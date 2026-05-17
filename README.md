@@ -3,8 +3,10 @@
 >
 > Advanced Damage System is a passion project, and I’m doing my best to make it more realistic, stable, and enjoyable for the FS25 community.
 >
-> If you like the mod and want to support its development, your donation would mean a lot. It helps me spend more time working on new features, fixes, and improvements instead of having to put the project aside for other work.
-> 
+> If you like the mod and want to support its development, your donation would mean a lot. Continued development depends heavily on the time I can afford to dedicate to the project, and your support helps me choose development over extra paid work.
+>
+> Every donation helps me keep working on new features, fixes, and improvements.
+>
 > Thank you for helping keep ADS alive and growing.
 >
 > [Donate via DonationAlerts](https://www.donationalerts.com/r/id577) · [Donate via Coindrop](https://coindrop.to/id577)
