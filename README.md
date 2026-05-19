@@ -123,6 +123,9 @@ For testing and debugging, ADS includes console commands. Most commands require 
 
 # Mod Guide
 
+> [!IMPORTANT]
+> The mod is actively being developed: some mechanics are constantly being expanded, changed, and reworked, so the guide may contain some inaccuracies.
+
 The Advanced Damage System (ADS) mod completely replaces the standard damage system, offering a deep and detailed simulation of wear, breakdowns, and technical service.
 This guide will help you understand all aspects of the mod.
 
