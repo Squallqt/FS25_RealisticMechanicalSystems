@@ -666,7 +666,7 @@
         <text name="ads_ingame_menu_header_last_inspection" text="Prohlídka"/>
         <text name="ads_ingame_menu_header_last_maintenance" text="Servis"/>
         <text name="ads_ingame_menu_header_cost" text="Údržba"/>
-        <text name="ads_ingame_menu_header_leasing_price" text="Leasing"/>
+        <text name="ads_ingame_menu_header_leasing_price" text="Pronájem"/>
         <text name="ads_ingame_menu_header_price" text="Hodnota"/>
         <text name="ads_ingame_menu_header_procedure" text="Procedura"/>
         <text name="ads_ingame_menu_header_time_left" text="Zbývá času"/>
