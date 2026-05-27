@@ -9,7 +9,7 @@
 >
 > Thank you for helping keep ADS alive and growing.
 >
-> [Donate via DonationAlerts](https://www.donationalerts.com/r/id577) · [Donate via Coindrop](https://coindrop.to/id577) · [Donate via Ko-fi](https://ko-fi.com/themodworkshop) - please include 'ADS' in the donation message.
+> [Donate via DonationAlerts](https://dalink.to/id577) · [Donate via Coindrop](https://coindrop.to/id577) · [Donate via Ko-fi](https://ko-fi.com/themodworkshop) - please include 'ADS' in the donation message.
 
 
 
