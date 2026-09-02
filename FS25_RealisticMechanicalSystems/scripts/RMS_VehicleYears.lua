@@ -6,6 +6,8 @@ RMS_VehicleYears = {}
 
 RMS_VehicleYears.DEFAULT_YEAR = 2000
 
+RMS_VehicleYears.SCR_MIN_YEAR = 2011
+
 local resolvedYears = {}
 
 ---Builds the lookup key of a store item, mod name then raw xml path in lower case
@@ -45,4 +47,23 @@ function RMS_VehicleYears.getYear(storeItem)
     end
 
     return year
+end
+
+---Returns the production year of a vehicle, raised to the SCR era when it consumes AdBlue
+-- @param table? vehicle vehicle
+-- @param table storeItem store item
+-- @return integer year production year
+function RMS_VehicleYears.getVehicleYear(vehicle, storeItem)
+    local year = RMS_VehicleYears.getYear(storeItem)
+    if year >= RMS_VehicleYears.SCR_MIN_YEAR then
+        return year
+    end
+
+    local motorizedSpec = vehicle ~= nil and vehicle.spec_motorized or nil
+    local consumers = motorizedSpec ~= nil and motorizedSpec.consumersByFillTypeName or nil
+    if consumers == nil or consumers["DEF"] == nil then
+        return year
+    end
+
+    return RMS_VehicleYears.SCR_MIN_YEAR
 end

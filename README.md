@@ -63,11 +63,13 @@ The exhaust plume is a real diagnostic channel, not decoration. Its colour comes
 
 | Colour | What it means | Usual causes |
 | --- | --- | --- |
-| Black | Too much fuel for the available air | Overload, clogged air filter, worn turbocharger, failing injectors, ECU fault |
+| Black | Too much fuel for the available air | A hard pickup before the turbocharger catches up, lugging at low revs, overload, clogged air filter, worn turbocharger, failing injectors, ECU fault |
 | Blue | The engine is burning its own oil | Worn engine at low Condition, leaking turbocharger seals, valve train wear |
 | White | Fuel leaving the engine unburnt | Cold engine, failed glow plugs, failing injection or a starving fuel system |
 
-Production year matters as much as condition. With the same fault, an older machine always smokes more, and a recent one running AdBlue shows almost nothing until something actually breaks. Working under load thickens the plume and can blacken it on its own, while engine speed only changes how large it looks.
+Production year matters as much as condition. With the same fault, an older machine always smokes more, and a recent one running AdBlue shows almost nothing until something actually breaks. A cold start still shows on a recent machine, briefly, because high injection pressure and glow plugs improved far less than particulate control did.
+
+The plume is drawn as real smoke particles, layered from a tight jet at the pipe to a slow trail behind. A clean plume dissipates at once; a loaded one hangs and takes seconds to clear. It follows the gas the engine actually moves, so it swells under boost and shrinks when the engine is coasting. On a turbocharged machine, black smoke appears whenever the fuel outruns the air: for a moment on a hard pickup while the turbocharger spools up, and for as long as it lasts on an engine held at full load down at low revs. A naturally aspirated engine never shows either, since without boost its air flow follows the engine speed alone.
 
 Leaving a diesel idling also leaves its mark. Past a long idle under `30%` load, unburnt carbon builds up and darkens the plume. The deposit survives an engine stop and a save, then burns off only once the engine is warm and working under load.
 
@@ -131,6 +133,7 @@ Maintenance and repair let you pick part quality between `Used`, `Aftermarket`, 
 
 - **Pre-shift check**: hold `R` near a vehicle for a go or no go verdict, the machine and its next service, the four fluid levels, radiator and air filter fouling, and reveal faults a real visual check would catch. Takes seconds, works anywhere.
 - **Fluids**: engine oil, coolant, transmission oil and hydraulic fluid each have a level, read against the minimum mark of their gauge. Engine oil is burnt off with the work done, faster under load and much faster as the engine wears, so a healthy engine always reaches its next service above the mark whatever interval you set while a tired one asks to be topped up; the other three only drop through a leak. Under the mark the machine only asks for a top up and still works normally; it is under `50%` that a machine short of coolant or transmission oil runs hot, and one short of engine oil or hydraulic fluid wears faster. The workshop `Top up` service fills what is missing for the price of the fluids, maintenance and overhaul replace everything, and a repair puts back what the fault it fixed had let out.
+- **Wrong fluid**: manually transferring an incompatible product contaminates only the selected circuit. Depending on the proportion in the mixture, system wear can rise to three times its normal rate, heat can increase, and contaminated hydraulic fluid can slow hydraulic functions by up to `25%`. The transfer requires explicit confirmation, and only a complete fluid replacement clears the contamination. Workshop procedures only reserve compatible products.
 - **Air Blower**: clears dust from the cooling pack and the air filter. A clean radiator will not overheat. Blowing an air filter out only recovers part of it, since what is embedded in the media stays until maintenance replaces it, and washing the machine never touches it.
 - **Grease Gun**: restores lubrication on machines that need it, harvesters above all. Lubrication drops `10%` per period only if the machine was neither operated, greased, nor serviced during it; inspection alone does not count.
 - **Aiming a hand tool**: point it directly at the machine within `5 m`.
@@ -144,7 +147,21 @@ Every brand carries two ratings based on its real-world reputation, both shown i
 
 Vehicles also age: production year drives thermostat behaviour, overheat protection, how much the machine smokes, and which breakdowns can occur at all.
 
-Two settings cover the exhaust: `Exhaust Smoke` turns the model on or off, and `Smoke Intensity` scales opacity from `100%` to `300%` without changing the calculated causes or colours. Turning the model off restores the vehicle's native values.
+Three settings cover the exhaust. `Exhaust Smoke` turns the model on or off and `Smoke Intensity` scales opacity from `100%` to `300%`, neither of them changing the calculated causes or colours; both belong to the server. `Plume Detail` belongs to each player instead: it sets how many layers of smoke their own machine draws, down to none, and never affects anyone else. It can only reduce what the server allows. Turning the model off restores the vehicle's native exhaust.
+
+## Buying Used
+
+A used machine arrives with the wear its hours have earned, and it may carry a fault nobody declared. Nothing shows at the sale.
+
+The hours set the odds, the brand shifts them:
+
+| Hours on the clock | Reliable brand | Budget brand |
+| --- | --- | --- |
+| 10 h | 7% | 11% |
+| 25 h | 18% | 28% |
+| 45 h | 32% | 51% |
+
+Run an `Inspection` before the machine sees any work. `Standard` finds most of it, `Complete Defectoscopy` finds all of it along with the exact condition of every system. Skipping that step is how a bargain becomes a breakdown in the middle of a field.
 
 ## Thermal Model
 
@@ -152,10 +169,11 @@ Engine temperature is computed from load, ambient temperature, dirt on the radia
 
 - **Engine thermostat behaviour follows production year.** Older machines have inert mechanical thermostats with real stiction; modern ones use fast PID control that adapts quickly to load.
 - **Overheat protection is staged from `2000` onwards**: power is progressively limited, then the engine can shut down. Older vehicles have no such protection and can suffer a hard failure instead.
-- **Warm-up is mandatory.** Pulling hard before the oil is warm damages the transmission; normal work never does, however long the warm-up takes.
+- **Warm-up is mandatory.** Cold oil only aggravates wear when the driveline is genuinely transmitting a heavy load. Idling and power used solely by an external consumer do not trigger cold-transmission wear.
 - **Transmission oil is not held at a target temperature.** Like the real machines, its thermostat only decides whether the oil goes through the oil cooler or around it: around it while the oil is cold, through it as the oil warms. The temperature then floats with the job instead of holding one value.
 - **A low fluid level costs cooling.** The minimum mark only asks for a top up, nothing changes there. Under `50%` the coolant carries less heat away and the transmission cooler loses capacity with the oil, down to `15%` on an empty circuit.
 - **CVT machines run a separate transmission model** driven by the pump, the power take-off, transmission load, the hydrostatic ratio, wheel slip and acceleration. Slow high-stress work and jerky driving can cook a CVT while the engine still reads normal.
+- **Heat follows real simulation time.** Engine and transmission temperatures are unaffected by the game time scale, cool independently after shutdown, and are preserved by savegames and multiplayer synchronization. Time spent outside the game is not simulated.
 
 ## Electrical System
 
@@ -164,6 +182,8 @@ The battery is a real model, not a switch: capacity falls in the cold, internal 
 The alternator output follows engine RPM, current load, and its own health. When consumers demand more than it delivers, voltage sags and the battery drains. Battery temperature is simulated on its own, driven by ambient air, engine bay heat, and self-heating from current.
 
 If a battery is too flat to start, jumper cables link both vehicles into a shared circuit so the donor can support cranking or charge the receiver.
+
+Diesel preheating starts automatically below `25 C`. It remains short in mild weather and lengthens progressively as the engine gets colder. At `5 C` and above, failed glow plugs can make the start rough but do not block it solely because of preheating; below that point, their condition becomes start-critical.
 
 ## Installation
 
@@ -222,14 +242,50 @@ For testing and debugging. Most require you to be inside a vehicle that supports
 | `rms_setConfigVar <path> <value>` | Changes a value inside `RMS_Config` at runtime |
 | `rms_printSpecVar <path>` | Prints a value from `spec_RealisticMechanicalSystems` |
 | `rms_setSpecVar <path> <value>` | Changes a value inside `spec_RealisticMechanicalSystems` |
-| `rms_telemetryStart [scenario] [intervalMs]` | Starts CSV telemetry (`default` or `transmission`) |
+| `rms_telemetryStart [scenario] [intervalMs]` | Starts CSV telemetry (`default`, `transmission`, `pto` or `exhaust`) |
 | `rms_telemetryStop` | Stops telemetry and closes the file |
+
+### Valid system names for RMS console commands
+
+Commands that take a system argument accept these names, case-insensitive:
+
+- `engine`
+- `transmission`
+- `hydraulics`
+- `cooling`
+- `electrical`
+- `chassis`
+- `fuel`
+- `pto`
+
+This applies to commands such as `rms_setSystemCondition`, `rms_setSystemStress`, and `rms_setSystemStressMultiplier`.
+
+Examples: `rms_setSystemCondition engine 0.75`, `rms_setSystemStress fuel 0.2`.
+
+### Temperature test commands
+
+The `raw` values drive the physical model; the other two values are the smoothed dashboard readings. Set both members of a pair when preparing a controlled test:
+
+```text
+rms_setSpecVar rawEngineTemperature 90
+rms_setSpecVar engineTemperature 90
+rms_setSpecVar rawTransmissionTemperature 90
+rms_setSpecVar transmissionTemperature 90
+```
+
+Read the physical temperatures with:
+
+```text
+rms_printSpecVar rawEngineTemperature
+rms_printSpecVar rawTransmissionTemperature
+```
 
 ## Changelog
 
 ### v0.10.0.0
 
-- Added exhaust smoke driven by vehicle age, engine wear, load and active faults
+- Improved used vehicles: a hidden fault at purchase is now a real risk, and a reliable brand lowers it
+- Added exhaust smoke driven by vehicle age, engine wear, load and active faults, with a detail setting each player sets on their own machine
 - Added an air filter that clogs with dusty work and is replaced by workshop maintenance
 - Improved the air blower: it no longer restores an air filter fully, and washing no longer cleans one
 - Improved the hand tools: they now reach further
@@ -253,7 +309,7 @@ For testing and debugging. Most require you to be inside a vehicle that supports
 - Improved the transmission oil temperature: it now floats with the load instead of holding a target
 - Improved radiator fouling: cooling capacity now drops with the clogging level
 - Improved steering wear: it now scales with the steered angle and the load on the steered axle
-- Improved compatibility: drivetrain and parking brake step aside when Enhanced Vehicle handles them
+- Added compatibility: drivetrain and parking brake step aside when Enhanced Vehicle handles them
 - Improved the translations of the fifteen supported languages
 - Rebalanced cooling wear: it now requires the engine above its target temperature
 - Rebalanced AI workers: they now wear a machine like a player

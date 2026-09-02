@@ -68,15 +68,16 @@ local function updateActiveDraftStats(vehicle)  -- calculates the current active
 end
 
 ---Keeps the rolling average of the dynamic motor load over its sampling window
+-- @param table vehicle vehicle
 -- @param table spec vehicle spec
 -- @param float dynamicMotorLoad current dynamic motor load
 -- @param float dt time since last call in ms
-local function updateAvgDynamicMotorLoadWindow(spec, dynamicMotorLoad, dt)
+local function updateAvgDynamicMotorLoadWindow(vehicle, spec, dynamicMotorLoad, dt)
     if spec == nil then
         return 0
     end
 
-    if not RMS_Config.DEBUG then
+    if not RMS_Utils.getIsDebugDataWanted(vehicle) then
         spec._avgDynamicMotorLoadSamples = nil
         spec.avgDynamicMotorLoad = 0
         return 0
@@ -128,15 +129,16 @@ local function updateAvgDynamicMotorLoadWindow(spec, dynamicMotorLoad, dt)
 end
 
 ---Keeps the rolling average of the driving speed over its sampling window
+-- @param table vehicle vehicle
 -- @param table spec vehicle spec
 -- @param float speed current speed
 -- @param float dt time since last call in ms
-local function updateAvgSpeedWindow(spec, speed, dt)
+local function updateAvgSpeedWindow(vehicle, spec, speed, dt)
     if spec == nil then
         return 0
     end
 
-    if not RMS_Config.DEBUG then
+    if not RMS_Utils.getIsDebugDataWanted(vehicle) then
         spec._avgSpeedSamples = nil
         spec.avgSpeed = 0
         return 0
@@ -201,8 +203,8 @@ local function updateDynamicMotorLoad(vehicle, dt) -- adjusts motor load with dr
 
     if hasMoreRealistic then
         spec.dynamicMotorLoad = motorLoad
-        updateAvgDynamicMotorLoadWindow(spec, motorLoad, dt)
-        updateAvgSpeedWindow(spec, vehicle:getLastSpeed(), dt)
+        updateAvgDynamicMotorLoadWindow(vehicle, spec, motorLoad, dt)
+        updateAvgSpeedWindow(vehicle, spec, vehicle:getLastSpeed(), dt)
         return
     end
 
@@ -234,8 +236,8 @@ local function updateDynamicMotorLoad(vehicle, dt) -- adjusts motor load with dr
 
     spec.dynamicMotorLoad = RealisticMechanicalSystems.sanitizeNumber(dynamicMotorLoad, motorLoad, 0, 1.5)
 
-    updateAvgDynamicMotorLoadWindow(spec, spec.dynamicMotorLoad or motorLoad, dt)
-    updateAvgSpeedWindow(spec, vehicle:getLastSpeed(), dt)
+    updateAvgDynamicMotorLoadWindow(vehicle, spec, spec.dynamicMotorLoad or motorLoad, dt)
+    updateAvgSpeedWindow(vehicle, spec, vehicle:getLastSpeed(), dt)
 end
 
 ---Keeps the rolling average of the absolute differential acceleration of the motor
@@ -512,8 +514,12 @@ local function getMoveState(vehicle, moveKey, jointDesc, nextMoveAlphaCache)
     local prevMoveAlpha = prevMoveAlphaCache[moveKey]
     nextMoveAlphaCache[moveKey] = moveAlpha
 
+    if prevMoveAlpha ~= nil then
+        return math.abs(moveAlpha - prevMoveAlpha) > 0.0001
+    end
+
     local isMovingRaw = jointDesc ~= nil and jointDesc.isMoving == true
-    return isMovingRaw or (prevMoveAlpha ~= nil and math.abs(moveAlpha - prevMoveAlpha) > 0.0001)
+    return isMovingRaw and moveAlpha > 0.001 and moveAlpha < 0.999
 end
 
 ---Reads the three hydraulic motion sources: cylindered parts, joint control and hammer
@@ -1084,7 +1090,7 @@ local function updateFuelState(vehicle, dt)
             end
         end
 
-        fuelState.temperature = math.max(RealisticMechanicalSystems.sanitizeNumber(spec.engineTemperature, environmentTemp, -80, 160) / 3.6, environmentTemp)
+        fuelState.temperature = math.max(RealisticMechanicalSystems.sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, environmentTemp, -80, 160) / 3.6, environmentTemp)
 
         local idleSpeedThreshold = RMS_Config.CORE.FUEL_FACTOR_DATA.IDLE_DEPOSIT_SPEED_THRESHOLD
         local idleLoadThreshold = RMS_Config.CORE.FUEL_FACTOR_DATA.IDLE_DEPOSIT_LOAD_THRESHOLD
@@ -1131,7 +1137,9 @@ local function updatePtoState(vehicle, dt)
         spec.ptoUtilization = 0
         spec.ptoMotorSideTorque = 0
         spec.ptoNativeCapacityTorque = 0
-        spec.ptoPreviousActiveLinks = {}
+        if type(spec.ptoPreviousActiveLinks) ~= "table" or next(spec.ptoPreviousActiveLinks) ~= nil then
+            spec.ptoPreviousActiveLinks = {}
+        end
         return
     end
 
@@ -1164,8 +1172,6 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
     local delayTwo = RMS_Config.UPDATE_VEHICLE_STATE_DELAY_TWO
     local delayThree = RMS_Config.UPDATE_VEHICLE_STATE_DELAY_THREE
 
-    updatePtoState(self, dt)
-
     spec.updateVehicleStateTimerOne = spec.updateVehicleStateTimerOne + dt
     spec.updateVehicleStateTimerTwo = spec.updateVehicleStateTimerTwo + dt
     spec.updateVehicleStateTimerThree = spec.updateVehicleStateTimerThree + dt
@@ -1173,6 +1179,7 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
     -- GROUP 1
     if spec.updateVehicleStateTimerOne >= delayOne then
         spec.updateVehicleStateTimerOne = spec.updateVehicleStateTimerOne % delayOne
+        updatePtoState(self, delayOne)
         -- avgAbsDiffAcc for dynamic motorLoad calculations
         updateAvgAbsDiffAccWindow(spec, self:getMotor(), delayOne)
         -- dynamic motorLoad

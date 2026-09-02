@@ -103,10 +103,9 @@ RMS_Config = {
             HEAVY_TRAILER_MOTORLOAD_THRESHOLD = 0.7,
             -- share of the heavy trailer threshold firing the tutorial tip
             HEAVY_TRAILER_TUTORIAL_MARGIN = 0.8,
+            COLD_TRANSMISSION_MULTIPLIER = 0.92,
             COLD_TRANSMISSION_THRESHOLD = 45,
             COLD_TRANSMISSION_LOAD_THRESHOLD = 0.60,
-            COLD_TRANSMISSION_ABUSE_DURATION = 10000,
-            COLD_TRANSMISSION_DAMAGE = 0.01,
             OVERHEAT_TRANSMISSION_MAX_MULTIPLIER = 100.0,
             OVERHEAT_TRANSMISSION_THRESHOLD = 100,
         },
@@ -193,7 +192,7 @@ RMS_Config = {
         STRESS_COOLDOWN = 0.5,
         CONDITION_EFFECTIVE_FLOOR = 0.10,
         REPEAT_BREAKDOWN_TIME = 1.3 * 3600000,
-        USED_VEHICLE_BREAKDOWN_PRESENCE_CHANGE_MUL = 0.33,
+        USED_VEHICLE_BREAKDOWN_PRESENCE_CHANGE_MUL = 0.90,
         USED_VEHICLE_BREAKDOWN_PRESENCE_CHANGE_MAX = 0.66,
 
         CONCURRENT_BREAKDOWN_LIMIT_PER_VEHICLE = 15,
@@ -497,7 +496,9 @@ RMS_Config = {
         -- cap on the integral term
         PID_MAX_INTEGRAL = 200,
 
-        COOLING_SLOWDOWN_POWER = 12,
+        -- natural cooling slowdown below the regulated temperature, by thermal mass
+        ENGINE_COOLING_SLOWDOWN_POWER = 3.0,
+        TRANS_COOLING_SLOWDOWN_POWER = 1.5,
 
         THERMOSTAT_TYPE_YEAR_DIVIDER = 2000,
         MECHANIC_THERMOSTAT_MIN_YEAR = 1950,
@@ -535,6 +536,9 @@ RMS_Config = {
 
     -- engine oil, coolant, transmission oil and hydraulic fluid levels
     FLUIDS = {
+        -- exact normalized vehicle XML keys take precedence over category profiles
+        CAPACITY_OVERRIDES = {},
+
         -- engine oil burnt over one service interval by a healthy engine
         ENGINE_OIL_CONSUMPTION_PER_INTERVAL = 0.10,
         -- extra consumption of a fully worn engine
@@ -597,31 +601,90 @@ RMS_Config = {
         ENABLED = true,
         INTENSITY = 1.0,
 
-        -- smoke tints mixed over the healthy base colour
+        -- smoke tints, mixed by concentration, and the colourless gas of a clean pipe
         SOOT_TINT = {0.020, 0.020, 0.025},
         OIL_TINT = {0.050, 0.090, 0.350},
         UNBURNT_TINT = {0.980, 0.980, 0.980},
-        HEALTHY_TINT = {0.550, 0.560, 0.580},
+        HEAT_TINT = {0.780, 0.780, 0.780},
 
-        -- exponent applied to the healthy weight
-        TINT_CONCENTRATION = 2.0,
+        -- extinction per channel, soot blocking the most light per unit of concentration
+        K_SOOT = 1.50,
+        K_OIL = 1.20,
+        K_UNBURNT = 1.00,
+        OPACITY_FLOOR = 0.03,
+        ALPHA_GAMMA = 0.80,
+        HEAT_COLD_FACTOR = 0.35,
 
-        -- shader alpha at idle and at maximum rpm
-        HEALTHY_ALPHA_IDLE = 0.10,
-        HEALTHY_ALPHA_FULL = 0.40,
-        SATURATED_ALPHA_IDLE = 4.00,
-        SATURATED_ALPHA_FULL = 10.00,
-
-        -- factors reducing a healthy plume
-        DEF_HEALTHY_ALPHA_FACTOR = 0.10,
-        METHANE_HEALTHY_ALPHA_FACTOR = 0.05,
+        -- aftertreatment, and the share of fault soot none of it can hold back
+        DEF_SOOT_FACTOR = 0.20,
         METHANE_SOOT_FACTOR = 0.10,
+        AFTERTREATMENT_FAULT_FLOOR = 0.35,
 
-        -- fault smoke density at idle against full load
-        LOAD_DENSITY_IDLE_FACTOR = 0.65,
+        FLOW_BOOST_GAIN = 0.60,
+
+        -- plume assets, the sprite family a directory loaded once for the session
+        PLUME_EMIT_SHAPE = "particles/exhaust/plumeEmitShape.i3d",
+        PLUME_SPRITES = "soft",
+        PLUME_DIRECTORY = "particles/exhaust/",
+
+        -- plume steps, each a complete plume for its own opacity band, only the current one and
+        -- the one it fades into ever drawn, the first being the refraction effect of the vehicle
+        PLUME_STEPS = {
+            {
+                id = "heat", isNative = true,
+                alphaMin = 0.10, alphaMax = 0.42, scaleMin = 0.07, scaleMax = 0.15
+            },
+            {
+                id = "veil", file = "veil.i3d", tintWash = 0.00,
+                alphaMax = 0.35, emitMin = 0.40, emitMax = 1.35, speedMin = 0.35, speedMax = 1.25
+            },
+            {
+                id = "plume", file = "plume.i3d", tintWash = 0.25,
+                alphaMax = 0.70, emitMin = 0.20, emitMax = 1.55, speedMin = 0.40, speedMax = 1.30
+            },
+            {
+                id = "column", file = "column.i3d", tintWash = 0.50,
+                alphaMax = 0.85, emitMin = 0.32, emitMax = 1.55, speedMin = 0.45, speedMax = 1.45
+            }
+        },
+
+        LADDER_GAMMA = 0.75,
+        LADDER_CROSSFADE = false,
+        STEP_SHARE_ON = 0.04,
+        STEP_SHARE_OFF = 0.02,
+
+        -- a transient promotes the plume up the ladder and populates the step it wakes
+        BURST_LADDER_GAIN = 1.20,
+        BURST_DECAY_TAU = 350,
+        BURST_EMIT_GAIN = 1.60,
+        BURST_REFRACTORY = 2000,
+        BURST_SLOW_TAU = 250,
+        BURST_LATCH_RESET = 0.50,
+        BURST_EDGE = {
+            BOOST_DEFICIT = 0.30,
+            UNBURNT = 0.08,
+            WET_STACKING = 0.06,
+            PREHEAT = 0.20,
+            FAULT = 0.10
+        },
+
+        -- renderer tick in ms, and the change under which nothing is rewritten
+        TUNE_INTERVAL = 80,
+        TUNE_EPSILON = 0.01,
+
+        -- particle culling distance, in metres
+        PLUME_CLIP_DISTANCE = 150,
+
+        -- opacity under which a step is imperceptible and stops emitting
+        PLUME_ALPHA_MIN = 0.008,
 
         -- channel smoothing time constants, in ms
+        TINT_TAU = 900,
         RISE_TAU = 250,
+        SOOT_RISE_TAU = 150,
+
+        SOOT_FALL_TAU = 350,
+        BURST_RISE_TAU = 40,
         FALL_TAU = 1200,
 
         -- share of the era factor kept by fault smoke
@@ -636,6 +699,15 @@ RMS_Config = {
             {9999, 0.30}
         },
 
+        -- emission eras of the unburnt channel, injection pressure and glow plugs improving far less than particulate control
+        UNBURNT_ERA_FACTORS = {
+            {2001, 1.00},
+            {2006, 0.90},
+            {2011, 0.80},
+            {2014, 0.70},
+            {9999, 0.60}
+        },
+
         -- year and power bands counting as Stage V
         STAGE_V = {
             OUTER_POWER_YEAR = 2019,
@@ -644,15 +716,16 @@ RMS_Config = {
             MID_POWER_MIN_KW = 56,
             MID_POWER_MAX_KW = 130,
             MAX_POWER_KW = 560,
-            SOOT_FACTOR = 0.15,
-            HEALTHY_ALPHA_FACTOR = 0.15
+            SOOT_FACTOR = 0.15
         },
         SOOT = {
+            FUEL_IDLE_SHARE = 0.25,
             LOAD_THRESHOLD = 0.80,
             LOAD_FULL = 1.05,
             LOAD_MAX = 0.35,
             WET_STACKING_MAX = 0.35,
-            TRANSIENT_LOAD_RATE = 1.2,
+            BOOST_DEFICIT_THRESHOLD = 0.45,
+            BOOST_DEFICIT_FULL = 0.75,
             TRANSIENT_MAX = 0.50,
             AIR_FILTER_KNEE = 0.50,
             AIR_FILTER_MAX = 0.30,
@@ -680,14 +753,17 @@ RMS_Config = {
     PREHEAT = {
         LAMP_TEST_DURATION_MS = 1000,
         MAX_AUTOMATIC_CRANK_MS = 10000,
-        ACTIVATION_TEMPERATURE_C = 8,
+        -- mild preheating remains useful above the temperature where failed plugs can prevent a start
+        START_ASSIST_TEMPERATURE_C = 5,
+        ACTIVATION_TEMPERATURE_C = 25,
         WAIT_TIME_CURVE = {
             {-15, 15000},
             {-10, 10000},
             {-5, 5000},
-            {0, 5000},
-            {5, 2000},
-            {8, 0}
+            {0, 4000},
+            {5, 2500},
+            {20, 2500},
+            {25, 0}
         }
     },
 
@@ -988,6 +1064,12 @@ end
 RMS_Config.savegameFile = "realisticMechanicalSystems.xml"
 RMS_Config.legacySavegameFile = "advancedDamageSystem.xml"
 RMS_Config.sharedSettingsDirectory = "modSettings/FS25_RealisticMechanicalSystems/"
+RMS_Config.localSettingsFile = "localSettings.xml"
+
+-- settings the player owns on their own machine, never shared and never synchronized
+RMS_Config.LOCAL = {
+    EXHAUST_SMOKE_DETAIL = 4
+}
 
 ---Prints a debug line while debug mode is on
 -- @param any ... values to print
@@ -1133,6 +1215,52 @@ end
 -- @return string path shared settings file path
 function RMS_Config.getSharedSettingsFilePath()
     return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.savegameFile
+end
+
+---Returns the path of the settings file belonging to the player, never shared and never synchronized
+-- @return string path local settings file path
+function RMS_Config.getLocalSettingsFilePath()
+    return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.localSettingsFile
+end
+
+---Writes the settings the player owns on their own machine
+-- @return boolean written true once the file is written
+function RMS_Config.saveLocalSettings()
+    createFolder(getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory)
+
+    local root = "realisticMechanicalSystemsLocal"
+    local xmlFile = createXMLFile(root, RMS_Config.getLocalSettingsFilePath(), root)
+    if xmlFile == nil or xmlFile == 0 then
+        log_dbg("LOCAL SAVE ERROR - createXMLFile returned", tostring(xmlFile))
+        return false
+    end
+
+    setXMLInt(xmlFile, root .. ".EXHAUST_SMOKE_DETAIL", RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL)
+    saveXMLFile(xmlFile)
+    delete(xmlFile)
+
+    return true
+end
+
+---Reads back the settings the player owns on their own machine
+function RMS_Config.loadLocalSettings()
+    local path = RMS_Config.getLocalSettingsFilePath()
+    if not fileExists(path) then
+        return
+    end
+
+    local root = "realisticMechanicalSystemsLocal"
+    local xmlFile = loadXMLFile(root, path)
+    if xmlFile == nil or xmlFile == 0 then
+        return
+    end
+
+    local detail = getXMLInt(xmlFile, root .. ".EXHAUST_SMOKE_DETAIL")
+    if detail ~= nil then
+        RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL = math.clamp(detail, 0, #RMS_Config.EXHAUST.PLUME_STEPS)
+    end
+
+    delete(xmlFile)
 end
 
 ---Writes every adjustable setting to the savegame file, then to the shared one

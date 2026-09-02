@@ -55,6 +55,7 @@ function RMS_DebugSnapshotRequestEvent:run(connection)
         return
     end
 
+    RMS_DebugSnapshot.markVehicleRequested(vehicle)
     connection:sendEvent(RMS_DebugSnapshotResponseEvent.new(vehicle))
 end
 
@@ -65,4 +66,3 @@ function RMS_DebugSnapshotRequestEvent.send(vehicle)
         g_client:getServerConnection():sendEvent(RMS_DebugSnapshotRequestEvent.new(vehicle))
     end
 end
-

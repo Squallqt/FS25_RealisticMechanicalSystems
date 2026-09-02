@@ -3,8 +3,10 @@
 
 ---Breakdown occurrence and lifecycle on a vehicle, and the effects they apply
 
-local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
-local hasCVTAddon = RMS_Utils.hasCVTAddon
+local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
+    and RMS_Utils.createLogger("[RMS_SPEC]")
+    or function() end
+local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
 
 ---Tells whether a player sits in the vehicle or in one of its attached implements
 -- @param table? rootVehicle vehicle at the head of the chain
@@ -378,7 +380,7 @@ function RealisticMechanicalSystems:tryTriggerBreakdown(dt)
                 end
             end
 
-            if RMS_Config.DEBUG and spec.debugData[systemName] ~= nil then
+            if RMS_Utils.getIsDebugDataWanted(self) and spec.debugData[systemName] ~= nil then
                 local criticalChance = math.clamp((1 - systemCondition) ^ probabilityData.CRITICAL_DEGREE, probabilityData.CRITICAL_MIN, probabilityData.CRITICAL_MAX)
                 spec.debugData[systemName].breakdownProbability = hourlyProb
                 spec.debugData[systemName].critBreakdownProbability = criticalChance

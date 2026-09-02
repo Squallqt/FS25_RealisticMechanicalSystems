@@ -4,7 +4,9 @@
 ---Runtime effects of the breakdowns, applied to the vehicle through engine function overrides
 RMS_Breakdowns = {}
 
-local log_dbg = RMS_Utils.createLogger("[RMS_BREAKDOWNS]")
+local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
+    and RMS_Utils.createLogger("[RMS_BREAKDOWNS]")
+    or function() end
 
 local loggedHookErrors = {}
 
@@ -1224,10 +1226,14 @@ function RMS_Breakdowns.applyHydraulicDamageToAttacher(self, superFunc, dt, ...)
     local hydraulicEffect = activeEffects ~= nil and activeEffects.HYDRAULIC_SPEED_MODIFIER or nil
     local hydraulicHoldEffect = activeEffects ~= nil and activeEffects.HYDRAULIC_HOLD_DRIFT_EFFECT or nil
     local erraticEffect = activeEffects ~= nil and activeEffects.HYDRAULIC_FUNCTION_ERRATIC_EFFECT or nil
-    local hydraulicModifier = (hydraulicEffect and hydraulicEffect.value) or 0
+    local hydraulicModifier = RMS_Fluids.getHydraulicSpeedModifier(rootVehicle, (hydraulicEffect and hydraulicEffect.value) or 0)
     local erraticModifier = (erraticEffect and erraticEffect.value) or 0
     local hydraulicHoldEffectValue = hydraulicHoldEffect ~= nil and (tonumber(hydraulicHoldEffect.value) or 0) or 0
-    
+
+    if hydraulicHoldEffectValue > 0 and (tonumber(rootSpec ~= nil and rootSpec.liftedMass or 0) or 0) <= 0 then
+        hydraulicHoldEffectValue = 0
+    end
+
     if hydraulicModifier == 0 and hydraulicHoldEffectValue == 0 and erraticModifier == 0 then
         return superFunc(self, dt, ...)
     end
@@ -1326,7 +1332,7 @@ function RMS_Breakdowns.applyHydraulicDamageToCylindered(self, superFunc, dt, ..
 
     local hydraulicEffect = rootVehicle.spec_RealisticMechanicalSystems and rootVehicle.spec_RealisticMechanicalSystems.activeEffects.HYDRAULIC_SPEED_MODIFIER
     local erraticEffect = rootVehicle.spec_RealisticMechanicalSystems and rootVehicle.spec_RealisticMechanicalSystems.activeEffects.HYDRAULIC_FUNCTION_ERRATIC_EFFECT
-    local hydraulicModifier = (hydraulicEffect and hydraulicEffect.value) or 0
+    local hydraulicModifier = RMS_Fluids.getHydraulicSpeedModifier(rootVehicle, (hydraulicEffect and hydraulicEffect.value) or 0)
     local erraticModifier = (erraticEffect and erraticEffect.value) or 0
     if hydraulicModifier == 0 and erraticModifier == 0 then
         return superFunc(self, dt, ...)
@@ -1339,33 +1345,27 @@ function RMS_Breakdowns.applyHydraulicDamageToCylindered(self, superFunc, dt, ..
 
     for _, tool in ipairs(spec.movingTools) do
         if RMS_Utils.getIsHydraulicMovingTool(tool) then
-            originalSpeeds[tool] = {
+            local original = {
                 rotSpeed = tool.rotSpeed,
                 transSpeed = tool.transSpeed,
                 animSpeed = tool.animSpeed
             }
-        end
-        
-        if RMS_Utils.getIsHydraulicMovingTool(tool) and tool.rotSpeed ~= nil then
+            originalSpeeds[tool] = original
+
             local toolPerformance = performance
             if tool.rmsHydraulicErraticTarget == true then
                 toolPerformance = toolPerformance * (erraticPhaseActive and erraticPerformance or 0)
             end
-            tool.rotSpeed = originalSpeeds[tool].rotSpeed * toolPerformance
-        end
-        if RMS_Utils.getIsHydraulicMovingTool(tool) and tool.transSpeed ~= nil then
-            local toolPerformance = performance
-            if tool.rmsHydraulicErraticTarget == true then
-                toolPerformance = toolPerformance * (erraticPhaseActive and erraticPerformance or 0)
+
+            if original.rotSpeed ~= nil then
+                tool.rotSpeed = original.rotSpeed * toolPerformance
             end
-            tool.transSpeed = originalSpeeds[tool].transSpeed * toolPerformance
-        end
-        if RMS_Utils.getIsHydraulicMovingTool(tool) and tool.animSpeed ~= nil then
-            local toolPerformance = performance
-            if tool.rmsHydraulicErraticTarget == true then
-                toolPerformance = toolPerformance * (erraticPhaseActive and erraticPerformance or 0)
+            if original.transSpeed ~= nil then
+                tool.transSpeed = original.transSpeed * toolPerformance
             end
-            tool.animSpeed = originalSpeeds[tool].animSpeed * toolPerformance
+            if original.animSpeed ~= nil then
+                tool.animSpeed = original.animSpeed * toolPerformance
+            end
         end
     end
 
@@ -1402,7 +1402,7 @@ function RMS_Breakdowns.applyHydraulicDamageToAttacherJointControl(self, superFu
     local rootVehicle = self:getRootVehicle()
     local effect = rootVehicle.spec_RealisticMechanicalSystems
         and rootVehicle.spec_RealisticMechanicalSystems.activeEffects.HYDRAULIC_SPEED_MODIFIER
-    local modifier = effect ~= nil and (tonumber(effect.value) or 0) or 0
+    local modifier = RMS_Fluids.getHydraulicSpeedModifier(rootVehicle, effect ~= nil and (tonumber(effect.value) or 0) or 0)
     local spec = self.spec_attacherJointControl
     local jointDesc = spec ~= nil and spec.jointDesc or nil
     local originalMoveTime = jointDesc ~= nil and tonumber(jointDesc.moveTime) or nil
@@ -1442,7 +1442,7 @@ function RMS_Breakdowns.applyHydraulicDamageToHammer(self, superFunc, actorId, x
     local rootVehicle = self:getRootVehicle()
     local effect = rootVehicle.spec_RealisticMechanicalSystems
         and rootVehicle.spec_RealisticMechanicalSystems.activeEffects.HYDRAULIC_SPEED_MODIFIER
-    local modifier = effect ~= nil and (tonumber(effect.value) or 0) or 0
+    local modifier = RMS_Fluids.getHydraulicSpeedModifier(rootVehicle, effect ~= nil and (tonumber(effect.value) or 0) or 0)
     if modifier == 0 then
         return superFunc(self, actorId, x, y, z, distance, nx, ny, nz, subShapeIndex, shapeId, isLast)
     end
@@ -2458,7 +2458,9 @@ local function applyHardStartModifier(vehicle, effectName)
         end
 
         if effect.extraData.timer <= 0 and effect.extraData.status == "PASSED" then
-            v:startMotor(false, true)
+            if v.getCanMotorRun == nil or v:getCanMotorRun() then
+                v:startMotor(false, true)
+            end
             effect.extraData.status = "IDLE"
             effect.extraData.preCrankVoltageV = nil
             effect.extraData.automaticCrank = false
@@ -2598,7 +2600,7 @@ local function isColdGlowPlugStartBlocked(vehicle)
     return effect ~= nil
         and effect.extraData ~= nil
         and effect.extraData.blockStart == true
-        and RMS_Preheat.getRequiredDurationMs(vehicle) > 0
+        and RMS_Preheat.isColdStartAssistanceRequired(vehicle)
 end
 
 ---Blocks the AI helper from starting a vehicle whose engine cannot run

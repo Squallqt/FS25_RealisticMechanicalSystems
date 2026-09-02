@@ -33,6 +33,7 @@ WORKSHOP
 DAILY CARE
 - Hold R near a vehicle for a pre-shift check of fluids, radiator, and air filter
 - Air Blower clears the cooling pack and the air filter, Grease Gun restores lubrication on machines that need it
+- An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
 
 SIMULATION
 - Separate engine and transmission thermal models driven by load, the hydraulic pump, the power take-off, ambient temperature, radiator fouling and airflow, with an engine thermostat that follows production year
@@ -44,7 +45,8 @@ SIMULATION
 - Multiplayer and dedicated server, 15 languages
 
 Changelog 0.10.0.0:
-- Added exhaust smoke driven by vehicle age, engine wear, load and active faults
+- Improved used vehicles: a hidden fault at purchase is now a real risk, and a reliable brand lowers it
+- Added exhaust smoke driven by vehicle age, engine wear, load and active faults, with a detail setting each player sets on their own machine
 - Added an air filter that clogs with dusty work and is replaced by workshop maintenance
 - Improved the air blower: it no longer restores an air filter fully, and washing no longer cleans one
 - Improved the hand tools: they now reach further
@@ -68,7 +70,7 @@ Changelog 0.10.0.0:
 - Improved the transmission oil temperature: it now floats with the load instead of holding a target
 - Improved radiator fouling: cooling capacity now drops with the clogging level
 - Improved steering wear: it now scales with the steered angle and the load on the steered axle
-- Improved compatibility: drivetrain and parking brake step aside when Enhanced Vehicle handles them
+- Added compatibility: drivetrain and parking brake step aside when Enhanced Vehicle handles them
 - Improved the translations of the fifteen supported languages
 - Rebalanced cooling wear: it now requires the engine above its target temperature
 - Rebalanced AI workers: they now wear a machine like a player
@@ -111,6 +113,7 @@ WERKSTATT
 TÄGLICHE PFLEGE
 - R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler und Luftfilter vor Schichtbeginn
 - Das Druckluftgebläse reinigt Kühlerpaket und Luftfilter, die Fettpresse stellt die Schmierung wieder her
+- Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
 
 SIMULATION
 - Getrennte thermische Modelle für Motor und Getriebe, gesteuert durch Last, Hydraulikpumpe, Zapfwelle, Außentemperatur, Kühlerverschmutzung und Fahrtwind, mit einem Motorthermostat, das dem Baujahr folgt
@@ -122,7 +125,8 @@ SIMULATION
 - Mehrspieler und Dedicated Server, 15 Sprachen
 
 Changelog 0.10.0.0:
-- Abgasrauch hinzugefügt, gesteuert von Fahrzeugalter, Motorverschleiß, Last und aktiven Defekten
+- Gebrauchtfahrzeuge verbessert: ein versteckter Defekt beim Kauf ist jetzt ein echtes Risiko, und eine zuverlässige Marke senkt es
+- Abgasrauch hinzugefügt, gesteuert von Fahrzeugalter, Motorverschleiß, Last und aktiven Defekten, mit einer Detailstufe, die jeder Spieler auf seinem eigenen Rechner einstellt
 - Luftfilter hinzugefügt, der sich bei staubiger Arbeit zusetzt und von der Wartung in der Werkstatt ersetzt wird
 - Druckluftgebläse verbessert: es stellt einen Luftfilter nicht mehr vollständig wieder her, und Waschen reinigt ihn nicht mehr
 - Handwerkzeuge verbessert: sie reichen weiter
@@ -146,7 +150,7 @@ Changelog 0.10.0.0:
 - Getriebeöltemperatur verbessert: sie folgt jetzt der Last, statt eine Zielwert zu halten
 - Kühlerverschmutzung verbessert: die Kühlleistung sinkt jetzt mit dem Verschmutzungsgrad
 - Lenkungsverschleiß verbessert: er richtet sich jetzt nach dem Lenkeinschlag und der Last auf der gelenkten Achse
-- Kompatibilität verbessert: Antrieb und Feststellbremse überlassen Enhanced Vehicle den Vortritt
+- Kompatibilität ergänzt: Antrieb und Feststellbremse überlassen Enhanced Vehicle den Vortritt
 - Übersetzungen der fünfzehn unterstützten Sprachen verbessert
 - Kühlungsverschleiß neu abgestimmt: er setzt jetzt einen Motor über seiner Zieltemperatur voraus
 - KI-Helfer neu abgestimmt: sie verschleißen eine Maschine jetzt wie ein Spieler
@@ -189,6 +193,7 @@ ATELIER
 ENTRETIEN QUOTIDIEN
 - Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air
 - La soufflette nettoie le bloc de refroidissement et l'admission, la pompe à graisse rétablit le graissage des machines qui en demandent
+- Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
 
 SIMULATION
 - Modèles thermiques séparés pour le moteur et la transmission, pilotés par la charge, la pompe hydraulique, la prise de force, la température extérieure, l'encrassement du radiateur et le flux d'air, avec un thermostat moteur adapté au millésime
@@ -200,7 +205,8 @@ SIMULATION
 - Multijoueur et serveur dédié, 15 langues
 
 Changelog 0.10.0.0 :
-- Ajout d'une fumée d'échappement pilotée par l'âge du véhicule, l'usure moteur, la charge et les pannes actives
+- Amélioration des véhicules d'occasion : une panne cachée à l'achat devient un vrai risque, et une marque fiable le réduit
+- Ajout d'une fumée d'échappement pilotée par l'âge du véhicule, l'usure moteur, la charge et les pannes actives, avec un réglage de détail que chaque joueur règle sur sa propre machine
 - Ajout d'un filtre à air qui se colmate au travail dans la poussière et se remplace à l'entretien en atelier
 - Amélioration du souffleur d'air comprimé : il ne remet plus un filtre à air à neuf, et le lavage ne le nettoie plus
 - Amélioration des outils à main : ils portent plus loin
@@ -224,7 +230,7 @@ Changelog 0.10.0.0 :
 - Amélioration de la température d'huile de transmission : elle suit désormais la charge au lieu de tenir une consigne
 - Amélioration de l'encrassement du radiateur : la capacité de refroidissement baisse désormais avec le niveau d'encrassement
 - Amélioration de l'usure de direction : elle suit désormais l'angle braqué et la charge sur l'essieu directeur
-- Amélioration de la compatibilité : la transmission et le frein de stationnement laissent la main à Enhanced Vehicle
+- Ajout de la compatibilité : la transmission et le frein de stationnement laissent la main à Enhanced Vehicle
 - Amélioration des traductions dans les quinze langues prises en charge
 - Rééquilibrage de l'usure du refroidissement : elle exige désormais un moteur au-dessus de sa température cible
 - Rééquilibrage de l'ouvrier IA : il use désormais une machine comme un joueur
@@ -243,13 +249,36 @@ Changelog 0.10.0.0 :
 - Ajout d'une réinitialisation de la flotte qui réaligne tous les véhicules sur la durée de vie de véhicule choisie]]></fr>
         
     </description>
+    <specializations>
+        <specialization name="rmsFluidContainer" className="RMS_FluidContainer" filename="scripts/objects/RMS_FluidContainer.lua"/>
+    </specializations>
+    <vehicleTypes>
+        <type name="rmsFluidContainer" parent="pallet" filename="$dataS/scripts/vehicles/Vehicle.lua">
+            <specialization name="rmsFluidContainer"/>
+        </type>
+    </vehicleTypes>
+    <brands>
+        <brand name="MOTOREX" title="Motorex" image="brands/brand_motorex.dds"/>
+        <brand name="FUCHS" title="FUCHS" image="brands/brand_fuchs.dds"/>
+        <brand name="MOTUL" title="Motul" image="brands/brand_motul.dds"/>
+    </brands>
     <storeItems>
         <storeItem xmlFilename="objects/greaseGun/greaseGun.xml"/>
         <storeItem xmlFilename="objects/airBlower/airBlower.xml"/>
         <storeItem xmlFilename="objects/jumperCables/jumperCables.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motorexFarmerPro/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motorexFarmerPoly/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motorexCoolantM30/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motulAgriTekno/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motulTrh97/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motulAutoCoolExpert/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/fuchsMotXla/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/fuchsUttoMp/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/fuchsFricofinLd50/product.xml"/>
     </storeItems>
     <iconFilename>icon_rms.dds</iconFilename>
     <multiplayer supported="true"/>
+    <fillTypes filename="fillTypes.xml"/>
     <extraSourceFiles>
         <sourceFile filename="scripts/RMS_Main.lua"/>
     </extraSourceFiles>

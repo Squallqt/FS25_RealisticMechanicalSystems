@@ -96,11 +96,17 @@
 
         <BoxLayout profile="fs25_dialogButtonBox">
             <Button profile="buttonCancel" text="$l10n_rms_ws_action_cancel_service" onClick="onClickCancelService" id="cancelServiceButton"/>
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" id="cancelServiceButtonSeparator" />
             <Button profile="buttonMenuPrev" text="$l10n_rms_ws_action_inspection" onClick="onClickInspection" id="inspectionButton"/>
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" id="inspectionButtonSeparator" />
             <Button profile="buttonMenuNext" text="$l10n_rms_ws_action_maintenance" onClick="onClickService" id="maintenanceButton"/>
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" id="maintenanceButtonSeparator" />
             <Button profile="buttonOK" text="$l10n_button_repair" onClick="onClickRepair" id="repairButton"/>
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" id="repairButtonSeparator" />
             <Button profile="buttonExtra1" text="$l10n_rms_ws_action_overhaul" onClick="onClickOverhaul" id="overhaulButton"/>
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" id="overhaulButtonSeparator" />
             <Button profile="buttonActivate" text="$l10n_rms_ws_action_refill" onClick="onClickRefill" id="refillButton"/>
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" id="refillButtonSeparator" />
             <Button profile="buttonBack" text="$l10n_button_back" onClick="onClickBack" id="backButton"/>
         </BoxLayout>
         

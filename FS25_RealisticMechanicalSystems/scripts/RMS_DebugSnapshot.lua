@@ -6,6 +6,7 @@ RMS_DebugSnapshot = {}
 
 RMS_DebugSnapshot.REQUEST_INTERVAL_MS = 500
 RMS_DebugSnapshot.MAX_SNAPSHOT_AGE_MS = 1500
+RMS_DebugSnapshot.DATA_REQUEST_TTL_MS = RMS_DebugSnapshot.MAX_SNAPSHOT_AGE_MS
 RMS_DebugSnapshot.ENTRY_TYPE_NUMBER = 0
 RMS_DebugSnapshot.ENTRY_TYPE_BOOLEAN = 1
 RMS_DebugSnapshot.ENTRY_TYPE_STRING = 2
@@ -192,6 +193,8 @@ function RMS_DebugSnapshot.build(vehicle)
 
     local motor = vehicle.getMotor ~= nil and vehicle:getMotor() or nil
     local preheatState = tonumber(spec.preheatState) or RMS_Preheat.STATE.IDLE
+    local preheatIsDiesel = RMS_Preheat.isDieselVehicle(vehicle)
+    local preheatEngineTemperatureC = RMS_Preheat.getEngineTemperatureC(vehicle)
     local glowHardStartEffect = spec.activeEffects ~= nil and spec.activeEffects.GLOW_PLUG_HARD_START_MODIFIER or nil
     local glowHardStartStatus = glowHardStartEffect ~= nil
         and glowHardStartEffect.extraData ~= nil
@@ -200,7 +203,8 @@ function RMS_DebugSnapshot.build(vehicle)
     local glowHardStartBlocked = glowHardStartEffect ~= nil
         and glowHardStartEffect.extraData ~= nil
         and glowHardStartEffect.extraData.blockStart == true
-        and spec.preheatWasRequired == true
+        and preheatIsDiesel
+        and preheatEngineTemperatureC < RMS_Config.PREHEAT.START_ASSIST_TEMPERATURE_C
 
     return {
         debugData = copyDebugData(spec.debugData),
@@ -219,8 +223,8 @@ function RMS_DebugSnapshot.build(vehicle)
             batteryTempC = tonumber(spec.batteryTempC) or 0,
             preheatState = preheatState,
             preheatStateName = RMS_Preheat.getStateName(preheatState),
-            preheatIsDiesel = RMS_Preheat.isDieselVehicle(vehicle),
-            preheatEngineTemperatureC = RMS_Preheat.getEngineTemperatureC(vehicle),
+            preheatIsDiesel = preheatIsDiesel,
+            preheatEngineTemperatureC = preheatEngineTemperatureC,
             preheatLampTestActive = spec.preheatLampTestActive == true,
             preheatLampTestRemainingMs = tonumber(spec.preheatLampTestRemainingMs) or 0,
             preheatRemainingMs = tonumber(spec.preheatRemainingMs) or 0,
@@ -303,13 +307,33 @@ function RMS_DebugSnapshot.get(vehicle)
     return spec.rmsDebugSnapshot
 end
 
+---Keeps debug calculations active briefly for the vehicle an administrator is inspecting
+-- @param table? vehicle vehicle
+function RMS_DebugSnapshot.markVehicleRequested(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil then
+        return
+    end
+
+    local now = (g_currentMission ~= nil and g_currentMission.time) or g_time or 0
+    spec.rmsDebugDataRequestedUntil = now + RMS_DebugSnapshot.DATA_REQUEST_TTL_MS
+end
+
 ---Asks the server for a fresh snapshot, at most once per request interval
 -- @param table? vehicle vehicle
 function RMS_DebugSnapshot.request(vehicle)
-    if vehicle == nil or vehicle.isServer or g_client == nil or not RMS_Config.DEBUG then
+    if vehicle == nil or not RMS_Config.DEBUG then
         return
     end
     if g_currentMission == nil or not g_currentMission.isMasterUser then
+        return
+    end
+
+    if vehicle.isServer then
+        RMS_DebugSnapshot.markVehicleRequested(vehicle)
+        return
+    end
+    if g_client == nil then
         return
     end
     if RMS_DebugSnapshotRequestEvent == nil then

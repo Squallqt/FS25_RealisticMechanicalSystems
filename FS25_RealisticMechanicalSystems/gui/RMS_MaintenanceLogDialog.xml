@@ -79,6 +79,7 @@
 
         <BoxLayout profile="fs25_dialogButtonBox">
             <Button profile="buttonActivate" text="$l10n_rms_log_button_show_report" onClick="onClickShowReport" id="showReportButton"/>
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
             <Button profile="buttonBack" text="$l10n_button_back" onClick="onClickBack" id="backButton"/>
         </BoxLayout>
         

@@ -26,6 +26,7 @@ RMS_ConsoleCommandEvent.ALLOWED_COMMANDS = {
     setPlowMaxForce = true,
     resetFactorStats = true,
     reinitializeVehicle = true,
+    reinitializeFluidCapacities = true,
     printSpecVar = true,
     setSpecVar = true,
     setConfigVar = true,

@@ -354,7 +354,7 @@ function RMS_MaintenanceLogDialog:populateCellForItemInSection(list, section, in
 
         -- maintenance
         elseif entry.type == S.MAINTENANCE then
-            descText = string.format(g_i18n:getText("rms_log_performed"), g_i18n:getText(entry.optionOne) .. " " .. g_i18n:getText("rms_ws_task_maintenance"))
+            descText = string.format(g_i18n:getText("rms_log_performed"), g_i18n:getText("rms_ws_task_maintenance"), g_i18n:getText(entry.optionOne))
             descText = descText .. partTypeSuffix
             if #repairedParts > 0 then
                 descText = descText .. ". " .. string.format(g_i18n:getText("rms_log_inspection_desc_with_breakdowns"), table.concat(partsNames, ", "))
@@ -362,7 +362,7 @@ function RMS_MaintenanceLogDialog:populateCellForItemInSection(list, section, in
 
         -- inspection
         elseif entry.type == S.INSPECTION then
-            descText = string.format(g_i18n:getText("rms_log_performed"), g_i18n:getText(entry.optionOne) .. " " .. g_i18n:getText("rms_ws_task_inspection"))
+            descText = string.format(g_i18n:getText("rms_log_performed"), g_i18n:getText("rms_ws_task_inspection"), g_i18n:getText(entry.optionOne))
             if #repairedParts > 0 then
                 descText = descText .. ". " .. string.format(g_i18n:getText("rms_log_inspection_desc_with_breakdowns"), table.concat(partsNames, ", "))
             else
@@ -372,11 +372,17 @@ function RMS_MaintenanceLogDialog:populateCellForItemInSection(list, section, in
 
         -- overhaul
         elseif entry.type == S.OVERHAUL then
-            descText = string.format(g_i18n:getText("rms_log_performed"), g_i18n:getText(entry.optionOne) .. " " .. g_i18n:getText("rms_ws_task_overhaul"))
+            descText = string.format(g_i18n:getText("rms_log_performed"), g_i18n:getText("rms_ws_task_overhaul"), g_i18n:getText(entry.optionOne))
             if entry.optionThree then
                 descText = descText .. ". " .. g_i18n:getText("rms_log_overhaul_desc_with_painting")
             end
         end
+    end
+
+    local locationKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, entry.location)
+    local locationText = locationKey ~= nil and g_i18n:getText(entry.location) or ""
+    if locationText ~= "" then
+        descText = descText .. " · " .. locationText
     end
 
     cell:getAttribute("logDescription"):setText(descText)

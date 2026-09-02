@@ -61,7 +61,7 @@ function RealisticMechanicalSystems:resetAiWorkerCruiseControlState(restoreCruis
     state.applyTimer = 0
     state.lastAppliedSpeed = nil
 
-    if RMS_Config.DEBUG and spec.debugData and spec.debugData.aiWorker then
+    if RMS_Utils.getIsDebugDataWanted(self) and spec.debugData and spec.debugData.aiWorker then
         local dbg = spec.debugData.aiWorker
         dbg.stress = 0
         dbg.filteredStress = 0
@@ -256,7 +256,7 @@ function RealisticMechanicalSystems:updateAiWorkerCruiseControl(dt)
 
     state.lastError = error
 
-    if RMS_Config.DEBUG and spec.debugData and spec.debugData.aiWorker then
+    if RMS_Utils.getIsDebugDataWanted(self) and spec.debugData and spec.debugData.aiWorker then
         local dbg = spec.debugData.aiWorker
         dbg.stress = stress
         dbg.filteredStress = state.filteredStress

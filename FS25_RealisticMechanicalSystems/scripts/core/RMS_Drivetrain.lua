@@ -35,6 +35,28 @@ local function getConfig()
     return RMS_Config.DRIVETRAIN
 end
 
+---Returns the share of available motor torque transmitted to the driveline, excluding external consumers
+-- @param table? vehicle vehicle
+-- @return float load driveline load ratio between 0 and 1
+function RMS_Drivetrain.getDrivelineLoad(vehicle)
+    local motor = vehicle ~= nil and vehicle.getMotor ~= nil and vehicle:getMotor() or nil
+    if motor == nil
+            or motor.getMotorAppliedTorque == nil
+            or motor.getMotorExternalTorque == nil
+            or motor.getMotorAvailableTorque == nil then
+        return 0
+    end
+
+    local availableTorque = sanitizeNumber(motor:getMotorAvailableTorque(), 0, 0)
+    if availableTorque <= 0.0001 then
+        return 0
+    end
+
+    local appliedTorque = sanitizeNumber(motor:getMotorAppliedTorque(), 0, 0)
+    local externalTorque = sanitizeNumber(motor:getMotorExternalTorque(), 0, 0)
+    return math.clamp((appliedTorque - externalTorque) / availableTorque, 0, 1)
+end
+
 local evConfigCache = { diff = nil, park = nil, nextReadTime = -math.huge }
 
 ---Reads the differential and park brake switches of the other mod, re-reading every ten seconds
@@ -278,6 +300,7 @@ function RMS_Drivetrain.buildLayout(vehicle)
     local layout = {
         differentialCount = #differentials,
         isTwinTrack = isTwinTrack,
+        isPermanentAllWheelDrive = false,
         originals = {},
         centerIdx0 = nil,
         primaryIdx0 = nil,
@@ -297,6 +320,8 @@ function RMS_Drivetrain.buildLayout(vehicle)
         end
     end
 
+    local rootCount = 0
+    local mixedRootIdx0 = nil
     for i, differential in ipairs(differentials) do
         local idx0 = i - 1
         layout.originals[idx0] = {
@@ -309,8 +334,14 @@ function RMS_Drivetrain.buildLayout(vehicle)
         }
 
         local isInterAxle = not differential.diffIndex1IsWheel and not differential.diffIndex2IsWheel
-        if isInterAxle and not referencedAsChild[i] and layout.centerIdx0 == nil then
-            layout.centerIdx0 = idx0
+        if not referencedAsChild[i] then
+            rootCount = rootCount + 1
+            local isMixedRoot = differential.diffIndex1IsWheel ~= differential.diffIndex2IsWheel
+            if isMixedRoot and mixedRootIdx0 == nil then
+                mixedRootIdx0 = idx0
+            elseif isInterAxle and layout.centerIdx0 == nil then
+                layout.centerIdx0 = idx0
+            end
         end
     end
 
@@ -318,7 +349,10 @@ function RMS_Drivetrain.buildLayout(vehicle)
         layout.centerIdx0 = nil
     end
 
-    if layout.centerIdx0 ~= nil then
+    if rootCount == 1 and mixedRootIdx0 ~= nil and not isTwinTrack then
+        layout.isPermanentAllWheelDrive = true
+        layout.centerIdx0 = nil
+    elseif layout.centerIdx0 ~= nil then
         local center = differentials[layout.centerIdx0 + 1]
         local out1Idx0 = tonumber(center.diffIndex1) or 0
         local out2Idx0 = tonumber(center.diffIndex2) or 0
@@ -463,8 +497,15 @@ local function ensureLayout(vehicle, state)
     end
 
     state.layout = RMS_Drivetrain.buildLayout(vehicle)
-    state.hasControl = state.layout ~= nil
+    local isPermanentAllWheelDrive = state.layout ~= nil and state.layout.isPermanentAllWheelDrive == true
+    state.hasControl = state.layout ~= nil and not isPermanentAllWheelDrive
     state.hasCenterDiff = state.layout ~= nil and state.layout.centerIdx0 ~= nil
+    if isPermanentAllWheelDrive then
+        state.driveMode = RMS_Drivetrain.MODE.FOUR_WD
+        state.autoEngaged = false
+        state.diffLockRequested = false
+        state.diffLockEngaged = false
+    end
     RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.DRIVETRAIN)
     return state.layout ~= nil
 end
@@ -655,7 +696,7 @@ function RMS_Drivetrain.applyState(vehicle, force)
 
     local state = RMS_Drivetrain.getState(vehicle)
     local spec_motorized = vehicle.spec_motorized
-    if state == nil or state.layout == nil or spec_motorized == nil or spec_motorized.motorizedNode == nil then
+    if state == nil or not state.hasControl or state.layout == nil or spec_motorized == nil or spec_motorized.motorizedNode == nil then
         return
     end
     if not vehicle.isAddedToPhysics then
@@ -677,6 +718,34 @@ function RMS_Drivetrain.applyState(vehicle, force)
 
     state._appliedMode = fourWheelDrive
     state._appliedLock = nil
+end
+
+---Hands the drivetrain back to the game, releasing the park brake and the managed graph
+-- @param table vehicle vehicle
+function RMS_Drivetrain.releaseControl(vehicle)
+    local state = RMS_Drivetrain.getState(vehicle)
+    if state == nil or not vehicle.isServer then
+        return
+    end
+
+    if state.parkBrake then
+        RMS_Drivetrain.setDrivetrainState(vehicle, state.driveMode, state.diffLockRequested, false, false)
+    end
+
+    if state._graphManaged or state._appliedMode ~= nil or state._appliedLock ~= nil then
+        state.autoEngaged = false
+        state.diffLockEngaged = false
+        if restoreOriginalDifferentialGraph(vehicle, state) then
+            state._appliedMode = nil
+            state._appliedLock = nil
+        end
+    end
+
+    state._windupDamageLatched = false
+    state.windupActive = false
+    state.windupStress = 0
+    state.windupWearFactor = 0
+    RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.DRIVETRAIN)
 end
 
 ---Shifts the torque ratio toward the slower output of a locked axle differential
@@ -832,7 +901,8 @@ function RMS_Drivetrain.addToPhysics(vehicle, superFunc)
         and not spec.isExcludedVehicle
         and getConfig().ENABLED
         and not RMS_Drivetrain.isExternallyManaged(vehicle)
-        and ensureLayout(vehicle, state) then
+        and ensureLayout(vehicle, state)
+        and state.hasControl then
         RMS_Drivetrain.applyState(vehicle, true)
         applyDifferentialLock(vehicle, state)
     end
@@ -850,11 +920,16 @@ function RMS_Drivetrain.setDrivetrainState(vehicle, driveMode, diffLockRequested
     local state = RMS_Drivetrain.getState(vehicle)
     if state == nil then return end
 
-    driveMode = math.clamp(math.floor(tonumber(driveMode) or state.driveMode), 0, 2)
-    if not getConfig().ALLOW_AUTO_MODE and driveMode == RMS_Drivetrain.MODE.AUTO then
+    if state.layout ~= nil and state.layout.isPermanentAllWheelDrive == true then
         driveMode = RMS_Drivetrain.MODE.FOUR_WD
+        diffLockRequested = false
+    else
+        driveMode = math.clamp(math.floor(tonumber(driveMode) or state.driveMode), 0, 2)
+        if not getConfig().ALLOW_AUTO_MODE and driveMode == RMS_Drivetrain.MODE.AUTO then
+            driveMode = RMS_Drivetrain.MODE.FOUR_WD
+        end
+        diffLockRequested = diffLockRequested == true
     end
-    diffLockRequested = diffLockRequested == true
     if parkBrake == nil then parkBrake = state.parkBrake end
     parkBrake = parkBrake == true
 
@@ -1259,7 +1334,7 @@ end
 -- @param table state drivetrain state
 -- @param table spec vehicle spec
 local function updateDebugData(vehicle, state, spec)
-    if not RMS_Config.DEBUG or spec.debugData == nil or spec.debugData.drivetrain == nil then
+    if not RMS_Utils.getIsDebugDataWanted(vehicle) or spec.debugData == nil or spec.debugData.drivetrain == nil then
         return
     end
 
@@ -1507,7 +1582,7 @@ function RMS_Drivetrain.registerActionEvents(vehicle, isActiveForInputIgnoreSele
     if not isActiveForInputIgnoreSelection and not isActiveForInputWithAI then return end
     if spec.isExcludedVehicle then return end
 
-    if getConfig().ENABLED and not state.externallyManaged then
+    if getConfig().ENABLED and not state.externallyManaged and state.hasControl then
         if state.hasCenterDiff or not state.layoutAnalyzed then
             local _, modeEventId = vehicle:addActionEvent(spec.drivetrainActionEvents, InputAction.RMS_TOGGLE_4WD, vehicle,
                 RMS_Drivetrain.actionToggleDriveMode, false, true, false, true, nil)

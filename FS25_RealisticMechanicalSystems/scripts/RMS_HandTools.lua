@@ -14,7 +14,9 @@ local function getRaycastDistance()
 end
 
 
-local log_dbg = RMS_Utils.createLogger("[RMS_HAND_TOOLS]")
+local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
+    and RMS_Utils.createLogger("[RMS_HAND_TOOLS]")
+    or function() end
 
 ---Returns the hand tool spec of an object, creating it on first use
 -- @param table? object hand tool

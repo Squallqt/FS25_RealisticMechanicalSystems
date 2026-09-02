@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="plumeEmitShape" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0"/>
+  </Asset>
+
+  <Files>
+  </Files>
+
+
+  <Materials>
+    <Material name="emitShape_mat" materialId="1" diffuseColor="1 1 1 1">
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="plumeEmitShape.i3d.shapes">
+  </Shapes>
+
+  <Scene>
+    <Shape name="plumeEmitShape" shapeId="1" clipDistance="150" nodeId="4" castsShadows="false" receiveShadows="false" nonRenderable="true" materialIds="1"/>
+  </Scene>
+
+</i3D>

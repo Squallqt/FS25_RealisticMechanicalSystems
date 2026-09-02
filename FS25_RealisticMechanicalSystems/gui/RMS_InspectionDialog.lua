@@ -9,9 +9,6 @@ local RMS_InspectionDialog_mt = Class(RMS_InspectionDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
 local TEXT_COLOR = {1, 1, 1, 1}
 
--- share of the gauge kept for everything under the minimum mark
-local GAUGE_MARK_RATIO = 0.25
-
 -- inspection target to the dialog section holding its row
 local TARGET_TO_SECTION = {
     engineOil = "technicalFluidsData",
@@ -25,32 +22,28 @@ local TARGET_TO_SECTION = {
 
 -- fluid rows of the dialog, with the system carrying them and the level they read
 local FLUID_ROWS = {
-    { titleKey = "rms_inspection_engine_oil", systemKey = "engine", levelKey = "engineOilLevel" },
-    { titleKey = "rms_inspection_coolant", systemKey = "cooling", levelKey = "coolantLevel" },
-    { titleKey = "rms_inspection_hydraulic_fluid", systemKey = "hydraulics", levelKey = "hydraulicFluidLevel" },
-    { titleKey = "rms_inspection_transmission_oil", systemKey = "transmission", levelKey = "transmissionOilLevel" }
+    { titleKey = "rms_inspection_engine_oil", systemKey = "engine", levelKey = "engineOilLevel", circuit = "engineOil" },
+    { titleKey = "rms_inspection_coolant", systemKey = "cooling", levelKey = "coolantLevel", circuit = "coolant" },
+    { titleKey = "rms_inspection_hydraulic_fluid", systemKey = "hydraulics", levelKey = "hydraulicFluidLevel", circuit = "hydraulicFluid" },
+    { titleKey = "rms_inspection_transmission_oil", systemKey = "transmission", levelKey = "transmissionOilLevel", circuit = "transmissionOil" }
 }
 
 -- severity rank of each status, 0 for fine up to 4 for critical, the highest wins on a row
 local STATUS_PRIORITY = {
     rms_inspection_ok = 0,
     rms_inspection_status_slightly_low = 1,
-    rms_inspection_status_slightly_darkened = 1,
     rms_inspection_status_slight_moisture = 1,
     rms_inspection_status_slightly_dirty = 1,
     rms_inspection_status_slightly_dry = 1,
     rms_inspection_status_low = 2,
-    rms_inspection_status_darkened = 2,
     rms_inspection_status_seepage = 2,
     rms_inspection_status_dirty = 2,
     rms_inspection_status_dry = 2,
     rms_inspection_status_very_low = 3,
-    rms_inspection_status_contaminated = 3,
     rms_inspection_status_active_leak = 3,
     rms_inspection_status_heavily_clogged = 3,
     rms_inspection_status_very_dry = 3,
     rms_inspection_status_critically_low = 4,
-    rms_inspection_status_critical_condition = 4,
     rms_inspection_status_severe_leak = 4,
     rms_inspection_status_critically_clogged = 4,
     rms_inspection_status_critically_dry = 4,
@@ -96,28 +89,19 @@ local function getRowColor(row)
     return getSeverityColor(row ~= nil and STATUS_PRIORITY[row.statusKey or ""] or 0)
 end
 
----Returns the accent colour of a row, quiet while the row is fine
--- @param table? row inspection row
--- @return table color rgba channels
-local function getRowAccentColor(row)
-    local priority = row ~= nil and STATUS_PRIORITY[row.statusKey or ""] or 0
-    if priority == 0 then
-        return RMS_Breakdowns.COLORS.DEFAULT
-    end
-
-    return getRowColor(row)
+---Returns the minimum fluid level represented by the left edge of the gauge
+-- @return float normalized minimum level
+local function getGaugeMinimum()
+    return math.clamp(tonumber(RMS_Config.FLUIDS.LEVEL_MIN_MARK) or 0, 0, 0.999)
 end
 
----Returns the bar fill a fluid level draws, the mark sitting low on the gauge
+---Returns the bar fill between the actual minimum and maximum fluid levels
 -- @param float level fluid level
 -- @return float ratio fill ratio between 0 and 1
 local function getGaugeRatio(level)
-    local mark = math.clamp(RMS_Config.FLUIDS.LEVEL_MIN_MARK, 0.001, 0.999)
-    if level >= mark then
-        return GAUGE_MARK_RATIO + (1 - GAUGE_MARK_RATIO) * ((level - mark) / (1 - mark))
-    end
-
-    return GAUGE_MARK_RATIO * (level / mark)
+    local minimum = getGaugeMinimum()
+    local normalizedLevel = math.clamp(tonumber(level) or 0, 0, 1)
+    return math.clamp((normalizedLevel - minimum) / (1 - minimum), 0, 1)
 end
 
 ---Returns the worst status severity of the whole report
@@ -177,6 +161,32 @@ local function setRowLevel(rows, titleKey, level)
     end
 end
 
+---Stores the present and capacity liters shown beside a fluid status
+-- @param table? rows section rows
+-- @param string? titleKey l10n key identifying the row
+-- @param table vehicle inspected vehicle
+-- @param string circuit fluid circuit key
+local function setRowQuantity(rows, titleKey, vehicle, circuit)
+    if rows == nil or titleKey == nil or vehicle == nil or circuit == nil then
+        return
+    end
+
+    local unit = g_i18n:getText("unit_literShort")
+    local quantityText = string.format(
+        g_i18n:getText("rms_inspection_fluid_quantity_format"),
+        g_i18n:formatNumber(RMS_Fluids.getLiters(vehicle, circuit), 1),
+        g_i18n:formatNumber(RMS_Fluids.getCapacity(vehicle, circuit), 1),
+        unit
+    )
+
+    for _, row in ipairs(rows) do
+        if row.titleKey == titleKey then
+            row.quantityText = quantityText
+            return
+        end
+    end
+end
+
 ---Appends a localized line to the findings list, skipping empties and duplicates
 -- @param table? lines findings lines
 -- @param string? textKey l10n key of the line
@@ -199,17 +209,13 @@ local function appendAdditionalLine(lines, textKey)
     table.insert(lines, text)
 end
 
----Joins the findings into a bullet list, or returns the no symptom text
+---Joins the findings into a bullet list
 -- @param table? lines findings lines
 -- @return string text findings block
 local function buildAdditionalText(lines)
-    if lines == nil or #lines == 0 then
-        return g_i18n:getText("rms_inspection_no_suspicious_symptoms")
-    end
-
     local formattedLines = {}
-    for _, line in ipairs(lines) do
-        table.insert(formattedLines, "- " .. line)
+    for _, line in ipairs(lines or {}) do
+        table.insert(formattedLines, "\194\183  " .. line)
     end
 
     return table.concat(formattedLines, "\n")
@@ -381,6 +387,7 @@ local function applyFluidLevelInspectionFindings(dialog, additionalLines)
             end
 
             setRowLevel(dialog.technicalFluidsData, row.titleKey, level)
+            setRowQuantity(dialog.technicalFluidsData, row.titleKey, vehicle, row.circuit)
 
             if statusKey ~= nil then
                 setRowValue(dialog.technicalFluidsData, row.titleKey, statusKey)
@@ -503,7 +510,12 @@ function RMS_InspectionDialog:updateScreen()
     applyCloggingInspectionFindings(self, additionalLines)
     applyLubricationInspectionFindings(self, additionalLines)
 
+    local hasAdditionalFindings = #additionalLines > 0
     self.additionalText:setText(buildAdditionalText(additionalLines))
+    self.additionalScroll:setVisible(hasAdditionalFindings)
+    self.additionalSliderBox:setVisible(hasAdditionalFindings)
+    self.noFindingsText:setText(g_i18n:getText("rms_inspection_no_suspicious_symptoms"))
+    self.noFindingsText:setVisible(not hasAdditionalFindings)
 
     self.technicalFluidsList:setDataSource(self)
     self.technicalFluidsList:setDelegate(self)
@@ -601,29 +613,34 @@ function RMS_InspectionDialog:populateCellForItemInSection(list, section, index,
     local valueElement = cell:getAttribute("inspectionValue")
     local valuePill = cell:getAttribute("inspectionValuePill")
 
-    updateRowTextLayout(cell, titleElement, valuePill, valueElement, row.title or "", row.value or "")
+    local valueText = row.value or ""
+    if row.quantityText ~= nil and row.quantityText ~= "" then
+        valueText = string.format("%s · %s", valueText, row.quantityText)
+    end
+    updateRowTextLayout(cell, titleElement, valuePill, valueElement, row.title or "", valueText)
     titleElement:setTextColor(unpack(TEXT_COLOR))
     valueElement:setTextColor(unpack(getRowColor(row)))
 
-    local accent = cell:getAttribute("inspectionAccent")
-    if accent ~= nil then
-        accent:setImageColor(nil, unpack(getRowAccentColor(row)))
-    end
-
     local gaugeTrack = cell:getAttribute("inspectionGaugeTrack")
     local gaugeFill = cell:getAttribute("inspectionGaugeFill")
-    local gaugeMark = cell:getAttribute("inspectionGaugeMark")
-    if gaugeTrack == nil or gaugeFill == nil or gaugeMark == nil then
+    local gaugeAlert = cell:getAttribute("inspectionGaugeAlert")
+    local gaugeMinLabel = cell:getAttribute("inspectionGaugeMinLabel")
+    local gaugeMaxLabel = cell:getAttribute("inspectionGaugeMaxLabel")
+    if gaugeTrack == nil or gaugeFill == nil or gaugeAlert == nil
+        or gaugeMinLabel == nil or gaugeMaxLabel == nil then
         return
     end
 
     -- gauge shown only on a row carrying a level
     local level = tonumber(row.level)
-    gaugeTrack:setVisible(level ~= nil)
-    gaugeMark:setVisible(level ~= nil)
+    local hasLevel = level ~= nil
+    gaugeTrack:setVisible(hasLevel)
+    gaugeMinLabel:setVisible(hasLevel)
+    gaugeMaxLabel:setVisible(hasLevel)
 
-    if level == nil then
+    if not hasLevel then
         gaugeFill:setVisible(false)
+        gaugeAlert:setVisible(false)
         return
     end
 
@@ -633,6 +650,9 @@ function RMS_InspectionDialog:populateCellForItemInSection(list, section, index,
     gaugeFill:setSize(fillWidth, trackHeight)
     gaugeFill:setImageColor(nil, unpack(getRowColor(row)))
     gaugeFill:setVisible(ratio > 0)
+
+    gaugeAlert:setImageColor(nil, unpack(getRowColor(row)))
+    gaugeAlert:setVisible(level < getGaugeMinimum())
 end
 
 ---

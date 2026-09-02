@@ -83,6 +83,11 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantLevel, 1.0, 0.0, 1.0))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionOilLevel, 1.0, 0.0, 1.0))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicFluidLevel, 1.0, 0.0, 1.0))
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(RMS_Fluids.getCapacity(self, circuit), 0, 0))
+        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(RMS_Fluids.getCompatibility(self, circuit), 1, 0, 1))
+    end
+    streamWriteString(streamId, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
     streamWriteBool(streamId, spec.fieldInspectionSoundActive)
 
     -- [Group 7] Wear
@@ -195,6 +200,15 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     spec.coolantLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
     spec.transmissionOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
     spec.hydraulicFluidLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
+    spec.fluidCapacities = spec.fluidCapacities or {}
+    spec.fluidCompatibility = spec.fluidCompatibility or {}
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        spec.fluidCapacities[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+        spec.fluidCompatibility[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1, 0, 1)
+    end
+    spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(streamReadString(streamId))
+    spec.fluidCapacityVersion = RMS_Fluids.CAPACITY_VERSION
+    RMS_Fluids.updateEffects(self)
     spec.fieldInspectionSoundActive = streamReadBool(streamId)
 
     -- [Group 7] Wear
@@ -306,6 +320,11 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantLevel, 1.0, 0.0, 1.0))
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionOilLevel, 1.0, 0.0, 1.0))
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicFluidLevel, 1.0, 0.0, 1.0))
+            for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+                streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(RMS_Fluids.getCapacity(self, circuit), 0, 0))
+                streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(RMS_Fluids.getCompatibility(self, circuit), 1, 0, 1))
+            end
+            streamWriteString(streamId, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
             streamWriteBool(streamId, spec.fieldInspectionSoundActive)
         end
 
@@ -437,6 +456,15 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             spec.coolantLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
             spec.transmissionOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
             spec.hydraulicFluidLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
+            spec.fluidCapacities = spec.fluidCapacities or {}
+            spec.fluidCompatibility = spec.fluidCompatibility or {}
+            for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+                spec.fluidCapacities[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+                spec.fluidCompatibility[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1, 0, 1)
+            end
+            spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(streamReadString(streamId))
+            spec.fluidCapacityVersion = RMS_Fluids.CAPACITY_VERSION
+            RMS_Fluids.updateEffects(self)
             spec.fieldInspectionSoundActive = streamReadBool(streamId)
         end
 

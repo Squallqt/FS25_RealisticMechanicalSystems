@@ -16,14 +16,14 @@
             <Text profile="fs25_dialogText" id="optionOneText" position="0px -80px" text="Select the extent of maintenance:"/>
             <MultiTextOption profile="rms_multiTextOption" id="optionOne" position="0px -110px" focusInit="onOpen" onClick="onClickOptionOne" texts="1|2|3|4" />
                 
-            <SmoothList profile="rms_dialogInfoTable" id="serviceInfoTable" position="0px -185px" size="400px 78px">
+            <SmoothList profile="rms_dialogInfoTable" id="serviceInfoTable" position="0px -185px" size="400px 104px">
                 <ListItem profile="rms_dialogInfoRow" name="serviceInfoRowTemplate" size="400px 26px">
                     <Text profile="rms_dialogInfoTitle" position="20px 0px" size="160px 26px" name="serviceInfoTitle" textLayoutMode="scrolling" />
                     <Text profile="rms_dialogInfoValue" position="190px 0px" size="190px 26px" name="serviceInfoValue" textLayoutMode="scrolling" />
                 </ListItem>
             </SmoothList>
 
-            <Text profile="rms_disclaimerText" position="40px -295px" size="500px 30px" id="optionOneDisclaimer" text="*Extended maintenance is more expensive and takes longer, but includes additional procedures that significantly extend the service interval until the next maintenance."/>
+            <Text profile="rms_disclaimerText" position="40px -305px" size="500px 30px" id="optionOneDisclaimer" text="*Extended maintenance is more expensive and takes longer, but includes additional procedures that significantly extend the service interval until the next maintenance."/>
         
             <Text profile="fs25_dialogText" id="optionThreeText" position="0px -360px" text="Repair any faults found"/>
             <Text profile="rms_disclaimerText" position="40px -430px" size="500px 30px" id="optionThreeDisclaimer" text="* Automatically start standard repair with OEM parts if faults are detected."/>
@@ -32,6 +32,7 @@
         </GuiElement>
         <BoxLayout profile="fs25_dialogButtonBox">
             <Button profile="buttonBack" text="$l10n_button_close" onClick="onClickBack" />
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
             <Button profile="buttonOK" id="startServiceButton" text="$l10n_rms_option_menu_start_text" onClick="onClickStartService" />
         </BoxLayout>
     </GuiElement>

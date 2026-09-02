@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="canister25LVisual" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+    <Asset>
+        <Export program="GIANTS Editor 64bit" version="10.0.2"/>
+    </Asset>
+
+    <Files>
+        <File fileId="1" filename="$data/shaders/decalShader.xml"/>
+        <File fileId="2" filename="canister25L_normal.dds"/>
+        <File fileId="3" filename="canister25L_specular.dds"/>
+        <File fileId="4" filename="../products/motorexFarmerPro/large_body_diffuse.dds"/>
+        <File fileId="5" filename="../products/motorexFarmerPro/large_label_diffuse.dds"/>
+    </Files>
+
+    <Materials>
+        <Material name="body60" materialId="1">
+            <Texture fileId="4"/>
+            <Normalmap fileId="2"/>
+            <Glossmap fileId="3"/>
+        </Material>
+        <Material name="label60" materialId="2" customShaderId="1">
+            <Texture fileId="5"/>
+        </Material>
+    </Materials>
+
+    <Shapes externalShapesFile="canister25LVisual.i3d.shapes"/>
+
+    <Scene>
+        <TransformGroup name="canister25LVisual" nodeId="1">
+            <Shape name="body60" shapeId="3" clipDistance="50" nodeId="2" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="label60" translation="0 0.0802544 0" shapeId="4" clipDistance="50" nodeId="3" castsShadows="true" receiveShadows="true" decalLayer="1" materialIds="2"/>
+        </TransformGroup>
+    </Scene>
+</i3D>

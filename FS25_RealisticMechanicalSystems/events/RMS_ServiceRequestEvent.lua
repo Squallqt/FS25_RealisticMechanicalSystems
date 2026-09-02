@@ -88,6 +88,7 @@ function RMS_ServiceRequestEvent:run(connection)
                 [RealisticMechanicalSystems.STATUS.INSPECTION] = true,
                 [RealisticMechanicalSystems.STATUS.MAINTENANCE] = true,
                 [RealisticMechanicalSystems.STATUS.REPAIR] = true,
+                [RealisticMechanicalSystems.STATUS.REFILL] = true,
                 [RealisticMechanicalSystems.STATUS.OVERHAUL] = true
             }
             if not validTypes[self.serviceType] then
@@ -100,16 +101,20 @@ function RMS_ServiceRequestEvent:run(connection)
                 return
             end
 
-            -- price is computed on the server, the client never sends one
-            local serverPrice = self.vehicle:getServicePrice(self.serviceType, self.optionOne, self.optionTwo, self.optionThree, self.workshopType) or 0
-
-            self.vehicle:initService(self.serviceType, self.workshopType, self.optionOne, self.optionTwo, self.optionThree)
-
-            if serverPrice > 0 then
-                g_currentMission:addMoney(-1 * serverPrice, self.vehicle:getOwnerFarmId(), MoneyType.VEHICLE_RUNNING_COSTS, true, true)
+            local started, result = RMS_FluidWorkshop.tryStartService(
+                self.vehicle,
+                nil,
+                self.serviceType,
+                self.workshopType,
+                self.optionOne,
+                self.optionTwo,
+                self.optionThree
+            )
+            if started then
+                RMS_VehicleChangeStatusEvent.send(self.vehicle)
+            else
+                connection:sendEvent(RMS_ServiceResultEvent.new(result))
             end
-
-            RMS_VehicleChangeStatusEvent.send(self.vehicle)
         end
     end
 end

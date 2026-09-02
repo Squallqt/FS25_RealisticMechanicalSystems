@@ -89,7 +89,7 @@ function RMS_Consumptables:updateRadiatorClogging(dt, canAccumulate)
             totalMultiplier = 0.0
         }
     end
-    local dbg = spec.debugData.radiator
+    local dbg = RMS_Utils.getIsDebugDataWanted(self) and spec.debugData.radiator or nil
 
     local lastSpeed = self:getLastSpeed()
     local washableSpec = self.spec_washable
@@ -107,16 +107,18 @@ function RMS_Consumptables:updateRadiatorClogging(dt, canAccumulate)
         fieldFactor = isOnField and (washableSpec.fieldMultiplier or 1.0) or 0.5
     end
 
-    dbg.fieldFactor = fieldFactor
-    dbg.dustFactor = dustFactor
-    dbg.debrisFactor = debrisFactor
-    dbg.wetness = wetness
-    dbg.wetnessFactor = wetnessFactor
-    dbg.baseWetnessFactor = baseWetnessFactor
-    dbg.isOnField = isOnField
-    dbg.hasDust = hasDust
-    dbg.hasDebris = spec.hasDebris
-    dbg.totalMultiplier = 0.0
+    if dbg then
+        dbg.fieldFactor = fieldFactor
+        dbg.dustFactor = dustFactor
+        dbg.debrisFactor = debrisFactor
+        dbg.wetness = wetness
+        dbg.wetnessFactor = wetnessFactor
+        dbg.baseWetnessFactor = baseWetnessFactor
+        dbg.isOnField = isOnField
+        dbg.hasDust = hasDust
+        dbg.hasDebris = spec.hasDebris
+        dbg.totalMultiplier = 0.0
+    end
 
     if lastSpeed > 0.5 and spec.radiatorClogging < dirtLevel then
         if washableSpec == nil then
@@ -125,7 +127,7 @@ function RMS_Consumptables:updateRadiatorClogging(dt, canAccumulate)
 
         local dirtDuration = ((washableSpec.dirtDuration or 0) / 4) * (RMS_Config.CORE.BASE_SERVICE_WEAR * 10)
         local totalMultiplier = wetnessFactor * (fieldFactor + dustFactor + debrisFactor) * C.CLOGGING_SPEED
-        dbg.totalMultiplier = totalMultiplier
+        if dbg then dbg.totalMultiplier = totalMultiplier end
 
         local change = dirtDuration * totalMultiplier * dt
         spec.radiatorClogging = math.min(spec.radiatorClogging + change, dirtLevel)
@@ -168,7 +170,7 @@ function RMS_Consumptables:updateAirFilterClogging(dt)
             totalMultiplier = 0.0
         }
     end
-    local dbg = spec.debugData.airFilter
+    local dbg = RMS_Utils.getIsDebugDataWanted(self) and spec.debugData.airFilter or nil
 
     local dirtLevel = self:getDirtAmount()
     local lastSpeed = self:getLastSpeed()
@@ -187,16 +189,18 @@ function RMS_Consumptables:updateAirFilterClogging(dt)
         fieldFactor = isOnField and (washableSpec.fieldMultiplier or 2.0) or 1.0
     end
 
-    dbg.fieldFactor = fieldFactor
-    dbg.dustFactor = dustFactor
-    dbg.debrisFactor = debrisFactor
-    dbg.wetness = wetness
-    dbg.wetnessFactor = wetnessFactor
-    dbg.baseWetnessFactor = baseWetnessFactor
-    dbg.isOnField = isOnField
-    dbg.hasDust = hasDust
-    dbg.hasDebris = spec.hasDebris
-    dbg.totalMultiplier = 0.0
+    if dbg then
+        dbg.fieldFactor = fieldFactor
+        dbg.dustFactor = dustFactor
+        dbg.debrisFactor = debrisFactor
+        dbg.wetness = wetness
+        dbg.wetnessFactor = wetnessFactor
+        dbg.baseWetnessFactor = baseWetnessFactor
+        dbg.isOnField = isOnField
+        dbg.hasDust = hasDust
+        dbg.hasDebris = spec.hasDebris
+        dbg.totalMultiplier = 0.0
+    end
 
     -- air filter clogging from working hours in dust
     if lastSpeed > 0.5 and spec.airFilterClogging < 1.0 then
@@ -206,7 +210,7 @@ function RMS_Consumptables:updateAirFilterClogging(dt)
 
         local dirtDuration = ((washableSpec.dirtDuration or 0) / 4) * (RMS_Config.CORE.BASE_SERVICE_WEAR * 10)
         local totalMultiplier = wetnessFactor * (fieldFactor + dustFactor + debrisFactor) * C.CLOGGING_SPEED
-        dbg.totalMultiplier = totalMultiplier
+        if dbg then dbg.totalMultiplier = totalMultiplier end
 
         local change = dirtDuration * totalMultiplier * dt
         spec.airFilterClogging = math.min(spec.airFilterClogging + change, 1.0)
@@ -300,20 +304,23 @@ function RMS_Consumptables:updateFluidLevels(operatingDt)
         local load = math.clamp(tonumber(spec.dynamicMotorLoad) or 0.5, 0, 1)
         local loadFactor = (1 - C.ENGINE_OIL_LOAD_SHARE * 0.5) + C.ENGINE_OIL_LOAD_SHARE * load
         local rate = (C.ENGINE_OIL_CONSUMPTION_PER_INTERVAL / interval) * (1 + C.ENGINE_OIL_WEAR_CONSUMPTION * (1 - condition)) * loadFactor
-        spec.engineOilLevel = math.max((tonumber(spec.engineOilLevel) or 1) - rate * hours, 0)
+        RMS_Fluids.removeLiters(self, "engineOil", rate * hours * RMS_Fluids.getCapacity(self, "engineOil"))
     end
 
     -- the other three fluids only go down through a leak
     if spec.systems.cooling.enabled then
-        spec.coolantLevel = math.max((tonumber(spec.coolantLevel) or 1) - (tonumber(spec.coolantLeakRate) or 0) * hours, 0)
+        local lost = RMS_Fluids.removeLiters(self, "coolant", (tonumber(spec.coolantLeakRate) or 0) * hours * RMS_Fluids.getCapacity(self, "coolant"))
+        RMS_Fluids.recordLeakLoss(self, "coolant", lost)
     end
 
     if spec.systems.transmission.enabled then
-        spec.transmissionOilLevel = math.max((tonumber(spec.transmissionOilLevel) or 1) - (tonumber(spec.transmissionOilLeakRate) or 0) * hours, 0)
+        local lost = RMS_Fluids.removeLiters(self, "transmissionOil", (tonumber(spec.transmissionOilLeakRate) or 0) * hours * RMS_Fluids.getCapacity(self, "transmissionOil"))
+        RMS_Fluids.recordLeakLoss(self, "transmissionOil", lost)
     end
 
     if spec.systems.hydraulics.enabled then
-        spec.hydraulicFluidLevel = math.max((tonumber(spec.hydraulicFluidLevel) or 1) - (tonumber(spec.hydraulicFluidLeakRate) or 0) * hours, 0)
+        local lost = RMS_Fluids.removeLiters(self, "hydraulicFluid", (tonumber(spec.hydraulicFluidLeakRate) or 0) * hours * RMS_Fluids.getCapacity(self, "hydraulicFluid"))
+        RMS_Fluids.recordLeakLoss(self, "hydraulicFluid", lost)
     end
 end
 
@@ -335,35 +342,47 @@ function RMS_Consumptables:getMissingFluidShare()
 end
 
 ---Fills back the fluids nothing leaks any more
-function RMS_Consumptables:topUpRepairedLeaks()
-    local spec = self.spec_RealisticMechanicalSystems
-    local filled = false
-
-    for levelKey, rateKey in pairs({coolantLevel = "coolantLeakRate",
-                                    transmissionOilLevel = "transmissionOilLeakRate",
-                                    hydraulicFluidLevel = "hydraulicFluidLeakRate"}) do
-        if (tonumber(spec[rateKey]) or 0) <= 0 and (tonumber(spec[levelKey]) or 1) < 1.0 then
-            spec[levelKey] = 1.0
-            filled = true
-        end
-    end
-
-    if filled and self.isServer then
-        RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
-    end
+function RMS_Consumptables:topUpRepairedLeaks(breakdownIds)
+    RMS_Fluids.restoreRepairedLeakLosses(self, breakdownIds or self.spec_RealisticMechanicalSystems.pendingSelectedBreakdowns or {})
 end
 
 ---Fills every fluid the machine carries back up
 function RMS_Consumptables:refillVehicleFluids()
-    local spec = self.spec_RealisticMechanicalSystems
-    spec.engineOilLevel = 1.0
-    spec.coolantLevel = 1.0
-    spec.transmissionOilLevel = 1.0
-    spec.hydraulicFluidLevel = 1.0
-
-    if self.isServer then
-        RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        if RMS_Fluids.getCapacity(self, circuit) > 0 then
+            RMS_Fluids.replaceCircuit(self, circuit)
+        end
     end
+end
+
+---Returns a physical circuit capacity in liters
+function RMS_Consumptables:getFluidCapacity(circuit)
+    return RMS_Fluids.getCapacity(self, circuit)
+end
+
+---Returns the physical quantity currently in a circuit
+function RMS_Consumptables:getFluidLiters(circuit)
+    return RMS_Fluids.getLiters(self, circuit)
+end
+
+---Returns the physical quantity missing from a circuit
+function RMS_Consumptables:getMissingFluidLiters(circuit)
+    return RMS_Fluids.getMissingLiters(self, circuit)
+end
+
+---Returns mixture compatibility for a circuit
+function RMS_Consumptables:getFluidCompatibility(circuit)
+    return RMS_Fluids.getCompatibility(self, circuit)
+end
+
+---Adds a catalogue product to a circuit
+function RMS_Consumptables:addFluidLiters(circuit, liters, productKey)
+    return RMS_Fluids.addLiters(self, circuit, liters, productKey)
+end
+
+---Replaces a circuit with compatible fluid
+function RMS_Consumptables:replaceFluidCircuit(circuit)
+    RMS_Fluids.replaceCircuit(self, circuit)
 end
 
 ---Restores one grease gun charge of lubrication, capped at full

@@ -9,6 +9,7 @@ local rmsInspectionHoldVehicle = nil
 local rmsInspectionHoldTime = 0
 local rmsInspectionHoldThreshold = 600
 local rmsInspectionHoldTriggered = false
+local rmsInspectionConsumeUntilRelease = false
 
 local rmsActiveInspectionVehicle = nil
 local rmsInspectionMaxDistance = 6.0
@@ -19,6 +20,36 @@ local function rmsResetInspectionHoldState()
     rmsInspectionHoldVehicle = nil
     rmsInspectionHoldTime = 0
     rmsInspectionHoldTriggered = false
+end
+
+---Runs the native activatable-object action after a short inspection-key press
+local function rmsActivateCurrentObject()
+    if g_currentMission == nil then
+        return
+    end
+
+    local system = g_currentMission.activatableObjectsSystem
+    if system == nil then
+        return
+    end
+
+    if system.onActivateObjectInput ~= nil then
+        system:onActivateObjectInput(InputAction.ACTIVATE_OBJECT, 1, nil, false)
+        return
+    end
+
+    local activatable = nil
+    if system.getActivatable ~= nil then
+        activatable = system:getActivatable()
+    else
+        activatable = system.currentActivatableObject
+    end
+
+    if activatable ~= nil
+        and activatable.run ~= nil
+        and (activatable.getIsActivatable == nil or activatable:getIsActivatable()) then
+        activatable:run()
+    end
 end
 
 ---Returns the vehicle the player looks at, if RMS tracks it and the player may access it
@@ -159,22 +190,33 @@ local function rmsUpdateActiveInspection(inputComponent, dt)
     end
 end
 
----Starts the inspection once the action has been held long enough
+---Starts the inspection on hold or forwards a short press to the native interaction
+-- @param table inputComponent player input component
 -- @param string actionName input action name
 -- @param float inputValue input value
 -- @param any callbackState callback state
 -- @param boolean isAnalog true for an analog input
-local function rmsOnInputFieldInspection(actionName, inputValue, callbackState, isAnalog)
+local function rmsOnInputFieldInspection(inputComponent, actionName, inputValue, callbackState, isAnalog)
+    if inputValue == 0 then
+        local activateObject = not rmsInspectionConsumeUntilRelease
+            and rmsInspectionHoldVehicle ~= nil
+            and not rmsInspectionHoldTriggered
+
+        rmsInspectionConsumeUntilRelease = false
+        rmsResetInspectionHoldState()
+
+        if activateObject then
+            rmsActivateCurrentObject()
+        end
+
+        return
+    end
+
     if rmsActiveInspectionVehicle ~= nil then
         return
     end
 
     if rmsInspectionVehicle == nil then
-        rmsResetInspectionHoldState()
-        return
-    end
-
-    if inputValue == 0 then
         rmsResetInspectionHoldState()
         return
     end
@@ -193,6 +235,7 @@ local function rmsOnInputFieldInspection(actionName, inputValue, callbackState, 
 
     if rmsInspectionHoldTime >= rmsInspectionHoldThreshold then
         rmsInspectionHoldTriggered = true
+        rmsInspectionConsumeUntilRelease = true
 
         if rmsInspectionHoldVehicle ~= nil and rmsInspectionHoldVehicle.startFieldVisualInspectionProcess ~= nil then
             local started = rmsInspectionHoldVehicle:startFieldVisualInspectionProcess()
@@ -201,8 +244,6 @@ local function rmsOnInputFieldInspection(actionName, inputValue, callbackState, 
                 rmsActiveInspectionVehicle = rmsInspectionHoldVehicle
             end
         end
-
-        rmsResetInspectionHoldState()
     end
 end
 
@@ -220,7 +261,7 @@ local function rmsOnPlayerInputComponentUpdate(inputComponent, superFunc, dt)
     end
 
     if rmsActiveInspectionVehicle ~= nil then
-        g_inputBinding:setActionEventActive(rmsInspectionActionId, false)
+        g_inputBinding:setActionEventActive(rmsInspectionActionId, true)
         rmsUpdateActiveInspection(inputComponent, dt)
         return
     end
@@ -240,7 +281,7 @@ local function rmsOnPlayerInputComponentUpdate(inputComponent, superFunc, dt)
         rmsResetInspectionHoldState()
     end
 
-    local isActive = rmsInspectionVehicle ~= nil
+    local isActive = rmsInspectionVehicle ~= nil or rmsInspectionConsumeUntilRelease
     g_inputBinding:setActionEventActive(rmsInspectionActionId, isActive)
 
     if isActive then

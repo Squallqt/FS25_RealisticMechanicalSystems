@@ -102,7 +102,9 @@ function RMS_Utils.hasHydraulicActuatorCapability(vehicle)
         end
     end
 
-    return vehicle.spec_attacherJointControl ~= nil or vehicle.spec_hydraulicHammer ~= nil
+    return vehicle.spec_attacherJointControl ~= nil
+        or vehicle.spec_hydraulicHammer ~= nil
+        or vehicle.spec_hookLiftTrailer ~= nil
 end
 
 ---Tells whether a connection hose entry carries hydraulics
@@ -300,6 +302,59 @@ function RMS_Utils.getPtoEngagementTransitionCount(activeLinks, previousActiveLi
     return count
 end
 
+---Walks one PTO branch and adds its demand to the shared accumulator
+-- @param table? vehicleObj vehicle or implement
+-- @param table data PTO accumulator
+-- @param table visited already visited vehicles
+local function collectConnectedPtoData(vehicleObj, data, visited)
+    if vehicleObj == nil or visited[vehicleObj] then
+        return
+    end
+    visited[vehicleObj] = true
+
+    if vehicleObj.getOutputPowerTakeOffs == nil then
+        return
+    end
+
+    local outputs = vehicleObj:getOutputPowerTakeOffs()
+    for _, output in pairs(outputs or {}) do
+        local consumer = output.connectedVehicle
+        if output.connectedInput ~= nil and consumer ~= nil then
+            if data.connectedVehicles[consumer] ~= true then
+                data.connectedVehicles[consumer] = true
+
+                local isEngaged = consumer.getIsPowerTakeOffActive ~= nil and consumer:getIsPowerTakeOffActive() or false
+                local torque = 0
+                if consumer.getConsumedPtoTorque ~= nil then
+                    local consumedTorque = consumer:getConsumedPtoTorque(nil, true)
+                    torque = tonumber(consumedTorque) or 0
+                end
+                local measuredRpm = consumer.getPtoRpm ~= nil and (tonumber(consumer:getPtoRpm()) or 0) or 0
+                local configuredRpm = consumer.spec_powerConsumer ~= nil
+                    and (tonumber(consumer.spec_powerConsumer.ptoRpm) or 0) or 0
+                local rpm = measuredRpm
+                if isEngaged and rpm <= 0 then
+                    rpm = configuredRpm
+                end
+                local power = torque * rpm * math.pi / 30
+
+                data.torque = data.torque + torque
+                data.rpm = math.max(data.rpm, rpm)
+                data.power = data.power + power
+
+                if isEngaged or measuredRpm > 0 or torque > 0 then
+                    data.isActive = true
+                end
+                if isEngaged then
+                    data.activeLinks[consumer] = true
+                end
+            end
+
+            collectConnectedPtoData(consumer, data, visited)
+        end
+    end
+end
+
 ---Walks the implement chain and sums the torque, rpm and power drawn from the PTO
 -- @param table? vehicle vehicle
 -- @return table data PTO torque, rpm, power, active state and links
@@ -314,58 +369,7 @@ function RMS_Utils.getConnectedPtoData(vehicle)
     }
     local visited = {}
 
-    ---Walks the implement chain summing what it draws from the PTO
-    -- @param table? vehicleObj vehicle or implement
-    local function walk(vehicleObj)
-        if vehicleObj == nil or visited[vehicleObj] then
-            return
-        end
-        visited[vehicleObj] = true
-
-        if vehicleObj.getOutputPowerTakeOffs == nil then
-            return
-        end
-
-        local outputs = vehicleObj:getOutputPowerTakeOffs()
-        for _, output in pairs(outputs or {}) do
-            local consumer = output.connectedVehicle
-            if output.connectedInput ~= nil and consumer ~= nil then
-                if data.connectedVehicles[consumer] ~= true then
-                    data.connectedVehicles[consumer] = true
-
-                    local isEngaged = consumer.getIsPowerTakeOffActive ~= nil and consumer:getIsPowerTakeOffActive() or false
-                    local torque = 0
-                    if consumer.getConsumedPtoTorque ~= nil then
-                        local consumedTorque = consumer:getConsumedPtoTorque(nil, true)
-                        torque = tonumber(consumedTorque) or 0
-                    end
-                    local measuredRpm = consumer.getPtoRpm ~= nil and (tonumber(consumer:getPtoRpm()) or 0) or 0
-                    local configuredRpm = consumer.spec_powerConsumer ~= nil
-                        and (tonumber(consumer.spec_powerConsumer.ptoRpm) or 0) or 0
-                    local rpm = measuredRpm
-                    if isEngaged and rpm <= 0 then
-                        rpm = configuredRpm
-                    end
-                    local power = torque * rpm * math.pi / 30
-
-                    data.torque = data.torque + torque
-                    data.rpm = math.max(data.rpm, rpm)
-                    data.power = data.power + power
-
-                    if isEngaged or measuredRpm > 0 or torque > 0 then
-                        data.isActive = true
-                    end
-                    if isEngaged then
-                        data.activeLinks[consumer] = true
-                    end
-                end
-
-                walk(consumer)
-            end
-        end
-    end
-
-    walk(vehicle)
+    collectConnectedPtoData(vehicle, data, visited)
     return data
 end
 
@@ -1607,6 +1611,30 @@ function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
         end
     end
     return result
+end
+
+---Tells whether something reads the debug values of a vehicle, the debug panel or a telemetry recording
+-- @param table? vehicle vehicle owning the debug values
+-- @return boolean isWanted true while the values are consumed
+function RMS_Utils.getIsDebugDataWanted(vehicle)
+    if RMS_Telemetry ~= nil and RMS_Telemetry.isRecording == true then
+        local recordedVehicleId = RMS_Telemetry.vehicleId
+        if vehicle == nil or recordedVehicleId == nil or vehicle.uniqueId == recordedVehicleId then
+            return true
+        end
+    end
+
+    if RMS_Config.DEBUG ~= true or vehicle == nil then
+        return false
+    end
+
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil then
+        return false
+    end
+
+    local now = (g_currentMission ~= nil and g_currentMission.time) or g_time or 0
+    return (tonumber(spec.rmsDebugDataRequestedUntil) or -math.huge) >= now
 end
 
 ---Tells whether the CVT addon mod drives the transmission of this vehicle

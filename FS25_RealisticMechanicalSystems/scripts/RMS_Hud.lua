@@ -455,8 +455,8 @@ function RMS_Hud:getVehicleTypeCategoryLabel(vehicle)
     return string.format("%s/%s", vehicleTypeName, categoryName)
 end
 
-local hasCVTTransmission = RMS_Utils.hasCVTTransmission
-local hasCVTAddon = RMS_Utils.hasCVTAddon
+local hasCVTTransmission = RMS_Utils ~= nil and RMS_Utils.hasCVTTransmission or function() return false end
+local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
 
 
 ---Draws the whole HUD for the current frame

@@ -3,8 +3,8 @@
 
 ---Debug HUD pages, showing the live simulation values of the active vehicle
 
-local hasCVTTransmission = RMS_Utils.hasCVTTransmission
-local hasCVTAddon = RMS_Utils.hasCVTAddon
+local hasCVTTransmission = RMS_Utils ~= nil and RMS_Utils.hasCVTTransmission or function() return false end
+local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
 
 
 ---Draws the prebuilt debug lines of the active vehicle
@@ -68,8 +68,8 @@ function RMS_Hud:drawActiveVehicleHUD()
 
     local panel = self.activeVehicleDebugPanel
     local debugSnapshot = nil
+    RMS_DebugSnapshot.request(vehicle)
     if not vehicle.isServer then
-        RMS_DebugSnapshot.request(vehicle)
         debugSnapshot = RMS_DebugSnapshot.get(vehicle)
         if debugSnapshot == nil then
             local statusHeight = 0.075
@@ -597,26 +597,53 @@ function RMS_Hud:drawActiveVehicleHUD()
 
     do
         local smoke = spec.exhaustSmoke
-        local exhaustEffectCount = vehicle.spec_motorized ~= nil and vehicle.spec_motorized.exhaustEffects ~= nil
-            and #vehicle.spec_motorized.exhaustEffects or 0
+        local exhaustDbg = type(spec.debugData) == "table" and type(spec.debugData.exhaust) == "table"
+            and spec.debugData.exhaust or {}
+
+        local profile = {tostring(spec.year or "?")}
+        if smoke.isStageV == true then table.insert(profile, "StageV") end
+        if smoke.hasDEF == true then table.insert(profile, "DEF") end
+        if smoke.isMethane == true then table.insert(profile, "methane") end
+        if smoke.hasTurbo == true then table.insert(profile, "turbo") end
+
+        -- one letter per drawn plume step, a dash where it is silent
+        -- the heat step owns no particle system, it is drawn by the exhaust effect of the vehicle
+        local stepMarks = {}
+        for _, step in ipairs(exhaustDbg.steps or {}) do
+            local isDrawn = step.isNative and (step.share or 0) > 0 or step.isEmitting
+            table.insert(stepMarks, isDrawn and string.upper(string.sub(step.id, 1, 1)) or "-")
+        end
+
         addLine(overviewLines, string.format(
-            "Exhaust: active: %s | nodes: %d | int: %.2f | era: %.2f | stageV: %s | def: %s | wet: %.2f%% | soot: %.2f%% | oil: %.2f%% | unburnt: %.2f%% | alpha: %.2f-%.2f | rgb: %.2f/%.2f/%.2f",
-            tostring(smoke.isActive == true),
-            exhaustEffectCount,
-            RMS_Config.EXHAUST.INTENSITY,
-            smoke.eraFactor,
-            tostring(smoke.isStageV == true),
-            tostring(smoke.hasDEF == true),
-            asPercent(spec.fuelState ~= nil and spec.fuelState.wetStackingLevel or 0),
+            "Exhaust: %s | %s | soot %.0f%% oil %.0f%% unburnt %.0f%% | tau %.2f opacity %.2f | flow %.2f (boost %.2f def %.2f)",
+            smoke.isActive == true and "on" or "off",
+            table.concat(profile, " "),
             asPercent(smoke.soot),
             asPercent(smoke.oil),
             asPercent(smoke.unburnt),
-            smoke.alphaIdle,
-            smoke.alphaFull,
-            smoke.red,
-            smoke.green,
-            smoke.blue
+            tonumber(exhaustDbg.opticalDepth) or 0,
+            tonumber(exhaustDbg.opacity) or 0,
+            tonumber(exhaustDbg.flow) or 0,
+            tonumber(exhaustDbg.boost) or 0,
+            tonumber(exhaustDbg.boostDeficit) or 0
         ), {1, 1, 1, 1}, 0.95)
+
+        -- the emitter count is the invariant, anything above two is a bug and not a setting
+        local emitterCount = tonumber(exhaustDbg.emitterCount) or 0
+        addLine(overviewLines, string.format(
+            "Plume: ladder %.2f (step %d to %d, fade %.2f) | alpha %.3f emit %.2f | heat %.2f | burst %.2f %s | steps %s | emitters %d",
+            tonumber(exhaustDbg.ladder) or 0,
+            tonumber(exhaustDbg.currentStep) or 0,
+            tonumber(exhaustDbg.nextStep) or 0,
+            tonumber(exhaustDbg.crossfade) or 0,
+            tonumber(exhaustDbg.alpha) or 0,
+            tonumber(exhaustDbg.emitScale) or 0,
+            tonumber(exhaustDbg.heatShare) or 0,
+            tonumber(exhaustDbg.burst) or 0,
+            tostring(exhaustDbg.burstCause or "idle"),
+            #stepMarks > 0 and table.concat(stepMarks) or "-",
+            emitterCount
+        ), emitterCount > 2 and {1, 0.3, 0.3, 1} or {1, 1, 1, 1}, 0.95)
     end
 
     local engineMaxFactor = math.max(
@@ -633,7 +660,7 @@ function RMS_Hud:drawActiveVehicleHUD()
         transmissionDbg.luggingFactor or 0,
         transmissionDbg.wheelSlipFactor or 0,
         transmissionDbg.drivetrainWindupFactor or 0,
-        transmissionDbg.coldTransAbuse or 0,
+        transmissionDbg.coldTransFactor or 0,
         transmissionDbg.hotTransFactor or 0
     ) * bcw
     local hydraulicsMaxFactor = math.max(
@@ -781,7 +808,7 @@ function RMS_Hud:drawActiveVehicleHUD()
         { shortName = "lf", statKey = "lf", value = transmissionDbg.luggingFactor or 0 },
         { shortName = "wsf", statKey = "wsf", value = transmissionDbg.wheelSlipFactor or 0, extraInfo = string.format("c: %.2f", avgTireGroundFrictionCoeff) },
         { shortName = "dwf", statKey = "dwf", value = transmissionDbg.drivetrainWindupFactor or 0, extraInfo = string.format("w: %.1f%% lock: %s", asPercent(drivetrainDbg.windupStress or 0), (drivetrainDbg.diffLockEngaged == true) and "Y" or "N") },
-        { shortName = "ctf", statKey = "ctf", value = transmissionDbg.coldTransAbuse or 0 },
+        { shortName = "ctf", statKey = "ctf", value = transmissionDbg.coldTransFactor or 0 },
         { shortName = "hotf", statKey = "hotf", value = transmissionDbg.hotTransFactor or 0 },
         { shortName = "flf", statKey = "flf", value = transmissionDbg.lowFluidFactor or 0, extraInfo = string.format("lvl: %.1f%%", asPercent(spec.transmissionOilLevel or 1)) }
     })
@@ -1025,7 +1052,8 @@ function RMS_Hud:drawActiveVehicleHUD()
     local localGlowHardStartBlocked = glowHardStartEffect ~= nil
         and glowHardStartEffect.extraData ~= nil
         and glowHardStartEffect.extraData.blockStart == true
-        and spec.preheatWasRequired == true
+        and preheatIsDiesel
+        and preheatEngineTemperatureC < RMS_Config.PREHEAT.START_ASSIST_TEMPERATURE_C
     local preheatGlowHardStartBlocked = getDebugStateValue("preheatGlowHardStartBlocked", localGlowHardStartBlocked) == true
 
     addLine(batteryLines, string.format(

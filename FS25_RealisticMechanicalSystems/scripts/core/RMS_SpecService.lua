@@ -3,7 +3,9 @@
 
 ---Workshop services on a vehicle: inspection, maintenance, repair and overhaul, with their prices and durations
 
-local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
+local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
+    and RMS_Utils.createLogger("[RMS_SPEC]")
+    or function() end
 local getSafeMissionTimeScale = RealisticMechanicalSystems.getSafeMissionTimeScale
 
 ---Tells whether a visible breakdown was picked for this repair type, quick fix needing it active
@@ -54,6 +56,7 @@ local function resetPendingServiceProgress(spec)
     spec.pendingRepairSystemStressStart = {}
     spec.pendingRepairSystemStressTarget = {}
     spec.pendingRepairSystemStressStartRatio = {}
+    spec.pendingFluidRequirements = {}
 end
 
 ---Interpolates the stress of the listed systems between their start and target values
@@ -63,11 +66,11 @@ end
 -- @param float ratio service progress ratio
 local function applyPendingSystemStressInterpolation(spec, startMap, targetMap, ratio)
     if spec == nil or spec.systems == nil then
-        return
+        return false
     end
 
     if startMap == nil or targetMap == nil then
-        return
+        return false
     end
 
     for systemKey, startStress in pairs(startMap) do
@@ -100,7 +103,7 @@ end
 -- @param string optionOne repair type
 local function markRepairStressReduction(spec, systemKey, optionOne)
     if spec == nil or spec.systems == nil or systemKey == nil or systemKey == "" then
-        return
+        return false
     end
 
     local systemData = spec.systems[systemKey]
@@ -225,13 +228,13 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     local repairPrice = nil
 
     if vehicleState ~= states.READY or (spec.maintenanceTimer or 0) ~= 0 then
-        return
+        return false
     end
 
     if RMS_Main ~= nil
         and RMS_Main.isWorkshopTypeOpen ~= nil
         and not RMS_Main:isWorkshopTypeOpen(workshopType) then
-        return
+        return false
     end
 
     if self.spec_enterable ~= nil and self.spec_enterable.setIsTabbable ~= nil and C.PARK_VEHICLE then
@@ -242,7 +245,7 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
         and optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
         and RMS_Utils.getEffectiveSystemWeight(self, optionTwo, RealisticMechanicalSystems.SYSTEMS) <= 0 then
         log_dbg(string.format("Skipping partial overhaul for %s: invalid or disabled target system '%s'", self:getFullName(), tostring(optionTwo)))
-        return
+        return false
     end
 
     if self:getIsOperating() then
@@ -364,13 +367,20 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
             if self.spec_enterable ~= nil and self.spec_enterable.setIsTabbable ~= nil and C.PARK_VEHICLE then
                 self.spec_enterable:setIsTabbable(true)
             end
-            return
+            return false
         end
 
         self:updateConditionLevel()
     end
 
     spec.pendingSelectedBreakdowns = {}
+    spec.pendingFluidRequirements = RMS_Fluids.getServiceRequirements(
+        self,
+        type,
+        optionOne,
+        optionTwo,
+        spec.pendingRepairQueue
+    )
 
     spec.pendingServicePrice = repairPrice
 
@@ -389,6 +399,7 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.STATE
         + RealisticMechanicalSystems.SYNC_GROUP.SERVICE_PROGRESS
         + RealisticMechanicalSystems.SYNC_GROUP.SERVICE_CONTEXT)
+    return spec.currentState == type and (spec.maintenanceTimer or 0) > 0
 end
 
 ---Repairs one breakdown, suspending it on a quick fix and possibly fitting a defective part
@@ -690,14 +701,7 @@ function RealisticMechanicalSystems:completeService()
         end
     end
 
-    -- fluid top up of the repaired leaks
-    if serviceType == states.REPAIR then
-        self:topUpRepairedLeaks()
-    end
-
-    if serviceType == states.MAINTENANCE or serviceType == states.OVERHAUL or serviceType == states.REFILL then
-        self:refillVehicleFluids()
-    end
+    RMS_Fluids.applyServiceRequirements(self, spec.pendingFluidRequirements)
 
     if serviceType == states.MAINTENANCE then
         spec.radiatorClogging = 0
@@ -735,7 +739,7 @@ function RealisticMechanicalSystems:completeService()
         end
     end
 
-    local maintenanceCompletedText = self:getFullName() .. ": " .. g_i18n:getText(serviceType) .. " " .. g_i18n:getText("rms_spec_maintenance_complete_notification")
+    local maintenanceCompletedText = string.format("%s: %s", self:getFullName(), string.format(g_i18n:getText("rms_spec_maintenance_complete_notification"), g_i18n:getText(serviceType)))
 
     if serviceType == states.INSPECTION or serviceType == states.MAINTENANCE then
         local activeBreakdowns = self:getActiveBreakdowns()
@@ -761,13 +765,6 @@ function RealisticMechanicalSystems:completeService()
         RMS_SoundManager.playSample(RMS_Main.samples.maintenanceCompleted2D)
     end
 
-
-    if self.isServer then
-        local lastEntry = spec.maintenanceLog and spec.maintenanceLog[#spec.maintenanceLog]
-        if lastEntry ~= nil then
-            RMS_LogEntrySyncEvent.sendToClients(self, lastEntry)
-        end
-    end
 
     spec.maintenanceTimer = 0
     resetPendingServiceProgress(spec)
@@ -806,42 +803,50 @@ function RealisticMechanicalSystems:completeService()
 
             if repairQueueCount == 0 then
                 log_dbg("Planned REPAIR skipped: no visible selected breakdowns to repair.")
-                RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText)
+                RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText, lastEntry)
                 return
             end
         end
 
-        local price = self:getServicePrice(nextWork, nextOptionOne, nextOptionTwo, nextOptionThree)
+        local started, result = RMS_FluidWorkshop.tryStartService(
+            self,
+            nil,
+            nextWork,
+            spec.workshopType,
+            nextOptionOne,
+            nextOptionTwo,
+            nextOptionThree
+        )
 
-        if g_currentMission:getMoney() >= price then
-            self:initService(nextWork, spec.workshopType, nextOptionOne, nextOptionTwo, nextOptionThree)
-            local started = spec.currentState == nextWork and (spec.maintenanceTimer or 0) > 0
-
-            if started then
-                if price > 0 then
-                    g_currentMission:addMoney(-1 * price, self:getOwnerFarmId(), MoneyType.VEHICLE_RUNNING_COSTS, true, true)
-                end
-                local nextServiceText = string.format("%s: %s", self:getFullName(), string.format(g_i18n:getText('rms_spec_next_planned_service_notification'), g_i18n:getText(nextWork)))
-                if g_currentMission.hud ~= nil and g_currentMission.hud.addSideNotification ~= nil
-                        and self:getOwnerFarmId() == g_currentMission:getFarmId() then
-                    g_currentMission.hud:addSideNotification({1, 1, 1, 1}, nextServiceText)
-                end
-                RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText)
-            else
-                log_dbg("Planned service was requested but did not start. State:", tostring(spec.currentState), "Timer:", tostring(spec.maintenanceTimer))
-                RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText)
-            end
-        else
-            local notEnoughMoneyText = string.format("%s: %s", self:getFullName(), string.format(g_i18n:getText('rms_spec_next_planned_service_not_enough_money_notification'), g_i18n:getText(nextWork)))
+        if started then
+            local nextServiceMessage = string.format(g_i18n:getText('rms_spec_next_planned_service_notification'), g_i18n:getText(nextWork))
+            local nextServiceText = string.format("%s: %s", self:getFullName(), nextServiceMessage)
             if g_currentMission.hud ~= nil and g_currentMission.hud.addSideNotification ~= nil
                     and self:getOwnerFarmId() == g_currentMission:getFarmId() then
-                g_currentMission.hud:addSideNotification({1, 1, 1, 1}, notEnoughMoneyText)
+                g_currentMission.hud:addSideNotification({1, 1, 1, 1}, nextServiceText)
             end
-            RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText)
+            RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText .. ". " .. nextServiceMessage, lastEntry)
+        else
+            if result == RMS_FluidWorkshop.RESULT.NOT_ENOUGH_MONEY then
+                local notEnoughMoneyText = string.format("%s: %s", self:getFullName(), string.format(g_i18n:getText('rms_spec_next_planned_service_not_enough_money_notification'), g_i18n:getText(nextWork)))
+                if g_currentMission.hud ~= nil and g_currentMission.hud.addSideNotification ~= nil
+                        and self:getOwnerFarmId() == g_currentMission:getFarmId() then
+                    g_currentMission.hud:addSideNotification({1, 1, 1, 1}, notEnoughMoneyText)
+                end
+            end
+            local resultTextKey = result ~= nil and RMS_FluidWorkshop.RESULT_TEXT_KEYS[result] or nil
+            resultTextKey = resultTextKey or RMS_FluidWorkshop.RESULT_TEXT_KEYS.INVALID
+            local failedServiceMessage = string.format(
+                g_i18n:getText("rms_spec_next_planned_service_failed_notification"),
+                g_i18n:getText(nextWork),
+                g_i18n:getText(resultTextKey)
+            )
+            log_dbg("Planned service transaction refused:", tostring(result))
+            RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText .. ". " .. failedServiceMessage, lastEntry)
         end
     else
         spec.currentState = states.READY
-        RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText)
+        RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText, lastEntry)
     end
 end
 
@@ -873,7 +878,7 @@ function RealisticMechanicalSystems:cancelService()
         self.spec_enterable:setIsTabbable(true)
     end
 
-    local cancelText = string.format("%s: %s %s", self:getFullName(), g_i18n:getText(serviceType), g_i18n:getText("rms_spec_maintenance_cancelled_notification"))
+    local cancelText = string.format("%s: %s", self:getFullName(), string.format(g_i18n:getText("rms_spec_maintenance_cancelled_notification"), g_i18n:getText(serviceType)))
     if g_currentMission.hud ~= nil and g_currentMission.hud.addSideNotification ~= nil
             and self:getOwnerFarmId() == g_currentMission:getFarmId() then
         g_currentMission.hud:addSideNotification({1, 1, 1, 1}, cancelText)
@@ -1417,9 +1422,9 @@ function RealisticMechanicalSystems:getServiceFinishTime(maintenanceType, option
 
     if not maintenanceType then maintenanceType = spec.currentState end
     local savedOptionOne, savedOptionTwo, savedOptionThree = self:getLastServiceOptions()
-    if not optionOne then optionOne = savedOptionOne end
-    if not optionTwo then optionTwo = savedOptionTwo end
-    if not optionThree then optionThree = savedOptionThree end
+    if optionOne == nil then optionOne = savedOptionOne end
+    if optionTwo == nil then optionTwo = savedOptionTwo end
+    if optionThree == nil then optionThree = savedOptionThree end
 
     if maintenanceType == RealisticMechanicalSystems.STATUS.READY then
         return 0

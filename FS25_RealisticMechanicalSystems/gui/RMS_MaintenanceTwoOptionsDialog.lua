@@ -31,40 +31,11 @@ end
 -- @param string? text label text
 -- @return string text label ending with a colon
 local function ensureTrailingColon(text)
-    local normalized = tostring(text or ""):gsub("%s*:%s*$", "")
+    local normalized = tostring(text or ""):gsub("%s+$", "")
+    if normalized:find(":$") ~= nil then
+        return normalized
+    end
     return normalized .. ":"
-end
-
----Tells whether the mobile workshop accepts the selected procedure at the vehicle maintainability
--- @param table dialog dialog instance
--- @return boolean isAllowed true outside the mobile workshop or when restrictions are off
-local function getMobileWorkshopAvailability(dialog)
-    local vehicle = dialog ~= nil and dialog.vehicle or nil
-    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    local workshopType = RMS_WorkshopDialog.INSTANCE ~= nil and RMS_WorkshopDialog.INSTANCE.workshopType or (spec ~= nil and spec.workshopType or nil)
-
-    if vehicle == nil or spec == nil or workshopType ~= RealisticMechanicalSystems.WORKSHOP.MOBILE then
-        return true
-    end
-
-    if not RMS_Config.WORKSHOP.MOBILE_WORKSHOP_RESTRICTIONS_ENABLED then
-        return true
-    end
-
-    local serviceKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.STATUS, dialog.maintenanceType)
-    local optionKey
-
-    if dialog.maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
-        optionKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.INSPECTION_TYPES, dialog.selectedOptionOne)
-    elseif dialog.maintenanceType == RealisticMechanicalSystems.STATUS.OVERHAUL then
-        optionKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.OVERHAUL_TYPES, dialog.selectedOptionOne)
-    end
-
-    local limits = RMS_Config.WORKSHOP.MOBILE_WORKSHOP_SERVICES_BY_MAINTAINABILITY
-    local requiredMaintainability = limits ~= nil and serviceKey ~= nil and optionKey ~= nil and limits[serviceKey] ~= nil and limits[serviceKey][optionKey] or 0
-    local currentMaintainability = spec.maintainability or 0
-
-    return currentMaintainability >= requiredMaintainability
 end
 
 ---Tells whether the selected workshop is currently open
@@ -188,12 +159,20 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
         end
     end
 
-    local isAllowedInMobileWorkshop = getMobileWorkshopAvailability(self)
+    local workshopType = RMS_WorkshopDialog.INSTANCE ~= nil and RMS_WorkshopDialog.INSTANCE.workshopType or spec.workshopType
+    local isAllowedInMobileWorkshop = RMS_FluidWorkshop.getMobileWorkshopAvailability(
+        self.vehicle,
+        self.maintenanceType,
+        workshopType,
+        self.selectedOptionOne
+    )
     local isWorkshopOpen = getSelectedWorkshopAvailability(self)
 
     -- price, duration, finishtime
-    local workshopType = RMS_WorkshopDialog.INSTANCE ~= nil and RMS_WorkshopDialog.INSTANCE.workshopType or spec.workshopType
-    local priceValue = g_i18n:formatMoney(self.vehicle:getServicePrice(self.maintenanceType, self.selectedOptionOne, self.selectedOptionTwo, self.selectedOptionThree, workshopType), 0, true, false)
+    local servicePrice = RMS_FluidWorkshop.getTransactionPrice(self.vehicle, self.maintenanceType, workshopType, self.selectedOptionOne, self.selectedOptionTwo, self.selectedOptionThree)
+    local priceValue = servicePrice ~= nil
+        and g_i18n:formatMoney(servicePrice, 0, true, false)
+        or g_i18n:getText("rms_fluid_service_price_unavailable")
     local durationValue = ""
     if RMS_Config.MAINTENANCE.INSTANT_INSPECTION and  self.maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
         durationValue = g_i18n:getText("rms_option_menu_duration_instant")
@@ -207,6 +186,19 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
         {title = ensureTrailingColon(g_i18n:getText("rms_option_menu_duration_text")), value = durationValue},
         {title = ensureTrailingColon(g_i18n:getText("rms_option_menu_finish_time_text")), value = finishTimeValue}
     }
+    local requirements = RMS_FluidWorkshop.getTransactionRequirements(
+        self.vehicle,
+        self.maintenanceType,
+        self.selectedOptionOne,
+        self.selectedOptionTwo
+    )
+    local requirementsText = RMS_FluidWorkshop.formatTransactionRequirements(requirements)
+    if requirementsText ~= "" then
+        table.insert(self.serviceInfoData, {
+            title = ensureTrailingColon(g_i18n:getText(RMS_FluidWorkshop.getRequirementsTextKey(workshopType))),
+            value = requirementsText
+        })
+    end
 
     self.serviceInfoTable:setDataSource(self)
     self.serviceInfoTable:setDelegate(self)
@@ -242,13 +234,19 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
     
 
     -- option three
+    local optionThreeDisclaimerText
     if self.maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
         self.optionThreeText:setText(g_i18n:getText("rms_option_menu_perform_repair"))
-        self.optionThreeDisclaimer:setText(g_i18n:getText("rms_option_menu_option_three_disclaimer_repair_after_detection"))
+        optionThreeDisclaimerText = g_i18n:getText("rms_option_menu_option_three_disclaimer_repair_after_detection")
     else
         self.optionThreeText:setText(g_i18n:getText("rms_option_menu_perform_renew_paint"))
-        self.optionThreeDisclaimer:setText(g_i18n:getText("rms_option_menu_option_three_disclaimer_overhaul_repaint"))
+        optionThreeDisclaimerText = g_i18n:getText("rms_option_menu_option_three_disclaimer_overhaul_repaint")
     end
+
+    if self.selectedOptionThree and self.maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
+        optionThreeDisclaimerText = optionThreeDisclaimerText .. " " .. g_i18n:getText("rms_option_menu_follow_up_separate_transaction")
+    end
+    self.optionThreeDisclaimer:setText(optionThreeDisclaimerText)
 
     if self.startServiceButton ~= nil then
         self.startServiceButton:setDisabled(not isAllowedInMobileWorkshop or not isWorkshopOpen)
@@ -272,15 +270,24 @@ end
 
 ---Starts the service directly on the server, sends a request from a client, after a money check
 function RMS_MaintenanceTwoOptionsDialog:onClickStartService()
-    if not getMobileWorkshopAvailability(self) or not getSelectedWorkshopAvailability(self) then
+    local vehicle = self.vehicle
+    local workshopType = RMS_WorkshopDialog.INSTANCE.workshopType
+    if not RMS_FluidWorkshop.getMobileWorkshopAvailability(
+        vehicle,
+        self.maintenanceType,
+        workshopType,
+        self.selectedOptionOne
+    ) or not getSelectedWorkshopAvailability(self) then
         return
     end
 
-    local vehicle = self.vehicle
-    local workshopType = RMS_WorkshopDialog.INSTANCE.workshopType
     local spec = vehicle.spec_RealisticMechanicalSystems
     
-    local price = vehicle:getServicePrice(self.maintenanceType, self.selectedOptionOne, self.selectedOptionTwo, self.selectedOptionThree, workshopType)
+    local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, self.maintenanceType, workshopType, self.selectedOptionOne, self.selectedOptionTwo, self.selectedOptionThree)
+    if price == nil then
+        RMS_FluidWorkshop.showResult(RMS_FluidWorkshop.RESULT.PRICE_UNAVAILABLE)
+        return
+    end
     
     if g_currentMission:getMoney() < price then
         InfoDialog.show(g_i18n:getText("shop_messageNotEnoughMoneyToBuy"))
@@ -288,11 +295,19 @@ function RMS_MaintenanceTwoOptionsDialog:onClickStartService()
     end
     
     if g_server ~= nil then
-        spec.serviceOptionOne = self.selectedOptionOne
-        spec.serviceOptionTwo = self.selectedOptionTwo
-        spec.serviceOptionThree = self.selectedOptionThree
-        vehicle:initService(self.maintenanceType, workshopType, self.selectedOptionOne, self.selectedOptionTwo, self.selectedOptionThree)
-        g_currentMission:addMoney(-1 * price, vehicle:getOwnerFarmId(), MoneyType.VEHICLE_RUNNING_COSTS, true, true)
+        local started, result = RMS_FluidWorkshop.tryStartService(
+            vehicle,
+            g_workshopScreen.sellingPoint,
+            self.maintenanceType,
+            workshopType,
+            self.selectedOptionOne,
+            self.selectedOptionTwo,
+            self.selectedOptionThree
+        )
+        if not started then
+            RMS_FluidWorkshop.showResult(result)
+            return
+        end
         RMS_VehicleChangeStatusEvent.send(vehicle)
     else
         RMS_ServiceRequestEvent.send(vehicle, self.maintenanceType, workshopType, self.selectedOptionOne, self.selectedOptionTwo, self.selectedOptionThree)

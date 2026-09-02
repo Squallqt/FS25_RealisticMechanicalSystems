@@ -512,6 +512,12 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_exhaustSmokeIntensity_label"),
         g_i18n:getText("rms_exhaustSmokeIntensity_tooltip")
     )
+    page.rmsExhaustSmokeDetail = RMS_SettingsPage:addMultiTextOption(
+        page, "onExhaustSmokeDetailChanged",
+        RMS_SettingsPage.steps.exhaustSmokeDetail.texts,
+        g_i18n:getText("rms_exhaustSmokeDetail_label"),
+        g_i18n:getText("rms_exhaustSmokeDetail_tooltip")
+    )
 
     RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_ws_header_title"))
 
@@ -916,6 +922,7 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     setIndex(currentPage.rmsAiWorkerMinSpeed, steps.aiWorkerMinSpeed.values, pending.aiWorkerMinSpeed)
     setIndex(currentPage.rmsDrivetrainDiffLockReleaseSpeed, steps.diffLockReleaseSpeed.values, pending.drivetrainDiffLockReleaseSpeed)
     setIndex(currentPage.rmsExhaustSmokeIntensity, steps.exhaustSmokeIntensity.values, pending.exhaustSmokeIntensity)
+    setIndex(currentPage.rmsExhaustSmokeDetail, steps.exhaustSmokeDetail.values, RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL)
 
     if tutorialOption ~= nil then
         tutorialOption:setIsChecked(pending.tutorialMode, false, false)
@@ -1015,6 +1022,14 @@ end
 function RMS_SettingsPage:onExhaustSmokeIntensityChanged(state)
     getPendingConfig().exhaustSmokeIntensity = RMS_SettingsPage.steps.exhaustSmokeIntensity.values[state]
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
+    refreshCurrentSettingsPage()
+end
+
+---Stores the plume detail the player wants on their own machine, outside the shared settings
+-- @param integer state selected step index
+function RMS_SettingsPage:onExhaustSmokeDetailChanged(state)
+    RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL = RMS_SettingsPage.steps.exhaustSmokeDetail.values[state]
+    RMS_Config.saveLocalSettings()
     refreshCurrentSettingsPage()
 end
 
@@ -1770,6 +1785,17 @@ function RMS_SettingsPage:generateAllSteps()
         end
         self.steps.radiatorDirtInfluence = data
     end
+
+    -- Exhaust plume detail, owned by the player and counted as the highest step drawn
+    self.steps.exhaustSmokeDetail = {
+        values = {4, 3, 2, 0},
+        texts = {
+            g_i18n:getText("rms_exhaustSmokeDetail_full"),
+            g_i18n:getText("rms_exhaustSmokeDetail_reduced"),
+            g_i18n:getText("rms_exhaustSmokeDetail_minimal"),
+            g_i18n:getText("rms_exhaustSmokeDetail_none")
+        }
+    }
 
     -- Exhaust Smoke Intensity: 100% to 300%.
     self.steps.exhaustSmokeIntensity = createSteps(1.0, 9, 0.25, function(v)

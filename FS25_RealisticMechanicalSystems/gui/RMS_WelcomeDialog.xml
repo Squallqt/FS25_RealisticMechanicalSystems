@@ -15,6 +15,7 @@
 
         <BoxLayout profile="fs25_dialogButtonBox">
             <Button profile="buttonBack" text="$l10n_rms_tutorial_welcome_disable_button" onClick="onClickDisableTips" />
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
             <Button profile="buttonOK" text="$l10n_rms_tutorial_welcome_enable_button" onClick="onClickEnableTips" focusInit="onOpen" />
         </BoxLayout>
     </GuiElement>

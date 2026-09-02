@@ -134,7 +134,7 @@ local function calculateAlternatorOutput(vehicle, isMotorStarted, iLoads, batter
         end
     end
 
-    if RMS_Config.DEBUG then
+    if RMS_Utils.getIsDebugDataWanted(vehicle) then
         local dbg = spec.debugData.battery
         dbg.iAltAvail = iAltAvail or 0
         dbg.iAltRaw = iAltRaw or 0
@@ -223,7 +223,7 @@ local function calculateCurrentLoadAmps(vehicle, isMotorStarted, envTemp)
     -- total
     local iLoads = baseLoadA + lightsLoadA + cabFanA + winterHeaterA + crankingA + preheatA + pulseA
 
-    if RMS_Config.DEBUG then
+    if RMS_Utils.getIsDebugDataWanted(vehicle) then
         local dbg = spec.debugData.battery
         dbg.iLoads = iLoads
         dbg.baseLoadA = baseLoadA
@@ -462,7 +462,7 @@ function RMS_Electrical.updateBatteryTemperatureC(vehicle, dtS, ambientC, engine
     -- safety clamp
     spec.batteryTempC = math.clamp(tempC, ambientC, 85)
 
-    if RMS_Config.DEBUG and spec.debugData ~= nil and spec.debugData.battery ~= nil then
+    if RMS_Utils.getIsDebugDataWanted(vehicle) and spec.debugData ~= nil and spec.debugData.battery ~= nil then
         local dbg = spec.debugData.battery
         dbg.dtS = dtS
         dbg.ambientC = ambientC
@@ -783,8 +783,13 @@ local function ensureBatteryDebugData(spec)
 end
 
 ---Clears the external power debug values
+-- @param table vehicle vehicle
 -- @param table spec vehicle spec
-local function resetExternalPowerDebug(spec)
+local function resetExternalPowerDebug(vehicle, spec)
+    if not RMS_Utils.getIsDebugDataWanted(vehicle) then
+        return
+    end
+
     local dbg = ensureBatteryDebugData(spec)
     dbg.isValidConnection = false
     dbg.distance = 0
@@ -828,7 +833,7 @@ local function commitBatteryContext(vehicle, ctx, dt)
     end
 
     local spec = ctx.spec
-    local dbg = ensureBatteryDebugData(spec)
+    local dbg = RMS_Utils.getIsDebugDataWanted(vehicle) and ensureBatteryDebugData(spec) or nil
 
     local capacityAh = sanitizeNumber(ctx.capacityAh, 0.01, 0.01, 10000)
     spec.batteryChargeAh = sanitizeNumber(ctx.chargeAh, 0, 0, capacityAh)
@@ -858,34 +863,36 @@ local function commitBatteryContext(vehicle, ctx, dt)
         30
     )
 
-    dbg.soc = spec.batterySoc or 0
-    dbg.chargeAh = spec.batteryChargeAh or 0
-    dbg.capacityNominalAh = ctx.nominalCapacityAh or spec.batteryCapacityAh or 0
-    dbg.capacityFactor = ctx.capF or 1
-    dbg.capacityUsableAh = ctx.usableCapacityAh or ctx.capacityAh or 0
-    dbg.capacityEffectiveAh = ctx.capacityAh or 0
-    dbg.batteryHealth = ctx.batteryHealth or spec.batteryHealth or 0
-    dbg.iNetRaw = ctx.iNetA or ((ctx.iAltAvail or 0) - (ctx.iLoads or 0))
-    dbg.iNet = dbg.iNetRaw
-    dbg.dAh = ctx.dAhTotal or (dbg.iNet * ((ctx.dtS or 0) / 3600))
-    dbg.ocvV = spec.batteryOpenCircuitVoltageV or 0
-    dbg.batteryTerminalV = spec.rawBatteryTerminalVoltageV or 0
-    dbg.rawBatteryTerminalVoltageV = spec.rawBatteryTerminalVoltageV or 0
-    dbg.batteryTerminalVoltageV = spec.batteryTerminalVoltageV or 0
-    dbg.systemVoltageV = spec.rawSystemVoltageV or 0
-    dbg.rawSystemVoltageV = spec.rawSystemVoltageV or 0
-    dbg.systemVoltageVSmoothed = spec.systemVoltageV or 0
+    if dbg then
+        dbg.soc = spec.batterySoc or 0
+        dbg.chargeAh = spec.batteryChargeAh or 0
+        dbg.capacityNominalAh = ctx.nominalCapacityAh or spec.batteryCapacityAh or 0
+        dbg.capacityFactor = ctx.capF or 1
+        dbg.capacityUsableAh = ctx.usableCapacityAh or ctx.capacityAh or 0
+        dbg.capacityEffectiveAh = ctx.capacityAh or 0
+        dbg.batteryHealth = ctx.batteryHealth or spec.batteryHealth or 0
+        dbg.iNetRaw = ctx.iNetA or ((ctx.iAltAvail or 0) - (ctx.iLoads or 0))
+        dbg.iNet = dbg.iNetRaw
+        dbg.dAh = ctx.dAhTotal or (dbg.iNet * ((ctx.dtS or 0) / 3600))
+        dbg.ocvV = spec.batteryOpenCircuitVoltageV or 0
+        dbg.batteryTerminalV = spec.rawBatteryTerminalVoltageV or 0
+        dbg.rawBatteryTerminalVoltageV = spec.rawBatteryTerminalVoltageV or 0
+        dbg.batteryTerminalVoltageV = spec.batteryTerminalVoltageV or 0
+        dbg.systemVoltageV = spec.rawSystemVoltageV or 0
+        dbg.rawSystemVoltageV = spec.rawSystemVoltageV or 0
+        dbg.systemVoltageVSmoothed = spec.systemVoltageV or 0
 
-    if ctx.termLoadDropV ~= nil then dbg.termLoadDropV = ctx.termLoadDropV end
-    if ctx.termChargeRiseV ~= nil then dbg.termChargeRiseV = ctx.termChargeRiseV end
-    if ctx.termDischargeA ~= nil then dbg.termDischargeA = ctx.termDischargeA end
-    if ctx.termChargeA ~= nil then dbg.termChargeA = ctx.termChargeA end
-    if ctx.regulatedVoltageV ~= nil then dbg.regulatedVoltageV = ctx.regulatedVoltageV end
-    if ctx.altDeficitA ~= nil then dbg.altDeficitA = ctx.altDeficitA end
-    if ctx.altSagV ~= nil then dbg.altSagV = ctx.altSagV end
-    if ctx.altRegulationHealth ~= nil then dbg.altRegulationHealth = ctx.altRegulationHealth end
-    if ctx.altHealthDeficitMult ~= nil then dbg.altHealthDeficitMult = ctx.altHealthDeficitMult end
-    if ctx.altChargeHeadroomV ~= nil then dbg.altChargeHeadroomV = ctx.altChargeHeadroomV end
+        if ctx.termLoadDropV ~= nil then dbg.termLoadDropV = ctx.termLoadDropV end
+        if ctx.termChargeRiseV ~= nil then dbg.termChargeRiseV = ctx.termChargeRiseV end
+        if ctx.termDischargeA ~= nil then dbg.termDischargeA = ctx.termDischargeA end
+        if ctx.termChargeA ~= nil then dbg.termChargeA = ctx.termChargeA end
+        if ctx.regulatedVoltageV ~= nil then dbg.regulatedVoltageV = ctx.regulatedVoltageV end
+        if ctx.altDeficitA ~= nil then dbg.altDeficitA = ctx.altDeficitA end
+        if ctx.altSagV ~= nil then dbg.altSagV = ctx.altSagV end
+        if ctx.altRegulationHealth ~= nil then dbg.altRegulationHealth = ctx.altRegulationHealth end
+        if ctx.altHealthDeficitMult ~= nil then dbg.altHealthDeficitMult = ctx.altHealthDeficitMult end
+        if ctx.altChargeHeadroomV ~= nil then dbg.altChargeHeadroomV = ctx.altChargeHeadroomV end
+    end
 end
 
 ---Solves one jump start pair, balancing the two batteries and committing both contexts
@@ -1201,7 +1208,7 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
         return
     end
 
-    resetExternalPowerDebug(spec)
+    resetExternalPowerDebug(self, spec)
 
     local connectionVehicle = normalizeExternalPowerConnection(spec.externalPowerConnection)
     local connectionSpec = connectionVehicle ~= nil and connectionVehicle.spec_RealisticMechanicalSystems or nil
@@ -1226,7 +1233,7 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
         and (connectionVehicle.rootNode == nil or entityExists(connectionVehicle.rootNode)) then
 
         ensureBatteryDebugData(connectionSpec)
-        resetExternalPowerDebug(connectionSpec)
+        resetExternalPowerDebug(connectionVehicle, connectionSpec)
 
         local selfCtx = buildBatteryContext(self, dtS)
         local connectionCtx = buildBatteryContext(connectionVehicle, dtS)
@@ -1345,9 +1352,11 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
 
     commitBatteryContext(self, ctx, dt)
 
-    local dbg = ensureBatteryDebugData(spec)
-    dbg.rIntHealthFactor = healthRintMult
-    dbg.termIsCranking = isCranking and 1 or 0
+    if RMS_Utils.getIsDebugDataWanted(self) then
+        local dbg = ensureBatteryDebugData(spec)
+        dbg.rIntHealthFactor = healthRintMult
+        dbg.termIsCranking = isCranking and 1 or 0
+    end
 end
 
 ---Tells whether two vehicles may be linked by jumper cables

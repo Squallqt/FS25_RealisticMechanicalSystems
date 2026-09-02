@@ -140,6 +140,14 @@ function RMS_Preheat.getRequiredDurationMs(vehicle)
     return 0
 end
 
+---Tells whether failed glow plugs may affect the ability of a cold diesel to start
+-- @param table? vehicle vehicle
+-- @return boolean isRequired true below the configured start-assistance temperature
+function RMS_Preheat.isColdStartAssistanceRequired(vehicle)
+    return RMS_Preheat.isDieselVehicle(vehicle)
+        and RMS_Preheat.getEngineTemperatureC(vehicle) < RMS_Config.PREHEAT.START_ASSIST_TEMPERATURE_C
+end
+
 ---Tells whether the glow plugs are currently heating
 -- @param table? vehicle vehicle
 -- @return boolean isHeating true while preheating
@@ -192,7 +200,9 @@ function RMS_Preheat.shouldApplyGlowPlugHardStart(vehicle)
         return false
     end
 
-    return spec.preheatWasRequired == true and RMS_Preheat.getGlowPlugFailureSeverity(vehicle) > 0
+    return spec.preheatWasRequired == true
+        and RMS_Preheat.isColdStartAssistanceRequired(vehicle)
+        and RMS_Preheat.getGlowPlugFailureSeverity(vehicle) > 0
 end
 
 ---Starts the preheat sequence, switching the motor to ignition and choosing lamp test or preheating
@@ -225,6 +235,10 @@ function RMS_Preheat.requestStart(vehicle)
         or spec.preheatState == RMS_Preheat.STATE.PREHEATING
         or spec.preheatState == RMS_Preheat.STATE.READY then
         return true
+    end
+
+    if vehicle.getCanMotorRun ~= nil and not vehicle:getCanMotorRun() then
+        return false
     end
 
     local requiredDurationMs = RMS_Preheat.getRequiredDurationMs(vehicle)
@@ -355,7 +369,9 @@ function RMS_Preheat.updateClientUx(vehicle)
     if state == RMS_Preheat.STATE.PREHEATING then
         g_currentMission:showBlinkingWarning(g_i18n:getText("rms_preheat_ignition_message"), 2000)
     elseif state == RMS_Preheat.STATE.FAILED then
-        local messageKey = spec.preheatWasRequired and RMS_Preheat.getGlowPlugFailureSeverity(vehicle) >= 4
+        local messageKey = spec.preheatWasRequired
+            and RMS_Preheat.isColdStartAssistanceRequired(vehicle)
+            and RMS_Preheat.getGlowPlugFailureSeverity(vehicle) >= 4
             and "rms_preheat_system_failure_message"
             or "rms_preheat_start_failed_message"
         g_currentMission:showBlinkingWarning(g_i18n:getText(messageKey), 4000)
@@ -404,11 +420,16 @@ function RMS_Preheat.update(vehicle, dt)
 
         if spec.preheatLampTestRemainingMs <= 0 and spec.preheatRemainingMs <= 0 then
             local failureSeverity = RMS_Preheat.getGlowPlugFailureSeverity(vehicle)
-            spec.preheatColdStartFaultSeverity = spec.preheatWasRequired and failureSeverity or 0
+            spec.preheatColdStartFaultSeverity = spec.preheatWasRequired
+                and RMS_Preheat.isColdStartAssistanceRequired(vehicle)
+                and failureSeverity
+                or 0
             spec.preheatAutomaticCrank = true
             spec.preheatAutomaticCrankElapsedMs = 0
             setState(vehicle, RMS_Preheat.STATE.READY)
-            vehicle:startMotor(false)
+            if vehicle.getCanMotorRun == nil or vehicle:getCanMotorRun() then
+                vehicle:startMotor(false)
+            end
         end
     elseif spec.preheatState == RMS_Preheat.STATE.READY and spec.preheatAutomaticCrank then
         spec.preheatAutomaticCrankElapsedMs = (spec.preheatAutomaticCrankElapsedMs or 0) + dt

@@ -216,6 +216,11 @@ local function buildServiceRow(vehicle)
     end
 
     baseRow.procedure = currentState ~= nil and g_i18n:getText(currentState) or ""
+    local workshopTypeKey = spec ~= nil and RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, spec.workshopType) or nil
+    local workshopTypeText = workshopTypeKey ~= nil and g_i18n:getText(spec.workshopType) or ""
+    if workshopTypeText ~= "" then
+        baseRow.procedure = baseRow.procedure .. " · " .. workshopTypeText
+    end
     baseRow.remainingTime = RMS_Utils.formatDuration(duration)
     baseRow.finishTime = RMS_Utils.formatFinishTime(finishTime, daysToAdd)
     baseRow.serviceCost = g_i18n:formatMoney(pendingServicePrice or 0, 0, true, false)

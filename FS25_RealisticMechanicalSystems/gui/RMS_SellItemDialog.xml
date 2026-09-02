@@ -28,6 +28,7 @@
 
         <BoxLayout profile="fs25_dialogButtonBox">
             <Button profile="buttonOK" text="$l10n_button_yes" onClick="onClickYes"/>
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
             <Button profile="buttonBack" text="$l10n_button_no" onClick="onClickNo"/>
         </BoxLayout>
     </GuiElement>

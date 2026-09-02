@@ -925,6 +925,30 @@ function RealisticMechanicalSystems.ConsoleCommands:reinitializeVehicle()
     ))
 end
 
+---Re-resolves physical fluid capacities while preserving absolute liters
+function RealisticMechanicalSystems.ConsoleCommands:reinitializeFluidCapacities()
+    if not g_currentMission:getIsServer() then
+        local vehicle = self:getTargetVehicle()
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("reinitializeFluidCapacities", nil, nil, vehicle) end
+        return
+    end
+
+    local vehicle = self:getTargetVehicle()
+    if not vehicle then return end
+
+    RMS_Fluids.reinitializeVehicleCapacities(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    print(string.format(
+        "RMS: Re-resolved physical fluid capacities for '%s' from %s: engine=%.2f L, coolant=%.2f L, transmission=%.2f L, hydraulic=%.2f L.",
+        vehicle:getFullName(),
+        tostring(spec.fluidCapacitySource or "unknown"),
+        RMS_Fluids.getCapacity(vehicle, "engineOil"),
+        RMS_Fluids.getCapacity(vehicle, "coolant"),
+        RMS_Fluids.getCapacity(vehicle, "transmissionOil"),
+        RMS_Fluids.getCapacity(vehicle, "hydraulicFluid")
+    ))
+end
+
 ---Starts a service, usage rms_startService <type> [count]
 -- @param string? rawArgs console arguments
 -- @param string? rawArgTwo second console argument
@@ -1014,13 +1038,27 @@ function RealisticMechanicalSystems.ConsoleCommands:startMaintance(rawArgs, rawA
         optionThree = false
     end
 
-    vehicle:initService(maintenanceType, RealisticMechanicalSystems.WORKSHOP.OWN, optionOne, optionTwo, optionThree)
+    local sellingPoint, workshopType = RMS_FluidWorkshop.findCurrentSellingPoint(vehicle)
+    if sellingPoint == nil then
+        print(string.format("RMS Error: Vehicle '%s' is not inside a workshop.", vehicle:getFullName()))
+        return
+    end
 
-    if spec.currentState == maintenanceType and (spec.maintenanceTimer or 0) > 0 then
+    local started, result = RMS_FluidWorkshop.tryStartService(
+        vehicle,
+        sellingPoint,
+        maintenanceType,
+        workshopType,
+        optionOne,
+        optionTwo,
+        optionThree
+    )
+
+    if started then
         local finishTime, days = vehicle:getServiceFinishTime()
         print(string.format("RMS: Started '%s' for '%s'. Remaining time: %.1f sec. Finishes in %d day(s) at %.2f.", maintenanceType, vehicle:getFullName(), spec.maintenanceTimer / 1000, days or 0, finishTime or 0))
     else
-        print(string.format("RMS Error: Failed to start '%s' for '%s'.", maintenanceType, vehicle:getFullName()))
+        print(string.format("RMS Error: Failed to start '%s' for '%s' (%s).", maintenanceType, vehicle:getFullName(), tostring(result)))
     end
 end
 
@@ -1759,6 +1797,7 @@ addConsoleCommand("rms_setSystemStressMultiplier", "Sets stress accumulation mul
 addConsoleCommand("rms_setService", "Sets vehicle service. Usage: rms_setService [0.0-1.0]", "setService", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_resetVehicle", "Resets vehicle state.", "resetVehicle", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_reinitializeVehicle", "Reinitializes vehicle from vanilla resale price logic.", "reinitializeVehicle", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_reinitializeFluidCapacities", "Re-resolves physical fluid capacities while preserving liters.", "reinitializeFluidCapacities", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_startService", "Starts service. Usage: rms_startService <type> [count]", "startMaintance", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_finishService", "Instantly finishes current service.", "finishMaintance", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_getServiceState", "Prints current service/workshop state variables.", "getServiceState", RealisticMechanicalSystems.ConsoleCommands)

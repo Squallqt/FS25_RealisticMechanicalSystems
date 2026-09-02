@@ -179,7 +179,7 @@
         <size value="46px 46px"/>
         <imageColor value="$preset_fs25_colorMainDark"/>
     </Profile>
-    <Profile name="rms_inspectionHeaderEdge" extends="fs25_lineSeparatorTopHighlighted" with="anchorTopStretchingX"/>
+    <Profile name="rms_inspectionHeaderEdge" extends="fs25_lineSeparatorTopHighlighted" with="anchorBottomLeft"/>
     <Profile name="rms_inspectionVerdictAccent" extends="baseReference" with="anchorMiddleLeft">
         <imageSliceId value="gui.rectangle_center"/>
         <imageColor value="$preset_fs25_colorMainLight"/>
@@ -279,10 +279,6 @@
         <textBold value="true"/>
         <textAlignment value="right"/>
     </Profile>
-    <Profile name="rms_inspectionRowAccent" extends="baseReference" with="anchorTopLeft">
-        <imageSliceId value="gui.rectangle_center"/>
-        <imageColor value="$preset_fs25_colorGreyDark_50"/>
-    </Profile>
     <Profile name="rms_fluidGaugeTrack" extends="baseReference" with="anchorTopLeft">
         <imageSliceId value="gui.colorPreset"/>
         <imageColor value="$preset_fs25_colorGrey"/>
@@ -290,13 +286,6 @@
     <Profile name="rms_fluidGaugeFill" extends="baseReference" with="anchorTopLeft">
         <imageSliceId value="gui.colorPreset"/>
         <imageColor value="$preset_fs25_colorMainLight"/>
-    </Profile>
-    <Profile name="rms_fluidGaugeMark" extends="baseReference" with="anchorTopLeft">
-        <imageSliceId value="gui.rectangle_center"/>
-        <imageColor value="$preset_colorWhite"/>
-    </Profile>
-    <Profile name="rms_fluidGaugeGuide" extends="rms_fluidGaugeMark">
-        <imageColor value="$preset_fs25_colorGreyLight_50"/>
     </Profile>
     <Profile name="rms_inspectionObservationsLayout" extends="rms_inspectionBlock">
         <flowDirection value="vertical"/>
@@ -315,6 +304,14 @@
         <textMaxNumLines value="2"/>
         <textLayoutMode value="overflow"/>
         <textAutoHeight value="true"/>
+        <textColor value="$preset_fs25_colorMainLight"/>
+    </Profile>
+    <Profile name="rms_inspectionNoFindingsText" extends="fs25_dialogText" with="anchorTopLeft">
+        <textSize value="18px"/>
+        <textAlignment value="center"/>
+        <textVerticalAlignment value="middle"/>
+        <textMaxNumLines value="1"/>
+        <textLayoutMode value="resize"/>
         <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
     <Profile name="rms_tableRowCellLeftUpper" extends="baseReference" with="anchorStretchingYLeft">

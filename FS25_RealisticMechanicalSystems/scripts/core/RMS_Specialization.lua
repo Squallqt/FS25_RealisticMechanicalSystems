@@ -289,7 +289,9 @@ for _, alias in pairs(RealisticMechanicalSystems.FACTOR_STATS_ALIASES) do
     RealisticMechanicalSystems.FACTOR_STATS_KEYS[alias] = true
 end
 
-local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
+local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
+    and RMS_Utils.createLogger("[RMS_SPEC]")
+    or function() end
 
 ---Returns the operating hours of a vehicle
 -- @param table? vehicle vehicle
@@ -314,6 +316,36 @@ local function getVehicleOperatingHours(vehicle)
 end
 RealisticMechanicalSystems.getVehicleOperatingHours = getVehicleOperatingHours
 
+---Returns one normalized wear factor statistics entry
+-- @param table spec vehicle spec
+-- @param string systemKey system key
+-- @return table? stats factor statistics entry
+local function ensureFactorStatsEntry(spec, systemKey)
+    if spec == nil or systemKey == nil then
+        return nil
+    end
+    if type(spec.factorStats) ~= "table" then
+        spec.factorStats = {}
+    end
+
+    if type(spec.factorStats[systemKey]) ~= "table" then
+        spec.factorStats[systemKey] = {}
+    end
+
+    local stats = spec.factorStats[systemKey]
+    stats.total = tonumber(stats.total) or 0
+    stats.stress = tonumber(stats.stress) or 0
+    stats._prevStress = tonumber(stats._prevStress) or 0
+    stats._avgStress = tonumber(stats._avgStress) or 0
+    stats.operatingHours = tonumber(stats.operatingHours)
+    if stats.operatingHours == nil then
+        stats.operatingHours = -1
+    end
+
+    return stats
+end
+RealisticMechanicalSystems.ensureFactorStatsEntry = ensureFactorStatsEntry
+
 ---Returns the wear factor statistics of the spec, creating the missing system entries
 -- @param table spec vehicle spec
 -- @param table vehicle vehicle
@@ -328,19 +360,7 @@ local function ensureFactorStats(spec, vehicle)
     end
 
     for systemKey, _ in pairs(spec.systems or {}) do
-        if type(spec.factorStats[systemKey]) ~= "table" then
-            spec.factorStats[systemKey] = {}
-        end
-
-        local stats = spec.factorStats[systemKey]
-        stats.total = tonumber(stats.total) or 0
-        stats.stress = tonumber(stats.stress) or 0
-        stats._prevStress = tonumber(stats._prevStress) or 0
-        stats._avgStress = tonumber(stats._avgStress) or 0
-        stats.operatingHours = tonumber(stats.operatingHours)
-        if stats.operatingHours == nil then
-            stats.operatingHours = -1
-        end
+        ensureFactorStatsEntry(spec, systemKey)
     end
 
     return spec.factorStats
@@ -434,8 +454,8 @@ end
 RealisticMechanicalSystems.getTransmissionType = getTransmissionType
 RealisticMechanicalSystems.getTransmissionNameFromXML = getTransmissionNameFromXML
 
-local hasCVTAddon = RMS_Utils.hasCVTAddon
-local hasCVTTransmission = RMS_Utils.hasCVTTransmission
+local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
+local hasCVTTransmission = RMS_Utils ~= nil and RMS_Utils.hasCVTTransmission or function() return false end
 
 ---Recomputes whether the vehicle is excluded, from the user flag and the classification rules
 -- @param table spec vehicle spec
@@ -506,6 +526,7 @@ function RealisticMechanicalSystems:setRMSUserExcluded(isExcluded, noEventSend)
         if self.isClient then
             RMS_Exhaust.reset(self)
         end
+        RMS_Drivetrain.releaseControl(self)
         spec.pendingSideNotifications = {}
     else
         spec.lubricationUsedThisPeriod = true
@@ -541,6 +562,111 @@ end
 RealisticMechanicalSystems.getSafeMissionTimeScale = getSafeMissionTimeScale
 
 local SYSTEM_SYNC_EPSILON = 0.001
+local OVERLOAD_AVERAGE_PERIOD_MS = 60000
+local OVERLOAD_WINDOW_COMPACT_THRESHOLD = 256
+local OVERLOAD_FACTOR_ALIASES_BY_SYSTEM = {
+    engine = { "mlf", "hmf", "lf" },
+    transmission = { "pof", "htf", "lf", "wsf", "hotf" }
+}
+
+---Clears the runtime-only rolling overload window
+-- @param table systemData factor statistics of one system
+local function resetOverloadAverage(systemData)
+    systemData._avgStress = 0
+    systemData._avgStressWindow = nil
+end
+
+---Adds one sample to the rolling overload average without rescanning the whole window
+-- @param table systemData factor statistics of one system
+-- @param float sampleDurationMs sample duration in milliseconds
+-- @param float sampleRatePerHour stress rate represented by the sample
+-- @return float average rolling stress rate over the configured period
+local function updateOverloadAverage(systemData, sampleDurationMs, sampleRatePerHour)
+    local window = systemData._avgStressWindow
+    if type(window) ~= "table" and sampleRatePerHour <= 0 then
+        resetOverloadAverage(systemData)
+        return 0
+    end
+
+    if type(window) ~= "table" then
+        window = {
+            samples = {},
+            head = 1,
+            tail = 0,
+            totalDurationMs = 0,
+            weightedSum = 0,
+            positiveSampleCount = 0
+        }
+        systemData._avgStressWindow = window
+    end
+
+    local samples = window.samples
+    local head = window.head
+    local tail = window.tail
+    local totalDurationMs = window.totalDurationMs
+    local weightedSum = window.weightedSum
+    local positiveSampleCount = window.positiveSampleCount
+
+    if sampleRatePerHour > 0 or head <= tail then
+        tail = tail + 1
+        samples[tail] = {
+            durationMs = sampleDurationMs,
+            ratePerHour = sampleRatePerHour
+        }
+        totalDurationMs = totalDurationMs + sampleDurationMs
+        weightedSum = weightedSum + sampleRatePerHour * sampleDurationMs
+        if sampleRatePerHour > 0 then
+            positiveSampleCount = positiveSampleCount + 1
+        end
+    end
+
+    while head <= tail and totalDurationMs > OVERLOAD_AVERAGE_PERIOD_MS do
+        local oldest = samples[head]
+        local oldestDurationMs = math.max(tonumber(oldest.durationMs) or 0, 0)
+        local oldestRatePerHour = tonumber(oldest.ratePerHour) or 0
+        local overflowMs = totalDurationMs - OVERLOAD_AVERAGE_PERIOD_MS
+
+        if oldestDurationMs <= overflowMs then
+            totalDurationMs = totalDurationMs - oldestDurationMs
+            weightedSum = weightedSum - oldestRatePerHour * oldestDurationMs
+            samples[head] = nil
+            head = head + 1
+            if oldestRatePerHour > 0 then
+                positiveSampleCount = positiveSampleCount - 1
+            end
+        else
+            oldest.durationMs = oldestDurationMs - overflowMs
+            totalDurationMs = totalDurationMs - overflowMs
+            weightedSum = weightedSum - oldestRatePerHour * overflowMs
+        end
+    end
+
+    if positiveSampleCount <= 0 or weightedSum <= 0 or totalDurationMs <= 0 then
+        resetOverloadAverage(systemData)
+        return 0
+    end
+
+    if head > OVERLOAD_WINDOW_COMPACT_THRESHOLD and head > tail / 2 then
+        local compactedSamples = {}
+        for index = head, tail do
+            compactedSamples[#compactedSamples + 1] = samples[index]
+        end
+        samples = compactedSamples
+        head = 1
+        tail = #samples
+    end
+
+    window.samples = samples
+    window.head = head
+    window.tail = tail
+    window.totalDurationMs = totalDurationMs
+    window.weightedSum = weightedSum
+    window.positiveSampleCount = positiveSampleCount
+
+    local average = math.max(weightedSum / OVERLOAD_AVERAGE_PERIOD_MS, 0)
+    systemData._avgStress = average
+    return average
+end
 
 ---Tells whether the vehicle may flag a sync group dirty right now
 -- @param table vehicle vehicle
@@ -570,9 +696,13 @@ RealisticMechanicalSystems.getSyncOperatingTime = getSyncOperatingTime
 -- @param table? breakdownsTable active breakdowns
 -- @return string serialized comparable representation
 local function serializeBreakdownsForDirtyCheck(breakdownsTable)
+    if type(breakdownsTable) ~= "table" or next(breakdownsTable) == nil then
+        return ""
+    end
+
     local parts = {}
 
-    for id, breakdown in pairs(breakdownsTable or {}) do
+    for id, breakdown in pairs(breakdownsTable) do
         local stage = math.max(math.floor(tonumber(breakdown.stage) or 1), 1)
         local visible = breakdown.isVisible and 1 or 0
         local selected = breakdown.isSelectedForRepair and 1 or 0
@@ -742,6 +872,16 @@ local function markFieldcareDirty(vehicle, spec)
         return false
     end
 
+    local fluidDataChanged = false
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        if syncFloatChanged(spec["_lastSyncFieldcare_capacity_" .. circuit], RMS_Fluids.getCapacity(vehicle, circuit), 0.001)
+            or syncFloatChanged(spec["_lastSyncFieldcare_compatibility_" .. circuit], RMS_Fluids.getCompatibility(vehicle, circuit), 0.0001) then
+            fluidDataChanged = true
+            break
+        end
+    end
+    local serializedLeakDebt = RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt)
+
     if syncFloatChanged(spec._lastSyncFieldcare_radiatorClogging, spec.radiatorClogging, 0.005) or
        syncFloatChanged(spec._lastSyncFieldcare_airFilterClogging, spec.airFilterClogging, 0.005) or
        syncFloatChanged(spec._lastSyncFieldcare_airFilterResidue, spec.airFilterResidue, 0.005) or
@@ -750,6 +890,8 @@ local function markFieldcareDirty(vehicle, spec)
        syncFloatChanged(spec._lastSyncFieldcare_coolantLevel, spec.coolantLevel, 0.005) or
        syncFloatChanged(spec._lastSyncFieldcare_transmissionOilLevel, spec.transmissionOilLevel, 0.005) or
        syncFloatChanged(spec._lastSyncFieldcare_hydraulicFluidLevel, spec.hydraulicFluidLevel, 0.005) or
+       fluidDataChanged or
+       spec._lastSyncFieldcare_leakDebt ~= serializedLeakDebt or
        spec._lastSyncFieldcare_inspectionSoundActive ~= spec.fieldInspectionSoundActive then
             RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
             spec._lastSyncFieldcare_radiatorClogging = spec.radiatorClogging
@@ -760,6 +902,11 @@ local function markFieldcareDirty(vehicle, spec)
             spec._lastSyncFieldcare_coolantLevel = spec.coolantLevel
             spec._lastSyncFieldcare_transmissionOilLevel = spec.transmissionOilLevel
             spec._lastSyncFieldcare_hydraulicFluidLevel = spec.hydraulicFluidLevel
+            for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+                spec["_lastSyncFieldcare_capacity_" .. circuit] = RMS_Fluids.getCapacity(vehicle, circuit)
+                spec["_lastSyncFieldcare_compatibility_" .. circuit] = RMS_Fluids.getCompatibility(vehicle, circuit)
+            end
+            spec._lastSyncFieldcare_leakDebt = serializedLeakDebt
             spec._lastSyncFieldcare_inspectionSoundActive = spec.fieldInspectionSoundActive
             return true
     end
@@ -1061,8 +1208,6 @@ function RealisticMechanicalSystems.initSpecialization()
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#realOperatingTime", "Real Operating Time")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#engineTemperature", "Engine Temperature")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionTemperature", "Transmission Temperature")
-        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#coldTransAbuseTimer", "Cold transmission abuse timer")
-        schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#coldTransAbuseDone", "Whether cold transmission damage was already applied during this cold period")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#batterySoc", "Battery State Of Charge")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#batteryTempC", "Battery Temperature")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#radiatorClogging", "Radiator clogging level")
@@ -1073,6 +1218,18 @@ function RealisticMechanicalSystems.initSpecialization()
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#coolantLevel", "Coolant level")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionOilLevel", "Transmission oil level")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#hydraulicFluidLevel", "Hydraulic fluid level")
+        schemaSavegame:register(XMLValueType.INT,    baseKey .. "#fluidCapacityVersion", "Fluid capacity model version")
+        schemaSavegame:register(XMLValueType.STRING, baseKey .. "#fluidCapacitySource", "Resolved fluid capacity source")
+        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#engineOilCapacity", "Engine oil capacity in liters")
+        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#coolantCapacity", "Coolant capacity in liters")
+        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionOilCapacity", "Transmission oil capacity in liters")
+        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#hydraulicFluidCapacity", "Hydraulic fluid capacity in liters")
+        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#engineOilCompatibility", "Engine oil mixture compatibility")
+        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#coolantCompatibility", "Coolant mixture compatibility")
+        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionOilCompatibility", "Transmission oil mixture compatibility")
+        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#hydraulicFluidCompatibility", "Hydraulic fluid mixture compatibility")
+        schemaSavegame:register(XMLValueType.STRING, baseKey .. "#fluidLeakLossDebt", "Unreplenished fluid loss by leak")
+        schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingFluidRequirements", "Physical fluid reserved for the running service")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#wetStackingLevel", "Wet stacking deposit level")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#lubricationLevel", "Lubrication level")
         schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#lubricationUsedThisPeriod", "Whether the vehicle was used during the current period")
@@ -1147,6 +1304,7 @@ function RealisticMechanicalSystems.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onDelete", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onLeaveVehicle", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", RealisticMechanicalSystems)
+    SpecializationUtil.registerEventListener(vehicleType, "onPostUpdate", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onPostUpdateTick", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onReadStream", RealisticMechanicalSystems)
@@ -1248,6 +1406,12 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "refillVehicleFluids", RMS_Consumptables.refillVehicleFluids)
     SpecializationUtil.registerFunction(vehicleType, "topUpRepairedLeaks", RMS_Consumptables.topUpRepairedLeaks)
     SpecializationUtil.registerFunction(vehicleType, "getMissingFluidShare", RMS_Consumptables.getMissingFluidShare)
+    SpecializationUtil.registerFunction(vehicleType, "getFluidCapacity", RMS_Consumptables.getFluidCapacity)
+    SpecializationUtil.registerFunction(vehicleType, "getFluidLiters", RMS_Consumptables.getFluidLiters)
+    SpecializationUtil.registerFunction(vehicleType, "getMissingFluidLiters", RMS_Consumptables.getMissingFluidLiters)
+    SpecializationUtil.registerFunction(vehicleType, "getFluidCompatibility", RMS_Consumptables.getFluidCompatibility)
+    SpecializationUtil.registerFunction(vehicleType, "addFluidLiters", RMS_Consumptables.addFluidLiters)
+    SpecializationUtil.registerFunction(vehicleType, "replaceFluidCircuit", RMS_Consumptables.replaceFluidCircuit)
     SpecializationUtil.registerFunction(vehicleType, "lubricateVehicle", RMS_Consumptables.lubricateVehicle)
     SpecializationUtil.registerFunction(vehicleType, "startFieldVisualInspectionProcess", RMS_Consumptables.startFieldVisualInspectionProcess)
     SpecializationUtil.registerFunction(vehicleType, "setFieldInspectionPlayerActive", RMS_Consumptables.setFieldInspectionPlayerActive)
@@ -1483,7 +1647,8 @@ local function initializeVehicleConditionFromVanillaPrice(vehicle, resetBreakdow
         if vehicle:getOperatingTime() > 0 then
             local operatingHours = tonumber(vehicle:getFormattedOperatingTime()) or 0
             local lifespanRatio = RMS_Config.CORE.REFERENCE_SYSTEMS_WEAR / RMS_Config.CORE.BASE_SYSTEMS_WEAR
-            local chance = operatingHours / (100 * lifespanRatio)
+            local reliability = RealisticMechanicalSystems.getBrandReliability(vehicle)
+            local chance = operatingHours / (100 * lifespanRatio) / reliability
             chance = math.clamp(chance * RMS_Config.CORE.USED_VEHICLE_BREAKDOWN_PRESENCE_CHANGE_MUL, 0, RMS_Config.CORE.USED_VEHICLE_BREAKDOWN_PRESENCE_CHANGE_MAX)
             if math.random() < chance then
                 vehicle:addBreakdown(vehicle:getRandomBreakdown())
@@ -1572,7 +1737,7 @@ local function registerVehicle(vehicle)
             -- Updating vehicle's production year
             local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
             if storeItem ~= nil then
-                spec.year = RMS_VehicleYears.getYear(storeItem)
+                spec.year = RMS_VehicleYears.getVehicleYear(vehicle, storeItem)
             end
 
             -- Updating vehicle's reliability and maintainability
@@ -1745,11 +1910,12 @@ local COLD_ENGINE_WARNING_MESSAGE = 'rms_spec_cold_engine_message'
 local function getColdEngineStress(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.CORE.ENGINE_FACTOR_DATA
+    local engineTemperature = RealisticMechanicalSystems.sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, -99, -99, 160)
 
     if not vehicle:getIsMotorStarted()
             or spec.isElectricVehicle
             or vehicle:getIsAIActive()
-            or spec.engineTemperature >= C.COLD_MOTOR_TEMP_THRESHOLD then
+            or engineTemperature >= C.COLD_MOTOR_TEMP_THRESHOLD then
         return 0
     end
 
@@ -1761,7 +1927,7 @@ local function getColdEngineStress(vehicle)
     local motor = vehicle.spec_motorized.motor
     local rpmLoad = math.clamp(motor:getLastModulatedMotorRpm() / motor.maxRpm, 0, 1)
     local temperatureFactor = RMS_Utils.calculateQuadraticMultiplier(
-        spec.engineTemperature,
+        engineTemperature,
         C.COLD_MOTOR_TEMP_THRESHOLD,
         true
     )
@@ -1972,7 +2138,6 @@ end
 local function syncOverloadWarning(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil or not vehicle.isServer or RealisticMechanicalSystems.isMissionVehicle(vehicle) then return end
-    local period = 60000
     local wearScale = RMS_Config.CORE.BASE_SYSTEMS_WEAR / RMS_Config.CORE.REFERENCE_SYSTEMS_WEAR
     local avgStressWarningThreshold = RMS_Config.CORE.AVG_STRESS_WARNING_THRESHOLD * RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER * wearScale
     local avgStressCriticalThreshold = RMS_Config.CORE.AVG_STRESS_CRITICAL_THRESHOLD * RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER * wearScale
@@ -1983,17 +2148,13 @@ local function syncOverloadWarning(vehicle, dt)
     local stressMultipliers = RMS_Config.CORE.SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS or {}
     local globalStressMultiplier = math.max(tonumber(RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER) or 1.0, 0.0)
 
-    local overloadFactorAliasesBySystem = {
-        engine = { "mlf", "hmf", "lf" },
-        transmission = { "pof", "htf", "lf", "wsf", "hotf" }
-    }
-
     local shouldStage = 0
     local maxAvgStress = 0
+    local debugDataWanted = RMS_Utils.getIsDebugDataWanted(vehicle)
     for systemName, systemData in pairs(factorStats) do
         if type(systemData) == "table" then
             local systemStressMultiplier = tonumber(stressMultipliers[systemName]) or 1.0
-            local selectedAliases = overloadFactorAliasesBySystem[tostring(systemName)]
+            local selectedAliases = OVERLOAD_FACTOR_ALIASES_BY_SYSTEM[tostring(systemName)]
             local currentStress = 0
 
             if type(selectedAliases) == "table" then
@@ -2005,10 +2166,9 @@ local function syncOverloadWarning(vehicle, dt)
 
             if not isMotorStarted then
                 systemData._prevStress = currentStress
-                systemData._avgStress = 0
-                systemData._avgStressSamples = {}
+                resetOverloadAverage(systemData)
 
-                if RMS_Config.DEBUG and spec.debugData ~= nil and spec.debugData[systemName] ~= nil then
+                if debugDataWanted and spec.debugData ~= nil and spec.debugData[systemName] ~= nil then
                     spec.debugData[systemName]._avgStress = 0
                 end
             else
@@ -2021,53 +2181,10 @@ local function syncOverloadWarning(vehicle, dt)
             local sampleRatePerHour = deltaStress * (60 * 60 * 1000) / sampleDurationMs
             systemData._prevStress = currentStress
 
-            if type(systemData._avgStressSamples) ~= "table" then
-                systemData._avgStressSamples = {}
-            end
+            systemData._avgStress = updateOverloadAverage(systemData, sampleDurationMs, sampleRatePerHour)
+            if systemData._avgStress > maxAvgStress then maxAvgStress = systemData._avgStress end
 
-            local samples = systemData._avgStressSamples
-            if sampleRatePerHour > 0 or #samples > 0 then
-                table.insert(samples, {
-                    durationMs = sampleDurationMs,
-                    ratePerHour = sampleRatePerHour
-                })
-            end
-
-            local totalSamplesDurationMs = 0
-            local weightedSum = 0
-            for _, sample in ipairs(samples) do
-                local durationMs = math.max(tonumber(sample.durationMs) or 0, 0)
-                local ratePerHour = tonumber(sample.ratePerHour) or 0
-                totalSamplesDurationMs = totalSamplesDurationMs + durationMs
-                weightedSum = weightedSum + ratePerHour * durationMs
-            end
-
-            while #samples > 0 and totalSamplesDurationMs > period do
-                local oldest = samples[1]
-                local oldestDurationMs = math.max(tonumber(oldest.durationMs) or 0, 0)
-                local overflowMs = totalSamplesDurationMs - period
-
-                if oldestDurationMs <= overflowMs then
-                    totalSamplesDurationMs = totalSamplesDurationMs - oldestDurationMs
-                    weightedSum = weightedSum - (tonumber(oldest.ratePerHour) or 0) * oldestDurationMs
-                    table.remove(samples, 1)
-                else
-                    oldest.durationMs = oldestDurationMs - overflowMs
-                    totalSamplesDurationMs = totalSamplesDurationMs - overflowMs
-                    weightedSum = weightedSum - (tonumber(oldest.ratePerHour) or 0) * overflowMs
-                end
-            end
-
-            if weightedSum <= 0 or totalSamplesDurationMs <= 0 then
-                systemData._avgStress = 0
-                systemData._avgStressSamples = {}
-                samples = systemData._avgStressSamples
-            else
-                systemData._avgStress = math.max(weightedSum / period, 0)
-                if systemData._avgStress > maxAvgStress then maxAvgStress = systemData._avgStress end
-            end
-
-            if RMS_Config.DEBUG and spec.debugData ~= nil and spec.debugData[systemName] ~= nil then
+            if debugDataWanted and spec.debugData ~= nil and spec.debugData[systemName] ~= nil then
                 spec.debugData[systemName]._avgStress = systemData._avgStress
             end
 
@@ -2195,9 +2312,9 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
         self:updateThermalSystems(updateDt, true, false)
     end
 
-    -- Exhaust smoke colour, opacity and plume size
+    -- Exhaust emission targets, the renderer easing toward them each frame
     if self.isClient then
-        RMS_Exhaust.update(self, updateDt)
+        RMS_Exhaust.update(self)
     end
 
     -- Random and permanent effects from breakdowns. Skip if spec.activeEffects is empty
@@ -2210,11 +2327,22 @@ end
 
 ---
 -- @param float dt time since last call in ms
+function RealisticMechanicalSystems:onPostUpdate(dt, ...)
+    local spec = self.spec_RealisticMechanicalSystems
+    if not self.isClient or spec.isExcludedVehicle then return end
+
+    RMS_Exhaust.applyShader(self, dt)
+end
+
+---
+-- @param float dt time since last call in ms
 function RealisticMechanicalSystems:onPostUpdateTick(dt, ...)
     local spec = self.spec_RealisticMechanicalSystems
     if not self.isClient or spec.isExcludedVehicle then return end
 
-    RMS_Exhaust.applyShader(self)
+    -- Motorized writes the exhaust effect parameters from the raw rpm in onUpdateTick, which the
+    -- engine raises just before this one, so the heat step has to answer here to have the last word
+    RMS_Exhaust.applyNativeHeat(self)
 end
 
 ---Runs the whole vehicle simulation step: state, wear, thermal, electrical and services
@@ -2523,7 +2651,7 @@ function RealisticMechanicalSystems.getBrandReliability(vehicle, storeItem)
     end
 
     if storeItem ~= nil then
-        year = RMS_VehicleYears.getYear(storeItem)
+        year = RMS_VehicleYears.getVehicleYear(vehicle, storeItem)
     end
 
     local yearFactor = 0

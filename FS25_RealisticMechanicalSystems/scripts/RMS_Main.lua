@@ -78,6 +78,9 @@ local modName = g_currentModName
 
 source(g_currentModDirectory .. "scripts/RMS_Config.lua")
 source(g_currentModDirectory .. "scripts/RMS_Utils.lua")
+source(g_currentModDirectory .. "scripts/RMS_Fluids.lua")
+source(g_currentModDirectory .. "scripts/RMS_FluidTransfer.lua")
+source(g_currentModDirectory .. "scripts/RMS_FluidWorkshop.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProgressRing.lua")
 source(g_currentModDirectory .. "scripts/RMS_VehicleYearsData.lua")
 source(g_currentModDirectory .. "scripts/RMS_VehicleYears.lua")
@@ -100,6 +103,8 @@ source(g_currentModDirectory .. "scripts/RMS_PlayerInput.lua")
 source(g_currentModDirectory .. "events/RMS_VehicleChangeStatusEvent.lua")
 source(g_currentModDirectory .. "events/RMS_WorkshopChangeStatusEvent.lua")
 source(g_currentModDirectory .. "events/RMS_ServiceRequestEvent.lua")
+source(g_currentModDirectory .. "events/RMS_ServiceResultEvent.lua")
+source(g_currentModDirectory .. "events/RMS_FluidTransferRequestEvent.lua")
 source(g_currentModDirectory .. "events/RMS_CancelServiceEvent.lua")
 source(g_currentModDirectory .. "events/RMS_SettingsSyncEvent.lua")
 source(g_currentModDirectory .. "events/RMS_ReinitializeVehiclesEvent.lua")
@@ -551,6 +556,19 @@ function RMS_Main:onPeriodChanged()
     end
 end
 
+---Refreshes the open workshop only when its vehicle status changed
+local function updateOpenWorkshopDialog()
+    local dialog = RMS_WorkshopDialog.INSTANCE
+    if dialog == nil or not dialog.isDialogOpen or dialog.vehicle == nil or dialog.vehicle.spec_RealisticMechanicalSystems == nil then
+        return
+    end
+
+    local currentStatus = dialog.vehicle:getCurrentStatus()
+    if dialog.lastObservedStatus ~= currentStatus then
+        dialog:updateScreen()
+    end
+end
+
 
 ---Runs the mod update: workshop hours and the simulation step of every vehicle
 -- @param float dt time since last call in ms
@@ -558,18 +576,6 @@ function RMS_Main:update(dt)
     if g_currentMission ~= nil and g_currentMission.getIsClient ~= nil and g_currentMission:getIsClient() then
         if not self.shopMenuPageInstalled then
             self:tryRegisterShopMenuPage()
-        end
-    end
-
-    local function updateOpenWorkshopDialog()
-        local dialog = RMS_WorkshopDialog.INSTANCE
-        if dialog == nil or not dialog.isDialogOpen or dialog.vehicle == nil or dialog.vehicle.spec_RealisticMechanicalSystems == nil then
-            return
-        end
-
-        local currentStatus = dialog.vehicle:getCurrentStatus()
-        if dialog.lastObservedStatus ~= currentStatus then
-            dialog:updateScreen()
         end
     end
 
@@ -590,7 +596,9 @@ function RMS_Main:update(dt)
     end
 
     for _, vehicle in pairs(self.vehicles) do
-        if vehicle ~= nil and vehicle.raiseActive ~= nil and vehicle.getMotorState ~= nil and vehicle:getMotorState() == MotorState.ON then
+        local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+        if spec ~= nil and not spec.isExcludedVehicle and vehicle.isActive ~= true
+            and vehicle.raiseActive ~= nil and vehicle.getMotorState ~= nil and vehicle:getMotorState() == MotorState.ON then
             vehicle:raiseActive()
         end
     end
@@ -656,6 +664,7 @@ function RMS_Main:loadMap()
     self.shopMenuPageInstalled = false
     RMS_Config.resetTutorialStateSession()
     RMS_Config.loadFromXMLFile()
+    RMS_Config.loadLocalSettings()
     self:tryRegisterShopMenuPage()
 
     if g_currentMission:getIsServer() then
@@ -678,11 +687,10 @@ function RMS_Main:deleteMap()
     RMS_Config._loaded = nil
     RMS_Config.resetTutorialStateSession()
     RMS_SettingsPage.reset()
+    RMS_Exhaust.plumeSources = nil
 
     g_soundManager:deleteSamples(self.samples)
     self.samples = nil
 end
 
 addModEventListener(RMS_Main)
-
-

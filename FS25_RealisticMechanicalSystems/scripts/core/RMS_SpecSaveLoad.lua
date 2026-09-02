@@ -3,8 +3,10 @@
 
 ---Savegame persistence of the vehicle spec, and the classification decided at load time
 
-local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
-local getIsElectricVehicle = RMS_Utils.getIsElectricVehicle
+local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
+    and RMS_Utils.createLogger("[RMS_SPEC]")
+    or function() end
+local getIsElectricVehicle = RMS_Utils ~= nil and RMS_Utils.getIsElectricVehicle or function() return false end
 local ensureFactorStats = RealisticMechanicalSystems.ensureFactorStats
 local refreshExclusionState = RealisticMechanicalSystems.refreshExclusionState
 local getSyncOperatingTime = RealisticMechanicalSystems.getSyncOperatingTime
@@ -167,10 +169,8 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#state", spec.currentState or RealisticMechanicalSystems.STATUS.READY)
         xmlFile:setValue(key .. "#plannedState", spec.plannedState or RealisticMechanicalSystems.STATUS.READY)
         xmlFile:setValue(key .. "#maintenanceTimer", RealisticMechanicalSystems.sanitizeNumber(spec.maintenanceTimer, 0, 0))
-        xmlFile:setValue(key .. "#engineTemperature", RealisticMechanicalSystems.sanitizeNumber(spec.engineTemperature, 20, -80, 160))
-        xmlFile:setValue(key .. "#transmissionTemperature", RealisticMechanicalSystems.sanitizeNumber(spec.transmissionTemperature, 20, -80, 180))
-        xmlFile:setValue(key .. "#coldTransAbuseTimer", math.clamp(tonumber(spec.coldTransAbuseTimer) or 0, 0, RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.COLD_TRANSMISSION_ABUSE_DURATION))
-        xmlFile:setValue(key .. "#coldTransAbuseDone", spec.coldTransAbuseDone == true)
+        xmlFile:setValue(key .. "#engineTemperature", RealisticMechanicalSystems.sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, 20, -80, 160))
+        xmlFile:setValue(key .. "#transmissionTemperature", RealisticMechanicalSystems.sanitizeNumber(spec.rawTransmissionTemperature or spec.transmissionTemperature, 20, -80, 180))
         xmlFile:setValue(key .. "#batterySoc", RealisticMechanicalSystems.sanitizeNumber(spec.batterySoc, 1.0, 0, 1))
         xmlFile:setValue(key .. "#batteryTempC", RealisticMechanicalSystems.sanitizeNumber(spec.batteryTempC, 20, -80, 85))
         xmlFile:setValue(key .. "#radiatorClogging", math.max(spec.radiatorClogging or 0, 0))
@@ -180,6 +180,17 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#coolantLevel", math.clamp(spec.coolantLevel or 1.0, 0.0, 1.0))
         xmlFile:setValue(key .. "#transmissionOilLevel", math.clamp(spec.transmissionOilLevel or 1.0, 0.0, 1.0))
         xmlFile:setValue(key .. "#hydraulicFluidLevel", math.clamp(spec.hydraulicFluidLevel or 1.0, 0.0, 1.0))
+        xmlFile:setValue(key .. "#fluidCapacityVersion", spec.fluidCapacityVersion or RMS_Fluids.CAPACITY_VERSION)
+        xmlFile:setValue(key .. "#fluidCapacitySource", spec.fluidCapacitySource or "")
+        xmlFile:setValue(key .. "#engineOilCapacity", RMS_Fluids.getCapacity(self, "engineOil"))
+        xmlFile:setValue(key .. "#coolantCapacity", RMS_Fluids.getCapacity(self, "coolant"))
+        xmlFile:setValue(key .. "#transmissionOilCapacity", RMS_Fluids.getCapacity(self, "transmissionOil"))
+        xmlFile:setValue(key .. "#hydraulicFluidCapacity", RMS_Fluids.getCapacity(self, "hydraulicFluid"))
+        xmlFile:setValue(key .. "#engineOilCompatibility", RMS_Fluids.getCompatibility(self, "engineOil"))
+        xmlFile:setValue(key .. "#coolantCompatibility", RMS_Fluids.getCompatibility(self, "coolant"))
+        xmlFile:setValue(key .. "#transmissionOilCompatibility", RMS_Fluids.getCompatibility(self, "transmissionOil"))
+        xmlFile:setValue(key .. "#hydraulicFluidCompatibility", RMS_Fluids.getCompatibility(self, "hydraulicFluid"))
+        xmlFile:setValue(key .. "#fluidLeakLossDebt", RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
         xmlFile:setValue(key .. "#wetStackingLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
         xmlFile:setValue(key .. "#lubricationLevel", math.clamp(spec.lubricationLevel or 1.0, 0.0, 1.0))
         xmlFile:setValue(key .. "#lubricationUsedThisPeriod", spec.lubricationUsedThisPeriod == true)
@@ -193,6 +204,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#pendingServicePrice", RMS_Utils.encodeOptionalFloat(spec.pendingServicePrice))
         xmlFile:setValue(key .. "#pendingInspectionQueue", table.concat(spec.pendingInspectionQueue or {}, ","))
         xmlFile:setValue(key .. "#pendingRepairQueue", table.concat(spec.pendingRepairQueue or {}, ","))
+        xmlFile:setValue(key .. "#pendingFluidRequirements", RMS_Fluids.serializeServiceRequirements(spec.pendingFluidRequirements))
         xmlFile:setValue(key .. "#pendingProgressStepIndex", spec.pendingProgressStepIndex or 0)
         xmlFile:setValue(key .. "#pendingProgressTotalTime", spec.pendingProgressTotalTime or 0)
         xmlFile:setValue(key .. "#pendingProgressElapsedTime", spec.pendingProgressElapsedTime or 0)
@@ -311,6 +323,17 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.coolantLevel = 1.0
     self.spec_RealisticMechanicalSystems.transmissionOilLevel = 1.0
     self.spec_RealisticMechanicalSystems.hydraulicFluidLevel = 1.0
+    self.spec_RealisticMechanicalSystems.fluidCapacities = {}
+    self.spec_RealisticMechanicalSystems.fluidCompatibility = {
+        engineOil = 1.0,
+        coolant = 1.0,
+        transmissionOil = 1.0,
+        hydraulicFluid = 1.0
+    }
+    self.spec_RealisticMechanicalSystems.fluidLeakLossDebt = {}
+    self.spec_RealisticMechanicalSystems.fluidCapacityVersion = nil
+    self.spec_RealisticMechanicalSystems.fluidCapacitySource = nil
+    self.spec_RealisticMechanicalSystems.pendingFluidRequirements = {}
     self.spec_RealisticMechanicalSystems.coolantLeakRate = 0
     self.spec_RealisticMechanicalSystems.transmissionOilLeakRate = 0
     self.spec_RealisticMechanicalSystems.hydraulicFluidLeakRate = 0
@@ -320,6 +343,10 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.extraEngineHeat = 0
     self.spec_RealisticMechanicalSystems.extraTransmissionHeat = 0
     self.spec_RealisticMechanicalSystems.extraHydraulicHeat = 0
+    self.spec_RealisticMechanicalSystems.fluidEngineHeat = 0
+    self.spec_RealisticMechanicalSystems.fluidTransmissionHeat = 0
+    self.spec_RealisticMechanicalSystems.fluidHydraulicHeat = 0
+    self.spec_RealisticMechanicalSystems.fluidHydraulicSpeedModifier = 0
     self.spec_RealisticMechanicalSystems.extraCurrentPeak = 0
     
     self.spec_RealisticMechanicalSystems.reliability = 1.0
@@ -394,8 +421,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.transmissionThermostatState = 0.0
     self.spec_RealisticMechanicalSystems.transmissionThermostatHealth = 1.0
     self.spec_RealisticMechanicalSystems.transmissionThermostatStuckedPosition = nil
-    self.spec_RealisticMechanicalSystems.coldTransAbuseTimer = 0
-    self.spec_RealisticMechanicalSystems.coldTransAbuseDone = false
     self.spec_RealisticMechanicalSystems.aiWorkerPid = {
         integral = 0,
         lastError = 0,
@@ -428,6 +453,14 @@ function RealisticMechanicalSystems:onLoad(savegame)
             distance = 0
         },
         drivetrain = {
+        },
+        exhaust = {
+            hasTurbo = false,
+            boost = 0,
+            boostDeficit = 0,
+            flow = 0,
+            scale = 0,
+            alpha = 0
         },
 
         engine = {
@@ -815,8 +848,6 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         -- Load Simple Variables
         spec.engineTemperature = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#engineTemperature", spec.engineTemperature), 20, -80, 160)
         spec.transmissionTemperature = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#transmissionTemperature", spec.transmissionTemperature), spec.engineTemperature, -80, 180)
-        spec.coldTransAbuseTimer = math.clamp(savegame.xmlFile:getValue(key .. "#coldTransAbuseTimer", spec.coldTransAbuseTimer) or 0, 0, RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.COLD_TRANSMISSION_ABUSE_DURATION)
-        spec.coldTransAbuseDone = savegame.xmlFile:getValue(key .. "#coldTransAbuseDone", spec.coldTransAbuseDone) == true
         spec.batterySoc = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#batterySoc", spec.batterySoc), 1.0, 0, 1)
         spec.batteryTempC = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#batteryTempC", spec.batteryTempC), 20, -80, 85)
         spec.radiatorClogging = math.max(savegame.xmlFile:getValue(key .. "#radiatorClogging", spec.radiatorClogging), 0)
@@ -830,6 +861,22 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         spec.coolantLevel = math.clamp(savegame.xmlFile:getValue(key .. "#coolantLevel", spec.coolantLevel), 0.0, 1.0)
         spec.transmissionOilLevel = math.clamp(savegame.xmlFile:getValue(key .. "#transmissionOilLevel", spec.transmissionOilLevel), 0.0, 1.0)
         spec.hydraulicFluidLevel = math.clamp(savegame.xmlFile:getValue(key .. "#hydraulicFluidLevel", spec.hydraulicFluidLevel), 0.0, 1.0)
+        spec.fluidCapacityVersion = savegame.xmlFile:getValue(key .. "#fluidCapacityVersion")
+        spec.fluidCapacitySource = savegame.xmlFile:getValue(key .. "#fluidCapacitySource", "")
+        spec.fluidCapacities = {
+            engineOil = math.max(savegame.xmlFile:getValue(key .. "#engineOilCapacity", 0) or 0, 0),
+            coolant = math.max(savegame.xmlFile:getValue(key .. "#coolantCapacity", 0) or 0, 0),
+            transmissionOil = math.max(savegame.xmlFile:getValue(key .. "#transmissionOilCapacity", 0) or 0, 0),
+            hydraulicFluid = math.max(savegame.xmlFile:getValue(key .. "#hydraulicFluidCapacity", 0) or 0, 0)
+        }
+        spec.fluidCompatibility = {
+            engineOil = math.clamp(savegame.xmlFile:getValue(key .. "#engineOilCompatibility", 1) or 1, 0, 1),
+            coolant = math.clamp(savegame.xmlFile:getValue(key .. "#coolantCompatibility", 1) or 1, 0, 1),
+            transmissionOil = math.clamp(savegame.xmlFile:getValue(key .. "#transmissionOilCompatibility", 1) or 1, 0, 1),
+            hydraulicFluid = math.clamp(savegame.xmlFile:getValue(key .. "#hydraulicFluidCompatibility", 1) or 1, 0, 1)
+        }
+        spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(savegame.xmlFile:getValue(key .. "#fluidLeakLossDebt", ""))
+        spec.pendingFluidRequirements = RMS_Fluids.deserializeServiceRequirements(savegame.xmlFile:getValue(key .. "#pendingFluidRequirements", ""))
         spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#wetStackingLevel", spec.fuelState.wetStackingLevel), 0, 0, 1)
         spec.lubricationLevel = math.clamp(savegame.xmlFile:getValue(key .. "#lubricationLevel", spec.lubricationLevel), 0.0, 1.0)
         spec.lubricationUsedThisPeriod = savegame.xmlFile:getValue(key .. "#lubricationUsedThisPeriod", true)
@@ -1148,6 +1195,7 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     end
 
     enableOrDisableSystems(self)
+    RMS_Fluids.initializeVehicle(self, false)
     spec.isVehicleNeedLubricate = getIsVehicleNeedLubricate(self)
     spec.isVehicleNeedBlowOut = getIsVehicleNeedBlowOut(self)
     resetIsMovingRecursive(self, {})
@@ -1194,6 +1242,11 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     spec._lastSyncFieldcare_coolantLevel = spec.coolantLevel
     spec._lastSyncFieldcare_transmissionOilLevel = spec.transmissionOilLevel
     spec._lastSyncFieldcare_hydraulicFluidLevel = spec.hydraulicFluidLevel
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        spec["_lastSyncFieldcare_capacity_" .. circuit] = RMS_Fluids.getCapacity(self, circuit)
+        spec["_lastSyncFieldcare_compatibility_" .. circuit] = RMS_Fluids.getCompatibility(self, circuit)
+    end
+    spec._lastSyncFieldcare_leakDebt = RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt)
     spec._lastSyncFieldcare_inspectionSoundActive = spec.fieldInspectionSoundActive
     -- [7] wear
     spec._lastSyncWear_serviceLevel = spec.serviceLevel
@@ -1219,6 +1272,10 @@ end
 ---
 function RealisticMechanicalSystems:onDelete()
     local spec = self.spec_RealisticMechanicalSystems
+
+    if self.isClient then
+        RMS_Exhaust.reset(self)
+    end
 
     if spec and spec.samples then
         g_soundManager:deleteSamples(spec.samples)

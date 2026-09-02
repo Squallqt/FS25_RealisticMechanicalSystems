@@ -19,7 +19,9 @@ RMS_Telemetry.recordingScenario = nil
 RMS_Telemetry.sessionInfo = nil
 
 
-local log_dbg = RMS_Utils.createLogger("[RMS_TELEMETRY]")
+local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
+    and RMS_Utils.createLogger("[RMS_TELEMETRY]")
+    or function() end
 
 ---Returns the directory the csv files are written to
 -- @return string path output directory
@@ -159,8 +161,8 @@ local function collectAttachedImplementNames(rootVehicle, names, visited)
     return names
 end
 
-local hasCVTTransmission = RMS_Utils.hasCVTTransmission
-local hasCVTAddon = RMS_Utils.hasCVTAddon
+local hasCVTTransmission = RMS_Utils ~= nil and RMS_Utils.hasCVTTransmission or function() return false end
+local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
 
 ---Splits a console argument string on whitespace
 -- @param string? text console arguments
@@ -366,7 +368,7 @@ function RMS_Telemetry:collectTransmissionSystemInfo(vehicle)
         wheelSlipFactor = transmissionDbg.wheelSlipFactor or 0,
         wheelSlipIntensity = spec.wheelSlipIntensity,
         avgTireGroundFrictionCoeff = spec.avgTireGroundFrictionCoeff,
-        coldTransAbuse = transmissionDbg.coldTransAbuse or 0,
+        coldTransFactor = transmissionDbg.coldTransFactor or 0,
         hotTransFactor = transmissionDbg.hotTransFactor or 0
     }
 end
@@ -554,6 +556,61 @@ function RMS_Telemetry:collectCloggingInfo(vehicle)
 end
 
 
+---Collects the exhaust smoke channels, render factors and model inputs of one sample
+-- @param table? vehicle vehicle
+-- @return table info exhaust values
+function RMS_Telemetry:collectExhaustInfo(vehicle)
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        return nil
+    end
+
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local smoke = type(spec.exhaustSmoke) == "table" and spec.exhaustSmoke or {}
+    local debugData = type(spec.debugData) == "table" and spec.debugData or {}
+    local exhaustDbg = type(debugData.exhaust) == "table" and debugData.exhaust or {}
+
+    local sample = {
+        isActive = smoke.isActive == true,
+        hasTurbo = smoke.hasTurbo == true,
+        hasDEF = smoke.hasDEF == true,
+        isStageV = smoke.isStageV == true,
+        eraFactor = smoke.eraFactor or 0,
+        soot = smoke.soot or 0,
+        oil = smoke.oil or 0,
+        unburnt = smoke.unburnt or 0,
+        targetSoot = smoke.targetSoot or 0,
+        targetOil = smoke.targetOil or 0,
+        targetUnburnt = smoke.targetUnburnt or 0,
+        opticalDepth = exhaustDbg.opticalDepth or 0,
+        opacity = exhaustDbg.opacity or 0,
+        ladder = exhaustDbg.ladder or 0,
+        currentStep = exhaustDbg.currentStep or 0,
+        nextStep = exhaustDbg.nextStep or 0,
+        crossfade = exhaustDbg.crossfade or 0,
+        alpha = exhaustDbg.alpha or 0,
+        burst = exhaustDbg.burst or 0,
+        burstCause = tostring(exhaustDbg.burstCause or ""),
+        emitterCount = exhaustDbg.emitterCount or 0,
+        heatShare = exhaustDbg.heatShare or 0,
+        boost = exhaustDbg.boost or 0,
+        boostDeficit = exhaustDbg.boostDeficit or 0,
+        flow = exhaustDbg.flow or 0,
+        emitScale = exhaustDbg.emitScale or 0,
+        motorLoad = spec.dynamicMotorLoad or 0,
+        engineTemperature = spec.rawEngineTemperature or spec.engineTemperature or 0,
+        airFilterClogging = spec.airFilterClogging or 0,
+        serviceLevel = spec.serviceLevel or 0,
+        wetStackingLevel = spec.fuelState ~= nil and spec.fuelState.wetStackingLevel or 0
+    }
+
+    for _, step in ipairs(exhaustDbg.steps or {}) do
+        sample["step_" .. tostring(step.id)] = step.share or 0
+    end
+
+    return sample
+end
+
+
 ---Collects one full sample of the recorded vehicle
 -- @param table? vehicle vehicle
 -- @return table sample recorded sample
@@ -578,6 +635,11 @@ function RMS_Telemetry:collectSample(vehicle)
     elseif scenario == "pto" then
         sample.ptoSystem = self:collectPtoSystemInfo(vehicle)
         if sample.ptoSystem == nil then
+            return nil
+        end
+    elseif scenario == "exhaust" then
+        sample.exhaust = self:collectExhaustInfo(vehicle)
+        if sample.exhaust == nil then
             return nil
         end
     end
@@ -648,7 +710,8 @@ function RMS_Telemetry:startRecording(scenarioName, intervalMs)
     end
 
     local requestedScenario = tostring(scenarioName or "default")
-    if requestedScenario ~= "default" and requestedScenario ~= "transmission" and requestedScenario ~= "pto" then
+    if requestedScenario ~= "default" and requestedScenario ~= "transmission" and requestedScenario ~= "pto"
+    and requestedScenario ~= "exhaust" then
         log_dbg("Telemetry: unsupported scenario:", requestedScenario)
         return false
     end

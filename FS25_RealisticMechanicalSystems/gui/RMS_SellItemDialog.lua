@@ -12,7 +12,10 @@ local modDirectory = g_currentModDirectory
 -- @param string? text label text
 -- @return string text label ending with a colon
 local function ensureTrailingColon(text)
-    local normalized = tostring(text or ""):gsub("%s*:%s*$", "")
+    local normalized = tostring(text or ""):gsub("%s+$", "")
+    if normalized:find(":$") ~= nil then
+        return normalized
+    end
     return normalized .. ":"
 end
 

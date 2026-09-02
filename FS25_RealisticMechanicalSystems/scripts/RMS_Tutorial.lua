@@ -595,8 +595,9 @@ function RMS_Tutorial:update(dt)
             elseif not messagedData.COLD_OIL
                 and (transmissionSystemEnabled or (hydraulicsSystemEnabled and spec.isHydraulicActive))
                 and isMotorStarted
-                and spec.transmissionTemperature < transmissionConfig.COLD_TRANSMISSION_THRESHOLD
-                and spec.dynamicMotorLoad >= transmissionConfig.COLD_TRANSMISSION_LOAD_THRESHOLD then
+                and RealisticMechanicalSystems.sanitizeNumber(spec.rawTransmissionTemperature or spec.transmissionTemperature, 20, -80, 180) < transmissionConfig.COLD_TRANSMISSION_THRESHOLD
+                and ((transmissionSystemEnabled and RMS_Drivetrain.getDrivelineLoad(vehicle) > transmissionConfig.COLD_TRANSMISSION_LOAD_THRESHOLD)
+                    or (hydraulicsSystemEnabled and spec.isHydraulicActive)) then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_cold_oil_message"),
                     0,
