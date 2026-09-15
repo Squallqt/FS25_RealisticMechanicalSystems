@@ -540,9 +540,9 @@ RMS_Config = {
         CAPACITY_OVERRIDES = {},
 
         -- engine oil burnt over one service interval by a healthy engine
-        ENGINE_OIL_CONSUMPTION_PER_INTERVAL = 0.10,
+        ENGINE_OIL_CONSUMPTION_PER_INTERVAL = 0.03,
         -- extra consumption of a fully worn engine
-        ENGINE_OIL_WEAR_CONSUMPTION = 6.0,
+        ENGINE_OIL_WEAR_CONSUMPTION = 3.0,
         -- share of the consumption that follows the motor load
         ENGINE_OIL_LOAD_SHARE = 1.5,
 

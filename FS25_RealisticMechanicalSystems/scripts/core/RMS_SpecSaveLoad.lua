@@ -248,6 +248,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
                     xmlFile:setValue(condKey .. "#age", entry.conditionData.age or 0)
                     xmlFile:setValue(condKey .. "#condition", entry.conditionData.condition or 1)
                     xmlFile:setValue(condKey .. "#service", entry.conditionData.service or 1)
+                    xmlFile:setValue(condKey .. "#sellPrice", entry.conditionData.sellPrice or 0)
                     xmlFile:setValue(condKey .. "#reliability", entry.conditionData.reliability or 1)
                     xmlFile:setValue(condKey .. "#maintainability", entry.conditionData.maintainability or 1)
                     xmlFile:setValue(condKey .. "#systems", RMS_Utils.serializeSystemsState(RMS_Utils.createSystemsSnapshot(entry.conditionData.systems)))
@@ -847,7 +848,12 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
 
         -- Load Simple Variables
         spec.engineTemperature = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#engineTemperature", spec.engineTemperature), 20, -80, 160)
-        spec.transmissionTemperature = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#transmissionTemperature", spec.transmissionTemperature), spec.engineTemperature, -80, 180)
+        spec.transmissionTemperature = RealisticMechanicalSystems.sanitizeNumber(
+            savegame.xmlFile:getValue(key .. "#transmissionTemperature", spec.transmissionTemperature),
+            spec.engineTemperature,
+            -80,
+            180
+        )
         spec.batterySoc = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#batterySoc", spec.batterySoc), 1.0, 0, 1)
         spec.batteryTempC = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#batteryTempC", spec.batteryTempC), 20, -80, 85)
         spec.radiatorClogging = math.max(savegame.xmlFile:getValue(key .. "#radiatorClogging", spec.radiatorClogging), 0)
@@ -881,7 +887,12 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         spec.lubricationLevel = math.clamp(savegame.xmlFile:getValue(key .. "#lubricationLevel", spec.lubricationLevel), 0.0, 1.0)
         spec.lubricationUsedThisPeriod = savegame.xmlFile:getValue(key .. "#lubricationUsedThisPeriod", true)
         spec.thermostatState = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#thermostatState", spec.thermostatState), spec.thermostatState or 0, 0.0, 1.0)
-        spec.transmissionThermostatState = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#transmissionThermostatState", spec.transmissionThermostatState), spec.transmissionThermostatState or 0, 0.0, 1.0)
+        spec.transmissionThermostatState = RealisticMechanicalSystems.sanitizeNumber(
+            savegame.xmlFile:getValue(key .. "#transmissionThermostatState", spec.transmissionThermostatState),
+            spec.transmissionThermostatState or 0,
+            0.0,
+            1.0
+        )
         spec.ptoEngagementCount = math.floor(math.max(savegame.xmlFile:getValue(key .. "#ptoEngagementCount", spec.ptoEngagementCount) or 0, 0))
         spec.ptoEngagementSequence = math.floor(math.max(savegame.xmlFile:getValue(key .. "#ptoEngagementSequence", spec.ptoEngagementSequence) or 0, 0))
         if spec.engTermPID ~= nil then
@@ -1009,6 +1020,7 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
                 entry.conditionData.age = savegame.xmlFile:getValue(condKey .. "#age", 0)
                 entry.conditionData.condition = savegame.xmlFile:getValue(condKey .. "#condition", 1)
                 entry.conditionData.service = savegame.xmlFile:getValue(condKey .. "#service", 1)
+                entry.conditionData.sellPrice = savegame.xmlFile:getValue(condKey .. "#sellPrice", 0)
                 entry.conditionData.reliability = savegame.xmlFile:getValue(condKey .. "#reliability", 1)
                 entry.conditionData.maintainability = savegame.xmlFile:getValue(condKey .. "#maintainability", 1)
                 entry.conditionData.systems = RMS_Utils.createSystemsSnapshot(RMS_Utils.deserializeSystemsState(savegame.xmlFile:getValue(condKey .. "#systems", "")))

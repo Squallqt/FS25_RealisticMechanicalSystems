@@ -32,7 +32,7 @@ function RealisticMechanicalSystems.ConsoleCommands:getTargetVehicle()
 end
 
 ---Splits the console arguments on whitespace, accepting them as one string or as several
--- @param string? rawArgs console arguments
+-- @param string? argString first console argument
 -- @param any ... further console arguments
 -- @return table args argument tokens
 local function parseArguments(argString, ...)
@@ -1056,7 +1056,14 @@ function RealisticMechanicalSystems.ConsoleCommands:startMaintance(rawArgs, rawA
 
     if started then
         local finishTime, days = vehicle:getServiceFinishTime()
-        print(string.format("RMS: Started '%s' for '%s'. Remaining time: %.1f sec. Finishes in %d day(s) at %.2f.", maintenanceType, vehicle:getFullName(), spec.maintenanceTimer / 1000, days or 0, finishTime or 0))
+        print(string.format(
+            "RMS: Started '%s' for '%s'. Remaining time: %.1f sec. Finishes in %d day(s) at %.2f.",
+            maintenanceType,
+            vehicle:getFullName(),
+            spec.maintenanceTimer / 1000,
+            days or 0,
+            finishTime or 0
+        ))
     else
         print(string.format("RMS Error: Failed to start '%s' for '%s' (%s).", maintenanceType, vehicle:getFullName(), tostring(result)))
     end
@@ -1793,7 +1800,12 @@ addConsoleCommand("rms_advanceBreakdown", "Advances a breakdown to the next stag
 addConsoleCommand("rms_setCondition", "Sets condition for all enabled systems. Usage: rms_setCondition [0.0-1.0]", "setCondition", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSystemCondition", "Sets system condition. Usage: rms_setSystemCondition [system] [0.0-1.0]", "setSystemCondition", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSystemStress", "Sets system stress. Usage: rms_setSystemStress [system] [>=0.0]", "setSystemStress", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_setSystemStressMultiplier", "Sets stress accumulation multiplier. Usage: rms_setSystemStressMultiplier [>=0.0] [system]", "setSystemStressMultiplier", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand(
+    "rms_setSystemStressMultiplier",
+    "Sets stress accumulation multiplier. Usage: rms_setSystemStressMultiplier [>=0.0] [system]",
+    "setSystemStressMultiplier",
+    RealisticMechanicalSystems.ConsoleCommands
+)
 addConsoleCommand("rms_setService", "Sets vehicle service. Usage: rms_setService [0.0-1.0]", "setService", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_resetVehicle", "Resets vehicle state.", "resetVehicle", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_reinitializeVehicle", "Reinitializes vehicle from vanilla resale price logic.", "reinitializeVehicle", RealisticMechanicalSystems.ConsoleCommands)

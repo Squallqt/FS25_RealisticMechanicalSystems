@@ -18,6 +18,7 @@ RealisticMechanicalSystems = {
     STATES = {
         EXCELLENT = 'rms_spec_state_excellent',
         GOOD = 'rms_spec_state_good',
+        SERVICE_GOOD = 'rms_spec_state_service_good',
         NORMAL = 'rms_spec_state_normal',
         BAD = 'rms_spec_state_bad',
         TERRIBLE = 'rms_spec_state_terrible',
@@ -132,9 +133,9 @@ RealisticMechanicalSystems.SYSTEMS_ORDER = {
 
 -- display order of the part quality options
 RealisticMechanicalSystems.PART_TYPES_ORDER = {
-    RealisticMechanicalSystems.PART_TYPES.OEM,
     RealisticMechanicalSystems.PART_TYPES.USED,
     RealisticMechanicalSystems.PART_TYPES.AFTERMARKET,
+    RealisticMechanicalSystems.PART_TYPES.OEM,
     RealisticMechanicalSystems.PART_TYPES.PREMIUM
 }
 
@@ -1162,24 +1163,7 @@ function RealisticMechanicalSystems.forceFinishService(vehicle)
 
     local forceDt = math.max(math.ceil(remainingMs / timeScale) + 1, 1)
 
-    local previousWorkshopOpen = nil
-    if RMS_Main ~= nil then
-        previousWorkshopOpen = RMS_Main.isWorkshopOpen
-        RMS_Main.isWorkshopOpen = true
-    end
-
-    local ok, err = pcall(function()
-        vehicle:processService(forceDt)
-    end)
-
-    if RMS_Main ~= nil and previousWorkshopOpen ~= nil then
-        RMS_Main.isWorkshopOpen = previousWorkshopOpen
-    end
-
-    if not ok then
-        log_dbg(string.format("Failed to force-finish service for '%s': %s", vehicle:getFullName(), tostring(err)))
-        return false, err
-    end
+    vehicle:processService(forceDt, true)
 
     if spec.currentState ~= RealisticMechanicalSystems.STATUS.READY then
         spec.pendingProgressElapsedTime = spec.pendingProgressTotalTime or 0
@@ -1283,6 +1267,7 @@ function RealisticMechanicalSystems.initSpecialization()
         schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#age", "Vehicle Age")
         schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#condition", "Condition Level")
         schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#service", "Service Level")
+        schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#sellPrice", "Vehicle Sell Price")
         schemaSavegame:register(XMLValueType.STRING, condKey .. "#activeBreakdowns", "Active Breakdowns")
         schemaSavegame:register(XMLValueType.STRING, condKey .. "#selectedBreakdowns", "Selected Breakdowns")
         schemaSavegame:register(XMLValueType.STRING, condKey .. "#activeEffects", "Active Effects")
@@ -1516,8 +1501,9 @@ function RealisticMechanicalSystems.updateStartButtonActionEvents(self)
     end
 end
 
----
+---Registers the specialization action events
 -- @param boolean isActiveForInput true if vehicle is active for input
+-- @param boolean isActiveForInputIgnoreSelection true if vehicle is active for input regardless of selection
 function RealisticMechanicalSystems:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
     if not self.isClient then
         return
@@ -1782,7 +1768,14 @@ local function syncOverheatProtection(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then return end
     local rawEngineTemp = RealisticMechanicalSystems.sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, -99, -99, 160)
-    local rawTransmissionTemp = hasCVTTransmission(vehicle) and not hasCVTAddon(vehicle) and RealisticMechanicalSystems.sanitizeNumber(spec.rawTransmissionTemperature or spec.transmissionTemperature, -99, -99, 180) or -99
+    local rawTransmissionTemp = hasCVTTransmission(vehicle)
+        and not hasCVTAddon(vehicle)
+        and RealisticMechanicalSystems.sanitizeNumber(
+            spec.rawTransmissionTemperature or spec.transmissionTemperature,
+            -99,
+            -99,
+            180
+        ) or -99
 
     if vehicle.isServer and spec.year >= 2000 then
         local overheatProtectionId = 'OVERHEAT_PROTECTION'
@@ -2232,8 +2225,9 @@ local function getSmoothedMotorLoad(vehicle, dt)
     end
 end
 
----
+---Updates the specialization every rendered frame
 -- @param float dt time since last call in ms
+-- @param any ... additional update arguments
 function RealisticMechanicalSystems:onUpdate(dt, ...)
     local spec = self.spec_RealisticMechanicalSystems
     self:updateFieldInspectionSound()
@@ -2325,8 +2319,9 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
     end
 end
 
----
+---Applies client-side effects after the rendered-frame update
 -- @param float dt time since last call in ms
+-- @param any ... additional update arguments
 function RealisticMechanicalSystems:onPostUpdate(dt, ...)
     local spec = self.spec_RealisticMechanicalSystems
     if not self.isClient or spec.isExcludedVehicle then return end
@@ -2334,8 +2329,9 @@ function RealisticMechanicalSystems:onPostUpdate(dt, ...)
     RMS_Exhaust.applyShader(self, dt)
 end
 
----
+---Applies post-tick client state after the simulation update
 -- @param float dt time since last call in ms
+-- @param any ... additional update arguments
 function RealisticMechanicalSystems:onPostUpdateTick(dt, ...)
     local spec = self.spec_RealisticMechanicalSystems
     if not self.isClient or spec.isExcludedVehicle then return end

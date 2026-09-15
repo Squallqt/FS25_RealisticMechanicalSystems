@@ -134,6 +134,11 @@ function RMS_Main.loadGuiProfiles()
         g_overlayManager:addTextureConfigFile(modDirectory .. "images/menuIcon.xml", "rms_MenuIcon")
     end
 
+    if g_overlayManager ~= nil
+        and (g_overlayManager.textureConfigs == nil or g_overlayManager.textureConfigs.rms_WorkshopFluids == nil) then
+        g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_workshopFluids.xml", "rms_WorkshopFluids")
+    end
+
     RMS_Main.guiProfilesLoaded = true
 end
 
@@ -287,6 +292,20 @@ function RMS_Main.hookRepairButton(screenInstance, vehicle)
     else
         screenInstance.repairButton.onClickCallback = screenInstance.rmsOriginalRepairCallback
     end
+end
+
+
+---Writes the vehicle transaction price missing from the native BuyVehicleData stream
+function RMS_Main.writeBuyVehicleDataPrice(data, superFunc, streamId, connection)
+    superFunc(data, streamId, connection)
+    streamWriteInt32(streamId, math.floor(tonumber(data.price) or 0))
+end
+
+
+---Reads the vehicle transaction price missing from the native BuyVehicleData stream
+function RMS_Main.readBuyVehicleDataPrice(data, superFunc, streamId, connection)
+    superFunc(data, streamId, connection)
+    data.price = streamReadInt32(streamId)
 end
 
 
@@ -480,6 +499,12 @@ end)
 WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RMS_Main.hookRepairButton)
 InGameMenuStatisticsFrame.populateCellForItemInSection = Utils.overwrittenFunction(InGameMenuStatisticsFrame.populateCellForItemInSection, RMS_Main.populateCellForItemInSection)
 ShopConfigScreen.processAttributeData = Utils.appendedFunction(ShopConfigScreen.processAttributeData, RMS_Main.processAttributeData)
+if BuyVehicleData ~= nil and BuyVehicleData.writeStream ~= nil then
+    BuyVehicleData.writeStream = Utils.overwrittenFunction(BuyVehicleData.writeStream, RMS_Main.writeBuyVehicleDataPrice)
+end
+if BuyVehicleData ~= nil and BuyVehicleData.readStream ~= nil then
+    BuyVehicleData.readStream = Utils.overwrittenFunction(BuyVehicleData.readStream, RMS_Main.readBuyVehicleDataPrice)
+end
 
 
 RMS_Main.initSpec()
@@ -494,8 +519,6 @@ RMS_Main.isWorkshopOpen = true
 RMS_Main.currentWeather = WeatherType.SUN
 RMS_Main.currentWeatherFactor = 1.0
 
--- Compute workshop open/close from config hours and current game time.
--- Runs on all machines for consistent local state.
 ---Recomputes whether the workshop is open from the time of day
 function RMS_Main:evaluateWorkshopState()
     if g_currentMission == nil or g_currentMission.environment == nil then
@@ -656,8 +679,7 @@ function RMS_Main:update(dt)
     updateOpenWorkshopDialog()
 end
 
----
--- @param string filename map filename
+---Loads the RMS map state and GUI registrations
 function RMS_Main:loadMap()
     RMS_Main.loadGuiProfiles()
     RMS_SettingsPage.reset()

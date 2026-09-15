@@ -62,14 +62,14 @@
                     <ListItem profile="rms_menuTableListItemAlt" id="vehicleTemplate" size="1550px 40.77px">
                         <ThreePartBitmap profile="rms_menuTableListItemGradient" name="alternating"/>
                         <Bitmap profile="rms_menuVehicleIcon" name="vehicleIcon"/>
-                        <Text profile="rms_menuTableRowCellFirstAlt" position="68px 0px" size="234px 40.77px" name="vehicleNameText" textLayoutMode="scrolling"/>
-                        <Text profile="rms_menuTableRowCellCenterAlt" position="308px 0px" size="180px 40.77px" name="vehicleTypeText" textLayoutMode="scrolling"/>
+                        <Text profile="rms_menuTableRowCellFirstAlt" position="68px 0px" size="234px 40.77px" name="vehicleNameText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
+                        <Text profile="rms_menuTableRowCellCenterAlt" position="308px 0px" size="180px 40.77px" name="vehicleTypeText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="494px 0px" size="81px 40.77px" name="ageText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="581px 0px" size="81px 40.77px" name="workingHoursText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="668px 0px" size="130px 40.77px" name="conditionText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="804px 0px" size="130px 40.77px" name="intervalText"/>
-                        <Text profile="rms_menuTableRowCellCenterAlt" position="940px 0px" size="127px 40.77px" name="lastInspectionText" textLayoutMode="scrolling"/>
-                        <Text profile="rms_menuTableRowCellCenterAlt" position="1073px 0px" size="127px 40.77px" name="lastMaintenanceText" textLayoutMode="scrolling"/>
+                        <Text profile="rms_menuTableRowCellCenterAlt" position="940px 0px" size="127px 40.77px" name="lastInspectionText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
+                        <Text profile="rms_menuTableRowCellCenterAlt" position="1073px 0px" size="127px 40.77px" name="lastMaintenanceText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="1206px 0px" size="100px 40.77px" name="costText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="1312px 0px" size="100px 40.77px" name="leasingPriceText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="1418px 0px" size="100px 40.77px" name="priceText"/>
@@ -114,11 +114,11 @@
                     <ListItem profile="rms_menuTableListItemAlt" id="serviceVehicleTemplate" size="1550px 40.77px">
                         <ThreePartBitmap profile="rms_menuTableListItemGradient" name="alternating"/>
                         <Bitmap profile="rms_menuVehicleIcon" name="vehicleIcon"/>
-                        <Text profile="rms_menuTableRowCellFirstAlt" position="68px 0px" size="234px 40.77px" name="vehicleNameText" textLayoutMode="scrolling"/>
-                        <Text profile="rms_menuTableRowCellCenterAlt" position="308px 0px" size="180px 40.77px" name="vehicleTypeText" textLayoutMode="scrolling"/>
+                        <Text profile="rms_menuTableRowCellFirstAlt" position="68px 0px" size="234px 40.77px" name="vehicleNameText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
+                        <Text profile="rms_menuTableRowCellCenterAlt" position="308px 0px" size="180px 40.77px" name="vehicleTypeText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="494px 0px" size="81px 40.77px" name="ageText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="581px 0px" size="81px 40.77px" name="workingHoursText"/>
-                        <Text profile="rms_menuTableRowCellCenterAlt" position="668px 0px" size="260px 40.77px" name="procedureText" textLayoutMode="scrolling"/>
+                        <Text profile="rms_menuTableRowCellCenterAlt" position="668px 0px" size="260px 40.77px" name="procedureText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="934px 0px" size="172px 40.77px" name="remainingTimeText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="1112px 0px" size="172px 40.77px" name="finishTimeText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="1290px 0px" size="228px 40.77px" name="serviceCostText"/>
@@ -169,14 +169,14 @@
                     <ListItem profile="rms_menuTableListItemAlt" id="otherVehicleTemplate" size="1550px 40.77px">
                         <ThreePartBitmap profile="rms_menuTableListItemGradient" name="alternating"/>
                         <Bitmap profile="rms_menuVehicleIcon" name="vehicleIcon"/>
-                        <Text profile="rms_menuTableRowCellFirstAlt" position="68px 0px" size="234px 40.77px" name="vehicleNameText" textLayoutMode="scrolling"/>
-                        <Text profile="rms_menuTableRowCellCenterAlt" position="308px 0px" size="180px 40.77px" name="vehicleTypeText" textLayoutMode="scrolling"/>
+                        <Text profile="rms_menuTableRowCellFirstAlt" position="68px 0px" size="234px 40.77px" name="vehicleNameText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
+                        <Text profile="rms_menuTableRowCellCenterAlt" position="308px 0px" size="180px 40.77px" name="vehicleTypeText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="494px 0px" size="81px 40.77px" name="ageText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="581px 0px" size="81px 40.77px" name="workingHoursText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="668px 0px" size="130px 40.77px" name="conditionText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="804px 0px" size="130px 40.77px" name="intervalText"/>
-                        <Text profile="rms_menuTableRowCellCenterAlt" position="940px 0px" size="127px 40.77px" name="lastInspectionText" textLayoutMode="scrolling"/>
-                        <Text profile="rms_menuTableRowCellCenterAlt" position="1073px 0px" size="127px 40.77px" name="lastMaintenanceText" textLayoutMode="scrolling"/>
+                        <Text profile="rms_menuTableRowCellCenterAlt" position="940px 0px" size="127px 40.77px" name="lastInspectionText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
+                        <Text profile="rms_menuTableRowCellCenterAlt" position="1073px 0px" size="127px 40.77px" name="lastMaintenanceText" textLayoutMode="scrolling" textScrollOnFocusOnly="false"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="1206px 0px" size="100px 40.77px" name="costText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="1312px 0px" size="100px 40.77px" name="leasingPriceText"/>
                         <Text profile="rms_menuTableRowCellCenterAlt" position="1418px 0px" size="100px 40.77px" name="priceText"/>
@@ -200,13 +200,13 @@
                 <ScrollingLayout profile="fs25_settingsLayout" id="settingsLayout">
                     <Text profile="fs25_settingsSectionHeader" name="sectionHeader" id="subTitlePrefab"/>
                     <Bitmap profile="fs25_multiTextOptionContainer" id="binaryPrefab">
-                        <BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="checkPrefab">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="checkPrefab">
                             <Text profile="fs25_multiTextOptionTooltip" name="ignore" />
                         </BinaryOption>
                         <Text profile="fs25_settingsMultiTextOptionTitle" />
                     </Bitmap>
                     <Bitmap profile="fs25_multiTextOptionContainer" id="multiPrefab">
-                        <MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickMultiOption" id="multiTextPrefab">
+                        <MultiTextOption profile="fs25_settingsMultiTextOption" id="multiTextPrefab">
                             <Text profile="fs25_multiTextOptionTooltip" name="ignore" />
                         </MultiTextOption>
                         <Text profile="fs25_settingsMultiTextOptionTitle" />

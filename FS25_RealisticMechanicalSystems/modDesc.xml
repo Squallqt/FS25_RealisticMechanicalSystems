@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="111">
+<modDesc descVersion="113">
     <author>Squallqt</author>
     <version>0.10.0.0</version>
     <title>
@@ -32,7 +32,7 @@ WORKSHOP
 
 DAILY CARE
 - Hold R near a vehicle for a pre-shift check of fluids, radiator, and air filter
-- Air Blower clears the cooling pack and the air filter, Grease Gun restores lubrication on machines that need it
+- Air Blower clears the cooling pack and removes loose dust from the air filter; Grease Gun restores lubrication on machines that need it
 - An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
 
 SIMULATION
@@ -40,53 +40,34 @@ SIMULATION
 - Battery and alternator modelled as a real circuit, with cold-weather capacity loss, internal resistance, voltage sag, and jumper cables between vehicles
 - Automatic temperature-based diesel preheating with its own glow-plug breakdown
 - Exhaust smoke driven by production year, emission profile, engine wear, load, temperature, prolonged idling and the type of active fault: black soot, blue oil or white unburnt fuel
-- Drivetrain management on tractors: 4x2 / 4WD / AUTO modes, differential locks, and a parking brake
+- Drivetrain management on tractors: 2WD / 4WD / AUTO modes, differential locks, and a parking brake
 - Reliability and maintainability per brand and production year, shown in the shop
-- Multiplayer and dedicated server, 15 languages
+- Multiplayer and dedicated server, 27 languages
+- Electric vehicles are not supported yet
+
+Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 0.10.0.0:
-- Improved used vehicles: a hidden fault at purchase is now a real risk, and a reliable brand lowers it
-- Added exhaust smoke driven by vehicle age, engine wear, load and active faults, with a detail setting each player sets on their own machine
-- Added an air filter that clogs with dusty work and is replaced by workshop maintenance
-- Improved the air blower: it no longer restores an air filter fully, and washing no longer cleans one
-- Improved the hand tools: they now reach further
-- Added engine oil, coolant, transmission oil and hydraulic fluid levels, read by the pre-shift check
-- Added a transmission oil leak breakdown
-- Added a Top up service at the workshop, priced on what the machine is actually missing
-- Added tutorial tips for fluid levels, exhaust smoke, drivetrain modes, the parking brake and transmission overheating
-- Improved the pre-shift check: a go or no go verdict, the machine and its next service on top, gauges on the four fluid levels
-- Simplified the vehicle info box on foot: condition and next service only
-- Added drivetrain management for tractors: 4x2, 4WD and AUTO modes with differential locks
-- Added a parking brake that can engage automatically
-- Added a HUD readout of tractor, towed and combined mass
-- Added dashboard indicators inside the extended speedometer layout
-- Added separate thermal alerts and indicators for engine and transmission
-- Added automatic diesel preheating in cold weather, with its own glow plug breakdown
-- Added a transmission thermostat breakdown on CVT gearboxes
-- Added transmission damage when turning on hard ground with locked differentials
-- Added transmission damage when a load is held on oil below 45 C
-- Added transmission oil heating from the pump, the power take-off and low speed heavy work
-- Added hydraulic wear from the running pump, the lifted implement mass and vibration
-- Improved the transmission oil temperature: it now floats with the load instead of holding a target
-- Improved radiator fouling: cooling capacity now drops with the clogging level
-- Improved steering wear: it now scales with the steered angle and the load on the steered axle
-- Added compatibility: drivetrain and parking brake step aside when Enhanced Vehicle handles them
-- Improved the translations of the fifteen supported languages
-- Rebalanced cooling wear: it now requires the engine above its target temperature
-- Rebalanced AI workers: they now wear a machine like a player
-- Rebalanced cold engine wear: it now starts only under high load
-- Rebalanced turbocharger wear: it now applies to every engine of 75 hp or more
-- Rebalanced lubrication: it now applies to every non-road machine
-- Rebalanced vehicle exclusions: the mod now follows every machine that has an engine to look after
-- Rebalanced hydraulic breakdowns: they now reach only the machines that really have hydraulics
-- Removed the thermal sensitivity, warm-up boost and cooling slowdown settings
-- Removed the work process system, its harvest wear and its unloading auger breakdown
-- Removed the Vehicle Years requirement, the mod resolves production years itself
-- Improved contract vehicles: they now show their hours and no longer wear down
-- Improved idling: an engine left running with nobody aboard now burns its fuel
-- Improved used vehicles: their condition now follows the selected vehicle lifespan
-- Added a settings profile that hands your current settings to every new savegame
-- Added a fleet reset that realigns every vehicle on the selected vehicle lifespan]]></en>
+- Renamed this independent fork to Realistic Mechanical Systems; existing Advanced Damage System saves and settings are migrated automatically
+- Reworked used vehicles: condition follows the selected vehicle lifespan, hidden faults can exist at purchase, and reliable brands reduce the risk
+- Added physical engine oil, coolant, transmission oil and hydraulic fluid: nine purchasable products in 5, 25 and 200 L containers, manual transfer, contamination and workshop stock; transmission oil leaks can drain the circuit
+- Reworked the pre-shift check and workshop fluid service: go or no go verdict, next service, four level gauges and a Top up procedure charged by the missing volume
+- Reworked air filter servicing: dusty work clogs the filter, the air blower only cleans it partly, washing does not clean it, and workshop maintenance replaces it; hand tools also reach further
+- Added exhaust smoke driven by vehicle age, engine wear, load and active faults, with a local detail setting for each player
+- Added tractor drivetrain management: 2WD, 4WD and AUTO modes, differential locks, an automatic parking brake and wind-up wear; Enhanced Vehicle takes over the functions it manages
+- Expanded the HUD with tractor, towed and combined mass, dashboard indicators, and separate engine and transmission thermal alerts
+- Added automatic diesel preheating in cold weather, with a four-stage glow plug breakdown
+- Reworked transmission thermal wear: temperature responds to the pump, power take-off and heavy low-speed work; cold oil progressively increases wear only under real driveline load; CVT gearboxes can suffer thermostat failure
+- Rebuilt hydraulic wear and breakdowns around actual machine capability, pump operation, lifted mass and vibration
+- Added a dedicated power take-off system with drive coupling, output bearing and engagement control breakdowns
+- Rebalanced mechanical wear: radiator clogging reduces cooling, cooling wear requires an engine above target temperature, cold-engine wear requires high load, turbo wear applies from 75 hp, steering follows angle and axle load, and lubrication covers every non-road machine
+- Reworked vehicle eligibility and non-player vehicles: supported motorized machines are classified by capability, AI workers cause normal wear, and contract machines show hours without wearing down
+- Improved idling: an unattended running engine now consumes fuel
+- Added a global settings profile for new savegames and a fleet reset based on the selected vehicle lifespan; removed the thermal sensitivity, warm-up boost and cooling slowdown settings
+- Removed the work process system, harvest wear and the unloading auger breakdown; production years are now resolved internally without Vehicle Years
+- Reworked the workshop, inspection, report, maintenance log and leased-vehicle return interfaces; simplified the on-foot vehicle info box to condition and next service
+- Expanded tutorial tips for the fluid, smoke, drivetrain, parking brake and thermal systems
+- Added 12 languages (27 total) and improved existing translations]]></en>
 
         <de><![CDATA[Ihre Maschinen verschleißen endlich wie echte.
 
@@ -112,7 +93,7 @@ WERKSTATT
 
 TÄGLICHE PFLEGE
 - R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler und Luftfilter vor Schichtbeginn
-- Das Druckluftgebläse reinigt Kühlerpaket und Luftfilter, die Fettpresse stellt die Schmierung wieder her
+- Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter; die Fettpresse stellt die Schmierung wieder her
 - Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
 
 SIMULATION
@@ -120,53 +101,34 @@ SIMULATION
 - Batterie und Lichtmaschine als echter Stromkreis, mit Kälteverlust, Innenwiderstand, Spannungseinbruch und Starthilfekabeln zwischen Fahrzeugen
 - Automatisches temperaturabhängiges Diesel-Vorglühen mit eigener Glühkerzenstörung
 - Abgasrauch nach Baujahr, Emissionsprofil, Motorverschleiß, Last, Temperatur, langem Leerlauf und Art des aktiven Defekts: schwarzer Ruß, blaues Öl oder weißer unverbrannter Kraftstoff
-- Antriebsstrangverwaltung für Traktoren: Modi 4x2 / Allrad / AUTO, Differentialsperren und Feststellbremse
+- Antriebsstrangverwaltung für Traktoren: Hinterradantrieb / Allrad / AUTO, Differentialsperren und Feststellbremse
 - Zuverlässigkeit und Wartungsfreundlichkeit je Marke und Baujahr, im Shop sichtbar
-- Mehrspieler und Dedicated Server, 15 Sprachen
+- Mehrspieler und Dedicated Server, 27 Sprachen
+- Elektrofahrzeuge werden noch nicht unterstützt
+
+Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 0.10.0.0:
-- Gebrauchtfahrzeuge verbessert: ein versteckter Defekt beim Kauf ist jetzt ein echtes Risiko, und eine zuverlässige Marke senkt es
-- Abgasrauch hinzugefügt, gesteuert von Fahrzeugalter, Motorverschleiß, Last und aktiven Defekten, mit einer Detailstufe, die jeder Spieler auf seinem eigenen Rechner einstellt
-- Luftfilter hinzugefügt, der sich bei staubiger Arbeit zusetzt und von der Wartung in der Werkstatt ersetzt wird
-- Druckluftgebläse verbessert: es stellt einen Luftfilter nicht mehr vollständig wieder her, und Waschen reinigt ihn nicht mehr
-- Handwerkzeuge verbessert: sie reichen weiter
-- Füllstände für Motoröl, Kühlmittel, Getriebeöl und Hydraulikflüssigkeit hinzugefügt, ablesbar bei der Kontrolle vor Schichtbeginn
-- Getriebeöl-Leck als Defekt hinzugefügt
-- Werkstattleistung Nachfüllen hinzugefügt, berechnet auf das, was der Maschine wirklich fehlt
-- Tutorial-Tipps für Füllstände, Abgasrauch, Antriebsmodi, Feststellbremse und Getriebeüberhitzung hinzugefügt
-- Kontrolle vor Schichtbeginn verbessert: ein Urteil oben, Maschine und nächste Wartung im Kopf, Balken für die vier Füllstände
-- Fahrzeug-Infobox zu Fuß vereinfacht: nur noch Zustand und nächste Wartung
-- Antriebsverwaltung für Traktoren hinzugefügt: Modi 4x2, 4WD und AUTO mit Differentialsperren
-- Feststellbremse hinzugefügt, die automatisch anziehen kann
-- HUD-Anzeige von Traktor-, Anhänger- und Gesamtmasse hinzugefügt
-- Armaturenbrettanzeigen im erweiterten Tachometer-Layout hinzugefügt
-- Eigene Temperaturwarnungen und Anzeigen für Motor und Getriebe hinzugefügt
-- Automatisches Diesel-Vorglühen bei Kälte hinzugefügt, mit eigener Glühkerzenstörung
-- Störung des Getriebethermostats für CVT-Getriebe hinzugefügt
-- Getriebeschaden beim Kurvenfahren auf hartem Boden mit gesperrten Differentialen hinzugefügt
-- Getriebeschaden bei gehaltener Last unter 45 C Öltemperatur hinzugefügt
-- Erwärmung des Getriebeöls durch Pumpe, Zapfwelle und schwere Arbeit bei niedriger Geschwindigkeit hinzugefügt
-- Hydraulikverschleiß durch laufende Pumpe, angehobene Gerätemasse und Vibration hinzugefügt
-- Getriebeöltemperatur verbessert: sie folgt jetzt der Last, statt eine Zielwert zu halten
-- Kühlerverschmutzung verbessert: die Kühlleistung sinkt jetzt mit dem Verschmutzungsgrad
-- Lenkungsverschleiß verbessert: er richtet sich jetzt nach dem Lenkeinschlag und der Last auf der gelenkten Achse
-- Kompatibilität ergänzt: Antrieb und Feststellbremse überlassen Enhanced Vehicle den Vortritt
-- Übersetzungen der fünfzehn unterstützten Sprachen verbessert
-- Kühlungsverschleiß neu abgestimmt: er setzt jetzt einen Motor über seiner Zieltemperatur voraus
-- KI-Helfer neu abgestimmt: sie verschleißen eine Maschine jetzt wie ein Spieler
-- Verschleiß bei kaltem Motor neu abgestimmt: er beginnt jetzt erst unter hoher Last
-- Turboladerverschleiß neu abgestimmt: er betrifft jetzt jeden Motor ab 75 PS
-- Schmierung neu abgestimmt: sie gilt jetzt für jede nicht straßengebundene Maschine
-- Fahrzeugausschlüsse neu abgestimmt: der Mod betreut nun jede Maschine mit einem zu pflegenden Motor
-- Hydraulikdefekte neu abgestimmt: sie treffen jetzt nur noch Maschinen mit echter Hydraulik
-- Einstellungen für Temperaturempfindlichkeit, Aufwärmbeschleunigung und Abkühlverzögerung entfernt
-- Arbeitssystem entfernt, samt Ernteverschleiß und Entladeschneckenstörung
-- Vehicle Years wird nicht mehr benötigt, der Mod ermittelt die Baujahre selbst
-- Verbesserung bei Auftragsfahrzeugen: Sie zeigen nun ihre Stunden an und verschleißen nicht mehr
-- Verbesserung im Leerlauf: Ein laufender Motor ohne Fahrer verbraucht nun Kraftstoff
-- Verbesserung bei Gebrauchtfahrzeugen: Ihr Zustand richtet sich nun nach der gewählten Fahrzeuglebensdauer
-- Einstellungsprofil hinzugefügt, das neuen Spielständen die aktuellen Einstellungen mitgibt
-- Fuhrpark-Zurücksetzung hinzugefügt, die alle Fahrzeuge an der gewählten Fahrzeuglebensdauer ausrichtet]]></de>
+- Diesen unabhängigen Fork in Realistic Mechanical Systems umbenannt; vorhandene Spielstände und Einstellungen von Advanced Damage System werden automatisch übernommen
+- Gebrauchtfahrzeuge überarbeitet: Ihr Zustand folgt der gewählten Fahrzeuglebensdauer, beim Kauf sind versteckte Defekte möglich und zuverlässige Marken senken das Risiko
+- Physisches Motoröl, Kühlmittel, Getriebeöl und Hydrauliköl hinzugefügt: neun käufliche Produkte in 5-, 25- und 200-Liter-Gebinden, manuelles Umfüllen, Verunreinigung und Werkstattbestand; Getriebeöllecks können den Kreislauf entleeren
+- Kontrolle vor Schichtbeginn und Flüssigkeitsservice in der Werkstatt überarbeitet: Einsatzurteil, nächste Wartung, vier Füllstandsanzeigen und ein Nachfüllvorgang nach tatsächlich fehlender Menge
+- Luftfilterwartung überarbeitet: Staub setzt den Filter zu, das Druckluftgebläse reinigt ihn nur teilweise, Waschen reinigt ihn nicht und die Werkstattwartung ersetzt ihn; Handwerkzeuge reichen außerdem weiter
+- Abgasrauch hinzugefügt, gesteuert von Fahrzeugalter, Motorverschleiß, Last und aktiven Defekten, mit lokaler Detailstufe für jeden Spieler
+- Antriebsverwaltung für Traktoren hinzugefügt: Hinterradantrieb, Allrad und AUTO, Differentialsperren, automatische Feststellbremse und Verschleiß durch Antriebsstrangbelastung; Enhanced Vehicle übernimmt die von ihm verwalteten Funktionen
+- HUD um Traktor-, Anhänger- und Gesamtmasse, Armaturenbrettanzeigen sowie getrennte Temperaturwarnungen für Motor und Getriebe erweitert
+- Automatisches Diesel-Vorglühen bei Kälte mit einer vierstufigen Glühkerzenstörung hinzugefügt
+- Thermischen Getriebeverschleiß überarbeitet: Die Temperatur reagiert auf Pumpe, Zapfwelle und schwere Arbeit bei niedriger Geschwindigkeit; kaltes Öl erhöht den Verschleiß nur unter echter Antriebslast schrittweise; CVT-Getriebe können einen Thermostatdefekt erleiden
+- Hydraulikverschleiß und -defekte anhand tatsächlicher Maschinenfunktionen, Pumpenbetrieb, angehobener Masse und Vibration neu aufgebaut
+- Eigenständiges Zapfwellensystem mit Defekten an Zapfwellen-Antriebskupplung, Lager der Zapfwellenabtriebswelle und Zapfwellen-Zuschaltsteuerung hinzugefügt
+- Mechanischen Verschleiß neu abgestimmt: Kühlerverschmutzung senkt die Kühlleistung, Kühlungsverschleiß erfordert einen Motor über Zieltemperatur, Verschleiß bei kaltem Motor setzt hohe Last voraus, Turboverschleiß gilt ab 75 PS, Lenkungsverschleiß folgt Winkel und Achslast und Schmierung gilt für jede nicht straßengebundene Maschine
+- Fahrzeugeignung und nicht vom Spieler gesteuerte Fahrzeuge überarbeitet: unterstützte motorisierte Maschinen werden nach ihren Funktionen eingestuft, KI-Helfer verursachen normalen Verschleiß und Auftragsmaschinen zeigen Stunden an, ohne zu verschleißen
+- Leerlauf verbessert: Ein unbeaufsichtigt laufender Motor verbraucht jetzt Kraftstoff
+- Globales Einstellungsprofil für neue Spielstände und eine Fuhrpark-Zurücksetzung anhand der gewählten Fahrzeuglebensdauer hinzugefügt; Einstellungen für Temperaturempfindlichkeit, Aufwärmbeschleunigung und Abkühlverzögerung entfernt
+- Arbeitssystem, Ernteverschleiß und Entladeschneckenstörung entfernt; Baujahre werden jetzt intern ohne Vehicle Years ermittelt
+- Oberflächen für Werkstatt, Inspektion, Bericht, Wartungsprotokoll und Rückgabe geleaster Fahrzeuge überarbeitet; Fahrzeug-Infobox zu Fuß auf Zustand und nächste Wartung vereinfacht
+- Tutorial-Tipps für Flüssigkeiten, Abgasrauch, Antrieb, Feststellbremse und Temperatursysteme erweitert
+- 12 Sprachen hinzugefügt (insgesamt 27) und bestehende Übersetzungen verbessert]]></de>
         
         <fr><![CDATA[Vos machines s'usent enfin comme les vraies.
 
@@ -192,7 +154,7 @@ ATELIER
 
 ENTRETIEN QUOTIDIEN
 - Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air
-- La soufflette nettoie le bloc de refroidissement et l'admission, la pompe à graisse rétablit le graissage des machines qui en demandent
+- La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air ; la pompe à graisse rétablit le graissage des machines qui en demandent
 - Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
 
 SIMULATION
@@ -200,53 +162,34 @@ SIMULATION
 - Batterie et alternateur simulés comme un vrai circuit, avec perte de capacité au froid, résistance interne, chute de tension et câbles de démarrage entre véhicules
 - Préchauffage diesel automatique selon la température, avec sa propre panne de bougies
 - Fumée d'échappement pilotée par le millésime, le profil d'émissions, l'usure moteur, la charge, la température, le ralenti prolongé et le type de panne active : suie noire, huile bleue ou carburant imbrûlé blanc
-- Gestion de transmission sur les tracteurs : modes 4x2 / 4RM / AUTO, blocages de différentiel et frein de parking
+- Gestion de transmission sur les tracteurs : modes 2RM / 4RM / AUTO, blocages de différentiel et frein de parking
 - Fiabilité et facilité d'entretien par marque et par millésime, affichées en boutique
-- Multijoueur et serveur dédié, 15 langues
+- Multijoueur et serveur dédié, 27 langues
+- Les véhicules électriques ne sont pas encore pris en charge
+
+Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 0.10.0.0 :
-- Amélioration des véhicules d'occasion : une panne cachée à l'achat devient un vrai risque, et une marque fiable le réduit
-- Ajout d'une fumée d'échappement pilotée par l'âge du véhicule, l'usure moteur, la charge et les pannes actives, avec un réglage de détail que chaque joueur règle sur sa propre machine
-- Ajout d'un filtre à air qui se colmate au travail dans la poussière et se remplace à l'entretien en atelier
-- Amélioration du souffleur d'air comprimé : il ne remet plus un filtre à air à neuf, et le lavage ne le nettoie plus
-- Amélioration des outils à main : ils portent plus loin
-- Ajout des niveaux d'huile moteur, de liquide de refroidissement, d'huile de transmission et d'huile hydraulique, lus au contrôle avant prise de poste
-- Ajout d'une panne de fuite d'huile de transmission
-- Ajout d'une prestation Appoint des niveaux à l'atelier, facturée sur ce qui manque réellement
-- Ajout de conseils pour les niveaux de fluides, la fumée d'échappement, les modes de transmission, le frein de parking et la surchauffe de boîte
-- Amélioration du contrôle avant prise de poste : un verdict en tête, la machine et son échéance d'entretien, des jauges sur les quatre niveaux
-- Simplification de l'infobulle véhicule à pied : état et prochain entretien uniquement
-- Ajout de la gestion de la transmission des tracteurs : modes 4x2, 4WD et AUTO avec blocages de différentiel
-- Ajout d'un frein de stationnement, avec engagement automatique possible
-- Ajout d'un affichage HUD des masses tracteur, remorquée et totale
-- Ajout des témoins du tableau de bord dans le compteur étendu
-- Ajout d'alertes et de témoins thermiques distincts pour le moteur et la transmission
-- Ajout du préchauffage diesel automatique par temps froid, avec sa panne de bougies
-- Ajout d'une panne de thermostat de transmission sur les boîtes CVT
-- Ajout de dégâts de transmission en tournant sur sol dur avec les différentiels bloqués
-- Ajout de dégâts de transmission lorsqu'une charge est maintenue sous 45 C d'huile
-- Ajout de la chauffe de l'huile de transmission par la pompe, la prise de force et le travail lourd à basse vitesse
-- Ajout de l'usure hydraulique par la pompe qui tourne, la masse d'outil portée et les vibrations
-- Amélioration de la température d'huile de transmission : elle suit désormais la charge au lieu de tenir une consigne
-- Amélioration de l'encrassement du radiateur : la capacité de refroidissement baisse désormais avec le niveau d'encrassement
-- Amélioration de l'usure de direction : elle suit désormais l'angle braqué et la charge sur l'essieu directeur
-- Ajout de la compatibilité : la transmission et le frein de stationnement laissent la main à Enhanced Vehicle
-- Amélioration des traductions dans les quinze langues prises en charge
-- Rééquilibrage de l'usure du refroidissement : elle exige désormais un moteur au-dessus de sa température cible
-- Rééquilibrage de l'ouvrier IA : il use désormais une machine comme un joueur
-- Rééquilibrage de l'usure du moteur froid : elle ne démarre désormais qu'à forte charge
-- Rééquilibrage de l'usure du turbocompresseur : elle concerne désormais tout moteur de 75 ch ou plus
-- Rééquilibrage de la lubrification : elle s'applique désormais à toutes les machines hors route
-- Rééquilibrage des exclusions de véhicules : le mod suit désormais toute machine dotée d'un moteur à entretenir
-- Rééquilibrage des pannes hydrauliques : elles ne touchent désormais que les machines réellement équipées
-- Suppression des réglages de sensibilité thermique, d'accélération de la mise en température et de ralentissement du refroidissement
-- Suppression du système de travail, de son usure de récolte et de sa panne de vis de déchargement
-- Suppression de la dépendance à Vehicle Years, le mod détermine lui-même les millésimes
-- Amélioration des véhicules de contrat : ils affichent désormais leurs heures et ne s'usent plus
-- Amélioration du ralenti : un moteur laissé tournant sans personne à bord brûle désormais son carburant
-- Amélioration des occasions : leur état suit désormais la durée de vie de véhicule choisie
-- Ajout d'un profil de réglages qui transmet vos réglages actuels à chaque nouvelle partie
-- Ajout d'une réinitialisation de la flotte qui réaligne tous les véhicules sur la durée de vie de véhicule choisie]]></fr>
+- Renommage de ce fork indépendant en Realistic Mechanical Systems, avec migration automatique des sauvegardes et réglages Advanced Damage System existants
+- Refonte des véhicules d'occasion : leur état suit la durée de vie choisie, des pannes cachées peuvent exister à l'achat et les marques fiables réduisent ce risque
+- Ajout de la gestion physique de l'huile moteur, du liquide de refroidissement, de l'huile de transmission et de l'huile hydraulique : neuf produits achetables en contenants de 5, 25 et 200 L, transfert manuel, contamination et stock d'atelier ; les fuites d'huile de transmission peuvent vider le circuit
+- Refonte du contrôle avant prise de poste et du service des fluides en atelier : verdict de départ, prochain entretien, quatre jauges de niveau et prestation d'appoint facturée au volume manquant
+- Refonte de l'entretien du filtre à air : la poussière le colmate, la soufflette ne le nettoie que partiellement, le lavage ne le nettoie pas et l'entretien en atelier le remplace ; les outils à main portent aussi plus loin
+- Ajout d'une fumée d'échappement pilotée par l'âge du véhicule, l'usure moteur, la charge et les pannes actives, avec un réglage local de détail pour chaque joueur
+- Ajout de la gestion de la transmission des tracteurs : modes 2RM, 4RM et AUTO, blocages de différentiel, frein de parking automatique et usure par contrainte ; Enhanced Vehicle reprend les fonctions qu'il gère
+- Enrichissement du HUD avec la masse du tracteur, la masse remorquée et la masse totale, les témoins du tableau de bord et des alertes thermiques distinctes pour le moteur et la transmission
+- Ajout du préchauffage diesel automatique par temps froid, avec une panne de bougies à quatre stades
+- Refonte de l'usure thermique de la transmission : la température réagit à la pompe, à la prise de force et au travail lourd à basse vitesse ; l'huile froide accélère progressivement l'usure uniquement sous charge réelle ; les boîtes CVT peuvent subir une panne de thermostat
+- Refonte de l'usure et des pannes hydrauliques selon les capacités réelles de la machine, le fonctionnement de la pompe, la masse portée et les vibrations
+- Ajout d'un système de PDF dédié, avec pannes du couplage d'entraînement, du roulement de l'arbre de sortie et de la commande d'engagement
+- Rééquilibrage de l'usure mécanique : l'encrassement du radiateur réduit le refroidissement, l'usure du refroidissement exige une température moteur supérieure à la cible, l'usure à froid exige une forte charge, le turbo est concerné dès 75 ch, la direction suit l'angle et la charge d'essieu, et la lubrification couvre toutes les machines hors route
+- Refonte de l'éligibilité et des véhicules non conduits par le joueur : les machines motorisées prises en charge sont classées selon leurs capacités, les ouvriers IA provoquent une usure normale et les véhicules de contrat affichent leurs heures sans s'user
+- Amélioration du ralenti : un moteur laissé en marche sans conducteur consomme désormais du carburant
+- Ajout d'un profil global de réglages pour les nouvelles sauvegardes et d'une réinitialisation de la flotte selon la durée de vie choisie ; suppression des réglages de sensibilité thermique, d'accélération de la mise en température et de ralentissement du refroidissement
+- Suppression du système de travail, de l'usure de récolte et de la panne de vis de déchargement ; les millésimes sont désormais déterminés en interne sans Vehicle Years
+- Refonte des interfaces de l'atelier, de l'inspection, du rapport, du journal d'entretien et du retour de location ; simplification de l'infobulle à pied à l'état et au prochain entretien
+- Extension des conseils de tutoriel aux fluides, à la fumée, à la transmission, au frein de parking et aux systèmes thermiques
+- Ajout de 12 langues (27 au total) et amélioration des traductions existantes]]></fr>
         
     </description>
     <specializations>

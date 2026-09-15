@@ -182,7 +182,16 @@ function RMS_Thermal:updateEngineThermalModel(dt, spec, isMotorStarted, motorLoa
     heat = getEngineHeat(self, spec, motorLoad, isMotorStarted)
     cooling, radiatorCooling, convectionCooling, speedCooling = getEngineCooling(self, spec, eviromentTemp, dirt, isMotorStarted)
 
-    spec.rawEngineTemperature = sanitizeNumber(spec.rawEngineTemperature + (heat - cooling) * (safeDt / 1000) * C.ENGINE_TEMPERATURE_CHANGE_SPEED * C.TEMPERATURE_CHANGE_SPEED, eviromentTemp, -80, 160)
+    spec.rawEngineTemperature = sanitizeNumber(
+        spec.rawEngineTemperature
+            + (heat - cooling)
+            * (safeDt / 1000)
+            * C.ENGINE_TEMPERATURE_CHANGE_SPEED
+            * C.TEMPERATURE_CHANGE_SPEED,
+        eviromentTemp,
+        -80,
+        160
+    )
     spec.rawEngineTemperature = math.max(spec.rawEngineTemperature, eviromentTemp)
 
     local dbg = RMS_Utils.getIsDebugDataWanted(self) and spec.debugData.engineTemp or nil
@@ -389,10 +398,21 @@ function RMS_Thermal:updateTransmissionThermalModel(dt, spec, isMotorStarted, mo
 
     local dbg = RMS_Utils.getIsDebugDataWanted(self) and spec.debugData.transmissionTemp or nil
 
-    heat, loadFactor, hydrostaticFactor, wheelSlipFactor, accFactor, cvtSlipActive, cvtSlipLocked, idleHeat, ptoHeat, hydraulicHeat = getTransmissionHeat(self, spec, isMotorStarted, motorLoad, motorRpm)
+    heat, loadFactor, hydrostaticFactor, wheelSlipFactor, accFactor,
+        cvtSlipActive, cvtSlipLocked, idleHeat, ptoHeat, hydraulicHeat =
+        getTransmissionHeat(self, spec, isMotorStarted, motorLoad, motorRpm)
     cooling, coolerCooling, convectionCooling, speedCooling = getTransmissionCooling(self, spec, eviromentTemp, dirt, isMotorStarted)
 
-    spec.rawTransmissionTemperature = sanitizeNumber(spec.rawTransmissionTemperature + (heat - cooling) * (safeDt / 1000) * C.TRANS_TEMPERATURE_CHANGE_SPEED * C.TRANS_TEMPERATURE_CHANGE_MULTIPLIER, eviromentTemp, -80, 180)
+    spec.rawTransmissionTemperature = sanitizeNumber(
+        spec.rawTransmissionTemperature
+            + (heat - cooling)
+            * (safeDt / 1000)
+            * C.TRANS_TEMPERATURE_CHANGE_SPEED
+            * C.TRANS_TEMPERATURE_CHANGE_MULTIPLIER,
+        eviromentTemp,
+        -80,
+        180
+    )
     spec.rawTransmissionTemperature = math.max(spec.rawTransmissionTemperature, eviromentTemp)
 
     local rawTransmissionTemp = sanitizeNumber(spec.rawTransmissionTemperature or spec.transmissionTemperature, eviromentTemp, -80, 180)

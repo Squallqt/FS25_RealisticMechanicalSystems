@@ -92,6 +92,7 @@ RMS_Breakdowns.PARTS = {
     FUEL_FILTER = "rms_breakdowns_part_fuel_filter",
     FUEL_LINE = "rms_breakdowns_part_fuel_line",
     PTO_DRIVE_COUPLING = "rms_breakdowns_part_pto_drive_coupling",
+    PTO_ENGAGEMENT_CONTROL = "rms_breakdowns_part_pto_engagement_control",
     PTO_DRIVE_OUTPUT = "rms_breakdowns_part_pto_drive_output"
 }
 
@@ -392,7 +393,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.0,
                 repairPrice = 0.0,
                 effects = {
-                    { id = "ENGINE_FAILURE", value = 1.0, extraData = {starter = false, message = "rms_breakdowns_dead_battery_message", reason = "BREAKDOWN", disableAi = true}, aggregation = "boolean_or"},
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_dead_battery_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            },
+                            aggregation = "boolean_or"
+                        },
                     { id = "LIGHTS_FAILURE", value = 1.0, aggregation = "boolean_or" }
                 },
                 indicators = {
@@ -530,7 +542,17 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.0,
                 repairPrice = 0.0,
                 effects = {
-                    { id = "EMPTY_EFFECT", value = 1.0, aggregation = "boolean_or",  extraData = {message = "rms_breakdowns_overload_breakdown_stage2_message", reason = "BREAKDOWN", disableAi = true, criticalOverload = true}}
+                        {
+                            id = "EMPTY_EFFECT",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                message = "rms_breakdowns_overload_breakdown_stage2_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true,
+                                criticalOverload = true
+                            }
+                        }
                 },
                 indicators = {
                     { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -597,7 +619,16 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.0,
                 repairPrice = 0.0,
                 effects = {
-                    { id = "ENGINE_LIMP_EFFECT", value = -0.2, aggregation = "min", extraData = {reason = "OVERHEAT", message = "rms_breakdowns_overheat_protection_stage1_message", disableAi = true } },
+                        {
+                            id = "ENGINE_LIMP_EFFECT",
+                            value = -0.2,
+                            aggregation = "min",
+                            extraData = {
+                                reason = "OVERHEAT",
+                                message = "rms_breakdowns_overheat_protection_stage1_message",
+                                disableAi = true
+                            }
+                        },
                 },
                 indicators = {
                     {  
@@ -615,7 +646,16 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.0,
                 repairPrice = 0.0,
                 effects = {
-                    { id = "ENGINE_LIMP_EFFECT", value = -0.5, aggregation = "min", extraData = {reason = "OVERHEAT", message = "rms_breakdowns_overheat_protection_stage2_message", disableAi = true }  },
+                        {
+                            id = "ENGINE_LIMP_EFFECT",
+                            value = -0.5,
+                            aggregation = "min",
+                            extraData = {
+                                reason = "OVERHEAT",
+                                message = "rms_breakdowns_overheat_protection_stage2_message",
+                                disableAi = true
+                            }
+                        },
                 },
                 indicators = {
                     {  
@@ -633,7 +673,16 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.0,
                 repairPrice = 0.0,
                 effects = {
-                    { id = "ENGINE_LIMP_EFFECT", value = -0.8, aggregation = "min", extraData = {reason = "OVERHEAT", message = "rms_breakdowns_overheat_protection_stage3_message", disableAi = true } },
+                        {
+                            id = "ENGINE_LIMP_EFFECT",
+                            value = -0.8,
+                            aggregation = "min",
+                            extraData = {
+                                reason = "OVERHEAT",
+                                message = "rms_breakdowns_overheat_protection_stage3_message",
+                                disableAi = true
+                            }
+                        },
                 },
                 indicators = {
                     {  
@@ -651,7 +700,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.0,
                 repairPrice = 0.0,
                 effects = {
-                     { id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or", extraData = {starter = false, message = "rms_breakdowns_overheat_protection_stage4_message", reason = "OVERHEAT", disableAi = true } },
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_overheat_protection_stage4_message",
+                                reason = "OVERHEAT",
+                                disableAi = true
+                            }
+                        },
                 },
                 indicators = {
                     {  
@@ -683,7 +743,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.0,
                 repairPrice = 20.0,
                 effects = {
-                    { id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or", extraData = {starter = false, message = "rms_breakdowns_engine_jam_stage1_message", reason = "OVERHEAT", disableAi = true} },
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_engine_jam_stage1_message",
+                                reason = "OVERHEAT",
+                                disableAi = true
+                            }
+                        },
                 },
                 indicators = {
                     {  
@@ -784,7 +855,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.ECU_MALFUNCTION,
                 effects = { 
-                    { id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or",  extraData = {starter = true, message = "rms_breakdowns_ecu_malfunction_stage4_message", reason = "BREAKDOWN", disableAi = true}} 
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = true,
+                                message = "rms_breakdowns_ecu_malfunction_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
                 },
                 indicators = {
                     { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -864,7 +946,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = 8.0 * breakdownPriceMultipliers.CORRODED_WIRING,
                 effects = { 
                     { id = "LIGHTS_FAILURE", value = 1.0, aggregation = "boolean_or" },
-                    { id = "ENGINE_FAILURE", value = 1.0, extraData = {starter = false, message = "rms_breakdowns_corroded_wiring_stage4_message", reason = "BREAKDOWN", disableAi = true}, aggregation = "boolean_or"} 
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_corroded_wiring_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            },
+                            aggregation = "boolean_or"
+                        }
                 },
                 inspection = {
                     { additional = "rms_inspection_hint_corroded_wiring_stage4" },
@@ -1238,7 +1331,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.OIL_PUMP_MALFUNCTION,
                 effects = {
-                    { id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or", extraData = {starter = true, message = "rms_breakdowns_oil_pump_malfunction_stage4_message", reason = "BREAKDOWN", disableAi = true} },
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = true,
+                                message = "rms_breakdowns_oil_pump_malfunction_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        },
                 },
                 indicators = {
                     { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -1314,7 +1418,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.VALVE_TRAIN_MALFUNCTION,
                 effects = {
-                    { id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or", extraData = {starter = true, message = "rms_breakdowns_valve_train_malfunction_stage4_message", reason = "BREAKDOWN", disableAi = true} },
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = true,
+                                message = "rms_breakdowns_valve_train_malfunction_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        },
                 },
                 indicators = {
                     { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }         
@@ -1459,7 +1574,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.MANUAL_TRANSMISSION_SYNCHRONIZER_MALFUNCTION,
                 effects = { 
-                     { id = "GEAR_SHIFT_FAILURE_CHANCE", value = 1.00, extraData = {timer = 0, status = 'IDLE', duration = 2200, message = "rms_breakdowns_transmission_synchronizer_malfunction_stage4_message", disableAi = true}, aggregation = "max"}
+                        {
+                            id = "GEAR_SHIFT_FAILURE_CHANCE",
+                            value = 1.00,
+                            extraData = {
+                                timer = 0,
+                                status = 'IDLE',
+                                duration = 2200,
+                                message = "rms_breakdowns_transmission_synchronizer_malfunction_stage4_message",
+                                disableAi = true
+                            },
+                            aggregation = "max"
+                        }
                 },
                 indicators = {
                     { id = db.TRANSMISSION, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -1686,7 +1812,16 @@ RMS_Breakdowns.BreakdownRegistry = {
                      { id = "TRANSMISSION_HEAT_MODIFIER", value = 0.15, aggregation = "sum" },
                      { id = "ENGINE_TORQUE_MODIFIER", value = -0.3, aggregation = "sum" },
                      { id = "CVT_PRESSURE_DROP_CHANCE", value = 0.1, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE'}},
-                     { id = "ENGINE_LIMP_EFFECT", value = -0.2, aggregation = "min", extraData = {reason = "BREAKDOWN", message = "rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message", disableAi = true } },
+                        {
+                            id = "ENGINE_LIMP_EFFECT",
+                            value = -0.2,
+                            aggregation = "min",
+                            extraData = {
+                                reason = "BREAKDOWN",
+                                message = "rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message",
+                                disableAi = true
+                            }
+                        },
                 },
                 indicators = {
                     { id = db.TRANSMISSION, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -2445,7 +2580,7 @@ RMS_Breakdowns.BreakdownRegistry = {
     PTO_ENGAGEMENT_CONTROL_MALFUNCTION = {
         isSelectable = true,
         system = systems.PTO,
-        part = parts.PTO_DRIVE_COUPLING,
+        part = parts.PTO_ENGAGEMENT_CONTROL,
         isApplicable = function(vehicle)
             local spec = vehicle.spec_RealisticMechanicalSystems
             return isPtoBreakdownApplicable(vehicle) and spec ~= nil and (tonumber(spec.year) or 0) >= 1990
@@ -2500,7 +2635,15 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.PTO_ENGAGEMENT_CONTROL_MALFUNCTION,
                 effects = {
-                    { id = "PTO_ENGAGEMENT_BLOCKED_CHANCE", value = 1.0, aggregation = "max", extraData = {message = "rms_breakdowns_pto_engagement_control_malfunction_stage4_message", disableAi = true} }
+                        {
+                            id = "PTO_ENGAGEMENT_BLOCKED_CHANCE",
+                            value = 1.0,
+                            aggregation = "max",
+                            extraData = {
+                                message = "rms_breakdowns_pto_engagement_control_malfunction_stage4_message",
+                                disableAi = true
+                            }
+                        }
                 },
                 indicators = {
                     { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -3053,7 +3196,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.FUEL_PUMP_MALFUNCTION,
                 repairPrice = 1.0 * breakdownPriceMultipliers.FUEL_PUMP_MALFUNCTION,
                 effects = {
-                    { id = "IDLE_HUNTING_EFFECT", value = 0.05, aggregation = "max", extraData = { timer = 0, period = 1800, rpmBackup = 0} },
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.05, aggregation = "max", extraData = { timer = 0, period = 1800} },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.15, aggregation = "sum" },
                     { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
@@ -3067,7 +3210,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.FUEL_PUMP_MALFUNCTION,
                 repairPrice = 2.0 * breakdownPriceMultipliers.FUEL_PUMP_MALFUNCTION,
                 effects = {
-                    { id = "IDLE_HUNTING_EFFECT", value = 0.08, aggregation = "max", extraData = { timer = 0, period = 1600, rpmBackup = 0} },
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.08, aggregation = "max", extraData = { timer = 0, period = 1600} },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.12, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.4, aggregation = "sum" },
                     { id = "ENGINE_STALLS_CHANCE", value = 20.0, aggregation = "min" },
@@ -3096,7 +3239,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.5 * breakdownProgressMultipliers.FUEL_PUMP_MALFUNCTION,
                 repairPrice = 4.0 * breakdownPriceMultipliers.FUEL_PUMP_MALFUNCTION,
                 effects = {
-                    { id = "IDLE_HUNTING_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1500, rpmBackup = 0} }, 
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1500} },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.25, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 1.0, aggregation = "sum" },
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
@@ -3116,7 +3259,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.FUEL_PUMP_MALFUNCTION,
                 effects = { 
-                    { id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or", extraData = {starter = true, message = "rms_breakdowns_fuel_pump_malfunction_stage4_message", reason = "BREAKDOWN", disableAi = true} } 
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = true,
+                                message = "rms_breakdowns_fuel_pump_malfunction_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
                 },
                 indicators = {
                     { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -3143,7 +3297,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.FUEL_INJECTOR_MALFUNCTION,
                 repairPrice = 1.0 * breakdownPriceMultipliers.FUEL_INJECTOR_MALFUNCTION,
                 effects = {
-                    { id = "IDLE_HUNTING_EFFECT", value = 0.05, aggregation = "max", extraData = { timer = 0, period = 1800, rpmBackup = 0} },
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.05, aggregation = "max", extraData = { timer = 0, period = 1800} },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.08, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.10, aggregation = "sum" },
                     { id = "EXHAUST_SOOT", value = 0.20, aggregation = "max" },
@@ -3158,7 +3312,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.FUEL_INJECTOR_MALFUNCTION,
                 repairPrice = 2.0 * breakdownPriceMultipliers.FUEL_INJECTOR_MALFUNCTION,
                 effects = {
-                    { id = "IDLE_HUNTING_EFFECT", value = 0.08, aggregation = "max", extraData = { timer = 0, period = 1500, rpmBackup = 0} },
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.08, aggregation = "max", extraData = { timer = 0, period = 1500} },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.20, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.25, aggregation = "sum" },
                     { id = "ENGINE_STALLS_CHANCE", value = 30.0, aggregation = "min" },
@@ -3177,7 +3331,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.5 * breakdownProgressMultipliers.FUEL_INJECTOR_MALFUNCTION,
                 repairPrice = 4.0 * breakdownPriceMultipliers.FUEL_INJECTOR_MALFUNCTION,
                 effects = {
-                    { id = "IDLE_HUNTING_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1800, rpmBackup = 0} },
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1800} },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.35, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.50, aggregation = "sum" },
                     { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
@@ -3196,7 +3350,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.FUEL_INJECTOR_MALFUNCTION,
                 effects = {
-                    { id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or", extraData = {starter = true, message = "rms_breakdowns_fuel_injector_malfunction_stage4_message", reason = "BREAKDOWN", disableAi = true} }
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = true,
+                                message = "rms_breakdowns_fuel_injector_malfunction_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
                 },
                 indicators = {
                     { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -3223,7 +3388,19 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.FUEL_FILTER_CLOGGING,
                 repairPrice = 1.0 * breakdownPriceMultipliers.FUEL_FILTER_CLOGGING,
                 effects = {
-                     { id = "ENGINE_HESITATION_CHANCE", value = 0.4, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.9, cruiseState = 0} },
+                        {
+                            id = "ENGINE_HESITATION_CHANCE",
+                            value = 0.4,
+                            aggregation = "min",
+                            extraData = {
+                                timer = 0,
+                                duration = 300,
+                                status = 'IDLE',
+                                amplitude = 0.6,
+                                motorLoad = 0.9,
+                                cruiseState = 0
+                            }
+                        },
                      { id = "ENGINE_TORQUE_MODIFIER", value = -0.03, aggregation = "sum" },
                 }
             },
@@ -3234,7 +3411,19 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.FUEL_FILTER_CLOGGING,
                 repairPrice = 2.0 * breakdownPriceMultipliers.FUEL_FILTER_CLOGGING,
                 effects = {
-                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 0.7, motorLoad = 0.9, cruiseState = 0} },
+                        {
+                            id = "ENGINE_HESITATION_CHANCE",
+                            value = 0.3,
+                            aggregation = "min",
+                            extraData = {
+                                timer = 0,
+                                duration = 400,
+                                status = 'IDLE',
+                                amplitude = 0.7,
+                                motorLoad = 0.9,
+                                cruiseState = 0
+                            }
+                        },
                      { id = "ENGINE_TORQUE_MODIFIER", value = -0.06, aggregation = "sum" },
                      { id = "ENGINE_STALLS_CHANCE", value = 30.0, aggregation = "min" },
                      { id = "EXHAUST_UNBURNT", value = 0.15, aggregation = "max" },
@@ -3261,7 +3450,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.FUEL_FILTER_CLOGGING,
                 effects = {
-                    { id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or", extraData = {starter = true, message = "rms_breakdowns_fuel_filter_clogging_stage4_message", reason = "BREAKDOWN", disableAi = true} }
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = true,
+                                message = "rms_breakdowns_fuel_filter_clogging_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
                 }
             }
         }
@@ -3321,7 +3521,18 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.FUEL_LINE_AIR_LEAK,
                 effects = {
-                    { id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or", extraData = {starter = true, message = "rms_breakdowns_fuel_line_air_leak_stage4_message", reason = "BREAKDOWN", disableAi = true}}
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = true,
+                                message = "rms_breakdowns_fuel_line_air_leak_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
                 }
             }
         }

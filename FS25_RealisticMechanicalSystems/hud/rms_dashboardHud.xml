@@ -23,5 +23,10 @@
       <slice id="diffLockRear" uvs="636px 730px 44px 59px" />
       <slice id="parkBrake" uvs="321px 162px 64px 51px" />
       <slice id="fuelConsumption" uvs="951px 817px 43px 46px" />
+      <slice id="engineLoad" uvs="528px 894px 64px 64px" />
+      <slice id="engineFault" uvs="631px 894px 64px 64px" />
+      <slice id="transmissionNormal" uvs="735px 895px 62px 62px" />
+      <slice id="transmissionTemperature" uvs="420px 552px 62px 62px" />
+      <slice id="transmissionFault" uvs="323px 551px 62px 62px" />
    </slices>
 </texture>

@@ -63,6 +63,8 @@
                     </fillUnit>
                 </fillUnits>
                 <objectChange node="drumPalletCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision01" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision02" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="drumCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="drumVisualLink" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
@@ -70,17 +72,18 @@
             </fillUnitConfiguration>
     </fillUnitConfigurations></fillUnit>
     <pallet fillUnitIndex="1"/>
-    <dynamicMount triggerNode="dynamicMountTrigger" triggerForceAcceleration="4" additionalMountDistance="0.6" jointTransY="0.05" jointLimitToRotY="true"/>
+    <dynamicMount triggerNode="dynamicMountTrigger" triggerForceAcceleration="4" additionalMountDistance="1.054" jointTransY="0.106" jointLimitToRotY="true"/>
     <foliageBending/>
     <wearable wearDuration="480" workMultiplier="1" fieldMultiplier="1"/>
     <washable dirtDuration="90" washDuration="1" workMultiplier="1" fieldMultiplier="1"/>
     <i3dMappings>
         <i3dMapping id="fluidContainer_component1" node="0>"/><i3dMapping id="mediumCanCollision" node="0>0"/>
         <i3dMapping id="largeCanCollision" node="0>1"/><i3dMapping id="drumPalletCollision" node="0>2"/>
-        <i3dMapping id="drumCollision" node="0>3"/><i3dMapping id="dynamicMountTrigger" node="0>4"/>
-        <i3dMapping id="mediumVisualLink" node="0>5"/><i3dMapping id="largeVisualLink" node="0>6"/>
-        <i3dMapping id="drumVisualLink" node="0>7"/><i3dMapping id="drumPalletVisualLink" node="0>8"/>
-        <i3dMapping id="fillRootNode" node="0>9"/>
-        <i3dMapping id="pickupNode" node="0>10"/>
+        <i3dMapping id="drumPalletFloorCollision01" node="0>3"/><i3dMapping id="drumPalletFloorCollision02" node="0>4"/>
+        <i3dMapping id="drumCollision" node="0>5"/><i3dMapping id="dynamicMountTrigger" node="0>6"/>
+        <i3dMapping id="mediumVisualLink" node="0>7"/><i3dMapping id="largeVisualLink" node="0>8"/>
+        <i3dMapping id="drumVisualLink" node="0>9"/><i3dMapping id="drumPalletVisualLink" node="0>10"/>
+        <i3dMapping id="fillRootNode" node="0>11"/>
+        <i3dMapping id="pickupNode" node="0>12"/>
     </i3dMappings>
 </vehicle>

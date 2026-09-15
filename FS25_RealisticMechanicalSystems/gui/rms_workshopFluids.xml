@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture>
+    <meta>
+        <filename>rms_workshopFluids.dds</filename>
+        <size width="256" height="256" />
+    </meta>
+    <slices>
+        <slice id="engineOil" uvs="0px 0px 128px 128px" />
+        <slice id="coolant" uvs="128px 0px 128px 128px" />
+        <slice id="transmissionOil" uvs="0px 128px 128px 128px" />
+        <slice id="hydraulicFluid" uvs="128px 128px 128px 128px" />
+    </slices>
+</texture>

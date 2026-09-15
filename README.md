@@ -5,12 +5,14 @@ In-depth vehicle wear, failure, diagnostics, maintenance, and repair system for 
 [![Version](https://img.shields.io/badge/version-0.10.0.0-blue.svg)](#)
 [![FS25](https://img.shields.io/badge/FS25-compatible-green.svg)](https://farming-simulator.com/)
 ![Multiplayer](https://img.shields.io/badge/multiplayer-supported-success.svg)
-![Languages](https://img.shields.io/badge/languages-15-blue.svg)
+![Languages](https://img.shields.io/badge/languages-27-blue.svg)
 [![License](https://img.shields.io/badge/license-GPL--3.0-yellow.svg)](LICENSE)
 
 Every machine is built from up to 8 individual systems, each with its own condition, its own wear factors, and its own way of failing. Service on schedule, work the machine within its limits, and watch for the early symptoms: the cheapest repair is always the one you catch first.
 
 Singleplayer, multiplayer, and dedicated server.
+
+Electric vehicles are not supported yet.
 
 > **Note:** This repository is an independently maintained fork of Advanced Damage System by id577, developed by Squallqt since 30 June 2026. The gameplay model and the documentation have been substantially reworked since then; the original credits and provenance are preserved unchanged in [NOTICE.md](NOTICE.md).
 
@@ -284,48 +286,26 @@ rms_printSpecVar rawTransmissionTemperature
 
 ### v0.10.0.0
 
-- Improved used vehicles: a hidden fault at purchase is now a real risk, and a reliable brand lowers it
-- Added exhaust smoke driven by vehicle age, engine wear, load and active faults, with a detail setting each player sets on their own machine
-- Added an air filter that clogs with dusty work and is replaced by workshop maintenance
-- Improved the air blower: it no longer restores an air filter fully, and washing no longer cleans one
-- Improved the hand tools: they now reach further
-- Added engine oil, coolant, transmission oil and hydraulic fluid levels, read by the pre-shift check
-- Added a transmission oil leak breakdown
-- Added a Top up service at the workshop, priced on what the machine is actually missing
-- Added tutorial tips for fluid levels, exhaust smoke, drivetrain modes, the parking brake and transmission overheating
-- Improved the pre-shift check: a go or no go verdict, the machine and its next service on top, gauges on the four fluid levels
-- Simplified the vehicle info box on foot: condition and next service only
-- Added drivetrain management for tractors: 4x2, 4WD and AUTO modes with differential locks
-- Added a parking brake that can engage automatically
-- Added a HUD readout of tractor, towed and combined mass
-- Added dashboard indicators inside the extended speedometer layout
-- Added separate thermal alerts and indicators for engine and transmission
-- Added automatic diesel preheating in cold weather, with its own glow plug breakdown
-- Added a transmission thermostat breakdown on CVT gearboxes
-- Added transmission damage when turning on hard ground with locked differentials
-- Added transmission damage when a load is held on oil below 45 C
-- Added transmission oil heating from the pump, the power take-off and low speed heavy work
-- Added hydraulic wear from the running pump, the lifted implement mass and vibration
-- Improved the transmission oil temperature: it now floats with the load instead of holding a target
-- Improved radiator fouling: cooling capacity now drops with the clogging level
-- Improved steering wear: it now scales with the steered angle and the load on the steered axle
-- Added compatibility: drivetrain and parking brake step aside when Enhanced Vehicle handles them
-- Improved the translations of the fifteen supported languages
-- Rebalanced cooling wear: it now requires the engine above its target temperature
-- Rebalanced AI workers: they now wear a machine like a player
-- Rebalanced cold engine wear: it now starts only under high load
-- Rebalanced turbocharger wear: it now applies to every engine of 75 hp or more
-- Rebalanced lubrication: it now applies to every non-road machine
-- Rebalanced vehicle exclusions: the mod now follows every machine that has an engine to look after
-- Rebalanced hydraulic breakdowns: they now reach only the machines that really have hydraulics
-- Removed the thermal sensitivity, warm-up boost and cooling slowdown settings
-- Removed the work process system, its harvest wear and its unloading auger breakdown
-- Removed the Vehicle Years requirement, the mod resolves production years itself
-- Improved contract vehicles: they now show their hours and no longer wear down
-- Improved idling: an engine left running with nobody aboard now burns its fuel
-- Improved used vehicles: their condition now follows the selected vehicle lifespan
-- Added a settings profile that hands your current settings to every new savegame
-- Added a fleet reset that realigns every vehicle on the selected vehicle lifespan
+- Renamed this independent fork to Realistic Mechanical Systems; existing Advanced Damage System saves and settings are migrated automatically
+- Reworked used vehicles: condition follows the selected vehicle lifespan, hidden faults can exist at purchase, and reliable brands reduce the risk
+- Added physical engine oil, coolant, transmission oil and hydraulic fluid: nine purchasable products in 5, 25 and 200 L containers, manual transfer, contamination and workshop stock; transmission oil leaks can drain the circuit
+- Reworked the pre-shift check and workshop fluid service: go or no go verdict, next service, four level gauges and a Top up procedure charged by the missing volume
+- Reworked air filter servicing: dusty work clogs the filter, the air blower only cleans it partly, washing does not clean it, and workshop maintenance replaces it; hand tools also reach further
+- Added exhaust smoke driven by vehicle age, engine wear, load and active faults, with a local detail setting for each player
+- Added tractor drivetrain management: 2WD, 4WD and AUTO modes, differential locks, an automatic parking brake and wind-up wear; Enhanced Vehicle takes over the functions it manages
+- Expanded the HUD with tractor, towed and combined mass, dashboard indicators, and separate engine and transmission thermal alerts
+- Added automatic diesel preheating in cold weather, with a four-stage glow plug breakdown
+- Reworked transmission thermal wear: temperature responds to the pump, power take-off and heavy low-speed work; cold oil progressively increases wear only under real driveline load; CVT gearboxes can suffer thermostat failure
+- Rebuilt hydraulic wear and breakdowns around actual machine capability, pump operation, lifted mass and vibration
+- Added a dedicated power take-off system with drive coupling, output bearing and engagement control breakdowns
+- Rebalanced mechanical wear: radiator clogging reduces cooling, cooling wear requires an engine above target temperature, cold-engine wear requires high load, turbo wear applies from 75 hp, steering follows angle and axle load, and lubrication covers every non-road machine
+- Reworked vehicle eligibility and non-player vehicles: supported motorized machines are classified by capability, AI workers cause normal wear, and contract machines show hours without wearing down
+- Improved idling: an unattended running engine now consumes fuel
+- Added a global settings profile for new savegames and a fleet reset based on the selected vehicle lifespan; removed the thermal sensitivity, warm-up boost and cooling slowdown settings
+- Removed the work process system, harvest wear and the unloading auger breakdown; production years are now resolved internally without Vehicle Years
+- Reworked the workshop, inspection, report, maintenance log and leased-vehicle return interfaces; simplified the on-foot vehicle info box to condition and next service
+- Expanded tutorial tips for the fluid, smoke, drivetrain, parking brake and thermal systems
+- Added 12 languages (27 total) and improved existing translations
 
 ## Support
 

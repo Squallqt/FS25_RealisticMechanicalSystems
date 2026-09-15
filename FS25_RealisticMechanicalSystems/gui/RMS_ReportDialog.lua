@@ -7,11 +7,12 @@ RMS_ReportDialog.INSTANCE = nil
 
 local RMS_ReportDialog_mt = Class(RMS_ReportDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
-local REPORT_TABLE_MIN_ROWS_MAIN = 10
-local REPORT_TABLE_MIN_ROWS_BOTTOM = 4
+-- thresholds a measured figure falls back on when the report carries no rule for it
+local ASSESSMENT_DEFAULT_CONFIG = {inverted = false, ideal = 100, high = 95, mid = 90, low = 70, isPercent = true}
 local getSystemDisplayName
 local formatRecommendationText
 local joinRecommendationParts
+
 ---Recommendation rules evaluated in order against the report entry and its metrics
 local RECOMMENDATION_RULES = {
     -- service between 0.45 and 0.65
@@ -224,7 +225,7 @@ function getSystemDisplayName(systemKey)
     return tostring(systemKey or "")
 end
 
----Formats a recommendation template with its parameters, returning the raw template on failure
+---Formats a recommendation template with its parameters
 -- @param string l10nKey l10n key of the template
 -- @param table? params format arguments
 -- @param string? fallback text used when the key resolves to nothing
@@ -232,8 +233,8 @@ end
 function formatRecommendationText(l10nKey, params, fallback)
     local template = getTextOrFallback(l10nKey, fallback or l10nKey)
     if type(params) == "table" and #params > 0 then
-        local ok, formattedText = pcall(string.format, template, table.unpack(params))
-        if ok and formattedText ~= nil and formattedText ~= "" then
+        local formattedText = string.format(template, table.unpack(params))
+        if formattedText ~= nil and formattedText ~= "" then
             return formattedText
         end
     end
@@ -293,16 +294,6 @@ local function getTransmissionEffectValue(activeEffects, effectId)
     return nil
 end
 
----Appends padding rows until the list reaches the requested row count
--- @param table rows row list, modified in place
--- @param integer minRows minimum number of rows
--- @param function makePaddingRow builds one padding row
-local function padRowsToCount(rows, minRows, makePaddingRow)
-    while #rows < minRows do
-        table.insert(rows, makePaddingRow())
-    end
-end
-
 ---Appends a text to the list unless it is empty or already present
 -- @param table list text list, modified in place
 -- @param table seen texts already inserted
@@ -338,8 +329,8 @@ local function buildRecommendationsData(vehicle, reportEntry, metrics)
 
     for _, rule in ipairs(RECOMMENDATION_RULES) do
         if type(rule.check) == "function" then
-            local ok, result = pcall(rule.check, vehicle, reportEntry, metrics)
-            if ok and result then
+            local result = rule.check(vehicle, reportEntry, metrics)
+            if result then
                 local recommendationText = nil
 
                 if result == true then
@@ -353,14 +344,14 @@ local function buildRecommendationsData(vehicle, reportEntry, metrics)
                 end
 
                 if recommendationText ~= nil and recommendationText ~= "" then
-                    table.insert(recommendations, "- " .. recommendationText)
+                    table.insert(recommendations, recommendationText)
                 end
             end
         end
     end
 
     if #recommendations == 0 then
-        table.insert(recommendations, "- " .. formatRecommendationText("rms_report_recommendation_all_ok"))
+        table.insert(recommendations, formatRecommendationText("rms_report_recommendation_all_ok"))
     end
 
     return recommendations
@@ -436,41 +427,33 @@ function RMS_ReportDialog:updateScreen()
         balanceText
     )
 
-    -- header
-    -- title
-    self.reportTitle:setText(g_i18n:getText("rms_report_header_title") .. " #" .. self.lastReport.id - 1)
+    -- identity band: the report number, then everything that dates the reading on one line
+    self.reportTitle:setText(g_i18n:getText("rms_report_header_title") .. " #" .. self.lastReport.id - 1, nil, nil, true)
+    self.reportVehicleImage:setImageFilename(self.vehicle:getImageFilename())
 
-    -- name
-    self.vehicleNameValue:setText(self.vehicle:getFullName())
+    local reportDate = self.lastReport.date or {}
+    local dateStr = string.format("%s %s. '%02d",
+        reportDate.day or 1,
+        g_i18n:formatPeriod(reportDate.month or 1, true),
+        reportDate.year or 0)
 
-    local yearStr = "00"
-    if self.lastReport.date and self.lastReport.date.year then
-        if self.lastReport.date.year >= 10 then
-            yearStr = tostring(self.lastReport.date.year)
-        else
-            yearStr = "0" .. tostring(self.lastReport.date.year)
-        end
-    end
-    local dDay = (self.lastReport.date and self.lastReport.date.day) or 1
-    local dMonth = (self.lastReport.date and self.lastReport.date.month) or 1
-    local dateStr = string.format("%s %s. '%s", dDay, g_i18n:formatPeriod(dMonth, true), yearStr)
-    
-    self.reportDateValue:setText(dateStr)
-    self.vehicleAgeValue:setText(tostring(self.lastReport.conditionData.age or 0) .. " " .. g_i18n:getText("rms_ws_age_unit"))
-    self.vehicleOperatingHoursValue:setText(string.format("%.1f", self.lastReport.conditionData.operatingHours or 0) .. " " .. g_i18n:getText("rms_ws_hours_unit"))
-        
-
-    self.inspectionTypeValue:setText(g_i18n:getText(self.lastReport.type) .. " (" .. g_i18n:getText(self.lastReport.optionOne) .. ")")
-
-    self.inspectionLocationValue:setText(g_i18n:getText(self.lastReport.location) or "UNKNOWN")
+    self.reportSubtitle:setText(table.concat({
+        self.vehicle:getFullName(),
+        dateStr,
+        string.format("%s (%s)", g_i18n:getText(self.lastReport.type), g_i18n:getText(self.lastReport.optionOne)),
+        g_i18n:getText(self.lastReport.location),
+        string.format("%d %s", self.lastReport.conditionData.age or 0, g_i18n:getText("rms_ws_age_unit")),
+        string.format("%.1f %s", self.lastReport.conditionData.operatingHours or 0, g_i18n:getText("rms_ws_hours_unit"))
+    }, " · "), nil, nil, true)
 
     -- overall assessment
     -- condition and service
     local condition = self.lastReport.conditionData.condition or 1.0
     local service = self.lastReport.conditionData.service or 1.0
-    local serviceIntervalRemaining = RMS_Utils.getServiceIntervalRemainingRatio(service)
-    table.insert(self.overallAssessmentData, {'rms_report_overall_assessment_condition', condition})
-    table.insert(self.overallAssessmentData, {'rms_report_overall_assessment_service', serviceIntervalRemaining, service})
+    self.reportSummaryCondition:setText(RMS_Utils.formatCondition(condition, self.isCompleteInspection))
+    self.reportSummaryCondition:setTextColor(RMS_Utils.getConditionColor(condition, self.isCompleteInspection))
+    self.reportSummaryService:setText(RMS_Utils.formatService(service, self.isCompleteInspection))
+    self.reportSummaryService:setTextColor(RMS_Utils.getServiceColor(service, self.isCompleteInspection))
 
     -- shortest mtbf, lowest and mean condition across enabled systems
     local systems = self.lastReport.conditionData.systems or {}
@@ -800,13 +783,20 @@ function RMS_ReportDialog:updateScreen()
     local inactivePoorPartsSeen = {}
     local inactiveQuickFixSeen = {}
 
-    -- breakdown ids listed in stable alphabetical order
+    -- breakdown ids listed from highest to lowest stage, ties kept deterministic
     local reportActiveBreakdowns = (self.lastReport.conditionData and self.lastReport.conditionData.activeBreakdowns) or {}
     local breakdownIds = {}
     for breakdownId, _ in pairs(reportActiveBreakdowns) do
         table.insert(breakdownIds, breakdownId)
     end
-    table.sort(breakdownIds)
+    table.sort(breakdownIds, function(a, b)
+        local aStage = reportActiveBreakdowns[a] ~= nil and (reportActiveBreakdowns[a].stage or 0) or 0
+        local bStage = reportActiveBreakdowns[b] ~= nil and (reportActiveBreakdowns[b].stage or 0) or 0
+        if aStage ~= bStage then
+            return aStage > bStage
+        end
+        return tostring(a) < tostring(b)
+    end)
 
     for _, breakdownId in ipairs(breakdownIds) do
         local breakdownData = reportActiveBreakdowns[breakdownId]
@@ -843,57 +833,43 @@ function RMS_ReportDialog:updateScreen()
                     descriptionText = g_i18n:getText("rms_breakdowns_defected_parts_detected_description")
                 end
 
-                table.insert(self.breakdownsData, string.format("- %s (%s): %s", partText, severityText, descriptionText))
+                table.insert(self.breakdownsData, {
+                    title = partText,
+                    severity = severityText,
+                    text = descriptionText,
+                    stage = stage,
+                    isActive = breakdownData.isActive ~= false
+                })
             end
         end
     end
+    self.reportSummaryBreakdowns:setText(tostring(reportMetrics.visibleSelectableBreakdownsCount))
 
     if #self.breakdownsData == 0 then
-        table.insert(self.breakdownsData, "- " .. g_i18n:getText("rms_log_inspection_desc_no_breakdowns"))
+        table.insert(self.breakdownsData, {title = g_i18n:getText("rms_log_inspection_desc_no_breakdowns"), text = "", severity = ""})
     end
 
     self.recommendationsData = buildRecommendationsData(self.vehicle, self.lastReport, reportMetrics)
 
-    padRowsToCount(self.overallAssessmentData, REPORT_TABLE_MIN_ROWS_MAIN, function()
-        return {isPadding = true}
-    end)
-    padRowsToCount(self.systemConditionData, REPORT_TABLE_MIN_ROWS_MAIN, function()
-        return {isPadding = true}
-    end)
-    padRowsToCount(self.vehicleSpecData, REPORT_TABLE_MIN_ROWS_MAIN, function()
-        return {isPadding = true}
-    end)
-    padRowsToCount(self.breakdownsData, REPORT_TABLE_MIN_ROWS_BOTTOM, function()
-        return ""
-    end)
-    padRowsToCount(self.recommendationsData, REPORT_TABLE_MIN_ROWS_BOTTOM, function()
-        return ""
-    end)
+    self:renderAssessmentRows()
+    self:renderSystemRows()
+    self:renderSpecRows()
 
-    self.overallAssessmentTable:setDataSource(self)
-    self.systemConditionTable:setDataSource(self)
-    self.vehicleSpecTable:setDataSource(self)
     self.breakdownsTable:setDataSource(self)
     self.recommendationsTable:setDataSource(self)
-    self.overallAssessmentTable:reloadData()
-    self.systemConditionTable:reloadData()
-    self.vehicleSpecTable:reloadData()
     self.breakdownsTable:reloadData()
     self.recommendationsTable:reloadData()
+
+    -- every value is written by now, so each pill can close on the one it wraps
+    RMS_Utils.fitValuePills(self)
 end
 
----Returns the row count of the requested report table
+---Returns the row count of the requested report note list
 -- @param table list list element
 -- @param integer section section index
--- @return integer count number of rows, zero when the list is not a report table
+-- @return integer count row count
 function RMS_ReportDialog:getNumberOfItemsInSection(list, section)
-    if list == self.overallAssessmentTable then
-        return #self.overallAssessmentData
-    elseif list == self.systemConditionTable then
-        return #self.systemConditionData
-    elseif list == self.vehicleSpecTable then
-        return #self.vehicleSpecData
-    elseif list == self.breakdownsTable then
+    if list == self.breakdownsTable then
         return #self.breakdownsData
     elseif list == self.recommendationsTable then
         return #self.recommendationsData
@@ -902,42 +878,22 @@ function RMS_ReportDialog:getNumberOfItemsInSection(list, section)
     return 0
 end
 
----Fills one cell, dispatching on the report table it belongs to
+---Fills one note cell, dispatching on the list it belongs to
 -- @param table list list element
 -- @param integer section section index
 -- @param integer index row index
 -- @param table cell cell element
 function RMS_ReportDialog:populateCellForItemInSection(list, section, index, cell)
-    if list == self.overallAssessmentTable then
-        self:populateOverallAssessmentCell(index, cell)
-    elseif list == self.systemConditionTable then
-        self:populateSystemConditionCell(index, cell)
-    elseif list == self.vehicleSpecTable then
-        self:populateVehicleSpecCell(index, cell)
-    elseif list == self.breakdownsTable then
+    if list == self.breakdownsTable then
         self:populateBreakdownsCell(index, cell)
     elseif list == self.recommendationsTable then
         self:populateRecommendationsCell(index, cell)
     end
 end
 
----Fills one overall assessment cell, colouring the value against its configured thresholds
--- @param integer index row index
--- @param table cell cell element
-function RMS_ReportDialog:populateOverallAssessmentCell(index, cell)
-    local data = self.overallAssessmentData[index]
-    if not data then return end
-
-    if data.isPadding then
-        local titleElement = cell:getAttribute("reportTableOverallAssessmentTitle")
-        local valueElement = cell:getAttribute("reportTableOverallAssessmentValue")
-        titleElement:setText("")
-        valueElement:setText("")
-        titleElement:setTextColor(1.0, 1.0, 1.0, 1.0)
-        valueElement:setTextColor(1.0, 1.0, 1.0, 1.0)
-        return
-    end
-
+---Returns the thresholds of every measured figure, scaled by the reliability the report recorded
+-- @return table config thresholds keyed by l10n key
+function RMS_ReportDialog:getAssessmentConfig()
     local spec = self.vehicle.spec_RealisticMechanicalSystems
     local maxMtbf = RMS_Config.CORE.BREAKDOWN_PROBABILITIES.MAX_MTBF / 60
     local minMtbf = RMS_Config.CORE.BREAKDOWN_PROBABILITIES.MIN_MTBF / 60
@@ -946,257 +902,197 @@ function RMS_ReportDialog:populateOverallAssessmentCell(index, cell)
     local maxCrit = RMS_Config.CORE.BREAKDOWN_PROBABILITIES.CRITICAL_MAX
     local critDiff = maxCrit - minCrit
     local reportReliability = math.max(tonumber(self.lastReport.conditionData.reliability or spec.reliability) or 1.0, 0.001)
-    local rel = 1 / (RMS_Config.CORE.BASE_SYSTEMS_WEAR / reportReliability)
     local nominalWearRate = RMS_Config.CORE.BASE_SYSTEMS_WEAR / reportReliability
+    local rul = 1 / nominalWearRate
 
-    local assessmentConfig = {
-        rms_report_overall_assessment_condition =  {inverted = false, ideal = 0.8, high = 0.6, mid = 0.4, low = 0.2, stdVisible = true, isPercent = true},
-        rms_report_overall_assessment_service = {inverted = false, ideal = 0.9, high = 0.5, mid = 0.2, low = 0.001, stdVisible = true, isPercent = true},
-        rms_report_overall_assessment_mtbf = {inverted = false, ideal = maxMtbf, high = diffMtbf * 0.66, mid = diffMtbf * 0.33, low = minMtbf, stdVisible = false, isPercent = false},
-        rms_report_overall_assessment_rul = {inverted = false, ideal = rel, high = rel * 0.66, mid = rel * 0.33, low = rel * 0.1, stdVisible = false, isPercent = false},
-        rms_report_overall_assessment_wear_rate = {inverted = true, ideal = nominalWearRate, high = nominalWearRate * 1.1, mid = nominalWearRate * 1.2, low = nominalWearRate * 1.3, stdVisible = false, isPercent = true},
-        rms_report_overall_assessment_nominal_wear_rate = {inverted = true, ideal = nominalWearRate, high = nominalWearRate * 1.1, mid = nominalWearRate * 1.2, low = nominalWearRate * 1.3, stdVisible = false, isPercent = true},
-        rms_report_overall_assessment_crit_fail_risk = {inverted = true, ideal = minCrit, high = critDiff * 0.33, mid = critDiff * 0.66, low = maxCrit * 1.3, stdVisible = false, isPercent = true},
+    return {
+        rms_report_overall_assessment_mtbf = {ideal = maxMtbf, high = diffMtbf * 0.66, mid = diffMtbf * 0.33, low = minMtbf, isPercent = false},
+        rms_report_overall_assessment_rul = {ideal = rul, high = rul * 0.66, mid = rul * 0.33, low = rul * 0.1, isPercent = false},
+        rms_report_overall_assessment_wear_rate = {inverted = true, ideal = nominalWearRate, high = nominalWearRate * 1.1, mid = nominalWearRate * 1.2, low = nominalWearRate * 1.3, isPercent = true},
+        rms_report_overall_assessment_nominal_wear_rate = {
+            inverted = true,
+            ideal = nominalWearRate,
+            high = nominalWearRate * 1.1,
+            mid = nominalWearRate * 1.2,
+            low = nominalWearRate * 1.3,
+            isPercent = true
+        },
+        rms_report_overall_assessment_crit_fail_risk = {inverted = true, ideal = minCrit, high = critDiff * 0.33, mid = critDiff * 0.66, low = maxCrit * 1.3, isPercent = true}
     }
-    local defaultConfig = {inverted = false, ideal = 100, high = 95, mid = 90, low = 70, stdVisible = false, isPercent = true}
-
-    local key = data[1]
-    local cfg = assessmentConfig[key] or defaultConfig
-    local val = data[2]
-    local rawVal = data[3] or val
-
-    ---Returns the row colour, grey when the value is hidden on a partial inspection
-    -- @param boolean smooth true for a gradient between thresholds
-    -- @return float r, float g, float b, float a colour channels
-    local function getColor(smooth)
-        if not cfg.stdVisible and not self.isCompleteInspection then
-            return 0.5, 0.5, 0.5, 1.0
-        end
-        if cfg.inverted then
-            return RMS_Utils.getValueColorInverted(val, cfg.ideal, cfg.low, cfg.mid, cfg.high, smooth)
-        else
-            return RMS_Utils.getValueColor(val, cfg.ideal, cfg.high, cfg.mid, cfg.low, smooth)
-        end
-    end
-    
-    cell:getAttribute("reportTableOverallAssessmentTitle"):setText(g_i18n:getText(key))
-    local valueElement = cell:getAttribute("reportTableOverallAssessmentValue")
-
-    if self.isCompleteInspection then
-        cell:getAttribute("reportTableOverallAssessmentTitle"):setTextColor(1.0, 1.0, 1.0, 1.0)
-        if cfg.isPercent then
-            valueElement:setText(string.format("%.2f %%", val * 100))
-        else
-            valueElement:setText(string.format("%.1f", val))
-        end
-        valueElement:setTextColor(getColor(true))
-    else
-        if not cfg.stdVisible then cell:getAttribute("reportTableOverallAssessmentTitle"):setTextColor(0.5, 0.5, 0.5, 1.0) end
-        local conditionStateTexts = {
-            g_i18n:getText("rms_spec_state_excellent"),
-            g_i18n:getText("rms_spec_state_good"),
-            g_i18n:getText("rms_spec_state_normal"),
-            g_i18n:getText("rms_spec_state_bad"),
-            g_i18n:getText("rms_spec_state_terrible")
-        }
-
-        if cfg.stdVisible then
-            if key == 'rms_report_overall_assessment_condition' then
-                valueElement:setText(RMS_Utils.getValueLabel(val, cfg.ideal, cfg.high, cfg.mid, cfg.low, table.unpack(conditionStateTexts)))
-            elseif key == 'rms_report_overall_assessment_service' then
-                 valueElement:setText(RMS_Utils.formatService(rawVal, false))
-            end
-        else
-            valueElement:setText(g_i18n:getText('rms_report_state_not_available'))
-        end
-        valueElement:setTextColor(getColor(false))
-    end
-
 end
 
----Fills one system condition cell with the condition value and its stress label
--- @param integer index row index
--- @param table cell cell element
-function RMS_ReportDialog:populateSystemConditionCell(index, cell)
-    local data = self.systemConditionData[index]
-    if not data then return end
+---Paints the measured figures of the assessment card, one row per figure
+function RMS_ReportDialog:renderAssessmentRows()
+    local config = self:getAssessmentConfig()
 
-    if data.isPadding then
-        local titleElement = cell:getAttribute("reportTableSystemConditionTitle")
-        local valueElement = cell:getAttribute("reportTableSystemConditionValue")
-        local riskElement = cell:getAttribute("reportTableSystemRiskValue")
-        titleElement:setText("")
-        valueElement:setText("")
-        riskElement:setText("")
-        titleElement:setTextColor(1.0, 1.0, 1.0, 1.0)
-        valueElement:setTextColor(1.0, 1.0, 1.0, 1.0)
-        riskElement:setTextColor(1.0, 1.0, 1.0, 1.0)
-        return
-    end
+    for index, labelElement in ipairs(self.assessmentLabel) do
+        local data = self.overallAssessmentData[index]
+        local valueElement = self.assessmentValue[index]
+        labelElement.parent:setVisible(data ~= nil)
 
-    local key = data[1]
-    local condition = tonumber(data[2]) or 0
-    local val = condition * 100
-    local stress = data[3] or 0
-    local safeCondition = math.max(condition, 0.001)
-    local normalizedRisk = math.max(math.min((tonumber(stress) or 0) / safeCondition, 1.0), 0.0)
-    local riskValue = normalizedRisk * 100
-    local stressLabel = getStressLabel(stress, condition)
+        if data ~= nil then
+            local key = data[1]
+            local cfg = config[key] or ASSESSMENT_DEFAULT_CONFIG
+            local value = data[2]
 
-    ---Returns the condition colour
-    -- @param boolean smooth true for a gradient between thresholds
-    -- @return float r, float g, float b, float a colour channels
-    local function getConditionColor(smooth)
-        return RMS_Utils.getValueColor(val, 95, 80, 60, 40, smooth)
-    end
-
-    ---Returns the risk colour, inverted so that a high risk reads as bad
-    -- @param boolean smooth true for a gradient between thresholds
-    -- @return float r, float g, float b, float a colour channels
-    local function getRiskColor(smooth)
-        return RMS_Utils.getValueColorInverted(riskValue, 20, 40, 60, 80, smooth)
-    end
-
-    cell:getAttribute("reportTableSystemConditionTitle"):setText(g_i18n:getText(key))
-    
-
-    local valueElement = cell:getAttribute("reportTableSystemConditionValue")
-    local riskElement = cell:getAttribute("reportTableSystemRiskValue")
-
-    if self.isCompleteInspection then
-        cell:getAttribute("reportTableSystemConditionTitle"):setTextColor(1.0, 1.0, 1.0, 1.0)
-        valueElement:setText(string.format("%.1f %%", val))
-        riskElement:setText(stressLabel)
-        valueElement:setTextColor(getConditionColor(true))
-        riskElement:setTextColor(getRiskColor(true))
-    else
-        local stateTexts = {
-            g_i18n:getText("rms_spec_state_excellent"),
-            g_i18n:getText("rms_spec_state_good"),
-            g_i18n:getText("rms_spec_state_normal"),
-            g_i18n:getText("rms_spec_state_bad"),
-            g_i18n:getText("rms_spec_state_terrible")
-        }
-
-        cell:getAttribute("reportTableSystemConditionTitle"):setTextColor(1.0, 1.0, 1.0, 1.0)
-        valueElement:setText(RMS_Utils.getValueLabel(val, 80, 60, 40, 20, table.unpack(stateTexts)))
-        riskElement:setText(g_i18n:getText("rms_report_state_not_available"))
-        valueElement:setTextColor(getConditionColor(false))
-        riskElement:setTextColor(0.5, 0.5, 0.5, 1.0)
-    end
-end
-
----Fills one vehicle spec cell, formatting it as a ratio, a value pair or a text
--- @param integer index row index
--- @param table cell cell element
-function RMS_ReportDialog:populateVehicleSpecCell(index, cell)
-    local data = self.vehicleSpecData[index]
-    if not data then return end
-
-    if data.isPadding then
-        local titleElement = cell:getAttribute("reportTableVehicleSpecTitle")
-        local valueElement = cell:getAttribute("reportTableVehicleSpecValue")
-        titleElement:setText("")
-        valueElement:setText("")
-        titleElement:setTextColor(1.0, 1.0, 1.0, 1.0)
-        valueElement:setTextColor(1.0, 1.0, 1.0, 1.0)
-        return
-    end
-
-    local key = data.key or data[1]
-    local kind = data.kind or "ratio"
-    local forceNumericPercent = key == "rms_report_vehicle_spec_battery_charge"
-    local ratioValue = clampUnitRatio(data.ratio or data.value or data[2] or 0)
-    local val = ratioValue * 100
-    local cfg = {
-        inverted = data.inverted == true,
-        ideal = data.ideal or 99,
-        high = data.high or 90,
-        mid = data.mid or 70,
-        low = data.low or 30,
-        stdVisible = data.stdVisible ~= false
-    }
-
-    ---Returns the row colour, grey when the value is hidden on a partial inspection
-    -- @param boolean smooth true for a gradient between thresholds
-    -- @return float r, float g, float b, float a colour channels
-    local function getColor(smooth)
-        if not cfg.stdVisible and not self.isCompleteInspection then
-            return 0.5, 0.5, 0.5, 1.0
-        end
-        if cfg.inverted then
-            return RMS_Utils.getValueColorInverted(val, cfg.ideal, cfg.low, cfg.mid, cfg.high, smooth)
-        else
-            return RMS_Utils.getValueColor(val, cfg.ideal, cfg.high, cfg.mid, cfg.low, smooth)
-        end
-    end
-
-    cell:getAttribute("reportTableVehicleSpecTitle"):setText(g_i18n:getText(key))
-    local valueElement = cell:getAttribute("reportTableVehicleSpecValue")
-
-    local displayText
-    if self.isCompleteInspection then
-        cell:getAttribute("reportTableVehicleSpecTitle"):setTextColor(1.0, 1.0, 1.0, 1.0)
-    else
-        if not cfg.stdVisible then
-            cell:getAttribute("reportTableVehicleSpecTitle"):setTextColor(0.5, 0.5, 0.5, 1.0)
-        else
-            cell:getAttribute("reportTableVehicleSpecTitle"):setTextColor(1.0, 1.0, 1.0, 1.0)
-        end
-
-        local stateTexts = {
-            g_i18n:getText("rms_report_state_optimal"),
-            g_i18n:getText("rms_report_state_normal"),
-            g_i18n:getText("rms_report_state_degraded"),
-            g_i18n:getText("rms_report_state_impaired"),
-            g_i18n:getText("rms_report_state_critical")
-        }
-
-        if cfg.stdVisible then
-            if kind == "text" then
-                displayText = g_i18n:getText(data.textKey or "")
-            elseif kind == "pair" then
-                displayText = string.format("%.1f | %.1f %s", data.currentValue or 0, data.nominalValue or 0, data.unit or "")
-            elseif forceNumericPercent then
-                displayText = string.format("%.1f %%", val)
-            elseif cfg.inverted then
-                displayText = RMS_Utils.getValueLabelInverted(val, cfg.ideal, cfg.low, cfg.mid, cfg.high, table.unpack(stateTexts))
+            local valueText
+            if self.isCompleteInspection then
+                valueText = cfg.isPercent and string.format("%.2f %%", value * 100) or string.format("%.1f", value)
+                if cfg.inverted then
+                    valueElement:setTextColor(RMS_Utils.getValueColorInverted(value, cfg.ideal, cfg.low, cfg.mid, cfg.high, true))
+                else
+                    valueElement:setTextColor(RMS_Utils.getValueColor(value, cfg.ideal, cfg.high, cfg.mid, cfg.low, true))
+                end
             else
-                displayText = RMS_Utils.getValueLabel(val, cfg.ideal, cfg.high, cfg.mid, cfg.low, table.unpack(stateTexts))
+                valueText = g_i18n:getText("rms_report_state_not_available")
+                valueElement:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
             end
-        else
-            displayText = g_i18n:getText("rms_report_state_not_available")
+
+            labelElement:setTextColor(unpack(self.isCompleteInspection and RMS_Utils.COLOR.TEXT or RMS_Utils.COLOR.TEXT_DIM))
+            RMS_Utils.fitRowValue(labelElement, self.assessmentPill[index], valueElement, g_i18n:getText(key), valueText)
         end
     end
 
-    if self.isCompleteInspection then
-        if kind == "text" then
-            displayText = g_i18n:getText(data.textKey or "")
-        elseif kind == "pair" then
-            displayText = string.format("%.1f | %.1f %s", data.currentValue or 0, data.nominalValue or 0, data.unit or "")
-        else
-            displayText = string.format("%.1f %%", val)
-        end
-    end
-
-    valueElement:setText(displayText or "")
-    valueElement:setTextColor(getColor(self.isCompleteInspection))
+    self.assessmentLabel[1].parent.parent:invalidateLayout()
 end
 
----Fills one breakdown cell with its prebuilt line
+---Paints one gauge per enabled system, with its condition and its failure risk
+function RMS_ReportDialog:renderSystemRows()
+    for index, nameElement in ipairs(self.systemName) do
+        local data = self.systemConditionData[index]
+        local valueElement = self.systemValue[index]
+        local riskElement = self.systemRisk[index]
+        nameElement.parent:setVisible(data ~= nil)
+
+        if data ~= nil then
+            local condition = clampUnitRatio(data[2])
+            local percent = condition * 100
+            local stress = data[3] or 0
+            local risk = clampUnitRatio(stress / math.max(condition, 0.001)) * 100
+            nameElement:setText(g_i18n:getText(data[1]))
+
+            if self.isCompleteInspection then
+                valueElement:setText(string.format("%.1f %%", percent))
+                riskElement:setText(getStressLabel(stress, condition))
+                riskElement:setTextColor(RMS_Utils.getValueColorInverted(risk, 20, 40, 60, 80, true))
+            else
+                valueElement:setText(RMS_Utils.getValueLabel(percent, 80, 60, 40, 20, unpack(self:getStateTexts())))
+                riskElement:setText(g_i18n:getText("rms_report_state_not_available"))
+                riskElement:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
+            end
+            valueElement:setTextColor(RMS_Utils.getValueColor(percent, 95, 80, 60, 40, self.isCompleteInspection))
+        end
+    end
+
+    self.systemName[1].parent.parent:invalidateLayout()
+end
+
+---Returns the five condition labels a partial inspection falls back on
+-- @return table texts localized labels, best first
+function RMS_ReportDialog:getStateTexts()
+    return {
+        g_i18n:getText("rms_spec_state_excellent"),
+        g_i18n:getText("rms_spec_state_good"),
+        g_i18n:getText("rms_spec_state_normal"),
+        g_i18n:getText("rms_spec_state_bad"),
+        g_i18n:getText("rms_spec_state_terrible")
+    }
+end
+
+---Paints what the machine still delivers, against the figures it left the factory with
+function RMS_ReportDialog:renderSpecRows()
+    for index, labelElement in ipairs(self.specLabel) do
+        local data = self.vehicleSpecData[index]
+        local valueElement = self.specValue[index]
+        labelElement.parent:setVisible(data ~= nil)
+
+        if data ~= nil then
+            local kind = data.kind or "ratio"
+            local percent = clampUnitRatio(data.ratio or data.value or 0) * 100
+            local cfg = {
+                inverted = data.inverted == true,
+                ideal = data.ideal or 99,
+                high = data.high or 90,
+                mid = data.mid or 70,
+                low = data.low or 30
+            }
+            local isReadable = self.isCompleteInspection or data.stdVisible ~= false
+
+            local valueText
+            labelElement:setTextColor(unpack(isReadable and RMS_Utils.COLOR.TEXT or RMS_Utils.COLOR.TEXT_DIM))
+
+            if not isReadable then
+                valueText = g_i18n:getText("rms_report_state_not_available")
+                valueElement:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
+            else
+                local stateTexts = {
+                    g_i18n:getText("rms_report_state_optimal"),
+                    g_i18n:getText("rms_report_state_normal"),
+                    g_i18n:getText("rms_report_state_degraded"),
+                    g_i18n:getText("rms_report_state_impaired"),
+                    g_i18n:getText("rms_report_state_critical")
+                }
+                if kind == "text" then
+                    valueText = g_i18n:getText(data.textKey or "")
+                elseif kind == "pair" then
+                    valueText = string.format("%.1f | %.1f %s", data.currentValue or 0, data.nominalValue or 0, data.unit or "")
+                elseif self.isCompleteInspection or data.key == "rms_report_vehicle_spec_battery_charge" then
+                    valueText = string.format("%.1f %%", percent)
+                elseif cfg.inverted then
+                    valueText = RMS_Utils.getValueLabelInverted(percent, cfg.ideal, cfg.low, cfg.mid, cfg.high, unpack(stateTexts))
+                else
+                    valueText = RMS_Utils.getValueLabel(percent, cfg.ideal, cfg.high, cfg.mid, cfg.low, unpack(stateTexts))
+                end
+
+                if cfg.inverted then
+                    valueElement:setTextColor(RMS_Utils.getValueColorInverted(percent, cfg.ideal, cfg.low, cfg.mid, cfg.high, self.isCompleteInspection))
+                else
+                    valueElement:setTextColor(RMS_Utils.getValueColor(percent, cfg.ideal, cfg.high, cfg.mid, cfg.low, self.isCompleteInspection))
+                end
+            end
+
+            RMS_Utils.fitRowText(labelElement, valueElement, g_i18n:getText(data.key), valueText)
+        end
+    end
+
+    self.specLabel[1].parent.parent:invalidateLayout()
+end
+
+---Fills one detected breakdown, its part and severity over its description
 -- @param integer index row index
 -- @param table cell cell element
 function RMS_ReportDialog:populateBreakdownsCell(index, cell)
-    local data = self.breakdownsData[index]
-    cell:getAttribute("reportBreakdownsRow"):setText(data or "")
+    RMS_Utils.applyScrollSpeed(cell)
+    local data = self.breakdownsData[index] or {}
+    local stageColor = data.isActive == false and RMS_Utils.COLOR.TEXT_DIM or RMS_Utils.COLOR.STAGE[data.stage or 1]
+    local severityElement = cell:getAttribute("reportBreakdownsSeverity")
+    local hasSeverity = (data.severity or "") ~= ""
+    local description = data.text or ""
+    local isEmptyState = not hasSeverity and description == ""
+
+    local titleElement = cell:getAttribute("reportBreakdownsTitle")
+    local emptyTitleElement = cell:getAttribute("reportBreakdownsEmptyTitle")
+    local textElement = cell:getAttribute("reportBreakdownsText")
+
+    cell:getAttribute("reportBreakdownsIcon"):setImageColor(nil, unpack(stageColor or RMS_Utils.COLOR.TEXT))
+    titleElement:setVisible(not isEmptyState)
+    titleElement:setText(data.title or "")
+    emptyTitleElement:setVisible(isEmptyState)
+    emptyTitleElement:setText(data.title or "")
+    severityElement:setVisible(hasSeverity)
+    severityElement:setText(data.severity or "")
+    severityElement:setTextColor(unpack(stageColor or RMS_Utils.COLOR.TEXT))
+    textElement:setText(description)
 end
 
----Fills one recommendation cell with its prebuilt line
+---Fills one recommendation with its prebuilt line
 -- @param integer index row index
 -- @param table cell cell element
 function RMS_ReportDialog:populateRecommendationsCell(index, cell)
-    local data = self.recommendationsData[index]
-    cell:getAttribute("reportRecRow"):setText(data or "")
+    RMS_Utils.applyScrollSpeed(cell)
+    local rowElement = cell:getAttribute("reportRecRow")
+
+    rowElement:setText(self.recommendationsData[index] or "")
 end
 
 
@@ -1205,17 +1101,27 @@ function RMS_ReportDialog:onClickBack()
     self:close()
 end
 
+---Selects the technical record tab in the report shell
+function RMS_ReportDialog:onCreate()
+    -- The report is a detail view of the technical record, so its tab stays lit.
+    RMS_Utils.mirrorSelectionToChildren(self.reportTechnicalTab)
+    self.reportTechnicalTab:setSelected(true)
+    RMS_Utils.applyScrollSpeed(self.dialogElement)
+end
 
----
--- @param function superFunc super function
-function RMS_ReportDialog:onOpen(superFunc)
+
+---Opens the dialog and subscribes to balance changes
+function RMS_ReportDialog:onOpen()
+    RMS_ReportDialog:superClass().onOpen(self)
+
     g_messageCenter:subscribe(MessageType.MONEY_CHANGED, self.updateScreen, self)
 end
 
 
----
--- @param function superFunc super function
-function RMS_ReportDialog:onClose(superFunc)
+---Closes the dialog and releases its subscriptions
+function RMS_ReportDialog:onClose()
     self.vehicle = nil
     g_messageCenter:unsubscribeAll(self)
+
+    RMS_ReportDialog:superClass().onClose(self)
 end

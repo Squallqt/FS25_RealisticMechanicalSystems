@@ -2,18 +2,18 @@
     <texts>
         <!-- HUD -->
         <text name="rms_hud_mass_tractor" text="차량"/>
-        <text name="rms_hud_mass_towed" text="부착"/>
+        <text name="rms_hud_mass_towed" text="부착 장비"/>
         <text name="rms_hud_mass_total" text="합계"/>
-        <text name="rms_drivetrain_mode_4x2" text="4x2 (전륜축 해제)"/>
-        <text name="rms_drivetrain_mode_4wd" text="4WD (전륜축 연결)"/>
+        <text name="rms_drivetrain_mode_4x2" text="2WD (전륜축 해제)"/>
+        <text name="rms_drivetrain_mode_4wd" text="4WD (전륜축 결합)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD 자동"/>
         <text name="rms_drivetrain_notify_mode" text="구동 모드: %s"/>
-        <text name="rms_drivetrain_notify_lock_on" text="차동 잠금 체결됨"/>
-        <text name="rms_drivetrain_notify_lock_off" text="차동 잠금 해제됨"/>
-        <text name="rms_drivetrain_notify_park_on" text="주차 브레이크 체결됨"/>
-        <text name="rms_drivetrain_notify_park_off" text="주차 브레이크 해제됨"/>
-        <text name="rms_drivetrain_warning_4wd_windup" text="구동계에 응력이 발생합니다! 단단한 지면에서 회전하기 전에 4WD를 해제하세요."/>
-        <text name="rms_drivetrain_warning_difflock_windup" text="차동 잠금에 부하가 걸리고 있습니다! 잠금을 해제하거나 조향각을 줄이세요."/>
+        <text name="rms_drivetrain_notify_lock_on" text="차동 잠금 작동"/>
+        <text name="rms_drivetrain_notify_lock_off" text="차동 잠금 해제"/>
+        <text name="rms_drivetrain_notify_park_on" text="주차 브레이크 체결"/>
+        <text name="rms_drivetrain_notify_park_off" text="주차 브레이크 해제"/>
+        <text name="rms_drivetrain_warning_4wd_windup" text="구동계에 응력이 발생합니다! 접지력이 높은 노면에서 조향하려면 전륜축을 해제하십시오."/>
+        <text name="rms_drivetrain_warning_difflock_windup" text="차동 잠금에 부하가 걸리고 있습니다! 잠금을 해제하거나 조향각을 줄이십시오."/>
         <text name="rms_drivetrain_warning_parkbrake" text="주차 브레이크가 체결되어 있습니다!"/>
         <text name="rms_preheat_ignition_message" text="점화 켜짐: 예열 진행 중"/>
         <text name="rms_preheat_system_failure_message" text="예열 시스템 고장: 냉간 시동 불가"/>
@@ -21,32 +21,32 @@
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="차량 점검"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="확인"/>
-        <text name="input_RMS_TOGGLE_4WD" text="구동 모드 (4x2 / 4WD / 자동)"/>
-        <text name="input_RMS_TOGGLE_DIFFLOCK" text="차동 잠금"/>
-        <text name="input_RMS_TOGGLE_PARKBRAKE" text="주차 브레이크"/>
+        <text name="input_RMS_TOGGLE_4WD" text="구동 모드 변경"/>
+        <text name="input_RMS_TOGGLE_DIFFLOCK" text="차동 잠금 작동/해제"/>
+        <text name="input_RMS_TOGGLE_PARKBRAKE" text="주차 브레이크 작동/해제"/>
         <!-- Settings -->
         <text name="rms_settings_title" text="RMS 설정"/>
         <text name="rms_settings_admin_required" text="멀티플레이어에서는 RMS 설정을 변경하려면 관리자 권한이 필요합니다."/>
         <text name="rms_settings_section_service_wear" text="정비 및 마모"/>
         <text name="rms_settings_section_thermal_model" text="열 모델"/>
         <text name="rms_settings_section_battery_alternator" text="배터리 및 발전기"/>
-        <text name="rms_settings_section_preshift_maintenance" text="작업 전 점검"/>
+        <text name="rms_settings_section_preshift_maintenance" text="일일 정비"/>
         <text name="rms_settings_section_other" text="기타"/>
         <text name="rms_settings_section_drivetrain" text="구동계 및 주차 브레이크"/>
-        <text name="rms_maintenancePrice_label" text="정비 비용 배율"/>
-        <text name="rms_maintenancePrice_tooltip" text="점검, 수리 및 오버홀을 포함한 모든 정비소 서비스 비용을 조정합니다. 값이 클수록 모든 정비 활동 비용이 비싸집니다."/>
-        <text name="rms_maintenanceDuration_label" text="정비 소요 시간 배율"/>
-        <text name="rms_maintenanceDuration_tooltip" text="모든 정비소 서비스의 소요 시간을 조정합니다. 값이 클수록 차량이 정비나 수리를 받는 데 걸리는 시간이 늘어납니다."/>
+        <text name="rms_maintenancePrice_label" text="작업 비용 배율"/>
+        <text name="rms_maintenancePrice_tooltip" text="점검, 수리 및 오버홀을 포함한 모든 정비소 작업 비용을 조정합니다. 값이 클수록 각 작업의 비용이 증가합니다."/>
+        <text name="rms_maintenanceDuration_label" text="작업 시간 배율"/>
+        <text name="rms_maintenanceDuration_tooltip" text="모든 정비소 작업의 소요 시간을 조정합니다. 값이 클수록 각 작업에 더 많은 시간이 걸립니다."/>
         <text name="rms_workshopOpenHour_label" text="정비소 영업 시작 시간"/>
-        <text name="rms_workshopOpenHour_tooltip" text="수리 작업은 이 시간부터만 시작됩니다."/>
+        <text name="rms_workshopOpenHour_tooltip" text="작업은 이 시간부터만 시작됩니다."/>
         <text name="rms_workshopCloseHour_label" text="정비소 영업 종료 시간"/>
-        <text name="rms_workshopCloseHour_tooltip" text="진행 중인 작업은 이 시간에 일시 중지되고 영업 시작 시 다시 재개됩니다."/>
+        <text name="rms_workshopCloseHour_tooltip" text="진행 중인 작업은 이 시간에 일시 중지되고 영업 시작 시 재개됩니다."/>
         <text name="rms_cloggingSpeed_label" text="이물질 축적 속도"/>
         <text name="rms_cloggingSpeed_tooltip" text="먼지나 왕겨, 작물 잔여물 속에서 작업할 때 라디에이터와 에어 필터가 얼마나 빨리 막히는지를 조정합니다. 값이 높을수록 더 빨리 막힙니다."/>
-        <text name="rms_fieldInspectionDuration_label" text="점검 소요 시간"/>
-        <text name="rms_fieldInspectionDuration_tooltip" text="작업 시작 전 현장 점검에 걸리는 시간을 실제 초 단위로 설정합니다."/>
-        <text name="rms_lubricationReducePerOperatingHour_label" text="윤활 소모율"/>
-        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="작동 시간당 소모되는 윤활량을 설정합니다."/>
+        <text name="rms_fieldInspectionDuration_label" text="운행 전 점검 시간"/>
+        <text name="rms_fieldInspectionDuration_tooltip" text="운행 전 점검에 걸리는 시간을 실제 초 단위로 설정합니다."/>
+        <text name="rms_lubricationReducePerOperatingHour_label" text="그리스 소모율"/>
+        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="작동 시간당 소모되는 그리스의 양을 설정합니다."/>
         <text name="rms_dealerWorkshopAvailable_label" text="판매점 정비소 24/7"/>
         <text name="rms_dealerWorkshopAvailable_tooltip" text="판매점 정비소를 하루 종일 언제든 이용할 수 있게 합니다."/>
         <text name="rms_mobileWorkshopAvailable_label" text="이동식 정비소 24/7"/>
@@ -64,47 +64,47 @@
         <text name="rms_aiOverloadAndOverheatControl_label" text="AI 과부하 및 과열 제어"/>
         <text name="rms_aiOverloadAndOverheatControl_tooltip" text="활성화 시 AI 작업자가 엔진 과부하 또는 과열을 방지하기 위해 부하를 줄입니다."/>
         <text name="rms_aiDisableOnCriticalOverload_label" text="임계 과부하 시 AI 정지"/>
-        <text name="rms_aiDisableOnCriticalOverload_tooltip" text="임계 과부하가 발생하면 RMS가 AI 작업자와 AutoDrive를 정지하도록 합니다."/>
+        <text name="rms_aiDisableOnCriticalOverload_tooltip" text="임계 과부하가 발생하면 AI 작업자와 AutoDrive를 정지시킵니다."/>
         <text name="rms_contractVehicleProtection_label" text="계약 차량 보호"/>
         <text name="rms_contractVehicleProtection_tooltip" text="계약 차량에도 임계 과부하 시 AI 정지와 과부하 또는 과열에 따른 속도 제어를 적용합니다."/>
-        <text name="rms_aiWorkerTargetStress_label" text="AI 속도 반응"/>
-        <text name="rms_aiWorkerTargetStress_tooltip" text="AI 작업자가 과부하와 과열에 얼마나 일찍 반응할지 조절합니다. 값이 높을수록 덜 민감해 더 늦게 반응하고, 값이 낮을수록 더 민감해 더 일찍 감속합니다."/>
-        <text name="rms_aiWorkerTargetStress_relaxed" text="완만함"/>
-        <text name="rms_aiWorkerTargetStress_balanced" text="균형"/>
-        <text name="rms_aiWorkerTargetStress_sensitive" text="민감"/>
-        <text name="rms_aiWorkerTargetStress_verySensitive" text="매우 민감"/>
+        <text name="rms_aiWorkerTargetStress_label" text="AI 반응 민감도"/>
+        <text name="rms_aiWorkerTargetStress_tooltip" text="AI 작업자가 과부하와 과열에 얼마나 일찍 반응할지 조절합니다. 민감도가 높을수록 더 일찍 감속하고 낮을수록 개입 전에 더 많은 부하가 누적됩니다."/>
+        <text name="rms_aiWorkerTargetStress_relaxed" text="낮음"/>
+        <text name="rms_aiWorkerTargetStress_balanced" text="보통"/>
+        <text name="rms_aiWorkerTargetStress_sensitive" text="높음"/>
+        <text name="rms_aiWorkerTargetStress_verySensitive" text="매우 높음"/>
         <text name="rms_aiWorkerMinSpeed_label" text="AI 최소 속도"/>
-        <text name="rms_aiWorkerMinSpeed_tooltip" text="AI 작업자가 과부하나 과열을 피하기 위해 감속할 때 사용할 수 있는 최저 크루즈 속도를 설정합니다."/>
+        <text name="rms_aiWorkerMinSpeed_tooltip" text="AI 작업자가 과부하나 과열을 피하기 위해 감속할 때 사용할 수 있는 최저 크루즈 컨트롤 속도를 설정합니다."/>
         <text name="rms_debugMode_label" text="디버그 모드"/>
         <text name="rms_debugMode_tooltip" text="디버그 패널 및 콘솔의 상세 디버그 로그 활성 여부를 설정합니다."/>
         <text name="rms_warningMessages_label" text="경고 메시지"/>
-        <text name="rms_warningMessages_tooltip" text="엔진 냉각 상태 및 과열 알림과 같은 게임 플레이 경고 메시지 표시 여부를 설정합니다."/>
+        <text name="rms_warningMessages_tooltip" text="차가운 엔진이나 과열 알림과 같은 게임 플레이 경고 메시지 표시 여부를 설정합니다."/>
         <text name="rms_serviceInterval_label" text="정비 주기"/>
         <text name="rms_serviceInterval_tooltip" text="정비가 필요한 기준 시간을 시간 단위로 설정합니다. 실제 주기는 차량 브랜드, 연식, 이전 정비 품질에 따라 달라집니다."/>
         <text name="rms_vehicleLifespan_label" text="차량 수명"/>
-        <text name="rms_vehicleLifespan_tooltip" text="차량 상태가 0%에 도달하는 기준 수명을 시간 단위로 설정합니다. 상태가 0%에 가까워질수록 차량의 신뢰도가 떨어집니다."/>
-        <text name="rms_reinitializeVehicles_label" text="차량 상태 초기화"/>
+        <text name="rms_vehicleLifespan_tooltip" text="차량 상태가 0%에 도달하는 기준 수명을 시간 단위로 설정합니다. 상태가 영에 가까워질수록 차량의 신뢰도가 떨어집니다."/>
+        <text name="rms_reinitializeVehicles_label" text="보유 차량 초기화"/>
         <text name="rms_reinitializeVehicles_text" text="초기화"/>
         <text name="rms_reinitializeVehicles_tooltip" text="선택한 수명에 맞춰 보유 차량의 상태를 재조정합니다. 현재 고장은 삭제됩니다."/>
-        <text name="rms_reinitializeVehiclesConfirm_title" text="차량 상태 초기화"/>
+        <text name="rms_reinitializeVehiclesConfirm_title" text="보유 차량 초기화"/>
         <text name="rms_reinitializeVehiclesConfirm_message" text="선택한 수명에 맞춰 보유 차량을 재조정할까요? 현재 고장은 삭제됩니다."/>
         <text name="rms_reinitializeVehicles_result" text="초기화된 차량: %d대. 그대로 둔 차량: %d대."/>
-        <text name="rms_downtimeWear_label" text="패시브 마모"/>
-        <text name="rms_downtimeWear_tooltip" text="차량이 유휴 상태일 때 발생하는 패시브 마모율을 기본 마모율(차량 수명)의 백분율로 설정합니다. 예: 수명이 100시간일 때 5%로 설정하면, 약 20시간의 유휴 시간마다 각 시스템의 상태가 1%씩 감소합니다. 참고: 차량이 지붕 아래에 보관된 동안에는 패시브 마모가 발생하지 않습니다."/>
+        <text name="rms_downtimeWear_label" text="비가동 마모"/>
+        <text name="rms_downtimeWear_tooltip" text="차량이 정지해 있을 때 발생하는 비가동 마모율을 기본 마모율(차량 수명)의 백분율로 설정합니다. 예: 5%로 설정하고 기본 수명이 100시간이면 약 1%의 시스템 상태가 20시간가량의 비가동 후 감소합니다. 참고: 차량을 지붕 아래에 보관하면 비가동 마모가 발생하지 않습니다."/>
         <text name="rms_generalWearEnabled_label" text="노후 마모"/>
         <text name="rms_generalWearEnabled_tooltip" text="노후에 따른 마모를 활성화합니다. 차량이 노후화됨에 따라 엔진 출력, 유압 속도, 브레이크 효율 등 핵심 특성에 미세한 불이익이 발생합니다. 이 효과는 차량 수명의 1/3이 지난 시점부터 시작되어 2/3가 지난 후 뚜렷해지며, 수명 끝부분에 갈수록 강해집니다."/>
         <text name="rms_exhaustSmokeEnabled_label" text="배기 연기"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="엔진의 실제 상태에 따라 배기 연기를 표현합니다. 공기보다 연료가 많을 때, 급가속 순간, 저회전에서 무리하게 밀어붙일 때, 저부하 장시간 공회전, 에어 필터 막힘, 분사 장치 마모에서는 검은색, 노후한 엔진이 오일을 태울 때는 파란색, 연료가 연소되지 않고 배출될 때는 흰색으로 나타납니다. 연기는 엔진이 하는 일에 따라 굵어지기도 합니다. 오래된 기계일수록 훨씬 많은 연기를 내며, 최신 기계는 심각한 고장이 없는 한 거의 연기를 내지 않습니다."/>
         <text name="rms_exhaustSmokeIntensity_label" text="연기 강도"/>
         <text name="rms_exhaustSmokeIntensity_tooltip" text="연기의 원인은 그대로 두고 가시성만 조절합니다. 값이 높을수록 멀리서도 증상을 알아보기 쉽습니다."/>
-        <text name="rms_exhaustSmokeDetail_label" text="연기 디테일 (이 PC)"/>
+        <text name="rms_exhaustSmokeDetail_label" text="연기 세부 표현 (이 컴퓨터)"/>
         <text name="rms_exhaustSmokeDetail_tooltip" text="본인의 컴퓨터에서 배기 연기를 얼마나 그릴지 설정합니다. 다른 플레이어에게는 아무런 영향을 주지 않습니다. 낮추면 연기의 바깥층이 사라져 사양이 낮은 그래픽 카드의 부담을 덩니다. 서버가 허용한 범위 안에서 줄일 수만 있습니다."/>
         <text name="rms_exhaustSmokeDetail_full" text="전체"/>
         <text name="rms_exhaustSmokeDetail_reduced" text="감소"/>
         <text name="rms_exhaustSmokeDetail_minimal" text="최소"/>
         <text name="rms_exhaustSmokeDetail_none" text="없음"/>
-        <text name="rms_systemStressRate_label" text="시스템 스트레스율"/>
-        <text name="rms_systemStressRate_tooltip" text="과부하, 과열, 휠 슬립 및 기타 가혹한 운행 조건에서 시스템 스트레스가 얼마나 빨리 쌓이는지 제어합니다. 스트레스는 고장 확률에 직접적인 영향을 줍니다."/>
+        <text name="rms_systemStressRate_label" text="기계적 응력 축적 속도"/>
+        <text name="rms_systemStressRate_tooltip" text="과부하, 과열, 휠 슬립 및 기타 가혹한 운행 조건에서 시스템에 기계적 응력이 누적되는 속도를 조정합니다. 응력은 고장 확률에 직접 영향을 주며 많이 누적될수록 고장 가능성이 커집니다."/>
         <text name="rms_batteryCapacity_label" text="배터리 용량"/>
         <text name="rms_batteryCapacity_tooltip" text="최대 사용 가능한 배터리 용량을 조정합니다. 150 Ah에 가까운 값이 현실적이지만, 이 수준에서는 배터리 방전 문제를 거의 겪지 않을 수 있습니다."/>
         <text name="rms_option_off" text="꺼짐"/>
@@ -114,9 +114,9 @@
         <text name="rms_idleCurrent_label" text="대기 전류"/>
         <text name="rms_idleCurrent_tooltip" text="엔진이 꺼져 있을 때 배터리 방전 전류를 설정합니다. 예를 들어 0.5A라면 15Ah 배터리는 온도 영향을 제외하고 약 30시간의 실제 시간 후 완전히 방전됩니다."/>
         <text name="rms_temperatureChangeSpeed_label" text="엔진 열 모델 속도"/>
-        <text name="rms_temperatureChangeSpeed_tooltip" text="엔진 온도가 변하는 속도를 조정합니다. 낮은 값은 가열과 냉각을 모두 늦추고, 높은 값은 모두 빠르게 합니다. 기본값은 1.4x입니다."/>
-        <text name="rms_transTemperatureChangeMultiplier_label" text="변속기·유압 공용 오일 열 모델 속도"/>
-        <text name="rms_transTemperatureChangeMultiplier_tooltip" text="변속기와 유압 장치가 공유하는 오일의 온도 변화 속도를 별도로 조정합니다. 낮은 값은 가열과 냉각을 모두 늦추고, 높은 값은 모두 빠르게 합니다. 기본값은 1.0x입니다."/>
+        <text name="rms_temperatureChangeSpeed_tooltip" text="엔진 온도가 변하는 속도를 조정합니다. 낮은 값은 가열과 냉각을 모두 늦추고 높은 값은 둘 다 빠르게 합니다. 기본값은 1.4입니다."/>
+        <text name="rms_transTemperatureChangeMultiplier_label" text="변속기 및 유압 오일 열 변화 속도"/>
+        <text name="rms_transTemperatureChangeMultiplier_tooltip" text="변속기와 유압 장치가 공유하는 오일의 온도 변화 속도를 별도로 조정합니다. 낮은 값은 가열과 냉각을 모두 늦추고 높은 값은 둘 다 빠르게 합니다. 기본값은 1.0입니다."/>
         <text name="rms_radiatorDirtInfluence_label" text="라디에이터 오염 영향"/>
         <text name="rms_radiatorDirtInfluence_tooltip" text="오염이 최대치일 때 라디에이터의 냉각 성능을 이 비율만큼 감소시킵니다."/>
         <text name="rms_tutorialMode_label" text="튜토리얼 모드"/>
@@ -131,7 +131,7 @@
         <text name="rms_drivetrainAllowAutoMode_label" text="자동 구동 모드 허용"/>
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="구동 선택기에 자동 위치를 추가합니다: 바퀴가 미끄러지거나 부하가 걸린 작업 속도에서 전륜축이 자동으로 연결되고, 도로에서는 해제됩니다. 이 옵션을 끄면 자동 모드로 남아 있던 차량은 4WD로 전환됩니다."/>
         <text name="rms_drivetrainWindupDamage_label" text="구동계 응력 손상"/>
-        <text name="rms_drivetrainWindupDamage_tooltip" text="차동 장치를 잠근 채 접지력이 높은 지면에서 회전하면 구동계에 응력이 가해져 시간이 지남에 따라 변속기가 손상됩니다. 더 관대한 게임을 원하면 비활성화하세요."/>
+        <text name="rms_drivetrainWindupDamage_tooltip" text="차동 장치를 잠근 채 접지력이 높은 노면에서 조향하면 구동계에 응력이 가해져 변속기가 점차 손상됩니다. 더 관대한 환경을 원하면 이 옵션을 비활성화하십시오."/>
         <text name="rms_drivetrainDiffLockReleaseSpeed_label" text="차동 잠금 해제 속도"/>
         <text name="rms_drivetrainDiffLockReleaseSpeed_tooltip" text="차동 잠금은 이 속도 이상에서 자동으로 해제되고, 요청된 상태라면 그 이하에서 다시 체결됩니다."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="주차 브레이크"/>
@@ -140,14 +140,43 @@
         <text name="rms_drivetrainParkBrakeAuto_tooltip" text="운전자가 정지된 기계에서 내리면 주차 브레이크가 자동으로 체결됩니다."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="정비소"/>
-        <text name="rms_ws_label_value" text="가치"/>
+        <text name="rms_ws_tab_summary" text="요약"/>
+        <text name="rms_ws_tab_diagnostic" text="진단 및 견적"/>
+        <text name="rms_ws_tab_interventions" text="작업"/>
+        <text name="rms_ws_tab_record" text="기술 기록"/>
+        <text name="rms_ws_section_alerts" text="경고 및 우선순위"/>
+        <text name="rms_ws_section_fluids" text="유체"/>
+        <text name="rms_ws_section_breakdowns" text="알려진 고장"/>
+        <text name="rms_ws_section_quote" text="수리 견적"/>
+        <text name="rms_ws_section_choose_intervention" text="작업 선택"/>
+        <text name="rms_ws_section_work_order" text="정비 작업 지시서"/>
+        <text name="rms_ws_section_recap" text="요약 정보"/>
+        <text name="rms_ws_section_parts" text="대상 부품"/>
+        <text name="rms_ws_section_history" text="이력"/>
+        <text name="rms_ws_section_current_intervention" text="진행 중인 작업"/>
+        <text name="rms_ws_label_last_check" text="최근 점검"/>
+        <text name="rms_ws_label_workshop_state" text="정비소 상태"/>
+        <text name="rms_ws_label_intervention" text="작업"/>
+        <text name="rms_ws_label_addon" text="옵션"/>
+        <text name="rms_ws_label_more_parts" text="+ %s개 더"/>
+        <text name="rms_ws_label_committed_cost" text="확정 비용"/>
+        <text name="rms_ws_label_finish_time" text="완료 예정"/>
+        <text name="rms_ws_label_total_estimate" text="예상 합계"/>
+        <text name="rms_ws_button_configure_repair" text="수리 설정"/>
+        <text name="rms_ws_info_inspection_reveals" text="점검을 하면 다른 결함이 드러날 수 있습니다."/>
+        <text name="rms_ws_status_ready_title" text="정비소 준비 완료"/>
+        <text name="rms_ws_status_ready_hint" text="작업을 선택하십시오. 옵션, 부품 및 가격은 시작 전에 확정됩니다."/>
+        <text name="rms_ws_status_no_intervention" text="진행 중인 작업 없음"/>
+        <text name="rms_ws_label_value" text="차량 가치"/>
         <text name="rms_ws_label_age" text="차령"/>
         <text name="rms_ws_label_operating_hours" text="가동 시간"/>
-        <text name="rms_ws_label_service" text="정비 서비스"/>
+        <text name="rms_ws_label_service" text="정비 수준"/>
         <text name="rms_ws_label_service_interval" text="정비 주기"/>
         <text name="rms_ws_label_next_service" text="다음 정비"/>
         <text name="rms_ws_value_service_overdue" text="%s 초과"/>
         <text name="rms_ws_label_condition" text="상태"/>
+        <text name="rms_ws_label_reliability" text="신뢰도"/>
+        <text name="rms_ws_label_overhaul_count" text="완료된 오버홀"/>
         <text name="rms_ws_label_maintainability" text="정비 용이성"/>
         <text name="rms_ws_label_maintenance_log" text="정비 기록"/>
         <text name="rms_ws_label_last_report" text="최근 보고서"/>
@@ -160,47 +189,54 @@
         <text name="rms_ws_task_inspection" text="점검"/>
         <text name="rms_ws_task_maintenance" text="정비"/>
         <text name="rms_ws_task_overhaul" text="오버홀"/>
-        <text name="rms_ws_info_no_breakdowns" text="고장이 없거나 아직 발견되지 않았습니다."/>
-        <text name="rms_ws_inspecting_status" text="점검 중..."/>
+        <text name="rms_ws_info_no_breakdowns" text="알려진 고장이 없습니다. 발견되지 않은 고장이 있을 수 있습니다."/>
+        <text name="rms_ws_status_in_progress_short_format" text="%s 진행 중..."/>
         <text name="rms_ws_status_initial" text="상태 로딩 중..."/>
-        <text name="rms_ws_status_in_progress_format" text="%s 진행 중 (완료 예정: %s)..."/>
+        <text name="rms_ws_status_in_progress_format" text="%s 진행 중 (완료 예정: %s)"/>
         <text name="rms_ws_status_open" text="정비소 영업 중"/>
-        <text name="rms_ws_status_closed" text="정비소 영업 종료"/>
+        <text name="rms_ws_status_closed" text="정비소가 닫혀 있습니다"/>
         <text name="rms_ws_action_inspection" text="점검"/>
         <text name="rms_ws_action_maintenance" text="정비"/>
         <text name="rms_ws_action_repair" text="수리"/>
         <text name="rms_ws_action_overhaul" text="오버홀"/>
         <text name="rms_ws_action_refill" text="보충"/>
-        <text name="rms_ws_action_cancel_service" text="절차 취소"/>
+        <text name="rms_ws_action_choice_inspection" text="차량 점검"/>
+        <text name="rms_ws_action_choice_maintenance" text="정기 정비"/>
+        <text name="rms_ws_action_choice_repair" text="고장 수리"/>
+        <text name="rms_ws_action_choice_overhaul" text="기계 오버홀"/>
+        <text name="rms_ws_action_choice_refill" text="유체 보충"/>
+        <text name="rms_ws_action_cancel_service" text="작업 취소"/>
         <text name="rms_ws_button_show" text="보기"/>
-        <text name="rms_ws_button_price_format" text="%s (%s)"/>
         <text name="rms_ws_age_unit" text="개월"/>
-        <text name="rms_ws_hours_unit" text="시간"/>
+        <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="예"/>
         <text name="rms_ws_option_no" text="아니요"/>
         <text name="rms_ws_no_last_report_message" text="아직 보고서가 없습니다"/>
+        <text name="rms_ws_systems_need_complete_inspection" text="종합 점검 필요"/>
         <text name="rms_ws_no_log_empty_message" text="기록이 비어 있습니다"/>
         <text name="rms_ws_no_report_message" text="보고서가 없습니다"/>
         <text name="rms_ws_cancel_confirm_title" text="%s을(를) 취소하시겠습니까?"/>
         <text name="rms_ws_cancel_confirm_text" text="현재 진행 상황이 그대로 저장됩니다. 비용은 환불되지 않습니다."/>
-        <text name="rms_mobile_workshop_low_maintainability" text="경고: 정비 용이성이 낮아 이동식 정비소에서 %s 작업을 %s에 대해 수행할 수 없습니다."/>
+        <text name="rms_mobile_workshop_low_maintainability" text="경고: %s 작업은 현장 정비가 어려운 %s 차량에서 이동식 정비소로 수행할 수 없습니다."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="정비 기록"/>
+        <text name="rms_log_recorded_interventions_title" text="기록된 작업"/>
+        <text name="rms_log_last_intervention_title" text="최근 작업"/>
         <text name="rms_log_hours" text="가동 시간"/>
-        <text name="rms_log_title" text="기술 정비 기록부"/>
+        <text name="rms_log_title" text="정비 기록"/>
         <text name="rms_log_total_cost_title" text="총 비용"/>
-        <text name="rms_log_total_breakdowns_count_title" text="총 고장 횟수"/>
+        <text name="rms_log_total_breakdowns_count_title" text="수리된 고장"/>
         <text name="rms_log_type" text="작업 유형"/>
         <text name="rms_log_cost_per_month_title" text="월간 비용"/>
-        <text name="rms_log_cancelled_desc" text="절차 취소됨"/>
+        <text name="rms_log_cancelled_desc" text="작업 취소됨"/>
         <text name="rms_log_ownership_months_title" text="보유 기간"/>
         <text name="rms_log_overhaul_desc_with_painting" text="차량 재도색 완료"/>
         <text name="rms_log_average_breakdowns_interval_title" text="평균 고장 간격"/>
         <text name="rms_log_average_maintenance_interval_title" text="평균 정비 간격"/>
         <text name="rms_log_performed" text="작업 완료: %s (%s)"/>
         <text name="rms_log_price" text="비용"/>
-        <text name="rms_log_inspection_desc_no_breakdowns" text="결함 없음"/>
-        <text name="rms_log_inspection_desc_with_breakdowns" text="결함 발견: %s"/>
+        <text name="rms_log_inspection_desc_no_breakdowns" text="고장 없음"/>
+        <text name="rms_log_inspection_desc_with_breakdowns" text="감지된 고장: %s"/>
         <text name="rms_log_repair_desc_generic" text="수리"/>
         <text name="rms_log_date" text="날짜"/>
         <text name="rms_log_description" text="설명"/>
@@ -214,17 +250,17 @@
         <text name="rms_breakdowns_severity_moderate" text="보통"/>
         <text name="rms_breakdowns_severity_major" text="심각함"/>
         <text name="rms_breakdowns_severity_critical" text="치명적임"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="스티어링 링케이지 경미한 마모. 조향이 약간 덜 정확해집니다."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="스티어링 링케이지 보통 마모. 유격이 커지고 정확도가 뚜렷이 떨어지며 주행 특성이 나빠집니다."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="스티어링 링케이지 심각한 마모. 유격이 크고 조향 반응이 나쁘며 차량 제어가 어려워집니다."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="치명적인 스티어링 링케이지 고장. 조향을 더 이상 신뢰할 수 없으며 주행이 위험해집니다."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="조향 링크 장치가 약간 마모되었습니다. 조향 정밀도가 조금 떨어집니다."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="조향 링크 장치가 중간 정도로 마모되었습니다. 유격이 커지고 정밀도가 뚜렷이 떨어지며 도로 주행 특성이 나빠집니다."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="조향 링크 장치가 심하게 마모되었습니다. 유격이 크고 조향 반응이 나쁘며 차량 제어가 어려워집니다."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="조향 링크 장치에 임계 고장이 발생했습니다. 조향을 더 이상 신뢰할 수 없으며 주행이 위험해집니다."/>
         <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="조향 장치 고장"/>
-        <text name="rms_breakdowns_general_wear_stage1_description" text="수년간의 험난한 작업으로 쌓인 스트레스입니다. 핵심 부품의 미세하고 되돌릴 수 없는 마모로 인해 전반적인 성능이 약간 저하되었습니다."/>
-        <text name="rms_breakdowns_gear_disengage_message" text="기어 빠짐"/>
+        <text name="rms_breakdowns_general_wear_stage1_description" text="수년간 사용하며 누적된 응력으로 주요 구성품에 경미하고 되돌릴 수 없는 마모가 남아 전반적인 성능이 약간 저하됩니다."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="중립으로 전환됨"/>
         <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="예열 플러그의 초기 열화입니다. 냉간 시동이 느려지지만 온간 시동에는 영향이 없습니다."/>
         <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="여러 예열 플러그가 약해졌거나 작동하지 않습니다. 냉간 시동이 어렵고 엔진이 따뜻해질 때까지 공회전이 불규칙할 수 있습니다."/>
         <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="심각한 예열 플러그 고장입니다. 냉간 시동의 신뢰성이 매우 낮으며 예열 중에도 엔진이 불규칙하게 작동합니다."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="예열 시스템이 완전히 고장 났습니다. 온도가 너무 낮으면 엔진을 시동할 수 없습니다."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="예열 플러그가 완전히 고장 났습니다. 온도가 너무 낮으면 엔진을 시동할 수 없습니다."/>
         <text name="rms_breakdowns_part_vehicle" text="차량"/>
         <text name="rms_breakdowns_part_valve_train" text="밸브 트레인"/>
         <text name="rms_breakdowns_part_consumables" text="소모품"/>
@@ -241,15 +277,16 @@
         <text name="rms_breakdowns_part_wheel_bearing" text="휠 베어링"/>
         <text name="rms_breakdowns_part_alternator_regulator" text="발전기 레귤레이터"/>
         <text name="rms_breakdowns_part_turbocharger" text="터보차저"/>
-        <text name="rms_breakdowns_part_transmission_thermostat" text="변속기 서모스탷"/>
+        <text name="rms_breakdowns_part_transmission_thermostat" text="변속기 서모스탯"/>
         <text name="rms_breakdowns_part_transmission_seal" text="변속기 오일 씰"/>
         <text name="rms_breakdowns_part_track_tensioner" text="트랙 텐셔너"/>
         <text name="rms_breakdowns_part_thermostat" text="서모스탯"/>
         <text name="rms_breakdowns_part_oil_pump" text="오일 펌프"/>
         <text name="rms_breakdowns_part_synchronizer" text="싱크로나이저"/>
-        <text name="rms_breakdowns_part_steering_linkage" text="스티어링 링케이지"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="조향 링크 장치"/>
         <text name="rms_breakdowns_part_powershift_hydraulic_pump" text="파워시프트 유압 펌프"/>
         <text name="rms_breakdowns_part_pto_drive_coupling" text="PTO 구동 커플링"/>
+        <text name="rms_breakdowns_part_pto_engagement_control" text="PTO 결합 제어 장치"/>
         <text name="rms_breakdowns_part_pto_drive_output" text="PTO 출력축"/>
         <text name="rms_breakdowns_part_hydraulic_pump" text="유압 펌프"/>
         <text name="rms_breakdowns_part_hydraulic_cylinder" text="유압 실린더"/>
@@ -263,211 +300,215 @@
         <text name="rms_breakdowns_part_fuel_filter" text="연료 필터"/>
         <text name="rms_breakdowns_part_fuel_line" text="연료 라인"/>
         <text name="rms_breakdowns_part_glow_plugs" text="예열 플러그"/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage1_description" text="파워시프트 유압 압력 낮음. 기어 체결 시 약간의 지연과 충격이 발생합니다."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage2_description" text="유압 펌프 씰 마모. 기어 변속 중 뚜렷한 지연과 요동이 발생합니다."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage3_description" text="유압 펌프 고장 중. 변속 시 심각한 지연과 격렬한 충격이 발생합니다."/>
+        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage1_description" text="파워시프트 유압 펌프의 압력이 낮아졌습니다. 변속 시 약간의 지연과 거친 느낌이 발생합니다."/>
+        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage2_description" text="파워시프트 유압 펌프의 씰이 마모되었습니다. 변속 시 뚜렷한 지연과 충격이 발생합니다."/>
+        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage3_description" text="파워시프트 유압 펌프가 고장 났습니다. 변속 시 심각한 지연과 강한 충격이 발생합니다."/>
         <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage4_description" text="파워시프트 유압 펌프 고장. 변속기가 중립 상태에서 고착되었습니다."/>
         <text name="rms_breakdowns_pto_auto_disengage_message" text="PTO가 해제되었습니다"/>
         <text name="rms_breakdowns_pto_drive_coupling_wear_stage1_description" text="PTO 구동 커플링의 초기 마모입니다. PTO가 가끔 해제될 수 있습니다."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage2_description" text="PTO 구동 커플링가 중간 정도로 마모되었습니다. 해제가 더 자주 발생합니다."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage3_description" text="PTO 구동 커플링가 심하게 마모되었습니다. PTO가 반복해서 해제됩니다."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_description" text="PTO 구동 커플링의 치명적 고장입니다. PTO가 더 이상 동력을 전달할 수 없습니다."/>
+        <text name="rms_breakdowns_pto_drive_coupling_wear_stage2_description" text="PTO 구동 커플링이 중간 정도로 마모되었습니다. 해제가 더 자주 발생합니다."/>
+        <text name="rms_breakdowns_pto_drive_coupling_wear_stage3_description" text="PTO 구동 커플링이 심하게 마모되었습니다. PTO가 반복해서 해제됩니다."/>
+        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_description" text="PTO 구동 커플링에 임계 고장이 발생했습니다. PTO가 더 이상 동력을 전달할 수 없습니다."/>
         <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_message" text="PTO 구동 커플링 고장"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage1_description" text="PTO 출력 베어링의 초기 마모로 약한 작동 소음이 발생합니다."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage2_description" text="PTO 출력 베어링의 중간 마모로 뚜렷한 소음이 발생합니다."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage3_description" text="PTO 출력 베어링의 심한 마모로 큰 소음과 간헐적인 해제가 발생합니다."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_description" text="PTO 출력 베어링의 치명적 고장입니다. PTO를 더 이상 작동할 수 없습니다."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_message" text="PTO 출력 베어링 고장"/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage1_description" text="PTO 결합 제어가 간헐적으로 반응하며 작동 명령을 거부할 수 있습니다."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage2_description" text="PTO 결합 제어가 PTO를 자주 연결하지 못합니다."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage3_description" text="PTO 결합 제어가 심하게 고장 나 대부분의 작동 시도를 거부합니다."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_description" text="PTO 결합 제어가 완전히 고장 났습니다. PTO를 연결할 수 없습니다."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage1_description" text="PTO 출력축 베어링의 초기 마모로 약한 작동 소음이 발생합니다."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage2_description" text="PTO 출력축 베어링의 중간 마모로 뚜렷한 소음이 발생합니다."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage3_description" text="PTO 출력축 베어링의 심한 마모로 큰 소음과 간헐적인 해제가 발생합니다."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_description" text="PTO 출력축에 임계 고장이 발생했습니다. PTO를 더 이상 작동할 수 없습니다."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_message" text="PTO 출력축 고장"/>
+        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage1_description" text="PTO 결합 제어 장치가 간헐적으로 반응하며 결합 명령을 거부할 수 있습니다."/>
+        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage2_description" text="PTO 결합 제어 장치가 PTO를 자주 결합하지 못합니다."/>
+        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage3_description" text="PTO 결합 제어 장치가 심하게 고장 나 대부분의 결합 시도를 거부합니다."/>
+        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_description" text="PTO 결합 제어 장치가 완전히 고장 났습니다. PTO를 결합할 수 없습니다."/>
         <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_message" text="PTO 결합 제어 고장"/>
-        <text name="rms_breakdowns_pto_engagement_blocked_message" text="PTO 연결이 거부됨"/>
-        <text name="rms_breakdowns_quick_fix_stage" text="임시 수리됨"/>
-        <text name="rms_breakdowns_defected_parts_stage" text="결함 있음"/>
-        <text name="rms_breakdowns_defected_parts_detected_description" text="장치는 정상 작동 중이나 점검 결과 결함 부품이 발견되었습니다. 안전 여유치가 매우 낮으므로 갑작스러운 고장을 방지하기 위해 예방적 교체를 권장합니다."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="PTO 결합 거부"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="임시 수리"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="결함"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="시스템은 정상 작동 중이지만 점검에서 결함 부품이 발견되었습니다. 이 부품에는 더 이상 안전 여유가 없으므로 갑작스러운 고장을 방지하기 위해 예방적 교체를 권장합니다."/>
         <text name="rms_breakdowns_dead_battery_message" text="배터리 방전됨"/>
-        <text name="rms_breakdowns_temporarily_repaired_description" text="장치는 정상 작동 중이나 전적으로 마모된 요소의 임시 수리에 의존하고 있습니다. 부하 상태에서의 고장을 피하기 위해 가능한 한 빨리 완전한 부품 교체를 권장합니다."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="터보 베어링 마모. 미세한 휘슬 소리가 들리며 고 RPM에서 약간의 출력 손실이 발생합니다."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="터보 씰 누설. 뚜렷한 출력 손실과 연료 소비 증가가 관찰됩니다."/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="시스템은 정상 작동 중이지만 전적으로 임시 수리에 의존하고 있습니다. 부하 시 고장을 방지하려면 가능한 한 빨리 부품을 완전히 교체하는 것이 좋습니다."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="터보차저 베어링이 마모되었습니다. 희미한 휘파람 소리가 들리며 고회전 영역에서 출력이 약간 떨어집니다."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="터보차저 씰에서 누출이 발생합니다. 뚜렷한 출력 손실과 연료 소비 증가가 나타납니다."/>
         <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="터빈 블레이드 손상. 심각한 출력 손실과 고부하 시 엔진 정지 위험이 있습니다."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="터보 치명적 파손. 엔진 출력을 대부분 상실했으며 심각한 내부 손상 위험이 있습니다."/>
-        <text name="rms_breakdowns_transmission_slip_stage1_description" text="클러치 플레이트 마모. 부하 상태에서 변속기 미끄러짐으로 인한 일시적인 출력 손실이 발생합니다."/>
-        <text name="rms_breakdowns_transmission_slip_stage2_description" text="상당한 클러치 마모. 가속 시 특히 뚜렷한 미끄러짐이 나타납니다."/>
-        <text name="rms_breakdowns_transmission_slip_stage3_description" text="클러치 심각한 마모. 심한 미끄러짐으로 인해 휠로 동력을 전달하기 어렵습니다."/>
-        <text name="rms_breakdowns_transmission_slip_stage4_description" text="클러치 완전 소멸. 차량이 움직일 수 없습니다."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="터보차저에 임계 고장이 발생했습니다. 엔진 출력을 대부분 상실했으며 심각한 내부 손상 위험이 있습니다."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="클러치 플레이트가 마모되었습니다. 부하 시 클러치 슬립으로 인해 간헐적으로 출력이 손실됩니다."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="클러치가 상당히 마모되었습니다. 가속 시와 고부하에서 뚜렷한 슬립이 발생합니다."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="클러치가 심하게 마모되었습니다. 심한 슬립으로 바퀴에 동력을 전달하기 어렵습니다."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="클러치가 완전히 타버렸습니다. 차량이 움직일 수 없습니다."/>
         <text name="rms_breakdowns_transmission_slip_stage4_message" text="클러치 고장"/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="싱크로나이저 마모. 기어 변속 시 간헐적인 소음이나 어려움이 발생합니다."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="싱크로나이저가 마모되었습니다. 기어 변속 시 간헐적으로 갈리는 소리가 나거나 변속이 어려워집니다."/>
         <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="싱크로나이저 손상. 기어 변속이 자주 어렵거나 실패할 수 있습니다."/>
         <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="싱크로나이저 치 파손. 부하 시 변속 실패나 기어 튕김 현상이 발생할 확률이 높습니다."/>
         <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="싱크로나이저 완전 고장. 기어 변속이 불가능합니다."/>
         <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_message" text="싱크로나이저 고장"/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage1_description" text="변속기 서모스탯이 고장 나기 시작합니다. 오일 쿨러를 너무 늦게 열어 변속기 오일이 평소보다 조금 더 뜨겁게 작동합니다."/>
+        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage1_description" text="변속기 서모스탯이 고장 나기 시작합니다. 오일 쿨러를 너무 늦게 열어 변속기 오일 온도가 평소보다 조금 높아집니다."/>
         <text name="rms_breakdowns_transmission_thermostat_malfunction_stage2_description" text="변속기 서모스탯의 반응이 나쁩니다. 오일 쿨러가 너무 늦게 열려 변속기 오일이 정상 온도보다 훨씬 높게 유지되고 마모가 빨라집니다."/>
         <text name="rms_breakdowns_transmission_thermostat_malfunction_stage3_description" text="변속기 서모스탯이 오일 쿨러를 거의 열지 않습니다. 부하가 올라가는 즉시 변속기 오일이 과열에 가까워집니다."/>
         <text name="rms_breakdowns_transmission_thermostat_malfunction_stage4_description" text="변속기 서모스탯 완전 고장. 한 위치에 고정되어 멈춘 위치에 따라 변속기 오일이 과열되거나 전혀 데워지지 않습니다."/>
         <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="변속기 오일이 약간 누유됩니다. 작업 중 오일 레벨이 서서히 내려갑니다."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="변속기 오일 누유가 진행되었습니다. 오일 레벨이 눈에 띄게 내려가고 변속기 온도가 상승합니다."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="변속기 오일이 중간 정도로 누출됩니다. 오일 수준이 눈에 띄게 낮아지고 변속기가 더 뜨거워집니다."/>
         <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="변속기 오일 누유가 심합니다. 오일 레벨이 빠르게 내려가고 부하 시 변속기가 과열됩니다."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="변속기 오일 누유가 치명적입니다. 남은 오일로는 변속기를 안전하게 운전할 수 없습니다."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="변속기 오일이 임계 수준으로 누출됩니다. 남은 오일로는 변속기를 안전하게 작동할 수 없습니다."/>
         <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="트랙 텐셔너 경미한 오작동. 트랙 장력이 약간 불안정해져 구름 저항과 마모가 소폭 증가합니다."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="트랙 텐셔너 보통 오작동. 장력이 불안정해지고 구름 효율이 떨어지며 정렬 불량 위험이 커집니다."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="트랙 텐셔너 심각한 오작동. 장력이 크게 흐트러지고 동력 전달이 비효율적이며 트랙 이탈 위험이 커집니다."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="치명적인 트랙 텐셔너 고장. 트랙을 더 이상 제대로 유지할 수 없으며 차량을 안전하게 운행할 수 없습니다."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="트랙 텐셔너가 중간 정도로 오작동합니다. 장력이 불안정해지고 주행 효율이 떨어지며 정렬 불량 위험이 커집니다."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="트랙 텐셔너가 심하게 오작동합니다. 장력이 크게 흐트러지고 동력 전달이 비효율적이며 트랙 이탈 위험이 커집니다."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="트랙 텐셔너에 임계 고장이 발생했습니다. 트랙을 더 이상 제대로 유지할 수 없으며 차량을 안전하게 운행할 수 없습니다."/>
         <text name="rms_breakdowns_track_tensioner_malfunction_stage4_message" text="트랙 텐셔너 고장"/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage1_description" text="엔진 서모스탯 고장 시작. 적정 온도 도달 시간이 길어지거나 약간 과열됩니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_stage1_description" text="엔진 서모스탯이 고장 나기 시작합니다. 엔진이 최적 온도에 도달하는 데 더 오래 걸리거나 온도가 약간 높아집니다."/>
         <text name="rms_breakdowns_thermostat_malfunction_stage2_description" text="서모스탯 반응 불량. 엔진 온도 조절이 불안정하여 마모가 증가합니다."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage3_description" text="서모스탯이 닫힌 채로 고착되었습니다. 부하 시 엔진이 계속 과열됩니다."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage4_description" text="서모스탯 완전 고장. 냉각수가 순환되지 않아 즉각적이고 심각한 과열이 발생합니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_stage3_description" text="서모스탯이 거의 열리지 않습니다. 부하가 증가하면 엔진이 과열됩니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_stage4_description" text="서모스탯이 완전히 고장 났습니다. 엔진 냉각수가 제대로 순환하지 못해 빠르고 심각한 과열이 발생합니다."/>
         <text name="rms_breakdowns_overheat_protection_stage1_description" text="엔진이 보호 모드로 전환되었습니다. 온도가 내려갈 때까지 출력이 제한됩니다."/>
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="과열 보호: 출력 제한"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="과열 보호가 강화됩니다. 엔진 출력이 절반으로 줄었습니다."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="과열 보호: 출력 절반으로 제한"/>
         <text name="rms_breakdowns_overheat_protection_stage3_description" text="과열 보호가 최대로 작동 중입니다. 엔진 출력의 극히 일부만 남았습니다."/>
         <text name="rms_breakdowns_overheat_protection_stage3_message" text="과열 보호: 출력 대폭 제한"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="손상을 막기 위해 엔진이 정지되었습니다. 다시 시동을 걸기 전에 식히세요."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="과열로부터 보호하기 위해 엔진이 정지되었습니다"/>
-        <text name="rms_breakdowns_overload_breakdown_stage2_message" text="치명적 과부하! 즉시 차량의 부하를 줄이십시오."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="손상을 막기 위해 엔진이 정지되었습니다. 다시 시동을 걸기 전에 식히십시오."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="과열 보호: 엔진 정지"/>
+        <text name="rms_breakdowns_overload_breakdown_stage2_message" text="임계 과부하! 즉시 차량의 부하를 줄이십시오."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="오일 펌프 경미한 오작동. 오일 압력이 낮아지고 토크가 약간 감소하며 엔진 온도가 올라가고 노킹이 발생할 수 있습니다."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="오일 펌프 보통 오작동. 오일 압력 부족으로 토크 감소가 뚜렷하며 엔진 온도가 상승하고 노킹 소리가 확실히 들립니다."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="오일 펌프 심각한 오작동. 오일 압력이 치명적으로 낮고 엔진 과열 가능성이 높으며 심한 노킹과 정지 현상이 발생합니다."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="치명적인 오일 펌프 고장. 오일 순환이 되지 않아 안전한 운행이 불가능하며 시동을 걸 수 없습니다."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_message" text="오일 압력 고장"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="엔진이 완전히 고장났습니다"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="오일 펌프가 중간 정도로 오작동합니다. 오일 압력이 부족하고 엔진 토크가 뚜렷이 감소하며 엔진 온도가 상승하고 기계적 노킹음이 명확히 들립니다."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="오일 펌프가 심하게 오작동합니다. 오일 압력이 임계 수준으로 낮고 엔진 토크가 크게 떨어지며 과열 가능성이 높고 심한 기계적 노킹과 엔진 정지가 발생할 수 있습니다."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="오일 펌프에 임계 고장이 발생했습니다. 엔진을 안전하게 작동하기에는 오일 순환이 부족하여 시동하거나 계속 운행할 수 없습니다."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_message" text="오일 펌프 고장"/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="엔진이 고착되어 더 이상 회전할 수 없습니다."/>
         <text name="rms_breakdowns_engine_jam_stage1_message" text="엔진 고착됨"/>
         <text name="rms_breakdowns_engine_stalled_message" text="엔진 정지됨"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU 오류. 엔진 출력이 약간 감소합니다."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU 오작동. 뚜렷한 출력 손실과 연료 소비 증가가 발생합니다."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="치명적인 ECU 오작동. 심각한 출력 손실, 높은 연료 소비 및 엔진 정지 위험이 있습니다."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU가 경미하게 오작동합니다. 엔진 출력이 약간 감소합니다."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU가 중간 정도로 오작동합니다. 뚜렷한 출력 손실과 연료 소비 증가가 발생합니다."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="ECU가 심하게 오작동합니다. 심각한 출력 손실, 높은 연료 소비 및 엔진 정지 위험이 있습니다."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="ECU 완전 고장. 엔진을 제어할 수 없으며 시동이 걸리지 않습니다."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="엔진 결함"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="배선 및 전기 커넥터 경미한 부식. 접촉 저항 증가로 전등이 깜빡이거나 전압 공급이 불안정하며 엔진 시동이 어려울 수 있습니다."/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="배선 및 전기 커넥터 보통 부식. 접촉 불량으로 전등 깜빡임, 불안정한 전압, 시동 곤란 및 엔진 정지가 발생할 수 있습니다."/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="배선 및 전기 커넥터 심각한 부식. 핵심 회로 전원 공급이 불안정하고 조명이 완전히 나갈 수 있으며 엔진 토크가 감소하고 정지하기 쉽습니다."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="ECU 고장"/>
+        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="배선과 전기 커넥터가 약간 부식되었습니다. 접촉 저항 증가로 조명이 간헐적으로 깜박이고 전원 공급이 불안정하며 시동이 어려워집니다."/>
+        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="배선과 전기 커넥터가 중간 정도로 부식되었습니다. 접촉 손실로 조명이 자주 깜박이고 전압 공급이 불안정하며 시동이 어렵고 엔진이 정지할 수 있습니다."/>
+        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="배선과 전기 커넥터가 심하게 부식되었습니다. 핵심 회로의 전원 공급이 불안정하고 조명이 완전히 고장 날 수 있으며 엔진 토크가 감소하고 엔진 정지 가능성이 높으며 시동도 불안정합니다."/>
         <text name="rms_breakdowns_corroded_wiring_stage4_description" text="심각한 부식으로 인한 스타터 제어 회로 고장. 조명이 작동하지 않으며 엔진 시동이 불가능합니다."/>
         <text name="rms_breakdowns_corroded_wiring_stage4_message" text="스타터 회로 고장"/>
         <text name="rms_breakdowns_coolant_leak_stage1_description" text="경미한 냉각수 누수. 냉각 시스템 효율이 약간 저하됩니다."/>
-        <text name="rms_breakdowns_coolant_leak_stage2_description" text="보통 수준의 냉각수 누수. 부하 시 엔진 온도가 더 빨리 상승합니다."/>
-        <text name="rms_breakdowns_coolant_leak_stage3_description" text="심각한 냉각수 누수. 효율이 대폭 감소하여 부하 시 과열 가능성이 높습니다."/>
-        <text name="rms_breakdowns_coolant_leak_stage4_description" text="치명적인 냉각수 누수. 냉각 효율을 상실하여 안전한 온도를 유지할 수 없습니다."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="CVT 체인 경미한 마모. 부하 시 약한 슬립이 발생해 전달 효율이 소폭 떨어집니다."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="CVT 체인 보통 마모. 부하 시 슬립이 뚜렷해지고 변속비 조정 정밀도가 떨어집니다."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="CVT 체인 심각한 마모. 슬립이 크고 효율이 급격히 떨어지며 변속기가 요구 변속비를 유지하기 어렵습니다."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="치명적인 CVT 체인 고장. 변속기가 토크를 제대로 전달하지 못해 차량이 사실상 운행 불가능해집니다."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="CVT 슬립 치명적"/>
+        <text name="rms_breakdowns_coolant_leak_stage2_description" text="냉각수가 중간 정도로 누출됩니다. 냉각 성능이 뚜렷이 떨어지고 엔진 온도가 더 빠르게 상승합니다."/>
+        <text name="rms_breakdowns_coolant_leak_stage3_description" text="냉각수가 심하게 누출됩니다. 냉각 손실이 크며 과열 위험이 높아집니다."/>
+        <text name="rms_breakdowns_coolant_leak_stage4_description" text="냉각 회로에 임계 고장이 발생했습니다. 엔진을 안전하게 작동하기에는 냉각수가 부족합니다."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="CVT 체인이 약간 마모되었습니다. 부하 시 가벼운 슬립이 발생해 전달 효율이 조금 떨어집니다."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="CVT 체인이 중간 정도로 마모되었습니다. 부하 시 슬립이 뚜렷해지고 변속비 조정 정밀도가 떨어집니다."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="CVT 체인이 심하게 마모되었습니다. 슬립이 크고 효율이 급격히 떨어지며 변속기가 요구 변속비를 유지하기 어렵습니다."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="CVT 체인에 임계 고장이 발생했습니다. 변속기가 토크를 제대로 전달하지 못해 차량이 사실상 운행 불가능해집니다."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="CVT 체인 고장"/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="CVT 변속기 오작동의 조기 징후가 발견되었습니다. 점검 및 수리가 필요합니다."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="CVT 변속기 오작동이 악화되고 있습니다. 계속 운행 시 비상 모드로 전환될 수 있습니다."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="치명적인 CVT 변속기 손상. 변속기가 비상 모드에 있으며 최고 속도가 제한됩니다."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="CVT 변속기에 임계 손상이 발생했습니다. 변속기가 비상 모드에 있으며 차량 최고 속도가 제한됩니다."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="CVT 변속기 완전 고장. 수리 전까지 더 이상의 운행이 불가능합니다."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage4_message" text="CVT 변속기 고장"/>
         <text name="rms_breakdowns_battery_sulfation_stage1_description" text="경미한 배터리 설페이션 현상. 유효 배터리 용량이 감소하여 부하 시 전기 예비력이 낮아집니다."/>
-        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="배터리 설페이션 보통 진행. 배터리 용량이 현저히 줄어들고 엔진 시동이 어렵습니다."/>
-        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="심각한 배터리 설페이션. 가용 용량이 치명적으로 낮고 크랭킹 성능이 불안정합니다."/>
-        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="치명적인 배터리 설페이션. 유효 용량이 거의 없으며 엔진 시동을 위한 크랭킹 성능이 부족합니다."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="배터리 설페이션이 중간 정도로 진행되었습니다. 유효 용량이 크게 줄어 엔진 시동이 어려워집니다."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="배터리 설페이션이 심각합니다. 유효 용량이 임계 수준으로 낮고 크랭킹 성능이 불안정합니다."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="배터리 설페이션이 임계 수준입니다. 유효 용량이 거의 없으며 안정적인 시동에 필요한 크랭킹 출력이 부족합니다."/>
         <text name="rms_breakdowns_brake_malfunction_stage1_description" text="브레이크 패드 마모. 제동 성능이 약간 저하됩니다."/>
-        <text name="rms_breakdowns_brake_malfunction_stage2_description" text="브레이크 액 누유 또는 디스크 마모. 제동 거리가 뚜렷하게 길어집니다."/>
-        <text name="rms_breakdowns_brake_malfunction_stage3_description" text="제동 압력 상실 심각. 브레이크가 매우 약하고 신뢰할 수 없습니다."/>
+        <text name="rms_breakdowns_brake_malfunction_stage2_description" text="브레이크액 누출 또는 디스크 마모입니다. 제동 거리가 뚜렷하게 길어집니다."/>
+        <text name="rms_breakdowns_brake_malfunction_stage3_description" text="제동 압력이 크게 떨어졌습니다. 브레이크가 매우 약하고 신뢰할 수 없습니다."/>
         <text name="rms_breakdowns_brake_malfunction_stage4_description" text="브레이크 시스템 완전 고장. 더 이상의 운행은 매우 위험합니다."/>
         <text name="rms_breakdowns_brake_malfunction_stage4_message" text="브레이크 고장"/>
-        <text name="rms_breakdowns_bearing_wear_stage1_description" text="휠 허브 베어링 경미한 마모. 기계적 저항이 약간 늘어나고 낯선 작동 소음이 발생할 수 있습니다."/>
-        <text name="rms_breakdowns_bearing_wear_stage2_description" text="휠 허브 베어링 보통 마모. 마찰이 뚜렷이 늘어나고 소음이 커지며 기계적 효율이 떨어집니다."/>
-        <text name="rms_breakdowns_bearing_wear_stage3_description" text="휠 허브 베어링 심각한 마모. 마찰이 크고 소음이 심하며 부하 시 고착될 실질적 위험이 있습니다."/>
-        <text name="rms_breakdowns_bearing_wear_stage4_description" text="치명적인 휠 허브 베어링 고장. 완전 고착에 가까워 작동이 불가능합니다."/>
-        <text name="rms_breakdowns_bearing_wear_stage4_message" text="휠 베어링 고착"/>
+        <text name="rms_breakdowns_bearing_wear_stage1_description" text="베어링이 약간 마모되었습니다. 기계적 저항이 조금 증가하고 비정상적인 작동 소음이 발생할 수 있습니다."/>
+        <text name="rms_breakdowns_bearing_wear_stage2_description" text="베어링이 중간 정도로 마모되었습니다. 마찰이 뚜렷이 증가하고 소음이 커지며 기계적 효율이 떨어집니다."/>
+        <text name="rms_breakdowns_bearing_wear_stage3_description" text="베어링이 심하게 마모되었습니다. 마찰과 소음이 크며 부하 시 고착될 실제 위험이 있습니다."/>
+        <text name="rms_breakdowns_bearing_wear_stage4_description" text="베어링에 임계 고장이 발생했습니다. 완전 고착에 가까워 작동이 불가능해집니다."/>
+        <text name="rms_breakdowns_bearing_wear_stage4_message" text="베어링 고장"/>
         <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="발전기 레귤레이터 경미한 오작동. 충전 출력이 감소하여 배터리 충전 효율이 떨어집니다."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="보통 수준의 레귤레이터 오작동. 충전 출력이 불안정하고 감소하여 배터리 충전 불량 및 전압 손실이 발생합니다."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="심각한 레귤레이터 오작동. 충전 출력이 치명적으로 낮고 전압 공급이 불안정하여 큰 손실이 발생합니다."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="레귤레이터 완전 고장. 배터리 충전이 되지 않으며 배터리 잔량으로만 작동합니다."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="밸브 트레인 경미한 오작동. 엔진 토크가 약간 감소하고 연료 소비가 늘어나며 비정상적인 소음이 발생합니다."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="보통 수준의 밸브 트레인 오작동. 토크 감소와 연료 소비 증가가 뚜렷하고 소음이 커지며 부하 시 엔진이 주춤거릴 수 있습니다."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="심각한 밸브 트레인 오작동. 토크가 대폭 감소하고 소음이 심하며 빈번한 주춤거림과 엔진 정지가 발생합니다."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage4_description" text="치명적인 밸브 트레인 고장. 정상적인 밸브 작동이 보장되지 않아 시동 및 운행이 불가능합니다."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="발전기 레귤레이터가 중간 정도로 오작동합니다. 충전이 약하고 불안정하여 배터리가 제대로 충전되지 않고 전압 손실이 증가합니다."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="발전기 레귤레이터가 심하게 오작동합니다. 충전이 크게 줄고 전원 공급이 불안정하여 전기 시스템에 큰 손실이 발생합니다."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="발전기 레귤레이터가 완전히 고장 났습니다. 배터리가 충전되지 않으며 전기 시스템은 남은 배터리 예비 전력으로만 작동합니다."/>
+        <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="밸브 트레인이 약간 오작동합니다. 엔진 토크가 조금 감소하고 연료 소비가 늘어나며 기구에서 비정상적인 소음이 발생합니다."/>
+        <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="밸브 트레인이 중간 정도로 오작동합니다. 엔진 토크가 뚜렷이 감소하고 연료 소비와 밸브 트레인 소음이 증가하며 부하 시 엔진이 주저할 수 있습니다."/>
+        <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="밸브 트레인이 심하게 오작동합니다. 엔진 토크가 크게 감소하고 연료 소비와 기계적 소음이 높으며 잦은 주저나 엔진 정지가 발생할 수 있습니다."/>
+        <text name="rms_breakdowns_valve_train_malfunction_stage4_description" text="밸브 트레인에 임계 고장이 발생했습니다. 엔진이 더 이상 안정적으로 작동하지 않아 시동하거나 계속 운행할 수 없습니다."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage4_message" text="밸브 트레인 고장"/>
         <text name="rms_breakdowns_voltage_sag_message" text="시스템 전압 부족"/>
         <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="연료 펌프 조기 마모. 엔진 출력이 약간 낮아지고 연료 소비가 늘어납니다."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="연료 압력 저하. 뚜렷한 출력 손실과 연료비 증가, 가끔 엔진 정지가 발생합니다."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="치명적인 연료 압력. 심각한 출력 손실과 매우 높은 연료 소비, 잦은 정지가 발생합니다."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="연료 압력이 낮아집니다. 뚜렷한 출력 손실과 연료 소비 증가, 간헐적인 엔진 정지가 발생합니다."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="연료 압력이 임계 수준입니다. 심각한 출력 손실과 매우 높은 연료 소비, 잦은 엔진 정지가 발생합니다."/>
         <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="연료 펌프 완전 고장. 엔진에 연료가 공급되지 않습니다."/>
         <text name="rms_breakdowns_fuel_pump_malfunction_stage4_message" text="연료 펌프 고장"/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="하나 이상의 인젝터 노즐이 약간 막혔습니다. 엔진이 약간 거칠게 작동하며 출력이 미세하게 떨어집니다."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="연료 분무 상태 불량. 부하 시 엔진 부조(미스파이어)가 발생하여 출력 저하와 주춤거림이 나타납니다."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="인젝터 고착. 엔진이 매우 열악하게 작동하며 심각한 출력 손실과 불안정한 시동을 보입니다."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="하나 이상의 인젝터 노즐이 약간 막혔습니다. 엔진이 다소 불규칙하게 작동하며 출력이 조금 떨어질 수 있습니다."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="연료 분무 상태가 좋지 않습니다. 부하 시 엔진이 주저하며 뚜렷한 출력 손실과 불규칙한 움직임이 발생합니다."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="연료 인젝터가 고착되었습니다. 엔진이 매우 불안정하게 작동하며 출력 손실이 크고 시동도 불안정합니다."/>
         <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="인젝터 완전 고장. 엔진이 정상 작동하지 않으며 시동이 전혀 걸리지 않을 수 있습니다."/>
         <text name="rms_breakdowns_fuel_injector_malfunction_stage4_message" text="인젝터 고장"/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="연료 필터 경미한 막힘. 높은 부하에서 연료 흐름이 약간 줄어듭니다."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="연료 필터 보통 막힘. 부하 시 흐름이 부족해지고 출력이 떨어지며 엔진이 이따금 주춤거립니다."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="연료 필터 심각한 막힘. 연료 공급이 크게 제한되어 출력이 뚜렷이 떨어지고 엔진이 정지할 수 있습니다."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="치명적인 연료 필터 막힘. 엔진이 신뢰할 수 있게 작동할 만큼의 연료를 더 이상 공급받지 못합니다."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_message" text="연료 필터 차단됨"/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage1_description" text="연료 라인 경미한 공기 유입. 연료 공급이 약간 불안정해집니다."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage2_description" text="연료 라인 보통 공기 유입. 공급이 불안정해지고 출력이 떨어지며 주춤거림이 나타납니다."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage3_description" text="연료 라인 심각한 공기 유입. 엔진이 매우 불규칙하게 작동하며 정지 위험이 높습니다."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_description" text="치명적인 연료 라인 공기 유입. 엔진에 연료를 더 이상 제대로 공급할 수 없습니다."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="연료 필터가 약간 막혔습니다. 고부하에서 연료 유량이 약간 줄어듭니다."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="연료 필터가 중간 정도로 막혔습니다. 부하 시 유량이 부족해지고 출력이 떨어지며 엔진이 이따금 주저합니다."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="연료 필터가 심하게 막혔습니다. 연료 공급이 크게 제한되어 출력이 뚜렷이 떨어지고 엔진이 정지할 수 있습니다."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="연료 필터가 완전히 막혔습니다. 엔진이 안정적으로 작동하는 데 필요한 연료를 더 이상 공급받지 못합니다."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_message" text="연료 필터 막힘"/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage1_description" text="연료 라인으로 공기가 약간 유입됩니다. 연료 공급이 조금 불안정해집니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage2_description" text="연료 라인으로 공기가 중간 정도 유입됩니다. 연료 공급이 불안정해지고 출력이 떨어지며 엔진이 주저합니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage3_description" text="연료 라인으로 공기가 심하게 유입됩니다. 엔진이 매우 불규칙하게 작동하며 정지 위험이 높습니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage4_description" text="연료 라인에 임계 고장이 발생하여 공기가 대량 유입됩니다. 엔진에 연료를 더 이상 제대로 공급할 수 없습니다."/>
         <text name="rms_breakdowns_fuel_line_air_leak_stage4_message" text="연료 라인 내 공기"/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="팬 클러치 경미한 오작동. 팬 반응 효율이 떨어지고 냉각 성능이 약간 저하됩니다."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="팬 클러치 보통 오작동. 팬 작동이 불규칙해지고 냉각 효율이 뚜렷이 떨어집니다."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="팬 클러치 심각한 오작동. 팬이 충분한 공기 흐름을 만들지 못해 엔진이 더 쉽게 과열됩니다."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="치명적인 팬 클러치 고장. 팬이 필요한 냉각 성능을 더 이상 유지할 수 없습니다."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="CVT 유압 제어 밸브 경미한 오작동. 변속기 반응이 약간 느려지고 정밀도가 떨어집니다."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="CVT 유압 제어 밸브 보통 오작동. 압력이 불안정해지고 변속비 변화가 느려지며 효율이 뚜렷이 떨어집니다."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="CVT 유압 제어 밸브 심각한 오작동. 압력이 매우 불규칙하고 변속기 반응이 나쁘며 전달 동력이 급격히 떨어집니다."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="치명적인 CVT 유압 제어 밸브 고장. 압력을 더 이상 제어할 수 없어 변속기를 사용할 수 없습니다."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="CVT 유압 제어 고장"/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="팬 클러치가 약간 오작동합니다. 팬의 반응 효율이 떨어지고 냉각 성능이 조금 저하됩니다."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="팬 클러치가 중간 정도로 오작동합니다. 팬 결합이 불규칙해지고 냉각 효율이 뚜렷이 떨어집니다."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="팬 클러치가 심하게 오작동합니다. 팬이 충분한 공기 흐름을 만들지 못해 엔진이 더 쉽게 과열됩니다."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="팬 클러치에 임계 고장이 발생했습니다. 팬이 필요한 냉각 성능을 더 이상 제공할 수 없습니다."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="CVT 유압 제어 밸브가 약간 오작동합니다. 변속기 반응이 조금 느려지고 정밀도가 떨어집니다."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="CVT 유압 제어 밸브가 중간 정도로 오작동합니다. 압력이 불안정하고 변속비 변경이 느려지며 효율이 뚜렷이 떨어집니다."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="CVT 유압 제어 밸브가 심하게 오작동합니다. 압력이 매우 불규칙하고 변속기 반응이 나쁘며 전달 동력이 급격히 떨어집니다."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="CVT 유압 제어 밸브에 임계 고장이 발생했습니다. 압력을 더 이상 제어할 수 없어 변속기를 사용할 수 없습니다."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="CVT 유압 제어 밸브 고장"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="유압 실린더에 경미한 내부 누설이 있습니다. 들어 올린 작업기가 부하를 받으면 천천히 내려갑니다."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="유압 실린더에 보통 수준의 내부 누설이 있습니다. 의도하지 않은 하강이 뚜렷하며 적재 하중이 커질수록 빨라집니다."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="유압 실린더에 심각한 내부 누설이 있습니다. 무거운 작업기가 더 이상 위치를 안정적으로 유지하지 못합니다."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="유압 실린더에 치명적인 내부 누설이 있습니다. 들어 올린 모든 하중이 빠르게 저절로 내려갑니다."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="펌프 미세 내부 누설. 유압 작업 기구의 작동 속도가 약간 느려집니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="유압 실린더에 중간 정도의 내부 누출이 있습니다. 의도하지 않은 하강이 뚜렷하며 지지하는 하중이 커질수록 심해집니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="유압 실린더에 심각한 내부 누출이 있습니다. 무거운 작업기가 더 이상 위치를 안정적으로 유지하지 못합니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="유압 실린더에 임계 내부 누출이 있습니다. 들어 올린 하중이 모두 빠르게 저절로 내려갑니다."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="유압 펌프에 경미한 내부 누출이 있습니다. 작업 기구가 약간 느리게 작동합니다."/>
         <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="펌프 씰 마모. 유압 장치 작동 속도가 눈에 띄게 느려집니다."/>
         <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="유압 펌프 손상. 작업 기구가 매우 느리고 힘이 없습니다."/>
         <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="유압 펌프 고장. 유압 시스템을 사용할 수 없습니다."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_message" text="유압 고장"/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="유압 호스에 작은 외부 누유가 있습니다. 소량의 오일이 빠져나가며 유압 반응이 약간 저하됩니다."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="유압 호스에서 누유가 눈에 띕니다. 오일 손실이 계속되고 유압 기능의 반응이 느려집니다."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_message" text="유압 펌프 고장"/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="유압 호스가 약간 젖어 있습니다. 소량의 오일이 빠져나가며 유압 반응이 조금 저하됩니다."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="유압 호스에서 눈에 띄게 오일이 스며 나옵니다. 오일 손실이 계속되고 유압 기능의 반응이 느려집니다."/>
         <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="유압 호스에서 오일이 계속 새고 있습니다. 오일 손실이 분명하며 유압 기능이 눈에 띄게 약해집니다."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="유압 호스에 심각한 외부 누유가 있습니다. 오일이 빠르게 빠져나가며 유압 성능이 크게 저하됩니다."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="유압 필터가 유량을 제한하기 시작합니다. 유압 기능이 약간 느려집니다. 정기 정비로 필터를 교체할 수 있습니다."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="유압 필터가 보통 수준으로 막혔습니다. 모든 유압 기능이 눈에 띄게 느려집니다. 정기 정비로 필터를 교체할 수 있습니다."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="유압 필터가 심하게 막혔습니다. 유압 반응이 매우 느립니다. 정기 정비로 필터를 교체할 수 있습니다."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="유압 필터가 거의 완전히 막혔습니다. 유압 기능이 거의 반응하지 않습니다. 정기 정비로 필터를 교체할 수 있습니다."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="유압 호스에 심각한 외부 누출이 있습니다. 오일이 빠르게 빠져나가며 유압 성능이 크게 저하됩니다."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="유압 필터가 약간 막혀 유량을 제한하기 시작합니다. 유압 기능이 조금 느려집니다. 정비 시 필터가 교체됩니다."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="유압 필터가 중간 정도로 막혔습니다. 모든 유압 기능이 눈에 띄게 느려집니다. 정비 시 필터가 교체됩니다."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="유압 필터가 심하게 막혔습니다. 유압 반응이 매우 느립니다. 정비 시 필터가 교체됩니다."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="유압 필터가 완전히 막혔습니다. 유압 기능이 거의 반응하지 않습니다. 정비 시 필터가 교체됩니다."/>
         <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="유압 오일 냉각기의 효율이 조금 떨어졌습니다. 유압 장치를 오래 사용하면 오일 온도가 약간 상승합니다."/>
         <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="유압 오일 냉각기의 성능이 부족합니다. 유압 장치를 계속 사용하면 오일 온도가 눈에 띄게 상승합니다."/>
         <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="유압 오일 냉각기가 심하게 손상되었습니다. 무거운 유압 작업은 오일을 빠르게 과열시킵니다."/>
         <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="유압 오일 냉각기가 고장 났습니다. 장시간 유압 작업을 하면 오일이 심하게 과열되고 펌프 마모가 빨라집니다."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="유압 제어 밸브가 걸리기 시작합니다. 한 유압 기능이 간헐적으로 주저하고 부하에서 힘을 잃습니다."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="유압 제어 밸브가 간헐적으로 걸립니다. 한 유압 기능이 느려지고 부하가 커질수록 더 많은 힘을 잃습니다."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="유압 제어 밸브가 심하게 마모되었습니다. 한 유압 기능이 불규칙하게 움직이고 무거운 부하에서 힘겨워합니다."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="유압 제어 밸브가 치명적으로 손상되었습니다. 한 유압 기능이 반복해서 멈추며 무거운 하중을 거의 움직이지 못합니다."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="유압 제어 밸브가 심하게 걸립니다. 한 유압 기능이 불규칙하게 움직이고 고부하에서 힘을 내지 못합니다."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="유압 제어 밸브가 심각하게 손상되었습니다. 한 유압 기능이 반복해서 멈추며 무거운 하중을 거의 움직이지 못합니다."/>
         <text name="rms_breakdown_at_progress_message" text="진행 중"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="엔진이 차갑습니다! 부하를 줄이십시오!"/>
+        <text name="rms_spec_cold_engine_message" text="경고! 엔진이 차갑습니다. 부하를 줄이십시오."/>
         <text name="rms_spec_overheat_engine_message" text="경고! 엔진 과열 중."/>
         <text name="rms_spec_overheat_transmission_message" text="경고! 변속기 과열 중."/>
         <text name="rms_spec_overhaul_partial" text="부분"/>
         <text name="rms_spec_overhaul_standard" text="표준"/>
         <text name="rms_spec_overhaul_full" text="전체"/>
-        <text name="rms_spec_op_hours_short" text="시간"/>
+        <text name="rms_spec_op_hours_short" text="h"/>
         <text name="rms_spec_this_month" text="이번 달"/>
         <text name="rms_spec_tomorrow_at" text="내일 "/>
-        <text name="rms_spec_never" text="기록 없음"/>
-        <text name="rms_spec_next_planned_service_notification" text="예약된 절차 시작: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="자금 부족으로 예약된 %s 취소됨"/>
+        <text name="rms_spec_never" text="없음"/>
+        <text name="rms_spec_next_planned_service_notification" text="예약 작업 시작: %s"/>
+        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="자금 부족으로 예약 작업 취소: %s"/>
         <text name="rms_spec_next_planned_service_failed_notification" text="예약된 %s 작업이 시작되지 않았습니다: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="모레 "/>
         <text name="rms_spec_day_s" text="일"/>
+        <text name="rms_spec_day_one" text="일"/>
         <text name="rms_spec_duration_format_hours" text="%d %s"/>
         <text name="rms_spec_duration_format_minutes" text="%d %s"/>
         <text name="rms_spec_duration_format_combined" text="%s %s"/>
         <text name="rms_spec_in_days_at" text="{days}일 후 "/>
-        <text name="rms_spec_inspection_issues_detected_notification" text="%s개의 결함 발견"/>
-        <text name="rms_spec_inspection_no_issues_detected_notification" text="결함 없음"/>
+        <text name="rms_spec_inspection_issues_detected_notification" text="문제 감지: %s"/>
+        <text name="rms_spec_inspection_no_issues_detected_notification" text="문제 없음"/>
         <text name="rms_spec_inspection_visual" text="육안"/>
         <text name="rms_spec_inspection_standard" text="표준"/>
-        <text name="rms_spec_inspection_complete" text="전체 정밀 검사"/>
+        <text name="rms_spec_inspection_complete" text="종합"/>
         <text name="rms_spec_hour_s" text="시간"/>
+        <text name="rms_spec_hour_one" text="시간"/>
         <text name="rms_spec_minute_s" text="분"/>
+        <text name="rms_spec_minute_one" text="분"/>
         <text name="rms_spec_months_ago_unit" text="개월 전"/>
+        <text name="rms_spec_month_ago_one" text="개월 전"/>
         <text name="rms_spec_months_ago_format" text="%s %s"/>
         <text name="rms_spec_maintenance_complete_notification" text="작업 완료: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="작업 취소: %s"/>
@@ -477,7 +518,7 @@
         <text name="rms_spec_maintenance_preventive" text="예방"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s (%s까지)"/>
         <text name="rms_spec_workshop_dealer" text="대리점"/>
-        <text name="rms_spec_workshop_own" text="자가 정비"/>
+        <text name="rms_spec_workshop_own" text="자가"/>
         <text name="rms_spec_workshop_mobile" text="이동식"/>
         <text name="rms_spec_system_engine" text="엔진"/>
         <text name="rms_spec_system_electrical" text="전기 시스템"/>
@@ -486,10 +527,10 @@
         <text name="rms_spec_system_cooling" text="냉각 시스템"/>
         <text name="rms_spec_system_chassis" text="섀시"/>
         <text name="rms_spec_system_fuel" text="연료 시스템"/>
-        <text name="rms_spec_system_pto" text="동력 인출 장치"/>
+        <text name="rms_spec_system_pto" text="PTO"/>
         <text name="rms_spec_state_ready" text="준비됨"/>
         <text name="rms_spec_state_repair" text="수리"/>
-        <text name="rms_spec_state_refill" text="유체 보충"/>
+        <text name="rms_spec_state_refill" text="보충"/>
         <text name="rms_spec_state_recommended" text="권장됨"/>
         <text name="rms_spec_state_required" text="필요함"/>
         <text name="rms_spec_state_inspection" text="점검"/>
@@ -497,12 +538,13 @@
         <text name="rms_spec_state_overhaul" text="오버홀"/>
         <text name="rms_spec_state_overdue" text="기한 지남"/>
         <text name="rms_spec_state_optimal" text="최적"/>
-        <text name="rms_spec_state_broken" text="고장남"/>
+        <text name="rms_spec_state_broken" text="고장"/>
         <text name="rms_spec_state_bad" text="나쁨"/>
         <text name="rms_spec_state_budget" text="보급형"/>
         <text name="rms_spec_state_excellent" text="최상"/>
         <text name="rms_spec_state_good" text="양호"/>
-        <text name="rms_spec_state_normal" text="보통"/>
+        <text name="rms_spec_state_service_good" text="양호"/>
+        <text name="rms_spec_state_normal" text="정상"/>
         <text name="rms_spec_state_terrible" text="최악"/>
         <text name="rms_spec_state_unknown" text="알 수 없음"/>
         <text name="rms_spec_state_legendary" text="전설적"/>
@@ -511,7 +553,7 @@
         <text name="rms_spec_state_standard" text="표준"/>
         <text name="rms_spec_state_average" text="평균"/>
         <text name="rms_spec_state_high" text="높음"/>
-        <text name="rms_spec_state_workhorse" text="현역"/>
+        <text name="rms_spec_state_workhorse" text="견고함"/>
         <text name="rms_spec_part_types_used" text="중고"/>
         <text name="rms_spec_part_types_aftermarket" text="애프터마켓"/>
         <text name="rms_spec_part_types_oem" text="순정"/>
@@ -524,48 +566,47 @@
         <text name="rms_spec_repair_type_replacement" text="표준"/>
         <text name="rms_spec_repair_type_advanced" text="정밀 수리"/>
         <!-- Service Options -->
-        <text name="rms_option_menu_option_one_title_inspection" text="점검 유형 선택"/>
-        <text name="rms_option_menu_option_one_title_maintenance" text="정비 수준 선택"/>
-        <text name="rms_option_menu_option_one_title_repair" text="수리 유형 선택"/>
-        <text name="rms_option_menu_option_one_title_overhaul" text="작업 범위 선택"/>
-        <text name="rms_option_menu_option_two_title_maintenance" text="소모품 품질 선택"/>
-        <text name="rms_option_menu_option_two_title_repair" text="교체 부품 품질 선택"/>
-        <text name="rms_option_menu_option_two_title_overhaul" text="시스템 선택"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="* 결함 발견 시 자동으로 순정 부품을 사용한 표준 수리를 시작합니다."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="* 수리 후 자동으로 순정 소모품을 사용한 표준 정비를 시작합니다."/>
-        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="* 오버홀 중 차량을 재도색합니다."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="* 선택한 시스템을 양호한 작동 상태로 재구축합니다. 차량 전체 오버홀보다 빠르고 저렴합니다."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="* 모든 주요 구성 요소에 대한 포괄적인 작업입니다. 상태를 양호한 수준으로 회복시킵니다."/>
-        <text name="rms_option_menu_overhaul_full_description" text="* 완전한 재생산 작업입니다. 비용과 시간이 많이 소요되지만 상태를 최상 수준으로 회복시킵니다."/>
-        <text name="rms_option_menu_price_text" text="가격: "/>
-        <text name="rms_option_menu_part_used_description" text="* 폐차 부품입니다. 매우 저렴하지만 결함 위험이 매우 높습니다(약 50% 확률)."/>
-        <text name="rms_option_menu_part_aftermarket_description" text="* 저가형 복제 부품입니다. 비용이 절감되지만 보통 수준의 결함 위험이 있습니다(33%)."/>
-        <text name="rms_option_menu_part_oem_description" text="* 순정 부품입니다. 표준적인 신뢰성(10% 결함 위험)을 갖추고 있으며 정가에 제공됩니다."/>
-        <text name="rms_option_menu_part_premium_description" text="* 강화된 성능 부품입니다. 비싸지만 엄격한 품질 관리를 거칩니다(0% 결함 위험)."/>
-        <text name="rms_option_menu_consumable_used_description" text="* 경제형 소모품입니다. 매우 저렴하지만 결함 위험이 50%입니다."/>
-        <text name="rms_option_menu_consumable_aftermarket_description" text="* 애프터마켓 소모품입니다. 비용이 절감되지만 결함 위험이 33%입니다."/>
-        <text name="rms_option_menu_consumable_oem_description" text="* 순정 소모품입니다. 정가에 표준 신뢰성을 제공하며 결함 위험은 10%입니다."/>
-        <text name="rms_option_menu_consumable_premium_description" text="* 프리미엄 소모품입니다. 더 비싸지만 엄격한 품질 관리를 거치며 결함 위험이 없습니다."/>
-        <text name="rms_option_menu_perform_repair" text="발견된 모든 결함 수리"/>
+        <text name="rms_option_menu_option_one_title_inspection" text="점검 유형"/>
+        <text name="rms_option_menu_option_one_title_maintenance" text="정비 수준"/>
+        <text name="rms_option_menu_option_one_title_repair" text="수리 방식"/>
+        <text name="rms_option_menu_option_one_title_overhaul" text="오버홀 범위"/>
+        <text name="rms_option_menu_option_two_title_maintenance" text="소모품 품질"/>
+        <text name="rms_option_menu_option_two_title_repair" text="교체 부품 품질"/>
+        <text name="rms_option_menu_option_two_title_overhaul" text="오버홀 대상 시스템"/>
+        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="작업에서 고장이 발견되면 순정 부품을 사용하는 표준 수리를 자동으로 시작합니다."/>
+        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="수리 후 순정 소모품을 사용하는 표준 정비를 자동으로 수행합니다."/>
+        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="오버홀에 차량 전체 재도색을 추가합니다."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="부분 오버홀: 선택한 시스템만 처리하고 해당 고장을 제거하며 기계적 응력을 없애고 상태를 회복합니다. 관련 유체가 있으면 교환합니다."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="표준 오버홀: 모든 시스템을 처리하고 지원되는 고장을 제거하며 기계적 응력을 없애고 모든 유체를 교환합니다. 양호한 상태 수준을 회복합니다."/>
+        <text name="rms_option_menu_overhaul_full_description" text="종합 오버홀: 모든 시스템을 처리하고 지원되는 고장을 제거하며 기계적 응력을 없애고 모든 유체를 교환합니다. 매우 우수한 상태 수준을 회복합니다."/>
+        <text name="rms_option_menu_price_text" text="가격"/>
+        <text name="rms_option_menu_part_used_description" text="중고 부품: 가격이 가장 낮지만 결함 위험은 50%입니다."/>
+        <text name="rms_option_menu_part_aftermarket_description" text="애프터마켓 부품: 가격이 낮고 결함 위험은 33%입니다."/>
+        <text name="rms_option_menu_part_oem_description" text="순정 부품: 표준 가격이며 결함 위험은 10%입니다."/>
+        <text name="rms_option_menu_part_premium_description" text="프리미엄 부품: 가격이 20% 높지만 장착 부품으로 인한 결함 위험은 없습니다."/>
+        <text name="rms_option_menu_consumable_used_description" text="경제형 소모품: 가격이 가장 낮지만 추후 결함 위험은 50%입니다."/>
+        <text name="rms_option_menu_consumable_aftermarket_description" text="애프터마켓 소모품: 가격이 낮고 결함 위험은 33%입니다."/>
+        <text name="rms_option_menu_consumable_oem_description" text="순정 소모품: 표준 가격이며 결함 위험은 10%입니다."/>
+        <text name="rms_option_menu_consumable_premium_description" text="프리미엄 소모품: 가격이 20% 높지만 소모품으로 인한 결함 위험은 없습니다."/>
+        <text name="rms_option_menu_perform_repair" text="자동 수리"/>
         <text name="rms_option_menu_perform_renew_paint" text="도색 갱신"/>
-        <text name="rms_option_menu_perform_maintenance" text="수리 후 정비 수행"/>
+        <text name="rms_option_menu_perform_maintenance" text="자동 정비"/>
         <text name="rms_option_menu_warranty_repair_text" text="보증 수리"/>
-        <text name="rms_option_menu_duration_text" text="소요 시간: "/>
+        <text name="rms_option_menu_duration_text" text="소요 시간"/>
         <text name="rms_option_menu_duration_instant" text="즉시"/>
-        <text name="rms_option_menu_finish_time_text" text="완료 예정: "/>
+        <text name="rms_option_menu_finish_time_text" text="완료 예정"/>
         <text name="rms_option_menu_start_text" text="시작"/>
-        <text name="rms_option_menu_inspection_visual_description" text="* 신속한 외부 점검입니다. 저렴하고 즉시 완료됩니다. 눈에 보이는 결함을 찾아내지만, 일부 결함을 놓칠 확률이 있으며 상세 기술 상태 데이터는 제공하지 않습니다."/>
-        <text name="rms_option_menu_inspection_standard_description" text="* 일상적인 진단 절차입니다. 모든 활성 고장을 식별하고 차량 상태에 대한 일반 보고서를 생성합니다."/>
-        <text name="rms_option_menu_inspection_complete_description" text="* 정밀 진단입니다. 잠재적인 결함을 포함한 모든 고장 발견을 보장하며, 모든 부품에 대한 정확한 상태 수치가 포함된 포괄적인 보고서를 제공합니다."/>
-        <text name="rms_option_menu_maintenance_minimal_description" text="* 정비 주기가 짧은 경제적인 서비스입니다. 유체: 전체 교환 없이 부족한 양만 보충합니다."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="* 표준 주기의 제조사 규격 서비스입니다. 유체: 엔진 오일 전체 교환 및 필요 시 다른 회로 보충."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="* 정비 수준과 주기를 높이는 종합 서비스입니다. 유체: 모든 유체를 완전히 교환합니다."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="* 고장 감소를 위해 문제가 있는 시스템을 대상으로 하는 서비스입니다. 유체: 모든 유체를 완전히 교환합니다."/>
-        <text name="rms_option_menu_repair_type_fix_description" text="* 긴급한 작업을 위해 차량 작동 상태만 유지하려는 임시 수리입니다. 빠르고 저렴하게 기본 기능을 복구하지만, 근본적인 결함은 해결되지 않아 일정 시간 후 다시 나타납니다."/>
-        <text name="rms_option_menu_repair_type_replacement_description" text="* 고장난 부품의 표준 교체입니다. 현재 결함을 완전히 제거하고 해당 유닛을 정상 작동 상태로 복구합니다."/>
-        <text name="rms_option_menu_repair_type_advanced_description" text="* 고장 부품 교체뿐만 아니라 시스템 내 관련 부품까지 정비하는 정밀 수리입니다. 해당 시스템에서 고장이 재발할 위험을 크게 줄입니다."/>
-        <text name="rms_option_menu_chosen_parts_text" text="* 수리에 선택됨:"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="두 번째 작업은 별도로 청구되며, 시작할 때 유체가 제공되거나 재고에서 사용됩니다."/>
+        <text name="rms_option_menu_inspection_visual_description" text="육안 점검: 빠르고 저렴하며 낮은 감지 능력으로 이미 발생 중인 고장만 찾습니다. 보고서에는 구성품의 상세 상태가 표시되지 않습니다."/>
+        <text name="rms_option_menu_inspection_standard_description" text="표준 점검: 일반 감지 능력으로 발생 중인 고장을 찾고 상세 상태값 없이 일반 보고서를 작성합니다."/>
+        <text name="rms_option_menu_inspection_complete_description" text="종합 점검: 일반 감지 능력으로 발생 중이거나 잠재적인 고장을 찾은 다음 구성품의 상세 상태가 포함된 종합 보고서를 제공합니다."/>
+        <text name="rms_option_menu_maintenance_minimal_description" text="최소 정비: 정비 수준을 부분적으로 회복하고 부족한 유체만 보충합니다. 다음 정비 주기는 짧은 상태로 유지됩니다."/>
+        <text name="rms_option_menu_maintenance_standard_description" text="표준 정비: 기준 정비 수준을 회복하고 엔진 오일을 교환하며 필요한 경우 다른 회로의 유체를 보충합니다."/>
+        <text name="rms_option_menu_maintenance_extended_description" text="확장 정비: 정비 수준을 기준 이상으로 높이고 다음 정비 주기를 연장하며 모든 유체를 교환합니다."/>
+        <text name="rms_option_menu_maintenance_preventive_description" text="예방 정비: 기준 정비 수준을 회복하고 모든 유체를 교환하며 우선순위가 높은 시스템을 최대 세 개까지 선택하여 기계적 응력을 줄입니다."/>
+        <text name="rms_option_menu_repair_type_fix_description" text="임시 수리: 저렴한 비용으로 기계를 신속히 운행 가능한 상태로 되돌리지만 고장은 제거하지 않습니다. 제한된 시간이 지나면 다시 나타납니다."/>
+        <text name="rms_option_menu_repair_type_replacement_description" text="표준 수리: 고장을 제거하고 고장 난 부품을 교체하며 해당 시스템의 기계적 응력을 부분적으로 줄입니다."/>
+        <text name="rms_option_menu_repair_type_advanced_description" text="고급 수리: 고장을 제거하고 고장 난 부품을 교체하며 해당 시스템에 누적된 기계적 응력을 없앱니다."/>
+        <text name="rms_option_menu_follow_up_separate_transaction" text="후속 작업은 별도로 청구됩니다. 필요한 유체는 작업 시작 시 정비소에서 제공하거나 보유 재고에서 사용합니다."/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="점검 보고서"/>
         <text name="rms_report_vehicle_name_title" text="차량명"/>
@@ -578,39 +619,41 @@
         <text name="rms_report_date_title" text="날짜"/>
         <text name="rms_report_detected_breakdowns_title" text="발견된 고장"/>
         <text name="rms_report_inspection_type_title" text="점검 유형"/>
-        <text name="rms_report_inspection_location_title" text="장소"/>
+        <text name="rms_report_inspection_location_title" text="점검 장소"/>
         <text name="rms_report_overall_assessment_title" text="전반적인 상태 평가"/>
         <text name="rms_report_overall_assessment_condition" text="상태 수준"/>
         <text name="rms_report_overall_assessment_crit_fail_risk" text="치명적 고장 위험"/>
         <text name="rms_report_overall_assessment_service" text="정비 수준"/>
-        <text name="rms_report_overall_assessment_mtbf" text="평균 고장 간격 (시간)"/>
-        <text name="rms_report_overall_assessment_rul" text="잔여 수명 (시간)"/>
-        <text name="rms_report_overall_assessment_wear_rate" text="마모율 (%/시간)"/>
-        <text name="rms_report_overall_assessment_nominal_wear_rate" text="정격 마모율 (%/시간)"/>
+        <text name="rms_report_overall_assessment_mtbf" text="평균 고장 간격 (h)"/>
+        <text name="rms_report_overall_assessment_rul" text="잔여 수명 (h)"/>
+        <text name="rms_report_overall_assessment_wear_rate" text="마모율 (%/h)"/>
+        <text name="rms_report_overall_assessment_nominal_wear_rate" text="정격 마모율 (%/h)"/>
         <text name="rms_report_recommendations_title" text="결론 및 권장 사항"/>
-        <text name="rms_report_recommendation_repair_active_breakdowns" text="활성 고장이 발견되었습니다. 모든 고장에 대한 표준 수리를 권장합니다."/>
-        <text name="rms_report_recommendation_repeat_maintenance" text="결함 있는 소모품이 발견되었습니다. 결함 부품 교체를 위해 정비를 다시 수행하십시오."/>
+        <text name="rms_report_recommendation_repair_active_breakdowns" text="발생 중인 고장이 감지되었습니다. 모든 고장에 대한 표준 수리를 권장합니다."/>
+        <text name="rms_report_recommendation_repeat_maintenance" text="결함 있는 소모품이 발견되었습니다. 소모품을 교체하려면 정비를 다시 수행하십시오."/>
         <text name="rms_report_recommendation_defective_parts" text="결함 있는 교체 부품이 발견됨: %s. 갑작스러운 고장을 방지하기 위해 예방적 교체를 권장합니다."/>
-        <text name="rms_report_recommendation_quick_fix" text="임시 수리 상태가 발견됨: %s. 빠른 시일 내에 표준 교체를 권장합니다."/>
+        <text name="rms_report_recommendation_quick_fix" text="임시 수리가 감지되었습니다: %s. 가능한 한 빨리 표준 부품으로 교체하는 것이 좋습니다."/>
         <text name="rms_report_recommendation_service_due" text="정비 주기 임계값에 도달했습니다. 정비를 수행하십시오."/>
-        <text name="rms_report_recommendation_service_urgent" text="정비 주기가 지났습니다. 즉시 정비를 수행하십시오!"/>
-        <text name="rms_report_recommendation_system_overhaul" text="%s에서 치명적인 노후화가 발견되었습니다. 해당 시스템의 부분 오버홀을 수행하십시오."/>
-        <text name="rms_report_recommendation_system_preventive_maintenance" text="%s에서 고장 위험 상승이 발견되었습니다. 위험을 줄이기 위해 예방 정비를 수행하십시오."/>
-        <text name="rms_report_recommendation_overhaul" text="핵심 부품의 노후화가 발견되었습니다. 오버홀을 수행하십시오."/>
-        <text name="rms_report_recommendation_operating_conditions" text="집중적인 과사용 흔적이 발견되었습니다. 운행 조건을 개선하십시오."/>
+        <text name="rms_report_recommendation_service_urgent" text="정비 주기가 지났습니다. 지체 없이 정비를 수행하십시오."/>
+        <text name="rms_report_recommendation_system_overhaul" text="이 시스템에서 심각한 열화가 감지되었습니다: %s. 부분 오버홀을 수행하십시오."/>
+        <text name="rms_report_recommendation_system_preventive_maintenance" text="이 시스템의 고장 위험이 증가했습니다: %s. 위험을 줄이려면 예방 정비를 수행하십시오."/>
+        <text name="rms_report_recommendation_overhaul" text="주요 구성품의 열화가 감지되었습니다. 오버홀을 수행하십시오."/>
+        <text name="rms_report_recommendation_operating_conditions" text="지나치게 가혹하게 사용한 징후가 감지되었습니다. 운행 조건을 개선하십시오."/>
         <text name="rms_report_recommendation_all_ok" text="특별한 권장 사항이 없습니다. 차량이 정상 운행 가능한 상태입니다."/>
         <text name="rms_report_state_optimal" text="최적"/>
-        <text name="rms_report_state_normal" text="보통"/>
+        <text name="rms_report_state_normal" text="정상"/>
         <text name="rms_report_state_not_available" text="해당 없음"/>
-        <text name="rms_report_state_degraded" text="성능 저하"/>
-        <text name="rms_report_state_impaired" text="손상됨"/>
+        <text name="rms_report_state_degraded" text="심각한 저하"/>
+        <text name="rms_report_state_impaired" text="기능 저하"/>
         <text name="rms_report_state_critical" text="치명적"/>
         <text name="rms_report_stress_absent" text="없음"/>
         <text name="rms_report_stress_low" text="낮음"/>
         <text name="rms_report_stress_moderate" text="보통"/>
         <text name="rms_report_stress_elevated" text="높음"/>
         <text name="rms_report_stress_high" text="매우 높음"/>
-        <text name="rms_report_system_condition_title" text="시스템 상태 | 고장 위험"/>
+        <text name="rms_report_system_condition_title" text="시스템 상태"/>
+        <text name="rms_report_breakdown_risk_title" text="고장 위험"/>
+        <text name="rms_report_component_title" text="부품"/>
         <text name="rms_report_system_condition_transmission" text="변속기"/>
         <text name="rms_report_system_condition_power" text="현재 출력"/>
         <text name="rms_report_system_condition_brakes" text="브레이크 효율"/>
@@ -618,29 +661,30 @@
         <text name="rms_report_system_condition_consumption" text="연료 소비량"/>
         <text name="rms_report_system_condition_hydraulic" text="유압 효율"/>
         <text name="rms_report_transmission_slipping" text="미끄러짐"/>
-        <text name="rms_report_transmission_shifting_impaired" text="변속 손상"/>
+        <text name="rms_report_transmission_shifting_impaired" text="변속 성능 저하"/>
         <text name="rms_report_transmission_shift_delay" text="변속 지연"/>
-        <text name="rms_report_transmission_gear_rejection" text="기어 거부"/>
+        <text name="rms_report_transmission_gear_rejection" text="기어 이탈"/>
         <text name="rms_report_transmission_cvt_slipping" text="벨트/체인 슬립"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="변속비 제한"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="압력 불안정"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="서모스탷 성능 저하"/>
-        <text name="rms_report_transmission_failed" text="고장남"/>
+        <text name="rms_report_transmission_thermostat_degraded" text="서모스탯 성능 저하"/>
+        <text name="rms_report_transmission_failed" text="고장"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="그리스 건"/>
-        <text name="rms_grease_gun_no_vehicle" text="주입 범위 내에 차량이 없습니다"/>
-        <text name="rms_grease_gun_function" text="윤활 서비스 절차에 사용됩니다"/>
+        <text name="rms_grease_gun_no_vehicle" text="그리스 주입 범위 내에 차량이 없습니다"/>
+        <text name="rms_grease_gun_function" text="기계의 그리스 주입 지점에 그리스를 주입하는 데 사용됩니다"/>
         <text name="rms_grease_gun_action" text="그리스 주입"/>
-        <text name="rms_grease_gun_already_lubricated" text="%s은(는) 이미 윤활되었습니다"/>
-        <text name="rms_grease_gun_lubrication_not_require" text="%s은(는) 윤활이 필요하지 않습니다"/>
+        <text name="rms_grease_gun_already_lubricated" text="%s은(는) 이미 그리스가 주입되었습니다"/>
+        <text name="rms_grease_gun_lubrication_not_require" text="%s은(는) 그리스 주입이 필요하지 않습니다"/>
         <text name="rms_air_blower_name" text="에어 블로워"/>
         <text name="rms_air_blower_no_vehicle" text="청소 범위 내에 차량이 없습니다"/>
         <text name="rms_air_blower_function" text="라디에이터 및 에어 필터 청소에 사용됩니다"/>
         <text name="rms_air_blower_action" text="라디에이터 및 에어 필터 청소"/>
         <text name="rms_air_blower_already_clean" text="%s: 라디에이터 및 에어 필터가 이미 깨끗합니다"/>
+        <text name="rms_air_blower_filter_requires_maintenance" text="%s: 라디에이터는 깨끗합니다. 에어 필터는 불어내도 더 이상 깨끗해지지 않습니다. 필터 교체에는 정비소 정비가 필요합니다"/>
         <text name="rms_air_blower_cleaning_not_require" text="%s은(는) 청소가 필요하지 않습니다"/>
         <text name="rms_jumper_cables_name" text="점프 케이블"/>
-        <text name="rms_jumper_cables_function" text="차량 배터리를 연결하여 방전된 엔진의 시동을 거는 데 사용됩니다"/>
+        <text name="rms_jumper_cables_function" text="두 배터리를 연결하여 배터리가 방전된 차량을 시동하는 데 사용됩니다"/>
         <text name="rms_jumper_cables_action" text="점프 케이블 연결/분리"/>
         <text name="rms_jumper_cables_auto_disconnected" text="한 차량이 움직이기 시작하여 점프 케이블이 자동으로 분리되었습니다"/>
         <text name="rms_jumper_cables_connected" text="점프 케이블이 %s에 연결되었습니다"/>
@@ -649,37 +693,39 @@
         <text name="rms_jumper_cables_both_already_connected" text="점프 케이블이 이미 %s와(과) %s에 연결되어 있습니다"/>
         <text name="rms_jumper_cables_disconnected" text="점프 케이블이 %s에서 분리되었습니다"/>
         <!-- Fluid containers -->
-        <text name="rms_fluid_container_typedesc" text="액체 용기"/>
+        <text name="rms_fluid_container_typedesc" text="유체 용기"/>
         <text name="rms_fluid_function_engine_oil" text="수동 보충용 엔진 오일"/>
         <text name="rms_fluid_function_utto" text="수동 보충용 변속기 및 유압 오일"/>
         <text name="rms_fluid_function_coolant" text="수동 보충용 냉각수"/>
-        <text name="rms_fluid_container_action_start" text="액체 보충"/>
-        <text name="rms_fluid_container_action_cancel" text="액체 보충 중단"/>
+        <text name="rms_fluid_container_action_start" text="유체 이송"/>
+        <text name="rms_fluid_container_action_cancel" text="유체 이송 중단"/>
         <text name="rms_fluid_select_vehicle_title" text="차량 선택"/>
-        <text name="rms_fluid_select_vehicle_prompt" text="보충할 차량을 선택하세요"/>
+        <text name="rms_fluid_select_vehicle_prompt" text="보충할 차량을 선택하십시오"/>
         <text name="rms_fluid_select_circuit_title" text="회로 선택"/>
-        <text name="rms_fluid_select_circuit_prompt" text="보충할 회로를 선택하세요"/>
+        <text name="rms_fluid_select_circuit_prompt" text="보충할 회로를 선택하십시오"/>
         <text name="rms_fluid_circuit_engineOil" text="엔진 오일"/>
         <text name="rms_fluid_circuit_coolant" text="냉각수"/>
         <text name="rms_fluid_circuit_transmissionOil" text="변속기 오일"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="유압유"/>
-        <text name="rms_fluid_incompatible_title" text="호환되지 않는 액체"/>
+        <text name="rms_fluid_incompatible_title" text="호환되지 않는 유체"/>
         <text name="rms_fluid_incompatible_message" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 시스템 마모를 최대 3배까지 증가시키고 발열을 높이거나 유압 작동을 느리게 할 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
-        <text name="rms_fluid_error_no_vehicle" text="4 m 이내에 액체 보충이 필요한 호환 차량이 없습니다"/>
-        <text name="rms_fluid_error_no_circuit" text="이 차량에는 액체가 필요한 회로가 없습니다"/>
-        <text name="rms_fluid_error_motor_running" text="액체를 보충하기 전에 엔진을 끄십시오"/>
+        <text name="rms_fluid_error_no_vehicle" text="4 m 이내에 유체 보충이 필요한 차량이 없습니다"/>
+        <text name="rms_fluid_error_no_circuit" text="이 차량은 유체 보충이 필요하지 않습니다"/>
+        <text name="rms_fluid_error_motor_running" text="유체를 이송하기 전에 엔진을 끄십시오"/>
         <text name="rms_fluid_error_vehicle_moving" text="차량이 정지해 있어야 합니다"/>
         <text name="rms_fluid_dealer_billed" text="청구되는 유체"/>
         <text name="rms_fluid_stock_required" text="필요한 유체 재고"/>
+        <text name="rms_fluid_refill_work_order" text="유체 레벨 보충"/>
+        <text name="rms_fluid_refill_dealer_supply" text="견적에 유체 공급 비용 포함"/>
+        <text name="rms_fluid_refill_stock_supply" text="정비소 재고에서 사용"/>
         <text name="rms_fluid_mode_top_up" text="보충"/>
         <text name="rms_fluid_mode_replace" text="교체"/>
         <text name="rms_fluid_mode_repair" text="누출 후 보충"/>
-        <text name="rms_fluid_refill_confirm" text="%s: %s&#10;%s%s&#10;&#10;이 보충을 확인하시겠습니까?"/>
         <text name="rms_fluid_service_workshop_not_found" text="차량이 더 이상 정비소 구역 안에 없습니다."/>
         <text name="rms_fluid_service_stock_insufficient" text="정비소 구역에 호환되는 유체가 충분하지 않습니다."/>
         <text name="rms_fluid_service_price_unavailable" text="필요한 유체의 가격을 확인할 수 없습니다."/>
-        <text name="rms_fluid_service_refused" text="현재 조건에서는 정비를 시작할 수 없습니다."/>
-        <text name="rms_fluid_service_consumption_failed" text="유체 예약에 실패했습니다. 정비가 취소되었습니다."/>
+        <text name="rms_fluid_service_refused" text="현재 조건에서는 작업을 시작할 수 없습니다."/>
+        <text name="rms_fluid_service_consumption_failed" text="유체 예약에 실패했습니다. 작업이 취소되었습니다."/>
         <!-- Inspection Dialog -->
         <text name="rms_field_inspection_hold_to_start" text="길게 눌러 점검 시작"/>
         <text name="rms_field_inspection_progress" text="점검 수행 중"/>
@@ -689,38 +735,39 @@
         <text name="rms_inspection_section_fluids" text="작동 유체"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
         <text name="rms_inspection_section_cooling_air" text="냉각 및 에어 필터"/>
-        <text name="rms_inspection_section_lubrication" text="윤활 부위"/>
+        <text name="rms_inspection_section_lubrication" text="그리스 주입 지점"/>
         <text name="rms_inspection_section_additional" text="추가 참고 사항"/>
         <text name="rms_inspection_verdict_ok_title" text="운행 가능"/>
-        <text name="rms_inspection_verdict_ok_message" text="특이사항 없음, 장비를 출고해도 됩니다."/>
-        <text name="rms_inspection_verdict_watch_title" text="주의 관찰"/>
-        <text name="rms_inspection_verdict_watch_message" text="한 가지 항목에 주의가 필요합니다. 작업은 가능하지만 오늘 안에 처리하세요."/>
+        <text name="rms_inspection_verdict_ok_message" text="이상 없음, 장비를 운행해도 됩니다."/>
+        <text name="rms_inspection_verdict_watch_title" text="관찰 필요"/>
+        <text name="rms_inspection_verdict_watch_message" text="한 가지 항목에 주의가 필요합니다. 작업은 가능하지만 오늘 안에 처리하십시오."/>
+        <text name="rms_inspection_verdict_air_filter_service_message" text="작업은 가능합니다. 에어 필터 교체를 위해 정비소 정비를 계획하십시오."/>
         <text name="rms_inspection_verdict_stop_title" text="사용 금지"/>
-        <text name="rms_inspection_verdict_stop_message" text="한 가지 항목이 치명적입니다. 처리하기 전에는 이 장비로 작업하지 마세요."/>
+        <text name="rms_inspection_verdict_stop_message" text="사용 전에 한 가지 항목을 처리해야 합니다. 현재 상태로 이 장비를 사용하지 마십시오."/>
         <text name="rms_inspection_service_due_in" text="다음 정비까지 %s"/>
         <text name="rms_inspection_service_overdue" text="정비 %s 초과"/>
         <text name="rms_inspection_status_slightly_low" text="약간 낮음"/>
         <text name="rms_inspection_status_slightly_dirty" text="약간 막힘"/>
         <text name="rms_inspection_status_slightly_dry" text="약간 건조함"/>
-        <text name="rms_inspection_status_slight_moisture" text="미세 수분"/>
+        <text name="rms_inspection_status_slight_moisture" text="약간의 습기"/>
         <text name="rms_inspection_status_seepage" text="스며나옴"/>
-        <text name="rms_inspection_status_severe_leak" text="심각한 누유"/>
+        <text name="rms_inspection_status_severe_leak" text="심한 누출"/>
         <text name="rms_inspection_status_low" text="낮음"/>
         <text name="rms_inspection_status_very_low" text="매우 낮음"/>
         <text name="rms_inspection_status_very_dry" text="매우 건조함"/>
-        <text name="rms_inspection_status_critically_low" text="보충 필요"/>
+        <text name="rms_inspection_status_critically_low" text="긴급 보충"/>
         <text name="rms_inspection_status_critically_clogged" text="완전 막힘"/>
         <text name="rms_inspection_status_critically_dry" text="금속 접촉"/>
         <text name="rms_inspection_status_dirty" text="막힘"/>
         <text name="rms_inspection_status_dry" text="건조함"/>
-        <text name="rms_inspection_status_active_leak" text="누유 중"/>
+        <text name="rms_inspection_status_active_leak" text="누출 중"/>
         <text name="rms_inspection_status_heavily_clogged" text="심하게 막힘"/>
         <text name="rms_inspection_status_not_required" text="필요 없음"/>
         <text name="rms_inspection_engine_oil" text="엔진 오일"/>
         <text name="rms_inspection_coolant" text="냉각수"/>
         <text name="rms_inspection_hydraulic_fluid" text="유압유"/>
         <text name="rms_inspection_hint_coolant_leak_stage1" text="냉각 시스템 연결부 근처에 냉각수 흔적이 미세하게 보입니다."/>
-        <text name="rms_inspection_hint_coolant_leak_stage2" text="냉각수 잔여물이 보이며, 수위가 정상보다 낮습니다."/>
+        <text name="rms_inspection_hint_coolant_leak_stage2" text="냉각수 잔여물이 보이며 냉각수 수준이 정상보다 낮습니다."/>
         <text name="rms_inspection_hint_coolant_leak_stage3" text="냉각 시스템 주변에 뚜렷한 냉각수 손실이 관찰됩니다."/>
         <text name="rms_inspection_hint_coolant_leak_stage4" text="냉각 시스템이 냉각수의 상당량을 잃었고 심한 누출 흔적이 보입니다."/>
         <text name="rms_inspection_hint_corroded_wiring_stage2" text="일부 전기 연결부에 미세한 산화 흔적이 보입니다."/>
@@ -738,26 +785,27 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="에어 필터가 눈에 띄게 막혔습니다."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="에어 필터가 먼지와 파편으로 심하게 막혔습니다."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage4" text="에어 필터가 먼지와 파편으로 완전히 막혔습니다."/>
+        <text name="rms_inspection_hint_air_filter_blowout_limit" text="에어 필터는 불어내도 더 이상 깨끗해지지 않습니다. 필터 교체에는 정비소 정비가 필요합니다."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="발전기와 일부 연결부 주변에 과열 및 변색 흔적이 보입니다."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="발전기와 배선 주변에 뚜렷한 과열 흔적과 변색된 커넥터가 보입니다."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="윤활 부위가 약간 건조해 보입니다."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="윤활 부위가 건조하고 그리스가 부족해 보입니다."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="윤활 부위가 매우 건조하며 그리스가 거의 남지 않았습니다."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="윤활 부위가 금속끼리 직접 접촉하며 그리스 흔적이 거의 없습니다."/>
+        <text name="rms_inspection_hint_lubrication_stage1" text="그리스 주입 지점이 약간 건조해 보입니다."/>
+        <text name="rms_inspection_hint_lubrication_stage2" text="그리스 주입 지점이 건조하고 그리스가 부족해 보입니다."/>
+        <text name="rms_inspection_hint_lubrication_stage3" text="그리스 주입 지점이 매우 건조하며 그리스가 거의 남지 않았습니다."/>
+        <text name="rms_inspection_hint_lubrication_stage4" text="그리스 주입 지점이 금속끼리 직접 접촉하며 그리스가 거의 보이지 않습니다."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="변속기 하우징 주변에 옅은 오일 자국이 보입니다."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="변속기 아래에 오일 방울이 보입니다."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="변속기 주변에 뚜렷한 오일 손실이 보입니다."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage4" text="변속기 하우징에서 오일이 흘러나와 장비 아래에 고입니다."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage2" text="트랙 장력이 약간 불균형해 보입니다."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage3" text="트랙이 느슨해 보이며 장력이 뚜렷하게 불균형합니다."/>
-        <text name="rms_inspection_hint_track_tensioner_malfunction_stage4" text="트랙이 눈에 띄게 처져 있으며 장력이 심각하게 훼손되었습니다."/>
+        <text name="rms_inspection_hint_track_tensioner_malfunction_stage4" text="트랙이 눈에 띄게 처져 있으며 장력이 크게 저하된 것으로 보입니다."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="터보차저 주변에 오일 흔적과 변색된 연결부가 보입니다."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="터보차저 주변에 심한 오일 흔적, 변색된 연결부 및 그을음 흔적이 보입니다."/>
         <text name="rms_inspection_hint_fluid_level_low" text="한 유체의 레벨이 기준선 아래로 내려갔습니다."/>
         <text name="rms_inspection_transmission_oil" text="변속기 오일"/>
         <text name="rms_inspection_radiator" text="라디에이터"/>
         <text name="rms_inspection_air_filter" text="에어 필터"/>
-        <text name="rms_inspection_lubrication_level" text="윤활 수준"/>
+        <text name="rms_inspection_lubrication_level" text="그리스 수준"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="의심스러운 증상이 발견되지 않았습니다"/>
         <text name="rms_inspection_ok" text="정상"/>
         <!-- In-Game Menu -->
@@ -774,22 +822,26 @@
         <text name="rms_ingame_menu_header_cost" text="총 비용"/>
         <text name="rms_ingame_menu_header_interval" text="주기"/>
         <text name="rms_ingame_menu_header_last_inspection" text="점검일"/>
-        <text name="rms_ingame_menu_header_last_maintenance" text="정비일"/>
+        <text name="rms_ingame_menu_header_last_maintenance" text="최근 정비"/>
         <text name="rms_ingame_menu_header_leasing_price" text="리스료"/>
         <text name="rms_ingame_menu_header_price" text="가치"/>
-        <text name="rms_ingame_menu_header_procedure" text="절차"/>
+        <text name="rms_ingame_menu_header_procedure" text="작업"/>
         <text name="rms_ingame_menu_header_finish_time" text="완료 시각"/>
         <text name="rms_ingame_menu_header_service_cost" text="비용"/>
-        <text name="rms_ingame_menu_empty_other" text="RMS 미적용 차량이 없습니다"/>
+        <text name="rms_ingame_menu_empty_other" text="다른 차량이 없습니다"/>
         <text name="rms_ingame_menu_empty_active" text="RMS 차량이 없습니다"/>
         <text name="rms_ingame_menu_empty_service" text="현재 정비 중인 차량이 없습니다"/>
         <!-- Sell Dialog -->
-        <text name="rms_sell_dialog_overdue_maintenance_penalty" text="정비 기한 초과 위약금"/>
-        <text name="rms_sell_dialog_repair_penalty" text="수리비 공제"/>
-        <text name="rms_sell_dialog_washing_penalty" text="세척비 공제"/>
+        <text name="rms_sell_dialog_title" text="차량 반납"/>
+        <text name="rms_sell_dialog_section_vehicle" text="차량"/>
+        <text name="rms_sell_dialog_section_penalties" text="반납 위약금"/>
+        <text name="rms_sell_dialog_total" text="합계"/>
+        <text name="rms_sell_dialog_overdue_maintenance_penalty" text="정비 기한 초과"/>
+        <text name="rms_sell_dialog_repair_penalty" text="수리"/>
+        <text name="rms_sell_dialog_washing_penalty" text="세척"/>
         <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="유체 레벨 낮음"/>
-        <text name="rms_tutorial_fluid_level_message" text="이 장비의 유체 중 하나가 게이지의 기준선 아래로 내려갔습니다.&#10;&#10;엔진 오일은 가동 시간에 따라 소모되며, 낡은 엔진은 훨씬 더 많이 소모합니다. 냉각수, 변속기 오일, 작동유는 누유로만 줄어듭니다.&#10;&#10;기준선 아래로 내려가면 장비는 보충을 요청할 뿐, 여전히 정상적으로 작동합니다. 실제로 손해가 나는 것은 레벨이 정말 낮아졌을 때입니다. 냉각수나 변속기 오일이 부족한 장비는 과열되고, 엔진 오일이나 작동유가 부족한 장비는 훨씬 빠르게 마모됩니다.&#10;&#10;상점에서 해당 회로와 호환되는 제품 용기를 구입해 장비 옆에 두고 레벨을 보충하세요. 해당 회로용으로 지정된 제품은 모두 기계적으로 동등하며, 잘못된 유체는 그 회로만 오염시킵니다. 판매점에서는 필요한 양만큼 공급하고 비용을 청구합니다. 자가 또는 이동식 정비소에서는 정비소 구역 안에 있는 농장 소유 용기의 유체를 사용합니다."/>
+        <text name="rms_tutorial_fluid_level_title" text="낮은 유체 수준"/>
+        <text name="rms_tutorial_fluid_level_message" text="이 장비의 유체 중 하나가 게이지의 기준선 아래로 내려갔습니다.&#10;&#10;엔진 오일은 가동 시간에 따라 소모되며 노후한 엔진은 훨씬 더 많이 소모합니다. 냉각수, 변속기 오일 및 유압 오일은 누출될 때만 줄어듭니다.&#10;&#10;기준선 아래에서는 보충만 필요하며 장비는 여전히 정상 작동합니다. 수준이 매우 낮아지면 손상이 시작됩니다. 냉각수나 변속기 오일이 부족한 장비는 과열되고 엔진 오일이나 유압 오일이 부족한 장비는 훨씬 빨리 마모됩니다.&#10;&#10;상점에서 해당 회로와 호환되는 제품 용기를 구입해 장비 옆에 놓고 보충하십시오. 해당 회로용 제품은 모두 같은 효과를 내며 잘못된 유체는 그 회로만 오염시킵니다. 판매점에서는 필요한 리터만큼 공급하고 비용을 청구합니다. 자가 또는 이동식 정비소에서는 구역 안에 있는 농장 소유 용기의 유체를 사용합니다."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systems에 오신 것을 환영합니다"/>
         <text name="rms_tutorial_welcome_disable_button" text="팁 끄기"/>
         <text name="rms_tutorial_welcome_enable_button" text="팁 켜기"/>
@@ -797,77 +849,77 @@
         <text name="rms_tutorial_wet_weather_title" text="습한 날씨"/>
         <text name="rms_tutorial_wet_weather_message" text="습기는 배선과 전기 장비에 좋지 않습니다. 비, 눈, 우박이 내릴 때 차량이 야외에 있으면 전기 시스템의 마모가 약간 더 빨라집니다."/>
         <text name="rms_tutorial_wheel_slip_title" text="휠 슬립"/>
-        <text name="rms_tutorial_wheel_slip_message" text="바퀴가 심하게 헛돌고 있습니다. 휠 슬립은 변속기에 가장 치명적인 요인 중 하나이며, 다음 정비소 방문 시점을 크게 앞당기게 됩니다."/>
-        <text name="rms_tutorial_service_due_soon_title" text="정기 정비"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s 차량은 곧 정비가 필요합니다.&#10;&#10;RMS에서는 차량이 정기적인 정비를 받아야 합니다. 이를 미루면 고장 위험이 크게 높아집니다.&#10;&#10;가장 가까운 정비소를 방문해 &quot;정비&quot;를 선택하세요. 정비 주기는 모드 설정에서 조정할 수 있습니다."/>
+        <text name="rms_tutorial_wheel_slip_message" text="바퀴가 심하게 미끄러지고 있습니다. 휠 슬립은 변속기를 가장 많이 손상시키는 요인 중 하나이며 다음 정비소 방문 시점을 크게 앞당깁니다."/>
+        <text name="rms_tutorial_service_due_soon_title" text="정비 예정"/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s 차량은 곧 정비가 필요합니다.&#10;&#10;RMS에서는 차량이 정기적인 정비를 받아야 합니다. 이를 미루면 고장 위험이 크게 높아집니다.&#10;&#10;가장 가까운 정비소를 방문해 &quot;정비&quot;를 선택하십시오. 정비 주기는 모드 설정에서 조정할 수 있습니다."/>
         <text name="rms_tutorial_service_interval_expired_title" text="정비 주기 초과"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="%s의 정비 주기가 지났으며 정비가 필요합니다.&#10;&#10;가능한 한 빨리 정비소로 가서 &quot;정비&quot; 절차를 실행하세요. 정비 주기를 넘긴 차량을 계속 운행하면 여러 고장이 동시에 발생할 위험이 크게 높아집니다."/>
+        <text name="rms_tutorial_service_interval_expired_message" text="%s의 정비 주기가 지났습니다.&#10;&#10;가능한 한 빨리 정비소로 가서 &quot;정비&quot;를 선택하십시오. 정비가 늦어진 차량을 계속 운행하면 여러 고장이 발생할 위험이 크게 높아집니다."/>
         <text name="rms_tutorial_steering_title" text="정지 상태 조향"/>
         <text name="rms_tutorial_steering_message" text="정지 상태에서는 가급적 조향하지 않는 것이 좋습니다. 이때 조향기어와 앞차축 부품에 큰 부담이 걸리며, 그 결과 하부 주행계의 마모가 증가합니다.&#10;&#10;조금만 움직이기 시작해도 바퀴는 훨씬 쉽게 돌아갑니다."/>
-        <text name="rms_tutorial_rad_or_filter_clogged_title" text="라디에이터 및 에어 필터 오염"/>
-        <text name="rms_tutorial_rad_or_filter_clogged_message" text="차량의 라디에이터와 에어 필터가 심하게 막힌 것 같습니다.&#10;&#10;라디에이터가 더러우면 열을 제대로 방출하지 못하고, 에어 필터가 막히면 엔진으로 들어가는 공기 흐름이 제한됩니다. 그러면 출력이 떨어지고 연료 소비가 증가합니다.&#10;&#10;라디에이터는 세차장이나 에어 블로워로 청소할 수 있습니다. 에어 필터는 불어내는 것만 가능하며, 불어내도 완전히 새것처럼 되지는 않습니다. 교체는 정비소 정비에서만 이루어집니다.&#10;&#10;두 가지 상태 모두 점검으로 확인할 수 있습니다. 차량을 바라보며 R 키를 길게 누르세요."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="윤활 필요"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s 차량은 정기적인 윤활이 필요합니다.&#10;&#10;RMS에서는 작동 시간이 늘어남에 따라 윤활 상태가 감소합니다. 장기간 사용하지 않은 뒤에는 차량을 다시 운행하기 전에 윤활해야 합니다. 윤활이 부족하면 섀시 마모가 빨라집니다.&#10;&#10;상점에서 그리스 건을 구입하고 점검 결과 윤활이 필요할 때 차량에 사용하세요.&#10;&#10;윤활 상태는 점검을 통해 확인할 수 있습니다. 차량을 바라보며 R 키를 길게 누르세요."/>
-        <text name="rms_tutorial_needs_repair_title" text="차량 이상"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s 차량에 뭔가 문제가 있는 것 같습니다. 부품 하나가 고장 났을 수 있습니다.&#10;&#10;반드시 정비소를 방문해 점검을 받으세요. 미루지 마세요. 문제가 계속 악화될 수 있고, 그만큼 수리 비용도 올라갑니다.&#10;&#10;점검 결과 고장이 확인되면 정비소의 수리 절차를 통해 해결하세요."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="대정비"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s 차량이 노후해지기 시작했습니다. 교체를 고려하거나 대정비를 할 때입니다. 시간과 비용이 많이 드는 작업이지만, 차량을 원래 상태로 되돌릴 수 있는 유일한 방법입니다.&#10;&#10;수명은 모드 설정에서 조정할 수 있습니다. 값이 클수록 차량 마모 속도는 더 느려집니다."/>
+        <text name="rms_tutorial_rad_or_filter_clogged_title" text="라디에이터 및 에어 필터 막힘"/>
+        <text name="rms_tutorial_rad_or_filter_clogged_message" text="차량의 라디에이터와 에어 필터가 심하게 막혔습니다.&#10;&#10;막힌 라디에이터는 열을 제대로 방출하지 못하고 막힌 에어 필터는 엔진으로 들어가는 공기 흐름을 제한합니다. 그러면 출력이 떨어지고 연료 소비가 증가합니다.&#10;&#10;라디에이터는 세차장이나 에어 블로워로 청소할 수 있습니다. 에어 필터는 불어내는 것만 가능하며 완전히 새것처럼 복원되지는 않습니다. 정비소의 정비만 필터를 교체합니다.&#10;&#10;차량을 바라보며 %s 키를 길게 눌러 두 상태를 확인할 수 있습니다."/>
+        <text name="rms_tutorial_needs_lubrication_title" text="그리스 주입 필요"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s 차량은 정기적인 그리스 주입이 필요합니다.&#10;&#10;RMS에서는 작동 시간이 늘어남에 따라 그리스 수준이 낮아집니다. 장기간 사용하지 않은 뒤에도 다시 운행하기 전에 그리스를 주입해야 합니다. 그리스가 부족하면 섀시 마모가 빨라집니다.&#10;&#10;상점에서 그리스 건을 구입하고 점검에서 필요하다고 표시될 때 기계에 그리스를 주입하십시오.&#10;&#10;차량을 바라보며 %s 키를 길게 눌러 그리스 수준을 확인할 수 있습니다."/>
+        <text name="rms_tutorial_needs_repair_title" text="고장 감지"/>
+        <text name="rms_tutorial_needs_repair_message" text="%s 차량에 문제가 있습니다. 부품 하나가 고장 났을 수 있습니다.&#10;&#10;정비소에서 점검을 받으십시오. 미루면 고장이 계속 악화되고 수리 비용도 증가할 수 있습니다.&#10;&#10;점검에서 고장이 확인되면 정비소에서 수리하십시오."/>
+        <text name="rms_tutorial_needs_overhaul_title" text="오버홀 필요"/>
+        <text name="rms_tutorial_needs_overhaul_message" text="%s 차량에서 노후화가 나타납니다. 교체나 오버홀을 고려할 때입니다. 시간과 비용이 많이 드는 작업이지만 기계를 원래 상태로 되돌릴 수 있는 유일한 방법입니다.&#10;&#10;차량 수명은 모드 설정에서 조정할 수 있으며 값이 클수록 차량이 더 천천히 마모됩니다."/>
         <text name="rms_tutorial_needs_preventive_title" text="고장 임박"/>
-        <text name="rms_tutorial_needs_preventive_message" text="%s 차량의 시스템 중 하나가 곧 고장 날 것 같습니다. 이는 아직 막을 수 있습니다.&#10;&#10;정비소에서 예방 정비를 이용할 수 있습니다. 여기에는 전체 기술 점검과 위험한 상태의 모든 부품에 대한 수리가 포함됩니다."/>
+        <text name="rms_tutorial_needs_preventive_message" text="%s 차량의 시스템 중 하나가 곧 고장 날 수 있습니다. 아직 조치할 시간이 있습니다.&#10;&#10;정비소의 예방 정비는 정비 수준을 회복하고 모든 유체를 교환하며 가장 위험에 노출된 시스템의 기계적 응력을 크게 줄입니다."/>
         <text name="rms_tutorial_age_degradation_title" text="노후 성능 저하"/>
         <text name="rms_tutorial_age_degradation_message" text="RMS에서는 차량이 오래될수록 원래 성능의 일부를 서서히 잃습니다.&#10;&#10;차량 수명의 약 3분의 1이 지나면 노후 마모가 출력이나 제동 성능 같은 일부 중요한 특성을 조금씩 낮추기 시작합니다. 이후 이 효과는 더 강해지며, 수명 말기에 특히 뚜렷하게 나타납니다.&#10;&#10;이 노후 마모는 모드 설정에서 끌 수 있습니다."/>
         <text name="rms_tutorial_poor_consumables_title" text="저품질 소모품"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s 차량은 최근 정비 때 저품질 소모품을 사용했습니다. 더 저렴한 등급을 선택하면 이런 일이 발생할 수 있습니다.&#10;&#10;현재 정비 주기는 짧아졌고, 부품 마모는 약간 증가한 상태입니다. 다시 한 번 정비를 받으면 문제가 해결됩니다. 기본 점검은 짧아진 정비 주기를 알려주고, 전체 진단 점검은 저품질 소모품 자체를 바로 찾아냅니다."/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s 차량의 최근 정비에 저품질 소모품이 사용되었습니다. 저렴한 등급을 선택하면 이런 일이 발생합니다.&#10;&#10;정비 주기가 짧아지고 구성품 마모가 약간 증가했습니다. 새로 정비하면 문제가 해결됩니다. 육안 점검이나 표준 점검은 짧아진 주기를 알리며 종합 점검만 원인이 된 소모품을 식별합니다."/>
         <text name="rms_tutorial_poor_parts_title" text="저품질 부품"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s 차량은 수리 과정에서 저품질 부품을 사용했습니다. 이 고장은 아마도 머지않아 다시 돌아올 가능성이 큽니다.&#10;&#10;그때를 기다리거나, 지금 바로 전체 진단 점검을 수행할 수 있습니다. 이 방법은 저품질 부품을 확실하게 찾아냅니다."/>
+        <text name="rms_tutorial_poor_parts_message" text="%s 차량의 수리에 저품질 부품이 사용되었습니다. 고장이 곧 다시 발생할 가능성이 높습니다.&#10;&#10;고장이 재발할 때까지 기다리거나 결함 부품을 확실하게 식별하는 종합 점검을 실시할 수 있습니다."/>
         <text name="rms_tutorial_park_brake_title" text="주차 브레이크"/>
         <text name="rms_tutorial_park_brake_message" text="주차 브레이크가 걸려 있습니다. 정차 상태에서 장비를 떠나면 자동으로 걸리고, 다시 가속하면 풀립니다.&#10;&#10;경사면에서는 장비가 저절로 굴러가는 것을 막아 줍니다."/>
         <text name="rms_tutorial_park_brake_manual_message" text="주차 브레이크가 걸려 있습니다. 전용 키로 직접 걸고 직접 풉니다. 브레이크를 건 채 가속하면 기계는 움직이지 않고 경고가 표시됩니다.&#10;&#10;경사에서는 기계가 저절로 굴러가는 것을 막아 줍니다."/>
         <text name="rms_tutorial_preheat_title" text="디젤 예열"/>
         <text name="rms_tutorial_preheat_message" text="차가운 디젤 엔진에서는 시동 조작을 한 번 누르면 점화가 켜지고 예열 플러그 사이클이 자동으로 시작됩니다. 계기판 경고등이 자체 점검을 수행한 뒤 엔진이 준비될 때까지 예열등이 켜져 있습니다. 조작을 반복하지 마십시오. 예열등이 꺼지면 스타터가 자동으로 작동합니다."/>
         <text name="rms_tutorial_pto_engagement_title" text="PTO 결합 사이클"/>
-        <text name="rms_tutorial_pto_engagement_message" text="PTO를 반복해서 작동하면 기계적 결합 사이클이 누적됩니다. 불필요하게 켰다 끄는 동작을 피하십시오."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="공회전과 보관"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="차량이 켜져 있지만 실제로 작업을 하지 않을 때는 마모가 훨씬 적습니다. 엔진이 꺼져 있으면 마모는 아주 미미해지고, 차량을 실내에 보관하면 마모는 완전히 사라집니다."/>
+        <text name="rms_tutorial_pto_engagement_message" text="PTO를 반복해서 결합하고 해제하면 기계적 사이클이 누적됩니다. 불필요한 결합을 피하십시오."/>
+        <text name="rms_tutorial_idle_and_downtime_title" text="공회전 및 비가동"/>
+        <text name="rms_tutorial_idle_and_downtime_message" text="기계가 작업하지 않고 가동 중일 때는 마모가 훨씬 적습니다. 엔진을 끄면 마모가 최소화되고 지붕 아래에 보관하면 완전히 사라집니다."/>
         <text name="rms_tutorial_idle_deposit_title" text="장시간 공회전"/>
         <text name="rms_tutorial_idle_deposit_message" text="차량이 너무 오래 공회전한 것 같습니다. 긴 공회전은 단지 연료만 낭비하는 것이 아닙니다. 시간이 지나면 연료 계통에 침전물이 쌓이고 엔진 상태 전반에도 악영향을 줍니다.&#10;&#10;지금 차량이 필요하지 않다면 엔진을 끄는 것이 좋습니다."/>
         <text name="rms_tutorial_hot_weather_title" text="더운 날씨"/>
-        <text name="rms_tutorial_hot_weather_message" text="오늘은 정말 덥습니다. 이런 날씨에는 라디에이터 청결 상태를 확인하고 엔진 과부하를 피해야 합니다. 그렇지 않으면 과열은 시간문제입니다.&#10;&#10;차량을 바라보며 R 키를 길게 눌러 점검으로 라디에이터 상태를 확인할 수 있고, 에어 블로워로 청소도 할 수 있습니다."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="무거운 트레일러"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="견인 하중이 이 차량에 비해 너무 무거울 수 있습니다. 계속 주행할 수는 있지만 변속기와 구동계의 부담이 증가합니다.&#10;&#10;RMS는 두 가지 기준을 사용합니다. 트랙터는 견인 중량 1톤당 최소 10마력, 트럭은 총 조합 중량 1톤당 최소 6마력이 필요합니다. 엔진 부하가 높은 상태에서 해당 기준보다 낮으면 변속기 마모가 증가합니다."/>
+        <text name="rms_tutorial_hot_weather_message" text="오늘은 정말 덥습니다. 이런 날씨에는 라디에이터 청결 상태를 확인하고 엔진 과부하를 피해야 합니다. 그렇지 않으면 과열은 시간문제입니다.&#10;&#10;차량을 바라보며 %s 키를 길게 눌러 점검으로 라디에이터 상태를 확인할 수 있고, 에어 블로워로 청소도 할 수 있습니다."/>
+        <text name="rms_tutorial_heavy_trailer_title" text="너무 무거운 트레일러"/>
+        <text name="rms_tutorial_heavy_trailer_message" text="견인 하중이 이 차량에 비해 너무 무거울 수 있습니다. 계속 주행할 수는 있지만 변속기와 구동계의 부담이 증가합니다.&#10;&#10;RMS는 두 가지 기준을 사용합니다. 트랙터는 견인 중량 톤당 최소 10마력, 트럭은 총 조합 중량 톤당 최소 6마력이 필요합니다. 엔진 부하가 높은 상태에서 해당 기준보다 낮으면 변속기 마모가 증가합니다."/>
         <text name="rms_tutorial_hard_start_title" text="시동 어려움"/>
-        <text name="rms_tutorial_hard_start_message" text="%s 차량의 엔진 시동이 어렵습니다. 배터리 부족, 심한 추위, 기계적 고장, 스타터 마모 등이 원인일 수 있습니다. 엔진이 걸릴 때까지 시동 버튼을 길게 누르세요.&#10;&#10;시동 시 큰 돌입 전류로 인해 전기 시스템에는 큰 부하가 걸립니다."/>
+        <text name="rms_tutorial_hard_start_message" text="%s 차량의 엔진 시동이 어렵습니다. 약한 배터리, 서리, 기계적 고장 또는 스타터 마모가 원인일 수 있습니다. 엔진이 시동될 때까지 시동 버튼을 누르십시오.&#10;&#10;시동 시 높은 돌입 전류로 인해 전기 시스템에 큰 부하가 걸립니다."/>
         <text name="rms_tutorial_low_fuel_title" text="연료 부족"/>
-        <text name="rms_tutorial_low_fuel_message" text="연료 탱크가 예비 수준에 가까워지고 있습니다. 남은 연료가 적을수록 연료 펌프는 그것을 끌어올리기 위해 더 힘들게 작동해야 하며, 그만큼 마모가 빨라집니다."/>
+        <text name="rms_tutorial_low_fuel_message" text="연료 탱크가 예비 수준에 가까워지고 있습니다. 남은 연료가 적을수록 연료 펌프가 연료를 끌어올리기 위해 더 힘들게 작동하며 그만큼 마모가 빨라집니다."/>
         <text name="rms_tutorial_lugging_title" text="저회전 고부하 운전"/>
         <text name="rms_tutorial_lugging_message" text="엔진, 특히 변속기는 저회전에서 높은 부하로 운행되는 것을 좋아하지 않습니다. 차량에 너무 무거운 장비를 연결했거나, 수동 변속기라면 단순히 기어 선택이 좋지 않을 수도 있습니다."/>
         <text name="rms_tutorial_engine_overheat_title" text="엔진 과열"/>
-        <text name="rms_tutorial_engine_overheat_message" text="엔진이 과열되기 시작했습니다. 원인은 하나 이상일 수 있습니다. 엔진이 큰 부하를 받고 있거나, 라디에이터가 막혔거나, 날씨가 덥거나, 차량 냉각 시스템에 이상이 있을 수 있습니다.&#10;&#10;주의하세요. 과열은 모든 기계에 가장 치명적인 요인 중 하나입니다. 엔진만 손상되는 것이 아닙니다. 냉각 시스템은 한계까지 밀리며, 엔진룸의 열은 배선과 전기 부품의 열화를 가속합니다."/>
+        <text name="rms_tutorial_engine_overheat_message" text="엔진이 과열되기 시작했습니다. 엔진의 높은 부하, 막힌 라디에이터, 더운 날씨 또는 차량 냉각 시스템의 고장이 원인일 수 있습니다.&#10;&#10;주의하십시오. 과열은 기계를 가장 많이 손상시키는 요인 중 하나입니다. 엔진뿐 아니라 냉각 시스템도 한계까지 작동하며 엔진룸의 열은 배선과 전기 부품의 열화를 가속합니다."/>
         <text name="rms_tutorial_engine_overload_title" text="엔진 과부하"/>
-        <text name="rms_tutorial_engine_overload_message" text="엔진이 엄청난 부담을 받고 있습니다. 지금 하고 있는 작업이 이 기계에게는 너무 벅찰 수도 있으니 더 강한 장비를 고려해야 할 수도 있습니다. 혹은 단순히 속도를 줄이는 것만으로도 엔진 부하를 낮출 수 있습니다.&#10;&#10;어쨌든 이런 부담 아래에서는 마모가 눈에 띄게 증가한다는 점을 꼭 기억하세요."/>
+        <text name="rms_tutorial_engine_overload_message" text="엔진이 매우 큰 응력을 받고 있습니다. 작업이 이 기계에 너무 무거워 더 강력한 차량이 필요할 수도 있고 속도를 줄이는 것만으로 부하가 감소할 수도 있습니다.&#10;&#10;어느 경우든 이러한 응력에서는 마모가 뚜렷이 증가합니다."/>
         <text name="rms_tutorial_exhaust_smoke_title" text="배기 연기 읽기"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="이 기계에서 나오는 연기는 장식이 아니라 색으로 진단을 말해 줍니다.&#10;&#10;검은색은 공기보다 연료가 많다는 뜻입니다. 터보가 돌기 전의 급가속, 저회전에서 무리하게 밀어붙이는 엔진, 과부하, 막힌 에어 필터, 낙은 터보, 마모된 분사 장치가 원인입니다. 파란색은 노후한 엔진이 자신의 오일을 태우고 있다는 뜻입니다. 흰색은 연료가 연소되지 않고 빠져나간다는 뜻입니다.&#10;&#10;연기는 엔진이 하는 일에 따라 굵어지기도 합니다. 오래된 기계는 최신 기계보다 훨씬 많은 연기를 내며, 그것은 정상입니다."/>
+        <text name="rms_tutorial_exhaust_smoke_message" text="이 기계에서 나오는 연기는 장식이 아니며 색상으로 상태를 진단할 수 있습니다.&#10;&#10;검은 연기는 엔진에 공기보다 연료가 더 많이 공급된다는 뜻입니다. 터보차저가 회전 속도에 도달하기 전의 급가속, 저회전 고부하, 과부하, 막힌 에어 필터, 노후한 터보차저 또는 마모된 분사 장치가 원인입니다. 파란 연기는 노후한 엔진이 자체 오일을 연소한다는 뜻이며 흰 연기는 연료가 연소되지 않은 채 배출된다는 뜻입니다.&#10;&#10;연기 기둥은 엔진의 작업량에 따라서도 커집니다. 오래된 기계는 최신 기계보다 훨씬 많은 연기를 내며 이는 정상입니다."/>
         <text name="rms_tutorial_cvt_overheat_title" text="CVT 과열"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="CVT 변속기가 과열되기 시작했습니다. 원인은 하나 이상일 수 있습니다. 변속기에 과도한 부하가 걸렸거나, 라디에이터가 막혔거나, 날씨가 매우 덥거나, 변속기 냉각 시스템에 이상이 있을 수 있습니다. 예를 들어 너무 무거운 쟁기를 끌고 있거나 과적된 트레일러를 견인하고 있을 수도 있습니다.&#10;&#10;주의하세요. 과열은 CVT 변속기에 일어날 수 있는 가장 치명적인 문제 중 하나입니다."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="서스펜션 부담 증가"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="거친 지형을 빠르게 달리면 %s 차량의 서스펜션이 금방 닳아버립니다. 이런 진동은 유압계와 전기계통 같은 다른 시스템에도 해를 줍니다.&#10;&#10;고르지 않은 지면에서는 부드럽게 운전하세요."/>
+        <text name="rms_tutorial_cvt_overheat_message" text="CVT 변속기가 과열되기 시작했습니다. 과도한 부하, 막힌 라디에이터, 매우 더운 날씨 또는 변속기 냉각 회로의 고장이 원인일 수 있습니다. 너무 무거운 쟁기나 과적된 트레일러만으로도 과열될 수 있습니다.&#10;&#10;주의하십시오. 과열은 CVT 변속기를 가장 많이 손상시키는 요인 중 하나입니다."/>
+        <text name="rms_tutorial_chassis_vibration_title" text="섀시 부하"/>
+        <text name="rms_tutorial_chassis_vibration_message" text="거친 지형을 빠르게 달리면 %s 차량의 서스펜션이 매우 빨리 마모됩니다. 이러한 진동은 다른 시스템도 손상시키며 유압 및 전기 시스템이 먼저 영향을 받습니다.&#10;&#10;고르지 않은 지면에서는 부드럽게 운전하십시오."/>
         <text name="rms_tutorial_cranking_title" text="잦은 시동"/>
-        <text name="rms_tutorial_cranking_message" text="엔진을 너무 자주 시동 걸고 있습니다. 시동을 걸 때마다 전기 시스템에는 매우 높은 전류가 흐르며, 이로 인해 배선, 스타터, 기타 전기 부품의 마모가 빨라집니다.&#10;&#10;짧게 멈출 때마다 엔진을 끄는 것을 피하세요."/>
+        <text name="rms_tutorial_cranking_message" text="엔진을 너무 자주 시동하고 있습니다. 시동할 때마다 전기 시스템에 매우 높은 전류가 흘러 배선, 스타터 및 기타 전기 부품의 마모가 빨라집니다.&#10;&#10;짧은 휴식에는 엔진을 끄지 마십시오."/>
         <text name="rms_tutorial_critical_failure_title" text="치명적 고장"/>
         <text name="rms_tutorial_critical_failure_message" text="%s 차량은 완전히 고장 나서 더 이상 스스로 움직일 수 없습니다.&#10;&#10;이동식 정비소를 이용하면 차량이 스스로 정비소까지 이동할 수 있을 정도의 임시 수리가 가능합니다. 그렇지 않다면 다른 회수 방법을 찾아야 합니다."/>
-        <text name="rms_tutorial_cold_engine_title" text="차량 예열하기"/>
-        <text name="rms_tutorial_cold_engine_message" text="엔진에 높은 부하를 가하기 전에 서서히 예열하세요. 엔진이 작동 온도에 도달할 때까지 스로틀과 회전수를 적당히 유지하세요."/>
+        <text name="rms_tutorial_cold_engine_title" text="차가운 엔진"/>
+        <text name="rms_tutorial_cold_engine_message" text="엔진에 높은 부하를 가하기 전에 서서히 예열하십시오. 엔진이 작동 온도에 도달할 때까지 가속과 회전수를 적당히 유지하십시오."/>
         <text name="rms_tutorial_cold_oil_title" text="차가운 변속기 오일"/>
-        <text name="rms_tutorial_cold_oil_message" text="변속기 오일과 유압 오일은 엔진보다 훨씬 천천히 예열됩니다. 오일이 차가울 때는 무거운 작업을 피하고, 부드럽게 주행하며 유압 장치를 가볍게 사용해 서서히 예열하세요."/>
+        <text name="rms_tutorial_cold_oil_message" text="변속기 및 유압 오일은 엔진보다 훨씬 천천히 예열됩니다. 오일이 차가울 때는 무거운 작업을 피하고 부드럽게 주행하며 유압 장치를 가볍게 사용해 서서히 예열하십시오."/>
         <text name="rms_tutorial_transmission_overheat_title" text="변속기 과열"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="변속기 오일이 과열되기 시작했습니다. 과도한 부하, 막힌 라디에이터, 매우 더운 날씨, 또는 변속기 냉각 계통의 고장이 원인일 수 있습니다.&#10;&#10;변속기 오일은 CVT뿐 아니라 모든 장비에서 뜨거워집니다. 너무 뜨거운 오일은 변속기를 마모시키고 실을 손상시킵니다."/>
+        <text name="rms_tutorial_transmission_overheat_message" text="변속기 오일이 과열되기 시작했습니다. 과도한 부하, 막힌 라디에이터, 매우 더운 날씨 또는 변속기 냉각 계통의 고장이 원인일 수 있습니다.&#10;&#10;변속기 오일은 CVT뿐 아니라 모든 기계에서 뜨거워집니다. 너무 뜨거운 오일은 변속기를 마모시키고 씰을 파괴합니다."/>
         <text name="rms_tutorial_overload_indicator_title" text="과부하 경고"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s에 큰 부하가 걸리고 있습니다. 방금 계기판에 켜진 경고등이 이를 알려주고 있습니다.&#10;&#10;현재 작업에 필요한 힘이 이 기계에 부족할 수 있습니다. 부하를 줄여 보세요. 크루즈 컨트롤로 속도를 제한하거나, 최대 출력으로 계속 밀어붙이기보다는 스로틀을 조금 줄이세요."/>
+        <text name="rms_tutorial_overload_indicator_message" text="%s에 큰 부하가 걸리고 있습니다. 방금 계기판에 켜진 경고등이 이를 알립니다.&#10;&#10;현재 작업에 필요한 출력이 이 기계에 부족할 수 있습니다. 크루즈 컨트롤로 속도를 제한하거나 최대 출력으로 주행하는 대신 가속을 조금 줄여 부하를 낮추십시오."/>
         <text name="rms_tutorial_battery_low_title" text="배터리 약함"/>
         <text name="rms_tutorial_battery_low_message" text="이 차량의 배터리가 거의 완전히 방전되었습니다. 장기간 방치, 심한 추위, 전기 시스템 이상 등이 원인일 수 있습니다.&#10;&#10;충전량이 낮으면 시동이 어려워지고, 이어서 아예 걸리지 않게 됩니다. 이 경우 점프 케이블을 사용해 다른 차량에서 시동을 걸 수 있습니다."/>
         <text name="rms_tutorial_drivetrain_windup_title" text="구동계 응력"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="차동 잠금을 체결한 채 접지력이 높은 지면에서 회전하고 있습니다. 커브에서 안쪽과 바깥쪽 바퀴는 서로 다른 거리를 이동하지만, 차동 잠금은 같은 속도로 회전하도록 강제합니다: 구동계에 응력이 발생하고 변속기 마모가 증가합니다. 회전하기 전에 잠금을 해제하세요."/>
+        <text name="rms_tutorial_drivetrain_windup_message" text="차동 잠금을 체결한 채 접지력이 높은 노면에서 조향하고 있습니다. 곡선에서는 안쪽과 바깥쪽 바퀴가 서로 다른 거리를 이동하지만 차동 잠금은 같은 속도로 회전하도록 강제합니다. 구동계에 응력이 발생하고 변속기 마모가 증가합니다. 조향하기 전에 잠금을 해제하십시오."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="구동 방식과 차동 잠금"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="이 장비는 구동 방식을 선택할 수 있습니다: 4x2, 4WD, 또는 바퀴가 미끄러지는 즉시 네 바퀴를 모두 연결하는 AUTO.&#10;&#10;차동 잠금은 접지력이 없는 곳에서 접지력을 만들어 주지만, 단단한 지면에서 선회할 때는 대가가 큽니다: 안쪽과 바깥쪽 바퀴가 같은 속도로 돌 수 없어 그 부담을 구동계가 받습니다. 선회 전에 해제하세요."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="이 기계에서는 구동 방식을 2WD, 4WD 또는 AUTO로 선택할 수 있습니다. AUTO는 바퀴가 미끄러지는 즉시 전륜축을 결합합니다.&#10;&#10;차동 잠금은 접지력이 부족할 때 접지력을 확보하지만 접지력이 높은 노면에서 조향하면 구동계에 큰 부담을 줍니다. 안쪽과 바깥쪽 바퀴가 같은 속도로 회전할 수 없기 때문입니다. 조향하기 전에 잠금을 해제하십시오."/>
     </texts>
 </l10n>

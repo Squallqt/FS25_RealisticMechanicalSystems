@@ -323,7 +323,9 @@ local function rmsOnPlayerInputComponentRegisterActionEvents(inputComponent)
 end
 
 ---Hides the hand crosshair while an inspection runs
--- @param table superFunc overwritten function
+-- @param table self hand tool hands instance
+-- @param function superFunc overwritten function
+-- @param any ... forwarded draw arguments
 local function rmsOnHandToolHandsDraw(self, superFunc, ...)
     if rmsActiveInspectionVehicle ~= nil then
         return

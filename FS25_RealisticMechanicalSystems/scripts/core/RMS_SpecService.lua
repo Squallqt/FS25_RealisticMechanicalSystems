@@ -20,7 +20,10 @@ local function isBreakdownSelectedForPlayerRepair(breakdownId, breakdown, option
     end
 
     local isSelectedForQuickFix = breakdown.isSelectedForRepair and breakdown.isVisible and (optionOne == RealisticMechanicalSystems.REPAIR_TYPES.LOW and breakdown.isActive)
-    local isSelectedForStandartRepair = breakdown.isSelectedForRepair and breakdown.isVisible and (optionOne == RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM or optionOne == RealisticMechanicalSystems.REPAIR_TYPES.HIGH)
+    local isSelectedForStandartRepair = breakdown.isSelectedForRepair
+        and breakdown.isVisible
+        and (optionOne == RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM
+            or optionOne == RealisticMechanicalSystems.REPAIR_TYPES.HIGH)
     return isSelectedForStandartRepair or isSelectedForQuickFix
 end
 
@@ -390,7 +393,14 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
         spec.pendingProgressTotalTime = adjustedTotalTimeMs
         spec.pendingProgressElapsedTime = 0
         spec.pendingProgressStepIndex = 0
-        log_dbg(string.format('%s initiated for %s, will take %.2f seconds (%.2f seconds after reliability adjustment). Next planned state: %s', spec.currentState, self:getFullName(), totalTimeMs / 1000, spec.maintenanceTimer / 1000, spec.plannedState))
+        log_dbg(string.format(
+            '%s initiated for %s, will take %.2f seconds (%.2f seconds after reliability adjustment). Next planned state: %s',
+            spec.currentState,
+            self:getFullName(),
+            totalTimeMs / 1000,
+            spec.maintenanceTimer / 1000,
+            spec.plannedState
+        ))
     else
         spec.currentState = states.READY
         resetPendingServiceProgress(spec)
@@ -455,14 +465,16 @@ end
 
 ---Advances the running service, consuming its step queue and interpolating the stress changes
 -- @param float dt time since last call in ms
-function RealisticMechanicalSystems:processService(dt)
+-- @param boolean? ignoreWorkshopHours true to advance independently of opening hours
+function RealisticMechanicalSystems:processService(dt, ignoreWorkshopHours)
     local spec = self.spec_RealisticMechanicalSystems
     local states = RealisticMechanicalSystems.STATUS
     local vehicleState = self:getCurrentStatus()
     local C = RMS_Config.MAINTENANCE
 
     if vehicleState == states.READY
-        or (RMS_Main ~= nil
+        or (not ignoreWorkshopHours
+            and RMS_Main ~= nil
             and RMS_Main.isWorkshopTypeOpen ~= nil
             and not RMS_Main:isWorkshopTypeOpen(spec.workshopType)) then
         return
@@ -541,7 +553,10 @@ function RealisticMechanicalSystems:processService(dt)
     
     elseif serviceType == states.OVERHAUL and spec.pendingProgressTotalTime > 0 then
         local ratio = math.min(math.max(spec.pendingProgressElapsedTime / spec.pendingProgressTotalTime, 0), 1)
-        local hasPerSystemTargets = spec.pendingOverhaulSystemStart ~= nil and next(spec.pendingOverhaulSystemStart) ~= nil and spec.pendingOverhaulSystemTarget ~= nil and next(spec.pendingOverhaulSystemTarget) ~= nil
+        local hasPerSystemTargets = spec.pendingOverhaulSystemStart ~= nil
+            and next(spec.pendingOverhaulSystemStart) ~= nil
+            and spec.pendingOverhaulSystemTarget ~= nil
+            and next(spec.pendingOverhaulSystemTarget) ~= nil
         if hasPerSystemTargets then
             for systemKey, startCondition in pairs(spec.pendingOverhaulSystemStart) do
                 local systemData = spec.systems[systemKey]
@@ -828,7 +843,14 @@ function RealisticMechanicalSystems:completeService()
             RMS_VehicleChangeStatusEvent.send(self, maintenanceCompletedText .. ". " .. nextServiceMessage, lastEntry)
         else
             if result == RMS_FluidWorkshop.RESULT.NOT_ENOUGH_MONEY then
-                local notEnoughMoneyText = string.format("%s: %s", self:getFullName(), string.format(g_i18n:getText('rms_spec_next_planned_service_not_enough_money_notification'), g_i18n:getText(nextWork)))
+                local notEnoughMoneyText = string.format(
+                    "%s: %s",
+                    self:getFullName(),
+                    string.format(
+                        g_i18n:getText('rms_spec_next_planned_service_not_enough_money_notification'),
+                        g_i18n:getText(nextWork)
+                    )
+                )
                 if g_currentMission.hud ~= nil and g_currentMission.hud.addSideNotification ~= nil
                         and self:getOwnerFarmId() == g_currentMission:getFarmId() then
                     g_currentMission.hud:addSideNotification({1, 1, 1, 1}, notEnoughMoneyText)
@@ -949,6 +971,7 @@ function RealisticMechanicalSystems:addEntryToMaintenanceLog(maintenanceType, op
             age = self.age or 0,
             condition = self:getConditionLevel(),
             service = self:getServiceLevel(),
+            sellPrice = self:getSellPrice(),
             systems = systemsSnapshot,
             batterySoc = tonumber(spec.batterySoc) or 1,
             activeBreakdowns = RMS_Utils.deepCopy(self:getActiveBreakdowns()),
@@ -1197,12 +1220,28 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
 
     if maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
         local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.INSPECTION_TYPES, optionOne)
-        local inspectionPrice = math.ceil(math.max((C.GLOBAL_SERVICE_PRICE_MULTIPLIER * C.INSPECTION_PRICE_MULTIPLIERS[key] * price * 0.001 * ownWorkshopDiscount / 10) / spec.maintainability, 2)) * 10
+        local inspectionPrice = math.ceil(math.max(
+            (C.GLOBAL_SERVICE_PRICE_MULTIPLIER
+                * C.INSPECTION_PRICE_MULTIPLIERS[key]
+                * price
+                * 0.001
+                * ownWorkshopDiscount
+                / 10)
+                / spec.maintainability,
+            2
+        )) * 10
         local inspectionPriceLimits = C.INSPECTION_PRICE_LIMITS ~= nil and C.INSPECTION_PRICE_LIMITS[key] or nil
         if inspectionPriceLimits ~= nil then
             inspectionPrice = math.clamp(inspectionPrice, inspectionPriceLimits.min or inspectionPrice, inspectionPriceLimits.max or inspectionPrice)
         end
-        log_dbg(string.format("Calculated inspection price: %.2f (base price: %.2f, multiplier: %.4f, own workshop discount: %.2f, maintainability: %.2f)", inspectionPrice, price, C.INSPECTION_PRICE_MULTIPLIERS[key] * C.GLOBAL_SERVICE_PRICE_MULTIPLIER * 0.0005, ownWorkshopDiscount, spec.maintainability))
+        log_dbg(string.format(
+            "Calculated inspection price: %.2f (base price: %.2f, multiplier: %.4f, own workshop discount: %.2f, maintainability: %.2f)",
+            inspectionPrice,
+            price,
+            C.INSPECTION_PRICE_MULTIPLIERS[key] * C.GLOBAL_SERVICE_PRICE_MULTIPLIER * 0.0005,
+            ownWorkshopDiscount,
+            spec.maintainability
+        ))
         return inspectionPrice
         
     elseif maintenanceType == RealisticMechanicalSystems.STATUS.REFILL then
@@ -1212,8 +1251,29 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
     elseif maintenanceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
         local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.MAINTENANCE_TYPES, optionOne)
         local optionTwoKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, optionTwo)
-        local maintenancePrice = math.ceil(math.max((C.GLOBAL_SERVICE_PRICE_MULTIPLIER * C.MAINTENANCE_PRICE_MULTIPLIERS[key] * C.PARTS_PRICE_MULTIPLIERS[optionTwoKey] * ownWorkshopDiscount * price * ageFactor * 0.01 / 10) / spec.maintainability, 2)) * 10
-        log_dbg(string.format("Calculated maintenance price: %.2f (base price: %.2f, multiplier: %.2f, own workshop discount: %.2f, age factor: %.2f, maintainability: %.2f)", maintenancePrice, price, C.MAINTENANCE_PRICE_MULTIPLIERS[key] * C.GLOBAL_SERVICE_PRICE_MULTIPLIER * C.PARTS_PRICE_MULTIPLIERS[optionTwoKey], ownWorkshopDiscount, ageFactor, spec.maintainability))
+        local maintenancePrice = math.ceil(math.max(
+            (C.GLOBAL_SERVICE_PRICE_MULTIPLIER
+                * C.MAINTENANCE_PRICE_MULTIPLIERS[key]
+                * C.PARTS_PRICE_MULTIPLIERS[optionTwoKey]
+                * ownWorkshopDiscount
+                * price
+                * ageFactor
+                * 0.01
+                / 10)
+                / spec.maintainability,
+            2
+        )) * 10
+        log_dbg(string.format(
+            "Calculated maintenance price: %.2f (base price: %.2f, multiplier: %.2f, own workshop discount: %.2f, age factor: %.2f, maintainability: %.2f)",
+            maintenancePrice,
+            price,
+            C.MAINTENANCE_PRICE_MULTIPLIERS[key]
+                * C.GLOBAL_SERVICE_PRICE_MULTIPLIER
+                * C.PARTS_PRICE_MULTIPLIERS[optionTwoKey],
+            ownWorkshopDiscount,
+            ageFactor,
+            spec.maintainability
+        ))
         return  maintenancePrice
 
     elseif maintenanceType == RealisticMechanicalSystems.STATUS.OVERHAUL then
@@ -1234,7 +1294,14 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
         end
         overhaulPrice = math.max(overhaulPrice, 100)
         overhaulPrice = math.min(overhaulPrice, price * (C.OVERHAUL_MAX_PRICE_RATIO or 1.0))
-        log_dbg(string.format("Calculated overhaul price: %.2f (base price: %.2f, multiplier: %.2f, own workshop discount: %.2f, maintainability: %.2f)", overhaulPrice, price, C.OVERHAUL_PRICE_MULTIPLIERS[key] * C.GLOBAL_SERVICE_PRICE_MULTIPLIER, ownWorkshopDiscount, spec.maintainability))
+        log_dbg(string.format(
+            "Calculated overhaul price: %.2f (base price: %.2f, multiplier: %.2f, own workshop discount: %.2f, maintainability: %.2f)",
+            overhaulPrice,
+            price,
+            C.OVERHAUL_PRICE_MULTIPLIERS[key] * C.GLOBAL_SERVICE_PRICE_MULTIPLIER,
+            ownWorkshopDiscount,
+            spec.maintainability
+        ))
         return overhaulPrice
     
     elseif maintenanceType == RealisticMechanicalSystems.STATUS.REPAIR then
@@ -1251,7 +1318,14 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
             if isBreakdownSelectedForPlayerRepair(id, breakdown, optionOne) or (allBreakdowns and getIsSelectableBreakdown(id)) then
                 local registryEntry = RMS_Breakdowns.BreakdownRegistry[id]
                 if registryEntry ~= nil then
-                    repairPrice = repairPrice + registryEntry.stages[breakdown.stage].repairPrice * C.GLOBAL_SERVICE_PRICE_MULTIPLIER * C.PARTS_PRICE_MULTIPLIERS[optionTwoKey] * C.REPAIR_PRICE_MULTIPLIERS[key] * ownWorkshopDiscount * (price / 100) * ageFactor
+                    repairPrice = repairPrice
+                        + registryEntry.stages[breakdown.stage].repairPrice
+                        * C.GLOBAL_SERVICE_PRICE_MULTIPLIER
+                        * C.PARTS_PRICE_MULTIPLIERS[optionTwoKey]
+                        * C.REPAIR_PRICE_MULTIPLIERS[key]
+                        * ownWorkshopDiscount
+                        * (price / 100)
+                        * ageFactor
                 end
             end
         end
@@ -1343,7 +1417,6 @@ function RealisticMechanicalSystems:getServiceDuration(maintenanceType, optionOn
                 totalDurationMs = totalDurationMs + C.REPAINT_TIME
             end
         elseif maintenanceType == RealisticMechanicalSystems.STATUS.REPAIR then
-            local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, optionOne)
             local repairCount = 0
             local breakdowns = self:getActiveBreakdowns()
 
@@ -1354,6 +1427,13 @@ function RealisticMechanicalSystems:getServiceDuration(maintenanceType, optionOn
                     end
                 end
             end
+
+            -- no breakdown ticked leaves the repair type unset, and there is nothing to time
+            if repairCount == 0 then
+                return 0
+            end
+
+            local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, optionOne)
             totalDurationMs = C.REPAIR_TIME * C.GLOBAL_SERVICE_TIME_MULTIPLIER * C.REPAIR_TIME_MULTIPLIERS[key] * repairCount / spec.maintainability
         end
         workDurationHours = totalDurationMs / 3600000

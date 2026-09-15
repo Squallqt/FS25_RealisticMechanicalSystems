@@ -164,6 +164,31 @@ end
 local hasCVTTransmission = RMS_Utils ~= nil and RMS_Utils.hasCVTTransmission or function() return false end
 local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
 
+---Returns the server-owned sources used by telemetry
+-- @param table? vehicle vehicle
+-- @return table? state server state or snapshot state
+-- @return table? debugData server debug data or snapshot debug data
+-- @return table? factorStats server factor statistics or snapshot statistics
+local function getTelemetryServerSources(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil then
+        return nil, nil, nil
+    end
+
+    if vehicle.isServer then
+        return spec, type(spec.debugData) == "table" and spec.debugData or {}, type(spec.factorStats) == "table" and spec.factorStats or {}
+    end
+
+    local snapshot = RMS_DebugSnapshot.get(vehicle)
+    if snapshot == nil then
+        return nil, nil, nil
+    end
+
+    return type(snapshot.state) == "table" and snapshot.state or {},
+        type(snapshot.debugData) == "table" and snapshot.debugData or {},
+        type(snapshot.factorStats) == "table" and snapshot.factorStats or {}
+end
+
 ---Splits a console argument string on whitespace
 -- @param string? text console arguments
 -- @return table args argument tokens
@@ -344,11 +369,14 @@ function RMS_Telemetry:collectTransmissionSystemInfo(vehicle)
         return nil
     end
 
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local debugData = type(spec.debugData) == "table" and spec.debugData or {}
+    local state, debugData, factorStats = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
+    end
+
     local transmissionDbg = type(debugData.transmission) == "table" and debugData.transmission or {}
-    local systemData = spec.systems.transmission
-    local systemStats = spec.factorStats.transmission
+    local systemData = type(state.systems) == "table" and state.systems.transmission or {}
+    local systemStats = type(factorStats.transmission) == "table" and factorStats.transmission or {}
 
     return {
         condition = systemData.condition,
@@ -366,8 +394,8 @@ function RMS_Telemetry:collectTransmissionSystemInfo(vehicle)
         heavyTrailerMassRatio = transmissionDbg.heavyTrailerMassRatio or 0,
         luggingFactor = transmissionDbg.luggingFactor or 0,
         wheelSlipFactor = transmissionDbg.wheelSlipFactor or 0,
-        wheelSlipIntensity = spec.wheelSlipIntensity,
-        avgTireGroundFrictionCoeff = spec.avgTireGroundFrictionCoeff,
+        wheelSlipIntensity = state.wheelSlipIntensity or 0,
+        avgTireGroundFrictionCoeff = state.avgTireGroundFrictionCoeff or 0,
         coldTransFactor = transmissionDbg.coldTransFactor or 0,
         hotTransFactor = transmissionDbg.hotTransFactor or 0
     }
@@ -381,20 +409,14 @@ function RMS_Telemetry:collectPtoSystemInfo(vehicle)
         return nil
     end
 
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local debugData = nil
-    if vehicle.isServer then
-        debugData = type(spec.debugData) == "table" and spec.debugData or {}
-    else
-        local debugSnapshot = RMS_DebugSnapshot.get(vehicle)
-        if debugSnapshot == nil then
-            return nil
-        end
-        debugData = type(debugSnapshot.debugData) == "table" and debugSnapshot.debugData or {}
+    local state, debugData, factorStats = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
     end
+
     local ptoDbg = type(debugData.pto) == "table" and debugData.pto or {}
-    local systemData = spec.systems.pto
-    local systemStats = spec.factorStats.pto
+    local systemData = type(state.systems) == "table" and state.systems.pto or {}
+    local systemStats = type(factorStats.pto) == "table" and factorStats.pto or {}
 
     return {
         enabled = systemData.enabled ~= false,
@@ -425,14 +447,17 @@ function RMS_Telemetry:collectCVTTempInfo(vehicle)
         return nil
     end
 
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local debugData = type(spec.debugData) == "table" and spec.debugData or {}
+    local state, debugData = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
+    end
+
     local transmissionTempDbg = type(debugData.transmissionTemp) == "table" and debugData.transmissionTemp or {}
 
     return {
-        temperatureC = spec.transmissionTemperature,
-        rawTemperatureC = spec.rawTransmissionTemperature,
-        thermostatState = spec.transmissionThermostatState,
+        temperatureC = state.transmissionTemperature,
+        rawTemperatureC = state.rawTransmissionTemperature,
+        thermostatState = state.transmissionThermostatState,
         totalHeat = transmissionTempDbg.totalHeat or 0,
         totalCooling = transmissionTempDbg.totalCooling or 0,
         coolerCooling = transmissionTempDbg.coolerCooling or 0,
@@ -459,73 +484,92 @@ function RMS_Telemetry:collectDrivetrainInfo(vehicle)
         return nil
     end
 
-    local spec = vehicle.spec_RealisticMechanicalSystems
+    local state = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
+    end
+
     local motor = vehicle.getMotor ~= nil and vehicle:getMotor() or nil
     if motor == nil then
         return nil
     end
 
-    local availableTorque = motor:getMotorAvailableTorque()
-    local motorPowerW = motor:getMotorRotSpeed()
-        * ((availableTorque - motor:getMotorExternalTorque()) * 1000)
+    ---Returns the live server value or its dedicated-client snapshot equivalent
+    -- @param string key snapshot key
+    -- @param any liveValue live server value
+    -- @return any value value to record
+    local function getStateValue(key, liveValue)
+        if vehicle.isServer then
+            return liveValue
+        end
+        return state[key]
+    end
+
+    local availableTorque = tonumber(getStateValue("motorAvailableTorque", motor:getMotorAvailableTorque())) or 0
+    local externalTorque = tonumber(getStateValue("motorExternalTorque", motor:getMotorExternalTorque())) or 0
+    local motorRotSpeed = tonumber(getStateValue("motorRotSpeed", motor:getMotorRotSpeed())) or 0
+    local motorPowerW = motorRotSpeed
+        * ((availableTorque - externalTorque) * 1000)
     local motorPowerHp = motorPowerW / 735.5
-    local peakPowerHp = (tonumber(motor.peakMotorPower) or 0) * 1.36
-    local lastRpm = motor:getLastModulatedMotorRpm()
-    local maxRpm = math.max(tonumber(motor.maxRpm) or 1, 1)
+    local peakPowerHp = (tonumber(getStateValue("peakMotorPower", motor.peakMotorPower)) or 0) * 1.36
+    local lastRpm = tonumber(getStateValue("lastModulatedMotorRpm", motor:getLastModulatedMotorRpm())) or 0
+    local maxRpm = math.max(tonumber(getStateValue("maxMotorRpm", motor.maxRpm)) or 1, 1)
     local rpmLoad = lastRpm / maxRpm
-    local motorLoad = vehicle:getMotorLoadPercentage()
-    local dynamicMotorLoad = tonumber(spec.dynamicMotorLoad) or motorLoad
-    local avgAbsDiffAcc = tonumber(spec.avgAbsDiffAcc) or 0
-    local acceleratorPedal = motor.lastAcceleratorPedal
-    local currentSpeedKmh = vehicle:getLastSpeed()
-    local currentSpeedLimitKmh = vehicle:getSpeedLimit(true)
-    if currentSpeedLimitKmh == math.huge or currentSpeedLimitKmh < 0 then
-        currentSpeedLimitKmh = 0
+    local motorLoad = tonumber(getStateValue("motorLoad", vehicle:getMotorLoadPercentage())) or 0
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local dynamicMotorLoad = tonumber(getStateValue("dynamicMotorLoad", spec.dynamicMotorLoad)) or motorLoad
+    local currentDirection = tonumber(getStateValue("currentDirection", motor.currentDirection)) or 1
+    local targetGear = (tonumber(getStateValue("targetGear", motor.targetGear)) or 0) * currentDirection
+    local lastControlParameters = (vehicle.spec_motorized or {}).lastControlParameters or {}
+    local cvtAddon = state.cvtAddon
+    if vehicle.isServer and hasCVTAddon(vehicle) then
+        local cvtAddonSpec = vehicle.spec_CVTaddon or {}
+        cvtAddon = {
+            damage = tonumber(cvtAddonSpec.CVTdamage) or 0,
+            warnDamage = cvtAddonSpec.forDBL_warndamage == 1,
+            critDamage = cvtAddonSpec.forDBL_critdamage == 1,
+            warnHeat = cvtAddonSpec.forDBL_warnheat == 1,
+            critHeat = cvtAddonSpec.forDBL_critheat == 1,
+            highPressure = cvtAddonSpec.forDBL_highpressure == 1
+        }
     end
-    if currentSpeedLimitKmh <= 0 and vehicle.spec_attacherJoints ~= nil and vehicle.spec_attacherJoints.attachedImplements ~= nil then
-        local implementSpeedLimit = math.huge
-        for _, implementData in pairs(vehicle.spec_attacherJoints.attachedImplements) do
-            local implement = implementData ~= nil and implementData.object or nil
-            local limit = implement ~= nil and tonumber(implement.speedLimit) or nil
-            local isLowered = implement ~= nil and implement.getIsLowered ~= nil and implement:getIsLowered() or false
-            if limit ~= nil and limit > 0 and isLowered then
-                implementSpeedLimit = math.min(implementSpeedLimit, limit)
-            end
-        end
-        if implementSpeedLimit < math.huge then
-            currentSpeedLimitKmh = implementSpeedLimit
-        end
-    end
-    if currentSpeedLimitKmh <= 0 then
-        currentSpeedLimitKmh = motor:getMaximumForwardSpeed() * 3.6
-    end
-    local targetGear = (tonumber(motor.targetGear) or 0) * (tonumber(motor.currentDirection) or 1)
-    local spec_CVTaddon = vehicle.spec_CVTaddon
 
     return {
         motorPowerHp = motorPowerHp,
         peakPowerHp = peakPowerHp,
         motorLoad = motorLoad,
         dynamicMotorLoad = dynamicMotorLoad,
-        avgAbsDiffAcc = avgAbsDiffAcc,
-        acceleratorPedal = acceleratorPedal,
+        avgAbsDiffAcc = tonumber(getStateValue("avgAbsDiffAcc", spec.avgAbsDiffAcc)) or 0,
+        inputAcceleratorPedal = tonumber(getStateValue(
+            "inputAcceleratorPedal",
+            vehicle.getAccelerationAxis ~= nil and vehicle:getAccelerationAxis() or 0
+        )) or 0,
+        cruiseControlState = tonumber(getStateValue(
+            "cruiseControlState",
+            vehicle.getCruiseControlState ~= nil and vehicle:getCruiseControlState() or 0
+        )) or 0,
+        cruiseControlAccelerator = tonumber(getStateValue(
+            "cruiseControlAccelerator",
+            vehicle.getCruiseControlAxis ~= nil and vehicle:getCruiseControlAxis() or 0
+        )) or 0,
+        requestedAcceleratorPedal = tonumber(getStateValue("requestedAcceleratorPedal", motor.lastAcceleratorPedal)) or 0,
+        appliedAcceleratorPedal = tonumber(getStateValue(
+            "appliedAcceleratorPedal",
+            lastControlParameters.acceleratorPedal
+        )) or 0,
+        actualAccelerationMps2 = tonumber(getStateValue(
+            "actualAccelerationMps2",
+            (tonumber(vehicle.lastSpeedAcceleration) or 0) * 1000000
+        )) or 0,
         rpmLoad = rpmLoad,
-        currentSpeedKmh = currentSpeedKmh,
-        currentSpeedLimitKmh = currentSpeedLimitKmh,
-        currentGear = tonumber(motor.gear) or 0,
+        currentSpeedKmh = tonumber(getStateValue("currentSpeedKmh", vehicle:getLastSpeed())) or 0,
+        currentGear = tonumber(getStateValue("currentGear", motor.gear)) or 0,
         targetGear = targetGear,
-        activeGearGroupIndex = tonumber(motor.activeGearGroupIndex) or 0,
-        gearRatio = motor:getGearRatio(),
-        draftMaxForce = tonumber(spec.activeDraftMaxForce) or 0,
-        draftEffectiveForceCap = tonumber(spec.activeDraftEffectiveForceCap) or 0,
-        cvtAddon = hasCVTAddon(vehicle) and {
-            damage = tonumber(spec_CVTaddon.CVTdamage) or 0,
-            warnDamage = spec_CVTaddon.forDBL_warndamage == 1,
-            critDamage = spec_CVTaddon.forDBL_critdamage == 1,
-            warnHeat = spec_CVTaddon.forDBL_warnheat == 1,
-            critHeat = spec_CVTaddon.forDBL_critheat == 1,
-            highPressure = spec_CVTaddon.forDBL_highpressure == 1
-        } or nil
+        activeGearGroupIndex = tonumber(getStateValue("activeGearGroupIndex", motor.activeGearGroupIndex)) or 0,
+        gearRatio = tonumber(getStateValue("gearRatio", motor:getGearRatio())) or 0,
+        draftMaxForce = tonumber(getStateValue("activeDraftMaxForce", spec.activeDraftMaxForce)) or 0,
+        draftEffectiveForceCap = tonumber(getStateValue("activeDraftEffectiveForceCap", spec.activeDraftEffectiveForceCap)) or 0,
+        cvtAddon = hasCVTAddon(vehicle) and cvtAddon or nil
     }
 end
 
@@ -537,16 +581,21 @@ function RMS_Telemetry:collectCloggingInfo(vehicle)
         return nil
     end
 
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local debugData = type(spec.debugData) == "table" and spec.debugData or {}
+    local state, debugData = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
+    end
+
     local radiatorDbg = type(debugData.radiator) == "table" and debugData.radiator or {}
     local airFilterDbg = type(debugData.airFilter) == "table" and debugData.airFilter or {}
 
     return {
-        dirtLevel = vehicle.getDirtAmount ~= nil and vehicle:getDirtAmount() or 0,
-        radiatorClogging = spec.radiatorClogging,
+        dirtLevel = vehicle.isServer
+            and (vehicle.getDirtAmount ~= nil and vehicle:getDirtAmount() or 0)
+            or (state.dirtAmount or 0),
+        radiatorClogging = state.radiatorClogging,
         radiatorMultiplier = radiatorDbg.totalMultiplier or 0,
-        airFilterClogging = spec.airFilterClogging,
+        airFilterClogging = state.airFilterClogging,
         airFilterMultiplier = airFilterDbg.totalMultiplier or 0,
         isOnField = radiatorDbg.isOnField == true or airFilterDbg.isOnField == true,
         hasDust = radiatorDbg.hasDust == true or airFilterDbg.hasDust == true,
@@ -632,6 +681,9 @@ function RMS_Telemetry:collectSample(vehicle)
         sample.cvtTemp = self:collectCVTTempInfo(vehicle)
         sample.drivetrain = self:collectDrivetrainInfo(vehicle)
         sample.clogging = self:collectCloggingInfo(vehicle)
+        if sample.transmissionSystem == nil or sample.drivetrain == nil or sample.clogging == nil then
+            return nil
+        end
     elseif scenario == "pto" then
         sample.ptoSystem = self:collectPtoSystemInfo(vehicle)
         if sample.ptoSystem == nil then
@@ -661,7 +713,7 @@ function RMS_Telemetry:update(dt)
         return
     end
 
-    if self.recordingScenario == "pto" and not vehicle.isServer then
+    if (self.recordingScenario == "transmission" or self.recordingScenario == "pto") and not vehicle.isServer then
         RMS_DebugSnapshot.request(vehicle)
     end
 

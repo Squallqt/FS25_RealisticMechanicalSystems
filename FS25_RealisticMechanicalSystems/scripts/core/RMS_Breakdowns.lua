@@ -8,22 +8,8 @@ local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
     and RMS_Utils.createLogger("[RMS_BREAKDOWNS]")
     or function() end
 
-local loggedHookErrors = {}
-
 -- brake sound plays once per crossing of this speed, in km/h
 local BRAKE_SOUND_SPEED_THRESHOLD = 15
-
----Reports a wrapped engine call failure once per distinct error
--- @param string context name of the wrapped call
--- @param any err error raised
-local function log_hook_error(context, err)
-    local key = context .. "|" .. tostring(err)
-    if loggedHookErrors[key] then
-        return
-    end
-    loggedHookErrors[key] = true
-    Logging.error("[RMS_BREAKDOWNS] %s failed: %s", context, tostring(err))
-end
 
 source(g_currentModDirectory .. "scripts/core/RMS_BreakdownRegistry.lua")
 
@@ -1299,7 +1285,7 @@ function RMS_Breakdowns.applyHydraulicDamageToAttacher(self, superFunc, dt, ...)
         end
     end
 
-    local success, result = pcall(superFunc, self, dt, ...)
+    local result = superFunc(self, dt, ...)
 
     for _, implement in pairs(spec.attachedImplements) do
         if implement.object ~= nil then
@@ -1310,11 +1296,6 @@ function RMS_Breakdowns.applyHydraulicDamageToAttacher(self, superFunc, dt, ...)
                 jointDesc.moveTime = originalMoveTimes[jointDesc].moveTime
             end
         end
-    end
-
-    if not success then
-        log_hook_error("AttacherJoints.onUpdateTick", result)
-        return
     end
 
     return result
@@ -1369,7 +1350,7 @@ function RMS_Breakdowns.applyHydraulicDamageToCylindered(self, superFunc, dt, ..
         end
     end
 
-    local success, result = pcall(superFunc, self, dt, ...)
+    local result = superFunc(self, dt, ...)
 
     for _, tool in ipairs(spec.movingTools) do
         if originalSpeeds[tool] ~= nil then
@@ -1383,11 +1364,6 @@ function RMS_Breakdowns.applyHydraulicDamageToCylindered(self, superFunc, dt, ..
                 tool.animSpeed = originalSpeeds[tool].animSpeed
             end
         end
-    end
-
-    if not success then
-        log_hook_error("Cylindered.onUpdate", result)
-        return
     end
 
     return result
@@ -1413,13 +1389,8 @@ function RMS_Breakdowns.applyHydraulicDamageToAttacherJointControl(self, superFu
 
     local performance = math.max(0, 1 + modifier)
     jointDesc.moveTime = performance > 0 and originalMoveTime / performance or math.huge
-    local success, result = pcall(superFunc, self, dt, ...)
+    local result = superFunc(self, dt, ...)
     jointDesc.moveTime = originalMoveTime
-
-    if not success then
-        log_hook_error("AttacherJointControl.onUpdate", result)
-        return
-    end
 
     return result
 end
@@ -1457,14 +1428,9 @@ function RMS_Breakdowns.applyHydraulicDamageToHammer(self, superFunc, actorId, x
     local originalMax = workNode.hitIntervalMax
     workNode.hitIntervalMin = math.ceil(originalMin / performance)
     workNode.hitIntervalMax = math.ceil(originalMax / performance)
-    local success, result = pcall(superFunc, self, actorId, x, y, z, distance, nx, ny, nz, subShapeIndex, shapeId, isLast)
+    local result = superFunc(self, actorId, x, y, z, distance, nx, ny, nz, subShapeIndex, shapeId, isLast)
     workNode.hitIntervalMin = originalMin
     workNode.hitIntervalMax = originalMax
-
-    if not success then
-        log_hook_error("HydraulicHammer.hydraulicHammerRaycastCallback", result)
-        return false
-    end
 
     return result
 end
@@ -1797,14 +1763,21 @@ RMS_Breakdowns.EffectApplicators.IDLE_HUNTING_EFFECT = {
 
         local effectName = handler.getEffectName()
         local motor = vehicle:getMotor()
-        effectData.extraData.rpmBackup = motor.minRpm
+        local spec = vehicle.spec_RealisticMechanicalSystems
+
+        -- the idle is kept on the vehicle, the effect table is already dropped when remove runs; it
+        -- is read only while none is held, or a recalculation would take the swung rpm for the idle
+        if spec.idleHuntingRpmBackup == nil then
+            spec.idleHuntingRpmBackup = motor.minRpm
+        end
 
         local activeFunc = function(v, dt)
-            effectData.extraData.rpmBackup = updateIdleHuntingMotor(
+            local activeSpec = v.spec_RealisticMechanicalSystems
+            activeSpec.idleHuntingRpmBackup = updateIdleHuntingMotor(
                 motor,
                 effectData,
                 dt,
-                effectData.extraData.rpmBackup,
+                activeSpec.idleHuntingRpmBackup,
                 v:getIsMotorStarted() and v:getLastSpeed() < 0.01,
                 true,
                 false
@@ -1814,6 +1787,16 @@ RMS_Breakdowns.EffectApplicators.IDLE_HUNTING_EFFECT = {
     end,
 
     remove = function(vehicle, handler)
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        local motor = vehicle:getMotor()
+
+        -- a repair made while the engine idles has to put the idle back, the swing stops on the
+        -- rpm it was passing through otherwise
+        if spec.idleHuntingRpmBackup ~= nil then
+            motor.minRpm = spec.idleHuntingRpmBackup
+        end
+
+        spec.idleHuntingRpmBackup = nil
         removeFuncFromActive(vehicle, handler.getEffectName())
     end
 }
@@ -1840,8 +1823,7 @@ RMS_Breakdowns.EffectApplicators.GLOW_PLUG_COLD_IDLE_EFFECT = {
 
             local coldThreshold = RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD
             local engineTemperature = RealisticMechanicalSystems.sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, coldThreshold, -80, 160)
-            local otherIdleHuntingEffect = spec.activeEffects.IDLE_HUNTING_EFFECT
-            local otherIdleHuntingActive = otherIdleHuntingEffect ~= nil
+            local otherIdleHuntingActive = spec.activeEffects.IDLE_HUNTING_EFFECT ~= nil
             local shouldHunt = spec.preheatColdStartFaultSeverity >= 2
                 and engineTemperature < coldThreshold
                 and v:getIsMotorStarted()
@@ -1849,8 +1831,7 @@ RMS_Breakdowns.EffectApplicators.GLOW_PLUG_COLD_IDLE_EFFECT = {
                 and not otherIdleHuntingActive
 
             if otherIdleHuntingActive and spec.glowPlugColdIdleRpmBackup ~= nil then
-                otherIdleHuntingEffect.extraData = otherIdleHuntingEffect.extraData or {}
-                otherIdleHuntingEffect.extraData.rpmBackup = spec.glowPlugColdIdleRpmBackup
+                spec.idleHuntingRpmBackup = spec.glowPlugColdIdleRpmBackup
             end
 
             spec.glowPlugColdIdleRpmBackup = updateIdleHuntingMotor(
@@ -1872,10 +1853,8 @@ RMS_Breakdowns.EffectApplicators.GLOW_PLUG_COLD_IDLE_EFFECT = {
         local spec = vehicle.spec_RealisticMechanicalSystems
         local motor = vehicle:getMotor()
         if spec ~= nil and spec.glowPlugColdIdleRpmBackup ~= nil then
-            local otherIdleHuntingEffect = spec.activeEffects.IDLE_HUNTING_EFFECT
-            if otherIdleHuntingEffect ~= nil then
-                otherIdleHuntingEffect.extraData = otherIdleHuntingEffect.extraData or {}
-                otherIdleHuntingEffect.extraData.rpmBackup = spec.glowPlugColdIdleRpmBackup
+            if spec.activeEffects.IDLE_HUNTING_EFFECT ~= nil then
+                spec.idleHuntingRpmBackup = spec.glowPlugColdIdleRpmBackup
             end
             motor.minRpm = spec.glowPlugColdIdleRpmBackup
         end

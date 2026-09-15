@@ -369,7 +369,8 @@ end
 
 ---Defers or performs deletion after a native FillUnit change
 function RMS_FluidContainer:onFillUnitFillLevelChanged(fillUnitIndex, fillLevelDelta, fillTypeIndex, toolType, fillPositionData, appliedDelta)
-    if fillUnitIndex ~= 1 or not self.isServer or self:getRMSFluidLiters() > RMS_Fluids.EPSILON then
+    if fillUnitIndex ~= 1 or not self.isServer or (tonumber(appliedDelta) or 0) >= 0
+        or self:getRMSFluidLiters() > RMS_Fluids.EPSILON then
         return
     end
 

@@ -8,22 +8,18 @@ RMS_SellItemDialog.INSTANCE = nil
 local RMS_SellItemDialog_mt = Class(RMS_SellItemDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
 
----Returns the text with exactly one trailing colon
--- @param string? text label text
--- @return string text label ending with a colon
-local function ensureTrailingColon(text)
-    local normalized = tostring(text or ""):gsub("%s+$", "")
-    if normalized:find(":$") ~= nil then
-        return normalized
-    end
-    return normalized .. ":"
+---Rounds an amount to the precision used by the dialog
+-- @param any value amount
+-- @return number amount rounded for display
+local function getDisplayedMoney(value)
+    return MathUtil.round(tonumber(value) or 0, 0)
 end
 
 ---Formats an amount as money with an explicit sign, and no sign at zero
 -- @param any value amount
 -- @return string text formatted amount
 local function formatSignedMoney(value)
-    local amount = tonumber(value) or 0
+    local amount = getDisplayedMoney(value)
     local sign = amount > 0 and "+" or amount < 0 and "-" or ""
     return string.format("%s%s", sign, g_i18n:formatMoney(math.abs(amount), 0, true, false))
 end
@@ -36,7 +32,7 @@ local function applyMoneyColor(element, value)
         return
     end
 
-    local amount = tonumber(value) or 0
+    local amount = getDisplayedMoney(value)
     if amount > 0 then
         element:setTextColor(0.455, 0.565, 0.115, 1)
     elseif amount < 0 then
@@ -121,16 +117,19 @@ function RMS_SellItemDialog:updateScreen()
         end
     end
 
-    if self.dialogTitleElement ~= nil then
-        self.dialogTitleElement:setText(g_i18n:getText("button_return"))
-    end
-
     if self.vehicleImageElement ~= nil then
         self.vehicleImageElement:setImageFilename(imageFilename)
     end
 
     if self.vehicleNameElement ~= nil then
         self.vehicleNameElement:setText(name)
+
+        -- the header block hugs the longer of its two lines, otherwise the layout centres the icon
+        -- and an empty text box and the name runs off to the right of the block
+        local textWidth = math.max(self.dialogTitleElement.size[1], self.vehicleNameElement.size[1])
+        self.headerTextLayout:setSize(textWidth, nil)
+        self.headerTextLayout:invalidateLayout()
+        self.headerLayout:invalidateLayout()
     end
 
 
@@ -142,14 +141,15 @@ function RMS_SellItemDialog:updateScreen()
 
     for _, row in ipairs(returnBreakdown.rows or {}) do
         table.insert(self.costRows, {
-            label = ensureTrailingColon(g_i18n:getText(row.label)),
+            label = g_i18n:getText(row.label),
             key = row.key,
             value = row.value
         })
     end
 
     if self.totalAmountElement ~= nil then
-        self.totalAmountElement:setText(formatSignedMoney(returnBreakdown.display.total))
+        RMS_Utils.fitValuePill(self.totalAmountPill, self.totalAmountElement, nil,
+            formatSignedMoney(returnBreakdown.display.total))
         applyMoneyColor(self.totalAmountElement, returnBreakdown.display.total)
     end
 
@@ -189,15 +189,10 @@ function RMS_SellItemDialog:populateCellForItemInSection(list, section, index, c
 
     local labelElement = cell:getAttribute("costLabel")
     local valueElement = cell:getAttribute("costValue")
+    local valuePill = cell:getAttribute("costValuePill")
 
-    if labelElement ~= nil then
-        labelElement:setText(row.label or "")
-    end
-
-    if valueElement ~= nil then
-        valueElement:setText(formatSignedMoney(row.value))
-        applyMoneyColor(valueElement, row.value)
-    end
+    RMS_Utils.fitRowValue(labelElement, valuePill, valueElement, row.label or "", formatSignedMoney(row.value))
+    applyMoneyColor(valueElement, row.value)
 end
 
 ---Fires the stored callback with the player answer

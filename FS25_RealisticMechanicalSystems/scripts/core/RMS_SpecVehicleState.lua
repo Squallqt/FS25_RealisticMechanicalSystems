@@ -301,10 +301,21 @@ local function updateStarterState(vehicle)
     local glowPlugHardStartEffect = spec.activeEffects ~= nil and spec.activeEffects.GLOW_PLUG_HARD_START_MODIFIER or nil
     local engineFailedEffect = spec.activeEffects ~= nil and spec.activeEffects.ENGINE_FAILURE or nil
 
-    local isCranking = vehicle:getMotorState() == MotorState.STARTING or
-        (engineHardStartEffect ~= nil and engineHardStartEffect.extraData ~= nil and engineHardStartEffect.extraData.status ~= nil and (engineHardStartEffect.extraData.status == "CRANKING" or engineHardStartEffect.extraData.status == "PASSED")) or 
-        (glowPlugHardStartEffect ~= nil and glowPlugHardStartEffect.extraData ~= nil and glowPlugHardStartEffect.extraData.status ~= nil and (glowPlugHardStartEffect.extraData.status == "CRANKING" or glowPlugHardStartEffect.extraData.status == "PASSED")) or
-        (engineFailedEffect ~= nil and engineFailedEffect.extraData ~= nil and engineFailedEffect.extraData.status ~= nil and engineFailedEffect.extraData.status == "CRANKING")
+    local isCranking = vehicle:getMotorState() == MotorState.STARTING
+        or (engineHardStartEffect ~= nil
+            and engineHardStartEffect.extraData ~= nil
+            and engineHardStartEffect.extraData.status ~= nil
+            and (engineHardStartEffect.extraData.status == "CRANKING"
+                or engineHardStartEffect.extraData.status == "PASSED"))
+        or (glowPlugHardStartEffect ~= nil
+            and glowPlugHardStartEffect.extraData ~= nil
+            and glowPlugHardStartEffect.extraData.status ~= nil
+            and (glowPlugHardStartEffect.extraData.status == "CRANKING"
+                or glowPlugHardStartEffect.extraData.status == "PASSED"))
+        or (engineFailedEffect ~= nil
+            and engineFailedEffect.extraData ~= nil
+            and engineFailedEffect.extraData.status ~= nil
+            and engineFailedEffect.extraData.status == "CRANKING")
 
     spec.isCranking = isCranking
 end

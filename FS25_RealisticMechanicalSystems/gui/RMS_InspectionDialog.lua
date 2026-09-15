@@ -7,7 +7,7 @@ RMS_InspectionDialog.INSTANCE = nil
 
 local RMS_InspectionDialog_mt = Class(RMS_InspectionDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
-local TEXT_COLOR = {1, 1, 1, 1}
+local TEXT_COLOR = RMS_Utils.COLOR.TEXT
 
 -- inspection target to the dialog section holding its row
 local TARGET_TO_SECTION = {
@@ -118,6 +118,22 @@ local function getWorstPriority(dialog)
     end
 
     return worst
+end
+
+---Returns whether a warning exists outside the air filter row
+-- @param table dialog dialog instance
+-- @return boolean hasOtherWarning true when another row carries a warning
+local function hasWarningOutsideAirFilter(dialog)
+    for _, rows in ipairs({dialog.technicalFluidsData, dialog.coolingAndAirData, dialog.lubricationData}) do
+        for _, row in ipairs(rows or {}) do
+            local priority = STATUS_PRIORITY[row.statusKey or ""] or 0
+            if row.titleKey ~= "rms_inspection_air_filter" and priority >= 1 then
+                return true
+            end
+        end
+    end
+
+    return false
 end
 
 ---Sets the status of a row, keeping the one already there when it is more severe
@@ -301,22 +317,30 @@ local function applyCloggingInspectionFindings(dialog, additionalLines)
     end
 
     local airFilterClogging = math.clamp(tonumber(spec.airFilterClogging) or 0, 0, 1)
+    local airFilterResidue = math.clamp(tonumber(spec.airFilterResidue) or 0, 0, airFilterClogging)
+    local isAirFilterAtBlowOutLimit = airFilterClogging > 0 and airFilterClogging <= airFilterResidue
     if airFilterClogging > 0.15 then
-        local statusKey
+        local statusKey, hintKey
         if airFilterClogging >= 0.85 then
             statusKey = "rms_inspection_status_critically_clogged"
-            appendAdditionalLine(additionalLines, "rms_inspection_hint_air_filter_clogging_stage4")
+            hintKey = "rms_inspection_hint_air_filter_clogging_stage4"
         elseif airFilterClogging >= 0.60 then
             statusKey = "rms_inspection_status_heavily_clogged"
-            appendAdditionalLine(additionalLines, "rms_inspection_hint_air_filter_clogging_stage3")
+            hintKey = "rms_inspection_hint_air_filter_clogging_stage3"
         elseif airFilterClogging >= 0.35 then
             statusKey = "rms_inspection_status_dirty"
-            appendAdditionalLine(additionalLines, "rms_inspection_hint_air_filter_clogging_stage2")
+            hintKey = "rms_inspection_hint_air_filter_clogging_stage2"
         else
             statusKey = "rms_inspection_status_slightly_dirty"
-            appendAdditionalLine(additionalLines, "rms_inspection_hint_air_filter_clogging_stage1")
+            hintKey = "rms_inspection_hint_air_filter_clogging_stage1"
         end
 
+        if isAirFilterAtBlowOutLimit then
+            dialog.isAirFilterAtBlowOutLimit = true
+            hintKey = "rms_inspection_hint_air_filter_blowout_limit"
+        end
+
+        appendAdditionalLine(additionalLines, hintKey)
         setRowValue(dialog.coolingAndAirData, "rms_inspection_air_filter", statusKey)
     end
 end
@@ -417,7 +441,8 @@ end
 
 ---Writes the go or no go the whole report comes down to
 -- @param table dialog dialog instance
-local function updateVerdict(dialog)
+-- @param table additionalLines findings lines
+local function updateVerdict(dialog, additionalLines)
     local worst = getWorstPriority(dialog)
     local name, color
 
@@ -430,12 +455,18 @@ local function updateVerdict(dialog)
     end
 
     color = getSeverityColor(worst)
+    local messageKey = "rms_inspection_verdict_" .. name .. "_message"
+    if name == "watch"
+        and dialog.isAirFilterAtBlowOutLimit == true
+        and #additionalLines == 1
+        and not hasWarningOutsideAirFilter(dialog) then
+        messageKey = "rms_inspection_verdict_air_filter_service_message"
+    end
 
     dialog.verdictTitle:setText(g_i18n:getText("rms_inspection_verdict_" .. name .. "_title"))
-    dialog.verdictMessage:setText(g_i18n:getText("rms_inspection_verdict_" .. name .. "_message"))
+    dialog.verdictMessage:setText(g_i18n:getText(messageKey))
     dialog.verdictBadgeText:setText(worst == 0 and "OK" or "!")
     dialog.verdictTitle:setTextColor(unpack(color))
-    dialog.verdictAccent:setImageColor(nil, unpack(color))
     dialog.verdictBadge.color = {color[1], color[2], color[3], color[4]}
 end
 
@@ -456,6 +487,7 @@ function RMS_InspectionDialog.new(target, customMt)
     dialog.technicalFluidsData = {}
     dialog.coolingAndAirData = {}
     dialog.lubricationData = {}
+    dialog.isAirFilterAtBlowOutLimit = false
     return dialog
 end
 
@@ -504,6 +536,7 @@ function RMS_InspectionDialog:updateScreen()
     end
 
     local additionalLines = {}
+    self.isAirFilterAtBlowOutLimit = false
 
     applyFluidLevelInspectionFindings(self, additionalLines)
     applyBreakdownInspectionFindings(self, additionalLines)
@@ -530,7 +563,7 @@ function RMS_InspectionDialog:updateScreen()
     self.lubricationList:reloadData()
 
     updateIdentity(self)
-    updateVerdict(self)
+    updateVerdict(self, additionalLines)
 end
 
 ---Returns the row table backing a list element
@@ -558,45 +591,6 @@ function RMS_InspectionDialog:getNumberOfItemsInSection(list, section)
     return data ~= nil and #data or 0
 end
 
----Fits a row status pill to its rendered text and gives the remaining width to the title
--- @param table cell row cell
--- @param table titleElement row title element
--- @param table valuePill status pill element
--- @param table valueElement row value element
--- @param string titleText localized row title
--- @param string valueText localized row value
-local function updateRowTextLayout(cell, titleElement, valuePill, valueElement, titleText, valueText)
-    if cell.rmsInspectionTextLayout == nil then
-        cell.rmsInspectionTextLayout = {
-            titleX = titleElement.position[1],
-            titleMaxWidth = titleElement.size[1],
-            pillMaxWidth = valuePill.size[1],
-            pillRight = valuePill.position[1] + valuePill.size[1],
-            valuePadding = valueElement.position[1] - valuePill.position[1],
-            titlePillGap = valuePill.position[1] - titleElement.position[1] - titleElement.size[1]
-        }
-    end
-
-    local layout = cell.rmsInspectionTextLayout
-    local pillX = layout.pillRight - layout.pillMaxWidth
-    valuePill:setPosition(pillX, nil)
-    valuePill:setSize(layout.pillMaxWidth, nil)
-    valueElement:setPosition(pillX + layout.valuePadding, nil)
-    valueElement:setSize(layout.pillMaxWidth - layout.valuePadding * 2, nil)
-    titleElement:setSize(layout.titleMaxWidth, nil)
-
-    titleElement:setText(titleText)
-    valueElement:setText(valueText)
-
-    local pillWidth = math.min(layout.pillMaxWidth, valueElement:getTextWidth(true) + layout.valuePadding * 2)
-    pillX = layout.pillRight - pillWidth
-    valuePill:setPosition(pillX, nil)
-    valuePill:setSize(pillWidth, nil)
-    valueElement:setPosition(pillX + layout.valuePadding, nil)
-    valueElement:setSize(pillWidth - layout.valuePadding * 2, nil)
-    titleElement:setSize(math.max(pillX - layout.titlePillGap - layout.titleX, 0), nil)
-end
-
 ---Fills one inspection row, colouring the value by status severity
 -- @param table list list element
 -- @param integer section section index
@@ -617,7 +611,7 @@ function RMS_InspectionDialog:populateCellForItemInSection(list, section, index,
     if row.quantityText ~= nil and row.quantityText ~= "" then
         valueText = string.format("%s · %s", valueText, row.quantityText)
     end
-    updateRowTextLayout(cell, titleElement, valuePill, valueElement, row.title or "", valueText)
+    RMS_Utils.fitRowValue(titleElement, valuePill, valueElement, row.title or "", valueText)
     titleElement:setTextColor(unpack(TEXT_COLOR))
     valueElement:setTextColor(unpack(getRowColor(row)))
 

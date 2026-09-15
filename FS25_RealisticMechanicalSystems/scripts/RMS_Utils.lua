@@ -531,7 +531,9 @@ function RMS_Utils.updateMoneyBoxLayout(labelElement, valueElement, boxElement, 
         return
     end
 
-    local horizontalPadding = 50 * (g_pixelSizeScaledX or 0)
+    -- both boxes are anchored on the right, so the background gains twice the gap it keeps on the
+    -- text; the gap is read from the two offsets rather than written down
+    local horizontalPadding = (bgElement.position[1] - boxElement.position[1]) * 2
     local bgHeight = (bgElement.size ~= nil and bgElement.size[2]) or ((boxElement.size ~= nil and boxElement.size[2]) or 0.03)
     targetWidth = targetWidth + horizontalPadding
 
@@ -576,6 +578,20 @@ function RMS_Utils.getKeyByValue(tbl, value)
         end
     end
     return nil
+end
+
+---Tells whether at least one diagnosed breakdown is selected for repair
+-- @param table? vehicle vehicle
+-- @return boolean hasSelection true with a visible selected breakdown
+function RMS_Utils.hasSelectedVisibleBreakdown(vehicle)
+    local activeBreakdowns = vehicle ~= nil and vehicle.getActiveBreakdowns ~= nil and vehicle:getActiveBreakdowns() or nil
+    for _, breakdown in pairs(activeBreakdowns or {}) do
+        if breakdown.isVisible and breakdown.isSelectedForRepair then
+            return true
+        end
+    end
+
+    return false
 end
 
 ---Returns the unique user id behind a connection
@@ -673,7 +689,11 @@ function RMS_Utils.deserializeBreakdowns(breakdownString)
     end
     
     for part in string.gmatch(breakdownString, "([^;]+)") do
-        local id, stage, timer, isVisible, isSelected, isActive, resumeTimer, source, effectTargetIndex = string.match(part, "([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),?([^,]*)")
+        local id, stage, timer, isVisible, isSelected, isActive, resumeTimer, source, effectTargetIndex =
+            string.match(
+                part,
+                "([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),?([^,]*)"
+            )
         
         if id then
             breakdowns[id] = {
@@ -716,6 +736,38 @@ function RMS_Utils.formatFinishTime(finishTime, daysToAdd)
     return string.format("%s%02d:%02d", daysText, finishTimeHours, finishTimeMinutes)
 end
 
+---Returns the current primary keyboard binding of an action
+-- @param string actionName input action name
+-- @param string? fallbackText text returned when no keyboard binding can be resolved
+-- @return string bindingText localized key names joined as a chord
+function RMS_Utils.getPrimaryKeyboardInputText(actionName, fallbackText)
+    if g_inputBinding == nil or type(g_inputBinding.actions) ~= "table" then
+        return fallbackText or ""
+    end
+
+    for _, action in ipairs(g_inputBinding.actions) do
+        if action.name == actionName and type(action.primaryKeyboardInput) == "string" then
+            local keyNames = {}
+            for inputName in string.gmatch(action.primaryKeyboardInput, "%S+") do
+                local inputId = Input ~= nil and Input[inputName] or nil
+                local keyName = inputId ~= nil and KeyboardHelper ~= nil
+                    and KeyboardHelper.getDisplayKeyName ~= nil
+                    and KeyboardHelper.getDisplayKeyName(inputId) or nil
+
+                if keyName ~= nil and keyName ~= "" then
+                    table.insert(keyNames, keyName)
+                end
+            end
+
+            if #keyNames > 0 then
+                return table.concat(keyNames, " + ")
+            end
+        end
+    end
+
+    return fallbackText or ""
+end
+
 ---Formats a duration in hours and minutes
 -- @param float? duration duration in ms
 -- @return string text formatted duration
@@ -728,17 +780,22 @@ function RMS_Utils.formatDuration(duration)
     local daysText = ""
     if days > 0 then
         durationHours = durationHours - days * 24
-        daysText = string.format("%s %s ", days, g_i18n:getText('rms_spec_day_s'))
+        local dayKey = days == 1 and 'rms_spec_day_one' or 'rms_spec_day_s'
+        daysText = string.format("%s %s ", days, g_i18n:getText(dayKey))
     end
 
     local durationText = ""
     if durationHours == 0 and durationMinutes > 0 then
-        durationText = string.format(g_i18n:getText('rms_spec_duration_format_minutes'), durationMinutes, g_i18n:getText('rms_spec_minute_s'))
+        local minuteKey = durationMinutes == 1 and 'rms_spec_minute_one' or 'rms_spec_minute_s'
+        durationText = string.format(g_i18n:getText('rms_spec_duration_format_minutes'), durationMinutes, g_i18n:getText(minuteKey))
     elseif durationHours > 0 and durationMinutes == 0 then
-        durationText = string.format(g_i18n:getText('rms_spec_duration_format_hours'), durationHours, g_i18n:getText('rms_spec_hour_s'))
+        local hourKey = durationHours == 1 and 'rms_spec_hour_one' or 'rms_spec_hour_s'
+        durationText = string.format(g_i18n:getText('rms_spec_duration_format_hours'), durationHours, g_i18n:getText(hourKey))
     elseif durationHours > 0 and durationMinutes > 0 then
-        local hoursText = string.format(g_i18n:getText('rms_spec_duration_format_hours'), durationHours, g_i18n:getText('rms_spec_hour_s'))
-        local minutesText = string.format(g_i18n:getText('rms_spec_duration_format_minutes'), durationMinutes, g_i18n:getText('rms_spec_minute_s'))
+        local hourKey = durationHours == 1 and 'rms_spec_hour_one' or 'rms_spec_hour_s'
+        local minuteKey = durationMinutes == 1 and 'rms_spec_minute_one' or 'rms_spec_minute_s'
+        local hoursText = string.format(g_i18n:getText('rms_spec_duration_format_hours'), durationHours, g_i18n:getText(hourKey))
+        local minutesText = string.format(g_i18n:getText('rms_spec_duration_format_minutes'), durationMinutes, g_i18n:getText(minuteKey))
         durationText = string.format(g_i18n:getText('rms_spec_duration_format_combined'), hoursText, minutesText)
     end
 
@@ -749,6 +806,10 @@ end
 RMS_Utils.CONDITION_LEVELS = {0.8, 0.6, 0.4, 0.2}
 
 local CONDITION_STATE_NAMES = {"EXCELLENT", "GOOD", "NORMAL", "BAD", "TERRIBLE"}
+
+local SERVICE_LEVELS = {0.9, 0.7, 0.6, 0.5}
+
+local SERVICE_STATE_NAMES = {"OPTIMAL", "SERVICE_GOOD", "RECOMMENDED", "REQUIRED", "OVERDUE"}
 
 ---Returns the tier a condition falls in, 1 being the best
 -- @param float? condition condition level
@@ -800,18 +861,60 @@ function RMS_Utils.formatService(service, isCompleteInspection)
     if isCompleteInspection then
         return string.format("%.0f%%", RMS_Utils.getServiceIntervalRemainingRatio(service) * 100)
     end
+    return g_i18n:getText(STATES[SERVICE_STATE_NAMES[RMS_Utils.getServiceTier(service)]])
+end
+
+
+---Returns the tier a service level falls in, 1 being the best
+-- @param float? service service level
+-- @return integer tier service tier
+function RMS_Utils.getServiceTier(service)
     service = tonumber(service) or 0.0
-    if service >= 0.9 then
-        return g_i18n:getText(STATES.OPTIMAL)
-    elseif service >= 0.7 then
-        return g_i18n:getText(STATES.GOOD)
-    elseif service >= 0.6 then
-        return g_i18n:getText(STATES.RECOMMENDED)
-    elseif service >= 0.5 then
-        return g_i18n:getText(STATES.REQUIRED)
-    else
-        return g_i18n:getText(STATES.OVERDUE)
+    for tier = 1, #SERVICE_LEVELS do
+        if service >= SERVICE_LEVELS[tier] then
+            return tier
+        end
     end
+    return #SERVICE_LEVELS + 1
+end
+
+
+---Returns the top of a tier, so a ring stays as vague as the label it sits behind while a mint machine still reads full
+-- @param table levels descending thresholds
+-- @param integer tier tier index
+-- @return float value top of the tier
+local function getTierCeiling(levels, tier)
+    return tier > 1 and levels[tier - 1] or 1.0
+end
+
+
+---Returns the condition ring ratio, snapped to its tier until a complete inspection reveals the exact value
+-- @param float? condition condition level
+-- @param boolean? isCompleteInspection true after a complete inspection
+-- @return float ratio ring ratio
+function RMS_Utils.getConditionRingRatio(condition, isCompleteInspection)
+    if isCompleteInspection == nil then
+        return 0.0
+    end
+    if isCompleteInspection then
+        return math.clamp(tonumber(condition) or 0.0, 0.0, 1.0)
+    end
+    return getTierCeiling(RMS_Utils.CONDITION_LEVELS, RMS_Utils.getConditionTier(condition))
+end
+
+
+---Returns the service ring ratio, snapped to its tier until a complete inspection reveals the exact value
+-- @param float? service service level
+-- @param boolean? isCompleteInspection true after a complete inspection
+-- @return float ratio ring ratio
+function RMS_Utils.getServiceRingRatio(service, isCompleteInspection)
+    if isCompleteInspection == nil then
+        return 0.0
+    end
+    if isCompleteInspection then
+        return RMS_Utils.getServiceIntervalRemainingRatio(service)
+    end
+    return RMS_Utils.getServiceIntervalRemainingRatio(getTierCeiling(SERVICE_LEVELS, RMS_Utils.getServiceTier(service)))
 end
 
 
@@ -839,7 +942,7 @@ function RMS_Utils.formatTimeAgo(pastDate) -- expects a table with year and mont
         return string.format(
             g_i18n:getText('rms_spec_months_ago_format'), 
             monthsAgo, 
-            g_i18n:getText('rms_spec_months_ago_unit')
+            g_i18n:getText(monthsAgo == 1 and 'rms_spec_month_ago_one' or 'rms_spec_months_ago_unit')
         )
     end
 end
@@ -924,6 +1027,117 @@ function RMS_Utils.formatMaintainability(value)
     else return g_i18n:getText('rms_spec_state_workhorse') end        
 end
 
+-- text colors the dialogs paint by hand, taken from the FS25 presets the profiles use:
+-- TEXT is $preset_fs25_colorMainLight, the shade every profile gives a normal label
+RMS_Utils.COLOR = {
+    TEXT = {0.89627, 0.92158, 0.81485, 1.0},
+    TEXT_DIM = {0.5, 0.5, 0.5, 1.0},
+    ALERT = {0.88, 0.18, 0.18, 1.0},
+    -- breakdown severity, one entry per stage, read by the workshop list and the report
+    STAGE = {
+        {0.89627, 0.92158, 0.81485, 1.0},
+        {0.85, 0.78, 0.2, 1.0},
+        {0.85, 0.5, 0.15, 1.0},
+        {0.8, 0.2, 0.2, 1.0}
+    }
+}
+
+RMS_Utils.LOG_ICON_PROFILES = {
+    square = {row = "rms_logTypeIcon", detail = "rms_logDetailIcon"},
+    wide = {row = "rms_logTypeIconWide", detail = "rms_logDetailIconWide"},
+    maintenance = {row = "rms_logTypeIconMaintenance", detail = "rms_logDetailIconMaintenance"},
+    refill = {row = "rms_logTypeIconRefill", detail = "rms_logDetailIconRefill"}
+}
+
+---Formats a maintenance log date in the same compact form as the report screen
+-- @param table? entry maintenance log entry
+-- @return string dateText formatted date
+function RMS_Utils.formatMaintenanceLogDate(entry)
+    local year = entry ~= nil and entry.date ~= nil and tonumber(entry.date.year) or 0
+    local yearText = year >= 10 and tostring(year) or "0" .. tostring(year)
+    local day = entry ~= nil and entry.date ~= nil and tonumber(entry.date.day) or 1
+    local month = entry ~= nil and entry.date ~= nil and tonumber(entry.date.month) or 1
+    return string.format("%s %s. '%s", day, g_i18n:formatPeriod(month, true), yearText)
+end
+
+---Returns the localized label, semantic color and verified native icon for one intervention type
+-- @param table? entry maintenance log entry
+-- @return string typeText localized intervention name
+-- @return table color RGBA text color
+-- @return string iconSliceId native GUI slice
+-- @return string iconStyle icon geometry category
+function RMS_Utils.getLogTypePresentation(entry)
+    local status = RealisticMechanicalSystems.STATUS
+    local entryType = entry ~= nil and entry.type or nil
+
+    if entryType == status.REPAIR then
+        return g_i18n:getText("rms_ws_action_repair"), {0.88, 0.12, 0.12, 1}, "gui.contextAction_icon_repair", "wide"
+    elseif entryType == status.MAINTENANCE then
+        return g_i18n:getText("rms_ws_action_maintenance"), HUD.COLOR.ACTIVE, "rms_DashboardHud.maintainability", "maintenance"
+    elseif entryType == status.INSPECTION then
+        return g_i18n:getText("rms_ws_action_inspection"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_search", "square"
+    elseif entryType == status.OVERHAUL then
+        return g_i18n:getText("rms_ws_action_overhaul"), {1, 0.5, 0, 1}, "gui.icon_ingameMenu_options", "square"
+    elseif entryType == status.REFILL then
+        return g_i18n:getText("rms_ws_action_refill"), HUD.COLOR.ACTIVE, "rms_WorkshopFluids.engineOil", "refill"
+    end
+
+    return "-", {1, 1, 1, 1}, "gui.icon_ingameMenu_options", "square"
+end
+
+---Fills one text row split into the requested columns and hides unused columns
+-- @param table items ordered text items
+-- @param integer index row index
+-- @param table cell list row element
+-- @param table columns ordered text and optional bullet attribute names
+local function populateTextColumnsRow(items, index, cell, columns)
+    local rowItems = items or {}
+    local columnCount = #columns
+
+    for columnIndex, column in ipairs(columns) do
+        local text = rowItems[(index - 1) * columnCount + columnIndex] or ""
+        local isVisible = text ~= ""
+        local textElement = cell:getAttribute(column.text)
+        textElement:setText(text)
+        textElement:setVisible(isVisible)
+
+        if column.bullet ~= nil then
+            cell:getAttribute(column.bullet):setVisible(isVisible)
+        end
+    end
+end
+
+---Fills a two-column text row and hides its unused right column
+-- @param table items ordered text items
+-- @param integer index row index
+-- @param table cell list row element
+-- @param string leftAttribute left text attribute name
+-- @param string rightAttribute right text attribute name
+-- @param string rightBulletAttribute right bullet attribute name
+function RMS_Utils.populateTwoColumnTextRow(items, index, cell, leftAttribute, rightAttribute, rightBulletAttribute)
+    populateTextColumnsRow(items, index, cell, {
+        {text = leftAttribute},
+        {text = rightAttribute, bullet = rightBulletAttribute}
+    })
+end
+
+---Fills a three-column text row and hides its unused center and right columns
+-- @param table items ordered text items
+-- @param integer index row index
+-- @param table cell list row element
+-- @param string leftAttribute left text attribute name
+-- @param string centerAttribute center text attribute name
+-- @param string centerBulletAttribute center bullet attribute name
+-- @param string rightAttribute right text attribute name
+-- @param string rightBulletAttribute right bullet attribute name
+function RMS_Utils.populateThreeColumnTextRow(items, index, cell, leftAttribute, centerAttribute, centerBulletAttribute, rightAttribute, rightBulletAttribute)
+    populateTextColumnsRow(items, index, cell, {
+        {text = leftAttribute},
+        {text = centerAttribute, bullet = centerBulletAttribute},
+        {text = rightAttribute, bullet = rightBulletAttribute}
+    })
+end
+
 local COLOR_IDEAL  = {0.12, 0.88, 0.0, 1.0}  -- super green
 local COLOR_GREEN  = {0.3, 0.7, 0.0, 1.0}    -- green
 local COLOR_YELLOW = {0.85, 0.78, 0.2, 1.0}  -- yellow
@@ -937,7 +1151,7 @@ local SERVICE_COLOR_LEVELS = {0.9, 0.5, 0.2, 0.001}
 -- @param table a colour at t 0
 -- @param table b colour at t 1
 -- @param float t interpolation factor
--- @return float r, float g, float b, float a colour channels
+-- @return table color RGBA colour channels
 local function lerpColor(a, b, t)
     return {
         a[1] + (b[1] - a[1]) * t,
@@ -947,6 +1161,57 @@ local function lerpColor(a, b, t)
     }
 end
 
+---Returns the colour a value takes on a five tier scale, from its best tier down to its worst
+-- @param table scale the five colours of the scale, best first
+-- @param float value value to rate
+-- @param float ideal best threshold
+-- @param float high second threshold
+-- @param float mid third threshold
+-- @param float low worst threshold
+-- @param boolean? smooth true to blend between the tiers
+-- @return float r red channel
+-- @return float g green channel
+-- @return float b blue channel
+-- @return float a alpha channel
+local function getScaleColor(scale, value, ideal, high, mid, low, smooth)
+    local c
+
+    if smooth then
+        if value >= ideal then
+            c = scale[1]
+        elseif value >= high then
+            local t = 1.0 - (value - high) / (ideal - high)
+            c = lerpColor(scale[1], scale[2], t)
+        elseif value >= mid then
+            local t = 1.0 - (value - mid) / (high - mid)
+            c = lerpColor(scale[2], scale[3], t)
+        elseif value >= low then
+            local t = 1.0 - (value - low) / (mid - low)
+            c = lerpColor(scale[3], scale[4], t)
+        else
+            local t = math.min(1.0, (low - value) / low)
+            c = lerpColor(scale[4], scale[5], t)
+        end
+    else
+        if value >= ideal then
+            c = scale[1]
+        elseif value >= high then
+            c = scale[2]
+        elseif value >= mid then
+            c = scale[3]
+        elseif value >= low then
+            c = scale[4]
+        else
+            c = scale[5]
+        end
+    end
+
+    return c[1], c[2], c[3], c[4]
+end
+
+-- the scale a written value is coloured with
+local TEXT_SCALE = {COLOR_IDEAL, COLOR_GREEN, COLOR_YELLOW, COLOR_ORANGE, COLOR_RED}
+
 ---Returns the colour of a value against four descending thresholds
 -- @param float value value to rate
 -- @param float ideal best threshold
@@ -954,47 +1219,39 @@ end
 -- @param float mid third threshold
 -- @param float low worst threshold
 -- @param boolean? smooth true to blend between the tiers
--- @return float r, float g, float b, float a colour channels
+-- @return float r red channel
+-- @return float g green channel
+-- @return float b blue channel
+-- @return float a alpha channel
 function RMS_Utils.getValueColor(value, ideal, high, mid, low, smooth)
-    local c
+    return getScaleColor(TEXT_SCALE, value, ideal, high, mid, low, smooth)
+end
 
-    if smooth then
-        if value >= ideal then
-            c = COLOR_IDEAL
-        elseif value >= high then
-            local t = 1.0 - (value - high) / (ideal - high)
-            c = lerpColor(COLOR_IDEAL, COLOR_GREEN, t)
-        elseif value >= mid then
-            local t = 1.0 - (value - mid) / (high - mid)
-            c = lerpColor(COLOR_GREEN, COLOR_YELLOW, t)
-        elseif value >= low then
-            local t = 1.0 - (value - low) / (mid - low)
-            c = lerpColor(COLOR_YELLOW, COLOR_ORANGE, t)
-        else
-            local t = math.min(1.0, (low - value) / low)
-            c = lerpColor(COLOR_ORANGE, COLOR_RED, t)
-        end
-    else
-        if value >= ideal then
-            c = COLOR_IDEAL
-        elseif value >= high then
-            c = COLOR_GREEN
-        elseif value >= mid then
-            c = COLOR_YELLOW
-        elseif value >= low then
-            c = COLOR_ORANGE
-        else
-            c = COLOR_RED
-        end
-    end
+---Returns the colour of a gauge fill, the green of the game down to the warning tiers
+-- @param float value value to rate
+-- @param float ideal best threshold
+-- @param float high second threshold
+-- @param float mid third threshold
+-- @param float low worst threshold
+-- @param boolean? smooth true to blend between the tiers
+-- @return float r red channel
+-- @return float g green channel
+-- @return float b blue channel
+-- @return float a alpha channel
+function RMS_Utils.getGaugeColor(value, ideal, high, mid, low, smooth)
+    local gameGreen = HUD.COLOR.ACTIVE
+    local scale = {gameGreen, gameGreen, COLOR_YELLOW, COLOR_ORANGE, COLOR_RED}
 
-    return c[1], c[2], c[3], c[4]
+    return getScaleColor(scale, value, ideal, high, mid, low, smooth)
 end
 
 ---Returns the colour of a condition, grey while the inspection is incomplete
 -- @param float? condition condition level
 -- @param boolean? isCompleteInspection true after a complete inspection
--- @return float r, float g, float b, float a colour channels
+-- @return float r red channel
+-- @return float g green channel
+-- @return float b blue channel
+-- @return float a alpha channel
 function RMS_Utils.getConditionColor(condition, isCompleteInspection)
     if isCompleteInspection == nil then
         return unpack(COLOR_UNKNOWN)
@@ -1007,7 +1264,10 @@ end
 ---Returns the colour of a service level, grey while the inspection is incomplete
 -- @param float? service service level
 -- @param boolean? isCompleteInspection true after a complete inspection
--- @return float r, float g, float b, float a colour channels
+-- @return float r red channel
+-- @return float g green channel
+-- @return float b blue channel
+-- @return float a alpha channel
 function RMS_Utils.getServiceColor(service, isCompleteInspection)
     if isCompleteInspection == nil then
         return unpack(COLOR_UNKNOWN)
@@ -1024,7 +1284,10 @@ end
 -- @param float mid third threshold
 -- @param float high worst threshold
 -- @param boolean? smooth true to blend between the tiers
--- @return float r, float g, float b, float a colour channels
+-- @return float r red channel
+-- @return float g green channel
+-- @return float b blue channel
+-- @return float a alpha channel
 function RMS_Utils.getValueColorInverted(value, ideal, low, mid, high, smooth)
     local c
 
@@ -1562,7 +1825,8 @@ function RMS_Utils.serializeMaintenanceLogEntry(entry)
         serializedEffects,
         serializedBreakdowns,
         serializedSelectedBreakdowns,
-        serializedIndicators
+        serializedIndicators,
+        tostring(cd.sellPrice or 0)
     }
     return table.concat(parts, "|")
 end
@@ -1602,7 +1866,8 @@ function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
             activeBreakdowns = RMS_Utils.deserializeBreakdowns(RMS_Utils.decodeDelimitedString(parts[21] or "")),
             selectedBreakdowns = RMS_Utils.parseCsvList(RMS_Utils.decodeDelimitedString(parts[22] or "")),
             activeEffects = RMS_Utils.deserializeEffectSnapshot(RMS_Utils.decodeDelimitedString(parts[20] or "")),
-            activeIndicators = {}
+            activeIndicators = {},
+            sellPrice = tonumber(parts[24]) or 0
         }
     }
     for _, indicatorId in ipairs(RMS_Utils.parseCsvList(RMS_Utils.decodeDelimitedString(parts[23] or ""))) do
@@ -1721,4 +1986,198 @@ function RMS_Utils.resolveConsoleSystemKey(spec, rawSystem)
     end
 
     return false
+end
+
+
+-- where a pill fitted by RMS_Utils.fitValuePills stays when it shrinks: a row holds the right edge
+-- the XML gave it, a caption under a progress indicator shrinks around its middle
+local VALUE_PILL_ANCHOR = {
+    rms_workshopValuePill = "right",
+    rms_workshopValuePillCentered = "center"
+}
+
+---Restores a value pill and its text to the boxes the XML declares, and reads that declaration once
+-- @param table valuePill rounded background of the value
+-- @param table valueElement value text drawn inside the pill
+-- @return table box declared geometry of the pill, with the inset of the text inside it
+local function resetValuePill(valuePill, valueElement)
+    if valuePill.rmsPillBox == nil then
+        valuePill.rmsPillBox = {
+            x = valuePill.position[1],
+            width = valuePill.size[1],
+            padding = valueElement.position[1] - valuePill.position[1]
+        }
+    end
+
+    local box = valuePill.rmsPillBox
+    valuePill:setPosition(box.x, nil)
+    valuePill:setSize(box.width, nil)
+    valueElement:setPosition(box.x + box.padding, nil)
+    valueElement:setSize(box.width - box.padding * 2, nil)
+
+    return box
+end
+
+---Shrinks a value pill onto the text it wraps, keeping the place the XML gave it
+-- @param table valuePill rounded background of the value
+-- @param table valueElement value text drawn inside the pill
+-- @param string? anchor "center" to shrink around the middle, anything else keeps the right edge
+-- @param string? valueText value to write, the one already in place when nil
+function RMS_Utils.fitValuePill(valuePill, valueElement, anchor, valueText)
+    local box = resetValuePill(valuePill, valueElement)
+    valueElement:setText(valueText or valueElement.sourceText or "")
+
+    local width = math.min(box.width, valueElement:getTextWidth(true) + box.padding * 2)
+    local x = box.x + box.width - width
+    if anchor == "center" then
+        x = box.x + (box.width - width) * 0.5
+    end
+
+    valuePill:setPosition(x, nil)
+    valuePill:setSize(width, nil)
+    valueElement:setPosition(x + box.padding, nil)
+    valueElement:setSize(width - box.padding * 2, nil)
+end
+
+---Fits every value pill of a screen to its value, the value text being the sibling right after it
+-- @param table element element to walk
+function RMS_Utils.fitValuePills(element)
+    if element == nil then
+        return
+    end
+
+    local children = element.elements
+    for index = 1, #children do
+        RMS_Utils.fitValuePills(children[index])
+
+        local anchor = VALUE_PILL_ANCHOR[children[index].profile]
+        if anchor ~= nil and children[index + 1] ~= nil then
+            RMS_Utils.fitValuePill(children[index], children[index + 1], anchor)
+        end
+    end
+end
+
+---Fits a row on its value, the title taking back the width the pill gives up
+-- @param table titleElement row title element
+-- @param table valuePill rounded background of the value
+-- @param table valueElement value text drawn inside the pill
+-- @param string titleText localized row title
+-- @param string valueText localized row value
+function RMS_Utils.fitRowValue(titleElement, valuePill, valueElement, titleText, valueText)
+    if valuePill.rmsRowBox == nil then
+        valuePill.rmsRowBox = {
+            titleX = titleElement.position[1],
+            titleWidth = titleElement.size[1],
+            titleGap = valuePill.position[1] - titleElement.position[1] - titleElement.size[1]
+        }
+    end
+
+    local box = valuePill.rmsRowBox
+
+    titleElement:setSize(box.titleWidth, nil)
+    titleElement:setText(titleText)
+
+    RMS_Utils.fitValuePill(valuePill, valueElement, nil, valueText)
+    titleElement:setSize(math.max(valuePill.position[1] - box.titleGap - box.titleX, 0), nil)
+end
+
+-- share of the native speed every scrolling text runs at, slow enough to be read
+RMS_Utils.SCROLL_SPEED = 0.5
+
+---Advances one scrolling text at the shared speed
+-- @param table element text element
+-- @param float dt elapsed time in milliseconds
+local function updateScrollingText(element, dt)
+    TextElement.update(element, dt * RMS_Utils.SCROLL_SPEED)
+end
+
+---Keeps a scrolling text where it was when the engine moves it
+-- @param table element text element
+local function updateScrollingTextPosition(element)
+    TextElement.updateAbsolutePosition(element)
+    -- the engine rewinds the offset to zero here but keeps the clock running, so the text jumps
+    -- back to its start for one frame: replaying the update with no elapsed time puts it back
+    TextElement.update(element, 0)
+end
+
+---Puts every scrolling text of a branch on the shared speed, cells included
+-- @param table element root element to walk
+function RMS_Utils.applyScrollSpeed(element)
+    if element.textLayoutMode == TextElement.LAYOUT_MODE.SCROLLING then
+        element.update = updateScrollingText
+        element.updateAbsolutePosition = updateScrollingTextPosition
+    end
+
+    for _, child in ipairs(element.elements) do
+        RMS_Utils.applyScrollSpeed(child)
+    end
+end
+
+
+---Centers the icon and the label of an action button as one block, keeping the gap the profile gave them
+-- @param table button action button holding an icon child
+function RMS_Utils.centerActionContent(button)
+    if button.rmsActionBox == nil then
+        local iconElement
+        for _, child in ipairs(button.elements) do
+            if type(child.profile) == "string" and child.profile:find("Icon") ~= nil then
+                iconElement = child
+            end
+        end
+
+        if iconElement == nil then
+            return
+        end
+
+        button.rmsActionBox = {
+            icon = iconElement,
+            width = iconElement.size[1],
+            gap = button.textOffset[1] - iconElement.position[1] - iconElement.size[1]
+        }
+    end
+
+    local box = button.rmsActionBox
+    -- a label long enough to fill the button pins the block to the left edge instead of overflowing it
+    local startX = math.max((button.size[1] - (box.width + box.gap + button:getTextWidth(true))) * 0.5, 0)
+
+    box.icon:setPosition(startX, nil)
+    button.textOffset[1] = startX + box.width + box.gap
+end
+
+
+---Fits a row that carries no pill: the value keeps its right edge and the label takes back the rest
+-- @param table labelElement row label
+-- @param table valueElement row value, right aligned
+-- @param string labelText localized label
+-- @param string valueText localized value
+function RMS_Utils.fitRowText(labelElement, valueElement, labelText, valueText)
+    if valueElement.rmsRowTextBox == nil then
+        valueElement.rmsRowTextBox = {
+            labelX = labelElement.position[1],
+            valueRight = valueElement.position[1] + valueElement.size[1],
+            gap = valueElement.position[1] - labelElement.position[1] - labelElement.size[1]
+        }
+    end
+
+    local box = valueElement.rmsRowTextBox
+    valueElement:setPosition(box.labelX, nil)
+    valueElement:setSize(box.valueRight - box.labelX, nil)
+    valueElement:setText(valueText)
+
+    local width = math.min(box.valueRight - box.labelX - box.gap, valueElement:getTextWidth(true))
+    valueElement:setPosition(box.valueRight - width, nil)
+    valueElement:setSize(width, nil)
+    labelElement:setSize(math.max(box.valueRight - width - box.gap - box.labelX, 0), nil)
+    labelElement:setText(labelText)
+end
+
+
+---Makes the children of a tab or button follow the selected state of their parent
+-- @param table element button whose children carry the selected artwork
+function RMS_Utils.mirrorSelectionToChildren(element)
+    for _, child in ipairs(element.elements) do
+        child.getIsSelected = function()
+            return element:getIsSelected()
+        end
+    end
 end

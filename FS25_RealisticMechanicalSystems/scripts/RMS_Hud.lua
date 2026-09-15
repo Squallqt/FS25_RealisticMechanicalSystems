@@ -88,16 +88,29 @@ function RMS_Hud:new()
         icon = g_overlayManager:createOverlay("rms_DashboardHud.parkBrake", 0, 0, 0, 0)
     }
 
+    local engineLoadIcon = g_overlayManager:createOverlay("rms_DashboardHud.engineLoad", 0, 0, 0, 0)
+    local transmissionNormalIcon = g_overlayManager:createOverlay("rms_DashboardHud.transmissionNormal", 0, 0, 0, 0)
+
     self.indicators = {
         engine = {
             name = 'engine',
-            icon = g_overlayManager:createOverlay("rms_DashboardHud.engine", 0, 0, 0, 0),
+            icon = engineLoadIcon,
+            icons = {
+                normal = engineLoadIcon,
+                fault = g_overlayManager:createOverlay("rms_DashboardHud.engineFault", 0, 0, 0, 0),
+                road = g_overlayManager:createOverlay("rms_DashboardHud.engine", 0, 0, 0, 0)
+            },
             year = 1990
         },
         transmission = {
             name = 'transmission',
-            icon = g_overlayManager:createOverlay("rms_DashboardHud.transmission", 0, 0, 0, 0),
-            year = 1990,
+            icon = transmissionNormalIcon,
+            icons = {
+                normal = transmissionNormalIcon,
+                temperature = g_overlayManager:createOverlay("rms_DashboardHud.transmissionTemperature", 0, 0, 0, 0),
+                fault = g_overlayManager:createOverlay("rms_DashboardHud.transmissionFault", 0, 0, 0, 0)
+            },
+            year = 1990
         },
         brakes = {
             name = 'brakes',
@@ -186,6 +199,7 @@ function RMS_Hud:new()
         refreshIntervalMs = 100,
         lastUpdateTime = -math.huge,
         vehicle = nil,
+        viewMode = nil,
         panel = nil,
         commands = nil
     }
@@ -223,7 +237,14 @@ function RMS_Hud:delete()
     end
 
     for _, indicator in pairs(self.indicators) do
-        indicator.icon:delete()
+        if indicator.icons ~= nil then
+            for _, icon in pairs(indicator.icons) do
+                icon:delete()
+            end
+            indicator.icons = nil
+        else
+            indicator.icon:delete()
+        end
         indicator.icon = nil
     end
 
@@ -248,6 +269,7 @@ function RMS_Hud:setVehicle(vehicle)
         self.indicatorRuntime = {}
         self.activeVehicleDebugCache.lastUpdateTime = -math.huge
         self.activeVehicleDebugCache.vehicle = nil
+        self.activeVehicleDebugCache.viewMode = nil
         self.activeVehicleDebugCache.panel = nil
         self.activeVehicleDebugCache.commands = nil
         self.telemetryDisplayValues.motorLoad = 0
@@ -674,7 +696,10 @@ end
 -- @param float y y position
 -- @param float width rectangle width
 -- @param float height rectangle height
--- @return float x, float y, float width, float height snapped rectangle
+-- @return float x snapped x position
+-- @return float y snapped y position
+-- @return float width snapped width
+-- @return float height snapped height
 function RMS_Hud:snapScreenRect(x, y, width, height)
     local snappedX = math.floor(x * g_screenWidth + 0.5) / g_screenWidth
     local snappedY = math.floor(y * g_screenHeight + 0.5) / g_screenHeight
@@ -887,7 +912,13 @@ function RMS_Hud:storeScaledValues()
     for _, layout in ipairs(indicatorLayout) do
         local indicator = layout.indicator
         indicator.offsetX, indicator.offsetY = self:scalePixelValuesToScreenVector(layout.offsetX, layout.offsetY)
-        indicator.icon:setDimension(indicatorWidth, indicatorHeight)
+        if indicator.icons ~= nil then
+            for _, icon in pairs(indicator.icons) do
+                icon:setDimension(indicatorWidth, indicatorHeight)
+            end
+        else
+            indicator.icon:setDimension(indicatorWidth, indicatorHeight)
+        end
 
         if layout.valueOffsetY ~= nil then
             indicator.valueOffsetX, indicator.valueOffsetY = self:scalePixelValuesToScreenVector(
@@ -925,13 +956,13 @@ function RMS_Hud:storeScaledValues()
     self.indicators.service.offsetY = serviceAnchorY
     self.indicators.service.icon:setDimension(serviceWidth, serviceHeight)
 
-    self.wheelSlipHud.offsetX, self.wheelSlipHud.offsetY = self:scalePixelValuesToScreenVector(47, -76)
+    self.wheelSlipHud.offsetX, self.wheelSlipHud.offsetY = self:scalePixelValuesToScreenVector(48, -78)
     local wheelSlipWidth, wheelSlipHeight = self:scalePixelValuesToScreenVector(24, 24)
     self.wheelSlipHud.icon:setDimension(wheelSlipWidth, wheelSlipHeight)
 
-    self.drivetrainHud.centerX, self.drivetrainHud.centerY = self:scalePixelValuesToScreenVector(-59, -67)
+    self.drivetrainHud.centerX, self.drivetrainHud.centerY = self:scalePixelValuesToScreenVector(-59, -66)
     self.drivetrainHud.autoBadgeOffsetX, self.drivetrainHud.autoBadgeOffsetY = self:scalePixelValuesToScreenVector(-59, -82)
-    self.drivetrainHud.autoBadgeSize = self:scalePixelToScreenHeight(7)
+    self.drivetrainHud.autoBadgeSize = self:scalePixelToScreenHeight(8)
     for _, iconData in pairs(self.drivetrainHud.icons) do
         local iconWidth, iconHeight = self:scalePixelValuesToScreenVector(iconData.height * iconData.aspect, iconData.height)
         iconData.overlay:setDimension(iconWidth, iconHeight)
@@ -949,8 +980,8 @@ function RMS_Hud:storeScaledValues()
 
     self.indicatorValueText.size = self:scalePixelToScreenHeight(indicatorValueSize)
 
-    self.wheelSlipHud.textOffsetX, self.wheelSlipHud.textOffsetY = self:scalePixelValuesToScreenVector(59, -78)
-    self.wheelSlipHud.textSize = self:scalePixelToScreenHeight(9)
+    self.wheelSlipHud.textOffsetX, self.wheelSlipHud.textOffsetY = self:scalePixelValuesToScreenVector(59, -82)
+    self.wheelSlipHud.textSize = self:scalePixelToScreenHeight(8)
 
     self.loadMassText.size = self:scalePixelToScreenHeight(13)
     self.loadMassText.paddingH, self.loadMassText.paddingV = self:scalePixelValuesToScreenVector(10, 4)
@@ -978,6 +1009,14 @@ function RMS_Hud:drawDashboard()
     local motorState = vehicle:getMotorState()
     local preheatState = spec.preheatState or RMS_Preheat.STATE.IDLE
     local isLampTestActive = RMS_Preheat.isLampTestActive(vehicle)
+    local isRoadVehicle = RMS_Drivetrain ~= nil and RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
+    local cvtAddonSpec = hasCVTAddon(vehicle) and vehicle.spec_CVTaddon or nil
+    local hasCVTFaultWarning = cvtAddonSpec ~= nil
+        and (cvtAddonSpec.forDBL_warndamage == 1
+            or cvtAddonSpec.forDBL_critdamage == 1
+            or cvtAddonSpec.forDBL_highpressure == 1)
+    local hasCVTCriticalFault = cvtAddonSpec ~= nil
+        and cvtAddonSpec.forDBL_critdamage == 1
 
     ---Returns the colour an indicator must light in, the highest priority breakdown winning
     -- @param string hudIndicatorId dashboard indicator id
@@ -1007,14 +1046,11 @@ function RMS_Hud:drawDashboard()
                 end
             end
 
-            if hasCVTAddon(vehicle) then
-                local spec_CVTaddon = vehicle.spec_CVTaddon
-
-                if hudIndicatorId == self.indicators.warning.name and targetColor == colors.DEFAULT and (spec_CVTaddon.forDBL_warndamage == 1 or spec_CVTaddon.forDBL_warnheat == 1 or spec_CVTaddon.forDBL_highpressure == 1) then
-                    targetColor = colors.WARNING
-                end
-                if hudIndicatorId == self.indicators.warning.name and targetColor == colors.WARNING and (spec_CVTaddon.forDBL_critdamage == 1 or spec_CVTaddon.forDBL_critheat == 1) then
+            if hudIndicatorId == self.indicators.transmission.name and cvtAddonSpec ~= nil then
+                if hasCVTCriticalFault then
                     targetColor = colors.CRITICAL
+                elseif targetColor == colors.DEFAULT and hasCVTFaultWarning then
+                    targetColor = colors.WARNING
                 end
             end
 
@@ -1022,9 +1058,13 @@ function RMS_Hud:drawDashboard()
 
             if hudIndicatorId == self.indicators.coolant.name and targetColor == colors.DEFAULT and isEngineNotHeated then targetColor = colors.COOL
             elseif hudIndicatorId == self.indicators.coolant.name and targetColor == colors.DEFAULT and spec.engineTemperature > 99 and spec.engineTemperature < 110 then targetColor = colors.WARNING
-            elseif hudIndicatorId == self.indicators.coolant.name and spec.engineTemperature > 110 then targetColor = colors.CRITICAL end
-            if hudIndicatorId == self.indicators.transmission.name and targetColor == colors.DEFAULT and spec.transmissionTemperature > 99 and spec.transmissionTemperature < 110 then targetColor = colors.WARNING
-            elseif hudIndicatorId == self.indicators.transmission.name and spec.transmissionTemperature > 110 then targetColor = colors.CRITICAL end
+            elseif hudIndicatorId == self.indicators.coolant.name and spec.engineTemperature >= 110 then targetColor = colors.CRITICAL end
+            if hudIndicatorId == self.indicators.transmission.name
+                    and targetColor == colors.DEFAULT
+                    and spec.transmissionTemperature > 99
+                    and spec.transmissionTemperature < 110 then
+                targetColor = colors.WARNING
+            elseif hudIndicatorId == self.indicators.transmission.name and spec.transmissionTemperature >= 110 then targetColor = colors.CRITICAL end
 
             if hudIndicatorId == self.indicators.service.name and isServiceOverdue then targetColor = colors.WARNING end
             if hudIndicatorId == self.indicators.oil.name
@@ -1060,11 +1100,34 @@ function RMS_Hud:drawDashboard()
     local speedBgX, speedBgY = g_currentMission.hud.speedMeter.speedBg:getPosition()
     local posX = speedBgX + g_currentMission.hud.speedMeter.speedGaugeCenterOffsetX
     local posY = speedBgY + g_currentMission.hud.speedMeter.speedGaugeCenterOffsetY
+    local hasTransmissionTemperatureDisplay = hasCVTTransmission(vehicle) or cvtAddonSpec ~= nil
 
     for hudIndicatorId, hudIndicatorData in pairs(self.indicators) do
-        local icon = hudIndicatorData.icon
         local targetColor, isRoutineIgnitionIndicator = calculateIndicatorTargetColor(hudIndicatorId, true)
         local activeIndicatorData = activeIndicators[hudIndicatorId]
+        local hasActiveBreakdown = activeIndicatorData ~= nil and activeIndicatorData.isActive == true
+        local icon = hudIndicatorData.icon
+
+        if hudIndicatorId == self.indicators.engine.name then
+            if isRoadVehicle then
+                icon = hudIndicatorData.icons.road
+            elseif isLampTestActive or hasActiveBreakdown then
+                icon = hudIndicatorData.icons.fault
+            else
+                icon = hudIndicatorData.icons.normal
+            end
+        elseif hudIndicatorId == self.indicators.transmission.name then
+            if isLampTestActive or hasActiveBreakdown or hasCVTFaultWarning then
+                icon = hudIndicatorData.icons.fault
+            elseif hasTransmissionTemperatureDisplay
+                    or spec.transmissionTemperature > 99 then
+                icon = hudIndicatorData.icons.temperature
+            else
+                icon = hudIndicatorData.icons.normal
+            end
+        end
+
+        hudIndicatorData.icon = icon
         local isIndicatorVisible = true
 
         icon:setPosition(posX + hudIndicatorData.offsetX, posY + hudIndicatorData.offsetY)
@@ -1073,7 +1136,7 @@ function RMS_Hud:drawDashboard()
         elseif hudIndicatorId == self.indicators.coolant.name and spec.isElectricVehicle then
             isIndicatorVisible = false
         elseif hudIndicatorId ~= self.indicators.preheat.name then
-            isIndicatorVisible = hudIndicatorData.year < spec.year
+            isIndicatorVisible = hudIndicatorData.year <= spec.year
         end
 
         icon:setVisible(isIndicatorVisible)
@@ -1106,7 +1169,7 @@ function RMS_Hud:drawDashboard()
 
     local tempText = string.format("%.0f%s", engineTemp, tempSign)
     local transTempText = nil
-    if hasCVTTransmission(vehicle) or hasCVTAddon(vehicle) then
+    if hasTransmissionTemperatureDisplay then
         transTempText = string.format("%.0f%s", transTemp, tempSign)
     end
 
@@ -1163,7 +1226,7 @@ function RMS_Hud:drawDashboard()
         setTextColor(1, 1, 1, 1)
     end
 
-    if RMS_Drivetrain == nil or not RMS_Drivetrain.getIsRoadVehicleCategory(vehicle) then
+    if not isRoadVehicle then
         self:drawWheelSlipDisplay(spec, posX, posY)
     end
     self:drawDrivetrainDisplay(vehicle, spec, posX, posY)
@@ -1807,7 +1870,7 @@ SpeedMeterDisplay.draw = function(self, ...)
         end
     end
 
-    local ok, result = pcall(originalSpeedMeterDisplayDraw, self, ...)
+    local result = originalSpeedMeterDisplayDraw(self, ...)
 
     if dashExt ~= nil then
         self.speedBg:setVisible(true)
@@ -1817,10 +1880,6 @@ SpeedMeterDisplay.draw = function(self, ...)
         for vehicleInstance, originalMethod in pairs(originalGetDamageMethods) do
             vehicleInstance.getDamageAmount = originalMethod
         end
-    end
-
-    if not ok then
-        error(result, 0)
     end
 
     return result
@@ -1843,7 +1902,11 @@ function RMS_Hud:showInfoVehicle(box)
 
         
         if spec.currentState ~= RealisticMechanicalSystems.STATUS.READY and spec.currentState ~= RealisticMechanicalSystems.STATUS.BROKEN then
-            local maintenanceStatusText = string.format(g_i18n:getText("rms_spec_last_maintenance_until_format"), g_i18n:getText(spec.currentState), RMS_Utils.formatFinishTime(self:getServiceFinishTime()))
+            local maintenanceStatusText = string.format(
+                g_i18n:getText("rms_spec_last_maintenance_until_format"),
+                g_i18n:getText(spec.currentState),
+                RMS_Utils.formatFinishTime(self:getServiceFinishTime())
+            )
             box:addLine(maintenanceStatusText)
         end
     end

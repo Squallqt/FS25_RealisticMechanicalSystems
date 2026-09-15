@@ -421,13 +421,25 @@ function rmsHandTools:onPostLoad(savegame)
         if xmlSoundFile ~= nil then
             if spec.toolKind == "airBlower" then
                 spec.samples.airBlower = g_soundManager:loadSampleFromXML(xmlSoundFile, "sounds", "airBlowerTool", self.baseDirectory, self.components, 0, AudioGroup.VEHICLE, self.i3dMappings, self)
-                spec.samples.airBlowerAirResistance = g_soundManager:loadSampleFromXML(xmlSoundFile, "sounds", "airBlowerAirResistanceTool", self.baseDirectory, self.components, 0, AudioGroup.VEHICLE, self.i3dMappings, self)
+                spec.samples.airBlowerAirResistance = g_soundManager:loadSampleFromXML(
+                    xmlSoundFile, "sounds", "airBlowerAirResistanceTool", self.baseDirectory,
+                    self.components, 0, AudioGroup.VEHICLE, self.i3dMappings, self
+                )
             elseif spec.toolKind == "greaseGun" then
                 spec.samples.greaseGun = g_soundManager:loadSampleFromXML(xmlSoundFile, "sounds", "greaseGunTool", self.baseDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
             elseif spec.toolKind == "jumperCables" then
-                spec.samples.jumperCablesConnect = g_soundManager:loadSampleFromXML(xmlSoundFile, "sounds", "jumperCablesConnectTool", self.baseDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
-                spec.samples.jumperCablesDisconnect = g_soundManager:loadSampleFromXML(xmlSoundFile, "sounds", "jumperCablesDisconnectTool", self.baseDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
-                spec.samples.jumperCablesSparks = g_soundManager:loadSampleFromXML(xmlSoundFile, "sounds", "jumperCablesSparksTool", self.baseDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
+                spec.samples.jumperCablesConnect = g_soundManager:loadSampleFromXML(
+                    xmlSoundFile, "sounds", "jumperCablesConnectTool", self.baseDirectory,
+                    self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self
+                )
+                spec.samples.jumperCablesDisconnect = g_soundManager:loadSampleFromXML(
+                    xmlSoundFile, "sounds", "jumperCablesDisconnectTool", self.baseDirectory,
+                    self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self
+                )
+                spec.samples.jumperCablesSparks = g_soundManager:loadSampleFromXML(
+                    xmlSoundFile, "sounds", "jumperCablesSparksTool", self.baseDirectory,
+                    self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self
+                )
             end
 
             delete(xmlSoundFile)
@@ -553,7 +565,14 @@ function rmsHandTools:onHeldStart()
     spec.lastSentUseTargetDistance = nil
 
     if spec.toolKind == 'jumperCables' and self.isClient and spec.connectedVehicleA ~= nil and spec.connectedVehicleB ~= nil then
-        g_currentMission:showBlinkingWarning(string.format(g_i18n:getText("rms_jumper_cables_both_already_connected"), spec.connectedVehicleA:getFullName(), spec.connectedVehicleB:getFullName()), 2200)
+        g_currentMission:showBlinkingWarning(
+            string.format(
+                g_i18n:getText("rms_jumper_cables_both_already_connected"),
+                spec.connectedVehicleA:getFullName(),
+                spec.connectedVehicleB:getFullName()
+            ),
+            2200
+        )
     end
 
 end
@@ -786,7 +805,14 @@ function rmsHandTools:applyJumperCablesState(state, targetVehicle, connectedVehi
     elseif state == "jumperTooFar" and targetName ~= nil and firstVehicleName ~= nil then
         g_currentMission:showBlinkingWarning(string.format(g_i18n:getText("rms_jumper_cables_is_too_far"), targetName, firstVehicleName), 2200)
     elseif state == "jumperFull" and spec.connectedVehicleA ~= nil and spec.connectedVehicleB ~= nil then
-        g_currentMission:showBlinkingWarning(string.format(g_i18n:getText("rms_jumper_cables_both_already_connected"), spec.connectedVehicleA:getFullName(), spec.connectedVehicleB:getFullName()), 2200)
+        g_currentMission:showBlinkingWarning(
+            string.format(
+                g_i18n:getText("rms_jumper_cables_both_already_connected"),
+                spec.connectedVehicleA:getFullName(),
+                spec.connectedVehicleB:getFullName()
+            ),
+            2200
+        )
     elseif state == "jumperInvalid" then
         g_currentMission:showBlinkingWarning(g_i18n:getText("rms_jumper_cables_impossible_to_connect"), 2200)
     end
@@ -891,15 +917,19 @@ function rmsHandTools:onActionCallback(actionName, inputValue)
     if vehicle ~= nil and spec.toolKind == "airBlower" then
         local vehicleSpec = vehicle.spec_RealisticMechanicalSystems
         local needsBlowOut = vehicleSpec ~= nil and vehicleSpec.isVehicleNeedBlowOut == true
+        local airFilterClogging = vehicleSpec ~= nil and (tonumber(vehicleSpec.airFilterClogging) or 0) or 0
+        local airFilterResidue = vehicleSpec ~= nil and (tonumber(vehicleSpec.airFilterResidue) or 0) or 0
         -- blow out floor, the filter residue
         local isAlreadyClean = vehicleSpec ~= nil
             and (tonumber(vehicleSpec.radiatorClogging) or 0) <= 0
-            and (tonumber(vehicleSpec.airFilterClogging) or 0) <= (tonumber(vehicleSpec.airFilterResidue) or 0)
+            and airFilterClogging <= airFilterResidue
+        local isAirFilterAtBlowOutLimit = isAlreadyClean and airFilterClogging > 0
 
         if not needsBlowOut and self.isClient then
             g_currentMission:showBlinkingWarning(string.format(g_i18n:getText("rms_air_blower_cleaning_not_require"), vehicle:getFullName()), 2200)
         elseif isAlreadyClean and self.isClient then
-            g_currentMission:showBlinkingWarning(string.format(g_i18n:getText("rms_air_blower_already_clean"), vehicle:getFullName()), 2200)
+            local textKey = isAirFilterAtBlowOutLimit and "rms_air_blower_filter_requires_maintenance" or "rms_air_blower_already_clean"
+            g_currentMission:showBlinkingWarning(string.format(g_i18n:getText(textKey), vehicle:getFullName()), 2200)
         end
     end
 
@@ -1017,10 +1047,13 @@ function rmsHandTools:onUpdate(dt)
     if spec.toolKind == "airBlower" then
         local vehicleSpec = vehicle.spec_RealisticMechanicalSystems
         local needsBlowOut = vehicleSpec ~= nil and vehicleSpec.isVehicleNeedBlowOut == true
+        local airFilterClogging = vehicleSpec ~= nil and (tonumber(vehicleSpec.airFilterClogging) or 0) or 0
+        local airFilterResidue = vehicleSpec ~= nil and (tonumber(vehicleSpec.airFilterResidue) or 0) or 0
         -- blow out floor, the filter residue
         local isAlreadyClean = vehicleSpec ~= nil
             and (tonumber(vehicleSpec.radiatorClogging) or 0) <= 0
-            and (tonumber(vehicleSpec.airFilterClogging) or 0) <= (tonumber(vehicleSpec.airFilterResidue) or 0)
+            and airFilterClogging <= airFilterResidue
+        local isAirFilterAtBlowOutLimit = isAlreadyClean and airFilterClogging > 0
         local vehicleId = tostring(vehicle.uniqueId or vehicle.id or vehicle.rootNode or vehicle:getFullName())
         local hintKey = nil
 
@@ -1032,10 +1065,16 @@ function rmsHandTools:onUpdate(dt)
                 end
             end
         elseif isAlreadyClean then
-            hintKey = vehicleId .. ":already_clean"
+            local textKey = "rms_air_blower_already_clean"
+            if isAirFilterAtBlowOutLimit then
+                hintKey = vehicleId .. ":filter_requires_maintenance"
+                textKey = "rms_air_blower_filter_requires_maintenance"
+            else
+                hintKey = vehicleId .. ":already_clean"
+            end
             if spec.lastAirBlowerHintKey ~= hintKey then
                 if isLocalOwner then
-                    g_currentMission:showBlinkingWarning(string.format(g_i18n:getText("rms_air_blower_already_clean"), vehicle:getFullName()), 2200)
+                    g_currentMission:showBlinkingWarning(string.format(g_i18n:getText(textKey), vehicle:getFullName()), 2200)
                 end
             end
         end

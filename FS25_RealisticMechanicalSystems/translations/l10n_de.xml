@@ -4,7 +4,7 @@
         <text name="rms_hud_mass_tractor" text="Fahrzeug"/>
         <text name="rms_hud_mass_towed" text="Angehängt"/>
         <text name="rms_hud_mass_total" text="Gesamt"/>
-        <text name="rms_drivetrain_mode_4x2" text="4x2 (Vorderachse abgeschaltet)"/>
+        <text name="rms_drivetrain_mode_4x2" text="Hinterradantrieb (Vorderachse abgeschaltet)"/>
         <text name="rms_drivetrain_mode_4wd" text="Allrad (Vorderachse zugeschaltet)"/>
         <text name="rms_drivetrain_mode_auto" text="Allrad AUTO"/>
         <text name="rms_drivetrain_notify_mode" text="Antriebsmodus: %s"/>
@@ -12,7 +12,7 @@
         <text name="rms_drivetrain_notify_lock_off" text="Differentialsperre gelöst"/>
         <text name="rms_drivetrain_notify_park_on" text="Feststellbremse angezogen"/>
         <text name="rms_drivetrain_notify_park_off" text="Feststellbremse gelöst"/>
-        <text name="rms_drivetrain_warning_4wd_windup" text="Antriebsstrang unter Belastung! Allradantrieb vor Kurven auf hartem Boden ausschalten."/>
+        <text name="rms_drivetrain_warning_4wd_windup" text="Antriebsstrang unter Belastung! Allradantrieb vor Kurven auf griffigem Untergrund ausschalten."/>
         <text name="rms_drivetrain_warning_difflock_windup" text="Differentialsperre unter Spannung! Sperre lösen oder Lenkwinkel verringern."/>
         <text name="rms_drivetrain_warning_parkbrake" text="Feststellbremse angezogen!"/>
         <text name="rms_preheat_ignition_message" text="Zündung ein: Vorglühen läuft"/>
@@ -33,20 +33,20 @@
         <text name="rms_settings_section_preshift_maintenance" text="Tägliche Pflege"/>
         <text name="rms_settings_section_other" text="Sonstiges"/>
         <text name="rms_settings_section_drivetrain" text="Antriebsstrang und Feststellbremse"/>
-        <text name="rms_maintenancePrice_label" text="Preis-Multiplikator für Wartung"/>
-        <text name="rms_maintenancePrice_tooltip" text="Passt die Kosten aller Werkstattarbeiten an, einschließlich Inspektionen, Reparaturen und Überholungen. Ein höherer Wert macht sie alle teurer."/>
-        <text name="rms_maintenanceDuration_label" text="Dauer-Multiplikator für Wartung"/>
-        <text name="rms_maintenanceDuration_tooltip" text="Passt die Dauer aller Werkstattleistungen an. Ein höherer Wert erhöht die Zeit, die dein Fahrzeug in der Wartung oder Reparatur verbringt."/>
+        <text name="rms_maintenancePrice_label" text="Preisfaktor für Werkstattvorgänge"/>
+        <text name="rms_maintenancePrice_tooltip" text="Passt die Kosten aller Werkstattvorgänge an, einschließlich Inspektionen, Reparaturen und Überholungen. Ein höherer Wert macht sie teurer."/>
+        <text name="rms_maintenanceDuration_label" text="Dauerfaktor für Werkstattvorgänge"/>
+        <text name="rms_maintenanceDuration_tooltip" text="Legt die Dauer aller Werkstattvorgänge fest. Je höher der Wert, desto länger dauert jeder Vorgang."/>
         <text name="rms_workshopOpenHour_label" text="Öffnungszeit der Werkstatt"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Werkstattarbeiten beginnen erst ab dieser Uhrzeit."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Werkstattvorgänge beginnen erst ab dieser Uhrzeit."/>
         <text name="rms_workshopCloseHour_label" text="Schließzeit der Werkstatt"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Laufende Arbeiten werden zu dieser Uhrzeit unterbrochen und bei Öffnung fortgesetzt."/>
-        <text name="rms_cloggingSpeed_label" text="Verschmutzungsgeschwindigkeit"/>
+        <text name="rms_workshopCloseHour_tooltip" text="Laufende Vorgänge werden zu dieser Uhrzeit unterbrochen und bei Öffnung fortgesetzt."/>
+        <text name="rms_cloggingSpeed_label" text="Verschmutzungsrate"/>
         <text name="rms_cloggingSpeed_tooltip" text="Regelt, wie schnell sich Kühler und Luftfilter bei der Arbeit in Staub, Spreu und Ernteresten zusetzen. Höhere Werte beschleunigen die Verschmutzung."/>
         <text name="rms_fieldInspectionDuration_label" text="Dauer der Kontrolle vor Schichtbeginn"/>
         <text name="rms_fieldInspectionDuration_tooltip" text="Legt fest, wie lange eine Kontrolle vor Schichtbeginn in Echtzeitsekunden dauert."/>
-        <text name="rms_lubricationReducePerOperatingHour_label" text="Schmierstoffverbrauch"/>
-        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="Legt fest, wie viel Schmierung pro Betriebsstunde verbraucht wird."/>
+        <text name="rms_lubricationReducePerOperatingHour_label" text="Schmierstoffverbrauch pro Betriebsstunde"/>
+        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="Legt fest, wie viel Schmierstoff pro Betriebsstunde verbraucht wird."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Händlerwerkstatt 24/7"/>
         <text name="rms_dealerWorkshopAvailable_tooltip" text="Hält die Händlerwerkstatt zu jeder Tages- und Nachtzeit verfügbar."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobile Werkstatt 24/7"/>
@@ -56,23 +56,23 @@
         <text name="rms_ownWorkshopAvailable_label" text="Eigene Werkstatt 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Hält deine eigene Werkstatt zu jeder Tages- und Nachtzeit verfügbar."/>
         <text name="rms_instantInspection_label" text="Sofortige Inspektion"/>
-        <text name="rms_instantInspection_tooltip" text="Wenn die Option aktiviert ist, werden alle Inspektionen sofort abgeschlossen (ohne Zeitablauf). Hinweis: die Inspektionsoption Sichtprüfung steht dann nicht mehr zur Verfügung."/>
+        <text name="rms_instantInspection_tooltip" text="Wenn die Option aktiviert ist, werden alle Inspektionen sofort abgeschlossen (ohne Zeitablauf). Hinweis: Die Sichtprüfung steht dann nicht mehr zur Verfügung."/>
         <text name="rms_parkVehicle_label" text="Fahrzeug während der Wartung parken"/>
         <text name="rms_parkVehicle_tooltip" text="Wenn die Option aktiviert ist, werden Fahrzeuge während der Wartung beim Durchschalten mit TAB übersprungen."/>
-        <text name="rms_warrantyEnabled_label" text="Garantie für neue Fahrzeuge"/>
+        <text name="rms_warrantyEnabled_label" text="Garantie für neue Maschinen"/>
         <text name="rms_warrantyEnabled_tooltip" text="Aktiviert Garantieleistungen für Reparaturen an Neufahrzeugen (bis zu 20 Betriebsstunden oder 12 Monate). Nur Originalteile sind kostenfrei abgedeckt."/>
-        <text name="rms_aiOverloadAndOverheatControl_label" text="KI-Überlastungs- und Überhitzungskontrolle"/>
+        <text name="rms_aiOverloadAndOverheatControl_label" text="KI-Regelung bei Überlastung und Überhitzung"/>
         <text name="rms_aiOverloadAndOverheatControl_tooltip" text="Wenn die Option aktiviert ist, verringert der KI-Helfer die Last, um Motorüberlastung oder Überhitzung zu vermeiden."/>
         <text name="rms_aiDisableOnCriticalOverload_label" text="KI bei kritischer Überlastung stoppen"/>
         <text name="rms_aiDisableOnCriticalOverload_tooltip" text="Hält KI-Helfer und AutoDrive bei kritischer Überlastung an."/>
         <text name="rms_contractVehicleProtection_label" text="Schutz für Vertragsfahrzeuge"/>
         <text name="rms_contractVehicleProtection_tooltip" text="Wendet die KI-Abschaltung bei kritischer Überlastung sowie die Geschwindigkeitsregelung bei Überlastung oder Überhitzung auf Vertragsfahrzeuge an."/>
-        <text name="rms_aiWorkerTargetStress_label" text="KI-Reaktion auf Last"/>
-        <text name="rms_aiWorkerTargetStress_tooltip" text="Steuert, wie früh der KI-Helfer auf Überlastung und Überhitzung reagiert. Ein hoher Wert macht den Helfer weniger empfindlich und verzögert seine Reaktion; ein niedriger Wert macht ihn empfindlicher und lässt ihn früher verlangsamen."/>
-        <text name="rms_aiWorkerTargetStress_relaxed" text="Wenig empfindlich"/>
-        <text name="rms_aiWorkerTargetStress_balanced" text="Ausgewogen"/>
-        <text name="rms_aiWorkerTargetStress_sensitive" text="Empfindlich"/>
-        <text name="rms_aiWorkerTargetStress_verySensitive" text="Sehr empfindlich"/>
+        <text name="rms_aiWorkerTargetStress_label" text="KI-Reaktivität"/>
+        <text name="rms_aiWorkerTargetStress_tooltip" text="Bestimmt, wann der KI-Helfer auf Überlastung und Überhitzung reagiert. Je höher die Reaktivität, desto früher verlangsamt der Helfer; je niedriger sie ist, desto stärker lässt er die Last vor dem Eingreifen ansteigen."/>
+        <text name="rms_aiWorkerTargetStress_relaxed" text="Niedrig"/>
+        <text name="rms_aiWorkerTargetStress_balanced" text="Mittel"/>
+        <text name="rms_aiWorkerTargetStress_sensitive" text="Hoch"/>
+        <text name="rms_aiWorkerTargetStress_verySensitive" text="Sehr hoch"/>
         <text name="rms_aiWorkerMinSpeed_label" text="Minimale KI-Geschwindigkeit"/>
         <text name="rms_aiWorkerMinSpeed_tooltip" text="Legt die niedrigste Tempomatgeschwindigkeit fest, die der KI-Helfer beim Verlangsamen zur Vermeidung von Überlastung oder Überhitzung verwenden darf."/>
         <text name="rms_debugMode_label" text="Debug-Modus"/>
@@ -85,16 +85,16 @@
         <text name="rms_vehicleLifespan_tooltip" text="Legt die grundlegende Fahrzeuglebensdauer in Stunden fest, nach deren Ablauf der Zustand 0 % erreicht. Je näher der Zustand an null liegt, desto unzuverlässiger wird das Fahrzeug."/>
         <text name="rms_reinitializeVehicles_label" text="Fuhrpark zurücksetzen"/>
         <text name="rms_reinitializeVehicles_text" text="Zurücksetzen"/>
-        <text name="rms_reinitializeVehicles_tooltip" text="Richtet den Zustand des Fuhrparks an der gewählten Lebensdauer aus. Aktuelle Defekte werden gelöscht."/>
+        <text name="rms_reinitializeVehicles_tooltip" text="Richtet den Zustand des Fuhrparks an der gewählten Lebensdauer aus. Aktuelle Schäden werden gelöscht."/>
         <text name="rms_reinitializeVehiclesConfirm_title" text="Fuhrpark zurücksetzen"/>
-        <text name="rms_reinitializeVehiclesConfirm_message" text="Fuhrpark an der gewählten Lebensdauer ausrichten? Aktuelle Defekte werden gelöscht."/>
+        <text name="rms_reinitializeVehiclesConfirm_message" text="Fuhrpark an der gewählten Lebensdauer ausrichten? Aktuelle Schäden werden gelöscht."/>
         <text name="rms_reinitializeVehicles_result" text="Zurückgesetzte Fahrzeuge: %d. Unberührt: %d."/>
         <text name="rms_downtimeWear_label" text="Passiver Verschleiß"/>
         <text name="rms_downtimeWear_tooltip" text="Legt die Geschwindigkeit des passiven Verschleißes im Stillstand als Prozentsatz des Grundverschleißes fest (Fahrzeuglebensdauer). Beispiel: 5 % bei der Standard-Lebensdauer von 100 Stunden bedeuten, dass jedes System nach etwa 20 Stunden Stillstand rund 1 % Zustand verliert. Hinweis: Wird das Fahrzeug unter Dach gelagert, ist passiver Verschleiß deaktiviert."/>
         <text name="rms_generalWearEnabled_label" text="Altersbedingter Verschleiß"/>
         <text name="rms_generalWearEnabled_tooltip" text="Mit zunehmendem Verschleiß erhält jedes System kleine Abzüge auf seine wichtigsten Eigenschaften, etwa Motorleistung, Hydraulikgeschwindigkeit oder Bremswirkung. Der Effekt setzt nach dem ersten Drittel der Lebensdauer ein, wird aber erst nach zwei Dritteln wirklich spürbar und verstärkt sich gegen Ende der Lebensdauer der Maschine."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Abgasrauch"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Steuert die Abgasfahne nach dem tatsächlichen Motorzustand: schwarz wenn mehr Kraftstoff als Luft da ist, beim harten Beschleunigen, beim Untertourigfahren, bei langem Leerlauf unter geringer Last, zugesetztem Luftfilter oder verschlissener Einspritzung, blau wenn ein müder Motor Öl verbrennt, weiß wenn Kraftstoff unverbrannt entweicht. Die Fahne wächst außerdem mit der Arbeit, die der Motor leistet. Ältere Maschinen rauchen deutlich stärker als moderne, die kaum rauchen, solange nichts ernsthaft defekt ist."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Steuert die Abgasfahne anhand des tatsächlichen Motorzustands. Sie ist schwarz, wenn mehr Kraftstoff als Luft vorhanden ist: bei starkem Beschleunigen, untertourigem Betrieb, langem Leerlauf unter geringer Last, einem zugesetzten Luftfilter oder verschlissener Einspritzung. Sie ist blau, wenn ein verschlissener Motor Öl verbrennt, und weiß, wenn Kraftstoff unverbrannt austritt. Die Fahne wird auch mit steigender Motorlast größer. Ältere Maschinen rauchen deutlich stärker als moderne, die kaum rauchen, solange nichts ernsthaft beschädigt ist."/>
         <text name="rms_exhaustSmokeIntensity_label" text="Rauchintensität"/>
         <text name="rms_exhaustSmokeIntensity_tooltip" text="Skaliert die Sichtbarkeit des Rauchs, ohne seine Ursachen zu verändern. Höhere Werte machen Symptome auch aus der Ferne erkennbar."/>
         <text name="rms_exhaustSmokeDetail_label" text="Fahnendetail (dieser PC)"/>
@@ -103,8 +103,8 @@
         <text name="rms_exhaustSmokeDetail_reduced" text="Reduziert"/>
         <text name="rms_exhaustSmokeDetail_minimal" text="Minimal"/>
         <text name="rms_exhaustSmokeDetail_none" text="Keine"/>
-        <text name="rms_systemStressRate_label" text="Systemstress-Aufbau"/>
-        <text name="rms_systemStressRate_tooltip" text="Bestimmt, wie schnell sich Stress in den Systemen durch Überlastung, Überhitzung, Schlupf und andere harte Betriebsbedingungen aufbaut. Stress beeinflusst die Wahrscheinlichkeit von Ausfällen direkt: Je mehr Stress sich in einem System ansammelt, desto wahrscheinlicher ist eine Panne."/>
+        <text name="rms_systemStressRate_label" text="Systemstress-Aufbaurate"/>
+        <text name="rms_systemStressRate_tooltip" text="Bestimmt, wie schnell sich Stress in den Systemen durch Überlastung, Überhitzung, Schlupf und andere harte Betriebsbedingungen aufbaut. Stress beeinflusst die Schadenswahrscheinlichkeit direkt: Je mehr Stress sich in einem System ansammelt, desto wahrscheinlicher wird ein Schaden."/>
         <text name="rms_batteryCapacity_label" text="Batteriekapazität"/>
         <text name="rms_batteryCapacity_tooltip" text="Passt die maximal nutzbare Batteriekapazität an. Ein Wert nahe 150 Ah entspricht einer echten Batterie, allerdings treten auf diesem Niveau kaum noch Entladeprobleme auf."/>
         <text name="rms_option_off" text="Aus"/>
@@ -113,14 +113,14 @@
         <text name="rms_alternatorMaxOutput_tooltip" text="Legt den maximalen Ausgangsstrom der Lichtmaschine fest. Höhere Werte erlauben es der Lichtmaschine, die Batterie schneller nachzuladen."/>
         <text name="rms_idleCurrent_label" text="Ruhestrom"/>
         <text name="rms_idleCurrent_tooltip" text="Legt den Entladestrom der Batterie bei abgestelltem Motor fest. Bei 0,5 A würde eine 15-Ah-Batterie zum Beispiel etwa 30 Echtzeitstunden bis zur vollständigen Entladung benötigen, bevor Temperatureffekte berücksichtigt werden."/>
-        <text name="rms_temperatureChangeSpeed_label" text="Thermogeschwindigkeit des Motors"/>
+        <text name="rms_temperatureChangeSpeed_label" text="Änderungsgeschwindigkeit der Motortemperatur"/>
         <text name="rms_temperatureChangeSpeed_tooltip" text="Bestimmt, wie schnell sich die Motortemperatur ändert. Niedrigere Werte verlangsamen Erwärmung und Abkühlung, höhere Werte beschleunigen beides. Standard ist 1,4."/>
-        <text name="rms_transTemperatureChangeMultiplier_label" text="Thermogeschwindigkeit des Getriebe- und Hydrauliköls"/>
+        <text name="rms_transTemperatureChangeMultiplier_label" text="Änderungsgeschwindigkeit der Getriebe- und Hydrauliköltemperatur"/>
         <text name="rms_transTemperatureChangeMultiplier_tooltip" text="Bestimmt separat, wie schnell sich die Temperatur des gemeinsamen Getriebe- und Hydrauliköls ändert. Niedrigere Werte verlangsamen Erwärmung und Abkühlung, höhere Werte beschleunigen beides. Standard ist 1,0."/>
         <text name="rms_radiatorDirtInfluence_label" text="Einfluss der Kühler-Verschmutzung"/>
         <text name="rms_radiatorDirtInfluence_tooltip" text="Verringert die Kühlleistung des Kühlers bei maximaler Verschmutzung um diesen Prozentsatz."/>
         <text name="rms_tutorialMode_label" text="Tutorial-Modus"/>
-        <text name="rms_tutorialMode_tooltip" text="Zeigt Tutorial-Hinweise während des Spielens an."/>
+        <text name="rms_tutorialMode_tooltip" text="Zeigt während des Spiels Tutorial-Hinweise an."/>
         <text name="rms_tutorialResetTips_label" text="Hinweise zurücksetzen"/>
         <text name="rms_tutorialResetTips_text" text="Zurücksetzen"/>
         <text name="rms_tutorialResetTips_tooltip" text="Setzt den Verlauf der Tutorial-Hinweise zurück und zeigt alle Hinweise erneut an."/>
@@ -129,7 +129,7 @@
         <text name="rms_drivetrainEnabled_label" text="Verwaltung von Allrad und Differentialsperren"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Aktiviert die manuelle Steuerung der zuschaltbaren Vorderachse und der Differentialsperren bei Traktoren. Ist die Differentialverwaltung von Enhanced Vehicle aktiv, zieht sich der Mod vollständig zurück und Enhanced Vehicle steuert den Antrieb allein."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="AUTO-Antriebsmodus erlauben"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Fügt dem Antriebswahlschalter eine AUTO-Stellung hinzu: Die Vorderachse schaltet bei Radschlupf oder bei Arbeitsgeschwindigkeit unter Last automatisch zu und löst sich auf der Straße. In AUTO belassene Fahrzeuge fallen auf Allrad zurück, wenn diese Option deaktiviert wird."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Fügt dem Antriebswahlschalter eine AUTO-Stellung hinzu: Die Vorderachse schaltet bei Radschlupf oder bei Arbeitsgeschwindigkeit unter Last automatisch zu und auf der Straße wieder ab. In AUTO belassene Fahrzeuge wechseln zu Allrad, wenn diese Option deaktiviert wird."/>
         <text name="rms_drivetrainWindupDamage_label" text="Schäden durch Antriebsstrangbelastung"/>
         <text name="rms_drivetrainWindupDamage_tooltip" text="Kurvenfahrten auf griffigem Untergrund mit gesperrten Differentialen belasten den Antriebsstrang und beschädigen das Getriebe mit der Zeit. Deaktiviere diese Option für ein nachsichtigeres Spielerlebnis."/>
         <text name="rms_drivetrainDiffLockReleaseSpeed_label" text="Lösegeschwindigkeit der Differentialsperre"/>
@@ -140,6 +140,33 @@
         <text name="rms_drivetrainParkBrakeAuto_tooltip" text="Zieht die Feststellbremse automatisch an, wenn der Fahrer die stehende Maschine verlässt."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Werkstatt"/>
+        <text name="rms_ws_tab_summary" text="Übersicht"/>
+        <text name="rms_ws_tab_diagnostic" text="Diagnose und Kostenvoranschlag"/>
+        <text name="rms_ws_tab_interventions" text="Vorgänge"/>
+        <text name="rms_ws_tab_record" text="Technische Akte"/>
+        <text name="rms_ws_section_alerts" text="Warnungen und Prioritäten"/>
+        <text name="rms_ws_section_fluids" text="Betriebsstoffe"/>
+        <text name="rms_ws_section_breakdowns" text="Bekannte Schäden"/>
+        <text name="rms_ws_section_quote" text="Kostenvoranschlag"/>
+        <text name="rms_ws_section_choose_intervention" text="Vorgang wählen"/>
+        <text name="rms_ws_section_work_order" text="Werkstattauftrag"/>
+        <text name="rms_ws_section_recap" text="Zusammenfassung"/>
+        <text name="rms_ws_section_parts" text="Betroffene Teile"/>
+        <text name="rms_ws_section_history" text="Verlauf"/>
+        <text name="rms_ws_section_current_intervention" text="Laufender Vorgang"/>
+        <text name="rms_ws_label_last_check" text="Letzte Kontrolle"/>
+        <text name="rms_ws_label_workshop_state" text="Zustand der Werkstatt"/>
+        <text name="rms_ws_label_intervention" text="Vorgang"/>
+        <text name="rms_ws_label_addon" text="Option"/>
+        <text name="rms_ws_label_more_parts" text="+ %s weitere"/>
+        <text name="rms_ws_label_committed_cost" text="Gebundene Kosten"/>
+        <text name="rms_ws_label_finish_time" text="Endzeit"/>
+        <text name="rms_ws_label_total_estimate" text="Geschätzte Summe"/>
+        <text name="rms_ws_button_configure_repair" text="Reparatur konfigurieren"/>
+        <text name="rms_ws_info_inspection_reveals" text="Eine Inspektion kann weitere Defekte aufdecken."/>
+        <text name="rms_ws_status_ready_title" text="Werkstatt bereit"/>
+        <text name="rms_ws_status_ready_hint" text="Wähle einen Vorgang. Optionen, Teile und Preis werden vor dem Start bestätigt."/>
+        <text name="rms_ws_status_no_intervention" text="Kein laufender Vorgang"/>
         <text name="rms_ws_label_value" text="Fahrzeugwert"/>
         <text name="rms_ws_label_age" text="Alter"/>
         <text name="rms_ws_label_operating_hours" text="Betriebsstunden"/>
@@ -148,6 +175,8 @@
         <text name="rms_ws_label_next_service" text="Nächste Wartung"/>
         <text name="rms_ws_value_service_overdue" text="überfällig seit %s"/>
         <text name="rms_ws_label_condition" text="Zustand"/>
+        <text name="rms_ws_label_reliability" text="Zuverlässigkeit"/>
+        <text name="rms_ws_label_overhaul_count" text="Durchgeführte Überholungen"/>
         <text name="rms_ws_label_maintainability" text="Wartungsfreundlichkeit"/>
         <text name="rms_ws_label_maintenance_log" text="Wartungsprotokoll"/>
         <text name="rms_ws_label_last_report" text="Letzter Bericht"/>
@@ -160,10 +189,10 @@
         <text name="rms_ws_task_inspection" text="Inspektion"/>
         <text name="rms_ws_task_maintenance" text="Wartung"/>
         <text name="rms_ws_task_overhaul" text="Überholung"/>
-        <text name="rms_ws_info_no_breakdowns" text="Keine bekannten Defekte. Ein unentdeckter Defekt bleibt möglich."/>
-        <text name="rms_ws_inspecting_status" text="Inspektion läuft..."/>
+        <text name="rms_ws_info_no_breakdowns" text="Keine bekannten Schäden. Ein unentdeckter Schaden bleibt möglich."/>
+        <text name="rms_ws_status_in_progress_short_format" text="%s läuft..."/>
         <text name="rms_ws_status_initial" text="Status wird geladen..."/>
-        <text name="rms_ws_status_in_progress_format" text="%s läuft bis %s..."/>
+        <text name="rms_ws_status_in_progress_format" text="%s läuft bis %s"/>
         <text name="rms_ws_status_open" text="Werkstatt ist geöffnet"/>
         <text name="rms_ws_status_closed" text="Werkstatt ist geschlossen"/>
         <text name="rms_ws_action_inspection" text="Inspektion"/>
@@ -171,36 +200,43 @@
         <text name="rms_ws_action_repair" text="Reparatur"/>
         <text name="rms_ws_action_overhaul" text="Überholung"/>
         <text name="rms_ws_action_refill" text="Nachfüllen"/>
+        <text name="rms_ws_action_choice_inspection" text="Fahrzeuginspektion"/>
+        <text name="rms_ws_action_choice_maintenance" text="Regelmäßige Wartung"/>
+        <text name="rms_ws_action_choice_repair" text="Schadensreparatur"/>
+        <text name="rms_ws_action_choice_overhaul" text="Mechanische Überholung"/>
+        <text name="rms_ws_action_choice_refill" text="Flüssigkeiten nachfüllen"/>
         <text name="rms_ws_action_cancel_service" text="Vorgang abbrechen"/>
         <text name="rms_ws_button_show" text="Anzeigen"/>
-        <text name="rms_ws_button_price_format" text="%s (%s)"/>
         <text name="rms_ws_age_unit" text="Monate"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="Ja"/>
         <text name="rms_ws_option_no" text="Nein"/>
         <text name="rms_ws_no_last_report_message" text="Noch keine Berichte vorhanden"/>
+        <text name="rms_ws_systems_need_complete_inspection" text="Vollständige Inspektion erforderlich"/>
         <text name="rms_ws_no_log_empty_message" text="Protokoll ist noch leer"/>
         <text name="rms_ws_no_report_message" text="Noch keine Berichte vorhanden"/>
-        <text name="rms_ws_cancel_confirm_title" text="%s abbrechen?"/>
+        <text name="rms_ws_cancel_confirm_title" text="Laufenden Vorgang abbrechen? (%s)"/>
         <text name="rms_ws_cancel_confirm_text" text="Der aktuelle Fortschritt wird unverändert gespeichert. Es wird kein Geld zurückerstattet."/>
-        <text name="rms_mobile_workshop_low_maintainability" text="Warnung: %s ist für %s in der mobilen Werkstatt wegen geringer Wartungsfreundlichkeit nicht verfügbar."/>
+        <text name="rms_mobile_workshop_low_maintainability" text="Warnung: Der Vorgang %s ist für %s in der mobilen Werkstatt nicht verfügbar, da dieses Fahrzeug vor Ort zu schwer zu warten ist."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="Wartungsprotokoll"/>
+        <text name="rms_log_recorded_interventions_title" text="Erfasste Vorgänge"/>
+        <text name="rms_log_last_intervention_title" text="Letzter Vorgang"/>
         <text name="rms_log_hours" text="Betriebsstunden"/>
         <text name="rms_log_title" text="Wartungsprotokoll"/>
         <text name="rms_log_total_cost_title" text="Gesamtkosten"/>
-        <text name="rms_log_total_breakdowns_count_title" text="Defekte insgesamt"/>
+        <text name="rms_log_total_breakdowns_count_title" text="Behobene Schäden"/>
         <text name="rms_log_type" text="Vorgangsart"/>
         <text name="rms_log_cost_per_month_title" text="Monatliche Kosten"/>
         <text name="rms_log_cancelled_desc" text="Vorgang abgebrochen"/>
         <text name="rms_log_ownership_months_title" text="Besitzdauer"/>
         <text name="rms_log_overhaul_desc_with_painting" text="Fahrzeug neu lackiert"/>
-        <text name="rms_log_average_breakdowns_interval_title" text="Durchschnittliches Defektintervall"/>
+        <text name="rms_log_average_breakdowns_interval_title" text="Durchschnittliches Schadensintervall"/>
         <text name="rms_log_average_maintenance_interval_title" text="Durchschnittliches Wartungsintervall"/>
-        <text name="rms_log_performed" text="Durchgeführt: %s (%s)"/>
+        <text name="rms_log_performed" text="Vorgang durchgeführt: %s (%s)"/>
         <text name="rms_log_price" text="Kosten"/>
-        <text name="rms_log_inspection_desc_no_breakdowns" text="Keine Defekte gefunden"/>
-        <text name="rms_log_inspection_desc_with_breakdowns" text="Defekte gefunden: %s"/>
+        <text name="rms_log_inspection_desc_no_breakdowns" text="Keine Schäden festgestellt"/>
+        <text name="rms_log_inspection_desc_with_breakdowns" text="Festgestellte Schäden: %s"/>
         <text name="rms_log_repair_desc_generic" text="Reparatur"/>
         <text name="rms_log_date" text="Datum"/>
         <text name="rms_log_description" text="Beschreibung"/>
@@ -224,7 +260,7 @@
         <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Beginnende Alterung der Glühkerzen. Kaltstarts dauern länger, Warmstarts bleiben unbeeinträchtigt."/>
         <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Mehrere Glühkerzen sind geschwächt oder ausgefallen. Kaltstarts sind schwierig und der Motor kann bis zum Warmlaufen unruhig laufen."/>
         <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Schwerer Glühkerzenausfall. Kaltstarts sind äußerst unzuverlässig und der Motor läuft während der Warmlaufphase unruhig."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Vollständiger Ausfall des Vorglühsystems. Bei zu niedriger Temperatur kann der Motor nicht gestartet werden."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Vollständiger Ausfall der Glühkerzen. Bei zu niedriger Temperatur kann der Motor nicht gestartet werden."/>
         <text name="rms_breakdowns_part_vehicle" text="Fahrzeug"/>
         <text name="rms_breakdowns_part_valve_train" text="Ventiltrieb"/>
         <text name="rms_breakdowns_part_consumables" text="Verbrauchsmaterialien"/>
@@ -250,6 +286,7 @@
         <text name="rms_breakdowns_part_steering_linkage" text="Lenkgestänge"/>
         <text name="rms_breakdowns_part_powershift_hydraulic_pump" text="Powershift-Hydraulikpumpe"/>
         <text name="rms_breakdowns_part_pto_drive_coupling" text="Zapfwellen-Antriebskupplung"/>
+        <text name="rms_breakdowns_part_pto_engagement_control" text="Zapfwellen-Zuschaltsteuerung"/>
         <text name="rms_breakdowns_part_pto_drive_output" text="Zapfwellenabtriebswelle"/>
         <text name="rms_breakdowns_part_hydraulic_pump" text="Hydraulikpumpe"/>
         <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hydraulikzylinder"/>
@@ -273,11 +310,11 @@
         <text name="rms_breakdowns_pto_drive_coupling_wear_stage3_description" text="Starker Verschleiß der Zapfwellen-Antriebskupplung. Die Zapfwelle schaltet sich wiederholt ab."/>
         <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_description" text="Kritischer Ausfall der Zapfwellen-Antriebskupplung. Die Zapfwelle kann keine Leistung mehr übertragen."/>
         <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_message" text="Ausfall der Zapfwellen-Antriebskupplung"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage1_description" text="Beginnender Verschleiß des Zapfwellenabtriebslagers verursacht ein leichtes Laufgeräusch."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage2_description" text="Mäßiger Verschleiß des Zapfwellenabtriebslagers verursacht ein deutlich hörbares Geräusch."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage3_description" text="Starker Verschleiß des Zapfwellenabtriebslagers verursacht laute Geräusche und gelegentliche Abschaltungen."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_description" text="Kritischer Ausfall des Zapfwellenabtriebslagers. Ein Zapfwellenbetrieb ist nicht mehr möglich."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_message" text="Ausfall des Zapfwellenabtriebslagers"/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage1_description" text="Beginnender Verschleiß des Lagers der Zapfwellenabtriebswelle verursacht ein leichtes Laufgeräusch."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage2_description" text="Mäßiger Verschleiß des Lagers der Zapfwellenabtriebswelle verursacht ein deutlich hörbares Geräusch."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage3_description" text="Starker Verschleiß des Lagers der Zapfwellenabtriebswelle verursacht laute Geräusche und gelegentliche Abschaltungen."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_description" text="Kritischer Ausfall der Zapfwellenabtriebswelle. Ein Zapfwellenbetrieb ist nicht mehr möglich."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_message" text="Ausfall der Zapfwellenabtriebswelle"/>
         <text name="rms_breakdowns_pto_engagement_control_malfunction_stage1_description" text="Die Zapfwellen-Zuschaltsteuerung reagiert unregelmäßig und kann einen Einschaltbefehl verweigern."/>
         <text name="rms_breakdowns_pto_engagement_control_malfunction_stage2_description" text="Die Zapfwellen-Zuschaltsteuerung kann die Zapfwelle häufig nicht einschalten."/>
         <text name="rms_breakdowns_pto_engagement_control_malfunction_stage3_description" text="Die Zapfwellen-Zuschaltsteuerung ist stark gestört und verweigert die meisten Einschaltversuche."/>
@@ -286,9 +323,9 @@
         <text name="rms_breakdowns_pto_engagement_blocked_message" text="Einschalten der Zapfwelle verweigert"/>
         <text name="rms_breakdowns_quick_fix_stage" text="Behelfsreparatur"/>
         <text name="rms_breakdowns_defected_parts_stage" text="Defekt"/>
-        <text name="rms_breakdowns_defected_parts_detected_description" text="Die Baugruppe funktioniert derzeit normal, aber die Diagnose hat ein defektes Teil festgestellt. Das Teil bietet keine Sicherheitsreserve mehr, ein vorsorglicher Austausch wird empfohlen, um einen plötzlichen Ausfall zu vermeiden."/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Das System funktioniert derzeit normal, aber die Inspektion hat ein defektes Teil festgestellt. Das Teil bietet keine Sicherheitsreserve mehr; ein vorsorglicher Austausch wird empfohlen, um einen plötzlichen Schaden zu vermeiden."/>
         <text name="rms_breakdowns_dead_battery_message" text="Batterie entladen"/>
-        <text name="rms_breakdowns_temporarily_repaired_description" text="Die Baugruppe funktioniert derzeit normal, beruht aber vollständig auf einer Behelfsreparatur. Um einen Ausfall unter Last zu vermeiden, wird ein vollständiger Austausch der Teile so bald wie möglich empfohlen."/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Das System funktioniert derzeit normal, beruht aber vollständig auf einer Behelfsreparatur. Um einen Schaden unter Last zu vermeiden, wird so bald wie möglich ein vollständiger Austausch der Teile empfohlen."/>
         <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Verschlissene Turboladerlager. Ein leises Pfeifen ist zu hören und bei hohen Drehzahlen tritt ein leichter Leistungsverlust auf."/>
         <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Undichte Turboladerdichtungen. Spürbarer Leistungsverlust, erhöhter Kraftstoffverbrauch."/>
         <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Beschädigte Turbinenschaufeln. Starker Leistungsverlust und Gefahr des Motorabwürgens unter hoher Last."/>
@@ -318,7 +355,7 @@
         <text name="rms_breakdowns_track_tensioner_malfunction_stage4_message" text="Ausfall des Kettenspanners"/>
         <text name="rms_breakdowns_thermostat_malfunction_stage1_description" text="Der Motorthermostat beginnt nachzulassen. Der Motor braucht länger, um die optimale Temperatur zu erreichen, oder läuft etwas zu heiß."/>
         <text name="rms_breakdowns_thermostat_malfunction_stage2_description" text="Schlechte Reaktion des Thermostats. Die Motortemperaturregelung ist instabil, was den Verschleiß erhöht."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage3_description" text="Der Thermostat klemmt in geschlossener Position. Der Motor überhitzt unter Last ständig."/>
+        <text name="rms_breakdowns_thermostat_malfunction_stage3_description" text="Der Thermostat öffnet kaum noch. Der Motor überhitzt, sobald die Last steigt."/>
         <text name="rms_breakdowns_thermostat_malfunction_stage4_description" text="Totalausfall des Thermostats. Das Kühlmittel kann nicht richtig zirkulieren, was zu einer schweren und schnellen Überhitzung führt."/>
         <text name="rms_breakdowns_overheat_protection_stage1_description" text="Der Motor ist in den Schutzmodus gegangen. Die Leistung ist begrenzt, bis die Temperatur sinkt."/>
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Überhitzungsschutz: Leistung reduziert"/>
@@ -327,7 +364,7 @@
         <text name="rms_breakdowns_overheat_protection_stage3_description" text="Der Überhitzungsschutz ist am Maximum. Es bleibt nur ein Bruchteil der Motorleistung."/>
         <text name="rms_breakdowns_overheat_protection_stage3_message" text="Überhitzungsschutz: Leistung stark reduziert"/>
         <text name="rms_breakdowns_overheat_protection_stage4_description" text="Der Motor wurde abgeschaltet, um Schäden zu vermeiden. Lass ihn abkühlen, bevor du neu startest."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Motor wird zum Schutz vor Überhitzung abgestellt"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Überhitzungsschutz: Motor abgestellt"/>
         <text name="rms_breakdowns_overload_breakdown_stage2_message" text="Kritische Überlastung! Verringere sofort die Belastung der Maschine."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Leichte Fehlfunktion der Ölpumpe. Der Öldruck ist reduziert, das Motordrehmoment sinkt leicht, die Motortemperatur steigt und mechanisches Klopfen kann auftreten."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Mäßige Fehlfunktion der Ölpumpe. Der Öldruck ist unzureichend, das Motordrehmoment deutlich reduziert, die Motortemperatur erhöht und mechanisches Klopfen klar hörbar."/>
@@ -337,11 +374,11 @@
         <text name="rms_breakdowns_engine_jam_stage1_description" text="Der Motor hat sich festgefressen und kann sich nicht mehr drehen."/>
         <text name="rms_breakdowns_engine_jam_stage1_message" text="Motor blockiert"/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor abgewürgt"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Fehlermeldungen im Steuergerät. Leicht reduzierte Motorleistung."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Mäßige Fehlfunktion des Steuergeräts. Spürbarer Leistungsverlust und erhöhter Kraftstoffverbrauch."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Schwere Fehlfunktion des Steuergeräts. Erheblicher Leistungsverlust, hoher Kraftstoffverbrauch und Gefahr des Motorabwürgens."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Totalausfall des Steuergeräts. Der Motor kann nicht gesteuert werden und startet nicht."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="Ausfall des Steuergeräts"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Leichte ECU-Fehlfunktion. Die Motorleistung ist leicht reduziert."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Mäßige ECU-Fehlfunktion. Spürbarer Leistungsverlust und erhöhter Kraftstoffverbrauch."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Schwere ECU-Fehlfunktion. Erheblicher Leistungsverlust, hoher Kraftstoffverbrauch und Gefahr des Motorabwürgens."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Vollständiger ECU-Ausfall. Der Motor kann nicht gesteuert werden und startet nicht."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="ECU-Ausfall"/>
         <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Leichte Korrosion an Verkabelung und elektrischen Steckverbindungen. Erhöhter Übergangswiderstand führt zu gelegentlichem Flackern der Beleuchtung, unstabiler Versorgung und schwerem Anspringen."/>
         <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Mäßige Korrosion an Verkabelung und elektrischen Steckverbindungen. Kontaktverluste verursachen häufiges Flackern der Beleuchtung, instabile Spannungsversorgung, erschwerten Motorstart und der Motor kann absterben."/>
         <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Starke Korrosion an Verkabelung und elektrischen Steckverbindungen. Die Versorgung kritischer Stromkreise ist instabil, die Beleuchtung kann vollständig ausfallen, das Motordrehmoment ist reduziert, der Motor stirbt wahrscheinlich ab und der Start ist unzuverlässig."/>
@@ -356,7 +393,7 @@
         <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Starker Verschleiß der CVT-Kette. Der Schlupf ist erheblich, die Effizienz sinkt stark und das Getriebe kann die angeforderte Übersetzung kaum halten."/>
         <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Kritischer Ausfall der CVT-Kette. Das Getriebe kann das Drehmoment nicht mehr korrekt übertragen und das Fahrzeug ist praktisch nicht mehr einsatzfähig."/>
         <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Ausfall der CVT-Kette"/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Erste Anzeichen einer Störung des CVT-Getriebes wurden erkannt. Eine Diagnose und Reparatur ist erforderlich."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Erste Anzeichen einer Störung des CVT-Getriebes wurden erkannt. Eine Inspektion und eine Reparatur sind erforderlich."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Die Störung des CVT-Getriebes schreitet fort. Weiterer Betrieb kann zum Notlauf führen."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Kritische Beschädigung des CVT-Getriebes. Das Getriebe arbeitet im Notlauf und die maximale Fahrgeschwindigkeit ist reduziert."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Vollständiger Ausfall des CVT-Getriebes. Ein weiterer Betrieb ist bis zur Reparatur nicht möglich."/>
@@ -373,7 +410,7 @@
         <text name="rms_breakdowns_bearing_wear_stage1_description" text="Leichter Lagerverschleiß. Der mechanische Widerstand steigt leicht an und ungewöhnliche Laufgeräusche können auftreten."/>
         <text name="rms_breakdowns_bearing_wear_stage2_description" text="Mäßiger Lagerverschleiß. Die Reibung steigt deutlich, das Geräusch wird stärker und die mechanische Effizienz sinkt."/>
         <text name="rms_breakdowns_bearing_wear_stage3_description" text="Starker Lagerverschleiß. Die Reibung ist hoch, die Geräuschentwicklung deutlich und unter Last besteht echte Fressgefahr."/>
-        <text name="rms_breakdowns_bearing_wear_stage4_description" text="Kritischer Ausfall der Lager. Das betroffene Bauteil steht kurz vor vollständigem Festfressen und ein Betrieb ist nicht mehr möglich."/>
+        <text name="rms_breakdowns_bearing_wear_stage4_description" text="Kritischer Ausfall der Lager. Sie stehen kurz vor vollständigem Festfressen und ein Betrieb ist nicht mehr möglich."/>
         <text name="rms_breakdowns_bearing_wear_stage4_message" text="Ausfall der Lager"/>
         <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Leichte Fehlfunktion des Lichtmaschinenreglers. Die Ladeleistung ist reduziert, wodurch die Batterie schlechter geladen wird."/>
         <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Mäßige Fehlfunktion des Lichtmaschinenreglers. Die Ladeleistung ist instabil und reduziert, was zu schlechter Batterieladung und erhöhten Spannungsverlusten im Bordnetz führt."/>
@@ -391,7 +428,7 @@
         <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Totalausfall der Kraftstoffpumpe. Es wird kein Kraftstoff zum Motor gefördert."/>
         <text name="rms_breakdowns_fuel_pump_malfunction_stage4_message" text="Ausfall der Kraftstoffpumpe"/>
         <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Eine oder mehrere Einspritzdüsen sind leicht verstopft. Der Motor läuft möglicherweise etwas unrund, mit einem geringen Leistungsverlust."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Schlechte Kraftstoffzerstäubung. Der Motor hat Zündaussetzer unter Last, was zu spürbarem Leistungsverlust und Motorruckeln führt."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Schlechte Kraftstoffzerstäubung. Der Motor stockt unter Last, mit spürbarem Leistungsverlust und Ruckeln."/>
         <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Eine Einspritzdüse klemmt. Der Motor läuft sehr schlecht, mit erheblichem Leistungsverlust und unzuverlässigem Startverhalten."/>
         <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Eine Einspritzdüse ist komplett ausgefallen. Der Motor läuft nicht korrekt und startet möglicherweise gar nicht."/>
         <text name="rms_breakdowns_fuel_injector_malfunction_stage4_message" text="Ausfall einer Einspritzdüse"/>
@@ -403,7 +440,7 @@
         <text name="rms_breakdowns_fuel_line_air_leak_stage1_description" text="Leichter Lufteintritt in der Kraftstoffleitung. Die Kraftstoffversorgung wird leicht ungleichmäßig."/>
         <text name="rms_breakdowns_fuel_line_air_leak_stage2_description" text="Mäßiger Lufteintritt in der Kraftstoffleitung. Die Versorgung wird instabil, die Leistung sinkt und der Motor verschluckt sich."/>
         <text name="rms_breakdowns_fuel_line_air_leak_stage3_description" text="Starker Lufteintritt in der Kraftstoffleitung. Der Motor läuft sehr unruhig und die Gefahr, dass er abstirbt, ist hoch."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_description" text="Kritischer Defekt der Kraftstoffleitung mit starkem Lufteintritt. Der Motor kann nicht mehr korrekt mit Kraftstoff versorgt werden."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage4_description" text="Kritischer Ausfall der Kraftstoffleitung mit starkem Lufteintritt. Der Motor kann nicht mehr korrekt mit Kraftstoff versorgt werden."/>
         <text name="rms_breakdowns_fuel_line_air_leak_stage4_message" text="Luftleck in der Kraftstoffleitung"/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Leichte Fehlfunktion der Lüfterkupplung. Der Lüfter reagiert träger und die Kühlung ist leicht eingeschränkt."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Mäßige Fehlfunktion der Lüfterkupplung. Die Lüfterzuschaltung erfolgt unregelmäßig und die Kühlleistung sinkt deutlich."/>
@@ -418,35 +455,35 @@
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Mäßige interne Leckage im Hydraulikzylinder. Das selbstständige Absinken ist deutlich und nimmt mit der getragenen Last zu."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Schwere interne Leckage im Hydraulikzylinder. Schwere Geräte können ihre Position nicht mehr zuverlässig halten."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Kritische interne Leckage im Hydraulikzylinder. Jede angehobene Last sinkt schnell von selbst ab."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Geringfügiges internes Leck in der Pumpe. Hydraulische Anbaugeräte sind etwas langsamer."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Geringfügige interne Leckage in der Hydraulikpumpe. Hydraulische Anbaugeräte sind etwas langsamer."/>
         <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Verschlissene Pumpendichtungen. Merklich langsamere Hydraulikfunktionen."/>
         <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Beschädigte Hydraulikpumpe. Anbaugeräte sind extrem langsam und schwach."/>
         <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Ausfall der Hydraulikpumpe. Das Hydrauliksystem ist außer Betrieb."/>
         <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_message" text="Ausfall der Hydraulikpumpe"/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Ein Hydraulikschlauch hat eine kleine äußere Leckage. Etwas Öl tritt aus und die Hydraulik reagiert geringfügig schwächer."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="An einem Hydraulikschlauch ist leichte Feuchtigkeit sichtbar. Etwas Öl tritt aus und die Hydraulik reagiert geringfügig schwächer."/>
         <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Ein Hydraulikschlauch schwitzt sichtbar. Der Ölverlust hält an und die Hydraulikfunktionen reagieren langsamer."/>
         <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Ein Hydraulikschlauch ist aktiv undicht. Der Ölverlust ist deutlich und die Hydraulikfunktionen sind merklich schwächer."/>
         <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Ein Hydraulikschlauch hat eine schwere äußere Leckage. Öl tritt schnell aus und die Hydraulikleistung ist stark reduziert."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Der Hydraulikfilter beginnt den Durchfluss zu begrenzen. Die Hydraulikfunktionen werden etwas langsamer. Die normale Wartung ersetzt den Filter."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Der Hydraulikfilter ist mäßig zugesetzt. Alle Hydraulikfunktionen sind merklich langsamer. Die normale Wartung ersetzt den Filter."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Der Hydraulikfilter ist stark zugesetzt. Die Hydraulik reagiert sehr langsam. Die normale Wartung ersetzt den Filter."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Der Hydraulikfilter ist fast verstopft. Die Hydraulikfunktionen reagieren kaum noch. Die normale Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Der Hydraulikfilter ist leicht zugesetzt und beginnt, den Durchfluss zu begrenzen. Die Hydraulikfunktionen werden etwas langsamer. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Der Hydraulikfilter ist mäßig zugesetzt. Alle Hydraulikfunktionen sind merklich langsamer. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Der Hydraulikfilter ist stark zugesetzt. Die Hydraulik reagiert sehr langsam. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Der Hydraulikfilter ist vollständig zugesetzt. Die Hydraulikfunktionen reagieren kaum noch. Die Wartung ersetzt den Filter."/>
         <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Der Hydraulikölkühler hat etwas Wirkung verloren. Bei längerem Hydraulikeinsatz steigt die Öltemperatur leicht an."/>
         <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Der Hydraulikölkühler arbeitet unzureichend. Bei dauerhaftem Hydraulikeinsatz steigt die Öltemperatur deutlich an."/>
         <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Der Hydraulikölkühler ist stark beeinträchtigt. Schwere Hydraulikarbeit lässt das Öl schnell überhitzen."/>
         <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Der Hydraulikölkühler ist ausgefallen. Längerer Hydraulikeinsatz führt zu starker Ölüberhitzung und beschleunigt den Pumpenverschleiß."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Ein Hydrauliksteuerventil beginnt zu klemmen. Eine Hydraulikfunktion stockt gelegentlich und verliert unter Last Kraft."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Ein Hydrauliksteuerventil klemmt zeitweise. Eine Hydraulikfunktion wird langsamer und verliert mit steigender Last mehr Kraft."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Ein Hydrauliksteuerventil ist stark verschlissen. Eine Hydraulikfunktion bewegt sich unregelmäßig und hat unter hoher Last Mühe."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Ein Hydrauliksteuerventil klemmt stark. Eine Hydraulikfunktion bewegt sich unregelmäßig und hat unter hoher Last Mühe."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Ein Hydrauliksteuerventil ist kritisch beschädigt. Eine Hydraulikfunktion stoppt wiederholt und kann eine schwere Last kaum bewegen."/>
-        <text name="rms_breakdown_at_progress_message" text="in Arbeit"/>
+        <text name="rms_breakdown_at_progress_message" text="läuft"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Motor ist kalt! Verringere die Belastung!"/>
+        <text name="rms_spec_cold_engine_message" text="Warnung! Motor kalt, verringere die Belastung."/>
         <text name="rms_spec_overheat_engine_message" text="Warnung! Motor überhitzt."/>
         <text name="rms_spec_overheat_transmission_message" text="Warnung! Getriebe überhitzt."/>
         <text name="rms_spec_overhaul_partial" text="Teilweise"/>
         <text name="rms_spec_overhaul_standard" text="Standard"/>
-        <text name="rms_spec_overhaul_full" text="Voll"/>
+        <text name="rms_spec_overhaul_full" text="Vollständig"/>
         <text name="rms_spec_op_hours_short" text="h"/>
         <text name="rms_spec_this_month" text="Diesen Monat"/>
         <text name="rms_spec_tomorrow_at" text="morgen um "/>
@@ -456,6 +493,7 @@
         <text name="rms_spec_next_planned_service_failed_notification" text="Geplanter Vorgang nicht gestartet (%s): %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="übermorgen um "/>
         <text name="rms_spec_day_s" text="Tage"/>
+        <text name="rms_spec_day_one" text="Tag"/>
         <text name="rms_spec_duration_format_hours" text="%d %s"/>
         <text name="rms_spec_duration_format_minutes" text="%d %s"/>
         <text name="rms_spec_duration_format_combined" text="%s und %s"/>
@@ -464,13 +502,16 @@
         <text name="rms_spec_inspection_no_issues_detected_notification" text="Keine Probleme erkannt"/>
         <text name="rms_spec_inspection_visual" text="Visuell"/>
         <text name="rms_spec_inspection_standard" text="Standard"/>
-        <text name="rms_spec_inspection_complete" text="Komplettdiagnose"/>
+        <text name="rms_spec_inspection_complete" text="Vollständig"/>
         <text name="rms_spec_hour_s" text="Stunden"/>
+        <text name="rms_spec_hour_one" text="Stunde"/>
         <text name="rms_spec_minute_s" text="Minuten"/>
+        <text name="rms_spec_minute_one" text="Minute"/>
         <text name="rms_spec_months_ago_unit" text="Monaten"/>
+        <text name="rms_spec_month_ago_one" text="Monat"/>
         <text name="rms_spec_months_ago_format" text="vor %s %s"/>
-        <text name="rms_spec_maintenance_complete_notification" text="Arbeit abgeschlossen: %s"/>
-        <text name="rms_spec_maintenance_cancelled_notification" text="Arbeit abgesagt: %s"/>
+        <text name="rms_spec_maintenance_complete_notification" text="Vorgang abgeschlossen: %s"/>
+        <text name="rms_spec_maintenance_cancelled_notification" text="Vorgang abgebrochen: %s"/>
         <text name="rms_spec_maintenance_minimal" text="Minimal"/>
         <text name="rms_spec_maintenance_standard" text="Standard"/>
         <text name="rms_spec_maintenance_extended" text="Erweitert"/>
@@ -497,11 +538,12 @@
         <text name="rms_spec_state_overhaul" text="Überholung"/>
         <text name="rms_spec_state_overdue" text="Überfällig"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
-        <text name="rms_spec_state_broken" text="Defekt"/>
+        <text name="rms_spec_state_broken" text="Ausgefallen"/>
         <text name="rms_spec_state_bad" text="Schlecht"/>
         <text name="rms_spec_state_budget" text="Günstig"/>
         <text name="rms_spec_state_excellent" text="Exzellent"/>
         <text name="rms_spec_state_good" text="Gut"/>
+        <text name="rms_spec_state_service_good" text="Gut"/>
         <text name="rms_spec_state_normal" text="Normal"/>
         <text name="rms_spec_state_terrible" text="Sehr schlecht"/>
         <text name="rms_spec_state_unknown" text="Unbekannt"/>
@@ -520,52 +562,51 @@
         <text name="rms_spec_consumable_types_aftermarket" text="Nachbau"/>
         <text name="rms_spec_consumable_types_oem" text="Original"/>
         <text name="rms_spec_consumable_types_premium" text="Premium"/>
-        <text name="rms_spec_repair_type_fix" text="Behelfsmäßig"/>
+        <text name="rms_spec_repair_type_fix" text="Behelfsreparatur"/>
         <text name="rms_spec_repair_type_replacement" text="Standard"/>
         <text name="rms_spec_repair_type_advanced" text="Gründlich"/>
         <!-- Service Options -->
-        <text name="rms_option_menu_option_one_title_inspection" text="Wähle den Inspektionstyp aus"/>
-        <text name="rms_option_menu_option_one_title_maintenance" text="Wähle die Wartungsstufe aus"/>
-        <text name="rms_option_menu_option_one_title_repair" text="Wähle die Reparaturart aus"/>
-        <text name="rms_option_menu_option_one_title_overhaul" text="Wähle den Arbeitsumfang aus"/>
-        <text name="rms_option_menu_option_two_title_maintenance" text="Wähle die Qualität der Verbrauchsmaterialien"/>
-        <text name="rms_option_menu_option_two_title_repair" text="Wähle die Ersatzteilqualität"/>
-        <text name="rms_option_menu_option_two_title_overhaul" text="Wähle das System aus"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="* Standardreparatur mit Originalteilen automatisch starten, wenn Defekte erkannt werden."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="* Nach der Reparatur automatisch eine Standardwartung mit originalen Verbrauchsmaterialien starten."/>
-        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="* Das Fahrzeug während der Überholung neu lackieren."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="* Setzt das gewählte System wieder in einen guten Betriebszustand. Schneller und günstiger als eine vollständige Überholung des Fahrzeugs."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="* Umfassende Arbeiten an allen wichtigen Komponenten. Stellt den Zustand auf ein gutes Niveau wieder her."/>
-        <text name="rms_option_menu_overhaul_full_description" text="* Komplette Überholung. Hohe Kosten und Dauer, aber stellt den Zustand auf ein ausgezeichnetes Niveau wieder her."/>
-        <text name="rms_option_menu_price_text" text="Preis: "/>
-        <text name="rms_option_menu_part_used_description" text="* Geborgene Teile. Sehr günstig, aber mit 50 % Fehlerrisiko."/>
-        <text name="rms_option_menu_part_aftermarket_description" text="* Günstige Nachbauteile. Niedrigere Kosten, aber mit 33 % Fehlerrisiko."/>
-        <text name="rms_option_menu_part_oem_description" text="* Originalteile des Herstellers. Standardzuverlässigkeit mit 10 % Fehlerrisiko zum Vollpreis."/>
-        <text name="rms_option_menu_part_premium_description" text="* Verstärkte Leistungsteile. Teurer, aber streng qualitätskontrolliert und ohne Fehlerrisiko."/>
-        <text name="rms_option_menu_consumable_used_description" text="* Günstige Verbrauchsmaterialien. Sehr preiswert, aber mit 50 % Fehlerrisiko."/>
-        <text name="rms_option_menu_consumable_aftermarket_description" text="* Günstige Nachbau-Verbrauchsmaterialien. Geringere Kosten, aber mit 33 % Fehlerrisiko."/>
-        <text name="rms_option_menu_consumable_oem_description" text="* Originale Verbrauchsmaterialien. Standardzuverlässigkeit mit 10 % Fehlerrisiko zum Vollpreis."/>
-        <text name="rms_option_menu_consumable_premium_description" text="* Premium-Verbrauchsmaterialien. Teurer, aber streng qualitätskontrolliert und ohne Fehlerrisiko."/>
-        <text name="rms_option_menu_perform_repair" text="Erkannte Defekte beheben"/>
+        <text name="rms_option_menu_option_one_title_inspection" text="Inspektionsart"/>
+        <text name="rms_option_menu_option_one_title_maintenance" text="Wartungsstand"/>
+        <text name="rms_option_menu_option_one_title_repair" text="Reparaturmethode"/>
+        <text name="rms_option_menu_option_one_title_overhaul" text="Umfang der Überholung"/>
+        <text name="rms_option_menu_option_two_title_maintenance" text="Qualität der Verbrauchsmaterialien"/>
+        <text name="rms_option_menu_option_two_title_repair" text="Ersatzteilqualität"/>
+        <text name="rms_option_menu_option_two_title_overhaul" text="Zu überholendes System"/>
+        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Wenn der Vorgang Schäden aufdeckt, folgt automatisch eine Standardreparatur mit Originalteilen."/>
+        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Nach der Reparatur folgt automatisch eine Standardwartung mit Original-Verbrauchsmaterialien."/>
+        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="Fügt dieser Überholung eine vollständige Neulackierung des Fahrzeugs hinzu."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="Teilweise Überholung: Behandelt nur das ausgewählte System, beseitigt dessen Schäden, baut dessen mechanische Belastung ab und stellt dessen Zustand wieder her. Die zugehörige Flüssigkeit wird ersetzt, sofern vorhanden."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Standardüberholung: Behandelt alle Systeme, beseitigt die abgedeckten Schäden, baut mechanische Belastungen ab und wechselt alle Flüssigkeiten. Stellt einen guten Zustand wieder her."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Vollständige Überholung: Behandelt alle Systeme, beseitigt die abgedeckten Schäden, baut mechanische Belastungen ab und wechselt alle Flüssigkeiten. Stellt einen ausgezeichneten Zustand wieder her."/>
+        <text name="rms_option_menu_price_text" text="Preis"/>
+        <text name="rms_option_menu_part_used_description" text="Gebrauchtteile: niedrigste Kosten, mit 50 % Risiko eines späteren Defekts."/>
+        <text name="rms_option_menu_part_aftermarket_description" text="Nachbauteile: geringere Kosten, mit 33 % Risiko eines späteren Defekts."/>
+        <text name="rms_option_menu_part_oem_description" text="Originalteile des Herstellers: Standardpreis, mit 10 % Risiko eines späteren Defekts."/>
+        <text name="rms_option_menu_part_premium_description" text="Premiumteile: 20 % Aufpreis, ohne durch das Teil verursachtes Defektrisiko."/>
+        <text name="rms_option_menu_consumable_used_description" text="Günstige Verbrauchsmaterialien: niedrigste Kosten, mit 50 % Risiko eines späteren Defekts."/>
+        <text name="rms_option_menu_consumable_aftermarket_description" text="Nachbau-Verbrauchsmaterialien: geringere Kosten, mit 33 % Risiko eines späteren Defekts."/>
+        <text name="rms_option_menu_consumable_oem_description" text="Original-Verbrauchsmaterialien: Standardpreis, mit 10 % Risiko eines späteren Defekts."/>
+        <text name="rms_option_menu_consumable_premium_description" text="Premium-Verbrauchsmaterialien: 20 % Aufpreis, ohne durch die Verbrauchsmaterialien verursachtes Defektrisiko."/>
+        <text name="rms_option_menu_perform_repair" text="Automatische Reparatur"/>
         <text name="rms_option_menu_perform_renew_paint" text="Lack erneuern"/>
-        <text name="rms_option_menu_perform_maintenance" text="Nach der Reparatur eine Wartung durchführen"/>
+        <text name="rms_option_menu_perform_maintenance" text="Automatische Wartung"/>
         <text name="rms_option_menu_warranty_repair_text" text="Garantiereparatur"/>
-        <text name="rms_option_menu_duration_text" text="Dauer: "/>
+        <text name="rms_option_menu_duration_text" text="Dauer"/>
         <text name="rms_option_menu_duration_instant" text="Sofort"/>
-        <text name="rms_option_menu_finish_time_text" text="Endzeit: "/>
+        <text name="rms_option_menu_finish_time_text" text="Endzeit"/>
         <text name="rms_option_menu_start_text" text="Starten"/>
-        <text name="rms_option_menu_inspection_visual_description" text="* Schnelle äußere Sichtprüfung. Geringe Kosten und sofortiges Ergebnis. Erkennt sichtbare Defekte, kann aber einzelne übersehen. Liefert keine Daten zum technischen Zustand."/>
-        <text name="rms_option_menu_inspection_standard_description" text="* Routinediagnose. Identifiziert alle aktiven Defekte und erstellt einen allgemeinen Bericht über den Zustand des Fahrzeugs."/>
-        <text name="rms_option_menu_inspection_complete_description" text="* Tiefendiagnose. Garantiert die Erkennung aller Defekte, einschließlich sich anbahnender Ausfälle, und liefert einen umfassenden Bericht mit exakten Zustandsprozenten aller Komponenten."/>
-        <text name="rms_option_menu_maintenance_minimal_description" text="* Günstige Wartung mit kürzerem Intervall. Flüssigkeiten: nur fehlende Mengen auffüllen, kein vollständiger Wechsel."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="* Wartung nach Herstellervorgaben mit Standardintervall. Flüssigkeiten: vollständiger Motorölwechsel und Auffüllen der anderen Kreisläufe bei Bedarf."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="* Umfassende Wartung, die einen besseren Wartungsstand herstellt und das Intervall verlängert. Flüssigkeiten: vollständiger Wechsel aller Flüssigkeiten."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="* Wartung problematischer Systeme zur Senkung des Ausfallrisikos. Flüssigkeiten: vollständiger Wechsel aller Flüssigkeiten."/>
-        <text name="rms_option_menu_repair_type_fix_description" text="* Behelfsmäßige Reparatur, um die Maschine für dringende Arbeiten betriebsfähig zu halten. Stellt die Grundfunktion schnell und günstig wieder her, aber der Defekt ist nicht beseitigt und kehrt nach einiger Zeit zurück."/>
-        <text name="rms_option_menu_repair_type_replacement_description" text="* Standardmäßiger Austausch des ausgefallenen Bauteils. Beseitigt den aktuellen Defekt vollständig und stellt den normalen Betrieb der betroffenen Einheit wieder her."/>
-        <text name="rms_option_menu_repair_type_advanced_description" text="* Gründliche Reparatur inklusive Austausch des defekten Bauteils und Wartung verwandter Teile innerhalb des Systems. Verringert das Risiko wiederholter Ausfälle im betroffenen System deutlich."/>
-        <text name="rms_option_menu_chosen_parts_text" text="* Für die Reparatur ausgewählte Teile:"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Dieser zweite Vorgang wird separat berechnet; Flüssigkeiten werden beim Start bereitgestellt oder aus dem Vorrat entnommen."/>
+        <text name="rms_option_menu_inspection_visual_description" text="Visuelle Inspektion: Sucht schnell und kostengünstig nur nach bereits aktiven Schäden, jedoch mit verringerter Erkennungsleistung. Der Bericht zeigt keinen detaillierten Komponentenzustand."/>
+        <text name="rms_option_menu_inspection_standard_description" text="Standardinspektion: Sucht mit normaler Erkennungsleistung nach aktiven Schäden und erstellt einen allgemeinen Bericht ohne detaillierte Zustandswerte."/>
+        <text name="rms_option_menu_inspection_complete_description" text="Vollständige Inspektion: Sucht mit normaler Erkennungsleistung nach aktiven und möglichen Schäden und erstellt anschließend einen vollständigen Bericht mit detailliertem Komponentenzustand."/>
+        <text name="rms_option_menu_maintenance_minimal_description" text="Minimale Wartung: Stellt den Wartungsstand teilweise wieder her und füllt nur fehlende Flüssigkeiten nach. Das nächste Intervall bleibt verkürzt."/>
+        <text name="rms_option_menu_maintenance_standard_description" text="Standardwartung: Stellt den Wartungsstand auf den Referenzwert zurück, wechselt das Motoröl und füllt die anderen Kreisläufe bei Bedarf nach."/>
+        <text name="rms_option_menu_maintenance_extended_description" text="Erweiterte Wartung: Hebt den Wartungsstand über den Standardwert, verlängert das nächste Intervall und wechselt alle Flüssigkeiten."/>
+        <text name="rms_option_menu_maintenance_preventive_description" text="Präventive Wartung: Stellt den Wartungsstand auf den Referenzwert zurück, wechselt alle Flüssigkeiten und baut die mechanische Belastung in bis zu drei vorrangigen Systemen ab."/>
+        <text name="rms_option_menu_repair_type_fix_description" text="Behelfsreparatur: Nimmt die Maschine schnell und kostengünstig wieder in Betrieb, ohne den Schaden zu beseitigen. Dieser tritt nach begrenzter Zeit erneut auf."/>
+        <text name="rms_option_menu_repair_type_replacement_description" text="Standardreparatur: Beseitigt den Schaden und ersetzt das ausgefallene Bauteil. Die mechanische Belastung im betroffenen System wird teilweise reduziert."/>
+        <text name="rms_option_menu_repair_type_advanced_description" text="Gründliche Reparatur: Beseitigt den Schaden, ersetzt das ausgefallene Bauteil und baut die angesammelte mechanische Belastung im betroffenen System vollständig ab."/>
+        <text name="rms_option_menu_follow_up_separate_transaction" text="Der folgende Vorgang wird separat berechnet. Benötigte Flüssigkeiten werden beim Start bereitgestellt oder aus dem Vorrat entnommen."/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Inspektionsbericht"/>
         <text name="rms_report_vehicle_name_title" text="Fahrzeugname"/>
@@ -576,11 +617,11 @@
         <text name="rms_report_vehicle_spec_battery_charge" text="Batterieladung"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="Batteriekapazität"/>
         <text name="rms_report_date_title" text="Datum"/>
-        <text name="rms_report_detected_breakdowns_title" text="Erkannte Defekte"/>
+        <text name="rms_report_detected_breakdowns_title" text="Festgestellte Schäden"/>
         <text name="rms_report_inspection_type_title" text="Inspektionsart"/>
         <text name="rms_report_inspection_location_title" text="Ort der Inspektion"/>
         <text name="rms_report_overall_assessment_title" text="Gesamtzustandsbewertung"/>
-        <text name="rms_report_overall_assessment_condition" text="Zustand"/>
+        <text name="rms_report_overall_assessment_condition" text="Zustandsniveau"/>
         <text name="rms_report_overall_assessment_crit_fail_risk" text="Risiko eines kritischen Ausfalls"/>
         <text name="rms_report_overall_assessment_service" text="Wartungsstand"/>
         <text name="rms_report_overall_assessment_mtbf" text="Mittlere Zeit zwischen Ausfällen (Stunden)"/>
@@ -588,14 +629,14 @@
         <text name="rms_report_overall_assessment_wear_rate" text="Verschleißrate (%/h)"/>
         <text name="rms_report_overall_assessment_nominal_wear_rate" text="Nominale Verschleißrate (%/h)"/>
         <text name="rms_report_recommendations_title" text="Fazit und Empfehlungen"/>
-        <text name="rms_report_recommendation_repair_active_breakdowns" text="Aktive Defekte erkannt. Eine Standardreparatur aller dieser Defekte wird empfohlen."/>
-        <text name="rms_report_recommendation_repeat_maintenance" text="Defekte Verbrauchsmaterialien erkannt. Wiederhole die Wartung, um fehlerhafte Komponenten auszutauschen."/>
-        <text name="rms_report_recommendation_defective_parts" text="Defekte Ersatzteile erkannt: %s. Ein vorsorglicher Austausch wird empfohlen, um plötzliche Ausfälle zu vermeiden."/>
-        <text name="rms_report_recommendation_quick_fix" text="Provisorischer Reparaturzustand erkannt: %s. Ein Standardaustausch wird bei nächster Gelegenheit empfohlen."/>
+        <text name="rms_report_recommendation_repair_active_breakdowns" text="Aktive Schäden festgestellt. Eine Standardreparatur aller dieser Schäden wird empfohlen."/>
+        <text name="rms_report_recommendation_repeat_maintenance" text="Defekte Verbrauchsmaterialien festgestellt. Wiederhole die Wartung, um sie auszutauschen."/>
+        <text name="rms_report_recommendation_defective_parts" text="Defekte Ersatzteile festgestellt: %s. Ein vorsorglicher Austausch wird empfohlen, um einen plötzlichen Schaden zu vermeiden."/>
+        <text name="rms_report_recommendation_quick_fix" text="Behelfsreparaturen festgestellt: %s. Eine Standardreparatur wird so bald wie möglich empfohlen."/>
         <text name="rms_report_recommendation_service_due" text="Wartungsintervall erreicht. Führe die Wartung durch."/>
-        <text name="rms_report_recommendation_service_urgent" text="Das Wartungsintervall wurde überschritten. Führe dringend eine Wartung durch!"/>
-        <text name="rms_report_recommendation_system_overhaul" text="Kritische Verschlechterung an diesem System festgestellt: %s. Führe eine Teilüberholung durch."/>
-        <text name="rms_report_recommendation_system_preventive_maintenance" text="Erhöhtes Ausfallrisiko an diesem System festgestellt: %s. Führe eine präventive Wartung durch, um es zu senken."/>
+        <text name="rms_report_recommendation_service_urgent" text="Das Wartungsintervall wurde überschritten. Führe dringend eine Wartung durch."/>
+        <text name="rms_report_recommendation_system_overhaul" text="Kritische Verschlechterung an diesem System festgestellt: %s. Führe eine teilweise Überholung durch."/>
+        <text name="rms_report_recommendation_system_preventive_maintenance" text="Erhöhtes Schadensrisiko an diesem System festgestellt: %s. Führe eine präventive Wartung durch, um es zu senken."/>
         <text name="rms_report_recommendation_overhaul" text="Verschlechterung der Kernkomponenten festgestellt. Führe eine Überholung durch."/>
         <text name="rms_report_recommendation_operating_conditions" text="Anzeichen einer Überbeanspruchung festgestellt. Verbessere die Betriebsbedingungen."/>
         <text name="rms_report_recommendation_all_ok" text="Keine besonderen Empfehlungen. Das Fahrzeug ist einsatzbereit."/>
@@ -610,7 +651,9 @@
         <text name="rms_report_stress_moderate" text="Mäßig"/>
         <text name="rms_report_stress_elevated" text="Erhöht"/>
         <text name="rms_report_stress_high" text="Sehr hoch"/>
-        <text name="rms_report_system_condition_title" text="Systemzustand | Ausfallrisiko"/>
+        <text name="rms_report_system_condition_title" text="Systemzustand"/>
+        <text name="rms_report_breakdown_risk_title" text="Schadensrisiko"/>
+        <text name="rms_report_component_title" text="Komponente"/>
         <text name="rms_report_system_condition_transmission" text="Getriebe"/>
         <text name="rms_report_system_condition_power" text="Aktuelle Leistung"/>
         <text name="rms_report_system_condition_brakes" text="Bremseffizienz"/>
@@ -631,18 +674,19 @@
         <text name="rms_grease_gun_no_vehicle" text="Kein Fahrzeug in Schmierreichweite"/>
         <text name="rms_grease_gun_function" text="Wird zum Abschmieren der Schmierstellen verwendet"/>
         <text name="rms_grease_gun_action" text="Fett auftragen"/>
-        <text name="rms_grease_gun_already_lubricated" text="%s ist bereits geschmiert"/>
+        <text name="rms_grease_gun_already_lubricated" text="%s: Schmierung bereits erfolgt"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s benötigt keine Schmierung"/>
         <text name="rms_air_blower_name" text="Druckluftgebläse"/>
         <text name="rms_air_blower_no_vehicle" text="Kein Fahrzeug in Reinigungsreichweite"/>
         <text name="rms_air_blower_function" text="Wird zum Reinigen von Kühlern und Luftfiltern verwendet"/>
         <text name="rms_air_blower_action" text="Kühler und Luftfilter reinigen"/>
         <text name="rms_air_blower_already_clean" text="%s: Kühler und Luftfilter sind bereits sauber"/>
+        <text name="rms_air_blower_filter_requires_maintenance" text="%s: Der Kühler ist sauber. Der Luftfilter hat die Grenze der Reinigung durch Ausblasen erreicht. Sein Austausch erfordert eine Wartung in der Werkstatt"/>
         <text name="rms_air_blower_cleaning_not_require" text="%s benötigt keine Reinigung"/>
         <text name="rms_jumper_cables_name" text="Starthilfekabel"/>
-        <text name="rms_jumper_cables_function" text="Werden verwendet, um Fahrzeugbatterien zu verbinden und Motoren mit entladener Batterie per Starthilfe zu starten"/>
+        <text name="rms_jumper_cables_function" text="Werden verwendet, um zwei Batterien zu verbinden und ein Fahrzeug mit entladener Batterie zu starten"/>
         <text name="rms_jumper_cables_action" text="Starthilfekabel anschließen/abklemmen"/>
-        <text name="rms_jumper_cables_auto_disconnected" text="Starthilfekabel getrennt: eines der Fahrzeuge hat sich bewegt"/>
+        <text name="rms_jumper_cables_auto_disconnected" text="Starthilfekabel getrennt: Eines der Fahrzeuge hat sich bewegt"/>
         <text name="rms_jumper_cables_connected" text="Starthilfekabel mit %s verbunden"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="Dieses Fahrzeug ist nicht für den Anschluss von Starthilfekabeln geeignet"/>
         <text name="rms_jumper_cables_is_too_far" text="%s ist zu weit von %s entfernt"/>
@@ -666,15 +710,17 @@
         <text name="rms_fluid_incompatible_title" text="Ungeeignete Flüssigkeit"/>
         <text name="rms_fluid_incompatible_message" text="Dieses Produkt ist nicht für diesen Kreislauf vorgesehen. Es verunreinigt ihn und kann den Systemverschleiß verdreifachen, die Erwärmung erhöhen oder die Hydraulik verlangsamen. Nur ein vollständiger Wechsel beseitigt die Verunreinigung. Fortfahren?"/>
         <text name="rms_fluid_error_no_vehicle" text="Kein passendes Fahrzeug mit Flüssigkeitsbedarf innerhalb von 4 m"/>
-        <text name="rms_fluid_error_no_circuit" text="Dieses Fahrzeug hat keinen Kreislauf, der Flüssigkeit benötigt"/>
+        <text name="rms_fluid_error_no_circuit" text="Dieses Fahrzeug benötigt kein Nachfüllen von Flüssigkeit"/>
         <text name="rms_fluid_error_motor_running" text="Motor abstellen, bevor Flüssigkeit umgefüllt wird"/>
         <text name="rms_fluid_error_vehicle_moving" text="Das Fahrzeug muss stehen"/>
-        <text name="rms_fluid_dealer_billed" text="Berechnete Flüssigkeiten"/>
+        <text name="rms_fluid_dealer_billed" text="Abgerechnete Flüssigkeiten"/>
         <text name="rms_fluid_stock_required" text="Benötigter Flüssigkeitsvorrat"/>
+        <text name="rms_fluid_refill_work_order" text="Flüssigkeiten nachfüllen"/>
+        <text name="rms_fluid_refill_dealer_supply" text="Bereitstellung im Kostenvoranschlag enthalten"/>
+        <text name="rms_fluid_refill_stock_supply" text="Entnahme aus dem Werkstattbestand"/>
         <text name="rms_fluid_mode_top_up" text="Nachfüllen"/>
         <text name="rms_fluid_mode_replace" text="Wechsel"/>
-        <text name="rms_fluid_mode_repair" text="Nachfüllen nach Leck"/>
-        <text name="rms_fluid_refill_confirm" text="%s: %s&#10;%s%s&#10;&#10;Dieses Nachfüllen bestätigen?"/>
+        <text name="rms_fluid_mode_repair" text="Nachfüllen nach Leckage"/>
         <text name="rms_fluid_service_workshop_not_found" text="Das Fahrzeug befindet sich nicht mehr im Werkstattbereich."/>
         <text name="rms_fluid_service_stock_insufficient" text="Im Werkstattbereich sind nicht genügend kompatible Betriebsflüssigkeiten vorhanden."/>
         <text name="rms_fluid_service_price_unavailable" text="Der Preis der benötigten Betriebsflüssigkeit ist nicht verfügbar."/>
@@ -692,35 +738,36 @@
         <text name="rms_inspection_section_lubrication" text="Schmierstellen"/>
         <text name="rms_inspection_section_additional" text="Zusätzliche Hinweise"/>
         <text name="rms_inspection_verdict_ok_title" text="Einsatzbereit"/>
-        <text name="rms_inspection_verdict_ok_message" text="Nichts zu beanstanden, die Maschine kann raus."/>
+        <text name="rms_inspection_verdict_ok_message" text="Keine Beanstandungen. Die Maschine ist einsatzbereit."/>
         <text name="rms_inspection_verdict_watch_title" text="Im Auge behalten"/>
-        <text name="rms_inspection_verdict_watch_message" text="Ein Punkt braucht Aufmerksamkeit. Die Maschine kann arbeiten, kümmere dich heute darum."/>
+        <text name="rms_inspection_verdict_watch_message" text="Ein Punkt erfordert Aufmerksamkeit. Die Maschine kann arbeiten; behebe ihn noch heute."/>
+        <text name="rms_inspection_verdict_air_filter_service_message" text="Die Maschine kann arbeiten. Plane eine Wartung in der Werkstatt ein, um den Luftfilter zu ersetzen."/>
         <text name="rms_inspection_verdict_stop_title" text="Nicht einsetzen"/>
-        <text name="rms_inspection_verdict_stop_message" text="Ein Punkt ist kritisch. Diese Maschine nicht arbeiten lassen, bevor das erledigt ist."/>
+        <text name="rms_inspection_verdict_stop_message" text="Ein Punkt muss vor jeder Nutzung behoben werden. Setze diese Maschine in diesem Zustand nicht ein."/>
         <text name="rms_inspection_service_due_in" text="nächste Wartung in %s"/>
         <text name="rms_inspection_service_overdue" text="Wartung überfällig seit %s"/>
-        <text name="rms_inspection_status_slightly_low" text="Leicht Niedrig"/>
-        <text name="rms_inspection_status_slightly_dirty" text="Leicht Zugesetzt"/>
-        <text name="rms_inspection_status_slightly_dry" text="Leicht Trocken"/>
+        <text name="rms_inspection_status_slightly_low" text="Leicht niedrig"/>
+        <text name="rms_inspection_status_slightly_dirty" text="Leicht zugesetzt"/>
+        <text name="rms_inspection_status_slightly_dry" text="Leicht trocken"/>
         <text name="rms_inspection_status_slight_moisture" text="Leichte Feuchtigkeit"/>
         <text name="rms_inspection_status_seepage" text="Sickerung"/>
         <text name="rms_inspection_status_severe_leak" text="Starke Leckage"/>
         <text name="rms_inspection_status_low" text="Niedrig"/>
-        <text name="rms_inspection_status_very_low" text="Sehr Niedrig"/>
-        <text name="rms_inspection_status_very_dry" text="Sehr Trocken"/>
-        <text name="rms_inspection_status_critically_low" text="Nachfüllen Erforderlich"/>
-        <text name="rms_inspection_status_critically_clogged" text="Vollständig Zugesetzt"/>
+        <text name="rms_inspection_status_very_low" text="Sehr niedrig"/>
+        <text name="rms_inspection_status_very_dry" text="Sehr trocken"/>
+        <text name="rms_inspection_status_critically_low" text="Nachfüllen erforderlich"/>
+        <text name="rms_inspection_status_critically_clogged" text="Vollständig zugesetzt"/>
         <text name="rms_inspection_status_critically_dry" text="Metall auf Metall"/>
         <text name="rms_inspection_status_dirty" text="Zugesetzt"/>
         <text name="rms_inspection_status_dry" text="Trocken"/>
         <text name="rms_inspection_status_active_leak" text="Aktive Leckage"/>
-        <text name="rms_inspection_status_heavily_clogged" text="Stark Zugesetzt"/>
-        <text name="rms_inspection_status_not_required" text="Nicht Erforderlich"/>
+        <text name="rms_inspection_status_heavily_clogged" text="Stark zugesetzt"/>
+        <text name="rms_inspection_status_not_required" text="Nicht erforderlich"/>
         <text name="rms_inspection_engine_oil" text="Motoröl"/>
         <text name="rms_inspection_coolant" text="Kühlmittel"/>
         <text name="rms_inspection_hydraulic_fluid" text="Hydrauliköl"/>
         <text name="rms_inspection_hint_coolant_leak_stage1" text="Leichte Kühlmittelspuren sind an den Verbindungen des Kühlsystems sichtbar."/>
-        <text name="rms_inspection_hint_coolant_leak_stage2" text="Kühlmittelrückstände sind sichtbar, und der Kühlmittelstand ist unter normal."/>
+        <text name="rms_inspection_hint_coolant_leak_stage2" text="Kühlmittelrückstände sind sichtbar, und der Kühlmittelstand liegt unter dem Normalwert."/>
         <text name="rms_inspection_hint_coolant_leak_stage3" text="Ein deutlicher Kühlmittelverlust ist im Bereich des Kühlsystems sichtbar."/>
         <text name="rms_inspection_hint_coolant_leak_stage4" text="Das Kühlsystem hat einen großen Teil seines Kühlmittels verloren, starke Spuren sind sichtbar."/>
         <text name="rms_inspection_hint_corroded_wiring_stage2" text="An einzelnen elektrischen Verbindungen sind leichte Oxidationsspuren sichtbar."/>
@@ -738,6 +785,7 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Der Luftfilter ist deutlich zugesetzt."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Der Luftfilter ist stark mit Staub und Schmutz zugesetzt."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage4" text="Der Luftfilter ist vollständig mit Staub und Schmutz zugesetzt."/>
+        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Der Luftfilter hat die Grenze der Reinigung durch Ausblasen erreicht. Sein Austausch erfordert eine Wartung in der Werkstatt."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Im Bereich des Generators sind Spuren von Überhitzung und nachgedunkelte Verbindungen sichtbar."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Im Bereich des Generators und seiner Verkabelung sind deutliche Überhitzungsspuren und nachgedunkelte Steckverbindungen sichtbar."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Die Schmierstellen wirken leicht trocken."/>
@@ -778,53 +826,57 @@
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
         <text name="rms_ingame_menu_header_price" text="Wert"/>
         <text name="rms_ingame_menu_header_procedure" text="Vorgang"/>
-        <text name="rms_ingame_menu_header_finish_time" text="Fertig"/>
+        <text name="rms_ingame_menu_header_finish_time" text="Ende"/>
         <text name="rms_ingame_menu_header_service_cost" text="Kosten"/>
         <text name="rms_ingame_menu_empty_other" text="Keine weiteren Fahrzeuge"/>
         <text name="rms_ingame_menu_empty_active" text="Keine RMS-Fahrzeuge"/>
         <text name="rms_ingame_menu_empty_service" text="Keine Fahrzeuge in Wartung"/>
         <!-- Sell Dialog -->
+        <text name="rms_sell_dialog_title" text="Fahrzeugrückgabe"/>
+        <text name="rms_sell_dialog_section_vehicle" text="Fahrzeug"/>
+        <text name="rms_sell_dialog_section_penalties" text="Rückgabeabzüge"/>
+        <text name="rms_sell_dialog_total" text="Gesamt"/>
         <text name="rms_sell_dialog_overdue_maintenance_penalty" text="Überfällige Wartung"/>
         <text name="rms_sell_dialog_repair_penalty" text="Reparatur"/>
         <text name="rms_sell_dialog_washing_penalty" text="Reinigung"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Niedriger Flüssigkeitsstand"/>
-        <text name="rms_tutorial_fluid_level_message" text="Eine der Betriebsflüssigkeiten dieser Maschine ist unter die Markierung ihrer Anzeige gefallen.&#10;&#10;Motoröl wird mit den Betriebsstunden verbraucht, und ein müder Motor braucht deutlich mehr davon. Kühlmittel, Getriebeöl und Hydraulikflüssigkeit sinken nur durch ein Leck.&#10;&#10;Unter der Markierung verlangt die Maschine nur nach Nachfüllen, sie arbeitet weiter normal. Teuer wird es erst, wenn ein Stand wirklich tief fällt: eine Maschine mit zu wenig Kühlmittel oder Getriebeöl läuft heiß, und eine Maschine mit zu wenig Motoröl oder Hydraulikflüssigkeit verschleißt deutlich schneller.&#10;&#10;Kauf im Shop einen Behälter mit kompatiblem Produkt, stell ihn neben die Maschine und füll nach. Alle für den jeweiligen Kreislauf vorgesehenen Produkte sind mechanisch gleichwertig; eine falsche Flüssigkeit verunreinigt nur diesen Kreislauf. Beim Händler werden die benötigten Liter bereitgestellt und berechnet. In der eigenen oder mobilen Werkstatt verbraucht der Vorgang die Behälter des Betriebs im Werkstattbereich."/>
+        <text name="rms_tutorial_fluid_level_message" text="Eine der Betriebsflüssigkeiten dieser Maschine ist unter die Markierung ihrer Anzeige gefallen.&#10;&#10;Motoröl wird mit den Betriebsstunden verbraucht, und ein verschlissener Motor verbraucht deutlich mehr davon. Kühlmittel, Getriebeöl und Hydrauliköl sinken nur durch ein Leck.&#10;&#10;Unter der Markierung benötigt die Maschine nur Nachfüllen und arbeitet weiterhin normal. Schäden entstehen erst, wenn ein Stand wirklich niedrig wird: Eine Maschine mit zu wenig Kühlmittel oder Getriebeöl läuft heiß, und eine Maschine mit zu wenig Motoröl oder Hydrauliköl verschleißt deutlich schneller.&#10;&#10;Kauf im Shop einen Behälter mit einem kompatiblen Produkt, stell ihn neben die Maschine und füll den Stand auf. Alle für diesen Kreislauf vorgesehenen Produkte haben dieselbe Wirkung; eine falsche Flüssigkeit verunreinigt nur diesen Kreislauf. Beim Händler werden die benötigten Liter bereitgestellt und berechnet. In der eigenen oder mobilen Werkstatt verbraucht der Vorgang die Behälter des Betriebs im Werkstattbereich."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Willkommen bei Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Hinweise deaktivieren"/>
         <text name="rms_tutorial_welcome_enable_button" text="Hinweise aktivieren"/>
-        <text name="rms_tutorial_welcome_message" text="Dieses Mod überarbeitet das Schadens- und Wartungssystem für Fahrzeuge im Spiel grundlegend. Es gibt viele Änderungen, deshalb werden von Zeit zu Zeit Tutorial-Hinweise eingeblendet. Sie helfen dir, die neuen Mechaniken schneller zu verstehen, typische Fehler zu vermeiden und deine Maschinen vor Ausfällen zu bewahren.&#10;&#10;Wenn du möchtest, kannst du die Tutorial-Hinweise jetzt direkt deaktivieren. Später lassen sie sich in den Mod-Einstellungen im Bereich Realistic Mechanical Systems jederzeit wieder einschalten."/>
+        <text name="rms_tutorial_welcome_message" text="Dieser Mod überarbeitet das Schadens- und Wartungssystem für Fahrzeuge im Spiel grundlegend. Es gibt viele Änderungen, deshalb werden von Zeit zu Zeit Tutorial-Hinweise eingeblendet. Sie helfen dir, die neuen Mechaniken schneller zu verstehen, typische Fehler zu vermeiden und deine Maschinen vor Schäden zu bewahren.&#10;&#10;Wenn du möchtest, kannst du die Tutorial-Hinweise jetzt direkt deaktivieren. Später lassen sie sich in den Mod-Einstellungen im Bereich Realistic Mechanical Systems jederzeit wieder einschalten."/>
         <text name="rms_tutorial_wet_weather_title" text="Nasses Wetter"/>
         <text name="rms_tutorial_wet_weather_message" text="Feuchtigkeit setzt Verkabelung und elektrischen Komponenten zu. Der Verschleiß des elektrischen Systems steigt bei Regen, Schnee oder Hagel leicht an, wenn die Maschine im Freien steht."/>
         <text name="rms_tutorial_wheel_slip_title" text="Radschlupf"/>
         <text name="rms_tutorial_wheel_slip_message" text="Deine Räder drehen stark durch. Schlupf gehört zu den zerstörerischsten Faktoren für das Getriebe und rückt deinen nächsten Werkstattbesuch deutlich näher."/>
         <text name="rms_tutorial_service_due_soon_title" text="Wartung steht an"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s benötigt bald Wartung.&#10;&#10;In RMS brauchen Fahrzeuge regelmäßige Wartung. Wenn du sie zu lange hinauszögerst, steigt das Ausfallrisiko deutlich an.&#10;&#10;Fahr in die nächste Werkstatt und wähle „Wartung“. Das Intervall lässt sich in den Einstellungen des Mods anpassen."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s benötigt bald Wartung.&#10;&#10;In RMS brauchen Fahrzeuge regelmäßige Wartung. Wenn du sie zu lange hinauszögerst, steigt das Schadensrisiko deutlich an.&#10;&#10;Fahr in die nächste Werkstatt und wähle „Wartung&quot;. Das Intervall lässt sich in den Einstellungen des Mods anpassen."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Wartungsintervall überschritten"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="%s hat sein Wartungsintervall überschritten und braucht eine Wartung.&#10;&#10;Fahr so schnell wie möglich in eine Werkstatt und wähle „Wartung“. Wenn du ein Fahrzeug mit überfälliger Wartung weiter einsetzt, steigt das Risiko für mehrere Ausfälle deutlich an."/>
+        <text name="rms_tutorial_service_interval_expired_message" text="%s hat sein Wartungsintervall überschritten und braucht eine Wartung.&#10;&#10;Fahr so schnell wie möglich in eine Werkstatt und wähle „Wartung&quot;. Wenn du ein Fahrzeug mit überfälliger Wartung weiter einsetzt, steigt das Risiko mehrerer Schäden deutlich an."/>
         <text name="rms_tutorial_steering_title" text="Lenken im Stand"/>
         <text name="rms_tutorial_steering_message" text="Du solltest möglichst nicht im Stand lenken. Dabei werden Lenkgetriebe und Bauteile der Vorderachse stark belastet, was den Verschleiß des Fahrwerks erhöht.&#10;&#10;Fahr einfach ein wenig an, dann lassen sich die Räder deutlich leichter einschlagen."/>
         <text name="rms_tutorial_rad_or_filter_clogged_title" text="Kühler und Luftfilter verschmutzt"/>
-        <text name="rms_tutorial_rad_or_filter_clogged_message" text="Der Kühler und der Luftfilter deines Fahrzeugs scheinen stark verschmutzt zu sein.&#10;&#10;Ein verschmutzter Kühler kann Wärme schlechter abführen, und ein zugesetzter Luftfilter schränkt die Luftzufuhr zum Motor ein. Das reduziert die Leistung und erhöht den Kraftstoffverbrauch.&#10;&#10;Den Kühler reinigst du an einer Waschstation oder mit dem Druckluftgebläse. Der Luftfilter lässt sich nur ausblasen, und Ausblasen stellt ihn nie vollständig wieder her: nur eine Wartung in der Werkstatt ersetzt ihn.&#10;&#10;Den Zustand von beidem kannst du prüfen: Halte die Taste R gedrückt, während du das Fahrzeug ansiehst."/>
+        <text name="rms_tutorial_rad_or_filter_clogged_message" text="Der Kühler und der Luftfilter deines Fahrzeugs sind stark verschmutzt.&#10;&#10;Ein verschmutzter Kühler kann Wärme schlechter abführen, und ein zugesetzter Luftfilter schränkt die Luftzufuhr zum Motor ein. Das reduziert die Leistung und erhöht den Kraftstoffverbrauch.&#10;&#10;Den Kühler reinigst du an einer Waschstation oder mit dem Druckluftgebläse. Der Luftfilter lässt sich nur ausblasen, und Ausblasen stellt ihn nie vollständig wieder her: Nur eine Wartung in der Werkstatt ersetzt ihn.&#10;&#10;Den Zustand von beidem kannst du prüfen: Halte die Taste %s gedrückt, während du das Fahrzeug ansiehst."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Schmierung erforderlich"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Dein %s benötigt regelmäßige Schmierung.&#10;&#10;In RMS sinkt der Schmierstand mit den Betriebsstunden. Nach längerer Stilllegung muss die Maschine vor der Wiederinbetriebnahme ebenfalls geschmiert werden. Zu wenig Schmierung beschleunigt den Verschleiß des Fahrwerks.&#10;&#10;Kauf im Laden eine Fettpresse und schmiere die Maschine, wenn die Kontrolle es verlangt.&#10;&#10;Den Schmierstand prüfst du, indem du die Taste R gedrückt hältst und die Maschine ansiehst."/>
-        <text name="rms_tutorial_needs_repair_title" text="Defekt erkannt"/>
-        <text name="rms_tutorial_needs_repair_message" text="Dein %s hat ein Problem. Eines seiner Teile ist möglicherweise ausgefallen.&#10;&#10;Fahr zur Werkstatt und lass eine Inspektion durchführen. Warte nicht: Der Defekt kann sich weiter verschlimmern, und die Reparaturkosten steigen mit ihm.&#10;&#10;Bestätigt die Inspektion den Defekt, behebe ihn mit der Reparatur in der Werkstatt."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s benötigt regelmäßige Schmierung.&#10;&#10;In RMS sinkt der Schmierstand mit den Betriebsstunden. Nach längerer Stilllegung muss die Maschine vor der Wiederinbetriebnahme ebenfalls geschmiert werden. Zu wenig Schmierung beschleunigt den Verschleiß des Fahrwerks.&#10;&#10;Kauf im Shop eine Fettpresse und schmiere die Maschine, wenn die Inspektion es verlangt.&#10;&#10;Den Schmierstand prüfst du, indem du die Taste %s gedrückt hältst und die Maschine ansiehst."/>
+        <text name="rms_tutorial_needs_repair_title" text="Schaden festgestellt"/>
+        <text name="rms_tutorial_needs_repair_message" text="Dein %s hat ein Problem. Eines seiner Teile ist möglicherweise ausgefallen.&#10;&#10;Fahr zur Werkstatt und lass eine Inspektion durchführen. Warte nicht: Der Schaden kann sich weiter verschlimmern, und die Reparaturkosten steigen mit ihm.&#10;&#10;Bestätigt die Inspektion den Schaden, lass ihn in der Werkstatt reparieren."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Überholung erforderlich"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="Dein %s zeigt sein Alter. Es wird Zeit, über einen Ersatz oder eine Überholung nachzudenken. Das ist ein langer und teurer Vorgang, aber der einzige Weg, der Maschine ihren ursprünglichen Zustand zurückzugeben.&#10;&#10;Die Lebensdauer wird in den Einstellungen des Mods festgelegt: je höher sie ist, desto langsamer verschleißen deine Fahrzeuge."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Defekt steht bevor"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Eines der Systeme deines %s steht kurz vor dem Ausfall. Du kannst ihn noch verhindern.&#10;&#10;Die Werkstatt bietet die vorbeugende Wartung an: Sie umfasst eine vollständige technische Inspektion und die Instandsetzung aller gefährdeten Bauteile."/>
+        <text name="rms_tutorial_needs_overhaul_message" text="Dein %s zeigt sein Alter. Es wird Zeit, über einen Ersatz oder eine Überholung nachzudenken. Das ist ein langer und teurer Vorgang, aber der einzige Weg, der Maschine ihren ursprünglichen Zustand zurückzugeben.&#10;&#10;Die Lebensdauer wird in den Einstellungen des Mods festgelegt: Je höher sie ist, desto langsamer verschleißen deine Fahrzeuge."/>
+        <text name="rms_tutorial_needs_preventive_title" text="Schaden steht bevor"/>
+        <text name="rms_tutorial_needs_preventive_message" text="Bei %s steht eines der Systeme kurz vor einem Schaden. Du kannst noch rechtzeitig eingreifen.&#10;&#10;Die Werkstatt bietet die präventive Wartung an: Sie stellt den Wartungsstand wieder her, wechselt alle Flüssigkeiten und baut die mechanische Belastung der am stärksten beanspruchten Systeme deutlich ab."/>
         <text name="rms_tutorial_age_degradation_title" text="Altersbedingter Verschleiß"/>
         <text name="rms_tutorial_age_degradation_message" text="In RMS verlieren Fahrzeuge mit zunehmendem Alter nach und nach einen Teil ihrer ursprünglichen Leistung.&#10;&#10;Nach etwa einem Drittel der Lebensdauer verringert der altersbedingte Verschleiß wichtige Eigenschaften leicht, etwa Leistung oder Bremswirkung. Der Effekt verstärkt sich danach und wird gegen Ende der Lebensdauer deutlich sichtbar.&#10;&#10;Diese Alterung lässt sich in den Einstellungen des Mods abschalten."/>
         <text name="rms_tutorial_poor_consumables_title" text="Minderwertige Verbrauchsmaterialien"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Dein %s hat bei der letzten Wartung minderwertige Verbrauchsmaterialien erhalten. Das kommt bei den günstigen Qualitäten vor.&#10;&#10;Das Wartungsintervall ist verkürzt und der Bauteilverschleiß leicht erhöht. Eine neue Wartung behebt das Problem. Eine einfache Inspektion meldet das verkürzte Intervall, eine vollständige Diagnose benennt die Verbrauchsmaterialien direkt."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Dein %s hat bei der letzten Wartung minderwertige Verbrauchsmaterialien erhalten. Das kommt bei den günstigen Qualitäten vor.&#10;&#10;Das Wartungsintervall ist verkürzt und der Bauteilverschleiß leicht erhöht. Eine neue Wartung behebt das Problem. Eine visuelle oder Standardinspektion meldet das verkürzte Intervall; nur eine vollständige Inspektion benennt die betroffenen Verbrauchsmaterialien."/>
         <text name="rms_tutorial_poor_parts_title" text="Minderwertige Ersatzteile"/>
-        <text name="rms_tutorial_poor_parts_message" text="Dein %s hat bei einer Reparatur ein minderwertiges Ersatzteil erhalten. Der Defekt wird wahrscheinlich bald zurückkehren.&#10;&#10;Du kannst abwarten, bis er wiederkommt, oder eine vollständige Diagnose durchführen, die das betroffene Teil zuverlässig benennt."/>
+        <text name="rms_tutorial_poor_parts_message" text="Dein %s hat bei einer Reparatur ein minderwertiges Ersatzteil erhalten. Der Schaden wird wahrscheinlich bald zurückkehren.&#10;&#10;Du kannst abwarten, bis er wiederkommt, oder eine vollständige Inspektion durchführen, die das betroffene Teil zuverlässig benennt."/>
         <text name="rms_tutorial_park_brake_title" text="Feststellbremse"/>
         <text name="rms_tutorial_park_brake_message" text="Die Feststellbremse ist angezogen. Sie greift von selbst, sobald du die Maschine im Stand verlässt, und löst sich, sobald du wieder Gas gibst.&#10;&#10;Am Hang verhindert sie, dass die Maschine von allein wegrollt."/>
         <text name="rms_tutorial_park_brake_manual_message" text="Die Feststellbremse ist angezogen. Du ziehst und löst sie selbst mit ihrer eigenen Taste: Gibst du bei angezogener Bremse Gas, bleibt die Maschine stehen und warnt dich.&#10;&#10;Am Hang verhindert sie, dass die Maschine von allein wegrollt."/>
         <text name="rms_tutorial_preheat_title" text="Diesel-Vorglühen"/>
-        <text name="rms_tutorial_preheat_message" text="Bei kaltem Dieselmotor schaltet ein Druck auf die Starttaste die Zündung ein und startet automatisch den Vorglühzyklus. Die Kontrollleuchten führen ihren Selbsttest durch; danach bleibt die Vorglühleuchte an, bis der Motor startbereit ist. Die Taste nicht erneut drücken: Der Anlasser wird automatisch betätigt, sobald die Leuchte erlischt."/>
+        <text name="rms_tutorial_preheat_message" text="Bei kaltem Dieselmotor schaltet ein Druck auf die Starttaste die Zündung ein und startet automatisch den Vorglühzyklus. Die Kontrollleuchten leuchten kurz auf; danach bleibt die Vorglühleuchte an, bis der Motor startbereit ist. Die Taste nicht erneut drücken: Der Anlasser wird automatisch betätigt, sobald die Leuchte erlischt."/>
         <text name="rms_tutorial_pto_engagement_title" text="Zapfwellen-Schaltzyklen"/>
         <text name="rms_tutorial_pto_engagement_message" text="Wiederholtes Einschalten der Zapfwelle erzeugt mechanische Schaltzyklen. Vermeide unnötiges Aus- und Einschalten."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Leerlauf und Standzeit"/>
@@ -832,11 +884,11 @@
         <text name="rms_tutorial_idle_deposit_title" text="Zu langer Leerlauf"/>
         <text name="rms_tutorial_idle_deposit_message" text="Die Maschine stand zu lange im Leerlauf. Lange Leerlaufphasen verschwenden nicht nur Kraftstoff: Mit der Zeit begünstigen sie Ablagerungen im Kraftstoffsystem und schaden dem allgemeinen Zustand des Motors.&#10;&#10;Wird die Maschine gerade nicht gebraucht, stellst du den Motor besser ab."/>
         <text name="rms_tutorial_hot_weather_title" text="Heißes Wetter"/>
-        <text name="rms_tutorial_hot_weather_message" text="Es ist heute sehr heiß. Bei diesem Wetter solltest du den Kühler sauber halten und den Motor nicht überlasten, sonst ist Überhitzung nur eine Frage der Zeit.&#10;&#10;Den Kühlerzustand prüfst du, indem du die Taste R gedrückt hältst und die Maschine ansiehst, und mit dem Druckluftgebläse reinigst du ihn."/>
+        <text name="rms_tutorial_hot_weather_message" text="Es ist heute sehr heiß. Bei diesem Wetter solltest du den Kühler sauber halten und den Motor nicht überlasten, sonst ist Überhitzung nur eine Frage der Zeit.&#10;&#10;Den Kühlerzustand prüfst du, indem du die Taste %s gedrückt hältst und die Maschine ansiehst, und mit dem Druckluftgebläse reinigst du ihn."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Schwerer Anhänger"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Die gezogene Last scheint für dieses Fahrzeug zu hoch zu sein. Du kannst weiterfahren, aber Getriebe und Antriebsstrang werden stärker belastet.&#10;&#10;RMS verwendet zwei Richtwerte: Traktoren benötigen mindestens 10 PS pro Tonne gezogener Masse, Lkw mindestens 6 PS pro Tonne Gesamtzuggewicht. Wird der jeweilige Wert bei hoher Motorlast unterschritten, steigt der Getriebeverschleiß."/>
         <text name="rms_tutorial_hard_start_title" text="Schwieriger Start"/>
-        <text name="rms_tutorial_hard_start_message" text="Der Motor deines %s springt schwer an. Eine schwache Batterie, Frost, ein mechanischer Defekt oder Anlasserverschleiß können die Ursache sein. Halte den Startknopf gedrückt, bis der Motor anspringt.&#10;&#10;Das Bordnetz wird beim Starten stark belastet, wegen der hohen Einschaltströme."/>
+        <text name="rms_tutorial_hard_start_message" text="Der Motor von %s springt schwer an. Eine schwache Batterie, Frost, ein mechanischer Schaden oder Anlasserverschleiß können die Ursache sein. Halte den Startknopf gedrückt, bis der Motor anspringt.&#10;&#10;Das Bordnetz wird beim Starten wegen der hohen Einschaltströme stark belastet."/>
         <text name="rms_tutorial_low_fuel_title" text="Wenig Kraftstoff"/>
         <text name="rms_tutorial_low_fuel_message" text="Der Tank nähert sich der Reserve. Je weniger Kraftstoff übrig ist, desto stärker muss die Kraftstoffpumpe ansaugen, was ihren Verschleiß erhöht."/>
         <text name="rms_tutorial_lugging_title" text="Untertouriger Betrieb"/>
@@ -846,14 +898,14 @@
         <text name="rms_tutorial_engine_overload_title" text="Motorüberlastung"/>
         <text name="rms_tutorial_engine_overload_message" text="Der Motor steht unter sehr hoher Belastung. Die Arbeit ist vielleicht zu schwer für diese Maschine und verlangt ein stärkeres Fahrzeug, oder es reicht, langsamer zu fahren und so die Last zu senken.&#10;&#10;In jedem Fall steigt der Verschleiß unter dieser Belastung deutlich an."/>
         <text name="rms_tutorial_exhaust_smoke_title" text="Den Rauch lesen"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="Der Rauch dieser Maschine ist keine Dekoration, seine Farbe ist eine Diagnose.&#10;&#10;Schwarz bedeutet mehr Kraftstoff als Luft: hartes Beschleunigen bevor der Turbolader hochgelaufen ist, ein untertourig gequälter Motor, Überlastung, zugesetzter Luftfilter, müder Turbolader oder verschlissene Einspritzung. Blau bedeutet, dass ein müder Motor sein eigenes Öl verbrennt. Weiß bedeutet unverbrannt austretenden Kraftstoff.&#10;&#10;Die Fahne wächst außerdem mit der Arbeit, die der Motor leistet. Ältere Maschinen rauchen weit stärker als neue, und das ist normal."/>
+        <text name="rms_tutorial_exhaust_smoke_message" text="Der Rauch dieser Maschine ist nicht nur Dekoration: Seine Farbe liefert eine Diagnose.&#10;&#10;Schwarzer Rauch zeigt, dass der Motor mehr Kraftstoff als Luft erhält: bei starkem Beschleunigen, bevor der Turbolader Drehzahl aufgebaut hat, bei untertourigem Betrieb, Überlastung, einem zugesetzten Luftfilter, einem verschlissenen Turbolader oder einer verschlissenen Einspritzung. Blauer Rauch zeigt, dass ein verschlissener Motor sein eigenes Öl verbrennt. Weißer Rauch zeigt, dass Kraftstoff unverbrannt austritt.&#10;&#10;Die Fahne wird auch mit steigender Motorlast größer. Ältere Maschinen rauchen viel stärker als neuere; das ist normal."/>
         <text name="rms_tutorial_cvt_overheat_title" text="CVT überhitzt"/>
         <text name="rms_tutorial_cvt_overheat_message" text="Das CVT-Getriebe beginnt zu überhitzen. Das kann von zu hoher Last, einem zugesetzten Kühler, sehr heißem Wetter oder einem Defekt im Kühlkreislauf des Getriebes kommen. Ein zu schwerer Pflug oder ein überladener Anhänger reichen dafür aus.&#10;&#10;Bleib aufmerksam: Überhitzung gehört zu den zerstörerischsten Belastungen für ein CVT-Getriebe."/>
         <text name="rms_tutorial_chassis_vibration_title" text="Fahrwerk unter Belastung"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Schnelles Fahren auf unebenem Gelände verschleißt die Federung deines %s sehr schnell. Diese Vibrationen schädigen auch die anderen Systeme, allen voran Hydraulik und Elektrik.&#10;&#10;Fahr auf unebenem Boden ruhig."/>
+        <text name="rms_tutorial_chassis_vibration_message" text="Schnelles Fahren auf unebenem Gelände verschleißt die Federung deines %s sehr schnell. Diese Vibrationen schädigen auch die anderen Systeme, allen voran Hydraulik und Elektrik.&#10;&#10;Fahr auf unebenem Boden vorsichtig."/>
         <text name="rms_tutorial_cranking_title" text="Häufiges Starten"/>
         <text name="rms_tutorial_cranking_message" text="Der Motor wird zu oft gestartet. Jeder Start schickt einen sehr hohen Strom durch das Bordnetz, was den Verschleiß von Kabelbaum, Anlasser und den übrigen elektrischen Bauteilen beschleunigt.&#10;&#10;Vermeide es, den Motor für kurze Pausen abzustellen."/>
-        <text name="rms_tutorial_critical_failure_title" text="Kritischer Ausfall"/>
+        <text name="rms_tutorial_critical_failure_title" text="Kritischer Schaden"/>
         <text name="rms_tutorial_critical_failure_message" text="Dein %s ist vollständig ausgefallen und kann sich nicht mehr aus eigener Kraft bewegen.&#10;&#10;Eine mobile Werkstatt erlaubt eine Behelfsreparatur, die ausreicht, damit die Maschine die Werkstatt selbst erreicht. Andernfalls muss sie anders geborgen werden."/>
         <text name="rms_tutorial_cold_engine_title" text="Kalter Motor"/>
         <text name="rms_tutorial_cold_engine_message" text="Wärme den Motor schonend auf, bevor du ihn stark belastest. Fahr mit mäßigem Gas und mittlerer Drehzahl, bis er seine Betriebstemperatur erreicht."/>
@@ -868,6 +920,6 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Antriebsstrangbelastung"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Du lenkst auf griffigem Boden mit eingelegter Differentialsperre. In einer Kurve legen die kurveninneren und kurvenäußeren Räder unterschiedliche Strecken zurück, doch die Differentialsperre zwingt sie zur gleichen Drehzahl: Der Antriebsstrang wird belastet und der Getriebeverschleiß steigt. Löse die Sperre vor Kurvenfahrten."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Antriebsmodi und Differentialsperre"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Diese Maschine lässt dich den Antrieb wählen: 4x2, Allrad oder AUTO, das alle vier Räder zuschaltet, sobald sie durchdrehen.&#10;&#10;Die Differentialsperre holt Grip, wo keiner mehr ist, kostet aber in Kurven auf hartem Boden viel: innere und äußere Räder können nicht gleich schnell drehen, und der Antriebsstrang trägt die Last. Löse sie vor dem Abbiegen."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Diese Maschine lässt dich den Antrieb wählen: Hinterradantrieb, Allrad oder AUTO, wobei die Vorderachse zugeschaltet wird, sobald die Räder durchdrehen.&#10;&#10;Die Differentialsperre sorgt für Traktion, wo sie sonst fehlt, belastet den Antriebsstrang aber in Kurven auf griffigem Untergrund stark: Innen- und Außenräder können nicht mit derselben Drehzahl laufen. Löse die Sperre vor dem Abbiegen."/>
     </texts>
 </l10n>

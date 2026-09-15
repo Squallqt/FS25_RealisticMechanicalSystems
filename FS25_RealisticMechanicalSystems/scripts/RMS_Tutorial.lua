@@ -228,7 +228,10 @@ function RMS_Tutorial:update(dt)
                 and g_currentMission.environment.weather.forecast:getCurrentWeather().temperature ~= nil
                 and g_currentMission.environment.weather.forecast:getCurrentWeather().temperature > 30 then
                 RMS_Hud.showNotification(
-                    g_i18n:getText("rms_tutorial_hot_weather_message"),
+                    string.format(
+                        g_i18n:getText("rms_tutorial_hot_weather_message"),
+                        RMS_Utils.getPrimaryKeyboardInputText("RMS_FIELD_INSPECTION", "R")
+                    ),
                     0,
                     g_i18n:getText("rms_tutorial_hot_weather_title"),
                     true
@@ -258,7 +261,10 @@ function RMS_Tutorial:update(dt)
                 and spec.isVehicleNeedBlowOut
                 and (spec.radiatorClogging >= 0.75 or spec.airFilterClogging >= 0.75) then
                 RMS_Hud.showNotification(
-                    g_i18n:getText("rms_tutorial_rad_or_filter_clogged_message"),
+                    string.format(
+                        g_i18n:getText("rms_tutorial_rad_or_filter_clogged_message"),
+                        RMS_Utils.getPrimaryKeyboardInputText("RMS_FIELD_INSPECTION", "R")
+                    ),
                     0,
                     g_i18n:getText("rms_tutorial_rad_or_filter_clogged_title"),
                     true
@@ -269,7 +275,11 @@ function RMS_Tutorial:update(dt)
             -- needs lubrication
             elseif not messagedData.NEEDS_LUBRICATION and spec.isVehicleNeedLubricate and spec.lubricationLevel <= RMS_Config.FIELD_CARE.LUBRICATION_WARNING_THRESHOLD then
                 RMS_Hud.showNotification(
-                    string.format(g_i18n:getText("rms_tutorial_needs_lubrication_message"), vehicle:getFullName()),
+                    string.format(
+                        g_i18n:getText("rms_tutorial_needs_lubrication_message"),
+                        vehicle:getFullName(),
+                        RMS_Utils.getPrimaryKeyboardInputText("RMS_FIELD_INSPECTION", "R")
+                    ),
                     0,
                     g_i18n:getText("rms_tutorial_needs_lubrication_title"),
                     true
@@ -334,7 +344,12 @@ function RMS_Tutorial:update(dt)
                 self.messageDowntime = downtimeAfterMessage
 
             -- cvt overheat
-            elseif not messagedData.CVT_OVERHEAT and transmissionSystemEnabled and isMotorStarted and spec.transmissionTemperature > 100 and not spec.isElectricVehicle and (RMS_Utils.hasCVTTransmission(vehicle) or RMS_Utils.hasCVTAddon(vehicle)) then
+            elseif not messagedData.CVT_OVERHEAT
+                    and transmissionSystemEnabled
+                    and isMotorStarted
+                    and spec.transmissionTemperature > 100
+                    and not spec.isElectricVehicle
+                    and (RMS_Utils.hasCVTTransmission(vehicle) or RMS_Utils.hasCVTAddon(vehicle)) then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_cvt_overheat_message"),
                     0,
@@ -346,7 +361,12 @@ function RMS_Tutorial:update(dt)
                 self.messageDowntime = downtimeAfterMessage
 
             -- transmission overheat outside cvt
-            elseif not messagedData.TRANSMISSION_OVERHEAT and transmissionSystemEnabled and isMotorStarted and spec.transmissionTemperature > 100 and not spec.isElectricVehicle and not (RMS_Utils.hasCVTTransmission(vehicle) or RMS_Utils.hasCVTAddon(vehicle)) then
+            elseif not messagedData.TRANSMISSION_OVERHEAT
+                    and transmissionSystemEnabled
+                    and isMotorStarted
+                    and spec.transmissionTemperature > 100
+                    and not spec.isElectricVehicle
+                    and not (RMS_Utils.hasCVTTransmission(vehicle) or RMS_Utils.hasCVTAddon(vehicle)) then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_transmission_overheat_message"),
                     0,
@@ -422,7 +442,13 @@ function RMS_Tutorial:update(dt)
                 self.messageDowntime = downtimeAfterMessage
 
             -- wheel slip
-            elseif not messagedData.WHEEL_SLIP and transmissionSystemEnabled and isMotorStarted and spec.wheelSlipIntensity ~= nil and spec.wheelSlipIntensity > 0.9 and spec.wheelSlipTutorialTimer ~= nil and spec.wheelSlipTutorialTimer >= 3000 then
+            elseif not messagedData.WHEEL_SLIP
+                    and transmissionSystemEnabled
+                    and isMotorStarted
+                    and spec.wheelSlipIntensity ~= nil
+                    and spec.wheelSlipIntensity > 0.9
+                    and spec.wheelSlipTutorialTimer ~= nil
+                    and spec.wheelSlipTutorialTimer >= 3000 then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_wheel_slip_message"),
                     0,

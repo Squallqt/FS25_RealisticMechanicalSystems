@@ -3,30 +3,39 @@
     <fillTypes>
         <fillType name="RMS_MOTOREX_FARMER_PRO_10W40" title="Motorex Farmer Pro SAE 10W/40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.868" maxPhysicalSurfaceAngle="0" />
+            <image hud="brands/hud_brand_motorex.dds" />
         </fillType>
         <fillType name="RMS_MOTOREX_FARMER_POLY_604" title="Motorex Farmer Poly 604" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.868" maxPhysicalSurfaceAngle="0" />
+            <image hud="brands/hud_brand_motorex.dds" />
         </fillType>
         <fillType name="RMS_MOTOREX_COOLANT_M30_RTU" title="Motorex Coolant M3.0 Ready To Use" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="1.070" maxPhysicalSurfaceAngle="0" />
+            <image hud="brands/hud_brand_motorex.dds" />
         </fillType>
         <fillType name="RMS_MOTUL_AGRI_TEKNO_10W40" title="Motul AGRI TEKNO 10W-40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.871" maxPhysicalSurfaceAngle="0" />
+            <image hud="brands/hud_brand_motul.dds" />
         </fillType>
         <fillType name="RMS_MOTUL_TRH_97" title="Motul TRH 97" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.886" maxPhysicalSurfaceAngle="0" />
+            <image hud="brands/hud_brand_motul.dds" />
         </fillType>
         <fillType name="RMS_MOTUL_AUTO_COOL_EXPERT_37C" title="Motul AUTO COOL EXPERT -37°C" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="1.076" maxPhysicalSurfaceAngle="0" />
+            <image hud="brands/hud_brand_motul.dds" />
         </fillType>
         <fillType name="RMS_FUCHS_AGRIFARM_MOT_XLA_10W40" title="FUCHS Agrifarm MOT X-LA 10W40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.859" maxPhysicalSurfaceAngle="0" />
+            <image hud="brands/hud_brand_fuchs.dds" />
         </fillType>
         <fillType name="RMS_FUCHS_AGRIFARM_UTTO_MP" title="FUCHS Agrifarm UTTO MP" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.870" maxPhysicalSurfaceAngle="0" />
+            <image hud="brands/hud_brand_fuchs.dds" />
         </fillType>
         <fillType name="RMS_FUCHS_FRICOFIN_LD50" title="FUCHS Fricofin LD50" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="1.070" maxPhysicalSurfaceAngle="0" />
+            <image hud="brands/hud_brand_fuchs.dds" />
         </fillType>
     </fillTypes>
 </map>

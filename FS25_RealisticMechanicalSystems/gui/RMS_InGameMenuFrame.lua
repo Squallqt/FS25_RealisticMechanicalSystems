@@ -1121,6 +1121,7 @@ end
 -- @param integer index row index
 -- @param table cell cell element
 function RMS_InGameMenuFrame:populateCellForItemInSection(_list, _section, index, cell)
+    RMS_Utils.applyScrollSpeed(cell)
     local row = nil
     if _list == self.serviceVehicleList then
         row = self.serviceRows[index]
@@ -1165,35 +1166,35 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(_list, _section, index
 
     if vehicleNameText ~= nil then
         vehicleNameText:setText(row.vehicleName or "")
-        vehicleNameText:setTextColor(1, 1, 1, 1)
+        vehicleNameText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if vehicleTypeText ~= nil then
         vehicleTypeText:setText(row.vehicleType or "")
-        vehicleTypeText:setTextColor(1, 1, 1, 1)
+        vehicleTypeText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if ageText ~= nil then
         ageText:setText(row.age or "")
-        ageText:setTextColor(1, 1, 1, 1)
+        ageText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if workingHoursText ~= nil then
         workingHoursText:setText(row.workingHours or "")
-        workingHoursText:setTextColor(1, 1, 1, 1)
+        workingHoursText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if procedureText ~= nil then
         procedureText:setText(row.procedure or "")
-        procedureText:setTextColor(1, 1, 1, 1)
+        procedureText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if remainingTimeText ~= nil then
         remainingTimeText:setText(row.remainingTime or "")
-        remainingTimeText:setTextColor(1, 1, 1, 1)
+        remainingTimeText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if finishTimeText ~= nil then
         finishTimeText:setText(row.finishTime or "")
-        finishTimeText:setTextColor(1, 1, 1, 1)
+        finishTimeText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if serviceCostText ~= nil then
         serviceCostText:setText(row.serviceCost or "")
-        serviceCostText:setTextColor(1, 1, 1, 1)
+        serviceCostText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if conditionText ~= nil then
         conditionText:setText(row.condition or "")
@@ -1205,23 +1206,23 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(_list, _section, index
     end
     if lastInspectionText ~= nil then
         lastInspectionText:setText(row.lastInspection or "")
-        lastInspectionText:setTextColor(1, 1, 1, 1)
+        lastInspectionText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if lastMaintenanceText ~= nil then
         lastMaintenanceText:setText(row.lastMaintenance or "")
-        lastMaintenanceText:setTextColor(1, 1, 1, 1)
+        lastMaintenanceText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if costText ~= nil then
         costText:setText(row.cost or "")
-        costText:setTextColor(1, 1, 1, 1)
+        costText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if leasingPriceText ~= nil then
         leasingPriceText:setText(row.leasingPrice or "")
-        leasingPriceText:setTextColor(1, 1, 1, 1)
+        leasingPriceText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
     if priceText ~= nil then
         priceText:setText(row.price or "")
-        priceText:setTextColor(1, 1, 1, 1)
+        priceText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
 end
 
