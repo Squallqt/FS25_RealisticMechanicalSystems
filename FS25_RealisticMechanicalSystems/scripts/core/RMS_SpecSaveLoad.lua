@@ -149,6 +149,7 @@ end
 function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
     local spec = self.spec_RealisticMechanicalSystems
     if spec ~= nil and not spec.isExcludedByDefault then
+        xmlFile:setValue(key .. "#saveVersion", RealisticMechanicalSystems.SAVE_VERSION)
         if spec.isExcludedByUser ~= nil then
             xmlFile:setValue(key .. "#userExclusion", spec.isExcludedByUser)
         end
@@ -287,6 +288,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.isExcludedByDefault = false
     self.spec_RealisticMechanicalSystems.isExcludedByRule = false
     self.spec_RealisticMechanicalSystems.isExcludedByUser = nil
+    self.spec_RealisticMechanicalSystems.loadedSaveVersion = RealisticMechanicalSystems.SAVE_VERSION
     self.spec_RealisticMechanicalSystems.isElectricVehicle = false
     self.spec_RealisticMechanicalSystems.isTruck = getIsTruck(self)
     self.spec_RealisticMechanicalSystems.isVehicleNeedLubricate = false
@@ -815,6 +817,7 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
 
     if spec ~= nil and savegame ~= nil then
         local key = savedKey
+        spec.loadedSaveVersion = tonumber(savegame.xmlFile:getValue(key .. "#saveVersion")) or 0
 
         spec.serviceLevel = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#service", spec.serviceLevel), spec.serviceLevel or 1.0, 0.001)
         spec.conditionLevel = RealisticMechanicalSystems.sanitizeNumber(savegame.xmlFile:getValue(key .. "#condition", spec.conditionLevel), spec.conditionLevel or 1.0, 0.001, 1.0)

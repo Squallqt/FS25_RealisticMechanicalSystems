@@ -207,7 +207,11 @@ function RealisticMechanicalSystems:updateAiWorkerCruiseControl(dt)
     end
 
     local minSpeed = math.max(config.MIN_SPEED or 5.0, 0)
-    local estimatedBaseCruiseSpeed = math.max(cruiseSpeed + state.currentReduction, minSpeed)
+    local appliedSpeedReduction = 0
+    if state.baseCruiseSpeed ~= nil and state.lastAppliedSpeed ~= nil then
+        appliedSpeedReduction = math.max(state.baseCruiseSpeed - state.lastAppliedSpeed, 0)
+    end
+    local estimatedBaseCruiseSpeed = math.max(cruiseSpeed + appliedSpeedReduction, minSpeed)
     if state.baseCruiseSpeed == nil then
         state.baseCruiseSpeed = estimatedBaseCruiseSpeed
     end

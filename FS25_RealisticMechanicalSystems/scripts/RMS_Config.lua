@@ -3,6 +3,8 @@
 
 ---Every tunable value of the mod, and the load and save of the settings file
 RMS_Config = {
+    CONFIG_VERSION = 1,
+
     -- extensive debug logging in the console
     DEBUG = false,
     TUTORIAL_MODE = true,
@@ -1140,6 +1142,7 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
     end
 
     local root = "realisticMechanicalSystems"
+    setXMLInt(xmlFile, root .. "#saveVersion", RMS_Config.CONFIG_VERSION)
 
     -- core
     setXMLFloat(xmlFile, root .. ".BASE_SERVICE_WEAR",      RMS_Config.CORE.BASE_SERVICE_WEAR)
@@ -1332,6 +1335,8 @@ function RMS_Config.loadFromXMLFile()
     end
 
     local root = isLegacyFile and "advancedDamageSystem" or "realisticMechanicalSystems"
+    RMS_Config.loadedConfigVersion = getXMLInt(xmlFile, root .. "#saveVersion") or 0
+    log_dbg("LOAD VERSION", RMS_Config.loadedConfigVersion, "CURRENT", RMS_Config.CONFIG_VERSION)
     local v
 
     -- core

@@ -3,6 +3,8 @@
 
 ---Root of the vehicle specialization: constants, sync groups, registration and the update loop
 RealisticMechanicalSystems = {
+    SAVE_VERSION = 1,
+
     -- service status of a vehicle
     STATUS = {
         READY = 'rms_spec_state_ready',
@@ -1182,6 +1184,7 @@ function RealisticMechanicalSystems.initSpecialization()
     schema:setXMLSpecializationType("RealisticMechanicalSystems")
 
     for _, baseKey in ipairs({ "vehicles.vehicle(?).RealisticMechanicalSystems", "vehicles.vehicle(?).AdvancedDamageSystem" }) do
+        schemaSavegame:register(XMLValueType.INT,    baseKey .. "#saveVersion", "RMS vehicle save format version")
         schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#userExclusion", "User decision overriding the automatic exclusion, absent when the user has no opinion")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#service", "Service Level")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#condition", "Condition Level")
