@@ -173,6 +173,34 @@ function RealisticMechanicalSystems.fromLegacyConstant(value)
     return (value:gsub("^ads_", "rms_"))
 end
 
+---Compares a loaded vehicle save format with the current one
+-- @param table spec specialization
+-- @param integer loadedVersion version read from the savegame
+function RealisticMechanicalSystems.applySaveVersion(spec, loadedVersion)
+    loadedVersion = tonumber(loadedVersion) or 0
+    local currentVersion = RealisticMechanicalSystems.SAVE_VERSION
+    if spec ~= nil then
+        spec.loadedSaveVersion = loadedVersion
+    end
+
+    if loadedVersion > currentVersion then
+        if Logging ~= nil and Logging.warning ~= nil then
+            Logging.warning("RMS: vehicle save version %d is newer than supported %d", loadedVersion, currentVersion)
+        end
+        return
+    end
+
+    if loadedVersion < currentVersion then
+        RealisticMechanicalSystems.migrateSavegame(spec, loadedVersion)
+    end
+end
+
+---Migrates a vehicle spec loaded from an older save format
+-- @param table spec specialization
+-- @param integer loadedVersion version read from the savegame
+function RealisticMechanicalSystems.migrateSavegame(spec, loadedVersion)
+end
+
 ---Returns the vehicle savegame key, falling back on the Advanced Damage System one
 -- @param table savegame savegame
 -- @return string key savegame key
@@ -2257,6 +2285,12 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
     -- registration in RMS_Main.vehicles and first load checks
     registerVehicle(self)
 
+    -- Enables the thermal and electrical models for a controlled vehicle outside the RMS fleet
+    if self.isServer and RMS_Main and RMS_Main.vehicles and RMS_Main.vehicles[self.uniqueId] == nil and self:getIsControlled() then
+        self:updateThermalSystems(updateDt, true, false)
+        self:updateBatteryChargingModel(updateDt)
+    end
+
     -- Temperature smoothing
     self:getSmoothedTemperature(updateDt)
 
@@ -2302,11 +2336,6 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
     -- AI worker overload, temp control
     if RMS_Config.CORE.AI_OVERLOAD_AND_OVERHEAT_CONTROL then
         self:updateAiWorkerCruiseControl(updateDt)
-    end
-
-    -- Enables the thermal model for neutral vehicles on the map, should the player happen to use them
-    if self.isServer and RMS_Main and RMS_Main.vehicles and RMS_Main.vehicles[self.uniqueId] == nil and self:getIsControlled() then
-        self:updateThermalSystems(updateDt, true, false)
     end
 
     -- Exhaust emission targets, the renderer easing toward them each frame

@@ -826,8 +826,10 @@ function RMS_Hud:drawActiveVehicleHUD()
 
         -- the emitter count is the invariant, anything above two is a bug and not a setting
         local emitterCount = tonumber(exhaustDbg.emitterCount) or 0
+        local activePuffs = tonumber(exhaustDbg.activePuffs) or 0
+        local collisionCount = tonumber(exhaustDbg.collisionCount) or 0
         addLine(overviewLines, string.format(
-            "Plume: ladder %.2f (step %d to %d, fade %.2f) | alpha %.3f emit %.2f | heat %.2f | burst %.2f %s | steps %s | emitters %d",
+            "Plume: ladder %.2f (step %d to %d, fade %.2f) | alpha %.3f emit %.2f | heat %.2f | burst %.2f %s | steps %s | emitters %d | puffs %d hits %d",
             tonumber(exhaustDbg.ladder) or 0,
             tonumber(exhaustDbg.currentStep) or 0,
             tonumber(exhaustDbg.nextStep) or 0,
@@ -838,7 +840,9 @@ function RMS_Hud:drawActiveVehicleHUD()
             tonumber(exhaustDbg.burst) or 0,
             tostring(exhaustDbg.burstCause or "idle"),
             #stepMarks > 0 and table.concat(stepMarks) or "-",
-            emitterCount
+            emitterCount,
+            activePuffs,
+            collisionCount
         ), emitterCount > 2 and {1, 0.3, 0.3, 1} or {1, 1, 1, 1}, 0.95)
     end
 

@@ -1083,6 +1083,7 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
             }
         end
         self:updateConditionLevel()
+        RealisticMechanicalSystems.applySaveVersion(spec, spec.loadedSaveVersion)
     else
         spec.realOperatingTime = currentOperatingTime
     end

@@ -651,7 +651,7 @@ RMS_Config = {
         },
 
         LADDER_GAMMA = 0.75,
-        LADDER_CROSSFADE = false,
+        LADDER_CROSSFADE = true,
         STEP_SHARE_ON = 0.04,
         STEP_SHARE_OFF = 0.02,
 
@@ -1480,6 +1480,28 @@ function RMS_Config.loadFromXMLFile()
         loadTutorialPlayerStates(xmlFile, root)
     end
 
+    RMS_Config.applyLoadedVersion()
     delete(xmlFile)
     RMS_Config._loaded = true
+end
+
+---Compares a loaded settings file with the current configuration format
+function RMS_Config.applyLoadedVersion()
+    local loadedVersion = tonumber(RMS_Config.loadedConfigVersion) or 0
+    local currentVersion = RMS_Config.CONFIG_VERSION
+    if loadedVersion > currentVersion then
+        if Logging ~= nil and Logging.warning ~= nil then
+            Logging.warning("RMS: settings file version %d is newer than supported %d", loadedVersion, currentVersion)
+        end
+        return
+    end
+
+    if loadedVersion < currentVersion then
+        RMS_Config.migrateLoadedSettings(loadedVersion)
+    end
+end
+
+---Migrates settings loaded from an older configuration file
+-- @param integer loadedVersion version read from the file
+function RMS_Config.migrateLoadedSettings(loadedVersion)
 end

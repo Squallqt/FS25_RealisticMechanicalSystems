@@ -47,6 +47,74 @@ local function getNumber(value, defaultValue, minimum, maximum)
     return number
 end
 
+---Returns the length of a three-dimensional vector
+-- @param float x x component
+-- @param float y y component
+-- @param float z z component
+-- @return float length vector length
+local function getVectorLength(x, y, z)
+    return math.sqrt(x * x + y * y + z * z)
+end
+
+---Normalizes a three-dimensional vector, returning the fallback direction for a null vector
+-- @param float x x component
+-- @param float y y component
+-- @param float z z component
+-- @param float? fallbackX fallback x component
+-- @param float? fallbackY fallback y component
+-- @param float? fallbackZ fallback z component
+-- @return float x normalized x component
+-- @return float y normalized y component
+-- @return float z normalized z component
+local function normalizeVector(x, y, z, fallbackX, fallbackY, fallbackZ)
+    local length = getVectorLength(x, y, z)
+    if length <= 0.000001 then
+        return fallbackX or 0, fallbackY or 1, fallbackZ or 0
+    end
+
+    return x / length, y / length, z / length
+end
+
+---Returns the dot product of two three-dimensional vectors
+local function dotProduct(ax, ay, az, bx, by, bz)
+    return ax * bx + ay * by + az * bz
+end
+
+---Returns the cross product of two three-dimensional vectors
+local function crossProduct(ax, ay, az, bx, by, bz)
+    return ay * bz - az * by, az * bx - ax * bz, ax * by - ay * bx
+end
+
+---Builds a stable orthonormal basis around a direction
+-- @return float sideX
+-- @return float sideY
+-- @return float sideZ
+-- @return float forwardX
+-- @return float forwardY
+-- @return float forwardZ
+local function getDirectionBasis(directionX, directionY, directionZ)
+    local referenceX, referenceY, referenceZ = 0, 1, 0
+    if math.abs(directionY) > 0.9 then
+        referenceX, referenceY, referenceZ = 1, 0, 0
+    end
+
+    local sideX, sideY, sideZ = crossProduct(directionX, directionY, directionZ,
+        referenceX, referenceY, referenceZ)
+    sideX, sideY, sideZ = normalizeVector(sideX, sideY, sideZ, 1, 0, 0)
+    local forwardX, forwardY, forwardZ = crossProduct(sideX, sideY, sideZ,
+        directionX, directionY, directionZ)
+    forwardX, forwardY, forwardZ = normalizeVector(forwardX, forwardY, forwardZ, 0, 0, 1)
+
+    return sideX, sideY, sideZ, forwardX, forwardY, forwardZ
+end
+
+---Returns a deterministic value between zero and one for one puff serial
+local function getDeterministicValue(serial, salt)
+    local value = math.sin(serial * 12.9898 + salt * 78.233) * 43758.5453
+
+    return value - math.floor(value)
+end
+
 ---Maps a value onto a 0 to 1 ramp between two thresholds
 -- @param float value value to map
 -- @param float from value mapping to 0
@@ -374,6 +442,250 @@ local function resolveEmissionProfile(vehicle, state)
     state.profileResolved = true
 end
 
+-- GIANTS only renders the sprite, RMS owns every puff
+local MANAGED_RENDERER_FUNCTIONS = {
+    "getGeometry",
+    "getMaxNumOfParticles",
+    "getNumOfParticlesToEmitPerMs",
+    "getParticleSystemLifespan",
+    "getParticleSystemSpeed",
+    "getParticleSystemSpeedRandom",
+    "getParticleSystemNormalSpeed",
+    "getParticleSystemTangentSpeed",
+    "getParticleSystemDamping",
+    "getParticleSystemSpriteScaleX",
+    "getParticleSystemSpriteScaleXGain",
+    "getParticleSystemSpriteScaleY",
+    "getParticleSystemSpriteScaleYGain",
+    "getEmitterShapeVelocityScale",
+    "addParticleSystemSimulationTime",
+    "setMaxNumOfParticles",
+    "setNumOfParticlesToEmitPerMs",
+    "setParticleSystemSpeed",
+    "setParticleSystemSpeedRandom",
+    "setParticleSystemNormalSpeed",
+    "setParticleSystemTangentSpeed",
+    "setEmitterShapeVelocityScale",
+    "raycastClosest"
+}
+
+---Tells whether the engine exposes every primitive used by the RMS puff renderer
+local function getHasManagedRendererApi()
+    for _, functionName in ipairs(MANAGED_RENDERER_FUNCTIONS) do
+        if type(_G[functionName]) ~= "function" then
+            return false
+        end
+    end
+
+    return true
+end
+
+---Reads the motion and lifetime authored in one RMS plume asset
+-- @param entityId node particle-system shape node
+-- @return table? profile immutable puff profile
+local function readPuffProfile(node)
+    local geometry = getGeometry(node)
+    if geometry == nil or geometry == 0 then
+        return nil
+    end
+
+    local profile = {
+        geometry = geometry,
+        maxCount = getMaxNumOfParticles(geometry),
+        rate = getNumOfParticlesToEmitPerMs(geometry),
+        lifespan = getParticleSystemLifespan(geometry),
+        speed = getParticleSystemSpeed(geometry),
+        speedRandom = getParticleSystemSpeedRandom(geometry),
+        normalSpeed = getParticleSystemNormalSpeed(geometry),
+        tangentSpeed = getParticleSystemTangentSpeed(geometry),
+        damping = getParticleSystemDamping(geometry),
+        spriteScaleX = getParticleSystemSpriteScaleX(geometry),
+        spriteScaleXGain = getParticleSystemSpriteScaleXGain(geometry),
+        spriteScaleY = getParticleSystemSpriteScaleY(geometry),
+        spriteScaleYGain = getParticleSystemSpriteScaleYGain(geometry),
+        emitterVelocityScale = getEmitterShapeVelocityScale(geometry)
+    }
+
+    for key, value in pairs(profile) do
+        if key ~= "geometry" and (type(value) ~= "number" or value ~= value) then
+            return nil
+        end
+    end
+    if profile.maxCount < 1 or profile.rate <= 0 or profile.lifespan <= 0 then
+        return nil
+    end
+
+    return profile
+end
+
+---Returns the bounding-sphere radius of one camera-facing puff
+-- @param table puff managed puff
+-- @return float radius radius in metres
+function RMS_Exhaust.getPuffRadius(puff)
+    local profile = puff.profile
+    local age = clamp(getNumber(puff.age, 0, 0), 0, profile.lifespan)
+    local sizeX = math.max(profile.spriteScaleX + profile.spriteScaleXGain * age, 0)
+    local sizeY = math.max(profile.spriteScaleY + profile.spriteScaleYGain * age, 0)
+
+    return math.sqrt(sizeX * sizeX + sizeY * sizeY) * 0.5
+end
+
+---Returns the optical alpha after a contacted puff has spread along a surface
+-- @param table puff managed puff
+-- @return float alpha rendered alpha
+function RMS_Exhaust.getPuffRenderAlpha(puff)
+    local alpha = clamp(getNumber(puff.baseAlpha, puff.alpha or 0, 0, 1), 0, 1)
+    local contactRadius = getNumber(puff.contactRadius, 0, 0)
+    local surfaceTravel = getNumber(puff.surfaceTravel, 0, 0)
+    if contactRadius > 0 and surfaceTravel > 0 then
+        alpha = alpha * ((contactRadius / (contactRadius + surfaceTravel)) ^ 0.57)
+    end
+
+    return alpha
+end
+
+---Projects an impacting puff onto a surface while retaining its tangential momentum
+-- @param table puff managed puff
+-- @param table hit raycast hit with point, normal and incoming direction
+-- @param float radius current puff radius
+function RMS_Exhaust.resolvePuffImpact(puff, hit, radius)
+    local normalX, normalY, normalZ = normalizeVector(hit.nx, hit.ny, hit.nz, 0, -1, 0)
+    if dotProduct(normalX, normalY, normalZ, hit.dx or 0, hit.dy or 0, hit.dz or 0) > 0 then
+        normalX, normalY, normalZ = -normalX, -normalY, -normalZ
+    end
+
+    local margin = math.max(radius * 0.02, 0.005)
+    puff.x = hit.x + normalX * (radius + margin)
+    puff.y = hit.y + normalY * (radius + margin)
+    puff.z = hit.z + normalZ * (radius + margin)
+
+    local normalSpeed = dotProduct(puff.vx, puff.vy, puff.vz, normalX, normalY, normalZ)
+    if normalSpeed < 0 then
+        local blockedSpeed = -normalSpeed
+        puff.vx = puff.vx - normalSpeed * normalX
+        puff.vy = puff.vy - normalSpeed * normalY
+        puff.vz = puff.vz - normalSpeed * normalZ
+
+        local spreadX = puff.spreadX - dotProduct(puff.spreadX, puff.spreadY, puff.spreadZ,
+            normalX, normalY, normalZ) * normalX
+        local spreadY = puff.spreadY - dotProduct(puff.spreadX, puff.spreadY, puff.spreadZ,
+            normalX, normalY, normalZ) * normalY
+        local spreadZ = puff.spreadZ - dotProduct(puff.spreadX, puff.spreadY, puff.spreadZ,
+            normalX, normalY, normalZ) * normalZ
+        spreadX, spreadY, spreadZ = normalizeVector(spreadX, spreadY, spreadZ, 1, 0, 0)
+        local surfaceSpread = blockedSpeed * clamp(puff.profile.tangentSpeed, 0, 1)
+        puff.vx = puff.vx + spreadX * surfaceSpread
+        puff.vy = puff.vy + spreadY * surfaceSpread
+        puff.vz = puff.vz + spreadZ * surfaceSpread
+    end
+
+    if puff.contactRadius == nil then
+        puff.contactRadius = math.max(radius, 0.001)
+        puff.surfaceTravel = 0
+    end
+    puff.contact = {
+        x = hit.x,
+        y = hit.y,
+        z = hit.z,
+        nx = normalX,
+        ny = normalY,
+        nz = normalZ,
+        objectId = hit.objectId
+    }
+    puff.collisionCount = (puff.collisionCount or 0) + 1
+end
+
+---Advances one RMS puff through drag, wind, buoyancy, turbulence and solid contacts
+-- @param table puff managed puff
+-- @param float dt elapsed time in ms
+-- @param table? environment trace and support callbacks plus wind velocity
+function RMS_Exhaust.advancePuff(puff, dt, environment)
+    environment = environment or {}
+    local remainingMs = math.max(getNumber(dt, 0, 0), 0)
+    local profile = puff.profile
+    local lifespanSeconds = math.max(profile.lifespan / 1000, 0.001)
+
+    while remainingMs > 0 and puff.age < profile.lifespan do
+        local stepMs = math.min(remainingMs, 50)
+        local stepSeconds = stepMs / 1000
+        remainingMs = remainingMs - stepMs
+        puff.age = math.min(puff.age + stepMs, profile.lifespan)
+
+        if puff.contact ~= nil and environment.hasContact ~= nil
+                and not environment.hasContact(puff, puff.contact, RMS_Exhaust.getPuffRadius(puff)) then
+            puff.contact = nil
+        end
+
+        local windX = getNumber(environment.windX, 0)
+        local windY = getNumber(environment.windY, 0)
+        local windZ = getNumber(environment.windZ, 0)
+        local drag = math.exp(-math.max(profile.damping, 0) * stepSeconds)
+        puff.vx = windX + (puff.vx - windX) * drag
+        puff.vy = windY + (puff.vy - windY) * drag
+        puff.vz = windZ + (puff.vz - windZ) * drag
+
+        local lifeShare = clamp(puff.age / profile.lifespan, 0, 1)
+        local buoyancy = puff.initialSpeed / lifespanSeconds * (1 - lifeShare)
+        puff.vy = puff.vy + buoyancy * stepSeconds
+
+        local turbulence = profile.speedRandom * 1000 / lifespanSeconds
+        local phase = puff.phase + lifeShare * math.pi * 2
+        puff.vx = puff.vx + puff.noiseX * math.sin(phase) * turbulence * stepSeconds
+        puff.vy = puff.vy + puff.noiseY * math.sin(phase * 0.73) * turbulence * stepSeconds
+        puff.vz = puff.vz + puff.noiseZ * math.cos(phase) * turbulence * stepSeconds
+
+        local previousX, previousY, previousZ = puff.x, puff.y, puff.z
+        local nextX = puff.x + puff.vx * stepSeconds
+        local nextY = puff.y + puff.vy * stepSeconds
+        local nextZ = puff.z + puff.vz * stepSeconds
+        local radius = RMS_Exhaust.getPuffRadius(puff)
+        local hit = environment.trace ~= nil
+            and environment.trace(puff, puff.x, puff.y, puff.z, nextX, nextY, nextZ, radius) or nil
+
+        if hit ~= nil then
+            RMS_Exhaust.resolvePuffImpact(puff, hit, radius)
+            local remainingShare = clamp(1 - getNumber(hit.fraction, 1, 0, 1), 0, 1)
+            nextX = puff.x + puff.vx * stepSeconds * remainingShare
+            nextY = puff.y + puff.vy * stepSeconds * remainingShare
+            nextZ = puff.z + puff.vz * stepSeconds * remainingShare
+        end
+
+        if puff.contact ~= nil then
+            local contact = puff.contact
+            local distance = dotProduct(nextX - contact.x, nextY - contact.y, nextZ - contact.z,
+                contact.nx, contact.ny, contact.nz)
+            local clearance = radius + math.max(radius * 0.02, 0.005)
+            if distance < clearance then
+                local correction = clearance - distance
+                nextX = nextX + contact.nx * correction
+                nextY = nextY + contact.ny * correction
+                nextZ = nextZ + contact.nz * correction
+
+                local inwardSpeed = dotProduct(puff.vx, puff.vy, puff.vz,
+                    contact.nx, contact.ny, contact.nz)
+                if inwardSpeed < 0 then
+                    puff.vx = puff.vx - inwardSpeed * contact.nx
+                    puff.vy = puff.vy - inwardSpeed * contact.ny
+                    puff.vz = puff.vz - inwardSpeed * contact.nz
+                end
+            end
+
+            local moveX = nextX - previousX
+            local moveY = nextY - previousY
+            local moveZ = nextZ - previousZ
+            local normalMove = dotProduct(moveX, moveY, moveZ,
+                contact.nx, contact.ny, contact.nz)
+            local tangentX = moveX - normalMove * contact.nx
+            local tangentY = moveY - normalMove * contact.ny
+            local tangentZ = moveZ - normalMove * contact.nz
+            puff.surfaceTravel = (puff.surfaceTravel or 0)
+                + math.sqrt(tangentX * tangentX + tangentY * tangentY + tangentZ * tangentZ)
+        end
+
+        puff.x, puff.y, puff.z = nextX, nextY, nextZ
+    end
+end
+
 ---Loads the emitter surface and the step sources once for the session
 -- @return boolean loaded true once every source is available
 local function loadPlumeSources()
@@ -382,8 +694,17 @@ local function loadPlumeSources()
     end
 
     local config = RMS_Config.EXHAUST
-    local sources = {isValid = false, sprites = config.PLUME_SPRITES, steps = {}}
+    local sources = {
+        isValid = false,
+        sprites = config.PLUME_SPRITES,
+        hasManagedRendererApi = getHasManagedRendererApi(),
+        steps = {},
+        profiles = {}
+    }
     RMS_Exhaust.plumeSources = sources
+    if not sources.hasManagedRendererApi then
+        return false
+    end
 
     local shapeRoot = loadI3DFile(RMS_Exhaust.modDirectory .. config.PLUME_EMIT_SHAPE, false, false, false)
     if shapeRoot == nil or shapeRoot == 0 then
@@ -401,18 +722,23 @@ local function loadPlumeSources()
     local directory = config.PLUME_DIRECTORY .. config.PLUME_SPRITES .. "/"
     for index, stepConfig in ipairs(config.PLUME_STEPS) do
         if stepConfig.isNative ~= true then
-        local root = loadI3DFile(RMS_Exhaust.modDirectory .. directory .. stepConfig.file, false, false, false)
-        if root == nil or root == 0 then
-            return false
-        end
+            local root = loadI3DFile(RMS_Exhaust.modDirectory .. directory .. stepConfig.file, false, false, false)
+            if root == nil or root == 0 then
+                return false
+            end
 
-        local node = getChildAt(root, 0)
-        if node == nil or node == 0 then
-            return false
-        end
+            local node = getChildAt(root, 0)
+            if node == nil or node == 0 then
+                return false
+            end
 
-        link(getRootNode(), node)
-        sources.steps[index] = node
+            link(getRootNode(), node)
+            local profile = readPuffProfile(node)
+            if profile == nil then
+                return false
+            end
+            sources.steps[index] = node
+            sources.profiles[index] = profile
         end
     end
 
@@ -466,6 +792,220 @@ local function setNativeOwnership(vehicle, state, isNative)
     state.isHeatVisible = isNative
 end
 
+---Returns the collision mask of solid world geometry a smoke puff cannot cross
+local function getPuffCollisionMask()
+    if RMS_Exhaust.puffCollisionMask ~= nil then
+        return RMS_Exhaust.puffCollisionMask
+    end
+
+    local mask = 0
+    local names = {
+        "STATIC_OBJECT", "BUILDING", "TERRAIN", "TERRAIN_DELTA",
+        "ROAD", "VEHICLE", "DYNAMIC_OBJECT", "TREE"
+    }
+    for _, name in ipairs(names) do
+        local flag = CollisionFlag ~= nil and CollisionFlag[name] or nil
+        if type(flag) == "number" then
+            if bit32 ~= nil and bit32.bor ~= nil then
+                mask = bit32.bor(mask, flag)
+            else
+                mask = mask + flag
+            end
+        end
+    end
+
+    RMS_Exhaust.puffCollisionMask = mask
+
+    return mask
+end
+
+---Receives the closest solid hit of the synchronous puff raycast
+function RMS_Exhaust:onPuffRaycast(transformId, x, y, z, distance, nx, ny, nz)
+    self.puffRaycastHit = {
+        objectId = transformId,
+        x = x,
+        y = y,
+        z = z,
+        distance = distance,
+        nx = nx,
+        ny = ny,
+        nz = nz
+    }
+end
+
+---Tells whether an early puff raycast hit belongs to its own vehicle
+local function getIsOwnVehicleHit(vehicle, object)
+    if object == nil then
+        return false
+    end
+    if object == vehicle then
+        return true
+    end
+
+    return object.rootVehicle ~= nil and vehicle.rootVehicle ~= nil
+        and object.rootVehicle == vehicle.rootVehicle
+end
+
+---Casts through ignored trigger and own-vehicle hits until the first physical surface
+local function castPuffRay(vehicle, puff, originX, originY, originZ, directionX, directionY, directionZ, distance)
+    if distance <= 0.000001 then
+        return nil
+    end
+
+    local travelled = 0
+    local startX, startY, startZ = originX, originY, originZ
+    for _ = 1, 12 do
+        local remaining = distance - travelled
+        if remaining <= 0.000001 then
+            return nil
+        end
+
+        RMS_Exhaust.puffRaycastHit = nil
+        raycastClosest(startX, startY, startZ, directionX, directionY, directionZ, remaining,
+            "onPuffRaycast", RMS_Exhaust, getPuffCollisionMask())
+        local hit = RMS_Exhaust.puffRaycastHit
+        if hit == nil then
+            return nil
+        end
+
+        local object = g_currentMission ~= nil and g_currentMission.getNodeObject ~= nil
+            and g_currentMission:getNodeObject(hit.objectId) or nil
+        local isTrigger = type(getHasTrigger) == "function" and getHasTrigger(hit.objectId)
+        local ignoreOwnVehicle = puff.age <= puff.selfIgnoreUntil and getIsOwnVehicleHit(vehicle, object)
+        if not isTrigger and not ignoreOwnVehicle then
+            hit.distance = travelled + hit.distance
+            return hit
+        end
+
+        local advance = hit.distance + 0.002
+        travelled = travelled + advance
+        startX = originX + directionX * travelled
+        startY = originY + directionY * travelled
+        startZ = originZ + directionZ * travelled
+    end
+
+    return nil
+end
+
+---Sweeps the bounding sphere of one puff over its next movement segment
+local function tracePuff(vehicle, puff, fromX, fromY, fromZ, toX, toY, toZ, radius)
+    local deltaX, deltaY, deltaZ = toX - fromX, toY - fromY, toZ - fromZ
+    local movementLength = getVectorLength(deltaX, deltaY, deltaZ)
+    if movementLength <= 0.000001 then
+        return nil
+    end
+
+    local directionX, directionY, directionZ = deltaX / movementLength, deltaY / movementLength, deltaZ / movementLength
+    local hit = castPuffRay(vehicle, puff, fromX, fromY, fromZ,
+        directionX, directionY, directionZ, movementLength + radius)
+    if hit == nil then
+        return nil
+    end
+
+    hit.dx, hit.dy, hit.dz = directionX, directionY, directionZ
+    hit.fraction = clamp((hit.distance - radius) / movementLength, 0, 1)
+
+    return hit
+end
+
+---Checks that the contacted surface still exists beneath a sliding puff
+local function hasPuffContact(vehicle, puff, contact, radius)
+    local margin = math.max(radius * 0.02, 0.005)
+    local originX = puff.x + contact.nx * margin
+    local originY = puff.y + contact.ny * margin
+    local originZ = puff.z + contact.nz * margin
+    local distance = radius + margin * 4
+    local hit = castPuffRay(vehicle, puff, originX, originY, originZ,
+        -contact.nx, -contact.ny, -contact.nz, distance)
+    if hit == nil then
+        return false
+    end
+
+    local normalX, normalY, normalZ = normalizeVector(hit.nx, hit.ny, hit.nz,
+        contact.nx, contact.ny, contact.nz)
+    if dotProduct(normalX, normalY, normalZ, contact.nx, contact.ny, contact.nz) < 0.5 then
+        return false
+    end
+
+    contact.x, contact.y, contact.z = hit.x, hit.y, hit.z
+    contact.nx, contact.ny, contact.nz = normalX, normalY, normalZ
+    contact.objectId = hit.objectId
+
+    return true
+end
+
+---Returns the current weather wind as a world velocity
+local function getWindVelocity()
+    local weather = g_currentMission ~= nil and g_currentMission.environment ~= nil
+        and g_currentMission.environment.weather or nil
+    local updater = weather ~= nil and weather.windUpdater or nil
+    if updater == nil then
+        return 0, 0, 0
+    end
+
+    local velocity = getNumber(updater.currentVelocity, 0, 0)
+
+    return getNumber(updater.currentDirX, 0) * velocity, 0,
+        getNumber(updater.currentDirZ, 0) * velocity
+end
+
+---Creates one reusable one-sprite renderer for an RMS-managed puff
+local function createPuffSlot(step)
+    local config = RMS_Config.EXHAUST
+    local sources = RMS_Exhaust.plumeSources
+    local root = createTransformGroup("rmsManagedPuff")
+    link(getRootNode(), root)
+
+    local emitterShape = clone(sources.emitShape, true, false, true)
+    link(root, emitterShape)
+    setScale(emitterShape, 0.001, 0.001, 0.001)
+    setClipDistance(emitterShape, config.PLUME_CLIP_DISTANCE)
+
+    local node = clone(step.sourceNode, true, false, true)
+    link(root, node)
+    setClipDistance(node, config.PLUME_CLIP_DISTANCE)
+
+    local renderer = {}
+    ParticleUtil.loadParticleSystemFromNode(node, renderer, false, false, true)
+    ParticleUtil.setEmitterShape(renderer, emitterShape)
+    ParticleUtil.setEmittingState(renderer, false)
+
+    local geometry = getGeometry(renderer.shape)
+    if geometry == nil or geometry == 0 then
+        ParticleUtil.deleteParticleSystem(renderer)
+        delete(root)
+        return nil
+    end
+
+    setMaxNumOfParticles(geometry, 1)
+    setNumOfParticlesToEmitPerMs(geometry, 1)
+    setParticleSystemSpeed(geometry, 0)
+    setParticleSystemSpeedRandom(geometry, 0)
+    setParticleSystemNormalSpeed(geometry, 0)
+    setParticleSystemTangentSpeed(geometry, 0)
+    setEmitterShapeVelocityScale(geometry, 0)
+    setVisibility(root, false)
+
+    return {
+        root = root,
+        node = node,
+        emitterShape = emitterShape,
+        renderer = renderer,
+        isInUse = false,
+        elapsed = 0
+    }
+end
+
+---Deletes every renderer allocated by one plume step
+local function deletePuffPool(step)
+    for _, slot in ipairs(step.pool) do
+        ParticleUtil.deleteParticleSystem(slot.renderer)
+        delete(slot.root)
+    end
+    step.pool = {}
+    step.particleSystem.isDeleted = true
+end
+
 ---Stops every step of the vehicle, the particles already out finishing their life
 -- @param table state exhaust smoke state
 local function stopPlumes(state)
@@ -479,7 +1019,9 @@ local function stopPlumes(state)
                 step.isEmitting = false
                 step.share = 0
                 step.alpha = 0
-                ParticleUtil.setEmittingState(step.particleSystem, false)
+                step.particleSystem.isEmitting = false
+                step.particleSystem.emitScale = 0
+                step.emissionAccumulator = 0
             end
         end
     end
@@ -496,10 +1038,9 @@ local function deletePlumes(vehicle, state)
     for _, plume in ipairs(state.plumes) do
         for _, step in ipairs(plume.steps) do
             if step.isNative ~= true then
-                ParticleUtil.deleteParticleSystem(step.particleSystem)
+                deletePuffPool(step)
             end
         end
-        delete(plume.emitter)
     end
 
     state.plumes = nil
@@ -520,53 +1061,56 @@ local function createPlumes(vehicle, state, effects)
     local plumes = {}
 
     for _, effect in pairs(effects) do
-        local emitter = createTransformGroup("rmsPlumeEmitter")
-        link(effect.node, emitter)
-        setTranslation(emitter, 0, 0, 0)
-        setRotation(emitter, 0, 0, 0)
-
-        local emitterShape = clone(sources.emitShape, true, false, true)
-        link(emitter, emitterShape)
-        setClipDistance(emitterShape, config.PLUME_CLIP_DISTANCE)
-
         local steps = {}
         for index, stepConfig in ipairs(config.PLUME_STEPS) do
             if stepConfig.isNative == true then
                 steps[index] = {id = stepConfig.id, isNative = true, share = 0, alpha = 0}
             else
-            local node = clone(sources.steps[index], true, false, true)
-            link(emitter, node)
-            setClipDistance(node, config.PLUME_CLIP_DISTANCE)
-
-            local particleSystem = {}
-            ParticleUtil.loadParticleSystemFromNode(node, particleSystem, false, true, false)
-            ParticleUtil.setEmitterShape(particleSystem, emitterShape)
-            ParticleUtil.setEmittingState(particleSystem, false)
-            ParticleUtil.setMaxNumOfParticlesToEmitScale(particleSystem, 1.0)
-
-            steps[index] = {
-                id = stepConfig.id,
-                isColourless = stepConfig.isColourless == true,
-                alphaMax = stepConfig.alphaMax,
-                emitMin = stepConfig.emitMin,
-                emitMax = stepConfig.emitMax,
-                speedMin = stepConfig.speedMin,
-                speedMax = stepConfig.speedMax,
-                tintWash = stepConfig.tintWash or 0,
-                node = node,
-                particleSystem = particleSystem,
-                baseSpeed = ParticleUtil.getParticleSystemSpeed(particleSystem) or 0,
-                baseSpeedRandom = ParticleUtil.getParticleSystemSpeedRandom(particleSystem) or 0,
-                isEmitting = false,
-                share = 0,
-                alpha = 0,
-                lastAlpha = -1,
-                lastEmit = -1
-            }
+                local profile = sources.profiles[index]
+                steps[index] = {
+                    id = stepConfig.id,
+                    isColourless = stepConfig.isColourless == true,
+                    alphaMax = stepConfig.alphaMax,
+                    emitMin = stepConfig.emitMin,
+                    emitMax = stepConfig.emitMax,
+                    speedMin = stepConfig.speedMin,
+                    speedMax = stepConfig.speedMax,
+                    tintWash = stepConfig.tintWash or 0,
+                    sourceNode = sources.steps[index],
+                    profile = profile,
+                    particleSystem = {
+                        shape = sources.steps[index],
+                        isEmitting = false,
+                        emitScale = 0,
+                        speed = profile.speed,
+                        isDeleted = false
+                    },
+                    baseSpeed = profile.speed,
+                    baseSpeedRandom = profile.speedRandom,
+                    pool = {},
+                    emissionAccumulator = 0,
+                    isEmitting = false,
+                    share = 0,
+                    alpha = 0,
+                    lastAlpha = -1,
+                    lastEmit = -1,
+                    activePuffs = 0,
+                    collisionCount = 0
+                }
             end
         end
 
-        table.insert(plumes, {emitter = emitter, emitterShape = emitterShape, linkNode = effect.node, steps = steps})
+        table.insert(plumes, {
+            linkNode = effect.node,
+            effect = effect,
+            steps = steps,
+            lastPipeX = nil,
+            lastPipeY = nil,
+            lastPipeZ = nil,
+            pipeVelocityX = 0,
+            pipeVelocityY = 0,
+            pipeVelocityZ = 0
+        })
     end
 
     state.plumes = plumes
@@ -586,6 +1130,190 @@ local function ensurePlumes(vehicle, state, effects)
     if state.plumes == nil then
         createPlumes(vehicle, state, effects)
     end
+end
+
+---Updates the world velocity of one exhaust outlet
+local function updatePipeVelocity(plume, dt)
+    local x, y, z = getWorldTranslation(plume.linkNode)
+    if plume.lastPipeX ~= nil and dt > 0 then
+        local seconds = dt / 1000
+        plume.pipeVelocityX = (x - plume.lastPipeX) / seconds
+        plume.pipeVelocityY = (y - plume.lastPipeY) / seconds
+        plume.pipeVelocityZ = (z - plume.lastPipeZ) / seconds
+    else
+        plume.pipeVelocityX = 0
+        plume.pipeVelocityY = 0
+        plume.pipeVelocityZ = 0
+    end
+    plume.lastPipeX, plume.lastPipeY, plume.lastPipeZ = x, y, z
+
+    return x, y, z
+end
+
+---Returns an idle puff slot, allocating one lazily up to the source asset's particle cap
+local function getPuffSlot(step)
+    for _, slot in ipairs(step.pool) do
+        if not slot.isInUse then
+            return slot
+        end
+    end
+
+    if #step.pool >= math.floor(step.profile.maxCount) then
+        return nil
+    end
+
+    local slot = createPuffSlot(step)
+    if slot ~= nil then
+        table.insert(step.pool, slot)
+    end
+
+    return slot
+end
+
+---Emits one independently simulated RMS puff from an exhaust outlet
+local function spawnPuff(state, plume, step, speedScale, red, green, blue, alpha)
+    local slot = getPuffSlot(step)
+    if slot == nil then
+        return false
+    end
+
+    state.nextPuffSerial = state.nextPuffSerial + 1
+    local serial = state.nextPuffSerial
+    local directionX, directionY, directionZ = localDirectionToWorld(plume.linkNode, 0, 1, 0)
+    directionX, directionY, directionZ = normalizeVector(directionX, directionY, directionZ, 0, 1, 0)
+    local sideX, sideY, sideZ, forwardX, forwardY, forwardZ = getDirectionBasis(
+        directionX, directionY, directionZ)
+
+    local angle = getDeterministicValue(serial, 1) * math.pi * 2
+    local spreadX = sideX * math.cos(angle) + forwardX * math.sin(angle)
+    local spreadY = sideY * math.cos(angle) + forwardY * math.sin(angle)
+    local spreadZ = sideZ * math.cos(angle) + forwardZ * math.sin(angle)
+    local profile = step.profile
+    local speedVariation = (getDeterministicValue(serial, 2) * 2 - 1)
+        * profile.speedRandom * 1000 * speedScale
+    local initialSpeed = math.max(profile.speed * 1000 * speedScale + speedVariation, 0)
+        * math.max(profile.normalSpeed, 0)
+    local lateralSpeed = (profile.speed * math.max(profile.tangentSpeed, 0)
+        + profile.speedRandom * (getDeterministicValue(serial, 3) * 2 - 1)) * 1000 * speedScale
+
+    local puff = {
+        serial = serial,
+        profile = profile,
+        age = 1,
+        initialSpeed = initialSpeed,
+        vx = directionX * initialSpeed + spreadX * lateralSpeed
+            + plume.pipeVelocityX * profile.emitterVelocityScale,
+        vy = directionY * initialSpeed + spreadY * lateralSpeed
+            + plume.pipeVelocityY * profile.emitterVelocityScale,
+        vz = directionZ * initialSpeed + spreadZ * lateralSpeed
+            + plume.pipeVelocityZ * profile.emitterVelocityScale,
+        spreadX = spreadX,
+        spreadY = spreadY,
+        spreadZ = spreadZ,
+        noiseX = getDeterministicValue(serial, 4) * 2 - 1,
+        noiseY = getDeterministicValue(serial, 5) * 2 - 1,
+        noiseZ = getDeterministicValue(serial, 6) * 2 - 1,
+        phase = getDeterministicValue(serial, 7) * math.pi * 2,
+        collisionCount = 0,
+        red = red,
+        green = green,
+        blue = blue,
+        alpha = alpha,
+        baseAlpha = alpha,
+        lastRenderedAlpha = alpha,
+        surfaceTravel = 0
+    }
+    puff.noiseX, puff.noiseY, puff.noiseZ = normalizeVector(
+        puff.noiseX, puff.noiseY, puff.noiseZ, spreadX, spreadY, spreadZ)
+
+    local radius = RMS_Exhaust.getPuffRadius(puff)
+    local originX, originY, originZ = getWorldTranslation(plume.linkNode)
+    local outletJitter = radius * 0.25 * (getDeterministicValue(serial, 8) * 2 - 1)
+    local clearance = radius + math.max(radius * 0.02, 0.005)
+    puff.x = originX + directionX * clearance + spreadX * outletJitter
+    puff.y = originY + directionY * clearance + spreadY * outletJitter
+    puff.z = originZ + directionZ * clearance + spreadZ * outletJitter
+    puff.selfIgnoreUntil = clamp(clearance / math.max(initialSpeed, 0.1) * 2000, 25, 250)
+
+    slot.puff = puff
+    slot.elapsed = 1
+    slot.isInUse = true
+    setWorldTranslation(slot.root, puff.x, puff.y, puff.z)
+    setVisibility(slot.root, true)
+    setShaderParameterRecursive(slot.renderer.shape, "colorAlpha", red, green, blue, alpha, false)
+    ParticleUtil.setEmittingState(slot.renderer, false)
+    ParticleUtil.resetNumOfEmittedParticles(slot.renderer)
+    ParticleUtil.setEmittingState(slot.renderer, true)
+    addParticleSystemSimulationTime(getGeometry(slot.renderer.shape), 1)
+    ParticleUtil.setEmittingState(slot.renderer, false)
+
+    return true
+end
+
+---Advances all already emitted puffs, including after their engine has stopped
+local function updatePuffPools(vehicle, state, dt)
+    if state.plumes == nil then
+        state.activePuffs = 0
+        return
+    end
+
+    local windX, windY, windZ = getWindVelocity()
+    local environment = {
+        windX = windX,
+        windY = windY,
+        windZ = windZ,
+        trace = function(puff, fromX, fromY, fromZ, toX, toY, toZ, radius)
+            return tracePuff(vehicle, puff, fromX, fromY, fromZ, toX, toY, toZ, radius)
+        end,
+        hasContact = function(puff, contact, radius)
+            return hasPuffContact(vehicle, puff, contact, radius)
+        end
+    }
+
+    local activePuffs = 0
+    for _, plume in ipairs(state.plumes) do
+        updatePipeVelocity(plume, dt)
+        for _, step in ipairs(plume.steps) do
+            if step.isNative ~= true then
+                local stepActive = 0
+                for _, slot in ipairs(step.pool) do
+                    if slot.isInUse then
+                        slot.elapsed = slot.elapsed + dt
+                        local puff = slot.puff
+                        if puff.age < puff.profile.lifespan then
+                            local previousCollisions = puff.collisionCount
+                            RMS_Exhaust.advancePuff(puff, math.min(dt,
+                                puff.profile.lifespan - puff.age), environment)
+                            local newCollisions = puff.collisionCount - previousCollisions
+                            step.collisionCount = step.collisionCount + newCollisions
+                            state.collisionCount = state.collisionCount + newCollisions
+                            setWorldTranslation(slot.root, puff.x, puff.y, puff.z)
+                            local renderedAlpha = RMS_Exhaust.getPuffRenderAlpha(puff)
+                            if math.abs(renderedAlpha - puff.lastRenderedAlpha) >= 0.001 then
+                                setShaderParameterRecursive(slot.renderer.shape, "colorAlpha",
+                                    puff.red, puff.green, puff.blue, renderedAlpha, false)
+                                puff.lastRenderedAlpha = renderedAlpha
+                            end
+                        end
+
+                        if slot.elapsed < puff.profile.lifespan then
+                            stepActive = stepActive + 1
+                            activePuffs = activePuffs + 1
+                        else
+                            setVisibility(slot.root, false)
+                        end
+
+                        if slot.elapsed >= puff.profile.lifespan + 100 then
+                            slot.isInUse = false
+                            slot.puff = nil
+                        end
+                    end
+                end
+                step.activePuffs = stepActive
+            end
+        end
+    end
+    state.activePuffs = activePuffs
 end
 
 -- the mechanical causes a burst can key on, one follower and one latch each
@@ -622,6 +1350,9 @@ local function resetState(state)
     state.emitScale = 0
     state.drawnShare = 0
     state.emitterCount = 0
+    state.activePuffs = 0
+    state.collisionCount = 0
+    state.nextPuffSerial = 0
     state.heatShare = 0
     state.isHeatVisible = false
     state.burst = 0
@@ -832,6 +1563,8 @@ end
 function RMS_Exhaust.applyShader(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local state = spec.exhaustSmoke
+    dt = getNumber(dt, 0, 0)
+    updatePuffPools(vehicle, state, dt)
     if not state.isActive or state.plumes == nil or not getIsSmokeRendered(vehicle) then
         return
     end
@@ -854,7 +1587,7 @@ function RMS_Exhaust.applyShader(vehicle, dt)
     state.soot = getSmoothed(state.soot, state.targetSoot, dt, sootRiseTau, config.SOOT_FALL_TAU)
     state.oil = getSmoothed(state.oil, state.targetOil, dt, riseTau)
     state.unburnt = getSmoothed(state.unburnt, state.targetUnburnt, dt, riseTau)
-    -- one shader value tints every particle already in the air, so the mix has to travel slowly
+    -- new puffs keep their birth colour
     local targetRed, targetGreen, targetBlue = getTintMix(state.soot, state.oil, state.unburnt)
     state.red = getSmoothed(state.red, targetRed, dt, config.TINT_TAU, config.TINT_TAU)
     state.green = getSmoothed(state.green, targetGreen, dt, config.TINT_TAU, config.TINT_TAU)
@@ -904,8 +1637,7 @@ function RMS_Exhaust.applyShader(vehicle, dt)
     state.emitScale = 0
     state.drawnShare = 0
 
-    -- the steps that share a pipe have to carry the same tint on the same tick, or the cloud
-    -- shows two populations of different colours
+    -- every pipe uses the same mixture
     local hasNewTint = math.abs(state.red - state.tintRed) >= config.TUNE_EPSILON
         or math.abs(state.green - state.tintGreen) >= config.TUNE_EPSILON
         or math.abs(state.blue - state.tintBlue) >= config.TUNE_EPSILON
@@ -936,15 +1668,16 @@ function RMS_Exhaust.applyShader(vehicle, dt)
                 step.share = share
                 step.alpha = shouldEmit and alpha or 0
                 local particleSystem = step.particleSystem
-                local hasStarted = false
 
                 if step.isEmitting ~= shouldEmit then
                     step.isEmitting = shouldEmit
-                    ParticleUtil.setEmittingState(particleSystem, shouldEmit)
                     if shouldEmit then
-                        hasStarted = true
-                        ParticleUtil.resetNumOfEmittedParticles(particleSystem)
+                        particleSystem.emittedReset = (particleSystem.emittedReset or 0) + 1
+                        step.emissionAccumulator = math.max(step.emissionAccumulator, 1)
+                    else
+                        step.emissionAccumulator = 0
                     end
+                    particleSystem.isEmitting = shouldEmit
                 end
 
                 if shouldEmit then
@@ -955,21 +1688,33 @@ function RMS_Exhaust.applyShader(vehicle, dt)
                     local emitScale = lerp(step.emitMin, step.emitMax, flowScale) * share * emitGain
                     local hasMoved = math.abs(alpha - step.lastAlpha) >= config.TUNE_EPSILON
                         or math.abs(emitScale - step.lastEmit) >= config.TUNE_EPSILON
+                    local speedScale = lerp(step.speedMin, step.speedMax, flowScale)
 
-                    if hasStarted or (isTuneTick and (hasMoved or hasNewTint)) then
+                    if hasMoved or hasNewTint then
                         step.lastAlpha = alpha
                         step.lastEmit = emitScale
+                    end
+                    particleSystem.emitScale = emitScale
+                    particleSystem.speed = step.baseSpeed * speedScale
+                    particleSystem.speedRandom = step.baseSpeedRandom * speedScale
 
-                        local grey = (state.red + state.green + state.blue) / 3
-                        setShaderParameterRecursive(particleSystem.shape, "colorAlpha",
-                            lerp(state.red, grey, sharedWash),
-                            lerp(state.green, grey, sharedWash),
-                            lerp(state.blue, grey, sharedWash), alpha, false)
-                        ParticleUtil.setEmitCountScale(particleSystem, emitScale)
+                    local emissionDt = math.min(dt, 100)
+                    step.emissionAccumulator = step.emissionAccumulator
+                        + step.profile.rate * emitScale * emissionDt
+                    local spawnCount = math.floor(step.emissionAccumulator)
+                    step.emissionAccumulator = step.emissionAccumulator - spawnCount
 
-                        local speedScale = lerp(step.speedMin, step.speedMax, flowScale)
-                        ParticleUtil.setParticleSystemSpeed(particleSystem, step.baseSpeed * speedScale)
-                        ParticleUtil.setParticleSystemSpeedRandom(particleSystem, step.baseSpeedRandom * speedScale)
+                    local grey = (state.red + state.green + state.blue) / 3
+                    local red = lerp(state.red, grey, sharedWash)
+                    local green = lerp(state.green, grey, sharedWash)
+                    local blue = lerp(state.blue, grey, sharedWash)
+                    for _ = 1, spawnCount do
+                        if spawnPuff(state, plume, step, speedScale, red, green, blue, alpha) then
+                            step.activePuffs = step.activePuffs + 1
+                            state.activePuffs = state.activePuffs + 1
+                        else
+                            break
+                        end
                     end
 
                     if share > state.drawnShare then
@@ -977,6 +1722,8 @@ function RMS_Exhaust.applyShader(vehicle, dt)
                         state.alpha = alpha
                         state.emitScale = emitScale
                     end
+                else
+                    particleSystem.emitScale = 0
                 end
             end
         end
@@ -1001,6 +1748,8 @@ function RMS_Exhaust.applyShader(vehicle, dt)
         dbg.burst = state.burst
         dbg.burstCause = state.burstCause
         dbg.emitterCount = state.emitterCount
+        dbg.activePuffs = state.activePuffs
+        dbg.collisionCount = state.collisionCount
         dbg.heatShare = state.heatShare
         dbg.steps = state.plumes[1] ~= nil and state.plumes[1].steps or nil
     end

@@ -13,6 +13,12 @@ RMS_Hud.CONSUMPTION_REFRESH_INTERVAL = 500
 RMS_Hud.CONSUMPTION_PER_HOUR_BUCKETS = 2
 RMS_Hud.CONSUMPTION_PER_AREA_BUCKETS = 10
 RMS_Hud.MOTOR_LOAD_BUCKETS = 2
+RMS_Hud.TRANSMISSION_OIL_TEMP_WARNING = 99
+RMS_Hud.TRANSMISSION_TELLTALE = {
+    NORMAL = "normal",
+    TEMPERATURE = "temperature",
+    FAULT = "fault"
+}
 
 ---Formats a number, dropping its decimals when it rounds to zero
 -- @param float value value to format
@@ -994,6 +1000,29 @@ function RMS_Hud:storeScaledValues()
     self.fuelConsumptionHud.iconGap = self:scalePixelToScreenWidth(6)
 end
 
+---Selects the transmission dashboard telltale
+-- @param table? params telltale inputs
+-- @return boolean isVisible true from the indicator introduction year
+-- @return string iconKey normal, temperature or fault
+-- @return boolean showTemperatureText true when a dedicated oil-temp readout is present
+function RMS_Hud.getTransmissionTelltaleState(params)
+    params = params or {}
+    local year = tonumber(params.year) or 0
+    local indicatorYear = tonumber(params.indicatorYear) or 1990
+    local isVisible = year >= indicatorYear
+    local temperature = tonumber(params.transmissionTemperature) or 0
+    local hasOilTempDisplay = params.hasTransmissionOilTempDisplay == true
+    local iconKey = RMS_Hud.TRANSMISSION_TELLTALE.NORMAL
+
+    if params.isLampTestActive or params.hasActiveBreakdown or params.hasCVTFaultWarning then
+        iconKey = RMS_Hud.TRANSMISSION_TELLTALE.FAULT
+    elseif hasOilTempDisplay or temperature > RMS_Hud.TRANSMISSION_OIL_TEMP_WARNING then
+        iconKey = RMS_Hud.TRANSMISSION_TELLTALE.TEMPERATURE
+    end
+
+    return isVisible, iconKey, isVisible and hasOilTempDisplay
+end
+
 ---Draws the dashboard indicators, the gauges and the vehicle condition
 function RMS_Hud:drawDashboard()
     if self.vehicle == nil or self.vehicle.spec_RealisticMechanicalSystems == nil or self.vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
@@ -1061,7 +1090,7 @@ function RMS_Hud:drawDashboard()
             elseif hudIndicatorId == self.indicators.coolant.name and spec.engineTemperature >= 110 then targetColor = colors.CRITICAL end
             if hudIndicatorId == self.indicators.transmission.name
                     and targetColor == colors.DEFAULT
-                    and spec.transmissionTemperature > 99
+                    and spec.transmissionTemperature > RMS_Hud.TRANSMISSION_OIL_TEMP_WARNING
                     and spec.transmissionTemperature < 110 then
                 targetColor = colors.WARNING
             elseif hudIndicatorId == self.indicators.transmission.name and spec.transmissionTemperature >= 110 then targetColor = colors.CRITICAL end
@@ -1100,13 +1129,15 @@ function RMS_Hud:drawDashboard()
     local speedBgX, speedBgY = g_currentMission.hud.speedMeter.speedBg:getPosition()
     local posX = speedBgX + g_currentMission.hud.speedMeter.speedGaugeCenterOffsetX
     local posY = speedBgY + g_currentMission.hud.speedMeter.speedGaugeCenterOffsetY
-    local hasTransmissionTemperatureDisplay = hasCVTTransmission(vehicle) or cvtAddonSpec ~= nil
+    local hasTransmissionOilTempDisplay = hasCVTTransmission(vehicle) or cvtAddonSpec ~= nil
+    local showTransmissionTemperatureText = false
 
     for hudIndicatorId, hudIndicatorData in pairs(self.indicators) do
         local targetColor, isRoutineIgnitionIndicator = calculateIndicatorTargetColor(hudIndicatorId, true)
         local activeIndicatorData = activeIndicators[hudIndicatorId]
         local hasActiveBreakdown = activeIndicatorData ~= nil and activeIndicatorData.isActive == true
         local icon = hudIndicatorData.icon
+        local isIndicatorVisible = true
 
         if hudIndicatorId == self.indicators.engine.name then
             if isRoadVehicle then
@@ -1117,25 +1148,29 @@ function RMS_Hud:drawDashboard()
                 icon = hudIndicatorData.icons.normal
             end
         elseif hudIndicatorId == self.indicators.transmission.name then
-            if isLampTestActive or hasActiveBreakdown or hasCVTFaultWarning then
-                icon = hudIndicatorData.icons.fault
-            elseif hasTransmissionTemperatureDisplay
-                    or spec.transmissionTemperature > 99 then
-                icon = hudIndicatorData.icons.temperature
-            else
-                icon = hudIndicatorData.icons.normal
-            end
+            local isTransmissionVisible, transmissionIconKey, shouldShowTemperatureText = RMS_Hud.getTransmissionTelltaleState({
+                year = spec.year,
+                indicatorYear = hudIndicatorData.year,
+                isLampTestActive = isLampTestActive,
+                hasActiveBreakdown = hasActiveBreakdown,
+                hasCVTFaultWarning = hasCVTFaultWarning,
+                hasTransmissionOilTempDisplay = hasTransmissionOilTempDisplay,
+                transmissionTemperature = spec.transmissionTemperature
+            })
+            icon = hudIndicatorData.icons[transmissionIconKey] or hudIndicatorData.icons.normal
+            isIndicatorVisible = isTransmissionVisible
+            showTransmissionTemperatureText = shouldShowTemperatureText
         end
 
         hudIndicatorData.icon = icon
-        local isIndicatorVisible = true
 
         icon:setPosition(posX + hudIndicatorData.offsetX, posY + hudIndicatorData.offsetY)
         if hudIndicatorId == self.indicators.preheat.name and not spec.isDieselVehicle then
             isIndicatorVisible = false
         elseif hudIndicatorId == self.indicators.coolant.name and spec.isElectricVehicle then
             isIndicatorVisible = false
-        elseif hudIndicatorId ~= self.indicators.preheat.name then
+        elseif hudIndicatorId ~= self.indicators.preheat.name
+                and hudIndicatorId ~= self.indicators.transmission.name then
             isIndicatorVisible = hudIndicatorData.year <= spec.year
         end
 
@@ -1169,7 +1204,7 @@ function RMS_Hud:drawDashboard()
 
     local tempText = string.format("%.0f%s", engineTemp, tempSign)
     local transTempText = nil
-    if hasTransmissionTemperatureDisplay then
+    if showTransmissionTemperatureText then
         transTempText = string.format("%.0f%s", transTemp, tempSign)
     end
 

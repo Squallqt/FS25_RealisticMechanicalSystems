@@ -4,7 +4,7 @@
 ---Physical fluid catalogue, vehicle capacities, mixture compatibility and leak-loss accounting
 RMS_Fluids = RMS_Fluids or {}
 
-RMS_Fluids.CAPACITY_VERSION = 2
+RMS_Fluids.CAPACITY_VERSION = 1
 RMS_Fluids.EPSILON = 0.0001
 
 RMS_Fluids.CIRCUIT_ORDER = {
