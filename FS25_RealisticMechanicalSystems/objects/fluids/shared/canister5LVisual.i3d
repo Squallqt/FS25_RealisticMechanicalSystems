@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="canister5LVisual" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="1" filename="../products/motorexFarmerPro/medium_body_diffuse.dds"/>
+    <File fileId="2" filename="../products/motorexFarmerPro/medium_cap_diffuse.dds"/>
+    <File fileId="3" filename="../products/motorexFarmerPro/medium_label_diffuse.dds"/>
+    <File fileId="4" filename="canister5L_specular.dds"/>
+  </Files>
+
+  <Materials>
+    <Material name="body" materialId="1">
+      <Texture fileId="1"/>
+      <Glossmap fileId="4"/>
+    </Material>
+    <Material name="cap" materialId="2">
+      <Texture fileId="2"/>
+    </Material>
+    <Material name="label" materialId="3">
+      <Texture fileId="3"/>
+    </Material>
+  </Materials>
+
+  <Shapes externalShapesFile="canister5LVisual.i3d.shapes">
+  </Shapes>
+
+  <Scene>
+    <TransformGroup name="canister5LVisual" nodeId="6">
+      <Shape name="body" rotation="-0 90 0" shapeId="1" clipDistance="50" nodeId="7" castsShadows="true" receiveShadows="true" materialIds="1"/>
+      <Shape name="cap" rotation="-0 90 0" shapeId="2" clipDistance="50" nodeId="8" castsShadows="true" receiveShadows="true" materialIds="2"/>
+      <Shape name="label" rotation="-0 90 0" shapeId="3" clipDistance="50" nodeId="9" castsShadows="true" receiveShadows="true" materialIds="3"/>
+    </TransformGroup>
+  </Scene>
+</i3D>

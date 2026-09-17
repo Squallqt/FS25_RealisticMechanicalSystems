@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="column" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="1" filename="$data/effects/smoke/industrial/smoke6x6_diffuse.png"/>
+    <File fileId="2" filename="$data/shared/default_specular.png"/>
+    <File fileId="3" filename="$data/shaders/psSubUVShader.xml"/>
+    <File fileId="4" filename="$data/effects/smoke/industrial/smoke6x6_lightmap.png"/>
+  </Files>
+
+
+  <Materials>
+    <Material name="emitShape_mat" materialId="1" diffuseColor="1 1 1 1">
+    </Material>
+    <Material name="plume_mat" materialId="2" alphaBlending="true" customShaderId="3" customShaderVariation="lightmap">
+      <Texture fileId="1"/>
+      <Glossmap fileId="2"/>
+      <Custommap name="lightMap" fileId="4"/>
+      <CustomParameter name="colorAlpha" value="0.5 0.5 0.5 0.5"/>
+      <CustomParameter name="isAlphaErosionSharpness" value="1.0 0.60"/>
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="column.i3d.shapes">
+  </Shapes>
+
+
+  <Dynamics>
+    <ParticleSystem name="plumeEmitter" dynamicId="1" type="sprite" rate="0.035" lifespan="5200" maxCount="520" speed="0.0028" speedRandom="0.0005" tangentSpeed="0.08" normalSpeed="1" damping="0.4" spriteScaleX="0.058" spriteScaleY="0.058" spriteScaleXGain="0.00125" spriteScaleYGain="0.00125" blendFactor="0.9" blendInFactor="0.12" blendOutFactor="0.7" depthSort="true" randomInitRotation="true" deltaRotateMax="0.00045" textureAtlasSizeX="6" textureAtlasSizeY="6">
+      <Gravity force="0 0 0"/>
+    </ParticleSystem>
+  </Dynamics>
+
+  <Scene>
+    <Dynamic name="plumeEmitter" dynamicId="1" emitterShapeNodeId="9" clipDistance="150" nodeId="8" castsShadows="false" receiveShadows="false" distanceBlending="false" materialIds="2">
+      <Shape name="emitShape" shapeId="2" nodeId="9" castsShadows="false" receiveShadows="false" nonRenderable="true" materialIds="1"/>
+    </Dynamic>
+  </Scene>
+
+</i3D>

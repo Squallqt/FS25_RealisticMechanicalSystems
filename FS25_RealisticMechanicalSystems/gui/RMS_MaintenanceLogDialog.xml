@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI onOpen="onOpen" onClose="onClose" onCreate="onCreate">
+    <GuiElement profile="newLayer" />
+    <RoundCorner profile="rms_dialogScreenBlocker" id="dialogScreenBlocker" />
+    <Bitmap profile="dialogFullscreenBg" id="dialogBg" />
+
+    <GuiElement profile="rms_workshopDialogBg" id="dialogElement" with="anchorMiddleCenter">
+        <ThreePartBitmap profile="fs25_dialogBgMiddle" />
+        <ThreePartBitmap profile="fs25_dialogBgTop" />
+        <ThreePartBitmap profile="fs25_dialogBgBottom" />
+
+        <GuiElement profile="fs25_dialogContentContainer">
+            <GuiElement profile="rms_workshopHeaderPanel">
+                <Bitmap profile="fs25_menuHeaderIconBg">
+                    <Bitmap profile="fs25_menuHeaderIcon" imageSliceId="gui.icon_vehicleDealer_machines" />
+                </Bitmap>
+                <Text profile="fs25_menuHeaderTitle" id="headerText" text="$l10n_rms_ws_header_title" />
+                <RoundCorner profile="fs25_shopMoneyBoxBg" id="moneyBoxBg" />
+                <BoxLayout profile="fs25_shopMoneyBox" id="moneyBox">
+                    <Text profile="fs25_shopBalance" id="balanceTitleElement" text="$l10n_ui_balance" />
+                    <Text profile="fs25_shopMoney" id="balanceElement" />
+                </BoxLayout>
+            </GuiElement>
+
+            <BoxLayout profile="rms_workshopTabBox">
+                <Button profile="fs25_subCategorySelectorTabbedTab" text="$l10n_rms_ws_tab_summary" disabled="true">
+                    <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+                </Button>
+                <Button profile="fs25_subCategorySelectorTabbedTab" text="$l10n_rms_ws_tab_diagnostic" disabled="true">
+                    <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+                </Button>
+                <Button profile="fs25_subCategorySelectorTabbedTab" text="$l10n_rms_ws_tab_interventions" disabled="true">
+                    <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+                </Button>
+                <Button profile="fs25_subCategorySelectorTabbedTab" id="logTechnicalTab" text="$l10n_rms_ws_tab_record">
+                    <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+                </Button>
+            </BoxLayout>
+            <ThreePartBitmap profile="rms_workshopTabSeparator" />
+
+            <GuiElement profile="fs25_subCategorySelectorTabbedContainer">
+                <BoxLayout profile="rms_logPageFlow">
+                    <GuiElement profile="rms_logHeroBand">
+                        <RoundCorner profile="rms_workshopSurfaceBand" />
+                        <BoxLayout profile="rms_logHeroContentRow">
+                            <GuiElement profile="rms_logHeroIdentity">
+                                <Bitmap profile="rms_workshopVehiclePicture" id="logVehicleImage" position="0px 0px" size="104px 68px" />
+                                <Text profile="rms_workshopHeroName" id="vehicleNameValue" position="124px -2px" size="496px 36px" />
+                                <Text profile="rms_workshopLabel" position="124px -42px" size="496px 24px" text="$l10n_rms_log_header_title" />
+                            </GuiElement>
+                            <GuiElement profile="rms_logHeroMetric">
+                                <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                <Bitmap profile="rms_logHeroMetricIcon" imageSliceId="gui.icon_ingameMenu_statistics" />
+                                <Text profile="rms_logHeroMetricLabel" text="$l10n_rms_log_recorded_interventions_title" />
+                                <Text profile="rms_logHeroMetricValue" id="visibleEntryCountValue" />
+                            </GuiElement>
+                            <GuiElement profile="rms_logHeroMetric">
+                                <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                <Bitmap profile="rms_logHeroMetricIcon" imageSliceId="gui.icon_calendar" />
+                                <Text profile="rms_logHeroMetricLabel" text="$l10n_rms_log_last_intervention_title" />
+                                <Text profile="rms_logHeroMetricValue" id="lastInterventionValue" />
+                            </GuiElement>
+                            <GuiElement profile="rms_logHeroMetric">
+                                <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                <Bitmap profile="rms_logHeroMetricIcon" imageSliceId="gui.storeAttribute_operatingHours" />
+                                <Text profile="rms_logHeroMetricLabel" text="$l10n_rms_ws_label_operating_hours" />
+                                <Text profile="rms_logHeroMetricValue" id="vehicleHoursValue" />
+                            </GuiElement>
+                        </BoxLayout>
+                    </GuiElement>
+
+                <BoxLayout profile="rms_logKpiRow">
+                    <GuiElement profile="rms_logKpiCard">
+                        <RoundCorner profile="rms_workshopSurfaceStrong" />
+                        <GuiElement profile="rms_logKpiIcon" onDraw="onDrawCurrencyKpiIcon" />
+                        <Text profile="rms_logKpiLabel" text="$l10n_rms_log_total_cost_title" />
+                        <Text profile="rms_logKpiValue" id="totalCostValue" />
+                    </GuiElement>
+                    <GuiElement profile="rms_logKpiCard">
+                        <RoundCorner profile="rms_workshopSurfaceStrong" />
+                        <GuiElement profile="rms_logKpiIcon" onDraw="onDrawCurrencyKpiIcon" />
+                        <Text profile="rms_logKpiLabel" text="$l10n_rms_log_cost_per_month_title" />
+                        <Text profile="rms_logKpiValue" id="costPerMonthValue" />
+                    </GuiElement>
+                    <GuiElement profile="rms_logKpiCard">
+                        <RoundCorner profile="rms_workshopSurfaceStrong" />
+                        <Bitmap profile="rms_logKpiIcon" imageSliceId="gui.icon_calendar" />
+                        <Text profile="rms_logKpiLabel" text="$l10n_rms_log_ownership_months_title" />
+                        <Text profile="rms_logKpiValue" id="ownershipMonthsValue" />
+                    </GuiElement>
+                    <GuiElement profile="rms_logKpiCard">
+                        <RoundCorner profile="rms_workshopSurfaceStrong" />
+                        <Bitmap profile="rms_logKpiIconWide" imageSliceId="gui.contextAction_icon_repairAlert" />
+                        <Text profile="rms_logKpiLabel" text="$l10n_rms_log_total_breakdowns_count_title" />
+                        <Text profile="rms_logKpiValue" id="totalBreakdownsCountValue" />
+                    </GuiElement>
+                    <GuiElement profile="rms_logKpiCard">
+                        <RoundCorner profile="rms_workshopSurfaceStrong" />
+                        <Bitmap profile="rms_logKpiIcon" imageSliceId="gui.icon_clock" />
+                        <Text profile="rms_logKpiLabel" text="$l10n_rms_log_average_breakdowns_interval_title" />
+                        <Text profile="rms_logKpiValue" id="averageBreakdownsIntervalValue" />
+                    </GuiElement>
+                    <GuiElement profile="rms_logKpiCardLast">
+                        <RoundCorner profile="rms_workshopSurfaceStrong" />
+                        <GuiElement profile="rms_logKpiMaintenanceIcon" onDraw="onDrawMaintenanceKpiIcon" />
+                        <Text profile="rms_logKpiLabel" text="$l10n_rms_log_average_maintenance_interval_title" />
+                        <Text profile="rms_logKpiValue" id="averageMaintenanceIntervalValue" />
+                    </GuiElement>
+                </BoxLayout>
+
+                <BoxLayout profile="rms_logMainRow">
+                    <GuiElement profile="rms_logHistoryCard">
+                        <RoundCorner profile="rms_workshopSurfaceStrong" />
+                        <GuiElement profile="rms_workshopBlock" position="20px -14px" size="874px 32px">
+                            <RoundCorner profile="rms_workshopSectionAccent" />
+                            <Text profile="rms_workshopSectionTitle" position="16px 0px" size="858px 32px" text="$l10n_rms_ws_section_history" />
+                            <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="858px 1px" />
+                        </GuiElement>
+
+                        <SmoothList profile="rms_logTableList" id="logTable" focusInit="onOpen" position="20px -58px" size="852px 374px">
+                            <ListItem profile="rms_logTableRow" name="logRowTemplate" size="852px 68px" onClick="onRowClick">
+                                <RoundCorner profile="rms_logRowSurface" />
+                                <Bitmap profile="rms_logTypeIcon" name="logTypeIcon" />
+                                <Text profile="rms_logRowType" position="68px -6.5px" size="220px 26px" name="logType" textUpperCase="true" />
+                                <Text profile="rms_logRowMeta" position="300px -7.5px" size="188px 24px" name="logDate" />
+                                <Text profile="rms_logRowMeta" position="500px -7.5px" size="188px 24px" name="logHours" />
+                                <Text profile="rms_logRowPrice" position="700px -7.5px" size="134px 24px" name="logPrice" />
+                                <Text profile="rms_logRowDescription" position="68px -37.5px" size="766px 24px" name="logDescription" />
+                            </ListItem>
+                        </SmoothList>
+
+                        <ThreePartBitmap profile="rms_listSliderBox" position="-16px -58px" size="6px 374px">
+                            <Slider profile="fs25_listSlider" dataElementId="logTable" />
+                        </ThreePartBitmap>
+
+                        <Text profile="rms_logEmptyText" id="emptylogText" text="$l10n_rms_log_empty" position="20px -205px" size="852px 80px" />
+                    </GuiElement>
+
+                    <GuiElement profile="rms_logDetailCard">
+                        <RoundCorner profile="rms_workshopSurfaceStrong" />
+                        <GuiElement profile="rms_workshopBlock" position="20px -14px" size="507px 32px">
+                            <RoundCorner profile="rms_workshopSectionAccent" />
+                            <Text profile="rms_workshopSectionTitle" position="16px 0px" size="491px 32px" text="$l10n_rms_log_description" />
+                            <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="491px 1px" />
+                        </GuiElement>
+
+                        <GuiElement profile="rms_workshopBlock" position="20px -58px" size="507px 64px">
+                            <RoundCorner profile="rms_workshopSurfaceSoft" />
+                            <Text profile="rms_logDetailIdentityLabel" position="18px -3px" size="471px 17px" text="$l10n_rms_log_type" />
+                            <BoxLayout profile="rms_workshopInfoGroup" id="detailIdentityRow" position="18px -20px" size="471px 40px" elementSpacing="10px">
+                                <Bitmap profile="rms_logDetailIcon" id="selectedLogIcon" />
+                                <Text profile="rms_logDetailType" id="selectedLogType" size="0px 36px" />
+                            </BoxLayout>
+                        </GuiElement>
+
+                        <GuiElement profile="rms_workshopBlock" position="20px -134px" size="161px 54px">
+                            <RoundCorner profile="rms_workshopSurfaceSoft" />
+                            <Text profile="rms_logDetailMetaLabel" position="10px -4px" size="141px 21px" text="$l10n_rms_log_date" />
+                            <Text profile="rms_logDetailMetaValue" id="selectedLogDate" position="10px -26px" size="141px 24px" />
+                        </GuiElement>
+
+                        <GuiElement profile="rms_workshopBlock" position="193px -134px" size="161px 54px">
+                            <RoundCorner profile="rms_workshopSurfaceSoft" />
+                            <Text profile="rms_logDetailMetaLabel" position="10px -4px" size="141px 21px" text="$l10n_rms_log_hours" />
+                            <Text profile="rms_logDetailMetaValue" id="selectedLogHours" position="10px -26px" size="141px 24px" />
+                        </GuiElement>
+
+                        <GuiElement profile="rms_workshopBlock" position="366px -134px" size="161px 54px">
+                            <RoundCorner profile="rms_workshopSurfaceSoft" />
+                            <Text profile="rms_logDetailMetaLabel" position="10px -4px" size="141px 20px" text="$l10n_rms_log_price" />
+                            <RoundCorner profile="rms_workshopValuePillCentered" position="12px -25px" size="137px 24px" />
+                            <Text profile="rms_logDetailPrice" id="selectedLogPrice" position="22px -24px" size="117px 26px" />
+                        </GuiElement>
+
+                        <GuiElement profile="rms_workshopBlock" position="20px -200px" size="507px 232px">
+                            <RoundCorner profile="rms_workshopSurfaceSoft" />
+                            <Text profile="rms_logDetailSummary" id="selectedLogSummary" position="18px -8px" size="471px 22px" />
+                            <Text profile="rms_logDetailLocation" id="selectedLogLocation" position="18px -30px" size="471px 16px" />
+                            <GuiElement profile="rms_workshopBlock" id="selectedLogDetailsHeader" position="18px -54px" size="471px 18px">
+                                <RoundCorner profile="rms_workshopSubsectionAccent" position="3px 0px" />
+                                <Text profile="rms_logDetailListLabel" id="selectedLogDetailsLabel" position="12px 0px" size="459px 18px" />
+                            </GuiElement>
+                            <SmoothList profile="rms_logDetailPartsList" id="detailPartsTable" position="18px -74px" size="471px 154px">
+                                <ListItem profile="rms_logDetailPartRow" name="detailPartRowTemplate" size="471px 22px" updateChildrenState="false">
+                                    <Text profile="rms_logDetailPartBullet" position="0px 0px" size="8px 22px" text="·" />
+                                    <Text profile="rms_logDetailPart" position="12px 0px" size="207.5px 22px" name="detailPartLeft" />
+                                    <Text profile="rms_logDetailPartBullet" position="235.5px 0px" size="8px 22px" text="·" name="detailPartRightBullet" />
+                                    <Text profile="rms_logDetailPart" position="247.5px 0px" size="207.5px 22px" name="detailPartRight" />
+                                </ListItem>
+                            </SmoothList>
+                        </GuiElement>
+                    </GuiElement>
+                </BoxLayout>
+                </BoxLayout>
+            </GuiElement>
+        </GuiElement>
+
+        <BoxLayout profile="fs25_dialogButtonBox">
+            <Button profile="buttonActivate" text="$l10n_rms_log_button_show_report" onClick="onClickShowReport" id="showReportButton" />
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
+            <Button profile="buttonBack" text="$l10n_button_back" onClick="onClickBack" id="backButton" />
+        </BoxLayout>
+    </GuiElement>
+</GUI>

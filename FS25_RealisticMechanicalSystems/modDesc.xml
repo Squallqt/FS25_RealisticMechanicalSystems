@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="113">
+    <author>Squallqt</author>
+    <version>0.10.0.0</version>
+    <title>
+        <en>Realistic Mechanical Systems</en>
+        <de>Realistische Mechaniksysteme</de>
+        <fr>Systèmes Mécaniques Réalistes</fr>
+    </title>
+    <description>
+        <en><![CDATA[Your machines finally wear out like real ones.
+
+Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO. Every one tracks its own condition, its own stress, and its own way of failing. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
+
+WEAR AND STRESS
+- Condition falls about 1% per operating hour under normal use, far faster under abuse, and each system has its own wear factors
+- Stress builds only through mistakes: overload, overheating, cold running under load, wheel slip, oversized implements
+- A breakdown becomes likely as stress approaches condition, and low condition makes it likely to strike at its worst stage straight away
+- Overdue service accelerates wear across every system, the engine most of all
+
+BREAKDOWNS
+- 36 breakdowns spread across the 8 systems, each in four stages from Minor to Critical
+- The type is not random: the mod tracks which wear factors you trigger most and picks the failure your habits earned
+- Stage 1 is silent and shows only through symptoms, RPM fluctuations, coloured exhaust smoke, knocking, whistling; dashboard indicators light from stage 2
+- Old machines also degrade permanently, losing engine power, transmission bite, battery performance, and cooling efficiency
+
+WORKSHOP
+- Four procedures, Inspection, Maintenance, Repair, and Overhaul, each with options that change price, duration, and quality
+- Part quality from Used to Premium: cheap parts are more often defective and bring the same fault back
+- Everything takes real time, and the workshop closes overnight, so planning when a machine goes in matters
+- A full defectoscopy reveals hidden faults, defective parts, and exact condition values
+
+DAILY CARE
+- Hold R near a vehicle for a pre-shift check of fluids, radiator, and air filter
+- Air Blower clears the cooling pack and removes loose dust from the air filter; Grease Gun restores lubrication on machines that need it
+- An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
+
+SIMULATION
+- Separate engine and transmission thermal models driven by load, the hydraulic pump, the power take-off, ambient temperature, radiator fouling and airflow, with an engine thermostat that follows production year
+- Battery and alternator modelled as a real circuit, with cold-weather capacity loss, internal resistance, voltage sag, and jumper cables between vehicles
+- Automatic temperature-based diesel preheating with its own glow-plug breakdown
+- Exhaust smoke driven by production year, emission profile, engine wear, load, temperature, prolonged idling and the type of active fault: black soot, blue oil or white unburnt fuel
+- Drivetrain management on tractors: 2WD / 4WD / AUTO modes, differential locks, and a parking brake
+- Reliability and maintainability per brand and production year, shown in the shop
+- Multiplayer and dedicated server, 27 languages
+- Electric vehicles are not supported yet
+
+Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.10.0.0:
+- Renamed this independent fork to Realistic Mechanical Systems; existing Advanced Damage System saves and settings are migrated automatically
+- Reworked used vehicles: condition follows the selected vehicle lifespan, hidden faults can exist at purchase, and reliable brands reduce the risk
+- Added physical engine oil, coolant, transmission oil and hydraulic fluid: nine purchasable products in 5, 25 and 200 L containers, manual transfer, contamination and workshop stock; transmission oil leaks can drain the circuit
+- Reworked the pre-shift check and workshop fluid service: go or no go verdict, next service, four level gauges and a Top up procedure charged by the missing volume
+- Reworked air filter servicing: dusty work clogs the filter, the air blower only cleans it partly, washing does not clean it, and workshop maintenance replaces it; hand tools also reach further
+- Added exhaust smoke driven by vehicle age, engine wear, load and active faults, with a local detail setting for each player
+- Added tractor drivetrain management: 2WD, 4WD and AUTO modes, differential locks, an automatic parking brake and wind-up wear; Enhanced Vehicle takes over the functions it manages
+- Expanded the HUD with tractor, towed and combined mass, dashboard indicators, and separate engine and transmission thermal alerts
+- Added automatic diesel preheating in cold weather, with a four-stage glow plug breakdown
+- Reworked transmission thermal wear: temperature responds to the pump, power take-off and heavy low-speed work; cold oil progressively increases wear only under real driveline load; CVT gearboxes can suffer thermostat failure
+- Rebuilt hydraulic wear and breakdowns around actual machine capability, pump operation, lifted mass and vibration
+- Added a dedicated power take-off system with drive coupling, output bearing and engagement control breakdowns
+- Rebalanced mechanical wear: radiator clogging reduces cooling, cooling wear requires an engine above target temperature, cold-engine wear requires high load, turbo wear applies from 75 hp, steering follows angle and axle load, and lubrication covers every non-road machine
+- Reworked vehicle eligibility and non-player vehicles: supported motorized machines are classified by capability, AI workers cause normal wear, and contract machines show hours without wearing down
+- Improved idling: an unattended running engine now consumes fuel
+- Added a global settings profile for new savegames and a fleet reset based on the selected vehicle lifespan; removed the thermal sensitivity, warm-up boost and cooling slowdown settings
+- Removed the work process system, harvest wear and the unloading auger breakdown; production years are now resolved internally without Vehicle Years
+- Reworked the workshop, inspection, report, maintenance log and leased-vehicle return interfaces; simplified the on-foot vehicle info box to condition and next service
+- Expanded tutorial tips for the fluid, smoke, drivetrain, parking brake and thermal systems
+- Added 12 languages (27 total) and improved existing translations]]></en>
+
+        <de><![CDATA[Ihre Maschinen verschleißen endlich wie echte.
+
+Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle. Jedes führt seinen eigenen Zustand, seine eigene Belastung und seine eigene Art auszufallen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
+
+VERSCHLEISS UND BELASTUNG
+- Der Zustand sinkt im Normalbetrieb um etwa 1% je Betriebsstunde, bei Missbrauch deutlich schneller, und jedes System hat eigene Verschleißfaktoren
+- Belastung entsteht nur durch Fehler: Überlast, Überhitzung, Arbeit mit kaltem Motor, Radschlupf, zu schwere Anbaugeräte
+- Ein Defekt wird wahrscheinlich, sobald die Belastung den Zustand erreicht; bei niedrigem Zustand tritt er häufig sofort in der schwersten Stufe auf
+- Überfällige Wartung beschleunigt den Verschleiß aller Systeme, allen voran des Motors
+
+DEFEKTE
+- 36 Defekte, verteilt auf die 8 Systeme, jeweils in vier Stufen von geringfügig bis kritisch
+- Die Art ist nicht zufällig: Der Mod verfolgt, welche Verschleißfaktoren Sie am häufigsten auslösen, und wählt den dazu passenden Ausfall
+- Stufe 1 bleibt stumm und zeigt sich nur über Symptome, schwankende Drehzahl, farbiger Abgasrauch, Klopfen, Pfeifen; Armaturenbrettanzeigen leuchten ab Stufe 2
+- Alte Maschinen bauen zudem dauerhaft ab und verlieren Motorleistung, Kraftübertragung, Batterieleistung und Kühlwirkung
+
+WERKSTATT
+- Vier Verfahren, Inspektion, Wartung, Reparatur und Grundüberholung, jeweils mit Optionen für Preis, Dauer und Qualität
+- Teilequalität von Gebraucht bis Premium: Billigteile sind häufiger defekt und holen denselben Fehler zurück
+- Alles braucht echte Zeit, und die Werkstatt schließt über Nacht, weshalb die Terminplanung zählt
+- Eine vollständige Defektoskopie deckt verborgene Fehler, defekte Teile und exakte Zustandswerte auf
+
+TÄGLICHE PFLEGE
+- R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler und Luftfilter vor Schichtbeginn
+- Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter; die Fettpresse stellt die Schmierung wieder her
+- Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
+
+SIMULATION
+- Getrennte thermische Modelle für Motor und Getriebe, gesteuert durch Last, Hydraulikpumpe, Zapfwelle, Außentemperatur, Kühlerverschmutzung und Fahrtwind, mit einem Motorthermostat, das dem Baujahr folgt
+- Batterie und Lichtmaschine als echter Stromkreis, mit Kälteverlust, Innenwiderstand, Spannungseinbruch und Starthilfekabeln zwischen Fahrzeugen
+- Automatisches temperaturabhängiges Diesel-Vorglühen mit eigener Glühkerzenstörung
+- Abgasrauch nach Baujahr, Emissionsprofil, Motorverschleiß, Last, Temperatur, langem Leerlauf und Art des aktiven Defekts: schwarzer Ruß, blaues Öl oder weißer unverbrannter Kraftstoff
+- Antriebsstrangverwaltung für Traktoren: Hinterradantrieb / Allrad / AUTO, Differentialsperren und Feststellbremse
+- Zuverlässigkeit und Wartungsfreundlichkeit je Marke und Baujahr, im Shop sichtbar
+- Mehrspieler und Dedicated Server, 27 Sprachen
+- Elektrofahrzeuge werden noch nicht unterstützt
+
+Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.10.0.0:
+- Diesen unabhängigen Fork in Realistic Mechanical Systems umbenannt; vorhandene Spielstände und Einstellungen von Advanced Damage System werden automatisch übernommen
+- Gebrauchtfahrzeuge überarbeitet: Ihr Zustand folgt der gewählten Fahrzeuglebensdauer, beim Kauf sind versteckte Defekte möglich und zuverlässige Marken senken das Risiko
+- Physisches Motoröl, Kühlmittel, Getriebeöl und Hydrauliköl hinzugefügt: neun käufliche Produkte in 5-, 25- und 200-Liter-Gebinden, manuelles Umfüllen, Verunreinigung und Werkstattbestand; Getriebeöllecks können den Kreislauf entleeren
+- Kontrolle vor Schichtbeginn und Flüssigkeitsservice in der Werkstatt überarbeitet: Einsatzurteil, nächste Wartung, vier Füllstandsanzeigen und ein Nachfüllvorgang nach tatsächlich fehlender Menge
+- Luftfilterwartung überarbeitet: Staub setzt den Filter zu, das Druckluftgebläse reinigt ihn nur teilweise, Waschen reinigt ihn nicht und die Werkstattwartung ersetzt ihn; Handwerkzeuge reichen außerdem weiter
+- Abgasrauch hinzugefügt, gesteuert von Fahrzeugalter, Motorverschleiß, Last und aktiven Defekten, mit lokaler Detailstufe für jeden Spieler
+- Antriebsverwaltung für Traktoren hinzugefügt: Hinterradantrieb, Allrad und AUTO, Differentialsperren, automatische Feststellbremse und Verschleiß durch Antriebsstrangbelastung; Enhanced Vehicle übernimmt die von ihm verwalteten Funktionen
+- HUD um Traktor-, Anhänger- und Gesamtmasse, Armaturenbrettanzeigen sowie getrennte Temperaturwarnungen für Motor und Getriebe erweitert
+- Automatisches Diesel-Vorglühen bei Kälte mit einer vierstufigen Glühkerzenstörung hinzugefügt
+- Thermischen Getriebeverschleiß überarbeitet: Die Temperatur reagiert auf Pumpe, Zapfwelle und schwere Arbeit bei niedriger Geschwindigkeit; kaltes Öl erhöht den Verschleiß nur unter echter Antriebslast schrittweise; CVT-Getriebe können einen Thermostatdefekt erleiden
+- Hydraulikverschleiß und -defekte anhand tatsächlicher Maschinenfunktionen, Pumpenbetrieb, angehobener Masse und Vibration neu aufgebaut
+- Eigenständiges Zapfwellensystem mit Defekten an Zapfwellen-Antriebskupplung, Lager der Zapfwellenabtriebswelle und Zapfwellen-Zuschaltsteuerung hinzugefügt
+- Mechanischen Verschleiß neu abgestimmt: Kühlerverschmutzung senkt die Kühlleistung, Kühlungsverschleiß erfordert einen Motor über Zieltemperatur, Verschleiß bei kaltem Motor setzt hohe Last voraus, Turboverschleiß gilt ab 75 PS, Lenkungsverschleiß folgt Winkel und Achslast und Schmierung gilt für jede nicht straßengebundene Maschine
+- Fahrzeugeignung und nicht vom Spieler gesteuerte Fahrzeuge überarbeitet: unterstützte motorisierte Maschinen werden nach ihren Funktionen eingestuft, KI-Helfer verursachen normalen Verschleiß und Auftragsmaschinen zeigen Stunden an, ohne zu verschleißen
+- Leerlauf verbessert: Ein unbeaufsichtigt laufender Motor verbraucht jetzt Kraftstoff
+- Globales Einstellungsprofil für neue Spielstände und eine Fuhrpark-Zurücksetzung anhand der gewählten Fahrzeuglebensdauer hinzugefügt; Einstellungen für Temperaturempfindlichkeit, Aufwärmbeschleunigung und Abkühlverzögerung entfernt
+- Arbeitssystem, Ernteverschleiß und Entladeschneckenstörung entfernt; Baujahre werden jetzt intern ohne Vehicle Years ermittelt
+- Oberflächen für Werkstatt, Inspektion, Bericht, Wartungsprotokoll und Rückgabe geleaster Fahrzeuge überarbeitet; Fahrzeug-Infobox zu Fuß auf Zustand und nächste Wartung vereinfacht
+- Tutorial-Tipps für Flüssigkeiten, Abgasrauch, Antrieb, Feststellbremse und Temperatursysteme erweitert
+- 12 Sprachen hinzugefügt (insgesamt 27) und bestehende Übersetzungen verbessert]]></de>
+        
+        <fr><![CDATA[Vos machines s'usent enfin comme les vraies.
+
+Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force. Chacun suit son propre état, sa propre contrainte et sa propre façon de lâcher. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
+
+USURE ET CONTRAINTE
+- L'état baisse d'environ 1% par heure de fonctionnement en usage normal, bien plus vite en cas d'abus, et chaque système a ses propres facteurs d'usure
+- La contrainte ne s'accumule que par les erreurs : surcharge, surchauffe, travail moteur froid, patinage, outils trop lourds
+- Une panne devient probable dès que la contrainte rejoint l'état, et un état faible la fait souvent survenir d'emblée à son stade le plus grave
+- Un entretien en retard accélère l'usure de tous les systèmes, du moteur en premier
+
+PANNES
+- 36 pannes réparties sur les 8 systèmes, chacune en quatre stades, de mineur à critique
+- Le type n'est pas aléatoire : le mod suit les facteurs d'usure que vous déclenchez le plus et choisit la panne que vos habitudes ont préparée
+- Le stade 1 est muet et ne se trahit que par des symptômes, régime instable, fumée d'échappement colorée, cognement, sifflement ; les témoins s'allument à partir du stade 2
+- Les machines âgées se dégradent aussi durablement et perdent puissance moteur, transmission, performance de batterie et efficacité de refroidissement
+
+ATELIER
+- Quatre procédures, inspection, entretien, réparation et révision, chacune avec des options qui changent le prix, la durée et la qualité
+- Qualité des pièces de l'occasion au premium : les pièces bon marché sont plus souvent défectueuses et ramènent la même panne
+- Tout prend un temps réel, et l'atelier ferme la nuit : planifier le passage d'une machine compte autant que le payer
+- Une défectoscopie complète révèle les pannes cachées, les pièces défectueuses et les valeurs exactes
+
+ENTRETIEN QUOTIDIEN
+- Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air
+- La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air ; la pompe à graisse rétablit le graissage des machines qui en demandent
+- Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
+
+SIMULATION
+- Modèles thermiques séparés pour le moteur et la transmission, pilotés par la charge, la pompe hydraulique, la prise de force, la température extérieure, l'encrassement du radiateur et le flux d'air, avec un thermostat moteur adapté au millésime
+- Batterie et alternateur simulés comme un vrai circuit, avec perte de capacité au froid, résistance interne, chute de tension et câbles de démarrage entre véhicules
+- Préchauffage diesel automatique selon la température, avec sa propre panne de bougies
+- Fumée d'échappement pilotée par le millésime, le profil d'émissions, l'usure moteur, la charge, la température, le ralenti prolongé et le type de panne active : suie noire, huile bleue ou carburant imbrûlé blanc
+- Gestion de transmission sur les tracteurs : modes 2RM / 4RM / AUTO, blocages de différentiel et frein de parking
+- Fiabilité et facilité d'entretien par marque et par millésime, affichées en boutique
+- Multijoueur et serveur dédié, 27 langues
+- Les véhicules électriques ne sont pas encore pris en charge
+
+Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.10.0.0 :
+- Renommage de ce fork indépendant en Realistic Mechanical Systems, avec migration automatique des sauvegardes et réglages Advanced Damage System existants
+- Refonte des véhicules d'occasion : leur état suit la durée de vie choisie, des pannes cachées peuvent exister à l'achat et les marques fiables réduisent ce risque
+- Ajout de la gestion physique de l'huile moteur, du liquide de refroidissement, de l'huile de transmission et de l'huile hydraulique : neuf produits achetables en contenants de 5, 25 et 200 L, transfert manuel, contamination et stock d'atelier ; les fuites d'huile de transmission peuvent vider le circuit
+- Refonte du contrôle avant prise de poste et du service des fluides en atelier : verdict de départ, prochain entretien, quatre jauges de niveau et prestation d'appoint facturée au volume manquant
+- Refonte de l'entretien du filtre à air : la poussière le colmate, la soufflette ne le nettoie que partiellement, le lavage ne le nettoie pas et l'entretien en atelier le remplace ; les outils à main portent aussi plus loin
+- Ajout d'une fumée d'échappement pilotée par l'âge du véhicule, l'usure moteur, la charge et les pannes actives, avec un réglage local de détail pour chaque joueur
+- Ajout de la gestion de la transmission des tracteurs : modes 2RM, 4RM et AUTO, blocages de différentiel, frein de parking automatique et usure par contrainte ; Enhanced Vehicle reprend les fonctions qu'il gère
+- Enrichissement du HUD avec la masse du tracteur, la masse remorquée et la masse totale, les témoins du tableau de bord et des alertes thermiques distinctes pour le moteur et la transmission
+- Ajout du préchauffage diesel automatique par temps froid, avec une panne de bougies à quatre stades
+- Refonte de l'usure thermique de la transmission : la température réagit à la pompe, à la prise de force et au travail lourd à basse vitesse ; l'huile froide accélère progressivement l'usure uniquement sous charge réelle ; les boîtes CVT peuvent subir une panne de thermostat
+- Refonte de l'usure et des pannes hydrauliques selon les capacités réelles de la machine, le fonctionnement de la pompe, la masse portée et les vibrations
+- Ajout d'un système de PDF dédié, avec pannes du couplage d'entraînement, du roulement de l'arbre de sortie et de la commande d'engagement
+- Rééquilibrage de l'usure mécanique : l'encrassement du radiateur réduit le refroidissement, l'usure du refroidissement exige une température moteur supérieure à la cible, l'usure à froid exige une forte charge, le turbo est concerné dès 75 ch, la direction suit l'angle et la charge d'essieu, et la lubrification couvre toutes les machines hors route
+- Refonte de l'éligibilité et des véhicules non conduits par le joueur : les machines motorisées prises en charge sont classées selon leurs capacités, les ouvriers IA provoquent une usure normale et les véhicules de contrat affichent leurs heures sans s'user
+- Amélioration du ralenti : un moteur laissé en marche sans conducteur consomme désormais du carburant
+- Ajout d'un profil global de réglages pour les nouvelles sauvegardes et d'une réinitialisation de la flotte selon la durée de vie choisie ; suppression des réglages de sensibilité thermique, d'accélération de la mise en température et de ralentissement du refroidissement
+- Suppression du système de travail, de l'usure de récolte et de la panne de vis de déchargement ; les millésimes sont désormais déterminés en interne sans Vehicle Years
+- Refonte des interfaces de l'atelier, de l'inspection, du rapport, du journal d'entretien et du retour de location ; simplification de l'infobulle à pied à l'état et au prochain entretien
+- Extension des conseils de tutoriel aux fluides, à la fumée, à la transmission, au frein de parking et aux systèmes thermiques
+- Ajout de 12 langues (27 au total) et amélioration des traductions existantes]]></fr>
+        
+    </description>
+    <specializations>
+        <specialization name="rmsFluidContainer" className="RMS_FluidContainer" filename="scripts/objects/RMS_FluidContainer.lua"/>
+    </specializations>
+    <vehicleTypes>
+        <type name="rmsFluidContainer" parent="pallet" filename="$dataS/scripts/vehicles/Vehicle.lua">
+            <specialization name="rmsFluidContainer"/>
+        </type>
+    </vehicleTypes>
+    <brands>
+        <brand name="MOTOREX" title="Motorex" image="brands/brand_motorex.dds"/>
+        <brand name="FUCHS" title="FUCHS" image="brands/brand_fuchs.dds"/>
+        <brand name="MOTUL" title="Motul" image="brands/brand_motul.dds"/>
+    </brands>
+    <storeItems>
+        <storeItem xmlFilename="objects/greaseGun/greaseGun.xml"/>
+        <storeItem xmlFilename="objects/airBlower/airBlower.xml"/>
+        <storeItem xmlFilename="objects/jumperCables/jumperCables.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motorexFarmerPro/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motorexFarmerPoly/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motorexCoolantM30/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motulAgriTekno/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motulTrh97/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/motulAutoCoolExpert/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/fuchsMotXla/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/fuchsUttoMp/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/fuchsFricofinLd50/product.xml"/>
+    </storeItems>
+    <iconFilename>icon_rms.dds</iconFilename>
+    <multiplayer supported="true"/>
+    <fillTypes filename="fillTypes.xml"/>
+    <extraSourceFiles>
+        <sourceFile filename="scripts/RMS_Main.lua"/>
+    </extraSourceFiles>
+    <actions>
+        <action name="RMS_FIELD_INSPECTION" axisType="HALF" displayCategory="PLAYER_INTERACTIVE"/>
+        <action name="RMS_CLOSE_NOTIFICATION" displayCategory="PLAYER_INTERACTIVE"/>
+        <action name="RMS_TOGGLE_4WD" displayCategory="VEHICLE"/>
+        <action name="RMS_TOGGLE_DIFFLOCK" displayCategory="VEHICLE"/>
+        <action name="RMS_TOGGLE_PARKBRAKE" displayCategory="VEHICLE"/>
+    </actions>
+    <inputBinding>
+        <actionBinding action="RMS_FIELD_INSPECTION">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_r"/>
+        </actionBinding>
+        <actionBinding action="RMS_CLOSE_NOTIFICATION">
+            <binding device="KB_MOUSE_DEFAULT" input="MOUSE_BUTTON_LEFT"/>
+            <binding device="0_XINPUT_GAMEPAD" input="BUTTON_1"/>
+        </actionBinding>
+        <actionBinding action="RMS_TOGGLE_4WD">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_4"/>
+        </actionBinding>
+        <actionBinding action="RMS_TOGGLE_DIFFLOCK">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_5"/>
+        </actionBinding>
+        <actionBinding action="RMS_TOGGLE_PARKBRAKE">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_6"/>
+        </actionBinding>
+    </inputBinding>
+    <l10n filenamePrefix="translations/l10n"/>
+</modDesc>

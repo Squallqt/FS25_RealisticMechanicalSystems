@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="fluidContainer" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="1" filename="canister5LVisual.i3d"/>
+    <File fileId="2" filename="canister25LVisual.i3d"/>
+    <File fileId="4" filename="$data/objects/pallets/shared/euroPallet/euroPallet.i3d"/>
+  </Files>
+
+
+  <Materials>
+    <Material name="fluidContainer_physics_mat" materialId="1" emissiveColor="0 0 0 1" specularColor="0.6 1 0">
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="fluidContainer.i3d.shapes">
+  </Shapes>
+
+  <Scene>
+    <Shape name="fluidContainer" shapeId="1" dynamic="true" compound="true" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ff983" staticFriction="0.8" dynamicFriction="0.6" linearDamping="0.1" angularDamping="0.1" clipDistance="300" nodeId="9" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1">
+      <Shape name="mediumCanCollision" shapeId="2" compoundChild="true" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ff983" nodeId="10" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1"/>
+      <Shape name="largeCanCollision" shapeId="3" compoundChild="true" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ff983" nodeId="11" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1"/>
+      <Shape name="drumPalletCollision" translation="0 0.122671 0" scale="1 0.152778 1" shapeId="4" compoundChild="true" staticFriction="1" dynamicFriction="1" density="0.001" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ffb83" nodeId="12" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1"/>
+      <Shape name="drumPalletFloorCollision01" translation="-0.299024 -0.001802 0" scale="0.498381 0.864397 1" shapeId="4" compoundChild="true" staticFriction="1" dynamicFriction="1" density="0.001" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="30" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1"/>
+      <Shape name="drumPalletFloorCollision02" translation="0.299024 -0.001802 0" scale="0.498381 0.864397 1" shapeId="4" compoundChild="true" staticFriction="1" dynamicFriction="1" density="0.001" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="31" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1"/>
+      <Shape name="drumCollision" shapeId="5" compoundChild="true" staticFriction="1" dynamicFriction="1" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ffb83" nodeId="13" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1"/>
+      <Shape name="dynamicMountTrigger" translation="0.00123 0.054705 0.000244" scale="0.78499 0.61831 0.794181" shapeId="6" kinematic="true" trigger="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x20000" nodeId="14" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1"/>
+      <TransformGroup name="mediumVisualLink" nodeId="15" visibility="false">
+
+        <ReferenceNode name="mediumVisual" referenceId="1" nodeId="26"/>
+
+      </TransformGroup>
+      <TransformGroup name="largeVisualLink" nodeId="16" visibility="false">
+
+        <ReferenceNode name="largeVisual" referenceId="2" nodeId="27"/>
+
+      </TransformGroup>
+      <TransformGroup name="drumVisualLink" translation="0 0.144 0" nodeId="17" visibility="false"/>
+      <TransformGroup name="drumPalletVisualLink" nodeId="18" visibility="false">
+
+        <ReferenceNode name="drumPalletVisual" referenceId="4" nodeId="29"/>
+
+      </TransformGroup>
+      <TransformGroup name="fillRootNode" translation="0 0.45 0" nodeId="19"/>
+      <TransformGroup name="pickupNode" translation="0 0.3 0" nodeId="20"/>
+    </Shape>
+  </Scene>
+
+</i3D>

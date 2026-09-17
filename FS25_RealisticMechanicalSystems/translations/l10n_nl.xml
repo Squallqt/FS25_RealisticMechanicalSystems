@@ -1,0 +1,925 @@
+﻿<l10n>
+    <texts>
+        <!-- HUD -->
+        <text name="rms_hud_mass_tractor" text="Voertuig"/>
+        <text name="rms_hud_mass_towed" text="Aangekoppeld"/>
+        <text name="rms_hud_mass_total" text="Totaal"/>
+        <text name="rms_drivetrain_mode_4x2" text="Achterwielaandrijving (vooras uitgeschakeld)"/>
+        <text name="rms_drivetrain_mode_4wd" text="Vierwielaandrijving (vooras ingeschakeld)"/>
+        <text name="rms_drivetrain_mode_auto" text="Vierwielaandrijving AUTO"/>
+        <text name="rms_drivetrain_notify_mode" text="Aandrijfmodus: %s"/>
+        <text name="rms_drivetrain_notify_lock_on" text="Differentieelslot ingeschakeld"/>
+        <text name="rms_drivetrain_notify_lock_off" text="Differentieelslot uitgeschakeld"/>
+        <text name="rms_drivetrain_notify_park_on" text="Parkeerrem aangetrokken"/>
+        <text name="rms_drivetrain_notify_park_off" text="Parkeerrem losgezet"/>
+        <text name="rms_drivetrain_warning_4wd_windup" text="Aandrijflijn onder spanning! Schakel de vooras uit voordat je op een ondergrond met veel grip stuurt."/>
+        <text name="rms_drivetrain_warning_difflock_windup" text="Differentieelslot onder spanning! Schakel het uit of verklein de stuurhoek."/>
+        <text name="rms_drivetrain_warning_parkbrake" text="Parkeerrem aangetrokken!"/>
+        <text name="rms_preheat_ignition_message" text="Contact aan: voorverwarmen wordt uitgevoerd"/>
+        <text name="rms_preheat_system_failure_message" text="Storing voorverwarmingssysteem: koude start niet mogelijk"/>
+        <text name="rms_preheat_start_failed_message" text="Motor niet gestart: zet het contact uit voordat je het opnieuw probeert"/>
+        <!-- Inputs -->
+        <text name="input_RMS_FIELD_INSPECTION" text="Voertuig controleren"/>
+        <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
+        <text name="input_RMS_TOGGLE_4WD" text="Aandrijfmodus wijzigen"/>
+        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Differentieelslot inschakelen of uitschakelen"/>
+        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Parkeerrem aantrekken of loszetten"/>
+        <!-- Settings -->
+        <text name="rms_settings_title" text="RMS-INSTELLINGEN"/>
+        <text name="rms_settings_admin_required" text="Voor RMS-instellingen zijn in multiplayer beheerdersrechten vereist."/>
+        <text name="rms_settings_section_service_wear" text="Onderhoud en slijtage"/>
+        <text name="rms_settings_section_thermal_model" text="Thermisch model"/>
+        <text name="rms_settings_section_battery_alternator" text="Accu en dynamo"/>
+        <text name="rms_settings_section_preshift_maintenance" text="Dagelijks onderhoud"/>
+        <text name="rms_settings_section_other" text="Overig"/>
+        <text name="rms_settings_section_drivetrain" text="Aandrijflijn en parkeerrem"/>
+        <text name="rms_maintenancePrice_label" text="Prijsfactor voor procedures"/>
+        <text name="rms_maintenancePrice_tooltip" text="Past de kosten van alle werkplaatsprocedures aan, waaronder inspecties, reparaties en revisies. Een hogere waarde maakt ze duurder."/>
+        <text name="rms_maintenanceDuration_label" text="Duurfactor voor procedures"/>
+        <text name="rms_maintenanceDuration_tooltip" text="Bepaalt de duur van alle werkplaatsprocedures. Hoe hoger de waarde, hoe langer elke procedure duurt."/>
+        <text name="rms_workshopOpenHour_label" text="Openingstijd werkplaats"/>
+        <text name="rms_workshopOpenHour_tooltip" text="Procedures starten pas vanaf dit tijdstip."/>
+        <text name="rms_workshopCloseHour_label" text="Sluitingstijd werkplaats"/>
+        <text name="rms_workshopCloseHour_tooltip" text="Lopende procedures worden op dit tijdstip onderbroken en bij opening hervat."/>
+        <text name="rms_cloggingSpeed_label" text="Vervuilingssnelheid"/>
+        <text name="rms_cloggingSpeed_tooltip" text="Regelt hoe snel de radiateur en het luchtfilter vervuild raken bij werk in stof, kaf en gewasresten. Hogere waarden versnellen de vervuiling."/>
+        <text name="rms_fieldInspectionDuration_label" text="Duur controle vóór aanvang dienst"/>
+        <text name="rms_fieldInspectionDuration_tooltip" text="Bepaalt in echte seconden hoe lang een controle vóór aanvang dienst duurt."/>
+        <text name="rms_lubricationReducePerOperatingHour_label" text="Vetverbruik per bedrijfsuur"/>
+        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="Bepaalt hoeveel vet per bedrijfsuur wordt verbruikt."/>
+        <text name="rms_dealerWorkshopAvailable_label" text="Dealerwerkplaats 24/7"/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Houdt de dealerwerkplaats dag en nacht beschikbaar."/>
+        <text name="rms_mobileWorkshopAvailable_label" text="Mobiele werkplaats 24/7"/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Houdt de mobiele werkplaats dag en nacht beschikbaar."/>
+        <text name="rms_mobileWorkshopRestrictions_label" text="Beperkingen mobiele werkplaats"/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Als deze optie is ingeschakeld, hangt de beschikbaarheid van elke procedure in de mobiele werkplaats af van het onderhoudsgemak van het voertuig."/>
+        <text name="rms_ownWorkshopAvailable_label" text="Eigen werkplaats 24/7"/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Houdt je eigen werkplaats dag en nacht beschikbaar."/>
+        <text name="rms_instantInspection_label" text="Directe inspectie"/>
+        <text name="rms_instantInspection_tooltip" text="Als deze optie is ingeschakeld, worden alle inspecties direct voltooid zonder tijdsverloop. Opmerking: de visuele inspectie is dan niet beschikbaar."/>
+        <text name="rms_parkVehicle_label" text="Voertuig parkeren tijdens onderhoud"/>
+        <text name="rms_parkVehicle_tooltip" text="Als deze optie is ingeschakeld, worden voertuigen in onderhoud overgeslagen bij wisselen met TAB."/>
+        <text name="rms_warrantyEnabled_label" text="Garantie voor nieuwe machines"/>
+        <text name="rms_warrantyEnabled_tooltip" text="Dekt reparaties aan nieuwe voertuigen onder garantie tot 20 bedrijfsuren of 12 maanden. Alleen originele onderdelen worden kosteloos gedekt."/>
+        <text name="rms_aiOverloadAndOverheatControl_label" text="AI-regeling bij overbelasting en oververhitting"/>
+        <text name="rms_aiOverloadAndOverheatControl_tooltip" text="Als deze optie is ingeschakeld, verlaagt de AI-helper de belasting om motoroverbelasting of oververhitting te voorkomen."/>
+        <text name="rms_aiDisableOnCriticalOverload_label" text="AI stoppen bij kritieke overbelasting"/>
+        <text name="rms_aiDisableOnCriticalOverload_tooltip" text="Stopt AI-helpers en AutoDrive bij kritieke overbelasting."/>
+        <text name="rms_contractVehicleProtection_label" text="Bescherming contractvoertuigen"/>
+        <text name="rms_contractVehicleProtection_tooltip" text="Past op contractvoertuigen zowel de AI-stop bij kritieke overbelasting toe als de snelheidsregeling bij overbelasting of oververhitting."/>
+        <text name="rms_aiWorkerTargetStress_label" text="AI-reactiviteit"/>
+        <text name="rms_aiWorkerTargetStress_tooltip" text="Bepaalt wanneer de AI-helper reageert op overbelasting en oververhitting. Hoe hoger de reactiviteit, hoe eerder de helper vertraagt; hoe lager deze is, hoe verder hij de belasting laat oplopen voordat hij ingrijpt."/>
+        <text name="rms_aiWorkerTargetStress_relaxed" text="Laag"/>
+        <text name="rms_aiWorkerTargetStress_balanced" text="Gemiddeld"/>
+        <text name="rms_aiWorkerTargetStress_sensitive" text="Hoog"/>
+        <text name="rms_aiWorkerTargetStress_verySensitive" text="Zeer hoog"/>
+        <text name="rms_aiWorkerMinSpeed_label" text="Minimale AI-snelheid"/>
+        <text name="rms_aiWorkerMinSpeed_tooltip" text="Bepaalt de laagste snelheid van de cruisecontrol die de AI-helper mag gebruiken wanneer hij vertraagt om overbelasting of oververhitting te voorkomen."/>
+        <text name="rms_debugMode_label" text="Debugmodus"/>
+        <text name="rms_debugMode_tooltip" text="Schakelt het debugpaneel en gedetailleerde logboeken in de console in."/>
+        <text name="rms_warningMessages_label" text="Waarschuwingsberichten"/>
+        <text name="rms_warningMessages_tooltip" text="Schakelt spelwaarschuwingen zoals een koude motor of oververhitting in of uit."/>
+        <text name="rms_serviceInterval_label" text="Onderhoudsinterval"/>
+        <text name="rms_serviceInterval_tooltip" text="Bepaalt het basisonderhoudsinterval in uren, waarna onderhoud vereist is. Het werkelijke interval hangt af van het voertuigmerk, de leeftijd en de kwaliteit van eerder onderhoud."/>
+        <text name="rms_vehicleLifespan_label" text="Levensduur voertuig"/>
+        <text name="rms_vehicleLifespan_tooltip" text="Bepaalt de basislevensduur van het voertuig in uren, waarna de conditie 0% bereikt. Hoe dichter de conditie bij nul komt, hoe onbetrouwbaarder het voertuig wordt."/>
+        <text name="rms_reinitializeVehicles_label" text="Wagenpark opnieuw instellen"/>
+        <text name="rms_reinitializeVehicles_text" text="Opnieuw instellen"/>
+        <text name="rms_reinitializeVehicles_tooltip" text="Stemt de conditie van het wagenpark af op de gekozen levensduur. Actieve storingen worden gewist."/>
+        <text name="rms_reinitializeVehiclesConfirm_title" text="Wagenpark opnieuw instellen"/>
+        <text name="rms_reinitializeVehiclesConfirm_message" text="Het wagenpark afstemmen op de gekozen levensduur? Actieve storingen worden gewist."/>
+        <text name="rms_reinitializeVehicles_result" text="Voertuigen opnieuw ingesteld: %d. Niet gewijzigd: %d."/>
+        <text name="rms_downtimeWear_label" text="Passieve slijtage"/>
+        <text name="rms_downtimeWear_tooltip" text="Bepaalt de snelheid van passieve slijtage wanneer een voertuig stilstaat, als percentage van de basisslijtage (Levensduur voertuig). Bijvoorbeeld: bij 5% en de standaardlevensduur van 100 uur verliest elk systeem ongeveer 1% conditie na 20 uur stilstand. Opmerking: passieve slijtage is uitgeschakeld wanneer het voertuig onder een afdak staat."/>
+        <text name="rms_generalWearEnabled_label" text="Leeftijdsgebonden slijtage"/>
+        <text name="rms_generalWearEnabled_tooltip" text="Naarmate het voertuig slijt, krijgt elk systeem kleine nadelen op de belangrijkste eigenschappen, zoals motorvermogen, hydraulieksnelheid of remefficiëntie. Het effect begint na het eerste derde deel van de levensduur, wordt pas echt merkbaar na twee derde en neemt verder toe tegen het einde van de levensduur van de machine."/>
+        <text name="rms_exhaustSmokeEnabled_label" text="Uitlaatrook"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Regelt de uitlaatrook aan de hand van de werkelijke motorconditie. De rook is zwart wanneer er meer brandstof dan lucht beschikbaar is: bij sterk accelereren, een motor die bij laag toerental zwaar wordt belast, lang stationair draaien bij lage belasting, een verstopt luchtfilter of versleten injectie. De rook is blauw wanneer een versleten motor olie verbrandt en wit wanneer brandstof onverbrand uitstroomt. De pluim groeit ook met de motorbelasting. Oudere machines roken veel meer dan moderne, die nauwelijks roken zolang niets ernstig beschadigd is."/>
+        <text name="rms_exhaustSmokeIntensity_label" text="Rookintensiteit"/>
+        <text name="rms_exhaustSmokeIntensity_tooltip" text="Past de zichtbaarheid van de rook aan zonder de oorzaken te wijzigen. Hogere waarden maken symptomen van grotere afstand herkenbaar."/>
+        <text name="rms_exhaustSmokeDetail_label" text="Rookpluimdetail (op deze pc)"/>
+        <text name="rms_exhaustSmokeDetail_tooltip" text="Bepaalt hoeveel van de uitlaatrookpluim op je eigen computer wordt weergegeven, zonder iets voor andere spelers te wijzigen. Een lagere instelling verwijdert de buitenste rooklagen en ontlast een bescheiden videokaart. De instelling kan alleen verminderen wat de server toestaat."/>
+        <text name="rms_exhaustSmokeDetail_full" text="Volledig"/>
+        <text name="rms_exhaustSmokeDetail_reduced" text="Beperkt"/>
+        <text name="rms_exhaustSmokeDetail_minimal" text="Minimaal"/>
+        <text name="rms_exhaustSmokeDetail_none" text="Geen"/>
+        <text name="rms_systemStressRate_label" text="Opbouwsnelheid systeembelasting"/>
+        <text name="rms_systemStressRate_tooltip" text="Bepaalt hoe snel belasting zich in de systemen opbouwt door overbelasting, oververhitting, slip en andere zware bedrijfsomstandigheden. Deze belasting beïnvloedt het storingsrisico rechtstreeks: hoe meer belasting een systeem opbouwt, hoe waarschijnlijker een storing wordt."/>
+        <text name="rms_batteryCapacity_label" text="Accucapaciteit"/>
+        <text name="rms_batteryCapacity_tooltip" text="Past de maximaal bruikbare accucapaciteit aan. Een waarde rond 150 Ah komt overeen met een echte accu, maar op dit niveau zul je vrijwel nooit ontladingsproblemen ondervinden."/>
+        <text name="rms_option_off" text="Uit"/>
+        <text name="rms_option_none" text="Geen"/>
+        <text name="rms_alternatorMaxOutput_label" text="Maximale dynamostroom"/>
+        <text name="rms_alternatorMaxOutput_tooltip" text="Bepaalt de maximale uitgangsstroom van de dynamo. Hogere waarden laten de dynamo de accu sneller opladen."/>
+        <text name="rms_idleCurrent_label" text="Ruststroom"/>
+        <text name="rms_idleCurrent_tooltip" text="Bepaalt de ontlaadstroom van de accu wanneer de motor uitstaat. Bij 0,5 A duurt het bij een accu van 15 Ah bijvoorbeeld ongeveer 30 echte uren voordat deze volledig is ontladen, vóór de invloed van de temperatuur."/>
+        <text name="rms_temperatureChangeSpeed_label" text="Veranderingssnelheid motortemperatuur"/>
+        <text name="rms_temperatureChangeSpeed_tooltip" text="Regelt hoe snel de motortemperatuur verandert. Lagere waarden vertragen opwarming en afkoeling; hogere waarden versnellen beide. De standaardwaarde is 1,4."/>
+        <text name="rms_transTemperatureChangeMultiplier_label" text="Veranderingssnelheid temperatuur transmissie- en hydrauliekolie"/>
+        <text name="rms_transTemperatureChangeMultiplier_tooltip" text="Regelt afzonderlijk hoe snel de temperatuur van de gedeelde transmissie- en hydrauliekolie verandert. Lagere waarden vertragen opwarming en afkoeling; hogere waarden versnellen beide. De standaardwaarde is 1,0."/>
+        <text name="rms_radiatorDirtInfluence_label" text="Invloed van radiateurvervuiling"/>
+        <text name="rms_radiatorDirtInfluence_tooltip" text="Verlaagt de koelcapaciteit van de radiateur met dit percentage bij maximale vervuiling."/>
+        <text name="rms_tutorialMode_label" text="Tutorialmodus"/>
+        <text name="rms_tutorialMode_tooltip" text="Toont tutorialtips tijdens het spelen."/>
+        <text name="rms_tutorialResetTips_label" text="Tips opnieuw instellen"/>
+        <text name="rms_tutorialResetTips_text" text="Opnieuw instellen"/>
+        <text name="rms_tutorialResetTips_tooltip" text="Wist de geschiedenis van tutorialtips en toont alle tips opnieuw."/>
+        <text name="rms_tutorialResetConfirm_title" text="Tutorialtips opnieuw instellen?"/>
+        <text name="rms_tutorialResetConfirm_message" text="De geschiedenis van tutorialtips wissen en alle tips opnieuw tonen?"/>
+        <text name="rms_drivetrainEnabled_label" text="Beheer van vierwielaandrijving en differentieelslot"/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Schakelt handmatige bediening van de aangedreven vooras en de differentieelsloten op tractoren in. Als het differentieelbeheer van Enhanced Vehicle actief is, trekt de mod zich volledig terug en beheert Enhanced Vehicle de aandrijflijn alleen."/>
+        <text name="rms_drivetrainAllowAutoMode_label" text="AUTO-modus toestaan"/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Voegt een AUTO-stand toe aan de aandrijfkeuzeschakelaar: de vooras schakelt automatisch in bij wielslip of onder belasting bij werksnelheid en schakelt op de weg uit. Voertuigen die in AUTO staan, schakelen over op vierwielaandrijving wanneer deze optie wordt uitgeschakeld."/>
+        <text name="rms_drivetrainWindupDamage_label" text="Schade door spanning in aandrijflijn"/>
+        <text name="rms_drivetrainWindupDamage_tooltip" text="Sturen op een ondergrond met veel grip terwijl de differentiëlen geblokkeerd zijn, zet de aandrijflijn onder spanning en beschadigt de transmissie geleidelijk. Schakel deze optie uit voor een vergevingsgezindere ervaring."/>
+        <text name="rms_drivetrainDiffLockReleaseSpeed_label" text="Uitschakelsnelheid differentieelslot"/>
+        <text name="rms_drivetrainDiffLockReleaseSpeed_tooltip" text="De differentieelsloten schakelen boven deze snelheid automatisch uit en daaronder weer in zolang de aansturing actief blijft."/>
+        <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkeerrem"/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Voegt aan alle gevolgde voertuigen een parkeerrem met eigen toets toe. De aangetrokken rem houdt de machine stil en negeert het gaspedaal."/>
+        <text name="rms_drivetrainParkBrakeAuto_label" text="Automatische parkeerrem"/>
+        <text name="rms_drivetrainParkBrakeAuto_tooltip" text="Trekt de parkeerrem automatisch aan wanneer de bestuurder de stilstaande machine verlaat."/>
+        <!-- Workshop -->
+        <text name="rms_ws_header_title" text="Werkplaats"/>
+        <text name="rms_ws_tab_summary" text="Overzicht"/>
+        <text name="rms_ws_tab_diagnostic" text="Diagnose en offerte"/>
+        <text name="rms_ws_tab_interventions" text="Procedures"/>
+        <text name="rms_ws_tab_record" text="Technisch dossier"/>
+        <text name="rms_ws_section_alerts" text="Waarschuwingen en prioriteiten"/>
+        <text name="rms_ws_section_fluids" text="Vloeistoffen"/>
+        <text name="rms_ws_section_breakdowns" text="Bekende storingen"/>
+        <text name="rms_ws_section_quote" text="Reparatieofferte"/>
+        <text name="rms_ws_section_choose_intervention" text="Procedure kiezen"/>
+        <text name="rms_ws_section_work_order" text="Werkplaatsopdracht"/>
+        <text name="rms_ws_section_recap" text="Samenvatting"/>
+        <text name="rms_ws_section_parts" text="Betrokken onderdelen"/>
+        <text name="rms_ws_section_history" text="Historie"/>
+        <text name="rms_ws_section_current_intervention" text="Lopende procedure"/>
+        <text name="rms_ws_label_last_check" text="Laatste controle"/>
+        <text name="rms_ws_label_workshop_state" text="Werkplaatsstatus"/>
+        <text name="rms_ws_label_intervention" text="Procedure"/>
+        <text name="rms_ws_label_addon" text="Optie"/>
+        <text name="rms_ws_label_more_parts" text="+ nog %s"/>
+        <text name="rms_ws_label_committed_cost" text="Reeds aangegane kosten"/>
+        <text name="rms_ws_label_finish_time" text="Eindtijd"/>
+        <text name="rms_ws_label_total_estimate" text="Geschat totaal"/>
+        <text name="rms_ws_button_configure_repair" text="Reparatie configureren"/>
+        <text name="rms_ws_info_inspection_reveals" text="Een inspectie kan meer defecten aan het licht brengen."/>
+        <text name="rms_ws_status_ready_title" text="Werkplaats gereed"/>
+        <text name="rms_ws_status_ready_hint" text="Selecteer een procedure. De opties, onderdelen en prijs worden vóór de start bevestigd."/>
+        <text name="rms_ws_status_no_intervention" text="Geen lopende procedure"/>
+        <text name="rms_ws_label_value" text="Voertuigwaarde"/>
+        <text name="rms_ws_label_age" text="Leeftijd"/>
+        <text name="rms_ws_label_operating_hours" text="Bedrijfsuren"/>
+        <text name="rms_ws_label_service" text="Onderhoudsniveau"/>
+        <text name="rms_ws_label_service_interval" text="Onderhoudsinterval"/>
+        <text name="rms_ws_label_next_service" text="Volgend onderhoud"/>
+        <text name="rms_ws_value_service_overdue" text="%s achterstallig"/>
+        <text name="rms_ws_label_condition" text="Conditie"/>
+        <text name="rms_ws_label_reliability" text="Betrouwbaarheid"/>
+        <text name="rms_ws_label_overhaul_count" text="Uitgevoerde revisies"/>
+        <text name="rms_ws_label_maintainability" text="Onderhoudsgemak"/>
+        <text name="rms_ws_label_maintenance_log" text="Onderhoudslogboek"/>
+        <text name="rms_ws_label_last_report" text="Laatste rapport"/>
+        <text name="rms_ws_label_last_maintenance" text="Laatste onderhoud"/>
+        <text name="rms_ws_table_header_part" text="Onderdeel"/>
+        <text name="rms_ws_table_header_price" text="Prijs"/>
+        <text name="rms_ws_table_header_description" text="Beschrijving"/>
+        <text name="rms_ws_table_header_stage" text="Fase"/>
+        <text name="rms_ws_table_header_repair_select" text="Reparatie"/>
+        <text name="rms_ws_task_inspection" text="Inspectie"/>
+        <text name="rms_ws_task_maintenance" text="Onderhoud"/>
+        <text name="rms_ws_task_overhaul" text="Revisie"/>
+        <text name="rms_ws_info_no_breakdowns" text="Geen bekende storingen. Een niet-gedetecteerde storing blijft mogelijk."/>
+        <text name="rms_ws_status_in_progress_short_format" text="%s wordt uitgevoerd..."/>
+        <text name="rms_ws_status_initial" text="Status laden..."/>
+        <text name="rms_ws_status_in_progress_format" text="%s wordt uitgevoerd tot %s"/>
+        <text name="rms_ws_status_open" text="De werkplaats is geopend"/>
+        <text name="rms_ws_status_closed" text="De werkplaats is gesloten"/>
+        <text name="rms_ws_action_inspection" text="Inspectie"/>
+        <text name="rms_ws_action_maintenance" text="Onderhoud"/>
+        <text name="rms_ws_action_repair" text="Reparatie"/>
+        <text name="rms_ws_action_overhaul" text="Revisie"/>
+        <text name="rms_ws_action_refill" text="Bijvullen"/>
+        <text name="rms_ws_action_choice_inspection" text="Voertuiginspectie"/>
+        <text name="rms_ws_action_choice_maintenance" text="Periodiek onderhoud"/>
+        <text name="rms_ws_action_choice_repair" text="Storingsreparatie"/>
+        <text name="rms_ws_action_choice_overhaul" text="Mechanische revisie"/>
+        <text name="rms_ws_action_choice_refill" text="Vloeistoffen bijvullen"/>
+        <text name="rms_ws_action_cancel_service" text="Procedure annuleren"/>
+        <text name="rms_ws_button_show" text="Weergeven"/>
+        <text name="rms_ws_age_unit" text="maanden"/>
+        <text name="rms_ws_hours_unit" text="h"/>
+        <text name="rms_ws_option_yes" text="Ja"/>
+        <text name="rms_ws_option_no" text="Nee"/>
+        <text name="rms_ws_no_last_report_message" text="Nog geen rapport"/>
+        <text name="rms_ws_systems_need_complete_inspection" text="Volledige inspectie vereist"/>
+        <text name="rms_ws_no_log_empty_message" text="Logboek is nog leeg"/>
+        <text name="rms_ws_no_report_message" text="Nog geen rapport"/>
+        <text name="rms_ws_cancel_confirm_title" text="Lopende procedure annuleren? (%s)"/>
+        <text name="rms_ws_cancel_confirm_text" text="De huidige voortgang wordt ongewijzigd opgeslagen. Er wordt geen geld terugbetaald."/>
+        <text name="rms_mobile_workshop_low_maintainability" text="Waarschuwing: de procedure %s is voor %s niet beschikbaar in de mobiele werkplaats, omdat dit voertuig ter plaatse te moeilijk te onderhouden is."/>
+        <!-- Maintenance Log -->
+        <text name="rms_log_header_title" text="Onderhoudslogboek"/>
+        <text name="rms_log_recorded_interventions_title" text="Geregistreerde procedures"/>
+        <text name="rms_log_last_intervention_title" text="Laatste procedure"/>
+        <text name="rms_log_hours" text="Bedrijfsuren"/>
+        <text name="rms_log_title" text="Onderhoudslogboek"/>
+        <text name="rms_log_total_cost_title" text="Totale kosten"/>
+        <text name="rms_log_total_breakdowns_count_title" text="Verholpen storingen"/>
+        <text name="rms_log_type" text="Proceduretype"/>
+        <text name="rms_log_cost_per_month_title" text="Maandelijkse kosten"/>
+        <text name="rms_log_cancelled_desc" text="Procedure geannuleerd"/>
+        <text name="rms_log_ownership_months_title" text="Bezitstijd"/>
+        <text name="rms_log_overhaul_desc_with_painting" text="Voertuig opnieuw gespoten"/>
+        <text name="rms_log_average_breakdowns_interval_title" text="Gemiddeld storingsinterval"/>
+        <text name="rms_log_average_maintenance_interval_title" text="Gemiddeld onderhoudsinterval"/>
+        <text name="rms_log_performed" text="Procedure uitgevoerd: %s (%s)"/>
+        <text name="rms_log_price" text="Kosten"/>
+        <text name="rms_log_inspection_desc_no_breakdowns" text="Geen storingen gedetecteerd"/>
+        <text name="rms_log_inspection_desc_with_breakdowns" text="Gedetecteerde storingen: %s"/>
+        <text name="rms_log_repair_desc_generic" text="Reparatie"/>
+        <text name="rms_log_date" text="Datum"/>
+        <text name="rms_log_description" text="Beschrijving"/>
+        <text name="rms_log_button_show_report" text="Rapport weergeven"/>
+        <text name="rms_log_empty" text="Logboek is nog leeg"/>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Vermogensverlies"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Buiten dienst"/>
+        <text name="rms_breakdowns_severity_minor" text="Licht"/>
+        <text name="rms_breakdowns_severity_moderate" text="Matig"/>
+        <text name="rms_breakdowns_severity_major" text="Ernstig"/>
+        <text name="rms_breakdowns_severity_critical" text="Kritiek"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Lichte slijtage van het stuurstangenstelsel. De besturing wordt iets minder nauwkeurig."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Matige slijtage van het stuurstangenstelsel. De speling neemt toe, de nauwkeurigheid daalt duidelijk en het rijgedrag verslechtert."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Ernstige slijtage van het stuurstangenstelsel. De speling is groot, de besturing reageert slecht en het voertuig wordt moeilijk te beheersen."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kritieke uitval van het stuurstangenstelsel. De besturing is niet meer betrouwbaar en rijden wordt gevaarlijk."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="Uitval stuurstangenstelsel"/>
+        <text name="rms_breakdowns_general_wear_stage1_description" text="De belasting die zich na jaren gebruik heeft opgebouwd, laat lichte onomkeerbare slijtage achter op belangrijke componenten en vermindert de totale prestaties licht."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Naar neutraal geschakeld"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Beginnende slijtage van de gloeibougies. Koude starts duren langer, terwijl warme starts normaal blijven."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Meerdere gloeibougies zijn zwak of werken niet. Koude starts zijn moeilijk en de motor kan onregelmatig stationair draaien totdat hij warm is."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Ernstige uitval van de gloeibougies. Koud starten wordt zeer onzeker en de motor blijft tijdens het opwarmen onregelmatig lopen."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Volledige uitval van de gloeibougies. Bij een te lage temperatuur kan de motor niet worden gestart."/>
+        <text name="rms_breakdowns_part_vehicle" text="Voertuig"/>
+        <text name="rms_breakdowns_part_valve_train" text="Kleppentrein"/>
+        <text name="rms_breakdowns_part_consumables" text="Verbruiksmaterialen"/>
+        <text name="rms_breakdowns_part_cooling_system" text="Koelsysteem"/>
+        <text name="rms_breakdowns_part_clutch" text="Koppeling"/>
+        <text name="rms_breakdowns_part_cvt_chain" text="CVT-ketting"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Hydraulisch CVT-regelventiel"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Motor"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_battery" text="Accu"/>
+        <text name="rms_breakdowns_part_brake_system" text="Remsysteem"/>
+        <text name="rms_breakdowns_part_wiring" text="Bedrading en stekkers"/>
+        <text name="rms_breakdowns_part_wheel_bearing" text="Wiellager"/>
+        <text name="rms_breakdowns_part_alternator_regulator" text="Dynamoregelaar"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turbolader"/>
+        <text name="rms_breakdowns_part_transmission_thermostat" text="Transmissiethermostaat"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Transmissieafdichting"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Rupsbandspanner"/>
+        <text name="rms_breakdowns_part_thermostat" text="Thermostaat"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Oliepomp"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Synchronisator"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Stuurstangenstelsel"/>
+        <text name="rms_breakdowns_part_powershift_hydraulic_pump" text="Hydrauliekpomp powershift"/>
+        <text name="rms_breakdowns_part_pto_drive_coupling" text="Aftakasaandrijfkoppeling"/>
+        <text name="rms_breakdowns_part_pto_engagement_control" text="Bediening van de aftakasinschakeling"/>
+        <text name="rms_breakdowns_part_pto_drive_output" text="Uitgaande aftakasas"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Hydrauliekpomp"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hydraulische cilinder"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Hydrauliekslang"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Hydrauliekfilter"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Hydrauliekoliekoeler"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Hydraulisch regelventiel"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Ventilatorkoppeling"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Brandstofpomp"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Brandstofinjectoren"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Brandstoffilter"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Brandstofleiding"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Gloeibougies"/>
+        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage1_description" text="Drukverlies bij de hydrauliekpomp van de powershift. Licht vertraagd en ruw schakelen."/>
+        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage2_description" text="Versleten afdichtingen van de hydrauliekpomp van de powershift. Merkbare vertraging en schokken tijdens het schakelen."/>
+        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage3_description" text="Uitval van de hydrauliekpomp van de powershift. Ernstige vertraging en hevige schokken tijdens het schakelen."/>
+        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage4_description" text="De hydrauliekpomp van de powershifttransmissie is uitgevallen. De transmissie zit vast in neutraal."/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="Aftakas uitgeschakeld"/>
+        <text name="rms_breakdowns_pto_drive_coupling_wear_stage1_description" text="Beginnende slijtage van de aftakasaandrijfkoppeling. De aftakas kan soms uitschakelen."/>
+        <text name="rms_breakdowns_pto_drive_coupling_wear_stage2_description" text="Matige slijtage van de aftakasaandrijfkoppeling. De aftakas schakelt steeds vaker uit."/>
+        <text name="rms_breakdowns_pto_drive_coupling_wear_stage3_description" text="Ernstige slijtage van de aftakasaandrijfkoppeling. De aftakas schakelt herhaaldelijk uit."/>
+        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_description" text="Kritieke uitval van de aftakasaandrijfkoppeling. De aftakas kan geen vermogen meer overbrengen."/>
+        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_message" text="Uitval aftakasaandrijfkoppeling"/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage1_description" text="Beginnende slijtage van het lager van de uitgaande aftakasas veroorzaakt licht loopgeluid."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage2_description" text="Matige slijtage van het lager van de uitgaande aftakasas veroorzaakt duidelijk hoorbaar geluid."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage3_description" text="Ernstige slijtage van het lager van de uitgaande aftakasas veroorzaakt veel lawaai en incidenteel uitschakelen."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_description" text="Kritieke uitval van de uitgaande aftakasas. De aftakas kan niet meer worden gebruikt."/>
+        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_message" text="Uitval uitgaande aftakasas"/>
+        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage1_description" text="De bediening van de aftakasinschakeling reageert onregelmatig en kan een inschakelopdracht weigeren."/>
+        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage2_description" text="De bediening van de aftakasinschakeling slaagt er vaak niet in de aftakas in te schakelen."/>
+        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage3_description" text="De bediening van de aftakasinschakeling is ernstig defect en weigert de meeste inschakelpogingen."/>
+        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_description" text="De bediening van de aftakasinschakeling is volledig uitgevallen. De aftakas kan niet meer worden ingeschakeld."/>
+        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_message" text="Uitval bediening aftakasinschakeling"/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Inschakelen aftakas geweigerd"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Noodreparatie"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Defect"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Het systeem werkt normaal, maar de inspectie heeft een defect onderdeel aangetoond. Het onderdeel biedt geen veiligheidsmarge meer; preventieve vervanging wordt aanbevolen om een plotselinge storing te voorkomen."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Accu leeg"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Het systeem werkt normaal, maar is volledig afhankelijk van een noodreparatie. Om een storing onder belasting te voorkomen, wordt zo snel mogelijk volledige vervanging van de onderdelen aanbevolen."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Versleten turboladerlagers. Een zacht fluitgeluid is hoorbaar en bij hoog toerental treedt licht vermogensverlies op."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Lekkende afdichtingen van de turbolader. Duidelijk vermogensverlies en hoger brandstofverbruik."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Beschadigde turbinebladen. Ernstig vermogensverlies en risico dat de motor afslaat onder zware belasting."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Kritieke uitval van de turbolader. De motor heeft het grootste deel van zijn vermogen verloren en riskeert ernstige interne schade."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Versleten koppelingsplaten. Incidenteel vermogensverlies door slippende koppeling onder belasting."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Aanzienlijke koppelingsslijtage. Duidelijke slip bij accelereren en onder zware belasting."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Sterk versleten koppeling. Ernstige slip bemoeilijkt de vermogensoverdracht naar de wielen."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="De koppeling is volledig verbrand. Het voertuig kan niet meer rijden."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_message" text="Uitval koppeling"/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Versleten synchronisatoren. Soms gekraak of moeilijk schakelen."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Beschadigde synchronisatoren. Schakelen gaat vaak moeilijk en kan mislukken."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Afgebroken tanden van de synchronisator. Grote kans op mislukte schakelingen of uit de versnelling springen onder belasting."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="De synchronisatoren zijn volledig uitgevallen. Schakelen is niet meer mogelijk."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_message" text="Uitval synchronisatoren"/>
+        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage1_description" text="De transmissiethermostaat begint te verzwakken. Hij opent de oliekoeler te laat en de transmissieolie wordt iets warmer dan normaal."/>
+        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage2_description" text="De transmissiethermostaat reageert slecht. De oliekoeler opent veel te laat, de transmissieolie blijft duidelijk boven de normale temperatuur en slijt sneller."/>
+        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage3_description" text="De transmissiethermostaat opent de oliekoeler bijna niet meer. De transmissieolie raakt bijna oververhit zodra de belasting stijgt."/>
+        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage4_description" text="Volledige uitval van de transmissiethermostaat. Hij blijft in één stand staan, waardoor de transmissieolie oververhit raakt of niet meer opwarmt, afhankelijk van de vastgelopen stand."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Lichte transmissieolielekkage. Het oliepeil daalt langzaam tijdens het werk."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Matige transmissieolielekkage. Het peil daalt duidelijk en de transmissie wordt warmer."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Ernstige transmissieolielekkage. Het peil daalt snel en de transmissie raakt onder belasting oververhit."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Kritieke transmissieolielekkage. Er is onvoldoende olie over voor veilig gebruik van de transmissie."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Lichte storing van de rupsbandspanner. De rupsbandspanning is iets minder stabiel, waardoor weerstand en slijtage licht toenemen."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Matige storing van de rupsbandspanner. De spanning wordt instabiel, de rolefficiëntie daalt en het risico op verkeerde uitlijning neemt toe."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Ernstige storing van de rupsbandspanner. De spanning is sterk verstoord, de krachtoverbrenging wordt inefficiënt en het risico dat de rupsband afloopt neemt toe."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Kritieke uitval van de rupsbandspanner. De rupsband kan niet meer correct op spanning worden gehouden en het voertuig kan niet meer veilig worden gebruikt."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_message" text="Uitval rupsbandspanner"/>
+        <text name="rms_breakdowns_thermostat_malfunction_stage1_description" text="De motorthermostaat begint te verzwakken. De motor bereikt zijn optimale temperatuur langzamer of draait iets te warm."/>
+        <text name="rms_breakdowns_thermostat_malfunction_stage2_description" text="De thermostaat reageert slecht. De regeling van de motortemperatuur is instabiel, waardoor de slijtage toeneemt."/>
+        <text name="rms_breakdowns_thermostat_malfunction_stage3_description" text="De thermostaat gaat bijna niet meer open. De motor raakt oververhit zodra de belasting stijgt."/>
+        <text name="rms_breakdowns_thermostat_malfunction_stage4_description" text="Volledige uitval van de thermostaat. De motorkoelvloeistof kan niet goed circuleren, waardoor de motor snel en ernstig oververhit raakt."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="De motor staat in de beveiligingsmodus. Het vermogen blijft begrensd totdat de temperatuur daalt."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Oververhittingsbeveiliging: vermogen verlaagd"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="De oververhittingsbeveiliging grijpt sterker in. De motor levert nog maar de helft van zijn vermogen."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Oververhittingsbeveiliging: vermogen gehalveerd"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="De oververhittingsbeveiliging grijpt maximaal in. Slechts een fractie van het motorvermogen blijft over."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Oververhittingsbeveiliging: vermogen sterk verlaagd"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="De motor is uitgeschakeld om schade te voorkomen. Laat hem afkoelen voordat je opnieuw start."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Oververhittingsbeveiliging: motor uitgeschakeld"/>
+        <text name="rms_breakdowns_overload_breakdown_stage2_message" text="Kritieke overbelasting! Verlaag onmiddellijk de belasting van het voertuig."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lichte storing van de oliepomp. De oliedruk is verminderd, het motorkoppel daalt licht, de motortemperatuur stijgt en er kunnen mechanische klopgeluiden ontstaan."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Matige storing van de oliepomp. De oliedruk is onvoldoende, het motorkoppel daalt duidelijk, de motortemperatuur stijgt en mechanisch kloppen is goed hoorbaar."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Ernstige storing van de oliepomp. De oliedruk is kritiek laag, het motorkoppel daalt sterk, oververhitting is waarschijnlijk, het mechanische kloppen is ernstig en de motor kan afslaan."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritieke uitval van de oliepomp. De oliecirculatie is onvoldoende voor veilig gebruik van de motor en starten of verder gebruik is onmogelijk."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_message" text="Uitval oliepomp"/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="De motor is vastgelopen en kan niet meer draaien."/>
+        <text name="rms_breakdowns_engine_jam_stage1_message" text="Motor vastgelopen"/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Motor afgeslagen"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lichte ECU-storing. Het motorvermogen is licht verminderd."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Matige ECU-storing. Duidelijk vermogensverlies en hoger brandstofverbruik."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Ernstige ECU-storing. Groot vermogensverlies, hoog brandstofverbruik en risico dat de motor afslaat."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Volledige uitval van de ECU. De motor kan niet worden aangestuurd en start niet."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="Uitval ECU"/>
+        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Lichte corrosie van bedrading en elektrische stekkers. De hogere contactweerstand veroorzaakt soms flikkerende verlichting, instabiele voeding en moeilijk starten."/>
+        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Matige corrosie van bedrading en elektrische stekkers. Contactverlies veroorzaakt vaak flikkerende verlichting, instabiele voeding, moeilijk starten en mogelijk afslaan."/>
+        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Ernstige corrosie van bedrading en elektrische stekkers. De voeding van kritieke circuits is instabiel, de verlichting kan volledig uitvallen, het motorkoppel is verminderd, de motor slaat waarschijnlijk af en starten is onbetrouwbaar."/>
+        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Uitval van het aansturingscircuit van de startmotor door ernstige corrosie van de bedrading. De verlichting werkt niet en de motor kan niet worden gestart."/>
+        <text name="rms_breakdowns_corroded_wiring_stage4_message" text="Uitval startcircuit"/>
+        <text name="rms_breakdowns_coolant_leak_stage1_description" text="Lichte koelvloeistoflekkage. De koelefficiëntie is licht verminderd."/>
+        <text name="rms_breakdowns_coolant_leak_stage2_description" text="Matige koelvloeistoflekkage. De koelcapaciteit daalt duidelijk en de motortemperatuur stijgt sneller."/>
+        <text name="rms_breakdowns_coolant_leak_stage3_description" text="Ernstige koelvloeistoflekkage. Het koelverlies is groot en het risico op oververhitting wordt hoog."/>
+        <text name="rms_breakdowns_coolant_leak_stage4_description" text="Kritieke uitval van het koelsysteem. Er is onvoldoende koelvloeistof voor veilig gebruik van de motor."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Lichte slijtage van de CVT-ketting. Onder belasting treedt lichte slip op en neemt de transmissie-efficiëntie iets af."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Matige slijtage van de CVT-ketting. De slip wordt merkbaar onder belasting en de overbrengingsverhouding varieert minder nauwkeurig."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Ernstige slijtage van de CVT-ketting. De slip is groot, de efficiëntie daalt sterk en de transmissie kan de gevraagde verhouding moeilijk vasthouden."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Kritieke uitval van de CVT-ketting. De transmissie brengt het koppel niet meer correct over en het voertuig wordt vrijwel onbruikbaar."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Uitval CVT-ketting"/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="De eerste tekenen van een storing in de CVT-transmissie zijn gedetecteerd. Inspectie en reparatie zijn vereist."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="De storing van de CVT-transmissie verergert. Verder gebruik kan de noodloop activeren."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Kritieke schade aan de CVT-transmissie. De transmissie staat in de noodloop en de maximumsnelheid van het voertuig is verlaagd."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Volledige uitval van de CVT-transmissie. Het voertuig kan niet worden gebruikt voordat het is gerepareerd."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_message" text="Uitval CVT-transmissie"/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Lichte accusulfatering. De bruikbare capaciteit is verminderd, waardoor de elektrische reserve onder belasting afneemt."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Matige accusulfatering. De bruikbare capaciteit is sterk verminderd en de motor start moeilijk."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Ernstige accusulfatering. De werkelijk bruikbare capaciteit is kritiek laag en de startprestatie is instabiel."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Kritieke accusulfatering. De bruikbare capaciteit is bijna nul en het startvermogen is onvoldoende voor betrouwbaar starten."/>
+        <text name="rms_breakdowns_brake_malfunction_stage1_description" text="Versleten remblokken. De remwerking is licht verminderd."/>
+        <text name="rms_breakdowns_brake_malfunction_stage2_description" text="Lekkende remvloeistof of versleten schijven. De remweg is duidelijk langer."/>
+        <text name="rms_breakdowns_brake_malfunction_stage3_description" text="Ernstig verlies van remdruk. De remmen zijn zeer zwak en onbetrouwbaar."/>
+        <text name="rms_breakdowns_brake_malfunction_stage4_description" text="Volledige uitval van het remsysteem. Verder rijden is uiterst gevaarlijk."/>
+        <text name="rms_breakdowns_brake_malfunction_stage4_message" text="Uitval remsysteem"/>
+        <text name="rms_breakdowns_bearing_wear_stage1_description" text="Lichte lagerslijtage. De mechanische weerstand neemt licht toe en er kan ongewoon loopgeluid ontstaan."/>
+        <text name="rms_breakdowns_bearing_wear_stage2_description" text="Matige lagerslijtage. De wrijving neemt duidelijk toe, het geluid wordt sterker en de mechanische efficiëntie daalt."/>
+        <text name="rms_breakdowns_bearing_wear_stage3_description" text="Ernstige lagerslijtage. De wrijving en het geluid zijn groot en onder belasting bestaat een reëel risico op vastlopen."/>
+        <text name="rms_breakdowns_bearing_wear_stage4_description" text="Kritieke uitval van de lagers. Ze lopen bijna volledig vast en gebruik wordt onmogelijk."/>
+        <text name="rms_breakdowns_bearing_wear_stage4_message" text="Uitval lagers"/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Lichte storing van de dynamoregelaar. Het laadvermogen is verminderd, waardoor de accu minder efficiënt wordt opgeladen."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Matige storing van de dynamoregelaar. Het laadvermogen is verminderd en instabiel, waardoor de accu slecht wordt opgeladen en de spanningsverliezen toenemen."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Ernstige storing van de dynamoregelaar. Het laadvermogen is sterk verminderd, de voeding is instabiel en het elektrische systeem werkt met grote verliezen."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Volledige uitval van de dynamoregelaar. De accu wordt niet meer opgeladen en het elektrische systeem werkt alleen op de resterende accureserve."/>
+        <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="Lichte storing van de kleppentrein. Het motorkoppel is licht verminderd, het verbruik stijgt en in het mechanisme ontstaat ongewoon geluid."/>
+        <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="Matige storing van de kleppentrein. Het motorkoppel daalt duidelijk, het verbruik stijgt, het geluid is sterk en de motor kan onder belasting haperen."/>
+        <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="Ernstige storing van de kleppentrein. Het motorkoppel is sterk verminderd, het brandstofverbruik is hoog, er is veel mechanisch geluid en de motor kan haperen of afslaan."/>
+        <text name="rms_breakdowns_valve_train_malfunction_stage4_description" text="Kritieke uitval van de kleppentrein. De motor kan niet meer betrouwbaar draaien en starten of verder gebruik zijn niet meer mogelijk."/>
+        <text name="rms_breakdowns_valve_train_malfunction_stage4_message" text="Uitval kleppentrein"/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Onvoldoende boordnetspanning"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Beginnende slijtage van de brandstofpomp. Licht verminderd motorvermogen en hoger brandstofverbruik."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Dalende brandstofdruk. Duidelijk vermogensverlies, hoger brandstofverbruik en de motor slaat soms af."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Kritiek lage brandstofdruk. Groot vermogensverlies, zeer hoog brandstofverbruik en de motor slaat vaak af."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Volledige uitval van de brandstofpomp. Er wordt geen brandstof meer naar de motor gevoerd."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_message" text="Uitval brandstofpomp"/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Een of meer injectorsproeiers zijn licht verstopt. De motor kan wat onregelmatig lopen, met licht vermogensverlies."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Slechte brandstofverstuiving. De motor hapert onder belasting, met duidelijk vermogensverlies en schokken."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Een brandstofinjector zit vast. De motor loopt zeer slecht, met groot vermogensverlies en onbetrouwbaar starten."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Een brandstofinjector is volledig defect. De motor loopt niet meer goed en start mogelijk helemaal niet."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_message" text="Uitval brandstofinjector"/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Lichte vervuiling van het brandstoffilter. De brandstofstroom neemt onder zware belasting licht af."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Matige vervuiling van het brandstoffilter. De doorstroming wordt onder belasting onvoldoende, het vermogen daalt en de motor hapert soms."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Ernstige vervuiling van het brandstoffilter. De brandstoftoevoer wordt sterk beperkt, het vermogen daalt duidelijk en de motor kan afslaan."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Het brandstoffilter is volledig verstopt. De motor krijgt niet meer genoeg brandstof om betrouwbaar te werken."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_message" text="Brandstoffilter verstopt"/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage1_description" text="Lichte luchtinlaat in de brandstofleiding. De brandstoftoevoer wordt licht onregelmatig."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage2_description" text="Matige luchtinlaat in de brandstofleiding. De toevoer wordt instabiel, het vermogen daalt en de motor begint te haperen."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage3_description" text="Ernstige luchtinlaat in de brandstofleiding. De motor loopt zeer onregelmatig en het risico op afslaan is groot."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage4_description" text="Kritieke uitval van de brandstofleiding met veel luchtinlaat. De motor kan niet meer correct van brandstof worden voorzien."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_stage4_message" text="Lucht in brandstofleiding"/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lichte storing van de ventilatorkoppeling. De ventilator reageert minder doeltreffend en de koeling is licht verminderd."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Matige storing van de ventilatorkoppeling. De ventilator schakelt onregelmatig in en de koelefficiëntie neemt duidelijk af."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Ernstige storing van de ventilatorkoppeling. De ventilator levert niet meer genoeg lucht en de motor raakt gemakkelijker oververhit."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Kritieke uitval van de ventilatorkoppeling. De ventilator kan niet meer voor de vereiste koeling zorgen."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Lichte storing van het hydraulische CVT-regelventiel. De transmissie reageert iets langzamer en minder nauwkeurig."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Matige storing van het hydraulische CVT-regelventiel. De druk is instabiel, verhoudingswijzigingen verlopen trager en de efficiëntie daalt duidelijk."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Ernstige storing van het hydraulische CVT-regelventiel. De druk is zeer onregelmatig, de transmissie reageert slecht en het overgedragen vermogen daalt sterk."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Kritieke uitval van het hydraulische CVT-regelventiel. De druk kan niet meer worden geregeld en de transmissie wordt onbruikbaar."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Uitval hydraulisch CVT-regelventiel"/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Lichte interne lekkage in de hydraulische cilinder. Een geheven werktuig zakt onder belasting langzaam."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Matige interne lekkage in de hydraulische cilinder. Het onbedoeld zakken is zichtbaar en neemt toe met de gedragen last."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Ernstige interne lekkage in de hydraulische cilinder. Zware werktuigen blijven niet meer betrouwbaar op hun plaats."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Kritieke interne lekkage in de hydraulische cilinder. Elke geheven last zakt vanzelf snel."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Lichte interne lekkage in de hydrauliekpomp. Hydraulische werktuigen werken iets langzamer."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Versleten afdichtingen van de hydrauliekpomp. De hydrauliek werkt duidelijk langzamer."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Beschadigde hydrauliekpomp. Werktuigen werken uiterst langzaam en zwak."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Uitval van de hydrauliekpomp. Het hydraulische systeem werkt niet meer."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_message" text="Uitval hydrauliekpomp"/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Een hydrauliekslang vertoont lichte vochtigheid. Er lekt wat olie en de hydrauliek reageert iets zwakker."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Een hydrauliekslang sijpelt zichtbaar. Het olieverlies gaat door en de hydraulische functies reageren langzamer."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Een hydrauliekslang lekt actief. Het olieverlies is duidelijk en de hydraulische functies zijn merkbaar verzwakt."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Een hydrauliekslang heeft een ernstige uitwendige lekkage. De olie stroomt snel weg en de hydraulische prestaties nemen sterk af."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Het hydrauliekfilter is licht vervuild en begint de doorstroming te beperken. De hydraulische functies worden iets trager. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Het hydrauliekfilter is matig vervuild. Alle hydraulische functies werken duidelijk langzamer. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Het hydrauliekfilter is sterk vervuild. De hydrauliek reageert zeer langzaam. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Het hydrauliekfilter is volledig verstopt. De hydraulische functies reageren nauwelijks. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="De hydrauliekoliekoeler verliest wat efficiëntie. De olietemperatuur stijgt licht tijdens langdurig hydraulisch werk."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="De hydrauliekoliekoeler werkt onvoldoende. De olietemperatuur stijgt duidelijk bij langdurig hydraulisch werk."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="De hydrauliekoliekoeler is sterk verslechterd. Zwaar hydraulisch werk laat de olie snel oververhit raken."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="De hydrauliekoliekoeler is uitgevallen. Langdurig hydraulisch werk veroorzaakt ernstige oververhitting van de olie en versnelt de pompslijtage."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Een hydraulisch regelventiel begint vast te lopen. Een hydraulische functie hapert soms en verliest kracht onder belasting."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Een hydraulisch regelventiel loopt soms vast. Een hydraulische functie wordt trager en verliest meer kracht naarmate de belasting stijgt."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Een hydraulisch regelventiel loopt sterk vast. Een hydraulische functie beweegt onregelmatig en heeft moeite met een zware last."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Een hydraulisch regelventiel is ernstig beschadigd. Een hydraulische functie stopt steeds en kan een zware last nauwelijks bewegen."/>
+        <text name="rms_breakdown_at_progress_message" text="loopt"/>
+        <!-- Vehicle Specifications -->
+        <text name="rms_spec_cold_engine_message" text="Waarschuwing! Motor koud, verlaag de belasting."/>
+        <text name="rms_spec_overheat_engine_message" text="Waarschuwing! Motor oververhit."/>
+        <text name="rms_spec_overheat_transmission_message" text="Waarschuwing! Transmissie oververhit."/>
+        <text name="rms_spec_overhaul_partial" text="Gedeeltelijk"/>
+        <text name="rms_spec_overhaul_standard" text="Standaard"/>
+        <text name="rms_spec_overhaul_full" text="Volledig"/>
+        <text name="rms_spec_op_hours_short" text="h"/>
+        <text name="rms_spec_this_month" text="Deze maand"/>
+        <text name="rms_spec_tomorrow_at" text="morgen om "/>
+        <text name="rms_spec_never" text="Nooit"/>
+        <text name="rms_spec_next_planned_service_notification" text="Geplande procedure gestart: %s"/>
+        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Geplande procedure geannuleerd wegens onvoldoende geld: %s"/>
+        <text name="rms_spec_next_planned_service_failed_notification" text="De geplande procedure (%s) is niet gestart: %s"/>
+        <text name="rms_spec_day_after_tomorrow_at" text="overmorgen om "/>
+        <text name="rms_spec_day_s" text="dagen"/>
+        <text name="rms_spec_day_one" text="dag"/>
+        <text name="rms_spec_duration_format_hours" text="%d %s"/>
+        <text name="rms_spec_duration_format_minutes" text="%d %s"/>
+        <text name="rms_spec_duration_format_combined" text="%s en %s"/>
+        <text name="rms_spec_in_days_at" text="over {days} dagen om "/>
+        <text name="rms_spec_inspection_issues_detected_notification" text="Gedetecteerde problemen: %s"/>
+        <text name="rms_spec_inspection_no_issues_detected_notification" text="Geen problemen gedetecteerd"/>
+        <text name="rms_spec_inspection_visual" text="Visueel"/>
+        <text name="rms_spec_inspection_standard" text="Standaard"/>
+        <text name="rms_spec_inspection_complete" text="Volledig"/>
+        <text name="rms_spec_hour_s" text="uren"/>
+        <text name="rms_spec_hour_one" text="uur"/>
+        <text name="rms_spec_minute_s" text="minuten"/>
+        <text name="rms_spec_minute_one" text="minuut"/>
+        <text name="rms_spec_months_ago_unit" text="maanden"/>
+        <text name="rms_spec_month_ago_one" text="maand"/>
+        <text name="rms_spec_months_ago_format" text="%s %s geleden"/>
+        <text name="rms_spec_maintenance_complete_notification" text="Procedure voltooid: %s"/>
+        <text name="rms_spec_maintenance_cancelled_notification" text="Procedure geannuleerd: %s"/>
+        <text name="rms_spec_maintenance_minimal" text="Minimaal"/>
+        <text name="rms_spec_maintenance_standard" text="Standaard"/>
+        <text name="rms_spec_maintenance_extended" text="Uitgebreid"/>
+        <text name="rms_spec_maintenance_preventive" text="Preventief"/>
+        <text name="rms_spec_last_maintenance_until_format" text="%s tot %s"/>
+        <text name="rms_spec_workshop_dealer" text="Dealer"/>
+        <text name="rms_spec_workshop_own" text="Eigen"/>
+        <text name="rms_spec_workshop_mobile" text="Mobiel"/>
+        <text name="rms_spec_system_engine" text="Motor"/>
+        <text name="rms_spec_system_electrical" text="Elektrisch systeem"/>
+        <text name="rms_spec_system_transmission" text="Transmissie"/>
+        <text name="rms_spec_system_hydraulics" text="Hydrauliek"/>
+        <text name="rms_spec_system_cooling" text="Koelsysteem"/>
+        <text name="rms_spec_system_chassis" text="Chassis"/>
+        <text name="rms_spec_system_fuel" text="Brandstofsysteem"/>
+        <text name="rms_spec_system_pto" text="Aftakas"/>
+        <text name="rms_spec_state_ready" text="Gereed"/>
+        <text name="rms_spec_state_repair" text="Reparatie"/>
+        <text name="rms_spec_state_refill" text="Bijvullen"/>
+        <text name="rms_spec_state_recommended" text="Aanbevolen"/>
+        <text name="rms_spec_state_required" text="Vereist"/>
+        <text name="rms_spec_state_inspection" text="Inspectie"/>
+        <text name="rms_spec_state_maintenance" text="Onderhoud"/>
+        <text name="rms_spec_state_overhaul" text="Revisie"/>
+        <text name="rms_spec_state_overdue" text="Achterstallig"/>
+        <text name="rms_spec_state_optimal" text="Optimaal"/>
+        <text name="rms_spec_state_broken" text="Buiten werking"/>
+        <text name="rms_spec_state_bad" text="Slecht"/>
+        <text name="rms_spec_state_budget" text="Voordelig"/>
+        <text name="rms_spec_state_excellent" text="Uitstekend"/>
+        <text name="rms_spec_state_good" text="Goed"/>
+        <text name="rms_spec_state_service_good" text="Goed"/>
+        <text name="rms_spec_state_normal" text="Normaal"/>
+        <text name="rms_spec_state_terrible" text="Zeer slecht"/>
+        <text name="rms_spec_state_unknown" text="Onbekend"/>
+        <text name="rms_spec_state_legendary" text="Legendarisch"/>
+        <text name="rms_spec_state_low" text="Laag"/>
+        <text name="rms_spec_state_premium" text="Premium"/>
+        <text name="rms_spec_state_standard" text="Standaard"/>
+        <text name="rms_spec_state_average" text="Gemiddeld"/>
+        <text name="rms_spec_state_high" text="Hoog"/>
+        <text name="rms_spec_state_workhorse" text="Robuust"/>
+        <text name="rms_spec_part_types_used" text="Gebruikt"/>
+        <text name="rms_spec_part_types_aftermarket" text="Aftermarket"/>
+        <text name="rms_spec_part_types_oem" text="Origineel"/>
+        <text name="rms_spec_part_types_premium" text="Premium"/>
+        <text name="rms_spec_consumable_types_used" text="Voordelig"/>
+        <text name="rms_spec_consumable_types_aftermarket" text="Aftermarket"/>
+        <text name="rms_spec_consumable_types_oem" text="Origineel"/>
+        <text name="rms_spec_consumable_types_premium" text="Premium"/>
+        <text name="rms_spec_repair_type_fix" text="Noodreparatie"/>
+        <text name="rms_spec_repair_type_replacement" text="Standaard"/>
+        <text name="rms_spec_repair_type_advanced" text="Grondig"/>
+        <!-- Service Options -->
+        <text name="rms_option_menu_option_one_title_inspection" text="Inspectietype"/>
+        <text name="rms_option_menu_option_one_title_maintenance" text="Onderhoudsniveau"/>
+        <text name="rms_option_menu_option_one_title_repair" text="Reparatiemethode"/>
+        <text name="rms_option_menu_option_one_title_overhaul" text="Revisieomvang"/>
+        <text name="rms_option_menu_option_two_title_maintenance" text="Kwaliteit verbruiksmaterialen"/>
+        <text name="rms_option_menu_option_two_title_repair" text="Kwaliteit reserveonderdelen"/>
+        <text name="rms_option_menu_option_two_title_overhaul" text="Te reviseren systeem"/>
+        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Als de procedure storingen ontdekt, volgt automatisch een standaardreparatie met originele onderdelen."/>
+        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Na de reparatie volgt automatisch standaardonderhoud met originele verbruiksmaterialen."/>
+        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="Voegt aan deze revisie toe dat het voertuig volledig opnieuw wordt gespoten."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="Gedeeltelijke revisie: behandelt alleen het geselecteerde systeem, verhelpt de storingen, verwijdert de mechanische belasting en herstelt de conditie. De bijbehorende vloeistof wordt indien aanwezig vervangen."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Standaardrevisie: behandelt alle systemen, verhelpt ondersteunde storingen, verwijdert mechanische belasting en vervangt alle vloeistoffen. Herstelt een goede conditie."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Volledige revisie: behandelt alle systemen, verhelpt ondersteunde storingen, verwijdert mechanische belasting en vervangt alle vloeistoffen. Herstelt een uitstekende conditie."/>
+        <text name="rms_option_menu_price_text" text="Prijs"/>
+        <text name="rms_option_menu_part_used_description" text="Gebruikte onderdelen: laagste kosten, met 50% risico op een later defect."/>
+        <text name="rms_option_menu_part_aftermarket_description" text="Aftermarketonderdelen: lagere kosten, met 33% risico op een later defect."/>
+        <text name="rms_option_menu_part_oem_description" text="Originele fabrieksonderdelen: standaardprijs, met 10% risico op een later defect."/>
+        <text name="rms_option_menu_part_premium_description" text="Premiumonderdelen: 20% meerkosten, zonder risico op een defect door het onderdeel."/>
+        <text name="rms_option_menu_consumable_used_description" text="Voordelige verbruiksmaterialen: laagste kosten, met 50% risico op een later defect."/>
+        <text name="rms_option_menu_consumable_aftermarket_description" text="Aftermarketverbruiksmaterialen: lagere kosten, met 33% risico op een later defect."/>
+        <text name="rms_option_menu_consumable_oem_description" text="Originele fabrieksverbruiksmaterialen: standaardprijs, met 10% risico op een later defect."/>
+        <text name="rms_option_menu_consumable_premium_description" text="Premiumverbruiksmaterialen: 20% meerkosten, zonder risico op een defect door de verbruiksmaterialen."/>
+        <text name="rms_option_menu_perform_repair" text="Automatische reparatie"/>
+        <text name="rms_option_menu_perform_renew_paint" text="Lak vernieuwen"/>
+        <text name="rms_option_menu_perform_maintenance" text="Automatisch onderhoud"/>
+        <text name="rms_option_menu_warranty_repair_text" text="Garantiereparatie"/>
+        <text name="rms_option_menu_duration_text" text="Duur"/>
+        <text name="rms_option_menu_duration_instant" text="Direct"/>
+        <text name="rms_option_menu_finish_time_text" text="Eindtijd"/>
+        <text name="rms_option_menu_start_text" text="Starten"/>
+        <text name="rms_option_menu_inspection_visual_description" text="Visuele inspectie: zoekt snel en goedkoop alleen naar reeds actieve storingen, met een lagere detectiekans. Het rapport toont geen gedetailleerde conditie van de componenten."/>
+        <text name="rms_option_menu_inspection_standard_description" text="Standaardinspectie: zoekt met normale detectiekans naar actieve storingen en maakt een algemeen rapport zonder gedetailleerde conditiewaarden."/>
+        <text name="rms_option_menu_inspection_complete_description" text="Volledige inspectie: zoekt met normale detectiekans naar actieve en mogelijke storingen en levert daarna een volledig rapport met de gedetailleerde conditie van de componenten."/>
+        <text name="rms_option_menu_maintenance_minimal_description" text="Minimaal onderhoud: herstelt het onderhoudsniveau gedeeltelijk en vult alleen ontbrekende vloeistoffen bij. Het volgende interval blijft korter."/>
+        <text name="rms_option_menu_maintenance_standard_description" text="Standaardonderhoud: herstelt het referentie-onderhoudsniveau, vervangt de motorolie en vult de andere circuits indien nodig bij."/>
+        <text name="rms_option_menu_maintenance_extended_description" text="Uitgebreid onderhoud: verhoogt het onderhoudsniveau boven de referentie, verlengt het volgende interval en vervangt alle vloeistoffen."/>
+        <text name="rms_option_menu_maintenance_preventive_description" text="Preventief onderhoud: herstelt het referentieniveau, vervangt alle vloeistoffen en vermindert de mechanische belasting van maximaal drie prioritaire systemen."/>
+        <text name="rms_option_menu_repair_type_fix_description" text="Noodreparatie: maakt de machine snel en goedkoop weer inzetbaar zonder de storing te verhelpen. De storing keert na beperkte tijd terug."/>
+        <text name="rms_option_menu_repair_type_replacement_description" text="Standaardreparatie: verhelpt de storing en vervangt het uitgevallen component. De mechanische belasting van het betrokken systeem wordt gedeeltelijk verminderd."/>
+        <text name="rms_option_menu_repair_type_advanced_description" text="Grondige reparatie: verhelpt de storing, vervangt het uitgevallen component en verwijdert de opgebouwde mechanische belasting uit het betrokken systeem."/>
+        <text name="rms_option_menu_follow_up_separate_transaction" text="De volgende procedure wordt afzonderlijk gefactureerd. De vereiste vloeistoffen worden bij de start geleverd of uit voorraad genomen."/>
+        <!-- Inspection Report -->
+        <text name="rms_report_header_title" text="Inspectierapport"/>
+        <text name="rms_report_vehicle_name_title" text="Voertuignaam"/>
+        <text name="rms_report_vehicle_age_title" text="Leeftijd"/>
+        <text name="rms_report_vehicle_operating_hours_title" text="Bedrijfsuren"/>
+        <text name="rms_report_vehicle_specs_title" text="Voertuigspecificaties"/>
+        <text name="rms_report_vehicle_spec_max_alternator_current" text="Maximale dynamostroom"/>
+        <text name="rms_report_vehicle_spec_battery_charge" text="Acculading"/>
+        <text name="rms_report_vehicle_spec_battery_capacity" text="Accucapaciteit"/>
+        <text name="rms_report_date_title" text="Datum"/>
+        <text name="rms_report_detected_breakdowns_title" text="Gedetecteerde storingen"/>
+        <text name="rms_report_inspection_type_title" text="Inspectietype"/>
+        <text name="rms_report_inspection_location_title" text="Inspectielocatie"/>
+        <text name="rms_report_overall_assessment_title" text="Algemene conditiebeoordeling"/>
+        <text name="rms_report_overall_assessment_condition" text="Algemene conditie"/>
+        <text name="rms_report_overall_assessment_crit_fail_risk" text="Risico op kritieke uitval"/>
+        <text name="rms_report_overall_assessment_service" text="Onderhoudsniveau"/>
+        <text name="rms_report_overall_assessment_mtbf" text="Gemiddelde tijd tussen storingen (uren)"/>
+        <text name="rms_report_overall_assessment_rul" text="Resterende levensduur (uren)"/>
+        <text name="rms_report_overall_assessment_wear_rate" text="Slijtagesnelheid (%/h)"/>
+        <text name="rms_report_overall_assessment_nominal_wear_rate" text="Nominale slijtagesnelheid (%/h)"/>
+        <text name="rms_report_recommendations_title" text="Conclusie en aanbevelingen"/>
+        <text name="rms_report_recommendation_repair_active_breakdowns" text="Actieve storingen gedetecteerd. Een standaardreparatie van al deze storingen wordt aanbevolen."/>
+        <text name="rms_report_recommendation_repeat_maintenance" text="Defecte verbruiksmaterialen gedetecteerd. Herhaal het onderhoud om ze te vervangen."/>
+        <text name="rms_report_recommendation_defective_parts" text="Defecte reserveonderdelen gedetecteerd: %s. Preventieve vervanging wordt aanbevolen om een plotselinge storing te voorkomen."/>
+        <text name="rms_report_recommendation_quick_fix" text="Noodreparaties gedetecteerd: %s. Een standaardreparatie wordt zo snel mogelijk aanbevolen."/>
+        <text name="rms_report_recommendation_service_due" text="Onderhoudsinterval bereikt. Voer onderhoud uit."/>
+        <text name="rms_report_recommendation_service_urgent" text="Het onderhoudsinterval is overschreden. Voer onmiddellijk onderhoud uit."/>
+        <text name="rms_report_recommendation_system_overhaul" text="Kritieke verslechtering van dit systeem gedetecteerd: %s. Voer een gedeeltelijke revisie uit."/>
+        <text name="rms_report_recommendation_system_preventive_maintenance" text="Verhoogd storingsrisico op dit systeem: %s. Voer preventief onderhoud uit om het te verlagen."/>
+        <text name="rms_report_recommendation_overhaul" text="Verslechtering van belangrijke componenten gedetecteerd. Voer een revisie uit."/>
+        <text name="rms_report_recommendation_operating_conditions" text="Tekenen van overmatig intensief gebruik gedetecteerd. Verbeter de bedrijfsomstandigheden."/>
+        <text name="rms_report_recommendation_all_ok" text="Geen bijzondere aanbevelingen. Het voertuig is gebruiksklaar."/>
+        <text name="rms_report_state_optimal" text="Optimaal"/>
+        <text name="rms_report_state_normal" text="Normaal"/>
+        <text name="rms_report_state_not_available" text="Niet beschikbaar"/>
+        <text name="rms_report_state_degraded" text="Verslechterd"/>
+        <text name="rms_report_state_impaired" text="Verminderd"/>
+        <text name="rms_report_state_critical" text="Kritiek"/>
+        <text name="rms_report_stress_absent" text="Afwezig"/>
+        <text name="rms_report_stress_low" text="Laag"/>
+        <text name="rms_report_stress_moderate" text="Matig"/>
+        <text name="rms_report_stress_elevated" text="Verhoogd"/>
+        <text name="rms_report_stress_high" text="Zeer hoog"/>
+        <text name="rms_report_system_condition_title" text="Systeemconditie"/>
+        <text name="rms_report_breakdown_risk_title" text="Storingsrisico"/>
+        <text name="rms_report_component_title" text="Component"/>
+        <text name="rms_report_system_condition_transmission" text="Transmissie"/>
+        <text name="rms_report_system_condition_power" text="Huidig vermogen"/>
+        <text name="rms_report_system_condition_brakes" text="Remefficiëntie"/>
+        <text name="rms_report_system_condition_cooling" text="Koelefficiëntie"/>
+        <text name="rms_report_system_condition_consumption" text="Brandstofverbruik"/>
+        <text name="rms_report_system_condition_hydraulic" text="Hydraulische efficiëntie"/>
+        <text name="rms_report_transmission_slipping" text="Slippen"/>
+        <text name="rms_report_transmission_shifting_impaired" text="Schakelen verminderd"/>
+        <text name="rms_report_transmission_shift_delay" text="Schakelvertraging"/>
+        <text name="rms_report_transmission_gear_rejection" text="Uit versnelling springen"/>
+        <text name="rms_report_transmission_cvt_slipping" text="Riem-/kettingslip"/>
+        <text name="rms_report_transmission_cvt_ratio_limited" text="Overbrengingsverhouding beperkt"/>
+        <text name="rms_report_transmission_cvt_pressure_instability" text="Drukinstabiliteit"/>
+        <text name="rms_report_transmission_thermostat_degraded" text="Thermostaat verslechterd"/>
+        <text name="rms_report_transmission_failed" text="Uitgevallen"/>
+        <!-- Tools and Inspection -->
+        <text name="rms_grease_gun_name" text="Vetspuit"/>
+        <text name="rms_grease_gun_no_vehicle" text="Geen voertuig binnen smeerbereik"/>
+        <text name="rms_grease_gun_function" text="Voor het smeren van de smeerpunten van de machine"/>
+        <text name="rms_grease_gun_action" text="Vet aanbrengen"/>
+        <text name="rms_grease_gun_already_lubricated" text="%s: smering al uitgevoerd"/>
+        <text name="rms_grease_gun_lubrication_not_require" text="%s hoeft niet te worden gesmeerd"/>
+        <text name="rms_air_blower_name" text="Persluchtblazer"/>
+        <text name="rms_air_blower_no_vehicle" text="Geen voertuig binnen reinigingsbereik"/>
+        <text name="rms_air_blower_function" text="Voor het reinigen van radiateurs en luchtfilters"/>
+        <text name="rms_air_blower_action" text="Radiateur en luchtfilter reinigen"/>
+        <text name="rms_air_blower_already_clean" text="%s: radiateur en luchtfilter zijn al schoon"/>
+        <text name="rms_air_blower_filter_requires_maintenance" text="%s: de radiateur is schoon. Het luchtfilter kan door uitblazen niet verder worden gereinigd. Vervanging vereist onderhoud in de werkplaats"/>
+        <text name="rms_air_blower_cleaning_not_require" text="%s hoeft niet te worden gereinigd"/>
+        <text name="rms_jumper_cables_name" text="Startkabels"/>
+        <text name="rms_jumper_cables_function" text="Voor het verbinden van twee accu's en het starten van een voertuig met een lege accu"/>
+        <text name="rms_jumper_cables_action" text="Startkabels aansluiten/loskoppelen"/>
+        <text name="rms_jumper_cables_auto_disconnected" text="Startkabels losgekoppeld: een van de voertuigen is verplaatst"/>
+        <text name="rms_jumper_cables_connected" text="Startkabels aangesloten op %s"/>
+        <text name="rms_jumper_cables_impossible_to_connect" text="Dit voertuig is niet geschikt voor het aansluiten van startkabels"/>
+        <text name="rms_jumper_cables_is_too_far" text="%s bevindt zich te ver van %s"/>
+        <text name="rms_jumper_cables_both_already_connected" text="Startkabels zijn al aangesloten op %s en %s"/>
+        <text name="rms_jumper_cables_disconnected" text="Startkabels losgekoppeld van %s"/>
+        <!-- Fluid containers -->
+        <text name="rms_fluid_container_typedesc" text="Vloeistofkan"/>
+        <text name="rms_fluid_function_engine_oil" text="Motorolie voor handmatig bijvullen"/>
+        <text name="rms_fluid_function_utto" text="Transmissie- en hydrauliekolie voor handmatig bijvullen"/>
+        <text name="rms_fluid_function_coolant" text="Koelvloeistof voor handmatig bijvullen"/>
+        <text name="rms_fluid_container_action_start" text="Vloeistof overdragen"/>
+        <text name="rms_fluid_container_action_cancel" text="Vloeistofoverdracht stoppen"/>
+        <text name="rms_fluid_select_vehicle_title" text="Voertuigselectie"/>
+        <text name="rms_fluid_select_vehicle_prompt" text="Kies het te vullen voertuig"/>
+        <text name="rms_fluid_select_circuit_title" text="Circuitselectie"/>
+        <text name="rms_fluid_select_circuit_prompt" text="Kies het te vullen circuit"/>
+        <text name="rms_fluid_circuit_engineOil" text="Motorolie"/>
+        <text name="rms_fluid_circuit_coolant" text="Koelvloeistof"/>
+        <text name="rms_fluid_circuit_transmissionOil" text="Transmissieolie"/>
+        <text name="rms_fluid_circuit_hydraulicFluid" text="Hydrauliekolie"/>
+        <text name="rms_fluid_incompatible_title" text="Ongeschikte vloeistof"/>
+        <text name="rms_fluid_incompatible_message" text="Dit product is niet bedoeld voor dit circuit. Het verontreinigt het en kan de systeemslijtage verdrievoudigen, de opwarming verhogen of de hydrauliek vertragen. Alleen een volledige vloeistofvervanging verwijdert de verontreiniging. Doorgaan?"/>
+        <text name="rms_fluid_error_no_vehicle" text="Geen voertuig met vloeistofbehoefte binnen 4 m"/>
+        <text name="rms_fluid_error_no_circuit" text="Voor dit voertuig hoeven geen vloeistoffen te worden bijgevuld"/>
+        <text name="rms_fluid_error_motor_running" text="Zet de motor uit voordat je vloeistof overdraagt"/>
+        <text name="rms_fluid_error_vehicle_moving" text="Het voertuig moet stilstaan"/>
+        <text name="rms_fluid_dealer_billed" text="Gefactureerde vloeistoffen"/>
+        <text name="rms_fluid_stock_required" text="Vloeistofvoorraad vereist"/>
+        <text name="rms_fluid_refill_work_order" text="Vloeistoffen bijvullen"/>
+        <text name="rms_fluid_refill_dealer_supply" text="Levering inbegrepen in de offerte"/>
+        <text name="rms_fluid_refill_stock_supply" text="Uit werkplaatsvoorraad genomen"/>
+        <text name="rms_fluid_mode_top_up" text="bijvullen"/>
+        <text name="rms_fluid_mode_replace" text="vervanging"/>
+        <text name="rms_fluid_mode_repair" text="bijvullen na lekkage"/>
+        <text name="rms_fluid_service_workshop_not_found" text="Het voertuig bevindt zich niet meer in de werkplaatszone."/>
+        <text name="rms_fluid_service_stock_insufficient" text="Er zijn onvoldoende geschikte vloeistoffen in de werkplaatszone."/>
+        <text name="rms_fluid_service_price_unavailable" text="De prijs van de vereiste vloeistof is niet beschikbaar."/>
+        <text name="rms_fluid_service_refused" text="De procedure kan onder de huidige omstandigheden niet starten."/>
+        <text name="rms_fluid_service_consumption_failed" text="Het reserveren van vloeistoffen is mislukt. De procedure is geannuleerd."/>
+        <!-- Inspection Dialog -->
+        <text name="rms_field_inspection_hold_to_start" text="Ingedrukt houden om controle te starten"/>
+        <text name="rms_field_inspection_progress" text="Controle wordt uitgevoerd"/>
+        <text name="rms_field_inspection_cancelled" text="Controle geannuleerd"/>
+        <text name="rms_field_inspection_engine_must_be_stopped" text="Zet de motor uit vóór de controle"/>
+        <text name="rms_inspection_dialog_title" text="Controle vóór aanvang dienst"/>
+        <text name="rms_inspection_section_fluids" text="Technische vloeistoffen"/>
+        <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
+        <text name="rms_inspection_section_cooling_air" text="Koeling en luchtfilter"/>
+        <text name="rms_inspection_section_lubrication" text="Smeerpunten"/>
+        <text name="rms_inspection_section_additional" text="Aanvullende opmerkingen"/>
+        <text name="rms_inspection_verdict_ok_title" text="Gebruiksklaar"/>
+        <text name="rms_inspection_verdict_ok_message" text="Geen bijzonderheden. De machine kan aan het werk."/>
+        <text name="rms_inspection_verdict_watch_title" text="In de gaten houden"/>
+        <text name="rms_inspection_verdict_watch_message" text="Eén punt vraagt je aandacht. De machine kan nog worden gebruikt; verhelp dit vandaag."/>
+        <text name="rms_inspection_verdict_air_filter_service_message" text="De machine kan nog worden gebruikt. Plan onderhoud in de werkplaats om het luchtfilter te vervangen."/>
+        <text name="rms_inspection_verdict_stop_title" text="Niet gebruiken"/>
+        <text name="rms_inspection_verdict_stop_message" text="Eén punt moet vóór elk gebruik worden verholpen. Gebruik deze machine niet in deze toestand."/>
+        <text name="rms_inspection_service_due_in" text="volgend onderhoud over %s"/>
+        <text name="rms_inspection_service_overdue" text="onderhoud %s achterstallig"/>
+        <text name="rms_inspection_status_slightly_low" text="Iets te laag"/>
+        <text name="rms_inspection_status_slightly_dirty" text="Licht vervuild"/>
+        <text name="rms_inspection_status_slightly_dry" text="Enigszins droog"/>
+        <text name="rms_inspection_status_slight_moisture" text="Lichte vochtigheid"/>
+        <text name="rms_inspection_status_seepage" text="Doorsijpeling"/>
+        <text name="rms_inspection_status_severe_leak" text="Ernstige lekkage"/>
+        <text name="rms_inspection_status_low" text="Laag"/>
+        <text name="rms_inspection_status_very_low" text="Zeer laag"/>
+        <text name="rms_inspection_status_very_dry" text="Zeer droog"/>
+        <text name="rms_inspection_status_critically_low" text="Dringend bijvullen"/>
+        <text name="rms_inspection_status_critically_clogged" text="Volledig verstopt"/>
+        <text name="rms_inspection_status_critically_dry" text="Metaal op metaal"/>
+        <text name="rms_inspection_status_dirty" text="Vervuild"/>
+        <text name="rms_inspection_status_dry" text="Droog"/>
+        <text name="rms_inspection_status_active_leak" text="Actieve lekkage"/>
+        <text name="rms_inspection_status_heavily_clogged" text="Sterk vervuild"/>
+        <text name="rms_inspection_status_not_required" text="Niet vereist"/>
+        <text name="rms_inspection_engine_oil" text="Motorolie"/>
+        <text name="rms_inspection_coolant" text="Koelvloeistof"/>
+        <text name="rms_inspection_hydraulic_fluid" text="Hydrauliekolie"/>
+        <text name="rms_inspection_hint_coolant_leak_stage1" text="Bij de aansluitingen van het koelsysteem zijn lichte koelvloeistofsporen zichtbaar."/>
+        <text name="rms_inspection_hint_coolant_leak_stage2" text="Er zijn koelvloeistofresten zichtbaar en het niveau ligt onder normaal."/>
+        <text name="rms_inspection_hint_coolant_leak_stage3" text="Rond het koelsysteem is duidelijk verlies van koelvloeistof zichtbaar."/>
+        <text name="rms_inspection_hint_coolant_leak_stage4" text="Het koelsysteem heeft veel koelvloeistof verloren en er zijn duidelijke sporen zichtbaar."/>
+        <text name="rms_inspection_hint_corroded_wiring_stage2" text="Op enkele elektrische aansluitingen zijn lichte oxidatiesporen zichtbaar."/>
+        <text name="rms_inspection_hint_corroded_wiring_stage3" text="Op de bedrading en stekkers zijn duidelijke oxidatie en vervuiling zichtbaar."/>
+        <text name="rms_inspection_hint_corroded_wiring_stage4" text="Op de bedrading en stekkers is ernstige corrosie zichtbaar en delen van de isolatie lijken beschadigd."/>
+        <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage1" text="Op een hydrauliekslang of aansluiting is een lichte oliefilm zichtbaar."/>
+        <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage2" text="Uit een hydrauliekslang of aansluiting sijpelt zichtbaar hydrauliekolie."/>
+        <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage3" text="Langs een hydrauliekslang zijn duidelijke hydrauliekoliesporen en een pas nat geworden plek zichtbaar."/>
+        <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage4" text="Een hydrauliekslang en de omgeving zijn sterk vervuild door lekkende olie."/>
+        <text name="rms_inspection_hint_radiator_clogging_stage1" text="Het oppervlak van de radiateur is licht vervuild."/>
+        <text name="rms_inspection_hint_radiator_clogging_stage2" text="De radiateur is duidelijk vervuild."/>
+        <text name="rms_inspection_hint_radiator_clogging_stage3" text="De radiateur is sterk vervuild met vuil en resten."/>
+        <text name="rms_inspection_hint_radiator_clogging_stage4" text="De radiateur is volledig verstopt met vuil en resten."/>
+        <text name="rms_inspection_hint_air_filter_clogging_stage1" text="Het luchtfilter is licht vervuild."/>
+        <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Het luchtfilter is duidelijk vervuild."/>
+        <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Het luchtfilter is sterk vervuild met stof en resten."/>
+        <text name="rms_inspection_hint_air_filter_clogging_stage4" text="Het luchtfilter is volledig verstopt met stof en resten."/>
+        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Het luchtfilter kan door uitblazen niet verder worden gereinigd. Vervanging vereist onderhoud in de werkplaats."/>
+        <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Rond de dynamo en enkele aansluitingen zijn sporen van oververhitting en donkere verkleuring zichtbaar."/>
+        <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Rond de dynamo en de bedrading zijn duidelijke sporen van oververhitting en donker verkleurde stekkers zichtbaar."/>
+        <text name="rms_inspection_hint_lubrication_stage1" text="De smeerpunten lijken licht droog."/>
+        <text name="rms_inspection_hint_lubrication_stage2" text="De smeerpunten lijken droog en hebben onvoldoende vet."/>
+        <text name="rms_inspection_hint_lubrication_stage3" text="De smeerpunten zijn zeer droog en er is nog maar weinig vet zichtbaar."/>
+        <text name="rms_inspection_hint_lubrication_stage4" text="De smeerpunten werken metaal op metaal en er is bijna geen vet meer zichtbaar."/>
+        <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Rond het transmissiehuis zijn lichte oliesporen zichtbaar."/>
+        <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Er zijn oliedruppels zichtbaar onder de transmissie."/>
+        <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Rond de transmissie is duidelijk olieverlies zichtbaar."/>
+        <text name="rms_inspection_hint_transmission_oil_leak_stage4" text="Er stroomt olie uit het transmissiehuis en onder de machine vormt zich een plas."/>
+        <text name="rms_inspection_hint_track_tensioner_malfunction_stage2" text="De spanning van de rupsband lijkt licht ongelijkmatig."/>
+        <text name="rms_inspection_hint_track_tensioner_malfunction_stage3" text="De rupsband lijkt los te zitten en de spanning is duidelijk ongelijkmatig."/>
+        <text name="rms_inspection_hint_track_tensioner_malfunction_stage4" text="De rupsband hangt zichtbaar door en de spanning lijkt ernstig aangetast."/>
+        <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Rond de turbolader zijn oliesporen en donker verkleurde aansluitingen zichtbaar."/>
+        <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Rond de turbolader zijn veel oliesporen, donker verkleurde aansluitingen en roetsporen zichtbaar."/>
+        <text name="rms_inspection_hint_fluid_level_low" text="Een vloeistofniveau is onder de markering gezakt."/>
+        <text name="rms_inspection_transmission_oil" text="Transmissieolie"/>
+        <text name="rms_inspection_radiator" text="Radiateur"/>
+        <text name="rms_inspection_air_filter" text="Luchtfilter"/>
+        <text name="rms_inspection_lubrication_level" text="Smeerniveau"/>
+        <text name="rms_inspection_no_suspicious_symptoms" text="Geen verdachte symptomen gedetecteerd"/>
+        <text name="rms_inspection_ok" text="OK"/>
+        <!-- In-Game Menu -->
+        <text name="rms_ingame_menu_title" text="Realistic Mechanical Systems"/>
+        <text name="rms_ingame_menu_section_active" text="RMS-voertuigen"/>
+        <text name="rms_ingame_menu_section_service" text="In onderhoud"/>
+        <text name="rms_ingame_menu_section_other" text="Andere voertuigen"/>
+        <text name="rms_ingame_menu_header_vehicle" text="Voertuig"/>
+        <text name="rms_ingame_menu_header_type" text="Type"/>
+        <text name="rms_ingame_menu_header_time_left" text="Resterende tijd"/>
+        <text name="rms_ingame_menu_header_age" text="Leeftijd"/>
+        <text name="rms_ingame_menu_header_working_hours" text="Bedrijfsuren"/>
+        <text name="rms_ingame_menu_header_condition" text="Conditie"/>
+        <text name="rms_ingame_menu_header_cost" text="Totale kosten"/>
+        <text name="rms_ingame_menu_header_interval" text="Interval"/>
+        <text name="rms_ingame_menu_header_last_inspection" text="Laatste inspectie"/>
+        <text name="rms_ingame_menu_header_last_maintenance" text="Laatste onderhoud"/>
+        <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
+        <text name="rms_ingame_menu_header_price" text="Waarde"/>
+        <text name="rms_ingame_menu_header_procedure" text="Procedure"/>
+        <text name="rms_ingame_menu_header_finish_time" text="Eindtijd"/>
+        <text name="rms_ingame_menu_header_service_cost" text="Kosten"/>
+        <text name="rms_ingame_menu_empty_other" text="Geen andere voertuigen"/>
+        <text name="rms_ingame_menu_empty_active" text="Geen RMS-voertuigen"/>
+        <text name="rms_ingame_menu_empty_service" text="Geen voertuigen in onderhoud"/>
+        <!-- Sell Dialog -->
+        <text name="rms_sell_dialog_title" text="Voertuig inleveren"/>
+        <text name="rms_sell_dialog_section_vehicle" text="Voertuig"/>
+        <text name="rms_sell_dialog_section_penalties" text="Inleveringskortingen"/>
+        <text name="rms_sell_dialog_total" text="Totaal"/>
+        <text name="rms_sell_dialog_overdue_maintenance_penalty" text="Achterstallig onderhoud"/>
+        <text name="rms_sell_dialog_repair_penalty" text="Reparatie"/>
+        <text name="rms_sell_dialog_washing_penalty" text="Reiniging"/>
+        <!-- Tutorial -->
+        <text name="rms_tutorial_fluid_level_title" text="Laag vloeistofniveau"/>
+        <text name="rms_tutorial_fluid_level_message" text="Een van de vloeistoffen van deze machine is onder de markering op de meter gezakt.&#10;&#10;Motorolie wordt met de bedrijfsuren verbruikt en een versleten motor verbruikt er veel meer van. Koelvloeistof, transmissieolie en hydrauliekolie dalen alleen door een lekkage.&#10;&#10;Onder de markering hoeft alleen te worden bijgevuld en werkt de machine nog normaal. Schade begint pas wanneer een niveau echt laag wordt: een machine met te weinig koelvloeistof of transmissieolie wordt heet, en een machine met te weinig motorolie of hydrauliekolie slijt veel sneller.&#10;&#10;Koop in de winkel een kan met een geschikt product, zet deze naast de machine en vul het niveau bij. Alle producten voor dit circuit hebben hetzelfde effect; een verkeerde vloeistof verontreinigt alleen dit circuit. Bij de dealer worden de benodigde liters geleverd en gefactureerd. In een eigen of mobiele werkplaats verbruikt de procedure de kannen van de boerderij die in de zone staan."/>
+        <text name="rms_tutorial_welcome_dialog_title" text="Welkom bij Realistic Mechanical Systems"/>
+        <text name="rms_tutorial_welcome_disable_button" text="Tips uitschakelen"/>
+        <text name="rms_tutorial_welcome_enable_button" text="Tips inschakelen"/>
+        <text name="rms_tutorial_welcome_message" text="Deze mod herziet de schade- en onderhoudssystemen van voertuigen in het spel volledig. Er zijn veel wijzigingen, daarom verschijnen er af en toe tutorialtips. Ze helpen je de nieuwe mechanismen sneller te begrijpen, veelgemaakte fouten te vermijden en te voorkomen dat je machines uitvallen.&#10;&#10;Je kunt de tutorialtips nu uitschakelen als je dat wilt. Later kun je ze altijd opnieuw inschakelen in de modinstellingen, onder Realistic Mechanical Systems."/>
+        <text name="rms_tutorial_wet_weather_title" text="Nat weer"/>
+        <text name="rms_tutorial_wet_weather_message" text="Vocht beschadigt bedrading en elektrische apparatuur. De slijtage van het elektrische systeem neemt licht toe bij regen, sneeuw of hagel als een machine buiten staat."/>
+        <text name="rms_tutorial_wheel_slip_title" text="Wielslip"/>
+        <text name="rms_tutorial_wheel_slip_message" text="Je wielen slippen sterk. Slip is een van de schadelijkste factoren voor de transmissie en zorgt ervoor dat je veel sneller naar de werkplaats moet."/>
+        <text name="rms_tutorial_service_due_soon_title" text="Onderhoud binnenkort nodig"/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s heeft binnenkort onderhoud nodig.&#10;&#10;In RMS hebben voertuigen regelmatig onderhoud nodig. Uitstel verhoogt het storingsrisico sterk.&#10;&#10;Ga naar de dichtstbijzijnde werkplaats en kies 'Onderhoud'. Het interval kan in de modinstellingen worden aangepast."/>
+        <text name="rms_tutorial_service_interval_expired_title" text="Onderhoudsinterval overschreden"/>
+        <text name="rms_tutorial_service_interval_expired_message" text="Het onderhoudsinterval van %s is overschreden.&#10;&#10;Ga zo snel mogelijk naar een werkplaats en kies 'Onderhoud'. Als je een voertuig met achterstallig onderhoud blijft gebruiken, neemt het risico op meerdere storingen sterk toe."/>
+        <text name="rms_tutorial_steering_title" text="Sturen bij stilstand"/>
+        <text name="rms_tutorial_steering_message" text="Stuur bij voorkeur niet wanneer je stilstaat. Dit belast het stuurmechanisme en de voorascomponenten zwaar, waardoor het onderstel sneller slijt.&#10;&#10;Rijd iets vooruit voordat je stuurt: de wielen draaien dan veel gemakkelijker."/>
+        <text name="rms_tutorial_rad_or_filter_clogged_title" text="Radiateur en luchtfilter vervuild"/>
+        <text name="rms_tutorial_rad_or_filter_clogged_message" text="De radiateur en het luchtfilter van je voertuig zijn sterk vervuild.&#10;&#10;Een vervuilde radiateur voert warmte minder goed af en een verstopt luchtfilter beperkt de luchttoevoer naar de motor. Daardoor daalt het vermogen en stijgt het brandstofverbruik.&#10;&#10;De radiateur kan bij een wasplaats of met de persluchtblazer worden gereinigd. Het luchtfilter kan alleen worden uitgeblazen, en uitblazen herstelt het nooit volledig: alleen onderhoud in de werkplaats vervangt het.&#10;&#10;Je kunt de conditie van beide controleren: houd de toets %s ingedrukt terwijl je naar het voertuig kijkt."/>
+        <text name="rms_tutorial_needs_lubrication_title" text="Smering vereist"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s heeft regelmatig smering nodig.&#10;&#10;In RMS daalt het smeerniveau met de bedrijfsuren. Na een lange periode zonder gebruik is smering ook vereist voordat de machine weer in bedrijf wordt genomen. Onvoldoende smering versnelt de slijtage van het chassis.&#10;&#10;Koop een vetspuit in de winkel en smeer de machine wanneer de inspectie dit vraagt.&#10;&#10;Je kunt het smeerniveau controleren: houd de toets %s ingedrukt terwijl je naar het voertuig kijkt."/>
+        <text name="rms_tutorial_needs_repair_title" text="Storing gedetecteerd"/>
+        <text name="rms_tutorial_needs_repair_message" text="%s heeft een probleem. Mogelijk is een van de onderdelen uitgevallen.&#10;&#10;Ga naar de werkplaats voor een inspectie. Wacht niet: de storing kan blijven verergeren en de reparatiekosten stijgen mee.&#10;&#10;Laat de storing in de werkplaats repareren als deze door de inspectie wordt bevestigd."/>
+        <text name="rms_tutorial_needs_overhaul_title" text="Revisie vereist"/>
+        <text name="rms_tutorial_needs_overhaul_message" text="%s vertoont de eerste tekenen van ouderdom. Het is tijd om vervanging of revisie te overwegen. Dit is een lange en dure procedure, maar de enige manier om de machine in de oorspronkelijke conditie te herstellen.&#10;&#10;De levensduur wordt ingesteld in de modinstellingen: hoe hoger de ingestelde waarde, hoe langzamer je voertuigen slijten."/>
+        <text name="rms_tutorial_needs_preventive_title" text="Dreigende storing"/>
+        <text name="rms_tutorial_needs_preventive_message" text="Een van de systemen van %s staat op het punt uit te vallen. Er is nog tijd om in te grijpen.&#10;&#10;De werkplaats biedt preventief onderhoud aan: het herstelt het onderhoudsniveau, vervangt alle vloeistoffen en vermindert de mechanische belasting van de zwaarst belaste systemen sterk."/>
+        <text name="rms_tutorial_age_degradation_title" text="Leeftijdsgebonden slijtage"/>
+        <text name="rms_tutorial_age_degradation_message" text="In RMS verliezen voertuigen bij het ouder worden geleidelijk een deel van hun oorspronkelijke prestaties.&#10;&#10;Na ongeveer een derde van hun levensduur vermindert leeftijdsgebonden slijtage belangrijke eigenschappen zoals vermogen of remwerking licht. Het effect wordt daarna sterker en is tegen het einde van de levensduur duidelijk zichtbaar.&#10;&#10;Deze verslechtering kan in de modinstellingen worden uitgeschakeld."/>
+        <text name="rms_tutorial_poor_consumables_title" text="Verbruiksmaterialen van slechte kwaliteit"/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s kreeg bij het laatste onderhoud verbruiksmaterialen van slechte kwaliteit. Dit kan gebeuren wanneer voor een goedkope kwaliteit wordt gekozen.&#10;&#10;Het onderhoudsinterval is korter en de slijtage van componenten is licht verhoogd. Opnieuw onderhoud uitvoeren verhelpt het probleem. Een visuele of standaardinspectie meldt het verkorte interval; alleen een volledige inspectie identificeert de betrokken verbruiksmaterialen."/>
+        <text name="rms_tutorial_poor_parts_title" text="Onderdelen van slechte kwaliteit"/>
+        <text name="rms_tutorial_poor_parts_message" text="%s kreeg tijdens een reparatie een onderdeel van slechte kwaliteit. De storing keert waarschijnlijk snel terug.&#10;&#10;Je kunt wachten totdat dat gebeurt of een volledige inspectie uitvoeren, die het betrokken onderdeel betrouwbaar identificeert."/>
+        <text name="rms_tutorial_park_brake_title" text="Parkeerrem"/>
+        <text name="rms_tutorial_park_brake_message" text="De parkeerrem is aangetrokken. Hij wordt automatisch aangetrokken zodra je de stilstaande machine verlaat en losgezet zodra je weer gas geeft.&#10;&#10;Op een helling voorkomt hij dat de machine vanzelf wegrolt."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="De parkeerrem is aangetrokken. Je trekt hem zelf aan en zet hem los met de bijbehorende toets: als je gas geeft terwijl de rem is aangetrokken, blijft de machine staan en krijg je een waarschuwing.&#10;&#10;Op een helling voorkomt hij dat de machine vanzelf wegrolt."/>
+        <text name="rms_tutorial_preheat_title" text="Dieselvoorverwarming"/>
+        <text name="rms_tutorial_preheat_message" text="Bij een koude dieselmotor schakelt één druk op de startknop het contact in en begint automatisch de voorgloeicyclus. De dashboardlampjes lichten kort op; daarna blijft het voorgloeilampje branden totdat de motor gereed is. Druk niet opnieuw: de startmotor schakelt automatisch in wanneer het lampje uitgaat."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Schakelcycli van de aftakas"/>
+        <text name="rms_tutorial_pto_engagement_message" text="De aftakas herhaaldelijk in- en uitschakelen bouwt mechanische cycli op. Vermijd onnodig inschakelen."/>
+        <text name="rms_tutorial_idle_and_downtime_title" text="Stationair draaien en stilstand"/>
+        <text name="rms_tutorial_idle_and_downtime_message" text="De slijtage is veel lager wanneer de machine draait zonder te werken. Met uitgeschakelde motor is de slijtage minimaal. Onder een afdak verdwijnt de slijtage volledig."/>
+        <text name="rms_tutorial_idle_deposit_title" text="Lang stationair draaien"/>
+        <text name="rms_tutorial_idle_deposit_message" text="De machine heeft te lang stationair gedraaid. Langdurig stationair draaien verspilt niet alleen brandstof: na verloop van tijd bevordert het ook afzettingen in het brandstofsysteem en schaadt het de algemene motorconditie.&#10;&#10;Zet de motor uit als de machine nu niet nodig is."/>
+        <text name="rms_tutorial_hot_weather_title" text="Warm weer"/>
+        <text name="rms_tutorial_hot_weather_message" text="Het is vandaag zeer warm. Houd bij dit weer de radiateur schoon en voorkom overbelasting van de motor, anders is oververhitting slechts een kwestie van tijd.&#10;&#10;Je kunt de conditie van de radiateur controleren: houd de toets %s ingedrukt terwijl je naar de machine kijkt. Reinig hem met de persluchtblazer."/>
+        <text name="rms_tutorial_heavy_trailer_title" text="Te zware aanhanger"/>
+        <text name="rms_tutorial_heavy_trailer_message" text="De getrokken last lijkt te zwaar voor dit voertuig. Je kunt blijven rijden, maar de transmissie en aandrijflijn worden zwaarder belast.&#10;&#10;RMS gebruikt twee richtwaarden: een tractor heeft minstens 10 pk per ton getrokken massa nodig en een vrachtwagen minstens 6 pk per ton totaal treingewicht. Onder de toepasselijke waarde en bij hoge motorbelasting neemt de transmissieslijtage toe."/>
+        <text name="rms_tutorial_hard_start_title" text="Moeilijk starten"/>
+        <text name="rms_tutorial_hard_start_message" text="De motor van %s start moeilijk. Een zwakke accu, vorst, een mechanische storing of slijtage van de startmotor kan de oorzaak zijn. Houd de startknop ingedrukt totdat de motor aanslaat.&#10;&#10;Het elektrische systeem wordt tijdens het starten zwaar belast door de hoge inschakelstromen."/>
+        <text name="rms_tutorial_low_fuel_title" text="Brandstofreserve"/>
+        <text name="rms_tutorial_low_fuel_message" text="De tank nadert de reserve. Hoe minder brandstof er overblijft, hoe harder de brandstofpomp moet werken om deze aan te zuigen, waardoor de slijtage toeneemt."/>
+        <text name="rms_tutorial_lugging_title" text="Motor op te laag toerental"/>
+        <text name="rms_tutorial_lugging_message" text="De motor en vooral de transmissie lijden onder een te laag toerental bij zware belasting. Het aangekoppelde werktuig is misschien te zwaar voor de machine, of bij een handgeschakelde transmissie is de gekozen versnelling niet juist."/>
+        <text name="rms_tutorial_engine_overheat_title" text="Motor oververhit"/>
+        <text name="rms_tutorial_engine_overheat_message" text="De motor begint oververhit te raken. Dit kan een of meer oorzaken hebben: de motor wordt zwaar belast, de radiateur is vervuild, het weer is warm of het koelsysteem van het voertuig heeft een defect.&#10;&#10;Blijf alert: oververhitting is een van de schadelijkste factoren voor elke machine. Niet alleen de motor lijdt eronder: het koelsysteem werkt op zijn grens en de hitte in de motorruimte versnelt de slijtage van bedrading en elektrische componenten."/>
+        <text name="rms_tutorial_engine_overload_title" text="Motoroverbelasting"/>
+        <text name="rms_tutorial_engine_overload_message" text="De motor staat onder zeer zware belasting. De taak is misschien te zwaar voor deze machine en vereist een krachtiger voertuig, of langzamer rijden kan volstaan om de belasting te verlagen.&#10;&#10;In elk geval neemt de slijtage onder deze belasting duidelijk toe."/>
+        <text name="rms_tutorial_exhaust_smoke_title" text="Rook beoordelen"/>
+        <text name="rms_tutorial_exhaust_smoke_message" text="De rook uit deze machine is niet alleen decoratie: de kleur ervan is een diagnose.&#10;&#10;Zwarte rook betekent dat de motor meer brandstof dan lucht krijgt: sterk accelereren voordat de turbolader op snelheid is, zware belasting bij laag toerental, overbelasting, een verstopt luchtfilter, een versleten turbolader of versleten injectie. Blauwe rook betekent dat een versleten motor zijn eigen olie verbrandt. Witte rook betekent dat brandstof onverbrand uitstroomt.&#10;&#10;De pluim groeit ook met de motorbelasting. Oudere machines roken veel meer dan nieuwere, en dat is normaal."/>
+        <text name="rms_tutorial_cvt_overheat_title" text="CVT oververhit"/>
+        <text name="rms_tutorial_cvt_overheat_message" text="De CVT-transmissie begint oververhit te raken. Dit kan komen door overmatige belasting, een vervuilde radiateur, zeer warm weer of een defect in het koelcircuit van de transmissie. Een te zware ploeg of een overbeladen aanhanger is al voldoende.&#10;&#10;Blijf alert: oververhitting is een van de schadelijkste factoren voor een CVT-transmissie."/>
+        <text name="rms_tutorial_chassis_vibration_title" text="Belast chassis"/>
+        <text name="rms_tutorial_chassis_vibration_message" text="Snel rijden op oneffen terrein verslijt de ophanging van %s zeer snel. Deze trillingen beschadigen ook de andere systemen, vooral de hydrauliek en de elektrische installatie.&#10;&#10;Rijd voorzichtig op oneffen terrein."/>
+        <text name="rms_tutorial_cranking_title" text="Veelvuldig starten"/>
+        <text name="rms_tutorial_cranking_message" text="De motor wordt te vaak gestart. Elke start stuurt een zeer hoge stroom door het elektrische systeem, waardoor de bedrading, startmotor en andere elektrische componenten sneller slijten.&#10;&#10;Zet de motor niet uit voor korte onderbrekingen."/>
+        <text name="rms_tutorial_critical_failure_title" text="Kritieke storing"/>
+        <text name="rms_tutorial_critical_failure_message" text="%s kan niet meer op eigen kracht rijden.&#10;&#10;Een mobiele werkplaats maakt een noodreparatie mogelijk, voldoende om de machine zelf naar de werkplaats te laten rijden. Anders moet het voertuig op een andere manier worden geborgen."/>
+        <text name="rms_tutorial_cold_engine_title" text="Koude motor"/>
+        <text name="rms_tutorial_cold_engine_message" text="Warm de motor geleidelijk op voordat je hem zwaar belast. Gebruik matig gas en een gemiddeld toerental totdat hij zijn bedrijfstemperatuur bereikt."/>
+        <text name="rms_tutorial_cold_oil_title" text="Koude transmissieolie"/>
+        <text name="rms_tutorial_cold_oil_message" text="Transmissie- en hydrauliekolie warmen veel langzamer op dan de motor. Vermijd zwaar werk zolang deze oliën koud zijn; warm ze geleidelijk op door rustig te rijden en de hydrauliek licht te gebruiken."/>
+        <text name="rms_tutorial_transmission_overheat_title" text="Transmissie oververhit"/>
+        <text name="rms_tutorial_transmission_overheat_message" text="De transmissieolie begint oververhit te raken. Dit kan komen door een te zware belasting, een vervuilde radiateur, zeer warm weer of een defect in de transmissiekoeling.&#10;&#10;Transmissieolie warmt op in elke machine, niet alleen in een CVT. Te hete olie verslijt de transmissie en beschadigt de afdichtingen."/>
+        <text name="rms_tutorial_overload_indicator_title" text="Overbelastingswaarschuwing"/>
+        <text name="rms_tutorial_overload_indicator_message" text="%s staat onder zware belasting. Het waarschuwingslampje dat net op het dashboard is gaan branden, geeft dit aan.&#10;&#10;De machine heeft mogelijk niet genoeg vermogen voor de huidige taak. Probeer de belasting te verlagen: begrens je snelheid met de cruisecontrol of laat het gaspedaal iets los in plaats van op vol vermogen te rijden."/>
+        <text name="rms_tutorial_battery_low_title" text="Zwakke accu"/>
+        <text name="rms_tutorial_battery_low_message" text="De accu van deze machine is bijna volledig ontladen. Dit gebeurt na lange stilstand, bij strenge kou of door een defect in het elektrische systeem.&#10;&#10;Bij een lage lading wordt starten eerst moeilijk en daarna onmogelijk. Je kunt de motor dan met startkabels vanaf een ander voertuig starten."/>
+        <text name="rms_tutorial_drivetrain_windup_title" text="Spanning in aandrijflijn"/>
+        <text name="rms_tutorial_drivetrain_windup_message" text="Je stuurt op een ondergrond met veel grip terwijl het differentieelslot is ingeschakeld. In een bocht leggen de binnen- en buitenwielen verschillende afstanden af, maar het differentieelslot dwingt ze met dezelfde snelheid te draaien: de aandrijflijn komt onder spanning en de transmissie slijt sneller. Schakel het slot uit voordat je stuurt."/>
+        <text name="rms_tutorial_drivetrain_modes_title" text="Aandrijfmodi en differentieelslot"/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Bij deze machine kun je de aandrijving kiezen: achterwielaandrijving, vierwielaandrijving of AUTO, waarbij de vooras wordt ingeschakeld zodra de wielen slippen.&#10;&#10;Het differentieelslot zorgt voor grip waar die ontbreekt, maar belast de aandrijflijn zwaar in bochten op een ondergrond met veel grip: de binnen- en buitenwielen kunnen niet met dezelfde snelheid draaien en de aandrijflijn vangt de klap op. Schakel het slot uit voordat je stuurt."/>
+    </texts>
+</l10n>

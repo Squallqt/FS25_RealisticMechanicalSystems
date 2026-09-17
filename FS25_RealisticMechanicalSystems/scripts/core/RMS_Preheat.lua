@@ -1,0 +1,442 @@
+-- Copyright (C) 2026 Squallqt.
+-- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+
+---Diesel preheating sequence: lamp test, glow plug heating, automatic crank
+RMS_Preheat = RMS_Preheat or {}
+
+-- preheat sequence states
+RMS_Preheat.STATE = {
+    IDLE = 0,
+    IGNITION = 1,
+    PREHEATING = 2,
+    READY = 3,
+    FAILED = 4
+}
+
+-- readable name of each state, used by the debug output
+RMS_Preheat.STATE_NAME = {
+    [RMS_Preheat.STATE.IDLE] = "IDLE",
+    [RMS_Preheat.STATE.IGNITION] = "IGNITION",
+    [RMS_Preheat.STATE.PREHEATING] = "PREHEATING",
+    [RMS_Preheat.STATE.READY] = "READY",
+    [RMS_Preheat.STATE.FAILED] = "FAILED"
+}
+
+---Returns the engine temperature, falling back to ambient when it is unset
+-- @param table? vehicle vehicle
+-- @return float temperature engine temperature in degrees
+function RMS_Preheat.getEngineTemperatureC(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    local engineTemperature = spec ~= nil and tonumber(spec.rawEngineTemperature or spec.engineTemperature) or nil
+    local environmentTemperature = RMS_Electrical.getEnvironmentTemperatureC()
+
+    if engineTemperature == nil or engineTemperature <= -90 then
+        return environmentTemperature
+    end
+
+    return RealisticMechanicalSystems.sanitizeNumber(engineTemperature, environmentTemperature, -80, 160)
+end
+
+---Writes the preheat state on the vehicle spec
+-- @param table? vehicle vehicle
+-- @param integer state preheat state
+local function setState(vehicle, state)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil then
+        return
+    end
+
+    spec.preheatState = state
+end
+
+---Returns the severity of the glow plug failure effect, 0 when absent
+-- @param table? vehicle vehicle
+-- @return integer severity severity between 0 and 4
+function RMS_Preheat.getGlowPlugFailureSeverity(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    local effect = spec ~= nil and spec.activeEffects ~= nil and spec.activeEffects.GLOW_PLUG_FAILURE or nil
+    return math.floor(RealisticMechanicalSystems.sanitizeNumber(effect ~= nil and effect.value or 0, 0, 0, 4))
+end
+
+---Resets every preheat field of the vehicle spec to its initial value
+-- @param table? vehicle vehicle
+function RMS_Preheat.initSpec(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil then
+        return
+    end
+
+    spec.preheatState = RMS_Preheat.STATE.IDLE
+    spec.preheatLampTestActive = false
+    spec.preheatLampTestRemainingMs = 0
+    spec.preheatRemainingMs = 0
+    spec.preheatRequiredMs = 0
+    spec.preheatWasRequired = false
+    spec.preheatAutomaticCrank = false
+    spec.preheatAutomaticCrankElapsedMs = 0
+    spec.preheatColdStartFaultSeverity = 0
+    spec.glowPlugColdIdleRpmBackup = nil
+    spec._lastPreheatUxState = RMS_Preheat.STATE.IDLE
+end
+
+---Returns the readable name of a preheat state
+-- @param integer state preheat state
+-- @return string name state name
+function RMS_Preheat.getStateName(state)
+    return RMS_Preheat.STATE_NAME[state] or "UNKNOWN"
+end
+
+---Tells whether the vehicle burns diesel, reading the spec flag or the motorized consumers
+-- @param table? vehicle vehicle
+-- @return boolean isDiesel true for a diesel vehicle
+function RMS_Preheat.isDieselVehicle(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec ~= nil and spec.isDieselVehicle ~= nil then
+        return spec.isDieselVehicle
+    end
+
+    local motorizedSpec = vehicle ~= nil and vehicle.spec_motorized or nil
+    if motorizedSpec == nil then
+        return false
+    end
+
+    return motorizedSpec.consumersByFillType ~= nil
+        and motorizedSpec.consumersByFillType[FillType.DIESEL] ~= nil
+end
+
+---Interpolates the preheat duration on the configured temperature curve
+-- @param table? vehicle vehicle
+-- @return integer duration preheat duration in ms, 0 above the activation temperature
+function RMS_Preheat.getRequiredDurationMs(vehicle)
+    if not RMS_Preheat.isDieselVehicle(vehicle) then
+        return 0
+    end
+
+    local curve = RMS_Config.PREHEAT.WAIT_TIME_CURVE
+    local engineTemperature = RMS_Preheat.getEngineTemperatureC(vehicle)
+
+    if engineTemperature >= RMS_Config.PREHEAT.ACTIVATION_TEMPERATURE_C then
+        return 0
+    end
+
+    if engineTemperature <= curve[1][1] then
+        return curve[1][2]
+    end
+
+    for index = 2, #curve do
+        local previousPoint = curve[index - 1]
+        local currentPoint = curve[index]
+        if engineTemperature <= currentPoint[1] then
+            local temperatureRange = currentPoint[1] - previousPoint[1]
+            if temperatureRange <= 0 then
+                return currentPoint[2]
+            end
+
+            local alpha = (engineTemperature - previousPoint[1]) / temperatureRange
+            return math.max(math.floor(previousPoint[2] + (currentPoint[2] - previousPoint[2]) * alpha + 0.5), 0)
+        end
+    end
+
+    return 0
+end
+
+---Tells whether failed glow plugs may affect the ability of a cold diesel to start
+-- @param table? vehicle vehicle
+-- @return boolean isRequired true below the configured start-assistance temperature
+function RMS_Preheat.isColdStartAssistanceRequired(vehicle)
+    return RMS_Preheat.isDieselVehicle(vehicle)
+        and RMS_Preheat.getEngineTemperatureC(vehicle) < RMS_Config.PREHEAT.START_ASSIST_TEMPERATURE_C
+end
+
+---Tells whether the glow plugs are currently heating
+-- @param table? vehicle vehicle
+-- @return boolean isHeating true while preheating
+function RMS_Preheat.isHeating(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    return spec ~= nil and spec.preheatState == RMS_Preheat.STATE.PREHEATING
+end
+
+---Tells whether the dashboard lamp test is running
+-- @param table? vehicle vehicle
+-- @return boolean isActive true during the lamp test
+function RMS_Preheat.isLampTestActive(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    return spec ~= nil and spec.preheatLampTestActive == true
+end
+
+---Tells whether the starter is cranking on its own after preheating
+-- @param table? vehicle vehicle
+-- @return boolean isActive true while the automatic crank runs
+function RMS_Preheat.isAutomaticCrankActive(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    return spec ~= nil and spec.preheatAutomaticCrank == true
+end
+
+---Tells whether the preheat sequence ended in failure
+-- @param table? vehicle vehicle
+-- @return boolean isFailed true after a failed sequence
+function RMS_Preheat.isFailed(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    return spec ~= nil and spec.preheatState == RMS_Preheat.STATE.FAILED
+end
+
+---Clears the automatic crank flag once the engine caught
+-- @param table? vehicle vehicle
+function RMS_Preheat.onCrankPassed(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil then
+        return
+    end
+
+    spec.preheatAutomaticCrank = false
+end
+
+---Tells whether a hard start applies, preheating having been required with failing glow plugs
+-- @param table? vehicle vehicle
+-- @return boolean shouldApply true when the hard start effect applies
+function RMS_Preheat.shouldApplyGlowPlugHardStart(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or spec.preheatState ~= RMS_Preheat.STATE.READY then
+        return false
+    end
+
+    return spec.preheatWasRequired == true
+        and RMS_Preheat.isColdStartAssistanceRequired(vehicle)
+        and RMS_Preheat.getGlowPlugFailureSeverity(vehicle) > 0
+end
+
+---Starts the preheat sequence, switching the motor to ignition and choosing lamp test or preheating
+-- @param table? vehicle vehicle
+-- @return boolean accepted true when the sequence runs or already runs
+function RMS_Preheat.requestStart(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or spec.isExcludedVehicle or not RMS_Preheat.isDieselVehicle(vehicle) then
+        return false
+    end
+
+    if vehicle.getIsMotorStarted ~= nil and vehicle:getIsMotorStarted() then
+        return false
+    end
+
+    local currentMotorState = vehicle.getMotorState ~= nil and vehicle:getMotorState() or MotorState.OFF
+    if currentMotorState == MotorState.STARTING or currentMotorState == MotorState.ON then
+        return false
+    end
+
+    if spec.preheatState == RMS_Preheat.STATE.FAILED then
+        RMS_Preheat.reset(vehicle, false)
+        if vehicle.setMotorState ~= nil then
+            vehicle:setMotorState(MotorState.OFF)
+        end
+        return false
+    end
+
+    if spec.preheatState == RMS_Preheat.STATE.IGNITION
+        or spec.preheatState == RMS_Preheat.STATE.PREHEATING
+        or spec.preheatState == RMS_Preheat.STATE.READY then
+        return true
+    end
+
+    if vehicle.getCanMotorRun ~= nil and not vehicle:getCanMotorRun() then
+        return false
+    end
+
+    local requiredDurationMs = RMS_Preheat.getRequiredDurationMs(vehicle)
+    spec.preheatLampTestRemainingMs = RMS_Config.PREHEAT.LAMP_TEST_DURATION_MS
+    spec.preheatLampTestActive = spec.preheatLampTestRemainingMs > 0
+    spec.preheatRemainingMs = requiredDurationMs
+    spec.preheatRequiredMs = requiredDurationMs
+    spec.preheatWasRequired = requiredDurationMs > 0
+    spec.preheatAutomaticCrank = false
+    spec.preheatAutomaticCrankElapsedMs = 0
+    spec.preheatColdStartFaultSeverity = 0
+
+    if requiredDurationMs > 0 then
+        setState(vehicle, RMS_Preheat.STATE.PREHEATING)
+    else
+        setState(vehicle, RMS_Preheat.STATE.IGNITION)
+    end
+
+    if vehicle.getMotorState ~= nil and vehicle.setMotorState ~= nil and currentMotorState == MotorState.OFF then
+        vehicle:setMotorState(MotorState.IGNITION)
+    end
+
+    return true
+end
+
+---Clears the preheat state, optionally keeping the recorded cold start fault
+-- @param table? vehicle vehicle
+-- @param boolean preserveColdStartFault true to keep the cold start fault severity
+function RMS_Preheat.reset(vehicle, preserveColdStartFault)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil then
+        return
+    end
+
+    spec.preheatState = RMS_Preheat.STATE.IDLE
+    spec.preheatLampTestActive = false
+    spec.preheatLampTestRemainingMs = 0
+    spec.preheatRemainingMs = 0
+    spec.preheatRequiredMs = 0
+    spec.preheatWasRequired = false
+    spec.preheatAutomaticCrank = false
+    spec.preheatAutomaticCrankElapsedMs = 0
+
+    if not preserveColdStartFault then
+        spec.preheatColdStartFaultSeverity = 0
+    end
+end
+
+---Tells whether the motor must stay blocked, starting the sequence when the ignition key asks for it
+-- @param table? vehicle vehicle
+-- @return boolean shouldBlock true while the motor may not run
+function RMS_Preheat.shouldBlockMotorRun(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or spec.isExcludedVehicle or not RMS_Preheat.isDieselVehicle(vehicle) then
+        return false
+    end
+
+    local motorState = vehicle:getMotorState()
+    if motorState == MotorState.STARTING or motorState == MotorState.ON then
+        return false
+    end
+
+    local state = spec.preheatState or RMS_Preheat.STATE.IDLE
+    if state == RMS_Preheat.STATE.IGNITION
+        or state == RMS_Preheat.STATE.PREHEATING
+        or state == RMS_Preheat.STATE.FAILED then
+        return true
+    end
+
+    if state == RMS_Preheat.STATE.READY then
+        return false
+    end
+
+    local ignitionStartRequested = g_ignitionLockManager ~= nil
+        and g_ignitionLockManager:getIsAvailable()
+        and g_ignitionLockManager:getState() == IgnitionLockState.START
+
+    if ignitionStartRequested then
+        RMS_Preheat.requestStart(vehicle)
+        return true
+    end
+
+    return false
+end
+
+---Defers a server side start until the preheat sequence reaches the ready state
+-- @param table vehicle vehicle
+-- @param boolean passed true once the start already went through
+-- @return boolean deferred true when the start was deferred
+function RMS_Preheat.shouldDeferStart(vehicle, passed)
+    if not vehicle.isServer or passed or not RMS_Preheat.isDieselVehicle(vehicle) then
+        return false
+    end
+
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or spec.isExcludedVehicle or spec.preheatState == RMS_Preheat.STATE.READY then
+        return false
+    end
+
+    RMS_Preheat.requestStart(vehicle)
+    return true
+end
+
+---Shows the preheat and failure warnings on the client, once per state change
+-- @param table? vehicle vehicle
+function RMS_Preheat.updateClientUx(vehicle)
+    if not vehicle.isClient then
+        return
+    end
+
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil then
+        return
+    end
+
+    local state = spec.preheatState or RMS_Preheat.STATE.IDLE
+    local previousState = spec._lastPreheatUxState
+    if previousState == state then
+        return
+    end
+
+    spec._lastPreheatUxState = state
+    if not vehicle:getIsActiveForInput(true)
+        or RMS_Config.CORE.ENABLE_WARNING_MESSAGES == false then
+        return
+    end
+
+    if state == RMS_Preheat.STATE.PREHEATING then
+        g_currentMission:showBlinkingWarning(g_i18n:getText("rms_preheat_ignition_message"), 2000)
+    elseif state == RMS_Preheat.STATE.FAILED then
+        local messageKey = spec.preheatWasRequired
+            and RMS_Preheat.isColdStartAssistanceRequired(vehicle)
+            and RMS_Preheat.getGlowPlugFailureSeverity(vehicle) >= 4
+            and "rms_preheat_system_failure_message"
+            or "rms_preheat_start_failed_message"
+        g_currentMission:showBlinkingWarning(g_i18n:getText(messageKey), 4000)
+    end
+end
+
+---Advances the preheat sequence on the server and triggers the automatic crank
+-- @param table? vehicle vehicle
+-- @param float dt time since last call in ms
+function RMS_Preheat.update(vehicle, dt)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil then
+        return
+    end
+
+    RMS_Preheat.updateClientUx(vehicle)
+
+    if not vehicle.isServer then
+        return
+    end
+
+    local motorState = vehicle.getMotorState ~= nil and vehicle:getMotorState() or MotorState.OFF
+    if motorState == MotorState.STARTING or motorState == MotorState.ON then
+        local coldThreshold = RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD
+        local preserveColdStartFault = motorState == MotorState.STARTING
+            or RMS_Preheat.getEngineTemperatureC(vehicle) < coldThreshold
+        RMS_Preheat.reset(vehicle, preserveColdStartFault)
+        return
+    end
+
+    if motorState == MotorState.OFF then
+        if spec.preheatState ~= RMS_Preheat.STATE.IDLE then
+            RMS_Breakdowns.cancelStarterCranking(vehicle)
+        end
+        RMS_Preheat.reset(vehicle, false)
+        return
+    end
+
+    if spec.preheatState == RMS_Preheat.STATE.IGNITION or spec.preheatState == RMS_Preheat.STATE.PREHEATING then
+        spec.preheatLampTestRemainingMs = math.max((spec.preheatLampTestRemainingMs or 0) - dt, 0)
+        spec.preheatLampTestActive = spec.preheatLampTestRemainingMs > 0
+
+        if spec.preheatState == RMS_Preheat.STATE.PREHEATING then
+            spec.preheatRemainingMs = math.max((spec.preheatRemainingMs or 0) - dt, 0)
+        end
+
+        if spec.preheatLampTestRemainingMs <= 0 and spec.preheatRemainingMs <= 0 then
+            local failureSeverity = RMS_Preheat.getGlowPlugFailureSeverity(vehicle)
+            spec.preheatColdStartFaultSeverity = spec.preheatWasRequired
+                and RMS_Preheat.isColdStartAssistanceRequired(vehicle)
+                and failureSeverity
+                or 0
+            spec.preheatAutomaticCrank = true
+            spec.preheatAutomaticCrankElapsedMs = 0
+            setState(vehicle, RMS_Preheat.STATE.READY)
+            if vehicle.getCanMotorRun == nil or vehicle:getCanMotorRun() then
+                vehicle:startMotor(false)
+            end
+        end
+    elseif spec.preheatState == RMS_Preheat.STATE.READY and spec.preheatAutomaticCrank then
+        spec.preheatAutomaticCrankElapsedMs = (spec.preheatAutomaticCrankElapsedMs or 0) + dt
+        if spec.preheatAutomaticCrankElapsedMs >= RMS_Config.PREHEAT.MAX_AUTOMATIC_CRANK_MS then
+            spec.preheatAutomaticCrank = false
+            RMS_Breakdowns.cancelStarterCranking(vehicle)
+            setState(vehicle, RMS_Preheat.STATE.FAILED)
+        end
+    end
+end

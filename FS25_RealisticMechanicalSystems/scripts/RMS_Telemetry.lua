@@ -1,0 +1,825 @@
+-- Copyright (C) 2026 Squallqt.
+-- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+
+---Telemetry recorder writing the live vehicle values to a csv file
+RMS_Telemetry = {}
+RMS_Telemetry.modDirectory = g_currentModDirectory
+
+RMS_Telemetry.isRecording = false
+RMS_Telemetry.intervalMs = 1000
+RMS_Telemetry.elapsedMs = 0
+RMS_Telemetry.samples = {}
+RMS_Telemetry.startedAt = nil
+RMS_Telemetry.stoppedAt = nil
+RMS_Telemetry.vehicleId = nil
+RMS_Telemetry.vehicleName = nil
+RMS_Telemetry.filePrefix = "rmsTelemetry"
+RMS_Telemetry.fileSequence = 0
+RMS_Telemetry.recordingScenario = nil
+RMS_Telemetry.sessionInfo = nil
+
+
+local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
+    and RMS_Utils.createLogger("[RMS_TELEMETRY]")
+    or function() end
+
+---Returns the directory the csv files are written to
+-- @return string path output directory
+local function getTelemetryOutputDirectory()
+    return getUserProfileAppPath() .. "modSettings/FS25_RealisticMechanicalSystems/"
+end
+
+---Strips from a name every character a file name cannot hold
+-- @param any value name to clean
+-- @return string name usable file name
+local function sanitizeFileName(value)
+    value = tostring(value or "unknown")
+    value = value:gsub("[\\/:*?\"<>|]", "_")
+    value = value:gsub("%s+", "_")
+    value = value:gsub("_+", "_")
+    value = value:gsub("^_+", "")
+    value = value:gsub("_+$", "")
+
+    if value == "" then
+        value = "unknown"
+    end
+
+    return value
+end
+
+---Escapes a value for a csv cell
+-- @param any value value to escape
+-- @return string text escaped value
+local function csvEscape(value)
+    local text = value == nil and "" or tostring(value)
+    text = text:gsub('"', '""')
+    return '"' .. text .. '"'
+end
+
+---Flattens a nested table into dotted keys
+-- @param table target flat map filled in place
+-- @param string prefix key prefix
+-- @param any value value to flatten
+local function flattenTable(target, prefix, value)
+    local valueType = type(value)
+
+    if valueType ~= "table" then
+        target[prefix] = value
+        return
+    end
+
+    local keys = {}
+    for key, _ in pairs(value) do
+        table.insert(keys, key)
+    end
+
+    table.sort(keys, function(a, b)
+        if type(a) == type(b) and (type(a) == "number" or type(a) == "string") then
+            return a < b
+        end
+        return tostring(a) < tostring(b)
+    end)
+
+    if #keys == 0 then
+        target[prefix] = ""
+        return
+    end
+
+    for _, key in ipairs(keys) do
+        local childValue = value[key]
+        local childKey = prefix ~= nil and prefix ~= ""
+            and (prefix .. "." .. tostring(key))
+            or tostring(key)
+        flattenTable(target, childKey, childValue)
+    end
+end
+
+---Builds the header row and the data rows of the csv
+-- @param table samples recorded samples
+-- @return table rows csv rows
+local function buildCsvRows(samples)
+    local rows = {}
+    local headerSet = {}
+    local headerOrder = {}
+
+    for _, sample in ipairs(samples or {}) do
+        local flatRow = {}
+
+        flattenTable(flatRow, nil, sample)
+        table.insert(rows, flatRow)
+
+        for key, _ in pairs(flatRow) do
+            if not headerSet[key] then
+                headerSet[key] = true
+                table.insert(headerOrder, key)
+            end
+        end
+    end
+
+    table.sort(headerOrder)
+    return headerOrder, rows
+end
+
+---Returns the vehicle the recording follows
+-- @return table? vehicle recorded vehicle
+local function getTelemetryTargetVehicle()
+    local vehicle = g_localPlayer ~= nil and g_localPlayer.getCurrentVehicle ~= nil and g_localPlayer:getCurrentVehicle() or nil
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        log_dbg("Telemetry: no current RMS vehicle found.")
+        return nil
+    end
+
+    return vehicle
+end
+
+---Collects the names of the attached implements
+-- @param table? rootVehicle vehicle at the head of the chain
+-- @param table names names collected so far
+-- @param table visited vehicles already walked
+local function collectAttachedImplementNames(rootVehicle, names, visited)
+    names = names or {}
+    visited = visited or {}
+
+    if rootVehicle == nil or visited[rootVehicle] then
+        return names
+    end
+
+    visited[rootVehicle] = true
+
+    local attachedImplements = rootVehicle.getAttachedImplements ~= nil and rootVehicle:getAttachedImplements() or nil
+    if attachedImplements ~= nil then
+        for _, implement in pairs(attachedImplements) do
+            local object = implement.object
+            if object ~= nil and not visited[object] then
+                local objectName = object.getFullName ~= nil and object:getFullName() or tostring(object.configFileName or object)
+                table.insert(names, tostring(objectName))
+                collectAttachedImplementNames(object, names, visited)
+            end
+        end
+    end
+
+    return names
+end
+
+local hasCVTTransmission = RMS_Utils ~= nil and RMS_Utils.hasCVTTransmission or function() return false end
+local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
+
+---Returns the server-owned sources used by telemetry
+-- @param table? vehicle vehicle
+-- @return table? state server state or snapshot state
+-- @return table? debugData server debug data or snapshot debug data
+-- @return table? factorStats server factor statistics or snapshot statistics
+local function getTelemetryServerSources(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil then
+        return nil, nil, nil
+    end
+
+    if vehicle.isServer then
+        return spec, type(spec.debugData) == "table" and spec.debugData or {}, type(spec.factorStats) == "table" and spec.factorStats or {}
+    end
+
+    local snapshot = RMS_DebugSnapshot.get(vehicle)
+    if snapshot == nil then
+        return nil, nil, nil
+    end
+
+    return type(snapshot.state) == "table" and snapshot.state or {},
+        type(snapshot.debugData) == "table" and snapshot.debugData or {},
+        type(snapshot.factorStats) == "table" and snapshot.factorStats or {}
+end
+
+---Splits a console argument string on whitespace
+-- @param string? text console arguments
+-- @return table args argument tokens
+local function splitConsoleArgs(text)
+    local args = {}
+    for token in tostring(text or ""):gmatch("%S+") do
+        table.insert(args, token)
+    end
+    return args
+end
+
+---Builds the csv path from the scenario name, the vehicle and the date
+-- @return string path output file path
+function RMS_Telemetry:buildOutputFilePath()
+    local baseDir = getTelemetryOutputDirectory()
+    createFolder(baseDir)
+
+    self.fileSequence = (self.fileSequence or 0) + 1
+
+    local safeVehicleName = sanitizeFileName(self.vehicleName)
+    local safeVehicleId = sanitizeFileName(self.vehicleId)
+    local safeScenarioName = sanitizeFileName(self.recordingScenario or "default")
+    local baseName = string.format(
+        "%s_%s_%s_%s_%03d",
+        tostring(self.filePrefix or "rmsTelemetry"),
+        safeScenarioName,
+        safeVehicleName,
+        safeVehicleId,
+        self.fileSequence
+    )
+
+    local filePath = baseDir .. baseName .. ".csv"
+    local collisionIndex = 1
+
+    while fileExists(filePath) do
+        filePath = string.format("%s%s_%02d.csv", baseDir, baseName, collisionIndex)
+        collisionIndex = collisionIndex + 1
+    end
+
+    return filePath
+end
+
+
+---Writes the recorded samples to the csv file
+-- @return boolean written true when the file was written
+function RMS_Telemetry:saveToFile()
+    local filePath = self:buildOutputFilePath()
+    local file = io.open(filePath, "w")
+
+    if file == nil then
+        log_dbg("Telemetry: failed to open file for writing:", filePath)
+        return false
+    end
+
+    local metadata = {
+        startedAt = self.startedAt,
+        stoppedAt = self.stoppedAt,
+        vehicleId = self.vehicleId,
+        vehicleName = self.vehicleName,
+        scenario = self.recordingScenario,
+        intervalMs = self.intervalMs,
+        sampleCount = self.samples ~= nil and #self.samples or 0
+    }
+
+    if type(self.sessionInfo) == "table" then
+        for key, value in pairs(self.sessionInfo) do
+            metadata[key] = value
+        end
+    end
+
+    local flatMetadata = {}
+    flattenTable(flatMetadata, nil, metadata)
+
+    local metadataHeaders = {}
+    for key, _ in pairs(flatMetadata) do
+        table.insert(metadataHeaders, key)
+    end
+    table.sort(metadataHeaders)
+
+    file:write("metadataKey,metadataValue\n")
+    for _, key in ipairs(metadataHeaders) do
+        file:write(csvEscape(key))
+        file:write(",")
+        file:write(csvEscape(flatMetadata[key]))
+        file:write("\n")
+    end
+
+    file:write("\n")
+
+    local headers, rows = buildCsvRows(self.samples or {})
+    if #headers > 0 then
+        file:write(table.concat(headers, ","))
+        file:write("\n")
+
+        for _, row in ipairs(rows) do
+            local values = {}
+            for _, header in ipairs(headers) do
+                table.insert(values, csvEscape(row[header]))
+            end
+            file:write(table.concat(values, ","))
+            file:write("\n")
+        end
+    end
+
+    file:close()
+
+    log_dbg("Telemetry: saved file:", filePath)
+    return true
+end
+
+
+---Clears the recorded samples and the session state
+function RMS_Telemetry:reset()
+    self.isRecording = false
+    self.elapsedMs = 0
+    self.samples = {}
+    self.startedAt = nil
+    self.stoppedAt = nil
+    self.vehicleId = nil
+    self.vehicleName = nil
+    self.recordingScenario = nil
+    self.sessionInfo = nil
+end
+
+---Returns the vehicle being recorded
+-- @return table? vehicle recorded vehicle
+function RMS_Telemetry:getRecordedVehicle()
+    if self.vehicleId == nil or RMS_Main == nil or RMS_Main.vehicles == nil then
+        return nil
+    end
+
+    return RMS_Main.vehicles[self.vehicleId]
+end
+
+
+---Collects the fixed information of the session: vehicle, implements and settings
+-- @param table? vehicle vehicle
+-- @return table info session information
+function RMS_Telemetry:collectSessionInfo(vehicle)
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        return nil
+    end
+
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local environment = g_currentMission ~= nil and g_currentMission.environment or nil
+    local weather = environment ~= nil and environment.weather or nil
+    local ambientTemperatureC = weather ~= nil and weather.getCurrentTemperature ~= nil and weather:getCurrentTemperature() or 0
+    local operatingTimeMs = vehicle:getOperatingTime()
+    local operatingTimeSec = operatingTimeMs / 1000
+    local operatingHours = operatingTimeMs / 3600000
+    local ageMonths = vehicle.age
+    local tractorMassKg = vehicle:getTotalMass(true)
+    local totalMassKg = tonumber(vehicle.getTotalMass ~= nil and vehicle:getTotalMass() or tractorMassKg) or tractorMassKg
+    local attachedNames = collectAttachedImplementNames(vehicle, {}, {})
+
+    return {
+        subjectFullName = vehicle.getFullName ~= nil and vehicle:getFullName() or "unknown",
+        subjectAgeMonths = ageMonths,
+        subjectAgeYears = ageMonths / 12,
+        subjectOperatingTimeSec = operatingTimeSec,
+        subjectOperatingHours = operatingHours,
+        subjectReliability = spec.reliability,
+        subjectMaintainability = spec.maintainability,
+        subjectTractorMassKg = tractorMassKg,
+        subjectTotalMassKg = totalMassKg,
+        subjectAttachedCount = #attachedNames,
+        subjectAttachedNames = table.concat(attachedNames, " | "),
+        environmentAmbientTemperatureC = ambientTemperatureC
+    }
+end
+
+
+---Collects the transmission values of one sample
+-- @param table? vehicle vehicle
+-- @return table info transmission values
+function RMS_Telemetry:collectTransmissionSystemInfo(vehicle)
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        return nil
+    end
+
+    local state, debugData, factorStats = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
+    end
+
+    local transmissionDbg = type(debugData.transmission) == "table" and debugData.transmission or {}
+    local systemData = type(state.systems) == "table" and state.systems.transmission or {}
+    local systemStats = type(factorStats.transmission) == "table" and factorStats.transmission or {}
+
+    return {
+        condition = systemData.condition,
+        stress = systemData.stress,
+        totalWearRate = transmissionDbg.totalWearRate or 0,
+        instantStressRate = transmissionDbg.instantStressRate or 0,
+        avgStress = transmissionDbg._avgStress or 0,
+        accumulatedStress = systemStats.stress,
+        breakdownProbability = transmissionDbg.breakdownProbability or 0,
+        critBreakdownProbability = transmissionDbg.critBreakdownProbability or 0,
+        expiredServiceFactor = transmissionDbg.expiredServiceFactor or 0,
+        pullOverloadFactor = transmissionDbg.pullOverloadFactor or 0,
+        pullOverloadTimer = transmissionDbg.pullOverloadTimer or 0,
+        heavyTrailerFactor = transmissionDbg.heavyTrailerFactor or 0,
+        heavyTrailerMassRatio = transmissionDbg.heavyTrailerMassRatio or 0,
+        luggingFactor = transmissionDbg.luggingFactor or 0,
+        wheelSlipFactor = transmissionDbg.wheelSlipFactor or 0,
+        wheelSlipIntensity = state.wheelSlipIntensity or 0,
+        avgTireGroundFrictionCoeff = state.avgTireGroundFrictionCoeff or 0,
+        coldTransFactor = transmissionDbg.coldTransFactor or 0,
+        hotTransFactor = transmissionDbg.hotTransFactor or 0
+    }
+end
+
+---Collects the PTO values of one sample
+-- @param table? vehicle vehicle
+-- @return table info PTO values
+function RMS_Telemetry:collectPtoSystemInfo(vehicle)
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        return nil
+    end
+
+    local state, debugData, factorStats = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
+    end
+
+    local ptoDbg = type(debugData.pto) == "table" and debugData.pto or {}
+    local systemData = type(state.systems) == "table" and state.systems.pto or {}
+    local systemStats = type(factorStats.pto) == "table" and factorStats.pto or {}
+
+    return {
+        enabled = systemData.enabled ~= false,
+        condition = systemData.condition,
+        stress = systemData.stress,
+        totalWearRate = ptoDbg.totalWearRate or 0,
+        instantStressRate = ptoDbg.instantStressRate or 0,
+        accumulatedStress = systemStats.stress,
+        isActive = ptoDbg.isPtoActive == true,
+        torqueKNm = ptoDbg.ptoTorque or 0,
+        rpm = ptoDbg.ptoRpm or 0,
+        powerKw = ptoDbg.ptoPower or 0,
+        utilization = ptoDbg.ptoUtilization or 0,
+        motorSideTorqueKNm = ptoDbg.ptoMotorSideTorque or 0,
+        nativeCapacityTorqueKNm = ptoDbg.ptoNativeCapacityTorque or 0,
+        engagementCount = ptoDbg.ptoEngagementCount or 0,
+        expiredServiceFactor = ptoDbg.expiredServiceFactor or 0,
+        ptoLoadFactor = ptoDbg.ptoLoadFactor or 0,
+        ptoEngagementFactor = ptoDbg.ptoEngagementFactor or 0
+    }
+end
+
+---Collects the CVT temperature values of one sample
+-- @param table? vehicle vehicle
+-- @return table info CVT temperature values
+function RMS_Telemetry:collectCVTTempInfo(vehicle)
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil or not hasCVTTransmission(vehicle) then
+        return nil
+    end
+
+    local state, debugData = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
+    end
+
+    local transmissionTempDbg = type(debugData.transmissionTemp) == "table" and debugData.transmissionTemp or {}
+
+    return {
+        temperatureC = state.transmissionTemperature,
+        rawTemperatureC = state.rawTransmissionTemperature,
+        thermostatState = state.transmissionThermostatState,
+        totalHeat = transmissionTempDbg.totalHeat or 0,
+        totalCooling = transmissionTempDbg.totalCooling or 0,
+        coolerCooling = transmissionTempDbg.coolerCooling or 0,
+        speedCooling = transmissionTempDbg.speedCooling or 0,
+        convectionCooling = transmissionTempDbg.convectionCooling or 0,
+        loadFactor = transmissionTempDbg.loadFactor or 0,
+        hydrostaticFactor = transmissionTempDbg.hydrostaticFactor or 0,
+        accFactor = transmissionTempDbg.accFactor or 0,
+        wheelSlipFactor = transmissionTempDbg.wheelSlipFactor or 0,
+        cvtSlipActive = transmissionTempDbg.cvtSlipActive or 0,
+        cvtSlipLocked = transmissionTempDbg.cvtSlipLocked or 0,
+        extraTransmissionHeat = transmissionTempDbg.extraTransmissionHeat or 0,
+        idleHeat = transmissionTempDbg.idleHeat or 0,
+        ptoHeat = transmissionTempDbg.ptoHeat or 0,
+        hydraulicHeat = transmissionTempDbg.hydraulicHeat or 0
+    }
+end
+
+---Collects the drivetrain values of one sample
+-- @param table? vehicle vehicle
+-- @return table info drivetrain values
+function RMS_Telemetry:collectDrivetrainInfo(vehicle)
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        return nil
+    end
+
+    local state = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
+    end
+
+    local motor = vehicle.getMotor ~= nil and vehicle:getMotor() or nil
+    if motor == nil then
+        return nil
+    end
+
+    ---Returns the live server value or its dedicated-client snapshot equivalent
+    -- @param string key snapshot key
+    -- @param any liveValue live server value
+    -- @return any value value to record
+    local function getStateValue(key, liveValue)
+        if vehicle.isServer then
+            return liveValue
+        end
+        return state[key]
+    end
+
+    local availableTorque = tonumber(getStateValue("motorAvailableTorque", motor:getMotorAvailableTorque())) or 0
+    local externalTorque = tonumber(getStateValue("motorExternalTorque", motor:getMotorExternalTorque())) or 0
+    local motorRotSpeed = tonumber(getStateValue("motorRotSpeed", motor:getMotorRotSpeed())) or 0
+    local motorPowerW = motorRotSpeed
+        * ((availableTorque - externalTorque) * 1000)
+    local motorPowerHp = motorPowerW / 735.5
+    local peakPowerHp = (tonumber(getStateValue("peakMotorPower", motor.peakMotorPower)) or 0) * 1.36
+    local lastRpm = tonumber(getStateValue("lastModulatedMotorRpm", motor:getLastModulatedMotorRpm())) or 0
+    local maxRpm = math.max(tonumber(getStateValue("maxMotorRpm", motor.maxRpm)) or 1, 1)
+    local rpmLoad = lastRpm / maxRpm
+    local motorLoad = tonumber(getStateValue("motorLoad", vehicle:getMotorLoadPercentage())) or 0
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local dynamicMotorLoad = tonumber(getStateValue("dynamicMotorLoad", spec.dynamicMotorLoad)) or motorLoad
+    local currentDirection = tonumber(getStateValue("currentDirection", motor.currentDirection)) or 1
+    local targetGear = (tonumber(getStateValue("targetGear", motor.targetGear)) or 0) * currentDirection
+    local lastControlParameters = (vehicle.spec_motorized or {}).lastControlParameters or {}
+    local cvtAddon = state.cvtAddon
+    if vehicle.isServer and hasCVTAddon(vehicle) then
+        local cvtAddonSpec = vehicle.spec_CVTaddon or {}
+        cvtAddon = {
+            damage = tonumber(cvtAddonSpec.CVTdamage) or 0,
+            warnDamage = cvtAddonSpec.forDBL_warndamage == 1,
+            critDamage = cvtAddonSpec.forDBL_critdamage == 1,
+            warnHeat = cvtAddonSpec.forDBL_warnheat == 1,
+            critHeat = cvtAddonSpec.forDBL_critheat == 1,
+            highPressure = cvtAddonSpec.forDBL_highpressure == 1
+        }
+    end
+
+    return {
+        motorPowerHp = motorPowerHp,
+        peakPowerHp = peakPowerHp,
+        motorLoad = motorLoad,
+        dynamicMotorLoad = dynamicMotorLoad,
+        avgAbsDiffAcc = tonumber(getStateValue("avgAbsDiffAcc", spec.avgAbsDiffAcc)) or 0,
+        inputAcceleratorPedal = tonumber(getStateValue(
+            "inputAcceleratorPedal",
+            vehicle.getAccelerationAxis ~= nil and vehicle:getAccelerationAxis() or 0
+        )) or 0,
+        cruiseControlState = tonumber(getStateValue(
+            "cruiseControlState",
+            vehicle.getCruiseControlState ~= nil and vehicle:getCruiseControlState() or 0
+        )) or 0,
+        cruiseControlAccelerator = tonumber(getStateValue(
+            "cruiseControlAccelerator",
+            vehicle.getCruiseControlAxis ~= nil and vehicle:getCruiseControlAxis() or 0
+        )) or 0,
+        requestedAcceleratorPedal = tonumber(getStateValue("requestedAcceleratorPedal", motor.lastAcceleratorPedal)) or 0,
+        appliedAcceleratorPedal = tonumber(getStateValue(
+            "appliedAcceleratorPedal",
+            lastControlParameters.acceleratorPedal
+        )) or 0,
+        actualAccelerationMps2 = tonumber(getStateValue(
+            "actualAccelerationMps2",
+            (tonumber(vehicle.lastSpeedAcceleration) or 0) * 1000000
+        )) or 0,
+        rpmLoad = rpmLoad,
+        currentSpeedKmh = tonumber(getStateValue("currentSpeedKmh", vehicle:getLastSpeed())) or 0,
+        currentGear = tonumber(getStateValue("currentGear", motor.gear)) or 0,
+        targetGear = targetGear,
+        activeGearGroupIndex = tonumber(getStateValue("activeGearGroupIndex", motor.activeGearGroupIndex)) or 0,
+        gearRatio = tonumber(getStateValue("gearRatio", motor:getGearRatio())) or 0,
+        draftMaxForce = tonumber(getStateValue("activeDraftMaxForce", spec.activeDraftMaxForce)) or 0,
+        draftEffectiveForceCap = tonumber(getStateValue("activeDraftEffectiveForceCap", spec.activeDraftEffectiveForceCap)) or 0,
+        cvtAddon = hasCVTAddon(vehicle) and cvtAddon or nil
+    }
+end
+
+---Collects the radiator and air intake clogging values of one sample
+-- @param table? vehicle vehicle
+-- @return table info clogging values
+function RMS_Telemetry:collectCloggingInfo(vehicle)
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        return nil
+    end
+
+    local state, debugData = getTelemetryServerSources(vehicle)
+    if state == nil then
+        return nil
+    end
+
+    local radiatorDbg = type(debugData.radiator) == "table" and debugData.radiator or {}
+    local airFilterDbg = type(debugData.airFilter) == "table" and debugData.airFilter or {}
+
+    return {
+        dirtLevel = vehicle.isServer
+            and (vehicle.getDirtAmount ~= nil and vehicle:getDirtAmount() or 0)
+            or (state.dirtAmount or 0),
+        radiatorClogging = state.radiatorClogging,
+        radiatorMultiplier = radiatorDbg.totalMultiplier or 0,
+        airFilterClogging = state.airFilterClogging,
+        airFilterMultiplier = airFilterDbg.totalMultiplier or 0,
+        isOnField = radiatorDbg.isOnField == true or airFilterDbg.isOnField == true,
+        hasDust = radiatorDbg.hasDust == true or airFilterDbg.hasDust == true,
+        hasDebris = radiatorDbg.hasDebris == true or airFilterDbg.hasDebris == true,
+        wetnessFactor = airFilterDbg.baseWetnessFactor or radiatorDbg.baseWetnessFactor or 1
+    }
+end
+
+
+---Collects the exhaust smoke channels, render factors and model inputs of one sample
+-- @param table? vehicle vehicle
+-- @return table info exhaust values
+function RMS_Telemetry:collectExhaustInfo(vehicle)
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        return nil
+    end
+
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local smoke = type(spec.exhaustSmoke) == "table" and spec.exhaustSmoke or {}
+    local debugData = type(spec.debugData) == "table" and spec.debugData or {}
+    local exhaustDbg = type(debugData.exhaust) == "table" and debugData.exhaust or {}
+
+    local sample = {
+        isActive = smoke.isActive == true,
+        hasTurbo = smoke.hasTurbo == true,
+        hasDEF = smoke.hasDEF == true,
+        isStageV = smoke.isStageV == true,
+        eraFactor = smoke.eraFactor or 0,
+        soot = smoke.soot or 0,
+        oil = smoke.oil or 0,
+        unburnt = smoke.unburnt or 0,
+        targetSoot = smoke.targetSoot or 0,
+        targetOil = smoke.targetOil or 0,
+        targetUnburnt = smoke.targetUnburnt or 0,
+        opticalDepth = exhaustDbg.opticalDepth or 0,
+        opacity = exhaustDbg.opacity or 0,
+        ladder = exhaustDbg.ladder or 0,
+        currentStep = exhaustDbg.currentStep or 0,
+        nextStep = exhaustDbg.nextStep or 0,
+        crossfade = exhaustDbg.crossfade or 0,
+        alpha = exhaustDbg.alpha or 0,
+        burst = exhaustDbg.burst or 0,
+        burstCause = tostring(exhaustDbg.burstCause or ""),
+        emitterCount = exhaustDbg.emitterCount or 0,
+        heatShare = exhaustDbg.heatShare or 0,
+        boost = exhaustDbg.boost or 0,
+        boostDeficit = exhaustDbg.boostDeficit or 0,
+        flow = exhaustDbg.flow or 0,
+        emitScale = exhaustDbg.emitScale or 0,
+        motorLoad = spec.dynamicMotorLoad or 0,
+        engineTemperature = spec.rawEngineTemperature or spec.engineTemperature or 0,
+        airFilterClogging = spec.airFilterClogging or 0,
+        serviceLevel = spec.serviceLevel or 0,
+        wetStackingLevel = spec.fuelState ~= nil and spec.fuelState.wetStackingLevel or 0
+    }
+
+    for _, step in ipairs(exhaustDbg.steps or {}) do
+        sample["step_" .. tostring(step.id)] = step.share or 0
+    end
+
+    return sample
+end
+
+
+---Collects one full sample of the recorded vehicle
+-- @param table? vehicle vehicle
+-- @return table sample recorded sample
+function RMS_Telemetry:collectSample(vehicle)
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        return nil
+    end
+
+    local scenario = tostring(self.recordingScenario or "default")
+    local sample = {
+        timestamp = g_currentMission ~= nil and g_currentMission.time or 0,
+        vehicleId = vehicle.uniqueId,
+        vehicleName = vehicle.getFullName ~= nil and vehicle:getFullName() or "unknown",
+        scenario = scenario
+    }
+
+    if scenario == "transmission" then
+        sample.transmissionSystem = self:collectTransmissionSystemInfo(vehicle)
+        sample.cvtTemp = self:collectCVTTempInfo(vehicle)
+        sample.drivetrain = self:collectDrivetrainInfo(vehicle)
+        sample.clogging = self:collectCloggingInfo(vehicle)
+        if sample.transmissionSystem == nil or sample.drivetrain == nil or sample.clogging == nil then
+            return nil
+        end
+    elseif scenario == "pto" then
+        sample.ptoSystem = self:collectPtoSystemInfo(vehicle)
+        if sample.ptoSystem == nil then
+            return nil
+        end
+    elseif scenario == "exhaust" then
+        sample.exhaust = self:collectExhaustInfo(vehicle)
+        if sample.exhaust == nil then
+            return nil
+        end
+    end
+
+    return sample
+end
+
+
+---Takes a sample each time the recording interval elapses
+-- @param float dt time since last call in ms
+function RMS_Telemetry:update(dt)
+    if not self.isRecording then
+        return
+    end
+
+    local vehicle = self:getRecordedVehicle()
+    if vehicle == nil then
+        self:finishRecording("vehicle_missing")
+        return
+    end
+
+    if (self.recordingScenario == "transmission" or self.recordingScenario == "pto") and not vehicle.isServer then
+        RMS_DebugSnapshot.request(vehicle)
+    end
+
+    self.elapsedMs = (self.elapsedMs or 0) + (dt or 0)
+    if self.elapsedMs < self.intervalMs then
+        return
+    end
+
+    self.elapsedMs = self.elapsedMs % self.intervalMs
+
+    local sample = self:collectSample(vehicle)
+    if sample ~= nil then
+        table.insert(self.samples, sample)
+    end
+end
+
+---Ends the recording and writes the file
+-- @param string? reason reason the recording ended
+function RMS_Telemetry:finishRecording(reason)
+    if not self.isRecording then
+        log_dbg("Telemetry: recording is not active.")
+        return false
+    end
+
+    self.isRecording = false
+    self.stoppedAt = g_currentMission ~= nil and g_currentMission.time or 0
+
+    log_dbg(string.format(
+        "Telemetry: recording stopped (%s). Samples collected: %d.",
+        tostring(reason or "manual"),
+        self.samples ~= nil and #self.samples or 0
+    ))
+
+    return self:saveToFile()
+end
+
+---Starts recording a scenario at a sampling interval
+-- @param string? scenarioName scenario name
+-- @param float? intervalMs sampling interval in ms
+-- @return boolean started true when the recording began
+function RMS_Telemetry:startRecording(scenarioName, intervalMs)
+    local vehicle = getTelemetryTargetVehicle()
+    if vehicle == nil then
+        log_dbg("Telemetry: no current RMS vehicle is currently selected.")
+        return false
+    end
+
+    local requestedScenario = tostring(scenarioName or "default")
+    if requestedScenario ~= "default" and requestedScenario ~= "transmission" and requestedScenario ~= "pto"
+    and requestedScenario ~= "exhaust" then
+        log_dbg("Telemetry: unsupported scenario:", requestedScenario)
+        return false
+    end
+
+    local requestedIntervalMs = math.floor(tonumber(intervalMs) or self.intervalMs or 1000)
+    if requestedIntervalMs <= 0 then
+        requestedIntervalMs = 1000
+    end
+
+    if self.isRecording then
+        if self.vehicleId == vehicle.uniqueId and self.recordingScenario == requestedScenario and self.intervalMs == requestedIntervalMs then
+            return true
+        end
+
+        self:finishRecording("switch_vehicle")
+    end
+
+    self:reset()
+    self.isRecording = true
+    self.startedAt = g_currentMission ~= nil and g_currentMission.time or 0
+    self.vehicleId = vehicle.uniqueId
+    self.vehicleName = vehicle.getFullName ~= nil and vehicle:getFullName() or tostring(vehicle.configFileName or "unknown")
+    self.intervalMs = requestedIntervalMs
+    self.recordingScenario = requestedScenario
+    self.sessionInfo = self:collectSessionInfo(vehicle)
+
+    log_dbg(string.format(
+        "Telemetry recording started for '%s' (id: %s, scenario: %s, intervalMs: %d).",
+        tostring(self.vehicleName),
+        tostring(self.vehicleId),
+        tostring(self.recordingScenario),
+        tonumber(self.intervalMs) or 0
+    ))
+    return true
+end
+
+---Stops the recording
+function RMS_Telemetry:stopRecording()
+    return self:finishRecording("manual")
+end
+
+---Console command starting a recording
+-- @param string? args console arguments
+function RMS_Telemetry:startConsole(args)
+    local tokens = splitConsoleArgs(args)
+    local scenarioName = tokens[1] or "default"
+    local intervalMs = tokens[2]
+    self:startRecording(scenarioName, intervalMs)
+end
+
+---Console command stopping the recording
+function RMS_Telemetry:stopConsole()
+    self:stopRecording()
+end
+
+
+addConsoleCommand("rms_telemetryStart", "Starts RMS telemetry recording for the current vehicle.", "startConsole", RMS_Telemetry)
+addConsoleCommand("rms_telemetryStop", "Stops RMS telemetry recording.", "stopConsole", RMS_Telemetry)
+addModEventListener(RMS_Telemetry)

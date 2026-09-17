@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<vehicle type="rmsFluidContainer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/vehicle.xsd">
+    <annotation>Copyright (C) 2026 Squallqt. Licensed under the GNU General Public License v3.0 or later.</annotation>
+    <storeData>
+        <name>AGRI TEKNO 10W-40</name>
+        <specs><fillTypes>RMS_MOTUL_AGRI_TEKNO_10W40</fillTypes><weight/></specs>
+        <functions><function>$l10n_rms_fluid_function_engine_oil</function></functions>
+        <image>objects/fluids/products/motulAgriTekno/store_motulAgriTekno.dds</image>
+        <price>25</price>
+        <category>pallets</category>
+        <brand>MOTUL</brand>
+        <showInStore>true</showInStore>
+        <canBeSold>false</canBeSold>
+        <allowLeasing>false</allowLeasing>
+        <rotation>0</rotation>
+        <shopHeight>0.65</shopHeight>
+        <financeCategory>OTHER</financeCategory>
+        <storeIconRendering><settings centerIcon="true" cameraXRot="-15" cameraYRot="35"/></storeIconRendering>
+    </storeData>
+    <base>
+        <typeDesc>$l10n_rms_fluid_container_typedesc</typeDesc>
+        <filename>objects/fluids/shared/fluidContainer.i3d</filename>
+        <size width="1.2" length="0.8" height="1.1"/>
+        <components maxMass="500"><component centerOfMass="0 0.3 0" solverIterationCount="10" mass="1"/></components>
+        <supportsPickUp>true</supportsPickUp>
+        <showInVehicleMenu>false</showInVehicleMenu>
+        <mapHotspot available="false"/>
+        <input allowed="false"/>
+    </base>
+    <rmsFluidContainer productKey="MOTUL_AGRI_TEKNO_10W40"
+        mediumBodyDiffuse="objects/fluids/products/motulAgriTekno/medium_body_diffuse.dds"
+        mediumCapDiffuse="objects/fluids/products/motulAgriTekno/medium_cap_diffuse.dds"
+        mediumLabelDiffuse="objects/fluids/products/motulAgriTekno/medium_label_diffuse.dds"
+        largeBodyDiffuse="objects/fluids/products/motulAgriTekno/large_body_diffuse.dds"
+        largeLabelDiffuse="objects/fluids/products/motulAgriTekno/large_label_diffuse.dds"
+        drumBodyDiffuse="objects/fluids/products/motulAgriTekno/drum_body_diffuse.dds"
+        drumLabelDiffuse="objects/fluids/products/motulAgriTekno/drum_label_diffuse.dds"/>
+    <fillUnit><fillUnitConfigurations title="$l10n_configuration_fillUnit">
+            <fillUnitConfiguration name="5 L" price="0" isDefault="true">
+                <fillUnits>
+                    <fillUnit unitTextOverride="$l10n_unit_literShort" fillTypes="RMS_MOTUL_AGRI_TEKNO_10W40" capacity="5" startFillType="RMS_MOTUL_AGRI_TEKNO_10W40" startFillLevel="5">
+                        <fillRootNode node="fillRootNode"/>
+                    </fillUnit>
+                </fillUnits>
+                <objectChange node="mediumCanCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="mediumVisualLink" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="fluidContainer_component1" massActive="1" centerOfMassActive="0 0.1943 0"/>
+            </fillUnitConfiguration>
+            <fillUnitConfiguration name="25 L" price="79">
+                <fillUnits>
+                    <fillUnit unitTextOverride="$l10n_unit_literShort" fillTypes="RMS_MOTUL_AGRI_TEKNO_10W40" capacity="25" startFillType="RMS_MOTUL_AGRI_TEKNO_10W40" startFillLevel="25">
+                        <fillRootNode node="fillRootNode"/>
+                    </fillUnit>
+                </fillUnits>
+                <objectChange node="largeCanCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="largeVisualLink" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="fluidContainer_component1" massActive="1"/>
+            </fillUnitConfiguration>
+            <fillUnitConfiguration name="200 L" price="810">
+                <fillUnits>
+                    <fillUnit unitTextOverride="$l10n_unit_literShort" fillTypes="RMS_MOTUL_AGRI_TEKNO_10W40" capacity="200" startFillType="RMS_MOTUL_AGRI_TEKNO_10W40" startFillLevel="200">
+                        <fillRootNode node="fillRootNode"/>
+                    </fillUnit>
+                </fillUnits>
+                <objectChange node="drumPalletCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision01" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision02" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumVisualLink" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="fluidContainer_component1" massActive="1"/>
+            </fillUnitConfiguration>
+    </fillUnitConfigurations></fillUnit>
+    <pallet fillUnitIndex="1"/>
+    <dynamicMount triggerNode="dynamicMountTrigger" triggerForceAcceleration="4" additionalMountDistance="1.054" jointTransY="0.106" jointLimitToRotY="true"/>
+    <foliageBending/>
+    <wearable wearDuration="480" workMultiplier="1" fieldMultiplier="1"/>
+    <washable dirtDuration="90" washDuration="1" workMultiplier="1" fieldMultiplier="1"/>
+    <i3dMappings>
+        <i3dMapping id="fluidContainer_component1" node="0>"/><i3dMapping id="mediumCanCollision" node="0>0"/>
+        <i3dMapping id="largeCanCollision" node="0>1"/><i3dMapping id="drumPalletCollision" node="0>2"/>
+        <i3dMapping id="drumPalletFloorCollision01" node="0>3"/><i3dMapping id="drumPalletFloorCollision02" node="0>4"/>
+        <i3dMapping id="drumCollision" node="0>5"/><i3dMapping id="dynamicMountTrigger" node="0>6"/>
+        <i3dMapping id="mediumVisualLink" node="0>7"/><i3dMapping id="largeVisualLink" node="0>8"/>
+        <i3dMapping id="drumVisualLink" node="0>9"/><i3dMapping id="drumPalletVisualLink" node="0>10"/>
+        <i3dMapping id="fillRootNode" node="0>11"/>
+        <i3dMapping id="pickupNode" node="0>12"/>
+    </i3dMappings>
+</vehicle>
