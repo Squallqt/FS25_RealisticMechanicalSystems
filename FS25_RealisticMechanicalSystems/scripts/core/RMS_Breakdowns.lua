@@ -2943,7 +2943,7 @@ function RMS_Breakdowns.getCanMotorRun(self, superFunc)
         return false
     end
 
-    if RMS_Preheat.shouldBlockMotorRun(self) then
+    if RMS_Preheat.shouldBlockMotorRun(self, superFunc) then
         return false
     end
 

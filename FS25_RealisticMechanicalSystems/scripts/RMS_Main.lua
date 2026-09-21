@@ -575,7 +575,7 @@ function RMS_Main:onPeriodChanged()
     end
 
     for _, vehicle in pairs(self.vehicles) do
-        RMS_Consumptables.onLubricationPeriodChanged(vehicle)
+        RMS_Consumables.onLubricationPeriodChanged(vehicle)
     end
 end
 

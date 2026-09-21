@@ -2,7 +2,7 @@
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
 ---Consumable upkeep of a vehicle: radiator and air intake clogging, lubrication, field inspection
-RMS_Consumptables = RMS_Consumptables or {}
+RMS_Consumables = RMS_Consumables or {}
 
 ---Flags the field inspection sound dirty when the set of inspecting players becomes empty or not
 -- @param table vehicle vehicle
@@ -18,7 +18,7 @@ end
 ---Registers a player as inspecting this vehicle until the configured duration elapses
 -- @param table player player
 -- @param boolean isActive true when the inspection starts
-function RMS_Consumptables:setFieldInspectionPlayerActive(player, isActive)
+function RMS_Consumables:setFieldInspectionPlayerActive(player, isActive)
     if not self.isServer or player == nil then
         return
     end
@@ -34,7 +34,7 @@ function RMS_Consumptables:setFieldInspectionPlayerActive(player, isActive)
 end
 
 ---Drops the players whose inspection elapsed on the server, plays the sound on a client
-function RMS_Consumptables:updateFieldInspectionSound()
+function RMS_Consumables:updateFieldInspectionSound()
     local spec = self.spec_RealisticMechanicalSystems
 
     if self.isServer then
@@ -54,7 +54,7 @@ end
 ---Accumulates radiator clogging from ground wetness, field work, dust and debris, capped at the dirt level
 -- @param float dt time since last call in ms
 -- @param boolean? canAccumulate true while the vehicle is operating
-function RMS_Consumptables:updateRadiatorClogging(dt, canAccumulate)
+function RMS_Consumables:updateRadiatorClogging(dt, canAccumulate)
     local C = RMS_Config.FIELD_CARE
     local spec = self.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -140,7 +140,7 @@ end
 
 ---Accumulates air intake clogging on the same inputs as the radiator, with its own weighting
 -- @param float dt time since last call in ms
-function RMS_Consumptables:updateAirFilterClogging(dt)
+function RMS_Consumables:updateAirFilterClogging(dt)
     local C = RMS_Config.FIELD_CARE
     local spec = self.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -223,7 +223,7 @@ end
 
 ---Clears radiator and air intake clogging at the configured cleaning speed
 -- @param float dt time since last call in ms
-function RMS_Consumptables:cleanRadiatorAndAirFilter(dt)
+function RMS_Consumables:cleanRadiatorAndAirFilter(dt)
     local C = RMS_Config.FIELD_CARE
     local spec = self.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -249,7 +249,7 @@ function RMS_Consumptables:cleanRadiatorAndAirFilter(dt)
 end
 
 ---Drops the lubrication level once per period, unless the vehicle was greased during it
-function RMS_Consumptables:onLubricationPeriodChanged()
+function RMS_Consumables:onLubricationPeriodChanged()
     local C = RMS_Config.FIELD_CARE
     local spec = self.spec_RealisticMechanicalSystems
     if not self.isServer or spec == nil or spec.isExcludedVehicle or not spec.isVehicleNeedLubricate then
@@ -270,7 +270,7 @@ end
 ---Consumes lubrication over the operating time, marking the period as used while the motor runs
 -- @param float operatingDt operating time since last call in ms
 -- @param integer motorState motor state
-function RMS_Consumptables:updateLubricationLevel(operatingDt, motorState)
+function RMS_Consumables:updateLubricationLevel(operatingDt, motorState)
     local C = RMS_Config.FIELD_CARE
     local spec = self.spec_RealisticMechanicalSystems
     if not spec.isVehicleNeedLubricate then
@@ -289,7 +289,7 @@ end
 
 ---Consumes engine oil and drains any leaking fluid over the operating time
 -- @param float operatingDt operating time since last call in ms
-function RMS_Consumptables:updateFluidLevels(operatingDt)
+function RMS_Consumables:updateFluidLevels(operatingDt)
     local C = RMS_Config.FLUIDS
     local spec = self.spec_RealisticMechanicalSystems
     local hours = (tonumber(operatingDt) or 0) / (60 * 60 * 1000)
@@ -326,7 +326,7 @@ end
 
 ---Returns how much fluid the machine is missing, in whole charges
 -- @return float share sum of what every fluid it carries is missing
-function RMS_Consumptables:getMissingFluidShare()
+function RMS_Consumables:getMissingFluidShare()
     local spec = self.spec_RealisticMechanicalSystems
     local missing = 0
 
@@ -342,12 +342,12 @@ function RMS_Consumptables:getMissingFluidShare()
 end
 
 ---Fills back the fluids nothing leaks any more
-function RMS_Consumptables:topUpRepairedLeaks(breakdownIds)
+function RMS_Consumables:topUpRepairedLeaks(breakdownIds)
     RMS_Fluids.restoreRepairedLeakLosses(self, breakdownIds or self.spec_RealisticMechanicalSystems.pendingSelectedBreakdowns or {})
 end
 
 ---Fills every fluid the machine carries back up
-function RMS_Consumptables:refillVehicleFluids()
+function RMS_Consumables:refillVehicleFluids()
     for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
         if RMS_Fluids.getCapacity(self, circuit) > 0 then
             RMS_Fluids.replaceCircuit(self, circuit)
@@ -356,37 +356,37 @@ function RMS_Consumptables:refillVehicleFluids()
 end
 
 ---Returns a physical circuit capacity in liters
-function RMS_Consumptables:getFluidCapacity(circuit)
+function RMS_Consumables:getFluidCapacity(circuit)
     return RMS_Fluids.getCapacity(self, circuit)
 end
 
 ---Returns the physical quantity currently in a circuit
-function RMS_Consumptables:getFluidLiters(circuit)
+function RMS_Consumables:getFluidLiters(circuit)
     return RMS_Fluids.getLiters(self, circuit)
 end
 
 ---Returns the physical quantity missing from a circuit
-function RMS_Consumptables:getMissingFluidLiters(circuit)
+function RMS_Consumables:getMissingFluidLiters(circuit)
     return RMS_Fluids.getMissingLiters(self, circuit)
 end
 
 ---Returns mixture compatibility for a circuit
-function RMS_Consumptables:getFluidCompatibility(circuit)
+function RMS_Consumables:getFluidCompatibility(circuit)
     return RMS_Fluids.getCompatibility(self, circuit)
 end
 
 ---Adds a catalogue product to a circuit
-function RMS_Consumptables:addFluidLiters(circuit, liters, productKey)
+function RMS_Consumables:addFluidLiters(circuit, liters, productKey)
     return RMS_Fluids.addLiters(self, circuit, liters, productKey)
 end
 
 ---Replaces a circuit with compatible fluid
-function RMS_Consumptables:replaceFluidCircuit(circuit)
+function RMS_Consumables:replaceFluidCircuit(circuit)
     RMS_Fluids.replaceCircuit(self, circuit)
 end
 
 ---Restores one grease gun charge of lubrication, capped at full
-function RMS_Consumptables:lubricateVehicle()
+function RMS_Consumables:lubricateVehicle()
     local C = RMS_Config.FIELD_CARE
     local spec = self.spec_RealisticMechanicalSystems
 
@@ -404,7 +404,7 @@ end
 
 ---Starts a field inspection, refused while the motor runs or a service is in progress
 -- @return boolean started true when the inspection began
-function RMS_Consumptables:startFieldVisualInspectionProcess()
+function RMS_Consumables:startFieldVisualInspectionProcess()
     local spec = self.spec_RealisticMechanicalSystems
     if spec == nil or spec.isExcludedVehicle then
         return false
