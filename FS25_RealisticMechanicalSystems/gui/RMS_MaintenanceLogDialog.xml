@@ -22,21 +22,22 @@
                 </BoxLayout>
             </GuiElement>
 
-            <BoxLayout profile="rms_workshopTabBox">
-                <Button profile="fs25_subCategorySelectorTabbedTab" text="$l10n_rms_ws_tab_summary" disabled="true">
+            <BoxLayout profile="rms_workshopTabBox" id="workshopTabBox">
+                <Button profile="fs25_subCategorySelectorTabbedTab" id="workshopNavTabs[1]" text="$l10n_rms_ws_tab_summary" onClick="onClickSummaryTab" disabled="true">
                     <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
                 </Button>
-                <Button profile="fs25_subCategorySelectorTabbedTab" text="$l10n_rms_ws_tab_diagnostic" disabled="true">
+                <Button profile="fs25_subCategorySelectorTabbedTab" id="workshopNavTabs[2]" text="$l10n_rms_ws_tab_diagnostic" onClick="onClickDiagnosticTab" disabled="true">
                     <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
                 </Button>
-                <Button profile="fs25_subCategorySelectorTabbedTab" text="$l10n_rms_ws_tab_interventions" disabled="true">
+                <Button profile="fs25_subCategorySelectorTabbedTab" id="workshopNavTabs[3]" text="$l10n_rms_ws_tab_interventions" onClick="onClickInterventionsTab" disabled="true">
                     <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
                 </Button>
-                <Button profile="fs25_subCategorySelectorTabbedTab" id="logTechnicalTab" text="$l10n_rms_ws_tab_record">
+                <Button profile="fs25_subCategorySelectorTabbedTab" id="workshopNavTabs[4]" text="$l10n_rms_ws_tab_record" onClick="onClickTechnicalTab">
                     <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
                 </Button>
             </BoxLayout>
             <ThreePartBitmap profile="rms_workshopTabSeparator" />
+            <MultiTextOption profile="rms_workshopTabPaging" id="workshopTabPaging" focusInit="onOpen" onClick="onWorkshopTabPagingChanged" />
 
             <GuiElement profile="fs25_subCategorySelectorTabbedContainer">
                 <BoxLayout profile="rms_logPageFlow">
@@ -81,6 +82,12 @@
                         <GuiElement profile="rms_logKpiIcon" onDraw="onDrawCurrencyKpiIcon" />
                         <Text profile="rms_logKpiLabel" text="$l10n_rms_log_cost_per_month_title" />
                         <Text profile="rms_logKpiValue" id="costPerMonthValue" />
+                    </GuiElement>
+                    <GuiElement profile="rms_logKpiCard">
+                        <RoundCorner profile="rms_workshopSurfaceStrong" />
+                        <GuiElement profile="rms_logKpiIcon" onDraw="onDrawCurrencyKpiIcon" />
+                        <Text profile="rms_logKpiLabel" text="$l10n_rms_log_cost_per_hour_title" />
+                        <Text profile="rms_logKpiValue" id="costPerHourValue" />
                     </GuiElement>
                     <GuiElement profile="rms_logKpiCard">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
@@ -186,6 +193,13 @@
                                     <Text profile="rms_logDetailPart" position="12px 0px" size="207.5px 22px" name="detailPartLeft" />
                                     <Text profile="rms_logDetailPartBullet" position="235.5px 0px" size="8px 22px" text="·" name="detailPartRightBullet" />
                                     <Text profile="rms_logDetailPart" position="247.5px 0px" size="207.5px 22px" name="detailPartRight" />
+                                </ListItem>
+                            </SmoothList>
+                            <SmoothList profile="rms_logDetailPartsList" id="invoiceTable" position="18px -74px" size="471px 154px">
+                                <ListItem profile="rms_logDetailPartRow" name="invoiceRowTemplate" size="471px 22px" updateChildrenState="false">
+                                    <Text profile="rms_logDetailPartBullet" position="0px 0px" size="8px 22px" text="·" />
+                                    <Text profile="rms_logDetailPart" position="12px 0px" size="335px 22px" name="invoiceLabel" />
+                                    <Text profile="rms_logInvoiceAmount" position="355px 0px" size="116px 22px" name="invoiceAmount" />
                                 </ListItem>
                             </SmoothList>
                         </GuiElement>

@@ -29,11 +29,9 @@ RMS_Config = {
     CORE = {
         REFERENCE_SERVICE_WEAR = 0.1,
         REFERENCE_SYSTEMS_WEAR = 0.01,
-        BASE_SERVICE_WEAR = 0.1,
+        BASE_SERVICE_WEAR = 0.05,
         BASE_SYSTEMS_WEAR = 0.01,
 
-        DOWNTIME_MULTIPLIER = 0.05,
-        UNDER_ROOF_DOWNTIME_MULTIPLIER = 0.0,
         RAIN_FACTOR = 1.1,
         HAIL_FACTOR = 1.3,
         SNOW_FACTOR = 1.1,
@@ -52,18 +50,6 @@ RMS_Config = {
 
         AVG_STRESS_WARNING_THRESHOLD = 0.22,
         AVG_STRESS_CRITICAL_THRESHOLD = 0.44,
-
-        SYSTEM_STRESS_GLOBAL_MULTIPLIER = 1.0,
-        SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS = {
-            engine=10.0, 
-            transmission=10.0, 
-            hydraulics=10.0, 
-            cooling=10.0, 
-            electrical=10.0, 
-            chassis=10.0, 
-            fuel=10.0,
-            pto=10.0
-        },
 
         ENGINE_FACTOR_DATA = {
             MOTOR_IDLING_MULTIPLIER = 0.5,
@@ -141,7 +127,6 @@ RMS_Config = {
         },
 
         ELECTRICAL_FACTOR_DATA = {
-            SERVICE_EXPIRED_MULTIPLIER = 2.0,
             CRANKING_STRESS_MULTIPLIER = 5.0,
             RAIN_FACTOR_MULTIPLIER = 0.8,
             SNOW_FACTOR_MULTIPLIER = 0.6,
@@ -156,7 +141,6 @@ RMS_Config = {
         },
 
         CHASSIS_FACTOR_DATA = {
-            SERVICE_EXPIRED_MULTIPLIER = 4.0,
             CHASSIS_IDLING_MULTIPLIER = 0.5,
             LUBRICATION_FACTOR_MULTIPLIER = 5.0,
             VIB_FACTOR_THRESHOLD = 0.08,
@@ -200,37 +184,20 @@ RMS_Config = {
         CONCURRENT_BREAKDOWN_LIMIT_PER_VEHICLE = 15,
         ENABLE_WARNING_MESSAGES = true,
 
-        AI_OVERLOAD_AND_OVERHEAT_CONTROL = true,
-        -- a critical overload stops the AI helper
-        AI_DISABLE_ON_CRITICAL_OVERLOAD = true,
-        -- contract vehicles are covered by the overload shutdown and speed control
-        CONTRACT_VEHICLE_PROTECTION = false,
-        AI_WORKER_PID = {
-            MIN_SPEED = 3.0,
-            MAX_REDUCTION = 16.0,
-            TARGET_STRESS = 0.30,
-            DEADBAND = 0.03,
-            LOAD_START = 0.8,
-            LOAD_FULL = 0.95,
-            ENGINE_TEMP_START = 92.0,
-            ENGINE_TEMP_FULL = 99.0,
-            TRANS_TEMP_START = 92.0,
-            TRANS_TEMP_FULL = 99.0,
-            WEIGHT_LOAD = 0.50,
-            WEIGHT_ENGINE_TEMP = 0.25,
-            WEIGHT_TRANS_TEMP = 0.25,
-            FILTER_TAU = 3.0,
-            KP = 4.5,
-            KI = 0.8,
-            KD = 0.45,
-            MAX_INTEGRAL = 3.0,
-            REDUCTION_RATE_DOWN = 8.0,
-            RECOVERY_RATE_UP = 2.5,
-            APPLY_INTERVAL_MS = 180,
-            MIN_APPLY_DELTA = 0.2,
-            BASE_SYNC_DOWN_RATE = 1.8,
-            EMERGENCY_ENGINE_TEMP = 105.0,
-            EMERGENCY_TRANS_TEMP = 105.0
+        -- the AI worker eases off like a careful driver once the machine runs into overload
+        AI_WORKER = {
+            -- km/h, the game's own field work floor
+            MIN_SPEED = 5,
+            -- shares of the overload warning level
+            SLOW_DOWN_LEVEL = 0.5,
+            RESUME_LEVEL = 0.25,
+            -- km/h per second
+            SLOW_DOWN_RATE = 1.0,
+            RESUME_RATE = 0.5,
+            -- km/h above the helper's own pace at which the limit lets go
+            RELEASE_MARGIN = 3,
+            -- seconds
+            OVERLOAD_SMOOTHING = 2
         },
         GENERAL_WEAR_ENABLED = true,
         GENERAL_WEAR_EARLY_STAGE_THRESHOLD = 0.66,
@@ -279,7 +246,6 @@ RMS_Config = {
 
             MAINTENANCE = {
                 STANDARD   = 1.1,
-                MINIMAL    = 0.9,
                 EXTENDED   = 1.2,
                 PREVENTIVE = 1.4,
             },
@@ -299,17 +265,12 @@ RMS_Config = {
     },
     -- service prices, durations and restore ratios
     MAINTENANCE = {
-        PARK_VEHICLE = true,
         INSTANT_INSPECTION = false,
-        WARRANTY_ENABLED = true,
-        WARRANTY_MAX_OPERATING_HOURS = 20,
-        WARRANTY_MAX_AGE_MONTHS = 12,
-
-        GLOBAL_SERVICE_PRICE_MULTIPLIER = 1.0,
-        GLOBAL_SERVICE_TIME_MULTIPLIER = 1.0,
+        INSTANT_MAINTENANCE_REPAIR = false,
+        INSTANT_BODYWORK = false,
+        INSTANT_OVERHAUL = false,
 
         REFILL_TIME = 0.25 * 3600000,
-        REFILL_PRICE_MULTIPLIER = 0.15,
         INSPECTION_TIME = 1 * 3600000,
         INSPECTION_TIME_MULTIPLIERS = {
             STANDARD = 1.0,
@@ -319,7 +280,6 @@ RMS_Config = {
         MAINTENANCE_TIME = 6 * 3600000,
         MAINTENANCE_TIME_MULTIPLIERS = {
             STANDARD   = 1.0,
-            MINIMAL    = 0.25,
             EXTENDED   = 1.5,
             PREVENTIVE = 2.0,
         },
@@ -344,13 +304,6 @@ RMS_Config = {
             COMPLETE = 1.0,
         },
 
-        MAINTENANCE_SERVICE_RESTORE_MULTIPLIERS = {
-            STANDARD   = 1.0,
-            MINIMAL    = 0.75,
-            EXTENDED   = 1.2,
-            PREVENTIVE = 1.0,
-        },
-
         MAINTENANCE_PREVENTIVE_STRESS_REMOVE_MULTIPLIER = 0.6,
         MAINTENANCE_PREVENTIVE_SYSTEMS_COUNT = 3,
 
@@ -359,18 +312,11 @@ RMS_Config = {
             HIGH   = 0.0,
         },
 
-        OVERHAUL_MIN_CONDITION_RESTORE_MULTIPLIERS = {
-            STANDARD = 0.61,
-            PARTIAL  = 0.61,
-            FULL     = 0.81,
+        OVERHAUL_CONDITION_TARGETS = {
+            STANDARD = 0.75,
+            PARTIAL  = 0.75,
+            FULL     = 1.0,
         },
-        OVERHAUL_MAX_CONDITION_RESTORE_MULTIPLIERS = {
-            STANDARD = 0.79,
-            PARTIAL  = 0.79,
-            FULL     = 0.99,
-        },
-
-        RE_OVERHAUL_FACTOR = 0.1,
 
         PARTS_BREAKDOWN_CHANCES = {
             OEM         = 0.1,
@@ -386,12 +332,33 @@ RMS_Config = {
             AFTERMARKET = 0.66,
             PREMIUM     = 1.20,
         },
-        MAINTENANCE_PRICE_MULTIPLIERS = {
-            STANDARD   = 1.0,
-            MINIMAL    = 0.65,
-            EXTENDED   = 1.25,
-            PREVENTIVE = 3.0,
+        -- prices are real ones for a machine of this power, the engine sizing them and the game's cost multiplier
+        -- scaling them with the economic difficulty; the service interval, not the price, carries the game's pace
+        REFERENCE_POWER = 160,
+        -- a dealer's hourly rate in euros
+        LABOUR_RATE = 90,
+        -- how labour and parts follow the engine power, measured on filter kits from 75 to 430 hp
+        LABOUR_POWER_EXPONENT = 0.4,
+        PARTS_POWER_EXPONENT = 0.6,
+        -- labour, filters and parts of a road vehicle against a machine of the same power
+        PROFILE_PRICE_FACTORS = {
+            ROAD_LIGHT = { labour = 0.3,  filters = 0.2, parts = 0.5  },
+            ROAD_HEAVY = { labour = 0.55, filters = 0.2, parts = 0.75 },
         },
+        -- a real dealer's maintenance of the reference machine, fluids apart: labour hours and filters in euros
+        MAINTENANCE_LABOUR_HOURS = {
+            STANDARD   = 2.5,
+            EXTENDED   = 5.0,
+            PREVENTIVE = 8.0,
+        },
+        MAINTENANCE_FILTER_PRICES = {
+            STANDARD   = 250,
+            EXTENDED   = 550,
+            PREVENTIVE = 700,
+        },
+        -- real value of the reference machine the breakdown registry's repair percentages and the overhauls apply to
+        REPAIR_REFERENCE_VALUE = 57700,
+        OVERHAUL_REFERENCE_VALUE = 32500,
 
         REPAIR_PRICE_MULTIPLIERS = {
             LOW    = 0.2,
@@ -402,16 +369,6 @@ RMS_Config = {
             STANDARD = 0.5,
             PARTIAL  = 0.6,
             FULL     = 0.8,
-        },
-        INSPECTION_PRICE_MULTIPLIERS = {
-            STANDARD = 1.0,
-            VISUAL   = 0.1,
-            COMPLETE = 4.0,
-        },
-        INSPECTION_PRICE_LIMITS = {
-            STANDARD = {min = 100, max = 400},
-            VISUAL   = {min = 20,  max = 100},
-            COMPLETE = {min = 400, max = 1600},
         },
         OVERHAUL_MAX_PRICE_RATIO = 1.0,
     },
@@ -520,12 +477,12 @@ RMS_Config = {
     },
 
     FIELD_CARE = {
-        CLOGGING_SPEED = 1.0,
         CLEANING_SPEED = 0.05,
         AIR_FILTER_BREAKDOWN_THRESHOLD = 0.5,
         AIR_FILTER_BLOWOUT_RESIDUE_SHARE = 0.25,
-        VISUAL_INSPECTION_DURATION = 6000,
-        LUBRICATION_REDUCE_PER_OPERATING_HOUR = 0.02,
+        -- Decoded length of sounds/inspection.ogg at pitch 1.0.
+        VISUAL_INSPECTION_DURATION = 6850,
+        LUBRICATION_REDUCE_PER_OPERATING_HOUR = 0.05,
         LUBRICATION_RESTORE_PER_USE = 0.1,
         LUBRICATION_DRY_THRESHOLD = 0.60,
         LUBRICATION_VERY_DRY_THRESHOLD = 0.35,
@@ -564,7 +521,6 @@ RMS_Config = {
     DRIVETRAIN = {
         ENABLED = true,
         ALLOW_AUTO_MODE = true,
-        DIFFLOCK_AUTO_RELEASE_SPEED = 10,
 
         OPEN_AXLE_SPEED_RATIO = 4.0,
         LOCKED_AXLE_SPEED_RATIO = 1.0,
@@ -601,7 +557,6 @@ RMS_Config = {
     -- exhaust smoke colour and opacity
     EXHAUST = {
         ENABLED = true,
-        INTENSITY = 1.0,
 
         -- smoke tints, mixed by concentration, and the colourless gas of a clean pipe
         SOOT_TINT = {0.020, 0.020, 0.025},
@@ -980,9 +935,9 @@ end
 -- @param table? state tutorial state
 function RMS_Config.applyTutorialState(state)
     local normalized = RMS_Config.createTutorialState(
-        state ~= nil and state.tutorialMode,
-        state ~= nil and state.welcomeMessageSeen,
-        state ~= nil and state.messages
+        state ~= nil and state.tutorialMode or nil,
+        state ~= nil and state.welcomeMessageSeen or nil,
+        state ~= nil and state.messages or nil
     )
 
     RMS_Config.TUTORIAL_MODE = normalized.tutorialMode
@@ -1040,9 +995,9 @@ end
 ---Creates the tutorial state of the local player on first use
 function RMS_Config.ensureLocalTutorialState()
     if RMS_Config.TUTORIAL_STATE_LOADED then return true end
-    if g_server == nil or g_localPlayer == nil or g_localPlayer.getUniqueUserId == nil then return false end
+    if g_server == nil or g_localPlayer == nil then return false end
 
-    local uniqueUserId = g_localPlayer:getUniqueUserId()
+    local uniqueUserId = g_localPlayer:getUniqueId()
     local state = RMS_Config.getTutorialPlayerState(uniqueUserId)
     if state == nil then return false end
 
@@ -1084,7 +1039,7 @@ local function log_dbg(...)
 end
 
 ---Writes the tutorial state of every player to the settings file
--- @param XMLFile xmlFile XMLFile instance
+-- @param number xmlFile XML file handle
 -- @param string root xml root key
 local function saveTutorialPlayerStates(xmlFile, root)
     local userIds = {}
@@ -1106,7 +1061,7 @@ local function saveTutorialPlayerStates(xmlFile, root)
 end
 
 ---Reads the tutorial state of every player from the settings file
--- @param XMLFile xmlFile XMLFile instance
+-- @param number xmlFile XML file handle
 -- @param string root xml root key
 local function loadTutorialPlayerStates(xmlFile, root)
     RMS_Config.TUTORIAL_PLAYER_STATES = {}
@@ -1147,22 +1102,14 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
     -- core
     setXMLFloat(xmlFile, root .. ".BASE_SERVICE_WEAR",      RMS_Config.CORE.BASE_SERVICE_WEAR)
     setXMLFloat(xmlFile, root .. ".BASE_SYSTEMS_WEAR",      RMS_Config.CORE.BASE_SYSTEMS_WEAR)
-    setXMLFloat(xmlFile, root .. ".DOWNTIME_MULTIPLIER",    RMS_Config.CORE.DOWNTIME_MULTIPLIER)
-    setXMLFloat(xmlFile, root .. ".SYSTEM_STRESS_GLOBAL_MULTIPLIER", RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER)
     setXMLBool (xmlFile, root .. ".GENERAL_WEAR_ENABLED",   RMS_Config.CORE.GENERAL_WEAR_ENABLED)
     setXMLBool (xmlFile, root .. ".ENABLE_WARNING_MESSAGES", RMS_Config.CORE.ENABLE_WARNING_MESSAGES)
-    setXMLBool (xmlFile, root .. ".AI_OVERLOAD_CONTROL",    RMS_Config.CORE.AI_OVERLOAD_AND_OVERHEAT_CONTROL)
-    setXMLBool (xmlFile, root .. ".AI_DISABLE_ON_CRITICAL_OVERLOAD", RMS_Config.CORE.AI_DISABLE_ON_CRITICAL_OVERLOAD)
-    setXMLBool (xmlFile, root .. ".CONTRACT_VEHICLE_PROTECTION", RMS_Config.CORE.CONTRACT_VEHICLE_PROTECTION)
-    setXMLFloat(xmlFile, root .. ".AI_WORKER_TARGET_STRESS", RMS_Config.CORE.AI_WORKER_PID.TARGET_STRESS)
-    setXMLFloat(xmlFile, root .. ".AI_WORKER_MIN_SPEED",     RMS_Config.CORE.AI_WORKER_PID.MIN_SPEED)
 
     -- maintenance
     setXMLBool (xmlFile, root .. ".INSTANT_INSPECTION",     RMS_Config.MAINTENANCE.INSTANT_INSPECTION)
-    setXMLBool (xmlFile, root .. ".PARK_VEHICLE",           RMS_Config.MAINTENANCE.PARK_VEHICLE)
-    setXMLBool (xmlFile, root .. ".WARRANTY_ENABLED",       RMS_Config.MAINTENANCE.WARRANTY_ENABLED)
-    setXMLFloat(xmlFile, root .. ".PRICE_MULTIPLIER",       RMS_Config.MAINTENANCE.GLOBAL_SERVICE_PRICE_MULTIPLIER)
-    setXMLFloat(xmlFile, root .. ".TIME_MULTIPLIER",        RMS_Config.MAINTENANCE.GLOBAL_SERVICE_TIME_MULTIPLIER)
+    setXMLBool (xmlFile, root .. ".INSTANT_MAINTENANCE_REPAIR", RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR)
+    setXMLBool (xmlFile, root .. ".INSTANT_BODYWORK", RMS_Config.MAINTENANCE.INSTANT_BODYWORK)
+    setXMLBool (xmlFile, root .. ".INSTANT_OVERHAUL", RMS_Config.MAINTENANCE.INSTANT_OVERHAUL)
 
     -- workshop
     setXMLBool (xmlFile, root .. ".DEALER_ALWAYS_AVAILABLE",       RMS_Config.WORKSHOP.DEALER_ALWAYS_AVAILABLE)
@@ -1182,22 +1129,15 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
     setXMLFloat(xmlFile, root .. ".ALT_MAX_OUTPUT",         RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT)
     setXMLFloat(xmlFile, root .. ".IDLE_CURRENT_A",         RMS_Config.ELECTRICAL.IDLE_CURRENT_A)
 
-    -- field care
-    setXMLFloat(xmlFile, root .. ".CLOGGING_SPEED",         RMS_Config.FIELD_CARE.CLOGGING_SPEED)
-    setXMLFloat(xmlFile, root .. ".VISUAL_INSPECTION_DURATION", RMS_Config.FIELD_CARE.VISUAL_INSPECTION_DURATION)
-    setXMLFloat(xmlFile, root .. ".LUBRICATION_REDUCE_PER_OPERATING_HOUR", RMS_Config.FIELD_CARE.LUBRICATION_REDUCE_PER_OPERATING_HOUR)
-
     -- drivetrain
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_ENABLED",           RMS_Config.DRIVETRAIN.ENABLED)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_ALLOW_AUTO_MODE",   RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_WINDUP_DAMAGE",     RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED)
-    setXMLFloat(xmlFile, root .. ".DRIVETRAIN_DIFFLOCK_RELEASE_SPEED", RMS_Config.DRIVETRAIN.DIFFLOCK_AUTO_RELEASE_SPEED)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_ENABLED", RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_AUTO",    RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE)
 
     -- exhaust
     setXMLBool (xmlFile, root .. ".EXHAUST_SMOKE_ENABLED",   RMS_Config.EXHAUST.ENABLED)
-    setXMLFloat(xmlFile, root .. ".EXHAUST_SMOKE_INTENSITY", RMS_Config.EXHAUST.INTENSITY)
 
     -- debug
     setXMLBool (xmlFile, root .. ".DEBUG_MODE",             RMS_Config.DEBUG)
@@ -1224,6 +1164,11 @@ end
 -- @return string path local settings file path
 function RMS_Config.getLocalSettingsFilePath()
     return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.localSettingsFile
+end
+
+---@diagnostic disable-next-line: lowercase-global
+function getUserProfileAppPath()
+    return g_currentModSettingsDirectory or (getUserProfileAppPath and getUserProfileAppPath()) or ""
 end
 
 ---Writes the settings the player owns on their own machine
@@ -1346,51 +1291,25 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLFloat(xmlFile, root .. ".BASE_SYSTEMS_WEAR")
     if v ~= nil then RMS_Config.CORE.BASE_SYSTEMS_WEAR = v end
 
-    v = getXMLFloat(xmlFile, root .. ".DOWNTIME_MULTIPLIER")
-    if v ~= nil then RMS_Config.CORE.DOWNTIME_MULTIPLIER = v end
-
-    v = getXMLFloat(xmlFile, root .. ".SYSTEM_STRESS_GLOBAL_MULTIPLIER")
-    if v ~= nil then RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER = v end
-
     v = getXMLBool(xmlFile, root .. ".GENERAL_WEAR_ENABLED")
     if v ~= nil then RMS_Config.CORE.GENERAL_WEAR_ENABLED = v end
 
     v = getXMLBool(xmlFile, root .. ".ENABLE_WARNING_MESSAGES")
     if v ~= nil then RMS_Config.CORE.ENABLE_WARNING_MESSAGES = v end
 
-    v = getXMLBool(xmlFile, root .. ".AI_OVERLOAD_CONTROL")
-    if v ~= nil then RMS_Config.CORE.AI_OVERLOAD_AND_OVERHEAT_CONTROL = v end
-
-    v = getXMLBool(xmlFile, root .. ".AI_DISABLE_ON_CRITICAL_OVERLOAD")
-    if v == nil then
-        v = getXMLBool(xmlFile, root .. ".AI_DISABLE_ON_CRITICAL_FAILURE")
-    end
-    if v ~= nil then RMS_Config.CORE.AI_DISABLE_ON_CRITICAL_OVERLOAD = v end
-
-    v = getXMLBool(xmlFile, root .. ".CONTRACT_VEHICLE_PROTECTION")
-    if v ~= nil then RMS_Config.CORE.CONTRACT_VEHICLE_PROTECTION = v end
-
-    v = getXMLFloat(xmlFile, root .. ".AI_WORKER_TARGET_STRESS")
-    if v ~= nil then RMS_Config.CORE.AI_WORKER_PID.TARGET_STRESS = v end
-
-    v = getXMLFloat(xmlFile, root .. ".AI_WORKER_MIN_SPEED")
-    if v ~= nil then RMS_Config.CORE.AI_WORKER_PID.MIN_SPEED = v end
-
     -- maintenance
     v = getXMLBool(xmlFile, root .. ".INSTANT_INSPECTION")
     if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_INSPECTION = v end
 
-    v = getXMLBool(xmlFile, root .. ".PARK_VEHICLE")
-    if v ~= nil then RMS_Config.MAINTENANCE.PARK_VEHICLE = v end
+    v = getXMLBool(xmlFile, root .. ".INSTANT_MAINTENANCE_REPAIR")
+    if v == nil then v = getXMLBool(xmlFile, root .. ".INSTANT_REPAIR") end
+    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR = v end
 
-    v = getXMLBool(xmlFile, root .. ".WARRANTY_ENABLED")
-    if v ~= nil then RMS_Config.MAINTENANCE.WARRANTY_ENABLED = v end
+    v = getXMLBool(xmlFile, root .. ".INSTANT_BODYWORK")
+    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_BODYWORK = v end
 
-    v = getXMLFloat(xmlFile, root .. ".PRICE_MULTIPLIER")
-    if v ~= nil then RMS_Config.MAINTENANCE.GLOBAL_SERVICE_PRICE_MULTIPLIER = v end
-
-    v = getXMLFloat(xmlFile, root .. ".TIME_MULTIPLIER")
-    if v ~= nil then RMS_Config.MAINTENANCE.GLOBAL_SERVICE_TIME_MULTIPLIER = v end
+    v = getXMLBool(xmlFile, root .. ".INSTANT_OVERHAUL")
+    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_OVERHAUL = v end
 
     -- workshop
     v = getXMLBool(xmlFile, root .. ".DEALER_ALWAYS_AVAILABLE")
@@ -1436,16 +1355,6 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLFloat(xmlFile, root .. ".IDLE_CURRENT_A")
     if v ~= nil then RMS_Config.ELECTRICAL.IDLE_CURRENT_A = v end
 
-    -- field care
-    v = getXMLFloat(xmlFile, root .. ".CLOGGING_SPEED")
-    if v ~= nil then RMS_Config.FIELD_CARE.CLOGGING_SPEED = v end
-
-    v = getXMLFloat(xmlFile, root .. ".VISUAL_INSPECTION_DURATION")
-    if v ~= nil then RMS_Config.FIELD_CARE.VISUAL_INSPECTION_DURATION = v end
-
-    v = getXMLFloat(xmlFile, root .. ".LUBRICATION_REDUCE_PER_OPERATING_HOUR")
-    if v ~= nil then RMS_Config.FIELD_CARE.LUBRICATION_REDUCE_PER_OPERATING_HOUR = math.clamp(v, 0, 0.05) end
-
     -- drivetrain
     v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_ENABLED")
     if v ~= nil then RMS_Config.DRIVETRAIN.ENABLED = v end
@@ -1456,8 +1365,6 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_WINDUP_DAMAGE")
     if v ~= nil then RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED = v end
 
-    v = getXMLFloat(xmlFile, root .. ".DRIVETRAIN_DIFFLOCK_RELEASE_SPEED")
-    if v ~= nil then RMS_Config.DRIVETRAIN.DIFFLOCK_AUTO_RELEASE_SPEED = math.clamp(v, 10, 40) end
 
     v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_ENABLED")
     if v ~= nil then RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED = v end
@@ -1469,8 +1376,6 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLBool(xmlFile, root .. ".EXHAUST_SMOKE_ENABLED")
     if v ~= nil then RMS_Config.EXHAUST.ENABLED = v end
 
-    v = getXMLFloat(xmlFile, root .. ".EXHAUST_SMOKE_INTENSITY")
-    if v ~= nil then RMS_Config.EXHAUST.INTENSITY = math.clamp(v, 1, 3) end
 
     -- debug
     v = getXMLBool(xmlFile, root .. ".DEBUG_MODE")

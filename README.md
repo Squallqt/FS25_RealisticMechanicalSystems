@@ -2,7 +2,7 @@
 
 In-depth vehicle wear, failure, diagnostics, maintenance, and repair system for Farming Simulator 25.
 
-[![Version](https://img.shields.io/badge/version-0.10.0.0-blue.svg)](#)
+[![Version](https://img.shields.io/badge/version-0.11.0.0-blue.svg)](#)
 [![FS25](https://img.shields.io/badge/FS25-compatible-green.svg)](https://farming-simulator.com/)
 ![Multiplayer](https://img.shields.io/badge/multiplayer-supported-success.svg)
 ![Languages](https://img.shields.io/badge/languages-27-blue.svg)
@@ -20,7 +20,7 @@ Electric vehicles are not supported yet.
 
 Three rules are enough to play without constant breakdowns:
 
-1. **Follow the service interval.** Around `5 operating hours` on average by default. Check it in the workshop, in the vehicle info panel, or in the fleet menu (`P` key), then run `Maintenance`.
+1. **Follow the service interval.** Around `10 operating hours` on average by default. Check it in the workshop, in the vehicle info panel, or in the fleet menu (`P` key), then run `Maintenance`.
 2. **Prepare your machines daily.** Hold `R` near a vehicle for a pre-shift check, clean it with the `Air Blower`, and grease what needs greasing with the `Grease Gun`.
 3. **Do not abuse your equipment.** If it would damage a real machine, it damages this one: overloading, overheating, cold-engine work, wheel slip in mud, oversized implements, speed over rough ground.
 
@@ -36,7 +36,7 @@ Inspection reports give an approximate status (`OPTIMAL`, `REQUIRED`, `OVERDUE`)
 
 ## Wear Factors
 
-Normal wear depends on system activity. Hydraulics and PTO wear only while active; the other enabled systems retain their idling and downtime wear. Overdue service adds wear while the affected system operates, and poor-quality consumables increase overall Condition wear.
+Normal wear depends on system activity. Hydraulics and PTO wear only while active; the other enabled systems retain their idling and downtime wear. Passive wear continues outdoors and stops under cover; it also affects the service level. Overdue service adds wear while the affected system operates, and poor-quality consumables increase overall Condition wear.
 
 | System | Wear factors |
 | --- | --- |
@@ -49,7 +49,7 @@ Normal wear depends on system activity. Hydraulics and PTO wear only while activ
 | **Fuel** | Fuel below `20%` under load; fuel colder than `20C` above `50%` load; idling past `60` seconds; fuel consumption above `80%` of the configured maximum |
 | **PTO** | Active drive; continuous native PTO utilization above `55%`, reaching its full overload factor at `90%`; unique engagement cycles are recorded for fault selection without instant engagement damage |
 
-AI workers wear a machine exactly like a player. They are protected by behaviour instead: the helper slows down on overload or overheating, never stalls, and is never blocked by a hard start.
+AI workers wear a machine exactly like a player. They are protected by behaviour instead: the helper drives like a careful driver. It slows down as soon as the machine counts an overload, whether from low revs, a long hard pull, wheel slip or overheating, never below `5 km/h`, the game's own field work floor, and picks its pace back up once the load eases. It never stalls and is never blocked by a hard start. An overload never sends it home; only a breakdown that leaves the machine unable to work stops it. The game's helpers, Courseplay and AutoDrive are all driven this way, contract machines included, and the player's cruise control speed is never touched.
 
 ## Breakdowns
 
@@ -121,13 +121,17 @@ Leaving a diesel idling also leaves its mark. Past a long idle under `30%` load,
 
 ## Workshop
 
-Four main procedures, plus fluid Top up, with options that change duration, cost, and quality. All of them take real time, and the workshop closes overnight: work in progress resumes the next opening. Planning when a machine goes in matters as much as paying for it.
+The workshop offers Inspection, Maintenance, Repair, Overhaul, fluid Top up and Repainting. By default, work takes real time and pauses when the workshop closes overnight; separate settings can make maintenance and repair, overhauls or repainting instant.
+
+Every price is a real dealer's price for the machine's size, its engine or, for paint, its body, never a share of what the machine cost. The Economic Difficulty scales it like the game's wages, and the Maintenance Interval, not the price, sets how often the bills come.
 
 - **Inspection**: `Visual` is quick but can miss things, `Standard` detects faults and reports condition, `Complete Defectoscopy` finds hidden faults and defective parts and gives exact values.
-- **Maintenance**: replaces oils, filters, and fluids, and restores Service. `Minimal` is cheap and partial, `Standard` follows manufacturer spec, `Extended` restores above normal, `Preventive` also strips Stress from the worst systems. The cost is **fixed**, so servicing at `90%` costs the same as at `10%`.
+- **Maintenance**: engine oil, transmission oil and coolant each have their own change interval; the transmission oil lasts twice as long as the engine oil, the coolant ten times. `Standard` changes the engine oil and blows out the air filter; `Extended` changes every oil and replaces the air filter; `Preventive` changes every fluid, replaces the air filter and also strips Stress from the worst systems. Fluids a level does not change are topped up. The bill lists labour and filters, plus the fluids. The cost is **fixed**, so servicing at `90%` costs the same as at `10%`.
 - **Repair**: `Quick Fix` suppresses the symptoms without fixing the fault, which returns. `Standard` replaces the failed part and cuts Stress. `Advanced` replaces everything around it and zeroes Stress.
+- **Dealer warranty**: for an owned vehicle under 12 months and 20 operating hours, a `Standard` repair with `OEM` parts and the fluids required by that repair is free at the dealer. Farm and mobile workshops charge normally.
 - **Top up**: fills whatever fluid the machine is missing, for the price of the fluids alone. Quick, and the button disappears once everything is full.
-- **Overhaul**: restores Condition on one system or all of them, clears breakdowns, and includes maintenance unless partial. `Partial`, `Standard`, and `Full` differ in scope and price. Paintwork can be renewed for a fee. It never restores a flat `100%`: the result depends on maintainability, on how many overhauls the machine already had, and on chance.
+- **Overhaul**: available when at least one system falls below `50%` Condition. `Partial` brings the selected system to at least `75%`; `Standard` brings every system to at least `75%`; `Full` restores every system to `100%`. Every tier clears Stress and supported breakdowns in the systems it treats. Standard and Full also renew Service and replace fluids.
+- **Repainting**: `Touchups` repair minor paint damage without changing colours. `Full repaint` renews the finish and lets you keep the current colours or choose from the vehicle's own configurable colours, including compatible added configurations. Changing colours through the dealer's vehicle configurator also incurs the RMS repaint price.
 
 Maintenance and repair let you pick part quality between `Used`, `Aftermarket`, `OEM`, and `Premium`. Cheaper parts are more often defective: on maintenance they shorten the interval and accelerate wear, on repair they bring the same fault back. Complete Defectoscopy detects them.
 
@@ -136,7 +140,7 @@ Maintenance and repair let you pick part quality between `Used`, `Aftermarket`, 
 - **Pre-shift check**: hold `R` near a vehicle for a go or no go verdict, the machine and its next service, the four fluid levels, radiator and air filter fouling, and reveal faults a real visual check would catch. Takes seconds, works anywhere.
 - **Fluids**: engine oil, coolant, transmission oil and hydraulic fluid each have a level, read against the minimum mark of their gauge. Engine oil is burnt off with the work done, faster under load and much faster as the engine wears, so a healthy engine always reaches its next service above the mark whatever interval you set while a tired one asks to be topped up; the other three only drop through a leak. Under the mark the machine only asks for a top up and still works normally; it is under `50%` that a machine short of coolant or transmission oil runs hot, and one short of engine oil or hydraulic fluid wears faster. The workshop `Top up` service fills what is missing for the price of the fluids, maintenance and overhaul replace everything, and a repair puts back what the fault it fixed had let out.
 - **Wrong fluid**: manually transferring an incompatible product contaminates only the selected circuit. Depending on the proportion in the mixture, system wear can rise to three times its normal rate, heat can increase, and contaminated hydraulic fluid can slow hydraulic functions by up to `25%`. The transfer requires explicit confirmation, and only a complete fluid replacement clears the contamination. Workshop procedures only reserve compatible products.
-- **Air Blower**: clears dust from the cooling pack and the air filter. A clean radiator will not overheat. Blowing an air filter out only recovers part of it, since what is embedded in the media stays until maintenance replaces it, and washing the machine never touches it.
+- **Air Blower**: clears dust from the cooling pack and the air filter. Blowing an air filter out only recovers part of it, since what is embedded in the media stays until Standard, Extended, or Preventive maintenance replaces it. Washing the vehicle exterior does not clear either component. Their clogging speed follows the game's dirt speed independently of the RMS service interval.
 - **Grease Gun**: restores lubrication on machines that need it, harvesters above all. Lubrication drops `10%` per period only if the machine was neither operated, greased, nor serviced during it; inspection alone does not count.
 - **Aiming a hand tool**: point it directly at the machine within `5 m`.
 
@@ -145,11 +149,11 @@ Maintenance and repair let you pick part quality between `Used`, `Aftermarket`, 
 Every brand carries two ratings based on its real-world reputation, both shown in the shop.
 
 - **Reliability** slows Condition loss, lowers base breakdown probability, and lengthens service intervals. Premium European and American brands generally rate higher than budget or older Eastern European ones.
-- **Maintainability** cuts the money and time of every workshop operation and improves how much an overhaul recovers. Simple older machines usually beat modern electronics-heavy ones.
+- **Maintainability** cuts the money and time of workshop operations. Simple older machines usually beat modern electronics-heavy ones.
 
 Vehicles also age: production year drives thermostat behaviour, overheat protection, how much the machine smokes, and which breakdowns can occur at all.
 
-Three settings cover the exhaust. `Exhaust Smoke` turns the model on or off and `Smoke Intensity` scales opacity from `100%` to `300%`, neither of them changing the calculated causes or colours; both belong to the server. `Plume Detail` belongs to each player instead: it sets how many layers of smoke their own machine draws, down to none, and never affects anyone else. It can only reduce what the server allows. Turning the model off restores the vehicle's native exhaust.
+Two settings cover the exhaust. `Exhaust Smoke` turns the model on or off for the server. `Plume Detail` belongs to each player: it sets how many layers of smoke their own machine draws, down to none, and never affects anyone else. It can only reduce what the server allows. Turning the model off restores the vehicle's native exhaust.
 
 ## Buying Used
 
@@ -164,6 +168,8 @@ The hours set the odds, the brand shifts them:
 | 45 h | 32% | 51% |
 
 Run an `Inspection` before the machine sees any work. `Standard` finds most of it, `Complete Defectoscopy` finds all of it along with the exact condition of every system. Skipping that step is how a bargain becomes a breakdown in the middle of a field.
+
+A machine loses value with the hours it has run against the Vehicle Lifespan, then with age, as the game depreciates it; its condition shades that value, and the repairs and paint it needs are taken off. An overhaul restores its reliability, not its value: late in life, a big repair can cost more than the machine is worth, and replacing it becomes the better deal.
 
 ## Thermal Model
 
@@ -199,9 +205,9 @@ Diesel preheating starts automatically below `25 C`. It remains short in mild we
 
 ### Running a service
 
-1. Drive the vehicle to a workshop, or use a mobile workshop.
-2. Pick `Inspection` first if you are unsure what is wrong, then `Maintenance`, `Repair`, or `Overhaul`.
-3. Choose the scope and part quality; both change price and duration.
+1. Take the vehicle to a workshop. Available services depend on the workshop type.
+2. Pick `Inspection` first if you are unsure what is wrong, then choose the needed service, including `Top up` or `Repainting`.
+3. Review the available options, price and duration before starting.
 4. Read the report afterwards. The maintenance log keeps every past procedure.
 
 ### Reading the warning signs
@@ -210,6 +216,13 @@ Diesel preheating starts automatically below `25 C`. It remains short in mild we
 2. Listen for knocking, whistling, and grinding, and read the exhaust: black means the engine is choking on fuel it cannot burn, blue means it is burning oil, white means fuel is leaving the engine unburnt. Stage 1 is otherwise silent.
 3. Run a pre-shift check when something feels off, then a workshop inspection if it does not clear.
 4. Repair early. A stage 1 fault costs a fraction of a critical one.
+
+### Leaving a machine out of RMS
+
+1. Open the fleet menu (`P` key) and select the machine.
+2. In the `RMS Vehicles` tab, press `X` (`Exclude from RMS`): the machine stops wearing and moves to the `Other Vehicles` tab.
+3. In the `Other Vehicles` tab, the `Reason` column says why each machine is left out, and `X` (`Include in RMS`) brings a machine back in. A machine that was never tracked starts from its resale value, like a used one.
+4. Electric machines always stay out, and so have no button. The choice takes the right to sell the farm's vehicles, and a machine under a workshop procedure cannot be excluded until it is done.
 
 ## Console Commands
 
@@ -225,13 +238,10 @@ For testing and debugging. Most require you to be inside a vehicle that supports
 | `rms_setCondition <0.0-1.0>` | Sets Condition on every enabled system |
 | `rms_setSystemCondition <system> <0.0-1.0>` | Sets Condition on one system |
 | `rms_setSystemStress <system> <value>` | Sets Stress on one system |
-| `rms_setSystemStressMultiplier <value> [system]` | Sets the stress accumulation multiplier |
 | `rms_setService <0.0-1.0>` | Sets the Service level |
 | `rms_resetVehicle` | Resets condition, service, and active breakdowns |
 | `rms_reinitializeVehicle` | Recomputes condition from vanilla resale price, as on first load |
 | `rms_setExcluded <true\|false>` | Excludes the vehicle or brings it back in; prints the exclusion state without an argument |
-| `rms_startService <type> [count]` | Starts `inspection`, `maintenance`, `repair`, or `overhaul` |
-| `rms_finishService` | Finishes the active service instantly |
 | `rms_getServiceState` | Prints workshop and service state |
 | `rms_showServiceLog [index]` | Prints the service log, or one entry in detail |
 | `rms_getDebugVehicleInfo [1]` | Prints vehicle debug info, with specializations when given `1` |
@@ -260,7 +270,7 @@ Commands that take a system argument accept these names, case-insensitive:
 - `fuel`
 - `pto`
 
-This applies to commands such as `rms_setSystemCondition`, `rms_setSystemStress`, and `rms_setSystemStressMultiplier`.
+This applies to commands such as `rms_setSystemCondition` and `rms_setSystemStress`.
 
 Examples: `rms_setSystemCondition engine 0.75`, `rms_setSystemStress fuel 0.2`.
 
@@ -283,6 +293,53 @@ rms_printSpecVar rawTransmissionTemperature
 ```
 
 ## Changelog
+
+### v0.11.0.0
+
+- Removed the System Stress Rate setting and its console command
+- Removed the Passive Wear setting
+- Removed the Smoke Intensity setting
+- Removed the Park Vehicle During Maintenance setting
+- Removed the Warranty setting; dealer warranty now covers standard OEM repairs and required fluids under 12 months and 20 hours
+- Removed the Procedure Duration Multiplier setting
+- Removed the Procedure Price Multiplier setting
+- Removed the Clogging Speed setting; radiator and air filter clogging now follow the game's dirt speed independently of the RMS service interval
+- Removed the Differential Lock Release Speed setting; the lock now releases above 10 km/h
+- Removed the Pre-shift Check Duration setting; the check now lasts as long as its sound
+- Removed the Grease Consumption Rate setting; grease now drops 5% per operating hour
+- Removed the AI Overload and Overheat Control, Stop AI on Critical Overload, Contract Vehicle Protection, AI Sensitivity and AI Minimum Speed settings; every AI worker now drives with care on its own
+- Added Repainting to the workshop: repair paint damage or choose new colours, including through dealer configuration at the RMS repaint price
+- Added separate instant completion settings for maintenance and repair, repainting, and mechanical overhauls
+- Fixed the issue preventing vehicles from starting with the GIANTS Ignition Key
+- Reworked overhauls for predictable results: Partial and Standard bring systems into good condition; Full restores them to like new
+- Added compatibility with FS25_mobileWorkshop: inspections and repairs can now be started from its mobile workshop
+- Improved the workshop, inspection report, and maintenance log interfaces
+- Simplified maintenance deadlines, now shown in whole hours
+- Fixed double charges when using farm-owned fluids for workshop top-ups
+- Fixed some modded trucks and machines being ignored by RMS
+- Fixed an empty hydraulic oil circuit that could never be refilled on some cars and utility vehicles; they no longer have hydraulics in RMS
+- Fixed a full overhaul being undone when the save was reloaded
+- Fixed parked machines missing from the RMS fleet list for players joining a server
+- Fixed some modded cars clogging their radiator and air filter on the road
+- Fixed grease and fluid leaks draining far too fast with the Ingame Time Operating Hours mod
+- Removed RMS Reliability and Ease of Maintenance ratings from the shop for machines RMS does not track
+- Added to the Other Vehicles tab why each vehicle is left out of RMS, with a button to include or exclude it
+- Rebalanced fluid capacities to match the size of each machine's engine
+- Added a line-by-line bill and the cost per operating hour to the Technical Record
+- Added a single transmission and hydraulic oil to most tractors, as in reality; Fendt, Valtra and Lindner keep two separate oils
+- Added separate change intervals for engine oil, transmission oil and coolant; each maintenance level says which ones it changes
+- Removed the Minimal maintenance; the workshop Top up refills the fluids
+- Fixed fluid barrels arriving empty on maps and mod lists that add many products; barrels no longer depend on the game's fill types. Fluid containers already present in a save will disappear after the update; new ones must be purchased.
+- Fixed the vehicle value in the RMS workshop showing 10% more than selling from the menus pays; it now matches the RMS fleet list
+- Reworked workshop prices: inspections, maintenance, repairs, overhauls and repainting now cost real dealer prices sized on the machine and scaled by the Economic Difficulty, instead of a share of its price and age; the maintenance bill shows labour and filters
+- Reworked the vehicle value: it now falls with the hours run against the Vehicle Lifespan, then with age; an overhaul restores reliability, not value
+- Changed the default Maintenance Interval from 5 to 10 hours
+- Fixed the noises of worn bearings, vibrations and seized wheels no longer changing with speed above 15 km/h
+- Fixed the pre-shift inspection sound not playing on a parked machine
+- Fixed the breakdown noises of an idling machine going unheard by other players on a server
+- Fixed AI workers, Courseplay and AutoDrive stopping in the field under a heavy load, even without overheating
+- Reworked the AI worker's driving: it slows down while the machine is overloaded, never below 5 km/h, and picks its pace back up once the load eases
+- Fixed the player's cruise control speed being replaced by the machine's top speed after an AI worker's job
 
 ### v0.10.0.0
 

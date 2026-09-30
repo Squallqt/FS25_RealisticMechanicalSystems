@@ -377,7 +377,7 @@ end
 ---Opens the dialog on a log entry that carries a report
 -- @param table vehicle vehicle
 -- @param table logEntry maintenance log entry
-function RMS_ReportDialog.show(vehicle, logEntry)
+function RMS_ReportDialog.show(vehicle, logEntry, parentDialog)
 
     if logEntry == nil or not RealisticMechanicalSystems.getIsLogEntryHasReport(logEntry) then
         log_dbg("Invalid log entry")
@@ -392,6 +392,9 @@ function RMS_ReportDialog.show(vehicle, logEntry)
 
     dialog.maintenanceLog = spec.maintenanceLog or {}
     dialog.vehicle = vehicle
+    dialog.parentDialog = parentDialog
+    dialog.workshopContext = parentDialog ~= nil and (parentDialog == RMS_WorkshopDialog.INSTANCE
+        or parentDialog.workshopContext == true)
     dialog.lastReport = logEntry
     dialog.isCompleteInspection = RealisticMechanicalSystems.getIsCompleteReport(logEntry)
 
@@ -1101,11 +1104,31 @@ function RMS_ReportDialog:onClickBack()
     self:close()
 end
 
+function RMS_ReportDialog:onClickSummaryTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.SUMMARY)
+end
+
+function RMS_ReportDialog:onClickDiagnosticTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.DIAGNOSTIC)
+end
+
+function RMS_ReportDialog:onClickInterventionsTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.INTERVENTIONS)
+end
+
+function RMS_ReportDialog:onClickTechnicalTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.TECHNICAL)
+end
+
+function RMS_ReportDialog:onWorkshopTabPagingChanged()
+    RMS_WorkshopDialog.onChildTabPagingChanged(self)
+end
+
 ---Selects the technical record tab in the report shell
 function RMS_ReportDialog:onCreate()
     -- The report is a detail view of the technical record, so its tab stays lit.
-    RMS_Utils.mirrorSelectionToChildren(self.reportTechnicalTab)
-    self.reportTechnicalTab:setSelected(true)
+    RMS_Utils.mirrorSelectionToChildren(self.workshopNavTabs[4])
+    self.workshopNavTabs[4]:setSelected(true)
     RMS_Utils.applyScrollSpeed(self.dialogElement)
 end
 
@@ -1114,6 +1137,9 @@ end
 function RMS_ReportDialog:onOpen()
     RMS_ReportDialog:superClass().onOpen(self)
 
+    RMS_WorkshopDialog.initializeChildTabPaging(self, RMS_WorkshopDialog.TAB.TECHNICAL)
+
+    RMS_Utils.resetScrollingTexts(self.dialogElement)
     g_messageCenter:subscribe(MessageType.MONEY_CHANGED, self.updateScreen, self)
 end
 
@@ -1121,6 +1147,8 @@ end
 ---Closes the dialog and releases its subscriptions
 function RMS_ReportDialog:onClose()
     self.vehicle = nil
+    self.parentDialog = nil
+    self.workshopContext = nil
     g_messageCenter:unsubscribeAll(self)
 
     RMS_ReportDialog:superClass().onClose(self)

@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Server-to-client broadcast of the user controlled exclusion flag of a vehicle
+---User controlled exclusion flag of a vehicle, asked by a player to the server and broadcast by the server to the clients
 RMS_VehicleExclusionEvent = {}
 local RMS_VehicleExclusionEvent_mt = Class(RMS_VehicleExclusionEvent, Event)
 
@@ -27,7 +27,7 @@ function RMS_VehicleExclusionEvent.new(vehicle, isExcludedByUser)
 end
 
 
----Called on server side on join
+---Writes the vehicle and the flag
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_VehicleExclusionEvent:writeStream(streamId, connection)
@@ -36,7 +36,7 @@ function RMS_VehicleExclusionEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads the vehicle and the flag
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_VehicleExclusionEvent:readStream(streamId, connection)
@@ -46,19 +46,19 @@ function RMS_VehicleExclusionEvent:readStream(streamId, connection)
 end
 
 
----Applies the received exclusion flag on the client vehicle
+---Applies the flag the server sent, or the one a player asked for when the player may change it
 -- @param Connection connection connection
 function RMS_VehicleExclusionEvent:run(connection)
-    if not connection:getIsServer() then
-        return
-    end
-
     local vehicle = self.vehicle
     if vehicle == nil or not vehicle:getIsSynchronized() or vehicle.setRMSUserExcluded == nil then
         return
     end
 
-    vehicle:setRMSUserExcluded(self.isExcludedByUser, true)
+    if connection:getIsServer() then
+        vehicle:setRMSUserExcluded(self.isExcludedByUser, true)
+    elseif RealisticMechanicalSystems.getCanSetUserExclusion(vehicle, self.isExcludedByUser, connection) then
+        vehicle:setRMSUserExcluded(self.isExcludedByUser)
+    end
 end
 
 
@@ -68,5 +68,17 @@ end
 function RMS_VehicleExclusionEvent.sendToClients(vehicle, isExcludedByUser)
     if g_server ~= nil then
         g_server:broadcastEvent(RMS_VehicleExclusionEvent.new(vehicle, isExcludedByUser), nil, nil, vehicle)
+    end
+end
+
+
+---Asks for a new exclusion flag, applied at once on the server and sent to it from a client
+-- @param table vehicle vehicle
+-- @param boolean isExcludedByUser true to exclude the vehicle
+function RMS_VehicleExclusionEvent.request(vehicle, isExcludedByUser)
+    if g_server ~= nil then
+        vehicle:setRMSUserExcluded(isExcludedByUser)
+    else
+        g_client:getServerConnection():sendEvent(RMS_VehicleExclusionEvent.new(vehicle, isExcludedByUser))
     end
 end

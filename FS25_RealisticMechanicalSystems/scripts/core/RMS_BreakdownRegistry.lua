@@ -548,9 +548,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                             aggregation = "boolean_or",
                             extraData = {
                                 message = "rms_breakdowns_overload_breakdown_stage2_message",
-                                reason = "BREAKDOWN",
-                                disableAi = true,
-                                criticalOverload = true
+                                reason = "BREAKDOWN"
                             }
                         }
                 },

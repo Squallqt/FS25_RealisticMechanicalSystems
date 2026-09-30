@@ -30,23 +30,11 @@
         <text name="rms_settings_section_service_wear" text="Întreținere și uzură"/>
         <text name="rms_settings_section_thermal_model" text="Model termic"/>
         <text name="rms_settings_section_battery_alternator" text="Baterie și alternator"/>
-        <text name="rms_settings_section_preshift_maintenance" text="Întreținere zilnică"/>
-        <text name="rms_settings_section_other" text="Altele"/>
         <text name="rms_settings_section_drivetrain" text="Transmisie și frână de parcare"/>
-        <text name="rms_maintenancePrice_label" text="Multiplicator de preț al intervențiilor"/>
-        <text name="rms_maintenancePrice_tooltip" text="Reglează costul tuturor intervențiilor din atelier, inclusiv inspecțiile, reparațiile și recondiționările. O valoare mai mare le face mai costisitoare."/>
-        <text name="rms_maintenanceDuration_label" text="Multiplicator de durată al intervențiilor"/>
-        <text name="rms_maintenanceDuration_tooltip" text="Reglează durata tuturor intervențiilor din atelier. Cu cât valoarea este mai mare, cu atât durează mai mult fiecare intervenție."/>
         <text name="rms_workshopOpenHour_label" text="Ora de deschidere a atelierului"/>
         <text name="rms_workshopOpenHour_tooltip" text="Intervențiile încep doar de la această oră."/>
         <text name="rms_workshopCloseHour_label" text="Ora de închidere a atelierului"/>
         <text name="rms_workshopCloseHour_tooltip" text="Intervențiile în curs sunt întrerupte la această oră și se reiau la deschiderea atelierului."/>
-        <text name="rms_cloggingSpeed_label" text="Viteză de colmatare"/>
-        <text name="rms_cloggingSpeed_tooltip" text="Reglează viteza cu care radiatorul și filtrul de aer se colmatează în timpul lucrului în praf, pleavă și resturi vegetale. Valorile mai mari accelerează colmatarea."/>
-        <text name="rms_fieldInspectionDuration_label" text="Durata verificării înainte de tură"/>
-        <text name="rms_fieldInspectionDuration_tooltip" text="Stabilește durata unei verificări înainte de tură, în secunde reale."/>
-        <text name="rms_lubricationReducePerOperatingHour_label" text="Rată de consum a unsorii"/>
-        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="Stabilește cantitatea de unsoare consumată pe oră de funcționare."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Atelierul reprezentanței 24 h/24"/>
         <text name="rms_dealerWorkshopAvailable_tooltip" text="Menține atelierul reprezentanței disponibil la orice oră din zi și din noapte."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Atelier mobil 24 h/24"/>
@@ -56,55 +44,37 @@
         <text name="rms_ownWorkshopAvailable_label" text="Atelier propriu 24 h/24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Menține atelierul tău disponibil la orice oră din zi și din noapte."/>
         <text name="rms_instantInspection_label" text="Inspecție instantanee"/>
-        <text name="rms_instantInspection_tooltip" text="Când opțiunea este activată, toate inspecțiile se încheie instantaneu, fără trecerea timpului. Notă: inspecția vizuală devine indisponibilă."/>
-        <text name="rms_parkVehicle_label" text="Parchează vehiculul în timpul întreținerii"/>
-        <text name="rms_parkVehicle_tooltip" text="Când opțiunea este activată, vehiculele aflate în întreținere sunt omise la comutarea cu TAB."/>
-        <text name="rms_warrantyEnabled_label" text="Garanție pentru echipamente noi"/>
-        <text name="rms_warrantyEnabled_tooltip" text="Aplică garanția reparațiilor vehiculelor noi, până la 20 de ore de funcționare sau 12 luni. Numai piesele originale sunt acoperite gratuit."/>
-        <text name="rms_aiOverloadAndOverheatControl_label" text="Control IA al suprasarcinii și supraîncălzirii"/>
-        <text name="rms_aiOverloadAndOverheatControl_tooltip" text="Când opțiunea este activată, lucrătorul IA reduce sarcina pentru a preveni suprasarcina sau supraîncălzirea motorului."/>
-        <text name="rms_aiDisableOnCriticalOverload_label" text="Oprește IA la suprasarcină critică"/>
-        <text name="rms_aiDisableOnCriticalOverload_tooltip" text="Oprește lucrătorii IA și AutoDrive în cazul unei suprasarcini critice."/>
-        <text name="rms_contractVehicleProtection_label" text="Protecția vehiculelor de contract"/>
-        <text name="rms_contractVehicleProtection_tooltip" text="Aplică vehiculelor de contract oprirea IA la suprasarcină critică și reglarea vitezei la suprasarcină sau supraîncălzire."/>
-        <text name="rms_aiWorkerTargetStress_label" text="Sensibilitatea IA"/>
-        <text name="rms_aiWorkerTargetStress_tooltip" text="Stabilește cât de devreme reacționează lucrătorul IA la suprasarcină și supraîncălzire. Cu cât sensibilitatea este mai mare, cu atât lucrătorul încetinește mai devreme; cu cât este mai mică, cu atât lasă sarcina să crească înainte de a interveni."/>
-        <text name="rms_aiWorkerTargetStress_relaxed" text="Scăzută"/>
-        <text name="rms_aiWorkerTargetStress_balanced" text="Moderată"/>
-        <text name="rms_aiWorkerTargetStress_sensitive" text="Ridicată"/>
-        <text name="rms_aiWorkerTargetStress_verySensitive" text="Foarte ridicată"/>
-        <text name="rms_aiWorkerMinSpeed_label" text="Viteză minimă IA"/>
-        <text name="rms_aiWorkerMinSpeed_tooltip" text="Stabilește cea mai mică viteză a pilotului automat pe care o poate folosi lucrătorul IA când încetinește pentru a evita suprasarcina sau supraîncălzirea."/>
+        <text name="rms_instantInspection_tooltip" text="Când opțiunea este activată, inspecțiile din atelier se încheie instantaneu. Lucrările de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantMaintenanceRepair_label" text="Întreținere și reparații instantanee"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Când opțiunea este activată, întreținerea și reparațiile din atelier se încheie instantaneu. Lucrările de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantBodywork_label" text="Vopsire instantanee"/>
+        <text name="rms_instantBodywork_tooltip" text="Când opțiunea este activată, vopsirea din atelier se încheie instantaneu. Lucrările de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantOverhaul_label" text="Recondiționare mecanică instantanee"/>
+        <text name="rms_instantOverhaul_tooltip" text="Când opțiunea este activată, recondiționarea mecanică din atelier se încheie instantaneu. Lucrările de acest tip deja în curs se încheie și ele imediat."/>
         <text name="rms_debugMode_label" text="Mod de depanare"/>
         <text name="rms_debugMode_tooltip" text="Activează panoul de depanare și jurnalele detaliate din consolă."/>
         <text name="rms_warningMessages_label" text="Mesaje de avertizare"/>
         <text name="rms_warningMessages_tooltip" text="Activează sau dezactivează avertizările din joc, precum motor rece sau supraîncălzire."/>
         <text name="rms_serviceInterval_label" text="Interval de întreținere"/>
-        <text name="rms_serviceInterval_tooltip" text="Stabilește intervalul de bază al întreținerii în ore, după care este necesară întreținerea. Intervalul real depinde de marca și vârsta vehiculului, precum și de calitatea întreținerilor anterioare."/>
+        <text name="rms_serviceInterval_tooltip" text="Stabilește în ore intervalul de schimb al uleiului de motor. Uleiul de transmisie și hidraulic se schimbă la fiecare două intervale, iar lichidul de răcire la fiecare zece. Intervalul real depinde de marca vehiculului."/>
         <text name="rms_vehicleLifespan_label" text="Durata de viață a vehiculului"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Stabilește durata de viață de bază a vehiculului în ore, după care starea sa ajunge la 0%. Cu cât starea se apropie de zero, cu atât vehiculul devine mai puțin fiabil."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Stabilește durata de viață de bază a vehiculului în ore, după care starea sa ajunge la 0%. Cu cât starea se apropie de zero, cu atât vehiculul devine mai puțin fiabil. Și valoarea vehiculului scade pe parcursul acestor ore."/>
         <text name="rms_reinitializeVehicles_label" text="Resetează flota"/>
         <text name="rms_reinitializeVehicles_text" text="Resetează"/>
         <text name="rms_reinitializeVehicles_tooltip" text="Realiniază starea flotei la durata de viață selectată. Avariile curente sunt șterse."/>
         <text name="rms_reinitializeVehiclesConfirm_title" text="Resetezi flota?"/>
         <text name="rms_reinitializeVehiclesConfirm_message" text="Realiniezi flota la durata de viață selectată? Avariile curente vor fi șterse."/>
         <text name="rms_reinitializeVehicles_result" text="Vehicule resetate: %d. Neatinse: %d."/>
-        <text name="rms_downtimeWear_label" text="Uzură pasivă"/>
-        <text name="rms_downtimeWear_tooltip" text="Stabilește rata uzurii pasive când un vehicul staționează, ca procent din rata de uzură de bază (Durata de viață a vehiculului). De exemplu, 5% cu durata de viață implicită de 100 de ore înseamnă că fiecare sistem pierde aproximativ 1% din stare după circa 20 de ore de staționare. Notă: uzura pasivă este dezactivată când vehiculul este depozitat sub acoperiș."/>
         <text name="rms_generalWearEnabled_label" text="Uzură cauzată de vechime"/>
         <text name="rms_generalWearEnabled_tooltip" text="Pe măsură ce vehiculul se uzează, fiecare sistem primește mici penalizări ale caracteristicilor principale, precum puterea motorului, viteza hidraulică sau eficiența frânării. Efectul se activează după prima treime a duratei de viață, dar devine cu adevărat vizibil abia după a doua treime și se intensifică spre sfârșitul vieții utilajului."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fum de eșapament"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Controlează fumul de eșapament după starea reală a motorului. Este negru când combustibilul depășește aerul disponibil: accelerare bruscă, motor forțat la turație joasă, ralanti prelungit la sarcină mică, filtru de aer colmatat sau injecție uzată. Este albastru când un motor uzat arde ulei și alb când combustibilul iese nears. Norul de fum crește și odată cu efortul motorului. Utilajele vechi scot mult mai mult fum decât cele moderne, care aproape nu scot fum cât timp nimic nu este grav defect."/>
-        <text name="rms_exhaustSmokeIntensity_label" text="Intensitatea fumului"/>
-        <text name="rms_exhaustSmokeIntensity_tooltip" text="Reglează vizibilitatea fumului fără a-i schimba cauzele. Valorile mari fac simptomele mai ușor de observat de la distanță."/>
         <text name="rms_exhaustSmokeDetail_label" text="Detaliul fumului (pe acest computer)"/>
         <text name="rms_exhaustSmokeDetail_tooltip" text="Stabilește cât fum de eșapament este redat pe computerul tău, fără a schimba nimic pentru ceilalți jucători. Reducerea valorii elimină straturile exterioare ale fumului și scade solicitarea unei plăci grafice modeste. Poate doar să reducă ceea ce permite serverul."/>
         <text name="rms_exhaustSmokeDetail_full" text="Complet"/>
         <text name="rms_exhaustSmokeDetail_reduced" text="Redus"/>
         <text name="rms_exhaustSmokeDetail_minimal" text="Minim"/>
         <text name="rms_exhaustSmokeDetail_none" text="Fără"/>
-        <text name="rms_systemStressRate_label" text="Rată de acumulare a solicitării"/>
-        <text name="rms_systemStressRate_tooltip" text="Stabilește viteza cu care se acumulează solicitarea în sisteme din cauza suprasarcinii, supraîncălzirii, patinării roților și altor condiții severe de utilizare. Solicitarea influențează direct probabilitatea unei avarii: cu cât un sistem acumulează mai multă solicitare, cu atât avaria devine mai probabilă."/>
         <text name="rms_batteryCapacity_label" text="Capacitatea bateriei"/>
         <text name="rms_batteryCapacity_tooltip" text="Reglează capacitatea maximă utilizabilă a bateriei. O valoare apropiată de 150 Ah corespunde unei baterii reale, dar la acest nivel aproape că nu vei întâmpina probleme de descărcare."/>
         <text name="rms_option_off" text="Dezactivat"/>
@@ -132,8 +102,6 @@
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="Adaugă selectorului o poziție AUTO: puntea față se cuplează automat la patinarea roților sau la viteza de lucru sub sarcină și se decuplează pe drum. Vehiculele lăsate în AUTO revin la 4x4 când această opțiune este dezactivată."/>
         <text name="rms_drivetrainWindupDamage_label" text="Deteriorare prin solicitarea transmisiei"/>
         <text name="rms_drivetrainWindupDamage_tooltip" text="Virarea pe o suprafață cu aderență ridicată, cu diferențialele blocate, solicită transmisia și o deteriorează în timp. Dezactivează această opțiune pentru o experiență mai permisivă."/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_label" text="Viteză de dezactivare a blocării diferențialului"/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_tooltip" text="Blocările diferențialului se dezactivează automat peste această viteză și se reactivează sub ea cât timp sunt solicitate."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Frână de parcare"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Adaugă o frână de parcare tuturor vehiculelor gestionate, acționată cu propria tastă. Frâna acționată ține utilajul pe loc și ignoră accelerația."/>
         <text name="rms_drivetrainParkBrakeAuto_label" text="Frână de parcare automată"/>
@@ -156,8 +124,6 @@
         <text name="rms_ws_section_current_intervention" text="Intervenție în curs"/>
         <text name="rms_ws_label_last_check" text="Ultima verificare"/>
         <text name="rms_ws_label_workshop_state" text="Starea atelierului"/>
-        <text name="rms_ws_label_intervention" text="Intervenție"/>
-        <text name="rms_ws_label_addon" text="Opțiune"/>
         <text name="rms_ws_label_more_parts" text="+ încă %s"/>
         <text name="rms_ws_label_committed_cost" text="Cost angajat"/>
         <text name="rms_ws_label_finish_time" text="Ora finalizării"/>
@@ -166,12 +132,10 @@
         <text name="rms_ws_info_inspection_reveals" text="O inspecție poate descoperi și alte defecte."/>
         <text name="rms_ws_status_ready_title" text="Atelier pregătit"/>
         <text name="rms_ws_status_ready_hint" text="Selectează o intervenție. Opțiunile, piesele și prețul vor fi confirmate înainte de începere."/>
-        <text name="rms_ws_status_no_intervention" text="Nicio intervenție în curs"/>
         <text name="rms_ws_label_value" text="Valoarea vehiculului"/>
         <text name="rms_ws_label_age" text="Vechime"/>
         <text name="rms_ws_label_operating_hours" text="Ore de funcționare"/>
         <text name="rms_ws_label_service" text="Nivel de întreținere"/>
-        <text name="rms_ws_label_service_interval" text="Interval de întreținere"/>
         <text name="rms_ws_label_next_service" text="Următoarea întreținere"/>
         <text name="rms_ws_value_service_overdue" text="depășit cu %s"/>
         <text name="rms_ws_label_condition" text="Stare"/>
@@ -181,17 +145,11 @@
         <text name="rms_ws_label_maintenance_log" text="Jurnal de întreținere"/>
         <text name="rms_ws_label_last_report" text="Ultimul raport"/>
         <text name="rms_ws_label_last_maintenance" text="Ultima întreținere"/>
-        <text name="rms_ws_table_header_part" text="Piesă"/>
-        <text name="rms_ws_table_header_price" text="Preț"/>
-        <text name="rms_ws_table_header_description" text="Descriere"/>
-        <text name="rms_ws_table_header_stage" text="Stadiu"/>
-        <text name="rms_ws_table_header_repair_select" text="Reparație"/>
         <text name="rms_ws_task_inspection" text="Inspecție"/>
         <text name="rms_ws_task_maintenance" text="Întreținere"/>
         <text name="rms_ws_task_overhaul" text="Recondiționare"/>
         <text name="rms_ws_info_no_breakdowns" text="Nicio avarie cunoscută. Este posibil să existe o avarie nedetectată."/>
         <text name="rms_ws_status_in_progress_short_format" text="%s în curs..."/>
-        <text name="rms_ws_status_initial" text="Se încarcă starea..."/>
         <text name="rms_ws_status_in_progress_format" text="%s în curs până la %s"/>
         <text name="rms_ws_status_open" text="Atelierul este deschis"/>
         <text name="rms_ws_status_closed" text="Atelierul este închis"/>
@@ -206,7 +164,6 @@
         <text name="rms_ws_action_choice_overhaul" text="Recondiționare mecanică"/>
         <text name="rms_ws_action_choice_refill" text="Completarea fluidelor"/>
         <text name="rms_ws_action_cancel_service" text="Anulează intervenția"/>
-        <text name="rms_ws_button_show" text="Afișează"/>
         <text name="rms_ws_age_unit" text="luni"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="Da"/>
@@ -223,11 +180,15 @@
         <text name="rms_log_recorded_interventions_title" text="Intervenții înregistrate"/>
         <text name="rms_log_last_intervention_title" text="Ultima intervenție"/>
         <text name="rms_log_hours" text="Ore de funcționare"/>
-        <text name="rms_log_title" text="Jurnal de întreținere"/>
         <text name="rms_log_total_cost_title" text="Cost total"/>
         <text name="rms_log_total_breakdowns_count_title" text="Avarii reparate"/>
         <text name="rms_log_type" text="Tip de intervenție"/>
         <text name="rms_log_cost_per_month_title" text="Cost lunar"/>
+        <text name="rms_log_cost_per_hour_title" text="Cost pe oră de funcționare"/>
+        <text name="rms_log_invoice_title" text="Detaliile facturii"/>
+        <text name="rms_log_invoice_workshop_flat_rate" text="Tarif fix atelier"/>
+        <text name="rms_log_invoice_labour" text="Manoperă"/>
+        <text name="rms_log_invoice_filters" text="Filtre"/>
         <text name="rms_log_cancelled_desc" text="Intervenție anulată"/>
         <text name="rms_log_ownership_months_title" text="Durata deținerii"/>
         <text name="rms_log_overhaul_desc_with_painting" text="Vehicul revopsit"/>
@@ -575,10 +536,9 @@
         <text name="rms_option_menu_option_two_title_overhaul" text="Sistem de recondiționat"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Dacă intervenția identifică avarii, aceasta este urmată automat de o reparație standard cu piese originale."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="După reparație, se efectuează automat o întreținere standard cu consumabile originale."/>
-        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="Adaugă acestei recondiționări revopsirea completă a vehiculului."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Recondiționare parțială: acoperă numai sistemul selectat, elimină avariile acestuia, înlătură solicitarea mecanică și îi restabilește starea. Fluidul asociat este înlocuit dacă există."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Recondiționare standard: acoperă toate sistemele, elimină avariile acceptate, înlătură solicitarea mecanică și înlocuiește toate fluidele. Restabilește un nivel bun al stării."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Recondiționare completă: acoperă toate sistemele, elimină avariile acceptate, înlătură solicitarea mecanică și înlocuiește toate fluidele. Restabilește un nivel excelent al stării."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="Recondiționare parțială: aduce sistemul ales în stare bună, repară defecțiunile care pot fi remediate și înlocuiește fluidul aferent la nevoie."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Recondiționare standard: aduce toate sistemele în stare bună, repară defecțiunile care pot fi remediate, înlocuiește fluidele și reînnoiește întreținerea."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Recondiționare completă: aduce toate sistemele la starea de nou, repară defecțiunile care pot fi remediate, înlocuiește fluidele și reînnoiește întreținerea."/>
         <text name="rms_option_menu_price_text" text="Preț"/>
         <text name="rms_option_menu_part_used_description" text="Piese folosite: cost minim, cu un risc de 50% de apariție ulterioară a unui defect."/>
         <text name="rms_option_menu_part_aftermarket_description" text="Piese compatibile: cost redus, cu un risc de 33% de apariție ulterioară a unui defect."/>
@@ -589,9 +549,9 @@
         <text name="rms_option_menu_consumable_oem_description" text="Consumabile originale ale producătorului: preț standard, cu un risc de 10% de apariție ulterioară a unui defect."/>
         <text name="rms_option_menu_consumable_premium_description" text="Consumabile premium: cost suplimentar de 20%, fără risc de defect cauzat de consumabile."/>
         <text name="rms_option_menu_perform_repair" text="Reparație automată"/>
-        <text name="rms_option_menu_perform_renew_paint" text="Revopsire"/>
         <text name="rms_option_menu_perform_maintenance" text="Întreținere automată"/>
         <text name="rms_option_menu_warranty_repair_text" text="Reparație în garanție"/>
+        <text name="rms_warranty_dealer_info" text="Garanție la dealer pentru vehicule deținute sub 12 luni și 20 de ore de funcționare: reparație standard, piese originale și fluide necesare."/>
         <text name="rms_option_menu_duration_text" text="Durată"/>
         <text name="rms_option_menu_duration_instant" text="Instantanee"/>
         <text name="rms_option_menu_finish_time_text" text="Oră de încheiere"/>
@@ -599,27 +559,35 @@
         <text name="rms_option_menu_inspection_visual_description" text="Inspecție vizuală: rapidă și ieftină, caută numai avariile deja active, cu o capacitate redusă de detectare. Raportul nu afișează starea detaliată a componentelor."/>
         <text name="rms_option_menu_inspection_standard_description" text="Inspecție standard: caută avariile active cu o capacitate normală de detectare și generează un raport general, fără valorile detaliate ale stării."/>
         <text name="rms_option_menu_inspection_complete_description" text="Inspecție completă: caută avariile active și potențiale cu o capacitate normală de detectare, apoi furnizează un raport complet cu starea detaliată a componentelor."/>
-        <text name="rms_option_menu_maintenance_minimal_description" text="Întreținere minimă: restabilește parțial nivelul de întreținere și completează numai fluidele lipsă. Următorul interval rămâne redus."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="Întreținere standard: restabilește nivelul de întreținere de referință, înlocuiește uleiul de motor și completează celelalte circuite dacă este necesar."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="Întreținere extinsă: ridică nivelul de întreținere peste valoarea de referință, prelungește următorul interval și înlocuiește toate fluidele."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="Întreținere preventivă: restabilește nivelul de referință, înlocuiește toate fluidele și reduce solicitarea mecanică în cel mult trei sisteme prioritare."/>
+        <text name="rms_option_menu_maintenance_standard_description" text="Întreținere standard: schimbă uleiul de motor și înlocuiește filtrele de ulei și de combustibil, completează celelalte circuite dacă este necesar, curăță radiatorul și suflă filtrul de aer."/>
+        <text name="rms_option_menu_maintenance_extended_description" text="Întreținere extinsă: întreținerea standard, plus schimbul uleiului de transmisie și hidraulic cu un filtru nou. Înlocuiește și filtrul de aer și completează lichidul de răcire."/>
+        <text name="rms_option_menu_maintenance_preventive_description" text="Întreținere preventivă: schimbă toate uleiurile și lichidul de răcire împreună cu filtrele lor și montează un filtru de aer nou. Reduce și solicitarea mecanică în cel mult trei sisteme prioritare."/>
         <text name="rms_option_menu_repair_type_fix_description" text="Reparație provizorie: repune rapid și ieftin utilajul în funcțiune fără a elimina avaria. Aceasta va reapărea după un interval limitat."/>
         <text name="rms_option_menu_repair_type_replacement_description" text="Reparație standard: elimină avaria și înlocuiește componenta defectă. Solicitarea mecanică din sistemul afectat este redusă parțial."/>
         <text name="rms_option_menu_repair_type_advanced_description" text="Reparație avansată: elimină avaria, înlocuiește componenta defectă și înlătură solicitarea mecanică acumulată în sistemul afectat."/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="Intervenția următoare va fi facturată separat. Fluidele necesare vor fi furnizate sau preluate din stoc la începerea acesteia."/>
+        <text name="rms_bodywork_touchup" text="Retușuri"/>
+        <text name="rms_bodywork_full" text="Revopsire completă"/>
+        <text name="rms_bodywork_colors_title" text="Culorile vehiculului"/>
+        <text name="rms_bodywork_keep_color" text="Păstrează culoarea actuală"/>
+        <text name="rms_bodywork_reset_color" text="Actuală"/>
+        <text name="rms_bodywork_wear" text="Deteriorarea vopselei"/>
+        <text name="rms_bodywork_unavailable" text="Indisponibil"/>
+        <text name="rms_bodywork_ineligible" text="Serviciul nu este disponibil pentru acest vehicul sau în acest atelier"/>
+        <text name="rms_bodywork_no_wear" text="Nu există deteriorări ale vopselei de reparat"/>
+        <text name="rms_bodywork_wear_limit" text="Retușurile sunt disponibile până la 30 % deteriorare a vopselei"/>
+        <text name="rms_bodywork_touchup_description" text="Repară deteriorările minore ale vopselei. Culorile actuale rămân neschimbate."/>
+        <text name="rms_bodywork_full_description" text="Reînnoiește vopseaua. Alege culorile disponibile pentru acest vehicul sau păstrează-le pe cele actuale."/>
+        <text name="rms_bodywork_touchup_colors" text="Culoarea actuală se păstrează."/>
+        <text name="rms_bodywork_no_colors" text="Acest vehicul nu are culori selectabile. Culorile actuale se păstrează."/>
+        <text name="rms_bodywork_unavailable_title" text="Serviciu indisponibil"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Raport de inspecție"/>
-        <text name="rms_report_vehicle_name_title" text="Numele vehiculului"/>
-        <text name="rms_report_vehicle_age_title" text="Vechime"/>
-        <text name="rms_report_vehicle_operating_hours_title" text="Ore de funcționare"/>
         <text name="rms_report_vehicle_specs_title" text="Caracteristicile vehiculului"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="Curent maxim al alternatorului"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="Încărcarea bateriei"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="Capacitatea bateriei"/>
-        <text name="rms_report_date_title" text="Dată"/>
         <text name="rms_report_detected_breakdowns_title" text="Avarii detectate"/>
-        <text name="rms_report_inspection_type_title" text="Tip de inspecție"/>
-        <text name="rms_report_inspection_location_title" text="Locul inspecției"/>
         <text name="rms_report_overall_assessment_title" text="Evaluarea generală a stării"/>
         <text name="rms_report_overall_assessment_condition" text="Nivelul stării"/>
         <text name="rms_report_overall_assessment_crit_fail_risk" text="Risc de defecțiune critică"/>
@@ -707,6 +675,10 @@
         <text name="rms_fluid_circuit_coolant" text="Lichid de răcire"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Ulei de transmisie"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Ulei hidraulic"/>
+        <text name="rms_fluid_circuit_transmissionHydraulic" text="Ulei de transmisie și hidraulic"/>
+        <text name="rms_fluid_hud_engineOil" text="Ulei de motor"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Ulei transmisie"/>
+        <text name="rms_fluid_hud_coolant" text="Lichid de răcire"/>
         <text name="rms_fluid_incompatible_title" text="Fluid incompatibil"/>
         <text name="rms_fluid_incompatible_message" text="Acest produs nu este destinat circuitului respectiv. Îl va contamina și poate tripla uzura sistemului, îi poate crește temperatura sau poate încetini sistemul hidraulic. Numai înlocuirea completă a fluidului va elimina contaminarea. Continui?"/>
         <text name="rms_fluid_error_no_vehicle" text="Niciun vehicul care necesită fluid pe o rază de 4 m"/>
@@ -714,10 +686,11 @@
         <text name="rms_fluid_error_motor_running" text="Oprește motorul înainte de a transfera fluid"/>
         <text name="rms_fluid_error_vehicle_moving" text="Vehiculul trebuie să fie staționar"/>
         <text name="rms_fluid_dealer_billed" text="Fluide facturate"/>
-        <text name="rms_fluid_stock_required" text="Este necesar un stoc de fluide"/>
+        <text name="rms_fluid_warranty_covered" text="Fluide acoperite de garanție"/>
+        <text name="rms_fluid_stock_required" text="Canistre compatibile necesare în zona atelierului"/>
         <text name="rms_fluid_refill_work_order" text="Completarea nivelului fluidelor"/>
         <text name="rms_fluid_refill_dealer_supply" text="Furnizare inclusă în deviz"/>
-        <text name="rms_fluid_refill_stock_supply" text="Preluare din stocul atelierului"/>
+        <text name="rms_fluid_refill_stock_supply" text="Așază canistrele compatibile în zona atelierului"/>
         <text name="rms_fluid_mode_top_up" text="completare"/>
         <text name="rms_fluid_mode_replace" text="înlocuire"/>
         <text name="rms_fluid_mode_repair" text="completare după scurgere"/>
@@ -740,12 +713,15 @@
         <text name="rms_inspection_verdict_ok_title" text="Apt de lucru"/>
         <text name="rms_inspection_verdict_ok_message" text="Nimic de semnalat, utilajul poate fi pus în funcțiune."/>
         <text name="rms_inspection_verdict_watch_title" text="De supravegheat"/>
-        <text name="rms_inspection_verdict_watch_message" text="Un punct necesită atenția ta. Utilajul poate lucra, dar remediază problema astăzi."/>
+        <text name="rms_inspection_verdict_watch_message" text="Unul sau mai multe puncte necesită atenția ta. Utilajul poate continua să lucreze; ocupă-te de ele astăzi."/>
         <text name="rms_inspection_verdict_air_filter_service_message" text="Utilajul poate lucra. Planifică întreținerea la atelier pentru înlocuirea filtrului de aer."/>
         <text name="rms_inspection_verdict_stop_title" text="Nu utiliza"/>
         <text name="rms_inspection_verdict_stop_message" text="Un punct trebuie remediat înainte de orice utilizare. Nu lucra cu acest utilaj în starea actuală."/>
-        <text name="rms_inspection_service_due_in" text="următoarea întreținere peste %s"/>
-        <text name="rms_inspection_service_overdue" text="întreținere depășită cu %s"/>
+        <text name="rms_inspection_service_due_in" text="%s peste %s"/>
+        <text name="rms_inspection_service_overdue" text="%s depășit cu %s"/>
+        <text name="rms_inspection_service_clock_engine" text="schimbul uleiului de motor"/>
+        <text name="rms_inspection_service_clock_transmission" text="schimbul uleiului de transmisie"/>
+        <text name="rms_inspection_service_clock_coolant" text="schimbul lichidului de răcire"/>
         <text name="rms_inspection_status_slightly_low" text="Ușor scăzut"/>
         <text name="rms_inspection_status_slightly_dirty" text="Ușor colmatat"/>
         <text name="rms_inspection_status_slightly_dry" text="Ușor uscat"/>
@@ -763,6 +739,8 @@
         <text name="rms_inspection_status_active_leak" text="Scurgere activă"/>
         <text name="rms_inspection_status_heavily_clogged" text="Puternic colmatat"/>
         <text name="rms_inspection_status_not_required" text="Nu este necesar"/>
+        <text name="rms_inspection_status_change_overdue" text="Schimb depășit"/>
+        <text name="rms_inspection_status_change_long_overdue" text="Schimb mult depășit"/>
         <text name="rms_inspection_engine_oil" text="Ulei de motor"/>
         <text name="rms_inspection_coolant" text="Lichid de răcire"/>
         <text name="rms_inspection_hydraulic_fluid" text="Ulei hidraulic"/>
@@ -784,8 +762,8 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="Filtrul de aer este ușor colmatat."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Filtrul de aer este vizibil colmatat."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Filtrul de aer este puternic colmatat cu praf și resturi."/>
-        <text name="rms_inspection_hint_air_filter_clogging_stage4" text="Filtrul de aer este complet colmatat cu praf și resturi."/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="Filtrul de aer a atins limita curățării prin suflare. Înlocuirea lui necesită întreținere la atelier."/>
+        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="Suflă filtrul pentru a îndepărta praful desprins. Reziduurile rămase vor impune apoi înlocuirea filtrului la atelier."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="În apropierea alternatorului sunt vizibile urme de supraîncălzire și înnegrirea unor conexiuni."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="În apropierea alternatorului și a cablajului său sunt vizibile urme pronunțate de supraîncălzire și conectori înnegriți."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Punctele de lubrifiere par ușor uscate."/>
@@ -802,6 +780,9 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="În jurul turbocompresorului sunt vizibile urme de ulei și conexiuni înnegrite."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="În jurul turbocompresorului sunt vizibile urme importante de ulei, conexiuni înnegrite și depuneri de funingine."/>
         <text name="rms_inspection_hint_fluid_level_low" text="Nivelul unui fluid a scăzut sub reper."/>
+        <text name="rms_inspection_hint_service_engine" text="Schimbul uleiului de motor este depășit: uleiul uzat accelerează uzura motorului și a injecției. O întreținere standard îl face împreună cu filtrele."/>
+        <text name="rms_inspection_hint_service_transmission" text="Schimbul uleiului de transmisie este depășit: uleiul uzat accelerează uzura transmisiei și a sistemului hidraulic. O întreținere extinsă îl face împreună cu filtrul."/>
+        <text name="rms_inspection_hint_service_coolant" text="Lichidul de răcire trebuie schimbat: uzat, accelerează uzura sistemului de răcire. O întreținere preventivă îl înlocuiește."/>
         <text name="rms_inspection_transmission_oil" text="Ulei de transmisie"/>
         <text name="rms_inspection_radiator" text="Radiator"/>
         <text name="rms_inspection_air_filter" text="Filtru de aer"/>
@@ -828,9 +809,18 @@
         <text name="rms_ingame_menu_header_procedure" text="Intervenție"/>
         <text name="rms_ingame_menu_header_finish_time" text="Încheiere"/>
         <text name="rms_ingame_menu_header_service_cost" text="Cost"/>
+        <text name="rms_ingame_menu_header_reason" text="Motiv"/>
         <text name="rms_ingame_menu_empty_other" text="Niciun alt vehicul"/>
         <text name="rms_ingame_menu_empty_active" text="Niciun vehicul RMS"/>
         <text name="rms_ingame_menu_empty_service" text="Niciun vehicul în întreținere"/>
+        <text name="rms_ingame_menu_reason_implement" text="Utilaj sau remorcă"/>
+        <text name="rms_ingame_menu_reason_unsupported" text="Neacceptat"/>
+        <text name="rms_ingame_menu_reason_electric" text="Electric"/>
+        <text name="rms_ingame_menu_reason_towed" text="Utilaj cu motor propriu"/>
+        <text name="rms_ingame_menu_reason_auxiliary" text="Mașină auxiliară"/>
+        <text name="rms_ingame_menu_reason_user" text="Exclus manual"/>
+        <text name="rms_ingame_menu_include" text="Include în RMS"/>
+        <text name="rms_ingame_menu_exclude" text="Exclude din RMS"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Returnarea vehiculului"/>
         <text name="rms_sell_dialog_section_vehicle" text="Vehicul"/>
@@ -856,8 +846,7 @@
         <text name="rms_tutorial_service_interval_expired_message" text="Intervalul de întreținere pentru %s a fost depășit.&#10;&#10;Mergi cât mai repede la un atelier și alege „Întreținere”. Continuarea utilizării unui vehicul cu întreținerea restantă crește puternic riscul de avarii multiple."/>
         <text name="rms_tutorial_steering_title" text="Virare pe loc"/>
         <text name="rms_tutorial_steering_message" text="Este recomandat să eviți virarea pe loc. Aceasta solicită puternic mecanismul de direcție și componentele punții față, ceea ce crește uzura trenului de rulare.&#10;&#10;Înaintează puțin înainte de a vira: roțile se vor întoarce mult mai ușor."/>
-        <text name="rms_tutorial_rad_or_filter_clogged_title" text="Radiator și filtru de aer colmatate"/>
-        <text name="rms_tutorial_rad_or_filter_clogged_message" text="Radiatorul și filtrul de aer ale vehiculului sunt puternic colmatate.&#10;&#10;Un radiator colmatat disipă mai greu căldura, iar un filtru de aer colmatat limitează alimentarea motorului cu aer. Puterea scade, iar consumul crește.&#10;&#10;Radiatorul poate fi curățat la stația de spălare sau cu suflanta cu aer comprimat. Filtrul de aer poate fi doar suflat, iar această operație nu îl readuce niciodată la starea inițială: numai întreținerea la atelier îl înlocuiește.&#10;&#10;Poți verifica starea ambelor componente: ține apăsată tasta %s în timp ce privești vehiculul."/>
+        <text name="rms_tutorial_cooling_air_check_message" text="Radiatorul sau filtrul de aer este colmatat. Ține apăsată tasta %s în timp ce privești vehiculul pentru a afla care dintre ele. Curăță-l cu suflanta cu aer comprimat. Dacă filtrul nu mai poate fi curățat, alege întreținerea extinsă sau preventivă la atelier pentru a-l înlocui."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubrifiere necesară"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%s necesită lubrifiere regulată.&#10;&#10;În RMS, nivelul de lubrifiere scade odată cu orele de funcționare. După o perioadă lungă de neutilizare, lubrifierea este necesară și înainte de repunerea în funcțiune. Lubrifierea insuficientă accelerează uzura șasiului.&#10;&#10;Cumpără un pistol de gresat din magazin și unge utilajul atunci când inspecția o cere.&#10;&#10;Poți verifica nivelul de lubrifiere: ține apăsată tasta %s în timp ce privești vehiculul."/>
         <text name="rms_tutorial_needs_repair_title" text="Avarie detectată"/>

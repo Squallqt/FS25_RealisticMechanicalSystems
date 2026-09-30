@@ -183,7 +183,9 @@ function RMS_Tutorial:update(dt)
                 end
             end
 
-            local serviceInterval = vehicle:getHoursSinceLastMaintenance() / vehicle:getMaintenanceInterval()
+            -- share of its interval the service clock the machine is most behind on has run
+            local serviceInterval = (spec.baseServiceLevel - vehicle:getServiceLevel())
+                / (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
 
             -- heavy trailer
             if not messagedData.HEAVY_TRAILER and transmissionSystemEnabled and isMotorStarted and speed > 5 and hasHeavyTrailer then
@@ -259,14 +261,14 @@ function RMS_Tutorial:update(dt)
             elseif not messagedData.RAD_OR_FILTER_CLOGGED
                 and (engineSystemEnabled or coolingSystemEnabled)
                 and spec.isVehicleNeedBlowOut
-                and (spec.radiatorClogging >= 0.75 or spec.airFilterClogging >= 0.75) then
+                and (spec.radiatorClogging >= 0.35 or spec.airFilterClogging >= 0.35) then
                 RMS_Hud.showNotification(
                     string.format(
-                        g_i18n:getText("rms_tutorial_rad_or_filter_clogged_message"),
+                        g_i18n:getText("rms_tutorial_cooling_air_check_message"),
                         RMS_Utils.getPrimaryKeyboardInputText("RMS_FIELD_INSPECTION", "R")
                     ),
                     0,
-                    g_i18n:getText("rms_tutorial_rad_or_filter_clogged_title"),
+                    g_i18n:getText("rms_inspection_section_cooling_air"),
                     true
                 )
                 messagedData.RAD_OR_FILTER_CLOGGED = true
@@ -382,7 +384,7 @@ function RMS_Tutorial:update(dt)
                 and ((engineSystemEnabled and (tonumber(spec.engineOilLevel) or 1) < RMS_Config.FLUIDS.LEVEL_MIN_MARK)
                     or (coolingSystemEnabled and (tonumber(spec.coolantLevel) or 1) < RMS_Config.FLUIDS.LEVEL_MIN_MARK)
                     or (transmissionSystemEnabled and (tonumber(spec.transmissionOilLevel) or 1) < RMS_Config.FLUIDS.LEVEL_MIN_MARK)
-                    or (hydraulicsSystemEnabled and (tonumber(spec.hydraulicFluidLevel) or 1) < RMS_Config.FLUIDS.LEVEL_MIN_MARK)) then
+                    or (hydraulicsSystemEnabled and RMS_Fluids.getLevel(vehicle, "hydraulicFluid") < RMS_Config.FLUIDS.LEVEL_MIN_MARK)) then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_fluid_level_message"),
                     0,

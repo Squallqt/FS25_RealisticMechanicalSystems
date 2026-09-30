@@ -12,10 +12,11 @@ local function updateFieldInspectionSoundActive(vehicle, spec)
     if spec.fieldInspectionSoundActive ~= isActive then
         spec.fieldInspectionSoundActive = isActive
         RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
+        vehicle:raiseActive()
     end
 end
 
----Registers a player as inspecting this vehicle until the configured duration elapses
+---Registers a player as inspecting this vehicle until the inspection duration elapses
 -- @param table player player
 -- @param boolean isActive true when the inspection starts
 function RMS_Consumables:setFieldInspectionPlayerActive(player, isActive)
@@ -33,9 +34,13 @@ function RMS_Consumables:setFieldInspectionPlayerActive(player, isActive)
     updateFieldInspectionSoundActive(self, spec)
 end
 
----Drops the players whose inspection elapsed on the server, plays the sound on a client
+---Drops the players whose inspection elapsed on the server, plays the sound on a client, keeping the machine
+-- updating while someone inspects it
 function RMS_Consumables:updateFieldInspectionSound()
     local spec = self.spec_RealisticMechanicalSystems
+    if spec.fieldInspectionSoundActive then
+        self:raiseActive()
+    end
 
     if self.isServer then
         for player, endTime in pairs(spec.fieldInspectionActivePlayers) do
@@ -51,11 +56,10 @@ function RMS_Consumables:updateFieldInspectionSound()
     end
 end
 
----Accumulates radiator clogging from ground wetness, field work, dust and debris, capped at the dirt level
+---Accumulates radiator clogging from ground wetness, field work, dust and debris
 -- @param float dt time since last call in ms
 -- @param boolean? canAccumulate true while the vehicle is operating
 function RMS_Consumables:updateRadiatorClogging(dt, canAccumulate)
-    local C = RMS_Config.FIELD_CARE
     local spec = self.spec_RealisticMechanicalSystems
     if spec == nil then
         return
@@ -66,9 +70,8 @@ function RMS_Consumables:updateRadiatorClogging(dt, canAccumulate)
         return
     end
 
-    local dirtLevel = self:getDirtAmount()
+    spec.radiatorClogging = math.clamp(spec.radiatorClogging or 0, 0, 1)
     if canAccumulate == false then
-        spec.radiatorClogging = math.min(spec.radiatorClogging, dirtLevel)
         return
     end
 
@@ -92,20 +95,15 @@ function RMS_Consumables:updateRadiatorClogging(dt, canAccumulate)
     local dbg = RMS_Utils.getIsDebugDataWanted(self) and spec.debugData.radiator or nil
 
     local lastSpeed = self:getLastSpeed()
-    local washableSpec = self.spec_washable
     local weather = g_currentMission ~= nil and g_currentMission.environment ~= nil and g_currentMission.environment.weather or nil
     local wetness = weather ~= nil and weather:getGroundWetness() or 0
     local baseWetnessFactor = math.max(1 - wetness, 0)
     local wetnessFactor = math.max(baseWetnessFactor ^ 3, 0)
     local isOnField = self:getIsOnField()
     local hasDust = isOnField and spec.isImplementLowered and lastSpeed > 0.1
-    local fieldFactor = 0.5
+    local fieldFactor = isOnField and 2.0 or 0.5
     local dustFactor = hasDust and 1.0 or 0.0
     local debrisFactor = spec.hasDebris and 2.0 or 0.0
-
-    if washableSpec ~= nil then
-        fieldFactor = isOnField and (washableSpec.fieldMultiplier or 1.0) or 0.5
-    end
 
     if dbg then
         dbg.fieldFactor = fieldFactor
@@ -120,21 +118,13 @@ function RMS_Consumables:updateRadiatorClogging(dt, canAccumulate)
         dbg.totalMultiplier = 0.0
     end
 
-    if lastSpeed > 0.5 and spec.radiatorClogging < dirtLevel then
-        if washableSpec == nil then
-            return
-        end
-
-        local dirtDuration = ((washableSpec.dirtDuration or 0) / 4) * (RMS_Config.CORE.BASE_SERVICE_WEAR * 10)
-        local totalMultiplier = wetnessFactor * (fieldFactor + dustFactor + debrisFactor) * C.CLOGGING_SPEED
+    if lastSpeed > 0.5 and spec.radiatorClogging < 1.0 then
+        local totalMultiplier = wetnessFactor * (fieldFactor + dustFactor + debrisFactor) * Washable.getIntervalMultiplier() * 2
         if dbg then dbg.totalMultiplier = totalMultiplier end
 
-        local change = dirtDuration * totalMultiplier * dt
-        spec.radiatorClogging = math.min(spec.radiatorClogging + change, dirtLevel)
-    else
-        if spec.radiatorClogging > dirtLevel then
-            spec.radiatorClogging = dirtLevel
-        end
+        -- At normal dirt speed, dry field work reaches the cleaning threshold in three operating hours.
+        local change = (dt / 3600000) * (0.35 / 9) * totalMultiplier
+        spec.radiatorClogging = math.min(spec.radiatorClogging + change, 1.0)
     end
 end
 
@@ -172,22 +162,16 @@ function RMS_Consumables:updateAirFilterClogging(dt)
     end
     local dbg = RMS_Utils.getIsDebugDataWanted(self) and spec.debugData.airFilter or nil
 
-    local dirtLevel = self:getDirtAmount()
     local lastSpeed = self:getLastSpeed()
-    local washableSpec = self.spec_washable
     local weather = g_currentMission ~= nil and g_currentMission.environment ~= nil and g_currentMission.environment.weather or nil
     local wetness = weather ~= nil and weather:getGroundWetness() or 0
     local baseWetnessFactor = math.max(1 - wetness, 0)
     local wetnessFactor = baseWetnessFactor
     local isOnField = self:getIsOnField()
     local hasDust = isOnField and spec.isImplementLowered and lastSpeed > 0.1
-    local fieldFactor = 1.0
+    local fieldFactor = isOnField and 2.0 or 1.0
     local dustFactor = hasDust and 2.0 or 0.0
     local debrisFactor = spec.hasDebris and 1.0 or 0.0
-
-    if washableSpec ~= nil then
-        fieldFactor = isOnField and (washableSpec.fieldMultiplier or 2.0) or 1.0
-    end
 
     if dbg then
         dbg.fieldFactor = fieldFactor
@@ -204,15 +188,11 @@ function RMS_Consumables:updateAirFilterClogging(dt)
 
     -- air filter clogging from working hours in dust
     if lastSpeed > 0.5 and spec.airFilterClogging < 1.0 then
-        if washableSpec == nil then
-            return
-        end
-
-        local dirtDuration = ((washableSpec.dirtDuration or 0) / 4) * (RMS_Config.CORE.BASE_SERVICE_WEAR * 10)
-        local totalMultiplier = wetnessFactor * (fieldFactor + dustFactor + debrisFactor) * C.CLOGGING_SPEED
+        local totalMultiplier = wetnessFactor * (fieldFactor + dustFactor + debrisFactor) * Washable.getIntervalMultiplier() * 2
         if dbg then dbg.totalMultiplier = totalMultiplier end
 
-        local change = dirtDuration * totalMultiplier * dt
+        -- At normal dirt speed, dry field work reaches the cleaning threshold in four operating hours.
+        local change = (dt / 3600000) * (0.35 / 16) * totalMultiplier
         spec.airFilterClogging = math.min(spec.airFilterClogging + change, 1.0)
 
         -- dust embedded in the media, cleared by a replacement only
@@ -299,7 +279,7 @@ function RMS_Consumables:updateFluidLevels(operatingDt)
 
     -- an engine burns oil over its service interval, a worn one burns much more
     if spec.systems.engine.enabled and not spec.isElectricVehicle then
-        local interval = math.max(tonumber(self:getMaintenanceInterval()) or 0, 0.001)
+        local interval = math.max(tonumber(self:getEngineMaintenanceInterval()) or 0, 0.001)
         local condition = math.clamp(tonumber(spec.systems.engine.condition) or 1, 0, 1)
         local load = math.clamp(tonumber(spec.dynamicMotorLoad) or 0.5, 0, 1)
         local loadFactor = (1 - C.ENGINE_OIL_LOAD_SHARE * 0.5) + C.ENGINE_OIL_LOAD_SHARE * load
@@ -330,11 +310,10 @@ function RMS_Consumables:getMissingFluidShare()
     local spec = self.spec_RealisticMechanicalSystems
     local missing = 0
 
-    for levelKey, systemKey in pairs({engineOilLevel = "engine", coolantLevel = "cooling",
-                                      transmissionOilLevel = "transmission", hydraulicFluidLevel = "hydraulics"}) do
-        local systemData = spec.systems ~= nil and spec.systems[systemKey] or nil
+    for _, circuit in ipairs(RMS_Fluids.getSumpCircuits(self)) do
+        local systemData = spec.systems ~= nil and spec.systems[RMS_Fluids.CIRCUITS[circuit].systemKey] or nil
         if systemData ~= nil and systemData.enabled ~= false then
-            missing = missing + (1 - math.clamp(tonumber(spec[levelKey]) or 1, 0, 1))
+            missing = missing + (1 - RMS_Fluids.getLevel(self, circuit))
         end
     end
 

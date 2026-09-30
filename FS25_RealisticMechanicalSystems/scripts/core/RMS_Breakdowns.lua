@@ -1983,7 +1983,7 @@ local function createEngineNoiseEffectApplicator(effectName, sampleName, gateMod
                 local loadN = math.clamp(tonumber(v:getMotorLoadPercentage()) or 0, 0, 1)
                 local boostN = math.clamp(tonumber(motor.lastTurboScale) or 0, 0, 1)
                 local hotN = math.clamp(((tonumber(spec_rms.engineTemperature) or 0) - 70) / 40, 0, 1)
-                local speedMps = tonumber(v:getLastSpeed()) or 0
+                local speedMps = v:getLastSpeed() / 3.6
                 local ptoData = nil
 
                 if gateMode == "pto" then
@@ -2854,7 +2854,7 @@ RMS_Breakdowns.EffectApplicators.GEAR_REJECTION_CHANCE = {
                                 RMS_EffectSyncEvent.send(v, "GEAR_REJECTION_CHANCE", "REJECTED", 0)
                                 RMS_SoundManager.playSample(v.spec_RealisticMechanicalSystems.samples.gearDisengage1)
                                 if v:getIsActiveForInput(true) then
-                                    g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_gear_disengage_message", 3000)) 
+                                    g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_gear_disengage_message"), 3000)
                                 end
                             end
                         end

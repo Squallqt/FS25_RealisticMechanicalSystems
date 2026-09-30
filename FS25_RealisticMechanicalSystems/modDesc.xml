@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="113">
     <author>Squallqt</author>
-    <version>0.10.0.0</version>
+    <version>0.11.0.0</version>
     <title>
         <en>Realistic Mechanical Systems</en>
         <de>Realistische Mechaniksysteme</de>
@@ -25,9 +25,11 @@ BREAKDOWNS
 - Old machines also degrade permanently, losing engine power, transmission bite, battery performance, and cooling efficiency
 
 WORKSHOP
-- Four procedures, Inspection, Maintenance, Repair, and Overhaul, each with options that change price, duration, and quality
+- Inspection, Maintenance, Repair, and Overhaul each offer options that change price, duration, and quality
+- Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. Dealer colour changes use the RMS repaint price
 - Part quality from Used to Premium: cheap parts are more often defective and bring the same fault back
-- Everything takes real time, and the workshop closes overnight, so planning when a machine goes in matters
+- Dealer warranty covers standard OEM repairs and required fluids for owned vehicles under 12 months and 20 operating hours
+- By default, work takes real time and pauses overnight; separate settings can make maintenance and repair, repainting, or overhauls instant
 - A full defectoscopy reveals hidden faults, defective parts, and exact condition values
 
 DAILY CARE
@@ -46,6 +48,52 @@ SIMULATION
 - Electric vehicles are not supported yet
 
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.11.0.0:
+- Removed the System Stress Rate setting and its console command
+- Removed the Passive Wear setting
+- Removed the Smoke Intensity setting
+- Removed the Park Vehicle During Maintenance setting
+- Removed the Warranty setting; dealer warranty now covers standard OEM repairs and required fluids under 12 months and 20 hours
+- Removed the Procedure Duration Multiplier setting
+- Removed the Procedure Price Multiplier setting
+- Removed the Clogging Speed setting; radiator and air filter clogging now follow the game's dirt speed independently of the RMS service interval
+- Removed the Differential Lock Release Speed setting; the lock now releases above 10 km/h
+- Removed the Pre-shift Check Duration setting; the check now lasts as long as its sound
+- Removed the Grease Consumption Rate setting; grease now drops 5% per operating hour
+- Removed the AI Overload and Overheat Control, Stop AI on Critical Overload, Contract Vehicle Protection, AI Sensitivity and AI Minimum Speed settings; every AI worker now drives with care on its own
+- Added Repainting to the workshop: repair paint damage or choose new colours, including through dealer configuration at the RMS repaint price
+- Added separate instant completion settings for maintenance and repair, repainting, and mechanical overhauls
+- Fixed the issue preventing vehicles from starting with the GIANTS Ignition Key
+- Reworked overhauls for predictable results: Partial and Standard bring systems into good condition; Full restores them to like new
+- Added compatibility with FS25_mobileWorkshop: inspections and repairs can now be started from its mobile workshop
+- Improved the workshop, inspection report, and maintenance log interfaces
+- Simplified maintenance deadlines, now shown in whole hours
+- Fixed double charges when using farm-owned fluids for workshop top-ups
+- Fixed some modded trucks and machines being ignored by RMS
+- Fixed an empty hydraulic oil circuit that could never be refilled on some cars and utility vehicles; they no longer have hydraulics in RMS
+- Fixed a full overhaul being undone when the save was reloaded
+- Fixed parked machines missing from the RMS fleet list for players joining a server
+- Fixed some modded cars clogging their radiator and air filter on the road
+- Fixed grease and fluid leaks draining far too fast with the Ingame Time Operating Hours mod
+- Removed RMS Reliability and Ease of Maintenance ratings from the shop for machines RMS does not track
+- Added to the Other Vehicles tab why each vehicle is left out of RMS, with a button to include or exclude it
+- Rebalanced fluid capacities to match the size of each machine's engine
+- Added a line-by-line bill and the cost per operating hour to the Technical Record
+- Added a single transmission and hydraulic oil to most tractors, as in reality; Fendt, Valtra and Lindner keep two separate oils
+- Added separate change intervals for engine oil, transmission oil and coolant; each maintenance level says which ones it changes
+- Removed the Minimal maintenance; the workshop Top up refills the fluids
+- Fixed fluid barrels arriving empty on maps and mod lists that add many products; barrels no longer depend on the game's fill types. Fluid containers already present in a save will disappear after the update; new ones must be purchased.
+- Fixed the vehicle value in the RMS workshop showing 10% more than selling from the menus pays; it now matches the RMS fleet list
+- Reworked workshop prices: inspections, maintenance, repairs, overhauls and repainting now cost real dealer prices sized on the machine and scaled by the Economic Difficulty, instead of a share of its price and age; the maintenance bill shows labour and filters
+- Reworked the vehicle value: it now falls with the hours run against the Vehicle Lifespan, then with age; an overhaul restores reliability, not value
+- Changed the default Maintenance Interval from 5 to 10 hours
+- Fixed the noises of worn bearings, vibrations and seized wheels no longer changing with speed above 15 km/h
+- Fixed the pre-shift inspection sound not playing on a parked machine
+- Fixed the breakdown noises of an idling machine going unheard by other players on a server
+- Fixed AI workers, Courseplay and AutoDrive stopping in the field under a heavy load, even without overheating
+- Reworked the AI worker's driving: it slows down while the machine is overloaded, never below 5 km/h, and picks its pace back up once the load eases
+- Fixed the player's cruise control speed being replaced by the machine's top speed after an AI worker's job
 
 Changelog 0.10.0.0:
 - Renamed this independent fork to Realistic Mechanical Systems; existing Advanced Damage System saves and settings are migrated automatically
@@ -86,9 +134,10 @@ DEFEKTE
 - Alte Maschinen bauen zudem dauerhaft ab und verlieren Motorleistung, Kraftübertragung, Batterieleistung und Kühlwirkung
 
 WERKSTATT
-- Vier Verfahren, Inspektion, Wartung, Reparatur und Grundüberholung, jeweils mit Optionen für Preis, Dauer und Qualität
+- Inspektion, Wartung, Reparatur und Grundüberholung bieten jeweils Optionen für Preis, Dauer und Qualität
+- Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Farbwechsel beim Händler kosten den RMS-Lackierpreis
 - Teilequalität von Gebraucht bis Premium: Billigteile sind häufiger defekt und holen denselben Fehler zurück
-- Alles braucht echte Zeit, und die Werkstatt schließt über Nacht, weshalb die Terminplanung zählt
+- Normalerweise dauert die Arbeit eine gewisse Zeit und pausiert über Nacht; getrennte Einstellungen ermöglichen sofortige Wartung und Reparatur, Neulackierung oder Überholung
 - Eine vollständige Defektoskopie deckt verborgene Fehler, defekte Teile und exakte Zustandswerte auf
 
 TÄGLICHE PFLEGE
@@ -107,6 +156,51 @@ SIMULATION
 - Elektrofahrzeuge werden noch nicht unterstützt
 
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.11.0.0:
+- Einstellung für die Stressaufbaurate und den zugehörigen Konsolenbefehl entfernt
+- Einstellung für passiven Verschleiß entfernt
+- Einstellung für Rauchintensität entfernt
+- Einstellung zum Parken des Fahrzeugs während der Wartung entfernt
+- Einstellung für den Dauerfaktor von Werkstattvorgängen entfernt
+- Einstellung für den Preisfaktor von Werkstattvorgängen entfernt
+- Einstellung für die Verschmutzungsgeschwindigkeit entfernt; die Verschmutzung von Kühler und Luftfilter folgt nun unabhängig vom RMS-Wartungsintervall der im Spiel gewählten Geschwindigkeit
+- Einstellung für die Lösegeschwindigkeit der Differentialsperre entfernt; die Sperre löst sich jetzt oberhalb von 10 km/h
+- Einstellung für die Dauer der Kontrolle vor Schichtbeginn entfernt; die Kontrolle dauert nun so lange wie ihr Ton
+- Einstellung für den Schmierfettverbrauch entfernt; pro Betriebsstunde sinkt der Schmierfettstand nun um 5 %
+- Einstellungen KI-Regelung bei Überlastung und Überhitzung, KI bei kritischer Überlastung stoppen, Schutz für Vertragsfahrzeuge, KI-Reaktivität und Minimale KI-Geschwindigkeit entfernt; jeder KI-Helfer fährt nun von selbst schonend
+- Neulackierung zur Werkstatt hinzugefügt: Lackschäden ausbessern oder neue Farben wählen, auch bei der Händlerkonfiguration zum RMS-Lackierpreis
+- Getrennte Einstellungen für sofortige Wartung und Reparatur, Neulackierung und mechanische Überholungen hinzugefügt
+- Startprobleme mit dem GIANTS-Zündschlüssel behoben
+- Überholungen für vorhersehbare Ergebnisse überarbeitet: Teil- und Standardüberholung bringen Systeme in guten Zustand, die vollständige Überholung macht sie wieder neuwertig
+- Kompatibilität mit FS25_mobileWorkshop hinzugefügt: Inspektionen und Reparaturen können nun über dessen mobile Werkstatt gestartet werden
+- Werkstatt, Inspektionsbericht und Wartungsprotokoll übersichtlicher gestaltet
+- Anzeige der Wartungstermine auf ganze Stunden vereinfacht
+- Doppelte Kosten bei Werkstatt-Nachfüllungen mit hofeigenen Flüssigkeiten behoben
+- Fehler behoben, durch den RMS einige Lkw und Maschinen aus Mods ignorierte
+- Leeren, nie auffüllbaren Hydraulikölkreis bei einigen Autos und Nutzfahrzeugen behoben; diese Fahrzeuge haben in RMS keine Hydraulik mehr
+- Fehler behoben, durch den eine vollständige Überholung beim Neuladen des Spielstands verloren ging
+- Fehler behoben, durch den abgestellte Maschinen in der RMS-Fuhrparkliste von Spielern fehlten, die einem Server beitreten
+- Fehler behoben, durch den bei einigen Autos aus Mods Kühler und Luftfilter auf der Straße verschmutzten
+- Fehler behoben, durch den Fett und Flüssigkeitslecks mit dem Mod Ingame Time Operating Hours viel zu schnell abnahmen
+- RMS-Werte für Zuverlässigkeit und Wartungsfreundlichkeit im Shop für Maschinen entfernt, die RMS nicht verwaltet
+- Grund für den Verbleib außerhalb von RMS im Tab Andere Fahrzeuge hinzugefügt, mit einer Taste zum Aufnehmen oder Ausschließen einer Maschine
+- Flüssigkeitsmengen an die Motorgröße jeder Maschine angepasst
+- Postengenaue Rechnungen und die Kosten pro Betriebsstunde zur Technischen Akte hinzugefügt
+- Gemeinsames Getriebe- und Hydrauliköl für die meisten Traktoren hinzugefügt, wie in der Realität; Fendt, Valtra und Lindner behalten zwei getrennte Öle
+- Eigene Wechselintervalle für Motoröl, Getriebeöl und Kühlmittel hinzugefügt; jede Wartungsstufe zeigt, was sie wechselt
+- Minimale Wartung entfernt; das Nachfüllen in der Werkstatt füllt die Flüssigkeiten auf
+- Leere Flüssigkeitsfässer auf Karten und Modlisten mit vielen zusätzlichen Produkten behoben; Fässer hängen nicht mehr von den Fülltypen des Spiels ab. Bereits in einem Spielstand vorhandene Flüssigkeitsbehälter verschwinden nach dem Update; neue müssen gekauft werden.
+- Fahrzeugwert in der RMS-Werkstatt, der 10 % über dem Verkaufserlös aus den Menüs lag, behoben; er entspricht jetzt der RMS-Fuhrparkliste
+- Werkstattpreise überarbeitet: Inspektion, Wartung, Reparatur, Überholung und Neulackierung kosten nun reale Händlerpreise nach Größe der Maschine, angepasst an den Wirtschafts-Schwierigkeitsgrad, statt eines Anteils an Preis und Alter; die Wartungsrechnung zeigt Arbeitslohn und Filter
+- Fahrzeugwert überarbeitet: Er sinkt nun mit den Betriebsstunden im Verhältnis zur Fahrzeuglebensdauer, dann mit dem Alter; eine Überholung stellt die Zuverlässigkeit wieder her, nicht den Wert
+- Standard-Wartungsintervall von 5 auf 10 Stunden geändert
+- Geräusche verschlissener Lager, von Vibrationen und blockierten Rädern, die sich oberhalb von 15 km/h nicht mehr mit der Geschwindigkeit änderten, behoben
+- Fehlendes Geräusch der Kontrolle vor Schichtbeginn an einer abgestellten Maschine behoben
+- Pannengeräusche einer Maschine im Leerlauf, die andere Spieler auf einem Server nicht hörten, behoben
+- Stehenbleiben von KI-Helfern, Courseplay und AutoDrive auf dem Feld unter hoher Last, auch ohne Überhitzung, behoben
+- Fahrweise des KI-Helfers überarbeitet: Er fährt langsamer, solange die Maschine überlastet ist, nie unter 5 km/h, und nimmt wieder Tempo auf, sobald die Last nachlässt
+- Tempomatgeschwindigkeit des Spielers, die nach einem Auftrag des KI-Helfers durch die Höchstgeschwindigkeit der Maschine ersetzt wurde, behoben
 
 Changelog 0.10.0.0:
 - Diesen unabhängigen Fork in Realistic Mechanical Systems umbenannt; vorhandene Spielstände und Einstellungen von Advanced Damage System werden automatisch übernommen
@@ -147,9 +241,11 @@ PANNES
 - Les machines âgées se dégradent aussi durablement et perdent puissance moteur, transmission, performance de batterie et efficacité de refroidissement
 
 ATELIER
-- Quatre procédures, inspection, entretien, réparation et révision, chacune avec des options qui changent le prix, la durée et la qualité
+- L’inspection, l’entretien, la réparation et la révision proposent chacune des options qui changent le prix, la durée et la qualité
+- L’appoint remplit les fluides manquants ; la repeinture corrige les petits dégâts ou renouvelle la peinture avec les teintes proposées par le véhicule. Le changement de couleur chez le concessionnaire est facturé au prix RMS
 - Qualité des pièces de l'occasion au premium : les pièces bon marché sont plus souvent défectueuses et ramènent la même panne
-- Tout prend un temps réel, et l'atelier ferme la nuit : planifier le passage d'une machine compte autant que le payer
+- Au concessionnaire, la garantie couvre la réparation standard avec pièces d'origine et ses fluides pour les véhicules possédés de moins de 12 mois et de 20 heures de fonctionnement
+- Par défaut, les travaux prennent du temps et s’interrompent la nuit ; des réglages distincts permettent de terminer instantanément l’entretien et les réparations, la repeinture ou les révisions
 - Une défectoscopie complète révèle les pannes cachées, les pièces défectueuses et les valeurs exactes
 
 ENTRETIEN QUOTIDIEN
@@ -168,6 +264,52 @@ SIMULATION
 - Les véhicules électriques ne sont pas encore pris en charge
 
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.11.0.0 :
+- Suppression du réglage de vitesse d’accumulation du stress et de sa commande console
+- Suppression du réglage d’usure passive
+- Suppression du réglage d’intensité de la fumée
+- Suppression du réglage de stationnement du véhicule pendant l’entretien
+- Suppression du réglage de garantie ; au concessionnaire, la réparation standard avec pièces d'origine et ses fluides sont couverts avant 12 mois et avant 20 heures
+- Suppression du réglage de multiplicateur de durée des interventions
+- Suppression du réglage de multiplicateur de prix des interventions
+- Suppression du réglage de vitesse d’encrassement : le radiateur et le filtre à air suivent désormais la vitesse de saleté choisie dans le jeu, indépendamment de l’intervalle d’entretien RMS
+- Suppression du réglage de vitesse de désenclenchement du différentiel : le blocage se désenclenche désormais au-dessus de 10 km/h
+- Suppression du réglage de durée du contrôle avant prise de poste : le contrôle dure désormais le temps du son
+- Suppression du réglage de vitesse de consommation de la graisse : elle baisse désormais de 5 % par heure de fonctionnement
+- Suppression des réglages Régulation de la surcharge et de la surchauffe par l’IA, Arrêter l’IA en cas de surcharge critique, Protection des véhicules de contrat, Réactivité de l’IA et Vitesse minimale de l’IA : chaque ouvrier IA conduit désormais avec ménagement de lui-même
+- Ajout de la repeinture en atelier : réparer les dégâts de peinture ou choisir de nouvelles teintes, y compris chez le concessionnaire au prix RMS
+- Ajout de réglages distincts pour terminer instantanément l’entretien et les réparations, la repeinture et les révisions mécaniques
+- Correction du problème empêchant le démarrage des véhicules avec la clé de contact GIANTS
+- Refonte des révisions pour un résultat prévisible : la partielle et la standard remettent les systèmes en bon état, la complète les remet à neuf
+- Ajout de la compatibilité avec FS25_mobileWorkshop : les inspections et réparations peuvent désormais être lancées depuis son atelier mobile
+- Amélioration de la lisibilité des interfaces de l’atelier, du rapport d’inspection et du carnet d’entretien
+- Simplification de l’affichage des échéances d’entretien, désormais en heures entières
+- Correction de la double facturation des appoints utilisant le stock de fluides de la ferme
+- Correction de camions et machines issus de mods que RMS ignorait
+- Correction du circuit d’huile hydraulique vide impossible à remplir sur certaines voitures et certains utilitaires, qui n’ont désormais plus d’hydraulique dans RMS
+- Correction d’une révision complète perdue au rechargement de la sauvegarde
+- Correction des machines garées absentes de la liste de flotte RMS chez un joueur qui rejoint un serveur
+- Correction de voitures issues de mods dont le radiateur et le filtre à air s’encrassaient sur la route
+- Correction de la graisse et des fuites de fluides qui baissaient beaucoup trop vite avec le mod Ingame Time Operating Hours
+- Suppression, en boutique, de la fiabilité et de la facilité d’entretien RMS des machines que RMS ne suit pas
+- Ajout, dans l’onglet Autres véhicules, de la raison pour laquelle chaque véhicule reste hors de RMS, avec un bouton pour inclure ou exclure une machine
+- Rééquilibrage des volumes de fluides selon la taille du moteur de chaque machine
+- Ajout au dossier technique du détail de chaque facture ligne par ligne et du coût par heure de fonctionnement
+- Ajout d’une huile unique pour la transmission et l’hydraulique sur la plupart des tracteurs, comme en réalité ; Fendt, Valtra et Lindner gardent deux huiles séparées
+- Ajout d’échéances de vidange distinctes pour l’huile moteur, l’huile de transmission et le liquide de refroidissement ; chaque niveau d’entretien indique ce qu’il change
+- Suppression de l’entretien minimal ; l’appoint à l’atelier complète les fluides
+- Correction des fûts de fluides livrés vides sur les cartes et listes de mods qui ajoutent beaucoup de produits ; les fûts ne dépendent plus des types de remplissage du jeu. Les bidons déjà présents dans une sauvegarde disparaîtront après la mise à jour ; il faudra en acheter de nouveaux.
+- Correction de la valeur du véhicule dans l’atelier RMS, 10 % au-dessus de ce que paie une vente depuis les menus ; elle correspond désormais à la liste de flotte RMS
+- Refonte des prix d’atelier : inspection, entretien, réparation, révision et peinture coûtent désormais des prix réels de concession selon la taille de la machine, ajustés à la difficulté économique, et non plus une part de son prix et de son âge ; la facture d’entretien détaille la main-d’œuvre et les filtres
+- Refonte de la valeur des véhicules : elle baisse désormais avec les heures de fonctionnement rapportées à la durée de vie du véhicule, puis avec l’âge ; une révision rend la fiabilité, pas la valeur
+- Passage de l’intervalle d’entretien par défaut de 5 à 10 heures
+- Correction des bruits de roulements usés, de vibrations et de roues grippées, qui ne suivaient plus la vitesse au-delà de 15 km/h
+- Correction du son de l’inspection avant prise de poste, muet sur une machine garée
+- Correction des bruits de panne d’une machine au ralenti, inaudibles pour les autres joueurs sur un serveur
+- Correction des ouvriers IA, de Courseplay et d’AutoDrive qui s’arrêtaient dans le champ sous forte charge, même sans surchauffe
+- Refonte de la conduite de l’ouvrier IA : il ralentit tant que la machine est en surcharge, sans descendre sous 5 km/h, et reprend son allure dès que la charge baisse
+- Correction de la vitesse du régulateur du joueur, remplacée par la vitesse maximale de la machine après le travail d’un ouvrier IA
 
 Changelog 0.10.0.0 :
 - Renommage de ce fork indépendant en Realistic Mechanical Systems, avec migration automatique des sauvegardes et réglages Advanced Damage System existants

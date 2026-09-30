@@ -228,14 +228,6 @@ local function syncConsoleCloggingState(vehicle, spec, parent, key)
     spec.radiatorClogging = math.clamp(tonumber(spec.radiatorClogging) or 0, 0.0, 1.0)
     spec.airFilterClogging = math.clamp(tonumber(spec.airFilterClogging) or 0, 0.0, 1.0)
 
-    if vehicle.spec_washable ~= nil and vehicle.setDirtAmount ~= nil and vehicle.getDirtAmount ~= nil then
-        local currentDirtAmount = math.clamp(tonumber(vehicle:getDirtAmount()) or 0, 0.0, 1.0)
-        local requiredDirtAmount = math.max(spec.radiatorClogging or 0, spec.airFilterClogging or 0)
-        if requiredDirtAmount > currentDirtAmount + 0.0001 then
-            vehicle:setDirtAmount(requiredDirtAmount)
-        end
-    end
-
     RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
 
     return true
@@ -332,6 +324,10 @@ function RealisticMechanicalSystems.ConsoleCommands:setConfigVar(rawArgs, rawVal
     end
 
     local oldValue = parent[key]
+    if oldValue == nil then
+        print(string.format("RMS Error: Invalid RMS_Config path '%s': setting does not exist.", path))
+        return
+    end
     parent[key] = value
 
     print(string.format("RMS: RMS_Config.%s changed: %s -> %s", path, tostring(oldValue), tostring(value)))
@@ -388,9 +384,8 @@ function RealisticMechanicalSystems.ConsoleCommands:setSpecVar(rawArgs, rawValue
     print(string.format("RMS: spec_RealisticMechanicalSystems.%s changed on '%s': %s -> %s", path, vehicle:getFullName(), tostring(oldValue), tostring(value)))
     if syncedCloggingState then
         print(string.format(
-            "RMS: clogging state synced on '%s' (dirt=%.2f, radiator=%.2f, airFilter=%.2f).",
+            "RMS: clogging state synced on '%s' (radiator=%.2f, airFilter=%.2f).",
             vehicle:getFullName(),
-            vehicle.getDirtAmount ~= nil and vehicle:getDirtAmount() or 0,
             tonumber(spec.radiatorClogging) or 0,
             tonumber(spec.airFilterClogging) or 0
         ))
@@ -743,72 +738,16 @@ function RealisticMechanicalSystems.ConsoleCommands:setSystemStress(rawArgs, raw
     print(string.format("RMS: Set stress for system '%s' on '%s' to %.4f.", tostring(systemKey), vehicle:getFullName(), value))
 end
 
----Sets the stress accumulation multiplier, usage rms_setSystemStressMultiplier [>=0.0] [system]
+---Sets the service clocks, usage rms_setService [0.0-1.0] [engine|transmission|coolant], every clock without a name
 -- @param string? rawArgs console arguments
 -- @param string? rawArgTwo second console argument
-function RealisticMechanicalSystems.ConsoleCommands:setSystemStressMultiplier(rawArgs, rawArgTwo)
+function RealisticMechanicalSystems.ConsoleCommands:setService(rawArgs, rawArgTwo)
     if not g_currentMission:getIsServer() then
         local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setSystemStressMultiplier", rawArgs, rawArgTwo, vehicle) end
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setService", rawArgs, rawArgTwo, vehicle) end
         return
     end
     local args = parseArguments(rawArgs, rawArgTwo)
-    local vehicle = self:getTargetVehicle()
-    if not vehicle then return end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local multipliers = RMS_Config.CORE.SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS
-
-    if multipliers == nil then
-        print("RMS Error: SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS is missing in config.")
-        return
-    end
-
-    local value = 1.0
-    if args and args[1] then
-        local parsedValue = tonumber(args[1])
-        if parsedValue == nil or parsedValue < 0 then
-            print("RMS Error: Invalid value. Please provide a number >= 0.0.")
-            return
-        end
-        value = parsedValue
-    end
-
-    local requestedSystem = args and args[2] or nil
-    local systemKey = RMS_Utils.resolveConsoleSystemKey(spec, requestedSystem)
-
-    if systemKey == false then
-        local availableSystems = {}
-        for key, _ in pairs(spec.systems or {}) do
-            table.insert(availableSystems, tostring(key))
-        end
-        table.sort(availableSystems)
-        print(string.format("RMS Error: Unknown system '%s'. Available systems: %s", tostring(requestedSystem), table.concat(availableSystems, ", ")))
-        return
-    end
-
-    if systemKey == nil then
-        for key, _ in pairs(multipliers) do
-            if type(key) == "string" then
-                multipliers[key] = value
-            end
-        end
-        print(string.format("RMS: Set stress accumulation multiplier for all systems to %.4f.", value))
-    else
-        multipliers[systemKey] = value
-        print(string.format("RMS: Set stress accumulation multiplier for system '%s' to %.4f.", tostring(systemKey), value))
-    end
-end
-
----Sets the service level, usage rms_setService [0.0-1.0]
--- @param string? rawArgs console arguments
-function RealisticMechanicalSystems.ConsoleCommands:setService(rawArgs)
-    if not g_currentMission:getIsServer() then
-        local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setService", rawArgs, nil, vehicle) end
-        return
-    end
-    local args = parseArguments(rawArgs)
     local vehicle = self:getTargetVehicle()
     if not vehicle then return end
     
@@ -823,38 +762,22 @@ function RealisticMechanicalSystems.ConsoleCommands:setService(rawArgs)
         end
         value = parsedValue
     end
-    
-    spec.serviceLevel = value
 
-    local interval = vehicle:getMaintenanceInterval()
-    local currentHours = spec.realOperatingTime / (60 * 60 * 1000) or vehicle:getFormattedOperatingTime() or 0
-    local serviceExpiredThreshold = math.clamp(tonumber(RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD) or 0.5, 0, 0.9999)
-    local activeServiceRange = math.max(1 - serviceExpiredThreshold, 0.0001)
-    local hoursSinceService = ((1 - value) / activeServiceRange) * interval
-    local targetOpHours = currentHours - hoursSinceService
-    local found = false
-    for i = #spec.maintenanceLog, 1, -1 do
-        local entry = spec.maintenanceLog[i]
-        if entry.type == RealisticMechanicalSystems.STATUS.MAINTENANCE or entry.id == 1 then
-            entry.conditionData.operatingHours = targetOpHours
-            entry.conditionData.service = value
-            if vehicle.isServer then
-                RMS_LogEntrySyncEvent.sendToClients(vehicle, entry)
-            end
-            found = true
-            break
+    local clockKey = args and args[2]
+    local setClockKeys = {}
+    for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
+        if clockKey == nil or clock.key == clockKey then
+            spec[clock.levelKey] = value
+            table.insert(setClockKeys, clock.key)
         end
     end
-    if not found and vehicle.isServer then
-        vehicle:addEntryToMaintenanceLog(RealisticMechanicalSystems.STATUS.INSPECTION, RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD, "NONE", false, 0)
-        local entry = spec.maintenanceLog[#spec.maintenanceLog]
-        entry.conditionData.operatingHours = targetOpHours
-        entry.conditionData.service = value
-        entry.isVisible = false
-        RMS_LogEntrySyncEvent.sendToClients(vehicle, entry)
+
+    if #setClockKeys == 0 then
+        print("RMS Error: Unknown service clock. Use engine, transmission or coolant.")
+        return
     end
 
-    print(string.format("RMS: Set Service level for '%s' to %.2f.", vehicle:getFullName(), value))
+    print(string.format("RMS: Set service clocks %s for '%s' to %.2f.", table.concat(setClockKeys, ", "), vehicle:getFullName(), value))
 end
 
 ---Resets the vehicle state
@@ -869,15 +792,15 @@ function RealisticMechanicalSystems.ConsoleCommands:resetVehicle()
     
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.conditionLevel = 1.0
-    spec.serviceLevel = 1.0
+    for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
+        spec[clock.levelKey] = 1.0
+    end
     vehicle:removeBreakdown()
 
-    local currentHours = vehicle:getFormattedOperatingTime()
     local found = false
     for i = #spec.maintenanceLog, 1, -1 do
         local entry = spec.maintenanceLog[i]
         if entry.type == RealisticMechanicalSystems.STATUS.MAINTENANCE or entry.id == 1 then
-            entry.conditionData.operatingHours = currentHours
             entry.conditionData.condition = 1.0
             entry.conditionData.service = 1.0
             if vehicle.isServer then
@@ -890,7 +813,6 @@ function RealisticMechanicalSystems.ConsoleCommands:resetVehicle()
     if not found and vehicle.isServer then
         vehicle:addEntryToMaintenanceLog(RealisticMechanicalSystems.STATUS.INSPECTION, RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD, "NONE", false, 0)
         local entry = spec.maintenanceLog[#spec.maintenanceLog]
-        entry.conditionData.operatingHours = currentHours
         entry.conditionData.condition = 1.0
         entry.conditionData.service = 1.0
         entry.isVisible = false
@@ -949,153 +871,6 @@ function RealisticMechanicalSystems.ConsoleCommands:reinitializeFluidCapacities(
     ))
 end
 
----Starts a service, usage rms_startService <type> [count]
--- @param string? rawArgs console arguments
--- @param string? rawArgTwo second console argument
-function RealisticMechanicalSystems.ConsoleCommands:startMaintance(rawArgs, rawArgTwo)
-    if not g_currentMission:getIsServer() then
-        local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("startMaintance", rawArgs, rawArgTwo, vehicle) end
-        return
-    end
-    local args = parseArguments(rawArgs, rawArgTwo)
-    local vehicle = self:getTargetVehicle()
-    if not vehicle then return end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec.currentState ~= RealisticMechanicalSystems.STATUS.READY then
-        print(string.format("RMS Error: Vehicle '%s' is already under service (%s).", vehicle:getFullName(), spec.currentState))
-        return
-    end
-
-    if not args or not args[1] then
-        print("RMS Error: Missing argument. Usage: rms_startService <type> [count]")
-        print("Available types: inspection, maintenance, repair, overhaul")
-        return
-    end
-
-    local maintenanceType = string.lower(args[1])
-    local isValidType = false
-
-    for stateName, state in pairs(RealisticMechanicalSystems.STATUS) do
-        if string.lower(stateName) == maintenanceType then
-            isValidType = true
-            maintenanceType = state
-            break
-        end
-    end
-    
-    if not isValidType or maintenanceType == RealisticMechanicalSystems.STATUS.READY then
-        print("RMS Error: Invalid maintenance type '"..maintenanceType.."'")
-        print("Available types: inspection, maintenance, repair, overhaul")
-        return
-    end
-
-    local breakdownCount = tonumber(args[2]) or 1
-    local optionOne, optionTwo, optionThree
-
-    if maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
-        optionOne = RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD
-        optionTwo = "NONE"
-        optionThree = false
-    elseif maintenanceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
-        optionOne = RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD
-        optionTwo = RealisticMechanicalSystems.PART_TYPES.OEM
-        optionThree = false
-    elseif maintenanceType == RealisticMechanicalSystems.STATUS.REPAIR then
-        optionOne = RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM
-        optionTwo = RealisticMechanicalSystems.PART_TYPES.OEM
-        optionThree = false
-
-        local visibleRepairableCount = 0
-        local selected = 0
-        for breakdownId, breakdown in pairs(vehicle:getActiveBreakdowns()) do
-            local isRepairable = breakdown ~= nil and breakdown.isVisible == true
-            if isRepairable then
-                visibleRepairableCount = visibleRepairableCount + 1
-            end
-
-            if selected < breakdownCount and isRepairable then
-                breakdown.isSelectedForRepair = true
-                selected = selected + 1
-            else
-                breakdown.isSelectedForRepair = false
-            end
-        end
-
-        if visibleRepairableCount == 0 then
-            print(string.format("RMS Error: Vehicle '%s' has no visible breakdowns for repair.", vehicle:getFullName()))
-            return
-        end
-
-        if selected == 0 then
-            print(string.format("RMS Error: No breakdowns selected for repair on '%s'.", vehicle:getFullName()))
-            return
-        end
-    elseif maintenanceType == RealisticMechanicalSystems.STATUS.OVERHAUL then
-        optionOne = RealisticMechanicalSystems.OVERHAUL_TYPES.STANDARD
-        optionTwo = "NONE"
-        optionThree = false
-    end
-
-    local sellingPoint, workshopType = RMS_FluidWorkshop.findCurrentSellingPoint(vehicle)
-    if sellingPoint == nil then
-        print(string.format("RMS Error: Vehicle '%s' is not inside a workshop.", vehicle:getFullName()))
-        return
-    end
-
-    local started, result = RMS_FluidWorkshop.tryStartService(
-        vehicle,
-        sellingPoint,
-        maintenanceType,
-        workshopType,
-        optionOne,
-        optionTwo,
-        optionThree
-    )
-
-    if started then
-        local finishTime, days = vehicle:getServiceFinishTime()
-        print(string.format(
-            "RMS: Started '%s' for '%s'. Remaining time: %.1f sec. Finishes in %d day(s) at %.2f.",
-            maintenanceType,
-            vehicle:getFullName(),
-            spec.maintenanceTimer / 1000,
-            days or 0,
-            finishTime or 0
-        ))
-    else
-        print(string.format("RMS Error: Failed to start '%s' for '%s' (%s).", maintenanceType, vehicle:getFullName(), tostring(result)))
-    end
-end
-
----Finishes the running service at once
-function RealisticMechanicalSystems.ConsoleCommands:finishMaintance()
-    if not g_currentMission:getIsServer() then
-        local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("finishMaintance", nil, nil, vehicle) end
-        return
-    end
-    local vehicle = self:getTargetVehicle()
-    if not vehicle then return end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec.currentState == RealisticMechanicalSystems.STATUS.READY then
-        print(string.format("RMS: Vehicle '%s' is not under service.", vehicle:getFullName()))
-        return
-    end
-
-    local currentState = spec.currentState
-    local finished, err = RealisticMechanicalSystems.forceFinishService(vehicle)
-
-    if not finished then
-        print(string.format("RMS Error: Failed to force-finish service for '%s': %s", vehicle:getFullName(), tostring(err)))
-        return
-    end
-
-    print(string.format("RMS: Service '%s' force-finished for '%s'.", currentState, vehicle:getFullName()))
-end
-
 ---Prints the service and workshop state variables
 function RealisticMechanicalSystems.ConsoleCommands:getServiceState()
     local vehicle = self:getTargetVehicle()
@@ -1129,8 +904,9 @@ function RealisticMechanicalSystems.ConsoleCommands:getServiceState()
     end
 
     print(string.format("Targets: serviceStart=%s serviceTarget=%s overhaulSystems=%d",
-        tostring(spec.pendingMaintenanceServiceStart), tostring(spec.pendingMaintenanceServiceTarget), pendingOverhaulSystemsCount))
-    print(string.format("Levels: service=%.4f condition=%.4f", spec.serviceLevel or 0, spec.conditionLevel or 0))
+        RMS_Utils.serializeNumericMap(spec.pendingServiceClockStart), RMS_Utils.serializeNumericMap(spec.pendingServiceClockTarget), pendingOverhaulSystemsCount))
+    print(string.format("Levels: service engine=%.4f transmission=%.4f coolant=%.4f condition=%.4f",
+        spec.serviceLevel, spec.transmissionServiceLevel, spec.coolantServiceLevel, spec.conditionLevel or 0))
     print(string.format("Queues: selected=%d inspection=%d repair=%d", #(spec.pendingSelectedBreakdowns or {}), #(spec.pendingInspectionQueue or {}), #(spec.pendingRepairQueue or {})))
     print(string.format("Breakdowns: active=%d selectedForRepair=%d", activeBreakdownsCount, selectedForRepairCount))
 
@@ -1800,18 +1576,10 @@ addConsoleCommand("rms_advanceBreakdown", "Advances a breakdown to the next stag
 addConsoleCommand("rms_setCondition", "Sets condition for all enabled systems. Usage: rms_setCondition [0.0-1.0]", "setCondition", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSystemCondition", "Sets system condition. Usage: rms_setSystemCondition [system] [0.0-1.0]", "setSystemCondition", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSystemStress", "Sets system stress. Usage: rms_setSystemStress [system] [>=0.0]", "setSystemStress", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand(
-    "rms_setSystemStressMultiplier",
-    "Sets stress accumulation multiplier. Usage: rms_setSystemStressMultiplier [>=0.0] [system]",
-    "setSystemStressMultiplier",
-    RealisticMechanicalSystems.ConsoleCommands
-)
-addConsoleCommand("rms_setService", "Sets vehicle service. Usage: rms_setService [0.0-1.0]", "setService", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_setService", "Sets vehicle service clocks. Usage: rms_setService [0.0-1.0] [engine|transmission|coolant]", "setService", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_resetVehicle", "Resets vehicle state.", "resetVehicle", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_reinitializeVehicle", "Reinitializes vehicle from vanilla resale price logic.", "reinitializeVehicle", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_reinitializeFluidCapacities", "Re-resolves physical fluid capacities while preserving liters.", "reinitializeFluidCapacities", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_startService", "Starts service. Usage: rms_startService <type> [count]", "startMaintance", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_finishService", "Instantly finishes current service.", "finishMaintance", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_getServiceState", "Prints current service/workshop state variables.", "getServiceState", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_showServiceLog", "Shows service log. Usage: rms_showServiceLog [index]", "showServiceLog", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_getDebugVehicleInfo", "Vehicle debug info", "getDebugVehicleInfo", RealisticMechanicalSystems.ConsoleCommands)

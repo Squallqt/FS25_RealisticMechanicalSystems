@@ -30,23 +30,11 @@
         <text name="rms_settings_section_service_wear" text="정비 및 마모"/>
         <text name="rms_settings_section_thermal_model" text="열 모델"/>
         <text name="rms_settings_section_battery_alternator" text="배터리 및 발전기"/>
-        <text name="rms_settings_section_preshift_maintenance" text="일일 정비"/>
-        <text name="rms_settings_section_other" text="기타"/>
         <text name="rms_settings_section_drivetrain" text="구동계 및 주차 브레이크"/>
-        <text name="rms_maintenancePrice_label" text="작업 비용 배율"/>
-        <text name="rms_maintenancePrice_tooltip" text="점검, 수리 및 오버홀을 포함한 모든 정비소 작업 비용을 조정합니다. 값이 클수록 각 작업의 비용이 증가합니다."/>
-        <text name="rms_maintenanceDuration_label" text="작업 시간 배율"/>
-        <text name="rms_maintenanceDuration_tooltip" text="모든 정비소 작업의 소요 시간을 조정합니다. 값이 클수록 각 작업에 더 많은 시간이 걸립니다."/>
         <text name="rms_workshopOpenHour_label" text="정비소 영업 시작 시간"/>
         <text name="rms_workshopOpenHour_tooltip" text="작업은 이 시간부터만 시작됩니다."/>
         <text name="rms_workshopCloseHour_label" text="정비소 영업 종료 시간"/>
         <text name="rms_workshopCloseHour_tooltip" text="진행 중인 작업은 이 시간에 일시 중지되고 영업 시작 시 재개됩니다."/>
-        <text name="rms_cloggingSpeed_label" text="이물질 축적 속도"/>
-        <text name="rms_cloggingSpeed_tooltip" text="먼지나 왕겨, 작물 잔여물 속에서 작업할 때 라디에이터와 에어 필터가 얼마나 빨리 막히는지를 조정합니다. 값이 높을수록 더 빨리 막힙니다."/>
-        <text name="rms_fieldInspectionDuration_label" text="운행 전 점검 시간"/>
-        <text name="rms_fieldInspectionDuration_tooltip" text="운행 전 점검에 걸리는 시간을 실제 초 단위로 설정합니다."/>
-        <text name="rms_lubricationReducePerOperatingHour_label" text="그리스 소모율"/>
-        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="작동 시간당 소모되는 그리스의 양을 설정합니다."/>
         <text name="rms_dealerWorkshopAvailable_label" text="판매점 정비소 24/7"/>
         <text name="rms_dealerWorkshopAvailable_tooltip" text="판매점 정비소를 하루 종일 언제든 이용할 수 있게 합니다."/>
         <text name="rms_mobileWorkshopAvailable_label" text="이동식 정비소 24/7"/>
@@ -56,55 +44,37 @@
         <text name="rms_ownWorkshopAvailable_label" text="자가 정비소 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="소유한 정비소를 하루 종일 언제든 이용할 수 있게 합니다."/>
         <text name="rms_instantInspection_label" text="즉시 점검"/>
-        <text name="rms_instantInspection_tooltip" text="활성화 시 모든 점검이 시간 경과 없이 즉시 완료됩니다. 참고: 이 경우 '육안 점검' 옵션은 사용할 수 없습니다."/>
-        <text name="rms_parkVehicle_label" text="정비 중 차량 주차"/>
-        <text name="rms_parkVehicle_tooltip" text="활성화 시 정비 중인 차량은 TAB 키를 이용한 차량 전환 대상에서 제외됩니다."/>
-        <text name="rms_warrantyEnabled_label" text="신규 장비 보증"/>
-        <text name="rms_warrantyEnabled_tooltip" text="신규 차량 수리에 보증을 적용합니다(최대 20시간 운행 또는 12개월). 순정 부품 교체 시에만 비용이 면제됩니다."/>
-        <text name="rms_aiOverloadAndOverheatControl_label" text="AI 과부하 및 과열 제어"/>
-        <text name="rms_aiOverloadAndOverheatControl_tooltip" text="활성화 시 AI 작업자가 엔진 과부하 또는 과열을 방지하기 위해 부하를 줄입니다."/>
-        <text name="rms_aiDisableOnCriticalOverload_label" text="임계 과부하 시 AI 정지"/>
-        <text name="rms_aiDisableOnCriticalOverload_tooltip" text="임계 과부하가 발생하면 AI 작업자와 AutoDrive를 정지시킵니다."/>
-        <text name="rms_contractVehicleProtection_label" text="계약 차량 보호"/>
-        <text name="rms_contractVehicleProtection_tooltip" text="계약 차량에도 임계 과부하 시 AI 정지와 과부하 또는 과열에 따른 속도 제어를 적용합니다."/>
-        <text name="rms_aiWorkerTargetStress_label" text="AI 반응 민감도"/>
-        <text name="rms_aiWorkerTargetStress_tooltip" text="AI 작업자가 과부하와 과열에 얼마나 일찍 반응할지 조절합니다. 민감도가 높을수록 더 일찍 감속하고 낮을수록 개입 전에 더 많은 부하가 누적됩니다."/>
-        <text name="rms_aiWorkerTargetStress_relaxed" text="낮음"/>
-        <text name="rms_aiWorkerTargetStress_balanced" text="보통"/>
-        <text name="rms_aiWorkerTargetStress_sensitive" text="높음"/>
-        <text name="rms_aiWorkerTargetStress_verySensitive" text="매우 높음"/>
-        <text name="rms_aiWorkerMinSpeed_label" text="AI 최소 속도"/>
-        <text name="rms_aiWorkerMinSpeed_tooltip" text="AI 작업자가 과부하나 과열을 피하기 위해 감속할 때 사용할 수 있는 최저 크루즈 컨트롤 속도를 설정합니다."/>
+        <text name="rms_instantInspection_tooltip" text="활성화하면 정비소에서 시작한 점검이 즉시 완료됩니다. 이미 진행 중인 같은 종류의 작업도 즉시 완료됩니다."/>
+        <text name="rms_instantMaintenanceRepair_label" text="즉시 정비 및 수리"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="활성화하면 정비소에서 시작한 정비와 수리가 즉시 완료됩니다. 이미 진행 중인 같은 종류의 작업도 즉시 완료됩니다."/>
+        <text name="rms_instantBodywork_label" text="즉시 도장"/>
+        <text name="rms_instantBodywork_tooltip" text="활성화하면 정비소에서 시작한 도장 작업이 즉시 완료됩니다. 이미 진행 중인 같은 종류의 작업도 즉시 완료됩니다."/>
+        <text name="rms_instantOverhaul_label" text="즉시 기계 오버홀"/>
+        <text name="rms_instantOverhaul_tooltip" text="활성화하면 정비소에서 시작한 기계 오버홀이 즉시 완료됩니다. 이미 진행 중인 같은 종류의 작업도 즉시 완료됩니다."/>
         <text name="rms_debugMode_label" text="디버그 모드"/>
         <text name="rms_debugMode_tooltip" text="디버그 패널 및 콘솔의 상세 디버그 로그 활성 여부를 설정합니다."/>
         <text name="rms_warningMessages_label" text="경고 메시지"/>
         <text name="rms_warningMessages_tooltip" text="차가운 엔진이나 과열 알림과 같은 게임 플레이 경고 메시지 표시 여부를 설정합니다."/>
         <text name="rms_serviceInterval_label" text="정비 주기"/>
-        <text name="rms_serviceInterval_tooltip" text="정비가 필요한 기준 시간을 시간 단위로 설정합니다. 실제 주기는 차량 브랜드, 연식, 이전 정비 품질에 따라 달라집니다."/>
+        <text name="rms_serviceInterval_tooltip" text="엔진 오일 교환 주기를 시간 단위로 설정합니다. 변속기 오일과 유압유는 두 주기마다, 냉각수는 열 주기마다 교환합니다. 실제 주기는 차량 브랜드에 따라 달라집니다."/>
         <text name="rms_vehicleLifespan_label" text="차량 수명"/>
-        <text name="rms_vehicleLifespan_tooltip" text="차량 상태가 0%에 도달하는 기준 수명을 시간 단위로 설정합니다. 상태가 영에 가까워질수록 차량의 신뢰도가 떨어집니다."/>
+        <text name="rms_vehicleLifespan_tooltip" text="차량 상태가 0%에 도달하는 기준 수명을 시간 단위로 설정합니다. 상태가 영에 가까워질수록 차량의 신뢰도가 떨어집니다. 이 시간이 지나는 동안 차량 가치도 떨어집니다."/>
         <text name="rms_reinitializeVehicles_label" text="보유 차량 초기화"/>
         <text name="rms_reinitializeVehicles_text" text="초기화"/>
         <text name="rms_reinitializeVehicles_tooltip" text="선택한 수명에 맞춰 보유 차량의 상태를 재조정합니다. 현재 고장은 삭제됩니다."/>
         <text name="rms_reinitializeVehiclesConfirm_title" text="보유 차량 초기화"/>
         <text name="rms_reinitializeVehiclesConfirm_message" text="선택한 수명에 맞춰 보유 차량을 재조정할까요? 현재 고장은 삭제됩니다."/>
         <text name="rms_reinitializeVehicles_result" text="초기화된 차량: %d대. 그대로 둔 차량: %d대."/>
-        <text name="rms_downtimeWear_label" text="비가동 마모"/>
-        <text name="rms_downtimeWear_tooltip" text="차량이 정지해 있을 때 발생하는 비가동 마모율을 기본 마모율(차량 수명)의 백분율로 설정합니다. 예: 5%로 설정하고 기본 수명이 100시간이면 약 1%의 시스템 상태가 20시간가량의 비가동 후 감소합니다. 참고: 차량을 지붕 아래에 보관하면 비가동 마모가 발생하지 않습니다."/>
         <text name="rms_generalWearEnabled_label" text="노후 마모"/>
         <text name="rms_generalWearEnabled_tooltip" text="노후에 따른 마모를 활성화합니다. 차량이 노후화됨에 따라 엔진 출력, 유압 속도, 브레이크 효율 등 핵심 특성에 미세한 불이익이 발생합니다. 이 효과는 차량 수명의 1/3이 지난 시점부터 시작되어 2/3가 지난 후 뚜렷해지며, 수명 끝부분에 갈수록 강해집니다."/>
         <text name="rms_exhaustSmokeEnabled_label" text="배기 연기"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="엔진의 실제 상태에 따라 배기 연기를 표현합니다. 공기보다 연료가 많을 때, 급가속 순간, 저회전에서 무리하게 밀어붙일 때, 저부하 장시간 공회전, 에어 필터 막힘, 분사 장치 마모에서는 검은색, 노후한 엔진이 오일을 태울 때는 파란색, 연료가 연소되지 않고 배출될 때는 흰색으로 나타납니다. 연기는 엔진이 하는 일에 따라 굵어지기도 합니다. 오래된 기계일수록 훨씬 많은 연기를 내며, 최신 기계는 심각한 고장이 없는 한 거의 연기를 내지 않습니다."/>
-        <text name="rms_exhaustSmokeIntensity_label" text="연기 강도"/>
-        <text name="rms_exhaustSmokeIntensity_tooltip" text="연기의 원인은 그대로 두고 가시성만 조절합니다. 값이 높을수록 멀리서도 증상을 알아보기 쉽습니다."/>
         <text name="rms_exhaustSmokeDetail_label" text="연기 세부 표현 (이 컴퓨터)"/>
         <text name="rms_exhaustSmokeDetail_tooltip" text="본인의 컴퓨터에서 배기 연기를 얼마나 그릴지 설정합니다. 다른 플레이어에게는 아무런 영향을 주지 않습니다. 낮추면 연기의 바깥층이 사라져 사양이 낮은 그래픽 카드의 부담을 덩니다. 서버가 허용한 범위 안에서 줄일 수만 있습니다."/>
         <text name="rms_exhaustSmokeDetail_full" text="전체"/>
         <text name="rms_exhaustSmokeDetail_reduced" text="감소"/>
         <text name="rms_exhaustSmokeDetail_minimal" text="최소"/>
         <text name="rms_exhaustSmokeDetail_none" text="없음"/>
-        <text name="rms_systemStressRate_label" text="기계적 응력 축적 속도"/>
-        <text name="rms_systemStressRate_tooltip" text="과부하, 과열, 휠 슬립 및 기타 가혹한 운행 조건에서 시스템에 기계적 응력이 누적되는 속도를 조정합니다. 응력은 고장 확률에 직접 영향을 주며 많이 누적될수록 고장 가능성이 커집니다."/>
         <text name="rms_batteryCapacity_label" text="배터리 용량"/>
         <text name="rms_batteryCapacity_tooltip" text="최대 사용 가능한 배터리 용량을 조정합니다. 150 Ah에 가까운 값이 현실적이지만, 이 수준에서는 배터리 방전 문제를 거의 겪지 않을 수 있습니다."/>
         <text name="rms_option_off" text="꺼짐"/>
@@ -132,8 +102,6 @@
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="구동 선택기에 자동 위치를 추가합니다: 바퀴가 미끄러지거나 부하가 걸린 작업 속도에서 전륜축이 자동으로 연결되고, 도로에서는 해제됩니다. 이 옵션을 끄면 자동 모드로 남아 있던 차량은 4WD로 전환됩니다."/>
         <text name="rms_drivetrainWindupDamage_label" text="구동계 응력 손상"/>
         <text name="rms_drivetrainWindupDamage_tooltip" text="차동 장치를 잠근 채 접지력이 높은 노면에서 조향하면 구동계에 응력이 가해져 변속기가 점차 손상됩니다. 더 관대한 환경을 원하면 이 옵션을 비활성화하십시오."/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_label" text="차동 잠금 해제 속도"/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_tooltip" text="차동 잠금은 이 속도 이상에서 자동으로 해제되고, 요청된 상태라면 그 이하에서 다시 체결됩니다."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="주차 브레이크"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="모든 RMS 차량에 전용 키로 조작하는 주차 브레이크를 추가합니다. 체결된 브레이크는 기계를 고정하고 가속 입력을 무시합니다."/>
         <text name="rms_drivetrainParkBrakeAuto_label" text="자동 주차 브레이크"/>
@@ -156,8 +124,6 @@
         <text name="rms_ws_section_current_intervention" text="진행 중인 작업"/>
         <text name="rms_ws_label_last_check" text="최근 점검"/>
         <text name="rms_ws_label_workshop_state" text="정비소 상태"/>
-        <text name="rms_ws_label_intervention" text="작업"/>
-        <text name="rms_ws_label_addon" text="옵션"/>
         <text name="rms_ws_label_more_parts" text="+ %s개 더"/>
         <text name="rms_ws_label_committed_cost" text="확정 비용"/>
         <text name="rms_ws_label_finish_time" text="완료 예정"/>
@@ -166,12 +132,10 @@
         <text name="rms_ws_info_inspection_reveals" text="점검을 하면 다른 결함이 드러날 수 있습니다."/>
         <text name="rms_ws_status_ready_title" text="정비소 준비 완료"/>
         <text name="rms_ws_status_ready_hint" text="작업을 선택하십시오. 옵션, 부품 및 가격은 시작 전에 확정됩니다."/>
-        <text name="rms_ws_status_no_intervention" text="진행 중인 작업 없음"/>
         <text name="rms_ws_label_value" text="차량 가치"/>
         <text name="rms_ws_label_age" text="차령"/>
         <text name="rms_ws_label_operating_hours" text="가동 시간"/>
         <text name="rms_ws_label_service" text="정비 수준"/>
-        <text name="rms_ws_label_service_interval" text="정비 주기"/>
         <text name="rms_ws_label_next_service" text="다음 정비"/>
         <text name="rms_ws_value_service_overdue" text="%s 초과"/>
         <text name="rms_ws_label_condition" text="상태"/>
@@ -181,17 +145,11 @@
         <text name="rms_ws_label_maintenance_log" text="정비 기록"/>
         <text name="rms_ws_label_last_report" text="최근 보고서"/>
         <text name="rms_ws_label_last_maintenance" text="최근 정비"/>
-        <text name="rms_ws_table_header_part" text="부품"/>
-        <text name="rms_ws_table_header_price" text="가격"/>
-        <text name="rms_ws_table_header_description" text="설명"/>
-        <text name="rms_ws_table_header_stage" text="단계"/>
-        <text name="rms_ws_table_header_repair_select" text="수리"/>
         <text name="rms_ws_task_inspection" text="점검"/>
         <text name="rms_ws_task_maintenance" text="정비"/>
         <text name="rms_ws_task_overhaul" text="오버홀"/>
         <text name="rms_ws_info_no_breakdowns" text="알려진 고장이 없습니다. 발견되지 않은 고장이 있을 수 있습니다."/>
         <text name="rms_ws_status_in_progress_short_format" text="%s 진행 중..."/>
-        <text name="rms_ws_status_initial" text="상태 로딩 중..."/>
         <text name="rms_ws_status_in_progress_format" text="%s 진행 중 (완료 예정: %s)"/>
         <text name="rms_ws_status_open" text="정비소 영업 중"/>
         <text name="rms_ws_status_closed" text="정비소가 닫혀 있습니다"/>
@@ -206,7 +164,6 @@
         <text name="rms_ws_action_choice_overhaul" text="기계 오버홀"/>
         <text name="rms_ws_action_choice_refill" text="유체 보충"/>
         <text name="rms_ws_action_cancel_service" text="작업 취소"/>
-        <text name="rms_ws_button_show" text="보기"/>
         <text name="rms_ws_age_unit" text="개월"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="예"/>
@@ -223,11 +180,15 @@
         <text name="rms_log_recorded_interventions_title" text="기록된 작업"/>
         <text name="rms_log_last_intervention_title" text="최근 작업"/>
         <text name="rms_log_hours" text="가동 시간"/>
-        <text name="rms_log_title" text="정비 기록"/>
         <text name="rms_log_total_cost_title" text="총 비용"/>
         <text name="rms_log_total_breakdowns_count_title" text="수리된 고장"/>
         <text name="rms_log_type" text="작업 유형"/>
         <text name="rms_log_cost_per_month_title" text="월간 비용"/>
+        <text name="rms_log_cost_per_hour_title" text="가동 시간당 비용"/>
+        <text name="rms_log_invoice_title" text="청구 내역"/>
+        <text name="rms_log_invoice_workshop_flat_rate" text="정비소 정액 요금"/>
+        <text name="rms_log_invoice_labour" text="공임"/>
+        <text name="rms_log_invoice_filters" text="필터"/>
         <text name="rms_log_cancelled_desc" text="작업 취소됨"/>
         <text name="rms_log_ownership_months_title" text="보유 기간"/>
         <text name="rms_log_overhaul_desc_with_painting" text="차량 재도색 완료"/>
@@ -575,10 +536,9 @@
         <text name="rms_option_menu_option_two_title_overhaul" text="오버홀 대상 시스템"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="작업에서 고장이 발견되면 순정 부품을 사용하는 표준 수리를 자동으로 시작합니다."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="수리 후 순정 소모품을 사용하는 표준 정비를 자동으로 수행합니다."/>
-        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="오버홀에 차량 전체 재도색을 추가합니다."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="부분 오버홀: 선택한 시스템만 처리하고 해당 고장을 제거하며 기계적 응력을 없애고 상태를 회복합니다. 관련 유체가 있으면 교환합니다."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="표준 오버홀: 모든 시스템을 처리하고 지원되는 고장을 제거하며 기계적 응력을 없애고 모든 유체를 교환합니다. 양호한 상태 수준을 회복합니다."/>
-        <text name="rms_option_menu_overhaul_full_description" text="종합 오버홀: 모든 시스템을 처리하고 지원되는 고장을 제거하며 기계적 응력을 없애고 모든 유체를 교환합니다. 매우 우수한 상태 수준을 회복합니다."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="부분 오버홀: 선택한 시스템을 양호한 상태로 복구하고 수리 가능한 고장을 고치며 필요하면 관련 유체를 교환합니다."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="표준 오버홀: 모든 시스템을 양호한 상태로 복구하고 수리 가능한 고장을 고치며 유체를 교환하고 정비를 새로 합니다."/>
+        <text name="rms_option_menu_overhaul_full_description" text="종합 오버홀: 모든 시스템을 새것과 같은 상태로 복구하고 수리 가능한 고장을 고치며 유체를 교환하고 정비를 새로 합니다."/>
         <text name="rms_option_menu_price_text" text="가격"/>
         <text name="rms_option_menu_part_used_description" text="중고 부품: 가격이 가장 낮지만 결함 위험은 50%입니다."/>
         <text name="rms_option_menu_part_aftermarket_description" text="애프터마켓 부품: 가격이 낮고 결함 위험은 33%입니다."/>
@@ -589,9 +549,9 @@
         <text name="rms_option_menu_consumable_oem_description" text="순정 소모품: 표준 가격이며 결함 위험은 10%입니다."/>
         <text name="rms_option_menu_consumable_premium_description" text="프리미엄 소모품: 가격이 20% 높지만 소모품으로 인한 결함 위험은 없습니다."/>
         <text name="rms_option_menu_perform_repair" text="자동 수리"/>
-        <text name="rms_option_menu_perform_renew_paint" text="도색 갱신"/>
         <text name="rms_option_menu_perform_maintenance" text="자동 정비"/>
         <text name="rms_option_menu_warranty_repair_text" text="보증 수리"/>
+        <text name="rms_warranty_dealer_info" text="판매점 보증: 소유 차량이 12개월 미만이고 운행 시간이 20시간 미만이면 표준 수리, 순정 부품 및 필요한 유체가 보증됩니다."/>
         <text name="rms_option_menu_duration_text" text="소요 시간"/>
         <text name="rms_option_menu_duration_instant" text="즉시"/>
         <text name="rms_option_menu_finish_time_text" text="완료 예정"/>
@@ -599,27 +559,35 @@
         <text name="rms_option_menu_inspection_visual_description" text="육안 점검: 빠르고 저렴하며 낮은 감지 능력으로 이미 발생 중인 고장만 찾습니다. 보고서에는 구성품의 상세 상태가 표시되지 않습니다."/>
         <text name="rms_option_menu_inspection_standard_description" text="표준 점검: 일반 감지 능력으로 발생 중인 고장을 찾고 상세 상태값 없이 일반 보고서를 작성합니다."/>
         <text name="rms_option_menu_inspection_complete_description" text="종합 점검: 일반 감지 능력으로 발생 중이거나 잠재적인 고장을 찾은 다음 구성품의 상세 상태가 포함된 종합 보고서를 제공합니다."/>
-        <text name="rms_option_menu_maintenance_minimal_description" text="최소 정비: 정비 수준을 부분적으로 회복하고 부족한 유체만 보충합니다. 다음 정비 주기는 짧은 상태로 유지됩니다."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="표준 정비: 기준 정비 수준을 회복하고 엔진 오일을 교환하며 필요한 경우 다른 회로의 유체를 보충합니다."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="확장 정비: 정비 수준을 기준 이상으로 높이고 다음 정비 주기를 연장하며 모든 유체를 교환합니다."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="예방 정비: 기준 정비 수준을 회복하고 모든 유체를 교환하며 우선순위가 높은 시스템을 최대 세 개까지 선택하여 기계적 응력을 줄입니다."/>
+        <text name="rms_option_menu_maintenance_standard_description" text="표준 정비: 엔진 오일을 오일 필터, 연료 필터와 함께 교환하고, 필요한 경우 다른 회로를 보충하며, 라디에이터를 청소하고 에어 필터를 불어냅니다."/>
+        <text name="rms_option_menu_maintenance_extended_description" text="확장 정비: 표준 정비에 더해 변속기 오일과 유압유를 새 필터와 함께 교환합니다. 에어 필터도 교체하고 냉각수를 보충합니다."/>
+        <text name="rms_option_menu_maintenance_preventive_description" text="예방 정비: 모든 오일과 냉각수를 필터와 함께 교환하고 새 에어 필터를 장착합니다. 또한 우선순위가 높은 시스템을 최대 세 개까지 선택하여 기계적 응력을 줄입니다."/>
         <text name="rms_option_menu_repair_type_fix_description" text="임시 수리: 저렴한 비용으로 기계를 신속히 운행 가능한 상태로 되돌리지만 고장은 제거하지 않습니다. 제한된 시간이 지나면 다시 나타납니다."/>
         <text name="rms_option_menu_repair_type_replacement_description" text="표준 수리: 고장을 제거하고 고장 난 부품을 교체하며 해당 시스템의 기계적 응력을 부분적으로 줄입니다."/>
         <text name="rms_option_menu_repair_type_advanced_description" text="고급 수리: 고장을 제거하고 고장 난 부품을 교체하며 해당 시스템에 누적된 기계적 응력을 없앱니다."/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="후속 작업은 별도로 청구됩니다. 필요한 유체는 작업 시작 시 정비소에서 제공하거나 보유 재고에서 사용합니다."/>
+        <text name="rms_bodywork_touchup" text="도장 보수"/>
+        <text name="rms_bodywork_full" text="전체 재도장"/>
+        <text name="rms_bodywork_colors_title" text="차량 색상"/>
+        <text name="rms_bodywork_keep_color" text="현재 색상 유지"/>
+        <text name="rms_bodywork_reset_color" text="현재"/>
+        <text name="rms_bodywork_wear" text="도장 손상"/>
+        <text name="rms_bodywork_unavailable" text="이용 불가"/>
+        <text name="rms_bodywork_ineligible" text="이 차량 또는 정비소에서는 이용할 수 없습니다"/>
+        <text name="rms_bodywork_no_wear" text="수리할 도장 손상이 없습니다"/>
+        <text name="rms_bodywork_wear_limit" text="도장 손상이 30% 이하일 때 보수할 수 있습니다"/>
+        <text name="rms_bodywork_touchup_description" text="가벼운 도장 손상을 복구합니다. 현재 색상은 유지됩니다."/>
+        <text name="rms_bodywork_full_description" text="도장을 새롭게 합니다. 이 차량에서 선택할 수 있는 색상으로 바꾸거나 현재 색상을 유지하세요."/>
+        <text name="rms_bodywork_touchup_colors" text="현재 색상이 유지됩니다."/>
+        <text name="rms_bodywork_no_colors" text="이 차량에는 선택 가능한 색상이 없습니다. 현재 색상이 유지됩니다."/>
+        <text name="rms_bodywork_unavailable_title" text="서비스 이용 불가"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="점검 보고서"/>
-        <text name="rms_report_vehicle_name_title" text="차량명"/>
-        <text name="rms_report_vehicle_age_title" text="차령"/>
-        <text name="rms_report_vehicle_operating_hours_title" text="가동 시간"/>
         <text name="rms_report_vehicle_specs_title" text="차량 제원"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="최대 발전기 전류"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="배터리 충전량"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="배터리 용량"/>
-        <text name="rms_report_date_title" text="날짜"/>
         <text name="rms_report_detected_breakdowns_title" text="발견된 고장"/>
-        <text name="rms_report_inspection_type_title" text="점검 유형"/>
-        <text name="rms_report_inspection_location_title" text="점검 장소"/>
         <text name="rms_report_overall_assessment_title" text="전반적인 상태 평가"/>
         <text name="rms_report_overall_assessment_condition" text="상태 수준"/>
         <text name="rms_report_overall_assessment_crit_fail_risk" text="치명적 고장 위험"/>
@@ -707,6 +675,10 @@
         <text name="rms_fluid_circuit_coolant" text="냉각수"/>
         <text name="rms_fluid_circuit_transmissionOil" text="변속기 오일"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="유압유"/>
+        <text name="rms_fluid_circuit_transmissionHydraulic" text="변속기·유압 공용 오일"/>
+        <text name="rms_fluid_hud_engineOil" text="엔진 오일"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="변속기 오일"/>
+        <text name="rms_fluid_hud_coolant" text="냉각수"/>
         <text name="rms_fluid_incompatible_title" text="호환되지 않는 유체"/>
         <text name="rms_fluid_incompatible_message" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 시스템 마모를 최대 3배까지 증가시키고 발열을 높이거나 유압 작동을 느리게 할 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
         <text name="rms_fluid_error_no_vehicle" text="4 m 이내에 유체 보충이 필요한 차량이 없습니다"/>
@@ -714,10 +686,11 @@
         <text name="rms_fluid_error_motor_running" text="유체를 이송하기 전에 엔진을 끄십시오"/>
         <text name="rms_fluid_error_vehicle_moving" text="차량이 정지해 있어야 합니다"/>
         <text name="rms_fluid_dealer_billed" text="청구되는 유체"/>
-        <text name="rms_fluid_stock_required" text="필요한 유체 재고"/>
+        <text name="rms_fluid_warranty_covered" text="보증 적용 유체"/>
+        <text name="rms_fluid_stock_required" text="정비소 구역에 호환 용기 필요"/>
         <text name="rms_fluid_refill_work_order" text="유체 레벨 보충"/>
         <text name="rms_fluid_refill_dealer_supply" text="견적에 유체 공급 비용 포함"/>
-        <text name="rms_fluid_refill_stock_supply" text="정비소 재고에서 사용"/>
+        <text name="rms_fluid_refill_stock_supply" text="호환되는 용기를 정비소 구역 안에 놓으십시오"/>
         <text name="rms_fluid_mode_top_up" text="보충"/>
         <text name="rms_fluid_mode_replace" text="교체"/>
         <text name="rms_fluid_mode_repair" text="누출 후 보충"/>
@@ -740,12 +713,15 @@
         <text name="rms_inspection_verdict_ok_title" text="운행 가능"/>
         <text name="rms_inspection_verdict_ok_message" text="이상 없음, 장비를 운행해도 됩니다."/>
         <text name="rms_inspection_verdict_watch_title" text="관찰 필요"/>
-        <text name="rms_inspection_verdict_watch_message" text="한 가지 항목에 주의가 필요합니다. 작업은 가능하지만 오늘 안에 처리하십시오."/>
+        <text name="rms_inspection_verdict_watch_message" text="한 개 이상의 항목에 주의가 필요합니다. 기계는 계속 작업할 수 있지만 오늘 안에 처리하십시오."/>
         <text name="rms_inspection_verdict_air_filter_service_message" text="작업은 가능합니다. 에어 필터 교체를 위해 정비소 정비를 계획하십시오."/>
         <text name="rms_inspection_verdict_stop_title" text="사용 금지"/>
         <text name="rms_inspection_verdict_stop_message" text="사용 전에 한 가지 항목을 처리해야 합니다. 현재 상태로 이 장비를 사용하지 마십시오."/>
-        <text name="rms_inspection_service_due_in" text="다음 정비까지 %s"/>
-        <text name="rms_inspection_service_overdue" text="정비 %s 초과"/>
+        <text name="rms_inspection_service_due_in" text="%s까지 %s"/>
+        <text name="rms_inspection_service_overdue" text="%s %s 초과"/>
+        <text name="rms_inspection_service_clock_engine" text="엔진 오일 교환"/>
+        <text name="rms_inspection_service_clock_transmission" text="변속기 오일 교환"/>
+        <text name="rms_inspection_service_clock_coolant" text="냉각수 교환"/>
         <text name="rms_inspection_status_slightly_low" text="약간 낮음"/>
         <text name="rms_inspection_status_slightly_dirty" text="약간 막힘"/>
         <text name="rms_inspection_status_slightly_dry" text="약간 건조함"/>
@@ -763,6 +739,8 @@
         <text name="rms_inspection_status_active_leak" text="누출 중"/>
         <text name="rms_inspection_status_heavily_clogged" text="심하게 막힘"/>
         <text name="rms_inspection_status_not_required" text="필요 없음"/>
+        <text name="rms_inspection_status_change_overdue" text="교환 시기 초과"/>
+        <text name="rms_inspection_status_change_long_overdue" text="교환 시기 크게 초과"/>
         <text name="rms_inspection_engine_oil" text="엔진 오일"/>
         <text name="rms_inspection_coolant" text="냉각수"/>
         <text name="rms_inspection_hydraulic_fluid" text="유압유"/>
@@ -784,8 +762,8 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="에어 필터가 약간 막혔습니다."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="에어 필터가 눈에 띄게 막혔습니다."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="에어 필터가 먼지와 파편으로 심하게 막혔습니다."/>
-        <text name="rms_inspection_hint_air_filter_clogging_stage4" text="에어 필터가 먼지와 파편으로 완전히 막혔습니다."/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="에어 필터는 불어내도 더 이상 깨끗해지지 않습니다. 필터 교체에는 정비소 정비가 필요합니다."/>
+        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="필터에 바람을 불어 느슨한 먼지를 제거하십시오. 남은 잔여물 때문에 이후 정비소에서 필터를 교체해야 합니다."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="발전기와 일부 연결부 주변에 과열 및 변색 흔적이 보입니다."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="발전기와 배선 주변에 뚜렷한 과열 흔적과 변색된 커넥터가 보입니다."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="그리스 주입 지점이 약간 건조해 보입니다."/>
@@ -802,6 +780,9 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="터보차저 주변에 오일 흔적과 변색된 연결부가 보입니다."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="터보차저 주변에 심한 오일 흔적, 변색된 연결부 및 그을음 흔적이 보입니다."/>
         <text name="rms_inspection_hint_fluid_level_low" text="한 유체의 레벨이 기준선 아래로 내려갔습니다."/>
+        <text name="rms_inspection_hint_service_engine" text="엔진 오일 교환 시기가 지났습니다. 열화된 오일은 엔진과 분사 계통의 마모를 앞당깁니다. 표준 정비에서 필터와 함께 교환합니다."/>
+        <text name="rms_inspection_hint_service_transmission" text="변속기 오일 교환 시기가 지났습니다. 열화된 오일은 변속기와 유압 계통의 마모를 앞당깁니다. 확장 정비에서 필터와 함께 교환합니다."/>
+        <text name="rms_inspection_hint_service_coolant" text="냉각수 교환 시기가 되었습니다. 열화된 냉각수는 냉각 시스템의 마모를 앞당깁니다. 예방 정비에서 교환합니다."/>
         <text name="rms_inspection_transmission_oil" text="변속기 오일"/>
         <text name="rms_inspection_radiator" text="라디에이터"/>
         <text name="rms_inspection_air_filter" text="에어 필터"/>
@@ -828,9 +809,18 @@
         <text name="rms_ingame_menu_header_procedure" text="작업"/>
         <text name="rms_ingame_menu_header_finish_time" text="완료 시각"/>
         <text name="rms_ingame_menu_header_service_cost" text="비용"/>
+        <text name="rms_ingame_menu_header_reason" text="사유"/>
         <text name="rms_ingame_menu_empty_other" text="다른 차량이 없습니다"/>
         <text name="rms_ingame_menu_empty_active" text="RMS 차량이 없습니다"/>
         <text name="rms_ingame_menu_empty_service" text="현재 정비 중인 차량이 없습니다"/>
+        <text name="rms_ingame_menu_reason_implement" text="장비 또는 트레일러"/>
+        <text name="rms_ingame_menu_reason_unsupported" text="지원되지 않음"/>
+        <text name="rms_ingame_menu_reason_electric" text="전기"/>
+        <text name="rms_ingame_menu_reason_towed" text="엔진 장착 장비"/>
+        <text name="rms_ingame_menu_reason_auxiliary" text="보조 기계"/>
+        <text name="rms_ingame_menu_reason_user" text="수동 제외"/>
+        <text name="rms_ingame_menu_include" text="RMS에 포함"/>
+        <text name="rms_ingame_menu_exclude" text="RMS에서 제외"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="차량 반납"/>
         <text name="rms_sell_dialog_section_vehicle" text="차량"/>
@@ -856,8 +846,7 @@
         <text name="rms_tutorial_service_interval_expired_message" text="%s의 정비 주기가 지났습니다.&#10;&#10;가능한 한 빨리 정비소로 가서 &quot;정비&quot;를 선택하십시오. 정비가 늦어진 차량을 계속 운행하면 여러 고장이 발생할 위험이 크게 높아집니다."/>
         <text name="rms_tutorial_steering_title" text="정지 상태 조향"/>
         <text name="rms_tutorial_steering_message" text="정지 상태에서는 가급적 조향하지 않는 것이 좋습니다. 이때 조향기어와 앞차축 부품에 큰 부담이 걸리며, 그 결과 하부 주행계의 마모가 증가합니다.&#10;&#10;조금만 움직이기 시작해도 바퀴는 훨씬 쉽게 돌아갑니다."/>
-        <text name="rms_tutorial_rad_or_filter_clogged_title" text="라디에이터 및 에어 필터 막힘"/>
-        <text name="rms_tutorial_rad_or_filter_clogged_message" text="차량의 라디에이터와 에어 필터가 심하게 막혔습니다.&#10;&#10;막힌 라디에이터는 열을 제대로 방출하지 못하고 막힌 에어 필터는 엔진으로 들어가는 공기 흐름을 제한합니다. 그러면 출력이 떨어지고 연료 소비가 증가합니다.&#10;&#10;라디에이터는 세차장이나 에어 블로워로 청소할 수 있습니다. 에어 필터는 불어내는 것만 가능하며 완전히 새것처럼 복원되지는 않습니다. 정비소의 정비만 필터를 교체합니다.&#10;&#10;차량을 바라보며 %s 키를 길게 눌러 두 상태를 확인할 수 있습니다."/>
+        <text name="rms_tutorial_cooling_air_check_message" text="라디에이터 또는 에어 필터가 막혔습니다. 차량을 바라보며 %s 키를 길게 눌러 어느 쪽인지 확인하세요. 압축 공기 블로어로 청소하세요. 필터를 더 이상 불어내어 청소할 수 없다면 정비소에서 확장 또는 예방 정비를 선택해 교체하세요."/>
         <text name="rms_tutorial_needs_lubrication_title" text="그리스 주입 필요"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%s 차량은 정기적인 그리스 주입이 필요합니다.&#10;&#10;RMS에서는 작동 시간이 늘어남에 따라 그리스 수준이 낮아집니다. 장기간 사용하지 않은 뒤에도 다시 운행하기 전에 그리스를 주입해야 합니다. 그리스가 부족하면 섀시 마모가 빨라집니다.&#10;&#10;상점에서 그리스 건을 구입하고 점검에서 필요하다고 표시될 때 기계에 그리스를 주입하십시오.&#10;&#10;차량을 바라보며 %s 키를 길게 눌러 그리스 수준을 확인할 수 있습니다."/>
         <text name="rms_tutorial_needs_repair_title" text="고장 감지"/>

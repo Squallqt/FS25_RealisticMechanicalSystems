@@ -1,12 +1,13 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Physical RMS fluid container backed by one native FillUnit
+---Physical RMS fluid container holding its own liters, so the game's 255 fill type limit never empties it
 RMS_FluidContainer = {}
-RMS_FluidContainer.SPEC_TABLE_NAME = "spec_FS25_RealisticMechanicalSystems.rmsFluidContainer"
+RMS_FluidContainer.SPEC_NAME = "FS25_RealisticMechanicalSystems.rmsFluidContainer"
+RMS_FluidContainer.SPEC_TABLE_NAME = "spec_" .. RMS_FluidContainer.SPEC_NAME
 RMS_FluidContainer.DRUM_I3D_FILENAME = "data/maps/textures/shared/props/motorex/motorexOilBarrel.i3d"
 
----Requires the native FillUnit specialization
+---Requires the native FillUnit specialization, whose configuration picks the 5, 25 or 200 liter format
 function RMS_FluidContainer.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(FillUnit, specializations)
 end
@@ -25,6 +26,9 @@ function RMS_FluidContainer.initSpecialization()
     schema:register(XMLValueType.STRING, baseKey .. "#drumBodyDiffuse", "200 liter drum diffuse map")
     schema:register(XMLValueType.STRING, baseKey .. "#drumLabelDiffuse", "200 liter drum label diffuse map")
     schema:setXMLSpecializationType()
+
+    Vehicle.xmlSchemaSavegame:register(XMLValueType.FLOAT,
+        "vehicles.vehicle(?)." .. RMS_FluidContainer.SPEC_NAME .. "#liters", "Liters left in the container")
 end
 
 ---Registers public container functions
@@ -45,15 +49,22 @@ function RMS_FluidContainer.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "delete", RMS_FluidContainer.delete)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCanBePickedUp", RMS_FluidContainer.getCanBePickedUp)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getMeshNodes", RMS_FluidContainer.getMeshNodes)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getFillLevelInformation", RMS_FluidContainer.getFillLevelInformation)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "showInfo", RMS_FluidContainer.showInfo)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getAdditionalComponentMass", RMS_FluidContainer.getAdditionalComponentMass)
 end
 
----Registers load and FillUnit callbacks
+---Registers load, save and network callbacks
 function RMS_FluidContainer.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onLoad", RMS_FluidContainer)
+    SpecializationUtil.registerEventListener(vehicleType, "onLoadEnd", RMS_FluidContainer)
     SpecializationUtil.registerEventListener(vehicleType, "onDelete", RMS_FluidContainer)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", RMS_FluidContainer)
     SpecializationUtil.registerEventListener(vehicleType, "saveToXMLFile", RMS_FluidContainer)
-    SpecializationUtil.registerEventListener(vehicleType, "onFillUnitFillLevelChanged", RMS_FluidContainer)
+    SpecializationUtil.registerEventListener(vehicleType, "onReadStream", RMS_FluidContainer)
+    SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", RMS_FluidContainer)
+    SpecializationUtil.registerEventListener(vehicleType, "onReadUpdateStream", RMS_FluidContainer)
+    SpecializationUtil.registerEventListener(vehicleType, "onWriteUpdateStream", RMS_FluidContainer)
 end
 
 ---Loads the native GIANTS drum without importing its static rigid body
@@ -77,7 +88,7 @@ function RMS_FluidContainer.loadNativeDrumVisual(parentNode)
     return true
 end
 
----Loads and validates the immutable catalogue product
+---Loads the immutable catalogue product and the liters left, a new container starting full
 function RMS_FluidContainer:onLoad(savegame)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     if spec == nil then
@@ -96,6 +107,14 @@ function RMS_FluidContainer:onLoad(savegame)
         Logging.xmlError(self.xmlFile, "Unknown RMS fluid product key '%s'", tostring(spec.productKey))
         return
     end
+
+    spec.capacity = product.capacities[Utils.getNoNil(self.configurations["fillUnit"], 1)]
+    spec.liters = spec.capacity
+    if savegame ~= nil and not savegame.resetVehicles then
+        spec.liters = math.clamp(savegame.xmlFile:getValue(savegame.key .. "." .. RMS_FluidContainer.SPEC_NAME .. "#liters", 0), 0, spec.capacity)
+    end
+    spec.dirtyFlag = self:getNextDirtyFlag()
+    self:setMassDirty()
 
     local baseKey = "vehicle.rmsFluidContainer"
     local mediumRoots = { self.i3dMappings.mediumVisualLink.nodeId }
@@ -148,6 +167,13 @@ function RMS_FluidContainer:onLoad(savegame)
     if self.isClient and g_currentMission ~= nil and g_currentMission.activatableObjectsSystem ~= nil then
         spec.activatable = RMS_FluidContainerActivatable.new(self)
         g_currentMission.activatableObjectsSystem:addActivatable(spec.activatable)
+    end
+end
+
+---Temporary cleanup for empty containers persisted before 1.0; remove this onLoadEnd hook for the 1.0 release
+function RMS_FluidContainer:onLoadEnd()
+    if self.isServer and self.propertyState ~= VehiclePropertyState.SHOP_CONFIG then
+        self:deleteRMSContainerIfEmpty()
     end
 end
 
@@ -256,10 +282,40 @@ function RMS_FluidContainer:onUpdate(dt, isActiveForInput, isActiveForInputIgnor
     end
 end
 
----Cancels transient transfer state when a save is written
+---Saves the liters left and cancels transient transfer state
 function RMS_FluidContainer:saveToXMLFile(xmlFile, key, usedModNames)
     if self.isServer and RMS_FluidTransfer ~= nil then
         RMS_FluidTransfer.cancel(self)
+    end
+    xmlFile:setValue(key .. "#liters", self[RMS_FluidContainer.SPEC_TABLE_NAME].liters)
+end
+
+---Sends the liters to a joining client
+function RMS_FluidContainer:onWriteStream(streamId, connection)
+    streamWriteFloat32(streamId, self[RMS_FluidContainer.SPEC_TABLE_NAME].liters)
+end
+
+---Receives the liters on joining
+function RMS_FluidContainer:onReadStream(streamId, connection)
+    self[RMS_FluidContainer.SPEC_TABLE_NAME].liters = streamReadFloat32(streamId)
+    self:setMassDirty()
+end
+
+---Sends the changed liters to the clients
+function RMS_FluidContainer:onWriteUpdateStream(streamId, connection, dirtyMask)
+    if not connection:getIsServer() then
+        local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+        if streamWriteBool(streamId, bit32.band(dirtyMask, spec.dirtyFlag) ~= 0) then
+            streamWriteFloat32(streamId, spec.liters)
+        end
+    end
+end
+
+---Receives the changed liters from the server
+function RMS_FluidContainer:onReadUpdateStream(streamId, timestamp, connection)
+    if connection:getIsServer() and streamReadBool(streamId) then
+        self[RMS_FluidContainer.SPEC_TABLE_NAME].liters = streamReadFloat32(streamId)
+        self:setMassDirty()
     end
 end
 
@@ -268,20 +324,85 @@ function RMS_FluidContainer:getRMSFluidProductKey()
     return self[RMS_FluidContainer.SPEC_TABLE_NAME].productKey
 end
 
----Returns current native FillUnit liters
+---Returns the liters left
 function RMS_FluidContainer:getRMSFluidLiters()
-    return math.max(tonumber(self:getFillUnitFillLevel(1)) or 0, 0)
+    return self[RMS_FluidContainer.SPEC_TABLE_NAME].liters
 end
 
----Returns configured native FillUnit capacity
+---Returns the capacity of the container format
 function RMS_FluidContainer:getRMSFluidCapacity()
-    return math.max(tonumber(self:getFillUnitCapacity(1)) or 0, 0)
+    return self[RMS_FluidContainer.SPEC_TABLE_NAME].capacity
 end
 
 ---Returns the remaining percentage
 function RMS_FluidContainer:getRMSFluidPercentage()
     local capacity = self:getRMSFluidCapacity()
     return capacity > 0 and math.clamp(self:getRMSFluidLiters() / capacity, 0, 1) or 0
+end
+
+-- short name of each kind of fluid, the one the player needs to tell containers apart
+local FLUID_KIND_TEXT_KEYS = {
+    engineOil = "rms_fluid_hud_engineOil",
+    transmissionHydraulic = "rms_fluid_hud_transmissionHydraulic",
+    coolant = "rms_fluid_hud_coolant"
+}
+
+-- fluid kinds each fill level display took per line in its current pass, weak so a deleted display goes
+local displayPasses = setmetatable({}, { __mode = "k" })
+
+---Returns the kind of fluid a product is
+local function getFluidKind(product)
+    if product.compatibleCircuits.engineOil then
+        return "engineOil"
+    elseif product.compatibleCircuits.coolant then
+        return "coolant"
+    end
+    return "transmissionHydraulic"
+end
+
+---Shows the container in the fill level display under its brand logo and its kind of fluid; when the game's
+-- 255 fill type limit refused the brand types, the line keeps the kind without logo nor unit
+function RMS_FluidContainer:getFillLevelInformation(superFunc, display)
+    superFunc(self, display)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    local product = RMS_Fluids.PRODUCTS[spec.productKey]
+    local kind = getFluidKind(product)
+    local lineFillType = g_fillTypeManager:getFillTypeIndexByName("RMS_HUD_" .. product.brand) or FillType.UNKNOWN
+
+    -- the game merges lines sharing a fill type, so a second kind of fluid on one line gets its product named
+    local pass = displayPasses[display]
+    if pass == nil or pass.time ~= g_time then
+        pass = { time = g_time, lineKinds = {} }
+        displayPasses[display] = pass
+    end
+    local lineKind = pass.lineKinds[lineFillType]
+    if lineKind == nil then
+        pass.lineKinds[lineFillType] = kind
+    end
+    local infoText = (lineKind ~= nil and lineKind ~= kind) and product.name or nil
+
+    display:addFillLevel(lineFillType, spec.liters, spec.capacity, 0, false, nil,
+        g_i18n:getText(FLUID_KIND_TEXT_KEYS[kind]), infoText)
+end
+
+---Shows the kind of fluid, its liters, then the brand and product when the player looks at the container
+function RMS_FluidContainer:showInfo(superFunc, box)
+    superFunc(self, box)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    local product = RMS_Fluids.PRODUCTS[spec.productKey]
+    box:addLine(g_i18n:getText(FLUID_KIND_TEXT_KEYS[getFluidKind(product)]), string.format("%s / %s %s", RMS_FluidWorkshop.formatLiters(spec.liters),
+        RMS_FluidWorkshop.formatLiters(spec.capacity), g_i18n:getText("unit_literShort")))
+    box:addLine(g_brandManager:getBrandByName(product.brand).title, product.name)
+end
+
+---Adds the weight of the fluid to the container body
+function RMS_FluidContainer:getAdditionalComponentMass(superFunc, component)
+    local additionalMass = superFunc(self, component)
+    if component.node == self.components[1].node then
+        local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+        additionalMass = additionalMass + spec.liters * RMS_Fluids.PRODUCTS[spec.productKey].densityKgPerLiter * 0.001
+    end
+    return additionalMass
 end
 
 ---Allows native hand pickup for the 5 and 25 liter formats
@@ -331,30 +452,40 @@ function RMS_FluidContainer:endRMSFluidTransaction(committed)
     end
 end
 
----Removes liters through the native FillUnit server path
-function RMS_FluidContainer:removeRMSFluidLiters(liters, farmId)
-    local fillType = self:getFillUnitFillType(1)
-    local delta = self:addFillUnitFillLevel(
-        farmId,
-        1,
-        -math.max(tonumber(liters) or 0, 0),
-        fillType,
-        ToolType.UNDEFINED,
-        nil
-    )
-    return math.max(-(tonumber(delta) or 0), 0), fillType
+---Sets the liters on the server, the weight following them and the clients told
+local function setLiters(container, liters)
+    local spec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
+    spec.liters = math.clamp(liters, 0, spec.capacity)
+    container:raiseDirtyFlags(spec.dirtyFlag)
+    container:setMassDirty()
 end
 
----Restores a rolled-back allocation through the native FillUnit path
-function RMS_FluidContainer:restoreRMSFluidLiters(liters, farmId, fillType)
-    return self:addFillUnitFillLevel(
-        farmId,
-        1,
-        math.max(tonumber(liters) or 0, 0),
-        fillType,
-        ToolType.UNDEFINED,
-        nil
-    )
+---Removes liters, an emptied container going away once its transaction ends
+-- @param float liters liters asked for
+-- @return float removed liters actually taken
+function RMS_FluidContainer:removeRMSFluidLiters(liters)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    local removed = math.min(math.max(liters, 0), spec.liters)
+    setLiters(self, spec.liters - removed)
+
+    if spec.liters <= RMS_Fluids.EPSILON then
+        if spec.transactionDepth > 0 then
+            spec.pendingDeleteCheck = true
+        else
+            self:deleteRMSContainerIfEmpty()
+        end
+    end
+    return removed
+end
+
+---Puts back liters a rolled-back allocation took
+-- @param float liters liters to put back
+-- @return float restored liters actually put back
+function RMS_FluidContainer:restoreRMSFluidLiters(liters)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    local before = spec.liters
+    setLiters(self, spec.liters + math.max(liters, 0))
+    return spec.liters - before
 end
 
 ---Deletes an empty container
@@ -365,21 +496,6 @@ function RMS_FluidContainer:deleteRMSContainerIfEmpty()
     end
 
     self:delete()
-end
-
----Defers or performs deletion after a native FillUnit change
-function RMS_FluidContainer:onFillUnitFillLevelChanged(fillUnitIndex, fillLevelDelta, fillTypeIndex, toolType, fillPositionData, appliedDelta)
-    if fillUnitIndex ~= 1 or not self.isServer or (tonumber(appliedDelta) or 0) >= 0
-        or self:getRMSFluidLiters() > RMS_Fluids.EPSILON then
-        return
-    end
-
-    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
-    if (spec.transactionDepth or 0) > 0 then
-        spec.pendingDeleteCheck = true
-    else
-        self:deleteRMSContainerIfEmpty()
-    end
 end
 
 RMS_FluidContainerActivatable = {}
@@ -486,11 +602,11 @@ function RMS_FluidContainerActivatable:selectCircuit(target)
 
     local circuits = {}
     local options = {}
-    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+    for _, circuit in ipairs(RMS_Fluids.getSumpCircuits(target)) do
         if RMS_Fluids.getCapacity(target, circuit) > RMS_Fluids.EPSILON
             and RMS_Fluids.getMissingLiters(target, circuit) > RMS_Fluids.EPSILON then
             table.insert(circuits, circuit)
-            table.insert(options, g_i18n:getText("rms_fluid_circuit_" .. circuit))
+            table.insert(options, g_i18n:getText(RMS_Fluids.getCircuitTextKey(target, circuit, "rms_fluid_circuit_" .. circuit)))
         end
     end
     if #circuits == 0 then

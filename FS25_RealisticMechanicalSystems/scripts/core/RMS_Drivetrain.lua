@@ -26,6 +26,7 @@ local TRACK_STEER_INPUT_EPSILON = 0.001
 local DEBUG_SAMPLE_INTERVAL_MS = 400
 local DEBUG_RATIO_MIN_SPEED = 0.05
 local DEBUG_RATIO_MAX = 99
+local DIFF_LOCK_RELEASE_KMH = 10
 
 local sanitizeNumber = RealisticMechanicalSystems.sanitizeNumber
 
@@ -1037,17 +1038,16 @@ end
 -- @param table state drivetrain state
 -- @param float dt time since last call in ms
 local function updateDiffLockState(vehicle, state, dt)
-    local C = getConfig()
     local speed = sanitizeNumber(vehicle:getLastSpeed(), 0, 0, 1000)
 
     if state.diffLockRequested then
         if state.diffLockEngaged then
-            if speed > C.DIFFLOCK_AUTO_RELEASE_SPEED then
+            if speed > DIFF_LOCK_RELEASE_KMH then
                 state.diffLockEngaged = false
                 RMS_Drivetrain.setDrivetrainState(vehicle, state.driveMode, false, state.parkBrake, false)
             end
         else
-            if speed <= C.DIFFLOCK_AUTO_RELEASE_SPEED then
+            if speed <= DIFF_LOCK_RELEASE_KMH then
                 state.diffLockEngaged = true
             end
         end

@@ -83,6 +83,9 @@ function RMS_VehicleChangeStatusEvent:run(connection)
             spec.pendingProgressStepIndex = self.progressStepIndex
             spec.pendingProgressTotalTime = self.progressTotalTime
             spec.pendingProgressElapsedTime = self.progressElapsedTime
+            if spec.currentState == RealisticMechanicalSystems.STATUS.READY then
+                RMS_Bodywork.syncPreview(self.vehicle)
+            end
 
             if self.serializedLogEntry ~= nil and self.serializedLogEntry ~= "" then
                 local entry = RMS_Utils.deserializeMaintenanceLogEntry(self.serializedLogEntry)

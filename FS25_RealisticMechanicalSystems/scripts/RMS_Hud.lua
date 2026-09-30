@@ -1033,8 +1033,7 @@ function RMS_Hud:drawDashboard()
     local spec = vehicle.spec_RealisticMechanicalSystems
     local colors = RMS_Breakdowns.COLORS
     local activeIndicators = spec.activeIndicators
-    local serviceInterval = (self.vehicle:getHoursSinceLastMaintenance() or 0) / (self.vehicle:getMaintenanceInterval() or 5)
-    local isServiceOverdue = serviceInterval > 1.0
+    local isServiceOverdue = self.vehicle:getServiceLevel() < RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
     local motorState = vehicle:getMotorState()
     local preheatState = spec.preheatState or RMS_Preheat.STATE.IDLE
     local isLampTestActive = RMS_Preheat.isLampTestActive(vehicle)
@@ -1927,7 +1926,8 @@ function RMS_Hud:showInfoVehicle(box)
     if self.spec_RealisticMechanicalSystems ~= nil and not self.spec_RealisticMechanicalSystems.isExcludedVehicle then
         local spec = self.spec_RealisticMechanicalSystems
         
-        local remaining = self:getMaintenanceInterval() - self:getHoursSinceLastMaintenance()
+        local _, serviceHours, serviceInterval = self:getNextServiceClock()
+        local remaining = serviceInterval - serviceHours
         local hoursText = string.format("%.0f %s", math.abs(remaining), g_i18n:getText("rms_spec_op_hours_short"))
         local serviceText = remaining >= 0 and hoursText
             or string.format(g_i18n:getText("rms_ws_value_service_overdue"), hoursText)

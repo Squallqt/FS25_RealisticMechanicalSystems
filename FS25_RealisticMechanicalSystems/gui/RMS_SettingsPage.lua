@@ -38,23 +38,14 @@ local function buildPendingConfigFromRMSConfig()
 
         baseServiceWear = RMS_Config.CORE.BASE_SERVICE_WEAR,
         baseSystemsWear = RMS_Config.CORE.BASE_SYSTEMS_WEAR,
-        downtimeMultiplier = RMS_Config.CORE.DOWNTIME_MULTIPLIER,
         generalWearEnabled = RMS_Config.CORE.GENERAL_WEAR_ENABLED,
         exhaustSmokeEnabled = RMS_Config.EXHAUST.ENABLED,
-        exhaustSmokeIntensity = RMS_Config.EXHAUST.INTENSITY,
         enableWarningMessages = RMS_Config.CORE.ENABLE_WARNING_MESSAGES,
-        systemStressGlobalMultiplier = RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER,
-        aiOverloadControl = RMS_Config.CORE.AI_OVERLOAD_AND_OVERHEAT_CONTROL,
-        aiDisableOnCriticalOverload = RMS_Config.CORE.AI_DISABLE_ON_CRITICAL_OVERLOAD,
-        contractVehicleProtection = RMS_Config.CORE.CONTRACT_VEHICLE_PROTECTION,
-        aiWorkerTargetStress = RMS_Config.CORE.AI_WORKER_PID.TARGET_STRESS,
-        aiWorkerMinSpeed = RMS_Config.CORE.AI_WORKER_PID.MIN_SPEED,
 
         instantInspection = RMS_Config.MAINTENANCE.INSTANT_INSPECTION,
-        parkVehicle = RMS_Config.MAINTENANCE.PARK_VEHICLE,
-        warrantyEnabled = RMS_Config.MAINTENANCE.WARRANTY_ENABLED,
-        globalPriceMultiplier = RMS_Config.MAINTENANCE.GLOBAL_SERVICE_PRICE_MULTIPLIER,
-        globalTimeMultiplier = RMS_Config.MAINTENANCE.GLOBAL_SERVICE_TIME_MULTIPLIER,
+        instantMaintenanceRepair = RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR,
+        instantBodywork = RMS_Config.MAINTENANCE.INSTANT_BODYWORK,
+        instantOverhaul = RMS_Config.MAINTENANCE.INSTANT_OVERHAUL,
 
         dealerAlwaysAvailable = RMS_Config.WORKSHOP.DEALER_ALWAYS_AVAILABLE,
         mobileAlwaysAvailable = RMS_Config.WORKSHOP.MOBILE_ALWAYS_AVAILABLE,
@@ -71,14 +62,9 @@ local function buildPendingConfigFromRMSConfig()
         alternatorMaxOutput = RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT,
         idleCurrentA = RMS_Config.ELECTRICAL.IDLE_CURRENT_A,
 
-        cloggingSpeed = RMS_Config.FIELD_CARE.CLOGGING_SPEED,
-        fieldInspectionDuration = RMS_Config.FIELD_CARE.VISUAL_INSPECTION_DURATION,
-        lubricationReducePerOperatingHour = RMS_Config.FIELD_CARE.LUBRICATION_REDUCE_PER_OPERATING_HOUR,
-
         drivetrainEnabled = RMS_Config.DRIVETRAIN.ENABLED,
         drivetrainAllowAutoMode = RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE,
         drivetrainWindupDamage = RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED,
-        drivetrainDiffLockReleaseSpeed = RMS_Config.DRIVETRAIN.DIFFLOCK_AUTO_RELEASE_SPEED,
         drivetrainParkBrakeEnabled = RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED,
         drivetrainParkBrakeAuto = RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE,
 
@@ -179,8 +165,9 @@ local function applySettingsRowColor(page, rowElement)
         return
     end
 
-    if InGameMenuSettingsFrame ~= nil and InGameMenuSettingsFrame.COLOR_ALTERNATING ~= nil then
-        rowElement:setImageColor(nil, table.unpack(InGameMenuSettingsFrame.COLOR_ALTERNATING[page.rmsSettingsRowIsEven]))
+    local settingsFrame = _G.InGameMenuSettingsFrame
+    if settingsFrame ~= nil and settingsFrame.COLOR_ALTERNATING ~= nil then
+        rowElement:setImageColor(nil, table.unpack(settingsFrame.COLOR_ALTERNATING[page.rmsSettingsRowIsEven]))
     end
 
     page.rmsSettingsRowIsEven = not page.rmsSettingsRowIsEven
@@ -261,7 +248,7 @@ local function refreshCurrentSettingsPage()
     end
 end
 
----Applies on the server what a changed park vehicle or instant inspection setting implies on running services
+---Applies changed instant service settings to running services
 -- @param table? oldConfig configuration before the change
 -- @param table? newConfig configuration after the change
 function RMS_SettingsPage.applyPendingConfigSideEffects(oldConfig, newConfig)
@@ -273,10 +260,13 @@ function RMS_SettingsPage.applyPendingConfigSideEffects(oldConfig, newConfig)
         return
     end
 
-    local parkVehicleChanged = valuesDiffer(oldConfig.parkVehicle, newConfig.parkVehicle)
     local instantInspectionEnabled = (oldConfig.instantInspection ~= true and newConfig.instantInspection == true)
+    local instantMaintenanceRepairEnabled = (oldConfig.instantMaintenanceRepair ~= true and newConfig.instantMaintenanceRepair == true)
+    local instantBodyworkEnabled = (oldConfig.instantBodywork ~= true and newConfig.instantBodywork == true)
+    local instantOverhaulEnabled = (oldConfig.instantOverhaul ~= true and newConfig.instantOverhaul == true)
 
-    if not parkVehicleChanged and not instantInspectionEnabled then
+    if not instantInspectionEnabled and not instantMaintenanceRepairEnabled
+        and not instantBodyworkEnabled and not instantOverhaulEnabled then
         return
     end
 
@@ -287,15 +277,10 @@ function RMS_SettingsPage.applyPendingConfigSideEffects(oldConfig, newConfig)
             local spec = vehicle.spec_RealisticMechanicalSystems
             local currentState = spec.currentState
 
-            if parkVehicleChanged
-                and currentState ~= states.READY
-                and currentState ~= states.BROKEN
-                and vehicle.spec_enterable ~= nil
-                and vehicle.spec_enterable.setIsTabbable ~= nil then
-                vehicle.spec_enterable:setIsTabbable(not newConfig.parkVehicle)
-            end
-
-            if instantInspectionEnabled and currentState == states.INSPECTION then
+            if (instantInspectionEnabled and currentState == states.INSPECTION)
+                or (instantMaintenanceRepairEnabled and (currentState == states.MAINTENANCE or currentState == states.REPAIR))
+                or (instantBodyworkEnabled and currentState == states.BODYWORK)
+                or (instantOverhaulEnabled and currentState == states.OVERHAUL) then
                 if RealisticMechanicalSystems.forceFinishService(vehicle) then
                     RealisticMechanicalSystems.raiseServiceLifecycleDirtyFlags(vehicle)
                 end
@@ -311,8 +296,6 @@ function RMS_SettingsPage.commitPendingConfig(current, pending)
     if pending == nil or current == nil then
         return
     end
-
-    RMS_SettingsPage.applyPendingConfigSideEffects(current, pending)
 
     local batteryFactorChanged = valuesDiffer(pending.batteryUsableCapacityFactor, current.batteryUsableCapacityFactor)
     local workshopChanged =
@@ -331,24 +314,15 @@ function RMS_SettingsPage.commitPendingConfig(current, pending)
 
     RMS_Config.CORE.BASE_SERVICE_WEAR = pending.baseServiceWear
     RMS_Config.CORE.BASE_SYSTEMS_WEAR = pending.baseSystemsWear
-    RMS_Config.CORE.DOWNTIME_MULTIPLIER = pending.downtimeMultiplier
     RMS_Config.CORE.GENERAL_WEAR_ENABLED = pending.generalWearEnabled
     RMS_Config.CORE.ENABLE_WARNING_MESSAGES = pending.enableWarningMessages
-    RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER = pending.systemStressGlobalMultiplier
-    RMS_Config.CORE.AI_OVERLOAD_AND_OVERHEAT_CONTROL = pending.aiOverloadControl
-    RMS_Config.CORE.AI_DISABLE_ON_CRITICAL_OVERLOAD = pending.aiDisableOnCriticalOverload
-    RMS_Config.CORE.CONTRACT_VEHICLE_PROTECTION = pending.contractVehicleProtection
-    RMS_Config.CORE.AI_WORKER_PID.TARGET_STRESS = pending.aiWorkerTargetStress
-    RMS_Config.CORE.AI_WORKER_PID.MIN_SPEED = pending.aiWorkerMinSpeed
 
     RMS_Config.EXHAUST.ENABLED = pending.exhaustSmokeEnabled
-    RMS_Config.EXHAUST.INTENSITY = pending.exhaustSmokeIntensity
 
     RMS_Config.MAINTENANCE.INSTANT_INSPECTION = pending.instantInspection
-    RMS_Config.MAINTENANCE.PARK_VEHICLE = pending.parkVehicle
-    RMS_Config.MAINTENANCE.WARRANTY_ENABLED = pending.warrantyEnabled
-    RMS_Config.MAINTENANCE.GLOBAL_SERVICE_PRICE_MULTIPLIER = pending.globalPriceMultiplier
-    RMS_Config.MAINTENANCE.GLOBAL_SERVICE_TIME_MULTIPLIER = pending.globalTimeMultiplier
+    RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR = pending.instantMaintenanceRepair
+    RMS_Config.MAINTENANCE.INSTANT_BODYWORK = pending.instantBodywork
+    RMS_Config.MAINTENANCE.INSTANT_OVERHAUL = pending.instantOverhaul
 
     RMS_Config.WORKSHOP.DEALER_ALWAYS_AVAILABLE = pending.dealerAlwaysAvailable
     RMS_Config.WORKSHOP.MOBILE_ALWAYS_AVAILABLE = pending.mobileAlwaysAvailable
@@ -365,26 +339,21 @@ function RMS_SettingsPage.commitPendingConfig(current, pending)
     RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT = pending.alternatorMaxOutput
     RMS_Config.ELECTRICAL.IDLE_CURRENT_A = pending.idleCurrentA
 
-    RMS_Config.FIELD_CARE.CLOGGING_SPEED = pending.cloggingSpeed
-    RMS_Config.FIELD_CARE.VISUAL_INSPECTION_DURATION = pending.fieldInspectionDuration
-    RMS_Config.FIELD_CARE.LUBRICATION_REDUCE_PER_OPERATING_HOUR = pending.lubricationReducePerOperatingHour
-
     RMS_Config.DRIVETRAIN.ENABLED = pending.drivetrainEnabled
     RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE = pending.drivetrainAllowAutoMode
     RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED = pending.drivetrainWindupDamage
-    RMS_Config.DRIVETRAIN.DIFFLOCK_AUTO_RELEASE_SPEED = pending.drivetrainDiffLockReleaseSpeed
     RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED = pending.drivetrainParkBrakeEnabled
     RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE = pending.drivetrainParkBrakeAuto
 
     RMS_Config.DEBUG = pending.debugMode
+
+    RMS_SettingsPage.applyPendingConfigSideEffects(current, pending)
 
     -- a changed battery capacity factor rescales the charge of every tracked vehicle
     if batteryFactorChanged and RMS_Main ~= nil and RMS_Main.vehicles ~= nil then
         for _, vehicle in pairs(RMS_Main.vehicles) do
             if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
                 RMS_Electrical.rescaleBatteryChargeFromSoc(vehicle)
-
-                local spec = vehicle.spec_RealisticMechanicalSystems
                 RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.ELECTRICAL)
             end
         end
@@ -482,18 +451,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_reinitializeVehicles_text"),
         g_i18n:getText("rms_reinitializeVehicles_tooltip")
     )
-    page.rmsSystemStressRate = RMS_SettingsPage:addMultiTextOption(
-        page, "onSystemStressRateChanged",
-        RMS_SettingsPage.steps.systemStressRate.texts,
-        g_i18n:getText("rms_systemStressRate_label"),
-        g_i18n:getText("rms_systemStressRate_tooltip")
-    )
-    page.rmsDowntimeWear = RMS_SettingsPage:addMultiTextOption(
-        page, "onDowntimeWearChanged",
-        RMS_SettingsPage.steps.downtimeWear.texts,
-        g_i18n:getText("rms_downtimeWear_label"),
-        g_i18n:getText("rms_downtimeWear_tooltip")
-    )
     page.rmsGeneralWearEnabled = RMS_SettingsPage:addBinaryOption(
         page,
         "onGeneralWearEnabledChanged",
@@ -505,12 +462,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         "onExhaustSmokeEnabledChanged",
         g_i18n:getText("rms_exhaustSmokeEnabled_label"),
         g_i18n:getText("rms_exhaustSmokeEnabled_tooltip")
-    )
-    page.rmsExhaustSmokeIntensity = RMS_SettingsPage:addMultiTextOption(
-        page, "onExhaustSmokeIntensityChanged",
-        RMS_SettingsPage.steps.exhaustSmokeIntensity.texts,
-        g_i18n:getText("rms_exhaustSmokeIntensity_label"),
-        g_i18n:getText("rms_exhaustSmokeIntensity_tooltip")
     )
     page.rmsExhaustSmokeDetail = RMS_SettingsPage:addMultiTextOption(
         page, "onExhaustSmokeDetailChanged",
@@ -529,38 +480,28 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_instantInspection_tooltip")
     )
 
-    -- Park Vehicle (Binary)
-    page.rmsParkVehicle = RMS_SettingsPage:addBinaryOption(
+    -- Instant Maintenance and Repair (Binary)
+    page.rmsInstantMaintenanceRepair = RMS_SettingsPage:addBinaryOption(
         page,
-        "onParkVehicleChanged",
-        g_i18n:getText("rms_parkVehicle_label"),
-        g_i18n:getText("rms_parkVehicle_tooltip")
+        "onInstantMaintenanceRepairChanged",
+        g_i18n:getText("rms_instantMaintenanceRepair_label"),
+        g_i18n:getText("rms_instantMaintenanceRepair_tooltip")
     )
 
-    -- Warranty Coverage (Binary)
-    page.rmsWarrantyEnabled = RMS_SettingsPage:addBinaryOption(
+    -- Instant Bodywork (Binary)
+    page.rmsInstantBodywork = RMS_SettingsPage:addBinaryOption(
         page,
-        "onWarrantyEnabledChanged",
-        g_i18n:getText("rms_warrantyEnabled_label"),
-        g_i18n:getText("rms_warrantyEnabled_tooltip")
+        "onInstantBodyworkChanged",
+        g_i18n:getText("rms_instantBodywork_label"),
+        g_i18n:getText("rms_instantBodywork_tooltip")
     )
 
-    -- Maintenance Price
-    page.rmsMaintenancePrice = RMS_SettingsPage:addMultiTextOption(
+    -- Instant Overhaul (Binary)
+    page.rmsInstantOverhaul = RMS_SettingsPage:addBinaryOption(
         page,
-        "onMaintenancePriceChanged",
-        RMS_SettingsPage.steps.maintPrice.texts,
-        g_i18n:getText("rms_maintenancePrice_label"),
-        g_i18n:getText("rms_maintenancePrice_tooltip")
-    )
-
-    -- Maintenance Duration
-    page.rmsMaintenanceDuration = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onMaintenanceDurationChanged",
-        RMS_SettingsPage.steps.maintDuration.texts,
-        g_i18n:getText("rms_maintenanceDuration_label"),
-        g_i18n:getText("rms_maintenanceDuration_tooltip")
+        "onInstantOverhaulChanged",
+        g_i18n:getText("rms_instantOverhaul_label"),
+        g_i18n:getText("rms_instantOverhaul_tooltip")
     )
 
     -- Mobile Workshop Restrictions (Binary)
@@ -660,30 +601,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_idleCurrent_tooltip")
     )
 
-    RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_settings_section_preshift_maintenance"))
-
-    page.rmsCloggingSpeed = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onCloggingSpeedChanged",
-        RMS_SettingsPage.steps.cloggingSpeed.texts,
-        g_i18n:getText("rms_cloggingSpeed_label"),
-        g_i18n:getText("rms_cloggingSpeed_tooltip")
-    )
-    page.rmsFieldInspectionDuration = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onFieldInspectionDurationChanged",
-        RMS_SettingsPage.steps.fieldInspectionDuration.texts,
-        g_i18n:getText("rms_fieldInspectionDuration_label"),
-        g_i18n:getText("rms_fieldInspectionDuration_tooltip")
-    )
-    page.rmsLubricationReducePerOperatingHour = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onLubricationReducePerOperatingHourChanged",
-        RMS_SettingsPage.steps.lubricationReducePerOperatingHour.texts,
-        g_i18n:getText("rms_lubricationReducePerOperatingHour_label"),
-        g_i18n:getText("rms_lubricationReducePerOperatingHour_tooltip")
-    )
-
     RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_settings_section_drivetrain"))
 
     page.rmsDrivetrainEnabled = RMS_SettingsPage:addBinaryOption(
@@ -704,13 +621,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_drivetrainWindupDamage_label"),
         g_i18n:getText("rms_drivetrainWindupDamage_tooltip")
     )
-    page.rmsDrivetrainDiffLockReleaseSpeed = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onDrivetrainDiffLockReleaseSpeedChanged",
-        RMS_SettingsPage.steps.diffLockReleaseSpeed.texts,
-        g_i18n:getText("rms_drivetrainDiffLockReleaseSpeed_label"),
-        g_i18n:getText("rms_drivetrainDiffLockReleaseSpeed_tooltip")
-    )
     page.rmsDrivetrainParkBrakeEnabled = RMS_SettingsPage:addBinaryOption(
         page,
         "onDrivetrainParkBrakeEnabledChanged",
@@ -722,41 +632,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         "onDrivetrainParkBrakeAutoChanged",
         g_i18n:getText("rms_drivetrainParkBrakeAuto_label"),
         g_i18n:getText("rms_drivetrainParkBrakeAuto_tooltip")
-    )
-
-    RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_settings_section_other"))
-
-    page.rmsAiOverloadAndOverheatControl = RMS_SettingsPage:addBinaryOption(
-        page,
-        "onAiOverloadAndOverheatControlChanged",
-        g_i18n:getText("rms_aiOverloadAndOverheatControl_label"),
-        g_i18n:getText("rms_aiOverloadAndOverheatControl_tooltip")
-    )
-    page.rmsAiDisableOnCriticalOverload = RMS_SettingsPage:addBinaryOption(
-        page,
-        "onAiDisableOnCriticalOverloadChanged",
-        g_i18n:getText("rms_aiDisableOnCriticalOverload_label"),
-        g_i18n:getText("rms_aiDisableOnCriticalOverload_tooltip")
-    )
-    page.rmsContractVehicleProtection = RMS_SettingsPage:addBinaryOption(
-        page,
-        "onContractVehicleProtectionChanged",
-        g_i18n:getText("rms_contractVehicleProtection_label"),
-        g_i18n:getText("rms_contractVehicleProtection_tooltip")
-    )
-    page.rmsAiWorkerTargetStress = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onAiWorkerTargetStressChanged",
-        RMS_SettingsPage.steps.aiWorkerTargetStress.texts,
-        g_i18n:getText("rms_aiWorkerTargetStress_label"),
-        g_i18n:getText("rms_aiWorkerTargetStress_tooltip")
-    )
-    page.rmsAiWorkerMinSpeed = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onAiWorkerMinSpeedChanged",
-        RMS_SettingsPage.steps.aiWorkerMinSpeed.texts,
-        g_i18n:getText("rms_aiWorkerMinSpeed_label"),
-        g_i18n:getText("rms_aiWorkerMinSpeed_tooltip")
     )
 
     deleteElementById("subTitlePrefab")
@@ -903,39 +778,26 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
         element:setState(bestIndex)
     end
 
-    setIndex(currentPage.rmsSystemStressRate, steps.systemStressRate.values, pending.systemStressGlobalMultiplier)
     setIndex(currentPage.rmsBatteryCapacity, steps.batteryCapacity.values, pending.batteryUsableCapacityFactor)
     setIndex(currentPage.rmsAlternatorMaxOutput, steps.alternatorMaxOutput.values, pending.alternatorMaxOutput)
     setIndex(currentPage.rmsIdleCurrent, steps.idleCurrent.values, pending.idleCurrentA)
     setIndex(currentPage.rmsServiceWear, steps.serviceWear.values, pending.baseServiceWear)
     setIndex(currentPage.rmsConditionWear, steps.conditionWear.values, pending.baseSystemsWear)
-    setIndex(currentPage.rmsDowntimeWear, steps.downtimeWear.values, pending.downtimeMultiplier)
-    setIndex(currentPage.rmsMaintenancePrice, steps.maintPrice.values, pending.globalPriceMultiplier * 100)
-    setIndex(currentPage.rmsMaintenanceDuration, steps.maintDuration.values, pending.globalTimeMultiplier * 100)
     setIndex(currentPage.rmsTemperatureChangeSpeed, steps.temperatureChangeSpeed.values, pending.temperatureChangeSpeed)
     setIndex(currentPage.rmsTransTemperatureChangeMultiplier, steps.transTemperatureChangeMultiplier.values, pending.transTemperatureChangeMultiplier)
     setIndex(currentPage.rmsRadiatorDirtInfluence, steps.radiatorDirtInfluence.values, pending.maxDirtInfluence)
-    setIndex(currentPage.rmsCloggingSpeed, steps.cloggingSpeed.values, pending.cloggingSpeed)
-    setIndex(currentPage.rmsFieldInspectionDuration, steps.fieldInspectionDuration.values, pending.fieldInspectionDuration)
-    setIndex(currentPage.rmsLubricationReducePerOperatingHour, steps.lubricationReducePerOperatingHour.values, pending.lubricationReducePerOperatingHour)
-    setIndex(currentPage.rmsAiWorkerTargetStress, steps.aiWorkerTargetStress.values, pending.aiWorkerTargetStress)
-    setIndex(currentPage.rmsAiWorkerMinSpeed, steps.aiWorkerMinSpeed.values, pending.aiWorkerMinSpeed)
-    setIndex(currentPage.rmsDrivetrainDiffLockReleaseSpeed, steps.diffLockReleaseSpeed.values, pending.drivetrainDiffLockReleaseSpeed)
-    setIndex(currentPage.rmsExhaustSmokeIntensity, steps.exhaustSmokeIntensity.values, pending.exhaustSmokeIntensity)
     setIndex(currentPage.rmsExhaustSmokeDetail, steps.exhaustSmokeDetail.values, RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL)
 
     if tutorialOption ~= nil then
         tutorialOption:setIsChecked(pending.tutorialMode, false, false)
     end
     currentPage.rmsInstantInspection:setIsChecked(pending.instantInspection, false, false)
-    currentPage.rmsParkVehicle:setIsChecked(pending.parkVehicle, false, false)
-    currentPage.rmsWarrantyEnabled:setIsChecked(pending.warrantyEnabled, false, false)
+    currentPage.rmsInstantMaintenanceRepair:setIsChecked(pending.instantMaintenanceRepair, false, false)
+    currentPage.rmsInstantBodywork:setIsChecked(pending.instantBodywork, false, false)
+    currentPage.rmsInstantOverhaul:setIsChecked(pending.instantOverhaul, false, false)
     currentPage.rmsGeneralWearEnabled:setIsChecked(pending.generalWearEnabled, false, false)
     currentPage.rmsExhaustSmokeEnabled:setIsChecked(pending.exhaustSmokeEnabled, false, false)
     currentPage.rmsWarningMessages:setIsChecked(pending.enableWarningMessages, false, false)
-    currentPage.rmsAiOverloadAndOverheatControl:setIsChecked(pending.aiOverloadControl, false, false)
-    currentPage.rmsAiDisableOnCriticalOverload:setIsChecked(pending.aiDisableOnCriticalOverload, false, false)
-    currentPage.rmsContractVehicleProtection:setIsChecked(pending.contractVehicleProtection, false, false)
     currentPage.rmsDealerWorkshopAvailable:setIsChecked(pending.dealerAlwaysAvailable, false, false)
     currentPage.rmsMobileWorkshopAvailable:setIsChecked(pending.mobileAlwaysAvailable, false, false)
     currentPage.rmsOwnWorkshopAvailable:setIsChecked(pending.ownAlwaysAvailable, false, false)
@@ -963,20 +825,16 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     currentPage.rmsServiceWear:setDisabled(disableAll)
     currentPage.rmsConditionWear:setDisabled(disableAll)
     currentPage.rmsReinitializeVehicles:setDisabled(disableAll)
-    currentPage.rmsDowntimeWear:setDisabled(disableAll)
     currentPage.rmsGeneralWearEnabled:setDisabled(disableAll)
     currentPage.rmsExhaustSmokeEnabled:setDisabled(disableAll)
-    currentPage.rmsExhaustSmokeIntensity:setDisabled(disableAll or not pending.exhaustSmokeEnabled)
 
-    currentPage.rmsSystemStressRate:setDisabled(disableAll)
     currentPage.rmsBatteryCapacity:setDisabled(disableAll)
     currentPage.rmsAlternatorMaxOutput:setDisabled(disableAll)
     currentPage.rmsIdleCurrent:setDisabled(disableAll)
     currentPage.rmsInstantInspection:setDisabled(disableAll)
-    currentPage.rmsParkVehicle:setDisabled(disableAll)
-    currentPage.rmsWarrantyEnabled:setDisabled(disableAll)
-    currentPage.rmsMaintenancePrice:setDisabled(disableAll)
-    currentPage.rmsMaintenanceDuration:setDisabled(disableAll)
+    currentPage.rmsInstantMaintenanceRepair:setDisabled(disableAll)
+    currentPage.rmsInstantBodywork:setDisabled(disableAll)
+    currentPage.rmsInstantOverhaul:setDisabled(disableAll)
     currentPage.rmsDealerWorkshopAvailable:setDisabled(disableAll)
     currentPage.rmsMobileWorkshopAvailable:setDisabled(disableAll)
     currentPage.rmsOwnWorkshopAvailable:setDisabled(disableAll)
@@ -984,20 +842,11 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     currentPage.rmsDrivetrainEnabled:setDisabled(disableAll)
     currentPage.rmsDrivetrainAllowAutoMode:setDisabled(disableAll or not pending.drivetrainEnabled)
     currentPage.rmsDrivetrainWindupDamage:setDisabled(disableAll or not pending.drivetrainEnabled)
-    currentPage.rmsDrivetrainDiffLockReleaseSpeed:setDisabled(disableAll or not pending.drivetrainEnabled)
     currentPage.rmsDrivetrainParkBrakeEnabled:setDisabled(disableAll)
     currentPage.rmsDrivetrainParkBrakeAuto:setDisabled(disableAll or not pending.drivetrainParkBrakeEnabled)
     currentPage.rmsTemperatureChangeSpeed:setDisabled(disableAll)
     currentPage.rmsTransTemperatureChangeMultiplier:setDisabled(disableAll)
     currentPage.rmsRadiatorDirtInfluence:setDisabled(disableAll)
-    currentPage.rmsCloggingSpeed:setDisabled(disableAll)
-    currentPage.rmsFieldInspectionDuration:setDisabled(disableAll)
-    currentPage.rmsLubricationReducePerOperatingHour:setDisabled(disableAll)
-    currentPage.rmsAiOverloadAndOverheatControl:setDisabled(disableAll)
-    currentPage.rmsAiDisableOnCriticalOverload:setDisabled(disableAll)
-    currentPage.rmsContractVehicleProtection:setDisabled(disableAll)
-    currentPage.rmsAiWorkerTargetStress:setDisabled(disableAll or not pending.aiOverloadControl)
-    currentPage.rmsAiWorkerMinSpeed:setDisabled(disableAll or not pending.aiOverloadControl)
     currentPage.rmsWarningMessages:setDisabled(disableAll)
     currentPage.rmsDebugMode:setDisabled(disableAll)
 
@@ -1013,14 +862,6 @@ end
 -- @param integer state binary option state
 function RMS_SettingsPage:onExhaustSmokeEnabledChanged(state)
     getPendingConfig().exhaustSmokeEnabled = (state == BinaryOptionElement.STATE_RIGHT)
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the exhaust smoke intensity step
--- @param integer state selected step index
-function RMS_SettingsPage:onExhaustSmokeIntensityChanged(state)
-    getPendingConfig().exhaustSmokeIntensity = RMS_SettingsPage.steps.exhaustSmokeIntensity.values[state]
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
     refreshCurrentSettingsPage()
 end
@@ -1112,14 +953,6 @@ function RMS_SettingsPage:onConditionWearChanged(state)
     refreshCurrentSettingsPage()
 end
 
----Stores the downtime multiplier step
--- @param integer state selected step index
-function RMS_SettingsPage:onDowntimeWearChanged(state)
-    getPendingConfig().downtimeMultiplier = RMS_SettingsPage.steps.downtimeWear.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
 ---Stores whether general wear accumulates
 -- @param integer state binary option state
 function RMS_SettingsPage:onGeneralWearEnabledChanged(state)
@@ -1136,34 +969,26 @@ function RMS_SettingsPage:onInstantInspectionChanged(state)
     refreshCurrentSettingsPage()
 end
 
----Stores whether a vehicle under service is parked
+---Stores whether maintenance and repairs complete instantly
 -- @param integer state binary option state
-function RMS_SettingsPage:onParkVehicleChanged(state)
-    getPendingConfig().parkVehicle = (state == BinaryOptionElement.STATE_RIGHT)
+function RMS_SettingsPage:onInstantMaintenanceRepairChanged(state)
+    getPendingConfig().instantMaintenanceRepair = (state == BinaryOptionElement.STATE_RIGHT)
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
     refreshCurrentSettingsPage()
 end
 
----Stores whether the warranty covers repairs
+---Stores whether bodywork completes instantly
 -- @param integer state binary option state
-function RMS_SettingsPage:onWarrantyEnabledChanged(state)
-    getPendingConfig().warrantyEnabled = (state == BinaryOptionElement.STATE_RIGHT)
+function RMS_SettingsPage:onInstantBodyworkChanged(state)
+    getPendingConfig().instantBodywork = (state == BinaryOptionElement.STATE_RIGHT)
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
     refreshCurrentSettingsPage()
 end
 
----Stores the service price multiplier, the step being a percentage
--- @param integer state selected step index
-function RMS_SettingsPage:onMaintenancePriceChanged(state)
-    getPendingConfig().globalPriceMultiplier = RMS_SettingsPage.steps.maintPrice.values[state] / 100
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the service duration multiplier, the step being a percentage
--- @param integer state selected step index
-function RMS_SettingsPage:onMaintenanceDurationChanged(state)
-    getPendingConfig().globalTimeMultiplier = RMS_SettingsPage.steps.maintDuration.values[state] / 100
+---Stores whether overhauls complete instantly
+-- @param integer state binary option state
+function RMS_SettingsPage:onInstantOverhaulChanged(state)
+    getPendingConfig().instantOverhaul = (state == BinaryOptionElement.STATE_RIGHT)
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
     refreshCurrentSettingsPage()
 end
@@ -1245,14 +1070,6 @@ function RMS_SettingsPage:onWorkshopCloseHourChanged(state)
 end
 
 
----Stores the global system stress multiplier step
--- @param integer state selected step index
-function RMS_SettingsPage:onSystemStressRateChanged(state)
-    getPendingConfig().systemStressGlobalMultiplier = RMS_SettingsPage.steps.systemStressRate.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
 ---Stores the usable battery capacity factor step
 -- @param integer state selected step index
 function RMS_SettingsPage:onBatteryCapacityChanged(state)
@@ -1302,70 +1119,6 @@ function RMS_SettingsPage:onRadiatorDirtInfluenceChanged(state)
     refreshCurrentSettingsPage()
 end
 
----Stores the clogging speed step
--- @param integer state selected step index
-function RMS_SettingsPage:onCloggingSpeedChanged(state)
-    getPendingConfig().cloggingSpeed = RMS_SettingsPage.steps.cloggingSpeed.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the field inspection duration step
--- @param integer state selected step index
-function RMS_SettingsPage:onFieldInspectionDurationChanged(state)
-    getPendingConfig().fieldInspectionDuration = RMS_SettingsPage.steps.fieldInspectionDuration.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the lubrication loss per operating hour step
--- @param integer state selected step index
-function RMS_SettingsPage:onLubricationReducePerOperatingHourChanged(state)
-    getPendingConfig().lubricationReducePerOperatingHour = RMS_SettingsPage.steps.lubricationReducePerOperatingHour.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores whether the AI worker throttles down on overload and overheat
--- @param integer state binary option state
-function RMS_SettingsPage:onAiOverloadAndOverheatControlChanged(state)
-    getPendingConfig().aiOverloadControl = (state == BinaryOptionElement.STATE_RIGHT)
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores whether the AI worker stops on a critical overload
--- @param integer state binary option state
-function RMS_SettingsPage:onAiDisableOnCriticalOverloadChanged(state)
-    getPendingConfig().aiDisableOnCriticalOverload = (state == BinaryOptionElement.STATE_RIGHT)
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores whether contract vehicles are shielded from wear
--- @param integer state binary option state
-function RMS_SettingsPage:onContractVehicleProtectionChanged(state)
-    getPendingConfig().contractVehicleProtection = (state == BinaryOptionElement.STATE_RIGHT)
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the AI worker target stress step
--- @param integer state selected step index
-function RMS_SettingsPage:onAiWorkerTargetStressChanged(state)
-    getPendingConfig().aiWorkerTargetStress = RMS_SettingsPage.steps.aiWorkerTargetStress.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the AI worker minimum speed step
--- @param integer state selected step index
-function RMS_SettingsPage:onAiWorkerMinSpeedChanged(state)
-    getPendingConfig().aiWorkerMinSpeed = RMS_SettingsPage.steps.aiWorkerMinSpeed.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
 ---Stores whether the drivetrain system is simulated
 -- @param integer state binary option state
 function RMS_SettingsPage:onDrivetrainEnabledChanged(state)
@@ -1386,14 +1139,6 @@ end
 -- @param integer state binary option state
 function RMS_SettingsPage:onDrivetrainWindupDamageChanged(state)
     getPendingConfig().drivetrainWindupDamage = (state == BinaryOptionElement.STATE_RIGHT)
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the speed at which the differential lock releases itself
--- @param integer state selected step index
-function RMS_SettingsPage:onDrivetrainDiffLockReleaseSpeedChanged(state)
-    getPendingConfig().drivetrainDiffLockReleaseSpeed = RMS_SettingsPage.steps.diffLockReleaseSpeed.values[state]
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
     refreshCurrentSettingsPage()
 end
@@ -1547,9 +1292,7 @@ end
 function RMS_SettingsPage:addButtonOption(inGameMenuSettingsFrame, onClickCallback, title, text, tooltip)
     local template = getVanillaSettingsButtonTemplate()
     local bitMap
-    local clonedTemplate = template ~= nil and template.clone ~= nil
-
-    if clonedTemplate then
+    if template ~= nil and template.clone ~= nil then
         bitMap = template:clone(inGameMenuSettingsFrame.settingsLayout)
         bitMap.id = nil
     else
@@ -1694,31 +1437,6 @@ function RMS_SettingsPage:generateAllSteps()
         self.steps.conditionWear = data
     end
 
-    -- Downtime Wear: Off, then 1% to 10%
-    do
-        local data = { values = {0.0}, texts = {g_i18n:getText("rms_option_off")} }
-        for percent = 1, 10 do
-            local value = percent / 100
-            table.insert(data.values, value)
-            table.insert(data.texts, string.format("%d%%", percent))
-        end
-        self.steps.downtimeWear = data
-    end
-
-    -- System Stress Rate: 10% to 300%, then 350% to 1000% by 50%
-    do
-        local data = createSteps(0.1, 30, 0.1, function(v)
-            return string.format("%.0f%%", v * 100)
-        end)
-
-        for percent = 350, 1000, 50 do
-            table.insert(data.values, percent / 100)
-            table.insert(data.texts, string.format("%d%%", percent))
-        end
-
-        self.steps.systemStressRate = data
-    end
-
     -- Battery Capacity in Ah (stored as usable capacity factor)
     do
         local nominalCapacity = tonumber(RMS_Config.ELECTRICAL.BATTERY_NOMINAL_CAPACITY) or 150
@@ -1753,16 +1471,6 @@ function RMS_SettingsPage:generateAllSteps()
         self.steps.idleCurrent = data
     end
 
-    -- Maint Price: 10% to 300%
-    self.steps.maintPrice = createSteps(10, 30, 10, function(v)
-        return string.format("%.0f%%", v)
-    end)
-
-    -- Maint Duration: 10% to 300%
-    self.steps.maintDuration = createSteps(10, 30, 10, function(v)
-        return string.format("%.0f%%", v)
-    end)
-
     -- Hours: 00:00 to 23:00
     self.steps.hours = createSteps(0, 24, 1, function(v)
         return string.format("%02d:00", v)
@@ -1796,52 +1504,6 @@ function RMS_SettingsPage:generateAllSteps()
             g_i18n:getText("rms_exhaustSmokeDetail_none")
         }
     }
-
-    -- Exhaust Smoke Intensity: 100% to 300%.
-    self.steps.exhaustSmokeIntensity = createSteps(1.0, 9, 0.25, function(v)
-        return string.format("%.0f%%", v * 100)
-    end)
-
-    -- Clogging Speed: 10% to 300%
-    self.steps.cloggingSpeed = createSteps(0.1, 30, 0.1, function(v)
-        return string.format("%.0f%%", v * 100)
-    end)
-
-    -- Field Inspection Duration: 1 s to 30 s.
-    self.steps.fieldInspectionDuration = createSteps(1000, 30, 1000, function(v)
-        return string.format("%d s", v / 1000)
-    end)
-
-    -- Lubrication wear: Off, then 1% to 5% per operating hour.
-    do
-        local data = { values = {0.0}, texts = {g_i18n:getText("rms_option_off")} }
-        for percent = 1, 5 do
-            table.insert(data.values, percent / 100)
-            table.insert(data.texts, string.format("%d%%", percent))
-        end
-        self.steps.lubricationReducePerOperatingHour = data
-    end
-
-    -- AI speed response target stress. Lower values react earlier and more aggressively.
-    self.steps.aiWorkerTargetStress = {
-        values = {0.4, 0.3, 0.2, 0.1},
-        texts = {
-            g_i18n:getText("rms_aiWorkerTargetStress_relaxed"),
-            g_i18n:getText("rms_aiWorkerTargetStress_balanced"),
-            g_i18n:getText("rms_aiWorkerTargetStress_sensitive"),
-            g_i18n:getText("rms_aiWorkerTargetStress_verySensitive"),
-        }
-    }
-
-    -- AI minimum cruise speed: 3 km/h to 10 km/h.
-    self.steps.aiWorkerMinSpeed = createSteps(3, 8, 1, function(v)
-        return string.format("%d km/h", v)
-    end)
-
-    -- Diff lock auto-release speed: 10 km/h to 40 km/h.
-    self.steps.diffLockReleaseSpeed = createSteps(10, 7, 5, function(v)
-        return string.format("%d km/h", v)
-    end)
 
     self.steps.generated = true
 end

@@ -184,7 +184,7 @@ local function getTransferAmount(dt)
     return RMS_FluidTransfer.LITERS_PER_SECOND * math.max(tonumber(dt) or 0, 0) / 1000
 end
 
----Advances the active server transfer and rolls back any unaccepted FillUnit removal
+---Advances the active server transfer and puts back any liters the target refused
 -- @param table container physical source container
 -- @param float dt elapsed milliseconds
 function RMS_FluidTransfer.update(container, dt)
@@ -212,10 +212,10 @@ function RMS_FluidTransfer.update(container, dt)
     end
 
     container:beginRMSFluidTransaction()
-    local removed, fillType = container:removeRMSFluidLiters(amount, transfer.requesterFarmId)
+    local removed = container:removeRMSFluidLiters(amount)
     local accepted = RMS_Fluids.addLiters(transfer.target, transfer.circuit, removed, transfer.productKey)
     if removed - accepted > RMS_Fluids.EPSILON then
-        container:restoreRMSFluidLiters(removed - accepted, transfer.requesterFarmId, fillType)
+        container:restoreRMSFluidLiters(removed - accepted)
     end
 
     local finished = accepted <= RMS_Fluids.EPSILON

@@ -1618,7 +1618,6 @@ function RMS_Exhaust.applyShader(vehicle, dt)
 
     state.heatShare = currentStep == 1 and (1 - crossfade) or 0
 
-    local intensity = clamp(getNumber(config.INTENSITY, 1), 1, 3)
     local opacityAlpha = opacity ^ config.ALPHA_GAMMA
     local emitGain = 1 + burst * config.BURST_EMIT_GAIN
     local emitterCount = 0
@@ -1660,7 +1659,7 @@ function RMS_Exhaust.applyShader(vehicle, dt)
             if step.isNative then
                 step.share = isPlumeVisible and share or 0
             else
-                local alpha = math.min(sharedAlphaMax * opacityAlpha * intensity, 1)
+                local alpha = math.min(sharedAlphaMax * opacityAlpha, 1)
 
                 local shareThreshold = step.isEmitting and config.STEP_SHARE_OFF or config.STEP_SHARE_ON
                 local shouldEmit = isPlumeVisible and share >= shareThreshold and alpha >= config.PLUME_ALPHA_MIN

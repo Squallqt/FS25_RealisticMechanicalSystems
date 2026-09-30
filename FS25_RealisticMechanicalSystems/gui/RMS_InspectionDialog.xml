@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<GUI onOpen="onOpen" onClose="onClose">
+<GUI onOpen="onOpen" onClose="onClose" onCreate="onCreate">
     <GuiElement profile="newLayer" />
     <Bitmap profile="dialogFullscreenBg" id="dialogBg" />
     <GuiElement profile="rms_inspectionDialogBg" id="dialogElement">
@@ -18,7 +18,7 @@
                     </RoundCorner>
                     <BoxLayout profile="rms_inspectionHeaderTextLayout" id="headerTextLayout" size="0px 58px">
                         <Text profile="rms_inspectionDialogTitle" id="dialogTitleElement" size="0px 32px" text="$l10n_rms_inspection_dialog_title" />
-                        <Text profile="rms_inspectionIdentity" id="identityElement" size="0px 24px" />
+                        <Text profile="rms_preShiftInspectionIdentity" id="identityElement" size="0px 24px" />
                     </BoxLayout>
                 </BoxLayout>
             </GuiElement>
@@ -43,13 +43,11 @@
                 <RoundCorner profile="rms_inspectionSectionLine" position="16px 0px" size="672px 1px" />
             </GuiElement>
             <GuiElement profile="rms_inspectionBlock" position="28px -270px" size="688px 274px">
-                <RoundCorner profile="rms_inspectionCardSurface" size="688px 274px" />
+                <RoundCorner profile="rms_inspectionCardSurface" id="technicalFluidsCard" size="688px 274px" />
                 <SmoothList profile="rms_inspectionList" id="technicalFluidsList" position="14px -12px" size="660px 250px">
                     <ListItem profile="rms_inspectionRow" name="technicalFluidsRowTemplate" size="660px 58px">
                         <RoundCorner profile="rms_inspectionRowSurface" size="660px 58px" />
                         <Text profile="rms_inspectionRowTitle" position="18px -7.5px" size="374px 22px" name="inspectionTitle" />
-                        <RoundCorner profile="rms_inspectionValuePill" position="406px -5.5px" size="236px 26px" name="inspectionValuePill" />
-                        <Text profile="rms_inspectionRowValue" position="418px -5.5px" size="212px 26px" name="inspectionValue" textLayoutMode="scrolling" textScrollOnFocusOnly="false" />
                         <Text profile="rms_inspectionRowTitle" position="18px -34.5px" size="30px 18px" name="inspectionGaugeMinLabel" text="MIN" textSize="11px" />
                         <Bitmap profile="rms_fluidGaugeFill" position="54px -37.5px" size="552px 14px" name="inspectionGaugeAlert" visible="false" />
                         <Bitmap profile="rms_fluidGaugeTrack" position="56px -39.5px" size="548px 10px" name="inspectionGaugeTrack" />
