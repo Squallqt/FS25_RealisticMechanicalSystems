@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Age-Related Wear"/>
         <text name="rms_generalWearEnabled_tooltip" text="As the vehicle wears out, each system receives small penalties to its core characteristics, such as engine power, hydraulic speed, or brake efficiency. The effect becomes active after the first third of the vehicle lifespan, but only becomes truly noticeable after the second third and grows stronger toward the end of the machine's life."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Exhaust Smoke"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Drives the exhaust plume from the real state of the engine. It is black when fuel outruns the available air: a hard pickup, an engine lugging at low speed, prolonged low-load idling, a clogged air filter or worn injection. It is blue when a tired engine burns oil, white when fuel leaves unburnt. The plume also grows with the work the engine is doing. Older machines smoke far more than modern ones, which barely smoke at all unless something is seriously wrong."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Plume Detail (this PC)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Sets how much of the exhaust plume is drawn on your own computer, without changing anything for the other players. Lowering it strips the outer layers of smoke and eases the load on a modest graphics card. It can only reduce what the server allows."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Full"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Reduced"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimal"/>
-        <text name="rms_exhaustSmokeDetail_none" text="None"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Drives the exhaust plume from the real state of the engine. It is black when fuel outruns the available air: a hard pickup, an engine lugging at low speed, prolonged low-load idling, a clogged air filter or worn injection. It is blue when a tired engine burns oil, white when fuel leaves unburnt. The plume also grows with the work the engine is doing. Older machines smoke far more than modern ones, which barely smoke at all unless something is seriously wrong. In cold air, the water from combustion also condenses into a short white trail that evaporates within a metre or two, even on a healthy engine."/>
         <text name="rms_batteryCapacity_label" text="Battery Capacity"/>
         <text name="rms_batteryCapacity_tooltip" text="Adjusts the maximum usable battery capacity. A value close to 150 Ah matches a real battery, but at that level you will hardly ever run into discharge problems."/>
         <text name="rms_option_off" text="Off"/>

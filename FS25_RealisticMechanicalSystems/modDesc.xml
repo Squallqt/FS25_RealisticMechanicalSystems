@@ -53,6 +53,9 @@ Changelog 0.11.0.0:
 - Removed the System Stress Rate setting and its console command
 - Removed the Passive Wear setting
 - Removed the Smoke Intensity setting
+- Removed the Plume Detail setting
+- Reworked the exhaust smoke into a realistic plume that rises higher under load and drifts with the wind
+- Added white exhaust vapour in cold and damp weather
 - Removed the Park Vehicle During Maintenance setting
 - Removed the Warranty setting; dealer warranty now covers standard OEM repairs and required fluids under 12 months and 20 hours
 - Removed the Procedure Duration Multiplier setting
@@ -161,6 +164,9 @@ Changelog 0.11.0.0:
 - Einstellung für die Stressaufbaurate und den zugehörigen Konsolenbefehl entfernt
 - Einstellung für passiven Verschleiß entfernt
 - Einstellung für Rauchintensität entfernt
+- Einstellung für Fahnendetail entfernt
+- Abgasrauch zu einer realistischen Rauchfahne überarbeitet, die unter Last höher steigt und mit dem Wind treibt
+- Weißen Abgasdampf bei kaltem und feuchtem Wetter hinzugefügt
 - Einstellung zum Parken des Fahrzeugs während der Wartung entfernt
 - Einstellung für den Dauerfaktor von Werkstattvorgängen entfernt
 - Einstellung für den Preisfaktor von Werkstattvorgängen entfernt
@@ -269,6 +275,9 @@ Changelog 0.11.0.0 :
 - Suppression du réglage de vitesse d’accumulation du stress et de sa commande console
 - Suppression du réglage d’usure passive
 - Suppression du réglage d’intensité de la fumée
+- Suppression du réglage de détail du panache
+- Refonte de la fumée d’échappement : un panache réaliste qui monte plus haut en charge et dérive avec le vent
+- Ajout d’une vapeur blanche à l’échappement par temps froid et humide
 - Suppression du réglage de stationnement du véhicule pendant l’entretien
 - Suppression du réglage de garantie ; au concessionnaire, la réparation standard avec pièces d'origine et ses fluides sont couverts avant 12 mois et avant 20 heures
 - Suppression du réglage de multiplicateur de durée des interventions

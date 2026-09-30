@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Hao mòn do tuổi tác"/>
         <text name="rms_generalWearEnabled_tooltip" text="Khi xe hao mòn, mỗi hệ thống chịu một mức suy giảm nhỏ ở các đặc tính chính như công suất động cơ, tốc độ thủy lực hoặc hiệu quả phanh. Hiệu ứng bắt đầu sau một phần ba đầu tiên của tuổi thọ xe, nhưng chỉ thực sự rõ rệt sau hai phần ba và tăng dần khi máy gần hết tuổi thọ."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Khói xả"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Điều khiển luồng khói xả theo tình trạng thực tế của động cơ. Khói màu đen khi nhiên liệu vượt quá lượng không khí sẵn có: tăng ga đột ngột, động cơ ì ở vòng tua thấp, chạy không tải kéo dài với tải thấp, bộ lọc không khí bị tắc hoặc hệ thống phun nhiên liệu bị mòn. Khói màu xanh khi động cơ mòn đốt dầu và màu trắng khi nhiên liệu không cháy hết. Luồng khói cũng lớn hơn khi động cơ làm việc nặng hơn. Máy cũ thải nhiều khói hơn hẳn máy hiện đại, vốn gần như không có khói trừ khi xảy ra hỏng hóc nghiêm trọng."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Chi tiết luồng khói (máy này)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Đặt lượng khói xả được hiển thị trên máy tính của bạn mà không thay đổi bất cứ điều gì với người chơi khác. Giảm cài đặt này sẽ bỏ bớt các lớp ngoài của luồng khói và giảm tải cho card đồ họa yếu. Cài đặt chỉ có thể giảm mức mà máy chủ cho phép."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Đầy đủ"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Giảm"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Tối thiểu"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Không"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Điều khiển luồng khói xả theo tình trạng thực tế của động cơ. Khói màu đen khi nhiên liệu vượt quá lượng không khí sẵn có: tăng ga đột ngột, động cơ ì ở vòng tua thấp, chạy không tải kéo dài với tải thấp, bộ lọc không khí bị tắc hoặc hệ thống phun nhiên liệu bị mòn. Khói màu xanh khi động cơ mòn đốt dầu và màu trắng khi nhiên liệu không cháy hết. Luồng khói cũng lớn hơn khi động cơ làm việc nặng hơn. Máy cũ thải nhiều khói hơn hẳn máy hiện đại, vốn gần như không có khói trừ khi xảy ra hỏng hóc nghiêm trọng. Khi trời lạnh, hơi nước sinh ra từ quá trình cháy còn ngưng tụ thành một vệt trắng ngắn, bay hơi trong vòng một hai mét, kể cả ở động cơ còn tốt."/>
         <text name="rms_batteryCapacity_label" text="Dung lượng ắc quy"/>
         <text name="rms_batteryCapacity_tooltip" text="Điều chỉnh dung lượng tối đa thực sự có thể sử dụng của ắc quy. Giá trị gần 150 Ah tương ứng với ắc quy thực tế, nhưng ở mức đó bạn hầu như không gặp vấn đề cạn điện."/>
         <text name="rms_option_off" text="Tắt"/>

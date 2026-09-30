@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="老化磨損"/>
         <text name="rms_generalWearEnabled_tooltip" text="隨著機具磨損，發動機功率、液壓速度和煞車效率等各系統的主要特性會受到輕微影響。該影響會在機具壽命的前三分之一結束後出現，在三分之二之後才會變得明顯，並在機器接近壽命終點時繼續加劇。"/>
         <text name="rms_exhaustSmokeEnabled_label" text="排氣煙霧"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="根據發動機的實際狀態控制排氣煙霧。燃油量超過可用空氣量時會冒黑煙，例如突然加速、發動機低轉速重負荷運轉、長時間低負荷怠速、空氣濾清器堵塞或噴油系統磨損。磨損的發動機燃燒機油時會冒藍煙，燃油未充分燃燒時會冒白煙。煙霧還會隨發動機負荷增大。舊機器的煙霧遠多於現代機器；現代機器只有在發生嚴重故障時才會明顯冒煙。"/>
-        <text name="rms_exhaustSmokeDetail_label" text="煙霧細節（此電腦）"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="設定僅在本機繪製的排氣煙霧量，不影響其他玩家。降低此設定會移除煙霧外層，減輕效能較低的顯示卡負擔。此設定只能減少伺服器允許的煙霧量。"/>
-        <text name="rms_exhaustSmokeDetail_full" text="完整"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="較少"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="最低"/>
-        <text name="rms_exhaustSmokeDetail_none" text="無"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="根據發動機的實際狀態控制排氣煙霧。燃油量超過可用空氣量時會冒黑煙，例如突然加速、發動機低轉速重負荷運轉、長時間低負荷怠速、空氣濾清器堵塞或噴油系統磨損。磨損的發動機燃燒機油時會冒藍煙，燃油未充分燃燒時會冒白煙。煙霧還會隨發動機負荷增大。舊機器的煙霧遠多於現代機器；現代機器只有在發生嚴重故障時才會明顯冒煙。在寒冷空氣中，燃燒產生的水分也會凝結成一小段白色尾跡，並在一兩公尺內蒸發，即使發動機完好也會出現。"/>
         <text name="rms_batteryCapacity_label" text="蓄電池容量"/>
         <text name="rms_batteryCapacity_tooltip" text="調整蓄電池實際可用的最大容量。接近150Ah的數值符合真實蓄電池，但使用這一容量時幾乎不會遇到放電問題。"/>
         <text name="rms_option_off" text="停用"/>

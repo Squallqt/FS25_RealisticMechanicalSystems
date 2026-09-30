@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Uzură cauzată de vechime"/>
         <text name="rms_generalWearEnabled_tooltip" text="Pe măsură ce vehiculul se uzează, fiecare sistem primește mici penalizări ale caracteristicilor principale, precum puterea motorului, viteza hidraulică sau eficiența frânării. Efectul se activează după prima treime a duratei de viață, dar devine cu adevărat vizibil abia după a doua treime și se intensifică spre sfârșitul vieții utilajului."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fum de eșapament"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Controlează fumul de eșapament după starea reală a motorului. Este negru când combustibilul depășește aerul disponibil: accelerare bruscă, motor forțat la turație joasă, ralanti prelungit la sarcină mică, filtru de aer colmatat sau injecție uzată. Este albastru când un motor uzat arde ulei și alb când combustibilul iese nears. Norul de fum crește și odată cu efortul motorului. Utilajele vechi scot mult mai mult fum decât cele moderne, care aproape nu scot fum cât timp nimic nu este grav defect."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Detaliul fumului (pe acest computer)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Stabilește cât fum de eșapament este redat pe computerul tău, fără a schimba nimic pentru ceilalți jucători. Reducerea valorii elimină straturile exterioare ale fumului și scade solicitarea unei plăci grafice modeste. Poate doar să reducă ceea ce permite serverul."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Complet"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Redus"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minim"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Fără"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Controlează fumul de eșapament după starea reală a motorului. Este negru când combustibilul depășește aerul disponibil: accelerare bruscă, motor forțat la turație joasă, ralanti prelungit la sarcină mică, filtru de aer colmatat sau injecție uzată. Este albastru când un motor uzat arde ulei și alb când combustibilul iese nears. Norul de fum crește și odată cu efortul motorului. Utilajele vechi scot mult mai mult fum decât cele moderne, care aproape nu scot fum cât timp nimic nu este grav defect. În aer rece, apa rezultată din ardere se condensează și ea într-o dâră albă scurtă, care se evaporă în unul sau doi metri, chiar și la un motor sănătos."/>
         <text name="rms_batteryCapacity_label" text="Capacitatea bateriei"/>
         <text name="rms_batteryCapacity_tooltip" text="Reglează capacitatea maximă utilizabilă a bateriei. O valoare apropiată de 150 Ah corespunde unei baterii reale, dar la acest nivel aproape că nu vei întâmpina probleme de descărcare."/>
         <text name="rms_option_off" text="Dezactivat"/>

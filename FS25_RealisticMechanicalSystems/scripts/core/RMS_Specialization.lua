@@ -1338,7 +1338,6 @@ function RealisticMechanicalSystems.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onLeaveVehicle", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onPostUpdate", RealisticMechanicalSystems)
-    SpecializationUtil.registerEventListener(vehicleType, "onPostUpdateTick", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onReadStream", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteUpdateStream", RealisticMechanicalSystems)
@@ -2385,18 +2384,6 @@ function RealisticMechanicalSystems:onPostUpdate(dt, ...)
     if not self.isClient or spec.isExcludedVehicle then return end
 
     RMS_Exhaust.applyShader(self, dt)
-end
-
----Applies post-tick client state after the simulation update
--- @param float dt time since last call in ms
--- @param any ... additional update arguments
-function RealisticMechanicalSystems:onPostUpdateTick(dt, ...)
-    local spec = self.spec_RealisticMechanicalSystems
-    if not self.isClient or spec.isExcludedVehicle then return end
-
-    -- Motorized writes the exhaust effect parameters from the raw rpm in onUpdateTick, which the
-    -- engine raises just before this one, so the heat step has to answer here to have the last word
-    RMS_Exhaust.applyNativeHeat(self)
 end
 
 ---Runs the whole vehicle simulation step: state, wear, thermal, electrical and services

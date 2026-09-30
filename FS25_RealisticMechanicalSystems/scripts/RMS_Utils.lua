@@ -1981,17 +1981,10 @@ function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
     return result
 end
 
----Tells whether something reads the debug values of a vehicle, the debug panel or a telemetry recording
+---Tells whether the debug panel reads the debug values of a vehicle
 -- @param table? vehicle vehicle owning the debug values
 -- @return boolean isWanted true while the values are consumed
 function RMS_Utils.getIsDebugDataWanted(vehicle)
-    if RMS_Telemetry ~= nil and RMS_Telemetry.isRecording == true then
-        local recordedVehicleId = RMS_Telemetry.vehicleId
-        if vehicle == nil or recordedVehicleId == nil or vehicle.uniqueId == recordedVehicleId then
-            return true
-        end
-    end
-
     if RMS_Config.DEBUG ~= true or vehicle == nil then
         return false
     end

@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Desgaste relacionado à idade"/>
         <text name="rms_generalWearEnabled_tooltip" text="À medida que o veículo se desgasta, cada sistema sofre pequenas penalidades em suas principais características, como potência do motor, velocidade hidráulica ou eficiência de frenagem. O efeito é ativado após o primeiro terço da vida útil, mas só se torna realmente perceptível após os dois terços e se intensifica à medida que o fim da vida da máquina se aproxima."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fumaça do escapamento"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Controla a fumaça do escapamento conforme o estado real do motor: preta quando entra mais combustível do que ar, em uma retomada forte, com o motor forçando em baixa rotação, após marcha lenta prolongada com pouca carga, com o filtro de ar entupido ou a injeção gasta; azul quando um motor cansado queima óleo; branca quando o combustível sai sem queimar. A fumaça também aumenta com o trabalho do motor. Máquinas antigas fumaçam muito mais que as modernas, que quase não fumaçam enquanto nada estiver realmente avariado."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Detalhe da fumaça (neste computador)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Define quanta fumaça de escapamento é desenhada no seu próprio computador, sem mudar nada para os outros jogadores. Baixar remove as camadas externas da fumaça e alivia uma placa de vídeo modesta. Só pode reduzir o que o servidor permite."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Completo"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Reduzido"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Mínimo"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Nenhum"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Controla a fumaça do escapamento conforme o estado real do motor: preta quando entra mais combustível do que ar, em uma retomada forte, com o motor forçando em baixa rotação, após marcha lenta prolongada com pouca carga, com o filtro de ar entupido ou a injeção gasta; azul quando um motor cansado queima óleo; branca quando o combustível sai sem queimar. A fumaça também aumenta com o trabalho do motor. Máquinas antigas fumaçam muito mais que as modernas, que quase não fumaçam enquanto nada estiver realmente avariado. No ar frio, a água da combustão também se condensa em um rastro branco curto, que evapora em um ou dois metros, mesmo em um motor saudável."/>
         <text name="rms_batteryCapacity_label" text="Capacidade da bateria"/>
         <text name="rms_batteryCapacity_tooltip" text="Ajusta a capacidade máxima utilizável da bateria. Um valor próximo de 150 Ah corresponde a uma bateria real, mas nesse nível você quase não encontrará problemas de descarga."/>
         <text name="rms_option_off" text="Desligado"/>

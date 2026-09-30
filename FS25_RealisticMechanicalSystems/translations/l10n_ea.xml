@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Desgaste por edad"/>
         <text name="rms_generalWearEnabled_tooltip" text="A medida que el vehículo se desgasta, cada sistema recibe pequeñas penalizaciones en sus características principales, como la potencia del motor, la velocidad hidráulica o la eficiencia de frenado. El efecto se activa después del primer tercio de la vida útil, pero solo se vuelve realmente notable después del segundo tercio y se intensifica al acercarse el final de la vida de la máquina."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Humo de escape"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Controla el penacho de escape según el estado real del motor. Es negro cuando entra más combustible que aire: una aceleración brusca, un motor forzado a bajo régimen, un ralentí prolongado a baja carga, un filtro de aire obstruido o una inyección desgastada. Es azul cuando un motor cansado quema aceite, y blanco cuando el combustible sale sin quemar. El penacho también crece con el trabajo que hace el motor. Las máquinas antiguas humean mucho más que las modernas, que apenas humean mientras no haya una avería seria."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Detalle del penacho (este PC)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Ajusta cuánto penacho de escape se dibuja en tu propia computadora, sin cambiar nada para los demás jugadores. Bajarlo quita las capas exteriores de humo y alivia una tarjeta gráfica modesta. Solo puede reducir lo que el servidor permite."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Completo"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Reducido"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Mínimo"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Ninguno"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Controla el penacho de escape según el estado real del motor. Es negro cuando entra más combustible que aire: una aceleración brusca, un motor forzado a bajo régimen, un ralentí prolongado a baja carga, un filtro de aire obstruido o una inyección desgastada. Es azul cuando un motor cansado quema aceite, y blanco cuando el combustible sale sin quemar. El penacho también crece con el trabajo que hace el motor. Las máquinas antiguas humean mucho más que las modernas, que apenas humean mientras no haya una avería seria. Con aire frío, el agua de la combustión también se condensa en una breve estela blanca que se evapora en uno o dos metros, incluso en un motor sano."/>
         <text name="rms_batteryCapacity_label" text="Capacidad de la batería"/>
         <text name="rms_batteryCapacity_tooltip" text="Ajusta la capacidad útil máxima de la batería. Un valor cercano a 150 Ah corresponde a una batería real, pero a ese nivel apenas encontrarás problemas de descarga."/>
         <text name="rms_option_off" text="Desactivado"/>

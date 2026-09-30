@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Életkor miatti kopás"/>
         <text name="rms_generalWearEnabled_tooltip" text="Ahogy a jármű elhasználódik, minden rendszer fő jellemzői kismértékben romlanak, például a motorteljesítmény, a hidraulika sebessége vagy a fékhatás. A hatás az élettartam első harmada után válik aktívvá, de csak a második harmad után lesz igazán észrevehető, majd a gép élettartamának vége felé erősödik."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kipufogófüst"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="A kipufogófüstöt a motor valós állapota vezérli. Fekete, amikor több az üzemanyag, mint a rendelkezésre álló levegő: erős gyorsításnál, alacsony fordulaton erőlködő motornál, hosszan tartó kis terhelésű alapjáratnál, eltömődött légszűrőnél vagy kopott befecskendezésnél. Kék, amikor egy fáradt motor olajat éget, és fehér, amikor az üzemanyag elégetlenül távozik. A füstcsóva a motor által végzett munkával együtt nő. A régebbi gépek sokkal jobban füstölnek, mint a modernek, amelyek komoly hiba nélkül alig füstölnek."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Füstcsóva részletessége (ezen a számítógépen)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Beállítja, mennyi kipufogófüst jelenik meg a saját számítógépeden, anélkül hogy bármit változtatna a többi játékosnál. Csökkentése eltávolítja a füstcsóva külső rétegeit, és tehermentesíti a gyengébb videokártyát. Csak csökkenteni tudja a szerver által engedélyezett mennyiséget."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Teljes"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Csökkentett"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimális"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Nincs"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="A kipufogófüstöt a motor valós állapota vezérli. Fekete, amikor több az üzemanyag, mint a rendelkezésre álló levegő: erős gyorsításnál, alacsony fordulaton erőlködő motornál, hosszan tartó kis terhelésű alapjáratnál, eltömődött légszűrőnél vagy kopott befecskendezésnél. Kék, amikor egy fáradt motor olajat éget, és fehér, amikor az üzemanyag elégetlenül távozik. A füstcsóva a motor által végzett munkával együtt nő. A régebbi gépek sokkal jobban füstölnek, mint a modernek, amelyek komoly hiba nélkül alig füstölnek. Hideg levegőben az égés során keletkező víz is lecsapódik egy rövid fehér csíkká, amely egy-két méteren belül elpárolog, még egy ép motornál is."/>
         <text name="rms_batteryCapacity_label" text="Akkumulátor kapacitása"/>
         <text name="rms_batteryCapacity_tooltip" text="Módosítja a maximálisan használható akkumulátorkapacitást. A 150 Ah körüli értékek valósághűbbek, de ilyen szinten alig találkozhatsz akkumulátorlemerülési problémákkal."/>
         <text name="rms_option_off" text="Ki"/>

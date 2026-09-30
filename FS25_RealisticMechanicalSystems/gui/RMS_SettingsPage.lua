@@ -463,12 +463,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_exhaustSmokeEnabled_label"),
         g_i18n:getText("rms_exhaustSmokeEnabled_tooltip")
     )
-    page.rmsExhaustSmokeDetail = RMS_SettingsPage:addMultiTextOption(
-        page, "onExhaustSmokeDetailChanged",
-        RMS_SettingsPage.steps.exhaustSmokeDetail.texts,
-        g_i18n:getText("rms_exhaustSmokeDetail_label"),
-        g_i18n:getText("rms_exhaustSmokeDetail_tooltip")
-    )
 
     RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_ws_header_title"))
 
@@ -786,7 +780,6 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     setIndex(currentPage.rmsTemperatureChangeSpeed, steps.temperatureChangeSpeed.values, pending.temperatureChangeSpeed)
     setIndex(currentPage.rmsTransTemperatureChangeMultiplier, steps.transTemperatureChangeMultiplier.values, pending.transTemperatureChangeMultiplier)
     setIndex(currentPage.rmsRadiatorDirtInfluence, steps.radiatorDirtInfluence.values, pending.maxDirtInfluence)
-    setIndex(currentPage.rmsExhaustSmokeDetail, steps.exhaustSmokeDetail.values, RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL)
 
     if tutorialOption ~= nil then
         tutorialOption:setIsChecked(pending.tutorialMode, false, false)
@@ -863,14 +856,6 @@ end
 function RMS_SettingsPage:onExhaustSmokeEnabledChanged(state)
     getPendingConfig().exhaustSmokeEnabled = (state == BinaryOptionElement.STATE_RIGHT)
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the plume detail the player wants on their own machine, outside the shared settings
--- @param integer state selected step index
-function RMS_SettingsPage:onExhaustSmokeDetailChanged(state)
-    RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL = RMS_SettingsPage.steps.exhaustSmokeDetail.values[state]
-    RMS_Config.saveLocalSettings()
     refreshCurrentSettingsPage()
 end
 
@@ -1493,17 +1478,6 @@ function RMS_SettingsPage:generateAllSteps()
         end
         self.steps.radiatorDirtInfluence = data
     end
-
-    -- Exhaust plume detail, owned by the player and counted as the highest step drawn
-    self.steps.exhaustSmokeDetail = {
-        values = {4, 3, 2, 0},
-        texts = {
-            g_i18n:getText("rms_exhaustSmokeDetail_full"),
-            g_i18n:getText("rms_exhaustSmokeDetail_reduced"),
-            g_i18n:getText("rms_exhaustSmokeDetail_minimal"),
-            g_i18n:getText("rms_exhaustSmokeDetail_none")
-        }
-    }
 
     self.steps.generated = true
 end

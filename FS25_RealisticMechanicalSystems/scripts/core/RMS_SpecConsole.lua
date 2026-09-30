@@ -1569,6 +1569,37 @@ function RealisticMechanicalSystems.ConsoleCommands:debug()
     end
 end
 
+---Forces the exhaust smoke drawn on this machine, to tune the plume without hunting for the matching engine
+-- @param string? rawArgs "off", or an opacity, a gas flow and a vapour depth, a dash keeping the engine value
+-- @param any ... further console arguments
+function RealisticMechanicalSystems.ConsoleCommands:exhaustOverride(rawArgs, ...)
+    local args = parseArguments(rawArgs, ...)
+    local first = args[1] ~= nil and string.lower(tostring(args[1])) or nil
+    if first == nil or first == "off" then
+        RMS_Exhaust.override = nil
+        print("RMS: exhaust override off")
+        return
+    end
+
+    local override = {}
+    local names = {"opacity", "flow", "vapour"}
+    for index, name in ipairs(names) do
+        local token = args[index]
+        if token ~= nil and token ~= "-" then
+            local value = tonumber(token)
+            if value == nil or value < 0 or (name ~= "vapour" and value > 1) then
+                print("RMS Error: Usage: rms_exhaustOverride <opacity 0-1|-> [flow 0-1|-] [vapour >=0|-] | off")
+                return
+            end
+            override[name] = value
+        end
+    end
+
+    RMS_Exhaust.override = override
+    print(string.format("RMS: exhaust override opacity %s flow %s vapour %s",
+        tostring(override.opacity or "engine"), tostring(override.flow or "engine"), tostring(override.vapour or "engine")))
+end
+
 addConsoleCommand("rms_listBreakdowns", "Lists all available breakdown IDs.", "listBreakdowns", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_addBreakdown", "Adds a breakdown. Usage: rms_addBreakdown [id] [stage]", "addBreakdown", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_removeBreakdown", "Removes a breakdown. Usage: rms_removeBreakdown [id]", "removeBreakdown", RealisticMechanicalSystems.ConsoleCommands)
@@ -1594,3 +1625,4 @@ addConsoleCommand("rms_debug", "Enbales/disabled RMS debug", "debug", RealisticM
 addConsoleCommand("rms_setConfigVar", "Sets RMS_Config variable. Usage: rms_setConfigVar <path> <value>", "setConfigVar", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSpecVar", "Sets RMS specialization variable on current vehicle. Usage: rms_setSpecVar <path> <value>", "setSpecVar", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_printSpecVar", "Prints RMS specialization variable on current vehicle. Usage: rms_printSpecVar <path>", "printSpecVar", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_exhaustOverride", "Forces the exhaust smoke drawn on this machine. Usage: rms_exhaustOverride <opacity 0-1|-> [flow 0-1|-] [vapour >=0|-] | off", "exhaustOverride", RealisticMechanicalSystems.ConsoleCommands)

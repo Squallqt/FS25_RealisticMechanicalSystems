@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="経年摩耗"/>
         <text name="rms_generalWearEnabled_tooltip" text="車両が摩耗するにつれて、エンジン出力、油圧速度、ブレーキ性能など、各システムの主な特性に小さな低下が生じます。この影響は車両寿命の最初の三分の一を過ぎると始まり、三分の二を過ぎてから明確になり、寿命末期に近づくほど強くなります。"/>
         <text name="rms_exhaustSmokeEnabled_label" text="排気煙"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="エンジンの実際の状態に応じて排気煙を制御します。急加速、低回転での高負荷運転、低負荷での長時間アイドリング、エアフィルターの目詰まり、噴射装置の摩耗など、燃料に対して空気が不足すると黒煙になります。摩耗したエンジンがオイルを燃やすと青煙、燃料が未燃焼のまま排出されると白煙になります。煙の量はエンジンの仕事量によっても増えます。旧式の車両は現代の車両よりはるかに多く煙を出しますが、現代の車両は重大な故障がない限りほとんど煙を出しません。"/>
-        <text name="rms_exhaustSmokeDetail_label" text="排気煙の詳細度（このPC）"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="ほかのプレイヤーには影響を与えず、このコンピューターで描画する排気煙の量を設定します。値を下げると煙の外側の層が省かれ、性能の低いグラフィックカードの負荷を軽減できます。サーバーが許可する量より増やすことはできません。"/>
-        <text name="rms_exhaustSmokeDetail_full" text="完全"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="低減"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="最小"/>
-        <text name="rms_exhaustSmokeDetail_none" text="なし"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="エンジンの実際の状態に応じて排気煙を制御します。急加速、低回転での高負荷運転、低負荷での長時間アイドリング、エアフィルターの目詰まり、噴射装置の摩耗など、燃料に対して空気が不足すると黒煙になります。摩耗したエンジンがオイルを燃やすと青煙、燃料が未燃焼のまま排出されると白煙になります。煙の量はエンジンの仕事量によっても増えます。旧式の車両は現代の車両よりはるかに多く煙を出しますが、現代の車両は重大な故障がない限りほとんど煙を出しません。寒い日には、燃焼で生じた水分も凝結して短い白いすじとなり、1〜2メートルで蒸発します。これは健全なエンジンでも起こります。"/>
         <text name="rms_batteryCapacity_label" text="バッテリー容量"/>
         <text name="rms_batteryCapacity_tooltip" text="実際に使用できるバッテリーの最大容量を調整します。150Ahに近い値は実物のバッテリーに相当しますが、その容量では放電の問題はほとんど発生しません。"/>
         <text name="rms_option_off" text="オフ"/>

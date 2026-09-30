@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Aldersbetinget slitasje"/>
         <text name="rms_generalWearEnabled_tooltip" text="Etter hvert som kjøretøyet slites, får hvert system små fradrag på sine viktigste egenskaper, som motoreffekt, hydraulikkhastighet eller bremseevne. Virkningen setter inn etter den første tredjedelen av levetiden, blir først riktig merkbar etter to tredjedeler og forsterkes jo nærmere maskinen kommer slutten av sin levetid."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Eksosrøyk"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Styrer eksosrøyken etter motorens faktiske tilstand. Den er svart når det er mer drivstoff enn luft: kraftig akselerasjon, en motor som drar på for lavt turtall, lengre tomgang med lav belastning, et tett luftfilter eller slitt innsprøytning. Den er blå når en sliten motor brenner olje, og hvit når drivstoff slipper ut ubrent. Røykfanen vokser også med det arbeidet motoren yter. Eldre maskiner røyker langt mer enn moderne, som nesten ikke røyker så lenge ingenting er alvorlig i stykker."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Detaljnivå for røykfanen (på denne PC-en)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Bestemmer hvor mye av røykfanen som tegnes på din egen datamaskin, uten å endre noe for de andre spillerne. En lavere innstilling fjerner røykens ytterste lag og avlaster et beskjedent skjermkort. Den kan bare redusere det serveren tillater."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Fullt"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Redusert"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimalt"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Ingen"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Styrer eksosrøyken etter motorens faktiske tilstand. Den er svart når det er mer drivstoff enn luft: kraftig akselerasjon, en motor som drar på for lavt turtall, lengre tomgang med lav belastning, et tett luftfilter eller slitt innsprøytning. Den er blå når en sliten motor brenner olje, og hvit når drivstoff slipper ut ubrent. Røykfanen vokser også med det arbeidet motoren yter. Eldre maskiner røyker langt mer enn moderne, som nesten ikke røyker så lenge ingenting er alvorlig i stykker. I kald luft kondenserer vannet fra forbrenningen også til en kort hvit stripe som fordamper i løpet av en meter eller to, selv på en frisk motor."/>
         <text name="rms_batteryCapacity_label" text="Batterikapasitet"/>
         <text name="rms_batteryCapacity_tooltip" text="Justerer batteriets største brukbare kapasitet. En verdi rundt 150 Ah svarer til et virkelig batteri, men på det nivået støter du nesten aldri på utladingsproblemer."/>
         <text name="rms_option_off" text="Av"/>

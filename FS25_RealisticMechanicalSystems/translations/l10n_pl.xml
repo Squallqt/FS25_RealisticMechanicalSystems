@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Zużycie wynikające z wieku"/>
         <text name="rms_generalWearEnabled_tooltip" text="W miarę zużywania się pojazdu każdy układ traci nieco swoich podstawowych parametrów, takich jak moc silnika, szybkość hydrauliki czy skuteczność hamulców. Efekt zaczyna działać po pierwszej jednej trzeciej okresu eksploatacji, staje się wyraźny po dwóch trzecich i nasila się pod koniec życia maszyny."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Dym z wydechu"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Steruje smugą spalin na podstawie rzeczywistego stanu silnika: czarna pojawia się, gdy paliwa jest więcej niż powietrza, przy gwałtownym przyspieszaniu, pracy na niskich obrotach pod obciążeniem, długiej pracy jałowej z małym obciążeniem, zatkanym filtrze powietrza lub zużytym wtrysku; niebieska, gdy zużyty silnik spala olej; biała, gdy paliwo pozostaje niespalone. Smuga rośnie wraz z pracą wykonywaną przez silnik. Starsze maszyny dymią znacznie mocniej niż nowoczesne, które prawie nie dymią, dopóki nie dojdzie do poważnej awarii."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Szczegółowość smugi (ten komputer)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Ustawia, ile smugi spalin jest rysowane na własnym komputerze, bez zmiany czegokolwiek u pozostałych graczy. Obniżenie usuwa zewnętrzne warstwy dymu i odciąża słabszą kartę graficzną. Może tylko zmniejszyć to, na co pozwala serwer."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Pełna"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Zmniejszona"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimalna"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Brak"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Steruje smugą spalin na podstawie rzeczywistego stanu silnika: czarna pojawia się, gdy paliwa jest więcej niż powietrza, przy gwałtownym przyspieszaniu, pracy na niskich obrotach pod obciążeniem, długiej pracy jałowej z małym obciążeniem, zatkanym filtrze powietrza lub zużytym wtrysku; niebieska, gdy zużyty silnik spala olej; biała, gdy paliwo pozostaje niespalone. Smuga rośnie wraz z pracą wykonywaną przez silnik. Starsze maszyny dymią znacznie mocniej niż nowoczesne, które prawie nie dymią, dopóki nie dojdzie do poważnej awarii. W zimnym powietrzu woda ze spalania dodatkowo skrapla się w krótką białą smugę, która odparowuje w ciągu metra lub dwóch, nawet w sprawnym silniku."/>
         <text name="rms_batteryCapacity_label" text="Pojemność akumulatora"/>
         <text name="rms_batteryCapacity_tooltip" text="Dostosuj maksymalną użyteczną pojemność akumulatora. Wartości bliskie 150 Ah są bardziej realistyczne, jednak przy takim poziomie problemy z rozładowaniem akumulatora mogą występować bardzo rzadko."/>
         <text name="rms_option_off" text="Wyłącz"/>

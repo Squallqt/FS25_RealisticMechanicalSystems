@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Opotřebení stářím"/>
         <text name="rms_generalWearEnabled_tooltip" text="S opotřebením vozidla dostává každý systém malé postihy ke svým hlavním vlastnostem, jako jsou výkon motoru, rychlost hydrauliky nebo účinnost brzd. Účinek se aktivuje po první třetině životnosti, skutečně patrný je až po dvou třetinách a zesiluje s blížícím se koncem životnosti stroje."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kouř z výfuku"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Řídí kouř z výfuku podle skutečného stavu motoru. Je černý, když motor dostává více paliva, než odpovídá dostupnému vzduchu: při prudké akceleraci, když motor pracuje namáhavě v nízkých otáčkách, po dlouhém volnoběhu s nízkým zatížením, při zaneseném vzduchovém filtru nebo opotřebeném vstřikování. Je modrý, když opotřebený motor spaluje olej, a bílý, když palivo odchází nespálené. Množství kouře se zvyšuje také s prací motoru. Starší stroje kouří výrazně více než moderní, které téměř nekouří, dokud není něco skutečně porouchané."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Detail oblaku (tento počítač)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Nastavuje, kolik výfukového oblaku se vykreslí na tvém počítači, aniž by se cokoli změnilo ostatním hráčům. Snížení odebere vnější vrstvy kouře a uleví slabší grafické kartě. Může pouze snížit množství povolené serverem."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Plný"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Snížený"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimální"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Žádný"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Řídí kouř z výfuku podle skutečného stavu motoru. Je černý, když motor dostává více paliva, než odpovídá dostupnému vzduchu: při prudké akceleraci, když motor pracuje namáhavě v nízkých otáčkách, po dlouhém volnoběhu s nízkým zatížením, při zaneseném vzduchovém filtru nebo opotřebeném vstřikování. Je modrý, když opotřebený motor spaluje olej, a bílý, když palivo odchází nespálené. Množství kouře se zvyšuje také s prací motoru. Starší stroje kouří výrazně více než moderní, které téměř nekouří, dokud není něco skutečně porouchané. Ve studeném vzduchu navíc voda ze spalování kondenzuje do krátké bílé stopy, která se odpaří během metru či dvou, a to i u zdravého motoru."/>
         <text name="rms_batteryCapacity_label" text="Kapacita baterie"/>
         <text name="rms_batteryCapacity_tooltip" text="Upravuje maximální skutečně využitelnou kapacitu baterie. Hodnota kolem 150 Ah odpovídá skutečné baterii, ale při této úrovni se s problémy s vybíjením téměř nesetkáš."/>
         <text name="rms_option_off" text="Vypnuto"/>

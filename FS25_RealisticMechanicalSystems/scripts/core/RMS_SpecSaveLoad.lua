@@ -511,12 +511,8 @@ function RealisticMechanicalSystems:onLoad(savegame)
         drivetrain = {
         },
         exhaust = {
-            hasTurbo = false,
-            boost = 0,
-            boostDeficit = 0,
-            flow = 0,
-            scale = 0,
-            alpha = 0
+            opacity = 0,
+            vapour = 0
         },
 
         engine = {

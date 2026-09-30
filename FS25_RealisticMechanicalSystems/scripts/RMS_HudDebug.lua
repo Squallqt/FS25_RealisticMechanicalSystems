@@ -802,48 +802,31 @@ function RMS_Hud:drawActiveVehicleHUD()
         if smoke.isMethane == true then table.insert(profile, "methane") end
         if smoke.hasTurbo == true then table.insert(profile, "turbo") end
 
-        -- one letter per drawn plume step, a dash where it is silent
-        -- the heat step owns no particle system, it is drawn by the exhaust effect of the vehicle
-        local stepMarks = {}
-        for _, step in ipairs(exhaustDbg.steps or {}) do
-            local isDrawn = step.isNative and (step.share or 0) > 0 or step.isEmitting
-            table.insert(stepMarks, isDrawn and string.upper(string.sub(step.id, 1, 1)) or "-")
+        -- one line: what the engine emits, what the plume shows and what drawing it costs this frame
+        local line = "Exhaust: off | " .. table.concat(profile, " ")
+        if smoke.isActive == true then
+            line = string.format(
+                "Exhaust: %s | black %.0f%% blue %.0f%% white %.0f%% | opacity %.0f%% vapour %.0f%%%s | gas %.0fC at %.1f m/s | wind %.1f m/s sheltered %.0f%% | %d puffs %.2f ms",
+                table.concat(profile, " "),
+                asPercent(smoke.soot),
+                asPercent(smoke.oil),
+                asPercent(smoke.unburnt),
+                asPercent(exhaustDbg.opacity),
+                asPercent(exhaustDbg.vapour),
+                exhaustDbg.burstCause ~= nil and (" | burst " .. tostring(exhaustDbg.burstCause)) or "",
+                tonumber(exhaustDbg.gasTemperature) or 0,
+                tonumber(exhaustDbg.exitSpeed) or 0,
+                tonumber(exhaustDbg.windSpeed) or 0,
+                asPercent(exhaustDbg.shelter),
+                tonumber(exhaustDbg.activePuffs) or 0,
+                tonumber(exhaustDbg.updateMs) or 0
+            )
         end
-
-        addLine(overviewLines, string.format(
-            "Exhaust: %s | %s | soot %.0f%% oil %.0f%% unburnt %.0f%% | tau %.2f opacity %.2f | flow %.2f (boost %.2f def %.2f)",
-            smoke.isActive == true and "on" or "off",
-            table.concat(profile, " "),
-            asPercent(smoke.soot),
-            asPercent(smoke.oil),
-            asPercent(smoke.unburnt),
-            tonumber(exhaustDbg.opticalDepth) or 0,
-            tonumber(exhaustDbg.opacity) or 0,
-            tonumber(exhaustDbg.flow) or 0,
-            tonumber(exhaustDbg.boost) or 0,
-            tonumber(exhaustDbg.boostDeficit) or 0
-        ), {1, 1, 1, 1}, 0.95)
-
-        -- the emitter count is the invariant, anything above two is a bug and not a setting
-        local emitterCount = tonumber(exhaustDbg.emitterCount) or 0
-        local activePuffs = tonumber(exhaustDbg.activePuffs) or 0
-        local collisionCount = tonumber(exhaustDbg.collisionCount) or 0
-        addLine(overviewLines, string.format(
-            "Plume: ladder %.2f (step %d to %d, fade %.2f) | alpha %.3f emit %.2f | heat %.2f | burst %.2f %s | steps %s | emitters %d | puffs %d hits %d",
-            tonumber(exhaustDbg.ladder) or 0,
-            tonumber(exhaustDbg.currentStep) or 0,
-            tonumber(exhaustDbg.nextStep) or 0,
-            tonumber(exhaustDbg.crossfade) or 0,
-            tonumber(exhaustDbg.alpha) or 0,
-            tonumber(exhaustDbg.emitScale) or 0,
-            tonumber(exhaustDbg.heatShare) or 0,
-            tonumber(exhaustDbg.burst) or 0,
-            tostring(exhaustDbg.burstCause or "idle"),
-            #stepMarks > 0 and table.concat(stepMarks) or "-",
-            emitterCount,
-            activePuffs,
-            collisionCount
-        ), emitterCount > 2 and {1, 0.3, 0.3, 1} or {1, 1, 1, 1}, 0.95)
+        if exhaustDbg.isOverridden == true then
+            line = line .. " | override"
+        end
+        -- orange when the game refused the per puff sprite control and the puffs fall back to the asset values
+        addLine(overviewLines, line, exhaustDbg.isSpriteControlled == false and {1, 0.6, 0.2, 1} or {1, 1, 1, 1}, 0.95)
     end
 
     local engineMaxFactor = math.max(

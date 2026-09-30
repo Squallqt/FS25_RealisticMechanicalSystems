@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Ikääntymiseen liittyvä kuluminen"/>
         <text name="rms_generalWearEnabled_tooltip" text="Ajoneuvon kuluessa jokaisen järjestelmän tärkeät ominaisuudet heikkenevät hieman, kuten moottorin teho, hydrauliikan nopeus tai jarrutusteho. Vaikutus alkaa käyttöiän ensimmäisen kolmanneksen jälkeen, mutta näkyy selvästi vasta kahden kolmanneksen jälkeen ja voimistuu koneen käyttöiän loppua kohti."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Pakokaasusavu"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Ohjaa pakokaasupilveä moottorin todellisen kunnon mukaan: musta kun polttoainetta on enemmän kuin ilmaa, voimakkaassa kiihdytyksessä, moottorin jauhaessa matalilla kierroksilla, pitkän vähäkuormitteisen joutokäynnin jälkeen, tukkeutuneessa ilmansuodattimessa tai kuluneessa ruiskutuksessa, sininen kun väsynyt moottori polttaa öljyä, valkoinen kun polttoaine poistuu palamattomana. Pilvi myös kasvaa sen työn mukana, jota moottori tekee. Vanhemmat koneet savuavat huomattavasti enemmän kuin uudet, jotka tuskin savuavat ennen kuin jokin on vakavasti rikki."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Savuvanan tarkkuus (tällä tietokoneella)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Määrittää omalla tietokoneella piirrettävän pakokaasuvanan määrän muuttamatta muiden pelaajien näkymää. Pienempi asetus poistaa savuvanan uloimpia kerroksia ja keventää vaatimattoman näytönohjaimen kuormaa. Asetus voi vain vähentää palvelimen sallimaa määrää."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Täysi"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Vähennetty"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimaalinen"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Ei mitään"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Ohjaa pakokaasupilveä moottorin todellisen kunnon mukaan: musta kun polttoainetta on enemmän kuin ilmaa, voimakkaassa kiihdytyksessä, moottorin jauhaessa matalilla kierroksilla, pitkän vähäkuormitteisen joutokäynnin jälkeen, tukkeutuneessa ilmansuodattimessa tai kuluneessa ruiskutuksessa, sininen kun väsynyt moottori polttaa öljyä, valkoinen kun polttoaine poistuu palamattomana. Pilvi myös kasvaa sen työn mukana, jota moottori tekee. Vanhemmat koneet savuavat huomattavasti enemmän kuin uudet, jotka tuskin savuavat ennen kuin jokin on vakavasti rikki. Kylmässä ilmassa palamisessa syntyvä vesi tiivistyy lisäksi lyhyeksi valkoiseksi vanaksi, joka haihtuu metrin tai kahden matkalla, myös terveessä moottorissa."/>
         <text name="rms_batteryCapacity_label" text="Akun kapasiteetti"/>
         <text name="rms_batteryCapacity_tooltip" text="Säätää maksimikäyttökelpoista akun kapasiteettia. Arvot lähellä 150 Ah ovat realistisempia, mutta akun tyhjenemisongelmia kohtaa harvoin tuolla tasolla."/>
         <text name="rms_option_off" text="Pois"/>

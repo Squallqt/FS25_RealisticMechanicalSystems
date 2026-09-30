@@ -558,19 +558,20 @@ RMS_Config = {
     EXHAUST = {
         ENABLED = true,
 
-        -- smoke tints, mixed by concentration, and the colourless gas of a clean pipe
+        -- smoke tints, mixed by concentration and kept saturated so the colour reads as the diagnosis it is:
+        -- black soot, blue burnt oil, white unburnt fuel, the off white of condensed water, and the colourless
+        -- gas of a clean pipe
         SOOT_TINT = {0.020, 0.020, 0.025},
         OIL_TINT = {0.050, 0.090, 0.350},
         UNBURNT_TINT = {0.980, 0.980, 0.980},
-        HEAT_TINT = {0.780, 0.780, 0.780},
+        VAPOUR_TINT = {0.920, 0.930, 0.950},
+        CLEAN_TINT = {0.780, 0.780, 0.780},
 
         -- extinction per channel, soot blocking the most light per unit of concentration
         K_SOOT = 1.50,
         K_OIL = 1.20,
         K_UNBURNT = 1.00,
         OPACITY_FLOOR = 0.03,
-        ALPHA_GAMMA = 0.80,
-        HEAT_COLD_FACTOR = 0.35,
 
         -- aftertreatment, and the share of fault soot none of it can hold back
         DEF_SOOT_FACTOR = 0.20,
@@ -579,41 +580,155 @@ RMS_Config = {
 
         FLOW_BOOST_GAIN = 0.60,
 
-        -- plume assets, the sprite family a directory loaded once for the session
+        -- plume asset, the sprite family a directory loaded once for the session
         PLUME_EMIT_SHAPE = "particles/exhaust/plumeEmitShape.i3d",
         PLUME_SPRITES = "soft",
         PLUME_DIRECTORY = "particles/exhaust/",
+        PLUME_FILE = "plume.i3d",
 
-        -- plume steps, each a complete plume for its own opacity band, only the current one and
-        -- the one it fades into ever drawn, the first being the refraction effect of the vehicle
-        PLUME_STEPS = {
-            {
-                id = "heat", isNative = true,
-                alphaMin = 0.10, alphaMax = 0.42, scaleMin = 0.07, scaleMax = 0.15
-            },
-            {
-                id = "veil", file = "veil.i3d", tintWash = 0.00,
-                alphaMax = 0.35, emitMin = 0.40, emitMax = 1.35, speedMin = 0.35, speedMax = 1.25
-            },
-            {
-                id = "plume", file = "plume.i3d", tintWash = 0.25,
-                alphaMax = 0.70, emitMin = 0.20, emitMax = 1.55, speedMin = 0.40, speedMax = 1.30
-            },
-            {
-                id = "column", file = "column.i3d", tintWash = 0.50,
-                alphaMax = 0.85, emitMin = 0.32, emitMax = 1.55, speedMin = 0.45, speedMax = 1.45
+        PUFF = {
+            -- neighbours overlapping any point of the plume from the outlet on, what keeps it continuous instead
+            -- of a string of puffs, and the bounds of the rate that holds it, in puffs per second and outlet
+            OVERLAP_TARGET = 5,
+            RATE_MIN = 8,
+            RATE_MAX = 720,
+            -- once the neighbours overlap more than needed, puffs retire in halves, fading into the ones that
+            -- remain, up to this many halvings
+            THIN_LEVEL_MAX = 6,
+            -- exit speed in m/s: a floor while cranking, and the speed at full gas flow with the gas at its full
+            -- load temperature, about 4 m/s at idle and 30 at full power through a pipe sized for the rated flow;
+            -- and the share of it each puff leaves sideways at, for a ragged edge
+            EXIT_SPEED_MIN = 2.0,
+            EXIT_SPEED_FULL = 30.0,
+            SPREAD_SHARE = 0.02,
+            -- tailpipe diameter in metres per square root of kW, about 75 mm at 70 kW, 110 at 150 and 155 at 300,
+            -- within bounds
+            PIPE_DIAMETER_PER_SQRT_KW = 0.009,
+            PIPE_DIAMETER_MIN = 0.06,
+            PIPE_DIAMETER_MAX = 0.16,
+            -- sprite width over the gas width it draws: the smoke texture reaches half its opacity at about 60 % of
+            -- the sprite, so a sprite that wide shows the gas at its real width; the share of the sprite width the
+            -- visible smoke reaches from its centre, which surfaces stop; and the widest a sprite grows far
+            -- downstream, where a heavy plume has spread over metres
+            SPRITE_GAS_RATIO = 1.65,
+            RADIUS_SHARE = 0.45,
+            SIZE_MAX = 8.0,
+            -- width the gas gains per metre it travels through the air, the concentration width at half maximum
+            -- of a round jet (half-width 0.11 per metre), and per metre of crosswind it takes in until the wind has
+            -- bent it over
+            JET_SPREAD = 0.22,
+            JET_CROSS_SPREAD = 0.10,
+            -- step in ms of the jet profile the spacing and the sprite growth are read on
+            JET_PROFILE_STEP_MS = 50,
+            -- growth the eddies of the air add in m/s, a floor and the crosswind mixing it
+            GROWTH_BASE = 0.18,
+            GROWTH_PER_WIND = 0.15,
+            -- a sprite grows at one steady rate, fitted to the gas width over this share of its life, within bounds
+            -- in ms: the plume schedule on its visible life, each thinning level on its own
+            GROWTH_FIT_SHARE = 0.35,
+            GROWTH_FIT_MIN_MS = 400,
+            GROWTH_FIT_LEVEL_MIN_MS = 20,
+            GROWTH_FIT_MAX_MS = 4000,
+            -- speed the rising plume carries its puffs apart at even in still air, in m/s
+            RISE_SPEED = 0.40,
+            -- width at which the condensed water shows the model vapour, a few decimetres from the outlet where
+            -- the gas has mixed with the cold air, the smoke opacity being read at the outlet itself
+            REFERENCE_SIZE = 0.50,
+            -- life bounds in ms, and the plume optical depth under which it no longer shows
+            LIFE_MIN = 800,
+            LIFE_MAX = 8000,
+            TAU_VISIBLE = 0.02,
+            -- how much of the sprite area the smoke texture covers, tuned in game
+            SPRITE_ALPHA_GAIN = 1.60,
+            -- relative change under which a puff is not rewritten, so a faint puff among many still thins
+            ALPHA_EPSILON = 0.03,
+            -- fade out drawn by RMS in ms for the puffs that reach the end of the visible plume, the sprite asset
+            -- carrying no blend of its own since its blend times would scale with lifespans that differ a lot;
+            -- the retiring puffs fade through the thinning, and a new one among five overlapping needs no fade in
+            FADE_OUT_MS = 300,
+            -- drag toward the surrounding air on top of entrainment, per second, a spent jet being a tracer; with
+            -- the entrainment above it puts a jet in crossflow on the measured y/(rD) = 2.05 (x/rD)^0.28 path
+            BASE_DAMPING = 1.20,
+            -- crosswind in m/s from which that drag applies in full, and the share left in still air
+            DAMPING_CROSS_SPEED = 2.0,
+            DAMPING_FLOOR_SHARE = 0.30,
+            -- share of the blocked speed a puff keeps sliding along a surface, and of the air speed the flow
+            -- keeps once a surface turns it aside
+            SURFACE_SPREAD = 0.06,
+            SURFACE_FLOW_SHARE = 0.85,
+            -- speed a puff that overlaps a surface eases off it at, in m/s, instead of jumping clear in one step
+            SURFACE_PUSH_SPEED = 1.5,
+            -- a puff wider than this also looks straight above itself for a roof, in metres
+            ROOF_PROBE_MIN_RADIUS = 0.30,
+            -- share of the wind left under a roof, how far around a sheltered vehicle its roof counts, in metres,
+            -- how often a puff checks it, in ms, and how fast it feels the change
+            SHELTER_WIND_SHARE = 0.15,
+            SHELTER_RADIUS = 8.0,
+            SHELTER_CHECK_MS = 200,
+            SHELTER_TAU = 400,
+            -- a building, a hedge or a tree line upwind keeps part of the wind off its lee: how far upwind of the
+            -- outlet one is looked for and how high above it its top, in metres, the least wind worth it in m/s, the
+            -- share of the wind left up to so many obstacle heights behind it, the heights by which it is back in
+            -- full, how far above the top a puff is in the free wind again, and the height of the outlet above the
+            -- ground assumed without terrain, in metres
+            LEE_SEARCH_DISTANCE = 40,
+            LEE_PROBE_HEIGHT = 30,
+            LEE_MIN_WIND = 0.5,
+            LEE_WIND_SHARE = 0.25,
+            LEE_FULL_HEIGHTS = 2,
+            LEE_RECOVERY_HEIGHTS = 10,
+            LEE_TOP_BLEND = 1.5,
+            LEE_GROUND_FALLBACK = 2.5,
+            -- a raycast hit this close to its origin started inside the collider, in metres
+            INSIDE_HIT_DISTANCE = 0.001,
+            -- sprites one outlet may hold at once, the retired ones included until their sprite has died
+            POOL_MAX = 400
+        },
+
+        -- exhaust gas temperature rise over the air in kelvin at the tailpipe, idle and full load, about 100 to
+        -- 150 C at idle and 350 to 500 C at full power past the turbo, and the share a cold engine reaches; the
+        -- excess heat is shared with the air the gas takes in, falling as a power of its width between the 1 of a
+        -- jet and the 5/3 of a rising plume
+        EGT = {
+            RISE_IDLE_K = 120,
+            RISE_FULL_K = 430,
+            COLD_FACTOR = 0.45,
+            DILUTION_EXPONENT = 1.30
+        },
+
+        -- eddies of the air in m/s, a floor plus a share of the wind speed, the vertical ones weaker near the
+        -- ground, each octave a wavelength in metres, a frequency in hertz and a weight
+        TURBULENCE = {
+            BASE = 0.35,
+            PER_WIND = 0.30,
+            VERTICAL_SHARE = 0.60,
+            OCTAVES = {
+                {wavelength = 4.0, frequency = 0.35, weight = 1.00},
+                {wavelength = 1.7, frequency = 0.70, weight = 0.55},
+                {wavelength = 0.7, frequency = 1.40, weight = 0.30}
             }
         },
 
-        LADDER_GAMMA = 0.75,
-        LADDER_CROSSFADE = true,
-        STEP_SHARE_ON = 0.04,
-        STEP_SHARE_OFF = 0.02,
+        -- combustion water condensing in cold air: the ambient range it appears over in degrees, its optical
+        -- depth, the humidity weights, the idle share of the fuel burnt, the extra of a cold engine, and the
+        -- evaporation time in ms from the mildest to the coldest air
+        VAPOUR = {
+            START_C = 8,
+            FULL_C = -10,
+            K = 1.10,
+            HUMIDITY_BASE = 0.60,
+            HUMIDITY_WEATHER = 0.40,
+            IDLE_SHARE = 0.55,
+            COLD_ENGINE_BOOST = 0.40,
+            EVAPORATION_WARM_MS = 300,
+            EVAPORATION_COLD_MS = 1400
+        },
 
-        -- a transient promotes the plume up the ladder and populates the step it wakes
-        BURST_LADDER_GAIN = 1.20,
+        -- a transient darkens the puffs it wakes and sends them out faster, the gas flow already rising
         BURST_DECAY_TAU = 350,
-        BURST_EMIT_GAIN = 1.60,
+        BURST_EMIT_GAIN = 0.50,
+        BURST_SPEED_GAIN = 0.50,
+        BURST_TAU_GAIN = 0.50,
         BURST_REFRACTORY = 2000,
         BURST_SLOW_TAU = 250,
         BURST_LATCH_RESET = 0.50,
@@ -625,15 +740,11 @@ RMS_Config = {
             FAULT = 0.10
         },
 
-        -- renderer tick in ms, and the change under which nothing is rewritten
+        -- burst edge tick in ms
         TUNE_INTERVAL = 80,
-        TUNE_EPSILON = 0.01,
 
         -- particle culling distance, in metres
         PLUME_CLIP_DISTANCE = 150,
-
-        -- opacity under which a step is imperceptible and stops emitting
-        PLUME_ALPHA_MIN = 0.008,
 
         -- channel smoothing time constants, in ms
         TINT_TAU = 900,
@@ -643,6 +754,7 @@ RMS_Config = {
         SOOT_FALL_TAU = 350,
         BURST_RISE_TAU = 40,
         FALL_TAU = 1200,
+        VAPOUR_TAU = 1500,
 
         -- share of the era factor kept by fault smoke
         ERA_BREAKDOWN_FLOOR = 0.60,
@@ -650,10 +762,10 @@ RMS_Config = {
         -- emission eras, the factor applying to normal smoke
         ERA_FACTORS = {
             {2001, 1.00},
-            {2006, 0.75},
-            {2011, 0.55},
-            {2014, 0.40},
-            {9999, 0.30}
+            {2006, 0.70},
+            {2011, 0.40},
+            {2014, 0.25},
+            {9999, 0.18}
         },
 
         -- emission eras of the unburnt channel, injection pressure and glow plugs improving far less than particulate control
@@ -1021,12 +1133,6 @@ end
 RMS_Config.savegameFile = "realisticMechanicalSystems.xml"
 RMS_Config.legacySavegameFile = "advancedDamageSystem.xml"
 RMS_Config.sharedSettingsDirectory = "modSettings/FS25_RealisticMechanicalSystems/"
-RMS_Config.localSettingsFile = "localSettings.xml"
-
--- settings the player owns on their own machine, never shared and never synchronized
-RMS_Config.LOCAL = {
-    EXHAUST_SMOKE_DETAIL = 4
-}
 
 ---Prints a debug line while debug mode is on
 -- @param any ... values to print
@@ -1160,55 +1266,9 @@ function RMS_Config.getSharedSettingsFilePath()
     return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.savegameFile
 end
 
----Returns the path of the settings file belonging to the player, never shared and never synchronized
--- @return string path local settings file path
-function RMS_Config.getLocalSettingsFilePath()
-    return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.localSettingsFile
-end
-
 ---@diagnostic disable-next-line: lowercase-global
 function getUserProfileAppPath()
     return g_currentModSettingsDirectory or (getUserProfileAppPath and getUserProfileAppPath()) or ""
-end
-
----Writes the settings the player owns on their own machine
--- @return boolean written true once the file is written
-function RMS_Config.saveLocalSettings()
-    createFolder(getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory)
-
-    local root = "realisticMechanicalSystemsLocal"
-    local xmlFile = createXMLFile(root, RMS_Config.getLocalSettingsFilePath(), root)
-    if xmlFile == nil or xmlFile == 0 then
-        log_dbg("LOCAL SAVE ERROR - createXMLFile returned", tostring(xmlFile))
-        return false
-    end
-
-    setXMLInt(xmlFile, root .. ".EXHAUST_SMOKE_DETAIL", RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL)
-    saveXMLFile(xmlFile)
-    delete(xmlFile)
-
-    return true
-end
-
----Reads back the settings the player owns on their own machine
-function RMS_Config.loadLocalSettings()
-    local path = RMS_Config.getLocalSettingsFilePath()
-    if not fileExists(path) then
-        return
-    end
-
-    local root = "realisticMechanicalSystemsLocal"
-    local xmlFile = loadXMLFile(root, path)
-    if xmlFile == nil or xmlFile == 0 then
-        return
-    end
-
-    local detail = getXMLInt(xmlFile, root .. ".EXHAUST_SMOKE_DETAIL")
-    if detail ~= nil then
-        RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL = math.clamp(detail, 0, #RMS_Config.EXHAUST.PLUME_STEPS)
-    end
-
-    delete(xmlFile)
 end
 
 ---Writes every adjustable setting to the savegame file, then to the shared one

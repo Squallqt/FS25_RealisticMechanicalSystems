@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Yaşla İlgili Aşınma"/>
         <text name="rms_generalWearEnabled_tooltip" text="Araç aşındıkça her sistem motor gücü, hidrolik hızı veya fren verimliliği gibi ana özelliklerinde küçük kayıplar yaşar. Etki ömrün ilk üçte birinden sonra başlar ancak ancak üçte ikisinden sonra belirginleşir ve makinenin ömrü sona yaklaştıkça güçlenir."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Egzoz Dumanı"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Egzoz dumanını motorun gerçek durumuna göre belirler: yakıt havayı aştığında, sert kalkışta, düşük devirde zorlanan motorda, düşük yükte uzun süre rölantide, tıkalı hava filtresinde veya yıpranmış enjeksiyonda siyah, yorgun bir motor yağ yaktığında mavi, yakıt yanmadan çıktığında beyaz. Duman ayrıca motorun yaptığı işle birlikte büyür. Eski makineler modern olanlardan çok daha fazla duman atar; modern makineler ciddi bir arıza olmadıkça neredeyse hiç duman çıkarmaz."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Duman Detayı (Bu Bilgisayar)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Egzoz dumanının kendi bilgisayarında ne kadarının çizileceğini belirler; diğer oyuncular için hiçbir şeyi değiştirmez. Ayarı düşürmek dumanın dış katmanlarını kaldırır ve mütevazı bir ekran kartını rahatlatır. Yalnızca sunucunun izin verdiği miktarı azaltabilir."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Tam"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Azaltılmış"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimum"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Yok"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Egzoz dumanını motorun gerçek durumuna göre belirler: yakıt havayı aştığında, sert kalkışta, düşük devirde zorlanan motorda, düşük yükte uzun süre rölantide, tıkalı hava filtresinde veya yıpranmış enjeksiyonda siyah, yorgun bir motor yağ yaktığında mavi, yakıt yanmadan çıktığında beyaz. Duman ayrıca motorun yaptığı işle birlikte büyür. Eski makineler modern olanlardan çok daha fazla duman atar; modern makineler ciddi bir arıza olmadıkça neredeyse hiç duman çıkarmaz. Soğuk havada yanmadan çıkan su da yoğuşarak kısa beyaz bir iz oluşturur ve bir iki metre içinde buharlaşır; bu, sağlam bir motorda bile görülür."/>
         <text name="rms_batteryCapacity_label" text="Akü Kapasitesi"/>
         <text name="rms_batteryCapacity_tooltip" text="Akünün gerçekten kullanılabilir azami kapasitesini ayarlar. 150 Ah’ye yakın bir değer gerçek aküye karşılık gelir ancak bu düzeyde boşalma sorunu neredeyse hiç yaşanmaz."/>
         <text name="rms_option_off" text="Kapalı"/>

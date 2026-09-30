@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Aldersbetinget slid"/>
         <text name="rms_generalWearEnabled_tooltip" text="Efterhånden som køretøjet slides, får hvert system små fradrag på sine vigtigste egenskaber, såsom motoreffekt, hydraulikhastighed eller bremseevne. Effekten sætter ind efter den første tredjedel af levetiden, bliver først rigtig mærkbar efter to tredjedele og forstærkes, jo tættere maskinen kommer på slutningen af sin levetid."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Udstødningsrøg"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Styrer udstødningsrøgen efter motorens faktiske tilstand. Den er sort, når der er mere brændstof end luft: kraftig acceleration, en motor der trækker ved for lavt omdrejningstal, længere tomgang ved lav belastning, et tilstoppet luftfilter eller slidt indsprøjtning. Den er blå, når en slidt motor brænder olie, og hvid, når brændstof slipper ud uforbrændt. Røgfanen vokser også med den belastning, motoren yder. Ældre maskiner ryger langt mere end moderne, som næsten ikke ryger, så længe intet er alvorligt i stykker."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Røgfanens detaljer (på denne pc)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Bestemmer, hvor meget af røgfanen der tegnes på din egen computer, uden at ændre noget for de andre spillere. En lavere indstilling fjerner røgens yderste lag og aflaster et beskedent grafikkort. Den kan kun reducere det, serveren tillader."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Fuld"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Reduceret"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimal"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Ingen"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Styrer udstødningsrøgen efter motorens faktiske tilstand. Den er sort, når der er mere brændstof end luft: kraftig acceleration, en motor der trækker ved for lavt omdrejningstal, længere tomgang ved lav belastning, et tilstoppet luftfilter eller slidt indsprøjtning. Den er blå, når en slidt motor brænder olie, og hvid, når brændstof slipper ud uforbrændt. Røgfanen vokser også med den belastning, motoren yder. Ældre maskiner ryger langt mere end moderne, som næsten ikke ryger, så længe intet er alvorligt i stykker. I kold luft kondenserer vandet fra forbrændingen også til en kort hvid stribe, der fordamper inden for en meter eller to, selv på en sund motor."/>
         <text name="rms_batteryCapacity_label" text="Batterikapacitet"/>
         <text name="rms_batteryCapacity_tooltip" text="Justerer batteriets maksimalt anvendelige kapacitet. En værdi omkring 150 Ah svarer til et rigtigt batteri, men på det niveau støder du næsten aldrig på afladningsproblemer."/>
         <text name="rms_option_off" text="Fra"/>

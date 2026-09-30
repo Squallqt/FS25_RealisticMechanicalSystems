@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Desgaste associado à idade"/>
         <text name="rms_generalWearEnabled_tooltip" text="Ativa o desgaste relacionado com a idade. À medida que o veículo se desgasta, cada sistema sofre pequenas penalizações nas suas características principais, como a potência do motor, a velocidade hidráulica ou a eficiência de travagem. O efeito é ativado após o primeiro terço da vida útil, mas só se torna realmente percetível após os dois terços e intensifica-se à medida que a máquina se aproxima do fim da sua vida útil."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fumo do escape"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Controla o fumo do escape de acordo com o estado real do motor: preto quando entra mais combustível do que ar, numa retoma forte, com o motor a forçar a baixas rotações, após ralenti prolongado com pouca carga, com o filtro de ar entupido ou a injeção desgastada; azul quando um motor cansado queima óleo; branco quando o combustível sai sem arder. O penacho também aumenta com o trabalho do motor. As máquinas antigas fumegam muito mais do que as modernas, que quase não fumegam enquanto não houver uma avaria séria."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Detalhe do penacho (neste computador)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Define quanto penacho de escape é desenhado no teu próprio computador, sem mudar nada para os outros jogadores. Baixar retira as camadas exteriores de fumo e alivia uma placa gráfica modesta. Só pode reduzir o que o servidor permite."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Completo"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Reduzido"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Mínimo"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Nenhum"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Controla o fumo do escape de acordo com o estado real do motor: preto quando entra mais combustível do que ar, numa retoma forte, com o motor a forçar a baixas rotações, após ralenti prolongado com pouca carga, com o filtro de ar entupido ou a injeção desgastada; azul quando um motor cansado queima óleo; branco quando o combustível sai sem arder. O penacho também aumenta com o trabalho do motor. As máquinas antigas fumegam muito mais do que as modernas, que quase não fumegam enquanto não houver uma avaria séria. Com ar frio, a água da combustão também condensa num rasto branco curto, que evapora num ou dois metros, mesmo num motor saudável."/>
         <text name="rms_batteryCapacity_label" text="Capacidade da bateria"/>
         <text name="rms_batteryCapacity_tooltip" text="Ajusta a capacidade máxima utilizável da bateria. Valores próximos de 150 Ah são mais realistas, mas, nesse nível, os problemas de descarga tornam-se raros."/>
         <text name="rms_option_off" text="Desligado"/>

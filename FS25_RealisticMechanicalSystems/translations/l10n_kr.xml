@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="노후 마모"/>
         <text name="rms_generalWearEnabled_tooltip" text="노후에 따른 마모를 활성화합니다. 차량이 노후화됨에 따라 엔진 출력, 유압 속도, 브레이크 효율 등 핵심 특성에 미세한 불이익이 발생합니다. 이 효과는 차량 수명의 1/3이 지난 시점부터 시작되어 2/3가 지난 후 뚜렷해지며, 수명 끝부분에 갈수록 강해집니다."/>
         <text name="rms_exhaustSmokeEnabled_label" text="배기 연기"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="엔진의 실제 상태에 따라 배기 연기를 표현합니다. 공기보다 연료가 많을 때, 급가속 순간, 저회전에서 무리하게 밀어붙일 때, 저부하 장시간 공회전, 에어 필터 막힘, 분사 장치 마모에서는 검은색, 노후한 엔진이 오일을 태울 때는 파란색, 연료가 연소되지 않고 배출될 때는 흰색으로 나타납니다. 연기는 엔진이 하는 일에 따라 굵어지기도 합니다. 오래된 기계일수록 훨씬 많은 연기를 내며, 최신 기계는 심각한 고장이 없는 한 거의 연기를 내지 않습니다."/>
-        <text name="rms_exhaustSmokeDetail_label" text="연기 세부 표현 (이 컴퓨터)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="본인의 컴퓨터에서 배기 연기를 얼마나 그릴지 설정합니다. 다른 플레이어에게는 아무런 영향을 주지 않습니다. 낮추면 연기의 바깥층이 사라져 사양이 낮은 그래픽 카드의 부담을 덩니다. 서버가 허용한 범위 안에서 줄일 수만 있습니다."/>
-        <text name="rms_exhaustSmokeDetail_full" text="전체"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="감소"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="최소"/>
-        <text name="rms_exhaustSmokeDetail_none" text="없음"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="엔진의 실제 상태에 따라 배기 연기를 표현합니다. 공기보다 연료가 많을 때, 급가속 순간, 저회전에서 무리하게 밀어붙일 때, 저부하 장시간 공회전, 에어 필터 막힘, 분사 장치 마모에서는 검은색, 노후한 엔진이 오일을 태울 때는 파란색, 연료가 연소되지 않고 배출될 때는 흰색으로 나타납니다. 연기는 엔진이 하는 일에 따라 굵어지기도 합니다. 오래된 기계일수록 훨씬 많은 연기를 내며, 최신 기계는 심각한 고장이 없는 한 거의 연기를 내지 않습니다. 추운 날에는 연소로 생긴 수분도 응결해 짧은 흰색 줄기가 되며, 1~2미터 안에 증발합니다. 이는 정상적인 엔진에서도 나타납니다."/>
         <text name="rms_batteryCapacity_label" text="배터리 용량"/>
         <text name="rms_batteryCapacity_tooltip" text="최대 사용 가능한 배터리 용량을 조정합니다. 150 Ah에 가까운 값이 현실적이지만, 이 수준에서는 배터리 방전 문제를 거의 겪지 않을 수 있습니다."/>
         <text name="rms_option_off" text="꺼짐"/>

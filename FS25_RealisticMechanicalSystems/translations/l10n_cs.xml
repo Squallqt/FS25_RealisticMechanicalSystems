@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="老化磨损"/>
         <text name="rms_generalWearEnabled_tooltip" text="随着载具磨损，发动机功率、液压速度和制动效率等各系统的主要特性会受到轻微影响。该影响会在载具寿命的前三分之一结束后出现，在三分之二之后才会变得明显，并在机器接近寿命终点时继续加剧。"/>
         <text name="rms_exhaustSmokeEnabled_label" text="排气烟雾"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="根据发动机的实际状态控制排气烟雾。燃油量超过可用空气量时会冒黑烟，例如突然加速、发动机低转速重负荷运转、长时间低负荷怠速、空气滤清器堵塞或喷油系统磨损。磨损的发动机燃烧机油时会冒蓝烟，燃油未充分燃烧时会冒白烟。烟雾还会随发动机负荷增大。旧机器的烟雾远多于现代机器；现代机器只有在发生严重故障时才会明显冒烟。"/>
-        <text name="rms_exhaustSmokeDetail_label" text="烟雾细节（此电脑）"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="设置仅在本机绘制的排气烟雾量，不影响其他玩家。降低此设置会移除烟雾外层，减轻性能较低显卡的负担。此设置只能减少服务器允许的烟雾量。"/>
-        <text name="rms_exhaustSmokeDetail_full" text="完整"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="较少"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="最低"/>
-        <text name="rms_exhaustSmokeDetail_none" text="无"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="根据发动机的实际状态控制排气烟雾。燃油量超过可用空气量时会冒黑烟，例如突然加速、发动机低转速重负荷运转、长时间低负荷怠速、空气滤清器堵塞或喷油系统磨损。磨损的发动机燃烧机油时会冒蓝烟，燃油未充分燃烧时会冒白烟。烟雾还会随发动机负荷增大。旧机器的烟雾远多于现代机器；现代机器只有在发生严重故障时才会明显冒烟。在寒冷空气中，燃烧产生的水分也会凝结成一小段白色尾迹，并在一两米内蒸发，即使发动机完好也会出现。"/>
         <text name="rms_batteryCapacity_label" text="蓄电池容量"/>
         <text name="rms_batteryCapacity_tooltip" text="调整蓄电池实际可用的最大容量。接近150Ah的数值符合真实蓄电池，但使用这一容量时几乎不会遇到放电问题。"/>
         <text name="rms_option_off" text="关闭"/>

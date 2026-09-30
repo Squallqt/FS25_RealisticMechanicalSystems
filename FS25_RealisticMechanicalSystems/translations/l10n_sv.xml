@@ -68,13 +68,7 @@
         <text name="rms_generalWearEnabled_label" text="Åldersbetingat slitage"/>
         <text name="rms_generalWearEnabled_tooltip" text="Allteftersom fordonet slits får varje system små avdrag på sina viktigaste egenskaper, som motoreffekt, hydraulikhastighet eller bromsverkan. Effekten sätter in efter den första tredjedelen av livslängden, blir riktigt märkbar först efter två tredjedelar och förstärks ju närmare maskinen kommer slutet av sin livslängd."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Avgasrök"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Styr avgasröken efter motorns verkliga skick. Den är svart när det finns mer bränsle än luft: kraftig acceleration, en motor som drar på för lågt varvtal, längre tomgång med låg belastning, ett igensatt luftfilter eller sliten insprutning. Den är blå när en sliten motor bränner olja, och vit när bränsle slipper ut oförbränt. Rökplymen växer också med det arbete motorn utför. Äldre maskiner ryker långt mer än moderna, som knappt ryker alls så länge inget är allvarligt trasigt."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Detaljnivå för rökplymen (på den här datorn)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Bestämmer hur mycket av rökplymen som ritas på din egen dator, utan att ändra något för de andra spelarna. En lägre inställning tar bort rökens yttersta lager och avlastar ett blygsamt grafikkort. Den kan bara minska det servern tillåter."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Fullständig"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Minskad"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimal"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Ingen"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Styr avgasröken efter motorns verkliga skick. Den är svart när det finns mer bränsle än luft: kraftig acceleration, en motor som drar på för lågt varvtal, längre tomgång med låg belastning, ett igensatt luftfilter eller sliten insprutning. Den är blå när en sliten motor bränner olja, och vit när bränsle slipper ut oförbränt. Rökplymen växer också med det arbete motorn utför. Äldre maskiner ryker långt mer än moderna, som knappt ryker alls så länge inget är allvarligt trasigt. I kall luft kondenserar vattnet från förbränningen också till en kort vit strimma som avdunstar inom en meter eller två, även på en frisk motor."/>
         <text name="rms_batteryCapacity_label" text="Batterikapacitet"/>
         <text name="rms_batteryCapacity_tooltip" text="Justerar batteriets största användbara kapacitet. Ett värde runt 150 Ah motsvarar ett verkligt batteri, men på den nivån stöter du nästan aldrig på urladdningsproblem."/>
         <text name="rms_option_off" text="Av"/>

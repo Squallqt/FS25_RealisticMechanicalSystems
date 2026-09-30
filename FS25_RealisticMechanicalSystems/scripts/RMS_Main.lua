@@ -99,7 +99,6 @@ source(g_currentModDirectory .. "gui/RMS_MaintenanceThreeOptionsDialog.lua")
 source(g_currentModDirectory .. "gui/RMS_WelcomeDialog.lua")
 source(g_currentModDirectory .. "gui/RMS_SettingsPage.lua")
 source(g_currentModDirectory .. "scripts/RMS_Hud.lua")
-source(g_currentModDirectory .. "scripts/RMS_Telemetry.lua")
 source(g_currentModDirectory .. "scripts/RMS_PlayerInput.lua")
 source(g_currentModDirectory .. "events/RMS_VehicleChangeStatusEvent.lua")
 source(g_currentModDirectory .. "events/RMS_WorkshopChangeStatusEvent.lua")
@@ -913,7 +912,6 @@ function RMS_Main:loadMap()
     self.shopMenuPageInstalled = false
     RMS_Config.resetTutorialStateSession()
     RMS_Config.loadFromXMLFile()
-    RMS_Config.loadLocalSettings()
     self:tryRegisterShopMenuPage()
 
     if g_currentMission:getIsServer() then

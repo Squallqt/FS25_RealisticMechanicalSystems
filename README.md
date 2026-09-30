@@ -71,7 +71,9 @@ The exhaust plume is a real diagnostic channel, not decoration. Its colour comes
 
 Production year matters as much as condition. With the same fault, an older machine always smokes more, and a recent one running AdBlue shows almost nothing until something actually breaks. A cold start still shows on a recent machine, briefly, because high injection pressure and glow plugs improved far less than particulate control did.
 
-The plume is drawn as real smoke particles, layered from a tight jet at the pipe to a slow trail behind. A clean plume dissipates at once; a loaded one hangs and takes seconds to clear. It follows the gas the engine actually moves, so it swells under boost and shrinks when the engine is coasting. On a turbocharged machine, black smoke appears whenever the fuel outruns the air: for a moment on a hard pickup while the turbocharger spools up, and for as long as it lasts on an engine held at full load down at low revs. A naturally aspirated engine never shows either, since without boost its air flow follows the engine speed alone.
+The plume is drawn as real smoke puffs: each one leaves the pipe as a hot jet that slows, widens and thins as it mixes with the air, rises with the heat of the gas, then drifts with the wind and its eddies. A clean plume dissipates at once; a loaded one hangs and takes seconds to clear. It follows the gas the engine actually moves, from a few metres per second at idle to some thirty at full power: under load the plume shoots up before the wind bends it over and carries far more smoke downwind, while an idling engine lets it curl over at the pipe and fade within a metre or two. On a turbocharged machine, black smoke appears whenever the fuel outruns the air: for a moment on a hard pickup while the turbocharger spools up, and for as long as it lasts on an engine held at full load down at low revs. A naturally aspirated engine never shows either, since without boost its air flow follows the engine speed alone.
+
+Cold air adds a white trail that says nothing about the engine. Below about `8 °C`, the water the combustion produces condenses as the gas mixes with the air, more so in damp weather, and evaporates within a metre or two. Unlike unburnt fuel, it lasts as long as the air stays cold, even on a warm and healthy engine.
 
 Leaving a diesel idling also leaves its mark. Past a long idle under `30%` load, unburnt carbon builds up and darkens the plume. The deposit survives an engine stop and a save, then burns off only once the engine is warm and working under load.
 
@@ -153,7 +155,7 @@ Every brand carries two ratings based on its real-world reputation, both shown i
 
 Vehicles also age: production year drives thermostat behaviour, overheat protection, how much the machine smokes, and which breakdowns can occur at all.
 
-Two settings cover the exhaust. `Exhaust Smoke` turns the model on or off for the server. `Plume Detail` belongs to each player: it sets how many layers of smoke their own machine draws, down to none, and never affects anyone else. It can only reduce what the server allows. Turning the model off restores the vehicle's native exhaust.
+The `Exhaust Smoke` setting turns the model on or off for the server. Turning it off restores the vehicle's native exhaust.
 
 ## Buying Used
 
@@ -251,11 +253,10 @@ For testing and debugging. Most require you to be inside a vehicle that supports
 | `rms_setPlowMaxForce <kN>` | Sets max force on the selected or attached plow |
 | `rms_resetFactorStats` | Resets accumulated factor statistics |
 | `rms_toggleHudDebugView` | Switches the HUD debug view between normal and factor stats |
+| `rms_exhaustOverride <opacity\|-> [flow\|-] [vapour\|-]` | Forces the exhaust smoke drawn on this machine, `-` keeping the engine value and `off` handing it back |
 | `rms_setConfigVar <path> <value>` | Changes a value inside `RMS_Config` at runtime |
 | `rms_printSpecVar <path>` | Prints a value from `spec_RealisticMechanicalSystems` |
 | `rms_setSpecVar <path> <value>` | Changes a value inside `spec_RealisticMechanicalSystems` |
-| `rms_telemetryStart [scenario] [intervalMs]` | Starts CSV telemetry (`default`, `transmission`, `pto` or `exhaust`) |
-| `rms_telemetryStop` | Stops telemetry and closes the file |
 
 ### Valid system names for RMS console commands
 
@@ -299,6 +300,9 @@ rms_printSpecVar rawTransmissionTemperature
 - Removed the System Stress Rate setting and its console command
 - Removed the Passive Wear setting
 - Removed the Smoke Intensity setting
+- Removed the Plume Detail setting
+- Reworked the exhaust smoke into a realistic plume that rises higher under load and drifts with the wind
+- Added white exhaust vapour in cold and damp weather
 - Removed the Park Vehicle During Maintenance setting
 - Removed the Warranty setting; dealer warranty now covers standard OEM repairs and required fluids under 12 months and 20 hours
 - Removed the Procedure Duration Multiplier setting
