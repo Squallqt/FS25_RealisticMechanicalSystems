@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Prosedur"/>
         <text name="rms_ingame_menu_header_finish_time" text="Selesai"/>
         <text name="rms_ingame_menu_header_service_cost" text="Biaya"/>
-        <text name="rms_ingame_menu_header_reason" text="Alasan"/>
+        <text name="rms_ingame_menu_header_reason" text="Alasan Pengecualian"/>
         <text name="rms_ingame_menu_empty_other" text="Tidak ada kendaraan lain"/>
         <text name="rms_ingame_menu_empty_active" text="Tidak ada kendaraan RMS"/>
         <text name="rms_ingame_menu_empty_service" text="Tidak ada kendaraan dalam perawatan"/>

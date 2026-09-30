@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Úkon"/>
         <text name="rms_ingame_menu_header_finish_time" text="Dokončení"/>
         <text name="rms_ingame_menu_header_service_cost" text="Cena"/>
-        <text name="rms_ingame_menu_header_reason" text="Důvod"/>
+        <text name="rms_ingame_menu_header_reason" text="Důvod vyřazení"/>
         <text name="rms_ingame_menu_empty_other" text="Žádná další vozidla"/>
         <text name="rms_ingame_menu_empty_active" text="Žádná vozidla RMS"/>
         <text name="rms_ingame_menu_empty_service" text="Žádná vozidla v údržbě"/>

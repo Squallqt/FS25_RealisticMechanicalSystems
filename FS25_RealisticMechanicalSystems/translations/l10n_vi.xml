@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Quy trình"/>
         <text name="rms_ingame_menu_header_finish_time" text="Hoàn tất"/>
         <text name="rms_ingame_menu_header_service_cost" text="Chi phí"/>
-        <text name="rms_ingame_menu_header_reason" text="Lý do"/>
+        <text name="rms_ingame_menu_header_reason" text="Lý do loại trừ"/>
         <text name="rms_ingame_menu_empty_other" text="Không có xe nào khác"/>
         <text name="rms_ingame_menu_empty_active" text="Không có xe RMS"/>
         <text name="rms_ingame_menu_empty_service" text="Không có xe nào đang bảo dưỡng"/>

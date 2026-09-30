@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Åtgärd"/>
         <text name="rms_ingame_menu_header_finish_time" text="Slut"/>
         <text name="rms_ingame_menu_header_service_cost" text="Kostnad"/>
-        <text name="rms_ingame_menu_header_reason" text="Orsak"/>
+        <text name="rms_ingame_menu_header_reason" text="Orsak till undantag"/>
         <text name="rms_ingame_menu_empty_other" text="Inga övriga fordon"/>
         <text name="rms_ingame_menu_empty_active" text="Inga RMS-fordon"/>
         <text name="rms_ingame_menu_empty_service" text="Inga fordon under underhåll"/>

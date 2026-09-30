@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Procedure"/>
         <text name="rms_ingame_menu_header_finish_time" text="Slut"/>
         <text name="rms_ingame_menu_header_service_cost" text="Omkostning"/>
-        <text name="rms_ingame_menu_header_reason" text="Årsag"/>
+        <text name="rms_ingame_menu_header_reason" text="Årsag til udelukkelse"/>
         <text name="rms_ingame_menu_empty_other" text="Ingen andre køretøjer"/>
         <text name="rms_ingame_menu_empty_active" text="Ingen RMS-køretøjer"/>
         <text name="rms_ingame_menu_empty_service" text="Ingen køretøjer under vedligeholdelse"/>

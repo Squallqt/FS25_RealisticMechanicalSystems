@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Intervenție"/>
         <text name="rms_ingame_menu_header_finish_time" text="Încheiere"/>
         <text name="rms_ingame_menu_header_service_cost" text="Cost"/>
-        <text name="rms_ingame_menu_header_reason" text="Motiv"/>
+        <text name="rms_ingame_menu_header_reason" text="Motivul excluderii"/>
         <text name="rms_ingame_menu_empty_other" text="Niciun alt vehicul"/>
         <text name="rms_ingame_menu_empty_active" text="Niciun vehicul RMS"/>
         <text name="rms_ingame_menu_empty_service" text="Niciun vehicul în întreținere"/>

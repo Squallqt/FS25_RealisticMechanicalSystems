@@ -495,12 +495,14 @@ function RMS_WorkshopDialog:updateScreen()
     self.overhaulButton:setVisible(not isUnderService)
     self.refillButton:setVisible(not isUnderService)
     self.refillButton:setDisabled(self.vehicle.getMissingFluidShare ~= nil and self.vehicle:getMissingFluidShare() <= 0.001)
+    self.bodyworkButton:setVisible(not isUnderService)
     self.cancelServiceButtonSeparator:setVisible(isUnderService)
     self.inspectionButtonSeparator:setVisible(not isUnderService)
     self.maintenanceButtonSeparator:setVisible(not isUnderService)
     self.repairButtonSeparator:setVisible(not isUnderService)
     self.overhaulButtonSeparator:setVisible(not isUnderService)
     self.refillButtonSeparator:setVisible(not isUnderService)
+    self.bodyworkButtonSeparator:setVisible(not isUnderService)
     self:updateInterventionPanels(statusText, isWorkshopTypeOpen, isUnderService)
 
     local repairPrice = RMS_FluidWorkshop.getTransactionPrice(
@@ -530,8 +532,10 @@ function RMS_WorkshopDialog:updateScreen()
         button:setDisabled(buttonsDisabled)
     end
     self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.REPAIR]:setDisabled(buttonsDisabled or selectedRepairCount == 0)
-    self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.BODYWORK]:setDisabled(
-        buttonsDisabled or self.workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE)
+    -- the mobile workshop cannot repaint, so the card and the bottom bar close together
+    local isBodyworkDisabled = buttonsDisabled or self.workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE
+    self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.BODYWORK]:setDisabled(isBodyworkDisabled)
+    self.bodyworkButton:setDisabled(isBodyworkDisabled)
     self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.OVERHAUL]:setDisabled(
         buttonsDisabled or not hasSystemEligibleForOverhaul)
     self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.BODYWORK]:setSelected(

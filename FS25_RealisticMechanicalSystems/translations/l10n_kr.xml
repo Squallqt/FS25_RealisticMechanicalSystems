@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="작업"/>
         <text name="rms_ingame_menu_header_finish_time" text="완료 시각"/>
         <text name="rms_ingame_menu_header_service_cost" text="비용"/>
-        <text name="rms_ingame_menu_header_reason" text="사유"/>
+        <text name="rms_ingame_menu_header_reason" text="제외 사유"/>
         <text name="rms_ingame_menu_empty_other" text="다른 차량이 없습니다"/>
         <text name="rms_ingame_menu_empty_active" text="RMS 차량이 없습니다"/>
         <text name="rms_ingame_menu_empty_service" text="현재 정비 중인 차량이 없습니다"/>

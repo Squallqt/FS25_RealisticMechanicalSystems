@@ -603,6 +603,28 @@ function RMS_Main.addShopMenuPage(frame, pageName, uvs, predicateFunc, insertAft
     g_shopMenu:rebuildTabList()
 end
 
+---Clones the last menu button until the menu holds enough of them, the vanilla shop menu declaring only six
+-- @param table menu tabbed menu
+-- @param integer count buttons needed
+function RMS_Main.ensureMenuButtonCount(menu, count)
+    if menu.menuButton == nil or menu.buttonsPanel == nil then
+        return
+    end
+
+    local template = menu.menuButton[#menu.menuButton]
+    if template == nil then
+        return
+    end
+
+    while #menu.menuButton < count do
+        local button = template:clone(menu.buttonsPanel, false, true)
+        button:setVisible(false)
+        table.insert(menu.menuButton, button)
+    end
+
+    menu.buttonsPanel:invalidateLayout()
+end
+
 ---Registers the RMS shop page once the shop menu exists
 function RMS_Main:tryRegisterShopMenuPage()
     if self.shopMenuPageInstalled then
@@ -622,6 +644,7 @@ function RMS_Main:tryRegisterShopMenuPage()
     RMS_Main.addShopMenuPage(frame, RMS_InGameMenuFrame.PAGE_NAME, {0, 0, 1024, 1024}, function()
         return true
     end, "pageUsedSale")
+    RMS_Main.ensureMenuButtonCount(g_shopMenu, RMS_InGameMenuFrame.MENU_BUTTON_COUNT)
     frame:initialize()
 
     self.shopMenuPageInstalled = true

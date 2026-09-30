@@ -7,6 +7,8 @@ RMS_InGameMenuFrame.MOD_DIR = g_currentModDirectory
 RMS_InGameMenuFrame.PAGE_NAME = "pageRMSFleet"
 RMS_InGameMenuFrame.REFRESH_INTERVAL_MS = 1000
 RMS_InGameMenuFrame.SCREEN_EDGE_SLIDER_MARGIN_X = 0
+-- the page shows up to seven menu buttons, the exclusion one included
+RMS_InGameMenuFrame.MENU_BUTTON_COUNT = 7
 -- sidebar tabs, in display order
 RMS_InGameMenuFrame.SUB_CATEGORY = {
     ACTIVE = 1,

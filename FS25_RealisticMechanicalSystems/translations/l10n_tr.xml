@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="İşlem"/>
         <text name="rms_ingame_menu_header_finish_time" text="Bitiş Saati"/>
         <text name="rms_ingame_menu_header_service_cost" text="Maliyet"/>
-        <text name="rms_ingame_menu_header_reason" text="Neden"/>
+        <text name="rms_ingame_menu_header_reason" text="Hariç Tutulma Nedeni"/>
         <text name="rms_ingame_menu_empty_other" text="RMS olmayan araç mevcut değil"/>
         <text name="rms_ingame_menu_empty_active" text="Mevcut RMS aracı yok"/>
         <text name="rms_ingame_menu_empty_service" text="Bakımda araç yok"/>

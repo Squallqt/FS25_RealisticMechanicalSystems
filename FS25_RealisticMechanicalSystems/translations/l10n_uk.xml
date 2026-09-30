@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Робота"/>
         <text name="rms_ingame_menu_header_finish_time" text="Час завершення"/>
         <text name="rms_ingame_menu_header_service_cost" text="Вартість"/>
-        <text name="rms_ingame_menu_header_reason" text="Причина"/>
+        <text name="rms_ingame_menu_header_reason" text="Причина вилучення"/>
         <text name="rms_ingame_menu_empty_other" text="Техніки без підтримки RMS не знайдено"/>
         <text name="rms_ingame_menu_empty_active" text="Техніки RMS не знайдено"/>
         <text name="rms_ingame_menu_empty_service" text="Зараз немає техніки на обслуговуванні"/>

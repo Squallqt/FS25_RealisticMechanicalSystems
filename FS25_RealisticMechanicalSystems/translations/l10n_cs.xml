@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="作业"/>
         <text name="rms_ingame_menu_header_finish_time" text="完成时间"/>
         <text name="rms_ingame_menu_header_service_cost" text="费用"/>
-        <text name="rms_ingame_menu_header_reason" text="原因"/>
+        <text name="rms_ingame_menu_header_reason" text="排除原因"/>
         <text name="rms_ingame_menu_empty_other" text="没有其他载具"/>
         <text name="rms_ingame_menu_empty_active" text="没有RMS载具"/>
         <text name="rms_ingame_menu_empty_service" text="没有正在保养的载具"/>

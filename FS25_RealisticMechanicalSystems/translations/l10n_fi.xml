@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Toimenpide"/>
         <text name="rms_ingame_menu_header_finish_time" text="Valmistumisaika"/>
         <text name="rms_ingame_menu_header_service_cost" text="Kustannus"/>
-        <text name="rms_ingame_menu_header_reason" text="Syy"/>
+        <text name="rms_ingame_menu_header_reason" text="Poisjättämisen syy"/>
         <text name="rms_ingame_menu_empty_other" text="Ei RMS-järjestelmän ulkopuolisia ajoneuvoja saatavilla"/>
         <text name="rms_ingame_menu_empty_active" text="Ei RMS-ajoneuvoja saatavilla"/>
         <text name="rms_ingame_menu_empty_service" text="Yhtään ajoneuvoa ei ole tällä hetkellä huollossa"/>

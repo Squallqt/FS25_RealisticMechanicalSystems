@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Procedimiento"/>
         <text name="rms_ingame_menu_header_finish_time" text="Fin"/>
         <text name="rms_ingame_menu_header_service_cost" text="Costo"/>
-        <text name="rms_ingame_menu_header_reason" text="Motivo"/>
+        <text name="rms_ingame_menu_header_reason" text="Motivo de exclusión"/>
         <text name="rms_ingame_menu_empty_other" text="No hay otros vehículos"/>
         <text name="rms_ingame_menu_empty_active" text="No hay vehículos RMS"/>
         <text name="rms_ingame_menu_empty_service" text="No hay vehículos en mantenimiento"/>

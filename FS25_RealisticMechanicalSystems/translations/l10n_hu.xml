@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Eljárás"/>
         <text name="rms_ingame_menu_header_finish_time" text="Befejezési idő"/>
         <text name="rms_ingame_menu_header_service_cost" text="Költség"/>
-        <text name="rms_ingame_menu_header_reason" text="Indok"/>
+        <text name="rms_ingame_menu_header_reason" text="Kizárás oka"/>
         <text name="rms_ingame_menu_empty_other" text="Nincs más jármű"/>
         <text name="rms_ingame_menu_empty_active" text="Nincs RMS-jármű"/>
         <text name="rms_ingame_menu_empty_service" text="Nincs karbantartás alatt álló jármű"/>

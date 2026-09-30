@@ -809,7 +809,7 @@
         <text name="rms_ingame_menu_header_procedure" text="Работа"/>
         <text name="rms_ingame_menu_header_finish_time" text="Готово"/>
         <text name="rms_ingame_menu_header_service_cost" text="Стоимость"/>
-        <text name="rms_ingame_menu_header_reason" text="Причина"/>
+        <text name="rms_ingame_menu_header_reason" text="Причина исключения"/>
         <text name="rms_ingame_menu_empty_other" text="Техника без RMS отсутствует"/>
         <text name="rms_ingame_menu_empty_active" text="У вас нет техники RMS"/>
         <text name="rms_ingame_menu_empty_service" text="Нет техники на техобслуживании"/>
