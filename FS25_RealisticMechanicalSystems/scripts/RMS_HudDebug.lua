@@ -883,7 +883,7 @@ function RMS_Hud:drawActiveVehicleHUD()
     local ptoMaxFactor = math.max(
         ptoDbg.expiredServiceFactor or 0,
         ptoDbg.ptoLoadFactor or 0,
-        ptoDbg.ptoEngagementFactor or 0
+        ptoDbg.ptoRaisedFactor or 0
     ) * bcw
     local factorStats = {}
     for rawSystemKey, rawStats in pairs(factorStatsSource) do
@@ -1123,14 +1123,15 @@ function RMS_Hud:drawActiveVehicleHUD()
                 ptoDbg.ptoUtilization or 0
             )
         },
+        { shortName = "prf", statKey = "prf", value = ptoDbg.ptoRaisedFactor or 0 },
         {
             shortName = "pef",
             statKey = "pef",
-            value = ptoDbg.ptoEngagementFactor or 0,
+            value = ptoDbg.ptoEngagementDamage or 0,
             extraInfo = string.format(
-                "cycles: %d pulse: %.0f",
+                "cycles: %d dmg: %.4f",
                 ptoDbg.ptoEngagementCount or 0,
-                ptoDbg.ptoEngagementFactor or 0
+                ptoDbg.ptoEngagementDamage or 0
             )
         }
     })
@@ -1817,7 +1818,9 @@ function RMS_Hud:drawFactorStatsVehicleHUD(vehicle, spec, debugData, factorStats
         elseif debugKey == "ptoLoadFactor" then
             return string.format("power %.1fkW | utilization %.3f | rpm %.0f", tonumber(dbg.ptoPower) or 0, tonumber(dbg.ptoUtilization) or 0, tonumber(dbg.ptoRpm) or 0)
         elseif debugKey == "ptoEngagementFactor" then
-            return string.format("cycles %d | current pulse %.0f", tonumber(dbg.ptoEngagementCount) or 0, tonumber(dbg.ptoEngagementFactor) or 0)
+            return string.format("cycles %d | last damage %.4f", tonumber(dbg.ptoEngagementCount) or 0, tonumber(dbg.ptoEngagementDamage) or 0)
+        elseif debugKey == "ptoRaisedFactor" then
+            return string.format("raised %s", tostring(dbg.ptoRaisedFactor ~= nil and dbg.ptoRaisedFactor > 0))
         elseif debugKey == "airFilterCloggingFactor" then
             if dbg.airFilterClogging ~= nil then
                 return string.format("clog %.1f%%", (tonumber(dbg.airFilterClogging) or 0) * 100)

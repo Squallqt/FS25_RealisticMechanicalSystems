@@ -109,9 +109,22 @@ RMS_Config = {
 
         PTO_FACTOR_DATA = {
             SERVICE_EXPIRED_MULTIPLIER = 4.0,
-            LOAD_FACTOR_THRESHOLD = 0.55,
+            -- share of the torque the engine can pass to the PTO a sustained load starts to strain the driveline at
+            LOAD_FACTOR_THRESHOLD = 0.40,
             LOAD_FACTOR_FULL_EFFECT = 0.90,
-            LOAD_FACTOR_MULTIPLIER = 6.0
+            LOAD_FACTOR_MULTIPLIER = 6.0,
+            -- past that capacity the engine bogs and the driveline takes the torque peaks
+            OVERLOAD_FACTOR_FULL_EFFECT = 1.20,
+            OVERLOAD_FACTOR_MULTIPLIER = 12.0,
+            -- a liftable implement turning while raised drives the cardan joints at a steep angle
+            RAISED_IMPLEMENT_MULTIPLIER = 4.0,
+            -- condition every engagement takes from the clutch pack
+            ENGAGEMENT_CLUTCH_DAMAGE = 0.0002,
+            -- engaging above idle shocks the driveline: share of the idle to max rpm range it starts at,
+            -- condition taken at full engine speed by an implement sized to the engine, and the smallest size counted
+            ENGAGEMENT_SHOCK_RPM_THRESHOLD = 0.25,
+            ENGAGEMENT_SHOCK_DAMAGE = 0.005,
+            ENGAGEMENT_SHOCK_MIN_SIZE = 0.25
         },
 
         COOLING_FACTOR_DATA = {

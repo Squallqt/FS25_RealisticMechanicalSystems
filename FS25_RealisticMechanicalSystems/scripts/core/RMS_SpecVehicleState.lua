@@ -1148,6 +1148,7 @@ local function updatePtoState(vehicle, dt)
         spec.ptoUtilization = 0
         spec.ptoMotorSideTorque = 0
         spec.ptoNativeCapacityTorque = 0
+        spec.isPtoImplementRaised = false
         if type(spec.ptoPreviousActiveLinks) ~= "table" or next(spec.ptoPreviousActiveLinks) ~= nil then
             spec.ptoPreviousActiveLinks = {}
         end
@@ -1168,9 +1169,14 @@ local function updatePtoState(vehicle, dt)
     if newEngagementCount > 0 then
         spec.ptoEngagementCount = (tonumber(spec.ptoEngagementCount) or 0) + newEngagementCount
         spec.ptoEngagementSequence = (tonumber(spec.ptoEngagementSequence) or 0) + newEngagementCount
-        spec.ptoEngagementPulseCount = (tonumber(spec.ptoEngagementPulseCount) or 0) + newEngagementCount
+        spec.ptoEngagementDamage = (tonumber(spec.ptoEngagementDamage) or 0)
+            + RMS_Utils.getPtoEngagementDamage(vehicle, ptoData.engagementTorques, previousActiveLinks, spec.ptoLastRpmShare)
     end
     spec.ptoPreviousActiveLinks = ptoData.activeLinks
+    spec.isPtoImplementRaised = ptoData.isRaised
+
+    -- an engagement is judged on the engine speed of the sample before it, ahead of the game revving up for the PTO
+    spec.ptoLastRpmShare = RMS_Utils.getMotorRpmShareAboveIdle(vehicle)
 end
 
 ---Refreshes the vehicle state on the server, each group on its own configured interval

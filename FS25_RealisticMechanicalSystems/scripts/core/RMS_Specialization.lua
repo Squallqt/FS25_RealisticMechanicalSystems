@@ -320,7 +320,8 @@ RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
     lubricationFactor = "lubf",
     instantDamageFactor = "idfg",
     ptoLoadFactor = "plf",
-    ptoEngagementFactor = "pef"
+    ptoEngagementFactor = "pef",
+    ptoRaisedFactor = "prf"
 }
 
 RealisticMechanicalSystems.FACTOR_STATS_KEYS = {}

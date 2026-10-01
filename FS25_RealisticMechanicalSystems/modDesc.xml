@@ -97,6 +97,7 @@ Changelog 0.11.0.0:
 - Fixed AI workers, Courseplay and AutoDrive stopping in the field under a heavy load, even without overheating
 - Reworked the AI worker's driving: it slows down while the machine is overloaded, never below 5 km/h, and picks its pace back up once the load eases
 - Fixed the player's cruise control speed being replaced by the machine's top speed after an AI worker's job
+- Reworked PTO wear: engaging it at high engine speed, engaging it often, running it with the implement raised and overloading it now strain it
 
 Changelog 0.10.0.0:
 - Renamed this independent fork to Realistic Mechanical Systems; existing Advanced Damage System saves and settings are migrated automatically
@@ -207,6 +208,7 @@ Changelog 0.11.0.0:
 - Stehenbleiben von KI-Helfern, Courseplay und AutoDrive auf dem Feld unter hoher Last, auch ohne Überhitzung, behoben
 - Fahrweise des KI-Helfers überarbeitet: Er fährt langsamer, solange die Maschine überlastet ist, nie unter 5 km/h, und nimmt wieder Tempo auf, sobald die Last nachlässt
 - Tempomatgeschwindigkeit des Spielers, die nach einem Auftrag des KI-Helfers durch die Höchstgeschwindigkeit der Maschine ersetzt wurde, behoben
+- Zapfwellenverschleiß überarbeitet: Einkuppeln bei hoher Drehzahl, häufiges Einkuppeln, Betrieb mit ausgehobenem Gerät und Überlastung beanspruchen sie jetzt
 
 Changelog 0.10.0.0:
 - Diesen unabhängigen Fork in Realistic Mechanical Systems umbenannt; vorhandene Spielstände und Einstellungen von Advanced Damage System werden automatisch übernommen
@@ -319,6 +321,7 @@ Changelog 0.11.0.0 :
 - Correction des ouvriers IA, de Courseplay et d’AutoDrive qui s’arrêtaient dans le champ sous forte charge, même sans surchauffe
 - Refonte de la conduite de l’ouvrier IA : il ralentit tant que la machine est en surcharge, sans descendre sous 5 km/h, et reprend son allure dès que la charge baisse
 - Correction de la vitesse du régulateur du joueur, remplacée par la vitesse maximale de la machine après le travail d’un ouvrier IA
+- Refonte de l’usure de la prise de force : l’embrayer à haut régime, l’embrayer souvent, la faire tourner outil relevé ou la surcharger la sollicite désormais
 
 Changelog 0.10.0.0 :
 - Renommage de ce fork indépendant en Realistic Mechanical Systems, avec migration automatique des sauvegardes et réglages Advanced Damage System existants
