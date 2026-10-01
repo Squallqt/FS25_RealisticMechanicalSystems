@@ -13,7 +13,7 @@
             <Animation profile="fs25_dialogLoading" id="iconLoadingElement" visible="false" />
             <GuiElement profile="rms_workshopHeaderPanel">
                 <Bitmap profile="fs25_menuHeaderIconBg">
-                    <Bitmap profile="fs25_menuHeaderIcon" imageSliceId="gui.icon_vehicleDealer_machines" />
+                    <Bitmap profile="rms_menuHeaderIcon" />
                 </Bitmap>
                 <Text profile="fs25_menuHeaderTitle" text="$l10n_rms_ws_header_title" />
                 <RoundCorner profile="fs25_shopMoneyBoxBg" id="moneyBoxBg" />
@@ -217,6 +217,18 @@
         </GuiElement>
 
         <BoxLayout profile="fs25_dialogButtonBox">
+            <Button profile="buttonMenuPrev" text="$l10n_rms_ws_action_inspection" onClick="onClickConfigureInspection" id="shortcutButtons[1]" />
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
+            <Button profile="buttonMenuNext" text="$l10n_rms_ws_action_maintenance" onClick="onClickConfigureMaintenance" id="shortcutButtons[2]" />
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
+            <Button profile="buttonOK" inputAction="MENU_EXTRA_2" text="$l10n_rms_ws_action_repair" onClick="onClickConfigureRepair" id="shortcutButtons[3]" />
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
+            <Button profile="buttonOK" text="$l10n_rms_ws_action_overhaul" onClick="onClickConfigureOverhaul" id="shortcutButtons[4]" />
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
+            <Button profile="buttonActivate" text="$l10n_rms_ws_action_refill" onClick="onClickConfigureRefill" id="shortcutButtons[5]" />
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
+            <Button profile="buttonExtra1" text="$l10n_button_repaint" onClick="onClickConfigureBodywork" id="shortcutButtons[6]" />
+            <Bitmap profile="fs25_dialogButtonBoxSeparator" />
             <Button profile="buttonBack" text="$l10n_button_back" onClick="onClickBack" />
         </BoxLayout>
     </GuiElement>

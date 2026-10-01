@@ -315,9 +315,11 @@ function RMS_Preheat.shouldBlockMotorRun(vehicle, canMotorRunFunc)
         return false
     end
 
+    -- the key only turns the vehicle the local player drives, as the game reads it, while this runs for any vehicle
     local ignitionStartRequested = g_ignitionLockManager ~= nil
         and g_ignitionLockManager:getIsAvailable()
         and g_ignitionLockManager:getState() == IgnitionLockState.START
+        and vehicle:getIsActiveForInput(true)
 
     if ignitionStartRequested then
         RMS_Preheat.requestStart(vehicle, canMotorRunFunc)

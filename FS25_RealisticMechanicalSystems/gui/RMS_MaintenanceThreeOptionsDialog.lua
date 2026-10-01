@@ -360,6 +360,10 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
     end
     self.configChoiceButtons[4]:setDisabled(#RMS_Utils.getEligibleOverhaulSystems(self.vehicle) == 0)
     self.configChoiceButtons[6]:setDisabled(workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE)
+    -- the bottom bar carries the workshop shortcuts and closes with the list beside it
+    for index, button in ipairs(self.shortcutButtons) do
+        button:setDisabled(self.configChoiceButtons[index]:getIsDisabled())
+    end
 
     -- title
     self.recapType:setText(g_i18n:getText(isRefill and "rms_fluid_refill_work_order" or self.maintenanceType))
