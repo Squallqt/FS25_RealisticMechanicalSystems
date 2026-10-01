@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Le frein de parking est serré. C'est vous qui le serrez et le desserrez avec sa touche : si vous accélérez frein serré, la machine ne bouge pas et vous avertit.&#10;&#10;En pente, c'est lui qui empêche la machine de partir toute seule."/>
         <text name="rms_tutorial_preheat_title" text="Préchauffage diesel"/>
         <text name="rms_tutorial_preheat_message" text="Sur un moteur diesel froid, une impulsion sur la commande de démarrage met le contact et lance automatiquement le cycle de préchauffage. Les voyants du tableau de bord s'allument brièvement, puis le voyant de préchauffage reste allumé jusqu'à ce que le moteur soit prêt. Ne répétez pas la commande : le démarreur s'engage automatiquement lorsque le voyant s'éteint."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Cycles d'engagement de la PDF"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Engager et couper la PDF à répétition accumule des cycles mécaniques. Évitez les engagements inutiles."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Embrayage de la PDF"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Embrayez la PDF au ralenti, puis montez le régime : l'embrayer à haut régime donne un à-coup à toute la transmission, d'autant plus avec un outil lourd. Chaque embrayage use aussi son embrayage."/>
+        <text name="rms_tutorial_pto_raised_title" text="PDF et outil relevé"/>
+        <text name="rms_tutorial_pto_raised_message" text="Faire tourner la PDF outil relevé fait travailler les cardans sous un angle prononcé et les use vite. Coupez la PDF avant de relever l'outil pour le transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralenti et immobilisation"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="L'usure est bien plus faible lorsque la machine tourne sans travailler. Moteur coupé, elle devient minime. Sous abri, elle disparaît complètement."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralenti prolongé"/>

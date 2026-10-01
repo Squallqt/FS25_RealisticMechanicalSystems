@@ -320,7 +320,8 @@ RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
     lubricationFactor = "lubf",
     instantDamageFactor = "idfg",
     ptoLoadFactor = "plf",
-    ptoEngagementFactor = "pef"
+    ptoEngagementFactor = "pef",
+    ptoRaisedFactor = "prf"
 }
 
 RealisticMechanicalSystems.FACTOR_STATS_KEYS = {}
@@ -1017,6 +1018,8 @@ local function markWearDirty(vehicle, spec)
        syncFloatChanged(spec._lastSyncWear_coolantServiceLevel, spec.coolantServiceLevel, 0.001) or
        syncFloatChanged(spec._lastSyncWear_conditionLevel, spec.conditionLevel, 0.001) or
        spec._lastSyncWear_ptoEngagementSequence ~= spec.ptoEngagementSequence or
+       spec._lastSyncWear_ptoShockSequence ~= spec.ptoShockSequence or
+       spec._lastSyncWear_ptoRaisedTooLong ~= spec.ptoRaisedTooLong or
        getSystemsSyncChanged(spec) then
             RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.WEAR)
             spec._lastSyncWear_serviceLevel = spec.serviceLevel
@@ -1024,6 +1027,8 @@ local function markWearDirty(vehicle, spec)
             spec._lastSyncWear_coolantServiceLevel = spec.coolantServiceLevel
             spec._lastSyncWear_conditionLevel = spec.conditionLevel
             spec._lastSyncWear_ptoEngagementSequence = spec.ptoEngagementSequence
+            spec._lastSyncWear_ptoShockSequence = spec.ptoShockSequence
+            spec._lastSyncWear_ptoRaisedTooLong = spec.ptoRaisedTooLong
             captureSystemsSync(spec)
             return true
     end

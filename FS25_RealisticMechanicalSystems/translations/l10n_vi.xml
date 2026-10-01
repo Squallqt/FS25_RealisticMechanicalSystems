@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Phanh đỗ đã được kéo. Bạn tự kéo và nhả phanh bằng phím riêng: nếu nhấn ga khi vẫn kéo phanh, máy sẽ đứng yên và phát cảnh báo.&#10;&#10;Trên dốc, phanh này ngăn máy tự trôi."/>
         <text name="rms_tutorial_preheat_title" text="Sấy nóng động cơ diesel"/>
         <text name="rms_tutorial_preheat_message" text="Trên động cơ diesel nguội, nhấn lệnh khởi động một lần sẽ bật khóa điện và tự động bắt đầu chu trình sấy nóng. Các đèn trên bảng điều khiển sáng trong chốc lát, sau đó đèn sấy tiếp tục sáng cho đến khi động cơ sẵn sàng. Không lặp lại lệnh: bộ đề tự động hoạt động khi đèn tắt."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Chu kỳ gài PTO"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Việc gài và ngắt PTO lặp đi lặp lại làm tích lũy các chu kỳ cơ học. Hãy tránh những lần gài không cần thiết."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Gài PTO"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Hãy gài PTO ở chế độ không tải rồi mới tăng vòng tua: gài ở vòng tua cao gây va đập cho toàn bộ hệ truyền động, càng mạnh khi nông cụ càng nặng. Mỗi lần gài cũng làm mòn ly hợp của nó."/>
+        <text name="rms_tutorial_pto_raised_title" text="PTO và nông cụ đang nâng"/>
+        <text name="rms_tutorial_pto_raised_message" text="Chạy PTO khi nông cụ đang nâng khiến các khớp các-đăng làm việc ở góc lớn và mòn nhanh. Hãy tắt PTO trước khi nâng nông cụ để vận chuyển."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Chạy không tải và ngừng hoạt động"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Hao mòn thấp hơn nhiều khi máy chạy mà không làm việc. Khi tắt động cơ, hao mòn trở nên tối thiểu. Khi được cất dưới mái che, hao mòn biến mất hoàn toàn."/>
         <text name="rms_tutorial_idle_deposit_title" text="Chạy không tải kéo dài"/>

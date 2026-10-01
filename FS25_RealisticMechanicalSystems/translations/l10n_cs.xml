@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="驻车制动已经启用。需要使用专用按键自行启用和解除：制动启用时踩下油门，机器不会移动并会发出警告。&#10;&#10;在坡道上，驻车制动可以防止机器自行滑动。"/>
         <text name="rms_tutorial_preheat_title" text="柴油机预热"/>
         <text name="rms_tutorial_preheat_message" text="柴油发动机处于冷机状态时，按一次启动控制即可打开点火开关，并自动开始预热塞循环。仪表板指示灯会短暂亮起，随后预热灯保持点亮，直到发动机准备就绪。不要重复操作：预热灯熄灭后，启动机会自动接合。"/>
-        <text name="rms_tutorial_pto_engagement_title" text="动力输出轴接合循环"/>
-        <text name="rms_tutorial_pto_engagement_message" text="反复接合和断开动力输出轴会积累机械循环。请避免不必要的接合。"/>
+        <text name="rms_tutorial_pto_engagement_title" text="动力输出轴接合"/>
+        <text name="rms_tutorial_pto_engagement_message" text="请在怠速时接合动力输出轴，然后再提高转速：高转速接合会冲击整个传动系统，机具越重冲击越大。每次接合也会磨损其离合器。"/>
+        <text name="rms_tutorial_pto_raised_title" text="动力输出轴与升起的机具"/>
+        <text name="rms_tutorial_pto_raised_message" text="机具升起时运转动力输出轴，会让万向节以很大的角度工作并迅速磨损。在为运输升起机具之前，请先关闭动力输出轴。"/>
         <text name="rms_tutorial_idle_and_downtime_title" text="怠速与停用"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="机器运行但不作业时，磨损会低得多。发动机关闭后，磨损降至最低；存放在遮蔽物下时，磨损会完全停止。"/>
         <text name="rms_tutorial_idle_deposit_title" text="长时间怠速"/>

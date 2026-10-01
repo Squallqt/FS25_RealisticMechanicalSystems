@@ -285,7 +285,60 @@ function RMS_Utils.calculatePtoLoadFactor(utilization, config)
     local multiplier = math.max(tonumber(config.LOAD_FACTOR_MULTIPLIER) or 0, 0)
     local fullEffect = math.max(tonumber(config.LOAD_FACTOR_FULL_EFFECT) or 1, threshold + 0.0001)
     local factor = RMS_Utils.calculateQuadraticMultiplier(load, threshold, false, fullEffect) * multiplier
-    return math.min(factor, multiplier)
+    factor = math.min(factor, multiplier)
+
+    -- past the capacity of the engine the overload climbs straight away instead of easing in
+    if load > fullEffect then
+        local overloadMultiplier = math.max(tonumber(config.OVERLOAD_FACTOR_MULTIPLIER) or 0, 0)
+        local overloadFullEffect = math.max(tonumber(config.OVERLOAD_FACTOR_FULL_EFFECT) or 1, fullEffect + 0.0001)
+        factor = factor + math.min((load - fullEffect) / (overloadFullEffect - fullEffect), 1) * overloadMultiplier
+    end
+
+    return factor
+end
+
+---Returns the engine speed as a share of its range from idle to maximum
+-- @param table? vehicle vehicle
+-- @return float share 0 at idle or with the engine off, 1 at maximum rpm
+function RMS_Utils.getMotorRpmShareAboveIdle(vehicle)
+    local motor = vehicle ~= nil and vehicle.getMotor ~= nil and vehicle:getMotor() or nil
+    if motor == nil or vehicle.getIsMotorStarted == nil or not vehicle:getIsMotorStarted() then
+        return 0
+    end
+
+    local minRpm = tonumber(motor.minRpm) or 0
+    local maxRpm = tonumber(motor.maxRpm) or 0
+    if maxRpm <= minRpm then
+        return 0
+    end
+
+    return math.clamp(((tonumber(motor:getLastModulatedMotorRpm()) or 0) - minRpm) / (maxRpm - minRpm), 0, 1)
+end
+
+---Returns the condition new engagements take from the PTO: the clutch pack of each one, and a shock growing
+-- with the engine speed it was engaged at and the size of the implement it set turning
+-- @param table? vehicle vehicle
+-- @param table? engagementTorques rated torque of each engaged implement that wears the clutch
+-- @param table? previousActiveLinks links active on the previous sample
+-- @param float? rpmShare engine speed share above idle on the previous sample
+-- @return float damage condition removed
+-- @return boolean isShock true when one of them was engaged above idle
+function RMS_Utils.getPtoEngagementDamage(vehicle, engagementTorques, previousActiveLinks, rpmShare)
+    local config = RMS_Config.CORE.PTO_FACTOR_DATA
+    local rpmFactor = RMS_Utils.calculateQuadraticMultiplier(math.clamp(tonumber(rpmShare) or 0, 0, 1),
+        config.ENGAGEMENT_SHOCK_RPM_THRESHOLD, false)
+    local damage = 0
+    local isShock = false
+
+    for consumer, ratedTorque in pairs(engagementTorques or {}) do
+        if previousActiveLinks == nil or previousActiveLinks[consumer] ~= true then
+            local size = math.clamp(RMS_Utils.getPtoNativeCapacityData(vehicle, ratedTorque), config.ENGAGEMENT_SHOCK_MIN_SIZE, 1)
+            damage = damage + config.ENGAGEMENT_CLUTCH_DAMAGE + config.ENGAGEMENT_SHOCK_DAMAGE * rpmFactor * size
+            isShock = isShock or rpmFactor > 0
+        end
+    end
+
+    return damage, isShock
 end
 
 ---Counts the PTO links that became active since the previous frame
@@ -347,6 +400,19 @@ local function collectConnectedPtoData(vehicleObj, data, visited)
                 end
                 if isEngaged then
                     data.activeLinks[consumer] = true
+
+                    -- the game turns a sprayer on to open its sections and lets it work at any height, while in
+                    -- reality its pump keeps the PTO turning: neither its switching nor its height count against it
+                    if consumer.spec_sprayer == nil then
+                        local neededMaxPower = consumer.spec_powerConsumer ~= nil
+                            and (tonumber(consumer.spec_powerConsumer.neededMaxPtoPower) or 0) or 0
+                        data.engagementTorques[consumer] = configuredRpm > 0 and neededMaxPower / (configuredRpm * math.pi / 30) or 0
+
+                        if consumer.getAllowsLowering ~= nil and consumer:getAllowsLowering()
+                            and consumer.getIsLowered ~= nil and not consumer:getIsLowered(true) then
+                            data.isRaised = true
+                        end
+                    end
                 end
             end
 
@@ -365,7 +431,9 @@ function RMS_Utils.getConnectedPtoData(vehicle)
         rpm = 0,
         power = 0,
         connectedVehicles = {},
-        activeLinks = {}
+        activeLinks = {},
+        engagementTorques = {},
+        isRaised = false
     }
     local visited = {}
 

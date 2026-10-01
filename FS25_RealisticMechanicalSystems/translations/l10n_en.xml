@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="The parking brake is engaged. You engage and release it yourself with its own key: press the throttle with the brake engaged and the machine stays put, with a warning.&#10;&#10;On a slope, it is what keeps the machine from rolling away on its own."/>
         <text name="rms_tutorial_preheat_title" text="Diesel Preheating"/>
         <text name="rms_tutorial_preheat_message" text="On a cold diesel engine, one press of the start control switches on the ignition and begins the automatic glow-plug cycle. The dashboard lamps light up briefly, then the preheat lamp remains on until the engine is ready. Do not repeat the command: the starter engages automatically when the lamp goes out."/>
-        <text name="rms_tutorial_pto_engagement_title" text="PTO Engagement Cycles"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Engaging and disengaging the PTO repeatedly accumulates mechanical cycles. Avoid unnecessary engagements."/>
+        <text name="rms_tutorial_pto_engagement_title" text="PTO Engagement"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Engage the PTO at idle, then raise the engine speed: engaging it at high revs shocks the driveline, all the more with a heavy implement. Every engagement also wears its clutch."/>
+        <text name="rms_tutorial_pto_raised_title" text="PTO and Raised Implement"/>
+        <text name="rms_tutorial_pto_raised_message" text="Running the PTO with the implement raised bends the cardan joints at a steep angle and wears them quickly. Switch the PTO off before lifting the implement for transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Idling and Downtime"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Wear is much lower when the machine is running without working. With the engine off it becomes minimal. Under cover, it disappears entirely."/>
         <text name="rms_tutorial_idle_deposit_title" text="Extended Idling"/>

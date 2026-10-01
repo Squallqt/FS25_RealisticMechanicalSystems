@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Frâna de parcare este acționată. O acționezi și o eliberezi cu tasta sa: dacă accelerezi cu frâna acționată, utilajul rămâne pe loc și apare un avertisment.&#10;&#10;Pe o pantă, aceasta împiedică utilajul să se deplaseze singur."/>
         <text name="rms_tutorial_preheat_title" text="Preîncălzirea motorului diesel"/>
         <text name="rms_tutorial_preheat_message" text="La un motor diesel rece, o apăsare a comenzii de pornire cuplează contactul și pornește automat ciclul de preîncălzire. Martorii de bord se aprind pentru scurt timp, apoi martorul de preîncălzire rămâne aprins până când motorul este pregătit. Nu repeta comanda: demarorul se cuplează automat când martorul se stinge."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Cicluri de cuplare a prizei de putere"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Cuplările și decuplările repetate ale prizei de putere acumulează cicluri mecanice. Evită cuplările inutile."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Cuplarea prizei de putere"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Cuplează priza de putere la ralanti, apoi crește turația: cuplarea la turație mare dă un șoc întregii transmisii, cu atât mai mult cu o mașină grea. Fiecare cuplare îi uzează și ambreiajul."/>
+        <text name="rms_tutorial_pto_raised_title" text="Priza de putere și utilajul ridicat"/>
+        <text name="rms_tutorial_pto_raised_message" text="Rotirea prizei de putere cu utilajul ridicat face cardanele să lucreze sub un unghi mare și le uzează repede. Decuplează priza de putere înainte să ridici utilajul pentru transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralanti și imobilizare"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Uzura este mult mai redusă când utilajul funcționează fără să lucreze. Cu motorul oprit, aceasta devine minimă. Sub adăpost, dispare complet."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralanti prelungit"/>

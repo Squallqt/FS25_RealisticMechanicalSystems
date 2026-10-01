@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="A rögzítőfék be van húzva. Te húzod be és oldod ki, a saját billentyűddel: ha behúzott fékkel adsz gázt, a gép nem indul el, és figyelmeztet.&#10;&#10;Lejtőn ez akadályozza meg, hogy a gép magától elguruljon."/>
         <text name="rms_tutorial_preheat_title" text="Dízel előizzítás"/>
         <text name="rms_tutorial_preheat_message" text="Hideg dízelmotornál az indításvezérlő egyszeri megnyomása bekapcsolja a gyújtást, és automatikusan elindítja az izzítási ciklust. A műszerfal visszajelzői rövid időre felgyulladnak, majd az előizzítás jelzőfénye addig világít, amíg a motor készen nem áll. Ne ismételd meg a parancsot: az önindító a jelzőfény kialvásakor automatikusan bekapcsol."/>
-        <text name="rms_tutorial_pto_engagement_title" text="TLT-kapcsolási ciklusok"/>
-        <text name="rms_tutorial_pto_engagement_message" text="A TLT ismételt bekapcsolása mechanikus kapcsolási ciklusokat halmoz fel. Kerüld a szükségtelen ki- és bekapcsolást."/>
+        <text name="rms_tutorial_pto_engagement_title" text="A TLT bekapcsolása"/>
+        <text name="rms_tutorial_pto_engagement_message" text="A TLT-t alapjáraton kapcsold be, és csak utána emeld a fordulatszámot: magas fordulaton bekapcsolva lökést kap az egész hajtáslánc, nehéz munkagéppel még inkább. Minden bekapcsolás a tengelykapcsolóját is koptatja."/>
+        <text name="rms_tutorial_pto_raised_title" text="TLT és kiemelt munkagép"/>
+        <text name="rms_tutorial_pto_raised_message" text="Ha a TLT kiemelt munkagéppel forog, a kardántengelyek nagy szögben dolgoznak és gyorsan kopnak. Kapcsold ki a TLT-t, mielőtt szállításhoz kiemeled a munkagépet."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Alapjárat és állásidő"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="A kopás sokkal alacsonyabb, amikor a gép jár, de nem végez aktív munkát. Amikor a motor le van állítva, a kopás minimálisra csökken, és ha a gép fedett helyen áll, teljesen megszűnik."/>
         <text name="rms_tutorial_idle_deposit_title" text="Hosszan tartó alapjárat"/>

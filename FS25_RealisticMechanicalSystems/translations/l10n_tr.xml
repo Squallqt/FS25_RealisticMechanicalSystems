@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="El freni çekili. Kendi tuşuyla çekip bırakırsın: fren çekiliyken gaz verirsen makine hareket etmez ve seni uyarır.&#10;&#10;Eğimde makinenin kendiliğinden kaymasını engeller."/>
         <text name="rms_tutorial_preheat_title" text="Dizel Ön Isıtma"/>
         <text name="rms_tutorial_preheat_message" text="Soğuk dizel motorda çalıştırma kumandasına bir kez basmak kontağı açar ve kızdırma çevrimini otomatik başlatır. Gösterge paneli ışıkları kısa süre yanar, ardından motor hazır olana kadar kızdırma göstergesi açık kalır. Komutu tekrarlama: gösterge söndüğünde marş motoru otomatik devreye girer."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Kuyruk Mili Devreye Alma Çevrimleri"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Kuyruk milini tekrar tekrar devreye almak ve devreden çıkarmak mekanik çevrim biriktirir. Gereksiz devreye almalardan kaçın."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Kuyruk Mili Devreye Alma"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Kuyruk milini rölantide devreye alın, ardından devri yükseltin: yüksek devirde devreye almak tüm aktarma organlarına darbe verir, ağır bir ekipmanla daha da fazla. Her devreye alma kavramasını da aşındırır."/>
+        <text name="rms_tutorial_pto_raised_title" text="Kuyruk Mili ve Kaldırılmış Ekipman"/>
+        <text name="rms_tutorial_pto_raised_message" text="Ekipman kaldırılmışken kuyruk milini çalıştırmak kardan mafsallarını dik bir açıyla çalıştırır ve hızla aşındırır. Ekipmanı nakliye için kaldırmadan önce kuyruk milini kapatın."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Rölanti ve Hareketsizlik"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Makine çalışır durumda olsa da aktif olarak iş yapmadığında aşınma çok daha azdır. Motor kapalıyken aşınma çok az olur ve makine kapalı bir yerde saklanırsa aşınma tamamen ortadan kalkar."/>
         <text name="rms_tutorial_idle_deposit_title" text="Uzun Süreli Rölanti"/>

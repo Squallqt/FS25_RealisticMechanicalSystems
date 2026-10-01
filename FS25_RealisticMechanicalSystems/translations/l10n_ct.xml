@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="駐車煞車已經啟用。需要使用專用按鍵自行啟用和解除：煞車啟用時踩下油門，機器不會移動並會發出警告。&#10;&#10;在坡道上，駐車煞車可以防止機器自行滑動。"/>
         <text name="rms_tutorial_preheat_title" text="柴油機預熱"/>
         <text name="rms_tutorial_preheat_message" text="柴油發動機處於冷機狀態時，按一次啟動控制即可打開點火開關，並自動開始預熱塞循環。儀表板指示燈會短暫亮起，隨後預熱燈保持點亮，直到發動機準備就緒。不要重複操作：預熱燈熄滅後，啟動機會自動接合。"/>
-        <text name="rms_tutorial_pto_engagement_title" text="動力輸出軸接合循環"/>
-        <text name="rms_tutorial_pto_engagement_message" text="反覆接合和斷開動力輸出軸會累積機械循環。請避免不必要的接合。"/>
+        <text name="rms_tutorial_pto_engagement_title" text="動力輸出軸接合"/>
+        <text name="rms_tutorial_pto_engagement_message" text="請在怠速時接合動力輸出軸，然後再提高轉速：高轉速接合會衝擊整個傳動系統，機具越重衝擊越大。每次接合也會磨損其離合器。"/>
+        <text name="rms_tutorial_pto_raised_title" text="動力輸出軸與升起的機具"/>
+        <text name="rms_tutorial_pto_raised_message" text="機具升起時運轉動力輸出軸，會讓萬向節以很大的角度工作並迅速磨損。在為運輸升起機具之前，請先關閉動力輸出軸。"/>
         <text name="rms_tutorial_idle_and_downtime_title" text="怠速與停用"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="機器運作但不作業時，磨損會低得多。發動機關閉後，磨損降至最低；存放在遮蔽物下時，磨損會完全停止。"/>
         <text name="rms_tutorial_idle_deposit_title" text="長時間怠速"/>

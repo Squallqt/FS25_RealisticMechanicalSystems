@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Seisontajarru on päällä. Kytket ja vapautat sen itse omalla näppäimellään: jos annat kaasua jarru päällä, kone ei liiku ja varoittaa sinua.&#10;&#10;Rinteessä se estää konetta lähtemästä liikkeelle itsestään."/>
         <text name="rms_tutorial_preheat_title" text="Dieselin hehkutus"/>
         <text name="rms_tutorial_preheat_message" text="Kun dieselmoottori on kylmä, käynnistysohjaimen yksi painallus kytkee virran ja aloittaa hehkutuksen automaattisesti. Kojelaudan merkkivalot suorittavat itsetestin, minkä jälkeen hehkutuksen merkkivalo palaa, kunnes moottori on valmis. Älä paina uudelleen: käynnistin kytkeytyy automaattisesti merkkivalon sammuttua."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Voimanoton kytkentäjaksot"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Voimanoton toistuva kytkeminen kerryttää mekaanisia kytkentäjaksoja. Vältä tarpeetonta päälle ja pois kytkemistä."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Voimanottoakselin kytkentä"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Kytke voimanottoakseli joutokäynnillä ja nosta vasta sitten kierroksia: kytkentä korkeilla kierroksilla iskee koko voimansiirtoon, sitä enemmän mitä raskaampi työkone. Jokainen kytkentä kuluttaa myös sen kytkintä."/>
+        <text name="rms_tutorial_pto_raised_title" text="Voimanotto ja nostettu työkone"/>
+        <text name="rms_tutorial_pto_raised_message" text="Voimanottoakselin pyörittäminen työkone nostettuna pakottaa nivelakselit työskentelemään jyrkässä kulmassa ja kuluttaa niitä nopeasti. Kytke voimanotto pois ennen kuin nostat työkoneen kuljetusta varten."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Käyttämättömyysaika ja varastointi"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Kuluminen on paljon vähäisempää, kun kone käy mutta ei tee aktiivista työtä. Kun moottori on sammutettu, kuluminen on hyvin vähäistä, ja jos kone on varastoitu katoksen alla, se katoaa kokonaan."/>
         <text name="rms_tutorial_idle_deposit_title" text="Pitkä joutokäynti"/>

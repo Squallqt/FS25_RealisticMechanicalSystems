@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Parkeringsbremsen er satt på. Det er du som setter den på og slipper den med dens egen tast: gir du gass med bremsen på, står maskinen stille og varsler deg.&#10;&#10;I en bakke er det den som holder maskinen fra å trille av gårde av seg selv."/>
         <text name="rms_tutorial_preheat_title" text="Forvarming av dieselmotor"/>
         <text name="rms_tutorial_preheat_message" text="På en kald dieselmotor slår ett trykk på startknappen på tenningen og starter forvarmingen automatisk. Lampene i instrumentpanelet lyser kort opp, og deretter fortsetter forvarmingslampen å lyse til motoren er klar. Ikke gjenta kommandoen: startmotoren kobler inn av seg selv når lampen slukker."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Kraftuttakets tilkoblingssykluser"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Å koble kraftuttaket til og fra igjen og igjen bygger opp mekaniske sykluser. Unngå unødvendige tilkoblinger."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Innkobling av kraftuttak"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Koble inn kraftuttaket på tomgang, og øk deretter turtallet: innkobling på høyt turtall gir hele drivverket et støt, særlig med et tungt redskap. Hver innkobling sliter også på clutchen."/>
+        <text name="rms_tutorial_pto_raised_title" text="Kraftuttak og løftet redskap"/>
+        <text name="rms_tutorial_pto_raised_message" text="Å kjøre kraftuttaket med løftet redskap får kardangene til å arbeide i skarp vinkel og sliter dem raskt. Slå av kraftuttaket før du løfter redskapet for transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgang og stillstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Slitasjen er langt lavere når maskinen går uten å arbeide. Med motoren av blir den minimal. Under tak forsvinner den helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Lengre tomgang"/>

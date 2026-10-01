@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Rem parkir diaktifkan. Kamu sendiri yang mengaktifkan dan melepaskannya dengan tombol tersendiri: jika kamu menekan pedal gas saat rem aktif, mesin tetap diam dan memberikan peringatan.&#10;&#10;Di lereng, rem inilah yang mencegah mesin bergerak sendiri."/>
         <text name="rms_tutorial_preheat_title" text="Pemanasan Awal Diesel"/>
         <text name="rms_tutorial_preheat_message" text="Pada mesin diesel yang dingin, satu kali menekan kontrol starter akan menyalakan kontak dan memulai siklus busi pijar secara otomatis. Lampu dasbor menyala sebentar, lalu lampu pemanasan awal tetap menyala hingga mesin siap. Jangan ulangi perintah: starter aktif secara otomatis ketika lampu padam."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Siklus Pengaktifan PTO"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Mengaktifkan dan menonaktifkan PTO berulang kali akan menambah siklus mekanis. Hindari pengaktifan yang tidak diperlukan."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Pengaktifan PTO"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Aktifkan PTO saat mesin langsam, lalu naikkan putaran mesin: mengaktifkannya pada putaran tinggi menghentak seluruh sistem penggerak, terlebih dengan alat yang berat. Setiap pengaktifan juga mengikis koplingnya."/>
+        <text name="rms_tutorial_pto_raised_title" text="PTO dan Alat Terangkat"/>
+        <text name="rms_tutorial_pto_raised_message" text="Menjalankan PTO saat alat terangkat membuat sambungan kardan bekerja pada sudut tajam dan cepat aus. Matikan PTO sebelum mengangkat alat untuk pengangkutan."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Langsam dan Masa Tidak Digunakan"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Keausan jauh lebih rendah ketika mesin menyala tanpa bekerja. Saat mesin dimatikan, keausan menjadi minimal. Di bawah naungan, keausan hilang sepenuhnya."/>
         <text name="rms_tutorial_idle_deposit_title" text="Langsam Berkepanjangan"/>

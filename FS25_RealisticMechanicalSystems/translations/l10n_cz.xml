@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Parkovací brzda je zatažená. Zatahuješ a uvolňuješ ji příslušnou klávesou: pokud přidáš plyn se zataženou brzdou, stroj se nerozjede a upozorní tě.&#10;&#10;Ve svahu právě ona brání stroji, aby se samovolně rozjel."/>
         <text name="rms_tutorial_preheat_title" text="Předehřev vznětového motoru"/>
         <text name="rms_tutorial_preheat_message" text="U studeného vznětového motoru jedno stisknutí ovladače spuštění zapne zapalování a automaticky zahájí cyklus předehřevu. Kontrolky na palubní desce se krátce rozsvítí a potom zůstane kontrolka předehřevu svítit, dokud není motor připraven. Povel neopakuj: startér se zapne automaticky, jakmile kontrolka zhasne."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Cykly zapínání vývodového hřídele"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Opakované zapínání a vypínání vývodového hřídele přidává mechanické spínací cykly. Vyhni se zbytečnému zapínání."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Zapínání vývodového hřídele"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Vývodový hřídel zapínej při volnoběhu a teprve potom zvyš otáčky: zapnutí ve vysokých otáčkách je ráz pro celé hnací ústrojí, tím silnější s těžkým nářadím. Každé zapnutí navíc opotřebovává jeho spojku."/>
+        <text name="rms_tutorial_pto_raised_title" text="Vývodový hřídel a zvednuté nářadí"/>
+        <text name="rms_tutorial_pto_raised_message" text="Chod vývodového hřídele se zvednutým nářadím nutí kloubové hřídele pracovat pod velkým úhlem a rychle je opotřebovává. Vypni vývodový hřídel dřív, než nářadí zvedneš k přepravě."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Volnoběh a odstavení"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Opotřebení je mnohem nižší, když stroj běží, ale aktivně nepracuje. Pokud je motor vypnutý, opotřebení je minimální, a pokud je stroj zaparkován pod střechou, mizí úplně."/>
         <text name="rms_tutorial_idle_deposit_title" text="Dlouhý volnoběh"/>

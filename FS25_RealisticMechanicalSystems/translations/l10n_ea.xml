@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="El freno de estacionamiento está accionado. Eres tú quien lo acciona y lo libera con su propia tecla: si aceleras con el freno accionado, la máquina no se mueve y te avisa.&#10;&#10;En pendiente, es lo que impide que la máquina se vaya sola."/>
         <text name="rms_tutorial_preheat_title" text="Precalentamiento diésel"/>
         <text name="rms_tutorial_preheat_message" text="Con el motor diésel frío, una pulsación del mando de arranque enciende el contacto e inicia automáticamente el ciclo de precalentamiento. Los testigos del cuadro se encienden brevemente y, después, el testigo de precalentamiento permanece encendido hasta que el motor está listo. No repitas la orden: el motor de arranque se acciona automáticamente cuando el testigo se apaga."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Ciclos de acoplamiento de la TDF"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Acoplar y desacoplar la TDF repetidamente acumula ciclos mecánicos. Evita los acoplamientos innecesarios."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Embrague de la TDF"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Embraga la TDF en ralentí y luego sube las revoluciones: embragarla a altas revoluciones le da un golpe a toda la transmisión, más aún con un implemento pesado. Cada embrague desgasta además su embrague."/>
+        <text name="rms_tutorial_pto_raised_title" text="TDF e implemento levantado"/>
+        <text name="rms_tutorial_pto_raised_message" text="Hacer girar la TDF con el implemento levantado obliga a los cardanes a trabajar con mucho ángulo y los desgasta rápido. Desconecta la TDF antes de levantar el implemento para el transporte."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralentí y tiempo parado"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="El desgaste es mucho menor cuando la máquina está en marcha sin trabajar. Con el motor apagado se vuelve mínimo. Bajo techo, desaparece por completo."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralentí prolongado"/>

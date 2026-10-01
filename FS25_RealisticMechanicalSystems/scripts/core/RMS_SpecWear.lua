@@ -669,7 +669,8 @@ function RealisticMechanicalSystems:updateHydraulicsSystem(dt)
     })
 end
 
----Wears the PTO while active from its load and an expired service, recording engagement cycles for fault selection
+---Wears the PTO while active from its load, a raised implement and an expired service, and takes the
+-- clutch wear and the shock of its engagements at once
 -- @param float dt time since last call in ms
 function RealisticMechanicalSystems:updatePtoSystem(dt)
     local spec = self.spec_RealisticMechanicalSystems
@@ -683,7 +684,9 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
     local wearRate = 0
     local expiredServiceFactor = 0
     local ptoLoadFactor = 0
-    local ptoEngagementFactor = math.max(tonumber(spec.ptoEngagementPulseCount) or 0, 0)
+    local ptoRaisedFactor = 0
+    local engagementDamage = math.max(tonumber(spec.ptoEngagementDamage) or 0, 0)
+    spec.ptoEngagementDamage = 0
 
     if self.getIsMotorStarted ~= nil and self:getIsMotorStarted() and spec.isPtoActive then
         wearRate = 1
@@ -693,15 +696,30 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
             wearRate = wearRate + ptoLoadFactor
         end
 
+        if spec.isPtoImplementRaised then
+            ptoRaisedFactor = C.RAISED_IMPLEMENT_MULTIPLIER
+            wearRate = wearRate + ptoRaisedFactor
+        end
+
         expiredServiceFactor = getExpiredServiceFactor(spec, "pto", C.SERVICE_EXPIRED_MULTIPLIER)
         wearRate = wearRate + expiredServiceFactor
+    end
+
+    -- the tip waits past a headland turn, so it only answers a PTO left turning with the implement up
+    spec.ptoRaisedTutorialTimer = math.clamp((tonumber(spec.ptoRaisedTutorialTimer) or 0) + (ptoRaisedFactor > 0 and dt or -dt),
+        0, C.RAISED_TUTORIAL_MS)
+    spec.ptoRaisedTooLong = spec.ptoRaisedTutorialTimer >= C.RAISED_TUTORIAL_MS
+
+    if engagementDamage > 0 then
+        self:applyInstantDamageToSystem(systemData.name, engagementDamage, "ptoEngagementFactor")
     end
 
     self:updateSystemConditionAndStress(dt, systemKey, wearRate, {
         isPtoActive = spec.isPtoActive == true,
         expiredServiceFactor = expiredServiceFactor,
         ptoLoadFactor = ptoLoadFactor,
-        ptoEngagementFactor = ptoEngagementFactor,
+        ptoRaisedFactor = ptoRaisedFactor,
+        ptoEngagementDamage = engagementDamage,
         ptoTorque = spec.ptoTorque,
         ptoRpm = spec.ptoRpm,
         ptoPower = spec.ptoPower,
@@ -710,7 +728,6 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
         ptoNativeCapacityTorque = spec.ptoNativeCapacityTorque,
         ptoEngagementCount = spec.ptoEngagementCount
     })
-    spec.ptoEngagementPulseCount = 0
 end
 
 ---Wears the cooling system on sustained high cooling, overheating, cold shock and an expired service

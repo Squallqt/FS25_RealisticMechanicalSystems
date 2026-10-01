@@ -47,7 +47,7 @@ Normal wear depends on system activity. Hydraulics and PTO wear only while activ
 | **Electrical** | Lights on; rain, snow, or hail on an outdoor vehicle; starter cranking; engine above `95C`; vibration over rough ground at speed |
 | **Chassis** | Poor lubrication on machines that require greasing; vibration over rough ground at speed; steering under `4 km/h`, scaled by the steered angle and by the load the steered axle really carries; braking above `2 km/h` while towing |
 | **Fuel** | Fuel below `20%` under load; fuel colder than `20C` above `50%` load; idling past `60` seconds; fuel consumption above `80%` of the configured maximum |
-| **PTO** | Active drive; continuous native PTO utilization above `55%`, reaching its full overload factor at `90%`; unique engagement cycles are recorded for fault selection without instant engagement damage |
+| **PTO** | Active drive; native PTO utilization above `40%`, reaching its full factor at `90%`, then overload up to `120%`; a liftable implement turning while raised; every engagement wears the clutch, and engaging above idle shocks the driveline, harder with a bigger implement; sprayers and spreaders, which the game switches to open their sections and lets work at any height, are spared engagement and raised wear |
 
 AI workers wear a machine exactly like a player. They are protected by behaviour instead: the helper drives like a careful driver. It slows down as soon as the machine counts an overload, whether from low revs, a long hard pull, wheel slip or overheating, never below `5 km/h`, the game's own field work floor, and picks its pace back up once the load eases. It never stalls and is never blocked by a hard start. An overload never sends it home; only a breakdown that leaves the machine unable to work stops it. The game's helpers, Courseplay and AutoDrive are all driven this way, contract machines included, and the player's cruise control speed is never touched.
 
@@ -344,6 +344,7 @@ rms_printSpecVar rawTransmissionTemperature
 - Fixed AI workers, Courseplay and AutoDrive stopping in the field under a heavy load, even without overheating
 - Reworked the AI worker's driving: it slows down while the machine is overloaded, never below 5 km/h, and picks its pace back up once the load eases
 - Fixed the player's cruise control speed being replaced by the machine's top speed after an AI worker's job
+- Reworked PTO wear: engaging it at high engine speed, engaging it often, running it with the implement raised and overloading it now strain it
 
 ### v0.10.0.0
 

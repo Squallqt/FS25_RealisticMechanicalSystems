@@ -254,13 +254,21 @@ local function getEffectValue(activeEffects, effectId)
     return nil
 end
 
+---Returns the stress over condition ratio as the breakdown roll weighs it, a worn system keeping the condition floor
+-- @param float stress system stress
+-- @param float condition system condition
+-- @return float ratio ratio between 0 and 1
+local function getStressRatio(stress, condition)
+    local effectiveCondition = math.max(tonumber(condition) or 0, RMS_Config.CORE.CONDITION_EFFECTIVE_FLOOR or 0, 0.001)
+    return math.max(math.min((tonumber(stress) or 0.0) / effectiveCondition, 1.0), 0.0)
+end
+
 ---Returns the localized stress label for a stress over condition ratio
 -- @param float stress system stress
 -- @param float condition system condition
 -- @return string label absent, low, moderate, elevated or high
 local function getStressLabel(stress, condition)
-    local safeCondition = math.max(tonumber(condition) or 0, 0.001)
-    local normalizedStress = math.max(math.min((tonumber(stress) or 0.0) / safeCondition, 1.0), 0.0)
+    local normalizedStress = getStressRatio(stress, condition)
 
     if normalizedStress < RMS_Config.CORE.BREAKDOWN_PROBABILITIES.STRESS_THRESHOLD then
         return getTextOrFallback("rms_report_stress_absent", "Absent")
@@ -971,7 +979,7 @@ function RMS_ReportDialog:renderSystemRows()
             local condition = clampUnitRatio(data[2])
             local percent = condition * 100
             local stress = data[3] or 0
-            local risk = clampUnitRatio(stress / math.max(condition, 0.001)) * 100
+            local risk = getStressRatio(stress, condition) * 100
             nameElement:setText(g_i18n:getText(data[1]))
 
             if self.isCompleteInspection then
