@@ -164,7 +164,7 @@ function RealisticMechanicalSystems.getExclusionReason(vehicle)
     return "rms_ingame_menu_reason_auxiliary"
 end
 
----Tells whether a player may include or exclude a vehicle, which takes the right to sell its farm's vehicles
+---Tells whether a player may include or exclude a vehicle, a choice kept for the admins
 -- @param table vehicle vehicle
 -- @param boolean isExcluded true to exclude the vehicle
 -- @param Connection? connection player connection, nil for the local player
@@ -176,7 +176,10 @@ function RealisticMechanicalSystems.getCanSetUserExclusion(vehicle, isExcluded, 
         return false
     end
 
-    return g_currentMission:getHasPlayerPermission(Farm.PERMISSION.SELL_VEHICLE, connection, vehicle:getOwnerFarmId())
+    if connection == nil then
+        return g_currentMission:getIsServer() or g_currentMission.isMasterUser == true
+    end
+    return g_currentMission.userManager:getUserByConnection(connection):getIsMasterUser()
 end
 
 ---Tells whether the vehicle sits in the trucks store category

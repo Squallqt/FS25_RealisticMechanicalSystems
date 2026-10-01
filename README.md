@@ -224,7 +224,7 @@ Diesel preheating starts automatically below `25 C`. It remains short in mild we
 1. Open the fleet menu (`P` key) and select the machine.
 2. In the `RMS Vehicles` tab, press `X` (`Exclude from RMS`): the machine stops wearing and moves to the `Other Vehicles` tab.
 3. In the `Other Vehicles` tab, the `Reason` column says why each machine is left out, and `X` (`Include in RMS`) brings a machine back in. A machine that was never tracked starts from its resale value, like a used one.
-4. Electric machines always stay out, and so have no button. The choice takes the right to sell the farm's vehicles, and a machine under a workshop procedure cannot be excluded until it is done.
+4. Electric machines always stay out, and so have no button. On a server, only an admin can make this choice, and a machine under a workshop procedure cannot be excluded until it is done.
 
 ## Console Commands
 

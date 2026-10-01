@@ -1282,11 +1282,6 @@ function RMS_Config.getSharedSettingsFilePath()
     return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.savegameFile
 end
 
----@diagnostic disable-next-line: lowercase-global
-function getUserProfileAppPath()
-    return g_currentModSettingsDirectory or (getUserProfileAppPath and getUserProfileAppPath()) or ""
-end
-
 ---Writes every adjustable setting to the savegame file, then to the shared one
 -- @return boolean written true once both files are written
 function RMS_Config.saveToXMLFile()
