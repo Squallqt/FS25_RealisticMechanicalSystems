@@ -1740,14 +1740,16 @@ function RMS_Utils.getMarketValue(vehicle)
     return math.max(price * usageFactor * ageFactor * conditionFactor - repaintPrice - repairPrice, price * 0.03)
 end
 
----Returns what selling a vehicle from the game's menus pays; the dealer's own sell screen adds its 10 percent
+---Returns the exact menu or direct dealer payment, applying the native multiplier before rounding and capping
 -- @param table vehicle vehicle
+-- @param boolean? isDirectSell true for the dealer trigger sale
 -- @return integer? value resale value, nil when the vehicle is not the farm's to sell
-function RMS_Utils.getResaleValue(vehicle)
+function RMS_Utils.getResaleValue(vehicle, isDirectSell)
     if vehicle.propertyState ~= VehiclePropertyState.OWNED then
         return nil
     end
-    return math.min(math.floor(vehicle:getSellPrice()), vehicle:getPrice())
+    local multiplier = isDirectSell and EconomyManager.DIRECT_SELL_MULTIPLIER or 1
+    return math.min(math.floor(vehicle:getSellPrice() * multiplier), vehicle:getPrice())
 end
 
 ---Returns the weight a system carries on this vehicle, disabled systems weighing nothing

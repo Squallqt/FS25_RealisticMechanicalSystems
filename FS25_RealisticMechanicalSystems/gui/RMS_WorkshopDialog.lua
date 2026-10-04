@@ -369,7 +369,15 @@ function RMS_WorkshopDialog:updateScreen()
     self.technicalVehicleImage:setImageFilename(vehicle:getImageFilename())
     self.technicalVehicleName:setText(vehicle:getFullName())
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
-    local resaleValue = RMS_Utils.getResaleValue(vehicle)
+    local isDirectSell = self.workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
+    local resaleValue = RMS_Utils.getResaleValue(vehicle, isDirectSell)
+    self.lastResaleValue = resaleValue
+    local valueLabel = g_i18n:getText("rms_ws_label_value")
+    if isDirectSell and resaleValue ~= nil then
+        local bonusPercent = math.floor((EconomyManager.DIRECT_SELL_MULTIPLIER - 1) * 100 + 0.5)
+        valueLabel = string.format("%s (+%d%%)", valueLabel, bonusPercent)
+    end
+    self.valueLabel:setText(valueLabel)
     local currentValue = resaleValue ~= nil and g_i18n:formatMoney(resaleValue, 0, true, false) or nil
     local newPrice = nil
     if storeItem ~= nil then

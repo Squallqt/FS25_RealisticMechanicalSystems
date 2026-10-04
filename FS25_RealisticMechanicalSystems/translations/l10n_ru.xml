@@ -799,7 +799,7 @@
         <text name="rms_ingame_menu_header_last_inspection" text="Последний осмотр"/>
         <text name="rms_ingame_menu_header_last_maintenance" text="Последнее техобслуживание"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Аренда"/>
-        <text name="rms_ingame_menu_header_price" text="Стоимость"/>
+        <text name="rms_ingame_menu_header_price" text="Продажа в меню"/>
         <text name="rms_ingame_menu_header_procedure" text="Работа"/>
         <text name="rms_ingame_menu_header_finish_time" text="Готово"/>
         <text name="rms_ingame_menu_header_service_cost" text="Стоимость"/>

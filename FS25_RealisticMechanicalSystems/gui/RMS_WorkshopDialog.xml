@@ -77,7 +77,7 @@
                                 <GuiElement profile="rms_workshopBlock" size="341px 44px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
                                     <GuiElement profile="rms_workshopBlock" id="valueIconArea" position="12px -4px" size="36px 36px" onDraw="onDrawValueIcon" />
-                                    <Text profile="rms_workshopDetail" position="58px -9px" size="109px 26px" text="$l10n_rms_ws_label_value" />
+                                    <Text profile="rms_workshopDetail" id="valueLabel" position="58px -9px" size="109px 26px" text="$l10n_rms_ws_label_value" />
                                     <RoundCorner profile="rms_workshopValuePill" position="173px -8px" size="156px 28px" />
                                     <Text profile="rms_workshopPillValue" id="valueValue" position="185px -8px" size="132px 28px" />
                                 </GuiElement>

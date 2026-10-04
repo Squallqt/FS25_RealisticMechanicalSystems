@@ -799,7 +799,7 @@
         <text name="rms_ingame_menu_header_last_inspection" text="Inspeksi Terakhir"/>
         <text name="rms_ingame_menu_header_last_maintenance" text="Perawatan Terakhir"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Biaya Sewa"/>
-        <text name="rms_ingame_menu_header_price" text="Nilai"/>
+        <text name="rms_ingame_menu_header_price" text="Jual di menu"/>
         <text name="rms_ingame_menu_header_procedure" text="Prosedur"/>
         <text name="rms_ingame_menu_header_finish_time" text="Selesai"/>
         <text name="rms_ingame_menu_header_service_cost" text="Biaya"/>

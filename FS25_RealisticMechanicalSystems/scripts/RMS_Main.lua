@@ -272,6 +272,28 @@ function RMS_Main:onStartMission()
 end
 
 
+---Refreshes the native trigger cards when an RMS dealer payment changes
+-- @param table screen workshop screen
+-- @param float dt frame duration in milliseconds
+function RMS_Main.refreshWorkshopResalePrices(screen, dt)
+    screen.rmsResaleRefreshTimer = (screen.rmsResaleRefreshTimer or 0) + dt
+    if screen.rmsResaleRefreshTimer < 250 then
+        return
+    end
+    screen.rmsResaleRefreshTimer = 0
+    screen.rmsResaleValues = screen.rmsResaleValues or setmetatable({}, {__mode = "k"})
+    for _, vehicle in ipairs(screen.vehicles or {}) do
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        if spec ~= nil and not spec.isExcludedVehicle then
+            local value = RMS_Utils.getResaleValue(vehicle, true)
+            if screen.rmsResaleValues[vehicle] ~= value then
+                screen.rmsResaleValues[vehicle] = value
+                screen.needsListReload = true
+            end
+        end
+    end
+end
+
 ---Opens the workshop dialog in place of the vanilla repair button
 -- @param table screenInstance workshop screen
 function RMS_Main.onCustomRepairClick(screenInstance)
@@ -715,6 +737,9 @@ FSBaseMission.sendInitialClientState = Utils.appendedFunction(FSBaseMission.send
         RMS_TutorialStateEvent.sendToClient(connection)
     end
 end)
+if WorkshopScreen.update ~= nil then
+    WorkshopScreen.update = Utils.appendedFunction(WorkshopScreen.update, RMS_Main.refreshWorkshopResalePrices)
+end
 WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RMS_Main.hookRepairButton)
 WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RMS_Main.hookRepaintButton)
 WearableRepaintEvent.run = Utils.overwrittenFunction(WearableRepaintEvent.run, RMS_Main.runNativeRepaintEvent)
@@ -806,7 +831,7 @@ function RMS_Main:onPeriodChanged()
     end
 end
 
----Refreshes the open workshop only when its vehicle status changed
+---Refreshes the open workshop when its vehicle status or resale payment changes
 local function updateOpenWorkshopDialog()
     local dialog = RMS_WorkshopDialog.INSTANCE
     if dialog == nil or not dialog.isDialogOpen or dialog.vehicle == nil or dialog.vehicle.spec_RealisticMechanicalSystems == nil then
@@ -814,7 +839,9 @@ local function updateOpenWorkshopDialog()
     end
 
     local currentStatus = dialog.vehicle:getCurrentStatus()
-    if dialog.lastObservedStatus ~= currentStatus then
+    if dialog.lastObservedStatus ~= currentStatus
+        or dialog.lastResaleValue ~= RMS_Utils.getResaleValue(dialog.vehicle,
+            dialog.workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER) then
         dialog:updateScreen()
     end
 end

@@ -5,6 +5,15 @@
 
 local getSyncOperatingTime = RealisticMechanicalSystems.getSyncOperatingTime
 
+---Transports the server quote without the Float32 loss that can change a floored payment
+local function writeResalePrice(vehicle, streamId)
+    streamWriteString(streamId, string.format("%.17g", RMS_Utils.getMarketValue(vehicle)))
+end
+
+local function readResalePrice(vehicle, streamId)
+    vehicle.spec_RealisticMechanicalSystems.syncedSellPrice = tonumber(streamReadString(streamId))
+end
+
 ---Writes the PTO engagement counters and the raised implement tutorial state
 -- @param table spec vehicle spec
 -- @param integer streamId streamId
@@ -125,6 +134,8 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     -- [Group 12] Exhaust deposits
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
 
+    -- [Group 13] Authoritative resale quote
+    writeResalePrice(self, streamId)
 end
 
 ---Called on client side on join, the groups being read in the order onWriteStream wrote them
@@ -260,6 +271,9 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     -- [Group 12] Exhaust deposits
     spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
 
+    -- [Group 13] Authoritative resale quote
+    readResalePrice(self, streamId)
+
     self:recalculateAndApplyEffects(true)
     self:recalculateAndApplyIndicators()
 
@@ -387,6 +401,11 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteBool(streamId, spec.isCranking == true)
             local elecSys = spec.systems ~= nil and spec.systems.electrical or nil
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(elecSys ~= nil and elecSys.crankingTimer or 0, 0, 0, 10000))
+        end
+
+        -- [13] Authoritative resale quote
+        if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.RESALE) ~= 0) then
+            writeResalePrice(self, streamId)
         end
     end
 end
@@ -546,6 +565,11 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             if elecSys ~= nil then
                 elecSys.crankingTimer = crankingTimer
             end
+        end
+
+        -- [13] Authoritative resale quote
+        if streamReadBool(streamId) then
+            readResalePrice(self, streamId)
         end
     end
 end

@@ -51,7 +51,8 @@ RealisticMechanicalSystems = {
         BREAKDOWNS = 128,
         SERVICE_PROGRESS = 256,
         TUTORIAL_DATA = 512,
-        DRIVETRAIN = 1024
+        DRIVETRAIN = 1024,
+        RESALE = 2048
     },
 
     -- the eight tracked vehicle systems
@@ -516,7 +517,7 @@ local function refreshExclusionState(spec)
 end
 RealisticMechanicalSystems.refreshExclusionState = refreshExclusionState
 
-RealisticMechanicalSystems.SYNC_GROUP_ALL = 2047
+RealisticMechanicalSystems.SYNC_GROUP_ALL = 4095
 
 ---Flags one or more sync groups dirty on the vehicle
 -- @param table vehicle vehicle
@@ -2496,6 +2497,7 @@ function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
         markBreakdownsDirty(self, spec)
         markServiceProgressDirty(self, spec)
         markTutorialDataDirty(self, spec)
+        RealisticMechanicalSystems.updateResalePrice(self)
     end
 end
 
@@ -2511,12 +2513,34 @@ function RealisticMechanicalSystems.updateDamageAmount(wearable, superFunc, dt)
 	end
 end
 
+---Flags an authoritative quote when either integer payment changes, independently of wear/telemetry thresholds
+-- @param table self vehicle
+function RealisticMechanicalSystems.updateResalePrice(self)
+    local spec = self.spec_RealisticMechanicalSystems
+    if not canRaiseDirtyFlag(self, spec) or spec.isExcludedVehicle then
+        return
+    end
+
+    local value = RMS_Utils.getMarketValue(self)
+    local price = self:getPrice()
+    local menuValue = math.min(math.floor(value), price)
+    local dealerValue = math.min(math.floor(value * EconomyManager.DIRECT_SELL_MULTIPLIER), price)
+    if spec._lastSyncResale_menu ~= menuValue or spec._lastSyncResale_dealer ~= dealerValue then
+        spec._lastSyncResale_menu = menuValue
+        spec._lastSyncResale_dealer = dealerValue
+        RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.RESALE)
+    end
+end
+
 ---Replaces the vanilla sell price by the RMS market value
 -- @param table self vehicle
 -- @param function superFunc super function
 -- @return float price sell price
 function RealisticMechanicalSystems.getSellPrice(self, superFunc)
     if self.spec_RealisticMechanicalSystems ~= nil and not self.spec_RealisticMechanicalSystems.isExcludedVehicle then
+        if not self.isServer and self.spec_RealisticMechanicalSystems.syncedSellPrice ~= nil then
+            return self.spec_RealisticMechanicalSystems.syncedSellPrice
+        end
         return RMS_Utils.getMarketValue(self)
     end
     return superFunc(self)

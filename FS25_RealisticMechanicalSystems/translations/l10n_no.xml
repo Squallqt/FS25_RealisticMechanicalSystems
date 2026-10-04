@@ -799,7 +799,7 @@
         <text name="rms_ingame_menu_header_last_inspection" text="Siste inspeksjon"/>
         <text name="rms_ingame_menu_header_last_maintenance" text="Siste vedlikehold"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
-        <text name="rms_ingame_menu_header_price" text="Verdi"/>
+        <text name="rms_ingame_menu_header_price" text="Menysalg"/>
         <text name="rms_ingame_menu_header_procedure" text="Prosedyre"/>
         <text name="rms_ingame_menu_header_finish_time" text="Slutt"/>
         <text name="rms_ingame_menu_header_service_cost" text="Kostnad"/>

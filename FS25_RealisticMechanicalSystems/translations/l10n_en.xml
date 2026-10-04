@@ -799,7 +799,7 @@
         <text name="rms_ingame_menu_header_last_inspection" text="Last Inspection"/>
         <text name="rms_ingame_menu_header_last_maintenance" text="Last Maintenance"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
-        <text name="rms_ingame_menu_header_price" text="Value"/>
+        <text name="rms_ingame_menu_header_price" text="Menu sale"/>
         <text name="rms_ingame_menu_header_procedure" text="Procedure"/>
         <text name="rms_ingame_menu_header_finish_time" text="Finish Time"/>
         <text name="rms_ingame_menu_header_service_cost" text="Cost"/>

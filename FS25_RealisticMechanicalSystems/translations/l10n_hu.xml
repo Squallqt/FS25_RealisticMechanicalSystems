@@ -799,7 +799,7 @@
         <text name="rms_ingame_menu_header_last_inspection" text="Utolsó átvizsgálás"/>
         <text name="rms_ingame_menu_header_last_maintenance" text="Utolsó karbantartás"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Lízing"/>
-        <text name="rms_ingame_menu_header_price" text="Érték"/>
+        <text name="rms_ingame_menu_header_price" text="Menüs eladás"/>
         <text name="rms_ingame_menu_header_procedure" text="Eljárás"/>
         <text name="rms_ingame_menu_header_finish_time" text="Befejezési idő"/>
         <text name="rms_ingame_menu_header_service_cost" text="Költség"/>

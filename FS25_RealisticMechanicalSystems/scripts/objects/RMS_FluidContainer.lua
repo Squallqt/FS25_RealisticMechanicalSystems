@@ -293,7 +293,8 @@ function RMS_FluidContainer:onReadStream(streamId, connection)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     spec.liters = streamReadFloat32(streamId)
     spec.isTransferActive = streamReadBool(streamId)
-    self:setMassDirty()
+    -- the game weighs a vehicle only inside its update, which a container at rest never gets
+    self:updateMass()
 end
 
 ---Sends the changed liters to the clients
@@ -313,7 +314,7 @@ function RMS_FluidContainer:onReadUpdateStream(streamId, timestamp, connection)
         local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
         spec.liters = streamReadFloat32(streamId)
         spec.isTransferActive = streamReadBool(streamId)
-        self:setMassDirty()
+        self:updateMass()
     end
 end
 
@@ -466,7 +467,7 @@ local function setLiters(container, liters)
     local spec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     spec.liters = math.clamp(liters, 0, spec.capacity)
     container:raiseDirtyFlags(spec.dirtyFlag)
-    container:setMassDirty()
+    container:updateMass()
 end
 
 ---Removes liters, an emptied container going away once its transaction ends
