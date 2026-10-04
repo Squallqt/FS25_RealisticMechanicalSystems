@@ -901,9 +901,13 @@ function RealisticMechanicalSystems:processGeneralWearBreakdown()
 end
 
 ---Rebuilds the active effect set from the active breakdowns and applies the difference
-function RealisticMechanicalSystems:recalculateAndApplyEffects()
+-- @param boolean? noSideNotifications true when restoring an initial network snapshot
+function RealisticMechanicalSystems:recalculateAndApplyEffects(noSideNotifications)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec then return end
+    if noSideNotifications then
+        spec.pendingSideNotifications = {}
+    end
 
     if spec.isExcludedVehicle then
         spec.dynamicBreakdowns.GENERAL_WEAR = nil
@@ -1041,7 +1045,9 @@ function RealisticMechanicalSystems:recalculateAndApplyEffects()
                 applicator.apply(self, spec.activeEffects[effectId], applicator)
             end
 
-            if self.isClient and not wasPreviouslyActive then
+            if self.isClient and not noSideNotifications and not wasPreviouslyActive
+                    and RMS_Config.CORE.ENABLE_WARNING_MESSAGES ~= false
+                    and self:getOwnerFarmId() == g_currentMission:getFarmId() then
                 local currentEffect = spec.activeEffects[effectId]
                 local rootVehicle = self.rootVehicle or self
                 local hasEnteredPlayer = hasEnteredPlayerInVehicleChain(rootVehicle)
@@ -1051,7 +1057,7 @@ function RealisticMechanicalSystems:recalculateAndApplyEffects()
                         and currentEffect.extraData.message ~= nil
                         and not hasEnteredPlayer then
                     spec.pendingSideNotifications = spec.pendingSideNotifications or {}
-                    table.insert(spec.pendingSideNotifications, g_i18n:getText(currentEffect.extraData.message))
+                    spec.pendingSideNotifications[effectId] = currentEffect.extraData.message
                 end
             end
         elseif wasPreviouslyActive then

@@ -89,7 +89,8 @@ function RMS_ServiceRequestEvent:run(connection)
                 [RealisticMechanicalSystems.STATUS.MAINTENANCE] = true,
                 [RealisticMechanicalSystems.STATUS.REPAIR] = true,
                 [RealisticMechanicalSystems.STATUS.REFILL] = true,
-                [RealisticMechanicalSystems.STATUS.OVERHAUL] = true
+                [RealisticMechanicalSystems.STATUS.OVERHAUL] = true,
+                [RealisticMechanicalSystems.STATUS.BODYWORK] = true
             }
             if not validTypes[self.serviceType] then
                 return
@@ -108,7 +109,8 @@ function RMS_ServiceRequestEvent:run(connection)
                 self.workshopType,
                 self.optionOne,
                 self.optionTwo,
-                self.optionThree
+                self.optionThree,
+                farm.farmId
             )
             if started then
                 RMS_VehicleChangeStatusEvent.send(self.vehicle)

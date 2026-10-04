@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Tändningen är på: förvärmning pågår"/>
         <text name="rms_preheat_system_failure_message" text="Fel på förvärmningssystemet: kallstart är inte möjlig"/>
         <text name="rms_preheat_start_failed_message" text="Motorn startade inte: slå av tändningen innan du försöker igen"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Kontrollera fordonet"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -30,23 +31,11 @@
         <text name="rms_settings_section_service_wear" text="Underhåll och slitage"/>
         <text name="rms_settings_section_thermal_model" text="Termisk modell"/>
         <text name="rms_settings_section_battery_alternator" text="Batteri och generator"/>
-        <text name="rms_settings_section_preshift_maintenance" text="Dagligt underhåll"/>
-        <text name="rms_settings_section_other" text="Övrigt"/>
         <text name="rms_settings_section_drivetrain" text="Drivlina och parkeringsbroms"/>
-        <text name="rms_maintenancePrice_label" text="Prisfaktor för verkstadsåtgärder"/>
-        <text name="rms_maintenancePrice_tooltip" text="Justerar priset på alla verkstadsåtgärder, inklusive inspektioner, reparationer och renoveringar. Ett högre värde gör dem dyrare."/>
-        <text name="rms_maintenanceDuration_label" text="Tidsfaktor för verkstadsåtgärder"/>
-        <text name="rms_maintenanceDuration_tooltip" text="Bestämmer hur lång tid alla verkstadsåtgärder tar. Ju högre värdet är, desto längre tid tar varje åtgärd."/>
         <text name="rms_workshopOpenHour_label" text="Verkstadens öppningstid"/>
         <text name="rms_workshopOpenHour_tooltip" text="Åtgärder startar först från den här tiden."/>
         <text name="rms_workshopCloseHour_label" text="Verkstadens stängningstid"/>
         <text name="rms_workshopCloseHour_tooltip" text="Pågående åtgärder avbryts vid den här tiden och återupptas vid öppning."/>
-        <text name="rms_cloggingSpeed_label" text="Nedsmutsningshastighet"/>
-        <text name="rms_cloggingSpeed_tooltip" text="Bestämmer hur snabbt kylaren och luftfiltret sätts igen vid arbete i damm, agnar och växtrester. Högre värden snabbar på nedsmutsningen."/>
-        <text name="rms_fieldInspectionDuration_label" text="Tid för kontroll före skiftstart"/>
-        <text name="rms_fieldInspectionDuration_tooltip" text="Bestämmer hur lång tid en kontroll före skiftstart tar, i verkliga sekunder."/>
-        <text name="rms_lubricationReducePerOperatingHour_label" text="Fettförbrukning per drifttimme"/>
-        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="Bestämmer hur mycket fett som går åt per drifttimme."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Återförsäljarverkstad dygnet runt"/>
         <text name="rms_dealerWorkshopAvailable_tooltip" text="Håller återförsäljarens verkstad tillgänglig dygnet runt."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobil verkstad dygnet runt"/>
@@ -56,55 +45,31 @@
         <text name="rms_ownWorkshopAvailable_label" text="Egen verkstad dygnet runt"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Håller din egen verkstad tillgänglig dygnet runt."/>
         <text name="rms_instantInspection_label" text="Omedelbar inspektion"/>
-        <text name="rms_instantInspection_tooltip" text="När inställningen är på slutförs alla inspektioner omedelbart utan att tid går. Obs: den visuella inspektionen är då inte tillgänglig."/>
-        <text name="rms_parkVehicle_label" text="Parkera fordonet under underhåll"/>
-        <text name="rms_parkVehicle_tooltip" text="När inställningen är på hoppas fordon under underhåll över när du byter med TABB."/>
-        <text name="rms_warrantyEnabled_label" text="Garanti på nya maskiner"/>
-        <text name="rms_warrantyEnabled_tooltip" text="Täcker reparationer på nya fordon under garanti i upp till 20 drifttimmar eller 12 månader. Endast originaldelar täcks utan kostnad."/>
-        <text name="rms_aiOverloadAndOverheatControl_label" text="AI-reglering vid överbelastning och överhettning"/>
-        <text name="rms_aiOverloadAndOverheatControl_tooltip" text="När inställningen är på sänker AI-arbetaren belastningen för att undvika överbelastning eller överhettning av motorn."/>
-        <text name="rms_aiDisableOnCriticalOverload_label" text="Stoppa AI vid kritisk överbelastning"/>
-        <text name="rms_aiDisableOnCriticalOverload_tooltip" text="Stoppar AI-arbetare och AutoDrive vid kritisk överbelastning."/>
-        <text name="rms_contractVehicleProtection_label" text="Skydd för uppdragsfordon"/>
-        <text name="rms_contractVehicleProtection_tooltip" text="Använder både AI-stoppet vid kritisk överbelastning och hastighetsregleringen vid överbelastning eller överhettning på uppdragsfordon."/>
-        <text name="rms_aiWorkerTargetStress_label" text="AI-känslighet"/>
-        <text name="rms_aiWorkerTargetStress_tooltip" text="Bestämmer när AI-arbetaren reagerar på överbelastning och överhettning. Ju högre känsligheten är, desto tidigare sänker arbetaren farten; ju lägre den är, desto mer belastning låter den byggas upp innan den ingriper."/>
-        <text name="rms_aiWorkerTargetStress_relaxed" text="Låg"/>
-        <text name="rms_aiWorkerTargetStress_balanced" text="Medel"/>
-        <text name="rms_aiWorkerTargetStress_sensitive" text="Hög"/>
-        <text name="rms_aiWorkerTargetStress_verySensitive" text="Mycket hög"/>
-        <text name="rms_aiWorkerMinSpeed_label" text="Lägsta AI-hastighet"/>
-        <text name="rms_aiWorkerMinSpeed_tooltip" text="Bestämmer den lägsta farthållarhastighet som AI-arbetaren får använda när den sänker farten för att undvika överbelastning eller överhettning."/>
+        <text name="rms_instantInspection_tooltip" text="När inställningen är på slutförs inspektioner på verkstaden omedelbart. Pågående åtgärder av den här typen slutförs också direkt."/>
+        <text name="rms_instantMaintenanceRepair_label" text="Omedelbart underhåll och reparation"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="När inställningen är på slutförs underhåll och reparationer på verkstaden omedelbart. Pågående åtgärder av den här typen slutförs också direkt."/>
+        <text name="rms_instantBodywork_label" text="Omedelbar lackering"/>
+        <text name="rms_instantBodywork_tooltip" text="När inställningen är på slutförs lackering på verkstaden omedelbart. Pågående åtgärder av den här typen slutförs också direkt."/>
+        <text name="rms_instantOverhaul_label" text="Omedelbar mekanisk renovering"/>
+        <text name="rms_instantOverhaul_tooltip" text="När inställningen är på slutförs mekanisk renovering på verkstaden omedelbart. Pågående åtgärder av den här typen slutförs också direkt."/>
         <text name="rms_debugMode_label" text="Felsökningsläge"/>
         <text name="rms_debugMode_tooltip" text="Aktiverar felsökningspanelen och detaljerad loggning i konsolen."/>
         <text name="rms_warningMessages_label" text="Varningsmeddelanden"/>
         <text name="rms_warningMessages_tooltip" text="Slår på eller av spelvarningar som kall motor eller överhettning."/>
         <text name="rms_serviceInterval_label" text="Underhållsintervall"/>
-        <text name="rms_serviceInterval_tooltip" text="Bestämmer det grundläggande underhållsintervallet i timmar, varefter underhåll krävs. Det verkliga intervallet beror på fordonets märke, dess ålder och kvaliteten på tidigare underhåll."/>
+        <text name="rms_serviceInterval_tooltip" text="Bestämmer intervallet för motoroljebyte i timmar. Transmissions- och hydrauloljan byts vartannat intervall, kylvätskan vart tionde. Det verkliga intervallet beror på fordonets märke."/>
         <text name="rms_vehicleLifespan_label" text="Fordonets livslängd"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Bestämmer fordonets grundläggande livslängd i timmar, varefter dess skick når 0 %. Ju närmare noll skicket kommer, desto mer opålitligt blir fordonet."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Bestämmer fordonets grundläggande livslängd i timmar, varefter dess skick når 0 %. Ju närmare noll skicket kommer, desto mer opålitligt blir fordonet. Fordonets värde sjunker också under dessa timmar."/>
         <text name="rms_reinitializeVehicles_label" text="Återställ maskinparken"/>
         <text name="rms_reinitializeVehicles_text" text="Återställ"/>
         <text name="rms_reinitializeVehicles_tooltip" text="Rättar in maskinparkens skick efter den valda livslängden. Aktiva fel raderas."/>
         <text name="rms_reinitializeVehiclesConfirm_title" text="Återställ maskinparken"/>
         <text name="rms_reinitializeVehiclesConfirm_message" text="Rätta in maskinparken efter den valda livslängden? Aktiva fel raderas."/>
         <text name="rms_reinitializeVehicles_result" text="Återställda fordon: %d. Oförändrade: %d."/>
-        <text name="rms_downtimeWear_label" text="Passivt slitage"/>
-        <text name="rms_downtimeWear_tooltip" text="Bestämmer hastigheten på passivt slitage medan ett fordon står stilla, som en procentandel av grundslitaget (Fordonets livslängd). Till exempel innebär 5 % med standardlivslängden 100 timmar att varje system tappar ungefär 1 % skick efter omkring 20 timmars stillestånd. Obs: passivt slitage är avstängt när fordonet står under tak."/>
         <text name="rms_generalWearEnabled_label" text="Åldersbetingat slitage"/>
         <text name="rms_generalWearEnabled_tooltip" text="Allteftersom fordonet slits får varje system små avdrag på sina viktigaste egenskaper, som motoreffekt, hydraulikhastighet eller bromsverkan. Effekten sätter in efter den första tredjedelen av livslängden, blir riktigt märkbar först efter två tredjedelar och förstärks ju närmare maskinen kommer slutet av sin livslängd."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Avgasrök"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Styr avgasröken efter motorns verkliga skick. Den är svart när det finns mer bränsle än luft: kraftig acceleration, en motor som drar på för lågt varvtal, längre tomgång med låg belastning, ett igensatt luftfilter eller sliten insprutning. Den är blå när en sliten motor bränner olja, och vit när bränsle slipper ut oförbränt. Rökplymen växer också med det arbete motorn utför. Äldre maskiner ryker långt mer än moderna, som knappt ryker alls så länge inget är allvarligt trasigt."/>
-        <text name="rms_exhaustSmokeIntensity_label" text="Rökintensitet"/>
-        <text name="rms_exhaustSmokeIntensity_tooltip" text="Justerar hur synlig röken är, utan att ändra orsakerna till den. Höga värden gör symptomen tydliga på avstånd."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Detaljnivå för rökplymen (på den här datorn)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Bestämmer hur mycket av rökplymen som ritas på din egen dator, utan att ändra något för de andra spelarna. En lägre inställning tar bort rökens yttersta lager och avlastar ett blygsamt grafikkort. Den kan bara minska det servern tillåter."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Fullständig"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Minskad"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimal"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Ingen"/>
-        <text name="rms_systemStressRate_label" text="Uppbyggnadstakt för systembelastning"/>
-        <text name="rms_systemStressRate_tooltip" text="Bestämmer hur snabbt belastningen byggs upp i systemen till följd av överbelastning, överhettning, hjulspinn och andra hårda driftförhållanden. Belastningen påverkar risken för fel direkt: ju mer belastning ett system samlar på sig, desto mer sannolikt blir ett fel."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Styr avgasröken efter motorns verkliga skick. Den är svart när det finns mer bränsle än luft: kraftig acceleration, en motor som drar på för lågt varvtal, längre tomgång med låg belastning, ett igensatt luftfilter eller sliten insprutning. Den är blå när en sliten motor bränner olja, och vit när bränsle slipper ut oförbränt. Rökplymen växer också med det arbete motorn utför. Äldre maskiner ryker långt mer än moderna, som knappt ryker alls så länge inget är allvarligt trasigt. I kall luft kondenserar vattnet från förbränningen också till en kort vit strimma som avdunstar inom en meter eller två, även på en frisk motor."/>
         <text name="rms_batteryCapacity_label" text="Batterikapacitet"/>
         <text name="rms_batteryCapacity_tooltip" text="Justerar batteriets största användbara kapacitet. Ett värde runt 150 Ah motsvarar ett verkligt batteri, men på den nivån stöter du nästan aldrig på urladdningsproblem."/>
         <text name="rms_option_off" text="Av"/>
@@ -132,8 +97,6 @@
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="Lägger till ett AUTO-läge i drivväljaren: framaxeln kopplas in automatiskt vid hjulspinn eller vid arbetsfart under belastning, och kopplas ur på väg. Fordon som står i AUTO går över till fyrhjulsdrift när den här inställningen stängs av."/>
         <text name="rms_drivetrainWindupDamage_label" text="Skador av belastning i drivlinan"/>
         <text name="rms_drivetrainWindupDamage_tooltip" text="Att svänga på underlag med bra grepp med spärrade differentialer belastar drivlinan och skadar transmissionen med tiden. Stäng av den här inställningen för en mildare upplevelse."/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_label" text="Urkopplingsfart för differentialspärren"/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_tooltip" text="Differentialspärrarna avaktiveras automatiskt över den här farten och aktiveras igen under den, så länge de är begärda."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkeringsbroms"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Lägger till en parkeringsbroms med en egen tangent på alla följda fordon. Bromsen håller maskinen stilla och struntar i gaspedalen när den är åtdragen."/>
         <text name="rms_drivetrainParkBrakeAuto_label" text="Automatisk parkeringsbroms"/>
@@ -156,8 +119,6 @@
         <text name="rms_ws_section_current_intervention" text="Pågående åtgärd"/>
         <text name="rms_ws_label_last_check" text="Senaste kontroll"/>
         <text name="rms_ws_label_workshop_state" text="Verkstadens status"/>
-        <text name="rms_ws_label_intervention" text="Åtgärd"/>
-        <text name="rms_ws_label_addon" text="Tillval"/>
         <text name="rms_ws_label_more_parts" text="+ %s till"/>
         <text name="rms_ws_label_committed_cost" text="Upparbetad kostnad"/>
         <text name="rms_ws_label_finish_time" text="Sluttid"/>
@@ -166,14 +127,13 @@
         <text name="rms_ws_info_inspection_reveals" text="En inspektion kan avslöja fler defekter."/>
         <text name="rms_ws_status_ready_title" text="Verkstaden är redo"/>
         <text name="rms_ws_status_ready_hint" text="Välj en åtgärd. Tillval, delar och pris bekräftas innan den startar."/>
-        <text name="rms_ws_status_no_intervention" text="Ingen pågående åtgärd"/>
         <text name="rms_ws_label_value" text="Fordonets värde"/>
         <text name="rms_ws_label_age" text="Ålder"/>
         <text name="rms_ws_label_operating_hours" text="Drifttimmar"/>
         <text name="rms_ws_label_service" text="Underhållsnivå"/>
-        <text name="rms_ws_label_service_interval" text="Underhållsintervall"/>
-        <text name="rms_ws_label_next_service" text="Nästa underhåll"/>
-        <text name="rms_ws_value_service_overdue" text="överskridet med %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Standardunderhåll"/>
+        <text name="rms_ws_label_maintenance_extended" text="Utökat underhåll"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Förebyggande underhåll"/>
         <text name="rms_ws_label_condition" text="Skick"/>
         <text name="rms_ws_label_reliability" text="Tillförlitlighet"/>
         <text name="rms_ws_label_overhaul_count" text="Utförda renoveringar"/>
@@ -181,17 +141,11 @@
         <text name="rms_ws_label_maintenance_log" text="Underhållslogg"/>
         <text name="rms_ws_label_last_report" text="Senaste rapport"/>
         <text name="rms_ws_label_last_maintenance" text="Senaste underhåll"/>
-        <text name="rms_ws_table_header_part" text="Del"/>
-        <text name="rms_ws_table_header_price" text="Pris"/>
-        <text name="rms_ws_table_header_description" text="Beskrivning"/>
-        <text name="rms_ws_table_header_stage" text="Steg"/>
-        <text name="rms_ws_table_header_repair_select" text="Reparation"/>
         <text name="rms_ws_task_inspection" text="Inspektion"/>
         <text name="rms_ws_task_maintenance" text="Underhåll"/>
         <text name="rms_ws_task_overhaul" text="Renovering"/>
         <text name="rms_ws_info_no_breakdowns" text="Inga kända fel. Ett oupptäckt fel kan ändå finnas."/>
         <text name="rms_ws_status_in_progress_short_format" text="%s pågår..."/>
-        <text name="rms_ws_status_initial" text="Läser in status..."/>
         <text name="rms_ws_status_in_progress_format" text="%s pågår till %s"/>
         <text name="rms_ws_status_open" text="Verkstaden är öppen"/>
         <text name="rms_ws_status_closed" text="Verkstaden är stängd"/>
@@ -206,7 +160,6 @@
         <text name="rms_ws_action_choice_overhaul" text="Mekanisk renovering"/>
         <text name="rms_ws_action_choice_refill" text="Påfyllning av vätskor"/>
         <text name="rms_ws_action_cancel_service" text="Avbryt åtgärden"/>
-        <text name="rms_ws_button_show" text="Visa"/>
         <text name="rms_ws_age_unit" text="månader"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="Ja"/>
@@ -223,11 +176,15 @@
         <text name="rms_log_recorded_interventions_title" text="Registrerade åtgärder"/>
         <text name="rms_log_last_intervention_title" text="Senaste åtgärd"/>
         <text name="rms_log_hours" text="Drifttimmar"/>
-        <text name="rms_log_title" text="Underhållslogg"/>
         <text name="rms_log_total_cost_title" text="Total kostnad"/>
         <text name="rms_log_total_breakdowns_count_title" text="Åtgärdade fel"/>
         <text name="rms_log_type" text="Åtgärdstyp"/>
         <text name="rms_log_cost_per_month_title" text="Månadskostnad"/>
+        <text name="rms_log_cost_per_hour_title" text="Kostnad per drifttimme"/>
+        <text name="rms_log_invoice_title" text="Fakturadetaljer"/>
+        <text name="rms_log_invoice_workshop_flat_rate" text="Fast verkstadspris"/>
+        <text name="rms_log_invoice_labour" text="Arbete"/>
+        <text name="rms_log_invoice_filters" text="Filter"/>
         <text name="rms_log_cancelled_desc" text="Åtgärd avbruten"/>
         <text name="rms_log_ownership_months_title" text="Innehavstid"/>
         <text name="rms_log_overhaul_desc_with_painting" text="Fordonet är omlackerat"/>
@@ -575,10 +532,9 @@
         <text name="rms_option_menu_option_two_title_overhaul" text="System som ska renoveras"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Om åtgärden avslöjar fel följer automatiskt en standardreparation med originaldelar."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Efter reparationen följer automatiskt ett standardunderhåll med originalt förbrukningsmaterial."/>
-        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="Lägger till en fullständig omlackering av fordonet i den här renoveringen."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Delvis renovering: behandlar bara det valda systemet, åtgärdar felen där, tar bort den mekaniska belastningen och återställer skicket. Den tillhörande vätskan byts där det finns en."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Standardrenovering: behandlar alla system, åtgärdar de fel som stöds, tar bort den mekaniska belastningen och byter alla vätskor. Återställer ett bra skick."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Fullständig renovering: behandlar alla system, åtgärdar de fel som stöds, tar bort den mekaniska belastningen och byter alla vätskor. Återställer ett utmärkt skick."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="Delvis renovering: återställer det valda systemet till gott skick, åtgärdar fel som kan repareras och byter tillhörande vätska vid behov."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Standardrenovering: återställer alla system till gott skick, åtgärdar fel som kan repareras, byter vätskorna och förnyar underhållet."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Fullständig renovering: återställer alla system till nyskick, åtgärdar fel som kan repareras, byter vätskorna och förnyar underhållet."/>
         <text name="rms_option_menu_price_text" text="Pris"/>
         <text name="rms_option_menu_part_used_description" text="Begagnade delar: lägst pris, med 50 % risk för en senare defekt."/>
         <text name="rms_option_menu_part_aftermarket_description" text="Ooriginala delar: lägre pris, med 33 % risk för en senare defekt."/>
@@ -589,9 +545,9 @@
         <text name="rms_option_menu_consumable_oem_description" text="Originalt förbrukningsmaterial från tillverkaren: standardpris, med 10 % risk för en senare defekt."/>
         <text name="rms_option_menu_consumable_premium_description" text="Premiumförbrukningsmaterial: 20 % i merpris, utan risk för defekt som beror på förbrukningsmaterialet."/>
         <text name="rms_option_menu_perform_repair" text="Automatisk reparation"/>
-        <text name="rms_option_menu_perform_renew_paint" text="Omlackering"/>
         <text name="rms_option_menu_perform_maintenance" text="Automatiskt underhåll"/>
         <text name="rms_option_menu_warranty_repair_text" text="Reparation på garanti"/>
+        <text name="rms_warranty_dealer_info" text="Återförsäljargaranti för ägda fordon under 12 månader och 20 drifttimmar: standardreparation, originaldelar och nödvändiga vätskor."/>
         <text name="rms_option_menu_duration_text" text="Tidsåtgång"/>
         <text name="rms_option_menu_duration_instant" text="Omedelbart"/>
         <text name="rms_option_menu_finish_time_text" text="Sluttid"/>
@@ -599,27 +555,32 @@
         <text name="rms_option_menu_inspection_visual_description" text="Visuell inspektion: snabb och billig, den letar bara efter fel som redan är aktiva, och med nedsatt förmåga att upptäcka dem. Rapporten visar inte komponenternas skick i detalj."/>
         <text name="rms_option_menu_inspection_standard_description" text="Standardinspektion: letar efter aktiva fel med normal upptäcktsförmåga och gör en allmän rapport utan detaljerade skickvärden."/>
         <text name="rms_option_menu_inspection_complete_description" text="Fullständig inspektion: letar efter aktiva och möjliga fel med normal upptäcktsförmåga och ger sedan en full rapport med komponenternas skick i detalj."/>
-        <text name="rms_option_menu_maintenance_minimal_description" text="Minimalt underhåll: återställer underhållsnivån delvis och fyller bara på de vätskor som saknas. Nästa intervall förblir kortare."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="Standardunderhåll: återställer den normala underhållsnivån, byter motoroljan och fyller på de övriga kretsarna vid behov."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="Utökat underhåll: höjer underhållsnivån över det normala, förlänger nästa intervall och byter alla vätskor."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="Förebyggande underhåll: återställer den normala nivån, byter alla vätskor och sänker den mekaniska belastningen på upp till tre prioriterade system."/>
+        <text name="rms_option_menu_maintenance_standard_description" text="Standardunderhåll: byter motoroljan tillsammans med olje- och bränslefiltret, fyller på de övriga kretsarna vid behov, rengör kylaren och blåser rent luftfiltret."/>
+        <text name="rms_option_menu_maintenance_extended_description" text="Utökat underhåll: standardunderhållet plus byte av transmissions- och hydrauloljan med nytt filter. Byter även luftfiltret och fyller på kylvätska."/>
+        <text name="rms_option_menu_maintenance_preventive_description" text="Förebyggande underhåll: byter alla oljor och kylvätskan tillsammans med deras filter och monterar ett nytt luftfilter. Sänker även den mekaniska belastningen på upp till tre prioriterade system."/>
         <text name="rms_option_menu_repair_type_fix_description" text="Nödreparation: sätter snabbt och billigt maskinen i drift igen utan att åtgärda felet. Felet kommer tillbaka efter en begränsad tid."/>
         <text name="rms_option_menu_repair_type_replacement_description" text="Standardreparation: åtgärdar felet och byter den defekta komponenten. Den mekaniska belastningen i det berörda systemet sänks delvis."/>
         <text name="rms_option_menu_repair_type_advanced_description" text="Grundlig reparation: åtgärdar felet, byter den defekta komponenten och tar bort den uppbyggda mekaniska belastningen i det berörda systemet."/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="Nästa åtgärd faktureras för sig. De vätskor som behövs levereras eller tas från lagret när den startar."/>
+        <text name="rms_bodywork_touchup" text="Lackbättring"/>
+        <text name="rms_bodywork_full" text="Full omlackering"/>
+        <text name="rms_bodywork_colors_title" text="Fordonets färger"/>
+        <text name="rms_bodywork_wear" text="Lackskador"/>
+        <text name="rms_bodywork_unavailable" text="Inte tillgänglig"/>
+        <text name="rms_bodywork_ineligible" text="Åtgärden är inte tillgänglig för detta fordon eller i denna verkstad"/>
+        <text name="rms_bodywork_no_wear" text="Inga lackskador att reparera"/>
+        <text name="rms_bodywork_wear_limit" text="Lackbättring är möjlig vid upp till 30 % lackskada"/>
+        <text name="rms_bodywork_touchup_description" text="Åtgärdar mindre lackskador. De nuvarande färgerna behålls."/>
+        <text name="rms_bodywork_full_description" text="Förnyar lacken. Välj bland fordonets tillgängliga färger eller behåll de nuvarande."/>
+        <text name="rms_bodywork_no_colors" text="Fordonet har inga valbara färger. De nuvarande färgerna behålls."/>
+        <text name="rms_bodywork_unavailable_title" text="Åtgärden är inte tillgänglig"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Inspektionsrapport"/>
-        <text name="rms_report_vehicle_name_title" text="Fordonets namn"/>
-        <text name="rms_report_vehicle_age_title" text="Ålder"/>
-        <text name="rms_report_vehicle_operating_hours_title" text="Drifttimmar"/>
         <text name="rms_report_vehicle_specs_title" text="Fordonets specifikationer"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="Generatorns maximala ström"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="Batteriets laddning"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="Batterikapacitet"/>
-        <text name="rms_report_date_title" text="Datum"/>
         <text name="rms_report_detected_breakdowns_title" text="Hittade fel"/>
-        <text name="rms_report_inspection_type_title" text="Inspektionstyp"/>
-        <text name="rms_report_inspection_location_title" text="Inspektionsplats"/>
         <text name="rms_report_overall_assessment_title" text="Samlad bedömning av skicket"/>
         <text name="rms_report_overall_assessment_condition" text="Skicknivå"/>
         <text name="rms_report_overall_assessment_crit_fail_risk" text="Risk för kritiskt haveri"/>
@@ -701,12 +662,17 @@
         <text name="rms_fluid_container_action_cancel" text="Stoppa överföringen"/>
         <text name="rms_fluid_select_vehicle_title" text="Val av fordon"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Välj det fordon som ska fyllas"/>
-        <text name="rms_fluid_select_circuit_title" text="Val av krets"/>
         <text name="rms_fluid_select_circuit_prompt" text="Välj den krets som ska fyllas"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Välj den vätska som ska fyllas på"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorolja"/>
         <text name="rms_fluid_circuit_coolant" text="Kylvätska"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmissionsolja"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulolja"/>
+        <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmissions- och hydraulolja"/>
+        <text name="rms_fluid_hud_engineOil" text="Motorolja"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Transm./hydr.-olja"/>
+        <text name="rms_fluid_hud_coolant" text="Kylvätska"/>
         <text name="rms_fluid_incompatible_title" text="Olämplig vätska"/>
         <text name="rms_fluid_incompatible_message" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan tredubbla slitaget på systemet, öka värmen eller göra hydrauliken långsammare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
         <text name="rms_fluid_error_no_vehicle" text="Inget fordon med behov av vätska inom 4 m"/>
@@ -714,10 +680,11 @@
         <text name="rms_fluid_error_motor_running" text="Stäng av motorn innan du överför vätska"/>
         <text name="rms_fluid_error_vehicle_moving" text="Fordonet måste stå stilla"/>
         <text name="rms_fluid_dealer_billed" text="Fakturerade vätskor"/>
-        <text name="rms_fluid_stock_required" text="Vätskelager krävs"/>
+        <text name="rms_fluid_warranty_covered" text="Vätskor som täcks av garantin"/>
+        <text name="rms_fluid_stock_required" text="Lämpliga dunkar krävs inom verkstadsområdet"/>
         <text name="rms_fluid_refill_work_order" text="Uppfyllning av vätskor"/>
         <text name="rms_fluid_refill_dealer_supply" text="Leverans ingår i prisförslaget"/>
-        <text name="rms_fluid_refill_stock_supply" text="Taget från verkstadens lager"/>
+        <text name="rms_fluid_refill_stock_supply" text="Ställ dina lämpliga dunkar inom verkstadsområdet"/>
         <text name="rms_fluid_mode_top_up" text="påfyllning"/>
         <text name="rms_fluid_mode_replace" text="byte"/>
         <text name="rms_fluid_mode_repair" text="påfyllning efter läckage"/>
@@ -740,12 +707,15 @@
         <text name="rms_inspection_verdict_ok_title" text="Klar att användas"/>
         <text name="rms_inspection_verdict_ok_message" text="Inget att anmärka på. Maskinen kan sättas i arbete."/>
         <text name="rms_inspection_verdict_watch_title" text="Håll ett öga på det"/>
-        <text name="rms_inspection_verdict_watch_message" text="En punkt kräver din uppmärksamhet. Maskinen kan fortfarande arbeta, men se över det i dag."/>
+        <text name="rms_inspection_verdict_watch_message" text="En eller flera punkter kräver din uppmärksamhet. Maskinen kan fortsätta arbeta; åtgärda dem i dag."/>
         <text name="rms_inspection_verdict_air_filter_service_message" text="Maskinen kan fortfarande arbeta. Planera underhåll på verkstaden för att byta luftfiltret."/>
         <text name="rms_inspection_verdict_stop_title" text="Får inte användas"/>
         <text name="rms_inspection_verdict_stop_message" text="En punkt måste åtgärdas före all användning. Sätt inte den här maskinen i arbete som den är."/>
-        <text name="rms_inspection_service_due_in" text="nästa underhåll om %s"/>
-        <text name="rms_inspection_service_overdue" text="underhåll överskridet med %s"/>
+        <text name="rms_inspection_service_due_in" text="%s om %s"/>
+        <text name="rms_inspection_service_overdue" text="%s överskridet med %s"/>
+        <text name="rms_inspection_service_clock_engine" text="motoroljebyte"/>
+        <text name="rms_inspection_service_clock_transmission" text="transmissionsoljebyte"/>
+        <text name="rms_inspection_service_clock_coolant" text="kylvätskebyte"/>
         <text name="rms_inspection_status_slightly_low" text="Något för lågt"/>
         <text name="rms_inspection_status_slightly_dirty" text="Lätt nedsmutsat"/>
         <text name="rms_inspection_status_slightly_dry" text="Något torrt"/>
@@ -763,6 +733,8 @@
         <text name="rms_inspection_status_active_leak" text="Aktivt läckage"/>
         <text name="rms_inspection_status_heavily_clogged" text="Kraftigt nedsmutsat"/>
         <text name="rms_inspection_status_not_required" text="Krävs inte"/>
+        <text name="rms_inspection_status_change_overdue" text="Byte överskridet"/>
+        <text name="rms_inspection_status_change_long_overdue" text="Byte långt överskridet"/>
         <text name="rms_inspection_engine_oil" text="Motorolja"/>
         <text name="rms_inspection_coolant" text="Kylvätska"/>
         <text name="rms_inspection_hydraulic_fluid" text="Hydraulolja"/>
@@ -784,8 +756,8 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="Luftfiltret är lätt nedsmutsat."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Luftfiltret är tydligt nedsmutsat."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Luftfiltret är kraftigt nedsmutsat av damm och skräp."/>
-        <text name="rms_inspection_hint_air_filter_clogging_stage4" text="Luftfiltret är helt igensatt av damm och skräp."/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="Luftfiltret har nått gränsen för rengöring med tryckluft. Byte kräver underhåll på verkstaden."/>
+        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="Blås rent filtret för att få bort löst damm. Resterna som blir kvar innebär att filtret sedan måste bytas på verkstaden."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Det finns spår av överhettning och missfärgning på enstaka kopplingar nära generatorn."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Det finns tydliga spår av överhettning och missfärgade kontakter nära generatorn och dess kablage."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Smörjpunkterna verkar något torra."/>
@@ -802,6 +774,9 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Det finns oljespår och missfärgade kopplingar runt turboaggregatet."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Det finns kraftiga oljespår, missfärgade kopplingar och sotspår runt turboaggregatet."/>
         <text name="rms_inspection_hint_fluid_level_low" text="En vätskenivå har sjunkit under sitt märke."/>
+        <text name="rms_inspection_hint_service_engine" text="Motoroljebytet är överskridet: sliten olja ökar slitaget på motor och insprutning. Ett standardunderhåll byter oljan tillsammans med filtren."/>
+        <text name="rms_inspection_hint_service_transmission" text="Transmissionsoljebytet är överskridet: sliten olja ökar slitaget på transmission och hydraulik. Ett utökat underhåll byter oljan tillsammans med filtret."/>
+        <text name="rms_inspection_hint_service_coolant" text="Kylvätskan behöver bytas: sliten kylvätska ökar slitaget på kylsystemet. Ett förebyggande underhåll byter ut den."/>
         <text name="rms_inspection_transmission_oil" text="Transmissionsolja"/>
         <text name="rms_inspection_radiator" text="Kylare"/>
         <text name="rms_inspection_air_filter" text="Luftfilter"/>
@@ -824,13 +799,22 @@
         <text name="rms_ingame_menu_header_last_inspection" text="Senaste inspektion"/>
         <text name="rms_ingame_menu_header_last_maintenance" text="Senaste underhåll"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
-        <text name="rms_ingame_menu_header_price" text="Värde"/>
+        <text name="rms_ingame_menu_header_price" text="Sälj i meny"/>
         <text name="rms_ingame_menu_header_procedure" text="Åtgärd"/>
         <text name="rms_ingame_menu_header_finish_time" text="Slut"/>
         <text name="rms_ingame_menu_header_service_cost" text="Kostnad"/>
+        <text name="rms_ingame_menu_header_reason" text="Orsak till undantag"/>
         <text name="rms_ingame_menu_empty_other" text="Inga övriga fordon"/>
         <text name="rms_ingame_menu_empty_active" text="Inga RMS-fordon"/>
         <text name="rms_ingame_menu_empty_service" text="Inga fordon under underhåll"/>
+        <text name="rms_ingame_menu_reason_implement" text="Redskap eller släp"/>
+        <text name="rms_ingame_menu_reason_unsupported" text="Stöds inte"/>
+        <text name="rms_ingame_menu_reason_electric" text="Elektriskt"/>
+        <text name="rms_ingame_menu_reason_towed" text="Redskap med egen motor"/>
+        <text name="rms_ingame_menu_reason_auxiliary" text="Hjälpmaskin"/>
+        <text name="rms_ingame_menu_reason_user" text="Manuellt undantaget"/>
+        <text name="rms_ingame_menu_include" text="Ta med i RMS"/>
+        <text name="rms_ingame_menu_exclude" text="Undanta från RMS"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Återlämning av fordonet"/>
         <text name="rms_sell_dialog_section_vehicle" text="Fordon"/>
@@ -856,8 +840,7 @@
         <text name="rms_tutorial_service_interval_expired_message" text="Underhållsintervallet för %s är överskridet.&#10;&#10;Kör till en verkstad så snart som möjligt och välj ”Underhåll”. Fortsätter du att använda ett fordon med överskridet underhåll stiger risken för flera fel på en gång kraftigt."/>
         <text name="rms_tutorial_steering_title" text="Styrning vid stillastående"/>
         <text name="rms_tutorial_steering_message" text="Det är bäst att undvika att vrida ratten när maskinen står stilla. Det belastar styrningen och framaxelns delar hårt, vilket ökar slitaget på underredet.&#10;&#10;Kör en liten bit framåt innan du vrider: då vrider sig hjulen långt lättare."/>
-        <text name="rms_tutorial_rad_or_filter_clogged_title" text="Kylare och luftfilter nedsmutsade"/>
-        <text name="rms_tutorial_rad_or_filter_clogged_message" text="Kylaren och luftfiltret på ditt fordon är kraftigt nedsmutsade.&#10;&#10;En nedsmutsad kylare leder bort värmen sämre, och ett igensatt luftfilter begränsar luften till motorn. Effekten faller, och förbrukningen stiger.&#10;&#10;Kylaren rengörs vid tvättplatsen eller med tryckluftsblåsaren. Luftfiltret går bara att blåsa rent, och en blåsning gör det aldrig som nytt igen: bara ett underhåll på verkstaden byter det.&#10;&#10;Du kan se skicket på båda: håll in %s-tangenten medan du tittar på fordonet."/>
+        <text name="rms_tutorial_cooling_air_check_message" text="Kylaren eller luftfiltret är igensatt. Håll in %s-tangenten medan du tittar på fordonet för att se vilket. Rengör det med tryckluftsblåsaren. Om filtret inte längre kan blåsas rent, välj utökat eller förebyggande underhåll på verkstaden för att byta det."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Smörjning behövs"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%s behöver regelbunden smörjning.&#10;&#10;I RMS sjunker smörjnivån med drifttimmarna. Efter en lång period utan användning behövs smörjning också innan maskinen sätts i drift igen. För lite smörjning snabbar på slitaget på chassit.&#10;&#10;Köp en fettspruta i butiken och smörj maskinen när inspektionen ber om det.&#10;&#10;Du kan se smörjnivån: håll in %s-tangenten medan du tittar på fordonet."/>
         <text name="rms_tutorial_needs_repair_title" text="Fel hittat"/>
@@ -877,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Parkeringsbromsen är åtdragen. Det är du som drar åt och släpper den med dess egen tangent: gasar du med bromsen åtdragen står maskinen stilla och varnar dig.&#10;&#10;I en backe är det den som hindrar maskinen från att rulla i väg av sig själv."/>
         <text name="rms_tutorial_preheat_title" text="Förvärmning av dieselmotor"/>
         <text name="rms_tutorial_preheat_message" text="På en kall dieselmotor slår ett tryck på startreglaget på tändningen och startar förvärmningen automatiskt. Lamporna i instrumentpanelet tänds kort, och sedan fortsätter förvärmningslampan att lysa tills motorn är klar. Upprepa inte kommandot: startmotorn kopplar in av sig själv när lampan slocknar."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Kraftuttagets inkopplingscykler"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Att koppla in och ur kraftuttaget om och om igen bygger upp mekaniska cykler. Undvik onödiga inkopplingar."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Inkoppling av kraftuttag"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Koppla in kraftuttaget på tomgång och höj sedan varvtalet: inkoppling på högt varvtal ger hela drivlinan en stöt, särskilt med ett tungt redskap. Varje inkoppling sliter också på kopplingen."/>
+        <text name="rms_tutorial_pto_raised_title" text="Kraftuttag och lyft redskap"/>
+        <text name="rms_tutorial_pto_raised_message" text="Att köra kraftuttaget med redskapet lyft får kardanaxlarna att arbeta i skarp vinkel och sliter dem snabbt. Stäng av kraftuttaget innan du lyfter redskapet för transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgång och stillestånd"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Slitaget är långt lägre när maskinen går utan att arbeta. Med motorn avstängd blir det minimalt. Under tak försvinner det helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Långvarig tomgång"/>
@@ -921,5 +906,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Du svänger på ett underlag med bra grepp med differentialspärren aktiverad. I en kurva rullar de inre och yttre hjulen olika sträckor, men differentialspärren tvingar dem att gå med samma hastighet: drivlinan kommer under belastning, och slitaget på den stiger. Avaktivera spärren innan du svänger."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Drivlägen och differentialspärr"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Den här maskinen låter dig välja sin drift: bakhjulsdrift, fyrhjulsdrift eller AUTO, som kopplar in framaxeln så snart hjulen spinner.&#10;&#10;Differentialspärren hittar grepp där det inte finns något kvar, men den kostar dyrt i kurvor på underlag med bra grepp: de inre och yttre hjulen kan inte gå med samma hastighet, och det är drivlinan som tar smällen. Avaktivera den innan du svänger."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Telwin-laddare på vagn, 150 A vid 12 V. Anslut den vid fordonet och låt batteriet laddas. Laddningen följer spelets tidshastighet. Starthjälp (START, 200 A)."/>
+        <text name="rms_charger_start" text="Anslut laddaren"/>
+        <text name="rms_charger_disconnect" text="Koppla från laddaren"/>
+        <text name="rms_charger_select" text="Välj fordonet som ska anslutas."/>
+        <text name="rms_charger_no_vehicle" text="Inget lämpligt fordon inom 4 m. Det måste tillhöra din gård, stå stilla och ha motorn avstängd."/>
+        <text name="rms_charger_idle" text="Tillgänglig"/>
+        <text name="rms_charger_charging" text="Laddning pågår"/>
+        <text name="rms_charger_full" text="Batteriet laddat"/>
+        <text name="rms_charger_interrupted" text="Laddning avbruten"/>
+        <text name="rms_charger_interrupted_reason" text="Laddning avbruten. %s"/>
+        <text name="rms_charger_status" text="Status"/>
+        <text name="rms_charger_battery" text="Batteri"/>
+        <text name="rms_charger_voltage" text="Spänning"/>
+        <text name="rms_charger_current" text="Levererad ström"/>
+        <text name="rms_charger_consumers" text="Stäng av lampor och tillbehör."/>
+        <text name="rms_charger_error_unavailable" text="Fordonet saknas eller stöds inte."/>
+        <text name="rms_charger_error_access" text="Detta fordon tillhör en annan gård."/>
+        <text name="rms_charger_error_distance" text="Flytta laddaren inom 4 m."/>
+        <text name="rms_charger_error_motor" text="Stäng av motorn innan laddaren ansluts."/>
+        <text name="rms_charger_error_moving" text="Fordonet rör sig."/>
+        <text name="rms_charger_error_service" text="En verkstadsåtgärd pågår."/>
+        <text name="rms_charger_error_cables" text="Koppla från startkablarna."/>
+        <text name="rms_charger_error_busy" text="En laddare är redan ansluten."/>
+        <text name="rms_charger_error_full" text="Detta batteri är redan laddat."/>
+        <text name="rms_charger_connected" text="Laddare ansluten. Laddning påbörjad."/>
+        <text name="rms_charger_disconnected" text="Laddare frånkopplad."/>
+        <text name="rms_charger_stopped_motor" text="Laddstopp: motorstart"/>
+        <text name="rms_charger_error_player_distance" text="Gå fram till laddaren."/>
+        <text name="rms_charger_mode_select" text="Anslut laddaren"/>
+        <text name="rms_charger_mode_start" text="Starthjälp (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START redo"/>
+        <text name="rms_charger_start_active" text="Starthjälp aktiv"/>
+        <text name="rms_charger_start_running" text="Motor startad: koppla loss"/>
+        <text name="rms_charger_start_countdown" text="Vänta: %d s"/>
+        <text name="rms_charger_start_wait" text="Vänta 30 sekunder mellan två startförsök."/>
+        <text name="rms_charger_unplug_before_start" text="Koppla loss laddaren eller välj START före motorstart."/>
+        <text name="rms_charger_start_connected" text="Starthjälp (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Ladda ett batteri (150 A)"/>
     </texts>
 </l10n>

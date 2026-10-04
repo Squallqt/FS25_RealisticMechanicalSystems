@@ -8,6 +8,9 @@ RMS_MaintenanceLogDialog.INSTANCE = nil
 local RMS_MaintenanceLogDialog_mt = Class(RMS_MaintenanceLogDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
 
+-- below one hour of use, the cost per hour is a division by almost nothing
+local MIN_HOURS_FOR_COST_PER_HOUR = 1
+
 ---Draws the native maintenance glyph in the maintenance interval KPI
 -- @param table area transparent GUI element receiving the XML draw callback
 function RMS_MaintenanceLogDialog:onDrawMaintenanceKpiIcon(area)
@@ -136,7 +139,7 @@ local function getLogDescription(entry)
         description = g_i18n:getText("rms_log_cancelled_desc")
     else
         local partTypeSuffix = ""
-        if entry.optionTwo ~= nil and entry.optionTwo ~= "NONE" then
+        if entry.type ~= status.BODYWORK and entry.optionTwo ~= nil and entry.optionTwo ~= "NONE" then
             partTypeSuffix = " (" .. g_i18n:getText(entry.optionTwo) .. ")"
         end
 
@@ -164,6 +167,8 @@ local function getLogDescription(entry)
             if entry.optionThree then
                 description = description .. ". " .. g_i18n:getText("rms_log_overhaul_desc_with_painting")
             end
+        elseif entry.type == status.BODYWORK then
+            description = g_i18n:getText(entry.optionOne)
         end
     end
 
@@ -194,7 +199,7 @@ local function getLogDetailPresentation(entry)
     end
 
     local partTypeSuffix = ""
-    if entry.optionTwo ~= nil and entry.optionTwo ~= "NONE" then
+    if entry.type ~= status.BODYWORK and entry.optionTwo ~= nil and entry.optionTwo ~= "NONE" then
         partTypeSuffix = " (" .. g_i18n:getText(entry.optionTwo) .. ")"
     end
 
@@ -220,11 +225,54 @@ local function getLogDetailPresentation(entry)
             presentation.detailLabel = g_i18n:getText("rms_log_description")
             presentation.detailItems = {g_i18n:getText("rms_log_overhaul_desc_with_painting")}
         end
+    elseif entry.type == status.BODYWORK then
+        presentation.summary = g_i18n:getText(entry.optionOne)
     else
         presentation.summary = getLogTypePresentation(entry)
     end
 
     return presentation
+end
+
+---Builds the invoice rows of a completed entry, repairs merged per part, when they say more than its price
+-- @param table vehicle vehicle
+-- @param table entry maintenance log entry
+-- @return table rows label and price of each invoice row
+local function getInvoiceRows(vehicle, entry)
+    local rows = {}
+    if entry.isCompleted == false or type(entry.invoice) ~= "table" then
+        return rows
+    end
+
+    local repairRowsByLabel = {}
+    for _, line in ipairs(entry.invoice) do
+        local price = tonumber(line.price) or 0
+        if line.kind == "service" then
+            local labelKey = entry.type == RealisticMechanicalSystems.STATUS.BODYWORK and entry.optionOne
+                or "rms_log_invoice_workshop_flat_rate"
+            table.insert(rows, { label = g_i18n:getText(labelKey), price = price })
+        elseif line.kind == "labour" or line.kind == "filters" then
+            table.insert(rows, { label = g_i18n:getText("rms_log_invoice_" .. line.kind), price = price })
+        elseif line.kind == "repair" then
+            local breakdownDef = RMS_Breakdowns.BreakdownRegistry[line.key]
+            local partKey = breakdownDef ~= nil and (breakdownDef.part or breakdownDef.system) or "rms_log_repair_desc_generic"
+            local label = g_i18n:getText(partKey)
+            if repairRowsByLabel[label] ~= nil then
+                repairRowsByLabel[label].price = repairRowsByLabel[label].price + price
+            else
+                repairRowsByLabel[label] = { label = label, price = price }
+                table.insert(rows, repairRowsByLabel[label])
+            end
+        elseif line.kind == "fluid" then
+            table.insert(rows, { label = RMS_FluidWorkshop.formatRequirement(vehicle, line.key, line.liters, line.mode), price = price })
+        end
+    end
+
+    -- a lone flat rate is already the price shown above
+    if #rows == 1 and entry.invoice[1].kind == "service" then
+        return {}
+    end
+    return rows
 end
 
 ---Loads the dialog layout and stores the shared instance
@@ -243,6 +291,7 @@ function RMS_MaintenanceLogDialog.new(target, customMt)
     dialog.vehicle = nil
     dialog.logDataAll = nil
     dialog.detailLogItems = {}
+    dialog.invoiceRows = {}
     dialog.selectedLogIndex = nil
     return dialog
 end
@@ -286,6 +335,8 @@ function RMS_MaintenanceLogDialog:updateSelectedEntryDetails()
         self.selectedLogDetailsHeader:setVisible(false)
         self.detailLogItems = {}
         self.detailPartsTable:setVisible(false)
+        self.invoiceRows = {}
+        self.invoiceTable:setVisible(false)
         self.selectedLogPrice:setText("-")
         self.detailIdentityRow:invalidateLayout()
         RMS_Utils.fitValuePills(self)
@@ -308,9 +359,15 @@ function RMS_MaintenanceLogDialog:updateSelectedEntryDetails()
     self.selectedLogSummary:setText(presentation.summary)
     self.selectedLogLocation:setText(presentation.location)
     self.selectedLogLocation:setVisible(presentation.location ~= "")
-    self.selectedLogDetailsLabel:setText(presentation.detailLabel)
-    self.selectedLogDetailsHeader:setVisible(presentation.detailLabel ~= "")
-    self.detailLogItems = presentation.detailItems
+    self.invoiceRows = getInvoiceRows(self.vehicle, entry)
+    local hasInvoice = #self.invoiceRows > 0
+    local detailLabel = hasInvoice and g_i18n:getText("rms_log_invoice_title") or presentation.detailLabel
+    self.selectedLogDetailsLabel:setText(detailLabel)
+    self.selectedLogDetailsHeader:setVisible(detailLabel ~= "")
+    self.invoiceTable:setDataSource(self)
+    self.invoiceTable:reloadData()
+    self.invoiceTable:setVisible(hasInvoice)
+    self.detailLogItems = hasInvoice and {} or presentation.detailItems
     self.detailPartsTable:setDataSource(self)
     self.detailPartsTable:reloadData()
     self.detailPartsTable:setVisible(#self.detailLogItems > 0)
@@ -339,12 +396,13 @@ end
 
 ---Opens the dialog on a vehicle with its newest entry selected
 -- @param table vehicle vehicle
-function RMS_MaintenanceLogDialog.show(vehicle)
+function RMS_MaintenanceLogDialog.show(vehicle, fromWorkshop)
     if RMS_MaintenanceLogDialog.INSTANCE == nil then RMS_MaintenanceLogDialog.register() end
     if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then return end
     
     local dialog = RMS_MaintenanceLogDialog.INSTANCE
     dialog.vehicle = vehicle
+    dialog.workshopContext = fromWorkshop == true
     
     dialog.logDataAll = vehicle.spec_RealisticMechanicalSystems.maintenanceLog or {}
     dialog:rebuildVisibleLogData()
@@ -408,6 +466,12 @@ function RMS_MaintenanceLogDialog:updateScreen()
     local averageMaintenanceInterval = 0
 
     self.costPerMonthValue:setText(g_i18n:formatMoney(costPerMonth, 0, true, false) .. " / " .. g_i18n:getText("rms_ws_age_unit"))
+    local ownedHours = currentLoggedHours - (purchaseHours or 0)
+    if ownedHours >= MIN_HOURS_FOR_COST_PER_HOUR then
+        self.costPerHourValue:setText(g_i18n:formatMoney(totalCost / ownedHours, 0, true, false) .. " / " .. g_i18n:getText("rms_ws_hours_unit"))
+    else
+        self.costPerHourValue:setText("-")
+    end
     self.ownershipMonthsValue:setText(tostring(age) .. " " .. g_i18n:getText("rms_ws_age_unit"))
     self.totalBreakdownsCountValue:setText(string.format("%d", totalBreakdowns))
     if totalBreakdowns > 0 then
@@ -432,7 +496,7 @@ function RMS_MaintenanceLogDialog:updateScreen()
 
     if maintenanceCount > 0 then
         averageMaintenanceInterval = math.max(sumMaintenanceInterval / maintenanceCount, 0)
-        self.averageMaintenanceIntervalValue:setText(string.format("%.1f", averageMaintenanceInterval) .. " " .. g_i18n:getText("rms_spec_hour_s"))
+        self.averageMaintenanceIntervalValue:setText(string.format("%.0f", averageMaintenanceInterval) .. " " .. g_i18n:getText("rms_spec_hour_s"))
     else
         self.averageMaintenanceIntervalValue:setText("-")
     end
@@ -465,6 +529,9 @@ function RMS_MaintenanceLogDialog:getNumberOfItemsInSection(list, section)
     if list == self.detailPartsTable then
         return math.ceil(#self.detailLogItems / 2)
     end
+    if list == self.invoiceTable then
+        return #self.invoiceRows
+    end
 
     return #self.logData
 end
@@ -484,6 +551,12 @@ function RMS_MaintenanceLogDialog:populateCellForItemInSection(list, section, in
             "detailPartRight",
             "detailPartRightBullet"
         )
+        return
+    end
+    if list == self.invoiceTable then
+        local row = self.invoiceRows[index]
+        cell:getAttribute("invoiceLabel"):setText(row.label)
+        cell:getAttribute("invoiceAmount"):setText(g_i18n:formatMoney(row.price, 0, true, false))
         return
     end
 
@@ -510,6 +583,26 @@ end
 ---Closes the dialog
 function RMS_MaintenanceLogDialog:onClickBack()
     self:close()
+end
+
+function RMS_MaintenanceLogDialog:onClickSummaryTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.SUMMARY)
+end
+
+function RMS_MaintenanceLogDialog:onClickDiagnosticTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.DIAGNOSTIC)
+end
+
+function RMS_MaintenanceLogDialog:onClickInterventionsTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.INTERVENTIONS)
+end
+
+function RMS_MaintenanceLogDialog:onClickTechnicalTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.TECHNICAL)
+end
+
+function RMS_MaintenanceLogDialog:onWorkshopTabPagingChanged()
+    RMS_WorkshopDialog.onChildTabPagingChanged(self)
 end
 
 ---Selects a log row and refreshes the report button
@@ -541,7 +634,7 @@ end
 function RMS_MaintenanceLogDialog:onClickShowReport()
     local entry = self:getSelectedLogEntry()
     if entry ~= nil and RealisticMechanicalSystems.getIsLogEntryHasReport(entry) then
-        RMS_ReportDialog.show(self.vehicle, entry)
+        RMS_ReportDialog.show(self.vehicle, entry, self)
         return
     end
 
@@ -550,19 +643,22 @@ end
 
 ---Selects the technical record tab in the maintenance log shell
 function RMS_MaintenanceLogDialog:onCreate()
-    RMS_Utils.mirrorSelectionToChildren(self.logTechnicalTab)
-    self.logTechnicalTab:setSelected(true)
+    RMS_Utils.mirrorSelectionToChildren(self.workshopNavTabs[4])
+    self.workshopNavTabs[4]:setSelected(true)
 end
 
 ---Subscribes to balance changes while the dialog is open
 function RMS_MaintenanceLogDialog:onOpen()
     RMS_MaintenanceLogDialog:superClass().onOpen(self)
+    RMS_WorkshopDialog.initializeChildTabPaging(self, RMS_WorkshopDialog.TAB.TECHNICAL)
+    RMS_Utils.resetScrollingTexts(self.dialogElement)
     g_messageCenter:subscribe(MessageType.MONEY_CHANGED, self.updateScreen, self)
 end
 
 ---Releases the displayed vehicle and dialog subscriptions
 function RMS_MaintenanceLogDialog:onClose()
     self.vehicle = nil
+    self.workshopContext = nil
     self.logData = nil
     self.logDataAll = nil
     self.selectedLogIndex = nil

@@ -29,11 +29,9 @@ RMS_Config = {
     CORE = {
         REFERENCE_SERVICE_WEAR = 0.1,
         REFERENCE_SYSTEMS_WEAR = 0.01,
-        BASE_SERVICE_WEAR = 0.1,
+        BASE_SERVICE_WEAR = 0.05,
         BASE_SYSTEMS_WEAR = 0.01,
 
-        DOWNTIME_MULTIPLIER = 0.05,
-        UNDER_ROOF_DOWNTIME_MULTIPLIER = 0.0,
         RAIN_FACTOR = 1.1,
         HAIL_FACTOR = 1.3,
         SNOW_FACTOR = 1.1,
@@ -52,18 +50,6 @@ RMS_Config = {
 
         AVG_STRESS_WARNING_THRESHOLD = 0.22,
         AVG_STRESS_CRITICAL_THRESHOLD = 0.44,
-
-        SYSTEM_STRESS_GLOBAL_MULTIPLIER = 1.0,
-        SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS = {
-            engine=10.0, 
-            transmission=10.0, 
-            hydraulics=10.0, 
-            cooling=10.0, 
-            electrical=10.0, 
-            chassis=10.0, 
-            fuel=10.0,
-            pto=10.0
-        },
 
         ENGINE_FACTOR_DATA = {
             MOTOR_IDLING_MULTIPLIER = 0.5,
@@ -123,9 +109,24 @@ RMS_Config = {
 
         PTO_FACTOR_DATA = {
             SERVICE_EXPIRED_MULTIPLIER = 4.0,
-            LOAD_FACTOR_THRESHOLD = 0.55,
+            -- share of the torque the engine can pass to the PTO a sustained load starts to strain the driveline at
+            LOAD_FACTOR_THRESHOLD = 0.40,
             LOAD_FACTOR_FULL_EFFECT = 0.90,
-            LOAD_FACTOR_MULTIPLIER = 6.0
+            LOAD_FACTOR_MULTIPLIER = 6.0,
+            -- past that capacity the engine bogs and the driveline takes the torque peaks
+            OVERLOAD_FACTOR_FULL_EFFECT = 1.20,
+            OVERLOAD_FACTOR_MULTIPLIER = 12.0,
+            -- a liftable implement turning while raised drives the cardan joints at a steep angle
+            RAISED_IMPLEMENT_MULTIPLIER = 4.0,
+            -- time raised and turning before the tutorial explains it, longer than a headland turn
+            RAISED_TUTORIAL_MS = 20000,
+            -- condition every engagement takes from the clutch pack
+            ENGAGEMENT_CLUTCH_DAMAGE = 0.0002,
+            -- engaging above idle shocks the driveline: share of the idle to max rpm range it starts at,
+            -- condition taken at full engine speed by an implement sized to the engine, and the smallest size counted
+            ENGAGEMENT_SHOCK_RPM_THRESHOLD = 0.25,
+            ENGAGEMENT_SHOCK_DAMAGE = 0.005,
+            ENGAGEMENT_SHOCK_MIN_SIZE = 0.25
         },
 
         COOLING_FACTOR_DATA = {
@@ -141,7 +142,6 @@ RMS_Config = {
         },
 
         ELECTRICAL_FACTOR_DATA = {
-            SERVICE_EXPIRED_MULTIPLIER = 2.0,
             CRANKING_STRESS_MULTIPLIER = 5.0,
             RAIN_FACTOR_MULTIPLIER = 0.8,
             SNOW_FACTOR_MULTIPLIER = 0.6,
@@ -156,7 +156,6 @@ RMS_Config = {
         },
 
         CHASSIS_FACTOR_DATA = {
-            SERVICE_EXPIRED_MULTIPLIER = 4.0,
             CHASSIS_IDLING_MULTIPLIER = 0.5,
             LUBRICATION_FACTOR_MULTIPLIER = 5.0,
             VIB_FACTOR_THRESHOLD = 0.08,
@@ -200,37 +199,20 @@ RMS_Config = {
         CONCURRENT_BREAKDOWN_LIMIT_PER_VEHICLE = 15,
         ENABLE_WARNING_MESSAGES = true,
 
-        AI_OVERLOAD_AND_OVERHEAT_CONTROL = true,
-        -- a critical overload stops the AI helper
-        AI_DISABLE_ON_CRITICAL_OVERLOAD = true,
-        -- contract vehicles are covered by the overload shutdown and speed control
-        CONTRACT_VEHICLE_PROTECTION = false,
-        AI_WORKER_PID = {
-            MIN_SPEED = 3.0,
-            MAX_REDUCTION = 16.0,
-            TARGET_STRESS = 0.30,
-            DEADBAND = 0.03,
-            LOAD_START = 0.8,
-            LOAD_FULL = 0.95,
-            ENGINE_TEMP_START = 92.0,
-            ENGINE_TEMP_FULL = 99.0,
-            TRANS_TEMP_START = 92.0,
-            TRANS_TEMP_FULL = 99.0,
-            WEIGHT_LOAD = 0.50,
-            WEIGHT_ENGINE_TEMP = 0.25,
-            WEIGHT_TRANS_TEMP = 0.25,
-            FILTER_TAU = 3.0,
-            KP = 4.5,
-            KI = 0.8,
-            KD = 0.45,
-            MAX_INTEGRAL = 3.0,
-            REDUCTION_RATE_DOWN = 8.0,
-            RECOVERY_RATE_UP = 2.5,
-            APPLY_INTERVAL_MS = 180,
-            MIN_APPLY_DELTA = 0.2,
-            BASE_SYNC_DOWN_RATE = 1.8,
-            EMERGENCY_ENGINE_TEMP = 105.0,
-            EMERGENCY_TRANS_TEMP = 105.0
+        -- the AI worker eases off like a careful driver once the machine runs into overload
+        AI_WORKER = {
+            -- km/h, the game's own field work floor
+            MIN_SPEED = 5,
+            -- shares of the overload warning level
+            SLOW_DOWN_LEVEL = 0.5,
+            RESUME_LEVEL = 0.25,
+            -- km/h per second
+            SLOW_DOWN_RATE = 1.0,
+            RESUME_RATE = 0.5,
+            -- km/h above the helper's own pace at which the limit lets go
+            RELEASE_MARGIN = 3,
+            -- seconds
+            OVERLOAD_SMOOTHING = 2
         },
         GENERAL_WEAR_ENABLED = true,
         GENERAL_WEAR_EARLY_STAGE_THRESHOLD = 0.66,
@@ -279,7 +261,6 @@ RMS_Config = {
 
             MAINTENANCE = {
                 STANDARD   = 1.1,
-                MINIMAL    = 0.9,
                 EXTENDED   = 1.2,
                 PREVENTIVE = 1.4,
             },
@@ -299,17 +280,12 @@ RMS_Config = {
     },
     -- service prices, durations and restore ratios
     MAINTENANCE = {
-        PARK_VEHICLE = true,
         INSTANT_INSPECTION = false,
-        WARRANTY_ENABLED = true,
-        WARRANTY_MAX_OPERATING_HOURS = 20,
-        WARRANTY_MAX_AGE_MONTHS = 12,
-
-        GLOBAL_SERVICE_PRICE_MULTIPLIER = 1.0,
-        GLOBAL_SERVICE_TIME_MULTIPLIER = 1.0,
+        INSTANT_MAINTENANCE_REPAIR = false,
+        INSTANT_BODYWORK = false,
+        INSTANT_OVERHAUL = false,
 
         REFILL_TIME = 0.25 * 3600000,
-        REFILL_PRICE_MULTIPLIER = 0.15,
         INSPECTION_TIME = 1 * 3600000,
         INSPECTION_TIME_MULTIPLIERS = {
             STANDARD = 1.0,
@@ -319,7 +295,6 @@ RMS_Config = {
         MAINTENANCE_TIME = 6 * 3600000,
         MAINTENANCE_TIME_MULTIPLIERS = {
             STANDARD   = 1.0,
-            MINIMAL    = 0.25,
             EXTENDED   = 1.5,
             PREVENTIVE = 2.0,
         },
@@ -344,13 +319,6 @@ RMS_Config = {
             COMPLETE = 1.0,
         },
 
-        MAINTENANCE_SERVICE_RESTORE_MULTIPLIERS = {
-            STANDARD   = 1.0,
-            MINIMAL    = 0.75,
-            EXTENDED   = 1.2,
-            PREVENTIVE = 1.0,
-        },
-
         MAINTENANCE_PREVENTIVE_STRESS_REMOVE_MULTIPLIER = 0.6,
         MAINTENANCE_PREVENTIVE_SYSTEMS_COUNT = 3,
 
@@ -359,18 +327,11 @@ RMS_Config = {
             HIGH   = 0.0,
         },
 
-        OVERHAUL_MIN_CONDITION_RESTORE_MULTIPLIERS = {
-            STANDARD = 0.61,
-            PARTIAL  = 0.61,
-            FULL     = 0.81,
+        OVERHAUL_CONDITION_TARGETS = {
+            STANDARD = 0.75,
+            PARTIAL  = 0.75,
+            FULL     = 1.0,
         },
-        OVERHAUL_MAX_CONDITION_RESTORE_MULTIPLIERS = {
-            STANDARD = 0.79,
-            PARTIAL  = 0.79,
-            FULL     = 0.99,
-        },
-
-        RE_OVERHAUL_FACTOR = 0.1,
 
         PARTS_BREAKDOWN_CHANCES = {
             OEM         = 0.1,
@@ -386,12 +347,33 @@ RMS_Config = {
             AFTERMARKET = 0.66,
             PREMIUM     = 1.20,
         },
-        MAINTENANCE_PRICE_MULTIPLIERS = {
-            STANDARD   = 1.0,
-            MINIMAL    = 0.65,
-            EXTENDED   = 1.25,
-            PREVENTIVE = 3.0,
+        -- prices are real ones for a machine of this power, the engine sizing them and the game's cost multiplier
+        -- scaling them with the economic difficulty; the service interval, not the price, carries the game's pace
+        REFERENCE_POWER = 160,
+        -- a dealer's hourly rate in euros
+        LABOUR_RATE = 90,
+        -- how labour and parts follow the engine power, measured on filter kits from 75 to 430 hp
+        LABOUR_POWER_EXPONENT = 0.4,
+        PARTS_POWER_EXPONENT = 0.6,
+        -- labour, filters and parts of a road vehicle against a machine of the same power
+        PROFILE_PRICE_FACTORS = {
+            ROAD_LIGHT = { labour = 0.3,  filters = 0.2, parts = 0.5  },
+            ROAD_HEAVY = { labour = 0.55, filters = 0.2, parts = 0.75 },
         },
+        -- a real dealer's maintenance of the reference machine, fluids apart: labour hours and filters in euros
+        MAINTENANCE_LABOUR_HOURS = {
+            STANDARD   = 2.5,
+            EXTENDED   = 5.0,
+            PREVENTIVE = 8.0,
+        },
+        MAINTENANCE_FILTER_PRICES = {
+            STANDARD   = 250,
+            EXTENDED   = 550,
+            PREVENTIVE = 700,
+        },
+        -- real value of the reference machine the breakdown registry's repair percentages and the overhauls apply to
+        REPAIR_REFERENCE_VALUE = 57700,
+        OVERHAUL_REFERENCE_VALUE = 32500,
 
         REPAIR_PRICE_MULTIPLIERS = {
             LOW    = 0.2,
@@ -402,16 +384,6 @@ RMS_Config = {
             STANDARD = 0.5,
             PARTIAL  = 0.6,
             FULL     = 0.8,
-        },
-        INSPECTION_PRICE_MULTIPLIERS = {
-            STANDARD = 1.0,
-            VISUAL   = 0.1,
-            COMPLETE = 4.0,
-        },
-        INSPECTION_PRICE_LIMITS = {
-            STANDARD = {min = 100, max = 400},
-            VISUAL   = {min = 20,  max = 100},
-            COMPLETE = {min = 400, max = 1600},
         },
         OVERHAUL_MAX_PRICE_RATIO = 1.0,
     },
@@ -520,12 +492,14 @@ RMS_Config = {
     },
 
     FIELD_CARE = {
-        CLOGGING_SPEED = 1.0,
         CLEANING_SPEED = 0.05,
         AIR_FILTER_BREAKDOWN_THRESHOLD = 0.5,
         AIR_FILTER_BLOWOUT_RESIDUE_SHARE = 0.25,
-        VISUAL_INSPECTION_DURATION = 6000,
-        LUBRICATION_REDUCE_PER_OPERATING_HOUR = 0.02,
+        -- embedded dust that leaves a blown out filter at the cleaning threshold, the filter then due for replacement
+        AIR_FILTER_REPLACEMENT_RESIDUE = 0.35,
+        -- Decoded length of sounds/inspection.ogg at pitch 1.0.
+        VISUAL_INSPECTION_DURATION = 6850,
+        LUBRICATION_REDUCE_PER_OPERATING_HOUR = 0.05,
         LUBRICATION_RESTORE_PER_USE = 0.1,
         LUBRICATION_DRY_THRESHOLD = 0.60,
         LUBRICATION_VERY_DRY_THRESHOLD = 0.35,
@@ -564,7 +538,6 @@ RMS_Config = {
     DRIVETRAIN = {
         ENABLED = true,
         ALLOW_AUTO_MODE = true,
-        DIFFLOCK_AUTO_RELEASE_SPEED = 10,
 
         OPEN_AXLE_SPEED_RATIO = 4.0,
         LOCKED_AXLE_SPEED_RATIO = 1.0,
@@ -601,21 +574,21 @@ RMS_Config = {
     -- exhaust smoke colour and opacity
     EXHAUST = {
         ENABLED = true,
-        INTENSITY = 1.0,
 
-        -- smoke tints, mixed by concentration, and the colourless gas of a clean pipe
+        -- smoke tints, mixed by concentration and kept saturated so the colour reads as the diagnosis it is:
+        -- black soot, blue burnt oil, white unburnt fuel, the off white of condensed water, and the colourless
+        -- gas of a clean pipe
         SOOT_TINT = {0.020, 0.020, 0.025},
         OIL_TINT = {0.050, 0.090, 0.350},
         UNBURNT_TINT = {0.980, 0.980, 0.980},
-        HEAT_TINT = {0.780, 0.780, 0.780},
+        VAPOUR_TINT = {0.920, 0.930, 0.950},
+        CLEAN_TINT = {0.780, 0.780, 0.780},
 
         -- extinction per channel, soot blocking the most light per unit of concentration
         K_SOOT = 1.50,
         K_OIL = 1.20,
         K_UNBURNT = 1.00,
         OPACITY_FLOOR = 0.03,
-        ALPHA_GAMMA = 0.80,
-        HEAT_COLD_FACTOR = 0.35,
 
         -- aftertreatment, and the share of fault soot none of it can hold back
         DEF_SOOT_FACTOR = 0.20,
@@ -624,41 +597,155 @@ RMS_Config = {
 
         FLOW_BOOST_GAIN = 0.60,
 
-        -- plume assets, the sprite family a directory loaded once for the session
+        -- plume asset, the sprite family a directory loaded once for the session
         PLUME_EMIT_SHAPE = "particles/exhaust/plumeEmitShape.i3d",
         PLUME_SPRITES = "soft",
         PLUME_DIRECTORY = "particles/exhaust/",
+        PLUME_FILE = "plume.i3d",
 
-        -- plume steps, each a complete plume for its own opacity band, only the current one and
-        -- the one it fades into ever drawn, the first being the refraction effect of the vehicle
-        PLUME_STEPS = {
-            {
-                id = "heat", isNative = true,
-                alphaMin = 0.10, alphaMax = 0.42, scaleMin = 0.07, scaleMax = 0.15
-            },
-            {
-                id = "veil", file = "veil.i3d", tintWash = 0.00,
-                alphaMax = 0.35, emitMin = 0.40, emitMax = 1.35, speedMin = 0.35, speedMax = 1.25
-            },
-            {
-                id = "plume", file = "plume.i3d", tintWash = 0.25,
-                alphaMax = 0.70, emitMin = 0.20, emitMax = 1.55, speedMin = 0.40, speedMax = 1.30
-            },
-            {
-                id = "column", file = "column.i3d", tintWash = 0.50,
-                alphaMax = 0.85, emitMin = 0.32, emitMax = 1.55, speedMin = 0.45, speedMax = 1.45
+        PUFF = {
+            -- neighbours overlapping any point of the plume from the outlet on, what keeps it continuous instead
+            -- of a string of puffs, and the bounds of the rate that holds it, in puffs per second and outlet
+            OVERLAP_TARGET = 5,
+            RATE_MIN = 8,
+            RATE_MAX = 720,
+            -- once the neighbours overlap more than needed, puffs retire in halves, fading into the ones that
+            -- remain, up to this many halvings
+            THIN_LEVEL_MAX = 6,
+            -- exit speed in m/s: a floor while cranking, and the speed at full gas flow with the gas at its full
+            -- load temperature, about 4 m/s at idle and 30 at full power through a pipe sized for the rated flow;
+            -- and the share of it each puff leaves sideways at, for a ragged edge
+            EXIT_SPEED_MIN = 2.0,
+            EXIT_SPEED_FULL = 30.0,
+            SPREAD_SHARE = 0.02,
+            -- tailpipe diameter in metres per square root of kW, about 75 mm at 70 kW, 110 at 150 and 155 at 300,
+            -- within bounds
+            PIPE_DIAMETER_PER_SQRT_KW = 0.009,
+            PIPE_DIAMETER_MIN = 0.06,
+            PIPE_DIAMETER_MAX = 0.16,
+            -- sprite width over the gas width it draws: the smoke texture reaches half its opacity at about 60 % of
+            -- the sprite, so a sprite that wide shows the gas at its real width; the share of the sprite width the
+            -- visible smoke reaches from its centre, which surfaces stop; and the widest a sprite grows far
+            -- downstream, where a heavy plume has spread over metres
+            SPRITE_GAS_RATIO = 1.65,
+            RADIUS_SHARE = 0.45,
+            SIZE_MAX = 8.0,
+            -- width the gas gains per metre it travels through the air, the concentration width at half maximum
+            -- of a round jet (half-width 0.11 per metre), and per metre of crosswind it takes in until the wind has
+            -- bent it over
+            JET_SPREAD = 0.22,
+            JET_CROSS_SPREAD = 0.10,
+            -- step in ms of the jet profile the spacing and the sprite growth are read on
+            JET_PROFILE_STEP_MS = 50,
+            -- growth the eddies of the air add in m/s, a floor and the crosswind mixing it
+            GROWTH_BASE = 0.18,
+            GROWTH_PER_WIND = 0.15,
+            -- a sprite grows at one steady rate, fitted to the gas width over this share of its life, within bounds
+            -- in ms: the plume schedule on its visible life, each thinning level on its own
+            GROWTH_FIT_SHARE = 0.35,
+            GROWTH_FIT_MIN_MS = 400,
+            GROWTH_FIT_LEVEL_MIN_MS = 20,
+            GROWTH_FIT_MAX_MS = 4000,
+            -- speed the rising plume carries its puffs apart at even in still air, in m/s
+            RISE_SPEED = 0.40,
+            -- width at which the condensed water shows the model vapour, a few decimetres from the outlet where
+            -- the gas has mixed with the cold air, the smoke opacity being read at the outlet itself
+            REFERENCE_SIZE = 0.50,
+            -- life bounds in ms, and the plume optical depth under which it no longer shows
+            LIFE_MIN = 800,
+            LIFE_MAX = 8000,
+            TAU_VISIBLE = 0.02,
+            -- how much of the sprite area the smoke texture covers, tuned in game
+            SPRITE_ALPHA_GAIN = 1.60,
+            -- relative change under which a puff is not rewritten, so a faint puff among many still thins
+            ALPHA_EPSILON = 0.03,
+            -- fade out drawn by RMS in ms for the puffs that reach the end of the visible plume, the sprite asset
+            -- carrying no blend of its own since its blend times would scale with lifespans that differ a lot;
+            -- the retiring puffs fade through the thinning, and a new one among five overlapping needs no fade in
+            FADE_OUT_MS = 300,
+            -- drag toward the surrounding air on top of entrainment, per second, a spent jet being a tracer; with
+            -- the entrainment above it puts a jet in crossflow on the measured y/(rD) = 2.05 (x/rD)^0.28 path
+            BASE_DAMPING = 1.20,
+            -- crosswind in m/s from which that drag applies in full, and the share left in still air
+            DAMPING_CROSS_SPEED = 2.0,
+            DAMPING_FLOOR_SHARE = 0.30,
+            -- share of the blocked speed a puff keeps sliding along a surface, and of the air speed the flow
+            -- keeps once a surface turns it aside
+            SURFACE_SPREAD = 0.06,
+            SURFACE_FLOW_SHARE = 0.85,
+            -- speed a puff that overlaps a surface eases off it at, in m/s, instead of jumping clear in one step
+            SURFACE_PUSH_SPEED = 1.5,
+            -- a puff wider than this also looks straight above itself for a roof, in metres
+            ROOF_PROBE_MIN_RADIUS = 0.30,
+            -- share of the wind left under a roof, how far around a sheltered vehicle its roof counts, in metres,
+            -- how often a puff checks it, in ms, and how fast it feels the change
+            SHELTER_WIND_SHARE = 0.15,
+            SHELTER_RADIUS = 8.0,
+            SHELTER_CHECK_MS = 200,
+            SHELTER_TAU = 400,
+            -- a building, a hedge or a tree line upwind keeps part of the wind off its lee: how far upwind of the
+            -- outlet one is looked for and how high above it its top, in metres, the least wind worth it in m/s, the
+            -- share of the wind left up to so many obstacle heights behind it, the heights by which it is back in
+            -- full, how far above the top a puff is in the free wind again, and the height of the outlet above the
+            -- ground assumed without terrain, in metres
+            LEE_SEARCH_DISTANCE = 40,
+            LEE_PROBE_HEIGHT = 30,
+            LEE_MIN_WIND = 0.5,
+            LEE_WIND_SHARE = 0.25,
+            LEE_FULL_HEIGHTS = 2,
+            LEE_RECOVERY_HEIGHTS = 10,
+            LEE_TOP_BLEND = 1.5,
+            LEE_GROUND_FALLBACK = 2.5,
+            -- a raycast hit this close to its origin started inside the collider, in metres
+            INSIDE_HIT_DISTANCE = 0.001,
+            -- sprites one outlet may hold at once, the retired ones included until their sprite has died
+            POOL_MAX = 400
+        },
+
+        -- exhaust gas temperature rise over the air in kelvin at the tailpipe, idle and full load, about 100 to
+        -- 150 C at idle and 350 to 500 C at full power past the turbo, and the share a cold engine reaches; the
+        -- excess heat is shared with the air the gas takes in, falling as a power of its width between the 1 of a
+        -- jet and the 5/3 of a rising plume
+        EGT = {
+            RISE_IDLE_K = 120,
+            RISE_FULL_K = 430,
+            COLD_FACTOR = 0.45,
+            DILUTION_EXPONENT = 1.30
+        },
+
+        -- eddies of the air in m/s, a floor plus a share of the wind speed, the vertical ones weaker near the
+        -- ground, each octave a wavelength in metres, a frequency in hertz and a weight
+        TURBULENCE = {
+            BASE = 0.35,
+            PER_WIND = 0.30,
+            VERTICAL_SHARE = 0.60,
+            OCTAVES = {
+                {wavelength = 4.0, frequency = 0.35, weight = 1.00},
+                {wavelength = 1.7, frequency = 0.70, weight = 0.55},
+                {wavelength = 0.7, frequency = 1.40, weight = 0.30}
             }
         },
 
-        LADDER_GAMMA = 0.75,
-        LADDER_CROSSFADE = true,
-        STEP_SHARE_ON = 0.04,
-        STEP_SHARE_OFF = 0.02,
+        -- combustion water condensing in cold air: the ambient range it appears over in degrees, its optical
+        -- depth, the humidity weights, the idle share of the fuel burnt, the extra of a cold engine, and the
+        -- evaporation time in ms from the mildest to the coldest air
+        VAPOUR = {
+            START_C = 8,
+            FULL_C = -10,
+            K = 1.10,
+            HUMIDITY_BASE = 0.60,
+            HUMIDITY_WEATHER = 0.40,
+            IDLE_SHARE = 0.55,
+            COLD_ENGINE_BOOST = 0.40,
+            EVAPORATION_WARM_MS = 300,
+            EVAPORATION_COLD_MS = 1400
+        },
 
-        -- a transient promotes the plume up the ladder and populates the step it wakes
-        BURST_LADDER_GAIN = 1.20,
+        -- a transient darkens the puffs it wakes and sends them out faster, the gas flow already rising
         BURST_DECAY_TAU = 350,
-        BURST_EMIT_GAIN = 1.60,
+        BURST_EMIT_GAIN = 0.50,
+        BURST_SPEED_GAIN = 0.50,
+        BURST_TAU_GAIN = 0.50,
         BURST_REFRACTORY = 2000,
         BURST_SLOW_TAU = 250,
         BURST_LATCH_RESET = 0.50,
@@ -670,15 +757,11 @@ RMS_Config = {
             FAULT = 0.10
         },
 
-        -- renderer tick in ms, and the change under which nothing is rewritten
+        -- burst edge tick in ms
         TUNE_INTERVAL = 80,
-        TUNE_EPSILON = 0.01,
 
         -- particle culling distance, in metres
         PLUME_CLIP_DISTANCE = 150,
-
-        -- opacity under which a step is imperceptible and stops emitting
-        PLUME_ALPHA_MIN = 0.008,
 
         -- channel smoothing time constants, in ms
         TINT_TAU = 900,
@@ -688,6 +771,7 @@ RMS_Config = {
         SOOT_FALL_TAU = 350,
         BURST_RISE_TAU = 40,
         FALL_TAU = 1200,
+        VAPOUR_TAU = 1500,
 
         -- share of the era factor kept by fault smoke
         ERA_BREAKDOWN_FLOOR = 0.60,
@@ -695,10 +779,10 @@ RMS_Config = {
         -- emission eras, the factor applying to normal smoke
         ERA_FACTORS = {
             {2001, 1.00},
-            {2006, 0.75},
-            {2011, 0.55},
-            {2014, 0.40},
-            {9999, 0.30}
+            {2006, 0.70},
+            {2011, 0.40},
+            {2014, 0.25},
+            {9999, 0.18}
         },
 
         -- emission eras of the unburnt channel, injection pressure and glow plugs improving far less than particulate control
@@ -922,6 +1006,7 @@ RMS_Config = {
         ENGINE_OVERLOAD = false,
         LUGGING = false,
         PTO_ENGAGEMENT = false,
+        PTO_RAISED = false,
         FLUID_LEVEL = false,
         EXHAUST_SMOKE = false,
         DRIVETRAIN_MODES = false,
@@ -980,9 +1065,9 @@ end
 -- @param table? state tutorial state
 function RMS_Config.applyTutorialState(state)
     local normalized = RMS_Config.createTutorialState(
-        state ~= nil and state.tutorialMode,
-        state ~= nil and state.welcomeMessageSeen,
-        state ~= nil and state.messages
+        state ~= nil and state.tutorialMode or nil,
+        state ~= nil and state.welcomeMessageSeen or nil,
+        state ~= nil and state.messages or nil
     )
 
     RMS_Config.TUTORIAL_MODE = normalized.tutorialMode
@@ -1040,9 +1125,9 @@ end
 ---Creates the tutorial state of the local player on first use
 function RMS_Config.ensureLocalTutorialState()
     if RMS_Config.TUTORIAL_STATE_LOADED then return true end
-    if g_server == nil or g_localPlayer == nil or g_localPlayer.getUniqueUserId == nil then return false end
+    if g_server == nil or g_localPlayer == nil then return false end
 
-    local uniqueUserId = g_localPlayer:getUniqueUserId()
+    local uniqueUserId = g_localPlayer:getUniqueId()
     local state = RMS_Config.getTutorialPlayerState(uniqueUserId)
     if state == nil then return false end
 
@@ -1066,12 +1151,6 @@ end
 RMS_Config.savegameFile = "realisticMechanicalSystems.xml"
 RMS_Config.legacySavegameFile = "advancedDamageSystem.xml"
 RMS_Config.sharedSettingsDirectory = "modSettings/FS25_RealisticMechanicalSystems/"
-RMS_Config.localSettingsFile = "localSettings.xml"
-
--- settings the player owns on their own machine, never shared and never synchronized
-RMS_Config.LOCAL = {
-    EXHAUST_SMOKE_DETAIL = 4
-}
 
 ---Prints a debug line while debug mode is on
 -- @param any ... values to print
@@ -1084,7 +1163,7 @@ local function log_dbg(...)
 end
 
 ---Writes the tutorial state of every player to the settings file
--- @param XMLFile xmlFile XMLFile instance
+-- @param number xmlFile XML file handle
 -- @param string root xml root key
 local function saveTutorialPlayerStates(xmlFile, root)
     local userIds = {}
@@ -1106,7 +1185,7 @@ local function saveTutorialPlayerStates(xmlFile, root)
 end
 
 ---Reads the tutorial state of every player from the settings file
--- @param XMLFile xmlFile XMLFile instance
+-- @param number xmlFile XML file handle
 -- @param string root xml root key
 local function loadTutorialPlayerStates(xmlFile, root)
     RMS_Config.TUTORIAL_PLAYER_STATES = {}
@@ -1147,22 +1226,14 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
     -- core
     setXMLFloat(xmlFile, root .. ".BASE_SERVICE_WEAR",      RMS_Config.CORE.BASE_SERVICE_WEAR)
     setXMLFloat(xmlFile, root .. ".BASE_SYSTEMS_WEAR",      RMS_Config.CORE.BASE_SYSTEMS_WEAR)
-    setXMLFloat(xmlFile, root .. ".DOWNTIME_MULTIPLIER",    RMS_Config.CORE.DOWNTIME_MULTIPLIER)
-    setXMLFloat(xmlFile, root .. ".SYSTEM_STRESS_GLOBAL_MULTIPLIER", RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER)
     setXMLBool (xmlFile, root .. ".GENERAL_WEAR_ENABLED",   RMS_Config.CORE.GENERAL_WEAR_ENABLED)
     setXMLBool (xmlFile, root .. ".ENABLE_WARNING_MESSAGES", RMS_Config.CORE.ENABLE_WARNING_MESSAGES)
-    setXMLBool (xmlFile, root .. ".AI_OVERLOAD_CONTROL",    RMS_Config.CORE.AI_OVERLOAD_AND_OVERHEAT_CONTROL)
-    setXMLBool (xmlFile, root .. ".AI_DISABLE_ON_CRITICAL_OVERLOAD", RMS_Config.CORE.AI_DISABLE_ON_CRITICAL_OVERLOAD)
-    setXMLBool (xmlFile, root .. ".CONTRACT_VEHICLE_PROTECTION", RMS_Config.CORE.CONTRACT_VEHICLE_PROTECTION)
-    setXMLFloat(xmlFile, root .. ".AI_WORKER_TARGET_STRESS", RMS_Config.CORE.AI_WORKER_PID.TARGET_STRESS)
-    setXMLFloat(xmlFile, root .. ".AI_WORKER_MIN_SPEED",     RMS_Config.CORE.AI_WORKER_PID.MIN_SPEED)
 
     -- maintenance
     setXMLBool (xmlFile, root .. ".INSTANT_INSPECTION",     RMS_Config.MAINTENANCE.INSTANT_INSPECTION)
-    setXMLBool (xmlFile, root .. ".PARK_VEHICLE",           RMS_Config.MAINTENANCE.PARK_VEHICLE)
-    setXMLBool (xmlFile, root .. ".WARRANTY_ENABLED",       RMS_Config.MAINTENANCE.WARRANTY_ENABLED)
-    setXMLFloat(xmlFile, root .. ".PRICE_MULTIPLIER",       RMS_Config.MAINTENANCE.GLOBAL_SERVICE_PRICE_MULTIPLIER)
-    setXMLFloat(xmlFile, root .. ".TIME_MULTIPLIER",        RMS_Config.MAINTENANCE.GLOBAL_SERVICE_TIME_MULTIPLIER)
+    setXMLBool (xmlFile, root .. ".INSTANT_MAINTENANCE_REPAIR", RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR)
+    setXMLBool (xmlFile, root .. ".INSTANT_BODYWORK", RMS_Config.MAINTENANCE.INSTANT_BODYWORK)
+    setXMLBool (xmlFile, root .. ".INSTANT_OVERHAUL", RMS_Config.MAINTENANCE.INSTANT_OVERHAUL)
 
     -- workshop
     setXMLBool (xmlFile, root .. ".DEALER_ALWAYS_AVAILABLE",       RMS_Config.WORKSHOP.DEALER_ALWAYS_AVAILABLE)
@@ -1182,22 +1253,15 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
     setXMLFloat(xmlFile, root .. ".ALT_MAX_OUTPUT",         RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT)
     setXMLFloat(xmlFile, root .. ".IDLE_CURRENT_A",         RMS_Config.ELECTRICAL.IDLE_CURRENT_A)
 
-    -- field care
-    setXMLFloat(xmlFile, root .. ".CLOGGING_SPEED",         RMS_Config.FIELD_CARE.CLOGGING_SPEED)
-    setXMLFloat(xmlFile, root .. ".VISUAL_INSPECTION_DURATION", RMS_Config.FIELD_CARE.VISUAL_INSPECTION_DURATION)
-    setXMLFloat(xmlFile, root .. ".LUBRICATION_REDUCE_PER_OPERATING_HOUR", RMS_Config.FIELD_CARE.LUBRICATION_REDUCE_PER_OPERATING_HOUR)
-
     -- drivetrain
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_ENABLED",           RMS_Config.DRIVETRAIN.ENABLED)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_ALLOW_AUTO_MODE",   RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_WINDUP_DAMAGE",     RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED)
-    setXMLFloat(xmlFile, root .. ".DRIVETRAIN_DIFFLOCK_RELEASE_SPEED", RMS_Config.DRIVETRAIN.DIFFLOCK_AUTO_RELEASE_SPEED)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_ENABLED", RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_AUTO",    RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE)
 
     -- exhaust
     setXMLBool (xmlFile, root .. ".EXHAUST_SMOKE_ENABLED",   RMS_Config.EXHAUST.ENABLED)
-    setXMLFloat(xmlFile, root .. ".EXHAUST_SMOKE_INTENSITY", RMS_Config.EXHAUST.INTENSITY)
 
     -- debug
     setXMLBool (xmlFile, root .. ".DEBUG_MODE",             RMS_Config.DEBUG)
@@ -1218,52 +1282,6 @@ end
 -- @return string path shared settings file path
 function RMS_Config.getSharedSettingsFilePath()
     return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.savegameFile
-end
-
----Returns the path of the settings file belonging to the player, never shared and never synchronized
--- @return string path local settings file path
-function RMS_Config.getLocalSettingsFilePath()
-    return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.localSettingsFile
-end
-
----Writes the settings the player owns on their own machine
--- @return boolean written true once the file is written
-function RMS_Config.saveLocalSettings()
-    createFolder(getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory)
-
-    local root = "realisticMechanicalSystemsLocal"
-    local xmlFile = createXMLFile(root, RMS_Config.getLocalSettingsFilePath(), root)
-    if xmlFile == nil or xmlFile == 0 then
-        log_dbg("LOCAL SAVE ERROR - createXMLFile returned", tostring(xmlFile))
-        return false
-    end
-
-    setXMLInt(xmlFile, root .. ".EXHAUST_SMOKE_DETAIL", RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL)
-    saveXMLFile(xmlFile)
-    delete(xmlFile)
-
-    return true
-end
-
----Reads back the settings the player owns on their own machine
-function RMS_Config.loadLocalSettings()
-    local path = RMS_Config.getLocalSettingsFilePath()
-    if not fileExists(path) then
-        return
-    end
-
-    local root = "realisticMechanicalSystemsLocal"
-    local xmlFile = loadXMLFile(root, path)
-    if xmlFile == nil or xmlFile == 0 then
-        return
-    end
-
-    local detail = getXMLInt(xmlFile, root .. ".EXHAUST_SMOKE_DETAIL")
-    if detail ~= nil then
-        RMS_Config.LOCAL.EXHAUST_SMOKE_DETAIL = math.clamp(detail, 0, #RMS_Config.EXHAUST.PLUME_STEPS)
-    end
-
-    delete(xmlFile)
 end
 
 ---Writes every adjustable setting to the savegame file, then to the shared one
@@ -1346,51 +1364,25 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLFloat(xmlFile, root .. ".BASE_SYSTEMS_WEAR")
     if v ~= nil then RMS_Config.CORE.BASE_SYSTEMS_WEAR = v end
 
-    v = getXMLFloat(xmlFile, root .. ".DOWNTIME_MULTIPLIER")
-    if v ~= nil then RMS_Config.CORE.DOWNTIME_MULTIPLIER = v end
-
-    v = getXMLFloat(xmlFile, root .. ".SYSTEM_STRESS_GLOBAL_MULTIPLIER")
-    if v ~= nil then RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER = v end
-
     v = getXMLBool(xmlFile, root .. ".GENERAL_WEAR_ENABLED")
     if v ~= nil then RMS_Config.CORE.GENERAL_WEAR_ENABLED = v end
 
     v = getXMLBool(xmlFile, root .. ".ENABLE_WARNING_MESSAGES")
     if v ~= nil then RMS_Config.CORE.ENABLE_WARNING_MESSAGES = v end
 
-    v = getXMLBool(xmlFile, root .. ".AI_OVERLOAD_CONTROL")
-    if v ~= nil then RMS_Config.CORE.AI_OVERLOAD_AND_OVERHEAT_CONTROL = v end
-
-    v = getXMLBool(xmlFile, root .. ".AI_DISABLE_ON_CRITICAL_OVERLOAD")
-    if v == nil then
-        v = getXMLBool(xmlFile, root .. ".AI_DISABLE_ON_CRITICAL_FAILURE")
-    end
-    if v ~= nil then RMS_Config.CORE.AI_DISABLE_ON_CRITICAL_OVERLOAD = v end
-
-    v = getXMLBool(xmlFile, root .. ".CONTRACT_VEHICLE_PROTECTION")
-    if v ~= nil then RMS_Config.CORE.CONTRACT_VEHICLE_PROTECTION = v end
-
-    v = getXMLFloat(xmlFile, root .. ".AI_WORKER_TARGET_STRESS")
-    if v ~= nil then RMS_Config.CORE.AI_WORKER_PID.TARGET_STRESS = v end
-
-    v = getXMLFloat(xmlFile, root .. ".AI_WORKER_MIN_SPEED")
-    if v ~= nil then RMS_Config.CORE.AI_WORKER_PID.MIN_SPEED = v end
-
     -- maintenance
     v = getXMLBool(xmlFile, root .. ".INSTANT_INSPECTION")
     if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_INSPECTION = v end
 
-    v = getXMLBool(xmlFile, root .. ".PARK_VEHICLE")
-    if v ~= nil then RMS_Config.MAINTENANCE.PARK_VEHICLE = v end
+    v = getXMLBool(xmlFile, root .. ".INSTANT_MAINTENANCE_REPAIR")
+    if v == nil then v = getXMLBool(xmlFile, root .. ".INSTANT_REPAIR") end
+    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR = v end
 
-    v = getXMLBool(xmlFile, root .. ".WARRANTY_ENABLED")
-    if v ~= nil then RMS_Config.MAINTENANCE.WARRANTY_ENABLED = v end
+    v = getXMLBool(xmlFile, root .. ".INSTANT_BODYWORK")
+    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_BODYWORK = v end
 
-    v = getXMLFloat(xmlFile, root .. ".PRICE_MULTIPLIER")
-    if v ~= nil then RMS_Config.MAINTENANCE.GLOBAL_SERVICE_PRICE_MULTIPLIER = v end
-
-    v = getXMLFloat(xmlFile, root .. ".TIME_MULTIPLIER")
-    if v ~= nil then RMS_Config.MAINTENANCE.GLOBAL_SERVICE_TIME_MULTIPLIER = v end
+    v = getXMLBool(xmlFile, root .. ".INSTANT_OVERHAUL")
+    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_OVERHAUL = v end
 
     -- workshop
     v = getXMLBool(xmlFile, root .. ".DEALER_ALWAYS_AVAILABLE")
@@ -1436,16 +1428,6 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLFloat(xmlFile, root .. ".IDLE_CURRENT_A")
     if v ~= nil then RMS_Config.ELECTRICAL.IDLE_CURRENT_A = v end
 
-    -- field care
-    v = getXMLFloat(xmlFile, root .. ".CLOGGING_SPEED")
-    if v ~= nil then RMS_Config.FIELD_CARE.CLOGGING_SPEED = v end
-
-    v = getXMLFloat(xmlFile, root .. ".VISUAL_INSPECTION_DURATION")
-    if v ~= nil then RMS_Config.FIELD_CARE.VISUAL_INSPECTION_DURATION = v end
-
-    v = getXMLFloat(xmlFile, root .. ".LUBRICATION_REDUCE_PER_OPERATING_HOUR")
-    if v ~= nil then RMS_Config.FIELD_CARE.LUBRICATION_REDUCE_PER_OPERATING_HOUR = math.clamp(v, 0, 0.05) end
-
     -- drivetrain
     v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_ENABLED")
     if v ~= nil then RMS_Config.DRIVETRAIN.ENABLED = v end
@@ -1456,8 +1438,6 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_WINDUP_DAMAGE")
     if v ~= nil then RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED = v end
 
-    v = getXMLFloat(xmlFile, root .. ".DRIVETRAIN_DIFFLOCK_RELEASE_SPEED")
-    if v ~= nil then RMS_Config.DRIVETRAIN.DIFFLOCK_AUTO_RELEASE_SPEED = math.clamp(v, 10, 40) end
 
     v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_ENABLED")
     if v ~= nil then RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED = v end
@@ -1469,8 +1449,6 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLBool(xmlFile, root .. ".EXHAUST_SMOKE_ENABLED")
     if v ~= nil then RMS_Config.EXHAUST.ENABLED = v end
 
-    v = getXMLFloat(xmlFile, root .. ".EXHAUST_SMOKE_INTENSITY")
-    if v ~= nil then RMS_Config.EXHAUST.INTENSITY = math.clamp(v, 1, 3) end
 
     -- debug
     v = getXMLBool(xmlFile, root .. ".DEBUG_MODE")

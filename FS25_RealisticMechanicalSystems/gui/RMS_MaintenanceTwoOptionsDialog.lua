@@ -172,9 +172,10 @@ local function updateRecapFluids(dialog, requirements)
         if liters > RMS_Fluids.EPSILON and count < #dialog.recapFluidRow then
             count = count + 1
             dialog.recapFluidIcon[count]:applyProfile(profiles[requirement.circuit], true)
-            dialog.recapFluidName[count]:setText(g_i18n:getText(names[requirement.circuit] or requirement.circuit))
+            dialog.recapFluidName[count]:setText(g_i18n:getText(
+                RMS_Fluids.getCircuitTextKey(dialog.vehicle, requirement.circuit, names[requirement.circuit])))
             dialog.recapFluidValue[count]:setText(string.format("%s %s (%s)",
-                g_i18n:formatNumber(liters, 1), unit, g_i18n:getText(modes[requirement.mode] or "rms_fluid_mode_top_up")))
+                RMS_FluidWorkshop.formatLiters(liters), unit, g_i18n:getText(modes[requirement.mode] or "rms_fluid_mode_top_up")))
         end
     end
 
@@ -250,6 +251,12 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
     local repairChoiceButton = self.configChoiceButtons ~= nil and self.configChoiceButtons[3] or nil
     if repairChoiceButton ~= nil then
         repairChoiceButton:setDisabled(not RMS_Utils.hasSelectedVisibleBreakdown(self.vehicle))
+    end
+    self.configChoiceButtons[4]:setDisabled(#RMS_Utils.getEligibleOverhaulSystems(self.vehicle) == 0)
+    self.configChoiceButtons[6]:setDisabled(workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE)
+    -- the bottom bar carries the workshop shortcuts and closes with the list beside it
+    for index, button in ipairs(self.shortcutButtons) do
+        button:setDisabled(self.configChoiceButtons[index]:getIsDisabled())
     end
 
     -- title
@@ -327,14 +334,13 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
     self.recapDuration:setText(durationValue)
     self.recapFinishLabel:setText(stripTrailingColon(g_i18n:getText("rms_option_menu_finish_time_text")))
     self.recapFinish:setText(finishTimeValue)
-    self.recapVehicle:setText(self.vehicle.getFullName ~= nil and self.vehicle:getFullName() or g_i18n:getText("ui_vehicle"))
     local requirements = RMS_FluidWorkshop.getTransactionRequirements(
         self.vehicle,
         self.maintenanceType,
         self.selectedOptionOne,
         self.selectedOptionTwo
     )
-    local requirementsText = RMS_FluidWorkshop.formatTransactionRequirements(requirements)
+    local requirementsText = RMS_FluidWorkshop.formatTransactionRequirements(self.vehicle, requirements)
     local hasFluids = requirementsText ~= ""
 
     -- an inspection consumes nothing: the block sizes itself to the billed circuits, or goes away
@@ -369,18 +375,20 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
         self.optionOneDisclaimer:applyProfile("rms_workshopConfigDescription", true)
     end
 
-    -- option three
-    local optionThreeText
-    local optionThreeDisclaimerText
-    if self.maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
-        optionThreeText = g_i18n:getText("rms_option_menu_perform_repair")
-        optionThreeDisclaimerText = g_i18n:getText("rms_option_menu_option_three_disclaimer_repair_after_detection")
-    else
-        optionThreeText = g_i18n:getText("rms_option_menu_perform_renew_paint")
-        optionThreeDisclaimerText = g_i18n:getText("rms_option_menu_option_three_disclaimer_overhaul_repaint")
+    -- Only inspections retain a follow-up option; bodywork is a separate procedure.
+    local hasFollowUp = self.maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION
+    local optionThreeText = hasFollowUp and g_i18n:getText("rms_option_menu_perform_repair") or ""
+    local optionThreeDisclaimerText = hasFollowUp
+        and g_i18n:getText("rms_option_menu_option_three_disclaimer_repair_after_detection") or ""
+    self.optionThreeGroup:setVisible(hasFollowUp)
+    self.recapAddonBlock:setVisible(hasFollowUp)
+    RMS_Utils.updateRecapVehicleCard(self, hasFollowUp)
+    self.recapVehicle:setText(self.vehicle.getFullName ~= nil and self.vehicle:getFullName() or g_i18n:getText("ui_vehicle"))
+    if not hasFollowUp then
+        self.selectedOptionThree = false
     end
 
-    if self.selectedOptionThree and self.maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
+    if self.selectedOptionThree and hasFollowUp then
         optionThreeDisclaimerText = optionThreeDisclaimerText .. " " .. g_i18n:getText("rms_option_menu_follow_up_separate_transaction")
     end
     self.optionThreeText:setText(optionThreeText)
@@ -426,45 +434,48 @@ function RMS_MaintenanceTwoOptionsDialog:onClickOptionOnePreset3()
     self:selectOptionOnePreset(3)
 end
 
----Reopens the relevant configuration dialog for another intervention type
--- @param string maintenanceType target service type
--- @param boolean usesTwoOptions true for the inspection dialog
-function RMS_MaintenanceTwoOptionsDialog:openInterventionConfiguration(maintenanceType, usesTwoOptions)
-    local vehicle = self.vehicle
-    if vehicle == nil then
-        return
-    end
-
-    self:close()
-    if usesTwoOptions then
-        RMS_MaintenanceTwoOptionsDialog.show(vehicle, maintenanceType)
-    else
-        RMS_MaintenanceThreeOptionsDialog.show(vehicle, maintenanceType)
-    end
-end
-
 function RMS_MaintenanceTwoOptionsDialog:onClickConfigureInspection()
-    self:openInterventionConfiguration(RealisticMechanicalSystems.STATUS.INSPECTION, true)
+    RMS_WorkshopDialog.selectInterventionFromConfiguration(self, RealisticMechanicalSystems.STATUS.INSPECTION)
 end
 
 function RMS_MaintenanceTwoOptionsDialog:onClickConfigureMaintenance()
-    self:openInterventionConfiguration(RealisticMechanicalSystems.STATUS.MAINTENANCE, false)
+    RMS_WorkshopDialog.selectInterventionFromConfiguration(self, RealisticMechanicalSystems.STATUS.MAINTENANCE)
 end
 
 function RMS_MaintenanceTwoOptionsDialog:onClickConfigureRepair()
-    if not RMS_Utils.hasSelectedVisibleBreakdown(self.vehicle) then
-        return
-    end
-
-    self:openInterventionConfiguration(RealisticMechanicalSystems.STATUS.REPAIR, false)
+    RMS_WorkshopDialog.selectInterventionFromConfiguration(self, RealisticMechanicalSystems.STATUS.REPAIR)
 end
 
 function RMS_MaintenanceTwoOptionsDialog:onClickConfigureOverhaul()
-    self:openInterventionConfiguration(RealisticMechanicalSystems.STATUS.OVERHAUL, false)
+    RMS_WorkshopDialog.selectInterventionFromConfiguration(self, RealisticMechanicalSystems.STATUS.OVERHAUL)
 end
 
 function RMS_MaintenanceTwoOptionsDialog:onClickConfigureRefill()
-    self:openInterventionConfiguration(RealisticMechanicalSystems.STATUS.REFILL, false)
+    RMS_WorkshopDialog.selectInterventionFromConfiguration(self, RealisticMechanicalSystems.STATUS.REFILL)
+end
+
+function RMS_MaintenanceTwoOptionsDialog:onClickConfigureBodywork()
+    RMS_WorkshopDialog.selectInterventionFromConfiguration(self, RealisticMechanicalSystems.STATUS.BODYWORK)
+end
+
+function RMS_MaintenanceTwoOptionsDialog:onClickSummaryTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.SUMMARY)
+end
+
+function RMS_MaintenanceTwoOptionsDialog:onClickDiagnosticTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.DIAGNOSTIC)
+end
+
+function RMS_MaintenanceTwoOptionsDialog:onClickInterventionsTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.INTERVENTIONS)
+end
+
+function RMS_MaintenanceTwoOptionsDialog:onClickTechnicalTab()
+    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.TECHNICAL)
+end
+
+function RMS_MaintenanceTwoOptionsDialog:onWorkshopTabPagingChanged()
+    RMS_WorkshopDialog.onChildTabPagingChanged(self)
 end
 
 ---Draws the native maintenance glyph in the intervention action list
@@ -572,8 +583,8 @@ function RMS_MaintenanceTwoOptionsDialog:onCreate()
         - self.recapFluidsLabel.size[2]
         - #self.recapFluidRow * (self.recapFluidRow[1].size[2] + self.recapFluidsLayout.elementSpacing)) * 0.5
 
-    RMS_Utils.mirrorSelectionToChildren(self.configurationTab)
-    self.configurationTab:setSelected(true)
+    RMS_Utils.mirrorSelectionToChildren(self.workshopNavTabs[3])
+    self.workshopNavTabs[3]:setSelected(true)
 
     for _, button in ipairs(self.configChoiceButtons or {}) do
         RMS_Utils.mirrorSelectionToChildren(button)
@@ -586,11 +597,14 @@ function RMS_MaintenanceTwoOptionsDialog:onCreate()
     for _, button in ipairs(self.optionThreeButtons or {}) do
         RMS_Utils.mirrorSelectionToChildren(button)
     end
+
+    RMS_Utils.applyScrollSpeed(self.dialogElement)
 end
 
 ---
 function RMS_MaintenanceTwoOptionsDialog:onOpen()
     RMS_MaintenanceTwoOptionsDialog:superClass().onOpen(self)
+    RMS_WorkshopDialog.initializeChildTabPaging(self, RMS_WorkshopDialog.TAB.INTERVENTIONS)
 
     if self.optionThree ~= nil then
         self.optionThree.useYesNoTexts = true
@@ -607,6 +621,7 @@ function RMS_MaintenanceTwoOptionsDialog:onOpen()
         RMS_Utils.centerActionContent(button)
     end
 
+    RMS_Utils.resetScrollingTexts(self.dialogElement)
     g_messageCenter:subscribe(MessageType.MONEY_CHANGED, self.updateScreen, self)
 end
 

@@ -207,8 +207,9 @@ end
 
 ---Starts the preheat sequence, switching the motor to ignition and choosing lamp test or preheating
 -- @param table? vehicle vehicle
+-- @param function? canMotorRunFunc previous getCanMotorRun function when called from its overwrite
 -- @return boolean accepted true when the sequence runs or already runs
-function RMS_Preheat.requestStart(vehicle)
+function RMS_Preheat.requestStart(vehicle, canMotorRunFunc)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec == nil or spec.isExcludedVehicle or not RMS_Preheat.isDieselVehicle(vehicle) then
         return false
@@ -237,7 +238,8 @@ function RMS_Preheat.requestStart(vehicle)
         return true
     end
 
-    if vehicle.getCanMotorRun ~= nil and not vehicle:getCanMotorRun() then
+    canMotorRunFunc = canMotorRunFunc or vehicle.getCanMotorRun
+    if canMotorRunFunc ~= nil and not canMotorRunFunc(vehicle) then
         return false
     end
 
@@ -289,8 +291,9 @@ end
 
 ---Tells whether the motor must stay blocked, starting the sequence when the ignition key asks for it
 -- @param table? vehicle vehicle
+-- @param function? canMotorRunFunc previous getCanMotorRun function
 -- @return boolean shouldBlock true while the motor may not run
-function RMS_Preheat.shouldBlockMotorRun(vehicle)
+function RMS_Preheat.shouldBlockMotorRun(vehicle, canMotorRunFunc)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec == nil or spec.isExcludedVehicle or not RMS_Preheat.isDieselVehicle(vehicle) then
         return false
@@ -312,12 +315,14 @@ function RMS_Preheat.shouldBlockMotorRun(vehicle)
         return false
     end
 
+    -- the key only turns the vehicle the local player drives, as the game reads it, while this runs for any vehicle
     local ignitionStartRequested = g_ignitionLockManager ~= nil
         and g_ignitionLockManager:getIsAvailable()
         and g_ignitionLockManager:getState() == IgnitionLockState.START
+        and vehicle:getIsActiveForInput(true)
 
     if ignitionStartRequested then
-        RMS_Preheat.requestStart(vehicle)
+        RMS_Preheat.requestStart(vehicle, canMotorRunFunc)
         return true
     end
 

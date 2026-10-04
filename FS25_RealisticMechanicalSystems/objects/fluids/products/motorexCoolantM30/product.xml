@@ -3,7 +3,7 @@
     <annotation>Copyright (C) 2026 Squallqt. Licensed under the GNU General Public License v3.0 or later.</annotation>
     <storeData>
         <name>Coolant M3.0 RTU</name>
-        <specs><fillTypes>RMS_MOTOREX_COOLANT_M30_RTU</fillTypes><weight/></specs>
+        <specs><weight/></specs>
         <functions><function>$l10n_rms_fluid_function_coolant</function></functions>
         <image>objects/fluids/products/motorexCoolantM30/store_motorexCoolantM30.dds</image>
         <price>105</price>
@@ -37,31 +37,16 @@
         drumLabelDiffuse="objects/fluids/products/motorexCoolantM30/drum_label_diffuse.dds"/>
     <fillUnit><fillUnitConfigurations title="$l10n_configuration_fillUnit">
             <fillUnitConfiguration name="5 L" price="0" isDefault="true">
-                <fillUnits>
-                    <fillUnit unitTextOverride="$l10n_unit_literShort" fillTypes="RMS_MOTOREX_COOLANT_M30_RTU" capacity="5" startFillType="RMS_MOTOREX_COOLANT_M30_RTU" startFillLevel="5">
-                        <fillRootNode node="fillRootNode"/>
-                    </fillUnit>
-                </fillUnits>
                 <objectChange node="mediumCanCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="mediumVisualLink" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="fluidContainer_component1" massActive="1" centerOfMassActive="0 0.1943 0"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="25 L" price="289">
-                <fillUnits>
-                    <fillUnit unitTextOverride="$l10n_unit_literShort" fillTypes="RMS_MOTOREX_COOLANT_M30_RTU" capacity="25" startFillType="RMS_MOTOREX_COOLANT_M30_RTU" startFillLevel="25">
-                        <fillRootNode node="fillRootNode"/>
-                    </fillUnit>
-                </fillUnits>
                 <objectChange node="largeCanCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="largeVisualLink" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="fluidContainer_component1" massActive="1"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="200 L" price="2545">
-                <fillUnits>
-                    <fillUnit unitTextOverride="$l10n_unit_literShort" fillTypes="RMS_MOTOREX_COOLANT_M30_RTU" capacity="200" startFillType="RMS_MOTOREX_COOLANT_M30_RTU" startFillLevel="200">
-                        <fillRootNode node="fillRootNode"/>
-                    </fillUnit>
-                </fillUnits>
                 <objectChange node="drumPalletCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="drumPalletFloorCollision01" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="drumPalletFloorCollision02" compoundChildActive="true" compoundChildInactive="false"/>
@@ -71,7 +56,7 @@
                 <objectChange node="fluidContainer_component1" massActive="1"/>
             </fillUnitConfiguration>
     </fillUnitConfigurations></fillUnit>
-    <pallet fillUnitIndex="1"/>
+    <pallet/>
     <dynamicMount triggerNode="dynamicMountTrigger" triggerForceAcceleration="4" additionalMountDistance="1.054" jointTransY="0.106" jointLimitToRotY="true"/>
     <foliageBending/>
     <wearable wearDuration="480" workMultiplier="1" fieldMultiplier="1"/>
@@ -83,7 +68,6 @@
         <i3dMapping id="drumCollision" node="0>5"/><i3dMapping id="dynamicMountTrigger" node="0>6"/>
         <i3dMapping id="mediumVisualLink" node="0>7"/><i3dMapping id="largeVisualLink" node="0>8"/>
         <i3dMapping id="drumVisualLink" node="0>9"/><i3dMapping id="drumPalletVisualLink" node="0>10"/>
-        <i3dMapping id="fillRootNode" node="0>11"/>
         <i3dMapping id="pickupNode" node="0>12"/>
     </i3dMappings>
 </vehicle>

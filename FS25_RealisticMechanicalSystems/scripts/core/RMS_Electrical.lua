@@ -207,7 +207,7 @@ local function calculateCurrentLoadAmps(vehicle, isMotorStarted, envTemp)
 
     -- starterCranking
     local crankingA = 0
-    if spec.isCranking ~= nil and spec.isCranking then
+    if spec.isCranking == true or RMS_BatteryCharger ~= nil and RMS_BatteryCharger.getIsCranking(vehicle) then
         crankingA = RMS_Config.ELECTRICAL.BATTERY_CRANK_CURRENT_A * (0.8 + math.random() * 0.4)
     end
 
@@ -407,6 +407,8 @@ getBatteryChargeAcceptance = function(tempC, soc, health)
 
     return math.clamp(tempK * socK * healthK, 0.02, 1.0), tempK, socK, healthK
 end
+
+RMS_Electrical.getBatteryChargeAcceptance = getBatteryChargeAcceptance
 
 ---Advances the battery temperature toward ambient and engine heat, plus its own losses
 -- @param table vehicle vehicle
@@ -1297,66 +1299,93 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
         return
     end
 
-    local iBatteryA = math.abs(sanitizeNumber((ctx.iAltAvail or 0) - (ctx.iLoads or 0), 0, -10000, 10000))
-    RMS_Electrical.updateBatteryTemperatureC(
-        self,
-        dtS,
-        ctx.environmentTemp,
-        sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, ctx.environmentTemp, -80, 160),
-        iBatteryA,
-        ctx.rintF
-    )
-
-    local capacityAh = sanitizeNumber(ctx.capacityAh, 0.01, 0.01, 10000)
-    local dAh = sanitizeNumber(((ctx.iAltAvail or 0) - (ctx.iLoads or 0)) * dtS / 3600, 0, -capacityAh, capacityAh)
-    ctx.chargeAh = sanitizeNumber((ctx.chargeAh or 0) + dAh, 0, 0, capacityAh)
-    ctx.soc = sanitizeNumber(ctx.chargeAh / capacityAh, 0, 0, 1)
-    ctx.ocvV = sanitizeNumber(getBatteryOpenCircuitVoltage(ctx.soc), 12.7, 0, 30)
-
-    local cfg = RMS_Config.ELECTRICAL or {}
-    local health = sanitizeNumber(spec.batteryHealth, 1, 0.0001, 1.0)
-    local rRef = math.max(cfg.RINT_REF_OHM or 0.005, 0.0001)
-    local maxHealthRintMult = math.max(cfg.BATTERY_HEALTH_RINT_MAX_MULT or 3.0, 1.0)
-    local healthRintMult = 1 + (1 - health) * (maxHealthRintMult - 1)
-    local rIntOhm = sanitizeNumber(rRef * (ctx.rintF or 1) * healthRintMult, rRef, 0.0001, 10)
-
-    local isCranking = spec.isCranking ~= nil and spec.isCranking
-
-    local batteryTerminalV, loadDropV, chargeRiseV, iDischargeA, iChargeA =
-        getBatteryTerminalVoltage(ctx.ocvV, ctx.iAltAvail, ctx.iLoads, isCranking, rIntOhm)
-    batteryTerminalV = sanitizeNumber(batteryTerminalV, ctx.ocvV, 0, 30)
-
-    local alternatorHealth = 1.0
-    if spec.systems ~= nil and spec.systems.electrical ~= nil then
-        alternatorHealth = sanitizeNumber(spec.alternatorHealth, 1.0, 0.0, 1.0)
+    local chargerCurrentA = 0
+    if self.isServer and RMS_BatteryCharger ~= nil and spec.batteryCharger ~= nil then
+        chargerCurrentA = RMS_BatteryCharger.getChargingCurrent(self, ctx)
     end
-
-    local rawSystemV, regulatedV, deficitA, sagV, regulationHealth, healthDeficitMult, chargeHeadroomV =
-        getSystemVoltage(ctx.isMotorStarted, batteryTerminalV, ctx.iAltAvail, ctx.iLoads, alternatorHealth)
-    rawSystemV = sanitizeNumber(rawSystemV, batteryTerminalV, 0, 30)
-
-    ctx.rawBatteryTerminalVoltageV = batteryTerminalV
-    ctx.rawSystemVoltageV = rawSystemV
-    ctx.termLoadDropV = loadDropV
-    ctx.termChargeRiseV = chargeRiseV
-    ctx.termDischargeA = iDischargeA
-    ctx.termChargeA = iChargeA
-    ctx.regulatedVoltageV = regulatedV
-    ctx.altDeficitA = deficitA
-    ctx.altSagV = sagV
-    ctx.altRegulationHealth = regulationHealth
-    ctx.altHealthDeficitMult = healthDeficitMult
-    ctx.altChargeHeadroomV = chargeHeadroomV
-    ctx.iNetA = (ctx.iAltAvail or 0) - (ctx.iLoads or 0)
-    ctx.dAhTotal = dAh
-
-    commitBatteryContext(self, ctx, dt)
-
-    if RMS_Utils.getIsDebugDataWanted(self) then
-        local dbg = ensureBatteryDebugData(spec)
-        dbg.rIntHealthFactor = healthRintMult
-        dbg.termIsCranking = isCranking and 1 or 0
+    local followsGameTime = self.isServer and chargerCurrentA > 0
+        and RMS_BatteryCharger.getFollowsGameTime(self)
+    local timeScale = 1
+    if followsGameTime and g_currentMission ~= nil and g_currentMission.getEffectiveTimeScale ~= nil then
+        timeScale = sanitizeNumber(g_currentMission:getEffectiveTimeScale(), 1, 0)
     end
+    local remainingDtS = dtS * timeScale
+    repeat
+        -- Re-evaluate acceptance and heat at the existing RMS core cadence during fast-forward.
+        local stepDtS = timeScale > 1 and math.min(remainingDtS, RMS_Config.CORE_UPDATE_DELAY / 1000) or remainingDtS
+        ctx.dtS = stepDtS
+        local supplyCurrentA = (ctx.iAltAvail or 0) + chargerCurrentA
+        local iBatteryA = math.abs(sanitizeNumber(supplyCurrentA - (ctx.iLoads or 0), 0, -10000, 10000))
+        RMS_Electrical.updateBatteryTemperatureC(
+            self,
+            stepDtS,
+            ctx.environmentTemp,
+            sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, ctx.environmentTemp, -80, 160),
+            iBatteryA,
+            ctx.rintF
+        )
+
+        local capacityAh = sanitizeNumber(ctx.capacityAh, 0.01, 0.01, 10000)
+        local dAh = sanitizeNumber((supplyCurrentA - (ctx.iLoads or 0)) * stepDtS / 3600, 0, -capacityAh, capacityAh)
+        ctx.chargeAh = sanitizeNumber((ctx.chargeAh or 0) + dAh, 0, 0, capacityAh)
+        ctx.soc = sanitizeNumber(ctx.chargeAh / capacityAh, 0, 0, 1)
+        ctx.ocvV = sanitizeNumber(getBatteryOpenCircuitVoltage(ctx.soc), 12.7, 0, 30)
+
+        local cfg = RMS_Config.ELECTRICAL or {}
+        local health = sanitizeNumber(spec.batteryHealth, 1, 0.0001, 1.0)
+        local rRef = math.max(cfg.RINT_REF_OHM or 0.005, 0.0001)
+        local maxHealthRintMult = math.max(cfg.BATTERY_HEALTH_RINT_MAX_MULT or 3.0, 1.0)
+        local healthRintMult = 1 + (1 - health) * (maxHealthRintMult - 1)
+        local rIntOhm = sanitizeNumber(rRef * (ctx.rintF or 1) * healthRintMult, rRef, 0.0001, 10)
+
+        local isCranking = spec.isCranking ~= nil and spec.isCranking
+
+        local batteryTerminalV, loadDropV, chargeRiseV, iDischargeA, iChargeA =
+            getBatteryTerminalVoltage(ctx.ocvV, supplyCurrentA, ctx.iLoads, isCranking, rIntOhm)
+        batteryTerminalV = sanitizeNumber(batteryTerminalV, ctx.ocvV, 0, 30)
+
+        local alternatorHealth = 1.0
+        if spec.systems ~= nil and spec.systems.electrical ~= nil then
+            alternatorHealth = sanitizeNumber(spec.alternatorHealth, 1.0, 0.0, 1.0)
+        end
+
+        local rawSystemV, regulatedV, deficitA, sagV, regulationHealth, healthDeficitMult, chargeHeadroomV =
+            getSystemVoltage(ctx.isMotorStarted, batteryTerminalV, supplyCurrentA, ctx.iLoads, alternatorHealth)
+        rawSystemV = sanitizeNumber(rawSystemV, batteryTerminalV, 0, 30)
+
+        ctx.rawBatteryTerminalVoltageV = batteryTerminalV
+        ctx.rawSystemVoltageV = rawSystemV
+        ctx.termLoadDropV = loadDropV
+        ctx.termChargeRiseV = chargeRiseV
+        ctx.termDischargeA = iDischargeA
+        ctx.termChargeA = iChargeA
+        ctx.regulatedVoltageV = regulatedV
+        ctx.altDeficitA = deficitA
+        ctx.altSagV = sagV
+        ctx.altRegulationHealth = regulationHealth
+        ctx.altHealthDeficitMult = healthDeficitMult
+        ctx.altChargeHeadroomV = chargeHeadroomV
+        ctx.iNetA = supplyCurrentA - (ctx.iLoads or 0)
+        ctx.dAhTotal = dAh
+
+        commitBatteryContext(self, ctx, stepDtS * 1000)
+
+        if self.isServer and RMS_BatteryCharger ~= nil and spec.batteryCharger ~= nil then
+            RMS_BatteryCharger.onBatteryUpdated(self, chargerCurrentA, ctx.iNetA)
+        end
+
+        if RMS_Utils.getIsDebugDataWanted(self) then
+            local dbg = ensureBatteryDebugData(spec)
+            dbg.rIntHealthFactor = healthRintMult
+            dbg.termIsCranking = isCranking and 1 or 0
+        end
+        remainingDtS = math.max(remainingDtS - stepDtS, 0)
+        if remainingDtS > 0 and spec.batteryCharger ~= nil then
+            ctx = buildBatteryContext(self, remainingDtS)
+            if ctx == nil then return end
+            chargerCurrentA = RMS_BatteryCharger.getChargingCurrent(self, ctx)
+        end
+    until remainingDtS <= 0 or not followsGameTime or not RMS_BatteryCharger.getFollowsGameTime(self)
 end
 
 ---Tells whether two vehicles may be linked by jumper cables
@@ -1382,6 +1411,19 @@ function RMS_Electrical.isValidPowerPair(vehicleA, vehicleB)
 
     if vehicleA.spec_RealisticMechanicalSystems == nil or vehicleB.spec_RealisticMechanicalSystems == nil then
         return false, 'NO_RMS'
+    end
+
+    if vehicleA.spec_RealisticMechanicalSystems.batteryCharger ~= nil
+        or vehicleB.spec_RealisticMechanicalSystems.batteryCharger ~= nil
+        or RMS_BatteryCharger ~= nil and (RMS_BatteryCharger.getConnectedCharger(vehicleA) ~= nil
+            or RMS_BatteryCharger.getConnectedCharger(vehicleB) ~= nil) then
+        return false
+    end
+
+    local connectionA = normalizeExternalPowerConnection(vehicleA.spec_RealisticMechanicalSystems.externalPowerConnection)
+    local connectionB = normalizeExternalPowerConnection(vehicleB.spec_RealisticMechanicalSystems.externalPowerConnection)
+    if connectionA ~= nil and connectionA ~= vehicleB or connectionB ~= nil and connectionB ~= vehicleA then
+        return false, 'BUSY'
     end
 
     local nodeA = vehicleA.rootNode
@@ -1428,8 +1470,11 @@ function RMS_Electrical:establishExternalPowerConnection(externalConnection)
     end
 
     local otherSpec = otherVehicle ~= nil and otherVehicle.spec_RealisticMechanicalSystems or nil
-    local isValid = RMS_Electrical.isValidPowerPair(self, otherVehicle)
+    local isValid, reason = RMS_Electrical.isValidPowerPair(self, otherVehicle)
 
+    if reason == 'BUSY' then
+        return false
+    end
     if isValid then
         spec.externalPowerConnection = otherVehicle
         if otherSpec ~= nil then

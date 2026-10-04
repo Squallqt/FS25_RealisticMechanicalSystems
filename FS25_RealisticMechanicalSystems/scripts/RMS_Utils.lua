@@ -285,7 +285,60 @@ function RMS_Utils.calculatePtoLoadFactor(utilization, config)
     local multiplier = math.max(tonumber(config.LOAD_FACTOR_MULTIPLIER) or 0, 0)
     local fullEffect = math.max(tonumber(config.LOAD_FACTOR_FULL_EFFECT) or 1, threshold + 0.0001)
     local factor = RMS_Utils.calculateQuadraticMultiplier(load, threshold, false, fullEffect) * multiplier
-    return math.min(factor, multiplier)
+    factor = math.min(factor, multiplier)
+
+    -- past the capacity of the engine the overload climbs straight away instead of easing in
+    if load > fullEffect then
+        local overloadMultiplier = math.max(tonumber(config.OVERLOAD_FACTOR_MULTIPLIER) or 0, 0)
+        local overloadFullEffect = math.max(tonumber(config.OVERLOAD_FACTOR_FULL_EFFECT) or 1, fullEffect + 0.0001)
+        factor = factor + math.min((load - fullEffect) / (overloadFullEffect - fullEffect), 1) * overloadMultiplier
+    end
+
+    return factor
+end
+
+---Returns the engine speed as a share of its range from idle to maximum
+-- @param table? vehicle vehicle
+-- @return float share 0 at idle or with the engine off, 1 at maximum rpm
+function RMS_Utils.getMotorRpmShareAboveIdle(vehicle)
+    local motor = vehicle ~= nil and vehicle.getMotor ~= nil and vehicle:getMotor() or nil
+    if motor == nil or vehicle.getIsMotorStarted == nil or not vehicle:getIsMotorStarted() then
+        return 0
+    end
+
+    local minRpm = tonumber(motor.minRpm) or 0
+    local maxRpm = tonumber(motor.maxRpm) or 0
+    if maxRpm <= minRpm then
+        return 0
+    end
+
+    return math.clamp(((tonumber(motor:getLastModulatedMotorRpm()) or 0) - minRpm) / (maxRpm - minRpm), 0, 1)
+end
+
+---Returns the condition new engagements take from the PTO: the clutch pack of each one, and a shock growing
+-- with the engine speed it was engaged at and the size of the implement it set turning
+-- @param table? vehicle vehicle
+-- @param table? engagementTorques rated torque of each engaged implement that wears the clutch
+-- @param table? previousActiveLinks links active on the previous sample
+-- @param float? rpmShare engine speed share above idle on the previous sample
+-- @return float damage condition removed
+-- @return boolean isShock true when one of them was engaged above idle
+function RMS_Utils.getPtoEngagementDamage(vehicle, engagementTorques, previousActiveLinks, rpmShare)
+    local config = RMS_Config.CORE.PTO_FACTOR_DATA
+    local rpmFactor = RMS_Utils.calculateQuadraticMultiplier(math.clamp(tonumber(rpmShare) or 0, 0, 1),
+        config.ENGAGEMENT_SHOCK_RPM_THRESHOLD, false)
+    local damage = 0
+    local isShock = false
+
+    for consumer, ratedTorque in pairs(engagementTorques or {}) do
+        if previousActiveLinks == nil or previousActiveLinks[consumer] ~= true then
+            local size = math.clamp(RMS_Utils.getPtoNativeCapacityData(vehicle, ratedTorque), config.ENGAGEMENT_SHOCK_MIN_SIZE, 1)
+            damage = damage + config.ENGAGEMENT_CLUTCH_DAMAGE + config.ENGAGEMENT_SHOCK_DAMAGE * rpmFactor * size
+            isShock = isShock or rpmFactor > 0
+        end
+    end
+
+    return damage, isShock
 end
 
 ---Counts the PTO links that became active since the previous frame
@@ -347,6 +400,21 @@ local function collectConnectedPtoData(vehicleObj, data, visited)
                 end
                 if isEngaged then
                     data.activeLinks[consumer] = true
+
+                    -- the game turns a sprayer on to open its sections and lets it work at any height, while in
+                    -- reality its pump keeps the PTO turning: neither its switching nor its height count against it
+                    if consumer.spec_sprayer == nil then
+                        local neededMaxPower = consumer.spec_powerConsumer ~= nil
+                            and (tonumber(consumer.spec_powerConsumer.neededMaxPtoPower) or 0) or 0
+                        data.engagementTorques[consumer] = configuredRpm > 0 and neededMaxPower / (configuredRpm * math.pi / 30) or 0
+
+                        -- a header rides the feeder of its harvester, raising it leaves its driveline straight
+                        if vehicleObj.spec_combine == nil
+                            and consumer.getAllowsLowering ~= nil and consumer:getAllowsLowering()
+                            and consumer.getIsLowered ~= nil and not consumer:getIsLowered(true) then
+                            data.isRaised = true
+                        end
+                    end
                 end
             end
 
@@ -365,7 +433,9 @@ function RMS_Utils.getConnectedPtoData(vehicle)
         rpm = 0,
         power = 0,
         connectedVehicles = {},
-        activeLinks = {}
+        activeLinks = {},
+        engagementTorques = {},
+        isRaised = false
     }
     local visited = {}
 
@@ -546,6 +616,20 @@ function RMS_Utils.updateMoneyBoxLayout(labelElement, valueElement, boxElement, 
     end
 end
 
+---Fits the recap vehicle card beside an optional follow-up card.
+-- @param table dialog workshop procedure dialog
+-- @param boolean hasFollowUp whether the follow-up card is visible
+function RMS_Utils.updateRecapVehicleCard(dialog, hasFollowUp)
+    local cardWidth = hasFollowUp and dialog.recapAddonBlock.size[1] or dialog.recapFluidsBlock.size[1]
+    local textWidth = hasFollowUp and dialog.recapAddon.size[1] or dialog.recapOptions.size[1]
+    dialog.recapVehicleBlock:setSize(cardWidth, nil)
+    dialog.recapVehicleSurface:setSize(cardWidth, nil)
+    dialog.recapVehicleLayout:setSize(cardWidth, nil)
+    dialog.recapVehicleLabel:setSize(textWidth, nil)
+    dialog.recapVehicle:setSize(textWidth, nil)
+    dialog.recapVehicleLayout:invalidateLayout()
+end
+
 ---Renders a table as a readable string
 -- @param any tbl table to render
 -- @return string text rendered table
@@ -592,17 +676,6 @@ function RMS_Utils.hasSelectedVisibleBreakdown(vehicle)
     end
 
     return false
-end
-
----Returns the unique user id behind a connection
--- @param Connection? connection connection
--- @return string? userId unique user id
-function RMS_Utils.getUniqueUserIdByConnection(connection)
-    local user = g_currentMission.userManager:getUserByConnection(connection)
-    if user == nil then
-        return nil
-    end
-    return user:getUniqueUserId()
 end
 
 ---Serializes the active breakdowns into one string
@@ -953,7 +1026,7 @@ end
 -- @param float? intervalHours length of the interval
 -- @return string text formatted hours
 function RMS_Utils.formatOperatingHours(currentHours, intervalHours)
-    return string.format("%.1f / %.1f %s", currentHours, intervalHours, g_i18n:getText('rms_spec_op_hours_short'))
+    return string.format("%.0f / %.0f %s", currentHours, intervalHours, g_i18n:getText('rms_spec_op_hours_short'))
 end
 
 
@@ -1642,6 +1715,43 @@ function RMS_Utils.getSystemKey(systems, systemName)
     return string.lower(RMS_Utils.getKeyByValue(systems, systemName) or "")
 end
 
+---Turns a real price into the game's, scaled like the game's wages by the economic difficulty around the normal one
+-- @param float realPrice real price in euros
+-- @return float price game price
+function RMS_Utils.getGamePrice(realPrice)
+    return realPrice * (EconomyManager.getCostMultiplier() / EconomyManager.COST_MULTIPLIER[EconomicDifficulty.NORMAL])
+end
+
+---Returns what a machine is worth: its price loses value with the hours run against the RMS lifespan and with its
+-- age, its condition shades that value, and the repairs and paint it needs are taken off
+-- @param table vehicle vehicle
+-- @return float value market value
+function RMS_Utils.getMarketValue(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local price = vehicle:getPrice()
+    local lifespanHours = 1 / RMS_Config.CORE.BASE_SYSTEMS_WEAR
+    local usageFactor = math.max(1 - spec.realOperatingTime / 3600000 / lifespanHours, 0)
+    local ageFactor = math.min(-0.1 * math.log(vehicle.age / Environment.PERIODS_IN_YEAR) + 0.75, 0.85)
+    local conditionFactor = 0.5 + 0.5 * vehicle:getConditionLevel()
+    local repaintPrice = (RMS_Bodywork.getPrice(vehicle, RMS_Bodywork.FULL, RealisticMechanicalSystems.WORKSHOP.DEALER) or 0)
+        * math.sqrt(vehicle:getWearTotalAmount())
+    local repairPrice = vehicle:getServicePrice(RealisticMechanicalSystems.STATUS.REPAIR, RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM,
+        RealisticMechanicalSystems.PART_TYPES.OEM, false, RealisticMechanicalSystems.WORKSHOP.DEALER, true)
+    return math.max(price * usageFactor * ageFactor * conditionFactor - repaintPrice - repairPrice, price * 0.03)
+end
+
+---Returns the exact menu or direct dealer payment, applying the native multiplier before rounding and capping
+-- @param table vehicle vehicle
+-- @param boolean? isDirectSell true for the dealer trigger sale
+-- @return integer? value resale value, nil when the vehicle is not the farm's to sell
+function RMS_Utils.getResaleValue(vehicle, isDirectSell)
+    if vehicle.propertyState ~= VehiclePropertyState.OWNED then
+        return nil
+    end
+    local multiplier = isDirectSell and EconomyManager.DIRECT_SELL_MULTIPLIER or 1
+    return math.min(math.floor(vehicle:getSellPrice() * multiplier), vehicle:getPrice())
+end
+
 ---Returns the weight a system carries on this vehicle, disabled systems weighing nothing
 -- @param table? vehicle vehicle
 -- @param string systemName system name
@@ -1745,6 +1855,29 @@ function RMS_Utils.getEffectiveSystemWeight(vehicle, systemName, systems)
     return targetWeight / totalEnabledWeight
 end
 
+---Returns the enabled systems whose condition permits an overhaul
+-- @param table? vehicle vehicle
+-- @return table values eligible system l10n keys in declared order
+function RMS_Utils.getEligibleOverhaulSystems(vehicle)
+    local values = {}
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or type(spec.systems) ~= "table" then
+        return values
+    end
+
+    for _, systemName in ipairs(RealisticMechanicalSystems.SYSTEMS_ORDER) do
+        local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemName)
+        local systemData = spec.systems[systemKey]
+        if type(systemData) == "table" and systemData.enabled ~= false
+            and (tonumber(systemData.condition) or 1.0) < 0.5
+            and RMS_Utils.getEffectiveSystemWeight(vehicle, systemName, RealisticMechanicalSystems.SYSTEMS) > 0 then
+            values[#values + 1] = systemName
+        end
+    end
+
+    return values
+end
+
 ---Copies a table one level deep
 -- @param any original table to copy
 -- @return any copy copied table
@@ -1782,6 +1915,48 @@ function RMS_Utils.deepCopy(original, seen)
     end
 
     return result
+end
+
+---Serializes invoice lines into a string
+-- @param table? invoice invoice lines
+-- @return string serialized kind, key, mode, liters and price of each line
+function RMS_Utils.serializeInvoice(invoice)
+    local values = {}
+    for _, line in ipairs(invoice or {}) do
+        table.insert(values, string.format(
+            "%s,%s,%s,%.6f,%.4f",
+            tostring(line.kind or ""),
+            tostring(line.key or ""),
+            tostring(line.mode or ""),
+            tonumber(line.liters) or 0,
+            tonumber(line.price) or 0
+        ))
+    end
+    return table.concat(values, ";")
+end
+
+---Rebuilds invoice lines from their serialized form
+-- @param string? serialized serialized invoice
+-- @return table? invoice invoice lines, nil when none were recorded
+function RMS_Utils.deserializeInvoice(serialized)
+    if serialized == nil or serialized == "" then
+        return nil
+    end
+
+    local invoice = {}
+    for value in string.gmatch(serialized, "[^;]+") do
+        local kind, key, mode, liters, price = string.match(value, "^([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)$")
+        if kind ~= nil and kind ~= "" then
+            table.insert(invoice, {
+                kind = kind,
+                key = key,
+                mode = mode ~= "" and mode or nil,
+                liters = tonumber(liters) or 0,
+                price = tonumber(price) or 0
+            })
+        end
+    end
+    return invoice
 end
 
 ---Serializes one maintenance log entry into a string
@@ -1826,7 +2001,7 @@ function RMS_Utils.serializeMaintenanceLogEntry(entry)
         serializedBreakdowns,
         serializedSelectedBreakdowns,
         serializedIndicators,
-        tostring(cd.sellPrice or 0)
+        RMS_Utils.encodeDelimitedString(RMS_Utils.serializeInvoice(entry.invoice))
     }
     return table.concat(parts, "|")
 end
@@ -1853,6 +2028,7 @@ function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
         optionThree = RMS_Utils.normalizeBoolValue(parts[8], false),
         isVisible = RMS_Utils.normalizeBoolValue(parts[9], true),
         isCompleted = RMS_Utils.normalizeBoolValue(parts[10], true),
+        invoice = RMS_Utils.deserializeInvoice(RMS_Utils.decodeDelimitedString(parts[24] or "")),
         conditionData = {
             year = tonumber(parts[11]) or 0,
             operatingHours = tonumber(parts[12]) or 0,
@@ -1866,8 +2042,7 @@ function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
             activeBreakdowns = RMS_Utils.deserializeBreakdowns(RMS_Utils.decodeDelimitedString(parts[21] or "")),
             selectedBreakdowns = RMS_Utils.parseCsvList(RMS_Utils.decodeDelimitedString(parts[22] or "")),
             activeEffects = RMS_Utils.deserializeEffectSnapshot(RMS_Utils.decodeDelimitedString(parts[20] or "")),
-            activeIndicators = {},
-            sellPrice = tonumber(parts[24]) or 0
+            activeIndicators = {}
         }
     }
     for _, indicatorId in ipairs(RMS_Utils.parseCsvList(RMS_Utils.decodeDelimitedString(parts[23] or ""))) do
@@ -1878,17 +2053,10 @@ function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
     return result
 end
 
----Tells whether something reads the debug values of a vehicle, the debug panel or a telemetry recording
+---Tells whether the debug panel reads the debug values of a vehicle
 -- @param table? vehicle vehicle owning the debug values
 -- @return boolean isWanted true while the values are consumed
 function RMS_Utils.getIsDebugDataWanted(vehicle)
-    if RMS_Telemetry ~= nil and RMS_Telemetry.isRecording == true then
-        local recordedVehicleId = RMS_Telemetry.vehicleId
-        if vehicle == nil or recordedVehicleId == nil or vehicle.uniqueId == recordedVehicleId then
-            return true
-        end
-    end
-
     if RMS_Config.DEBUG ~= true or vehicle == nil then
         return false
     end
@@ -1922,25 +2090,38 @@ function RMS_Utils.hasCVTTransmission(vehicle)
     return motor ~= nil and motor.minForwardGearRatio ~= nil
 end
 
----Tells whether the vehicle runs on electricity
--- @param table? vehicle vehicle
--- @return boolean isElectric true for an electric vehicle
-function RMS_Utils.getIsElectricVehicle(vehicle)
+---Tells whether a set of consumers runs on electricity alone
+-- @param table fillTypes consumer fill type indices
+-- @return boolean isElectric true with an electric consumer and no combustion one
+function RMS_Utils.getIsElectricConsumers(fillTypes)
     local hasElectricConsumer = false
     local hasCombustionConsumer = false
 
-    if vehicle.spec_motorized and vehicle.spec_motorized.consumers then
-        for _, consumer in pairs(vehicle.spec_motorized.consumers) do
-            if consumer.fillType == FillType.ELECTRICCHARGE then
-                hasElectricConsumer = true
-            elseif consumer.fillType == FillType.DIESEL
-                    or consumer.fillType == FillType.METHANE then
-                hasCombustionConsumer = true
-            end
+    for _, fillType in pairs(fillTypes) do
+        if fillType == FillType.ELECTRICCHARGE then
+            hasElectricConsumer = true
+        elseif fillType == FillType.DIESEL
+                or fillType == FillType.METHANE then
+            hasCombustionConsumer = true
         end
     end
 
     return hasElectricConsumer and not hasCombustionConsumer
+end
+
+---Tells whether the vehicle runs on electricity
+-- @param table? vehicle vehicle
+-- @return boolean isElectric true for an electric vehicle
+function RMS_Utils.getIsElectricVehicle(vehicle)
+    local fillTypes = {}
+
+    if vehicle.spec_motorized and vehicle.spec_motorized.consumers then
+        for _, consumer in pairs(vehicle.spec_motorized.consumers) do
+            table.insert(fillTypes, consumer.fillType)
+        end
+    end
+
+    return RMS_Utils.getIsElectricConsumers(fillTypes)
 end
 
 ---Returns the power to trailer mass thresholds, trucks having their own
@@ -2110,6 +2291,23 @@ function RMS_Utils.applyScrollSpeed(element)
 
     for _, child in ipairs(element.elements) do
         RMS_Utils.applyScrollSpeed(child)
+    end
+end
+
+---Resets scrolling text elements in a GUI branch to the start of their text
+-- @param table? element root element to walk
+function RMS_Utils.resetScrollingTexts(element)
+    if element == nil then
+        return
+    end
+
+    if element.textLayoutMode == TextElement.LAYOUT_MODE.SCROLLING then
+        element.scrollTime = 0
+        element:updateScrollingParameters()
+    end
+
+    for _, child in ipairs(element.elements or {}) do
+        RMS_Utils.resetScrollingTexts(child)
     end
 end
 

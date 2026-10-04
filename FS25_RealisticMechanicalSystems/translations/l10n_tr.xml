@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Kontak açık: ön ısıtma sürüyor"/>
         <text name="rms_preheat_system_failure_message" text="Ön ısıtma sistemi arızası: soğuk çalıştırma kullanılamıyor"/>
         <text name="rms_preheat_start_failed_message" text="Motor çalışmadı: yeniden denemeden önce kontağı kapat"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Aracı kontrol et"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="Tamam"/>
@@ -30,23 +31,11 @@
         <text name="rms_settings_section_service_wear" text="Bakım ve Aşınma"/>
         <text name="rms_settings_section_thermal_model" text="Termal Model"/>
         <text name="rms_settings_section_battery_alternator" text="Akü ve Alternatör"/>
-        <text name="rms_settings_section_preshift_maintenance" text="Vardiya Öncesi Bakım"/>
-        <text name="rms_settings_section_other" text="Diğer"/>
         <text name="rms_settings_section_drivetrain" text="Aktarma Organları ve El Freni"/>
-        <text name="rms_maintenancePrice_label" text="İşlem Fiyatı Çarpanı"/>
-        <text name="rms_maintenancePrice_tooltip" text="Muayene, onarım ve revizyon dahil tüm atölye işlemlerinin maliyetini ayarlar. Değer yükseldikçe işlemler pahalılaşır."/>
-        <text name="rms_maintenanceDuration_label" text="İşlem Süresi Çarpanı"/>
-        <text name="rms_maintenanceDuration_tooltip" text="Tüm atölye işlemlerinin süresini ayarlar. Değer yükseldikçe her işlem daha uzun sürer."/>
         <text name="rms_workshopOpenHour_label" text="Atölye Açılış Saati"/>
         <text name="rms_workshopOpenHour_tooltip" text="İşlemler yalnızca bu saatten itibaren başlayabilir."/>
         <text name="rms_workshopCloseHour_label" text="Atölye Kapanış Saati"/>
         <text name="rms_workshopCloseHour_tooltip" text="Devam eden işlemler bu saatte duraklar ve atölye açıldığında yeniden başlar."/>
-        <text name="rms_cloggingSpeed_label" text="Tıkanma Hızı"/>
-        <text name="rms_cloggingSpeed_tooltip" text="Toz, saman ve mahsul artıkları içinde çalışırken radyatörün ve hava filtresinin ne kadar hızlı tıkanacağını ayarlar. Daha yüksek değerler, tıkanmanın daha hızlı artmasına neden olur."/>
-        <text name="rms_fieldInspectionDuration_label" text="Vardiya Öncesi Kontrol Süresi"/>
-        <text name="rms_fieldInspectionDuration_tooltip" text="Vardiya öncesi kontrolün ne kadar süreceğini, gerçek saniye cinsinden belirler."/>
-        <text name="rms_lubricationReducePerOperatingHour_label" text="Gres Tüketim Hızı"/>
-        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="Çalışma saati başına tüketilen gres miktarını belirler."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Bayi Atölyesi 7/24"/>
         <text name="rms_dealerWorkshopAvailable_tooltip" text="Bayi atölyesinin günün her saatinde hizmet verebilir durumda olmasını sağlar."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobil Atölye 7/24"/>
@@ -56,55 +45,31 @@
         <text name="rms_ownWorkshopAvailable_label" text="Kendi Atölyen 7/24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Kendi atölyeni günün her saatinde kullanıma hazır tutar."/>
         <text name="rms_instantInspection_label" text="Anında Muayene"/>
-        <text name="rms_instantInspection_tooltip" text="Etkinleştirildiğinde tüm muayeneler anında tamamlanır (zaman geçmez). Not: görsel muayene kullanılamaz."/>
-        <text name="rms_parkVehicle_label" text="Bakım Sırasında Aracı Park Et"/>
-        <text name="rms_parkVehicle_tooltip" text="Bu özellik etkinleştirildiğinde, TAB tuşuyla geçiş yaparken bakımda olan araçlar atlanır."/>
-        <text name="rms_warrantyEnabled_label" text="Yeni Ekipman Garantisi"/>
-        <text name="rms_warrantyEnabled_tooltip" text="Garanti, yeni araç onarımlarına uygulanır (20 çalışma saatine veya 12 aya kadar). Yalnızca orijinal parçalar ücretsiz karşılanır."/>
-        <text name="rms_aiOverloadAndOverheatControl_label" text="YZ ile Aşırı Yük ve Aşırı Isınma Denetimi"/>
-        <text name="rms_aiOverloadAndOverheatControl_tooltip" text="Etkinleştirildiğinde YZ çalışanı motorun aşırı yüklenmesini veya aşırı ısınmasını önlemek için yükü azaltır."/>
-        <text name="rms_aiDisableOnCriticalOverload_label" text="Kritik Aşırı Yükte YZ’yi Durdur"/>
-        <text name="rms_aiDisableOnCriticalOverload_tooltip" text="Kritik aşırı yükte YZ çalışanlarını ve AutoDrive’ı durdurur."/>
-        <text name="rms_contractVehicleProtection_label" text="Sözleşme Araçlarını Koruma"/>
-        <text name="rms_contractVehicleProtection_tooltip" text="Sözleşme araçlarına kritik aşırı yükte YZ’yi durdurma ve aşırı yük ya da aşırı ısınmada hız düzenleme işlevlerini uygular."/>
-        <text name="rms_aiWorkerTargetStress_label" text="YZ Tepkisi"/>
-        <text name="rms_aiWorkerTargetStress_tooltip" text="YZ çalışanının aşırı yük ve aşırı ısınmaya ne zaman tepki verdiğini belirler. Tepki düzeyi yükseldikçe daha erken yavaşlar; düştükçe müdahale etmeden önce yükün daha fazla artmasına izin verir."/>
-        <text name="rms_aiWorkerTargetStress_relaxed" text="Rahat"/>
-        <text name="rms_aiWorkerTargetStress_balanced" text="Dengeli"/>
-        <text name="rms_aiWorkerTargetStress_sensitive" text="Hassas"/>
-        <text name="rms_aiWorkerTargetStress_verySensitive" text="Çok Hassas"/>
-        <text name="rms_aiWorkerMinSpeed_label" text="YZ Asgari Hızı"/>
-        <text name="rms_aiWorkerMinSpeed_tooltip" text="Aşırı yük veya aşırı ısınmayı önlemek için yavaşlarken YZ çalışanının kullanabileceği asgari sabit hızı belirler."/>
+        <text name="rms_instantInspection_tooltip" text="Etkinleştirildiğinde atölyedeki muayeneler anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
+        <text name="rms_instantMaintenanceRepair_label" text="Anında Bakım ve Onarım"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Etkinleştirildiğinde atölyedeki bakım ve onarımlar anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
+        <text name="rms_instantBodywork_label" text="Anında Boyama"/>
+        <text name="rms_instantBodywork_tooltip" text="Etkinleştirildiğinde atölyedeki boyama işlemleri anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
+        <text name="rms_instantOverhaul_label" text="Anında Mekanik Revizyon"/>
+        <text name="rms_instantOverhaul_tooltip" text="Etkinleştirildiğinde atölyedeki mekanik revizyonlar anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
         <text name="rms_debugMode_label" text="Hata Ayıklama Modu"/>
         <text name="rms_debugMode_tooltip" text="Konsoldaki hata ayıklama panelini ve ayrıntılı günlükleri etkinleştirir."/>
         <text name="rms_warningMessages_label" text="Uyarı Mesajları"/>
         <text name="rms_warningMessages_tooltip" text="Soğuk motor ve aşırı ısınma uyarıları gibi oyun içi uyarı mesajlarını etkinleştirir veya devre dışı bırakır."/>
         <text name="rms_serviceInterval_label" text="Bakım Aralığı"/>
-        <text name="rms_serviceInterval_tooltip" text="Temel bakım aralığını saat olarak belirler; bu süre aşıldığında bakım gerekir. Gerçek aralık aracın markasına, yaşına ve önceki bakımların kalitesine bağlıdır."/>
+        <text name="rms_serviceInterval_tooltip" text="Motor yağı değişim aralığını saat olarak belirler. Şanzıman ve hidrolik yağı her iki aralıkta bir, soğutma sıvısı her on aralıkta bir değişir. Gerçek aralık aracın markasına bağlıdır."/>
         <text name="rms_vehicleLifespan_label" text="Aracın Kullanım Ömrü"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Aracın temel ömrünü saat cinsinden belirler; bu sürenin sonunda aracın durumu %0’a ulaşır. Durum sıfıra ne kadar yaklaşırsa, araç o kadar güvenilmez hale gelir."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Aracın temel ömrünü saat cinsinden belirler; bu sürenin sonunda aracın durumu %0’a ulaşır. Durum sıfıra ne kadar yaklaşırsa, araç o kadar güvenilmez hale gelir. Aracın değeri de bu saatler boyunca düşer."/>
         <text name="rms_reinitializeVehicles_label" text="Filoyu sıfırla"/>
         <text name="rms_reinitializeVehicles_text" text="Sıfırla"/>
         <text name="rms_reinitializeVehicles_tooltip" text="Filo durumunu seçilen kullanım ömrüne göre hizalar. Mevcut arızalar silinir."/>
         <text name="rms_reinitializeVehiclesConfirm_title" text="Filoyu Sıfırla"/>
         <text name="rms_reinitializeVehiclesConfirm_message" text="Filo seçilen kullanım ömrüne göre hizalansın mı? Mevcut arızalar silinecek."/>
         <text name="rms_reinitializeVehicles_result" text="Sıfırlanan araçlar: %d. Etkilenmeyenler: %d."/>
-        <text name="rms_downtimeWear_label" text="Pasif Aşınma"/>
-        <text name="rms_downtimeWear_tooltip" text="Bir araç hareketsiz kaldığında pasif aşınma hızını, temel aşınma hızının (Araç ömrü) yüzdesi olarak belirler. Örneğin varsayılan 100 saatlik ömürde %5, her sistemin yaklaşık 20 saatlik hareketsizlikten sonra durumunun %1’ini kaybetmesi demektir. Not: araç üstü kapalı bir yerde depolandığında pasif aşınma devre dışı kalır."/>
         <text name="rms_generalWearEnabled_label" text="Yaşla İlgili Aşınma"/>
         <text name="rms_generalWearEnabled_tooltip" text="Araç aşındıkça her sistem motor gücü, hidrolik hızı veya fren verimliliği gibi ana özelliklerinde küçük kayıplar yaşar. Etki ömrün ilk üçte birinden sonra başlar ancak ancak üçte ikisinden sonra belirginleşir ve makinenin ömrü sona yaklaştıkça güçlenir."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Egzoz Dumanı"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Egzoz dumanını motorun gerçek durumuna göre belirler: yakıt havayı aştığında, sert kalkışta, düşük devirde zorlanan motorda, düşük yükte uzun süre rölantide, tıkalı hava filtresinde veya yıpranmış enjeksiyonda siyah, yorgun bir motor yağ yaktığında mavi, yakıt yanmadan çıktığında beyaz. Duman ayrıca motorun yaptığı işle birlikte büyür. Eski makineler modern olanlardan çok daha fazla duman atar; modern makineler ciddi bir arıza olmadıkça neredeyse hiç duman çıkarmaz."/>
-        <text name="rms_exhaustSmokeIntensity_label" text="Duman Yoğunluğu"/>
-        <text name="rms_exhaustSmokeIntensity_tooltip" text="Dumanın nedenlerini değiştirmeden görünürlüğünü ölçekler. Yüksek değerler belirtileri uzaktan okunabilir kılar."/>
-        <text name="rms_exhaustSmokeDetail_label" text="Duman Detayı (Bu Bilgisayar)"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="Egzoz dumanının kendi bilgisayarında ne kadarının çizileceğini belirler; diğer oyuncular için hiçbir şeyi değiştirmez. Ayarı düşürmek dumanın dış katmanlarını kaldırır ve mütevazı bir ekran kartını rahatlatır. Yalnızca sunucunun izin verdiği miktarı azaltabilir."/>
-        <text name="rms_exhaustSmokeDetail_full" text="Tam"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="Azaltılmış"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="Minimum"/>
-        <text name="rms_exhaustSmokeDetail_none" text="Yok"/>
-        <text name="rms_systemStressRate_label" text="Sistem Zorlanma Hızı"/>
-        <text name="rms_systemStressRate_tooltip" text="Aşırı yük, aşırı ısınma, patinaj ve diğer ağır çalışma koşulları nedeniyle sistemlerde zorlanmanın ne kadar hızlı biriktiğini belirler. Zorlanma arıza olasılığını doğrudan etkiler: sistem ne kadar çok zorlanma biriktirirse arıza o kadar olasıdır."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Egzoz dumanını motorun gerçek durumuna göre belirler: yakıt havayı aştığında, sert kalkışta, düşük devirde zorlanan motorda, düşük yükte uzun süre rölantide, tıkalı hava filtresinde veya yıpranmış enjeksiyonda siyah, yorgun bir motor yağ yaktığında mavi, yakıt yanmadan çıktığında beyaz. Duman ayrıca motorun yaptığı işle birlikte büyür. Eski makineler modern olanlardan çok daha fazla duman atar; modern makineler ciddi bir arıza olmadıkça neredeyse hiç duman çıkarmaz. Soğuk havada yanmadan çıkan su da yoğuşarak kısa beyaz bir iz oluşturur ve bir iki metre içinde buharlaşır; bu, sağlam bir motorda bile görülür."/>
         <text name="rms_batteryCapacity_label" text="Akü Kapasitesi"/>
         <text name="rms_batteryCapacity_tooltip" text="Akünün gerçekten kullanılabilir azami kapasitesini ayarlar. 150 Ah’ye yakın bir değer gerçek aküye karşılık gelir ancak bu düzeyde boşalma sorunu neredeyse hiç yaşanmaz."/>
         <text name="rms_option_off" text="Kapalı"/>
@@ -132,8 +97,6 @@
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="Çekiş seçicisine OTO konumu ekler: ön aks patinajda veya yük altında çalışma hızında otomatik devreye girer, yolda devreden çıkar. OTO’da bırakılan araçlar bu seçenek kapatıldığında 4WD’ye döner."/>
         <text name="rms_drivetrainWindupDamage_label" text="Aktarma Organı Gerilimi Hasarı"/>
         <text name="rms_drivetrainWindupDamage_tooltip" text="Diferansiyeller kilitliyken tutunmalı zeminde dönmek aktarma organlarını zorlar ve zamanla şanzımana zarar verir. Daha hoşgörülü bir deneyim için kapat."/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_label" text="Kilit Bırakma Hızı"/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_tooltip" text="Diferansiyel kilitleri bu hızın üzerinde otomatik olarak çözülür ve talep edildiği sürece altında yeniden devreye girer."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="El Freni"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="İzlenen tüm araçlara kendi tuşuyla kumanda edilen bir el freni ekler. Çekili fren makineyi sabitler ve gazı yok sayar."/>
         <text name="rms_drivetrainParkBrakeAuto_label" text="Otomatik El Freni"/>
@@ -156,8 +119,6 @@
         <text name="rms_ws_section_current_intervention" text="Devam Eden İşlem"/>
         <text name="rms_ws_label_last_check" text="Son Kontrol"/>
         <text name="rms_ws_label_workshop_state" text="Atölye Durumu"/>
-        <text name="rms_ws_label_intervention" text="İşlem"/>
-        <text name="rms_ws_label_addon" text="Seçenek"/>
         <text name="rms_ws_label_more_parts" text="+ %s daha"/>
         <text name="rms_ws_label_committed_cost" text="Taahhüt Edilen Maliyet"/>
         <text name="rms_ws_label_finish_time" text="Bitiş Saati"/>
@@ -166,14 +127,13 @@
         <text name="rms_ws_info_inspection_reveals" text="Bir muayene başka arızaları ortaya çıkarabilir."/>
         <text name="rms_ws_status_ready_title" text="Atölye Hazır"/>
         <text name="rms_ws_status_ready_hint" text="Bir işlem seç. Seçenekler, parçalar ve fiyat başlamadan önce onaylanır."/>
-        <text name="rms_ws_status_no_intervention" text="Devam eden işlem yok"/>
         <text name="rms_ws_label_value" text="Değer"/>
         <text name="rms_ws_label_age" text="Yaş"/>
         <text name="rms_ws_label_operating_hours" text="Çalışma Saatleri"/>
         <text name="rms_ws_label_service" text="Bakım Seviyesi"/>
-        <text name="rms_ws_label_service_interval" text="Bakım Aralığı"/>
-        <text name="rms_ws_label_next_service" text="Sonraki Bakım"/>
-        <text name="rms_ws_value_service_overdue" text="%s gecikti"/>
+        <text name="rms_ws_label_maintenance_standard" text="Standart Bakım"/>
+        <text name="rms_ws_label_maintenance_extended" text="Genişletilmiş Bakım"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Önleyici Bakım"/>
         <text name="rms_ws_label_condition" text="Durum"/>
         <text name="rms_ws_label_reliability" text="Güvenilirlik"/>
         <text name="rms_ws_label_overhaul_count" text="Yapılan Revizyonlar"/>
@@ -181,17 +141,11 @@
         <text name="rms_ws_label_maintenance_log" text="Bakım Kaydı"/>
         <text name="rms_ws_label_last_report" text="Son Rapor"/>
         <text name="rms_ws_label_last_maintenance" text="Son Bakım"/>
-        <text name="rms_ws_table_header_part" text="Parça"/>
-        <text name="rms_ws_table_header_price" text="Fiyat"/>
-        <text name="rms_ws_table_header_description" text="Açıklama"/>
-        <text name="rms_ws_table_header_stage" text="Aşama"/>
-        <text name="rms_ws_table_header_repair_select" text="Onarım"/>
         <text name="rms_ws_task_inspection" text="Muayene"/>
         <text name="rms_ws_task_maintenance" text="Bakım"/>
         <text name="rms_ws_task_overhaul" text="Revizyon"/>
         <text name="rms_ws_info_no_breakdowns" text="Bilinen arıza yok. Tespit edilmemiş bir arıza olabilir."/>
         <text name="rms_ws_status_in_progress_short_format" text="%s devam ediyor..."/>
-        <text name="rms_ws_status_initial" text="Durum yükleniyor..."/>
         <text name="rms_ws_status_in_progress_format" text="%s devam ediyor; bitiş: %s"/>
         <text name="rms_ws_status_open" text="Atölye açık"/>
         <text name="rms_ws_status_closed" text="Atölye kapalıdır"/>
@@ -206,7 +160,6 @@
         <text name="rms_ws_action_choice_overhaul" text="Mekanik Revizyon"/>
         <text name="rms_ws_action_choice_refill" text="Tamamlama"/>
         <text name="rms_ws_action_cancel_service" text="İşlemi iptal et"/>
-        <text name="rms_ws_button_show" text="Göster"/>
         <text name="rms_ws_age_unit" text="ay"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="Evet"/>
@@ -223,11 +176,15 @@
         <text name="rms_log_recorded_interventions_title" text="Kayıtlı İşlemler"/>
         <text name="rms_log_last_intervention_title" text="Son İşlem"/>
         <text name="rms_log_hours" text="Çalışma Saatleri"/>
-        <text name="rms_log_title" text="Bakım Kaydı"/>
         <text name="rms_log_total_cost_title" text="Toplam Maliyet"/>
         <text name="rms_log_total_breakdowns_count_title" text="Onarılan Arızalar"/>
         <text name="rms_log_type" text="İş Türü"/>
         <text name="rms_log_cost_per_month_title" text="Aylık Maliyet"/>
+        <text name="rms_log_cost_per_hour_title" text="Çalışma Saati Başına Maliyet"/>
+        <text name="rms_log_invoice_title" text="Fatura Ayrıntıları"/>
+        <text name="rms_log_invoice_workshop_flat_rate" text="Atölye Sabit Ücreti"/>
+        <text name="rms_log_invoice_labour" text="İşçilik"/>
+        <text name="rms_log_invoice_filters" text="Filtreler"/>
         <text name="rms_log_cancelled_desc" text="İşlem iptal edildi"/>
         <text name="rms_log_ownership_months_title" text="Mülkiyet Süresi"/>
         <text name="rms_log_overhaul_desc_with_painting" text="Araç yeniden boyandı"/>
@@ -575,10 +532,9 @@
         <text name="rms_option_menu_option_two_title_overhaul" text="Revizyon Yapılacak Sistem"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="İşlem arıza ortaya çıkarırsa otomatik olarak orijinal parçalarla standart onarım başlatılır."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Onarımın ardından otomatik olarak orijinal sarf malzemeleriyle standart bakım başlatılır."/>
-        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="Bu revizyona aracın tamamen yeniden boyanmasını ekler."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Kısmi revizyon: yalnızca seçilen sistemi işler, arızalarını giderir, mekanik zorlanmasını sıfırlar ve durumunu geri kazandırır. İlgili sıvı varsa değiştirilir."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Standart revizyon: tüm sistemleri işler, desteklenen arızaları giderir, mekanik zorlanmayı sıfırlar ve tüm sıvıları değiştirir. İyi bir durum seviyesini geri kazandırır."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Tam revizyon: tüm sistemleri işler, desteklenen arızaları giderir, mekanik zorlanmayı sıfırlar ve tüm sıvıları değiştirir. Mükemmel bir durum seviyesini geri kazandırır."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="Kısmi revizyon: seçilen sistemi iyi duruma getirir, onarılabilir arızaları giderir ve gerektiğinde ilgili sıvıyı değiştirir."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Standart revizyon: tüm sistemleri iyi duruma getirir, onarılabilir arızaları giderir, sıvıları değiştirir ve bakımı yeniler."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Tam revizyon: tüm sistemleri yeni gibi yapar, onarılabilir arızaları giderir, sıvıları değiştirir ve bakımı yeniler."/>
         <text name="rms_option_menu_price_text" text="Fiyat"/>
         <text name="rms_option_menu_part_used_description" text="Kullanılmış parçalar: en düşük maliyet, sonradan oluşacak kusur riski %50."/>
         <text name="rms_option_menu_part_aftermarket_description" text="Yan sanayi parçaları: daha düşük maliyet, sonradan oluşacak kusur riski %33."/>
@@ -589,9 +545,9 @@
         <text name="rms_option_menu_consumable_oem_description" text="Orijinal üretici sarf malzemeleri: standart fiyat, sonradan oluşacak kusur riski %10."/>
         <text name="rms_option_menu_consumable_premium_description" text="Premium sarf malzemeleri: %20 ek ücret, sarf malzemesinden kaynaklanan kusur riski yoktur."/>
         <text name="rms_option_menu_perform_repair" text="Otomatik Onarım"/>
-        <text name="rms_option_menu_perform_renew_paint" text="Boya Kaplamasının Yenilenmesi"/>
         <text name="rms_option_menu_perform_maintenance" text="Otomatik Bakım"/>
         <text name="rms_option_menu_warranty_repair_text" text="Garanti Kapsamında Onarım"/>
+        <text name="rms_warranty_dealer_info" text="Bayi garantisi, 12 aydan genç ve 20 çalışma saatinden az kullanılmış sahip olunan araçlar için: standart onarım, orijinal parçalar ve gerekli sıvılar."/>
         <text name="rms_option_menu_duration_text" text="Süre"/>
         <text name="rms_option_menu_duration_instant" text="Anında"/>
         <text name="rms_option_menu_finish_time_text" text="Bitiş Saati"/>
@@ -599,27 +555,32 @@
         <text name="rms_option_menu_inspection_visual_description" text="Görsel muayene: hızlı ve ekonomiktir; yalnızca etkin arızaları düşük tespit kapasitesiyle arar. Rapor, bileşenlerin ayrıntılı durumunu göstermez."/>
         <text name="rms_option_menu_inspection_standard_description" text="Standart muayene: etkin arızaları normal tespit kapasitesiyle arar ve ayrıntılı durum değerleri olmadan genel bir rapor oluşturur."/>
         <text name="rms_option_menu_inspection_complete_description" text="Kapsamlı muayene: etkin ve olası arızaları normal tespit kapasitesiyle arar ve bileşenlerin ayrıntılı durumunu içeren tam rapor sunar."/>
-        <text name="rms_option_menu_maintenance_minimal_description" text="Minimum bakım: bakım seviyesini kısmen geri kazandırır ve yalnızca eksik sıvıları tamamlar. Sonraki bakım aralığı kısa kalır."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="Standart bakım: bakım seviyesini referans değere getirir, motor yağını değiştirir ve gerektiğinde diğer devreleri tamamlar."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="Genişletilmiş bakım: bakım seviyesini standardın üzerine çıkarır, sonraki bakım aralığını uzatır ve tüm sıvıları değiştirir."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="Önleyici bakım: referans seviyeyi geri kazandırır, tüm sıvıları değiştirir ve en fazla üç öncelikli sistemdeki mekanik zorlanmayı azaltır."/>
+        <text name="rms_option_menu_maintenance_standard_description" text="Standart bakım: motor yağını yağ ve yakıt filtreleriyle birlikte değiştirir, gerektiğinde diğer devreleri tamamlar, radyatörü temizler ve hava filtresini üfler."/>
+        <text name="rms_option_menu_maintenance_extended_description" text="Genişletilmiş bakım: standart bakıma ek olarak şanzıman ve hidrolik yağını yeni filtreyle değiştirir. Hava filtresini de değiştirir ve soğutma sıvısını tamamlar."/>
+        <text name="rms_option_menu_maintenance_preventive_description" text="Önleyici bakım: tüm yağları ve soğutma sıvısını filtreleriyle birlikte değiştirir ve yeni bir hava filtresi takar. En fazla üç öncelikli sistemdeki mekanik zorlanmayı da azaltır."/>
         <text name="rms_option_menu_repair_type_fix_description" text="Geçici onarım: arızayı gidermeden makineyi hızlı ve düşük maliyetle yeniden hizmete alır. Arıza sınırlı bir süre sonra geri döner."/>
         <text name="rms_option_menu_repair_type_replacement_description" text="Standart değişim: arızayı giderir ve arızalı bileşeni değiştirir. Etkilenen sistemdeki mekanik zorlanma kısmen azaltılır."/>
         <text name="rms_option_menu_repair_type_advanced_description" text="Gelişmiş onarım: arızayı giderir, arızalı bileşeni değiştirir ve etkilenen sistemde biriken mekanik zorlanmayı sıfırlar."/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="Sonraki işlem ayrı ücretlendirilir. Gerekli sıvılar işlem başladığında sağlanır veya stoktan alınır."/>
+        <text name="rms_bodywork_touchup" text="Boya Rötuşları"/>
+        <text name="rms_bodywork_full" text="Tam Yeniden Boyama"/>
+        <text name="rms_bodywork_colors_title" text="Araç Renkleri"/>
+        <text name="rms_bodywork_wear" text="Boya Hasarı"/>
+        <text name="rms_bodywork_unavailable" text="Kullanılamıyor"/>
+        <text name="rms_bodywork_ineligible" text="Bu araç için veya bu atölyede işlem yapılamıyor"/>
+        <text name="rms_bodywork_no_wear" text="Onarılacak boya hasarı yok"/>
+        <text name="rms_bodywork_wear_limit" text="Boya rötuşu %30 hasara kadar yapılabilir"/>
+        <text name="rms_bodywork_touchup_description" text="Küçük boya hasarlarını onarır. Mevcut renkler korunur."/>
+        <text name="rms_bodywork_full_description" text="Boyayı yeniler. Bu araç için sunulan renkleri seç veya mevcut renkleri koru."/>
+        <text name="rms_bodywork_no_colors" text="Bu araçta seçilebilir renk yok. Geçerli renkler korunur."/>
+        <text name="rms_bodywork_unavailable_title" text="İşlem Kullanılamıyor"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Muayene Raporu"/>
-        <text name="rms_report_vehicle_name_title" text="Araç Adı"/>
-        <text name="rms_report_vehicle_age_title" text="Yaş"/>
-        <text name="rms_report_vehicle_operating_hours_title" text="Çalışma Saatleri"/>
         <text name="rms_report_vehicle_specs_title" text="Araç Özellikleri"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="Alternatör Azami Çıkış Akımı"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="Akü Şarjı"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="Akü Kapasitesi"/>
-        <text name="rms_report_date_title" text="Tarih"/>
         <text name="rms_report_detected_breakdowns_title" text="Tespit Edilen Arızalar"/>
-        <text name="rms_report_inspection_type_title" text="Muayene Türü"/>
-        <text name="rms_report_inspection_location_title" text="Konum"/>
         <text name="rms_report_overall_assessment_title" text="Genel Durum Değerlendirmesi"/>
         <text name="rms_report_overall_assessment_condition" text="Durum Seviyesi"/>
         <text name="rms_report_overall_assessment_crit_fail_risk" text="Kritik Arıza Riski"/>
@@ -701,12 +662,17 @@
         <text name="rms_fluid_container_action_cancel" text="Aktarmayı durdur"/>
         <text name="rms_fluid_select_vehicle_title" text="Araç Seçimi"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Doldurulacak aracı seç"/>
-        <text name="rms_fluid_select_circuit_title" text="Devre Seçimi"/>
         <text name="rms_fluid_select_circuit_prompt" text="Doldurulacak devreyi seç"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Eklenecek sıvıyı seç"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Motor Yağı"/>
         <text name="rms_fluid_circuit_coolant" text="Soğutma Sıvısı"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Şanzıman Yağı"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hidrolik Yağı"/>
+        <text name="rms_fluid_circuit_transmissionHydraulic" text="Şanzıman ve Hidrolik Yağı"/>
+        <text name="rms_fluid_hud_engineOil" text="Motor Yağı"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Şanz./Hidrolik Yağı"/>
+        <text name="rms_fluid_hud_coolant" text="Soğutma Sıvısı"/>
         <text name="rms_fluid_incompatible_title" text="Uyumsuz Sıvı"/>
         <text name="rms_fluid_incompatible_message" text="Bu ürün bu devre için uygun değil. Devreyi kirletir ve sistem aşınmasını 3 katına çıkarabilir, ısınmayı artırabilir veya hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_error_no_vehicle" text="4 m içinde sıvıya ihtiyaç duyan uyumlu bir araç yok"/>
@@ -714,10 +680,11 @@
         <text name="rms_fluid_error_motor_running" text="Sıvı aktarmadan önce motoru durdur"/>
         <text name="rms_fluid_error_vehicle_moving" text="Araç hareketsiz olmalı"/>
         <text name="rms_fluid_dealer_billed" text="Ücretlendirilen sıvılar"/>
-        <text name="rms_fluid_stock_required" text="Gerekli sıvı stoğu"/>
+        <text name="rms_fluid_warranty_covered" text="Garanti kapsamındaki sıvılar"/>
+        <text name="rms_fluid_stock_required" text="Atölye bölgesinde uyumlu kaplar gerekli"/>
         <text name="rms_fluid_refill_work_order" text="Sıvı seviyelerini tamamlama"/>
         <text name="rms_fluid_refill_dealer_supply" text="Sıvı tedariki teklife dahildir"/>
-        <text name="rms_fluid_refill_stock_supply" text="Atölye stoğundan kullanılır"/>
+        <text name="rms_fluid_refill_stock_supply" text="Uyumlu kaplarını atölye bölgesine yerleştir"/>
         <text name="rms_fluid_mode_top_up" text="tamamlama"/>
         <text name="rms_fluid_mode_replace" text="değiştirme"/>
         <text name="rms_fluid_mode_repair" text="sızıntı sonrası tamamlama"/>
@@ -740,12 +707,15 @@
         <text name="rms_inspection_verdict_ok_title" text="Çalışmaya Hazır"/>
         <text name="rms_inspection_verdict_ok_message" text="Bildirilecek bir şey yok, makine çıkabilir."/>
         <text name="rms_inspection_verdict_watch_title" text="İzlenmeli"/>
-        <text name="rms_inspection_verdict_watch_message" text="Bir nokta dikkat istiyor. Makine çalışabilir, bugün hallet."/>
+        <text name="rms_inspection_verdict_watch_message" text="Bir veya daha fazla nokta dikkat gerektiriyor. Makine çalışabilir; bugün hepsini ele al."/>
         <text name="rms_inspection_verdict_air_filter_service_message" text="Makine çalışabilir. Hava filtresini değiştirmek için atölye bakımı planla."/>
         <text name="rms_inspection_verdict_stop_title" text="Kullanma"/>
         <text name="rms_inspection_verdict_stop_message" text="Bir nokta kritik. Halletmeden bu makineyi çalıştırma."/>
-        <text name="rms_inspection_service_due_in" text="sonraki bakıma %s kaldı"/>
-        <text name="rms_inspection_service_overdue" text="bakım %s gecikti"/>
+        <text name="rms_inspection_service_due_in" text="%s için %s kaldı"/>
+        <text name="rms_inspection_service_overdue" text="%s %s gecikti"/>
+        <text name="rms_inspection_service_clock_engine" text="motor yağı değişimi"/>
+        <text name="rms_inspection_service_clock_transmission" text="şanzıman yağı değişimi"/>
+        <text name="rms_inspection_service_clock_coolant" text="soğutma sıvısı değişimi"/>
         <text name="rms_inspection_status_slightly_low" text="Hafif Düşük"/>
         <text name="rms_inspection_status_slightly_dirty" text="Hafif Kirli"/>
         <text name="rms_inspection_status_slightly_dry" text="Hafif Kuru"/>
@@ -763,6 +733,8 @@
         <text name="rms_inspection_status_active_leak" text="Aktif Sızıntı"/>
         <text name="rms_inspection_status_heavily_clogged" text="Çok Kirli"/>
         <text name="rms_inspection_status_not_required" text="Gerekli Değil"/>
+        <text name="rms_inspection_status_change_overdue" text="Değişim Gecikti"/>
+        <text name="rms_inspection_status_change_long_overdue" text="Değişim Çok Gecikti"/>
         <text name="rms_inspection_engine_oil" text="Motor Yağı"/>
         <text name="rms_inspection_coolant" text="Soğutma Sıvısı"/>
         <text name="rms_inspection_hydraulic_fluid" text="Hidrolik Yağı"/>
@@ -784,8 +756,8 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="Hava filtresi hafif tıkalı."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Hava filtresi gözle görülür şekilde tıkalı."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Hava filtresi toz ve kirle ağır şekilde tıkanmış durumda."/>
-        <text name="rms_inspection_hint_air_filter_clogging_stage4" text="Hava filtresi, toz ve kir parçacıklarıyla tamamen tıkanmış durumda."/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="Hava filtresi üfleyerek temizleme sınırına ulaştı. Değiştirilmesi için atölye bakımı gerekir."/>
+        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="Filtreyi üfleyerek gevşek tozu temizle. Geriye kalan kalıntı, filtrenin daha sonra atölyede değiştirilmesini gerektirir."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Alternatörün çevresinde ve bazı bağlantı noktalarında aşırı ısınma ve koyulaşma belirtileri görülmektedir."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Alternatörün çevresinde ve kablolarında belirgin aşırı ısınma belirtileri ve koyulaşmış konektörler görülmektedir."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Gresleme noktaları hafifçe kuru görünüyor."/>
@@ -802,6 +774,9 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Turboşarjın çevresinde yağ izleri ve kararmış bağlantı noktaları görülüyor."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Turboşarj çevresinde yoğun yağ izleri, kararmış bağlantı noktaları ve kurum lekeleri görülmektedir."/>
         <text name="rms_inspection_hint_fluid_level_low" text="Bir sıvı seviyesi işaretinin altına düştü."/>
+        <text name="rms_inspection_hint_service_engine" text="Motor yağı değişimi gecikti: yıpranmış yağ motorun ve enjeksiyonun aşınmasını hızlandırır. Standart bakım yağı filtreleriyle birlikte değiştirir."/>
+        <text name="rms_inspection_hint_service_transmission" text="Şanzıman yağı değişimi gecikti: yıpranmış yağ şanzımanın ve hidroliğin aşınmasını hızlandırır. Genişletilmiş bakım yağı filtresiyle birlikte değiştirir."/>
+        <text name="rms_inspection_hint_service_coolant" text="Soğutma sıvısının değişmesi gerekiyor: yıpranmış sıvı soğutma sisteminin aşınmasını hızlandırır. Önleyici bakım onu yeniler."/>
         <text name="rms_inspection_transmission_oil" text="Şanzıman Yağı"/>
         <text name="rms_inspection_radiator" text="Radyatör"/>
         <text name="rms_inspection_air_filter" text="Hava Filtresi"/>
@@ -824,13 +799,22 @@
         <text name="rms_ingame_menu_header_last_inspection" text="Son Muayene"/>
         <text name="rms_ingame_menu_header_last_maintenance" text="Son Bakım"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Kiralama"/>
-        <text name="rms_ingame_menu_header_price" text="Değer"/>
+        <text name="rms_ingame_menu_header_price" text="Menüden satış"/>
         <text name="rms_ingame_menu_header_procedure" text="İşlem"/>
         <text name="rms_ingame_menu_header_finish_time" text="Bitiş Saati"/>
         <text name="rms_ingame_menu_header_service_cost" text="Maliyet"/>
+        <text name="rms_ingame_menu_header_reason" text="Hariç Tutulma Nedeni"/>
         <text name="rms_ingame_menu_empty_other" text="RMS olmayan araç mevcut değil"/>
         <text name="rms_ingame_menu_empty_active" text="Mevcut RMS aracı yok"/>
         <text name="rms_ingame_menu_empty_service" text="Bakımda araç yok"/>
+        <text name="rms_ingame_menu_reason_implement" text="Ekipman veya Römork"/>
+        <text name="rms_ingame_menu_reason_unsupported" text="Desteklenmiyor"/>
+        <text name="rms_ingame_menu_reason_electric" text="Elektrikli"/>
+        <text name="rms_ingame_menu_reason_towed" text="Motorlu Ekipman"/>
+        <text name="rms_ingame_menu_reason_auxiliary" text="Yardımcı Makine"/>
+        <text name="rms_ingame_menu_reason_user" text="Elle Hariç Tutuldu"/>
+        <text name="rms_ingame_menu_include" text="RMS’ye dahil et"/>
+        <text name="rms_ingame_menu_exclude" text="RMS’den çıkar"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Araç İadesi"/>
         <text name="rms_sell_dialog_section_vehicle" text="Araç"/>
@@ -856,8 +840,7 @@
         <text name="rms_tutorial_service_interval_expired_message" text="Bu %s için bakım aralığı aşıldı.&#10;&#10;En kısa sürede atölyeye git ve &quot;Bakım&quot; işlemini seç. Bakımı gecikmiş bir aracı kullanmaya devam etmek birden fazla arıza riskini büyük ölçüde artırır."/>
         <text name="rms_tutorial_steering_title" text="Dururken Direksiyon Kullanımı"/>
         <text name="rms_tutorial_steering_message" text="Araç dururken direksiyonu çevirmemek en iyisidir. Bu, direksiyon mekanizmasına ve ön aks bileşenlerine ağır yük bindirerek yürüyen aksamın aşınmasını artırır.&#10;&#10;Direksiyonu çevirmeden önce biraz ilerle: tekerlekler çok daha kolay döner."/>
-        <text name="rms_tutorial_rad_or_filter_clogged_title" text="Radyatör ve Hava Filtresinde Kirlenme"/>
-        <text name="rms_tutorial_rad_or_filter_clogged_message" text="Aracın radyatörü ve hava filtresi çok kirli.&#10;&#10;Kirli radyatör ısıyı daha kötü dağıtır, tıkalı hava filtresi motora giren havayı sınırlar. Güç düşer ve tüketim artar.&#10;&#10;Radyatörü yıkama istasyonunda veya hava üfleyicisiyle temizleyebilirsin. Hava filtresi yalnızca üflenir ve bu onu asla yenilemez: yalnızca atölye bakımı filtreyi değiştirir.&#10;&#10;İkisinin durumunu kontrol edebilirsin: araca bakarken %s tuşunu basılı tut."/>
+        <text name="rms_tutorial_cooling_air_check_message" text="Radyatör veya hava filtresi tıkandı. Hangisi olduğunu görmek için araca bakarken %s tuşunu basılı tut. Basınçlı hava üfleyicisiyle temizle. Filtre artık üflenerek temizlenemiyorsa değiştirmek için atölyede genişletilmiş veya önleyici bakım seç."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Gresleme Gerekiyor"/>
         <text name="rms_tutorial_needs_lubrication_message" text="Bu %s düzenli gresleme gerektiriyor.&#10;&#10;RMS’de gres seviyesi çalışma saatleriyle düşer. Uzun süre kullanılmayan makineyi yeniden hizmete almadan önce de greslemek gerekir. Yetersiz gresleme şasi aşınmasını hızlandırır.&#10;&#10;Mağazadan gres tabancası satın al ve muayene istediğinde makineyi gresle.&#10;&#10;Gres seviyesini kontrol edebilirsin: araca bakarken %s tuşunu basılı tut."/>
         <text name="rms_tutorial_needs_repair_title" text="Arıza Tespit Edildi"/>
@@ -877,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="El freni çekili. Kendi tuşuyla çekip bırakırsın: fren çekiliyken gaz verirsen makine hareket etmez ve seni uyarır.&#10;&#10;Eğimde makinenin kendiliğinden kaymasını engeller."/>
         <text name="rms_tutorial_preheat_title" text="Dizel Ön Isıtma"/>
         <text name="rms_tutorial_preheat_message" text="Soğuk dizel motorda çalıştırma kumandasına bir kez basmak kontağı açar ve kızdırma çevrimini otomatik başlatır. Gösterge paneli ışıkları kısa süre yanar, ardından motor hazır olana kadar kızdırma göstergesi açık kalır. Komutu tekrarlama: gösterge söndüğünde marş motoru otomatik devreye girer."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Kuyruk Mili Devreye Alma Çevrimleri"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Kuyruk milini tekrar tekrar devreye almak ve devreden çıkarmak mekanik çevrim biriktirir. Gereksiz devreye almalardan kaçın."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Kuyruk Mili Devreye Alma"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Kuyruk milini rölantide devreye alın, ardından devri yükseltin: yüksek devirde devreye almak tüm aktarma organlarına darbe verir, ağır bir ekipmanla daha da fazla. Her devreye alma kavramasını da aşındırır."/>
+        <text name="rms_tutorial_pto_raised_title" text="Kuyruk Mili ve Kaldırılmış Ekipman"/>
+        <text name="rms_tutorial_pto_raised_message" text="Ekipman kaldırılmışken kuyruk milini çalıştırmak kardan mafsallarını dik bir açıyla çalıştırır ve hızla aşındırır. Ekipmanı nakliye için kaldırmadan önce kuyruk milini kapatın."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Rölanti ve Hareketsizlik"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Makine çalışır durumda olsa da aktif olarak iş yapmadığında aşınma çok daha azdır. Motor kapalıyken aşınma çok az olur ve makine kapalı bir yerde saklanırsa aşınma tamamen ortadan kalkar."/>
         <text name="rms_tutorial_idle_deposit_title" text="Uzun Süreli Rölanti"/>
@@ -921,5 +906,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Diferansiyel kilidi devredeyken tutunmalı zeminde dönüyorsun. Virajda iç ve dış tekerlekler farklı mesafeler kat eder ancak kilit onları aynı hızda dönmeye zorlar: aktarma organlarında zorlanma birikir ve şanzıman aşınması hızlanır. Dönmeden önce kilidi bırak."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Çekiş Modları ve Diferansiyel Kilidi"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Bu makinede çekiş modunu seçebilirsin: 2WD, 4WD veya patinaj başlar başlamaz ön aksı devreye alan OTO.&#10;&#10;Diferansiyel kilidi tutuş kalmadığında çekiş sağlar ancak tutunmalı zeminde virajın bedeli ağırdır: iç ve dış tekerlekler aynı hızda dönemez ve yükü aktarma organları taşır. Dönmeden önce kilidi devre dışı bırak."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Arabalı Telwin şarj cihazı, 12 V’ta 150 A. Aracın yanına bağla ve akünün şarj olmasını bekle. Şarj, oyundaki zaman hızına göre ilerler. Marş desteği (START, 200 A)."/>
+        <text name="rms_charger_start" text="Şarj cihazını bağla"/>
+        <text name="rms_charger_disconnect" text="Şarj cihazını ayır"/>
+        <text name="rms_charger_select" text="Bağlanacak aracı seçin."/>
+        <text name="rms_charger_no_vehicle" text="4 m içinde uygun araç yok. Araç çiftliğine ait olmalı, hareketsiz ve motoru kapalı olmalıdır."/>
+        <text name="rms_charger_idle" text="Kullanılabilir"/>
+        <text name="rms_charger_charging" text="Şarj ediliyor"/>
+        <text name="rms_charger_full" text="Akü şarj edildi"/>
+        <text name="rms_charger_interrupted" text="Şarj kesildi"/>
+        <text name="rms_charger_interrupted_reason" text="Şarj kesildi. %s"/>
+        <text name="rms_charger_status" text="Durum"/>
+        <text name="rms_charger_battery" text="Akü"/>
+        <text name="rms_charger_voltage" text="Gerilim"/>
+        <text name="rms_charger_current" text="Çıkış Akımı"/>
+        <text name="rms_charger_consumers" text="Farları ve aksesuarları kapat."/>
+        <text name="rms_charger_error_unavailable" text="Araç yok veya desteklenmiyor."/>
+        <text name="rms_charger_error_access" text="Bu araç başka bir çiftliğe ait."/>
+        <text name="rms_charger_error_distance" text="Şarj cihazını 4 m içine yaklaştır."/>
+        <text name="rms_charger_error_motor" text="Şarj cihazını bağlamadan önce motoru durdur."/>
+        <text name="rms_charger_error_moving" text="Araç hareket ediyor."/>
+        <text name="rms_charger_error_service" text="Atölye işlemi devam ediyor."/>
+        <text name="rms_charger_error_cables" text="Takviye kablolarını ayır."/>
+        <text name="rms_charger_error_busy" text="Bir şarj cihazı zaten bağlı."/>
+        <text name="rms_charger_error_full" text="Bu akü zaten şarj edilmiş."/>
+        <text name="rms_charger_connected" text="Şarj cihazı bağlandı. Şarj başladı."/>
+        <text name="rms_charger_disconnected" text="Şarj cihazının bağlantısı kesildi."/>
+        <text name="rms_charger_stopped_motor" text="Şarj durdu: motor çalıştırma"/>
+        <text name="rms_charger_error_player_distance" text="Şarj cihazına yürüyerek yaklaş."/>
+        <text name="rms_charger_mode_select" text="Şarj cihazını bağla"/>
+        <text name="rms_charger_mode_start" text="Marş desteği (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START hazır"/>
+        <text name="rms_charger_start_active" text="Marş desteği etkin"/>
+        <text name="rms_charger_start_running" text="Motor çalıştı: bağlantıyı kes"/>
+        <text name="rms_charger_start_countdown" text="Bekleyin: %d sn"/>
+        <text name="rms_charger_start_wait" text="İki çalıştırma arasında 30 saniye bekleyin."/>
+        <text name="rms_charger_unplug_before_start" text="Çalıştırmadan önce şarj cihazını ayırın veya START seçin."/>
+        <text name="rms_charger_start_connected" text="Marş desteği (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Aküyü şarj et (150 A)"/>
     </texts>
 </l10n>

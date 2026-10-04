@@ -165,12 +165,13 @@ end
 -- @param function overwrittenFunc overwritten function
 -- @param table storeItem store item
 -- @param table concreteItem vehicle being sold
-function RMS_Leasing.onShopControllerSell(self, overwrittenFunc, storeItem, concreteItem)
+-- @param boolean? isDirectSell true for the dealer trigger sale
+function RMS_Leasing.onShopControllerSell(self, overwrittenFunc, storeItem, concreteItem, isDirectSell)
     local vehicle = concreteItem
     local isConcreteVehicle = vehicle ~= nil and vehicle ~= ShopDisplayItem.NO_CONCRETE_ITEM
 
     if not isConcreteVehicle or not RMS_Leasing.isSupportedVehicle(vehicle) then
-        overwrittenFunc(self, storeItem, concreteItem)
+        overwrittenFunc(self, storeItem, concreteItem, isDirectSell)
         return
     end
 
@@ -178,18 +179,19 @@ function RMS_Leasing.onShopControllerSell(self, overwrittenFunc, storeItem, conc
     self.currentSellStoreItem = storeItem
     self.currentSellItem = concreteItem
 
-    RMS_SellItemDialog.show(vehicle, storeItem, RMS_Leasing.onShopControllerSellDialogCallback, self)
+    RMS_SellItemDialog.show(vehicle, storeItem, RMS_Leasing.onShopControllerSellDialogCallback, self, {isDirectSell})
 end
 
 ---Forwards the player answer to the shop controller
 -- @param table? self shop controller
 -- @param boolean yes true when the player confirmed
-function RMS_Leasing.onShopControllerSellDialogCallback(self, yes)
+-- @param boolean? isDirectSell true for the dealer trigger sale
+function RMS_Leasing.onShopControllerSellDialogCallback(self, yes, isDirectSell)
     if self == nil then
         return
     end
 
-    self:onSellCallback(yes)
+    self:onSellCallback(yes, isDirectSell)
 end
 
 ---Debits the return charges on the server once the vehicle is sold
@@ -205,6 +207,12 @@ function RMS_Leasing.onSellVehicleEventRun(self, overwrittenFunc, connection)
     local shouldApplyCharges = RMS_Leasing.isSupportedVehicle(vehicle)
         and hasPermission
         and not isVehicleInUse
+
+    -- Use the native constant again after its Float32 network transport, before rounding the payment.
+    if not connection:getIsServer() and RMS_Leasing.isRMSVehicle(vehicle)
+        and vehicle.propertyState == VehiclePropertyState.OWNED then
+        self.multiplier = self.isDirectSell and EconomyManager.DIRECT_SELL_MULTIPLIER or 1
+    end
 
     overwrittenFunc(self, connection)
 

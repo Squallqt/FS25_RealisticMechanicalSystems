@@ -27,16 +27,17 @@
     <TransformGroup name="jumperCables" lockedgroup="true" nodeId="10">
       <TransformGroup name="graphics" translation="0 0 0.0513875" nodeId="11">
         <TransformGroup name="leftPair" nodeId="255">
-          <Shape name="aRedLeft" clipDistance="300" translation="-0.16 0.016 0" rotation="-70 -15 -5" shapeId="1" nodeId="52" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="31"/>
-          <Shape name="aBlackLeft" clipDistance="300" translation="-0.12 0.05 0.021" rotation="-70 -17 -6" shapeId="2" nodeId="53" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="41"/>
+          <Shape name="aRedLeft" clipDistance="300" translation="-0.214000002 0.028343856 -0.021612098" rotation="-70.007103068 -0.000000000 -0.000000000" shapeId="1" nodeId="52" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="31"/>
+          <Shape name="aBlackLeft" clipDistance="300" translation="-0.214000002 0.060303856 -0.009984099" rotation="-109.992895111 0.000000000 180.000005009" shapeId="2" nodeId="53" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="41"/>
+          <TransformGroup name="leftHandNode" translation="-0.171000004 0.026888773 0.020423688" rotation="0.000000000 70.007109898 90.000002504" nodeId="257"/>
         </TransformGroup>
         <TransformGroup name="rightPair" nodeId="256">
-          <Shape name="aRedRight" clipDistance="300" translation="0.12 0.05 0.0211809" rotation="-70 17 6" shapeId="1" nodeId="15" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="31"/>
-          <Shape name="aBlackRight" clipDistance="300" translation="0.16 0.0162098 0" rotation="-70 15 5" shapeId="2" nodeId="16" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="41"/>
+          <Shape name="aRedRight" clipDistance="300" translation="0.063999996 0.028343856 -0.021612098" rotation="-70.007103068 -0.000000000 -0.000000000" shapeId="1" nodeId="15" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="31"/>
+          <Shape name="aBlackRight" clipDistance="300" translation="0.063999996 0.060303856 -0.009984099" rotation="-109.992895111 0.000000000 180.000005009" shapeId="2" nodeId="16" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="41"/>
         </TransformGroup>
       </TransformGroup>
-      <TransformGroup name="handNode" translation="-0.0117173 0.32997 -7.39185e-05" rotation="-49.3208 13.2875 91.924" nodeId="12">
-        <TransformGroup name="raycastNode" translation="0.0728855 0.0142458 -0.0299484" rotation="49.8188 -8.69255 -9.74645" scale="1.01395 1.0149 1.0149" nodeId="13"/>
+      <TransformGroup name="handNode" translation="0.106999993 0.034406655 0.074546419" rotation="-0.000000000 -70.007109898 -90.000002504" nodeId="12">
+        <TransformGroup name="raycastNode" translation="-0.236665487 -0.107446171 0.296919674" rotation="-6.266943170 -69.628765229 -173.549779262" scale="1.01395 1.0149 1.0149" nodeId="13"/>
       </TransformGroup>
       <TransformGroup name="firstPersonNode" translation="0 0.431383 0.764936" rotation="-180 0 -180" nodeId="14"/>
     </TransformGroup>

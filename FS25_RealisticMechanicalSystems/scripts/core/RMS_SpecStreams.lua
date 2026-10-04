@@ -5,21 +5,35 @@
 
 local getSyncOperatingTime = RealisticMechanicalSystems.getSyncOperatingTime
 
----Writes the PTO engagement counter
+---Transports the server quote without the Float32 loss that can change a floored payment
+local function writeResalePrice(vehicle, streamId)
+    streamWriteString(streamId, string.format("%.17g", RMS_Utils.getMarketValue(vehicle)))
+end
+
+local function readResalePrice(vehicle, streamId)
+    vehicle.spec_RealisticMechanicalSystems.syncedSellPrice = tonumber(streamReadString(streamId))
+end
+
+---Writes the PTO engagement counters and the raised implement tutorial state
 -- @param table spec vehicle spec
 -- @param integer streamId streamId
 local function writePtoWearState(spec, streamId)
     streamWriteInt32(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.ptoEngagementSequence, 0, 0)))
+    streamWriteInt32(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.ptoShockSequence, 0, 0)))
+    streamWriteBool(streamId, spec.ptoRaisedTooLong == true)
 end
 
----Reads the PTO engagement counter, seeding the tutorial reference on the first read
+---Reads the PTO engagement counters and the raised implement tutorial state, seeding the tutorial references on the first read
 -- @param table spec vehicle spec
 -- @param integer streamId streamId
--- @param boolean? initializeTutorial true to seed the tutorial observed sequence
+-- @param boolean? initializeTutorial true to seed the tutorial observed sequences
 local function readPtoWearState(spec, streamId, initializeTutorial)
     spec.ptoEngagementSequence = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadInt32(streamId), 0, 0))
+    spec.ptoShockSequence = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadInt32(streamId), 0, 0))
+    spec.ptoRaisedTooLong = streamReadBool(streamId)
     if initializeTutorial then
         spec.ptoTutorialObservedSequence = spec.ptoEngagementSequence
+        spec.ptoTutorialObservedShockSequence = spec.ptoShockSequence
     end
 end
 
@@ -84,14 +98,16 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionOilLevel, 1.0, 0.0, 1.0))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicFluidLevel, 1.0, 0.0, 1.0))
     for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(RMS_Fluids.getCapacity(self, circuit), 0, 0))
-        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(RMS_Fluids.getCompatibility(self, circuit), 1, 0, 1))
+        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCapacities[circuit], 0, 0))
+        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCompatibility[circuit], 1, 0, 1))
     end
     streamWriteString(streamId, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
     streamWriteBool(streamId, spec.fieldInspectionSoundActive)
 
     -- [Group 7] Wear
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.serviceLevel, 1.0, 0.001))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionServiceLevel, 1.0, 0.001))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantServiceLevel, 1.0, 0.001))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.conditionLevel, 1.0, 0.001, 1.0))
     streamWriteString(streamId, RMS_Utils.serializeSystemsState(spec.systems))
     writePtoWearState(spec, streamId)
@@ -118,6 +134,8 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     -- [Group 12] Exhaust deposits
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
 
+    -- [Group 13] Authoritative resale quote
+    writeResalePrice(self, streamId)
 end
 
 ---Called on client side on join, the groups being read in the order onWriteStream wrote them
@@ -210,9 +228,14 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     spec.fluidCapacityVersion = RMS_Fluids.CAPACITY_VERSION
     RMS_Fluids.updateEffects(self)
     spec.fieldInspectionSoundActive = streamReadBool(streamId)
+    if spec.fieldInspectionSoundActive then
+        self:raiseActive()
+    end
 
     -- [Group 7] Wear
     spec.serviceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
+    spec.transmissionServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
+    spec.coolantServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
     spec.conditionLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001, 1.0)
     local loadedSystems = RMS_Utils.deserializeSystemsState(streamReadString(streamId))
     for sysKey, sysData in pairs(loadedSystems) do
@@ -248,8 +271,14 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     -- [Group 12] Exhaust deposits
     spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
 
-    self:recalculateAndApplyEffects()
+    -- [Group 13] Authoritative resale quote
+    readResalePrice(self, streamId)
+
+    self:recalculateAndApplyEffects(true)
     self:recalculateAndApplyIndicators()
+
+    -- a parked machine never updates on a joining client, so it joins the fleet here
+    RealisticMechanicalSystems.registerVehicle(self)
 end
 
 ---Called on server side on update, writing only the sync groups flagged dirty
@@ -321,8 +350,8 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionOilLevel, 1.0, 0.0, 1.0))
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicFluidLevel, 1.0, 0.0, 1.0))
             for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-                streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(RMS_Fluids.getCapacity(self, circuit), 0, 0))
-                streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(RMS_Fluids.getCompatibility(self, circuit), 1, 0, 1))
+                streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCapacities[circuit], 0, 0))
+                streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCompatibility[circuit], 1, 0, 1))
             end
             streamWriteString(streamId, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
             streamWriteBool(streamId, spec.fieldInspectionSoundActive)
@@ -331,6 +360,8 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
         -- [7] Wear
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.WEAR) ~= 0) then
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.serviceLevel, 1.0, 0.001))
+            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionServiceLevel, 1.0, 0.001))
+            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantServiceLevel, 1.0, 0.001))
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.conditionLevel, 1.0, 0.001, 1.0))
             streamWriteString(streamId, RMS_Utils.serializeSystemsState(spec.systems))
             writePtoWearState(spec, streamId)
@@ -371,6 +402,11 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             local elecSys = spec.systems ~= nil and spec.systems.electrical or nil
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(elecSys ~= nil and elecSys.crankingTimer or 0, 0, 0, 10000))
         end
+
+        -- [13] Authoritative resale quote
+        if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.RESALE) ~= 0) then
+            writeResalePrice(self, streamId)
+        end
     end
 end
 
@@ -400,6 +436,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             if spec.serviceOptionOne == "" then spec.serviceOptionOne = nil end
             if spec.serviceOptionTwo == "" then spec.serviceOptionTwo = nil end
             if spec.workshopType == "" then spec.workshopType = nil end
+            RMS_Bodywork.syncPreview(self)
         end
 
         -- [3] Telemetry
@@ -465,12 +502,18 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(streamReadString(streamId))
             spec.fluidCapacityVersion = RMS_Fluids.CAPACITY_VERSION
             RMS_Fluids.updateEffects(self)
+            local wasInspected = spec.fieldInspectionSoundActive
             spec.fieldInspectionSoundActive = streamReadBool(streamId)
+            if spec.fieldInspectionSoundActive ~= wasInspected then
+                self:raiseActive()
+            end
         end
 
         -- [7] Wear
         if streamReadBool(streamId) then
             spec.serviceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
+            spec.transmissionServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
+            spec.coolantServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
             spec.conditionLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001, 1.0)
             local loadedSystems = RMS_Utils.deserializeSystemsState(streamReadString(streamId))
             for sysKey, sysData in pairs(loadedSystems) do
@@ -522,6 +565,11 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             if elecSys ~= nil then
                 elecSys.crankingTimer = crankingTimer
             end
+        end
+
+        -- [13] Authoritative resale quote
+        if streamReadBool(streamId) then
+            readResalePrice(self, streamId)
         end
     end
 end

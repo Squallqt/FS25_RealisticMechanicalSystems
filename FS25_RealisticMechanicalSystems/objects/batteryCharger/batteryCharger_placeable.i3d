@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<i3D xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="batteryCharger_placeable" version="1.6" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+    <Files>
+  </Files>
+    <Materials>
+  </Materials>
+    <Scene>
+        <TransformGroup name="batteryCharger_placeable" nodeId="1">
+            <TransformGroup name="linkNode" nodeId="2" />
+            <TransformGroup name="testAreaStart01" translation="0.40 0 0.26" nodeId="3">
+                <TransformGroup name="testAreaEnd01" translation="-0.66 0.955 -0.52" nodeId="4" />
+            </TransformGroup>
+        </TransformGroup>
+    </Scene>
+</i3D>

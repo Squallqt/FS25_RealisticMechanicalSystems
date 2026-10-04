@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='utf-8'?>
+<vehicle type="rmsBatteryCharger">
+    <annotation>TELWIN Doctor Charge 155 Connect with Diagnostic trolley. Rated 12 V charging current: 150 A.</annotation>
+    <storeData>
+        <name>$l10n_rms_charger_name</name>
+        <functions>
+            <function>$l10n_rms_charger_function</function>
+        </functions>
+        <image>objects/batteryCharger/store_batteryCharger.dds</image>
+        <price>800</price>
+        <lifetime>600</lifetime>
+        <rotation>0</rotation>
+        <brand>TELWIN</brand>
+        <category>handtoolsMisc</category>
+        <shopHeight>0.955</shopHeight>
+        <shopTranslationOffset>0 0 0</shopTranslationOffset>
+        <shopRotationOffset>0 0 0</shopRotationOffset>
+        <showInStore>false</showInStore>
+    </storeData>
+    <base>
+        <typeDesc>$l10n_rms_charger_name</typeDesc>
+        <filename>objects/batteryCharger/batteryCharger.i3d</filename>
+        <sounds filename="objects/batteryCharger/sounds.xml" />
+        <size width="0.653" length="0.51" height="0.955" />
+        <components>
+            <component centerOfMass="0 0.350000 -0.025267" solverIterationCount="10" mass="29.69" />
+        </components>
+        <schemaOverlay attacherJointPosition="0 0" name="IMPLEMENT" />
+        <mapHotspot type="TOOL" />
+        <supportsPickUp>false</supportsPickUp>
+    </base>
+    <wheels>
+        <wheelConfigurations>
+            <wheelConfiguration name="$l10n_configuration_valueDefault" price="0" brand="TRELLEBORG" saveId="TRELLEBORG_DEFAULT">
+                <wheels autoRotateBackSpeed="2.1">
+                    <wheel isLeft="true" hasTireTracks="false" hasParticles="false">
+                        <physics rotSpeed="1" restLoad="0.0102816" radius="0.0475" width="0.025" mass="0.0004" repr="wheelFrontLeftRot" driveNode="wheelFrontLeft" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="1.4394304" damper="2.0563291" yOffset="0" />
+                        <tire tireTrackAtlasIndex="4" />
+                    </wheel>
+                    <wheel isLeft="false" hasTireTracks="false" hasParticles="false">
+                        <physics rotSpeed="1" restLoad="0.0102816" radius="0.0475" width="0.025" mass="0.0004" repr="wheelFrontRightRot" driveNode="wheelFrontRight" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="1.4394304" damper="2.0563291" yOffset="0" />
+                        <tire tireTrackAtlasIndex="4" />
+                    </wheel>
+                    <wheel isLeft="true" hasTireTracks="false" hasParticles="false">
+                        <physics rotSpeed="0" restLoad="0.0102816" radius="0.106" width="0.035" mass="0.001" repr="wheelBackLeft" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="1.4394304" damper="2.0563291" yOffset="0" />
+                        <tire tireTrackAtlasIndex="4" />
+                    </wheel>
+                    <wheel isLeft="false" hasTireTracks="false" hasParticles="false">
+                        <physics rotSpeed="0" restLoad="0.0102816" radius="0.106" width="0.035" mass="0.001" repr="wheelBackRight" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="1.4394304" damper="2.0563291" yOffset="0" />
+                        <tire tireTrackAtlasIndex="4" />
+                    </wheel>
+                </wheels>
+            </wheelConfiguration>
+        </wheelConfigurations>
+        <ackermannSteeringConfigurations>
+            <ackermannSteering rotSpeed="40" rotMax="38" rotCenterWheel1="3" rotCenterWheel2="4" />
+        </ackermannSteeringConfigurations>
+    </wheels>
+    <enterable isTabbable="false">
+        <exitPoint node="exitPoint" />
+        <enterReferenceNode node="charger_vis" />
+        <cameras>
+            <camera node="outdoorCamera1" rotatable="true" rotateNode="outdoorCameraTarget" limit="true" useWorldXZRotation="true" rotMinX="-1.4" rotMaxX="1" transMin="3.1" transMax="40" translation="0 0 3.4" rotation="-18 180 0">
+                <raycastNode node="cameraRaycastNode1" />
+                <raycastNode node="cameraRaycastNode2" />
+            </camera>
+            <camera node="indoorCamera1" rotatable="true" limit="true" rotMinX="-1.1" rotMaxX="0.4" transMin="0" transMax="0" useMirror="true" isInside="true" shadowFocusBox="shadowFocusBox" useOutdoorSounds="true" />
+        </cameras>
+        <characterNode node="skeleton" cameraMinDistance="1.75" useAnimation="true" />
+        <enterAnimation name="enterAnimation" />
+    </enterable>
+    <motorized forceSpeedHudDisplay="true">
+        <differentialConfigurations>
+            <differentialConfiguration>
+                <differentials>
+                    <differential torqueRatio="0.5" maxSpeedRatio="1.4" wheelIndex1="1" wheelIndex2="2" />
+                    <differential torqueRatio="0.5" maxSpeedRatio="2.5" wheelIndex1="3" wheelIndex2="4" />
+                    <differential torqueRatio="0.5" maxSpeedRatio="1.3" differentialIndex1="1" differentialIndex2="2" />
+                </differentials>
+            </differentialConfiguration>
+        </differentialConfigurations>
+        <motorConfigurations>
+            <motorConfiguration price="0">
+                <motor torqueScale="0.015834" minRpm="850" maxRpm="2200" maxForwardSpeed="7" maxBackwardSpeed="5" brakeForce="0.0020563" lowBrakeForceScale="0.1" accelerationLimit="1.6" dampingRateScale="0.08">
+                    <torque normRpm="0.45" torque="0.9" />
+                    <torque normRpm="0.5" torque="0.97" />
+                    <torque normRpm="0.59" torque="1" />
+                    <torque normRpm="0.72" torque="1" />
+                    <torque normRpm="0.86" torque="0.88" />
+                    <torque normRpm="1" torque="0.72" />
+                </motor>
+                <transmission minForwardGearRatio="118" maxForwardGearRatio="320" minBackwardGearRatio="165" maxBackwardGearRatio="320" />
+            </motorConfiguration>
+        </motorConfigurations>
+        <motorStartDuration>0</motorStartDuration>
+        <dashboards>
+            <dashboard displayType="ANIMATION" valueType="speedDir" animName="speedAnimation" minValueAnim="-5" maxValueAnim="5" />
+        </dashboards>
+    </motorized>
+    <pushHandTool>
+        <raycast node1="raycast01" node2="raycast02" playerNode="playerNode" positionSmoothnessFactor="0.4" positionSmoothnessFactorReverse="2" positionSmoothnessFactorSteering="0" />
+        <wheels front="3 4" back="1 2" />
+        <spine rotationForward="-55" rotationBackward="-55" rotationIdle="-56" ratio="0.6 0.2 0.2" speed="40" />
+        <ikChains>
+            <target ikChain="rightArm" targetNode="playerRightHandTarget" poseId="narrowFingers" />
+            <target ikChain="leftArm" targetNode="playerLeftHandTarget" poseId="narrowFingers" />
+        </ikChains>
+        <playerConditionalAnimation>
+            <item id="idle" entryTransitionDuration="0.25" exitTransitionDuration="0.25">
+                <clips>
+                    <clip clipName="idle1Source" />
+                </clips>
+                <conditions>
+                    <conditionGroup>
+                        <condition parameter="absSmoothedForwardVelocity" lower="0.2" />
+                    </conditionGroup>
+                </conditions>
+            </item>
+            <item id="walk" entryTransitionDuration="0.25" exitTransitionDuration="0.25">
+                <clips speedScaleType="distance" speedScaleParameter="2.25">
+                    <clip clipName="walkFwd1Source" />
+                </clips>
+                <conditions>
+                    <conditionGroup>
+                        <condition parameter="smoothedForwardVelocity" between="0.3, 4" />
+                    </conditionGroup>
+                </conditions>
+            </item>
+            <item id="walkBack" entryTransitionDuration="0.5" exitTransitionDuration="0.25">
+                <clips speedScaleType="distance" speedScaleParameter="2.25">
+                    <clip clipName="walkBwdLoopSource" />
+                </clips>
+                <conditions>
+                    <conditionGroup>
+                        <condition parameter="smoothedForwardVelocity" between="-3, -0.3" />
+                    </conditionGroup>
+                </conditions>
+            </item>
+        </playerConditionalAnimation>
+    </pushHandTool>
+    <animations>
+        <animation name="enterAnimation">
+            <part node="playerCollision01" startTime="0" endTime="0.001" startTrans="0 0.55 0.49" endTrans="0 0.55 -0.05" />
+            <part node="playerCollision02" startTime="0" endTime="0.001" startTrans="0 0 0" endTrans="0 0.8 0" />
+        </animation>
+        <animation name="speedAnimation">
+            <part node="player" startTime="0.0" endTime="0.5" startTrans="0 0 -0.781000000" endTrans="0 0 -0.600000000" />
+            <part node="player" startTime="0.5" endTime="1.0" startTrans="0 0 -0.600000000" endTrans="0 0 -0.681000000" />
+        </animation>
+    </animations>
+    <foliageBending>
+        <bendingNode minX="-0.2624" maxX="0.3906" minZ="-0.255" maxZ="0.255" yOffset="0.16" />
+    </foliageBending>
+    <wearable wearDuration="480" workMultiplier="5" fieldMultiplier="2" />
+    <washable dirtDuration="90" washDuration="1" workMultiplier="3" fieldMultiplier="2" />
+    <i3dMappings>
+        <i3dMapping id="charger_vis" node="0&gt;0" />
+        <i3dMapping id="cameraRaycastNode1" node="0&gt;0|0" />
+        <i3dMapping id="cameraRaycastNode2" node="0&gt;0|1" />
+        <i3dMapping id="chargerDisplay" node="0&gt;0|2" />
+        <i3dMapping id="case" node="0&gt;0|3|0|13" />
+        <i3dMapping id="exitPoint" node="0&gt;0|4" />
+        <i3dMapping id="indoorCamera1" node="0&gt;0|5" />
+        <i3dMapping id="outdoorCameraTarget" node="0&gt;0|6" />
+        <i3dMapping id="outdoorCamera1" node="0&gt;0|6|0" />
+        <i3dMapping id="player" node="0&gt;0|7" />
+        <i3dMapping id="playerCollision01" node="0&gt;0|7|0" />
+        <i3dMapping id="playerCollision02" node="0&gt;0|7|0|0" />
+        <i3dMapping id="playerNode" node="0&gt;0|7|1" />
+        <i3dMapping id="skeleton" node="0&gt;0|7|1|0" />
+        <i3dMapping id="raycast01" node="0&gt;0|7|2" />
+        <i3dMapping id="raycast02" node="0&gt;0|7|3" />
+        <i3dMapping id="playerLeftHandTarget" node="0&gt;0|8" />
+        <i3dMapping id="playerRightHandTarget" node="0&gt;0|9" />
+        <i3dMapping id="shadowFocusBox" node="0&gt;0|10" />
+        <i3dMapping id="wheelBackLeft" node="0&gt;0|11" />
+        <i3dMapping id="wheelBackRight" node="0&gt;0|12" />
+        <i3dMapping id="wheelFrontLeftRot" node="0&gt;0|13" />
+        <i3dMapping id="wheelFrontLeft" node="0&gt;0|13|0" />
+        <i3dMapping id="wheelFrontRightRot" node="0&gt;0|14" />
+        <i3dMapping id="wheelFrontRight" node="0&gt;0|14|0" />
+    </i3dMappings>
+    <rmsBatteryCharger maxCurrent="150" display="chargerDisplay">
+        <sounds>
+            <work file="objects/batteryCharger/chargerHum.ogg" linkNode="0&gt;" loops="0" volumeScale="1" innerRadius="2" outerRadius="12" fadeIn="0.3" fadeOut="0.3" />
+        </sounds>
+    </rmsBatteryCharger>
+</vehicle>

@@ -62,7 +62,7 @@
     <Profile name="rms_inspectionHeaderTextLayout" extends="emptyPanel" with="anchorTopLeft">
         <flowDirection value="vertical"/>
         <fillDirectionY value="topToBottom"/>
-        <alignmentX value="left"/>
+        <alignmentX value="center"/>
         <alignmentY value="middle"/>
         <numFlows value="1"/>
         <elementSpacing value="2px"/>
@@ -93,6 +93,9 @@
         <textAutoWidth value="true"/>
         <textLayoutMode value="resize"/>
         <textColor value="$preset_fs25_colorGreyLight"/>
+    </Profile>
+    <Profile name="rms_preShiftInspectionIdentity" extends="rms_inspectionIdentity">
+        <textAlignment value="center"/>
     </Profile>
     <Profile name="rms_inspectionSurface" extends="baseReference" with="anchorTopLeft">
         <color value="$preset_colorBlack50"/>
@@ -236,7 +239,7 @@
     <Profile name="rms_listSliderBox" extends="fs25_listSliderBox" with="anchorTopRight"/>
     <Profile name="rms_inspectionObservationsSliderBox" extends="rms_listSliderBox"/>
     <Profile name="rms_inspectionAdditionalText" extends="fs25_dialogText" with="anchorTopLeft">
-        <textSize value="15px"/>
+        <textSize value="16px"/>
         <textAlignment value="left"/>
         <textVerticalAlignment value="top"/>
         <textLineHeightScale value="1.15"/>
@@ -733,7 +736,7 @@
         <flowDirection value="horizontal"/>
     </Profile>
     <Profile name="rms_workshopActionList" extends="emptyPanel" with="anchorTopLeft">
-        <size value="310px 298px"/>
+        <size value="310px 360px"/>
         <flowDirection value="vertical"/>
         <alignmentX value="left"/>
         <alignmentY value="top"/>
@@ -769,6 +772,10 @@
         <textLineHeightScale value="1.1"/>
         <textLayoutMode value="resize"/>
         <textColor value="$preset_fs25_colorMainLight"/>
+    </Profile>
+    <Profile name="rms_workshopBodyworkDescription" extends="rms_workshopConfigDescription">
+        <textMaxNumLines value="2"/>
+        <textColor value="$preset_fs25_colorGreyLight"/>
     </Profile>
     <Profile name="rms_workshopConfigChoiceCard" extends="rms_workshopBlock">
         <size value="619px 152px"/>
@@ -809,6 +816,10 @@
     <Profile name="rms_workshopConfigNativeOption" extends="fs25_multiTextOption" with="anchorTopLeft">
         <size value="619px 50px"/>
     </Profile>
+    <Profile name="rms_workshopBodyworkColorList" extends="rms_inspectionObservationsLayout" with="anchorTopLeft">
+        <elementSpacing value="8px"/>
+    </Profile>
+    <Profile name="rms_workshopBodyworkColorButton" extends="fs25_colorButton" with="anchorTopLeft"/>
     <Profile name="rms_workshopRecapStack" extends="emptyPanel" with="anchorTopLeft">
         <flowDirection value="vertical"/>
         <fillDirectionY value="topToBottom"/>
@@ -985,7 +996,6 @@
         <textMaxNumLines value="1"/>
         <textLayoutMode value="resize"/>
     </Profile>
-
     <Profile name="shopListAttributeIconReliability" extends="shopListAttributeIconLifeTime">
         <imageSliceId value="rms_DashboardHud.reliability"/>
     </Profile>
@@ -1043,10 +1053,10 @@
         <elementSpacing value="10px"/>
     </Profile>
     <Profile name="rms_logKpiCard" extends="rms_workshopBlock">
-        <size value="237px 104px"/>
+        <size value="202px 104px"/>
     </Profile>
     <Profile name="rms_logKpiCardLast" extends="rms_logKpiCard">
-        <size value="238px 104px"/>
+        <size value="201px 104px"/>
     </Profile>
     <Profile name="rms_logKpiIcon" extends="rms_workshopIcon" with="anchorTopCenter">
         <position value="0px -7px"/>
@@ -1062,7 +1072,7 @@
     </Profile>
     <Profile name="rms_logKpiLabel" extends="rms_workshopLabel" with="anchorTopCenter">
         <position value="0px -42px"/>
-        <size value="213px 30px"/>
+        <size value="178px 30px"/>
         <textSize value="13px"/>
         <textMinSize value="11px"/>
         <textAlignment value="center"/>
@@ -1071,7 +1081,7 @@
     </Profile>
     <Profile name="rms_logKpiValue" extends="rms_workshopValue" with="anchorTopCenter">
         <position value="0px -75px"/>
-        <size value="213px 24px"/>
+        <size value="178px 24px"/>
         <textSize value="20px"/>
         <textMinSize value="14px"/>
         <textAlignment value="center"/>
@@ -1216,6 +1226,9 @@
         <textMaxNumLines value="1"/>
         <textLayoutMode value="resize"/>
         <textColor value="$preset_fs25_colorMainLight"/>
+    </Profile>
+    <Profile name="rms_logInvoiceAmount" extends="rms_logDetailPart">
+        <textAlignment value="right"/>
     </Profile>
     <Profile name="rms_logDetailPrice" extends="rms_workshopPillValue">
         <textSize value="20px"/>

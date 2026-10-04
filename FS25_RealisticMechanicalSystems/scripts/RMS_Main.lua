@@ -80,6 +80,7 @@ source(g_currentModDirectory .. "scripts/RMS_Config.lua")
 source(g_currentModDirectory .. "scripts/RMS_Utils.lua")
 source(g_currentModDirectory .. "scripts/RMS_Fluids.lua")
 source(g_currentModDirectory .. "scripts/RMS_FluidTransfer.lua")
+source(g_currentModDirectory .. "scripts/RMS_Bodywork.lua")
 source(g_currentModDirectory .. "scripts/RMS_FluidWorkshop.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProgressRing.lua")
 source(g_currentModDirectory .. "scripts/RMS_VehicleYearsData.lua")
@@ -98,13 +99,14 @@ source(g_currentModDirectory .. "gui/RMS_MaintenanceThreeOptionsDialog.lua")
 source(g_currentModDirectory .. "gui/RMS_WelcomeDialog.lua")
 source(g_currentModDirectory .. "gui/RMS_SettingsPage.lua")
 source(g_currentModDirectory .. "scripts/RMS_Hud.lua")
-source(g_currentModDirectory .. "scripts/RMS_Telemetry.lua")
 source(g_currentModDirectory .. "scripts/RMS_PlayerInput.lua")
 source(g_currentModDirectory .. "events/RMS_VehicleChangeStatusEvent.lua")
 source(g_currentModDirectory .. "events/RMS_WorkshopChangeStatusEvent.lua")
 source(g_currentModDirectory .. "events/RMS_ServiceRequestEvent.lua")
+source(g_currentModDirectory .. "events/RMS_BodyworkColorEvent.lua")
 source(g_currentModDirectory .. "events/RMS_ServiceResultEvent.lua")
 source(g_currentModDirectory .. "events/RMS_FluidTransferRequestEvent.lua")
+source(g_currentModDirectory .. "events/RMS_BatteryChargerRequestEvent.lua")
 source(g_currentModDirectory .. "events/RMS_CancelServiceEvent.lua")
 source(g_currentModDirectory .. "events/RMS_SettingsSyncEvent.lua")
 source(g_currentModDirectory .. "events/RMS_ReinitializeVehiclesEvent.lua")
@@ -151,7 +153,7 @@ end
 
 local RMS_REQUIRED_SPECIALIZATIONS = {"motorized", "wheels", "enterable"}
 
-local RMS_REJECTED_SPECIALIZATIONS = {"attachable", "pushHandTool", "locomotive", "motorbike"}
+local RMS_REJECTED_SPECIALIZATIONS = {"pushHandTool", "locomotive", "motorbike"}
 
 ---Tells whether a vehicle type gets the RMS specialization
 -- @param table vehicleType vehicle type
@@ -270,6 +272,28 @@ function RMS_Main:onStartMission()
 end
 
 
+---Refreshes the native trigger cards when an RMS dealer payment changes
+-- @param table screen workshop screen
+-- @param float dt frame duration in milliseconds
+function RMS_Main.refreshWorkshopResalePrices(screen, dt)
+    screen.rmsResaleRefreshTimer = (screen.rmsResaleRefreshTimer or 0) + dt
+    if screen.rmsResaleRefreshTimer < 250 then
+        return
+    end
+    screen.rmsResaleRefreshTimer = 0
+    screen.rmsResaleValues = screen.rmsResaleValues or setmetatable({}, {__mode = "k"})
+    for _, vehicle in ipairs(screen.vehicles or {}) do
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        if spec ~= nil and not spec.isExcludedVehicle then
+            local value = RMS_Utils.getResaleValue(vehicle, true)
+            if screen.rmsResaleValues[vehicle] ~= value then
+                screen.rmsResaleValues[vehicle] = value
+                screen.needsListReload = true
+            end
+        end
+    end
+end
+
 ---Opens the workshop dialog in place of the vanilla repair button
 -- @param table screenInstance workshop screen
 function RMS_Main.onCustomRepairClick(screenInstance)
@@ -295,6 +319,92 @@ function RMS_Main.hookRepairButton(screenInstance, vehicle)
 end
 
 
+---Finds the native repaint control by its actual GUI callback.
+-- @param table screenInstance workshop screen
+-- @return table? button repaint button, when the native callback is exposed
+function RMS_Main.findNativeRepaintButton(screenInstance)
+    if screenInstance.rmsNativeRepaintButton ~= nil then
+        return screenInstance.rmsNativeRepaintButton
+    end
+
+    local callbacks = {}
+    for name, callback in pairs(WorkshopScreen) do
+        if type(name) == "string" and string.find(string.lower(name), "repaint", 1, true)
+            and type(callback) == "function" then
+            callbacks[callback] = true
+        end
+    end
+
+    local button = nil
+    for _, element in ipairs(screenInstance:getDescendants()) do
+        if element.target == screenInstance and callbacks[element.onClickCallback] then
+            if button ~= nil then
+                return nil
+            end
+            button = element
+        end
+    end
+
+    if button ~= nil then
+        screenInstance.rmsNativeRepaintButton = button
+        screenInstance.rmsOriginalRepaintCallback = button.onClickCallback
+    end
+    return button
+end
+
+
+---Redirects the native repaint action for RMS vehicles only.
+-- @param table screenInstance workshop screen
+-- @param table? vehicle selected vehicle
+function RMS_Main.hookRepaintButton(screenInstance, vehicle)
+    local button = RMS_Main.findNativeRepaintButton(screenInstance)
+    if button == nil then
+        if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil
+            and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
+            and not screenInstance.rmsRepaintHookWarningShown then
+            Logging.warning("RMS: Native workshop repaint callback could not be identified; RMS repaint is blocked on this screen")
+            screenInstance.rmsRepaintHookWarningShown = true
+        end
+        return
+    end
+
+    local isRmsVehicle = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil
+        and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
+    if isRmsVehicle then
+        button.onClickCallback = function()
+            local workshopType = RealisticMechanicalSystems.WORKSHOP.DEALER
+            if screenInstance.isOwnWorkshop then
+                workshopType = RealisticMechanicalSystems.WORKSHOP.OWN
+            end
+            if screenInstance.isMobileWorkshop then
+                workshopType = RealisticMechanicalSystems.WORKSHOP.MOBILE
+            end
+            if workshopType ~= RealisticMechanicalSystems.WORKSHOP.MOBILE then
+                RMS_WorkshopDialog.show(screenInstance.vehicle, true)
+            end
+        end
+        button:setText(g_i18n:getText("button_repaint"))
+        button:setDisabled(screenInstance.isMobileWorkshop == true)
+    else
+        button.onClickCallback = screenInstance.rmsOriginalRepaintCallback
+    end
+end
+
+
+---Stops native repaint transactions for RMS vehicles when another entry point calls the event.
+-- @param table event repaint event
+-- @param function superFunc native event handler
+-- @param table connection event connection
+function RMS_Main.runNativeRepaintEvent(event, superFunc, connection)
+    local vehicle = event.vehicle
+    if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil
+        and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
+        return
+    end
+    return superFunc(event, connection)
+end
+
+
 ---Writes the vehicle transaction price missing from the native BuyVehicleData stream
 function RMS_Main.writeBuyVehicleDataPrice(data, superFunc, streamId, connection)
     superFunc(data, streamId, connection)
@@ -309,31 +419,139 @@ function RMS_Main.readBuyVehicleDataPrice(data, superFunc, streamId, connection)
 end
 
 
----Returns the reliability of a store item, the vehicle value taking precedence
--- @param table? storeItem store item
+---Detects changes to the vehicle's native color configurations, including custom colors.
+function RMS_Main.hasConfigurationColorChange(vehicle, configurations, configurationData)
+    if vehicle == nil or configurations == nil then
+        return false
+    end
+    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
+    for _, name in ipairs(RMS_Bodywork.getColorZones(vehicle)) do
+        local selectedIndex = configurations[name] or vehicle.configurations[name]
+        if selectedIndex ~= vehicle.configurations[name] then
+            return true, name
+        end
+        local item = storeItem.configurations[name][selectedIndex]
+        if item ~= nil and item.isCustomColor then
+            local selectedData = configurationData ~= nil and configurationData[name] ~= nil
+                and configurationData[name][selectedIndex] or nil
+            local currentData = vehicle.configurationData ~= nil and vehicle.configurationData[name] ~= nil
+                and vehicle.configurationData[name][selectedIndex] or nil
+            if (selectedData == nil) ~= (currentData == nil)
+                or (selectedData ~= nil and item:hasDataChanged(selectedData, currentData)) then
+                return true, name
+            end
+        end
+    end
+    return false
+end
+
+---Keeps the native color row prices aligned with the single RMS paint charge.
+function RMS_Main.updateShopConfigData(screen, superFunc, storeItem, vehicle, saleItem)
+    superFunc(screen, storeItem, vehicle, saleItem)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or spec.isExcludedVehicle then
+        return
+    end
+    local _, firstZone = RMS_Main.hasConfigurationColorChange(
+        vehicle, screen.configurations, screen.configurationData)
+    local paintPrice = firstZone ~= nil and RMS_Bodywork.getPrice(
+        vehicle, RMS_Bodywork.FULL, RealisticMechanicalSystems.WORKSHOP.DEALER) or nil
+    for index, option in ipairs(screen.colorPickers or {}) do
+        local colorElement = screen.colorElements ~= nil and screen.colorElements[index] or nil
+        local configIndex = screen.configurations[option.configName]
+        if colorElement ~= nil and configIndex ~= nil then
+            local priceElement = colorElement.parent:getDescendantByName("price")
+            screen:setConfigPrice(option.configName, configIndex, priceElement, vehicle)
+            if paintPrice ~= nil and option.configName == firstZone then
+                local optionPrice = storeItem.configurations[option.configName][configIndex].price
+                if ConfigurationUtil.hasBoughtConfiguration(vehicle, option.configName, configIndex) then
+                    optionPrice = 0
+                end
+                priceElement:setText("+" .. g_i18n:formatMoney(optionPrice + paintPrice))
+            end
+        end
+    end
+end
+
+---Adds one RMS full-paint price to the native configuration quote.
+function RMS_Main.getConfigurationCostsAndChanges(screen, superFunc, storeItem, vehicle, saleItem)
+    local basePrice, upgradePrice, hasChanges = superFunc(screen, storeItem, vehicle, saleItem)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec ~= nil and not spec.isExcludedVehicle
+        and RMS_Main.hasConfigurationColorChange(vehicle, screen.configurations, screen.configurationData) then
+        local price = RMS_Bodywork.getPrice(vehicle, RMS_Bodywork.FULL,
+            RealisticMechanicalSystems.WORKSHOP.DEALER)
+        if price == nil then
+            return basePrice, upgradePrice, false
+        end
+        upgradePrice = upgradePrice + price
+    end
+    return basePrice, upgradePrice, hasChanges
+end
+
+---Enforces the RMS paint charge before the native server transaction reloads the vehicle.
+function RMS_Main.runChangeVehicleConfigEvent(event, superFunc, connection)
+    if not connection:getIsServer() and event.vehicle ~= nil and event.vehicleBuyData ~= nil then
+        local spec = event.vehicle.spec_RealisticMechanicalSystems
+        if spec ~= nil and not spec.isExcludedVehicle
+            and RMS_Main.hasConfigurationColorChange(event.vehicle,
+                event.vehicleBuyData.configurations, event.vehicleBuyData.configurationData) then
+            local price = RMS_Bodywork.getPrice(event.vehicle, RMS_Bodywork.FULL,
+                RealisticMechanicalSystems.WORKSHOP.DEALER)
+            if price == nil or (tonumber(event.vehicleBuyData.price) or 0) < price then
+                connection:sendEvent(ChangeVehicleConfigEvent.newServerToClient(false))
+                return
+            end
+        end
+    end
+    return superFunc(event, connection)
+end
+
+---Loads whether RMS tracks the store item, kept under the reliability spec both ratings read
+-- @param XMLFile xmlFile vehicle file of the store item
+-- @param string? customEnvironment mod of the store item
+-- @return boolean isTracked true when RMS tracks the machine by default
+local function loadIsTracked(xmlFile, customEnvironment)
+    return RealisticMechanicalSystems.getIsStoreItemTracked(xmlFile, customEnvironment)
+end
+
+---Tells whether a store item gets the RMS ratings, a vehicle answering for itself
+-- @param table storeItem store item
 -- @param table? vehicle vehicle
--- @return float reliability reliability value
-local function getReliability(storeItem, vehicle)
-    if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
-        return nil
+-- @param table? configurations configuration ids the shop shows
+-- @return boolean isRated true when RMS tracks the machine and its power is known
+local function getIsRated(storeItem, vehicle, configurations)
+    if vehicle ~= nil then
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        if spec == nil or spec.isExcludedVehicle then
+            return false
+        end
+    elseif storeItem.specs.reliability ~= true or RealisticMechanicalSystems.getIsStoreItemElectric(storeItem, configurations) then
+        return false
     end
 
-    if storeItem.specs.power ~= nil then
+    return storeItem.specs.power ~= nil
+end
+
+---Returns the reliability of a store item, the vehicle value taking precedence
+-- @param table storeItem store item
+-- @param table? vehicle vehicle
+-- @param table? configurations configuration ids the shop shows
+-- @return float reliability reliability value
+local function getReliability(storeItem, vehicle, configurations)
+    if getIsRated(storeItem, vehicle, configurations) then
         local reliability = RealisticMechanicalSystems.getBrandReliability(nil, storeItem)
         return RMS_Utils.formatReliability(reliability)
     end
 end
 
 ---Returns the maintainability of a store item, the vehicle value taking precedence
--- @param table? storeItem store item
+-- @param table storeItem store item
 -- @param table? vehicle vehicle
+-- @param table? configurations configuration ids the shop shows
 -- @return float maintainability maintainability value
-local function getMaintainability(storeItem, vehicle)
-    if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
-        return nil
-    end
-
-    if storeItem.specs.power ~= nil then
+local function getMaintainability(storeItem, vehicle, configurations)
+    if getIsRated(storeItem, vehicle, configurations) then
         local _, maintainability = RealisticMechanicalSystems.getBrandReliability(nil, storeItem)
         return RMS_Utils.formatMaintainability(maintainability)
     end
@@ -341,7 +559,7 @@ end
 
 -- adds spec while browsing
 if g_modIsLoaded == nil or not g_modIsLoaded["FS25_AdvancedDamageSystem"] then
-    g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", nil, getReliability, StoreSpecies.VEHICLE)
+    g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", loadIsTracked, getReliability, StoreSpecies.VEHICLE)
     g_storeManager:addSpecType("maintainability", "shopListAttributeIconMaintainability", nil, getMaintainability, StoreSpecies.VEHICLE)
 end
 
@@ -407,6 +625,28 @@ function RMS_Main.addShopMenuPage(frame, pageName, uvs, predicateFunc, insertAft
     g_shopMenu:rebuildTabList()
 end
 
+---Clones the last menu button until the menu holds enough of them, the vanilla shop menu declaring only six
+-- @param table menu tabbed menu
+-- @param integer count buttons needed
+function RMS_Main.ensureMenuButtonCount(menu, count)
+    if menu.menuButton == nil or menu.buttonsPanel == nil then
+        return
+    end
+
+    local template = menu.menuButton[#menu.menuButton]
+    if template == nil then
+        return
+    end
+
+    while #menu.menuButton < count do
+        local button = template:clone(menu.buttonsPanel, false, true)
+        button:setVisible(false)
+        table.insert(menu.menuButton, button)
+    end
+
+    menu.buttonsPanel:invalidateLayout()
+end
+
 ---Registers the RMS shop page once the shop menu exists
 function RMS_Main:tryRegisterShopMenuPage()
     if self.shopMenuPageInstalled then
@@ -426,6 +666,7 @@ function RMS_Main:tryRegisterShopMenuPage()
     RMS_Main.addShopMenuPage(frame, RMS_InGameMenuFrame.PAGE_NAME, {0, 0, 1024, 1024}, function()
         return true
     end, "pageUsedSale")
+    RMS_Main.ensureMenuButtonCount(g_shopMenu, RMS_InGameMenuFrame.MENU_BUTTON_COUNT)
     frame:initialize()
 
     self.shopMenuPageInstalled = true
@@ -496,9 +737,20 @@ FSBaseMission.sendInitialClientState = Utils.appendedFunction(FSBaseMission.send
         RMS_TutorialStateEvent.sendToClient(connection)
     end
 end)
+if WorkshopScreen.update ~= nil then
+    WorkshopScreen.update = Utils.appendedFunction(WorkshopScreen.update, RMS_Main.refreshWorkshopResalePrices)
+end
 WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RMS_Main.hookRepairButton)
+WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RMS_Main.hookRepaintButton)
+WearableRepaintEvent.run = Utils.overwrittenFunction(WearableRepaintEvent.run, RMS_Main.runNativeRepaintEvent)
 InGameMenuStatisticsFrame.populateCellForItemInSection = Utils.overwrittenFunction(InGameMenuStatisticsFrame.populateCellForItemInSection, RMS_Main.populateCellForItemInSection)
 ShopConfigScreen.processAttributeData = Utils.appendedFunction(ShopConfigScreen.processAttributeData, RMS_Main.processAttributeData)
+ShopConfigScreen.getConfigurationCostsAndChanges = Utils.overwrittenFunction(
+    ShopConfigScreen.getConfigurationCostsAndChanges, RMS_Main.getConfigurationCostsAndChanges)
+ShopConfigScreen.updateData = Utils.overwrittenFunction(
+    ShopConfigScreen.updateData, RMS_Main.updateShopConfigData)
+ChangeVehicleConfigEvent.run = Utils.overwrittenFunction(
+    ChangeVehicleConfigEvent.run, RMS_Main.runChangeVehicleConfigEvent)
 if BuyVehicleData ~= nil and BuyVehicleData.writeStream ~= nil then
     BuyVehicleData.writeStream = Utils.overwrittenFunction(BuyVehicleData.writeStream, RMS_Main.writeBuyVehicleDataPrice)
 end
@@ -575,11 +827,11 @@ function RMS_Main:onPeriodChanged()
     end
 
     for _, vehicle in pairs(self.vehicles) do
-        RMS_Consumptables.onLubricationPeriodChanged(vehicle)
+        RMS_Consumables.onLubricationPeriodChanged(vehicle)
     end
 end
 
----Refreshes the open workshop only when its vehicle status changed
+---Refreshes the open workshop when its vehicle status or resale payment changes
 local function updateOpenWorkshopDialog()
     local dialog = RMS_WorkshopDialog.INSTANCE
     if dialog == nil or not dialog.isDialogOpen or dialog.vehicle == nil or dialog.vehicle.spec_RealisticMechanicalSystems == nil then
@@ -587,7 +839,9 @@ local function updateOpenWorkshopDialog()
     end
 
     local currentStatus = dialog.vehicle:getCurrentStatus()
-    if dialog.lastObservedStatus ~= currentStatus then
+    if dialog.lastObservedStatus ~= currentStatus
+        or dialog.lastResaleValue ~= RMS_Utils.getResaleValue(dialog.vehicle,
+            dialog.workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER) then
         dialog:updateScreen()
     end
 end
@@ -612,18 +866,18 @@ function RMS_Main:update(dt)
         end
     end
 
+    -- a running engine keeps its machine updating on every game, for its breakdown noises, smoke and gauges
+    for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        if spec ~= nil and not spec.isExcludedVehicle and vehicle.isActive ~= true and vehicle:getMotorState() == MotorState.ON then
+            vehicle:raiseActive()
+        end
+    end
+
     if not g_currentMission:getIsServer() or self.numVehicles == 0 then
         self.previousKey = nil
         updateOpenWorkshopDialog()
         return
-    end
-
-    for _, vehicle in pairs(self.vehicles) do
-        local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-        if spec ~= nil and not spec.isExcludedVehicle and vehicle.isActive ~= true
-            and vehicle.raiseActive ~= nil and vehicle.getMotorState ~= nil and vehicle:getMotorState() == MotorState.ON then
-            vehicle:raiseActive()
-        end
     end
 
     self.updateAlphaTimer = self.updateAlphaTimer + dt
@@ -686,7 +940,6 @@ function RMS_Main:loadMap()
     self.shopMenuPageInstalled = false
     RMS_Config.resetTutorialStateSession()
     RMS_Config.loadFromXMLFile()
-    RMS_Config.loadLocalSettings()
     self:tryRegisterShopMenuPage()
 
     if g_currentMission:getIsServer() then

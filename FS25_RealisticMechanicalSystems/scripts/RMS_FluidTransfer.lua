@@ -15,6 +15,7 @@ RMS_FluidTransfer.RESULT = {
     OUT_OF_RANGE = "OUT_OF_RANGE",
     MOTOR_RUNNING = "MOTOR_RUNNING",
     VEHICLE_MOVING = "VEHICLE_MOVING",
+    SERVICE_BUSY = "SERVICE_BUSY",
     CIRCUIT_FULL = "CIRCUIT_FULL",
     WRONG_FLUID_CONFIRMATION_REQUIRED = "WRONG_FLUID_CONFIRMATION_REQUIRED",
     BUSY = "BUSY",
@@ -84,6 +85,10 @@ local function getRuntimeValidation(container, target, circuit, requester)
         return RMS_FluidTransfer.RESULT.OUT_OF_RANGE
     end
 
+    if target.isUnderService ~= nil and target:isUnderService() then
+        return RMS_FluidTransfer.RESULT.SERVICE_BUSY
+    end
+
     if target.getIsMotorStarted ~= nil and target:getIsMotorStarted() then
         return RMS_FluidTransfer.RESULT.MOTOR_RUNNING
     end
@@ -146,6 +151,9 @@ function RMS_FluidTransfer.tryStart(container, target, circuit, requester, incom
         requesterUserId = requester.userId,
         requesterFarmId = requester.farmId
     }
+    container:raiseDirtyFlags(containerSpec.dirtyFlag)
+    -- a container at rest is not updated by the game, and its update pours the fluid
+    container:raiseActive()
     return true, RMS_FluidTransfer.RESULT.OK
 end
 
@@ -164,6 +172,7 @@ function RMS_FluidTransfer.cancel(container)
         targetSpec.fluidTransferLocks[transfer.circuit] = nil
     end
     containerSpec.activeTransfer = nil
+    container:raiseDirtyFlags(containerSpec.dirtyFlag)
 end
 
 local function getActiveRequester(transfer)
@@ -175,7 +184,7 @@ local function getActiveRequester(transfer)
     end
     return {
         userId = transfer.requesterUserId,
-        farmId = transfer.requesterFarmId,
+        farmId = player.farmId,
         player = player
     }
 end
@@ -184,7 +193,7 @@ local function getTransferAmount(dt)
     return RMS_FluidTransfer.LITERS_PER_SECOND * math.max(tonumber(dt) or 0, 0) / 1000
 end
 
----Advances the active server transfer and rolls back any unaccepted FillUnit removal
+---Advances the active server transfer and puts back any liters the target refused
 -- @param table container physical source container
 -- @param float dt elapsed milliseconds
 function RMS_FluidTransfer.update(container, dt)
@@ -212,10 +221,10 @@ function RMS_FluidTransfer.update(container, dt)
     end
 
     container:beginRMSFluidTransaction()
-    local removed, fillType = container:removeRMSFluidLiters(amount, transfer.requesterFarmId)
+    local removed = container:removeRMSFluidLiters(amount)
     local accepted = RMS_Fluids.addLiters(transfer.target, transfer.circuit, removed, transfer.productKey)
     if removed - accepted > RMS_Fluids.EPSILON then
-        container:restoreRMSFluidLiters(removed - accepted, transfer.requesterFarmId, fillType)
+        container:restoreRMSFluidLiters(removed - accepted)
     end
 
     local finished = accepted <= RMS_Fluids.EPSILON

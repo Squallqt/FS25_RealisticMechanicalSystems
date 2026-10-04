@@ -4,7 +4,7 @@
 ---Physical fluid catalogue, vehicle capacities, mixture compatibility and leak-loss accounting
 RMS_Fluids = RMS_Fluids or {}
 
-RMS_Fluids.CAPACITY_VERSION = 1
+RMS_Fluids.CAPACITY_VERSION = 3
 RMS_Fluids.EPSILON = 0.0001
 
 RMS_Fluids.CIRCUIT_ORDER = {
@@ -44,41 +44,52 @@ RMS_Fluids.SYSTEM_TO_CIRCUIT = {
     hydraulics = "hydraulicFluid"
 }
 
+-- liters of a 100 hp machine of each family, from the real machines of docs/RMS_FLUID_CAPACITY_REFERENCES.md;
+-- maxPower is twice the most powerful of them, the volumes no longer growing past it
 RMS_Fluids.PROFILES = {
-    ROAD_LIGHT =         { engineOil = 6.6,  coolant = 20.2,  transmissionOil = 15.8, hydraulicFluid = 0.0 },
-    ROAD_HEAVY =         { engineOil = 35.0, coolant = 35.0,  transmissionOil = 19.4, hydraulicFluid = 31.8 },
-    TRACTOR_SMALL =      { engineOil = 10.0, coolant = 31.0,  transmissionOil = 28.0, hydraulicFluid = 59.0 },
-    TRACTOR_MEDIUM =     { engineOil = 16.5, coolant = 29.0,  transmissionOil = 47.0, hydraulicFluid = 64.0 },
-    TRACTOR_LARGE =      { engineOil = 36.0, coolant = 32.0,  transmissionOil = 67.0, hydraulicFluid = 109.0 },
-    HARVESTER =          { engineOil = 27.5, coolant = 53.0,  transmissionOil = 21.3, hydraulicFluid = 31.0 },
-    MOWER =              { engineOil = 31.4, coolant = 55.3,  transmissionOil = 5.7,  hydraulicFluid = 95.0 },
-    SPRAYER =            { engineOil = 31.0, coolant = 38.0,  transmissionOil = 10.0, hydraulicFluid = 98.4 },
-    SLURRY_VEHICLE =     { engineOil = 36.0, coolant = 32.0,  transmissionOil = 67.0, hydraulicFluid = 170.0 },
-    ROOT_HARVESTER =     { engineOil = 48.0, coolant = 82.0,  transmissionOil = 8.25, hydraulicFluid = 220.0 },
-    SPECIALTY_HARVESTER = { engineOil = 43.0, coolant = 70.0, transmissionOil = 19.0, hydraulicFluid = 189.0 },
-    FORAGE_HARVESTER =   { engineOil = 99.0, coolant = 130.0, transmissionOil = 16.0, hydraulicFluid = 58.0 },
-    LOADER_COMPACT =     { engineOil = 11.4, coolant = 15.1,  transmissionOil = 39.7, hydraulicFluid = 37.9 },
-    TELEHANDLER =        { engineOil = 15.0, coolant = 28.0,  transmissionOil = 23.0, hydraulicFluid = 115.0 },
-    WHEEL_LOADER =       { engineOil = 21.0, coolant = 54.0,  transmissionOil = 43.0, hydraulicFluid = 97.0 },
-    FORESTRY =           { engineOil = 27.5, coolant = 53.0,  transmissionOil = 4.4,  hydraulicFluid = 300.0 }
+    ROAD_LIGHT =          { engineOil = 5.9,  coolant = 11.0, transmissionOil = 7.1,  hydraulicFluid = 0.0,   maxPower = 950,
+                            exponents = { engineOil = 0.4, coolant = 0.55, transmissionOil = 0.3 } },
+    ROAD_HEAVY =          { engineOil = 11.0, coolant = 15.2, transmissionOil = 4.6,  hydraulicFluid = 9.5,   maxPower = 1220 },
+    TRACTOR =             { engineOil = 9.7,  coolant = 15.0, transmissionOil = 23.0, hydraulicFluid = 34.5,  maxPower = 1384 },
+    HARVESTER =           { engineOil = 10.2, coolant = 16.8, transmissionOil = 6.2,  hydraulicFluid = 17.4,  maxPower = 1580 },
+    FORAGE_HARVESTER =    { engineOil = 11.8, coolant = 23.1, transmissionOil = 3.4,  hydraulicFluid = 13.5,  maxPower = 2312 },
+    ROOT_HARVESTER =      { engineOil = 12.0, coolant = 15.8, transmissionOil = 2.5,  hydraulicFluid = 75.7,  maxPower = 1252 },
+    SPECIALTY_HARVESTER = { engineOil = 11.4, coolant = 18.5, transmissionOil = 5.0,  hydraulicFluid = 49.9,  maxPower = 1180 },
+    SUGARCANE_HARVESTER = { engineOil = 13.6, coolant = 28.4, transmissionOil = 2.9,  hydraulicFluid = 165.4, maxPower = 660 },
+    SPRAYER =             { engineOil = 11.0, coolant = 13.4, transmissionOil = 3.5,  hydraulicFluid = 34.8,  maxPower = 800 },
+    MOWER =               { engineOil = 13.6, coolant = 17.5, transmissionOil = 5.3,  hydraulicFluid = 35.7,  maxPower = 898 },
+    LOADER_COMPACT =      { engineOil = 12.3, coolant = 14.9, transmissionOil = 41.3, hydraulicFluid = 51.8,  maxPower = 192 },
+    TELEHANDLER =         { engineOil = 10.3, coolant = 16.7, transmissionOil = 7.5,  hydraulicFluid = 94.0,  maxPower = 312 },
+    WHEEL_LOADER =        { engineOil = 12.4, coolant = 17.2, transmissionOil = 10.6, hydraulicFluid = 81.7,  maxPower = 666 },
+    FORESTRY =            { engineOil = 15.6, coolant = 19.4, transmissionOil = 6.6,  hydraulicFluid = 123.2, maxPower = 584 }
 }
 
+-- how the volumes follow the engine power, measured on the same real machines
+RMS_Fluids.PROFILE_REFERENCE_POWER = 100
+RMS_Fluids.POWER_EXPONENT = 0.75
+-- a fifth wheel or this empty mass in tonnes makes a road vehicle a heavy truck
+RMS_Fluids.HEAVY_ROAD_VEHICLE_MASS = 5
+RMS_Fluids.KW_TO_HP = 1.35962
+
+-- store category to profile family, the road ones split on the vehicle itself
 RMS_Fluids.CATEGORY_PROFILES = {
-    TRACTORSS = "TRACTOR_SMALL",
-    TRACTORSM = "TRACTOR_MEDIUM",
-    TRACTORSL = "TRACTOR_LARGE",
+    TRACTORSS = "TRACTOR",
+    TRACTORSM = "TRACTOR",
+    TRACTORSL = "TRACTOR",
     HARVESTERS = "HARVESTER",
     MOWERS = "MOWER",
     MOWERVEHICLES = "MOWER",
     COMBINEWINDROWER = "MOWER",
+    BALERSROUND = "MOWER",
+    BALERSSQUARE = "MOWER",
     SPRAYERS = "SPRAYER",
     SPRAYERVEHICLES = "SPRAYER",
-    SLURRYTANKS = "SLURRY_VEHICLE",
-    SLURRYVEHICLES = "SLURRY_VEHICLE",
-    MISC = "TRACTOR_MEDIUM",
-    MISCVEHICLES = "TRACTOR_MEDIUM",
-    MISCDRIVABLES = "TRACTOR_MEDIUM",
-    FORAGEMIXERS = "TRACTOR_MEDIUM",
+    SLURRYTANKS = "TRACTOR",
+    SLURRYVEHICLES = "TRACTOR",
+    MISC = "TRACTOR",
+    MISCVEHICLES = "TRACTOR",
+    MISCDRIVABLES = "TRACTOR",
+    FORAGEMIXERS = "TRACTOR",
     FORAGEHARVESTERS = "FORAGE_HARVESTER",
     BEETVEHICLES = "ROOT_HARVESTER",
     BEETHARVESTERS = "ROOT_HARVESTER",
@@ -89,8 +100,8 @@ RMS_Fluids.CATEGORY_PROFILES = {
     SPINACHHARVESTERS = "SPECIALTY_HARVESTER",
     COTTONVEHICLES = "SPECIALTY_HARVESTER",
     COTTONHARVESTERS = "SPECIALTY_HARVESTER",
-    SUGARCANEVEHICLES = "SPECIALTY_HARVESTER",
-    SUGARCANEHARVESTERS = "SPECIALTY_HARVESTER",
+    SUGARCANEVEHICLES = "SUGARCANE_HARVESTER",
+    SUGARCANEHARVESTERS = "SUGARCANE_HARVESTER",
     RICEHARVESTERS = "SPECIALTY_HARVESTER",
     RICEPLANTERS = "SPECIALTY_HARVESTER",
     PEAHARVESTERS = "SPECIALTY_HARVESTER",
@@ -98,6 +109,7 @@ RMS_Fluids.CATEGORY_PROFILES = {
     GRAPEHARVESTERS = "SPECIALTY_HARVESTER",
     GRAPEVEHICLES = "SPECIALTY_HARVESTER",
     OLIVEVEHICLES = "SPECIALTY_HARVESTER",
+    OLIVEHARVESTERS = "SPECIALTY_HARVESTER",
     SKIDSTEERVEHICLES = "LOADER_COMPACT",
     FORKLIFTS = "LOADER_COMPACT",
     FRONTLOADERVEHICLES = "WHEEL_LOADER",
@@ -109,16 +121,21 @@ RMS_Fluids.CATEGORY_PROFILES = {
     FORESTRYEXCAVATORS = "FORESTRY",
     FORESTRYFORWARDERS = "FORESTRY",
     FORESTRYHARVESTERS = "FORESTRY",
-    CARS = "ROAD_LIGHT",
-    TRANSPORTCARS = "ROAD_LIGHT",
-    TRUCKS = "ROAD_HEAVY"
+    CARS = "ROAD",
+    TRANSPORTCARS = "ROAD",
+    TRUCKS = "ROAD"
 }
+
+-- tractors are the machines whose transmission and hydraulics may share one sump; these brands keep
+-- two separate oils, every other tractor shares one, checked in docs/RMS_FLUID_CAPACITY_REFERENCES.md
+RMS_Fluids.TRACTOR_CATEGORIES = { TRACTORSS = true, TRACTORSM = true, TRACTORSL = true }
+RMS_Fluids.SEPARATE_SUMP_TRACTOR_BRANDS = { FENDT = true, VALTRA = true, LINDNER = true }
+RMS_Fluids.COMMON_SUMP_TEXT_KEY = "rms_fluid_circuit_transmissionHydraulic"
 
 RMS_Fluids.PRODUCTS = {
     MOTOREX_FARMER_PRO_10W40 = {
         brand = "MOTOREX", name = "Farmer Pro SAE 10W/40",
         assetDirectory = "objects/fluids/products/motorexFarmerPro",
-        fillTypeName = "RMS_MOTOREX_FARMER_PRO_10W40",
         densityKgPerLiter = 0.868,
         storePrices = { [5] = 45, [25] = 202, [200] = 1605 },
         isStoreItem = true,
@@ -127,7 +144,6 @@ RMS_Fluids.PRODUCTS = {
     MOTOREX_FARMER_POLY_604 = {
         brand = "MOTOREX", name = "Farmer Poly 604",
         assetDirectory = "objects/fluids/products/motorexFarmerPoly",
-        fillTypeName = "RMS_MOTOREX_FARMER_POLY_604",
         densityKgPerLiter = 0.868,
         storePrices = { [5] = 45, [25] = 208, [200] = 1665 },
         isStoreItem = true,
@@ -136,7 +152,6 @@ RMS_Fluids.PRODUCTS = {
     MOTOREX_COOLANT_M30_RTU = {
         brand = "MOTOREX", name = "Coolant M3.0 Ready To Use",
         assetDirectory = "objects/fluids/products/motorexCoolantM30",
-        fillTypeName = "RMS_MOTOREX_COOLANT_M30_RTU",
         densityKgPerLiter = 1.070,
         storePrices = { [5] = 105, [25] = 394, [200] = 2650 },
         isStoreItem = true,
@@ -145,7 +160,6 @@ RMS_Fluids.PRODUCTS = {
     MOTUL_AGRI_TEKNO_10W40 = {
         brand = "MOTUL", name = "AGRI TEKNO 10W-40",
         assetDirectory = "objects/fluids/products/motulAgriTekno",
-        fillTypeName = "RMS_MOTUL_AGRI_TEKNO_10W40",
         densityKgPerLiter = 0.871,
         storePrices = { [5] = 25, [25] = 104, [200] = 835 },
         isStoreItem = true,
@@ -154,7 +168,6 @@ RMS_Fluids.PRODUCTS = {
     MOTUL_TRH_97 = {
         brand = "MOTUL", name = "TRH 97",
         assetDirectory = "objects/fluids/products/motulTrh97",
-        fillTypeName = "RMS_MOTUL_TRH_97",
         densityKgPerLiter = 0.886,
         storePrices = { [5] = 50, [25] = 229, [200] = 1725 },
         isStoreItem = true,
@@ -163,7 +176,6 @@ RMS_Fluids.PRODUCTS = {
     MOTUL_AUTO_COOL_EXPERT_37C = {
         brand = "MOTUL", name = "AUTO COOL EXPERT -37°C",
         assetDirectory = "objects/fluids/products/motulAutoCoolExpert",
-        fillTypeName = "RMS_MOTUL_AUTO_COOL_EXPERT_37C",
         densityKgPerLiter = 1.076,
         storePrices = { [5] = 30, [25] = 123, [200] = 970 },
         isStoreItem = true,
@@ -172,7 +184,6 @@ RMS_Fluids.PRODUCTS = {
     FUCHS_AGRIFARM_MOT_XLA_10W40 = {
         brand = "FUCHS", name = "Agrifarm MOT X-LA 10W40",
         assetDirectory = "objects/fluids/products/fuchsMotXla",
-        fillTypeName = "RMS_FUCHS_AGRIFARM_MOT_XLA_10W40",
         densityKgPerLiter = 0.859,
         storePrices = { [5] = 35, [25] = 171, [200] = 1435 },
         isStoreItem = true,
@@ -181,7 +192,6 @@ RMS_Fluids.PRODUCTS = {
     FUCHS_AGRIFARM_UTTO_MP = {
         brand = "FUCHS", name = "Agrifarm UTTO MP",
         assetDirectory = "objects/fluids/products/fuchsUttoMp",
-        fillTypeName = "RMS_FUCHS_AGRIFARM_UTTO_MP",
         densityKgPerLiter = 0.870,
         storePrices = { [5] = 25, [25] = 113, [200] = 910 },
         isStoreItem = true,
@@ -190,7 +200,6 @@ RMS_Fluids.PRODUCTS = {
     FUCHS_FRICOFIN_LD50 = {
         brand = "FUCHS", name = "Fricofin LD50",
         assetDirectory = "objects/fluids/products/fuchsFricofinLd50",
-        fillTypeName = "RMS_FUCHS_FRICOFIN_LD50",
         densityKgPerLiter = 1.070,
         storePrices = { [5] = 35, [25] = 110, [200] = 870 },
         isStoreItem = true,
@@ -211,10 +220,25 @@ local function clamp(value, minimum, maximum)
     return math.max(minimum, math.min(value, maximum))
 end
 
+---Returns the circuit holding a circuit's oil, the transmission sump for the hydraulics of a common sump
+-- @param table? spec vehicle spec
+-- @param string circuit circuit key
+-- @return string sumpCircuit circuit whose capacity, level and mixture hold the oil
+local function getSpecSumpCircuit(spec, circuit)
+    if circuit == "hydraulicFluid" and spec ~= nil and spec.hasCommonSump then
+        return "transmissionOil"
+    end
+    return circuit
+end
+
 local function copyCapacities(source)
     local result = {}
     for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-        result[circuit] = math.max(tonumber(source ~= nil and source[circuit]) or 0, 0)
+        local capacity = 0
+        if source ~= nil then
+            capacity = tonumber(source[circuit]) or 0
+        end
+        result[circuit] = math.max(capacity, 0)
     end
     return result
 end
@@ -271,6 +295,122 @@ function RMS_Fluids.getVehicleCategory(vehicle)
     return string.upper(tostring(storeItem.categoryName or ""))
 end
 
+---Returns the advertised power of the engine fitted, the torque curve telling it when the shop leaves it out
+-- @param table vehicle vehicle
+-- @return float power engine power in hp
+function RMS_Fluids.getEnginePower(vehicle)
+    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
+    local motorItems = storeItem ~= nil and storeItem.configurations ~= nil and storeItem.configurations.motor or nil
+    local motorItem = motorItems ~= nil and vehicle.configurations ~= nil and motorItems[vehicle.configurations.motor] or nil
+    if motorItem ~= nil and motorItem.power ~= nil then
+        return motorItem.power
+    end
+
+    return vehicle.spec_motorized.motor.peakMotorPower * RMS_Fluids.KW_TO_HP
+end
+
+---Tells whether a road vehicle is a heavy truck, from its fifth wheel or its empty mass
+-- @param table vehicle vehicle
+-- @return boolean isHeavy true for a heavy truck
+function RMS_Fluids.getIsHeavyRoadVehicle(vehicle)
+    if vehicle:getDefaultMass() >= RMS_Fluids.HEAVY_ROAD_VEHICLE_MASS then
+        return true
+    end
+
+    local attacherJointsSpec = vehicle.spec_attacherJoints
+    if attacherJointsSpec ~= nil then
+        for _, attacherJoint in ipairs(attacherJointsSpec.attacherJoints) do
+            if attacherJoint.jointType == AttacherJoints.JOINTTYPE_SEMITRAILER then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+---Tells whether a tractor's transmission and hydraulics share one sump, which its brand decides
+-- @param table vehicle vehicle
+-- @return boolean hasCommonSump true for one oil serving both
+function RMS_Fluids.getHasCommonSump(vehicle)
+    if not RMS_Fluids.TRACTOR_CATEGORIES[RMS_Fluids.getVehicleCategory(vehicle)] then
+        return false
+    end
+    return not RMS_Fluids.SEPARATE_SUMP_TRACTOR_BRANDS[g_brandManager:getBrandByIndex(vehicle:getBrand()).name]
+end
+
+---Returns the circuit holding a circuit's oil, the transmission sump for the hydraulics of a common sump
+-- @param table? vehicle vehicle
+-- @param string circuit circuit key
+-- @return string sumpCircuit circuit whose capacity, level and mixture hold the oil
+function RMS_Fluids.getSumpCircuit(vehicle, circuit)
+    return getSpecSumpCircuit(vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil, circuit)
+end
+
+---Returns the circuits that hold their own oil, the hydraulics of a common sump drawing on the transmission's
+-- @param table vehicle vehicle
+-- @return table circuits circuit keys in display order
+function RMS_Fluids.getSumpCircuits(vehicle)
+    local circuits = {}
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        if RMS_Fluids.getSumpCircuit(vehicle, circuit) == circuit then
+            table.insert(circuits, circuit)
+        end
+    end
+    return circuits
+end
+
+---Returns the text naming a circuit, the common sump having its own
+-- @param table? vehicle vehicle
+-- @param string circuit circuit key
+-- @param string textKey text naming the circuit on its own
+-- @return string textKey text naming the circuit on this vehicle
+function RMS_Fluids.getCircuitTextKey(vehicle, circuit, textKey)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec ~= nil and spec.hasCommonSump and getSpecSumpCircuit(spec, circuit) == "transmissionOil" then
+        return RMS_Fluids.COMMON_SUMP_TEXT_KEY
+    end
+    return textKey
+end
+
+---Scales the volumes of a profile to an engine power, rounded to the deciliter
+-- @param table profile capacity profile
+-- @param float power engine power in hp
+-- @return table capacities capacity by circuit
+function RMS_Fluids.getProfileCapacities(profile, power)
+    local scale = math.min(power, profile.maxPower) / RMS_Fluids.PROFILE_REFERENCE_POWER
+    local capacities = {}
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        local exponent = profile.exponents ~= nil and profile.exponents[circuit] or RMS_Fluids.POWER_EXPONENT
+        capacities[circuit] = math.floor(profile[circuit] * scale ^ exponent * 10 + 0.5) / 10
+    end
+    return capacities
+end
+
+---Returns the family of machines a vehicle belongs to, the road ones split on the vehicle itself
+-- @param table vehicle vehicle
+-- @return string profileName capacity profile name
+function RMS_Fluids.getProfileName(vehicle)
+    local category = RMS_Fluids.getVehicleCategory(vehicle)
+    local profileName = RMS_Fluids.CATEGORY_PROFILES[category]
+    if profileName == nil then
+        profileName = "TRACTOR"
+        local xmlKey = RMS_Fluids.getVehicleXMLKey(vehicle)
+        local warningKey = xmlKey ~= "" and xmlKey or tostring(vehicle)
+        -- only a machine RMS manages is worth a missing profile warning
+        if not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
+            and not RMS_Fluids._warnedUnknownVehicles[warningKey] then
+            RMS_Fluids._warnedUnknownVehicles[warningKey] = true
+            if Logging ~= nil and Logging.warning ~= nil then
+                Logging.warning("RMS: no fluid capacity profile for category '%s' (%s); using TRACTOR", category, warningKey)
+            end
+        end
+    elseif profileName == "ROAD" then
+        profileName = RMS_Fluids.getIsHeavyRoadVehicle(vehicle) and "ROAD_HEAVY" or "ROAD_LIGHT"
+    end
+    return profileName
+end
+
 ---Resolves configured capacities before disabled systems are zeroed
 -- @param table vehicle vehicle
 -- @return table capacities capacity by circuit
@@ -283,20 +423,8 @@ function RMS_Fluids.resolveCapacities(vehicle)
         return copyCapacities(override), "override:" .. xmlKey
     end
 
-    local category = RMS_Fluids.getVehicleCategory(vehicle)
-    local profileName = RMS_Fluids.CATEGORY_PROFILES[category]
-    if profileName == nil then
-        profileName = "TRACTOR_MEDIUM"
-        local warningKey = xmlKey ~= "" and xmlKey or tostring(vehicle)
-        if not RMS_Fluids._warnedUnknownVehicles[warningKey] then
-            RMS_Fluids._warnedUnknownVehicles[warningKey] = true
-            if Logging ~= nil and Logging.warning ~= nil then
-                Logging.warning("RMS: no fluid capacity profile for category '%s' (%s); using TRACTOR_MEDIUM", category, warningKey)
-            end
-        end
-    end
-
-    return copyCapacities(RMS_Fluids.PROFILES[profileName]), "profile:" .. profileName
+    local profileName = RMS_Fluids.getProfileName(vehicle)
+    return RMS_Fluids.getProfileCapacities(RMS_Fluids.PROFILES[profileName], RMS_Fluids.getEnginePower(vehicle)), "profile:" .. profileName
 end
 
 ---Initializes or restores a vehicle's physical fluid data
@@ -314,6 +442,27 @@ function RMS_Fluids.initializeVehicle(vehicle, forceResolve)
 
     local resolved, source = RMS_Fluids.resolveCapacities(vehicle)
     local hasCurrentSavedCapacities = tonumber(spec.fluidCapacityVersion) == RMS_Fluids.CAPACITY_VERSION
+    spec.hasCommonSump = RMS_Fluids.getHasCommonSump(vehicle)
+    if spec.hasCommonSump then
+        -- the sump holds both oils, and a save from before pours both circuits into it
+        if spec.systems.hydraulics.enabled then
+            resolved.transmissionOil = resolved.transmissionOil + resolved.hydraulicFluid
+        end
+        resolved.hydraulicFluid = 0
+
+        local transmissionCapacity = math.max(tonumber(spec.fluidCapacities.transmissionOil) or 0, 0)
+        local hydraulicCapacity = math.max(tonumber(spec.fluidCapacities.hydraulicFluid) or 0, 0)
+        if not hasCurrentSavedCapacities and hydraulicCapacity > 0 then
+            local transmissionLiters = clamp(spec.transmissionOilLevel or 1, 0, 1) * transmissionCapacity
+            local hydraulicLiters = clamp(spec.hydraulicFluidLevel or 1, 0, 1) * hydraulicCapacity
+            local liters = transmissionLiters + hydraulicLiters
+            spec.transmissionOilLevel = liters / (transmissionCapacity + hydraulicCapacity)
+            if liters > 0 then
+                spec.fluidCompatibility.transmissionOil = (transmissionLiters * clamp(spec.fluidCompatibility.transmissionOil or 1, 0, 1)
+                    + hydraulicLiters * clamp(spec.fluidCompatibility.hydraulicFluid or 1, 0, 1)) / liters
+            end
+        end
+    end
     for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
         local definition = RMS_Fluids.CIRCUITS[circuit]
         local systemData = spec.systems ~= nil and spec.systems[definition.systemKey] or nil
@@ -358,7 +507,19 @@ end
 -- @return float capacity liters
 function RMS_Fluids.getCapacity(vehicle, circuit)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    return math.max(tonumber(spec ~= nil and spec.fluidCapacities ~= nil and spec.fluidCapacities[circuit]) or 0, 0)
+    if spec == nil or spec.fluidCapacities == nil then
+        return 0
+    end
+    return math.max(tonumber(spec.fluidCapacities[getSpecSumpCircuit(spec, circuit)]) or 0, 0)
+end
+
+---Returns the fill level of a circuit from zero to one
+-- @param table vehicle vehicle
+-- @param string circuit circuit key
+-- @return float level fill ratio
+function RMS_Fluids.getLevel(vehicle, circuit)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    return clamp(spec[RMS_Fluids.CIRCUITS[getSpecSumpCircuit(spec, circuit)].levelKey] or 1, 0, 1)
 end
 
 ---Returns the current circuit quantity in liters
@@ -367,6 +528,7 @@ end
 -- @return float liters current liters
 function RMS_Fluids.getLiters(vehicle, circuit)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    circuit = getSpecSumpCircuit(spec, circuit)
     local definition = RMS_Fluids.CIRCUITS[circuit]
     if spec == nil or definition == nil then
         return 0
@@ -388,6 +550,7 @@ end
 -- @return float compatibility compatibility ratio
 function RMS_Fluids.getCompatibility(vehicle, circuit)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    circuit = getSpecSumpCircuit(spec, circuit)
     return clamp(spec ~= nil and spec.fluidCompatibility ~= nil and spec.fluidCompatibility[circuit] or 1, 0, 1)
 end
 
@@ -413,7 +576,7 @@ function RMS_Fluids.reduceLeakDebt(spec, circuit, liters)
     local matching = {}
     local total = 0
     for breakdownId, debt in pairs(spec.fluidLeakLossDebt) do
-        if RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS[breakdownId] == circuit then
+        if getSpecSumpCircuit(spec, RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS[breakdownId]) == circuit then
             local amount = math.max(tonumber(debt) or 0, 0)
             if amount > RMS_Fluids.EPSILON then
                 matching[breakdownId] = amount
@@ -442,6 +605,7 @@ end
 -- @return float accepted accepted liters
 function RMS_Fluids.addLiters(vehicle, circuit, liters, productKey, skipDebtReduction)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    circuit = getSpecSumpCircuit(spec, circuit)
     local definition = RMS_Fluids.CIRCUITS[circuit]
     if spec == nil or definition == nil then
         return 0
@@ -480,6 +644,7 @@ end
 -- @return float removed removed liters
 function RMS_Fluids.removeLiters(vehicle, circuit, liters)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    circuit = getSpecSumpCircuit(spec, circuit)
     local definition = RMS_Fluids.CIRCUITS[circuit]
     if spec == nil or definition == nil then
         return 0
@@ -497,6 +662,7 @@ end
 -- @param string circuit circuit key
 function RMS_Fluids.replaceCircuit(vehicle, circuit)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    circuit = getSpecSumpCircuit(spec, circuit)
     local definition = RMS_Fluids.CIRCUITS[circuit]
     if spec == nil or definition == nil then
         return
@@ -505,7 +671,7 @@ function RMS_Fluids.replaceCircuit(vehicle, circuit)
     spec[definition.levelKey] = RMS_Fluids.getCapacity(vehicle, circuit) > 0 and 1 or 0
     spec.fluidCompatibility[circuit] = 1
     for breakdownId in pairs(spec.fluidLeakLossDebt or {}) do
-        if RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS[breakdownId] == circuit then
+        if getSpecSumpCircuit(spec, RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS[breakdownId]) == circuit then
             spec.fluidLeakLossDebt[breakdownId] = nil
         end
     end
@@ -524,7 +690,7 @@ function RMS_Fluids.getBreakdownLeakRate(breakdownId, breakdown, circuit)
     local definition = RMS_Fluids.CIRCUITS[circuit]
     local registry = RMS_Breakdowns ~= nil and RMS_Breakdowns.BreakdownRegistry or nil
     local breakdownDef = registry ~= nil and registry[breakdownId] or nil
-    local stage = math.max(math.floor(tonumber(breakdown ~= nil and breakdown.stage) or 1), 1)
+    local stage = math.max(math.floor(tonumber(breakdown ~= nil and breakdown.stage or 1) or 1), 1)
     local stageDef = breakdownDef ~= nil and breakdownDef.stages ~= nil and breakdownDef.stages[stage] or nil
     if definition == nil or definition.leakEffectId == nil or stageDef == nil then
         return 0
@@ -658,7 +824,8 @@ function RMS_Fluids.getSystemWearMultiplier(vehicle, systemKey)
     if circuit == nil then
         return 1
     end
-    return RMS_Fluids.getCompatibilityConsequences(RMS_Fluids.getCompatibility(vehicle, circuit))
+    local wearMultiplier = RMS_Fluids.getCompatibilityConsequences(RMS_Fluids.getCompatibility(vehicle, circuit))
+    return wearMultiplier
 end
 
 ---Adds fluid contamination to the existing breakdown hydraulic modifier
@@ -667,8 +834,9 @@ end
 -- @return float modifier effective modifier
 function RMS_Fluids.getHydraulicSpeedModifier(vehicle, breakdownModifier)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    local fluidModifier = tonumber(spec ~= nil and spec.fluidHydraulicSpeedModifier) or 0
-    return math.max((tonumber(breakdownModifier) or 0) + fluidModifier, -1)
+    local fluidModifier = tonumber(spec ~= nil and spec.fluidHydraulicSpeedModifier or 0) or 0
+    local currentModifier = tonumber(breakdownModifier or 0) or 0
+    return math.max(currentModifier + fluidModifier, -1)
 end
 
 ---Serializes leak debts deterministically
@@ -700,8 +868,8 @@ end
 function RMS_Fluids.deserializeLeakDebt(serialized)
     local debts = {}
     for item in string.gmatch(tostring(serialized or ""), "[^;]+") do
-        local breakdownId, value = string.match(item, "^([^:]+):([%+%-%.%d]+)$")
-        value = tonumber(value)
+        local breakdownId, valueStr = string.match(item, "^([^:]+):([%+%-%.%d]+)$")
+        local value = valueStr ~= nil and tonumber(valueStr) or nil
         if breakdownId ~= nil and value ~= nil and value > RMS_Fluids.EPSILON then
             debts[breakdownId] = value
         end
@@ -721,6 +889,7 @@ function RMS_Fluids.getServiceRequirements(vehicle, serviceType, optionOne, opti
     local states = RealisticMechanicalSystems.STATUS
 
     local function append(circuit, mode, liters, breakdownIds)
+        circuit = RMS_Fluids.getSumpCircuit(vehicle, circuit)
         liters = math.max(tonumber(liters) or 0, 0)
         if RMS_Fluids.getCapacity(vehicle, circuit) > 0 and liters > RMS_Fluids.EPSILON then
             table.insert(requirements, {
@@ -733,7 +902,7 @@ function RMS_Fluids.getServiceRequirements(vehicle, serviceType, optionOne, opti
     end
 
     local function appendAll(modeForCircuit)
-        for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        for _, circuit in ipairs(RMS_Fluids.getSumpCircuits(vehicle)) do
             local mode = modeForCircuit(circuit)
             if mode == "replace" then
                 append(circuit, mode, RMS_Fluids.getCapacity(vehicle, circuit))
@@ -748,16 +917,16 @@ function RMS_Fluids.getServiceRequirements(vehicle, serviceType, optionOne, opti
             return "topUp"
         end)
     elseif serviceType == states.MAINTENANCE then
-        if optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.MINIMAL then
-            appendAll(function()
-                return "topUp"
-            end)
-        elseif optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD then
+        if optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD then
             appendAll(function(circuit)
                 return circuit == "engineOil" and "replace" or "topUp"
             end)
-        elseif optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.EXTENDED
-            or optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE then
+        elseif optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.EXTENDED then
+            -- every oil, the coolant lasting several of these services
+            appendAll(function(circuit)
+                return circuit == "coolant" and "topUp" or "replace"
+            end)
+        elseif optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE then
             appendAll(function()
                 return "replace"
             end)
@@ -768,6 +937,7 @@ function RMS_Fluids.getServiceRequirements(vehicle, serviceType, optionOne, opti
         for _, breakdownId in ipairs(selectedBreakdowns or {}) do
             local circuit = RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS[breakdownId]
             if circuit ~= nil then
+                circuit = RMS_Fluids.getSumpCircuit(vehicle, circuit)
                 idsByCircuit[circuit] = idsByCircuit[circuit] or {}
                 table.insert(idsByCircuit[circuit], breakdownId)
             end
@@ -853,8 +1023,8 @@ end
 function RMS_Fluids.deserializeServiceRequirements(serialized)
     local requirements = {}
     for item in string.gmatch(tostring(serialized or ""), "[^;]+") do
-        local circuit, mode, liters, idsString = string.match(item, "^([^|]+)|([^|]+)|([%+%-%.%d]+)|(.*)$")
-        liters = tonumber(liters)
+        local circuit, mode, litersString, idsString = string.match(item, "^([^|]+)|([^|]+)|([%+%-%.%d]+)|(.*)$")
+        local liters = litersString ~= nil and tonumber(litersString) or nil
         if RMS_Fluids.CIRCUITS[circuit] ~= nil
             and (mode == "replace" or mode == "topUp" or mode == "repair")
             and liters ~= nil and liters > RMS_Fluids.EPSILON then

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<placeable type="placeableVehicle">
+    <storeData>
+        <name>$l10n_rms_charger_name</name>
+        <functions>
+            <function>$l10n_rms_charger_function</function>
+        </functions>
+        <image>objects/batteryCharger/store_batteryCharger.dds</image>
+        <price>800</price>
+        <lifetime>600</lifetime>
+        <rotation>0</rotation>
+        <brand>TELWIN</brand>
+        <species>PLACEABLE</species>
+        <category>placeableMisc</category>
+        <brush>
+            <type>placeable</type>
+            <category>buildings</category>
+            <tab>tools</tab>
+        </brush>
+        <vertexBufferMemoryUsage>0</vertexBufferMemoryUsage>
+        <indexBufferMemoryUsage>0</indexBufferMemoryUsage>
+        <textureMemoryUsage>0</textureMemoryUsage>
+        <instanceVertexBufferMemoryUsage>0</instanceVertexBufferMemoryUsage>
+        <instanceIndexBufferMemoryUsage>0</instanceIndexBufferMemoryUsage>
+        <audioMemoryUsage>0</audioMemoryUsage>
+    </storeData>
+    <base>
+        <filename>objects/batteryCharger/batteryCharger_placeable.i3d</filename>
+    </base>
+    <placement useRandomYRotation="false" useManualYRotation="true">
+        <testAreas>
+            <testArea startNode="testAreaStart01" endNode="testAreaEnd01" />
+        </testAreas>
+        <sounds>
+            <place template="smallImp" pitchScale="1.6" />
+        </sounds>
+    </placement>
+    <clearAreas />
+    <leveling />
+    <indoorAreas />
+    <tipOcclusionUpdateAreas />
+    <ai>
+        <updateAreas />
+    </ai>
+    <placeableVehicle>
+        <vehicle xmlFilename="objects/batteryCharger/batteryCharger.xml" linkNode="linkNode" />
+    </placeableVehicle>
+    <i3dMappings>
+        <i3dMapping id="linkNode" node="0&gt;0" />
+        <i3dMapping id="testAreaStart01" node="0&gt;1" />
+        <i3dMapping id="testAreaEnd01" node="0&gt;1|0" />
+    </i3dMappings>
+</placeable>

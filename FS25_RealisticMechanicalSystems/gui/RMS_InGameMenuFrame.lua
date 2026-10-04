@@ -7,6 +7,8 @@ RMS_InGameMenuFrame.MOD_DIR = g_currentModDirectory
 RMS_InGameMenuFrame.PAGE_NAME = "pageRMSFleet"
 RMS_InGameMenuFrame.REFRESH_INTERVAL_MS = 1000
 RMS_InGameMenuFrame.SCREEN_EDGE_SLIDER_MARGIN_X = 0
+-- the page shows up to seven menu buttons, the exclusion one included
+RMS_InGameMenuFrame.MENU_BUTTON_COUNT = 7
 -- sidebar tabs, in display order
 RMS_InGameMenuFrame.SUB_CATEGORY = {
     ACTIVE = 1,
@@ -26,7 +28,8 @@ RMS_InGameMenuFrame.SORT_COLUMN = {
     LAST_MAINTENANCE = "lastMaintenance",
     COST = "cost",
     LEASING_PRICE = "leasingPrice",
-    PRICE = "price"
+    PRICE = "price",
+    REASON = "reason"
 }
 
 local RMS_InGameMenuFrame_mt = Class(RMS_InGameMenuFrame, TabbedMenuFrameElement)
@@ -136,18 +139,14 @@ end
 local function buildVehicleRow(vehicle)
     local conditionValue, isCompleteInspection = vehicle:getLastInspectedCondition()
     local totalCost = getVehicleTotalCost(vehicle)
-    local currentValue = math.min(
-        math.floor(vehicle:getSellPrice()),
-        vehicle:getPrice()
-    )
+    local currentValue = RMS_Utils.getResaleValue(vehicle)
     local isLeased = vehicle.propertyState == 3
     local leasingPriceValue = 0
-    local priceText = g_i18n:formatMoney(currentValue, 0, true, false)
-    local priceValue = currentValue
+    local priceText = currentValue ~= nil and g_i18n:formatMoney(currentValue, 0, true, false) or "-"
+    local priceValue = currentValue or 0
     local lastInspectionDate = vehicle:getLastInspectionDate()
     local lastMaintenanceDate = vehicle:getLastMaintenanceDate()
-    local intervalCurrent = vehicle:getHoursSinceLastMaintenance()
-    local intervalTotal = vehicle:getMaintenanceInterval()
+    local intervalCurrent, intervalTotal = vehicle:getServiceCountdown()
     local operatingHours = getVehicleOperatingHoursValue(vehicle)
     local intervalColor = {1, 1, 1, 1}
     local intervalRatio = intervalTotal ~= nil and intervalTotal > 0 and ((intervalCurrent or 0) / intervalTotal) or 0
@@ -156,8 +155,6 @@ local function buildVehicleRow(vehicle)
         leasingPriceValue = (vehicle.price or vehicle:getPrice()) * (
             EconomyManager.DEFAULT_RUNNING_LEASING_FACTOR + EconomyManager.PER_DAY_LEASING_FACTOR
         )
-        priceText = "-"
-        priceValue = 0
     end
 
     -- interval column turns orange past 80 percent and red past the interval
@@ -209,10 +206,19 @@ local function buildServiceRow(vehicle)
     local optionTwo = spec ~= nil and spec.serviceOptionTwo or nil
     local optionThree = spec ~= nil and spec.serviceOptionThree or false
 
-    if (pendingServicePrice == nil or pendingServicePrice <= 0)
-        and currentState ~= nil
-        and vehicle.getServicePrice ~= nil then
-        pendingServicePrice = vehicle:getServicePrice(currentState, optionOne, optionTwo, optionThree)
+    if pendingServicePrice == nil or pendingServicePrice <= 0 then
+        if currentState == RealisticMechanicalSystems.STATUS.REFILL then
+            pendingServicePrice = RMS_FluidWorkshop.getTransactionPrice(
+                vehicle,
+                currentState,
+                spec.workshopType,
+                optionOne,
+                optionTwo,
+                optionThree
+            )
+        elseif currentState ~= nil and vehicle.getServicePrice ~= nil then
+            pendingServicePrice = vehicle:getServicePrice(currentState, optionOne, optionTwo, optionThree)
+        end
     end
 
     baseRow.procedure = currentState ~= nil and g_i18n:getText(currentState) or ""
@@ -228,18 +234,15 @@ local function buildServiceRow(vehicle)
     return baseRow
 end
 
----Builds one row for a vehicle outside RMS, its condition read from the vanilla damage amount
+---Builds one row for a vehicle outside RMS, its condition read from the vanilla damage amount and its reason stated
 -- @param table vehicle vehicle
 -- @return table row other vehicle row
 local function buildOtherVehicleRow(vehicle)
-    local currentValue = math.min(
-        math.floor(vehicle:getSellPrice()),
-        vehicle:getPrice()
-    )
+    local currentValue = RMS_Utils.getResaleValue(vehicle)
     local isLeased = vehicle.propertyState == 3
     local leasingPriceValue = 0
-    local priceText = g_i18n:formatMoney(currentValue, 0, true, false)
-    local priceValue = currentValue
+    local priceText = currentValue ~= nil and g_i18n:formatMoney(currentValue, 0, true, false) or "-"
+    local priceValue = currentValue or 0
     local operatingHours = getVehicleOperatingHoursValue(vehicle)
     local damageAmount = vehicle.getDamageAmount ~= nil and vehicle:getDamageAmount() or 0
     local conditionValue = math.clamp(1 - damageAmount, 0, 1)
@@ -248,8 +251,6 @@ local function buildOtherVehicleRow(vehicle)
         leasingPriceValue = (vehicle.price or vehicle:getPrice()) * (
             EconomyManager.DEFAULT_RUNNING_LEASING_FACTOR + EconomyManager.PER_DAY_LEASING_FACTOR
         )
-        priceText = "-"
-        priceValue = 0
     end
 
     return {
@@ -264,15 +265,7 @@ local function buildOtherVehicleRow(vehicle)
         condition = string.format("%s%%", g_i18n:formatNumber(conditionValue * 100, 0)),
         conditionValue = conditionValue,
         conditionColor = {RMS_Utils.getConditionColor(conditionValue, true)},
-        interval = "-",
-        intervalValue = -1,
-        intervalColor = {1, 1, 1, 1},
-        lastInspection = "-",
-        lastInspectionValue = -1,
-        lastMaintenance = "-",
-        lastMaintenanceValue = -1,
-        cost = "-",
-        costValue = -1,
+        reason = g_i18n:getText(RealisticMechanicalSystems.getExclusionReason(vehicle)),
         leasingPrice = leasingPriceValue > 0 and g_i18n:formatMoney(leasingPriceValue, 0, true, false) or "-",
         leasingPriceValue = leasingPriceValue,
         price = priceText,
@@ -430,6 +423,13 @@ function RMS_InGameMenuFrame:initialize()
         end
     }
 
+    self.exclusionButtonInfo = {
+        inputAction = InputAction.MENU_EXTRA_1,
+        callback = function()
+            self:onToggleExclusion()
+        end
+    }
+
     self:setMenuButtonInfo({
         self.backButtonInfo,
         self.prevPageButtonInfo,
@@ -524,6 +524,9 @@ function RMS_InGameMenuFrame:updateSubCategoryPages(subCategoryIndex)
     if self.subCategoryPages ~= nil then
         for index, page in pairs(self.subCategoryPages) do
             page:setVisible(index == state)
+            if index == state then
+                RMS_Utils.resetScrollingTexts(page)
+            end
         end
     end
 
@@ -610,6 +613,9 @@ function RMS_InGameMenuFrame:onFrameOpen()
     self.refreshTimerMs = 0
     self:updateBalanceDisplay()
     self:reloadRows()
+    local activePage = self.subCategoryPages ~= nil
+        and self.subCategoryPages[self:getCurrentSubCategory()] or nil
+    RMS_Utils.resetScrollingTexts(activePage)
     self:updateScreenEdgeSliders()
 end
 
@@ -654,7 +660,7 @@ function RMS_InGameMenuFrame:getSelectedVehicle()
     return row ~= nil and row.vehicle or nil
 end
 
----Rebuilds the menu buttons, the log button needing an RMS vehicle and the sell button a leased one
+---Rebuilds the menu buttons, the log button needing an RMS vehicle, the sell button a leased one, and the exclusion button a machine the player may include or exclude
 function RMS_InGameMenuFrame:updateActionButtons()
     local currentSection = self:getCurrentSubCategory()
     if currentSection == RMS_InGameMenuFrame.SUB_CATEGORY.SETTINGS then
@@ -690,14 +696,25 @@ function RMS_InGameMenuFrame:updateActionButtons()
         self.maintenanceLogButtonInfo.disabled = not hasRMSVehicle
     end
 
-    self:setMenuButtonInfo({
+    local buttons = {
         self.backButtonInfo,
         self.prevPageButtonInfo,
         self.nextPageButtonInfo,
         self.maintenanceLogButtonInfo,
         self.enterVehicleButtonInfo,
         self.sellVehicleButtonInfo
-    })
+    }
+
+    -- only a reversible choice gets the button, electric machines never do
+    local spec = hasVehicle and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec ~= nil and not spec.isExcludedByDefault then
+        local isExcluding = not spec.isExcludedVehicle
+        self.exclusionButtonInfo.text = g_i18n:getText(isExcluding and "rms_ingame_menu_exclude" or "rms_ingame_menu_include")
+        self.exclusionButtonInfo.disabled = not RealisticMechanicalSystems.getCanSetUserExclusion(vehicle, isExcluding)
+        table.insert(buttons, self.exclusionButtonInfo)
+    end
+
+    self:setMenuButtonInfo(buttons)
     self:setMenuButtonInfoDirty()
 end
 
@@ -907,6 +924,8 @@ function RMS_InGameMenuFrame:getSortValue(row)
         return row.leasingPriceValue or 0
     elseif col == RMS_InGameMenuFrame.SORT_COLUMN.PRICE then
         return row.priceValue or 0
+    elseif col == RMS_InGameMenuFrame.SORT_COLUMN.REASON then
+        return safeLower(row.reason)
     end
 
     return safeLower(row.vehicleName)
@@ -972,7 +991,8 @@ function RMS_InGameMenuFrame:reloadRows()
         [RealisticMechanicalSystems.STATUS.MAINTENANCE] = true,
         [RealisticMechanicalSystems.STATUS.REPAIR] = true,
         [RealisticMechanicalSystems.STATUS.OVERHAUL] = true,
-        [RealisticMechanicalSystems.STATUS.REFILL] = true
+        [RealisticMechanicalSystems.STATUS.REFILL] = true,
+        [RealisticMechanicalSystems.STATUS.BODYWORK] = true
     }
 
     self:updateBalanceDisplay()
@@ -1135,6 +1155,12 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(_list, _section, index
         return
     end
 
+    local rowVehicleId = row.vehicle ~= nil and row.vehicle.uniqueId or nil
+    if cell.rmsScrollVehicleId ~= rowVehicleId then
+        cell.rmsScrollVehicleId = rowVehicleId
+        RMS_Utils.resetScrollingTexts(cell)
+    end
+
     local vehicleNameText = cell:getAttribute("vehicleNameText")
     local vehicleTypeText = cell:getAttribute("vehicleTypeText")
     local ageText = cell:getAttribute("ageText")
@@ -1150,6 +1176,7 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(_list, _section, index
     local remainingTimeText = cell:getAttribute("remainingTimeText")
     local finishTimeText = cell:getAttribute("finishTimeText")
     local serviceCostText = cell:getAttribute("serviceCostText")
+    local reasonText = cell:getAttribute("reasonText")
     local conditionColor = row.conditionColor or {1, 1, 1, 1}
     local intervalColor = row.intervalColor or {1, 1, 1, 1}
     local vehicleIcon = cell:getDescendantByName("vehicleIcon")
@@ -1223,6 +1250,10 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(_list, _section, index
     if priceText ~= nil then
         priceText:setText(row.price or "")
         priceText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
+    end
+    if reasonText ~= nil then
+        reasonText:setText(row.reason or "")
+        reasonText:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
     end
 end
 
@@ -1366,6 +1397,20 @@ end
 function RMS_InGameMenuFrame:onClickPriceHeader(element)
     self:playSample(GuiSoundPlayer.SOUND_SAMPLES.CLICK)
     self:selectSortColumn(RMS_InGameMenuFrame.SORT_COLUMN.PRICE)
+end
+
+---Sorts on the exclusion reason column
+-- @param table element clicked header element
+function RMS_InGameMenuFrame:onClickReasonHeader(element)
+    self:playSample(GuiSoundPlayer.SOUND_SAMPLES.CLICK)
+    self:selectSortColumn(RMS_InGameMenuFrame.SORT_COLUMN.REASON)
+end
+
+---Includes the selected machine in RMS or excludes it, the choice going through the server
+function RMS_InGameMenuFrame:onToggleExclusion()
+    local vehicle = self:getSelectedVehicle()
+    RMS_VehicleExclusionEvent.request(vehicle, not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle)
+    self:reloadRows()
 end
 
 ---Closes the menu and enters the selected vehicle when it can be entered from the menu

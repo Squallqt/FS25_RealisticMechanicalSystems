@@ -10,6 +10,10 @@ local getColdEngineStress = RealisticMechanicalSystems.getColdEngineStress
 local isMissionVehicle = RealisticMechanicalSystems.isMissionVehicle
 local sanitizeNumber = RealisticMechanicalSystems.sanitizeNumber
 
+local function getPassiveWearRate(wearRate, isUnderRoof)
+    return wearRate * (isUnderRoof and 0.0 or 0.05)
+end
+
 ---Resolves a system name to the key actually present in the spec, matching case insensitively
 -- @param table? spec vehicle spec
 -- @param string systemName system name
@@ -68,14 +72,21 @@ local function ensureSystemData(spec, systemName)
     return systemData
 end
 
----Returns the extra wear caused by a service level below its expiry threshold
--- @param float? serviceLevel remaining service level
+-- level field of the service clock covering each system
+local SERVICE_LEVEL_KEY_BY_SYSTEM = {}
+for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
+    for _, systemKey in ipairs(clock.systems) do
+        SERVICE_LEVEL_KEY_BY_SYSTEM[systemKey] = clock.levelKey
+    end
+end
+
+---Returns the extra wear the expired service clock of a system causes
+-- @param table spec vehicle spec
+-- @param string systemKey system covered by the clock
 -- @param float? serviceMultiplier system sensitivity to an expired service
 -- @return float factor additional wear, 0 above the threshold
-local function getExpiredServiceFactor(serviceLevel, serviceMultiplier)
-    if serviceLevel == nil then
-        return 0.0
-    end
+local function getExpiredServiceFactor(spec, systemKey, serviceMultiplier)
+    local serviceLevel = spec[SERVICE_LEVEL_KEY_BY_SYSTEM[systemKey]]
 
     if serviceLevel < RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD then
         local severity = math.clamp(
@@ -90,7 +101,7 @@ local function getExpiredServiceFactor(serviceLevel, serviceMultiplier)
     return 0.0
 end
 
----Consumes the service level, faster under load and slower while parked, under a roof most of all
+---Runs down the service clocks, faster under load and slower while parked, under a roof most of all
 -- @param float dt time since last call in ms
 function RealisticMechanicalSystems:updateServiceLevel(dt)
     local spec = self.spec_RealisticMechanicalSystems
@@ -103,17 +114,15 @@ function RealisticMechanicalSystems:updateServiceLevel(dt)
     if self.getIsMotorStarted ~= nil and self:getIsMotorStarted() then
         wearRate = wearRate * (1 + spec.extraServiceWear) 
     else
-        if spec.isUnderRoof then 
-            wearRate = wearRate * RMS_Config.CORE.UNDER_ROOF_DOWNTIME_MULTIPLIER 
-        else
-            wearRate = wearRate * RMS_Config.CORE.DOWNTIME_MULTIPLIER
-        end
+        wearRate = getPassiveWearRate(wearRate, spec.isUnderRoof)
     end  
 
     wearRate = wearRate / spec.reliability
-    
-    local newLevel = spec.serviceLevel -  wearRate / (60 * 60 * 1000) * dt
-    spec.serviceLevel = math.max(newLevel, 0)
+
+    for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
+        local newLevel = spec[clock.levelKey] - wearRate / clock.intervalFactor / (60 * 60 * 1000) * dt
+        spec[clock.levelKey] = math.max(newLevel, 0)
+    end
 
     if RMS_Utils.getIsDebugDataWanted(self) then
         if spec.debugData == nil then
@@ -178,9 +187,7 @@ function RealisticMechanicalSystems:updateSystemConditionAndStress(dt, systemNam
         debugFactors.fluidCompatibilityMultiplier = fluidCompatibilityMultiplier
     end
 
-    local stressMultipliers = RMS_Config.CORE.SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS or {}
-    local systemStressMultiplier = stressMultipliers[systemName] or 1.0
-    local globalStressMultiplier = math.max(tonumber(RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER) or 1.0, 0.0)
+    local systemStressMultiplier = RMS_Config.CORE.SYSTEM_WEIGHTS[systemName] ~= nil and 10.0 or 1.0
     local dtMultiplier = RMS_Config.CORE.BASE_SYSTEMS_WEAR / (60 * 60 * 1000) * dt
 
     local conditionToRemove = wearRate * dtMultiplier
@@ -189,7 +196,7 @@ function RealisticMechanicalSystems:updateSystemConditionAndStress(dt, systemNam
 
     local stressToAdd = 0
     if not isMissionVehicle(self) then
-        stressToAdd = math.max(wearRate - baseWearRate, 0) * dtMultiplier * systemStressMultiplier * globalStressMultiplier
+        stressToAdd = math.max(wearRate - baseWearRate, 0) * dtMultiplier * systemStressMultiplier
     end
     systemData.stress = math.max((systemData.stress or 0) + stressToAdd, 0)
 
@@ -249,7 +256,7 @@ function RealisticMechanicalSystems:applyInstantDamageToSystem(system, damageAmo
     spec.systems[systemKey].condition = math.clamp((spec.systems[systemKey].condition or 1.0) - dmg, 0.001, 1.0)
     local stressToAdd = 0
     if not isMissionVehicle(self) then
-        stressToAdd = dmg * (RMS_Config.CORE.SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS[systemKey] or 1)
+        stressToAdd = dmg * (RMS_Config.CORE.SYSTEM_WEIGHTS[systemKey] ~= nil and 10.0 or 1.0)
     end
     local stressCap = math.max(spec.systems[systemKey].condition or 0, RMS_Config.CORE.CONDITION_EFFECTIVE_FLOOR or 0)
     spec.systems[systemKey].stress = math.clamp((spec.systems[systemKey].stress or 0) + stressToAdd, 0, stressCap)
@@ -337,14 +344,10 @@ function RealisticMechanicalSystems:updateEngineSystem(dt)
             wearRate = wearRate * C.MOTOR_IDLING_MULTIPLIER
         end
 
-        expiredServiceFactor = getExpiredServiceFactor(spec.serviceLevel, C.SERVICE_EXPIRED_MULTIPLIER)
+        expiredServiceFactor = getExpiredServiceFactor(spec, "engine", C.SERVICE_EXPIRED_MULTIPLIER)
         wearRate = wearRate + expiredServiceFactor
     else
-        if spec.isUnderRoof then 
-            wearRate = wearRate * RMS_Config.CORE.UNDER_ROOF_DOWNTIME_MULTIPLIER 
-        else
-            wearRate = wearRate * RMS_Config.CORE.DOWNTIME_MULTIPLIER
-        end
+        wearRate = getPassiveWearRate(wearRate, spec.isUnderRoof)
     end
 
     -- engine oil shortage factor
@@ -420,9 +423,7 @@ function RealisticMechanicalSystems:updateTransmissionSystem(dt)
         local normalizedCVTdamage = currentCVTdamage / 100
         local normalizedDelta = cvtDamageDelta / 100
 
-        local systemStressMultiplier = RMS_Config.CORE.SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS[systemKey] or 1.0
-        local globalStressMultiplier = math.max(tonumber(RMS_Config.CORE.SYSTEM_STRESS_GLOBAL_MULTIPLIER) or 1.0, 0.001)
-        local divisor = math.max(systemStressMultiplier * globalStressMultiplier, 0.001)
+        local divisor = RMS_Config.CORE.SYSTEM_WEIGHTS[systemKey] ~= nil and 10.0 or 1.0
 
         local currentCondition = math.clamp(tonumber(systemData.condition) or 1.0, 0.001, 1.0)
         local conditionToRemove = normalizedDelta / divisor
@@ -552,7 +553,7 @@ function RealisticMechanicalSystems:updateTransmissionSystem(dt)
         end
 
         -- service
-        expiredServiceFactor = getExpiredServiceFactor(spec.serviceLevel, C.SERVICE_EXPIRED_MULTIPLIER or RMS_Config.CORE.ENGINE_FACTOR_DATA.SERVICE_EXPIRED_MULTIPLIER)
+        expiredServiceFactor = getExpiredServiceFactor(spec, "transmission", C.SERVICE_EXPIRED_MULTIPLIER)
         wearRate = wearRate + expiredServiceFactor
     else
         if hasCVTAddon(self) and not isMissionVehicle(self) then
@@ -560,11 +561,7 @@ function RealisticMechanicalSystems:updateTransmissionSystem(dt)
             spec_CVTaddon.CVTdamage = systemData.stress / math.max(systemData.condition, 0.001) * 100
         end
 
-        if spec.isUnderRoof then 
-            wearRate = wearRate * RMS_Config.CORE.UNDER_ROOF_DOWNTIME_MULTIPLIER 
-        else
-            wearRate = wearRate * RMS_Config.CORE.DOWNTIME_MULTIPLIER
-        end
+        wearRate = getPassiveWearRate(wearRate, spec.isUnderRoof)
     end
 
     -- transmission oil shortage factor
@@ -646,14 +643,14 @@ function RealisticMechanicalSystems:updateHydraulicsSystem(dt)
             wearRate = wearRate + hotOilFactor
         end
 
-        expiredServiceFactor = getExpiredServiceFactor(spec.serviceLevel, C.SERVICE_EXPIRED_MULTIPLIER)
+        expiredServiceFactor = getExpiredServiceFactor(spec, "hydraulics", C.SERVICE_EXPIRED_MULTIPLIER)
         wearRate = wearRate + expiredServiceFactor
     end
 
     -- hydraulic fluid shortage factor
     local lowFluidFactor = 0
     if self.getIsMotorStarted ~= nil and self:getIsMotorStarted() then
-        lowFluidFactor = RMS_Utils.getFluidShortage(spec.hydraulicFluidLevel) * RMS_Config.FLUIDS.LOW_LEVEL_WEAR_MULTIPLIER
+        lowFluidFactor = RMS_Utils.getFluidShortage(RMS_Fluids.getLevel(self, "hydraulicFluid")) * RMS_Config.FLUIDS.LOW_LEVEL_WEAR_MULTIPLIER
         wearRate = wearRate + lowFluidFactor
     end
 
@@ -672,7 +669,8 @@ function RealisticMechanicalSystems:updateHydraulicsSystem(dt)
     })
 end
 
----Wears the PTO while active from its load and an expired service, recording engagement cycles for fault selection
+---Wears the PTO while active from its load, a raised implement and an expired service, and takes the
+-- clutch wear and the shock of its engagements at once
 -- @param float dt time since last call in ms
 function RealisticMechanicalSystems:updatePtoSystem(dt)
     local spec = self.spec_RealisticMechanicalSystems
@@ -686,7 +684,9 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
     local wearRate = 0
     local expiredServiceFactor = 0
     local ptoLoadFactor = 0
-    local ptoEngagementFactor = math.max(tonumber(spec.ptoEngagementPulseCount) or 0, 0)
+    local ptoRaisedFactor = 0
+    local engagementDamage = math.max(tonumber(spec.ptoEngagementDamage) or 0, 0)
+    spec.ptoEngagementDamage = 0
 
     if self.getIsMotorStarted ~= nil and self:getIsMotorStarted() and spec.isPtoActive then
         wearRate = 1
@@ -696,15 +696,31 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
             wearRate = wearRate + ptoLoadFactor
         end
 
-        expiredServiceFactor = getExpiredServiceFactor(spec.serviceLevel, C.SERVICE_EXPIRED_MULTIPLIER)
+        -- the worker keeps the PTO turning through its headland turns, the player has no say in it
+        if spec.isPtoImplementRaised and not self:getIsAIActive() then
+            ptoRaisedFactor = C.RAISED_IMPLEMENT_MULTIPLIER
+            wearRate = wearRate + ptoRaisedFactor
+        end
+
+        expiredServiceFactor = getExpiredServiceFactor(spec, "pto", C.SERVICE_EXPIRED_MULTIPLIER)
         wearRate = wearRate + expiredServiceFactor
+    end
+
+    -- the tip waits past a headland turn, so it only answers a PTO left turning with the implement up
+    spec.ptoRaisedTutorialTimer = math.clamp((tonumber(spec.ptoRaisedTutorialTimer) or 0) + (ptoRaisedFactor > 0 and dt or -dt),
+        0, C.RAISED_TUTORIAL_MS)
+    spec.ptoRaisedTooLong = spec.ptoRaisedTutorialTimer >= C.RAISED_TUTORIAL_MS
+
+    if engagementDamage > 0 then
+        self:applyInstantDamageToSystem(systemData.name, engagementDamage, "ptoEngagementFactor")
     end
 
     self:updateSystemConditionAndStress(dt, systemKey, wearRate, {
         isPtoActive = spec.isPtoActive == true,
         expiredServiceFactor = expiredServiceFactor,
         ptoLoadFactor = ptoLoadFactor,
-        ptoEngagementFactor = ptoEngagementFactor,
+        ptoRaisedFactor = ptoRaisedFactor,
+        ptoEngagementDamage = engagementDamage,
         ptoTorque = spec.ptoTorque,
         ptoRpm = spec.ptoRpm,
         ptoPower = spec.ptoPower,
@@ -713,7 +729,6 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
         ptoNativeCapacityTorque = spec.ptoNativeCapacityTorque,
         ptoEngagementCount = spec.ptoEngagementCount
     })
-    spec.ptoEngagementPulseCount = 0
 end
 
 ---Wears the cooling system on sustained high cooling, overheating, cold shock and an expired service
@@ -773,14 +788,10 @@ function RealisticMechanicalSystems:updateCoolingSystem(dt)
         end
 
         -- service factor
-        expiredServiceFactor = getExpiredServiceFactor(spec.serviceLevel, C.SERVICE_EXPIRED_MULTIPLIER)
+        expiredServiceFactor = getExpiredServiceFactor(spec, "cooling", C.SERVICE_EXPIRED_MULTIPLIER)
         wearRate = wearRate + expiredServiceFactor
     else
-        if spec.isUnderRoof then 
-            wearRate = wearRate * RMS_Config.CORE.UNDER_ROOF_DOWNTIME_MULTIPLIER 
-        else
-            wearRate = wearRate * RMS_Config.CORE.DOWNTIME_MULTIPLIER
-        end
+        wearRate = getPassiveWearRate(wearRate, spec.isUnderRoof)
     end
 
     self:updateSystemConditionAndStress(dt, systemKey, wearRate, {
@@ -805,7 +816,7 @@ function RealisticMechanicalSystems:updateElectricalSystem(dt)
     local vibSignal = vibState.signal
     local vibRaw = vibState.raw
     local vibFieldMultiplier = vibState.fieldMultiplier
-    local expiredServiceFactor, weatherExposureFactor, lightsFactor, overheatFactor, crankingStressFactor, vibFactor = 0, 0, 0, 0, 0, 0
+    local weatherExposureFactor, lightsFactor, overheatFactor, crankingStressFactor, vibFactor = 0, 0, 0, 0, 0
     local C = RMS_Config.CORE.ELECTRICAL_FACTOR_DATA
     local wearRate = 1.0
 
@@ -860,10 +871,6 @@ function RealisticMechanicalSystems:updateElectricalSystem(dt)
     end
 
     if self:getIsMotorStarted() and not spec.isElectricVehicle then
-        -- service factor
-        expiredServiceFactor = getExpiredServiceFactor(spec.serviceLevel, C.SERVICE_EXPIRED_MULTIPLIER)
-        wearRate = wearRate + expiredServiceFactor
-
         -- overheating engine compartment
         if engineTemperature > C.OVERHEAT_FACTOR_THRESHOLD then
             overheatFactor = RMS_Utils.calculateQuadraticMultiplier(engineTemperature, C.OVERHEAT_FACTOR_THRESHOLD, false, 120)
@@ -885,15 +892,10 @@ function RealisticMechanicalSystems:updateElectricalSystem(dt)
         end
 
     elseif lightsFactor == 0 and crankingStressFactor == 0 then 
-        if spec.isUnderRoof then 
-            wearRate = wearRate * RMS_Config.CORE.UNDER_ROOF_DOWNTIME_MULTIPLIER 
-        else
-            wearRate = wearRate * RMS_Config.CORE.DOWNTIME_MULTIPLIER 
-        end
+        wearRate = getPassiveWearRate(wearRate, spec.isUnderRoof)
     end
 
     self:updateSystemConditionAndStress(dt, systemKey, wearRate, {
-        expiredServiceFactor = expiredServiceFactor,
         crankingStressFactor = crankingStressFactor,
         crankingTimer = systemData.crankingTimer or 0,
         weatherExposureFactor = weatherExposureFactor,
@@ -913,7 +915,7 @@ function RealisticMechanicalSystems:updateChassisSystem(dt)
     local spec = self.spec_RealisticMechanicalSystems
     local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, spec.systems.chassis.name)
     local systemData = spec.systems.chassis
-    local expiredServiceFactor, lubricationFactor, vibFactor, steerLoadFactor = 0, 0, 0, 0
+    local lubricationFactor, vibFactor, steerLoadFactor = 0, 0, 0
     local vibState = spec.chassisVibState
     local steerState = spec.chassisSteerState
     local brakeState = spec.chassisBrakeState
@@ -1004,22 +1006,11 @@ function RealisticMechanicalSystems:updateChassisSystem(dt)
                 wearRate = wearRate + steerLoadFactor
             end
         end
-
-        -- service
-        if not spec.isElectricVehicle then
-            expiredServiceFactor = getExpiredServiceFactor(spec.serviceLevel, C.SERVICE_EXPIRED_MULTIPLIER)
-            wearRate = wearRate + expiredServiceFactor
-        end
     else
-        if spec.isUnderRoof then 
-            wearRate = wearRate * RMS_Config.CORE.UNDER_ROOF_DOWNTIME_MULTIPLIER 
-        else
-            wearRate = wearRate * RMS_Config.CORE.DOWNTIME_MULTIPLIER 
-        end
+        wearRate = getPassiveWearRate(wearRate, spec.isUnderRoof)
     end
 
     self:updateSystemConditionAndStress(dt, systemKey, wearRate, {
-        expiredServiceFactor = expiredServiceFactor,
         lubricationFactor = lubricationFactor,
         vibFactor = vibFactor,
         vibSignal = vibSignal,
@@ -1108,14 +1099,10 @@ function RealisticMechanicalSystems:updateFuelSystem(dt)
         end
 
         -- service
-        expiredServiceFactor = getExpiredServiceFactor(spec.serviceLevel, C.SERVICE_EXPIRED_MULTIPLIER)
+        expiredServiceFactor = getExpiredServiceFactor(spec, "fuel", C.SERVICE_EXPIRED_MULTIPLIER)
         wearRate = wearRate + expiredServiceFactor
     else
-        if spec.isUnderRoof then 
-            wearRate = wearRate * RMS_Config.CORE.UNDER_ROOF_DOWNTIME_MULTIPLIER 
-        else
-            wearRate = wearRate * RMS_Config.CORE.DOWNTIME_MULTIPLIER
-        end
+        wearRate = getPassiveWearRate(wearRate, spec.isUnderRoof)
     end
 
     self:updateSystemConditionAndStress(dt, systemKey, wearRate, {

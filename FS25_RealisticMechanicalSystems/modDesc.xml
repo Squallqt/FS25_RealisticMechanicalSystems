@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="113">
     <author>Squallqt</author>
-    <version>0.10.0.0</version>
+    <version>0.11.0.0</version>
     <title>
         <en>Realistic Mechanical Systems</en>
         <de>Realistische Mechaniksysteme</de>
@@ -14,23 +14,26 @@ Each vehicle is built from up to 8 individual systems: engine, transmission, hyd
 
 WEAR AND STRESS
 - Condition falls about 1% per operating hour under normal use, far faster under abuse, and each system has its own wear factors
-- Stress builds only through mistakes: overload, overheating, cold running under load, wheel slip, oversized implements
+- Stress builds through overload, overheating, cold running under load, wheel slip, oversized implements and other operating or environmental factors
 - A breakdown becomes likely as stress approaches condition, and low condition makes it likely to strike at its worst stage straight away
-- Overdue service accelerates wear across every system, the engine most of all
+- Overdue service accelerates wear in the systems covered by the overdue fluid, the engine most of all
 
 BREAKDOWNS
 - 36 breakdowns spread across the 8 systems, each in four stages from Minor to Critical
-- The type is not random: the mod tracks which wear factors you trigger most and picks the failure your habits earned
-- Stage 1 is silent and shows only through symptoms, RPM fluctuations, coloured exhaust smoke, knocking, whistling; dashboard indicators light from stage 2
+- The type is drawn with weights based on the wear factors that have been active most
+- Early faults show through RPM fluctuations, coloured exhaust smoke, knocking and whistling; dashboard warnings usually appear from stage 2, though some faults can warn from stage 1
 - Old machines also degrade permanently, losing engine power, transmission bite, battery performance, and cooling efficiency
 
 WORKSHOP
-- Four procedures, Inspection, Maintenance, Repair, and Overhaul, each with options that change price, duration, and quality
+- Inspection, Maintenance, Repair, and Overhaul each offer options that change price, duration, and quality
+- Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. Dealer colour changes use the RMS repaint price
 - Part quality from Used to Premium: cheap parts are more often defective and bring the same fault back
-- Everything takes real time, and the workshop closes overnight, so planning when a machine goes in matters
-- A full defectoscopy reveals hidden faults, defective parts, and exact condition values
+- Dealer warranty covers standard repairs with original parts and required fluids for owned vehicles under 12 months and 20 operating hours
+- By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make maintenance and repair, repainting, or overhauls instant
+- A full defectoscopy can reveal hidden faults and defective repair parts, and shows exact condition values; some faults can remain undetected
 
 DAILY CARE
+- Telwin Doctor Charge 155 Connect on a trolley: connect it near a vehicle to recharge its battery or select START for starting aid; charging follows the game's time speed and resumes when the save is loaded
 - Hold R near a vehicle for a pre-shift check of fluids, radiator, and air filter
 - Air Blower clears the cooling pack and removes loose dust from the air filter; Grease Gun restores lubrication on machines that need it
 - An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
@@ -41,11 +44,64 @@ SIMULATION
 - Automatic temperature-based diesel preheating with its own glow-plug breakdown
 - Exhaust smoke driven by production year, emission profile, engine wear, load, temperature, prolonged idling and the type of active fault: black soot, blue oil or white unburnt fuel
 - Drivetrain management on tractors: 2WD / 4WD / AUTO modes, differential locks, and a parking brake
-- Reliability and maintainability per brand and production year, shown in the shop
+- Reliability by brand and model; production year also affects maintainability on applicable vehicles. Both ratings are shown in the shop
 - Multiplayer and dedicated server, 27 languages
 - Electric vehicles are not supported yet
 
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.11.0.0:
+- Added the Telwin Doctor Charge 155 Connect on a trolley for 800 €: recharge a battery while you work or select START to help start a vehicle. Charging follows the game's time speed
+- Removed the System Stress Rate setting and its console command
+- Removed the Passive Wear setting
+- Removed the Smoke Intensity setting
+- Removed the Plume Detail setting
+- Reworked the exhaust smoke into a realistic plume that rises higher under load and drifts with the wind
+- Added white exhaust vapour in cold and damp weather
+- Removed the Park Vehicle During Maintenance setting
+- Removed the Warranty setting; dealer warranty now covers standard repairs with original parts and required fluids under 12 months and 20 hours
+- Removed the Procedure Duration Multiplier setting
+- Removed the Procedure Price Multiplier setting
+- Removed the Clogging Speed setting; radiator and air filter clogging now follow the game's dirt speed independently of the RMS service interval
+- Removed the Differential Lock Release Speed setting; the lock now releases above 10 km/h
+- Removed the Pre-shift Check Duration setting; the check now lasts as long as its sound
+- Removed the Grease Consumption Rate setting; grease now drops 5% per operating hour
+- Removed the AI Overload and Overheat Control, Stop AI on Critical Overload, Contract Vehicle Protection, AI Sensitivity and AI Minimum Speed settings; every AI worker now drives with care on its own
+- Added Repainting to the workshop: repair paint damage or choose new colours, including through dealer configuration at the RMS repaint price
+- Added separate instant completion settings for maintenance and repair, repainting, and mechanical overhauls
+- Fixed the issue preventing vehicles from starting with the GIANTS Ignition Key
+- Reworked overhauls for predictable results: Partial and Standard bring systems into good condition; Full restores them to like new
+- Added compatibility with FS25_mobileWorkshop: inspections and repairs can now be started from its mobile workshop
+- Improved the workshop, inspection report, and maintenance log interfaces
+- Simplified maintenance deadlines, now shown in whole hours
+- Fixed double charges when using farm-owned fluids for workshop top-ups
+- Fixed some modded trucks and machines being ignored by RMS
+- Fixed an empty hydraulic oil circuit that could never be refilled on some cars and utility vehicles; they no longer have hydraulics in RMS
+- Fixed a full overhaul being undone when the save was reloaded
+- Fixed parked machines missing from the RMS fleet list for players joining a server
+- Fixed some modded cars clogging their radiator and air filter on the road
+- Fixed grease and fluid leaks draining far too fast with the Ingame Time Operating Hours mod
+- Removed RMS Reliability and Ease of Maintenance ratings from the shop for machines RMS does not track
+- Added to the Other Vehicles tab why each vehicle is left out of RMS, with a button to include or exclude it
+- Rebalanced fluid capacities to match the size of each machine's engine
+- Added a line-by-line bill and the cost per operating hour to the Technical Record
+- Added a single transmission and hydraulic oil to most tractors, as in reality; Fendt, Valtra and Lindner keep two separate oils
+- Added a maintenance schedule set on the Maintenance Interval: every service changes the engine oil, every second one the transmission and hydraulic oil, every tenth one the coolant; the vehicle info box names the maintenance that is due, the workshop opens on it, and each level says what it changes
+- Removed the Minimal maintenance; the workshop Top up refills the fluids
+- Fixed fluid barrels arriving empty on maps and mod lists that add many products; barrels no longer depend on the game's fill types. Fluid containers already present in a save will disappear after the update; new ones must be purchased.
+- Fixed the vehicle value in the RMS workshop showing 10% more than selling from the menus pays; it now matches the RMS fleet list
+- Reworked workshop prices: inspections, maintenance, repairs, overhauls and repainting now cost real dealer prices sized on the machine and scaled by the Economic Difficulty, instead of a share of its price and age; the maintenance bill shows labour and filters
+- Reworked the vehicle value: it now falls with the hours run against the Vehicle Lifespan, then with age; an overhaul restores condition but does not reset age or operating hours
+- Changed the default Maintenance Interval from 5 to 10 hours
+- Fixed the noises of worn bearings, vibrations and seized wheels no longer changing with speed above 15 km/h
+- Fixed the pre-shift check sound not playing on a parked machine
+- Fixed the breakdown noises of an idling machine going unheard by other players on a server
+- Fixed AI workers, Courseplay and AutoDrive stopping in the field under a heavy load, even without overheating
+- Reworked the AI worker's driving: it slows down while the machine is overloaded, never below 5 km/h, and picks its pace back up once the load eases
+- Fixed the player's cruise control speed being replaced by the machine's top speed after an AI worker's job
+- Reworked PTO wear: engaging it at high engine speed, engaging it often, running it with the implement raised and overloading it now strain it
+- Fixed fluid transfers from a container sometimes needing several key presses to start
+- Added the choice of the circuit to fill, then of the fluid to pour, when several are possible
 
 Changelog 0.10.0.0:
 - Renamed this independent fork to Realistic Mechanical Systems; existing Advanced Damage System saves and settings are migrated automatically
@@ -74,24 +130,27 @@ Changelog 0.10.0.0:
 Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle. Jedes führt seinen eigenen Zustand, seine eigene Belastung und seine eigene Art auszufallen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
 
 VERSCHLEISS UND BELASTUNG
-- Der Zustand sinkt im Normalbetrieb um etwa 1% je Betriebsstunde, bei Missbrauch deutlich schneller, und jedes System hat eigene Verschleißfaktoren
-- Belastung entsteht nur durch Fehler: Überlast, Überhitzung, Arbeit mit kaltem Motor, Radschlupf, zu schwere Anbaugeräte
+- Der Zustand sinkt im Normalbetrieb um etwa 1 % je Betriebsstunde, bei Missbrauch deutlich schneller, und jedes System hat eigene Verschleißfaktoren
+- Belastung entsteht durch Überlast, Überhitzung, Arbeit mit kaltem Motor, Radschlupf, zu schwere Anbaugeräte und weitere Betriebs- oder Umweltfaktoren
 - Ein Defekt wird wahrscheinlich, sobald die Belastung den Zustand erreicht; bei niedrigem Zustand tritt er häufig sofort in der schwersten Stufe auf
-- Überfällige Wartung beschleunigt den Verschleiß aller Systeme, allen voran des Motors
+- Überfällige Wartung beschleunigt den Verschleiß der vom überfälligen Flüssigkeitswechsel betroffenen Systeme, allen voran des Motors
 
 DEFEKTE
 - 36 Defekte, verteilt auf die 8 Systeme, jeweils in vier Stufen von geringfügig bis kritisch
-- Die Art ist nicht zufällig: Der Mod verfolgt, welche Verschleißfaktoren Sie am häufigsten auslösen, und wählt den dazu passenden Ausfall
-- Stufe 1 bleibt stumm und zeigt sich nur über Symptome, schwankende Drehzahl, farbiger Abgasrauch, Klopfen, Pfeifen; Armaturenbrettanzeigen leuchten ab Stufe 2
+- Die Defektart wird zufällig ausgewählt, gewichtet nach den bisher wirksamen Verschleißfaktoren
+- Frühe Defekte zeigen sich durch schwankende Drehzahl, farbigen Abgasrauch, Klopfen und Pfeifen; Warnanzeigen leuchten meist ab Stufe 2, bei manchen Defekten schon ab Stufe 1
 - Alte Maschinen bauen zudem dauerhaft ab und verlieren Motorleistung, Kraftübertragung, Batterieleistung und Kühlwirkung
 
 WERKSTATT
-- Vier Verfahren, Inspektion, Wartung, Reparatur und Grundüberholung, jeweils mit Optionen für Preis, Dauer und Qualität
+- Inspektion, Wartung, Reparatur und Grundüberholung bieten jeweils Optionen für Preis, Dauer und Qualität
+- Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Farbwechsel beim Händler kosten den RMS-Lackierpreis
 - Teilequalität von Gebraucht bis Premium: Billigteile sind häufiger defekt und holen denselben Fehler zurück
-- Alles braucht echte Zeit, und die Werkstatt schließt über Nacht, weshalb die Terminplanung zählt
-- Eine vollständige Defektoskopie deckt verborgene Fehler, defekte Teile und exakte Zustandswerte auf
+- Die Händlergarantie deckt Standardreparaturen mit Originalteilen und die benötigten Flüssigkeiten für eigene Fahrzeuge unter 12 Monaten und 20 Betriebsstunden ab
+- Standardmäßig richtet sich die Arbeitsdauer nach der Spielzeit und pausiert beim Händler über Nacht; eigene und mobile Werkstätten bleiben geöffnet. Getrennte Einstellungen ermöglichen sofortige Wartung und Reparatur, Neulackierung oder Überholung
+- Eine vollständige Defektoskopie kann verborgene Fehler und defekte Reparaturteile aufdecken und zeigt exakte Zustandswerte; manche Defekte können unentdeckt bleiben
 
 TÄGLICHE PFLEGE
+- Telwin Doctor Charge 155 Connect auf einem Wagen: neben einem Fahrzeug anschließen und die Batterie laden oder START für Starthilfe wählen; das Laden folgt der Zeitgeschwindigkeit im Spiel und wird beim Laden des Spielstands fortgesetzt
 - R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler und Luftfilter vor Schichtbeginn
 - Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter; die Fettpresse stellt die Schmierung wieder her
 - Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
@@ -102,11 +161,64 @@ SIMULATION
 - Automatisches temperaturabhängiges Diesel-Vorglühen mit eigener Glühkerzenstörung
 - Abgasrauch nach Baujahr, Emissionsprofil, Motorverschleiß, Last, Temperatur, langem Leerlauf und Art des aktiven Defekts: schwarzer Ruß, blaues Öl oder weißer unverbrannter Kraftstoff
 - Antriebsstrangverwaltung für Traktoren: Hinterradantrieb / Allrad / AUTO, Differentialsperren und Feststellbremse
-- Zuverlässigkeit und Wartungsfreundlichkeit je Marke und Baujahr, im Shop sichtbar
+- Zuverlässigkeit nach Marke und Modell; bei bestimmten Fahrzeugen beeinflusst das Baujahr auch die Wartungsfreundlichkeit. Beide Werte werden im Shop angezeigt
 - Mehrspieler und Dedicated Server, 27 Sprachen
 - Elektrofahrzeuge werden noch nicht unterstützt
 
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.11.0.0:
+- Telwin Doctor Charge 155 Connect auf einem Wagen für 800 € hinzugefügt: die Batterie während der Arbeit laden lassen oder START als Starthilfe wählen. Das Laden folgt der Zeitgeschwindigkeit im Spiel
+- Einstellung für die Stressaufbaurate und den zugehörigen Konsolenbefehl entfernt
+- Einstellung für passiven Verschleiß entfernt
+- Einstellung für Rauchintensität entfernt
+- Einstellung für Fahnendetail entfernt
+- Abgasrauch zu einer realistischen Rauchfahne überarbeitet, die unter Last höher steigt und mit dem Wind treibt
+- Weißen Abgasdampf bei kaltem und feuchtem Wetter hinzugefügt
+- Einstellung zum Parken des Fahrzeugs während der Wartung entfernt
+- Einstellung für die Garantie entfernt; die Händlergarantie deckt nun Standardreparaturen mit Originalteilen und die benötigten Flüssigkeiten unter 12 Monaten und 20 Stunden ab
+- Einstellung für den Dauerfaktor von Werkstattvorgängen entfernt
+- Einstellung für den Preisfaktor von Werkstattvorgängen entfernt
+- Einstellung für die Verschmutzungsgeschwindigkeit entfernt; die Verschmutzung von Kühler und Luftfilter folgt nun unabhängig vom RMS-Wartungsintervall der im Spiel gewählten Geschwindigkeit
+- Einstellung für die Lösegeschwindigkeit der Differentialsperre entfernt; die Sperre löst sich jetzt oberhalb von 10 km/h
+- Einstellung für die Dauer der Kontrolle vor Schichtbeginn entfernt; die Kontrolle dauert nun so lange wie ihr Ton
+- Einstellung für den Schmierfettverbrauch entfernt; pro Betriebsstunde sinkt der Schmierfettstand nun um 5 %
+- Einstellungen KI-Regelung bei Überlastung und Überhitzung, KI bei kritischer Überlastung stoppen, Schutz für Vertragsfahrzeuge, KI-Reaktivität und Minimale KI-Geschwindigkeit entfernt; jeder KI-Helfer fährt nun von selbst schonend
+- Neulackierung zur Werkstatt hinzugefügt: Lackschäden ausbessern oder neue Farben wählen, auch bei der Händlerkonfiguration zum RMS-Lackierpreis
+- Getrennte Einstellungen für sofortige Wartung und Reparatur, Neulackierung und mechanische Überholungen hinzugefügt
+- Startprobleme mit dem GIANTS-Zündschlüssel behoben
+- Überholungen für vorhersehbare Ergebnisse überarbeitet: Teil- und Standardüberholung bringen Systeme in guten Zustand, die vollständige Überholung macht sie wieder neuwertig
+- Kompatibilität mit FS25_mobileWorkshop hinzugefügt: Inspektionen und Reparaturen können nun über dessen mobile Werkstatt gestartet werden
+- Werkstatt, Inspektionsbericht und Wartungsprotokoll übersichtlicher gestaltet
+- Anzeige der Wartungstermine auf ganze Stunden vereinfacht
+- Doppelte Kosten bei Werkstatt-Nachfüllungen mit hofeigenen Flüssigkeiten behoben
+- Fehler behoben, durch den RMS einige Lkw und Maschinen aus Mods ignorierte
+- Leeren, nie auffüllbaren Hydraulikölkreis bei einigen Autos und Nutzfahrzeugen behoben; diese Fahrzeuge haben in RMS keine Hydraulik mehr
+- Fehler behoben, durch den eine vollständige Überholung beim Neuladen des Spielstands verloren ging
+- Fehler behoben, durch den abgestellte Maschinen in der RMS-Fuhrparkliste von Spielern fehlten, die einem Server beitreten
+- Fehler behoben, durch den bei einigen Autos aus Mods Kühler und Luftfilter auf der Straße verschmutzten
+- Fehler behoben, durch den Fett und Flüssigkeitslecks mit dem Mod Ingame Time Operating Hours viel zu schnell abnahmen
+- RMS-Werte für Zuverlässigkeit und Wartungsfreundlichkeit im Shop für Maschinen entfernt, die RMS nicht verwaltet
+- Grund für den Verbleib außerhalb von RMS im Tab Andere Fahrzeuge hinzugefügt, mit einer Taste zum Aufnehmen oder Ausschließen einer Maschine
+- Flüssigkeitsmengen an die Motorgröße jeder Maschine angepasst
+- Postengenaue Rechnungen und die Kosten pro Betriebsstunde zur Technischen Akte hinzugefügt
+- Gemeinsames Getriebe- und Hydrauliköl für die meisten Traktoren hinzugefügt, wie in der Realität; Fendt, Valtra und Lindner behalten zwei getrennte Öle
+- Wartungsplan auf Basis des Wartungsintervalls hinzugefügt: Jede Wartung wechselt das Motoröl, jede zweite das Getriebe- und Hydrauliköl, jede zehnte das Kühlmittel; die Fahrzeug-Infobox nennt die fällige Wartung, die Werkstatt öffnet mit ihr, und jede Stufe zeigt, was sie wechselt
+- Minimale Wartung entfernt; das Nachfüllen in der Werkstatt füllt die Flüssigkeiten auf
+- Leere Flüssigkeitsfässer auf Karten und Modlisten mit vielen zusätzlichen Produkten behoben; Fässer hängen nicht mehr von den Fülltypen des Spiels ab. Bereits in einem Spielstand vorhandene Flüssigkeitsbehälter verschwinden nach dem Update; neue müssen gekauft werden.
+- Fahrzeugwert in der RMS-Werkstatt, der 10 % über dem Verkaufserlös aus den Menüs lag, behoben; er entspricht jetzt der RMS-Fuhrparkliste
+- Werkstattpreise überarbeitet: Inspektion, Wartung, Reparatur, Überholung und Neulackierung kosten nun reale Händlerpreise nach Größe der Maschine, angepasst an den Wirtschafts-Schwierigkeitsgrad, statt eines Anteils an Preis und Alter; die Wartungsrechnung zeigt Arbeitslohn und Filter
+- Fahrzeugwert überarbeitet: Er sinkt nun mit den Betriebsstunden im Verhältnis zur Fahrzeuglebensdauer, dann mit dem Alter; eine Überholung verbessert den Zustand, setzt aber Alter und Betriebsstunden nicht zurück
+- Standard-Wartungsintervall von 5 auf 10 Stunden geändert
+- Geräusche verschlissener Lager, von Vibrationen und blockierten Rädern, die sich oberhalb von 15 km/h nicht mehr mit der Geschwindigkeit änderten, behoben
+- Fehlendes Geräusch der Kontrolle vor Schichtbeginn an einer abgestellten Maschine behoben
+- Pannengeräusche einer Maschine im Leerlauf, die andere Spieler auf einem Server nicht hörten, behoben
+- Stehenbleiben von KI-Helfern, Courseplay und AutoDrive auf dem Feld unter hoher Last, auch ohne Überhitzung, behoben
+- Fahrweise des KI-Helfers überarbeitet: Er fährt langsamer, solange die Maschine überlastet ist, nie unter 5 km/h, und nimmt wieder Tempo auf, sobald die Last nachlässt
+- Tempomatgeschwindigkeit des Spielers, die nach einem Auftrag des KI-Helfers durch die Höchstgeschwindigkeit der Maschine ersetzt wurde, behoben
+- Zapfwellenverschleiß überarbeitet: Einkuppeln bei hoher Drehzahl, häufiges Einkuppeln, Betrieb mit ausgehobenem Gerät und Überlastung beanspruchen sie jetzt
+- Umfüllen aus einem Behälter, das manchmal mehrere Tastendrücke zum Starten brauchte, behoben
+- Auswahl des zu befüllenden Kreislaufs und danach der einzufüllenden Flüssigkeit hinzugefügt, wenn mehrere möglich sind
 
 Changelog 0.10.0.0:
 - Diesen unabhängigen Fork in Realistic Mechanical Systems umbenannt; vorhandene Spielstände und Einstellungen von Advanced Damage System werden automatisch übernommen
@@ -135,24 +247,27 @@ Changelog 0.10.0.0:
 Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force. Chacun suit son propre état, sa propre contrainte et sa propre façon de lâcher. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
 
 USURE ET CONTRAINTE
-- L'état baisse d'environ 1% par heure de fonctionnement en usage normal, bien plus vite en cas d'abus, et chaque système a ses propres facteurs d'usure
-- La contrainte ne s'accumule que par les erreurs : surcharge, surchauffe, travail moteur froid, patinage, outils trop lourds
+- L'état baisse d'environ 1 % par heure de fonctionnement en usage normal, bien plus vite en cas d'abus, et chaque système a ses propres facteurs d'usure
+- La contrainte s'accumule avec la surcharge, la surchauffe, le travail moteur froid, le patinage, les outils trop lourds et d'autres facteurs d'utilisation ou d'exposition
 - Une panne devient probable dès que la contrainte rejoint l'état, et un état faible la fait souvent survenir d'emblée à son stade le plus grave
-- Un entretien en retard accélère l'usure de tous les systèmes, du moteur en premier
+- Un entretien en retard accélère l'usure des systèmes couverts par le fluide à remplacer, du moteur en premier
 
 PANNES
 - 36 pannes réparties sur les 8 systèmes, chacune en quatre stades, de mineur à critique
-- Le type n'est pas aléatoire : le mod suit les facteurs d'usure que vous déclenchez le plus et choisit la panne que vos habitudes ont préparée
-- Le stade 1 est muet et ne se trahit que par des symptômes, régime instable, fumée d'échappement colorée, cognement, sifflement ; les témoins s'allument à partir du stade 2
+- Le type est tiré au sort avec une pondération selon les facteurs d'usure les plus sollicités
+- Les premiers stades se manifestent par un régime instable, une fumée colorée, des cognements ou des sifflements ; les témoins apparaissent généralement au stade 2, mais certaines pannes peuvent en afficher dès le stade 1
 - Les machines âgées se dégradent aussi durablement et perdent puissance moteur, transmission, performance de batterie et efficacité de refroidissement
 
 ATELIER
-- Quatre procédures, inspection, entretien, réparation et révision, chacune avec des options qui changent le prix, la durée et la qualité
+- L'inspection, l'entretien, la réparation et la révision proposent chacune des options qui changent le prix, la durée et la qualité
+- L'appoint remplit les fluides manquants ; la repeinture corrige les petits dégâts ou renouvelle la peinture avec les couleurs proposées par le véhicule. Le changement de couleur chez le concessionnaire est facturé au prix RMS
 - Qualité des pièces de l'occasion au premium : les pièces bon marché sont plus souvent défectueuses et ramènent la même panne
-- Tout prend un temps réel, et l'atelier ferme la nuit : planifier le passage d'une machine compte autant que le payer
-- Une défectoscopie complète révèle les pannes cachées, les pièces défectueuses et les valeurs exactes
+- Au concessionnaire, la garantie couvre la réparation standard avec pièces d'origine et ses fluides pour les véhicules possédés de moins de 12 mois et de 20 heures de fonctionnement
+- Par défaut, la durée des travaux suit le temps de la partie et les travaux s'interrompent la nuit chez le concessionnaire ; les ateliers personnels et mobiles restent ouverts. Des réglages distincts permettent de terminer instantanément l'entretien et les réparations, la repeinture ou les révisions
+- Une défectoscopie complète peut révéler les pannes cachées et les pièces de réparation défectueuses, et donne les valeurs exactes ; certaines pannes peuvent rester indétectées
 
 ENTRETIEN QUOTIDIEN
+- Telwin Doctor Charge 155 Connect sur chariot : branchez-le près d'un véhicule pour recharger sa batterie ou choisissez START pour l'aider à démarrer ; la recharge suit la vitesse du temps de la partie et reprend au chargement de la sauvegarde
 - Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air
 - La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air ; la pompe à graisse rétablit le graissage des machines qui en demandent
 - Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
@@ -163,11 +278,64 @@ SIMULATION
 - Préchauffage diesel automatique selon la température, avec sa propre panne de bougies
 - Fumée d'échappement pilotée par le millésime, le profil d'émissions, l'usure moteur, la charge, la température, le ralenti prolongé et le type de panne active : suie noire, huile bleue ou carburant imbrûlé blanc
 - Gestion de transmission sur les tracteurs : modes 2RM / 4RM / AUTO, blocages de différentiel et frein de parking
-- Fiabilité et facilité d'entretien par marque et par millésime, affichées en boutique
+- Fiabilité selon la marque et le modèle ; le millésime influe aussi sur la facilité d'entretien de certains véhicules. Les deux notes sont affichées en boutique
 - Multijoueur et serveur dédié, 27 langues
 - Les véhicules électriques ne sont pas encore pris en charge
 
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.11.0.0 :
+- Ajout du Telwin Doctor Charge 155 Connect sur chariot à 800 € : rechargez une batterie pendant que vous travaillez ou choisissez START pour aider un véhicule à démarrer. La recharge suit la vitesse du temps de la partie
+- Suppression du réglage de vitesse d'accumulation du stress et de sa commande console
+- Suppression du réglage d'usure passive
+- Suppression du réglage d'intensité de la fumée
+- Suppression du réglage de détail du panache
+- Refonte de la fumée d'échappement : un panache réaliste qui monte plus haut en charge et dérive avec le vent
+- Ajout d'une vapeur blanche à l'échappement par temps froid et humide
+- Suppression du réglage de stationnement du véhicule pendant l'entretien
+- Suppression du réglage de garantie ; au concessionnaire, la réparation standard avec pièces d'origine et ses fluides sont couverts pour un véhicule de moins de 12 mois et de moins de 20 heures
+- Suppression du réglage de multiplicateur de durée des interventions
+- Suppression du réglage de multiplicateur de prix des interventions
+- Suppression du réglage de vitesse d'encrassement : le radiateur et le filtre à air suivent désormais la vitesse de saleté choisie dans le jeu, indépendamment de l'intervalle d'entretien RMS
+- Suppression du réglage de vitesse de désenclenchement du différentiel : le blocage se désenclenche désormais au-dessus de 10 km/h
+- Suppression du réglage de durée du contrôle avant prise de poste : le contrôle dure désormais le temps du son
+- Suppression du réglage de vitesse de consommation de la graisse : elle baisse désormais de 5 % par heure de fonctionnement
+- Suppression des réglages Régulation de la surcharge et de la surchauffe par l'IA, Arrêter l'IA en cas de surcharge critique, Protection des véhicules de contrat, Réactivité de l'IA et Vitesse minimale de l'IA : chaque ouvrier IA conduit désormais avec ménagement de lui-même
+- Ajout de la repeinture en atelier : réparer les dégâts de peinture ou choisir de nouvelles couleurs, y compris chez le concessionnaire au prix RMS
+- Ajout de réglages distincts pour terminer instantanément l'entretien et les réparations, la repeinture et les révisions mécaniques
+- Correction du problème empêchant le démarrage des véhicules avec la clé de contact GIANTS
+- Refonte des révisions pour un résultat prévisible : la partielle et la standard remettent les systèmes en bon état, la complète les remet à neuf
+- Ajout de la compatibilité avec FS25_mobileWorkshop : les inspections et réparations peuvent désormais être lancées depuis son atelier mobile
+- Amélioration de la lisibilité des interfaces de l'atelier, du rapport d'inspection et du carnet d'entretien
+- Simplification de l'affichage des échéances d'entretien, désormais en heures entières
+- Correction de la double facturation des appoints utilisant le stock de fluides de la ferme
+- Correction de camions et machines issus de mods que RMS ignorait
+- Correction du circuit d'huile hydraulique vide impossible à remplir sur certaines voitures et certains utilitaires, qui n'ont désormais plus d'hydraulique dans RMS
+- Correction d'une révision complète perdue au rechargement de la sauvegarde
+- Correction des machines garées absentes de la liste de flotte RMS chez un joueur qui rejoint un serveur
+- Correction de voitures issues de mods dont le radiateur et le filtre à air s'encrassaient sur la route
+- Correction de la graisse et des fuites de fluides qui baissaient beaucoup trop vite avec le mod Ingame Time Operating Hours
+- Suppression, en boutique, de la fiabilité et de la facilité d'entretien RMS des machines que RMS ne suit pas
+- Ajout, dans l'onglet Autres véhicules, de la raison pour laquelle chaque véhicule reste hors de RMS, avec un bouton pour inclure ou exclure une machine
+- Rééquilibrage des volumes de fluides selon la taille du moteur de chaque machine
+- Ajout au dossier technique du détail de chaque facture ligne par ligne et du coût par heure de fonctionnement
+- Ajout d'une huile unique pour la transmission et l'hydraulique sur la plupart des tracteurs, comme en réalité ; Fendt, Valtra et Lindner gardent deux huiles séparées
+- Ajout d'un plan d'entretien calé sur l'intervalle d'entretien : chaque entretien vidange l'huile moteur, un sur deux l'huile de transmission et hydraulique, un sur dix le liquide de refroidissement ; l'encadré du véhicule nomme l'entretien attendu, l'atelier s'ouvre dessus, et chaque niveau indique ce qu'il change
+- Suppression de l'entretien minimal ; l'appoint à l'atelier complète les fluides
+- Correction des fûts de fluides livrés vides sur les cartes et listes de mods qui ajoutent beaucoup de produits ; les fûts ne dépendent plus des types de remplissage du jeu. Les bidons déjà présents dans une sauvegarde disparaîtront après la mise à jour ; il faudra en acheter de nouveaux.
+- Correction de la valeur du véhicule dans l'atelier RMS, 10 % au-dessus de ce que paie une vente depuis les menus ; elle correspond désormais à la liste de flotte RMS
+- Refonte des prix d'atelier : inspection, entretien, réparation, révision et peinture coûtent désormais des prix réels de concession selon la taille de la machine, ajustés à la difficulté économique, et non plus une part de son prix et de son âge ; la facture d'entretien détaille la main-d'œuvre et les filtres
+- Refonte de la valeur des véhicules : elle baisse désormais avec les heures de fonctionnement rapportées à la durée de vie du véhicule, puis avec l'âge ; une révision restaure l'état sans remettre à zéro l'âge ni les heures de fonctionnement
+- Passage de l'intervalle d'entretien par défaut de 5 à 10 heures
+- Correction des bruits de roulements usés, de vibrations et de roues grippées, qui ne suivaient plus la vitesse au-delà de 15 km/h
+- Correction du son du contrôle avant prise de poste, muet sur une machine garée
+- Correction des bruits de panne d'une machine au ralenti, inaudibles pour les autres joueurs sur un serveur
+- Correction des ouvriers IA, de Courseplay et d'AutoDrive qui s'arrêtaient dans le champ sous forte charge, même sans surchauffe
+- Refonte de la conduite de l'ouvrier IA : il ralentit tant que la machine est en surcharge, sans descendre sous 5 km/h, et reprend son allure dès que la charge baisse
+- Correction de la vitesse du régulateur du joueur, remplacée par la vitesse maximale de la machine après le travail d'un ouvrier IA
+- Refonte de l'usure de la prise de force : l'embrayer à haut régime, l'embrayer souvent, la faire tourner outil relevé ou la surcharger la sollicite désormais
+- Correction du transfert de fluide depuis un bidon, qui demandait parfois plusieurs appuis pour démarrer
+- Ajout du choix du circuit à remplir, puis du fluide à verser, quand plusieurs sont possibles
 
 Changelog 0.10.0.0 :
 - Renommage de ce fork indépendant en Realistic Mechanical Systems, avec migration automatique des sauvegardes et réglages Advanced Damage System existants
@@ -194,8 +362,26 @@ Changelog 0.10.0.0 :
     </description>
     <specializations>
         <specialization name="rmsFluidContainer" className="RMS_FluidContainer" filename="scripts/objects/RMS_FluidContainer.lua"/>
+        <specialization name="rmsBatteryCharger" className="RMS_BatteryCharger" filename="scripts/objects/RMS_BatteryCharger.lua"/>
     </specializations>
     <vehicleTypes>
+        <type name="rmsBatteryCharger" className="Vehicle" filename="$dataS/scripts/vehicles/Vehicle.lua">
+            <specialization name="vehicleSettings"/>
+            <specialization name="baseMaterial"/>
+            <specialization name="foliageBending"/>
+            <specialization name="washable"/>
+            <specialization name="wearable"/>
+            <specialization name="animatedVehicle"/>
+            <specialization name="dashboard"/>
+            <specialization name="ikChains"/>
+            <specialization name="wheels"/>
+            <specialization name="enterable"/>
+            <specialization name="fillUnit"/>
+            <specialization name="motorized"/>
+            <specialization name="drivable"/>
+            <specialization name="pushHandTool"/>
+            <specialization name="rmsBatteryCharger"/>
+        </type>
         <type name="rmsFluidContainer" parent="pallet" filename="$dataS/scripts/vehicles/Vehicle.lua">
             <specialization name="rmsFluidContainer"/>
         </type>
@@ -204,8 +390,11 @@ Changelog 0.10.0.0 :
         <brand name="MOTOREX" title="Motorex" image="brands/brand_motorex.dds"/>
         <brand name="FUCHS" title="FUCHS" image="brands/brand_fuchs.dds"/>
         <brand name="MOTUL" title="Motul" image="brands/brand_motul.dds"/>
+        <brand name="TELWIN" title="Telwin" image="brands/brand_telwin.dds"/>
     </brands>
     <storeItems>
+        <storeItem xmlFilename="objects/batteryCharger/batteryCharger.xml"/>
+        <storeItem xmlFilename="objects/batteryCharger/batteryCharger_placeable.xml"/>
         <storeItem xmlFilename="objects/greaseGun/greaseGun.xml"/>
         <storeItem xmlFilename="objects/airBlower/airBlower.xml"/>
         <storeItem xmlFilename="objects/jumperCables/jumperCables.xml"/>

@@ -59,7 +59,7 @@ function RMS_TutorialStateEvent:run(connection)
         return
     end
 
-    RMS_Config.setTutorialPlayerState(RMS_Utils.getUniqueUserIdByConnection(connection), self.state)
+    RMS_Config.setTutorialPlayerState(g_currentMission.userManager:getUniqueUserIdByConnection(connection), self.state)
 end
 
 ---Send the stored tutorial state of a player to its newly connected client
@@ -67,7 +67,7 @@ end
 function RMS_TutorialStateEvent.sendToClient(connection)
     if g_server == nil then return end
 
-    local state = RMS_Config.getTutorialPlayerState(RMS_Utils.getUniqueUserIdByConnection(connection))
+    local state = RMS_Config.getTutorialPlayerState(g_currentMission.userManager:getUniqueUserIdByConnection(connection))
     if state ~= nil then
         connection:sendEvent(RMS_TutorialStateEvent.new(state))
     end

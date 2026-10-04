@@ -548,9 +548,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                             aggregation = "boolean_or",
                             extraData = {
                                 message = "rms_breakdowns_overload_breakdown_stage2_message",
-                                reason = "BREAKDOWN",
-                                disableAi = true,
-                                criticalOverload = true
+                                reason = "BREAKDOWN"
                             }
                         }
                 },
@@ -2454,7 +2452,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         part = parts.PTO_DRIVE_COUPLING,
         isApplicable = isPtoBreakdownApplicable,
         probability = function(vehicle)
-            return getBreakdownProbabilityWeightPercent(vehicle, systems.PTO, {"plf", "pef"}, {})
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.PTO, {"plf", "pef", "prf"}, {})
         end,
         isCanProgress = function(vehicle)
             return vehicle.spec_RealisticMechanicalSystems.isPtoActive

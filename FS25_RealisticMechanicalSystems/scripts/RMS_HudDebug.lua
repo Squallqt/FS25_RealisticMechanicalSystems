@@ -224,6 +224,7 @@ function RMS_Hud:drawActiveVehicleHUD()
     end
     local liveSpec = vehicle.spec_RealisticMechanicalSystems
     local spec = liveSpec
+    local hydraulicFluidLevel = RMS_Fluids.getLevel(vehicle, "hydraulicFluid")
     local motor = vehicle:getMotor()
     if motor == nil then
         return
@@ -579,22 +580,11 @@ function RMS_Hud:drawActiveVehicleHUD()
         )) or 0
 
         addLine(aiCruiseLines, string.format(
-            "cc acc: %.0f%% (s:%d) | stress: %.3f (f: %.3f | l/e/t: %.3f/%.3f/%.3f) | e/i/d: %.3f/%.3f/%.3f | red: %.2f | base/tgt/app: %.1f/%.1f/%.1f | t: %.0fms",
+            "cc acc: %.0f%% (s:%d) | overload: %.2f | limit: %.1f km/h",
             cruiseAccelerator * 100,
             ccState,
-            dbg.stress or 0,
-            dbg.filteredStress or 0,
-            dbg.loadStress or 0,
-            dbg.engineStress or 0,
-            dbg.transStress or 0,
-            dbg.error or 0,
-            dbg.integral or 0,
-            dbg.derivative or 0,
-            dbg.reduction or 0,
-            dbg.baseCruiseSpeed or 0,
-            dbg.targetSpeed or 0,
-            dbg.appliedSpeed or 0,
-            getDebugStateValue("aiWorkerApplyTimer", (liveSpec.aiWorkerPid or {}).applyTimer or 0)
+            dbg.overload or 0,
+            dbg.speedLimit or 0
         ), {0.75, 1, 0.85, 1}, 0.95)
     end
 
@@ -704,12 +694,14 @@ function RMS_Hud:drawActiveVehicleHUD()
         end
     end
     addLine(overviewLines, string.format(
-        "op.sec: %ds (real: %ds) | start.op.h: %.1fh | condition: %.2f%% | service: %.2f%% | service_wear: %.2f%% | rel: %.2f%% | mnt: %.2f%% | wf: %.3f | roof: %s | lube: %.2f%% | paint: %.2f%%",
+        "op.sec: %ds (real: %ds) | start.op.h: %.1fh | condition: %.2f%% | service e/t/c: %.2f%% / %.2f%% / %.2f%% | service_wear: %.2f%% | rel: %.2f%% | mnt: %.2f%% | wf: %.3f | roof: %s | lube: %.2f%% | paint: %.2f%%",
         currentOperatingSeconds,
         math.floor((tonumber(spec.realOperatingTime) or 0) / 1000),
         factorStatsOperatingHours,
         asPercent(spec.conditionLevel or 0),
         asPercent(spec.serviceLevel or 0),
+        asPercent(spec.transmissionServiceLevel or 0),
+        asPercent(spec.coolantServiceLevel or 0),
         asPercent(serviceWearRate),
         asPercent(spec.reliability or 0),
         asPercent(spec.maintainability or 0),
@@ -733,16 +725,24 @@ function RMS_Hud:drawActiveVehicleHUD()
         cloggingWetnessFactor
     ), {1, 1, 1, 1}, 0.95)
 
-    addLine(overviewLines, string.format(
-        "Fluids: engine oil %.2f%% | coolant %.2f%% (leak %.3f/h) | transmission %.2f%% (leak %.3f/h) | hydraulic %.2f%% (leak %.3f/h)",
-        asPercent(spec.engineOilLevel or 1),
-        asPercent(spec.coolantLevel or 1),
-        tonumber(spec.coolantLeakRate) or 0,
-        asPercent(spec.transmissionOilLevel or 1),
-        tonumber(spec.transmissionOilLeakRate) or 0,
-        asPercent(spec.hydraulicFluidLevel or 1),
-        tonumber(spec.hydraulicFluidLeakRate) or 0
-    ), {1, 1, 1, 1}, 0.95)
+    -- only the circuits the machine has
+    local fluidEntries = {}
+    if isSystemEnabled("engine") then
+        table.insert(fluidEntries, string.format("engine oil %.2f%%", asPercent(spec.engineOilLevel or 1)))
+    end
+    if isSystemEnabled("cooling") then
+        table.insert(fluidEntries, string.format("coolant %.2f%% (leak %.3f/h)",
+            asPercent(spec.coolantLevel or 1), tonumber(spec.coolantLeakRate) or 0))
+    end
+    if isSystemEnabled("transmission") then
+        table.insert(fluidEntries, string.format("transmission %.2f%% (leak %.3f/h)",
+            asPercent(spec.transmissionOilLevel or 1), tonumber(spec.transmissionOilLeakRate) or 0))
+    end
+    if isSystemEnabled("hydraulics") then
+        table.insert(fluidEntries, string.format("hydraulic %.2f%% (leak %.3f/h)",
+            asPercent(spec == liveSpec and hydraulicFluidLevel or spec.hydraulicFluidLevel or 1), tonumber(spec.hydraulicFluidLeakRate) or 0))
+    end
+    addLine(overviewLines, "Fluids: " .. table.concat(fluidEntries, " | "), {1, 1, 1, 1}, 0.95)
 
     do
         local drivetrainModeNames = { [0] = "4x2", [1] = "4WD", [2] = "AUTO" }
@@ -802,48 +802,31 @@ function RMS_Hud:drawActiveVehicleHUD()
         if smoke.isMethane == true then table.insert(profile, "methane") end
         if smoke.hasTurbo == true then table.insert(profile, "turbo") end
 
-        -- one letter per drawn plume step, a dash where it is silent
-        -- the heat step owns no particle system, it is drawn by the exhaust effect of the vehicle
-        local stepMarks = {}
-        for _, step in ipairs(exhaustDbg.steps or {}) do
-            local isDrawn = step.isNative and (step.share or 0) > 0 or step.isEmitting
-            table.insert(stepMarks, isDrawn and string.upper(string.sub(step.id, 1, 1)) or "-")
+        -- one line: what the engine emits, what the plume shows and what drawing it costs this frame
+        local line = "Exhaust: off | " .. table.concat(profile, " ")
+        if smoke.isActive == true then
+            line = string.format(
+                "Exhaust: %s | black %.0f%% blue %.0f%% white %.0f%% | opacity %.0f%% vapour %.0f%%%s | gas %.0fC at %.1f m/s | wind %.1f m/s sheltered %.0f%% | %d puffs %.2f ms",
+                table.concat(profile, " "),
+                asPercent(smoke.soot),
+                asPercent(smoke.oil),
+                asPercent(smoke.unburnt),
+                asPercent(exhaustDbg.opacity),
+                asPercent(exhaustDbg.vapour),
+                exhaustDbg.burstCause ~= nil and (" | burst " .. tostring(exhaustDbg.burstCause)) or "",
+                tonumber(exhaustDbg.gasTemperature) or 0,
+                tonumber(exhaustDbg.exitSpeed) or 0,
+                tonumber(exhaustDbg.windSpeed) or 0,
+                asPercent(exhaustDbg.shelter),
+                tonumber(exhaustDbg.activePuffs) or 0,
+                tonumber(exhaustDbg.updateMs) or 0
+            )
         end
-
-        addLine(overviewLines, string.format(
-            "Exhaust: %s | %s | soot %.0f%% oil %.0f%% unburnt %.0f%% | tau %.2f opacity %.2f | flow %.2f (boost %.2f def %.2f)",
-            smoke.isActive == true and "on" or "off",
-            table.concat(profile, " "),
-            asPercent(smoke.soot),
-            asPercent(smoke.oil),
-            asPercent(smoke.unburnt),
-            tonumber(exhaustDbg.opticalDepth) or 0,
-            tonumber(exhaustDbg.opacity) or 0,
-            tonumber(exhaustDbg.flow) or 0,
-            tonumber(exhaustDbg.boost) or 0,
-            tonumber(exhaustDbg.boostDeficit) or 0
-        ), {1, 1, 1, 1}, 0.95)
-
-        -- the emitter count is the invariant, anything above two is a bug and not a setting
-        local emitterCount = tonumber(exhaustDbg.emitterCount) or 0
-        local activePuffs = tonumber(exhaustDbg.activePuffs) or 0
-        local collisionCount = tonumber(exhaustDbg.collisionCount) or 0
-        addLine(overviewLines, string.format(
-            "Plume: ladder %.2f (step %d to %d, fade %.2f) | alpha %.3f emit %.2f | heat %.2f | burst %.2f %s | steps %s | emitters %d | puffs %d hits %d",
-            tonumber(exhaustDbg.ladder) or 0,
-            tonumber(exhaustDbg.currentStep) or 0,
-            tonumber(exhaustDbg.nextStep) or 0,
-            tonumber(exhaustDbg.crossfade) or 0,
-            tonumber(exhaustDbg.alpha) or 0,
-            tonumber(exhaustDbg.emitScale) or 0,
-            tonumber(exhaustDbg.heatShare) or 0,
-            tonumber(exhaustDbg.burst) or 0,
-            tostring(exhaustDbg.burstCause or "idle"),
-            #stepMarks > 0 and table.concat(stepMarks) or "-",
-            emitterCount,
-            activePuffs,
-            collisionCount
-        ), emitterCount > 2 and {1, 0.3, 0.3, 1} or {1, 1, 1, 1}, 0.95)
+        if exhaustDbg.isOverridden == true then
+            line = line .. " | override"
+        end
+        -- orange when the game refused the per puff sprite control and the puffs fall back to the asset values
+        addLine(overviewLines, line, exhaustDbg.isSpriteControlled == false and {1, 0.6, 0.2, 1} or {1, 1, 1, 1}, 0.95)
     end
 
     local engineMaxFactor = math.max(
@@ -878,7 +861,6 @@ function RMS_Hud:drawActiveVehicleHUD()
         coolingDbg.coldShockFactor or 0
     ) * bcw
     local electricalMaxFactor = math.max(
-        electricalDbg.expiredServiceFactor or 0,
         electricalDbg.weatherExposureFactor or 0,
         electricalDbg.lightsFactor or 0,
         electricalDbg.crankingStressFactor or 0,
@@ -886,7 +868,6 @@ function RMS_Hud:drawActiveVehicleHUD()
         electricalDbg.vibFactor or 0
     ) * bcw
     local chassisMaxFactor = math.max(
-        chassisDbg.expiredServiceFactor or 0,
         chassisDbg.lubricationFactor or 0,
         chassisDbg.vibFactor or 0,
         chassisDbg.steerLoadFactor or 0,
@@ -902,7 +883,7 @@ function RMS_Hud:drawActiveVehicleHUD()
     local ptoMaxFactor = math.max(
         ptoDbg.expiredServiceFactor or 0,
         ptoDbg.ptoLoadFactor or 0,
-        ptoDbg.ptoEngagementFactor or 0
+        ptoDbg.ptoRaisedFactor or 0
     ) * bcw
     local factorStats = {}
     for rawSystemKey, rawStats in pairs(factorStatsSource) do
@@ -953,7 +934,7 @@ function RMS_Hud:drawActiveVehicleHUD()
     -- @return table lines debug lines
     local function buildSystemLines(systemKey, dbg, maxFactor, factorEntries)
         local lines = {}
-        local systemStressMultiplier = tonumber(RMS_Config.CORE.SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS[systemKey]) or 1
+        local systemStressMultiplier = RMS_Config.CORE.SYSTEM_WEIGHTS[systemKey] ~= nil and 10.0 or 1.0
         addLine(lines, string.format(
             "C: %.1f (-%.2f)",
             asPercent(getSystemCondition(systemKey)),
@@ -1047,7 +1028,7 @@ function RMS_Hud:drawActiveVehicleHUD()
         { shortName = "of", statKey = "of", value = hydraulicsDbg.operatingFactor or 0, extraInfo = string.format("active: %s", tostring(hydraulicsDbg.isHydraulicActive == true)) },
         { shortName = "cof", statKey = "cof", value = hydraulicsDbg.coldOilFactor or 0 },
         { shortName = "hof", statKey = "hof", value = hydraulicsDbg.hotOilFactor or 0 },
-        { shortName = "flf", statKey = "flf", value = hydraulicsDbg.lowFluidFactor or 0, extraInfo = string.format("lvl: %.1f%%", asPercent(spec.hydraulicFluidLevel or 1)) }
+        { shortName = "flf", statKey = "flf", value = hydraulicsDbg.lowFluidFactor or 0, extraInfo = string.format("lvl: %.1f%%", asPercent(spec == liveSpec and hydraulicFluidLevel or spec.hydraulicFluidLevel or 1)) }
     })
 
     local coolingLines = buildSystemLines("cooling", coolingDbg, coolingMaxFactor, {
@@ -1058,7 +1039,6 @@ function RMS_Hud:drawActiveVehicleHUD()
     })
 
     local electricalLines = buildSystemLines("electrical", electricalDbg, electricalMaxFactor, {
-        { shortName = "sf", statKey = "sf", value = electricalDbg.expiredServiceFactor or 0 },
         { shortName = "wef", statKey = "wef", value = electricalDbg.weatherExposureFactor or 0 },
         { shortName = "ltf", statKey = "ltf", value = electricalDbg.lightsFactor or 0 },
         {
@@ -1085,7 +1065,6 @@ function RMS_Hud:drawActiveVehicleHUD()
     })
 
     local chassisLines = buildSystemLines("chassis", chassisDbg, chassisMaxFactor, {
-        { shortName = "sf", statKey = "sf", value = chassisDbg.expiredServiceFactor or 0 },
         { shortName = "lubf", statKey = "lubf", value = chassisDbg.lubricationFactor or 0, extraInfo = string.format("lvl: %.1f%%", asPercent(lubricationLevel)) },
         {
             shortName = "vf",
@@ -1144,14 +1123,15 @@ function RMS_Hud:drawActiveVehicleHUD()
                 ptoDbg.ptoUtilization or 0
             )
         },
+        { shortName = "prf", statKey = "prf", value = ptoDbg.ptoRaisedFactor or 0 },
         {
             shortName = "pef",
             statKey = "pef",
-            value = ptoDbg.ptoEngagementFactor or 0,
+            value = ptoDbg.ptoEngagementDamage or 0,
             extraInfo = string.format(
-                "cycles: %d pulse: %.0f",
+                "cycles: %d dmg: %.4f",
                 ptoDbg.ptoEngagementCount or 0,
-                ptoDbg.ptoEngagementFactor or 0
+                ptoDbg.ptoEngagementDamage or 0
             )
         }
     })
@@ -1372,8 +1352,8 @@ function RMS_Hud:drawActiveVehicleHUD()
         ), {1, 0.95, 0.75, 1}, 0.95)
         addLine(serviceDataLines, string.format(
             "svc s->t: %s->%s | cur s/c: %.4f/%.4f",
-            tostring(getDebugStateValue("pendingMaintenanceServiceStart", spec.pendingMaintenanceServiceStart)),
-            tostring(getDebugStateValue("pendingMaintenanceServiceTarget", spec.pendingMaintenanceServiceTarget)),
+            RMS_Utils.serializeNumericMap(getDebugStateValue("pendingServiceClockStart", spec.pendingServiceClockStart or {}) or {}),
+            RMS_Utils.serializeNumericMap(getDebugStateValue("pendingServiceClockTarget", spec.pendingServiceClockTarget or {}) or {}),
             spec.serviceLevel or 0,
             spec.conditionLevel or 0
         ), {1, 0.95, 0.75, 1}, 0.95)
@@ -1519,7 +1499,7 @@ function RMS_Hud:drawActiveVehicleHUD()
     end
 
     if #aiCruiseLines > 0 then
-        table.insert(sections, {title = "AI Cruise Control", lines = aiCruiseLines})
+        table.insert(sections, {title = "AI Worker", lines = aiCruiseLines})
     end
 
     table.insert(sections, {title = "Implements", lines = implementLines, showTitle = false})
@@ -1838,7 +1818,9 @@ function RMS_Hud:drawFactorStatsVehicleHUD(vehicle, spec, debugData, factorStats
         elseif debugKey == "ptoLoadFactor" then
             return string.format("power %.1fkW | utilization %.3f | rpm %.0f", tonumber(dbg.ptoPower) or 0, tonumber(dbg.ptoUtilization) or 0, tonumber(dbg.ptoRpm) or 0)
         elseif debugKey == "ptoEngagementFactor" then
-            return string.format("cycles %d | current pulse %.0f", tonumber(dbg.ptoEngagementCount) or 0, tonumber(dbg.ptoEngagementFactor) or 0)
+            return string.format("cycles %d | last damage %.4f", tonumber(dbg.ptoEngagementCount) or 0, tonumber(dbg.ptoEngagementDamage) or 0)
+        elseif debugKey == "ptoRaisedFactor" then
+            return string.format("raised %s", tostring(dbg.ptoRaisedFactor ~= nil and dbg.ptoRaisedFactor > 0))
         elseif debugKey == "airFilterCloggingFactor" then
             if dbg.airFilterClogging ~= nil then
                 return string.format("clog %.1f%%", (tonumber(dbg.airFilterClogging) or 0) * 100)
@@ -1914,7 +1896,7 @@ function RMS_Hud:drawFactorStatsVehicleHUD(vehicle, spec, debugData, factorStats
             usedSystems[systemKey] = true
             local lines = {}
             local dbg = type(debugData) == "table" and debugData[systemKey] or nil
-            local systemStressMultiplier = tonumber(RMS_Config.CORE.SYSTEM_STRESS_ACCUMULATION_MULTIPLIERS[systemKey]) or 1
+            local systemStressMultiplier = RMS_Config.CORE.SYSTEM_WEIGHTS[systemKey] ~= nil and 10.0 or 1.0
             addLine(lines, string.format(
                 "total: %.3f%% | stress: %.3f%%",
                 toPct(stats.total),

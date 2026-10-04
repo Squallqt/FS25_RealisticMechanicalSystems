@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="イグニッションON：予熱中"/>
         <text name="rms_preheat_system_failure_message" text="予熱システム故障：冷間始動不可"/>
         <text name="rms_preheat_start_failed_message" text="エンジンを始動できませんでした：再試行する前にイグニッションをOFFにしてください"/>
+        <text name="rms_hud_vehicle_notification" text="%s：%s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="車両を点検"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -30,23 +31,11 @@
         <text name="rms_settings_section_service_wear" text="メンテナンスと摩耗"/>
         <text name="rms_settings_section_thermal_model" text="熱モデル"/>
         <text name="rms_settings_section_battery_alternator" text="バッテリーとオルタネーター"/>
-        <text name="rms_settings_section_preshift_maintenance" text="日常点検"/>
-        <text name="rms_settings_section_other" text="その他"/>
         <text name="rms_settings_section_drivetrain" text="駆動系と駐車ブレーキ"/>
-        <text name="rms_maintenancePrice_label" text="作業料金倍率"/>
-        <text name="rms_maintenancePrice_tooltip" text="点検、修理、オーバーホールを含む、すべてのワークショップ作業の費用を調整します。値を大きくすると費用が高くなります。"/>
-        <text name="rms_maintenanceDuration_label" text="作業時間倍率"/>
-        <text name="rms_maintenanceDuration_tooltip" text="すべてのワークショップ作業にかかる時間を設定します。値を大きくするほど、各作業に時間がかかります。"/>
         <text name="rms_workshopOpenHour_label" text="ワークショップ開始時刻"/>
         <text name="rms_workshopOpenHour_tooltip" text="作業はこの時刻以降にのみ開始されます。"/>
         <text name="rms_workshopCloseHour_label" text="ワークショップ終了時刻"/>
         <text name="rms_workshopCloseHour_tooltip" text="この時刻になると進行中の作業は中断され、ワークショップの開始時刻に再開されます。"/>
-        <text name="rms_cloggingSpeed_label" text="目詰まり速度"/>
-        <text name="rms_cloggingSpeed_tooltip" text="ほこり、もみ殻、作物残渣の中で作業したときに、ラジエーターとエアフィルターが目詰まりする速さを調整します。値を大きくすると目詰まりが速く進みます。"/>
-        <text name="rms_fieldInspectionDuration_label" text="作業前点検の所要時間"/>
-        <text name="rms_fieldInspectionDuration_tooltip" text="作業前点検にかかる時間を実時間の秒数で設定します。"/>
-        <text name="rms_lubricationReducePerOperatingHour_label" text="グリース消費速度"/>
-        <text name="rms_lubricationReducePerOperatingHour_tooltip" text="稼働時間あたりに消費されるグリースの量を設定します。"/>
         <text name="rms_dealerWorkshopAvailable_label" text="ディーラーワークショップ24時間営業"/>
         <text name="rms_dealerWorkshopAvailable_tooltip" text="ディーラーワークショップを昼夜を問わずいつでも利用できるようにします。"/>
         <text name="rms_mobileWorkshopAvailable_label" text="移動式ワークショップ24時間営業"/>
@@ -56,55 +45,31 @@
         <text name="rms_ownWorkshopAvailable_label" text="個人ワークショップ24時間営業"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="個人ワークショップを昼夜を問わずいつでも利用できるようにします。"/>
         <text name="rms_instantInspection_label" text="即時点検"/>
-        <text name="rms_instantInspection_tooltip" text="有効にすると、すべての点検が時間を経過させず即座に完了します。注意：目視点検は利用できなくなります。"/>
-        <text name="rms_parkVehicle_label" text="メンテナンス中の車両を駐車"/>
-        <text name="rms_parkVehicle_tooltip" text="有効にすると、TABで車両を切り替える際に、メンテナンス中の車両をスキップします。"/>
-        <text name="rms_warrantyEnabled_label" text="新車保証"/>
-        <text name="rms_warrantyEnabled_tooltip" text="新車の修理に保証を適用します（稼働20時間または12か月まで）。純正部品だけが無償保証の対象です。"/>
-        <text name="rms_aiOverloadAndOverheatControl_label" text="AIによる過負荷・過熱制御"/>
-        <text name="rms_aiOverloadAndOverheatControl_tooltip" text="有効にすると、AI作業員が負荷を下げ、エンジンの過負荷や過熱を防ぎます。"/>
-        <text name="rms_aiDisableOnCriticalOverload_label" text="重大な過負荷時にAIを停止"/>
-        <text name="rms_aiDisableOnCriticalOverload_tooltip" text="重大な過負荷が発生した場合に、AI作業員とAutoDriveを停止します。"/>
-        <text name="rms_contractVehicleProtection_label" text="契約車両の保護"/>
-        <text name="rms_contractVehicleProtection_tooltip" text="契約車両にも、重大な過負荷時のAI停止と、過負荷または過熱時の速度制御を適用します。"/>
-        <text name="rms_aiWorkerTargetStress_label" text="AIの反応感度"/>
-        <text name="rms_aiWorkerTargetStress_tooltip" text="AI作業員が過負荷や過熱に反応するタイミングを設定します。感度を高くすると早めに減速し、低くすると介入するまで負荷の上昇を許容します。"/>
-        <text name="rms_aiWorkerTargetStress_relaxed" text="低"/>
-        <text name="rms_aiWorkerTargetStress_balanced" text="中"/>
-        <text name="rms_aiWorkerTargetStress_sensitive" text="高"/>
-        <text name="rms_aiWorkerTargetStress_verySensitive" text="非常に高い"/>
-        <text name="rms_aiWorkerMinSpeed_label" text="AI最低速度"/>
-        <text name="rms_aiWorkerMinSpeed_tooltip" text="過負荷や過熱を避けるために減速する際、AI作業員が設定できるクルーズコントロールの最低速度を指定します。"/>
+        <text name="rms_instantInspection_tooltip" text="有効にすると、ワークショップでの点検が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantMaintenanceRepair_label" text="即時整備と修理"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="有効にすると、ワークショップでの整備と修理が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantBodywork_label" text="即時塗装"/>
+        <text name="rms_instantBodywork_tooltip" text="有効にすると、ワークショップでの塗装作業が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantOverhaul_label" text="即時機械オーバーホール"/>
+        <text name="rms_instantOverhaul_tooltip" text="有効にすると、ワークショップでの機械オーバーホールが即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
         <text name="rms_debugMode_label" text="デバッグモード"/>
         <text name="rms_debugMode_tooltip" text="デバッグパネルと詳細ログをコンソールに表示します。"/>
         <text name="rms_warningMessages_label" text="警告メッセージ"/>
         <text name="rms_warningMessages_tooltip" text="冷間時や過熱など、ゲーム中の警告メッセージの表示を切り替えます。"/>
         <text name="rms_serviceInterval_label" text="メンテナンス間隔"/>
-        <text name="rms_serviceInterval_tooltip" text="メンテナンスが必要になる基本間隔を時間単位で設定します。実際の間隔は、車両ブランド、車齢、過去のメンテナンス品質によって変わります。"/>
+        <text name="rms_serviceInterval_tooltip" text="エンジンオイルの交換間隔を時間単位で設定します。ミッションオイルと作動油は二間隔ごと、冷却液は十間隔ごとに交換します。実際の間隔は車両ブランドによって変わります。"/>
         <text name="rms_vehicleLifespan_label" text="車両寿命"/>
-        <text name="rms_vehicleLifespan_tooltip" text="車両の状態が0%に達するまでの基本寿命を時間単位で設定します。状態がゼロに近づくほど、車両の信頼性が低下します。"/>
+        <text name="rms_vehicleLifespan_tooltip" text="車両の状態が0%に達するまでの基本寿命を時間単位で設定します。状態がゼロに近づくほど、車両の信頼性が低下します。この時間の経過とともに車両価値も下がります。"/>
         <text name="rms_reinitializeVehicles_label" text="車両群をリセット"/>
         <text name="rms_reinitializeVehicles_text" text="リセット"/>
         <text name="rms_reinitializeVehicles_tooltip" text="選択した車両寿命に合わせて車両群の状態を再設定します。発生中の故障は消去されます。"/>
         <text name="rms_reinitializeVehiclesConfirm_title" text="車両群をリセット"/>
         <text name="rms_reinitializeVehiclesConfirm_message" text="選択した車両寿命に合わせて車両群を再設定しますか？発生中の故障は消去されます。"/>
         <text name="rms_reinitializeVehicles_result" text="リセットした車両：%d。変更なし：%d。"/>
-        <text name="rms_downtimeWear_label" text="待機中の摩耗"/>
-        <text name="rms_downtimeWear_tooltip" text="車両が停止している間の摩耗速度を、基本摩耗速度（車両寿命）に対する割合で設定します。たとえば5%に設定し、既定の車両寿命を100時間とした場合、各システムの状態が1%低下するまでに約20時間の停止を要します。注意：車両を屋内に保管している間は待機中の摩耗が発生しません。"/>
         <text name="rms_generalWearEnabled_label" text="経年摩耗"/>
         <text name="rms_generalWearEnabled_tooltip" text="車両が摩耗するにつれて、エンジン出力、油圧速度、ブレーキ性能など、各システムの主な特性に小さな低下が生じます。この影響は車両寿命の最初の三分の一を過ぎると始まり、三分の二を過ぎてから明確になり、寿命末期に近づくほど強くなります。"/>
         <text name="rms_exhaustSmokeEnabled_label" text="排気煙"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="エンジンの実際の状態に応じて排気煙を制御します。急加速、低回転での高負荷運転、低負荷での長時間アイドリング、エアフィルターの目詰まり、噴射装置の摩耗など、燃料に対して空気が不足すると黒煙になります。摩耗したエンジンがオイルを燃やすと青煙、燃料が未燃焼のまま排出されると白煙になります。煙の量はエンジンの仕事量によっても増えます。旧式の車両は現代の車両よりはるかに多く煙を出しますが、現代の車両は重大な故障がない限りほとんど煙を出しません。"/>
-        <text name="rms_exhaustSmokeIntensity_label" text="排気煙の濃さ"/>
-        <text name="rms_exhaustSmokeIntensity_tooltip" text="原因を変えずに、排気煙の見えやすさを調整します。値を大きくすると、遠くからでも症状を確認しやすくなります。"/>
-        <text name="rms_exhaustSmokeDetail_label" text="排気煙の詳細度（このPC）"/>
-        <text name="rms_exhaustSmokeDetail_tooltip" text="ほかのプレイヤーには影響を与えず、このコンピューターで描画する排気煙の量を設定します。値を下げると煙の外側の層が省かれ、性能の低いグラフィックカードの負荷を軽減できます。サーバーが許可する量より増やすことはできません。"/>
-        <text name="rms_exhaustSmokeDetail_full" text="完全"/>
-        <text name="rms_exhaustSmokeDetail_reduced" text="低減"/>
-        <text name="rms_exhaustSmokeDetail_minimal" text="最小"/>
-        <text name="rms_exhaustSmokeDetail_none" text="なし"/>
-        <text name="rms_systemStressRate_label" text="システム応力の蓄積速度"/>
-        <text name="rms_systemStressRate_tooltip" text="過負荷、過熱、ホイールスリップ、その他の過酷な使用条件によって各システムに機械的応力が蓄積する速さを設定します。機械的応力は故障確率に直接影響し、蓄積量が多いシステムほど故障しやすくなります。"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="エンジンの実際の状態に応じて排気煙を制御します。急加速、低回転での高負荷運転、低負荷での長時間アイドリング、エアフィルターの目詰まり、噴射装置の摩耗など、燃料に対して空気が不足すると黒煙になります。摩耗したエンジンがオイルを燃やすと青煙、燃料が未燃焼のまま排出されると白煙になります。煙の量はエンジンの仕事量によっても増えます。旧式の車両は現代の車両よりはるかに多く煙を出しますが、現代の車両は重大な故障がない限りほとんど煙を出しません。寒い日には、燃焼で生じた水分も凝結して短い白いすじとなり、1〜2メートルで蒸発します。これは健全なエンジンでも起こります。"/>
         <text name="rms_batteryCapacity_label" text="バッテリー容量"/>
         <text name="rms_batteryCapacity_tooltip" text="実際に使用できるバッテリーの最大容量を調整します。150Ahに近い値は実物のバッテリーに相当しますが、その容量では放電の問題はほとんど発生しません。"/>
         <text name="rms_option_off" text="オフ"/>
@@ -132,8 +97,6 @@
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="駆動モードスイッチにAUTOを追加します。ホイールスリップが発生した場合や、負荷のかかった作業速度では前輪駆動が自動的に作動し、路上では解除されます。この設定を無効にすると、AUTOの車両は4駆に戻ります。"/>
         <text name="rms_drivetrainWindupDamage_label" text="駆動系応力による損傷"/>
         <text name="rms_drivetrainWindupDamage_tooltip" text="デフロックを作動させたままグリップの高い路面で旋回すると、駆動系に応力がかかり、ミッションが徐々に損傷します。この影響を緩和するには無効にしてください。"/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_label" text="デフロック解除速度"/>
-        <text name="rms_drivetrainDiffLockReleaseSpeed_tooltip" text="デフロックはこの速度を超えると自動的に解除され、要求が続いている場合は速度が下がると再び作動します。"/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="駐車ブレーキ"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="管理対象のすべての車両に、専用キーで切り替える駐車ブレーキを追加します。ブレーキが作動している間は車両が固定され、アクセル操作は無視されます。"/>
         <text name="rms_drivetrainParkBrakeAuto_label" text="自動駐車ブレーキ"/>
@@ -156,8 +119,6 @@
         <text name="rms_ws_section_current_intervention" text="進行中の作業"/>
         <text name="rms_ws_label_last_check" text="前回の点検"/>
         <text name="rms_ws_label_workshop_state" text="ワークショップの状態"/>
-        <text name="rms_ws_label_intervention" text="作業"/>
-        <text name="rms_ws_label_addon" text="オプション"/>
         <text name="rms_ws_label_more_parts" text="ほか%s点"/>
         <text name="rms_ws_label_committed_cost" text="確定費用"/>
         <text name="rms_ws_label_finish_time" text="完了時刻"/>
@@ -166,14 +127,13 @@
         <text name="rms_ws_info_inspection_reveals" text="点検により、ほかの不良が見つかる場合があります。"/>
         <text name="rms_ws_status_ready_title" text="ワークショップ準備完了"/>
         <text name="rms_ws_status_ready_hint" text="作業を選択してください。オプション、部品、料金は開始前に確定されます。"/>
-        <text name="rms_ws_status_no_intervention" text="進行中の作業なし"/>
         <text name="rms_ws_label_value" text="車両価値"/>
         <text name="rms_ws_label_age" text="車齢"/>
         <text name="rms_ws_label_operating_hours" text="稼働時間"/>
         <text name="rms_ws_label_service" text="メンテナンスレベル"/>
-        <text name="rms_ws_label_service_interval" text="メンテナンス間隔"/>
-        <text name="rms_ws_label_next_service" text="次回メンテナンス"/>
-        <text name="rms_ws_value_service_overdue" text="%s超過"/>
+        <text name="rms_ws_label_maintenance_standard" text="標準メンテナンス"/>
+        <text name="rms_ws_label_maintenance_extended" text="拡張メンテナンス"/>
+        <text name="rms_ws_label_maintenance_preventive" text="予防メンテナンス"/>
         <text name="rms_ws_label_condition" text="状態"/>
         <text name="rms_ws_label_reliability" text="信頼性"/>
         <text name="rms_ws_label_overhaul_count" text="オーバーホール回数"/>
@@ -181,17 +141,11 @@
         <text name="rms_ws_label_maintenance_log" text="メンテナンス履歴"/>
         <text name="rms_ws_label_last_report" text="前回の報告書"/>
         <text name="rms_ws_label_last_maintenance" text="前回のメンテナンス"/>
-        <text name="rms_ws_table_header_part" text="部品"/>
-        <text name="rms_ws_table_header_price" text="価格"/>
-        <text name="rms_ws_table_header_description" text="説明"/>
-        <text name="rms_ws_table_header_stage" text="段階"/>
-        <text name="rms_ws_table_header_repair_select" text="修理"/>
         <text name="rms_ws_task_inspection" text="点検"/>
         <text name="rms_ws_task_maintenance" text="メンテナンス"/>
         <text name="rms_ws_task_overhaul" text="オーバーホール"/>
         <text name="rms_ws_info_no_breakdowns" text="判明している故障はありません。未検出の故障が存在する可能性はあります。"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s実施中…"/>
-        <text name="rms_ws_status_initial" text="状態を読み込み中…"/>
         <text name="rms_ws_status_in_progress_format" text="%s：%sまで実施中"/>
         <text name="rms_ws_status_open" text="ワークショップ営業中"/>
         <text name="rms_ws_status_closed" text="ワークショップ営業時間外"/>
@@ -206,7 +160,6 @@
         <text name="rms_ws_action_choice_overhaul" text="機械オーバーホール"/>
         <text name="rms_ws_action_choice_refill" text="油水類の補給"/>
         <text name="rms_ws_action_cancel_service" text="作業をキャンセル"/>
-        <text name="rms_ws_button_show" text="表示"/>
         <text name="rms_ws_age_unit" text="か月"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="はい"/>
@@ -223,11 +176,15 @@
         <text name="rms_log_recorded_interventions_title" text="記録された作業"/>
         <text name="rms_log_last_intervention_title" text="前回の作業"/>
         <text name="rms_log_hours" text="稼働時間"/>
-        <text name="rms_log_title" text="メンテナンス履歴"/>
         <text name="rms_log_total_cost_title" text="総費用"/>
         <text name="rms_log_total_breakdowns_count_title" text="修理済み故障"/>
         <text name="rms_log_type" text="作業種類"/>
         <text name="rms_log_cost_per_month_title" text="月間費用"/>
+        <text name="rms_log_cost_per_hour_title" text="稼働時間あたりの費用"/>
+        <text name="rms_log_invoice_title" text="請求明細"/>
+        <text name="rms_log_invoice_workshop_flat_rate" text="ワークショップ定額料金"/>
+        <text name="rms_log_invoice_labour" text="工賃"/>
+        <text name="rms_log_invoice_filters" text="フィルター"/>
         <text name="rms_log_cancelled_desc" text="作業キャンセル"/>
         <text name="rms_log_ownership_months_title" text="保有期間"/>
         <text name="rms_log_overhaul_desc_with_painting" text="車両再塗装"/>
@@ -575,10 +532,9 @@
         <text name="rms_option_menu_option_two_title_overhaul" text="オーバーホール対象システム"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="この作業で故障が見つかった場合、純正部品を使用する標準修理を自動的に続けて実施します。"/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="修理後、純正消耗品を使用する標準メンテナンスを自動的に続けて実施します。"/>
-        <text name="rms_option_menu_option_three_disclaimer_overhaul_repaint" text="このオーバーホールに車両全体の再塗装を追加します。"/>
-        <text name="rms_option_menu_overhaul_partial_description" text="部分オーバーホール：選択したシステムだけを対象に、故障と機械的応力を取り除き、状態を回復します。該当する油水類がある場合は交換します。"/>
-        <text name="rms_option_menu_overhaul_standard_description" text="標準オーバーホール：すべてのシステムを対象に、対応可能な故障と機械的応力を取り除き、すべての油水類を交換します。状態を良好な水準まで回復します。"/>
-        <text name="rms_option_menu_overhaul_full_description" text="完全オーバーホール：すべてのシステムを対象に、対応可能な故障と機械的応力を取り除き、すべての油水類を交換します。状態を非常に良好な水準まで回復します。"/>
+        <text name="rms_option_menu_overhaul_partial_description" text="部分オーバーホール：選択したシステムを良好な状態に戻し、修理可能な故障を直して、必要に応じて関連する油水類を交換します。"/>
+        <text name="rms_option_menu_overhaul_standard_description" text="標準オーバーホール：すべてのシステムを良好な状態に戻し、修理可能な故障を直して、油水類を交換し整備を更新します。"/>
+        <text name="rms_option_menu_overhaul_full_description" text="完全オーバーホール：すべてのシステムを新品同様に戻し、修理可能な故障を直して、油水類を交換し整備を更新します。"/>
         <text name="rms_option_menu_price_text" text="価格"/>
         <text name="rms_option_menu_part_used_description" text="中古部品：費用は最小ですが、後で不良が発生する確率は50%です。"/>
         <text name="rms_option_menu_part_aftermarket_description" text="社外部品：費用は安くなりますが、後で不良が発生する確率は33%です。"/>
@@ -589,9 +545,9 @@
         <text name="rms_option_menu_consumable_oem_description" text="純正消耗品：標準価格で、後で不良が発生する確率は10%です。"/>
         <text name="rms_option_menu_consumable_premium_description" text="プレミアム消耗品：費用は20%高くなりますが、その消耗品が原因で不良が発生することはありません。"/>
         <text name="rms_option_menu_perform_repair" text="自動修理"/>
-        <text name="rms_option_menu_perform_renew_paint" text="再塗装"/>
         <text name="rms_option_menu_perform_maintenance" text="自動メンテナンス"/>
         <text name="rms_option_menu_warranty_repair_text" text="保証修理"/>
+        <text name="rms_warranty_dealer_info" text="販売店保証：所有車両が12か月未満かつ稼働20時間未満の場合、標準修理、純正部品、必要な油水類が対象です。"/>
         <text name="rms_option_menu_duration_text" text="所要時間"/>
         <text name="rms_option_menu_duration_instant" text="即時"/>
         <text name="rms_option_menu_finish_time_text" text="完了時刻"/>
@@ -599,27 +555,32 @@
         <text name="rms_option_menu_inspection_visual_description" text="目視点検：短時間で低価格ですが、すでに発生している故障だけを探し、検出能力は低くなります。報告書には部品の詳しい状態が表示されません。"/>
         <text name="rms_option_menu_inspection_standard_description" text="標準点検：発生中の故障を通常の検出能力で探し、詳しい状態値を含まない一般報告書を作成します。"/>
         <text name="rms_option_menu_inspection_complete_description" text="完全点検：発生中および潜在的な故障を通常の検出能力で探し、部品の詳しい状態を含む完全な報告書を作成します。"/>
-        <text name="rms_option_menu_maintenance_minimal_description" text="最小メンテナンス：メンテナンスレベルを部分的に回復し、不足している油水類だけを補給します。次回の間隔は短いままです。"/>
-        <text name="rms_option_menu_maintenance_standard_description" text="標準メンテナンス：メンテナンスレベルを基準値まで回復し、エンジンオイルを交換して、必要に応じてほかの回路を補給します。"/>
-        <text name="rms_option_menu_maintenance_extended_description" text="拡張メンテナンス：メンテナンスレベルを基準値以上に回復し、次回の間隔を延長して、すべての油水類を交換します。"/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="予防メンテナンス：メンテナンスレベルを基準値まで回復し、すべての油水類を交換して、優先度の高いシステムを最大三つまで選び機械的応力を軽減します。"/>
+        <text name="rms_option_menu_maintenance_standard_description" text="標準メンテナンス：エンジンオイルをオイルフィルター、燃料フィルターとともに交換し、必要に応じてほかの回路を補給し、ラジエーターを清掃してエアフィルターをエアブローします。"/>
+        <text name="rms_option_menu_maintenance_extended_description" text="拡張メンテナンス：標準メンテナンスに加えて、ミッションオイルと作動油を新しいフィルターとともに交換します。エアフィルターも交換し、冷却液を補給します。"/>
+        <text name="rms_option_menu_maintenance_preventive_description" text="予防メンテナンス：すべてのオイルと冷却液をフィルターとともに交換し、新しいエアフィルターを取り付けます。さらに、優先度の高いシステムを最大三つまで選び機械的応力を軽減します。"/>
         <text name="rms_option_menu_repair_type_fix_description" text="応急修理：故障を取り除かず、低費用で車両をすぐに運転可能な状態へ戻します。一定時間後に故障が再発します。"/>
         <text name="rms_option_menu_repair_type_replacement_description" text="標準修理：故障を取り除いて不具合のある部品を交換し、対象システムの機械的応力を部分的に軽減します。"/>
         <text name="rms_option_menu_repair_type_advanced_description" text="徹底修理：故障を取り除いて不具合のある部品を交換し、対象システムに蓄積した機械的応力をすべて解消します。"/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="次の作業は別途請求されます。必要な油水類は作業開始時に供給されるか、在庫から使用されます。"/>
+        <text name="rms_bodywork_touchup" text="塗装の補修"/>
+        <text name="rms_bodywork_full" text="全面再塗装"/>
+        <text name="rms_bodywork_colors_title" text="車両の色"/>
+        <text name="rms_bodywork_wear" text="塗装の損傷"/>
+        <text name="rms_bodywork_unavailable" text="利用不可"/>
+        <text name="rms_bodywork_ineligible" text="この車両またはワークショップでは利用できません"/>
+        <text name="rms_bodywork_no_wear" text="補修が必要な塗装の傷はありません"/>
+        <text name="rms_bodywork_wear_limit" text="塗装の損傷が30%以下なら補修できます"/>
+        <text name="rms_bodywork_touchup_description" text="軽度の塗装ダメージを修復します。現在の色はそのまま維持されます。"/>
+        <text name="rms_bodywork_full_description" text="塗装を新しくします。この車両で選べる色に変更するか、現在の色を維持できます。"/>
+        <text name="rms_bodywork_no_colors" text="この車両には選択できる色がありません。現在の色を維持します。"/>
+        <text name="rms_bodywork_unavailable_title" text="利用できない作業"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="点検報告書"/>
-        <text name="rms_report_vehicle_name_title" text="車両名"/>
-        <text name="rms_report_vehicle_age_title" text="車齢"/>
-        <text name="rms_report_vehicle_operating_hours_title" text="稼働時間"/>
         <text name="rms_report_vehicle_specs_title" text="車両仕様"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="オルタネーター最大出力電流"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="バッテリー充電量"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="バッテリー容量"/>
-        <text name="rms_report_date_title" text="日付"/>
         <text name="rms_report_detected_breakdowns_title" text="検出された故障"/>
-        <text name="rms_report_inspection_type_title" text="点検種類"/>
-        <text name="rms_report_inspection_location_title" text="点検場所"/>
         <text name="rms_report_overall_assessment_title" text="総合状態評価"/>
         <text name="rms_report_overall_assessment_condition" text="状態レベル"/>
         <text name="rms_report_overall_assessment_crit_fail_risk" text="重大故障リスク"/>
@@ -701,12 +662,17 @@
         <text name="rms_fluid_container_action_cancel" text="移し替えを中止"/>
         <text name="rms_fluid_select_vehicle_title" text="車両選択"/>
         <text name="rms_fluid_select_vehicle_prompt" text="補給する車両を選択してください"/>
-        <text name="rms_fluid_select_circuit_title" text="回路選択"/>
         <text name="rms_fluid_select_circuit_prompt" text="補給する回路を選択してください"/>
+        <text name="rms_fluid_select_fluid_prompt" text="補給する油水類を選択してください"/>
+        <text name="rms_fluid_pour_option" text="%s、%s（%s）"/>
         <text name="rms_fluid_circuit_engineOil" text="エンジンオイル"/>
         <text name="rms_fluid_circuit_coolant" text="冷却液"/>
         <text name="rms_fluid_circuit_transmissionOil" text="ミッションオイル"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="作動油"/>
+        <text name="rms_fluid_circuit_transmissionHydraulic" text="ミッションオイル兼作動油"/>
+        <text name="rms_fluid_hud_engineOil" text="エンジンオイル"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="ミッション兼作動油"/>
+        <text name="rms_fluid_hud_coolant" text="冷却液"/>
         <text name="rms_fluid_incompatible_title" text="互換性のない油水類"/>
         <text name="rms_fluid_incompatible_message" text="この製品は選択した回路用ではありません。回路が汚染され、システムの摩耗が最大3倍になったり、発熱が増えたり、油圧機能が遅くなったりするおそれがあります。汚染を除去するには油水類を完全に交換する必要があります。続行しますか？"/>
         <text name="rms_fluid_error_no_vehicle" text="4m以内に油水類の補給が必要な車両がありません"/>
@@ -714,10 +680,11 @@
         <text name="rms_fluid_error_motor_running" text="油水類を移送する前にエンジンを停止してください"/>
         <text name="rms_fluid_error_vehicle_moving" text="車両を停止させてください"/>
         <text name="rms_fluid_dealer_billed" text="請求される油水類"/>
-        <text name="rms_fluid_stock_required" text="必要な油水類在庫"/>
+        <text name="rms_fluid_warranty_covered" text="保証対象の油水類"/>
+        <text name="rms_fluid_stock_required" text="ワークショップ区域に適合容器が必要"/>
         <text name="rms_fluid_refill_work_order" text="油水類の補給"/>
         <text name="rms_fluid_refill_dealer_supply" text="見積りに油水類の供給を含む"/>
-        <text name="rms_fluid_refill_stock_supply" text="ワークショップ在庫から使用"/>
+        <text name="rms_fluid_refill_stock_supply" text="適合する容器をワークショップ区域内に置いてください"/>
         <text name="rms_fluid_mode_top_up" text="補給"/>
         <text name="rms_fluid_mode_replace" text="交換"/>
         <text name="rms_fluid_mode_repair" text="漏れ後の補給"/>
@@ -740,12 +707,15 @@
         <text name="rms_inspection_verdict_ok_title" text="使用可能"/>
         <text name="rms_inspection_verdict_ok_message" text="異常はありません。車両を使用できます。"/>
         <text name="rms_inspection_verdict_watch_title" text="要経過観察"/>
-        <text name="rms_inspection_verdict_watch_message" text="注意が必要な項目が一つあります。作業は可能ですが、本日中に対処してください。"/>
+        <text name="rms_inspection_verdict_watch_message" text="一つ以上の項目に注意が必要です。機械は作業を続けられますが、本日中に対処してください。"/>
         <text name="rms_inspection_verdict_air_filter_service_message" text="作業は可能です。エアフィルターを交換するため、ワークショップでのメンテナンスを予定してください。"/>
         <text name="rms_inspection_verdict_stop_title" text="使用禁止"/>
         <text name="rms_inspection_verdict_stop_message" text="使用前に対処が必要な項目が一つあります。現在の状態でこの車両を作業に使用しないでください。"/>
-        <text name="rms_inspection_service_due_in" text="次回メンテナンスまで%s"/>
-        <text name="rms_inspection_service_overdue" text="メンテナンス期限を%s超過"/>
+        <text name="rms_inspection_service_due_in" text="%sまで%s"/>
+        <text name="rms_inspection_service_overdue" text="%sを%s超過"/>
+        <text name="rms_inspection_service_clock_engine" text="エンジンオイル交換"/>
+        <text name="rms_inspection_service_clock_transmission" text="ミッションオイル交換"/>
+        <text name="rms_inspection_service_clock_coolant" text="冷却液交換"/>
         <text name="rms_inspection_status_slightly_low" text="やや低い"/>
         <text name="rms_inspection_status_slightly_dirty" text="軽度の目詰まり"/>
         <text name="rms_inspection_status_slightly_dry" text="やや乾燥"/>
@@ -763,6 +733,8 @@
         <text name="rms_inspection_status_active_leak" text="漏れ発生中"/>
         <text name="rms_inspection_status_heavily_clogged" text="重度の目詰まり"/>
         <text name="rms_inspection_status_not_required" text="不要"/>
+        <text name="rms_inspection_status_change_overdue" text="交換期限超過"/>
+        <text name="rms_inspection_status_change_long_overdue" text="交換期限を大幅超過"/>
         <text name="rms_inspection_engine_oil" text="エンジンオイル"/>
         <text name="rms_inspection_coolant" text="冷却液"/>
         <text name="rms_inspection_hydraulic_fluid" text="作動油"/>
@@ -784,8 +756,8 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="エアフィルターがわずかに目詰まりしています。"/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="エアフィルターが明らかに目詰まりしています。"/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="エアフィルターがほこりやごみで激しく目詰まりしています。"/>
-        <text name="rms_inspection_hint_air_filter_clogging_stage4" text="エアフィルターがほこりやごみで完全に詰まっています。"/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="エアフィルターはエアブロー清掃の限界に達しています。交換にはワークショップでのメンテナンスが必要です。"/>
+        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="エアフィルターにエアを吹き付けて、表面のほこりを取り除いてください。残った汚れがあるため、その後はワークショップでフィルターを交換する必要があります。"/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="オルタネーター周辺に過熱の跡があり、一部の接続部が変色しています。"/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="オルタネーターと配線の周辺に著しい過熱の跡があり、コネクターが変色しています。"/>
         <text name="rms_inspection_hint_lubrication_stage1" text="給脂箇所がやや乾燥しているようです。"/>
@@ -802,6 +774,9 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="ターボチャージャー周辺にオイルの跡があり、接続部が変色しています。"/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="ターボチャージャー周辺に大量のオイル跡、変色した接続部、すすの跡が見えます。"/>
         <text name="rms_inspection_hint_fluid_level_low" text="油水類の一つが基準線を下回っています。"/>
+        <text name="rms_inspection_hint_service_engine" text="エンジンオイルの交換時期を過ぎています。劣化したオイルはエンジンと噴射系の摩耗を早めます。標準メンテナンスでフィルターとともに交換できます。"/>
+        <text name="rms_inspection_hint_service_transmission" text="ミッションオイルの交換時期を過ぎています。劣化したオイルはミッションと油圧の摩耗を早めます。拡張メンテナンスでフィルターとともに交換できます。"/>
+        <text name="rms_inspection_hint_service_coolant" text="冷却液の交換時期です。劣化した冷却液は冷却システムの摩耗を早めます。予防メンテナンスで交換できます。"/>
         <text name="rms_inspection_transmission_oil" text="ミッションオイル"/>
         <text name="rms_inspection_radiator" text="ラジエーター"/>
         <text name="rms_inspection_air_filter" text="エアフィルター"/>
@@ -824,13 +799,22 @@
         <text name="rms_ingame_menu_header_last_inspection" text="前回点検"/>
         <text name="rms_ingame_menu_header_last_maintenance" text="前回メンテナンス"/>
         <text name="rms_ingame_menu_header_leasing_price" text="リース料金"/>
-        <text name="rms_ingame_menu_header_price" text="価値"/>
+        <text name="rms_ingame_menu_header_price" text="メニュー売却"/>
         <text name="rms_ingame_menu_header_procedure" text="作業"/>
         <text name="rms_ingame_menu_header_finish_time" text="完了時刻"/>
         <text name="rms_ingame_menu_header_service_cost" text="費用"/>
+        <text name="rms_ingame_menu_header_reason" text="除外理由"/>
         <text name="rms_ingame_menu_empty_other" text="その他の車両はありません"/>
         <text name="rms_ingame_menu_empty_active" text="RMS車両はありません"/>
         <text name="rms_ingame_menu_empty_service" text="メンテナンス中の車両はありません"/>
+        <text name="rms_ingame_menu_reason_implement" text="作業機またはトレーラー"/>
+        <text name="rms_ingame_menu_reason_unsupported" text="非対応"/>
+        <text name="rms_ingame_menu_reason_electric" text="電動"/>
+        <text name="rms_ingame_menu_reason_towed" text="エンジン付き作業機"/>
+        <text name="rms_ingame_menu_reason_auxiliary" text="補助機械"/>
+        <text name="rms_ingame_menu_reason_user" text="手動で除外"/>
+        <text name="rms_ingame_menu_include" text="RMSに追加"/>
+        <text name="rms_ingame_menu_exclude" text="RMSから除外"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="車両返却"/>
         <text name="rms_sell_dialog_section_vehicle" text="車両"/>
@@ -856,8 +840,7 @@
         <text name="rms_tutorial_service_interval_expired_message" text="%sのメンテナンス間隔を超過しています。&#10;&#10;できるだけ早くワークショップへ移動し、「メンテナンス」を実施してください。期限を超えた車両を使い続けると、複数の故障が同時に発生するリスクが大幅に高まります。"/>
         <text name="rms_tutorial_steering_title" text="停止状態での操舵"/>
         <text name="rms_tutorial_steering_message" text="停止したまま操舵することは避けてください。ステアリングギアと前車軸部品に大きな負荷がかかり、走行装置の摩耗が増えます。&#10;&#10;操舵前に少し前進すると、車輪がはるかに軽く回ります。"/>
-        <text name="rms_tutorial_rad_or_filter_clogged_title" text="ラジエーターとエアフィルターの目詰まり"/>
-        <text name="rms_tutorial_rad_or_filter_clogged_message" text="車両のラジエーターとエアフィルターが激しく目詰まりしています。&#10;&#10;ラジエーターが目詰まりすると放熱性能が下がり、エアフィルターが詰まるとエンジンへの吸気が制限されます。その結果、出力が低下し、燃料消費量が増えます。&#10;&#10;ラジエーターは洗車場またはエアブロワーで清掃できます。エアフィルターはエアブローだけが可能で、完全に新品の状態へ戻すことはできません。交換はワークショップでのメンテナンスによってのみ行われます。&#10;&#10;両方の状態を確認するには、車両を見ながら%sキーを長押ししてください。"/>
+        <text name="rms_tutorial_cooling_air_check_message" text="ラジエーターまたはエアフィルターが詰まっています。車両を見ながら%sキーを長押しして、どちらかを確認してください。圧縮空気ブロワーで清掃できます。フィルターをこれ以上清掃できない場合は、ワークショップで拡張または予防メンテナンスを選ぶと交換できます。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="給脂時期"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%sには定期的な給脂が必要です。&#10;&#10;RMSでは、稼働時間に応じて給脂状態が低下します。長期間使用しなかった場合も、再び使用する前に給脂が必要です。給脂不足はシャーシの摩耗を速めます。&#10;&#10;ショップでグリースガンを購入し、点検で必要と判断されたときに車両へ給脂してください。&#10;&#10;給脂状態を確認するには、車両を見ながら%sキーを長押ししてください。"/>
         <text name="rms_tutorial_needs_repair_title" text="故障検出"/>
@@ -877,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="駐車ブレーキが作動しています。専用キーで作動と解除を切り替えます。ブレーキを作動させたままアクセルを踏むと、車両は動かず警告が表示されます。&#10;&#10;傾斜地では、車両が自然に動き出すのを防ぎます。"/>
         <text name="rms_tutorial_preheat_title" text="ディーゼル予熱"/>
         <text name="rms_tutorial_preheat_message" text="冷えたディーゼルエンジンでは、始動操作を一度行うとイグニッションがONになり、グロープラグの予熱サイクルが自動的に始まります。ダッシュボードの警告灯が短時間点灯した後、エンジンの準備が整うまで予熱灯が点灯します。操作を繰り返さないでください。予熱灯が消えるとスターターが自動的に作動します。"/>
-        <text name="rms_tutorial_pto_engagement_title" text="PTO接続サイクル"/>
-        <text name="rms_tutorial_pto_engagement_message" text="PTOの接続と切断を繰り返すと、機械的な作動サイクルが蓄積します。不必要な接続は避けてください。"/>
+        <text name="rms_tutorial_pto_engagement_title" text="PTOの接続"/>
+        <text name="rms_tutorial_pto_engagement_message" text="PTOはアイドリング中に接続し、その後で回転数を上げてください。高回転で接続すると駆動系全体に衝撃が加わり、重い作業機ほど大きくなります。接続のたびにクラッチも摩耗します。"/>
+        <text name="rms_tutorial_pto_raised_title" text="PTOと持ち上げた作業機"/>
+        <text name="rms_tutorial_pto_raised_message" text="作業機を持ち上げたままPTOを回すと、ユニバーサルジョイントが急角度で回り、すぐに摩耗します。輸送のために作業機を持ち上げる前にPTOを切ってください。"/>
         <text name="rms_tutorial_idle_and_downtime_title" text="アイドリングと保管"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="エンジンがかかっていても実作業をしていない間は、摩耗が大幅に少なくなります。エンジンを停止すると摩耗はごくわずかになり、屋内に保管すると完全に止まります。"/>
         <text name="rms_tutorial_idle_deposit_title" text="長時間のアイドリング"/>
@@ -921,5 +906,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="デフロックを作動させたまま、グリップの高い路面で旋回しています。カーブでは内輪と外輪の走行距離が異なりますが、デフロックは両方を同じ速度で回転させます。そのため駆動系に応力がかかり、ミッションの摩耗が増えます。旋回する前にデフロックを解除してください。"/>
         <text name="rms_tutorial_drivetrain_modes_title" text="駆動モードとデフロック"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="この車両では駆動方式を2駆、4駆、AUTOから選択できます。AUTOでは車輪が滑ると前輪駆動が自動的に作動します。&#10;&#10;デフロックはグリップが失われた場所で駆動力を確保しますが、グリップの高い路面で旋回すると駆動系に大きな負担をかけます。内輪と外輪は同じ速度で回転できないため、その応力を駆動系が受けます。旋回する前に解除してください。"/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="台車付きTelwin充電器、12 Vで150 A。車両のそばで接続し、バッテリーを充電してください。充電はゲーム内の時間の進み方に合わせて進みます。 エンジン始動補助 (START, 200 A)."/>
+        <text name="rms_charger_start" text="充電器を接続"/>
+        <text name="rms_charger_disconnect" text="充電器を取り外す"/>
+        <text name="rms_charger_select" text="接続する車両を選択してください。"/>
+        <text name="rms_charger_no_vehicle" text="4 m以内に対象車両がありません。自分の農場の車両を停止させ、エンジンを切ってください。"/>
+        <text name="rms_charger_idle" text="使用可能"/>
+        <text name="rms_charger_charging" text="充電中"/>
+        <text name="rms_charger_full" text="充電完了"/>
+        <text name="rms_charger_interrupted" text="充電中断"/>
+        <text name="rms_charger_interrupted_reason" text="充電中断。%s"/>
+        <text name="rms_charger_status" text="状態"/>
+        <text name="rms_charger_battery" text="バッテリー"/>
+        <text name="rms_charger_voltage" text="電圧"/>
+        <text name="rms_charger_current" text="出力電流"/>
+        <text name="rms_charger_consumers" text="ライトとアクセサリーを切ってください。"/>
+        <text name="rms_charger_error_unavailable" text="車両が存在しないか、非対応です。"/>
+        <text name="rms_charger_error_access" text="この車両は別の農場の所有物です。"/>
+        <text name="rms_charger_error_distance" text="充電器を4 m以内に近づけてください。"/>
+        <text name="rms_charger_error_motor" text="接続前にエンジンを切ってください。"/>
+        <text name="rms_charger_error_moving" text="車両が動いています。"/>
+        <text name="rms_charger_error_service" text="ワークショップで作業中です。"/>
+        <text name="rms_charger_error_cables" text="ジャンパーケーブルを外してください。"/>
+        <text name="rms_charger_error_busy" text="充電器がすでに接続されています。"/>
+        <text name="rms_charger_error_full" text="このバッテリーは充電済みです。"/>
+        <text name="rms_charger_connected" text="充電器を接続しました。充電を開始します。"/>
+        <text name="rms_charger_disconnected" text="充電器を取り外しました。"/>
+        <text name="rms_charger_stopped_motor" text="充電中断：エンジン始動"/>
+        <text name="rms_charger_error_player_distance" text="徒歩で充電器に近づいてください。"/>
+        <text name="rms_charger_mode_select" text="充電器を接続"/>
+        <text name="rms_charger_mode_start" text="エンジン始動補助 (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START準備完了"/>
+        <text name="rms_charger_start_active" text="始動補助中"/>
+        <text name="rms_charger_start_running" text="始動完了：接続を外す"/>
+        <text name="rms_charger_start_countdown" text="待機：%d秒"/>
+        <text name="rms_charger_start_wait" text="次の始動まで30秒待ってください。"/>
+        <text name="rms_charger_unplug_before_start" text="始動前に充電器を外すか、STARTを選択してください。"/>
+        <text name="rms_charger_start_connected" text="エンジン始動補助 (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="バッテリーを充電 (150 A)"/>
     </texts>
 </l10n>

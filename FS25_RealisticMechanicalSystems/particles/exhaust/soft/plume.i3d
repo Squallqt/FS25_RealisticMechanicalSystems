@@ -28,7 +28,7 @@
 
 
   <Dynamics>
-    <ParticleSystem name="plumeEmitter" dynamicId="1" type="sprite" rate="0.04" lifespan="3200" maxCount="360" speed="0.0024" speedRandom="0.0004" tangentSpeed="0.06" normalSpeed="1" damping="0.28" spriteScaleX="0.042" spriteScaleY="0.042" spriteScaleXGain="0.0009" spriteScaleYGain="0.0009" blendFactor="0.8" blendInFactor="0.1" blendOutFactor="0.6" depthSort="true" randomInitRotation="true" deltaRotateMax="0.0006" textureAtlasSizeX="6" textureAtlasSizeY="6">
+    <ParticleSystem name="plumeEmitter" dynamicId="1" type="sprite" rate="0.04" lifespan="3200" maxCount="1" speed="0.0024" speedRandom="0.0004" tangentSpeed="0.06" normalSpeed="1" damping="0.28" spriteScaleX="0.042" spriteScaleY="0.042" spriteScaleXGain="0.0009" spriteScaleYGain="0.0009" blendFactor="0.8" blendInFactor="0" blendOutFactor="0" depthSort="true" randomInitRotation="true" deltaRotateMax="0.0006" textureAtlasSizeX="6" textureAtlasSizeY="6">
       <Gravity force="0 0 0"/>
     </ParticleSystem>
   </Dynamics>

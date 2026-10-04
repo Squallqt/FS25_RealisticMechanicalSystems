@@ -195,7 +195,6 @@ function RMS_DebugSnapshot.build(vehicle)
     local motorizedSpec = vehicle.spec_motorized or {}
     local lastControlParameters = motorizedSpec.lastControlParameters or {}
     local chassisBrakeState = spec.chassisBrakeState or {}
-    local aiWorkerPid = spec.aiWorkerPid or {}
     local preheatState = tonumber(spec.preheatState) or RMS_Preheat.STATE.IDLE
     local preheatIsDiesel = RMS_Preheat.isDieselVehicle(vehicle)
     local preheatEngineTemperatureC = RMS_Preheat.getEngineTemperatureC(vehicle)
@@ -220,6 +219,8 @@ function RMS_DebugSnapshot.build(vehicle)
             realOperatingTime = tonumber(spec.realOperatingTime) or 0,
             conditionLevel = tonumber(spec.conditionLevel) or 0,
             serviceLevel = tonumber(spec.serviceLevel) or 0,
+            transmissionServiceLevel = tonumber(spec.transmissionServiceLevel) or 0,
+            coolantServiceLevel = tonumber(spec.coolantServiceLevel) or 0,
             currentState = tostring(spec.currentState or ""),
             plannedState = tostring(spec.plannedState or ""),
             workshopType = tostring(spec.workshopType or ""),
@@ -288,7 +289,7 @@ function RMS_DebugSnapshot.build(vehicle)
             coolantLeakRate = tonumber(spec.coolantLeakRate) or 0,
             transmissionOilLevel = tonumber(spec.transmissionOilLevel) or 0,
             transmissionOilLeakRate = tonumber(spec.transmissionOilLeakRate) or 0,
-            hydraulicFluidLevel = tonumber(spec.hydraulicFluidLevel) or 0,
+            hydraulicFluidLevel = RMS_Fluids.getLevel(vehicle, "hydraulicFluid"),
             hydraulicFluidLeakRate = tonumber(spec.hydraulicFluidLeakRate) or 0,
             preheatState = preheatState,
             preheatStateName = RMS_Preheat.getStateName(preheatState),
@@ -309,8 +310,8 @@ function RMS_DebugSnapshot.build(vehicle)
             pendingSelectedBreakdowns = copyPlainValue(spec.pendingSelectedBreakdowns or {}),
             pendingInspectionQueue = copyPlainValue(spec.pendingInspectionQueue or {}),
             pendingRepairQueue = copyPlainValue(spec.pendingRepairQueue or {}),
-            pendingMaintenanceServiceStart = tonumber(spec.pendingMaintenanceServiceStart),
-            pendingMaintenanceServiceTarget = tonumber(spec.pendingMaintenanceServiceTarget),
+            pendingServiceClockStart = copyPlainValue(spec.pendingServiceClockStart or {}),
+            pendingServiceClockTarget = copyPlainValue(spec.pendingServiceClockTarget or {}),
             pendingPreventiveSystemStressStart = copyPlainValue(spec.pendingPreventiveSystemStressStart or {}),
             pendingPreventiveSystemStressTarget = copyPlainValue(spec.pendingPreventiveSystemStressTarget or {}),
             pendingOverhaulSystemStart = copyPlainValue(spec.pendingOverhaulSystemStart or {}),
@@ -319,7 +320,6 @@ function RMS_DebugSnapshot.build(vehicle)
             pendingOverhaulSystemStressTarget = copyPlainValue(spec.pendingOverhaulSystemStressTarget or {}),
             pendingRepairSystemStressStart = copyPlainValue(spec.pendingRepairSystemStressStart or {}),
             pendingRepairSystemStressTarget = copyPlainValue(spec.pendingRepairSystemStressTarget or {}),
-            aiWorkerApplyTimer = tonumber(aiWorkerPid.applyTimer) or 0,
             implements = copyPlainValue(spec.implements or {}),
             isImplementLowered = spec.isImplementLowered == true,
             isImplementOperating = spec.isImplementOperating == true,
