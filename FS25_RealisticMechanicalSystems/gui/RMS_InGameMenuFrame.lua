@@ -146,7 +146,7 @@ local function buildVehicleRow(vehicle)
     local priceValue = currentValue or 0
     local lastInspectionDate = vehicle:getLastInspectionDate()
     local lastMaintenanceDate = vehicle:getLastMaintenanceDate()
-    local _, intervalCurrent, intervalTotal = vehicle:getNextServiceClock()
+    local intervalCurrent, intervalTotal = vehicle:getServiceCountdown()
     local operatingHours = getVehicleOperatingHoursValue(vehicle)
     local intervalColor = {1, 1, 1, 1}
     local intervalRatio = intervalTotal ~= nil and intervalTotal > 0 and ((intervalCurrent or 0) / intervalTotal) or 0

@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Kontak açık: ön ısıtma sürüyor"/>
         <text name="rms_preheat_system_failure_message" text="Ön ısıtma sistemi arızası: soğuk çalıştırma kullanılamıyor"/>
         <text name="rms_preheat_start_failed_message" text="Motor çalışmadı: yeniden denemeden önce kontağı kapat"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Aracı kontrol et"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="Tamam"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Kendi Atölyen 7/24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Kendi atölyeni günün her saatinde kullanıma hazır tutar."/>
         <text name="rms_instantInspection_label" text="Anında Muayene"/>
-        <text name="rms_instantInspection_tooltip" text="Etkinleştirildiğinde atölyedeki muayeneler anında tamamlanır. Bu türde devam eden işler de hemen tamamlanır."/>
+        <text name="rms_instantInspection_tooltip" text="Etkinleştirildiğinde atölyedeki muayeneler anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
         <text name="rms_instantMaintenanceRepair_label" text="Anında Bakım ve Onarım"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Etkinleştirildiğinde atölyedeki bakım ve onarımlar anında tamamlanır. Bu türde devam eden işler de hemen tamamlanır."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Etkinleştirildiğinde atölyedeki bakım ve onarımlar anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
         <text name="rms_instantBodywork_label" text="Anında Boyama"/>
-        <text name="rms_instantBodywork_tooltip" text="Etkinleştirildiğinde atölyedeki boyama işlemleri anında tamamlanır. Bu türde devam eden işler de hemen tamamlanır."/>
+        <text name="rms_instantBodywork_tooltip" text="Etkinleştirildiğinde atölyedeki boyama işlemleri anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
         <text name="rms_instantOverhaul_label" text="Anında Mekanik Revizyon"/>
-        <text name="rms_instantOverhaul_tooltip" text="Etkinleştirildiğinde atölyedeki mekanik revizyonlar anında tamamlanır. Bu türde devam eden işler de hemen tamamlanır."/>
+        <text name="rms_instantOverhaul_tooltip" text="Etkinleştirildiğinde atölyedeki mekanik revizyonlar anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
         <text name="rms_debugMode_label" text="Hata Ayıklama Modu"/>
         <text name="rms_debugMode_tooltip" text="Konsoldaki hata ayıklama panelini ve ayrıntılı günlükleri etkinleştirir."/>
         <text name="rms_warningMessages_label" text="Uyarı Mesajları"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Yaş"/>
         <text name="rms_ws_label_operating_hours" text="Çalışma Saatleri"/>
         <text name="rms_ws_label_service" text="Bakım Seviyesi"/>
-        <text name="rms_ws_label_next_service" text="Sonraki Bakım"/>
-        <text name="rms_ws_value_service_overdue" text="%s gecikti"/>
+        <text name="rms_ws_label_maintenance_standard" text="Standart Bakım"/>
+        <text name="rms_ws_label_maintenance_extended" text="Genişletilmiş Bakım"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Önleyici Bakım"/>
         <text name="rms_ws_label_condition" text="Durum"/>
         <text name="rms_ws_label_reliability" text="Güvenilirlik"/>
         <text name="rms_ws_label_overhaul_count" text="Yapılan Revizyonlar"/>
@@ -545,7 +547,7 @@
         <text name="rms_option_menu_perform_repair" text="Otomatik Onarım"/>
         <text name="rms_option_menu_perform_maintenance" text="Otomatik Bakım"/>
         <text name="rms_option_menu_warranty_repair_text" text="Garanti Kapsamında Onarım"/>
-        <text name="rms_warranty_dealer_info" text="Bayi garantisi, 12 aydan ve 20 çalışma saatinden genç sahip olunan araçlar için: standart onarım, orijinal parçalar ve gerekli sıvılar."/>
+        <text name="rms_warranty_dealer_info" text="Bayi garantisi, 12 aydan genç ve 20 çalışma saatinden az kullanılmış sahip olunan araçlar için: standart onarım, orijinal parçalar ve gerekli sıvılar."/>
         <text name="rms_option_menu_duration_text" text="Süre"/>
         <text name="rms_option_menu_duration_instant" text="Anında"/>
         <text name="rms_option_menu_finish_time_text" text="Bitiş Saati"/>
@@ -560,21 +562,18 @@
         <text name="rms_option_menu_repair_type_replacement_description" text="Standart değişim: arızayı giderir ve arızalı bileşeni değiştirir. Etkilenen sistemdeki mekanik zorlanma kısmen azaltılır."/>
         <text name="rms_option_menu_repair_type_advanced_description" text="Gelişmiş onarım: arızayı giderir, arızalı bileşeni değiştirir ve etkilenen sistemde biriken mekanik zorlanmayı sıfırlar."/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="Sonraki işlem ayrı ücretlendirilir. Gerekli sıvılar işlem başladığında sağlanır veya stoktan alınır."/>
-        <text name="rms_bodywork_touchup" text="Boya rötuşları"/>
-        <text name="rms_bodywork_full" text="Tam yeniden boyama"/>
-        <text name="rms_bodywork_colors_title" text="Araç renkleri"/>
-        <text name="rms_bodywork_keep_color" text="Geçerli rengi koru"/>
-        <text name="rms_bodywork_reset_color" text="Geçerli"/>
-        <text name="rms_bodywork_wear" text="Boya hasarı"/>
+        <text name="rms_bodywork_touchup" text="Boya Rötuşları"/>
+        <text name="rms_bodywork_full" text="Tam Yeniden Boyama"/>
+        <text name="rms_bodywork_colors_title" text="Araç Renkleri"/>
+        <text name="rms_bodywork_wear" text="Boya Hasarı"/>
         <text name="rms_bodywork_unavailable" text="Kullanılamıyor"/>
-        <text name="rms_bodywork_ineligible" text="Bu araçta veya bu atölyede hizmet kullanılamıyor"/>
+        <text name="rms_bodywork_ineligible" text="Bu araç için veya bu atölyede işlem yapılamıyor"/>
         <text name="rms_bodywork_no_wear" text="Onarılacak boya hasarı yok"/>
         <text name="rms_bodywork_wear_limit" text="Boya rötuşu %30 hasara kadar yapılabilir"/>
         <text name="rms_bodywork_touchup_description" text="Küçük boya hasarlarını onarır. Mevcut renkler korunur."/>
-        <text name="rms_bodywork_full_description" text="Boyayı yeniler. Bu araç için sunulan renkleri seçin veya mevcut renkleri koruyun."/>
-        <text name="rms_bodywork_touchup_colors" text="Geçerli renk korunur."/>
+        <text name="rms_bodywork_full_description" text="Boyayı yeniler. Bu araç için sunulan renkleri seç veya mevcut renkleri koru."/>
         <text name="rms_bodywork_no_colors" text="Bu araçta seçilebilir renk yok. Geçerli renkler korunur."/>
-        <text name="rms_bodywork_unavailable_title" text="Hizmet kullanılamıyor"/>
+        <text name="rms_bodywork_unavailable_title" text="İşlem Kullanılamıyor"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Muayene Raporu"/>
         <text name="rms_report_vehicle_specs_title" text="Araç Özellikleri"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Aktarmayı durdur"/>
         <text name="rms_fluid_select_vehicle_title" text="Araç Seçimi"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Doldurulacak aracı seç"/>
-        <text name="rms_fluid_select_circuit_title" text="Devre Seçimi"/>
         <text name="rms_fluid_select_circuit_prompt" text="Doldurulacak devreyi seç"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Eklenecek sıvıyı seç"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Motor Yağı"/>
         <text name="rms_fluid_circuit_coolant" text="Soğutma Sıvısı"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Şanzıman Yağı"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hidrolik Yağı"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Şanzıman ve Hidrolik Yağı"/>
         <text name="rms_fluid_hud_engineOil" text="Motor Yağı"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Şanzıman Yağı"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Şanz./Hidrolik Yağı"/>
         <text name="rms_fluid_hud_coolant" text="Soğutma Sıvısı"/>
         <text name="rms_fluid_incompatible_title" text="Uyumsuz Sıvı"/>
         <text name="rms_fluid_incompatible_message" text="Bu ürün bu devre için uygun değil. Devreyi kirletir ve sistem aşınmasını 3 katına çıkarabilir, ısınmayı artırabilir veya hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Diferansiyel kilidi devredeyken tutunmalı zeminde dönüyorsun. Virajda iç ve dış tekerlekler farklı mesafeler kat eder ancak kilit onları aynı hızda dönmeye zorlar: aktarma organlarında zorlanma birikir ve şanzıman aşınması hızlanır. Dönmeden önce kilidi bırak."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Çekiş Modları ve Diferansiyel Kilidi"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Bu makinede çekiş modunu seçebilirsin: 2WD, 4WD veya patinaj başlar başlamaz ön aksı devreye alan OTO.&#10;&#10;Diferansiyel kilidi tutuş kalmadığında çekiş sağlar ancak tutunmalı zeminde virajın bedeli ağırdır: iç ve dış tekerlekler aynı hızda dönemez ve yükü aktarma organları taşır. Dönmeden önce kilidi devre dışı bırak."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Arabalı Telwin şarj cihazı, 12 V’ta 150 A. Aracın yanına bağla ve akünün şarj olmasını bekle. Şarj, oyundaki zaman hızına göre ilerler. Marş desteği (START, 200 A)."/>
+        <text name="rms_charger_start" text="Şarj cihazını bağla"/>
+        <text name="rms_charger_disconnect" text="Şarj cihazını ayır"/>
+        <text name="rms_charger_select" text="Bağlanacak aracı seçin."/>
+        <text name="rms_charger_no_vehicle" text="4 m içinde uygun araç yok. Araç çiftliğine ait olmalı, hareketsiz ve motoru kapalı olmalıdır."/>
+        <text name="rms_charger_idle" text="Kullanılabilir"/>
+        <text name="rms_charger_charging" text="Şarj ediliyor"/>
+        <text name="rms_charger_full" text="Akü şarj edildi"/>
+        <text name="rms_charger_interrupted" text="Şarj kesildi"/>
+        <text name="rms_charger_interrupted_reason" text="Şarj kesildi. %s"/>
+        <text name="rms_charger_status" text="Durum"/>
+        <text name="rms_charger_battery" text="Akü"/>
+        <text name="rms_charger_voltage" text="Gerilim"/>
+        <text name="rms_charger_current" text="Çıkış Akımı"/>
+        <text name="rms_charger_consumers" text="Farları ve aksesuarları kapat."/>
+        <text name="rms_charger_error_unavailable" text="Araç yok veya desteklenmiyor."/>
+        <text name="rms_charger_error_access" text="Bu araç başka bir çiftliğe ait."/>
+        <text name="rms_charger_error_distance" text="Şarj cihazını 4 m içine yaklaştır."/>
+        <text name="rms_charger_error_motor" text="Şarj cihazını bağlamadan önce motoru durdur."/>
+        <text name="rms_charger_error_moving" text="Araç hareket ediyor."/>
+        <text name="rms_charger_error_service" text="Atölye işlemi devam ediyor."/>
+        <text name="rms_charger_error_cables" text="Takviye kablolarını ayır."/>
+        <text name="rms_charger_error_busy" text="Bir şarj cihazı zaten bağlı."/>
+        <text name="rms_charger_error_full" text="Bu akü zaten şarj edilmiş."/>
+        <text name="rms_charger_connected" text="Şarj cihazı bağlandı. Şarj başladı."/>
+        <text name="rms_charger_disconnected" text="Şarj cihazının bağlantısı kesildi."/>
+        <text name="rms_charger_stopped_motor" text="Şarj durdu: motor çalıştırma"/>
+        <text name="rms_charger_error_player_distance" text="Şarj cihazına yürüyerek yaklaş."/>
+        <text name="rms_charger_mode_select" text="Şarj cihazını bağla"/>
+        <text name="rms_charger_mode_start" text="Marş desteği (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START hazır"/>
+        <text name="rms_charger_start_active" text="Marş desteği etkin"/>
+        <text name="rms_charger_start_running" text="Motor çalıştı: bağlantıyı kes"/>
+        <text name="rms_charger_start_countdown" text="Bekleyin: %d sn"/>
+        <text name="rms_charger_start_wait" text="İki çalıştırma arasında 30 saniye bekleyin."/>
+        <text name="rms_charger_unplug_before_start" text="Çalıştırmadan önce şarj cihazını ayırın veya START seçin."/>
+        <text name="rms_charger_start_connected" text="Marş desteği (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Aküyü şarj et (150 A)"/>
     </texts>
 </l10n>

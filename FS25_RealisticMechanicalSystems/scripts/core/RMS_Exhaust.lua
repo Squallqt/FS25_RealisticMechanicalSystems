@@ -1208,38 +1208,39 @@ local function loadPlumeSources()
     return true
 end
 
----Hands the exhaust over to the plumes, silencing what the engine and the vehicle draw on their own
+---Hands the exhaust over to the plumes, silencing what the engine and the vehicle draw on their own, or gives it
+-- back as the engine leaves it for the motor state, drawn while the motor runs and silent once it stops
 -- the engine keeps its scale limits in the same table as its particle systems, hence the type check
 -- @param table vehicle vehicle
 -- @param table effects exhaust effects
 -- @param boolean isNative true to give the engine its exhaust back
 local function setNativeExhaustState(vehicle, effects, isNative)
+    local isDrawn = isNative and getIsSmokeRendered(vehicle)
     local motorizedSpec = vehicle.spec_motorized
     if motorizedSpec.exhaustParticleSystems ~= nil then
         for _, particleSystem in pairs(motorizedSpec.exhaustParticleSystems) do
             if type(particleSystem) == "table" then
-                ParticleUtil.setEmittingState(particleSystem, isNative)
+                ParticleUtil.setEmittingState(particleSystem, isDrawn)
             end
         end
     end
 
     if motorizedSpec.effects ~= nil and g_effectManager ~= nil then
-        if not isNative then
-            g_effectManager:stopEffects(motorizedSpec.effects)
-        elseif getIsSmokeRendered(vehicle) then
+        if isDrawn then
             g_effectManager:startEffects(motorizedSpec.effects)
+        else
+            g_effectManager:stopEffects(motorizedSpec.effects)
         end
     end
 
-    -- the engine hides this node at load and never shows it, so hidden is the state to hand back
     for _, effect in pairs(effects) do
-        setVisibility(effect.effectNode, false)
+        setVisibility(effect.effectNode, isDrawn)
     end
 end
 
 ---Keeps what the engine and the vehicle draw at the exhaust silent while the plume owns it
--- the engine turns its exhaust particles back on at a motor start and drives the motor effects of the vehicle
--- with the rpm, so a second smoke would appear next to the plume, at the base of the pipe on some models
+-- every motor start shows the exhaust effect, frees the exhaust particles and starts the motor effects again,
+-- which would draw the native smoke and heat shimmer over the plume
 -- @param table vehicle vehicle
 local function enforceNativeSilence(vehicle)
     local motorizedSpec = vehicle.spec_motorized
@@ -1253,6 +1254,12 @@ local function enforceNativeSilence(vehicle)
 
     if motorizedSpec.effects ~= nil and g_effectManager ~= nil then
         g_effectManager:stopEffects(motorizedSpec.effects)
+    end
+
+    for _, effect in pairs(motorizedSpec.exhaustEffects) do
+        if getVisibility(effect.effectNode) then
+            setVisibility(effect.effectNode, false)
+        end
     end
 end
 

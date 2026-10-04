@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="點火開關已打開：正在預熱"/>
         <text name="rms_preheat_system_failure_message" text="預熱系統故障：無法冷啟動"/>
         <text name="rms_preheat_start_failed_message" text="發動機未啟動：再次嘗試前請關閉點火開關"/>
+        <text name="rms_hud_vehicle_notification" text="%s：%s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="進行班前檢查"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="確定"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="車齡"/>
         <text name="rms_ws_label_operating_hours" text="工作小時"/>
         <text name="rms_ws_label_service" text="保養水準"/>
-        <text name="rms_ws_label_next_service" text="下次保養"/>
-        <text name="rms_ws_value_service_overdue" text="逾期%s"/>
+        <text name="rms_ws_label_maintenance_standard" text="標準保養"/>
+        <text name="rms_ws_label_maintenance_extended" text="加強保養"/>
+        <text name="rms_ws_label_maintenance_preventive" text="預防性保養"/>
         <text name="rms_ws_label_condition" text="狀況"/>
         <text name="rms_ws_label_reliability" text="可靠性"/>
         <text name="rms_ws_label_overhaul_count" text="大修次數"/>
@@ -545,7 +547,7 @@
         <text name="rms_option_menu_perform_repair" text="自動修理"/>
         <text name="rms_option_menu_perform_maintenance" text="自動保養"/>
         <text name="rms_option_menu_warranty_repair_text" text="保固修理"/>
-        <text name="rms_warranty_dealer_info" text="經銷商保固：自有車輛車齡未滿12個月且運作未滿20小時，標準維修、原廠零件及所需油液均在保固範圍內。"/>
+        <text name="rms_warranty_dealer_info" text="經銷商保固：自有機具車齡未滿12個月且運作未滿20小時，標準維修、原廠零件及所需油液均在保固範圍內。"/>
         <text name="rms_option_menu_duration_text" text="時間"/>
         <text name="rms_option_menu_duration_instant" text="即時"/>
         <text name="rms_option_menu_finish_time_text" text="完成時間"/>
@@ -562,19 +564,16 @@
         <text name="rms_option_menu_follow_up_separate_transaction" text="後續作業將單獨收費。所需油液會在作業開始時供應或從庫存中取用。"/>
         <text name="rms_bodywork_touchup" text="補漆"/>
         <text name="rms_bodywork_full" text="完整噴漆"/>
-        <text name="rms_bodywork_colors_title" text="車輛顏色"/>
-        <text name="rms_bodywork_keep_color" text="保留目前顏色"/>
-        <text name="rms_bodywork_reset_color" text="目前"/>
+        <text name="rms_bodywork_colors_title" text="機具顏色"/>
         <text name="rms_bodywork_wear" text="漆面損傷"/>
         <text name="rms_bodywork_unavailable" text="無法使用"/>
-        <text name="rms_bodywork_ineligible" text="此車輛或此維修廠無法提供這項服務"/>
+        <text name="rms_bodywork_ineligible" text="此機具或此維修廠無法進行這項作業"/>
         <text name="rms_bodywork_no_wear" text="沒有需要修復的漆面損傷"/>
         <text name="rms_bodywork_wear_limit" text="漆面損傷不超過30%時可補漆"/>
-        <text name="rms_bodywork_touchup_description" text="修復輕微漆面損傷，保留車輛目前的配色。"/>
-        <text name="rms_bodywork_full_description" text="翻新漆面。可選擇此車輛提供的顏色，或保留目前的配色。"/>
-        <text name="rms_bodywork_touchup_colors" text="保留目前顏色。"/>
-        <text name="rms_bodywork_no_colors" text="此車輛沒有可選顏色，將保留目前配色。"/>
-        <text name="rms_bodywork_unavailable_title" text="服務無法使用"/>
+        <text name="rms_bodywork_touchup_description" text="修復輕微漆面損傷，保留機具目前的配色。"/>
+        <text name="rms_bodywork_full_description" text="翻新漆面。可選擇此機具提供的顏色，或保留目前的配色。"/>
+        <text name="rms_bodywork_no_colors" text="此機具沒有可選顏色，將保留目前配色。"/>
+        <text name="rms_bodywork_unavailable_title" text="作業無法使用"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="檢查報告"/>
         <text name="rms_report_vehicle_specs_title" text="機具規格"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="停止輸送"/>
         <text name="rms_fluid_select_vehicle_title" text="選擇機具"/>
         <text name="rms_fluid_select_vehicle_prompt" text="請選擇要補充的機具"/>
-        <text name="rms_fluid_select_circuit_title" text="選擇回路"/>
         <text name="rms_fluid_select_circuit_prompt" text="請選擇要補充的回路"/>
+        <text name="rms_fluid_select_fluid_prompt" text="請選擇要加注的油液"/>
+        <text name="rms_fluid_pour_option" text="%s，%s（%s）"/>
         <text name="rms_fluid_circuit_engineOil" text="發動機機油"/>
         <text name="rms_fluid_circuit_coolant" text="冷卻液"/>
         <text name="rms_fluid_circuit_transmissionOil" text="變速箱油"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="液壓油"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="變速箱與液壓共用油"/>
         <text name="rms_fluid_hud_engineOil" text="發動機機油"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="變速箱油"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="變速箱與液壓油"/>
         <text name="rms_fluid_hud_coolant" text="冷卻液"/>
         <text name="rms_fluid_incompatible_title" text="油液不相容"/>
         <text name="rms_fluid_incompatible_message" text="此產品不適用於該回路。它會污染回路，並可能使系統磨損增加至3倍、溫度升高或液壓功能變慢。只有完全更換油液才能清除污染。是否繼續？"/>
@@ -840,7 +840,7 @@
         <text name="rms_tutorial_service_interval_expired_message" text="%s的保養間隔已超期。&#10;&#10;請盡快前往維修廠並選擇「保養」。繼續使用保養逾期的機具會大幅增加同時發生多個故障的風險。"/>
         <text name="rms_tutorial_steering_title" text="原地轉向"/>
         <text name="rms_tutorial_steering_message" text="應避免原地轉向。這會給轉向機構和前軸零組件施加很大負載，增加行走裝置的磨損。&#10;&#10;請先稍微向前移動再轉向，車輪會更容易轉動。"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="散熱器或空氣濾清器已堵塞。看向載具時按住%s鍵，確認是哪個部件。使用壓縮空氣吹風機清潔。如果濾清器無法繼續吹掃清潔，請在維修廠選擇加強或預防性保養來更換。"/>
+        <text name="rms_tutorial_cooling_air_check_message" text="散熱器或空氣濾清器已堵塞。看向機具時按住%s鍵，確認是哪個部件。使用壓縮空氣吹風機清潔。如果濾清器無法繼續吹掃清潔，請在維修廠選擇加強或預防性保養來更換。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="需要潤滑"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%s需要定期潤滑。&#10;&#10;在RMS中，潤滑水準會隨工作小時增加而下降。長時間停用後，重新投入使用前也需要潤滑。潤滑不足會加快底盤磨損。&#10;&#10;請在商店購買黃油槍，並在檢查要求時為機器加注潤滑脂。&#10;&#10;可以檢查潤滑水準：看向機具時按住%s鍵。"/>
         <text name="rms_tutorial_needs_repair_title" text="檢測到故障"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="差速鎖保持鎖定時，正在高附著力地面轉彎。轉彎時，內外側車輪行駛的距離不同，但差速鎖迫使它們以相同速度旋轉，因此傳動系統承受應力，變速箱磨損加快。請在轉彎前解除差速鎖。"/>
         <text name="rms_tutorial_drivetrain_modes_title" text="驅動模式與差速鎖"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="這臺機器可選擇兩輪驅動、四輪驅動或自動模式；自動模式會在車輪開始打滑時接合前軸。&#10;&#10;差速鎖能在失去附著力時獲得牽引力，但在高附著力地面轉彎會付出很大代價：內外側車輪無法以相同速度旋轉，傳動系統會承受全部應力。請在轉彎前解除差速鎖。"/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="推車式Telwin充電器，12 V時為150 A。在機具旁連接，讓電池充電。充電速度隨遊戲時間倍速變化。 啟動輔助 (START, 200 A)."/>
+        <text name="rms_charger_start" text="連接充電器"/>
+        <text name="rms_charger_disconnect" text="斷開充電器"/>
+        <text name="rms_charger_select" text="選擇要連接的車輛。"/>
+        <text name="rms_charger_no_vehicle" text="4 m範圍內沒有符合條件的機具。機具必須屬於自己的農場，保持靜止並關閉發動機。"/>
+        <text name="rms_charger_idle" text="可用"/>
+        <text name="rms_charger_charging" text="正在充電"/>
+        <text name="rms_charger_full" text="電池已充滿"/>
+        <text name="rms_charger_interrupted" text="充電中斷"/>
+        <text name="rms_charger_interrupted_reason" text="充電中斷。%s"/>
+        <text name="rms_charger_status" text="狀態"/>
+        <text name="rms_charger_battery" text="電池"/>
+        <text name="rms_charger_voltage" text="電壓"/>
+        <text name="rms_charger_current" text="輸出電流"/>
+        <text name="rms_charger_consumers" text="關閉燈光和配件。"/>
+        <text name="rms_charger_error_unavailable" text="機具不存在或不支援。"/>
+        <text name="rms_charger_error_access" text="該機具屬於其他農場。"/>
+        <text name="rms_charger_error_distance" text="將充電器移至4 m範圍內。"/>
+        <text name="rms_charger_error_motor" text="連接充電器前請關閉發動機。"/>
+        <text name="rms_charger_error_moving" text="機具正在移動。"/>
+        <text name="rms_charger_error_service" text="維修廠正在作業。"/>
+        <text name="rms_charger_error_cables" text="斷開跨接電纜。"/>
+        <text name="rms_charger_error_busy" text="已有充電器連接。"/>
+        <text name="rms_charger_error_full" text="這顆電池已充滿。"/>
+        <text name="rms_charger_connected" text="充電器已連接。充電已開始。"/>
+        <text name="rms_charger_disconnected" text="充電器已斷開。"/>
+        <text name="rms_charger_stopped_motor" text="充電停止：發動機啟動"/>
+        <text name="rms_charger_error_player_distance" text="下車並走近充電器。"/>
+        <text name="rms_charger_mode_select" text="連接充電器"/>
+        <text name="rms_charger_mode_start" text="啟動輔助 (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START已就緒"/>
+        <text name="rms_charger_start_active" text="正在輔助啟動"/>
+        <text name="rms_charger_start_running" text="引擎已啟動：請斷開"/>
+        <text name="rms_charger_start_countdown" text="等待：%d秒"/>
+        <text name="rms_charger_start_wait" text="兩次啟動之間請等待30秒。"/>
+        <text name="rms_charger_unplug_before_start" text="啟動前請斷開充電器或選擇START。"/>
+        <text name="rms_charger_start_connected" text="啟動輔助 (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="為電池充電 (150 A)"/>
     </texts>
 </l10n>

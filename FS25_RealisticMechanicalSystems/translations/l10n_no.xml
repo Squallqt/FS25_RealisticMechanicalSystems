@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Tenningen er på: forvarming pågår"/>
         <text name="rms_preheat_system_failure_message" text="Svikt i forvarmingssystemet: kaldstart er ikke mulig"/>
         <text name="rms_preheat_start_failed_message" text="Motoren startet ikke: slå av tenningen før du prøver igjen"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Kontroller kjøretøyet"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Døgnåpent eget verksted"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Holder ditt eget verksted tilgjengelig døgnet rundt."/>
         <text name="rms_instantInspection_label" text="Øyeblikkelig inspeksjon"/>
-        <text name="rms_instantInspection_tooltip" text="Når innstillingen er slått på, fullføres inspeksjoner på verkstedet øyeblikkelig. Arbeid av denne typen som allerede pågår, fullføres også øyeblikkelig."/>
+        <text name="rms_instantInspection_tooltip" text="Når innstillingen er slått på, fullføres inspeksjoner på verkstedet øyeblikkelig. Prosedyrer av denne typen som allerede pågår, fullføres også øyeblikkelig."/>
         <text name="rms_instantMaintenanceRepair_label" text="Øyeblikkelig vedlikehold og reparasjon"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Når innstillingen er slått på, fullføres vedlikehold og reparasjoner på verkstedet øyeblikkelig. Arbeid av denne typen som allerede pågår, fullføres også øyeblikkelig."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Når innstillingen er slått på, fullføres vedlikehold og reparasjoner på verkstedet øyeblikkelig. Prosedyrer av denne typen som allerede pågår, fullføres også øyeblikkelig."/>
         <text name="rms_instantBodywork_label" text="Øyeblikkelig lakkering"/>
-        <text name="rms_instantBodywork_tooltip" text="Når innstillingen er slått på, fullføres lakkering på verkstedet øyeblikkelig. Arbeid av denne typen som allerede pågår, fullføres også øyeblikkelig."/>
+        <text name="rms_instantBodywork_tooltip" text="Når innstillingen er slått på, fullføres lakkering på verkstedet øyeblikkelig. Prosedyrer av denne typen som allerede pågår, fullføres også øyeblikkelig."/>
         <text name="rms_instantOverhaul_label" text="Øyeblikkelig mekanisk overhaling"/>
-        <text name="rms_instantOverhaul_tooltip" text="Når innstillingen er slått på, fullføres mekanisk overhaling på verkstedet øyeblikkelig. Arbeid av denne typen som allerede pågår, fullføres også øyeblikkelig."/>
+        <text name="rms_instantOverhaul_tooltip" text="Når innstillingen er slått på, fullføres mekanisk overhaling på verkstedet øyeblikkelig. Prosedyrer av denne typen som allerede pågår, fullføres også øyeblikkelig."/>
         <text name="rms_debugMode_label" text="Feilsøkingsmodus"/>
         <text name="rms_debugMode_tooltip" text="Aktiverer feilsøkingspanelet og detaljert logging i konsollen."/>
         <text name="rms_warningMessages_label" text="Varselmeldinger"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Alder"/>
         <text name="rms_ws_label_operating_hours" text="Driftstimer"/>
         <text name="rms_ws_label_service" text="Vedlikeholdsnivå"/>
-        <text name="rms_ws_label_next_service" text="Neste vedlikehold"/>
-        <text name="rms_ws_value_service_overdue" text="overskredet med %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Standardvedlikehold"/>
+        <text name="rms_ws_label_maintenance_extended" text="Utvidet vedlikehold"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Forebyggende vedlikehold"/>
         <text name="rms_ws_label_condition" text="Tilstand"/>
         <text name="rms_ws_label_reliability" text="Pålitelighet"/>
         <text name="rms_ws_label_overhaul_count" text="Utførte overhalinger"/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Lakkreparasjoner"/>
         <text name="rms_bodywork_full" text="Full omlakkering"/>
         <text name="rms_bodywork_colors_title" text="Kjøretøyets farger"/>
-        <text name="rms_bodywork_keep_color" text="Behold gjeldende farge"/>
-        <text name="rms_bodywork_reset_color" text="Gjeldende"/>
         <text name="rms_bodywork_wear" text="Lakkskader"/>
         <text name="rms_bodywork_unavailable" text="Ikke tilgjengelig"/>
-        <text name="rms_bodywork_ineligible" text="Tjenesten er ikke tilgjengelig for dette kjøretøyet eller på dette verkstedet"/>
+        <text name="rms_bodywork_ineligible" text="Prosedyren er ikke tilgjengelig for dette kjøretøyet eller på dette verkstedet"/>
         <text name="rms_bodywork_no_wear" text="Ingen lakkskader å reparere"/>
         <text name="rms_bodywork_wear_limit" text="Lakkreparasjon er tilgjengelig ved opptil 30 % lakkskade"/>
         <text name="rms_bodywork_touchup_description" text="Utbedrer mindre lakkskader. De nåværende fargene beholdes."/>
         <text name="rms_bodywork_full_description" text="Fornyer lakken. Velg blant kjøretøyets tilgjengelige farger, eller behold de nåværende."/>
-        <text name="rms_bodywork_touchup_colors" text="Gjeldende farge beholdes."/>
-        <text name="rms_bodywork_no_colors" text="Kjøretøyet har ingen valgbare farger. Gjeldende farger beholdes."/>
-        <text name="rms_bodywork_unavailable_title" text="Tjenesten er ikke tilgjengelig"/>
+        <text name="rms_bodywork_no_colors" text="Kjøretøyet har ingen valgbare farger. De nåværende fargene beholdes."/>
+        <text name="rms_bodywork_unavailable_title" text="Prosedyren er ikke tilgjengelig"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Inspeksjonsrapport"/>
         <text name="rms_report_vehicle_specs_title" text="Kjøretøyets spesifikasjoner"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Stopp overføringen"/>
         <text name="rms_fluid_select_vehicle_title" text="Valg av kjøretøy"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Velg kjøretøyet som skal fylles"/>
-        <text name="rms_fluid_select_circuit_title" text="Valg av krets"/>
         <text name="rms_fluid_select_circuit_prompt" text="Velg kretsen som skal fylles"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Velg væsken som skal fylles på"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorolje"/>
         <text name="rms_fluid_circuit_coolant" text="Kjølevæske"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmisjonsolje"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulikkolje"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmisjons- og hydraulikkolje"/>
         <text name="rms_fluid_hud_engineOil" text="Motorolje"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Transmisjonsolje"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Transm./hydr.-olje"/>
         <text name="rms_fluid_hud_coolant" text="Kjølevæske"/>
         <text name="rms_fluid_incompatible_title" text="Uegnet væske"/>
         <text name="rms_fluid_incompatible_message" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan tredoble slitasjen på systemet, øke varmen eller gjøre hydraulikken langsommere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Du svinger på et underlag med godt feste med differensialsperren aktivert. I en sving kjører de indre og ytre hjulene ulike strekninger, men differensialsperren tvinger dem til å gå med samme hastighet: drivlinjen kommer under belastning, og slitasjen på den stiger. Deaktiver sperren før du svinger."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Trekkmodus og differensialsperre"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Denne maskinen lar deg velge trekket sitt: bakhjulstrekk, firehjulstrekk eller AUTO, som kobler til forakselen så snart hjulene spinner.&#10;&#10;Differensialsperren finner feste der det ikke er mer igjen, men den koster dyrt i sving på et underlag med godt feste: de indre og ytre hjulene kan ikke gå med samme hastighet, og det er drivlinjen som tar støyten. Deaktiver den før du svinger."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Telwin-lader på vogn, 150 A ved 12 V. Koble den til ved kjøretøyet, og la batteriet lades. Ladingen følger spillets tidshastighet. Starthjelp (START, 200 A)."/>
+        <text name="rms_charger_start" text="Koble til laderen"/>
+        <text name="rms_charger_disconnect" text="Koble fra laderen"/>
+        <text name="rms_charger_select" text="Velg kjøretøyet som skal tilkobles."/>
+        <text name="rms_charger_no_vehicle" text="Ingen egnet kjøretøy innen 4 m. Det må tilhøre gården din, stå stille og ha motoren avslått."/>
+        <text name="rms_charger_idle" text="Tilgjengelig"/>
+        <text name="rms_charger_charging" text="Lading pågår"/>
+        <text name="rms_charger_full" text="Batteri ladet"/>
+        <text name="rms_charger_interrupted" text="Lading avbrutt"/>
+        <text name="rms_charger_interrupted_reason" text="Lading avbrutt. %s"/>
+        <text name="rms_charger_status" text="Status"/>
+        <text name="rms_charger_battery" text="Batteri"/>
+        <text name="rms_charger_voltage" text="Spenning"/>
+        <text name="rms_charger_current" text="Levert strøm"/>
+        <text name="rms_charger_consumers" text="Slå av lys og tilbehør."/>
+        <text name="rms_charger_error_unavailable" text="Kjøretøyet mangler eller støttes ikke."/>
+        <text name="rms_charger_error_access" text="Dette kjøretøyet tilhører en annen gård."/>
+        <text name="rms_charger_error_distance" text="Flytt laderen innen 4 m."/>
+        <text name="rms_charger_error_motor" text="Slå av motoren før laderen kobles til."/>
+        <text name="rms_charger_error_moving" text="Kjøretøyet beveger seg."/>
+        <text name="rms_charger_error_service" text="En verkstedprosedyre pågår."/>
+        <text name="rms_charger_error_cables" text="Koble fra startkablene."/>
+        <text name="rms_charger_error_busy" text="En lader er allerede tilkoblet."/>
+        <text name="rms_charger_error_full" text="Dette batteriet er allerede ladet."/>
+        <text name="rms_charger_connected" text="Lader tilkoblet. Lading startet."/>
+        <text name="rms_charger_disconnected" text="Lader frakoblet."/>
+        <text name="rms_charger_stopped_motor" text="Ladestopp: motorstart"/>
+        <text name="rms_charger_error_player_distance" text="Gå bort til laderen."/>
+        <text name="rms_charger_mode_select" text="Koble til laderen"/>
+        <text name="rms_charger_mode_start" text="Starthjelp (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START klar"/>
+        <text name="rms_charger_start_active" text="Starthjelp aktiv"/>
+        <text name="rms_charger_start_running" text="Motor startet: koble fra"/>
+        <text name="rms_charger_start_countdown" text="Vent: %d s"/>
+        <text name="rms_charger_start_wait" text="Vent de 30 sekundene mellom to starter."/>
+        <text name="rms_charger_unplug_before_start" text="Koble fra laderen eller velg START før motorstart."/>
+        <text name="rms_charger_start_connected" text="Starthjelp (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Lad et batteri (150 A)"/>
     </texts>
 </l10n>

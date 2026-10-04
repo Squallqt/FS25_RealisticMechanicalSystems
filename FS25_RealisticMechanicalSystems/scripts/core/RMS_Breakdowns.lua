@@ -2607,6 +2607,15 @@ end
 -- @param boolean noEventSend no event send
 -- @param boolean passed true once the start already went through
 function RMS_Breakdowns.startMotor(self, superFunc, noEventSend, passed)
+    if RMS_BatteryCharger ~= nil then
+        local reason = RMS_BatteryCharger.getStartBlockReason(self)
+        if reason ~= nil then
+            if self.isClient and self:getIsActiveForInput(true) then
+                g_currentMission:showBlinkingWarning(g_i18n:getText(reason), 2000)
+            end
+            return
+        end
+    end
     local spec = self.spec_RealisticMechanicalSystems
     local engineFailure = spec and spec.activeEffects.ENGINE_FAILURE
     local engineHardStart = spec and spec.activeEffects.ENGINE_HARD_START_MODIFIER
@@ -2922,6 +2931,12 @@ RMS_Breakdowns.EffectApplicators.LIGHTS_FLICKER_CHANCE = {
 RMS_Breakdowns.EffectApplicators.EMPTY_EFFECT = {
 }
 
+---Preserves native warnings and explains charger process or recovery restrictions.
+function RMS_Breakdowns.getMotorNotAllowedWarning(self, superFunc)
+    if RMS_BatteryCharger ~= nil then return RMS_BatteryCharger.getMotorNotAllowedWarning(self, superFunc) end
+    return superFunc(self)
+end
+
 ---Blocks the engine from running while a fault or the preheat sequence forbids it
 -- @param table self vehicle
 -- @param function superFunc super function
@@ -2931,6 +2946,8 @@ function RMS_Breakdowns.getCanMotorRun(self, superFunc)
     if spec == nil or spec.isExcludedVehicle then
         return superFunc(self)
     end
+
+    if RMS_BatteryCharger ~= nil and RMS_BatteryCharger.getStartBlockReason(self) ~= nil then return false end
 
     if (spec and spec.activeEffects.ENGINE_FAILURE) then
         if not spec.activeEffects.ENGINE_FAILURE.extraData.starter then

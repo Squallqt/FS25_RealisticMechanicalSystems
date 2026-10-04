@@ -15,6 +15,7 @@ RMS_FluidTransfer.RESULT = {
     OUT_OF_RANGE = "OUT_OF_RANGE",
     MOTOR_RUNNING = "MOTOR_RUNNING",
     VEHICLE_MOVING = "VEHICLE_MOVING",
+    SERVICE_BUSY = "SERVICE_BUSY",
     CIRCUIT_FULL = "CIRCUIT_FULL",
     WRONG_FLUID_CONFIRMATION_REQUIRED = "WRONG_FLUID_CONFIRMATION_REQUIRED",
     BUSY = "BUSY",
@@ -84,6 +85,10 @@ local function getRuntimeValidation(container, target, circuit, requester)
         return RMS_FluidTransfer.RESULT.OUT_OF_RANGE
     end
 
+    if target.isUnderService ~= nil and target:isUnderService() then
+        return RMS_FluidTransfer.RESULT.SERVICE_BUSY
+    end
+
     if target.getIsMotorStarted ~= nil and target:getIsMotorStarted() then
         return RMS_FluidTransfer.RESULT.MOTOR_RUNNING
     end
@@ -146,6 +151,9 @@ function RMS_FluidTransfer.tryStart(container, target, circuit, requester, incom
         requesterUserId = requester.userId,
         requesterFarmId = requester.farmId
     }
+    container:raiseDirtyFlags(containerSpec.dirtyFlag)
+    -- a container at rest is not updated by the game, and its update pours the fluid
+    container:raiseActive()
     return true, RMS_FluidTransfer.RESULT.OK
 end
 
@@ -164,6 +172,7 @@ function RMS_FluidTransfer.cancel(container)
         targetSpec.fluidTransferLocks[transfer.circuit] = nil
     end
     containerSpec.activeTransfer = nil
+    container:raiseDirtyFlags(containerSpec.dirtyFlag)
 end
 
 local function getActiveRequester(transfer)
@@ -175,7 +184,7 @@ local function getActiveRequester(transfer)
     end
     return {
         userId = transfer.requesterUserId,
-        farmId = transfer.requesterFarmId,
+        farmId = player.farmId,
         player = player
     }
 end

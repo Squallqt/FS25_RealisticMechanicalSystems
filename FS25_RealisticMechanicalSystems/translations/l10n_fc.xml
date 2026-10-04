@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Contact mis : préchauffage en cours"/>
         <text name="rms_preheat_system_failure_message" text="Panne du système de préchauffage : démarrage à froid impossible"/>
         <text name="rms_preheat_start_failed_message" text="Le moteur n'a pas démarré : coupez le contact avant de réessayer"/>
+        <text name="rms_hud_vehicle_notification" text="%s : %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Contrôler le véhicule"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -48,7 +49,7 @@
         <text name="rms_instantMaintenanceRepair_label" text="Entretien et réparation instantanés"/>
         <text name="rms_instantMaintenanceRepair_tooltip" text="Lorsque l'option est activée, les entretiens et réparations en atelier se terminent instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
         <text name="rms_instantBodywork_label" text="Repeinture instantanée"/>
-        <text name="rms_instantBodywork_tooltip" text="Lorsque l’option est activée, la repeinture en atelier se termine instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
+        <text name="rms_instantBodywork_tooltip" text="Lorsque l'option est activée, la repeinture en atelier se termine instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
         <text name="rms_instantOverhaul_label" text="Révision mécanique instantanée"/>
         <text name="rms_instantOverhaul_tooltip" text="Lorsque l'option est activée, les révisions mécaniques en atelier se terminent instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
         <text name="rms_debugMode_label" text="Mode débogage"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Âge"/>
         <text name="rms_ws_label_operating_hours" text="Heures de fonctionnement"/>
         <text name="rms_ws_label_service" text="Niveau d'entretien"/>
-        <text name="rms_ws_label_next_service" text="Prochain entretien"/>
-        <text name="rms_ws_value_service_overdue" text="dépassé de %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Entretien standard"/>
+        <text name="rms_ws_label_maintenance_extended" text="Entretien étendu"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Entretien préventif"/>
         <text name="rms_ws_label_condition" text="État"/>
         <text name="rms_ws_label_reliability" text="Fiabilité"/>
         <text name="rms_ws_label_overhaul_count" text="Révisions effectuées"/>
@@ -531,8 +533,8 @@
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Si l'intervention révèle des pannes, enchaîne automatiquement une réparation standard avec des pièces d'origine."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Après la réparation, enchaîne automatiquement un entretien standard avec des consommables d'origine."/>
         <text name="rms_option_menu_overhaul_partial_description" text="Révision partielle : remet en bon état le système choisi, répare les pannes traitables et remplace son fluide si nécessaire."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Révision standard : remet en bon état tous les systèmes, répare les pannes traitables, remplace les fluides et renouvelle l’entretien."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Révision complète : remet tous les systèmes à neuf, répare les pannes traitables, remplace les fluides et renouvelle l’entretien."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Révision standard : remet en bon état tous les systèmes, répare les pannes traitables, remplace les fluides et renouvelle l'entretien."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Révision complète : remet tous les systèmes à neuf, répare les pannes traitables, remplace les fluides et renouvelle l'entretien."/>
         <text name="rms_option_menu_price_text" text="Prix"/>
         <text name="rms_option_menu_part_used_description" text="Pièces usagées : coût minimal, avec 50 % de risque de défaut ultérieur."/>
         <text name="rms_option_menu_part_aftermarket_description" text="Pièces adaptables : coût réduit, avec 33 % de risque de défaut ultérieur."/>
@@ -545,7 +547,7 @@
         <text name="rms_option_menu_perform_repair" text="Réparation automatique"/>
         <text name="rms_option_menu_perform_maintenance" text="Entretien automatique"/>
         <text name="rms_option_menu_warranty_repair_text" text="Réparation sous garantie"/>
-        <text name="rms_warranty_dealer_info" text="Garantie concessionnaire pour véhicule possédé avant 12 mois et avant 20 h : réparation standard, pièces d'origine et fluides nécessaires."/>
+        <text name="rms_warranty_dealer_info" text="Garantie concessionnaire pour un véhicule acheté, de moins de 12 mois et de moins de 20 h : réparation standard, pièces d'origine et fluides nécessaires."/>
         <text name="rms_option_menu_duration_text" text="Durée"/>
         <text name="rms_option_menu_duration_instant" text="Instantané"/>
         <text name="rms_option_menu_finish_time_text" text="Heure de fin"/>
@@ -562,18 +564,15 @@
         <text name="rms_option_menu_follow_up_separate_transaction" text="L'intervention suivante sera facturée séparément. Les fluides nécessaires seront fournis ou prélevés à son démarrage."/>
         <text name="rms_bodywork_touchup" text="Retouches"/>
         <text name="rms_bodywork_full" text="Peinture complète"/>
-        <text name="rms_bodywork_colors_title" text="Teintes du véhicule"/>
-        <text name="rms_bodywork_keep_color" text="Conserver la couleur"/>
-        <text name="rms_bodywork_reset_color" text="Actuelle"/>
-        <text name="rms_bodywork_wear" text="Dommages à la peinture"/>
+        <text name="rms_bodywork_colors_title" text="Couleurs du véhicule"/>
+        <text name="rms_bodywork_wear" text="Dégâts de peinture"/>
         <text name="rms_bodywork_unavailable" text="Indisponible"/>
         <text name="rms_bodywork_ineligible" text="Intervention indisponible pour ce véhicule ou dans cet atelier"/>
         <text name="rms_bodywork_no_wear" text="Aucun dégât de peinture à corriger"/>
         <text name="rms_bodywork_wear_limit" text="Retouches possibles jusqu'à 30 % de dégâts de peinture"/>
-        <text name="rms_bodywork_touchup_description" text="Répare les petits dommages à la peinture. Les couleurs actuelles sont conservées."/>
-        <text name="rms_bodywork_full_description" text="Refait la peinture à neuf. Choisissez les couleurs offertes pour ce véhicule ou gardez les couleurs actuelles."/>
-        <text name="rms_bodywork_touchup_colors" text="La teinte actuelle est conservée."/>
-        <text name="rms_bodywork_no_colors" text="Ce véhicule ne propose aucune couleur sélectionnable. Ses teintes sont conservées."/>
+        <text name="rms_bodywork_touchup_description" text="Répare les légers dégâts de peinture. Les couleurs actuelles sont conservées."/>
+        <text name="rms_bodywork_full_description" text="Remet la peinture à neuf. Choisissez de nouvelles couleurs parmi celles proposées pour ce véhicule ou gardez les actuelles."/>
+        <text name="rms_bodywork_no_colors" text="Ce véhicule ne propose aucune couleur sélectionnable. Ses couleurs actuelles sont conservées."/>
         <text name="rms_bodywork_unavailable_title" text="Intervention indisponible"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Rapport d'inspection"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Arrêter le transfert"/>
         <text name="rms_fluid_select_vehicle_title" text="Sélection du véhicule"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Choisissez le véhicule à remplir"/>
-        <text name="rms_fluid_select_circuit_title" text="Sélection du circuit"/>
         <text name="rms_fluid_select_circuit_prompt" text="Choisissez le circuit à remplir"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Choisissez le fluide à verser"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Huile moteur"/>
         <text name="rms_fluid_circuit_coolant" text="Liquide de refroidissement"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Huile de transmission"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Huile hydraulique"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Huile de transmission et hydraulique"/>
         <text name="rms_fluid_hud_engineOil" text="Huile moteur"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Huile transmission"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Huile transm./hydr."/>
         <text name="rms_fluid_hud_coolant" text="Liq. refroidissement"/>
         <text name="rms_fluid_incompatible_title" text="Fluide incompatible"/>
         <text name="rms_fluid_incompatible_message" text="Ce produit n'est pas prévu pour ce circuit. Il le contaminera et pourra multiplier l'usure du système par 3, augmenter sa chauffe ou ralentir l'hydraulique. Seule une vidange complète supprimera la contamination. Continuer ?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Vous braquez sur un sol adhérent avec le blocage de différentiel enclenché. Dans une courbe, les roues intérieures et extérieures parcourent des distances différentes, mais le blocage de différentiel les force à tourner à la même vitesse : la transmission se met sous contrainte et son usure s'accélère. Désenclenchez le blocage avant de braquer."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Modes de transmission et blocage"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Cette machine vous laisse choisir sa transmission : 2RM, 4RM ou AUTO, qui embraye le pont avant dès que les roues patinent.&#10;&#10;Le blocage de différentiel va chercher de l'adhérence là où il n'y en a plus, mais il coûte cher en virage sur sol adhérent : les roues intérieures et extérieures ne peuvent pas tourner à la même vitesse, et c'est la transmission qui encaisse. Désenclenchez-le avant de tourner."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Chargeur Telwin sur chariot, 150 A en 12 V. Branchez-le près du véhicule et laissez la batterie se recharger. La recharge suit la vitesse du temps de la partie. Aide au démarrage (START, 200 A)."/>
+        <text name="rms_charger_start" text="Brancher le chargeur"/>
+        <text name="rms_charger_disconnect" text="Débrancher le chargeur"/>
+        <text name="rms_charger_select" text="Choisissez le véhicule à raccorder."/>
+        <text name="rms_charger_no_vehicle" text="Aucun véhicule admissible à moins de 4 m. Le véhicule doit appartenir à votre ferme, avoir le moteur arrêté et être immobile."/>
+        <text name="rms_charger_idle" text="Disponible"/>
+        <text name="rms_charger_charging" text="Recharge en cours"/>
+        <text name="rms_charger_full" text="Batterie chargée"/>
+        <text name="rms_charger_interrupted" text="Recharge interrompue"/>
+        <text name="rms_charger_interrupted_reason" text="Recharge interrompue. %s"/>
+        <text name="rms_charger_status" text="État"/>
+        <text name="rms_charger_battery" text="Batterie"/>
+        <text name="rms_charger_voltage" text="Tension"/>
+        <text name="rms_charger_current" text="Courant délivré"/>
+        <text name="rms_charger_consumers" text="Éteignez les phares et accessoires."/>
+        <text name="rms_charger_error_unavailable" text="Véhicule absent ou non pris en charge."/>
+        <text name="rms_charger_error_access" text="Ce véhicule appartient à une autre ferme."/>
+        <text name="rms_charger_error_distance" text="Rapprochez le chargeur à moins de 4 m."/>
+        <text name="rms_charger_error_motor" text="Arrêtez le moteur avant de brancher le chargeur."/>
+        <text name="rms_charger_error_moving" text="Véhicule en mouvement."/>
+        <text name="rms_charger_error_service" text="Une intervention d'atelier est en cours."/>
+        <text name="rms_charger_error_cables" text="Débranchez les câbles de survoltage."/>
+        <text name="rms_charger_error_busy" text="Un chargeur est déjà raccordé."/>
+        <text name="rms_charger_error_full" text="Cette batterie est déjà chargée."/>
+        <text name="rms_charger_connected" text="Chargeur branché. Recharge en cours."/>
+        <text name="rms_charger_disconnected" text="Chargeur débranché."/>
+        <text name="rms_charger_stopped_motor" text="Recharge coupée : démarrage"/>
+        <text name="rms_charger_error_player_distance" text="Approchez-vous du chargeur à pied."/>
+        <text name="rms_charger_mode_select" text="Brancher le chargeur"/>
+        <text name="rms_charger_mode_start" text="Aide au démarrage (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START prêt"/>
+        <text name="rms_charger_start_active" text="Aide au démarrage en cours"/>
+        <text name="rms_charger_start_running" text="Moteur démarré : débranchez"/>
+        <text name="rms_charger_start_countdown" text="Attente : %d s"/>
+        <text name="rms_charger_start_wait" text="Attendez la fin des 30 secondes entre deux démarrages."/>
+        <text name="rms_charger_unplug_before_start" text="Débranchez le chargeur ou choisissez START avant de démarrer."/>
+        <text name="rms_charger_start_connected" text="Aide au démarrage (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Recharger une batterie (150 A)"/>
     </texts>
 </l10n>

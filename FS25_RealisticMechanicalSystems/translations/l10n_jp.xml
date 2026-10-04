@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="イグニッションON：予熱中"/>
         <text name="rms_preheat_system_failure_message" text="予熱システム故障：冷間始動不可"/>
         <text name="rms_preheat_start_failed_message" text="エンジンを始動できませんでした：再試行する前にイグニッションをOFFにしてください"/>
+        <text name="rms_hud_vehicle_notification" text="%s：%s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="車両を点検"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="個人ワークショップ24時間営業"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="個人ワークショップを昼夜を問わずいつでも利用できるようにします。"/>
         <text name="rms_instantInspection_label" text="即時点検"/>
-        <text name="rms_instantInspection_tooltip" text="有効にすると、整備工場での点検が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantInspection_tooltip" text="有効にすると、ワークショップでの点検が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
         <text name="rms_instantMaintenanceRepair_label" text="即時整備と修理"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="有効にすると、整備工場での整備と修理が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="有効にすると、ワークショップでの整備と修理が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
         <text name="rms_instantBodywork_label" text="即時塗装"/>
-        <text name="rms_instantBodywork_tooltip" text="有効にすると、整備工場での塗装作業が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantBodywork_tooltip" text="有効にすると、ワークショップでの塗装作業が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
         <text name="rms_instantOverhaul_label" text="即時機械オーバーホール"/>
-        <text name="rms_instantOverhaul_tooltip" text="有効にすると、整備工場での機械オーバーホールが即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantOverhaul_tooltip" text="有効にすると、ワークショップでの機械オーバーホールが即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
         <text name="rms_debugMode_label" text="デバッグモード"/>
         <text name="rms_debugMode_tooltip" text="デバッグパネルと詳細ログをコンソールに表示します。"/>
         <text name="rms_warningMessages_label" text="警告メッセージ"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="車齢"/>
         <text name="rms_ws_label_operating_hours" text="稼働時間"/>
         <text name="rms_ws_label_service" text="メンテナンスレベル"/>
-        <text name="rms_ws_label_next_service" text="次回メンテナンス"/>
-        <text name="rms_ws_value_service_overdue" text="%s超過"/>
+        <text name="rms_ws_label_maintenance_standard" text="標準メンテナンス"/>
+        <text name="rms_ws_label_maintenance_extended" text="拡張メンテナンス"/>
+        <text name="rms_ws_label_maintenance_preventive" text="予防メンテナンス"/>
         <text name="rms_ws_label_condition" text="状態"/>
         <text name="rms_ws_label_reliability" text="信頼性"/>
         <text name="rms_ws_label_overhaul_count" text="オーバーホール回数"/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="塗装の補修"/>
         <text name="rms_bodywork_full" text="全面再塗装"/>
         <text name="rms_bodywork_colors_title" text="車両の色"/>
-        <text name="rms_bodywork_keep_color" text="現在の色を維持"/>
-        <text name="rms_bodywork_reset_color" text="現在"/>
         <text name="rms_bodywork_wear" text="塗装の損傷"/>
         <text name="rms_bodywork_unavailable" text="利用不可"/>
-        <text name="rms_bodywork_ineligible" text="この車両または整備工場では利用できません"/>
+        <text name="rms_bodywork_ineligible" text="この車両またはワークショップでは利用できません"/>
         <text name="rms_bodywork_no_wear" text="補修が必要な塗装の傷はありません"/>
-        <text name="rms_bodywork_wear_limit" text="塗装の損傷が30％以下なら補修できます"/>
+        <text name="rms_bodywork_wear_limit" text="塗装の損傷が30%以下なら補修できます"/>
         <text name="rms_bodywork_touchup_description" text="軽度の塗装ダメージを修復します。現在の色はそのまま維持されます。"/>
         <text name="rms_bodywork_full_description" text="塗装を新しくします。この車両で選べる色に変更するか、現在の色を維持できます。"/>
-        <text name="rms_bodywork_touchup_colors" text="現在の色を維持します。"/>
         <text name="rms_bodywork_no_colors" text="この車両には選択できる色がありません。現在の色を維持します。"/>
-        <text name="rms_bodywork_unavailable_title" text="利用できないサービス"/>
+        <text name="rms_bodywork_unavailable_title" text="利用できない作業"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="点検報告書"/>
         <text name="rms_report_vehicle_specs_title" text="車両仕様"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="移し替えを中止"/>
         <text name="rms_fluid_select_vehicle_title" text="車両選択"/>
         <text name="rms_fluid_select_vehicle_prompt" text="補給する車両を選択してください"/>
-        <text name="rms_fluid_select_circuit_title" text="回路選択"/>
         <text name="rms_fluid_select_circuit_prompt" text="補給する回路を選択してください"/>
+        <text name="rms_fluid_select_fluid_prompt" text="補給する油水類を選択してください"/>
+        <text name="rms_fluid_pour_option" text="%s、%s（%s）"/>
         <text name="rms_fluid_circuit_engineOil" text="エンジンオイル"/>
         <text name="rms_fluid_circuit_coolant" text="冷却液"/>
         <text name="rms_fluid_circuit_transmissionOil" text="ミッションオイル"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="作動油"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="ミッションオイル兼作動油"/>
         <text name="rms_fluid_hud_engineOil" text="エンジンオイル"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="ミッションオイル"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="ミッション兼作動油"/>
         <text name="rms_fluid_hud_coolant" text="冷却液"/>
         <text name="rms_fluid_incompatible_title" text="互換性のない油水類"/>
         <text name="rms_fluid_incompatible_message" text="この製品は選択した回路用ではありません。回路が汚染され、システムの摩耗が最大3倍になったり、発熱が増えたり、油圧機能が遅くなったりするおそれがあります。汚染を除去するには油水類を完全に交換する必要があります。続行しますか？"/>
@@ -757,7 +757,7 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="エアフィルターが明らかに目詰まりしています。"/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="エアフィルターがほこりやごみで激しく目詰まりしています。"/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="エアフィルターはエアブロー清掃の限界に達しています。交換にはワークショップでのメンテナンスが必要です。"/>
-        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="エアフィルターにエアを吹き付けて、表面のほこりを取り除いてください。残った汚れがあるため、その後は整備工場でフィルターを交換する必要があります。"/>
+        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="エアフィルターにエアを吹き付けて、表面のほこりを取り除いてください。残った汚れがあるため、その後はワークショップでフィルターを交換する必要があります。"/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="オルタネーター周辺に過熱の跡があり、一部の接続部が変色しています。"/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="オルタネーターと配線の周辺に著しい過熱の跡があり、コネクターが変色しています。"/>
         <text name="rms_inspection_hint_lubrication_stage1" text="給脂箇所がやや乾燥しているようです。"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="デフロックを作動させたまま、グリップの高い路面で旋回しています。カーブでは内輪と外輪の走行距離が異なりますが、デフロックは両方を同じ速度で回転させます。そのため駆動系に応力がかかり、ミッションの摩耗が増えます。旋回する前にデフロックを解除してください。"/>
         <text name="rms_tutorial_drivetrain_modes_title" text="駆動モードとデフロック"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="この車両では駆動方式を2駆、4駆、AUTOから選択できます。AUTOでは車輪が滑ると前輪駆動が自動的に作動します。&#10;&#10;デフロックはグリップが失われた場所で駆動力を確保しますが、グリップの高い路面で旋回すると駆動系に大きな負担をかけます。内輪と外輪は同じ速度で回転できないため、その応力を駆動系が受けます。旋回する前に解除してください。"/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="台車付きTelwin充電器、12 Vで150 A。車両のそばで接続し、バッテリーを充電してください。充電はゲーム内の時間の進み方に合わせて進みます。 エンジン始動補助 (START, 200 A)."/>
+        <text name="rms_charger_start" text="充電器を接続"/>
+        <text name="rms_charger_disconnect" text="充電器を取り外す"/>
+        <text name="rms_charger_select" text="接続する車両を選択してください。"/>
+        <text name="rms_charger_no_vehicle" text="4 m以内に対象車両がありません。自分の農場の車両を停止させ、エンジンを切ってください。"/>
+        <text name="rms_charger_idle" text="使用可能"/>
+        <text name="rms_charger_charging" text="充電中"/>
+        <text name="rms_charger_full" text="充電完了"/>
+        <text name="rms_charger_interrupted" text="充電中断"/>
+        <text name="rms_charger_interrupted_reason" text="充電中断。%s"/>
+        <text name="rms_charger_status" text="状態"/>
+        <text name="rms_charger_battery" text="バッテリー"/>
+        <text name="rms_charger_voltage" text="電圧"/>
+        <text name="rms_charger_current" text="出力電流"/>
+        <text name="rms_charger_consumers" text="ライトとアクセサリーを切ってください。"/>
+        <text name="rms_charger_error_unavailable" text="車両が存在しないか、非対応です。"/>
+        <text name="rms_charger_error_access" text="この車両は別の農場の所有物です。"/>
+        <text name="rms_charger_error_distance" text="充電器を4 m以内に近づけてください。"/>
+        <text name="rms_charger_error_motor" text="接続前にエンジンを切ってください。"/>
+        <text name="rms_charger_error_moving" text="車両が動いています。"/>
+        <text name="rms_charger_error_service" text="ワークショップで作業中です。"/>
+        <text name="rms_charger_error_cables" text="ジャンパーケーブルを外してください。"/>
+        <text name="rms_charger_error_busy" text="充電器がすでに接続されています。"/>
+        <text name="rms_charger_error_full" text="このバッテリーは充電済みです。"/>
+        <text name="rms_charger_connected" text="充電器を接続しました。充電を開始します。"/>
+        <text name="rms_charger_disconnected" text="充電器を取り外しました。"/>
+        <text name="rms_charger_stopped_motor" text="充電中断：エンジン始動"/>
+        <text name="rms_charger_error_player_distance" text="徒歩で充電器に近づいてください。"/>
+        <text name="rms_charger_mode_select" text="充電器を接続"/>
+        <text name="rms_charger_mode_start" text="エンジン始動補助 (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START準備完了"/>
+        <text name="rms_charger_start_active" text="始動補助中"/>
+        <text name="rms_charger_start_running" text="始動完了：接続を外す"/>
+        <text name="rms_charger_start_countdown" text="待機：%d秒"/>
+        <text name="rms_charger_start_wait" text="次の始動まで30秒待ってください。"/>
+        <text name="rms_charger_unplug_before_start" text="始動前に充電器を外すか、STARTを選択してください。"/>
+        <text name="rms_charger_start_connected" text="エンジン始動補助 (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="バッテリーを充電 (150 A)"/>
     </texts>
 </l10n>

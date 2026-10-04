@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="점화 켜짐: 예열 진행 중"/>
         <text name="rms_preheat_system_failure_message" text="예열 시스템 고장: 냉간 시동 불가"/>
         <text name="rms_preheat_start_failed_message" text="엔진이 시동되지 않음: 다시 시도하기 전에 점화를 끄십시오"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="차량 점검"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="확인"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="차령"/>
         <text name="rms_ws_label_operating_hours" text="가동 시간"/>
         <text name="rms_ws_label_service" text="정비 수준"/>
-        <text name="rms_ws_label_next_service" text="다음 정비"/>
-        <text name="rms_ws_value_service_overdue" text="%s 초과"/>
+        <text name="rms_ws_label_maintenance_standard" text="표준 정비"/>
+        <text name="rms_ws_label_maintenance_extended" text="확장 정비"/>
+        <text name="rms_ws_label_maintenance_preventive" text="예방 정비"/>
         <text name="rms_ws_label_condition" text="상태"/>
         <text name="rms_ws_label_reliability" text="신뢰도"/>
         <text name="rms_ws_label_overhaul_count" text="완료된 오버홀"/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="도장 보수"/>
         <text name="rms_bodywork_full" text="전체 재도장"/>
         <text name="rms_bodywork_colors_title" text="차량 색상"/>
-        <text name="rms_bodywork_keep_color" text="현재 색상 유지"/>
-        <text name="rms_bodywork_reset_color" text="현재"/>
         <text name="rms_bodywork_wear" text="도장 손상"/>
         <text name="rms_bodywork_unavailable" text="이용 불가"/>
         <text name="rms_bodywork_ineligible" text="이 차량 또는 정비소에서는 이용할 수 없습니다"/>
         <text name="rms_bodywork_no_wear" text="수리할 도장 손상이 없습니다"/>
         <text name="rms_bodywork_wear_limit" text="도장 손상이 30% 이하일 때 보수할 수 있습니다"/>
         <text name="rms_bodywork_touchup_description" text="가벼운 도장 손상을 복구합니다. 현재 색상은 유지됩니다."/>
-        <text name="rms_bodywork_full_description" text="도장을 새롭게 합니다. 이 차량에서 선택할 수 있는 색상으로 바꾸거나 현재 색상을 유지하세요."/>
-        <text name="rms_bodywork_touchup_colors" text="현재 색상이 유지됩니다."/>
+        <text name="rms_bodywork_full_description" text="도장을 새롭게 합니다. 이 차량에서 선택할 수 있는 색상으로 바꾸거나 현재 색상을 유지하십시오."/>
         <text name="rms_bodywork_no_colors" text="이 차량에는 선택 가능한 색상이 없습니다. 현재 색상이 유지됩니다."/>
-        <text name="rms_bodywork_unavailable_title" text="서비스 이용 불가"/>
+        <text name="rms_bodywork_unavailable_title" text="작업 이용 불가"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="점검 보고서"/>
         <text name="rms_report_vehicle_specs_title" text="차량 제원"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="유체 이송 중단"/>
         <text name="rms_fluid_select_vehicle_title" text="차량 선택"/>
         <text name="rms_fluid_select_vehicle_prompt" text="보충할 차량을 선택하십시오"/>
-        <text name="rms_fluid_select_circuit_title" text="회로 선택"/>
         <text name="rms_fluid_select_circuit_prompt" text="보충할 회로를 선택하십시오"/>
+        <text name="rms_fluid_select_fluid_prompt" text="보충할 유체를 선택하십시오"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="엔진 오일"/>
         <text name="rms_fluid_circuit_coolant" text="냉각수"/>
         <text name="rms_fluid_circuit_transmissionOil" text="변속기 오일"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="유압유"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="변속기·유압 공용 오일"/>
         <text name="rms_fluid_hud_engineOil" text="엔진 오일"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="변속기 오일"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="변속기·유압 오일"/>
         <text name="rms_fluid_hud_coolant" text="냉각수"/>
         <text name="rms_fluid_incompatible_title" text="호환되지 않는 유체"/>
         <text name="rms_fluid_incompatible_message" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 시스템 마모를 최대 3배까지 증가시키고 발열을 높이거나 유압 작동을 느리게 할 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
@@ -840,7 +840,7 @@
         <text name="rms_tutorial_service_interval_expired_message" text="%s의 정비 주기가 지났습니다.&#10;&#10;가능한 한 빨리 정비소로 가서 &quot;정비&quot;를 선택하십시오. 정비가 늦어진 차량을 계속 운행하면 여러 고장이 발생할 위험이 크게 높아집니다."/>
         <text name="rms_tutorial_steering_title" text="정지 상태 조향"/>
         <text name="rms_tutorial_steering_message" text="정지 상태에서는 가급적 조향하지 않는 것이 좋습니다. 이때 조향기어와 앞차축 부품에 큰 부담이 걸리며, 그 결과 하부 주행계의 마모가 증가합니다.&#10;&#10;조금만 움직이기 시작해도 바퀴는 훨씬 쉽게 돌아갑니다."/>
-        <text name="rms_tutorial_cooling_air_check_message" text="라디에이터 또는 에어 필터가 막혔습니다. 차량을 바라보며 %s 키를 길게 눌러 어느 쪽인지 확인하세요. 압축 공기 블로어로 청소하세요. 필터를 더 이상 불어내어 청소할 수 없다면 정비소에서 확장 또는 예방 정비를 선택해 교체하세요."/>
+        <text name="rms_tutorial_cooling_air_check_message" text="라디에이터 또는 에어 필터가 막혔습니다. 차량을 바라보며 %s 키를 길게 눌러 어느 쪽인지 확인하십시오. 압축 공기 블로어로 청소하십시오. 필터를 더 이상 불어내어 청소할 수 없다면 정비소에서 확장 또는 예방 정비를 선택해 교체하십시오."/>
         <text name="rms_tutorial_needs_lubrication_title" text="그리스 주입 필요"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%s 차량은 정기적인 그리스 주입이 필요합니다.&#10;&#10;RMS에서는 작동 시간이 늘어남에 따라 그리스 수준이 낮아집니다. 장기간 사용하지 않은 뒤에도 다시 운행하기 전에 그리스를 주입해야 합니다. 그리스가 부족하면 섀시 마모가 빨라집니다.&#10;&#10;상점에서 그리스 건을 구입하고 점검에서 필요하다고 표시될 때 기계에 그리스를 주입하십시오.&#10;&#10;차량을 바라보며 %s 키를 길게 눌러 그리스 수준을 확인할 수 있습니다."/>
         <text name="rms_tutorial_needs_repair_title" text="고장 감지"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="차동 잠금을 체결한 채 접지력이 높은 노면에서 조향하고 있습니다. 곡선에서는 안쪽과 바깥쪽 바퀴가 서로 다른 거리를 이동하지만 차동 잠금은 같은 속도로 회전하도록 강제합니다. 구동계에 응력이 발생하고 변속기 마모가 증가합니다. 조향하기 전에 잠금을 해제하십시오."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="구동 방식과 차동 잠금"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="이 기계에서는 구동 방식을 2WD, 4WD 또는 AUTO로 선택할 수 있습니다. AUTO는 바퀴가 미끄러지는 즉시 전륜축을 결합합니다.&#10;&#10;차동 잠금은 접지력이 부족할 때 접지력을 확보하지만 접지력이 높은 노면에서 조향하면 구동계에 큰 부담을 줍니다. 안쪽과 바깥쪽 바퀴가 같은 속도로 회전할 수 없기 때문입니다. 조향하기 전에 잠금을 해제하십시오."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="트롤리에 장착된 Telwin 충전기, 12 V에서 150 A. 차량 옆에서 연결하고 배터리가 충전되도록 두십시오. 충전은 게임 내 시간 배속을 따릅니다. 시동 보조 (START, 200 A)."/>
+        <text name="rms_charger_start" text="충전기 연결"/>
+        <text name="rms_charger_disconnect" text="충전기 분리"/>
+        <text name="rms_charger_select" text="연결할 차량을 선택하세요."/>
+        <text name="rms_charger_no_vehicle" text="4 m 이내에 적합한 차량이 없습니다. 자신의 농장 소유 차량을 정지시키고 엔진을 끄십시오."/>
+        <text name="rms_charger_idle" text="사용 가능"/>
+        <text name="rms_charger_charging" text="충전 중"/>
+        <text name="rms_charger_full" text="배터리 충전 완료"/>
+        <text name="rms_charger_interrupted" text="충전 중단"/>
+        <text name="rms_charger_interrupted_reason" text="충전 중단. %s"/>
+        <text name="rms_charger_status" text="상태"/>
+        <text name="rms_charger_battery" text="배터리"/>
+        <text name="rms_charger_voltage" text="전압"/>
+        <text name="rms_charger_current" text="출력 전류"/>
+        <text name="rms_charger_consumers" text="조명과 액세서리를 끄십시오."/>
+        <text name="rms_charger_error_unavailable" text="차량이 없거나 지원되지 않습니다."/>
+        <text name="rms_charger_error_access" text="이 차량은 다른 농장 소유입니다."/>
+        <text name="rms_charger_error_distance" text="충전기를 4 m 이내로 옮기십시오."/>
+        <text name="rms_charger_error_motor" text="충전기를 연결하기 전에 엔진을 끄십시오."/>
+        <text name="rms_charger_error_moving" text="차량이 움직이고 있습니다."/>
+        <text name="rms_charger_error_service" text="정비소 작업이 진행 중입니다."/>
+        <text name="rms_charger_error_cables" text="점프 케이블을 분리하십시오."/>
+        <text name="rms_charger_error_busy" text="이미 충전기가 연결되어 있습니다."/>
+        <text name="rms_charger_error_full" text="이 배터리는 이미 충전되었습니다."/>
+        <text name="rms_charger_connected" text="충전기가 연결되었습니다. 충전이 시작되었습니다."/>
+        <text name="rms_charger_disconnected" text="충전기가 분리되었습니다."/>
+        <text name="rms_charger_stopped_motor" text="충전 중단: 엔진 시동"/>
+        <text name="rms_charger_error_player_distance" text="차량에서 내려 충전기에 가까이 가십시오."/>
+        <text name="rms_charger_mode_select" text="충전기 연결"/>
+        <text name="rms_charger_mode_start" text="시동 보조 (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START 준비 완료"/>
+        <text name="rms_charger_start_active" text="시동 보조 중"/>
+        <text name="rms_charger_start_running" text="시동 완료: 분리하세요"/>
+        <text name="rms_charger_start_countdown" text="대기: %d초"/>
+        <text name="rms_charger_start_wait" text="시동을 다시 걸기 전에 30초 기다리세요."/>
+        <text name="rms_charger_unplug_before_start" text="시동 전에 충전기를 분리하거나 START를 선택하세요."/>
+        <text name="rms_charger_start_connected" text="시동 보조 (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="배터리 충전 (150 A)"/>
     </texts>
 </l10n>

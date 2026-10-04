@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Contact pornit: preîncălzire în curs"/>
         <text name="rms_preheat_system_failure_message" text="Defecțiune a sistemului de preîncălzire: pornirea la rece este imposibilă"/>
         <text name="rms_preheat_start_failed_message" text="Motorul nu a pornit: oprește contactul înainte de a încerca din nou"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Verifică vehiculul"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Atelier propriu 24 h/24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Menține atelierul tău disponibil la orice oră din zi și din noapte."/>
         <text name="rms_instantInspection_label" text="Inspecție instantanee"/>
-        <text name="rms_instantInspection_tooltip" text="Când opțiunea este activată, inspecțiile din atelier se încheie instantaneu. Lucrările de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantInspection_tooltip" text="Când opțiunea este activată, inspecțiile din atelier se încheie instantaneu. Intervențiile de acest tip deja în curs se încheie și ele imediat."/>
         <text name="rms_instantMaintenanceRepair_label" text="Întreținere și reparații instantanee"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Când opțiunea este activată, întreținerea și reparațiile din atelier se încheie instantaneu. Lucrările de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Când opțiunea este activată, întreținerea și reparațiile din atelier se încheie instantaneu. Intervențiile de acest tip deja în curs se încheie și ele imediat."/>
         <text name="rms_instantBodywork_label" text="Vopsire instantanee"/>
-        <text name="rms_instantBodywork_tooltip" text="Când opțiunea este activată, vopsirea din atelier se încheie instantaneu. Lucrările de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantBodywork_tooltip" text="Când opțiunea este activată, vopsirea din atelier se încheie instantaneu. Intervențiile de acest tip deja în curs se încheie și ele imediat."/>
         <text name="rms_instantOverhaul_label" text="Recondiționare mecanică instantanee"/>
-        <text name="rms_instantOverhaul_tooltip" text="Când opțiunea este activată, recondiționarea mecanică din atelier se încheie instantaneu. Lucrările de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantOverhaul_tooltip" text="Când opțiunea este activată, recondiționarea mecanică din atelier se încheie instantaneu. Intervențiile de acest tip deja în curs se încheie și ele imediat."/>
         <text name="rms_debugMode_label" text="Mod de depanare"/>
         <text name="rms_debugMode_tooltip" text="Activează panoul de depanare și jurnalele detaliate din consolă."/>
         <text name="rms_warningMessages_label" text="Mesaje de avertizare"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Vechime"/>
         <text name="rms_ws_label_operating_hours" text="Ore de funcționare"/>
         <text name="rms_ws_label_service" text="Nivel de întreținere"/>
-        <text name="rms_ws_label_next_service" text="Următoarea întreținere"/>
-        <text name="rms_ws_value_service_overdue" text="depășit cu %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Întreținere standard"/>
+        <text name="rms_ws_label_maintenance_extended" text="Întreținere extinsă"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Întreținere preventivă"/>
         <text name="rms_ws_label_condition" text="Stare"/>
         <text name="rms_ws_label_reliability" text="Fiabilitate"/>
         <text name="rms_ws_label_overhaul_count" text="Recondiționări efectuate"/>
@@ -530,9 +532,9 @@
         <text name="rms_option_menu_option_two_title_overhaul" text="Sistem de recondiționat"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Dacă intervenția identifică avarii, aceasta este urmată automat de o reparație standard cu piese originale."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="După reparație, se efectuează automat o întreținere standard cu consumabile originale."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Recondiționare parțială: aduce sistemul ales în stare bună, repară defecțiunile care pot fi remediate și înlocuiește fluidul aferent la nevoie."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Recondiționare standard: aduce toate sistemele în stare bună, repară defecțiunile care pot fi remediate, înlocuiește fluidele și reînnoiește întreținerea."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Recondiționare completă: aduce toate sistemele la starea de nou, repară defecțiunile care pot fi remediate, înlocuiește fluidele și reînnoiește întreținerea."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="Recondiționare parțială: aduce sistemul ales în stare bună, repară avariile care pot fi remediate și înlocuiește fluidul aferent la nevoie."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Recondiționare standard: aduce toate sistemele în stare bună, repară avariile care pot fi remediate, înlocuiește fluidele și reînnoiește întreținerea."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Recondiționare completă: aduce toate sistemele la starea de nou, repară avariile care pot fi remediate, înlocuiește fluidele și reînnoiește întreținerea."/>
         <text name="rms_option_menu_price_text" text="Preț"/>
         <text name="rms_option_menu_part_used_description" text="Piese folosite: cost minim, cu un risc de 50% de apariție ulterioară a unui defect."/>
         <text name="rms_option_menu_part_aftermarket_description" text="Piese compatibile: cost redus, cu un risc de 33% de apariție ulterioară a unui defect."/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Retușuri"/>
         <text name="rms_bodywork_full" text="Revopsire completă"/>
         <text name="rms_bodywork_colors_title" text="Culorile vehiculului"/>
-        <text name="rms_bodywork_keep_color" text="Păstrează culoarea actuală"/>
-        <text name="rms_bodywork_reset_color" text="Actuală"/>
         <text name="rms_bodywork_wear" text="Deteriorarea vopselei"/>
         <text name="rms_bodywork_unavailable" text="Indisponibil"/>
-        <text name="rms_bodywork_ineligible" text="Serviciul nu este disponibil pentru acest vehicul sau în acest atelier"/>
+        <text name="rms_bodywork_ineligible" text="Intervenția nu este disponibilă pentru acest vehicul sau în acest atelier"/>
         <text name="rms_bodywork_no_wear" text="Nu există deteriorări ale vopselei de reparat"/>
-        <text name="rms_bodywork_wear_limit" text="Retușurile sunt disponibile până la 30 % deteriorare a vopselei"/>
+        <text name="rms_bodywork_wear_limit" text="Retușurile sunt disponibile până la 30% deteriorare a vopselei"/>
         <text name="rms_bodywork_touchup_description" text="Repară deteriorările minore ale vopselei. Culorile actuale rămân neschimbate."/>
         <text name="rms_bodywork_full_description" text="Reînnoiește vopseaua. Alege culorile disponibile pentru acest vehicul sau păstrează-le pe cele actuale."/>
-        <text name="rms_bodywork_touchup_colors" text="Culoarea actuală se păstrează."/>
         <text name="rms_bodywork_no_colors" text="Acest vehicul nu are culori selectabile. Culorile actuale se păstrează."/>
-        <text name="rms_bodywork_unavailable_title" text="Serviciu indisponibil"/>
+        <text name="rms_bodywork_unavailable_title" text="Intervenție indisponibilă"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Raport de inspecție"/>
         <text name="rms_report_vehicle_specs_title" text="Caracteristicile vehiculului"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Oprește transferul"/>
         <text name="rms_fluid_select_vehicle_title" text="Selectarea vehiculului"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Alege vehiculul de completat"/>
-        <text name="rms_fluid_select_circuit_title" text="Selectarea circuitului"/>
         <text name="rms_fluid_select_circuit_prompt" text="Alege circuitul de completat"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Alege fluidul de turnat"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Ulei de motor"/>
         <text name="rms_fluid_circuit_coolant" text="Lichid de răcire"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Ulei de transmisie"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Ulei hidraulic"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Ulei de transmisie și hidraulic"/>
         <text name="rms_fluid_hud_engineOil" text="Ulei de motor"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Ulei transmisie"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Ulei transm./hidr."/>
         <text name="rms_fluid_hud_coolant" text="Lichid de răcire"/>
         <text name="rms_fluid_incompatible_title" text="Fluid incompatibil"/>
         <text name="rms_fluid_incompatible_message" text="Acest produs nu este destinat circuitului respectiv. Îl va contamina și poate tripla uzura sistemului, îi poate crește temperatura sau poate încetini sistemul hidraulic. Numai înlocuirea completă a fluidului va elimina contaminarea. Continui?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Virezi pe o suprafață cu aderență bună în timp ce blocarea diferențialului este activată. Într-o curbă, roțile interioare și exterioare parcurg distanțe diferite, dar blocarea diferențialului le obligă să se rotească la aceeași viteză: transmisia este supusă unei solicitări, iar uzura sa se accelerează. Dezactivează blocarea înainte de a vira."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Moduri de tracțiune și blocarea diferențialului"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Acest utilaj îți permite să alegi modul de tracțiune: 4x2, 4x4 sau AUTO, care cuplează puntea față imediat ce roțile patinează.&#10;&#10;Blocarea diferențialului asigură aderență atunci când aceasta lipsește, dar solicită puternic transmisia în viraje pe suprafețe cu aderență bună: roțile interioare și exterioare nu se pot roti cu aceeași viteză. Dezactiveaz-o înainte de a vira."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Încărcător Telwin pe cărucior, 150 A la 12 V. Conectează-l lângă vehicul și lasă bateria să se încarce. Încărcarea urmează viteza timpului din joc. Asistență la pornire (START, 200 A)."/>
+        <text name="rms_charger_start" text="Conectează încărcătorul"/>
+        <text name="rms_charger_disconnect" text="Deconectează încărcătorul"/>
+        <text name="rms_charger_select" text="Alege vehiculul de conectat."/>
+        <text name="rms_charger_no_vehicle" text="Niciun vehicul eligibil la mai puțin de 4 m. Trebuie să aparțină fermei tale, să fie staționar și cu motorul oprit."/>
+        <text name="rms_charger_idle" text="Disponibil"/>
+        <text name="rms_charger_charging" text="Încărcare în curs"/>
+        <text name="rms_charger_full" text="Baterie încărcată"/>
+        <text name="rms_charger_interrupted" text="Încărcare întreruptă"/>
+        <text name="rms_charger_interrupted_reason" text="Încărcare întreruptă. %s"/>
+        <text name="rms_charger_status" text="Stare"/>
+        <text name="rms_charger_battery" text="Baterie"/>
+        <text name="rms_charger_voltage" text="Tensiune"/>
+        <text name="rms_charger_current" text="Curent furnizat"/>
+        <text name="rms_charger_consumers" text="Oprește luminile și accesoriile."/>
+        <text name="rms_charger_error_unavailable" text="Vehicul absent sau neacceptat."/>
+        <text name="rms_charger_error_access" text="Acest vehicul aparține altei ferme."/>
+        <text name="rms_charger_error_distance" text="Apropie încărcătorul la mai puțin de 4 m."/>
+        <text name="rms_charger_error_motor" text="Oprește motorul înainte de conectarea încărcătorului."/>
+        <text name="rms_charger_error_moving" text="Vehiculul se mișcă."/>
+        <text name="rms_charger_error_service" text="O intervenție în atelier este în curs."/>
+        <text name="rms_charger_error_cables" text="Deconectează cablurile de pornire."/>
+        <text name="rms_charger_error_busy" text="Un încărcător este deja conectat."/>
+        <text name="rms_charger_error_full" text="Această baterie este deja încărcată."/>
+        <text name="rms_charger_connected" text="Încărcător conectat. Încărcarea a început."/>
+        <text name="rms_charger_disconnected" text="Încărcător deconectat."/>
+        <text name="rms_charger_stopped_motor" text="Încărcare oprită: pornire"/>
+        <text name="rms_charger_error_player_distance" text="Apropie-te de încărcător pe jos."/>
+        <text name="rms_charger_mode_select" text="Conectează încărcătorul"/>
+        <text name="rms_charger_mode_start" text="Asistență la pornire (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START pregătit"/>
+        <text name="rms_charger_start_active" text="Asistență la pornire activă"/>
+        <text name="rms_charger_start_running" text="Motor pornit: deconectează"/>
+        <text name="rms_charger_start_countdown" text="Așteaptă: %d s"/>
+        <text name="rms_charger_start_wait" text="Așteaptă 30 de secunde între două porniri."/>
+        <text name="rms_charger_unplug_before_start" text="Deconectează încărcătorul sau alege START înainte de pornire."/>
+        <text name="rms_charger_start_connected" text="Asistență la pornire (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Încarcă o baterie (150 A)"/>
     </texts>
 </l10n>

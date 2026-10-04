@@ -277,7 +277,8 @@ local function applyCloggingInspectionFindings(dialog, additionalLines)
 
     local airFilterClogging = math.clamp(tonumber(spec.airFilterClogging) or 0, 0, 1)
     local airFilterResidue = math.clamp(tonumber(spec.airFilterResidue) or 0, 0, airFilterClogging)
-    local isAirFilterAtBlowOutLimit = airFilterClogging > 0 and airFilterClogging <= airFilterResidue
+    local isAirFilterWornOut = RMS_Consumables.getIsAirFilterWornOut(spec)
+    local isAirFilterAtBlowOutLimit = isAirFilterWornOut and airFilterClogging <= airFilterResidue
     if airFilterClogging > 0.15 then
         local statusKey, hintKey
         if airFilterClogging >= 0.60 then
@@ -294,7 +295,7 @@ local function applyCloggingInspectionFindings(dialog, additionalLines)
         if isAirFilterAtBlowOutLimit then
             dialog.isAirFilterAtBlowOutLimit = true
             hintKey = "rms_inspection_hint_air_filter_blowout_limit"
-        elseif airFilterResidue > 0.15 then
+        elseif isAirFilterWornOut then
             hintKey = "rms_inspection_hint_air_filter_blowout_residue_service"
         end
 

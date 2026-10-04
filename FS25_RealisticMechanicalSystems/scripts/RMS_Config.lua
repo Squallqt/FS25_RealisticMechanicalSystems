@@ -493,6 +493,8 @@ RMS_Config = {
         CLEANING_SPEED = 0.05,
         AIR_FILTER_BREAKDOWN_THRESHOLD = 0.5,
         AIR_FILTER_BLOWOUT_RESIDUE_SHARE = 0.25,
+        -- embedded dust that leaves a blown out filter at the cleaning threshold, the filter then due for replacement
+        AIR_FILTER_REPLACEMENT_RESIDUE = 0.35,
         -- Decoded length of sounds/inspection.ogg at pitch 1.0.
         VISUAL_INSPECTION_DURATION = 6850,
         LUBRICATION_REDUCE_PER_OPERATING_HOUR = 0.05,
@@ -1277,11 +1279,6 @@ end
 -- @return string path shared settings file path
 function RMS_Config.getSharedSettingsFilePath()
     return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.savegameFile
-end
-
----@diagnostic disable-next-line: lowercase-global
-function getUserProfileAppPath()
-    return g_currentModSettingsDirectory or (getUserProfileAppPath and getUserProfileAppPath()) or ""
 end
 
 ---Writes every adjustable setting to the savegame file, then to the shared one

@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Ignition on: preheating in progress"/>
         <text name="rms_preheat_system_failure_message" text="Preheating system failure: cold start unavailable"/>
         <text name="rms_preheat_start_failed_message" text="Engine did not start: switch the ignition off before retrying"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Check the vehicle"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Personal Workshop 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Keeps your personal workshop available at any hour of the day or night."/>
         <text name="rms_instantInspection_label" text="Instant Inspection"/>
-        <text name="rms_instantInspection_tooltip" text="When enabled, workshop inspections finish instantly. Work of this type already in progress also finishes immediately."/>
+        <text name="rms_instantInspection_tooltip" text="When enabled, workshop inspections finish instantly. Procedures of this type already in progress also finish immediately."/>
         <text name="rms_instantMaintenanceRepair_label" text="Instant Maintenance and Repair"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="When enabled, workshop maintenance and repairs finish instantly. Work of this type already in progress also finishes immediately."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="When enabled, workshop maintenance and repairs finish instantly. Procedures of this type already in progress also finish immediately."/>
         <text name="rms_instantBodywork_label" text="Instant Repainting"/>
-        <text name="rms_instantBodywork_tooltip" text="When enabled, workshop repainting finishes instantly. Work of this type already in progress also finishes immediately."/>
+        <text name="rms_instantBodywork_tooltip" text="When enabled, workshop repainting finishes instantly. Procedures of this type already in progress also finish immediately."/>
         <text name="rms_instantOverhaul_label" text="Instant Mechanical Overhaul"/>
-        <text name="rms_instantOverhaul_tooltip" text="When enabled, workshop mechanical overhauls finish instantly. Work of this type already in progress also finishes immediately."/>
+        <text name="rms_instantOverhaul_tooltip" text="When enabled, workshop mechanical overhauls finish instantly. Procedures of this type already in progress also finish immediately."/>
         <text name="rms_debugMode_label" text="Debug Mode"/>
         <text name="rms_debugMode_tooltip" text="Enables the debug panel and detailed logs in the console."/>
         <text name="rms_warningMessages_label" text="Warning Messages"/>
@@ -68,7 +69,7 @@
         <text name="rms_generalWearEnabled_label" text="Age-Related Wear"/>
         <text name="rms_generalWearEnabled_tooltip" text="As the vehicle wears out, each system receives small penalties to its core characteristics, such as engine power, hydraulic speed, or brake efficiency. The effect becomes active after the first third of the vehicle lifespan, but only becomes truly noticeable after the second third and grows stronger toward the end of the machine's life."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Exhaust Smoke"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Drives the exhaust plume from the real state of the engine. It is black when fuel outruns the available air: a hard pickup, an engine lugging at low speed, prolonged low-load idling, a clogged air filter or worn injection. It is blue when a tired engine burns oil, white when fuel leaves unburnt. The plume also grows with the work the engine is doing. Older machines smoke far more than modern ones, which barely smoke at all unless something is seriously wrong. In cold air, the water from combustion also condenses into a short white trail that evaporates within a metre or two, even on a healthy engine."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Drives the exhaust plume from the real state of the engine. It is black when fuel outruns the available air: a hard pickup, an engine lugging at low speed, prolonged low-load idling, a clogged air filter or worn injection. It is blue when a tired engine burns oil, white when fuel leaves unburnt. The plume also grows with the work the engine is doing. Older machines smoke far more than modern ones, which barely smoke at all unless something is seriously wrong. In cold air, the water from combustion also condenses into a short white trail that evaporates within a meter or two, even on a healthy engine."/>
         <text name="rms_batteryCapacity_label" text="Battery Capacity"/>
         <text name="rms_batteryCapacity_tooltip" text="Adjusts the maximum usable battery capacity. A value close to 150 Ah matches a real battery, but at that level you will hardly ever run into discharge problems."/>
         <text name="rms_option_off" text="Off"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Age"/>
         <text name="rms_ws_label_operating_hours" text="Operating Hours"/>
         <text name="rms_ws_label_service" text="Maintenance Level"/>
-        <text name="rms_ws_label_next_service" text="Next Maintenance"/>
-        <text name="rms_ws_value_service_overdue" text="overdue by %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Standard Maintenance"/>
+        <text name="rms_ws_label_maintenance_extended" text="Extended Maintenance"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Preventive Maintenance"/>
         <text name="rms_ws_label_condition" text="Condition"/>
         <text name="rms_ws_label_reliability" text="Reliability"/>
         <text name="rms_ws_label_overhaul_count" text="Overhauls Done"/>
@@ -181,7 +183,7 @@
         <text name="rms_log_cost_per_hour_title" text="Cost per Operating Hour"/>
         <text name="rms_log_invoice_title" text="Invoice Details"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Workshop Flat Rate"/>
-        <text name="rms_log_invoice_labour" text="Labour"/>
+        <text name="rms_log_invoice_labour" text="Labor"/>
         <text name="rms_log_invoice_filters" text="Filters"/>
         <text name="rms_log_cancelled_desc" text="Procedure canceled"/>
         <text name="rms_log_ownership_months_title" text="Ownership Duration"/>
@@ -530,9 +532,9 @@
         <text name="rms_option_menu_option_two_title_overhaul" text="System to Overhaul"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="If the procedure reveals any breakdowns, automatically follows it with a standard repair using original parts."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="After the repair, automatically follows it with standard maintenance using original consumables."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Partial overhaul: brings the selected system into good condition, repairs supported faults and replaces its fluid when needed."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Standard overhaul: brings all systems into good condition, repairs supported faults, replaces fluids and renews servicing."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Full overhaul: restores all systems to like-new condition, repairs supported faults, replaces fluids and renews servicing."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="Partial overhaul: brings the selected system into good condition, repairs supported breakdowns and replaces its fluid when needed."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Standard overhaul: brings all systems into good condition, repairs supported breakdowns, replaces fluids and renews maintenance."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Full overhaul: restores all systems to like-new condition, repairs supported breakdowns, replaces fluids and renews maintenance."/>
         <text name="rms_option_menu_price_text" text="Price"/>
         <text name="rms_option_menu_part_used_description" text="Used parts: lowest cost, with a 50% risk of a later defect."/>
         <text name="rms_option_menu_part_aftermarket_description" text="Aftermarket parts: reduced cost, with a 33% risk of a later defect."/>
@@ -545,7 +547,7 @@
         <text name="rms_option_menu_perform_repair" text="Automatic repair"/>
         <text name="rms_option_menu_perform_maintenance" text="Automatic maintenance"/>
         <text name="rms_option_menu_warranty_repair_text" text="Warranty repair"/>
-        <text name="rms_warranty_dealer_info" text="Dealer warranty for owned vehicles under 12 months and 20 h: standard repair, OEM parts and required fluids."/>
+        <text name="rms_warranty_dealer_info" text="Dealer warranty for owned vehicles under 12 months and 20 h: standard repair, original parts and required fluids."/>
         <text name="rms_option_menu_duration_text" text="Duration"/>
         <text name="rms_option_menu_duration_instant" text="Instant"/>
         <text name="rms_option_menu_finish_time_text" text="Finish Time"/>
@@ -554,27 +556,24 @@
         <text name="rms_option_menu_inspection_standard_description" text="Standard inspection: searches for active breakdowns with normal detection ability and generates a general report without detailed condition values."/>
         <text name="rms_option_menu_inspection_complete_description" text="Complete inspection: searches for active and potential breakdowns with normal detection ability, then provides a complete report with detailed component condition."/>
         <text name="rms_option_menu_maintenance_standard_description" text="Standard maintenance: changes the engine oil and replaces its oil and fuel filters, tops up the other circuits when required, cleans the radiator, and blows out the air filter."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="Extended maintenance: Standard maintenance plus a transmission and hydraulic oil change with a new filter. It also replaces the air filter and tops up the coolant."/>
+        <text name="rms_option_menu_maintenance_extended_description" text="Extended maintenance: standard maintenance plus a transmission and hydraulic oil change with a new filter. It also replaces the air filter and tops up the coolant."/>
         <text name="rms_option_menu_maintenance_preventive_description" text="Preventive maintenance: changes every oil and the coolant with their filters and fits a new air filter. It also reduces mechanical stress in up to three priority systems."/>
         <text name="rms_option_menu_repair_type_fix_description" text="Temporary repair: returns the machine to service quickly at low cost without removing the breakdown. The breakdown will come back after a limited time."/>
         <text name="rms_option_menu_repair_type_replacement_description" text="Standard repair: removes the breakdown and replaces the failed component. Mechanical stress in the affected system is partially reduced."/>
         <text name="rms_option_menu_repair_type_advanced_description" text="Advanced repair: removes the breakdown, replaces the failed component, and clears accumulated mechanical stress from the affected system."/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="The following procedure is charged separately. Required fluids are supplied or taken from stock when it starts."/>
-        <text name="rms_bodywork_touchup" text="Touchups"/>
-        <text name="rms_bodywork_full" text="Full repaint"/>
-        <text name="rms_bodywork_colors_title" text="Vehicle colors"/>
-        <text name="rms_bodywork_keep_color" text="Keep current color"/>
-        <text name="rms_bodywork_reset_color" text="Current"/>
-        <text name="rms_bodywork_wear" text="Paint damage"/>
+        <text name="rms_bodywork_touchup" text="Touch-Ups"/>
+        <text name="rms_bodywork_full" text="Full Repaint"/>
+        <text name="rms_bodywork_colors_title" text="Vehicle Colors"/>
+        <text name="rms_bodywork_wear" text="Paint Damage"/>
         <text name="rms_bodywork_unavailable" text="Unavailable"/>
-        <text name="rms_bodywork_ineligible" text="Service unavailable for this vehicle or at this workshop"/>
+        <text name="rms_bodywork_ineligible" text="Procedure unavailable for this vehicle or at this workshop"/>
         <text name="rms_bodywork_no_wear" text="No paint damage to repair"/>
-        <text name="rms_bodywork_wear_limit" text="Touchups available up to 30% paint damage"/>
+        <text name="rms_bodywork_wear_limit" text="Touch-ups available up to 30% paint damage"/>
         <text name="rms_bodywork_touchup_description" text="Repairs minor paint damage. The current colors stay the same."/>
         <text name="rms_bodywork_full_description" text="Renews the paint. Choose this vehicle's available colors or keep the current ones."/>
-        <text name="rms_bodywork_touchup_colors" text="The current color is preserved."/>
         <text name="rms_bodywork_no_colors" text="This vehicle has no selectable colors. Its current colors are preserved."/>
-        <text name="rms_bodywork_unavailable_title" text="Service unavailable"/>
+        <text name="rms_bodywork_unavailable_title" text="Procedure Unavailable"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Inspection Report"/>
         <text name="rms_report_vehicle_specs_title" text="Vehicle Specifications"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Stop fluid transfer"/>
         <text name="rms_fluid_select_vehicle_title" text="Vehicle Selection"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Choose the vehicle to fill"/>
-        <text name="rms_fluid_select_circuit_title" text="Circuit Selection"/>
         <text name="rms_fluid_select_circuit_prompt" text="Choose the circuit to fill"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Choose the fluid to pour"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Engine Oil"/>
         <text name="rms_fluid_circuit_coolant" text="Coolant"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmission Oil"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulic Oil"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmission and Hydraulic Oil"/>
         <text name="rms_fluid_hud_engineOil" text="Engine Oil"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Transmission Oil"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Trans-Hydraulic Oil"/>
         <text name="rms_fluid_hud_coolant" text="Coolant"/>
         <text name="rms_fluid_incompatible_title" text="Incompatible Fluid"/>
         <text name="rms_fluid_incompatible_message" text="This product is not intended for this circuit. It will contaminate it and may triple system wear, increase heat or slow the hydraulics. Only a complete fluid replacement will remove the contamination. Continue?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="You are turning on a high-grip surface with the differential lock engaged. Inside and outside wheels travel different distances in a curve, but the differential lock forces them to rotate at the same speed: the drivetrain comes under stress and transmission wear increases. Release the differential lock before turning."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Drivetrain Modes and Differential Lock"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="This machine lets you choose its drivetrain: 2WD, 4WD or AUTO, which engages the front axle as soon as the wheels slip.&#10;&#10;The differential lock finds grip where there is none left, but it costs dearly when turning on a high-grip surface: inner and outer wheels cannot turn at the same speed, and the drivetrain takes the strain. Release it before you turn."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Telwin charger on a trolley, 150 A at 12 V. Connect it near the vehicle and leave the battery to charge. Charging follows the game's time speed. Starting aid (START, 200 A)."/>
+        <text name="rms_charger_start" text="Connect charger"/>
+        <text name="rms_charger_disconnect" text="Disconnect charger"/>
+        <text name="rms_charger_select" text="Choose the vehicle to connect."/>
+        <text name="rms_charger_no_vehicle" text="No eligible vehicle within 4 m. The vehicle must belong to your farm, with its engine off and stationary."/>
+        <text name="rms_charger_idle" text="Available"/>
+        <text name="rms_charger_charging" text="Charging"/>
+        <text name="rms_charger_full" text="Battery charged"/>
+        <text name="rms_charger_interrupted" text="Charging interrupted"/>
+        <text name="rms_charger_interrupted_reason" text="Charging interrupted. %s"/>
+        <text name="rms_charger_status" text="Status"/>
+        <text name="rms_charger_battery" text="Battery"/>
+        <text name="rms_charger_voltage" text="Voltage"/>
+        <text name="rms_charger_current" text="Output Current"/>
+        <text name="rms_charger_consumers" text="Switch off lights and accessories."/>
+        <text name="rms_charger_error_unavailable" text="Vehicle missing or not supported."/>
+        <text name="rms_charger_error_access" text="This vehicle belongs to another farm."/>
+        <text name="rms_charger_error_distance" text="Move the charger within 4 m."/>
+        <text name="rms_charger_error_motor" text="Stop the engine before connecting the charger."/>
+        <text name="rms_charger_error_moving" text="Vehicle moving."/>
+        <text name="rms_charger_error_service" text="A workshop procedure is in progress."/>
+        <text name="rms_charger_error_cables" text="Disconnect the jumper cables."/>
+        <text name="rms_charger_error_busy" text="A charger is already connected."/>
+        <text name="rms_charger_error_full" text="This battery is already charged."/>
+        <text name="rms_charger_connected" text="Charger connected. Charging started."/>
+        <text name="rms_charger_disconnected" text="Charger disconnected."/>
+        <text name="rms_charger_stopped_motor" text="Charging stopped: engine start"/>
+        <text name="rms_charger_error_player_distance" text="Approach the charger on foot."/>
+        <text name="rms_charger_mode_select" text="Connect charger"/>
+        <text name="rms_charger_mode_start" text="Starting aid (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START ready"/>
+        <text name="rms_charger_start_active" text="Starting aid active"/>
+        <text name="rms_charger_start_running" text="Engine started: disconnect"/>
+        <text name="rms_charger_start_countdown" text="Wait: %d s"/>
+        <text name="rms_charger_start_wait" text="Wait for the 30 seconds between starts to end."/>
+        <text name="rms_charger_unplug_before_start" text="Disconnect the charger or select START before starting."/>
+        <text name="rms_charger_start_connected" text="Starting aid (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Charge a battery (150 A)"/>
     </texts>
 </l10n>

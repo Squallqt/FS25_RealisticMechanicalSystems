@@ -103,6 +103,47 @@ local function getServiceClockSumps(vehicle, clock)
     return sumps
 end
 
+---Returns the engine oil intervals a service clock has run since its reset
+-- @param table spec vehicle spec
+-- @param table clock service clock definition
+-- @return float intervals engine oil intervals run
+local function getClockUsedIntervals(spec, clock)
+    local usedShare = (spec.baseServiceLevel - spec[clock.levelKey]) / (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
+    return usedShare * clock.intervalFactor
+end
+
+---Returns the services a clock went through since its oils were changed: the clocks run down together, so what
+-- a clock has run beyond the current engine oil interval is the services it was left out of
+-- @param table spec vehicle spec
+-- @param table clock service clock definition
+-- @param float engineIntervals engine oil intervals run by the engine clock
+-- @return integer services services since the change
+local function getServicesSinceChange(spec, clock, engineIntervals)
+    return math.max(math.floor(getClockUsedIntervals(spec, clock) - engineIntervals + 0.5), 0)
+end
+
+---Sets the clocks a service left out on a whole number of services, so that every change falls due at a service
+-- and never between two: a maintenance counts as one more, any other work restarting the engine clock as none
+-- @param table vehicle vehicle
+-- @param boolean isMaintenance true when the service is a maintenance
+local function alignServiceClocks(vehicle, isMaintenance)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local engineClock = RealisticMechanicalSystems.SERVICE_CLOCKS[1]
+    local engineStartLevel = spec.pendingServiceClockStart[engineClock.key]
+    if engineStartLevel == nil or spec.pendingServiceClockTarget[engineClock.key] == nil then
+        return
+    end
+
+    local levelRange = spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
+    local engineIntervals = (spec.baseServiceLevel - engineStartLevel) / levelRange
+    for _, clock in ipairs(vehicle:getServiceClocks()) do
+        if spec.pendingServiceClockTarget[clock.key] == nil then
+            local services = getServicesSinceChange(spec, clock, engineIntervals) + (isMaintenance and 1 or 0)
+            spec[clock.levelKey] = math.max(spec.baseServiceLevel - services / clock.intervalFactor * levelRange, 0)
+        end
+    end
+end
+
 ---Collects the service clocks a service resets, those whose every oil it changes
 -- @param table vehicle vehicle
 -- @param table requirements fluid work of the service
@@ -284,6 +325,17 @@ local function collectPreventiveMaintenanceStressTargets(vehicle)
     return startMap, targetMap
 end
 
+---Skips a vehicle while its service runs, preserving its native tab selection setting
+-- @param function superFunc native or previously overwritten function
+-- @return boolean isTabbable true when the vehicle may be selected with the tab key
+function RealisticMechanicalSystems:getIsTabbable(superFunc)
+    local spec = self.spec_RealisticMechanicalSystems
+    if spec ~= nil and not spec.isExcludedVehicle and self:isUnderService() then
+        return false
+    end
+    return superFunc(self)
+end
+
 ---Starts a service, building its step queues, its duration and its price
 -- @param string type service status constant
 -- @param string? workshopType workshop the service runs at
@@ -320,10 +372,6 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     end
     if type == states.BODYWORK and not RMS_Bodywork.isAllowed(self, workshopType, optionOne, optionTwo) then
         return false
-    end
-
-    if self.spec_enterable ~= nil and self.spec_enterable.setIsTabbable ~= nil then
-        self.spec_enterable:setIsTabbable(false)
     end
 
     if type == states.OVERHAUL
@@ -460,9 +508,6 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
             spec.serviceOptionTwo = nil
             spec.serviceOptionThree = false
             resetPendingServiceProgress(spec)
-            if self.spec_enterable ~= nil and self.spec_enterable.setIsTabbable ~= nil then
-                self.spec_enterable:setIsTabbable(true)
-            end
             return false
         end
 
@@ -707,6 +752,7 @@ function RealisticMechanicalSystems:completeService()
     end
 
     applyPendingServiceClockInterpolation(spec, 1)
+    alignServiceClocks(self, serviceType == states.MAINTENANCE)
 
     if serviceType == states.MAINTENANCE then
         for systemKey, targetStress in pairs(spec.pendingPreventiveSystemStressTarget or {}) do
@@ -811,6 +857,14 @@ function RealisticMechanicalSystems:completeService()
         end
     end
 
+    if (serviceType == states.REPAIR or serviceType == states.OVERHAUL)
+        and RMS_Utils.getKeyByValue(selectedBreakdowns, "CVT_ADDON_MALFUNCTION") ~= nil then
+        local systemData = spec.systems.transmission
+        if systemData.stress > 0.25 then
+            systemData.stress = 0.25
+        end
+    end
+
     spec.pendingSelectedBreakdowns = selectedBreakdowns
     self:recalculateAndApplyEffects()
     self:addEntryToMaintenanceLog(serviceType, optionOne, optionTwo, optionThree, spec.pendingServicePrice, true, spec.pendingServiceInvoice)
@@ -818,10 +872,6 @@ function RealisticMechanicalSystems:completeService()
     local lastEntry = spec.maintenanceLog and spec.maintenanceLog[#spec.maintenanceLog]
     if lastEntry ~= nil then
         lastEntry.isVisible = true
-    end
-
-    if self.spec_enterable ~= nil and self.spec_enterable.setIsTabbable ~= nil then 
-        self.spec_enterable:setIsTabbable(true)
     end
 
     if not isMobileWorkshop and (serviceType == states.MAINTENANCE
@@ -866,14 +916,7 @@ function RealisticMechanicalSystems:completeService()
         resetVehicleRepaintWear(self)
     end
 
-    if serviceType == states.REPAIR or serviceType == states.OVERHAUL and spec.pendingSelectedBreakdowns.CVT_ADDON_MALFUNCTION ~= nil then
-        local systemData = spec.systems.transmission
-        if systemData.stress > 0.25 then
-            spec.systems.transmission.stress = 0.25
-        end
-    end
-
-    local maintenanceCompletedText = string.format("%s: %s", self:getFullName(), string.format(g_i18n:getText("rms_spec_maintenance_complete_notification"), g_i18n:getText(serviceType)))
+    local maintenanceCompletedText = string.format(g_i18n:getText("rms_hud_vehicle_notification"), self:getFullName(), string.format(g_i18n:getText("rms_spec_maintenance_complete_notification"), g_i18n:getText(serviceType)))
 
     if serviceType == states.INSPECTION or serviceType == states.MAINTENANCE then
         local activeBreakdowns = self:getActiveBreakdowns()
@@ -922,7 +965,7 @@ function RealisticMechanicalSystems:completeService()
             nextOptionTwo = RealisticMechanicalSystems.PART_TYPES.OEM
             nextOptionThree = false
         elseif nextWork == states.MAINTENANCE then
-            nextOptionOne = RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD
+            nextOptionOne = self:getDueMaintenanceType()
             nextOptionTwo = RealisticMechanicalSystems.PART_TYPES.OEM
             nextOptionThree = false
         end
@@ -954,7 +997,7 @@ function RealisticMechanicalSystems:completeService()
 
         if started then
             local nextServiceMessage = string.format(g_i18n:getText('rms_spec_next_planned_service_notification'), g_i18n:getText(nextWork))
-            local nextServiceText = string.format("%s: %s", self:getFullName(), nextServiceMessage)
+            local nextServiceText = string.format(g_i18n:getText("rms_hud_vehicle_notification"), self:getFullName(), nextServiceMessage)
             if g_currentMission.hud ~= nil and g_currentMission.hud.addSideNotification ~= nil
                     and self:getOwnerFarmId() == g_currentMission:getFarmId() then
                 g_currentMission.hud:addSideNotification({1, 1, 1, 1}, nextServiceText)
@@ -963,7 +1006,7 @@ function RealisticMechanicalSystems:completeService()
         else
             if result == RMS_FluidWorkshop.RESULT.NOT_ENOUGH_MONEY then
                 local notEnoughMoneyText = string.format(
-                    "%s: %s",
+                    g_i18n:getText("rms_hud_vehicle_notification"),
                     self:getFullName(),
                     string.format(
                         g_i18n:getText('rms_spec_next_planned_service_not_enough_money_notification'),
@@ -1019,11 +1062,7 @@ function RealisticMechanicalSystems:cancelService()
         lastEntry.isVisible = true
     end
 
-    if self.spec_enterable ~= nil and self.spec_enterable.setIsTabbable ~= nil then
-        self.spec_enterable:setIsTabbable(true)
-    end
-
-    local cancelText = string.format("%s: %s", self:getFullName(), string.format(g_i18n:getText("rms_spec_maintenance_cancelled_notification"), g_i18n:getText(serviceType)))
+    local cancelText = string.format(g_i18n:getText("rms_hud_vehicle_notification"), self:getFullName(), string.format(g_i18n:getText("rms_spec_maintenance_cancelled_notification"), g_i18n:getText(serviceType)))
     if g_currentMission.hud ~= nil and g_currentMission.hud.addSideNotification ~= nil
             and self:getOwnerFarmId() == g_currentMission:getFarmId() then
         g_currentMission.hud:addSideNotification({1, 1, 1, 1}, cancelText)
@@ -1121,10 +1160,12 @@ function RealisticMechanicalSystems.getIsLogEntryHasReport(entry)
 
     local isCompleted = RMS_Utils.normalizeBoolValue(entry.isCompleted, true)
 
-    return (entry.type ~= RealisticMechanicalSystems.STATUS.REPAIR 
-    and entry.optionOne ~= RealisticMechanicalSystems.INSPECTION_TYPES.VISUAL 
-    and entry.optionOne ~= "NONE" 
-    and isCompleted)
+    return (entry.type == RealisticMechanicalSystems.STATUS.INSPECTION
+        or entry.type == RealisticMechanicalSystems.STATUS.MAINTENANCE
+        or entry.type == RealisticMechanicalSystems.STATUS.OVERHAUL)
+        and entry.optionOne ~= RealisticMechanicalSystems.INSPECTION_TYPES.VISUAL
+        and entry.optionOne ~= "NONE"
+        and isCompleted
 end
 
 ---Tells whether a log entry holds a complete inspection report
@@ -1239,7 +1280,8 @@ function RealisticMechanicalSystems:getServiceClockHours(clock)
     return usedShare * interval, interval
 end
 
----Returns the service clock with the fewest hours left, the most overdue one past its interval
+---Returns the service clock with the fewest hours left, the most overdue one past its interval; the clocks
+-- falling due at the same service tie, and the last one, the heaviest change of that service, names it
 -- @return table clock service clock definition
 -- @return float hours hours run since the clock was reset
 -- @return float interval hours the clock lasts
@@ -1247,12 +1289,35 @@ function RealisticMechanicalSystems:getNextServiceClock()
     local nextClock, nextHours, nextInterval = nil, 0, 0
     for _, clock in ipairs(self:getServiceClocks()) do
         local hours, interval = self:getServiceClockHours(clock)
-        if nextClock == nil or interval - hours < nextInterval - nextHours then
+        if nextClock == nil or interval - hours < nextInterval - nextHours + 0.001 then
             nextClock, nextHours, nextInterval = clock, hours, interval
         end
     end
 
     return nextClock, nextHours, nextInterval
+end
+
+---Returns the hours run and the hours of the service countdown: every service is set on the engine oil interval
+-- @return float hours hours run since the last service
+-- @return float interval hours between two services
+function RealisticMechanicalSystems:getServiceCountdown()
+    return self:getServiceClockHours(RealisticMechanicalSystems.SERVICE_CLOCKS[1])
+end
+
+---Returns the maintenance the schedule calls for at the next service: the lightest one reaching every clock that
+-- falls due by then, the engine oil at every service, the other oils every second one, the coolant every tenth
+-- @return string maintenanceType maintenance type constant
+function RealisticMechanicalSystems:getDueMaintenanceType()
+    local spec = self.spec_RealisticMechanicalSystems
+    local engineIntervals = getClockUsedIntervals(spec, RealisticMechanicalSystems.SERVICE_CLOCKS[1])
+    local dueType = RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD
+    for _, clock in ipairs(self:getServiceClocks()) do
+        if getServicesSinceChange(spec, clock, engineIntervals) + 1 >= clock.intervalFactor then
+            dueType = RealisticMechanicalSystems.MAINTENANCE_TYPES[clock.maintenanceType]
+        end
+    end
+
+    return dueType
 end
 
 ---Returns the options of the newest service

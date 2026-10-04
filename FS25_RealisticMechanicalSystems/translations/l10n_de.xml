@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Zündung ein: Vorglühen läuft"/>
         <text name="rms_preheat_system_failure_message" text="Vorglühsystem ausgefallen: Kaltstart nicht möglich"/>
         <text name="rms_preheat_start_failed_message" text="Motor nicht gestartet: Zündung vor erneutem Versuch ausschalten"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Fahrzeug kontrollieren"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Eigene Werkstatt 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Hält deine eigene Werkstatt zu jeder Tages- und Nachtzeit verfügbar."/>
         <text name="rms_instantInspection_label" text="Sofortige Inspektion"/>
-        <text name="rms_instantInspection_tooltip" text="Wenn die Option aktiviert ist, werden Inspektionen in der Werkstatt sofort abgeschlossen. Bereits laufende Arbeiten dieser Art werden ebenfalls sofort abgeschlossen."/>
+        <text name="rms_instantInspection_tooltip" text="Wenn die Option aktiviert ist, werden Inspektionen in der Werkstatt sofort abgeschlossen. Bereits laufende Vorgänge dieser Art werden ebenfalls sofort abgeschlossen."/>
         <text name="rms_instantMaintenanceRepair_label" text="Sofortige Wartung und Reparatur"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Wenn die Option aktiviert ist, werden Wartungen und Reparaturen in der Werkstatt sofort abgeschlossen. Bereits laufende Arbeiten dieser Art werden ebenfalls sofort abgeschlossen."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Wenn die Option aktiviert ist, werden Wartungen und Reparaturen in der Werkstatt sofort abgeschlossen. Bereits laufende Vorgänge dieser Art werden ebenfalls sofort abgeschlossen."/>
         <text name="rms_instantBodywork_label" text="Sofortige Lackierung"/>
-        <text name="rms_instantBodywork_tooltip" text="Wenn die Option aktiviert ist, werden Lackierarbeiten in der Werkstatt sofort abgeschlossen. Bereits laufende Arbeiten dieser Art werden ebenfalls sofort abgeschlossen."/>
+        <text name="rms_instantBodywork_tooltip" text="Wenn die Option aktiviert ist, werden Lackierarbeiten in der Werkstatt sofort abgeschlossen. Bereits laufende Vorgänge dieser Art werden ebenfalls sofort abgeschlossen."/>
         <text name="rms_instantOverhaul_label" text="Sofortige mechanische Überholung"/>
-        <text name="rms_instantOverhaul_tooltip" text="Wenn die Option aktiviert ist, werden mechanische Überholungen in der Werkstatt sofort abgeschlossen. Bereits laufende Arbeiten dieser Art werden ebenfalls sofort abgeschlossen."/>
+        <text name="rms_instantOverhaul_tooltip" text="Wenn die Option aktiviert ist, werden mechanische Überholungen in der Werkstatt sofort abgeschlossen. Bereits laufende Vorgänge dieser Art werden ebenfalls sofort abgeschlossen."/>
         <text name="rms_debugMode_label" text="Debug-Modus"/>
         <text name="rms_debugMode_tooltip" text="Aktiviert das Debug-Panel und die ausführliche Protokollierung in der Konsole."/>
         <text name="rms_warningMessages_label" text="Warnmeldungen"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Alter"/>
         <text name="rms_ws_label_operating_hours" text="Betriebsstunden"/>
         <text name="rms_ws_label_service" text="Wartungsstand"/>
-        <text name="rms_ws_label_next_service" text="Nächste Wartung"/>
-        <text name="rms_ws_value_service_overdue" text="überfällig seit %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Standardwartung"/>
+        <text name="rms_ws_label_maintenance_extended" text="Erweiterte Wartung"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Präventive Wartung"/>
         <text name="rms_ws_label_condition" text="Zustand"/>
         <text name="rms_ws_label_reliability" text="Zuverlässigkeit"/>
         <text name="rms_ws_label_overhaul_count" text="Durchgeführte Überholungen"/>
@@ -530,9 +532,9 @@
         <text name="rms_option_menu_option_two_title_overhaul" text="Zu überholendes System"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Wenn der Vorgang Schäden aufdeckt, folgt automatisch eine Standardreparatur mit Originalteilen."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Nach der Reparatur folgt automatisch eine Standardwartung mit Original-Verbrauchsmaterialien."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Teilweise Überholung: bringt das gewählte System in guten Zustand, behebt reparierbare Defekte und wechselt bei Bedarf die zugehörige Flüssigkeit."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Standardüberholung: bringt alle Systeme in guten Zustand, behebt reparierbare Defekte, wechselt die Flüssigkeiten und erneuert die Wartung."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Vollständige Überholung: bringt alle Systeme in neuwertigen Zustand, behebt reparierbare Defekte, wechselt die Flüssigkeiten und erneuert die Wartung."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="Teilweise Überholung: Bringt das gewählte System in guten Zustand, behebt reparierbare Schäden und wechselt bei Bedarf die zugehörige Flüssigkeit."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Standardüberholung: Bringt alle Systeme in guten Zustand, behebt reparierbare Schäden, wechselt die Flüssigkeiten und erneuert die Wartung."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Vollständige Überholung: Bringt alle Systeme in neuwertigen Zustand, behebt reparierbare Schäden, wechselt die Flüssigkeiten und erneuert die Wartung."/>
         <text name="rms_option_menu_price_text" text="Preis"/>
         <text name="rms_option_menu_part_used_description" text="Gebrauchtteile: niedrigste Kosten, mit 50 % Risiko eines späteren Defekts."/>
         <text name="rms_option_menu_part_aftermarket_description" text="Nachbauteile: geringere Kosten, mit 33 % Risiko eines späteren Defekts."/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Lackausbesserung"/>
         <text name="rms_bodywork_full" text="Komplette Neulackierung"/>
         <text name="rms_bodywork_colors_title" text="Fahrzeugfarben"/>
-        <text name="rms_bodywork_keep_color" text="Aktuelle Farbe behalten"/>
-        <text name="rms_bodywork_reset_color" text="Aktuell"/>
         <text name="rms_bodywork_wear" text="Lackschäden"/>
         <text name="rms_bodywork_unavailable" text="Nicht verfügbar"/>
-        <text name="rms_bodywork_ineligible" text="Service für dieses Fahrzeug oder in dieser Werkstatt nicht verfügbar"/>
+        <text name="rms_bodywork_ineligible" text="Vorgang für dieses Fahrzeug oder in dieser Werkstatt nicht verfügbar"/>
         <text name="rms_bodywork_no_wear" text="Keine Lackschäden zum Ausbessern"/>
         <text name="rms_bodywork_wear_limit" text="Lackausbesserung bei bis zu 30 % Lackschaden möglich"/>
         <text name="rms_bodywork_touchup_description" text="Beseitigt leichte Lackschäden. Die aktuellen Farben bleiben erhalten."/>
-        <text name="rms_bodywork_full_description" text="Erneuert den Lack. Wählen Sie die verfügbaren Farben dieses Fahrzeugs oder behalten Sie die aktuellen."/>
-        <text name="rms_bodywork_touchup_colors" text="Die aktuelle Farbe bleibt erhalten."/>
+        <text name="rms_bodywork_full_description" text="Erneuert den Lack. Wähle die verfügbaren Farben dieses Fahrzeugs oder behalte die aktuellen."/>
         <text name="rms_bodywork_no_colors" text="Für dieses Fahrzeug sind keine Farben wählbar. Die aktuellen Farben bleiben erhalten."/>
-        <text name="rms_bodywork_unavailable_title" text="Service nicht verfügbar"/>
+        <text name="rms_bodywork_unavailable_title" text="Vorgang nicht verfügbar"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Inspektionsbericht"/>
         <text name="rms_report_vehicle_specs_title" text="Fahrzeugspezifikationen"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Umfüllen beenden"/>
         <text name="rms_fluid_select_vehicle_title" text="Fahrzeugauswahl"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Fahrzeug zum Befüllen wählen"/>
-        <text name="rms_fluid_select_circuit_title" text="Kreislaufauswahl"/>
         <text name="rms_fluid_select_circuit_prompt" text="Kreislauf zum Befüllen wählen"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Flüssigkeit zum Einfüllen wählen"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Motoröl"/>
         <text name="rms_fluid_circuit_coolant" text="Kühlmittel"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Getriebeöl"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydrauliköl"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Getriebe- und Hydrauliköl"/>
         <text name="rms_fluid_hud_engineOil" text="Motoröl"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Getriebeöl"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Getriebe-Hydrauliköl"/>
         <text name="rms_fluid_hud_coolant" text="Kühlmittel"/>
         <text name="rms_fluid_incompatible_title" text="Ungeeignete Flüssigkeit"/>
         <text name="rms_fluid_incompatible_message" text="Dieses Produkt ist nicht für diesen Kreislauf vorgesehen. Es verunreinigt ihn und kann den Systemverschleiß verdreifachen, die Erwärmung erhöhen oder die Hydraulik verlangsamen. Nur ein vollständiger Wechsel beseitigt die Verunreinigung. Fortfahren?"/>
@@ -684,7 +684,7 @@
         <text name="rms_fluid_stock_required" text="Passende Behälter im Werkstattbereich erforderlich"/>
         <text name="rms_fluid_refill_work_order" text="Flüssigkeiten nachfüllen"/>
         <text name="rms_fluid_refill_dealer_supply" text="Bereitstellung im Kostenvoranschlag enthalten"/>
-        <text name="rms_fluid_refill_stock_supply" text="Stellen Sie Ihre passenden Behälter in den Werkstattbereich"/>
+        <text name="rms_fluid_refill_stock_supply" text="Stelle deine passenden Behälter in den Werkstattbereich"/>
         <text name="rms_fluid_mode_top_up" text="Nachfüllen"/>
         <text name="rms_fluid_mode_replace" text="Wechsel"/>
         <text name="rms_fluid_mode_repair" text="Nachfüllen nach Leckage"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Du lenkst auf griffigem Boden mit eingelegter Differentialsperre. In einer Kurve legen die kurveninneren und kurvenäußeren Räder unterschiedliche Strecken zurück, doch die Differentialsperre zwingt sie zur gleichen Drehzahl: Der Antriebsstrang wird belastet und der Getriebeverschleiß steigt. Löse die Sperre vor Kurvenfahrten."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Antriebsmodi und Differentialsperre"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Diese Maschine lässt dich den Antrieb wählen: Hinterradantrieb, Allrad oder AUTO, wobei die Vorderachse zugeschaltet wird, sobald die Räder durchdrehen.&#10;&#10;Die Differentialsperre sorgt für Traktion, wo sie sonst fehlt, belastet den Antriebsstrang aber in Kurven auf griffigem Untergrund stark: Innen- und Außenräder können nicht mit derselben Drehzahl laufen. Löse die Sperre vor dem Abbiegen."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Telwin-Ladegerät auf einem Wagen, 150 A bei 12 V. Neben dem Fahrzeug anschließen und die Batterie laden lassen. Das Laden folgt der Zeitgeschwindigkeit im Spiel. Starthilfe (START, 200 A)."/>
+        <text name="rms_charger_start" text="Ladegerät anschließen"/>
+        <text name="rms_charger_disconnect" text="Ladegerät abklemmen"/>
+        <text name="rms_charger_select" text="Wählen Sie das anzuschließende Fahrzeug."/>
+        <text name="rms_charger_no_vehicle" text="Kein geeignetes Fahrzeug im Umkreis von 4 m. Es muss deinem Hof gehören, stillstehen und der Motor muss aus sein."/>
+        <text name="rms_charger_idle" text="Verfügbar"/>
+        <text name="rms_charger_charging" text="Ladevorgang läuft"/>
+        <text name="rms_charger_full" text="Batterie geladen"/>
+        <text name="rms_charger_interrupted" text="Ladevorgang unterbrochen"/>
+        <text name="rms_charger_interrupted_reason" text="Ladevorgang unterbrochen. %s"/>
+        <text name="rms_charger_status" text="Status"/>
+        <text name="rms_charger_battery" text="Batterie"/>
+        <text name="rms_charger_voltage" text="Spannung"/>
+        <text name="rms_charger_current" text="Ladestrom"/>
+        <text name="rms_charger_consumers" text="Licht und Zubehör ausschalten."/>
+        <text name="rms_charger_error_unavailable" text="Fahrzeug fehlt oder wird nicht unterstützt."/>
+        <text name="rms_charger_error_access" text="Dieses Fahrzeug gehört einem anderen Hof."/>
+        <text name="rms_charger_error_distance" text="Stelle das Ladegerät höchstens 4 m entfernt auf."/>
+        <text name="rms_charger_error_motor" text="Stelle vor dem Anschließen den Motor ab."/>
+        <text name="rms_charger_error_moving" text="Fahrzeug bewegt sich."/>
+        <text name="rms_charger_error_service" text="Ein Werkstattvorgang läuft."/>
+        <text name="rms_charger_error_cables" text="Klemme die Starthilfekabel ab."/>
+        <text name="rms_charger_error_busy" text="Ein Ladegerät ist bereits angeschlossen."/>
+        <text name="rms_charger_error_full" text="Diese Batterie ist bereits geladen."/>
+        <text name="rms_charger_connected" text="Ladegerät angeschlossen. Ladevorgang gestartet."/>
+        <text name="rms_charger_disconnected" text="Ladegerät getrennt."/>
+        <text name="rms_charger_stopped_motor" text="Ladestopp: Motorstart"/>
+        <text name="rms_charger_error_player_distance" text="Nähere dich dem Ladegerät zu Fuß."/>
+        <text name="rms_charger_mode_select" text="Ladegerät anschließen"/>
+        <text name="rms_charger_mode_start" text="Starthilfe (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START bereit"/>
+        <text name="rms_charger_start_active" text="Starthilfe aktiv"/>
+        <text name="rms_charger_start_running" text="Motor läuft: abklemmen"/>
+        <text name="rms_charger_start_countdown" text="Warten: %d s"/>
+        <text name="rms_charger_start_wait" text="Warten Sie die 30 Sekunden zwischen den Starts ab."/>
+        <text name="rms_charger_unplug_before_start" text="Ladegerät abklemmen oder vor dem Start START wählen."/>
+        <text name="rms_charger_start_connected" text="Starthilfe (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Batterie aufladen (150 A)"/>
     </texts>
 </l10n>

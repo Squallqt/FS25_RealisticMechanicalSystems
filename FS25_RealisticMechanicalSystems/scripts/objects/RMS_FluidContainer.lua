@@ -42,6 +42,7 @@ function RMS_FluidContainer.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "removeRMSFluidLiters", RMS_FluidContainer.removeRMSFluidLiters)
     SpecializationUtil.registerFunction(vehicleType, "restoreRMSFluidLiters", RMS_FluidContainer.restoreRMSFluidLiters)
     SpecializationUtil.registerFunction(vehicleType, "deleteRMSContainerIfEmpty", RMS_FluidContainer.deleteRMSContainerIfEmpty)
+    SpecializationUtil.registerFunction(vehicleType, "getIsRMSFluidTransferActive", RMS_FluidContainer.getIsRMSFluidTransferActive)
 end
 
 ---Registers native container behavior overrides
@@ -99,8 +100,7 @@ function RMS_FluidContainer:onLoad(savegame)
     spec.transactionDepth = 0
     spec.pendingDeleteCheck = false
     spec.activeTransfer = nil
-    spec.clientTransferTarget = nil
-    spec.clientTransferCircuit = nil
+    spec.isTransferActive = false
 
     local product = RMS_Fluids.PRODUCTS[spec.productKey]
     if product == nil then
@@ -267,17 +267,8 @@ function RMS_FluidContainer:onUpdate(dt, isActiveForInput, isActiveForInputIgnor
 
     if self.isServer and RMS_FluidTransfer ~= nil and spec.activeTransfer ~= nil then
         RMS_FluidTransfer.update(self, dt)
-    end
-
-    local target = self.isClient and spec.clientTransferTarget or nil
-    if target ~= nil then
-        local circuit = spec.clientTransferCircuit
-        if target.isDeleted == true
-            or self:getRMSFluidLiters() <= RMS_Fluids.EPSILON
-            or RMS_Fluids.getMissingLiters(target, circuit) <= RMS_Fluids.EPSILON
-            or (target.getIsMotorStarted ~= nil and target:getIsMotorStarted()) then
-            spec.clientTransferTarget = nil
-            spec.clientTransferCircuit = nil
+        if spec.activeTransfer ~= nil then
+            self:raiseActive()
         end
     end
 end
@@ -292,12 +283,16 @@ end
 
 ---Sends the liters to a joining client
 function RMS_FluidContainer:onWriteStream(streamId, connection)
-    streamWriteFloat32(streamId, self[RMS_FluidContainer.SPEC_TABLE_NAME].liters)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    streamWriteFloat32(streamId, spec.liters)
+    streamWriteBool(streamId, spec.activeTransfer ~= nil)
 end
 
 ---Receives the liters on joining
 function RMS_FluidContainer:onReadStream(streamId, connection)
-    self[RMS_FluidContainer.SPEC_TABLE_NAME].liters = streamReadFloat32(streamId)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    spec.liters = streamReadFloat32(streamId)
+    spec.isTransferActive = streamReadBool(streamId)
     self:setMassDirty()
 end
 
@@ -307,6 +302,7 @@ function RMS_FluidContainer:onWriteUpdateStream(streamId, connection, dirtyMask)
         local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
         if streamWriteBool(streamId, bit32.band(dirtyMask, spec.dirtyFlag) ~= 0) then
             streamWriteFloat32(streamId, spec.liters)
+            streamWriteBool(streamId, spec.activeTransfer ~= nil)
         end
     end
 end
@@ -314,9 +310,22 @@ end
 ---Receives the changed liters from the server
 function RMS_FluidContainer:onReadUpdateStream(streamId, timestamp, connection)
     if connection:getIsServer() and streamReadBool(streamId) then
-        self[RMS_FluidContainer.SPEC_TABLE_NAME].liters = streamReadFloat32(streamId)
+        local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+        spec.liters = streamReadFloat32(streamId)
+        spec.isTransferActive = streamReadBool(streamId)
         self:setMassDirty()
     end
+end
+
+---Tells whether a transfer is running from the container, as the server knows it
+-- @return boolean isActive true while fluid is being poured
+function RMS_FluidContainer:getIsRMSFluidTransferActive()
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    if self.isServer then
+        return spec.activeTransfer ~= nil
+    end
+
+    return spec.isTransferActive
 end
 
 ---Returns the immutable catalogue product key
@@ -517,20 +526,70 @@ local function getObjectDistance(objectA, objectB)
     return MathUtil.vector3Length(ax - bx, ay - by, az - bz)
 end
 
-function RMS_FluidContainerActivatable:getNearbyVehicles()
+---Lists the farm containers the player can pour from, the one carrying the action first
+-- @return table containers containers in reach of the player, holding fluid and not pouring
+function RMS_FluidContainerActivatable:getNearbyContainers()
+    local containers = {}
+    local farmId = g_currentMission:getFarmId()
+    for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
+        if vehicle[RMS_FluidContainer.SPEC_TABLE_NAME] ~= nil and vehicle:getOwnerFarmId() == farmId
+            and vehicle:getRMSFluidLiters() > RMS_Fluids.EPSILON and not vehicle:getIsRMSFluidTransferActive()
+            and getObjectDistance(g_localPlayer, vehicle) <= RMS_FluidTransfer.MAX_DISTANCE then
+            table.insert(containers, vehicle)
+        end
+    end
+    table.sort(containers, function(a, b)
+        if (a == self.container) ~= (b == self.container) then
+            return a == self.container
+        end
+        return getObjectDistance(g_localPlayer, a) < getObjectDistance(g_localPlayer, b)
+    end)
+    return containers
+end
+
+---Lists what the containers can pour into a machine, the fluids made for the circuit first
+-- @param table target machine to fill
+-- @param table containers containers the player can pour from
+-- @return table pours container and circuit pairs, in display order
+function RMS_FluidContainerActivatable:getPours(target, containers)
+    local pours = {}
+    for containerIndex, container in ipairs(containers) do
+        if getObjectDistance(container, target) <= RMS_FluidTransfer.MAX_DISTANCE then
+            local productKey = container:getRMSFluidProductKey()
+            for circuitIndex, circuit in ipairs(RMS_Fluids.getSumpCircuits(target)) do
+                if RMS_Fluids.getCapacity(target, circuit) > RMS_Fluids.EPSILON
+                    and RMS_Fluids.getMissingLiters(target, circuit) > RMS_Fluids.EPSILON then
+                    table.insert(pours, {
+                        container = container,
+                        circuit = circuit,
+                        isCompatible = RMS_Fluids.getIsProductCompatible(productKey, circuit),
+                        order = circuitIndex * #containers + containerIndex
+                    })
+                end
+            end
+        end
+    end
+    table.sort(pours, function(a, b)
+        if a.isCompatible ~= b.isCompatible then
+            return a.isCompatible
+        end
+        return a.order < b.order
+    end)
+    return pours
+end
+
+---Lists the farm machines within reach of the player that one of the containers can fill
+-- @param table containers containers the player can pour from
+-- @return table vehicles machines lacking fluid
+function RMS_FluidContainerActivatable:getNearbyVehicles(containers)
     local vehicles = {}
     local farmId = g_currentMission:getFarmId()
     for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
-        if vehicle ~= self.container and vehicle.spec_RealisticMechanicalSystems ~= nil
+        if vehicle.spec_RealisticMechanicalSystems ~= nil
             and vehicle.getOwnerFarmId ~= nil and vehicle:getOwnerFarmId() == farmId
-            and getObjectDistance(self.container, vehicle) <= RMS_FluidTransfer.MAX_DISTANCE then
-            for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-                if RMS_Fluids.getCapacity(vehicle, circuit) > RMS_Fluids.EPSILON
-                    and RMS_Fluids.getMissingLiters(vehicle, circuit) > RMS_Fluids.EPSILON then
-                    table.insert(vehicles, vehicle)
-                    break
-                end
-            end
+            and getObjectDistance(g_localPlayer, vehicle) <= RMS_FluidTransfer.MAX_DISTANCE
+            and #self:getPours(vehicle, containers) > 0 then
+            table.insert(vehicles, vehicle)
         end
     end
     table.sort(vehicles, function(a, b)
@@ -566,13 +625,13 @@ function RMS_FluidContainerActivatable:getIsActivatable()
         or container:getOwnerFarmId() ~= farmId then
         return false
     end
+    self:updateActivateText()
     return true
 end
 
 function RMS_FluidContainerActivatable:updateActivateText()
-    local spec = self.container[RMS_FluidContainer.SPEC_TABLE_NAME]
     self.activateText = g_i18n:getText(
-        spec.clientTransferTarget ~= nil
+        self.container:getIsRMSFluidTransferActive()
             and "rms_fluid_container_action_cancel"
             or "rms_fluid_container_action_start"
     )
@@ -583,14 +642,14 @@ function RMS_FluidContainerActivatable:getDistance(x, y, z)
     return MathUtil.vector3Length(tx - x, ty - y, tz - z)
 end
 
-function RMS_FluidContainerActivatable:startTransfer(target, circuit, incompatibleConfirmed)
-    RMS_FluidTransferRequestEvent.send(self.container, target, circuit, incompatibleConfirmed, false)
-    local spec = self.container[RMS_FluidContainer.SPEC_TABLE_NAME]
-    spec.clientTransferTarget = target
-    spec.clientTransferCircuit = circuit
-end
-
-function RMS_FluidContainerActivatable:selectCircuit(target)
+---Asks which circuit of the machine to fill, then which fluid to pour, skipping a question that has a single answer
+-- @param table target machine to fill
+-- @param table containers containers the player can pour from
+function RMS_FluidContainerActivatable:selectPour(target, containers)
+    if target.isUnderService ~= nil and target:isUnderService() then
+        InfoDialog.show(g_i18n:getText("rms_charger_error_service"))
+        return
+    end
     if target.getIsMotorStarted ~= nil and target:getIsMotorStarted() then
         InfoDialog.show(g_i18n:getText("rms_fluid_error_motor_running"))
         return
@@ -600,32 +659,29 @@ function RMS_FluidContainerActivatable:selectCircuit(target)
         return
     end
 
-    local circuits = {}
-    local options = {}
-    for _, circuit in ipairs(RMS_Fluids.getSumpCircuits(target)) do
-        if RMS_Fluids.getCapacity(target, circuit) > RMS_Fluids.EPSILON
-            and RMS_Fluids.getMissingLiters(target, circuit) > RMS_Fluids.EPSILON then
-            table.insert(circuits, circuit)
-            table.insert(options, g_i18n:getText(RMS_Fluids.getCircuitTextKey(target, circuit, "rms_fluid_circuit_" .. circuit)))
-        end
-    end
-    if #circuits == 0 then
+    local pours = self:getPours(target, containers)
+    if #pours == 0 then
         InfoDialog.show(g_i18n:getText("rms_fluid_error_no_circuit"))
         return
     end
 
-    local function choose(index)
-        local circuit = index ~= nil and circuits[index] or nil
-        if circuit == nil then
-            return
+    -- the circuits one of the containers holds the right fluid for come first, as do those fluids within a circuit
+    local circuits, poursByCircuit = {}, {}
+    for _, pour in ipairs(pours) do
+        if poursByCircuit[pour.circuit] == nil then
+            poursByCircuit[pour.circuit] = {}
+            table.insert(circuits, pour.circuit)
         end
-        local productKey = self.container:getRMSFluidProductKey()
-        if RMS_Fluids.getIsProductCompatible(productKey, circuit) then
-            self:startTransfer(target, circuit, false)
+        table.insert(poursByCircuit[pour.circuit], pour)
+    end
+
+    local function start(pour)
+        if pour.isCompatible then
+            RMS_FluidTransferRequestEvent.send(pour.container, target, pour.circuit, false, false)
         else
             local callback = function(confirmed)
                 if confirmed then
-                    self:startTransfer(target, circuit, true)
+                    RMS_FluidTransferRequestEvent.send(pour.container, target, pour.circuit, true, false)
                 end
             end
             YesNoDialog.show(
@@ -637,58 +693,87 @@ function RMS_FluidContainerActivatable:selectCircuit(target)
         end
     end
 
-    if #circuits == 1 then
-        choose(1)
-    else
+    local function selectFluid(circuit)
+        local circuitPours = poursByCircuit[circuit]
+        if #circuitPours == 1 then
+            start(circuitPours[1])
+            return
+        end
+
+        local options = {}
+        for _, pour in ipairs(circuitPours) do
+            local product = RMS_Fluids.PRODUCTS[pour.container:getRMSFluidProductKey()]
+            -- the kind of fluid and its brand, as the container itself is labelled: a trade name tells the player nothing
+            table.insert(options, string.format(
+                g_i18n:getText("rms_fluid_pour_option"),
+                g_i18n:getText(FLUID_KIND_TEXT_KEYS[getFluidKind(product)]),
+                g_brandManager:getBrandByName(product.brand).title,
+                string.format("%s %s", RMS_FluidWorkshop.formatLiters(pour.container:getRMSFluidLiters()), g_i18n:getText("unit_literShort"))
+            ))
+        end
         OptionDialog.show(
-            choose,
-            g_i18n:getText("rms_fluid_select_circuit_title"),
-            g_i18n:getText("rms_fluid_select_circuit_prompt"),
+            function(index)
+                if circuitPours[index] ~= nil then
+                    start(circuitPours[index])
+                end
+            end,
+            g_i18n:getText("rms_fluid_select_fluid_prompt"),
+            g_i18n:getText(RMS_Fluids.getCircuitTextKey(target, circuit, "rms_fluid_circuit_" .. circuit)),
             options
         )
     end
-end
 
-function RMS_FluidContainerActivatable:run()
-    local spec = self.container[RMS_FluidContainer.SPEC_TABLE_NAME]
-    if spec.clientTransferTarget ~= nil then
-        RMS_FluidTransferRequestEvent.send(
-            self.container,
-            spec.clientTransferTarget,
-            spec.clientTransferCircuit,
-            false,
-            true
-        )
-        spec.clientTransferTarget = nil
-        spec.clientTransferCircuit = nil
+    if #circuits == 1 then
+        selectFluid(circuits[1])
         return
     end
 
-    local vehicles = self:getNearbyVehicles()
+    local options = {}
+    for _, circuit in ipairs(circuits) do
+        table.insert(options, g_i18n:getText(RMS_Fluids.getCircuitTextKey(target, circuit, "rms_fluid_circuit_" .. circuit)))
+    end
+    OptionDialog.show(
+        function(index)
+            if circuits[index] ~= nil then
+                selectFluid(circuits[index])
+            end
+        end,
+        g_i18n:getText("rms_fluid_select_circuit_prompt"),
+        g_i18n:getText("rms_fluid_container_action_start"),
+        options
+    )
+end
+
+function RMS_FluidContainerActivatable:run()
+    if self.container:getIsRMSFluidTransferActive() then
+        RMS_FluidTransferRequestEvent.send(self.container, nil, nil, false, true)
+        return
+    end
+
+    local containers = self:getNearbyContainers()
+    local vehicles = self:getNearbyVehicles(containers)
     if #vehicles == 0 then
         InfoDialog.show(g_i18n:getText("rms_fluid_error_no_vehicle"))
         return
     end
 
-    local function choose(index)
-        local target = index ~= nil and vehicles[index] or nil
-        if target ~= nil then
-            self:selectCircuit(target)
-        end
+    if #vehicles == 1 then
+        self:selectPour(vehicles[1], containers)
+        return
     end
 
-    if #vehicles == 1 then
-        choose(1)
-    else
-        local options = {}
-        for _, vehicle in ipairs(vehicles) do
-            table.insert(options, vehicle.getFullName ~= nil and vehicle:getFullName() or tostring(vehicle.configFileName))
-        end
-        OptionDialog.show(
-            choose,
-            g_i18n:getText("rms_fluid_select_vehicle_title"),
-            g_i18n:getText("rms_fluid_select_vehicle_prompt"),
-            options
-        )
+    local options = {}
+    for _, vehicle in ipairs(vehicles) do
+        table.insert(options, vehicle.getFullName ~= nil and vehicle:getFullName() or tostring(vehicle.configFileName))
     end
+    OptionDialog.show(
+        function(index)
+            if vehicles[index] ~= nil then
+                self:selectPour(vehicles[index], containers)
+            end
+        end,
+        g_i18n:getText("rms_fluid_select_vehicle_prompt"),
+        g_i18n:getText("rms_fluid_select_vehicle_title"),
+        options
+    )
 end

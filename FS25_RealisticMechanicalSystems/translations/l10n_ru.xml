@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Зажигание включено: идёт предпусковой подогрев"/>
         <text name="rms_preheat_system_failure_message" text="Отказ системы накаливания: холодный запуск невозможен"/>
         <text name="rms_preheat_start_failed_message" text="Двигатель не запустился: выключите зажигание перед новой попыткой"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Проверить технику"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="ОК"/>
@@ -45,8 +46,8 @@
         <text name="rms_ownWorkshopAvailable_tooltip" text="Делает собственную мастерскую доступной в любое время суток."/>
         <text name="rms_instantInspection_label" text="Мгновенный осмотр"/>
         <text name="rms_instantInspection_tooltip" text="Если включено, осмотры в мастерской завершаются мгновенно. Уже выполняемые работы этого типа также завершаются мгновенно."/>
-        <text name="rms_instantMaintenanceRepair_label" text="Мгновенное обслуживание и ремонт"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Если включено, обслуживание и ремонт в мастерской завершаются мгновенно. Уже выполняемые работы этого типа также завершаются мгновенно."/>
+        <text name="rms_instantMaintenanceRepair_label" text="Мгновенное техобслуживание и ремонт"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Если включено, техобслуживание и ремонт в мастерской завершаются мгновенно. Уже выполняемые работы этого типа также завершаются мгновенно."/>
         <text name="rms_instantBodywork_label" text="Мгновенная покраска"/>
         <text name="rms_instantBodywork_tooltip" text="Если включено, покраска в мастерской завершается мгновенно. Уже выполняемые работы этого типа также завершаются мгновенно."/>
         <text name="rms_instantOverhaul_label" text="Мгновенный капитальный ремонт"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Возраст"/>
         <text name="rms_ws_label_operating_hours" text="Моточасы"/>
         <text name="rms_ws_label_service" text="Уровень техобслуживания"/>
-        <text name="rms_ws_label_next_service" text="Следующее техобслуживание"/>
-        <text name="rms_ws_value_service_overdue" text="просрочено на %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Стандартное ТО"/>
+        <text name="rms_ws_label_maintenance_extended" text="Расширенное ТО"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Профилактическое ТО"/>
         <text name="rms_ws_label_condition" text="Состояние"/>
         <text name="rms_ws_label_reliability" text="Надёжность"/>
         <text name="rms_ws_label_overhaul_count" text="Выполнено капремонтов"/>
@@ -531,8 +533,8 @@
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Если во время работы выявлены неисправности, после неё автоматически запускается стандартный ремонт с оригинальными деталями."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="После ремонта автоматически выполняет стандартное техобслуживание с оригинальными расходными материалами."/>
         <text name="rms_option_menu_overhaul_partial_description" text="Частичный капитальный ремонт: приводит выбранную систему в хорошее состояние, устраняет поддающиеся ремонту неисправности и при необходимости меняет связанную жидкость."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Стандартный капитальный ремонт: приводит все системы в хорошее состояние, устраняет поддающиеся ремонту неисправности, меняет жидкости и обновляет обслуживание."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Полный капитальный ремонт: приводит все системы в состояние новых, устраняет поддающиеся ремонту неисправности, меняет жидкости и обновляет обслуживание."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Стандартный капитальный ремонт: приводит все системы в хорошее состояние, устраняет поддающиеся ремонту неисправности, меняет жидкости и обновляет техобслуживание."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Полный капитальный ремонт: приводит все системы в состояние новых, устраняет поддающиеся ремонту неисправности, меняет жидкости и обновляет техобслуживание."/>
         <text name="rms_option_menu_price_text" text="Цена"/>
         <text name="rms_option_menu_part_used_description" text="Подержанные детали: минимальная цена и 50% риска последующего дефекта."/>
         <text name="rms_option_menu_part_aftermarket_description" text="Аналоги: сниженная цена и 33% риска последующего дефекта."/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Подкраска"/>
         <text name="rms_bodywork_full" text="Полная перекраска"/>
         <text name="rms_bodywork_colors_title" text="Цвета машины"/>
-        <text name="rms_bodywork_keep_color" text="Сохранить текущий цвет"/>
-        <text name="rms_bodywork_reset_color" text="Текущий"/>
         <text name="rms_bodywork_wear" text="Повреждения краски"/>
         <text name="rms_bodywork_unavailable" text="Недоступно"/>
-        <text name="rms_bodywork_ineligible" text="Услуга недоступна для этой машины или в этой мастерской"/>
+        <text name="rms_bodywork_ineligible" text="Работа недоступна для этой машины или в этой мастерской"/>
         <text name="rms_bodywork_no_wear" text="Нет повреждений краски для ремонта"/>
-        <text name="rms_bodywork_wear_limit" text="Подкраска доступна при повреждении краски до 30 %"/>
+        <text name="rms_bodywork_wear_limit" text="Подкраска доступна при повреждении краски до 30%"/>
         <text name="rms_bodywork_touchup_description" text="Устраняет небольшие повреждения краски. Текущие цвета сохраняются."/>
         <text name="rms_bodywork_full_description" text="Обновляет окраску. Выберите доступные цвета для этой машины или сохраните текущие."/>
-        <text name="rms_bodywork_touchup_colors" text="Текущий цвет сохраняется."/>
         <text name="rms_bodywork_no_colors" text="У этой машины нет доступных цветов на выбор. Текущие цвета сохраняются."/>
-        <text name="rms_bodywork_unavailable_title" text="Услуга недоступна"/>
+        <text name="rms_bodywork_unavailable_title" text="Работа недоступна"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Отчёт об осмотре"/>
         <text name="rms_report_vehicle_specs_title" text="Характеристики техники"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Остановить перелив"/>
         <text name="rms_fluid_select_vehicle_title" text="Выбор машины"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Выберите машину для долива"/>
-        <text name="rms_fluid_select_circuit_title" text="Выбор контура"/>
         <text name="rms_fluid_select_circuit_prompt" text="Выберите контур для долива"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Выберите жидкость для долива"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Моторное масло"/>
         <text name="rms_fluid_circuit_coolant" text="Охлаждающая жидкость"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Трансмиссионное масло"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Гидравлическое масло"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Трансмиссионно-гидравлическое масло"/>
         <text name="rms_fluid_hud_engineOil" text="Моторное масло"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Масло трансмиссии"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Масло транс./гидр."/>
         <text name="rms_fluid_hud_coolant" text="Антифриз"/>
         <text name="rms_fluid_incompatible_title" text="Несовместимая жидкость"/>
         <text name="rms_fluid_incompatible_message" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ системы, усилить нагрев или замедлить гидравлику. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Вы поворачиваете на покрытии с хорошим сцеплением при включённой блокировке дифференциала. В повороте внутренние и внешние колёса проходят разные расстояния, но блокировка заставляет их вращаться с одинаковой скоростью: в трансмиссии возникает напряжение и её износ ускоряется. Отключайте блокировку перед поворотом."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Привод и блокировка"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Эта машина позволяет выбрать привод: 2WD, 4WD или АВТО, который подключает передний мост при пробуксовке колёс.&#10;&#10;Блокировка дифференциала помогает при потере сцепления, но вредит при повороте на покрытии с хорошим сцеплением: внутренние и внешние колёса не могут вращаться с одной скоростью, поэтому в трансмиссии возникает напряжение. Отключайте блокировку перед поворотом."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Зарядное устройство Telwin на тележке, 150 А при 12 В. Подключите его рядом с машиной и оставьте аккумулятор заряжаться. Скорость зарядки зависит от скорости времени в игре. Помощь при запуске (START, 200 A)."/>
+        <text name="rms_charger_start" text="Подключить зарядное устройство"/>
+        <text name="rms_charger_disconnect" text="Отключить зарядное устройство"/>
+        <text name="rms_charger_select" text="Выберите автомобиль для подключения."/>
+        <text name="rms_charger_no_vehicle" text="Нет подходящей машины в радиусе 4 м. Она должна принадлежать вашей ферме, стоять неподвижно с выключенным двигателем."/>
+        <text name="rms_charger_idle" text="Доступно"/>
+        <text name="rms_charger_charging" text="Идёт зарядка"/>
+        <text name="rms_charger_full" text="Аккумулятор заряжен"/>
+        <text name="rms_charger_interrupted" text="Зарядка прервана"/>
+        <text name="rms_charger_interrupted_reason" text="Зарядка прервана. %s"/>
+        <text name="rms_charger_status" text="Состояние"/>
+        <text name="rms_charger_battery" text="Аккумулятор"/>
+        <text name="rms_charger_voltage" text="Напряжение"/>
+        <text name="rms_charger_current" text="Выходной ток"/>
+        <text name="rms_charger_consumers" text="Выключите фары и допоборудование."/>
+        <text name="rms_charger_error_unavailable" text="Машина отсутствует или не поддерживается."/>
+        <text name="rms_charger_error_access" text="Эта машина принадлежит другой ферме."/>
+        <text name="rms_charger_error_distance" text="Подвиньте зарядное устройство ближе, в радиус 4 м."/>
+        <text name="rms_charger_error_motor" text="Выключите двигатель перед подключением."/>
+        <text name="rms_charger_error_moving" text="Машина движется."/>
+        <text name="rms_charger_error_service" text="Идут работы в мастерской."/>
+        <text name="rms_charger_error_cables" text="Отключите пусковые провода."/>
+        <text name="rms_charger_error_busy" text="Зарядное устройство уже подключено."/>
+        <text name="rms_charger_error_full" text="Этот аккумулятор уже заряжен."/>
+        <text name="rms_charger_connected" text="Зарядное устройство подключено. Зарядка началась."/>
+        <text name="rms_charger_disconnected" text="Зарядное устройство отключено."/>
+        <text name="rms_charger_stopped_motor" text="Зарядка прервана: запуск"/>
+        <text name="rms_charger_error_player_distance" text="Подойдите к зарядному устройству пешком."/>
+        <text name="rms_charger_mode_select" text="Подключить зарядное устройство"/>
+        <text name="rms_charger_mode_start" text="Помощь при запуске (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START готов"/>
+        <text name="rms_charger_start_active" text="Помощь при запуске активна"/>
+        <text name="rms_charger_start_running" text="Двигатель запущен: отключите"/>
+        <text name="rms_charger_start_countdown" text="Ожидание: %d с"/>
+        <text name="rms_charger_start_wait" text="Подождите 30 секунд между попытками запуска."/>
+        <text name="rms_charger_unplug_before_start" text="Отключите зарядное устройство или выберите START перед запуском."/>
+        <text name="rms_charger_start_connected" text="Помощь при запуске (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Зарядить аккумулятор (150 A)"/>
     </texts>
 </l10n>

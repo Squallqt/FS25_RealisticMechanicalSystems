@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sounds>
+    <motorized>
+        <sounds>
+            <motor file="$data/vehicles/kaercher/hds9184M/sounds/highPressureWasherRoll.wav" volumeScale="0.7">
+                <volume>
+                    <modifier type="SPEED" value="0.0" modifiedValue="0.0" />
+                    <modifier type="SPEED" value="7.0" modifiedValue="1.0" />
+                </volume>
+            </motor>
+        </sounds>
+    </motorized>
+</sounds>

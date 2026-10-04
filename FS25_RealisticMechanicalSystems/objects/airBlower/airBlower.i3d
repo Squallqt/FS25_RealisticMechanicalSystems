@@ -29,8 +29,8 @@
       <TransformGroup name="graphics" nodeId="9">
         <Shape name="body" translation="3.90336e-08 -0.129256 1.58323e-10" rotation="-180 -89.5352 -180" shapeId="1" clipDistance="300" nodeId="10" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="5"/>
       </TransformGroup>
-      <TransformGroup name="handNode" translation="-0.0117173 0.32997 -7.39185e-05" rotation="-49.3208 13.2875 91.924" nodeId="11">
-        <TransformGroup name="raycastNode" translation="0.205864 0.222989 -0.218835" rotation="49.8188 -8.69255 -9.74645" scale="1.01395 1.0149 1.0149" nodeId="12"/>
+      <TransformGroup name="handNode" translation="0.032000005 0.072488844 0.311902136" rotation="0.000000000 -55.101885186 90.000002504" nodeId="11">
+        <TransformGroup name="raycastNode" translation="-0.322227091 0.027441125 -0.696383893" rotation="3.022776416 55.298396558 3.938763054" scale="1.01395 1.0149 1.0149" nodeId="12"/>
       </TransformGroup>
       <TransformGroup name="firstPersonNode" translation="-0.211465 0.367123 0.743932" rotation="-180 5.17004 -180" nodeId="13"/>
       <TransformGroup name="dustEmitterNode" translation="0 0.5 -1" scale="1 1.16163 1" nodeId="14">

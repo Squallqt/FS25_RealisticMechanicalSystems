@@ -20,7 +20,7 @@ local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
 
 ---Returns the hand tool spec of an object, creating it on first use
 -- @param table? object hand tool
--- @return table? spec hand tool spec
+-- @return table spec hand tool spec
 local function ensureSpec(object)
     local spec = object[specName]
     if spec == nil then
@@ -88,6 +88,45 @@ local function resolveMappedNode(object, mappingKey)
     end
 
     return I3DUtil.indexToObject(object.components, mappingKey, object.i3dMappings)
+end
+
+---Restores the cable pair to its own graphics before camera attachment or detachment.
+local function restoreLeftCablePair(handTool)
+    local spec = ensureSpec(handTool)
+    if spec.leftPairParent == nil or spec.leftPairNode == nil then
+        return
+    end
+
+    link(spec.leftPairParent, spec.leftPairNode)
+    setTranslation(spec.leftPairNode, unpack(spec.leftPairTranslation))
+    setRotation(spec.leftPairNode, unpack(spec.leftPairRotation))
+end
+
+---Uses the native attachment for each hand without moving the character's skeleton.
+function rmsHandTools:attachToolToHand(superFunc)
+    restoreLeftCablePair(self)
+    local attached = superFunc(self)
+    local spec = ensureSpec(self)
+    if attached and spec.leftHandNode ~= nil then
+        local player = self:getCarryingPlayer()
+        local model = player.graphicsComponent.model
+        if model.thirdPersonLeftHandNode ~= nil then
+            HandToolUtil.linkAndTransformRelativeToParent(spec.leftPairNode, spec.leftHandNode, model.thirdPersonLeftHandNode)
+        end
+    end
+    return attached
+end
+
+---Keeps both cable pairs in the native first-person graphics container.
+function rmsHandTools:attachToolToCamera(superFunc)
+    restoreLeftCablePair(self)
+    return superFunc(self)
+end
+
+---Returns the additional pair before the native tool root is hidden or unlinked.
+function rmsHandTools:detachTool(superFunc)
+    restoreLeftCablePair(self)
+    return superFunc(self)
 end
 
 ---Raycasts forward from the tool and returns the vehicle it hits
@@ -360,6 +399,13 @@ function rmsHandTools.registerFunctions(handTool)
     SpecializationUtil.registerFunction(handTool, "tryUseGreaseGunServer", rmsHandTools.tryUseGreaseGunServer)
     SpecializationUtil.registerFunction(handTool, "handleJumperCablesActionServer", rmsHandTools.handleJumperCablesActionServer)
     SpecializationUtil.registerFunction(handTool, "applyJumperCablesState", rmsHandTools.applyJumperCablesState)
+    for _, name in ipairs({"attachToolToHand", "attachToolToCamera", "detachTool"}) do
+        if handTool.functions[name] ~= nil then
+            SpecializationUtil.registerOverwrittenFunction(handTool, name, rmsHandTools[name])
+        else
+            SpecializationUtil.registerFunction(handTool, name, Utils.overwrittenFunction(HandTool[name], rmsHandTools[name]))
+        end
+    end
 end
 
 ---
@@ -476,6 +522,12 @@ function rmsHandTools:onPostLoad(savegame)
     if spec.toolKind == "jumperCables" then
         spec.leftPairNode = resolveMappedNode(self, "leftPair")
         spec.rightPairNode = resolveMappedNode(self, "rightPair")
+        spec.leftHandNode = resolveMappedNode(self, "leftHandNode")
+        if spec.leftPairNode ~= nil and spec.leftHandNode ~= nil then
+            spec.leftPairParent = getParent(spec.leftPairNode)
+            spec.leftPairTranslation = {getTranslation(spec.leftPairNode)}
+            spec.leftPairRotation = {getRotation(spec.leftPairNode)}
+        end
         spec.connectedVehicleA = nil
         spec.connectedVehicleB = nil
         updateJumperCablesVisibility(self)
@@ -491,6 +543,13 @@ function rmsHandTools:onWriteStream(streamId, connection)
         streamWriteBool(streamId, spec.networkUseActive)
         NetworkUtil.writeNodeObject(streamId, spec.networkTargetVehicle)
         streamWriteFloat32(streamId, spec.networkTargetDistance)
+    elseif spec.toolKind == "jumperCables" and not connection:getIsServer() then
+        for _, suffix in ipairs({"A", "B"}) do
+            local vehicle = spec["connectedVehicle" .. suffix]
+            if streamWriteBool(streamId, vehicle ~= nil) then
+                NetworkUtil.writeNodeObject(streamId, vehicle)
+            end
+        end
     end
 end
 
@@ -504,12 +563,28 @@ function rmsHandTools:onReadStream(streamId, connection)
         local targetVehicle = NetworkUtil.readNodeObject(streamId)
         local targetDistance = streamReadFloat32(streamId)
         self:applyAirBlowerNetworkState(isActive and "use" or "stop", targetVehicle, targetDistance)
+    elseif spec.toolKind == "jumperCables" and connection:getIsServer() then
+        for _, suffix in ipairs({"A", "B"}) do
+            spec["connectedVehicle" .. suffix] = nil
+            spec["pendingConnectedVehicle" .. suffix .. "Id"] = nil
+            if streamReadBool(streamId) then
+                spec["pendingConnectedVehicle" .. suffix .. "Id"] = NetworkUtil.readNodeObjectId(streamId)
+                self:raiseActive()
+            end
+        end
+        updateJumperCablesVisibility(self)
     end
 end
 
 ---
 function rmsHandTools:onDelete()
+    restoreLeftCablePair(self)
     local spec = ensureSpec(self)
+
+    if self.isServer and spec.toolKind == "jumperCables"
+        and areVehiclesExternallyConnected(spec.connectedVehicleA, spec.connectedVehicleB) then
+        normalizeConnectedVehicle(spec.connectedVehicleA):clearExternalPowerConnection(spec.connectedVehicleB)
+    end
 
     setToolSoundState(self, false)
     setAirResistanceSoundState(self, false)
@@ -771,6 +846,8 @@ end
 -- @param table? connectedVehicleB vehicle on the second clamp
 function rmsHandTools:applyJumperCablesState(state, targetVehicle, connectedVehicleA, connectedVehicleB)
     local spec = ensureSpec(self)
+    spec.pendingConnectedVehicleAId = nil
+    spec.pendingConnectedVehicleBId = nil
     spec.connectedVehicleA = connectedVehicleA
     spec.connectedVehicleB = connectedVehicleB
     updateJumperCablesVisibility(self)
@@ -923,7 +1000,7 @@ function rmsHandTools:onActionCallback(actionName, inputValue)
         local isAlreadyClean = vehicleSpec ~= nil
             and (tonumber(vehicleSpec.radiatorClogging) or 0) <= 0
             and airFilterClogging <= airFilterResidue
-        local isAirFilterAtBlowOutLimit = isAlreadyClean and airFilterClogging > 0
+        local isAirFilterAtBlowOutLimit = isAlreadyClean and RMS_Consumables.getIsAirFilterWornOut(vehicleSpec)
 
         if not needsBlowOut and self.isClient then
             g_currentMission:showBlinkingWarning(string.format(g_i18n:getText("rms_air_blower_cleaning_not_require"), vehicle:getFullName()), 2200)
@@ -978,6 +1055,22 @@ end
 -- @param float dt time since last call in ms
 function rmsHandTools:onUpdate(dt)
     local spec = ensureSpec(self)
+    if spec.toolKind == "jumperCables" and self.isClient then
+        for _, suffix in ipairs({"A", "B"}) do
+            local pendingKey = "pendingConnectedVehicle" .. suffix .. "Id"
+            local objectId = spec[pendingKey]
+            if objectId ~= nil then
+                local vehicle = NetworkUtil.getObject(objectId)
+                if vehicle ~= nil then
+                    spec["connectedVehicle" .. suffix] = vehicle
+                    spec[pendingKey] = nil
+                    updateJumperCablesVisibility(self)
+                else
+                    self:raiseActive()
+                end
+            end
+        end
+    end
     local carryingPlayer = self:getCarryingPlayer()
     local isLocalOwner = carryingPlayer ~= nil and carryingPlayer.isOwner
     local isUsing = (isLocalOwner and spec.activatePressed) or spec.networkUseActive
@@ -1053,7 +1146,7 @@ function rmsHandTools:onUpdate(dt)
         local isAlreadyClean = vehicleSpec ~= nil
             and (tonumber(vehicleSpec.radiatorClogging) or 0) <= 0
             and airFilterClogging <= airFilterResidue
-        local isAirFilterAtBlowOutLimit = isAlreadyClean and airFilterClogging > 0
+        local isAirFilterAtBlowOutLimit = isAlreadyClean and RMS_Consumables.getIsAirFilterWornOut(vehicleSpec)
         local vehicleId = tostring(vehicle.uniqueId or vehicle.id or vehicle.rootNode or vehicle:getFullName())
         local hintKey = nil
 

@@ -187,7 +187,7 @@
                                     <Text profile="rms_workshopPillValue" id="summaryOverhaulCount" position="153px -10px" size="66px 28px" />
                                 </GuiElement>
                             </BoxLayout>
-                            <Text profile="rms_workshopCenteredDetail" position="20px -490px" size="241px 26px" text="$l10n_rms_ws_label_next_service" />
+                            <Text profile="rms_workshopCenteredDetail" id="relAndMainLabel" position="20px -490px" size="241px 26px" />
                             <RoundCorner profile="rms_workshopValuePillCentered" position="40px -516px" size="200px 30px" />
                             <Text profile="rms_workshopPillValue" id="relAndMainValue" position="52px -516px" size="176px 30px" />
                         </GuiElement>

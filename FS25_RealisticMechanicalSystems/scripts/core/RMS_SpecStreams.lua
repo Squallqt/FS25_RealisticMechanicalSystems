@@ -255,7 +255,7 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     -- [Group 12] Exhaust deposits
     spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
 
-    self:recalculateAndApplyEffects()
+    self:recalculateAndApplyEffects(true)
     self:recalculateAndApplyIndicators()
 
     -- a parked machine never updates on a joining client, so it joins the fleet here

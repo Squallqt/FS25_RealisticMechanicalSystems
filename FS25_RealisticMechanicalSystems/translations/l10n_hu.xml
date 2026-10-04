@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Gyújtás bekapcsolva: előizzítás folyamatban"/>
         <text name="rms_preheat_system_failure_message" text="Az előizzító rendszer hibája: hidegindítás nem lehetséges"/>
         <text name="rms_preheat_start_failed_message" text="A motor nem indult el: újabb próbálkozás előtt kapcsold ki a gyújtást"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Jármű ellenőrzése"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Saját műhely 0–24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="A saját műhelyed a nap bármely szakában elérhető marad."/>
         <text name="rms_instantInspection_label" text="Azonnali átvizsgálás"/>
-        <text name="rms_instantInspection_tooltip" text="Bekapcsolva a műhelyben végzett átvizsgálások azonnal befejeződnek. Az ilyen típusú, már folyamatban lévő munkák is azonnal befejeződnek."/>
+        <text name="rms_instantInspection_tooltip" text="Bekapcsolva a műhelyben végzett átvizsgálások azonnal befejeződnek. Az ilyen típusú, már folyamatban lévő eljárások is azonnal befejeződnek."/>
         <text name="rms_instantMaintenanceRepair_label" text="Azonnali karbantartás és javítás"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Bekapcsolva a műhelyben végzett karbantartások és javítások azonnal befejeződnek. Az ilyen típusú, már folyamatban lévő munkák is azonnal befejeződnek."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Bekapcsolva a műhelyben végzett karbantartások és javítások azonnal befejeződnek. Az ilyen típusú, már folyamatban lévő eljárások is azonnal befejeződnek."/>
         <text name="rms_instantBodywork_label" text="Azonnali fényezés"/>
-        <text name="rms_instantBodywork_tooltip" text="Bekapcsolva a műhelyben végzett fényezés azonnal befejeződik. Az ilyen típusú, már folyamatban lévő munkák is azonnal befejeződnek."/>
+        <text name="rms_instantBodywork_tooltip" text="Bekapcsolva a műhelyben végzett fényezés azonnal befejeződik. Az ilyen típusú, már folyamatban lévő eljárások is azonnal befejeződnek."/>
         <text name="rms_instantOverhaul_label" text="Azonnali mechanikai nagyjavítás"/>
-        <text name="rms_instantOverhaul_tooltip" text="Bekapcsolva a műhelyben végzett mechanikai nagyjavítás azonnal befejeződik. Az ilyen típusú, már folyamatban lévő munkák is azonnal befejeződnek."/>
+        <text name="rms_instantOverhaul_tooltip" text="Bekapcsolva a műhelyben végzett mechanikai nagyjavítás azonnal befejeződik. Az ilyen típusú, már folyamatban lévő eljárások is azonnal befejeződnek."/>
         <text name="rms_debugMode_label" text="Hibakeresési mód"/>
         <text name="rms_debugMode_tooltip" text="Be- vagy kikapcsolja a hibakeresési panelt és a részletes konzolos hibakeresési naplózást."/>
         <text name="rms_warningMessages_label" text="Figyelmeztető üzenetek"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Kor"/>
         <text name="rms_ws_label_operating_hours" text="Üzemórák"/>
         <text name="rms_ws_label_service" text="Karbantartási szint"/>
-        <text name="rms_ws_label_next_service" text="Következő karbantartás"/>
-        <text name="rms_ws_value_service_overdue" text="Késés: %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Normál karbantartás"/>
+        <text name="rms_ws_label_maintenance_extended" text="Bővített karbantartás"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Megelőző karbantartás"/>
         <text name="rms_ws_label_condition" text="Állapot"/>
         <text name="rms_ws_label_reliability" text="Megbízhatóság"/>
         <text name="rms_ws_label_overhaul_count" text="Elvégzett nagyjavítások"/>
@@ -530,9 +532,9 @@
         <text name="rms_option_menu_option_two_title_overhaul" text="Nagyjavításra váró rendszer"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Ha az eljárás meghibásodásokat tár fel, automatikusan normál javítás következik eredeti alkatrészekkel."/>
         <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="A javítás után automatikusan normál karbantartás következik eredeti fogyóanyagokkal."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Részleges nagyjavítás: jó állapotba hozza a kiválasztott rendszert, kijavítja a javítható hibákat, és szükség esetén lecseréli a hozzá tartozó folyadékot."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Normál nagyjavítás: jó állapotba hozza az összes rendszert, kijavítja a javítható hibákat, lecseréli a folyadékokat és megújítja a karbantartást."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Teljes nagyjavítás: újszerű állapotba hozza az összes rendszert, kijavítja a javítható hibákat, lecseréli a folyadékokat és megújítja a karbantartást."/>
+        <text name="rms_option_menu_overhaul_partial_description" text="Részleges nagyjavítás: jó állapotba hozza a kiválasztott rendszert, kijavítja a javítható meghibásodásokat, és szükség esetén lecseréli a hozzá tartozó folyadékot."/>
+        <text name="rms_option_menu_overhaul_standard_description" text="Normál nagyjavítás: jó állapotba hozza az összes rendszert, kijavítja a javítható meghibásodásokat, lecseréli a folyadékokat és megújítja a karbantartást."/>
+        <text name="rms_option_menu_overhaul_full_description" text="Teljes nagyjavítás: újszerű állapotba hozza az összes rendszert, kijavítja a javítható meghibásodásokat, lecseréli a folyadékokat és megújítja a karbantartást."/>
         <text name="rms_option_menu_price_text" text="Ár"/>
         <text name="rms_option_menu_part_used_description" text="Használt alkatrészek: legalacsonyabb költség, 50% későbbi hibakockázattal."/>
         <text name="rms_option_menu_part_aftermarket_description" text="Utángyártott alkatrészek: alacsonyabb költség, 33% későbbi hibakockázattal."/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Fényezés javítása"/>
         <text name="rms_bodywork_full" text="Teljes újrafényezés"/>
         <text name="rms_bodywork_colors_title" text="A jármű színei"/>
-        <text name="rms_bodywork_keep_color" text="Jelenlegi szín megtartása"/>
-        <text name="rms_bodywork_reset_color" text="Jelenlegi"/>
         <text name="rms_bodywork_wear" text="Fényezési sérülések"/>
         <text name="rms_bodywork_unavailable" text="Nem elérhető"/>
-        <text name="rms_bodywork_ineligible" text="A szolgáltatás ehhez a járműhöz vagy ebben a műhelyben nem érhető el"/>
+        <text name="rms_bodywork_ineligible" text="Az eljárás ehhez a járműhöz vagy ebben a műhelyben nem érhető el"/>
         <text name="rms_bodywork_no_wear" text="Nincs javítható fényezési sérülés"/>
-        <text name="rms_bodywork_wear_limit" text="Fényezésjavítás legfeljebb 30 % sérülésig érhető el"/>
+        <text name="rms_bodywork_wear_limit" text="Fényezésjavítás legfeljebb 30% sérülésig érhető el"/>
         <text name="rms_bodywork_touchup_description" text="Kijavítja a kisebb fényezési sérüléseket. A jelenlegi színek megmaradnak."/>
-        <text name="rms_bodywork_full_description" text="Megújítja a fényezést. Válasszon a jármű elérhető színei közül, vagy tartsa meg a jelenlegieket."/>
-        <text name="rms_bodywork_touchup_colors" text="A jelenlegi szín megmarad."/>
+        <text name="rms_bodywork_full_description" text="Megújítja a fényezést. Válassz a jármű elérhető színei közül, vagy tartsd meg a jelenlegieket."/>
         <text name="rms_bodywork_no_colors" text="Ehhez a járműhöz nem választható más szín. A jelenlegi színek megmaradnak."/>
-        <text name="rms_bodywork_unavailable_title" text="A szolgáltatás nem érhető el"/>
+        <text name="rms_bodywork_unavailable_title" text="Az eljárás nem érhető el"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Átvizsgálási jelentés"/>
         <text name="rms_report_vehicle_specs_title" text="Jármű adatai"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Áttöltés leállítása"/>
         <text name="rms_fluid_select_vehicle_title" text="Jármű kiválasztása"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Válaszd ki a feltöltendő járművet"/>
-        <text name="rms_fluid_select_circuit_title" text="Kör kiválasztása"/>
         <text name="rms_fluid_select_circuit_prompt" text="Válaszd ki a feltöltendő kört"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Válaszd ki a betöltendő folyadékot"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorolaj"/>
         <text name="rms_fluid_circuit_coolant" text="Hűtőfolyadék"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Váltóolaj"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hidraulikaolaj"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Váltó- és hidraulikaolaj"/>
         <text name="rms_fluid_hud_engineOil" text="Motorolaj"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Váltóolaj"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Váltó/hidraulikaolaj"/>
         <text name="rms_fluid_hud_coolant" text="Hűtőfolyadék"/>
         <text name="rms_fluid_incompatible_title" text="Nem megfelelő folyadék"/>
         <text name="rms_fluid_incompatible_message" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a rendszer kopását, fokozhatja a melegedést vagy lassíthatja a hidraulikát. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Tapadós talajon kanyarodsz bekapcsolt differenciálzárral. Kanyarban a belső és külső kerekek eltérő utat tesznek meg, de a differenciálzár azonos fordulatszámra kényszeríti őket: a hajtáslánc terhelés alá kerül, és fokozódik a váltó kopása. Oldd ki a zárat, mielőtt kanyarodsz."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Hajtásmódok és differenciálzár"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Ez a gép lehetővé teszi a hajtásmód kiválasztását: hátsókerék-hajtás, összkerékhajtás vagy AUTO, amely kerékcsúszáskor bekapcsolja az első hidat.&#10;&#10;A differenciálzár ott biztosít tapadást, ahol már nincs, de tapadós talajon kanyarodáskor nagy árat fizettet érte: a belső és külső kerekek nem foroghatnak azonos sebességgel, és a terhelést a hajtáslánc viseli. Kanyarodás előtt oldd ki."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Telwin-töltő kocsin, 150 A 12 V-on. Csatlakoztasd a jármű mellett, és hagyd feltöltődni az akkumulátort. A töltés a játékidő sebességét követi. Indítássegítés (START, 200 A)."/>
+        <text name="rms_charger_start" text="Töltő csatlakoztatása"/>
+        <text name="rms_charger_disconnect" text="Töltő leválasztása"/>
+        <text name="rms_charger_select" text="Válaszd ki a csatlakoztatandó járművet."/>
+        <text name="rms_charger_no_vehicle" text="Nincs megfelelő jármű 4 m-en belül. A gazdaságodhoz kell tartoznia, állnia kell, leállított motorral."/>
+        <text name="rms_charger_idle" text="Elérhető"/>
+        <text name="rms_charger_charging" text="Töltés folyamatban"/>
+        <text name="rms_charger_full" text="Akkumulátor feltöltve"/>
+        <text name="rms_charger_interrupted" text="Töltés megszakítva"/>
+        <text name="rms_charger_interrupted_reason" text="Töltés megszakítva. %s"/>
+        <text name="rms_charger_status" text="Állapot"/>
+        <text name="rms_charger_battery" text="Akkumulátor"/>
+        <text name="rms_charger_voltage" text="Feszültség"/>
+        <text name="rms_charger_current" text="Töltőáram"/>
+        <text name="rms_charger_consumers" text="Kapcsold ki a lámpákat és a tartozékokat."/>
+        <text name="rms_charger_error_unavailable" text="A jármű hiányzik vagy nem támogatott."/>
+        <text name="rms_charger_error_access" text="Ez a jármű másik gazdasághoz tartozik."/>
+        <text name="rms_charger_error_distance" text="Vidd a töltőt 4 m-en belülre."/>
+        <text name="rms_charger_error_motor" text="Csatlakoztatás előtt állítsd le a motort."/>
+        <text name="rms_charger_error_moving" text="A jármű mozog."/>
+        <text name="rms_charger_error_service" text="Műhelyeljárás van folyamatban."/>
+        <text name="rms_charger_error_cables" text="Válaszd le az indítókábeleket."/>
+        <text name="rms_charger_error_busy" text="Már csatlakozik egy töltő."/>
+        <text name="rms_charger_error_full" text="Ez az akkumulátor már fel van töltve."/>
+        <text name="rms_charger_connected" text="Töltő csatlakoztatva. Töltés elindítva."/>
+        <text name="rms_charger_disconnected" text="Töltő leválasztva."/>
+        <text name="rms_charger_stopped_motor" text="Töltés leállt: indítás"/>
+        <text name="rms_charger_error_player_distance" text="Gyalog menj a töltőhöz."/>
+        <text name="rms_charger_mode_select" text="Töltő csatlakoztatása"/>
+        <text name="rms_charger_mode_start" text="Indítássegítés (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START kész"/>
+        <text name="rms_charger_start_active" text="Indítássegítés aktív"/>
+        <text name="rms_charger_start_running" text="Motor jár: válaszd le"/>
+        <text name="rms_charger_start_countdown" text="Várakozás: %d s"/>
+        <text name="rms_charger_start_wait" text="Két indítás között várj 30 másodpercet."/>
+        <text name="rms_charger_unplug_before_start" text="Indítás előtt válaszd le a töltőt vagy válaszd a START módot."/>
+        <text name="rms_charger_start_connected" text="Indítássegítés (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Akkumulátor töltése (150 A)"/>
     </texts>
 </l10n>

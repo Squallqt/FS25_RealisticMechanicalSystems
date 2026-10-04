@@ -696,7 +696,8 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
             wearRate = wearRate + ptoLoadFactor
         end
 
-        if spec.isPtoImplementRaised then
+        -- the worker keeps the PTO turning through its headland turns, the player has no say in it
+        if spec.isPtoImplementRaised and not self:getIsAIActive() then
             ptoRaisedFactor = C.RAISED_IMPLEMENT_MULTIPLIER
             wearRate = wearRate + ptoRaisedFactor
         end

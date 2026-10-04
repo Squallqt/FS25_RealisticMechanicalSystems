@@ -134,11 +134,19 @@ RealisticMechanicalSystems.SYSTEMS_ORDER = {
 }
 
 -- the service clocks, each run down by the hours in its level field and reset when every oil it covers is changed;
--- intervalFactor counts engine oil intervals, systems are the ones worn past its expiry
+-- every service changes the engine oil and intervalFactor counts the services between two changes of the others,
+-- maintenanceType is the lightest maintenance reaching its oils, systems are the ones worn past its expiry
 RealisticMechanicalSystems.SERVICE_CLOCKS = {
-    { key = "engine", levelKey = "serviceLevel", intervalFactor = 1, circuits = { "engineOil" }, systems = { "engine", "fuel" } },
-    { key = "transmission", levelKey = "transmissionServiceLevel", intervalFactor = 2, circuits = { "transmissionOil", "hydraulicFluid" }, systems = { "transmission", "hydraulics", "pto" } },
-    { key = "coolant", levelKey = "coolantServiceLevel", intervalFactor = 10, circuits = { "coolant" }, systems = { "cooling" } }
+    { key = "engine", levelKey = "serviceLevel", intervalFactor = 1, maintenanceType = "STANDARD", circuits = { "engineOil" }, systems = { "engine", "fuel" } },
+    { key = "transmission", levelKey = "transmissionServiceLevel", intervalFactor = 2, maintenanceType = "EXTENDED", circuits = { "transmissionOil", "hydraulicFluid" }, systems = { "transmission", "hydraulics", "pto" } },
+    { key = "coolant", levelKey = "coolantServiceLevel", intervalFactor = 10, maintenanceType = "PREVENTIVE", circuits = { "coolant" }, systems = { "cooling" } }
+}
+
+-- name of each maintenance where the one due is announced
+RealisticMechanicalSystems.MAINTENANCE_LABEL_TEXT_KEYS = {
+    [RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD] = "rms_ws_label_maintenance_standard",
+    [RealisticMechanicalSystems.MAINTENANCE_TYPES.EXTENDED] = "rms_ws_label_maintenance_extended",
+    [RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE] = "rms_ws_label_maintenance_preventive"
 }
 
 -- display order of the part quality options
@@ -1279,6 +1287,8 @@ function RealisticMechanicalSystems.initSpecialization()
         schemaSavegame:register(XMLValueType.INT,    baseKey .. "#pendingProgressStepIndex", "Pending Progress Step Index")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#pendingProgressTotalTime", "Pending Progress Total Time")
         schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#pendingProgressElapsedTime", "Pending Progress Elapsed Time")
+        schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingMaintenanceServiceStart", "Legacy engine service level at the start of the running maintenance")
+        schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingMaintenanceServiceTarget", "Legacy engine service level targeted by the running maintenance")
         schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingServiceClockStart", "Service clock levels at the start of the running service")
         schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingServiceClockTarget", "Service clock levels the running service restores")
         schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingPreventiveSystemStressStart", "Pending preventive per-system stress start values")
@@ -1339,6 +1349,7 @@ function RealisticMechanicalSystems.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onLeaveVehicle", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onPostUpdate", RealisticMechanicalSystems)
+    SpecializationUtil.registerEventListener(vehicleType, "onStartMotor", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onReadStream", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteUpdateStream", RealisticMechanicalSystems)
@@ -1350,8 +1361,10 @@ end
 ---
 -- @param table vehicleType vehicle type
 function RealisticMechanicalSystems.registerOverwrittenFunctions(vehicleType)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsTabbable", RealisticMechanicalSystems.getIsTabbable)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "repaintVehicle", RMS_Bodywork.repaintVehicle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCanMotorRun", RMS_Breakdowns.getCanMotorRun)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getMotorNotAllowedWarning", RMS_Breakdowns.getMotorNotAllowedWarning)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCanStartAIVehicle", RMS_Breakdowns.getCanStartAIVehicle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "startMotor", RMS_Breakdowns.startMotor)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateDamageAmount", RealisticMechanicalSystems.updateDamageAmount)
@@ -1471,6 +1484,8 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getServiceClocks", RealisticMechanicalSystems.getServiceClocks)
     SpecializationUtil.registerFunction(vehicleType, "getServiceClockHours", RealisticMechanicalSystems.getServiceClockHours)
     SpecializationUtil.registerFunction(vehicleType, "getNextServiceClock", RealisticMechanicalSystems.getNextServiceClock)
+    SpecializationUtil.registerFunction(vehicleType, "getServiceCountdown", RealisticMechanicalSystems.getServiceCountdown)
+    SpecializationUtil.registerFunction(vehicleType, "getDueMaintenanceType", RealisticMechanicalSystems.getDueMaintenanceType)
     SpecializationUtil.registerFunction(vehicleType, "getLastServiceOptions", RealisticMechanicalSystems.getLastServiceOptions)
     SpecializationUtil.registerFunction(vehicleType, "getOverhaulPerformedCount", RealisticMechanicalSystems.getOverhaulPerformedCount)
     
@@ -2098,11 +2113,14 @@ local function syncSideNotifications(vehicle)
         return
     end
 
-    if RMS_Config.CORE ~= nil and RMS_Config.CORE.ENABLE_WARNING_MESSAGES == false then
+    -- Pending warnings belong to the current farm and active effect, never to join history.
+    local pendingNotifications = spec.pendingSideNotifications
+    spec.pendingSideNotifications = {}
+    if pendingNotifications == nil or next(pendingNotifications) == nil then
         return
     end
 
-    if spec.pendingSideNotifications == nil or next(spec.pendingSideNotifications) == nil then
+    if RMS_Config.CORE ~= nil and RMS_Config.CORE.ENABLE_WARNING_MESSAGES == false then
         return
     end
 
@@ -2112,11 +2130,16 @@ local function syncSideNotifications(vehicle)
         return
     end
 
-    for _, notificationText in ipairs(spec.pendingSideNotifications) do
-        g_currentMission.hud:addSideNotification(RMS_Breakdowns.COLORS.WARNING, vehicle:getFullName() .. ": " .. notificationText)
+    local shownMessages = {}
+    for effectId, messageKey in pairs(pendingNotifications) do
+        local effect = spec.activeEffects ~= nil and spec.activeEffects[effectId] or nil
+        if effect ~= nil and effect.extraData ~= nil and effect.extraData.message == messageKey
+                and not shownMessages[messageKey] then
+            g_currentMission.hud:addSideNotification(RMS_Breakdowns.COLORS.WARNING, string.format(
+                g_i18n:getText("rms_hud_vehicle_notification"), vehicle:getFullName(), g_i18n:getText(messageKey)))
+            shownMessages[messageKey] = true
+        end
     end
-
-    spec.pendingSideNotifications = {}
 end
 
 ---Applies the fuel consumption modifier of the active effects
@@ -2385,6 +2408,13 @@ function RealisticMechanicalSystems:onPostUpdate(dt, ...)
     if not self.isClient or spec.isExcludedVehicle then return end
 
     RMS_Exhaust.applyShader(self, dt)
+end
+
+---Takes the exhaust back the moment the engine restarts its own, before a frame is drawn with it
+function RealisticMechanicalSystems:onStartMotor()
+    if self.isClient and not self.spec_RealisticMechanicalSystems.isExcludedVehicle then
+        RMS_Exhaust.update(self)
+    end
 end
 
 ---Runs the whole vehicle simulation step: state, wear, thermal, electrical and services

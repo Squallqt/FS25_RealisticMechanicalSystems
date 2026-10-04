@@ -405,7 +405,9 @@ local function collectConnectedPtoData(vehicleObj, data, visited)
                             and (tonumber(consumer.spec_powerConsumer.neededMaxPtoPower) or 0) or 0
                         data.engagementTorques[consumer] = configuredRpm > 0 and neededMaxPower / (configuredRpm * math.pi / 30) or 0
 
-                        if consumer.getAllowsLowering ~= nil and consumer:getAllowsLowering()
+                        -- a header rides the feeder of its harvester, raising it leaves its driveline straight
+                        if vehicleObj.spec_combine == nil
+                            and consumer.getAllowsLowering ~= nil and consumer:getAllowsLowering()
                             and consumer.getIsLowered ~= nil and not consumer:getIsLowered(true) then
                             data.isRaised = true
                         end

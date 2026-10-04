@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Kontak dinyalakan: pemanasan awal berlangsung"/>
         <text name="rms_preheat_system_failure_message" text="Kegagalan sistem pemanasan awal: mesin tidak dapat dinyalakan dalam kondisi dingin"/>
         <text name="rms_preheat_start_failed_message" text="Mesin tidak menyala: matikan kontak sebelum mencoba lagi"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Periksa kendaraan"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Bengkel Pribadi 24 Jam"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Menjaga bengkel pribadimu tetap tersedia kapan saja, siang maupun malam."/>
         <text name="rms_instantInspection_label" text="Inspeksi Seketika"/>
-        <text name="rms_instantInspection_tooltip" text="Saat opsi ini diaktifkan, inspeksi di bengkel langsung selesai. Pekerjaan jenis ini yang sudah berlangsung juga langsung selesai."/>
+        <text name="rms_instantInspection_tooltip" text="Saat opsi ini diaktifkan, inspeksi di bengkel langsung selesai. Prosedur jenis ini yang sudah berlangsung juga langsung selesai."/>
         <text name="rms_instantMaintenanceRepair_label" text="Perawatan dan Perbaikan Seketika"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Saat opsi ini diaktifkan, perawatan dan perbaikan di bengkel langsung selesai. Pekerjaan jenis ini yang sudah berlangsung juga langsung selesai."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Saat opsi ini diaktifkan, perawatan dan perbaikan di bengkel langsung selesai. Prosedur jenis ini yang sudah berlangsung juga langsung selesai."/>
         <text name="rms_instantBodywork_label" text="Pengecatan Seketika"/>
-        <text name="rms_instantBodywork_tooltip" text="Saat opsi ini diaktifkan, pengecatan di bengkel langsung selesai. Pekerjaan jenis ini yang sudah berlangsung juga langsung selesai."/>
+        <text name="rms_instantBodywork_tooltip" text="Saat opsi ini diaktifkan, pengecatan di bengkel langsung selesai. Prosedur jenis ini yang sudah berlangsung juga langsung selesai."/>
         <text name="rms_instantOverhaul_label" text="Rekondisi Mekanis Seketika"/>
-        <text name="rms_instantOverhaul_tooltip" text="Saat opsi ini diaktifkan, rekondisi mekanis di bengkel langsung selesai. Pekerjaan jenis ini yang sudah berlangsung juga langsung selesai."/>
+        <text name="rms_instantOverhaul_tooltip" text="Saat opsi ini diaktifkan, rekondisi mekanis di bengkel langsung selesai. Prosedur jenis ini yang sudah berlangsung juga langsung selesai."/>
         <text name="rms_debugMode_label" text="Mode Debug"/>
         <text name="rms_debugMode_tooltip" text="Mengaktifkan panel debug dan log terperinci di konsol."/>
         <text name="rms_warningMessages_label" text="Pesan Peringatan"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Usia"/>
         <text name="rms_ws_label_operating_hours" text="Jam Operasi"/>
         <text name="rms_ws_label_service" text="Tingkat Perawatan"/>
-        <text name="rms_ws_label_next_service" text="Perawatan Berikutnya"/>
-        <text name="rms_ws_value_service_overdue" text="terlambat %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Perawatan Standar"/>
+        <text name="rms_ws_label_maintenance_extended" text="Perawatan Diperluas"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Perawatan Preventif"/>
         <text name="rms_ws_label_condition" text="Kondisi"/>
         <text name="rms_ws_label_reliability" text="Keandalan"/>
         <text name="rms_ws_label_overhaul_count" text="Rekondisi yang Dilakukan"/>
@@ -560,21 +562,18 @@
         <text name="rms_option_menu_repair_type_replacement_description" text="Perbaikan standar: menghapus kerusakan dan mengganti komponen yang gagal. Tegangan mekanis pada sistem terkait dikurangi sebagian."/>
         <text name="rms_option_menu_repair_type_advanced_description" text="Perbaikan menyeluruh: menghapus kerusakan, mengganti komponen yang gagal, dan menghilangkan tegangan mekanis yang menumpuk pada sistem terkait."/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="Prosedur berikutnya ditagih secara terpisah. Fluida yang diperlukan disediakan atau diambil dari persediaan saat prosedur dimulai."/>
-        <text name="rms_bodywork_touchup" text="Perbaikan cat"/>
-        <text name="rms_bodywork_full" text="Pengecatan ulang penuh"/>
-        <text name="rms_bodywork_colors_title" text="Warna kendaraan"/>
-        <text name="rms_bodywork_keep_color" text="Pertahankan warna saat ini"/>
-        <text name="rms_bodywork_reset_color" text="Saat ini"/>
-        <text name="rms_bodywork_wear" text="Kerusakan cat"/>
+        <text name="rms_bodywork_touchup" text="Perbaikan Cat"/>
+        <text name="rms_bodywork_full" text="Pengecatan Ulang Penuh"/>
+        <text name="rms_bodywork_colors_title" text="Warna Kendaraan"/>
+        <text name="rms_bodywork_wear" text="Kerusakan Cat"/>
         <text name="rms_bodywork_unavailable" text="Tidak tersedia"/>
-        <text name="rms_bodywork_ineligible" text="Layanan tidak tersedia untuk kendaraan ini atau di bengkel ini"/>
+        <text name="rms_bodywork_ineligible" text="Prosedur tidak tersedia untuk kendaraan ini atau di bengkel ini"/>
         <text name="rms_bodywork_no_wear" text="Tidak ada kerusakan cat yang perlu diperbaiki"/>
-        <text name="rms_bodywork_wear_limit" text="Perbaikan cat tersedia hingga kerusakan cat 30 %"/>
+        <text name="rms_bodywork_wear_limit" text="Perbaikan cat tersedia hingga kerusakan cat 30%"/>
         <text name="rms_bodywork_touchup_description" text="Memperbaiki kerusakan cat ringan. Warna saat ini tetap dipertahankan."/>
         <text name="rms_bodywork_full_description" text="Memperbarui cat. Pilih warna yang tersedia untuk kendaraan ini atau pertahankan warna saat ini."/>
-        <text name="rms_bodywork_touchup_colors" text="Warna saat ini tetap digunakan."/>
         <text name="rms_bodywork_no_colors" text="Kendaraan ini tidak memiliki pilihan warna. Warna saat ini tetap digunakan."/>
-        <text name="rms_bodywork_unavailable_title" text="Layanan tidak tersedia"/>
+        <text name="rms_bodywork_unavailable_title" text="Prosedur Tidak Tersedia"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Laporan Inspeksi"/>
         <text name="rms_report_vehicle_specs_title" text="Spesifikasi Kendaraan"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Hentikan pemindahan fluida"/>
         <text name="rms_fluid_select_vehicle_title" text="Pemilihan Kendaraan"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Pilih kendaraan yang akan diisi"/>
-        <text name="rms_fluid_select_circuit_title" text="Pemilihan Sirkuit"/>
         <text name="rms_fluid_select_circuit_prompt" text="Pilih sirkuit yang akan diisi"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Pilih fluida yang akan dituang"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Oli Mesin"/>
         <text name="rms_fluid_circuit_coolant" text="Cairan Pendingin"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Oli Transmisi"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Oli Hidraulis"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Oli Transmisi dan Hidraulis"/>
         <text name="rms_fluid_hud_engineOil" text="Oli Mesin"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Oli Transmisi"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Oli Trans./Hidraulis"/>
         <text name="rms_fluid_hud_coolant" text="Cairan Pendingin"/>
         <text name="rms_fluid_incompatible_title" text="Fluida Tidak Kompatibel"/>
         <text name="rms_fluid_incompatible_message" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan sistem menjadi tiga kali lipat, meningkatkan suhu, atau memperlambat sistem hidraulis. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Kamu berbelok di permukaan dengan daya cengkeram tinggi saat pengunci diferensial aktif. Roda bagian dalam dan luar menempuh jarak berbeda di tikungan, tetapi pengunci diferensial memaksanya berputar pada kecepatan yang sama: sistem penggerak mengalami tegangan dan keausan transmisi meningkat. Nonaktifkan pengunci diferensial sebelum berbelok."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Mode Sistem Penggerak dan Pengunci Diferensial"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Mesin ini memungkinkanmu memilih sistem penggeraknya: 2WD, 4WD, atau OTOMATIS, yang mengaktifkan gandar depan segera setelah roda selip.&#10;&#10;Pengunci diferensial mendapatkan daya cengkeram saat cengkeraman hilang, tetapi sangat membebani sistem ketika berbelok di permukaan dengan daya cengkeram tinggi: roda bagian dalam dan luar tidak dapat berputar pada kecepatan yang sama sehingga sistem penggerak menerima tegangan. Nonaktifkan sebelum berbelok."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Pengisi Telwin pada troli, 150 A pada 12 V. Hubungkan di dekat kendaraan dan biarkan baterai terisi. Pengisian mengikuti kecepatan waktu dalam permainan. Bantuan starter (START, 200 A)."/>
+        <text name="rms_charger_start" text="Hubungkan pengisi daya"/>
+        <text name="rms_charger_disconnect" text="Lepaskan pengisi"/>
+        <text name="rms_charger_select" text="Pilih kendaraan yang akan dihubungkan."/>
+        <text name="rms_charger_no_vehicle" text="Tidak ada kendaraan yang sesuai dalam jarak 4 m. Kendaraan harus milik pertanianmu, diam, dan mesinnya mati."/>
+        <text name="rms_charger_idle" text="Tersedia"/>
+        <text name="rms_charger_charging" text="Sedang mengisi"/>
+        <text name="rms_charger_full" text="Baterai terisi"/>
+        <text name="rms_charger_interrupted" text="Pengisian terhenti"/>
+        <text name="rms_charger_interrupted_reason" text="Pengisian terhenti. %s"/>
+        <text name="rms_charger_status" text="Status"/>
+        <text name="rms_charger_battery" text="Baterai"/>
+        <text name="rms_charger_voltage" text="Tegangan"/>
+        <text name="rms_charger_current" text="Arus Keluaran"/>
+        <text name="rms_charger_consumers" text="Matikan lampu dan aksesori."/>
+        <text name="rms_charger_error_unavailable" text="Kendaraan tidak ada atau tidak didukung."/>
+        <text name="rms_charger_error_access" text="Kendaraan ini milik pertanian lain."/>
+        <text name="rms_charger_error_distance" text="Dekatkan pengisi hingga berjarak kurang dari 4 m."/>
+        <text name="rms_charger_error_motor" text="Matikan mesin sebelum menghubungkan pengisi."/>
+        <text name="rms_charger_error_moving" text="Kendaraan bergerak."/>
+        <text name="rms_charger_error_service" text="Prosedur bengkel sedang berlangsung."/>
+        <text name="rms_charger_error_cables" text="Lepaskan kabel jumper."/>
+        <text name="rms_charger_error_busy" text="Pengisi sudah terhubung."/>
+        <text name="rms_charger_error_full" text="Baterai ini sudah terisi."/>
+        <text name="rms_charger_connected" text="Pengisi terhubung. Pengisian dimulai."/>
+        <text name="rms_charger_disconnected" text="Pengisi dilepaskan."/>
+        <text name="rms_charger_stopped_motor" text="Pengisian berhenti: mesin hidup"/>
+        <text name="rms_charger_error_player_distance" text="Dekati pengisi dengan berjalan kaki."/>
+        <text name="rms_charger_mode_select" text="Hubungkan pengisi daya"/>
+        <text name="rms_charger_mode_start" text="Bantuan starter (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START siap"/>
+        <text name="rms_charger_start_active" text="Bantuan starter aktif"/>
+        <text name="rms_charger_start_running" text="Mesin menyala: lepaskan"/>
+        <text name="rms_charger_start_countdown" text="Tunggu: %d dtk"/>
+        <text name="rms_charger_start_wait" text="Tunggu 30 detik di antara dua kali menyalakan mesin."/>
+        <text name="rms_charger_unplug_before_start" text="Lepaskan pengisi daya atau pilih START sebelum menyalakan mesin."/>
+        <text name="rms_charger_start_connected" text="Bantuan starter (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Isi baterai (150 A)"/>
     </texts>
 </l10n>

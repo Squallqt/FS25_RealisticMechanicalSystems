@@ -406,7 +406,9 @@ function RMS_WorkshopDialog:updateScreen()
     self.conditionRingRatio = RMS_Utils.getConditionRingRatio(inspectedCondition, isCompleteInspection)
     self.serviceRingRatio = RMS_Utils.getServiceRingRatio(inspectedService, isCompleteServiceInspection)
 
-    local _, serviceHours, serviceInterval = self.vehicle:getNextServiceClock()
+    local serviceHours, serviceInterval = self.vehicle:getServiceCountdown()
+    self.relAndMainLabel:setText(g_i18n:getText(
+        RealisticMechanicalSystems.MAINTENANCE_LABEL_TEXT_KEYS[self.vehicle:getDueMaintenanceType()]))
     self.relAndMainValue:setText(RMS_Utils.formatOperatingHours(serviceHours, serviceInterval))
 
     -- breakdown table, restricted to the breakdowns already discovered

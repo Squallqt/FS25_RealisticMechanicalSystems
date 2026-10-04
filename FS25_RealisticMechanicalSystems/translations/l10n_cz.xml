@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Zapalování zapnuto: probíhá předehřev"/>
         <text name="rms_preheat_system_failure_message" text="Porucha systému žhavení: studený start není možný"/>
         <text name="rms_preheat_start_failed_message" text="Motor nenastartoval: před dalším pokusem vypni zapalování"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Zkontrolovat vozidlo"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Vlastní dílna 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Udržuje tvou vlastní dílnu dostupnou nepřetržitě ve dne i v noci."/>
         <text name="rms_instantInspection_label" text="Okamžitá prohlídka"/>
-        <text name="rms_instantInspection_tooltip" text="Je-li tato možnost zapnuta, prohlídky v dílně se dokončí okamžitě. I již probíhající práce tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantInspection_tooltip" text="Je-li tato možnost zapnuta, prohlídky v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
         <text name="rms_instantMaintenanceRepair_label" text="Okamžitá údržba a opravy"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Je-li tato možnost zapnuta, údržba a opravy v dílně se dokončí okamžitě. I již probíhající práce tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Je-li tato možnost zapnuta, údržba a opravy v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
         <text name="rms_instantBodywork_label" text="Okamžité lakování"/>
-        <text name="rms_instantBodywork_tooltip" text="Je-li tato možnost zapnuta, lakování v dílně se dokončí okamžitě. I již probíhající práce tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantBodywork_tooltip" text="Je-li tato možnost zapnuta, lakování v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
         <text name="rms_instantOverhaul_label" text="Okamžitá generální oprava"/>
-        <text name="rms_instantOverhaul_tooltip" text="Je-li tato možnost zapnuta, generální oprava v dílně se dokončí okamžitě. I již probíhající práce tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantOverhaul_tooltip" text="Je-li tato možnost zapnuta, generální oprava v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
         <text name="rms_debugMode_label" text="Režim ladění"/>
         <text name="rms_debugMode_tooltip" text="Zapne panel ladění a podrobné záznamy v konzoli."/>
         <text name="rms_warningMessages_label" text="Varovné zprávy"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Stáří"/>
         <text name="rms_ws_label_operating_hours" text="Provozní hodiny"/>
         <text name="rms_ws_label_service" text="Úroveň údržby"/>
-        <text name="rms_ws_label_next_service" text="Příští údržba"/>
-        <text name="rms_ws_value_service_overdue" text="překročen o %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Běžná údržba"/>
+        <text name="rms_ws_label_maintenance_extended" text="Rozšířená údržba"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Preventivní údržba"/>
         <text name="rms_ws_label_condition" text="Stav"/>
         <text name="rms_ws_label_reliability" text="Spolehlivost"/>
         <text name="rms_ws_label_overhaul_count" text="Provedené generální opravy"/>
@@ -545,7 +547,7 @@
         <text name="rms_option_menu_perform_repair" text="Automatická oprava"/>
         <text name="rms_option_menu_perform_maintenance" text="Automatická údržba"/>
         <text name="rms_option_menu_warranty_repair_text" text="Záruční oprava"/>
-        <text name="rms_warranty_dealer_info" text="Záruka u prodejce pro vlastní vozidlo mladší 12 měsíců a s méně než 20 motohodinami: standardní oprava, originální díly a potřebné kapaliny."/>
+        <text name="rms_warranty_dealer_info" text="Záruka u prodejce pro vlastní vozidlo mladší 12 měsíců a s méně než 20 provozními hodinami: standardní oprava, originální díly a potřebné kapaliny."/>
         <text name="rms_option_menu_duration_text" text="Trvání"/>
         <text name="rms_option_menu_duration_instant" text="Okamžitě"/>
         <text name="rms_option_menu_finish_time_text" text="Čas dokončení"/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Opravy laku"/>
         <text name="rms_bodywork_full" text="Úplné přelakování"/>
         <text name="rms_bodywork_colors_title" text="Barvy vozidla"/>
-        <text name="rms_bodywork_keep_color" text="Ponechat současnou barvu"/>
-        <text name="rms_bodywork_reset_color" text="Současná"/>
         <text name="rms_bodywork_wear" text="Poškození laku"/>
         <text name="rms_bodywork_unavailable" text="Nedostupné"/>
-        <text name="rms_bodywork_ineligible" text="Služba není pro toto vozidlo nebo v této dílně dostupná"/>
+        <text name="rms_bodywork_ineligible" text="Úkon není pro toto vozidlo nebo v této dílně dostupný"/>
         <text name="rms_bodywork_no_wear" text="Žádné poškození laku k opravě"/>
         <text name="rms_bodywork_wear_limit" text="Opravy laku jsou dostupné do 30 % poškození"/>
         <text name="rms_bodywork_touchup_description" text="Opraví drobná poškození laku. Současné barvy zůstanou zachovány."/>
-        <text name="rms_bodywork_full_description" text="Obnoví lak. Vyberte dostupné barvy tohoto vozidla, nebo ponechte stávající."/>
-        <text name="rms_bodywork_touchup_colors" text="Současná barva zůstane zachována."/>
+        <text name="rms_bodywork_full_description" text="Obnoví lak. Vyber dostupné barvy tohoto vozidla, nebo ponech stávající."/>
         <text name="rms_bodywork_no_colors" text="Toto vozidlo nenabízí volitelné barvy. Současné barvy zůstanou zachovány."/>
-        <text name="rms_bodywork_unavailable_title" text="Služba není dostupná"/>
+        <text name="rms_bodywork_unavailable_title" text="Úkon není dostupný"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Zpráva z prohlídky"/>
         <text name="rms_report_vehicle_specs_title" text="Specifikace vozidla"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Zastavit přečerpávání"/>
         <text name="rms_fluid_select_vehicle_title" text="Výběr vozidla"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Vyber vozidlo k doplnění"/>
-        <text name="rms_fluid_select_circuit_title" text="Výběr okruhu"/>
         <text name="rms_fluid_select_circuit_prompt" text="Vyber okruh k doplnění"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Vyber kapalinu k doplnění"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorový olej"/>
         <text name="rms_fluid_circuit_coolant" text="Chladicí kapalina"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Převodový olej"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulický olej"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Převodový a hydraulický olej"/>
         <text name="rms_fluid_hud_engineOil" text="Motorový olej"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Převodový olej"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Převod./hydr. olej"/>
         <text name="rms_fluid_hud_coolant" text="Chladicí kapalina"/>
         <text name="rms_fluid_incompatible_title" text="Nekompatibilní kapalina"/>
         <text name="rms_fluid_incompatible_message" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení systému, zvýšit zahřívání nebo zpomalit hydrauliku. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
@@ -684,7 +684,7 @@
         <text name="rms_fluid_stock_required" text="Kompatibilní kanystry nutné v prostoru dílny"/>
         <text name="rms_fluid_refill_work_order" text="Doplnění provozních kapalin"/>
         <text name="rms_fluid_refill_dealer_supply" text="Dodávka zahrnuta v cenové nabídce"/>
-        <text name="rms_fluid_refill_stock_supply" text="Umístěte své kompatibilní kanystry do prostoru dílny"/>
+        <text name="rms_fluid_refill_stock_supply" text="Umísti své kompatibilní kanystry do prostoru dílny"/>
         <text name="rms_fluid_mode_top_up" text="doplnění"/>
         <text name="rms_fluid_mode_replace" text="výměna"/>
         <text name="rms_fluid_mode_repair" text="doplnění po úniku"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Zatáčíš na přilnavém povrchu se zapnutou uzávěrkou diferenciálu. V zatáčce urazí vnitřní a vnější kola různé vzdálenosti, ale uzávěrka je nutí otáčet se stejnou rychlostí: hnací ústrojí se namáhá a jeho opotřebení se zrychluje. Před zatáčením uzávěrku uvolni."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Režimy pohonu a uzávěrka diferenciálu"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Tento stroj ti umožňuje zvolit pohon: 4x2, 4x4 nebo AUTO, který připojí přední nápravu, jakmile kola začnou prokluzovat.&#10;&#10;Uzávěrka diferenciálu pomáhá získat přilnavost tam, kde už chybí, ale zatáčení na přilnavém povrchu s ní silně namáhá hnací ústrojí: vnitřní a vnější kola se nemohou otáčet stejnou rychlostí. Před zatáčením ji uvolni."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Nabíječka Telwin na vozíku, 150 A při 12 V. Připoj ji vedle vozidla a nech baterii nabíjet. Nabíjení se řídí rychlostí herního času. Pomoc při startování (START, 200 A)."/>
+        <text name="rms_charger_start" text="Připojit nabíječku"/>
+        <text name="rms_charger_disconnect" text="Odpojit nabíječku"/>
+        <text name="rms_charger_select" text="Vyberte vozidlo k připojení."/>
+        <text name="rms_charger_no_vehicle" text="Žádné vhodné vozidlo do 4 m. Musí patřit tvé farmě, stát na místě a mít vypnutý motor."/>
+        <text name="rms_charger_idle" text="K dispozici"/>
+        <text name="rms_charger_charging" text="Probíhá nabíjení"/>
+        <text name="rms_charger_full" text="Baterie nabitá"/>
+        <text name="rms_charger_interrupted" text="Nabíjení přerušeno"/>
+        <text name="rms_charger_interrupted_reason" text="Nabíjení přerušeno. %s"/>
+        <text name="rms_charger_status" text="Stav"/>
+        <text name="rms_charger_battery" text="Baterie"/>
+        <text name="rms_charger_voltage" text="Napětí"/>
+        <text name="rms_charger_current" text="Dodávaný proud"/>
+        <text name="rms_charger_consumers" text="Vypni světla a příslušenství."/>
+        <text name="rms_charger_error_unavailable" text="Vozidlo chybí nebo není podporováno."/>
+        <text name="rms_charger_error_access" text="Vozidlo patří jiné farmě."/>
+        <text name="rms_charger_error_distance" text="Přesuň nabíječku do vzdálenosti 4 m."/>
+        <text name="rms_charger_error_motor" text="Před připojením nabíječky vypni motor."/>
+        <text name="rms_charger_error_moving" text="Vozidlo se pohybuje."/>
+        <text name="rms_charger_error_service" text="V dílně probíhá úkon."/>
+        <text name="rms_charger_error_cables" text="Odpoj startovací kabely."/>
+        <text name="rms_charger_error_busy" text="Nabíječka je již připojena."/>
+        <text name="rms_charger_error_full" text="Tato baterie je již nabitá."/>
+        <text name="rms_charger_connected" text="Nabíječka připojena. Nabíjení spuštěno."/>
+        <text name="rms_charger_disconnected" text="Nabíječka odpojena."/>
+        <text name="rms_charger_stopped_motor" text="Nabíjení přerušeno: start"/>
+        <text name="rms_charger_error_player_distance" text="Přistup k nabíječce pěšky."/>
+        <text name="rms_charger_mode_select" text="Připojit nabíječku"/>
+        <text name="rms_charger_mode_start" text="Pomoc při startování (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START připraven"/>
+        <text name="rms_charger_start_active" text="Pomoc při startování aktivní"/>
+        <text name="rms_charger_start_running" text="Motor běží: odpojte"/>
+        <text name="rms_charger_start_countdown" text="Čekejte: %d s"/>
+        <text name="rms_charger_start_wait" text="Mezi dvěma starty vyčkejte 30 sekund."/>
+        <text name="rms_charger_unplug_before_start" text="Před startem odpojte nabíječku nebo vyberte START."/>
+        <text name="rms_charger_start_connected" text="Pomoc při startování (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Nabít baterii (150 A)"/>
     </texts>
 </l10n>

@@ -164,7 +164,7 @@ function RealisticMechanicalSystems.getExclusionReason(vehicle)
     return "rms_ingame_menu_reason_auxiliary"
 end
 
----Tells whether a player may include or exclude a vehicle, which takes the right to sell its farm's vehicles
+---Tells whether a player may include or exclude a vehicle, a choice kept for the admins
 -- @param table vehicle vehicle
 -- @param boolean isExcluded true to exclude the vehicle
 -- @param Connection? connection player connection, nil for the local player
@@ -176,7 +176,10 @@ function RealisticMechanicalSystems.getCanSetUserExclusion(vehicle, isExcluded, 
         return false
     end
 
-    return g_currentMission:getHasPlayerPermission(Farm.PERMISSION.SELL_VEHICLE, connection, vehicle:getOwnerFarmId())
+    if connection == nil then
+        return g_currentMission:getIsServer() or g_currentMission.isMasterUser == true
+    end
+    return g_currentMission.userManager:getUserByConnection(connection):getIsMasterUser()
 end
 
 ---Tells whether the vehicle sits in the trucks store category
@@ -986,6 +989,21 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         spec.pendingProgressElapsedTime = savegame.xmlFile:getValue(key .. "#pendingProgressElapsedTime", spec.pendingProgressElapsedTime)
         spec.pendingServiceClockStart = RMS_Utils.deserializeNumericMap(savegame.xmlFile:getValue(key .. "#pendingServiceClockStart", ""))
         spec.pendingServiceClockTarget = RMS_Utils.deserializeNumericMap(savegame.xmlFile:getValue(key .. "#pendingServiceClockTarget", ""))
+        if not savegame.xmlFile:hasProperty(key .. "#pendingServiceClockStart")
+            and not savegame.xmlFile:hasProperty(key .. "#pendingServiceClockTarget") then
+            if spec.currentState == RealisticMechanicalSystems.STATUS.MAINTENANCE then
+                local legacyStart = RMS_Utils.decodeOptionalFloat(savegame.xmlFile:getValue(key .. "#pendingMaintenanceServiceStart"))
+                local legacyTarget = RMS_Utils.decodeOptionalFloat(savegame.xmlFile:getValue(key .. "#pendingMaintenanceServiceTarget"))
+                if legacyStart ~= nil and legacyTarget ~= nil then
+                    spec.pendingServiceClockStart.engine = legacyStart
+                    spec.pendingServiceClockTarget.engine = legacyTarget
+                end
+            elseif spec.currentState == RealisticMechanicalSystems.STATUS.OVERHAUL
+                and spec.serviceOptionOne ~= RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL then
+                spec.pendingServiceClockStart.engine = spec.serviceLevel
+                spec.pendingServiceClockTarget.engine = 1.0
+            end
+        end
         spec.pendingPreventiveSystemStressStart = RMS_Utils.deserializeNumericMap(savegame.xmlFile:getValue(key .. "#pendingPreventiveSystemStressStart", ""))
         spec.pendingPreventiveSystemStressTarget = RMS_Utils.deserializeNumericMap(savegame.xmlFile:getValue(key .. "#pendingPreventiveSystemStressTarget", ""))
         spec.pendingOverhaulSystemStart = RMS_Utils.deserializeNumericMap(savegame.xmlFile:getValue(key .. "#pendingOverhaulSystemStart", ""))

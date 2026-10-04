@@ -11,13 +11,14 @@ function RMS_FluidTransferRequestEvent.emptyNew()
     return Event.new(RMS_FluidTransferRequestEvent_mt)
 end
 
-function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompatibleConfirmed, cancel)
+function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompatibleConfirmed, cancel, result)
     local self = RMS_FluidTransferRequestEvent.emptyNew()
     self.container = container
     self.target = target
     self.circuit = circuit
     self.incompatibleConfirmed = incompatibleConfirmed == true
     self.cancel = cancel == true
+    self.result = result or ""
     return self
 end
 
@@ -27,6 +28,7 @@ function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     streamWriteString(streamId, self.circuit or "")
     streamWriteBool(streamId, self.incompatibleConfirmed)
     streamWriteBool(streamId, self.cancel)
+    streamWriteString(streamId, self.result)
 end
 
 function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
@@ -35,11 +37,18 @@ function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
     self.circuit = streamReadString(streamId)
     self.incompatibleConfirmed = streamReadBool(streamId)
     self.cancel = streamReadBool(streamId)
+    self.result = streamReadString(streamId)
     self:run(connection)
 end
 
 function RMS_FluidTransferRequestEvent:run(connection)
-    if connection:getIsServer() or self.container == nil then
+    if connection:getIsServer() then
+        if self.result == RMS_FluidTransfer.RESULT.SERVICE_BUSY then
+            InfoDialog.show(g_i18n:getText("rms_charger_error_service"))
+        end
+        return
+    end
+    if self.container == nil then
         return
     end
 
@@ -60,13 +69,16 @@ function RMS_FluidTransferRequestEvent:run(connection)
     if self.target == nil or not self.container:getIsSynchronized() or not self.target:getIsSynchronized() then
         return
     end
-    RMS_FluidTransfer.tryStart(
+    local _, result = RMS_FluidTransfer.tryStart(
         self.container,
         self.target,
         self.circuit,
         requester,
         self.incompatibleConfirmed
     )
+    if result == RMS_FluidTransfer.RESULT.SERVICE_BUSY then
+        connection:sendEvent(RMS_FluidTransferRequestEvent.new(self.container, nil, self.circuit, false, false, result))
+    end
 end
 
 function RMS_FluidTransferRequestEvent.send(container, target, circuit, incompatibleConfirmed, cancel)

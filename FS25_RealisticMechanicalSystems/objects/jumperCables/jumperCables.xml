@@ -29,6 +29,7 @@
     <i3dMappings>
         <i3dMapping id="graphics" node="0>0"/>
         <i3dMapping id="leftPair" node="0>0|0"/>
+        <i3dMapping id="leftHandNode" node="0>0|0|2"/>
         <i3dMapping id="rightPair" node="0>0|1"/>
         <i3dMapping id="handNode" node="0>1"/>
         <i3dMapping id="firstPersonNode" node="0>2"/>

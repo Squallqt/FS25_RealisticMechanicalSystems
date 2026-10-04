@@ -301,7 +301,8 @@ function RMS_MaintenanceThreeOptionsDialog.show(vehicle, maintenanceType)
     end
 
     if dialog.maintenanceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
-        dialog.selectedOptionOne = RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD
+        -- the level the schedule calls for comes selected
+        dialog.selectedOptionOne = vehicle:getDueMaintenanceType()
     elseif dialog.maintenanceType == RealisticMechanicalSystems.STATUS.REPAIR then
         dialog.selectedOptionOne = RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM
     elseif dialog.maintenanceType == RealisticMechanicalSystems.STATUS.OVERHAUL then

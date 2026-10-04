@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Zapłon włączony: trwa podgrzewanie"/>
         <text name="rms_preheat_system_failure_message" text="Awaria układu świec żarowych: rozruch na zimno niemożliwy"/>
         <text name="rms_preheat_start_failed_message" text="Silnik nie uruchomił się: wyłącz zapłon przed kolejną próbą"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Skontroluj pojazd"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,21 +45,21 @@
         <text name="rms_ownWorkshopAvailable_label" text="Własny warsztat 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Utrzymuje Twój własny warsztat dostępny przez całą dobę."/>
         <text name="rms_instantInspection_label" text="Natychmiastowy przegląd"/>
-        <text name="rms_instantInspection_tooltip" text="Gdy ta opcja jest włączona, przeglądy w warsztacie kończą się natychmiast. Trwające już prace tego typu również kończą się natychmiast."/>
-        <text name="rms_instantMaintenanceRepair_label" text="Natychmiastowy serwis i naprawa"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Gdy ta opcja jest włączona, serwis i naprawy w warsztacie kończą się natychmiast. Trwające już prace tego typu również kończą się natychmiast."/>
+        <text name="rms_instantInspection_tooltip" text="Gdy ta opcja jest włączona, przeglądy w warsztacie kończą się natychmiast. Trwające już czynności tego typu również kończą się natychmiast."/>
+        <text name="rms_instantMaintenanceRepair_label" text="Natychmiastowa obsługa techniczna i naprawa"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Gdy ta opcja jest włączona, obsługa techniczna i naprawy w warsztacie kończą się natychmiast. Trwające już czynności tego typu również kończą się natychmiast."/>
         <text name="rms_instantBodywork_label" text="Natychmiastowe lakierowanie"/>
-        <text name="rms_instantBodywork_tooltip" text="Gdy ta opcja jest włączona, lakierowanie w warsztacie kończy się natychmiast. Trwające już prace tego typu również kończą się natychmiast."/>
+        <text name="rms_instantBodywork_tooltip" text="Gdy ta opcja jest włączona, lakierowanie w warsztacie kończy się natychmiast. Trwające już czynności tego typu również kończą się natychmiast."/>
         <text name="rms_instantOverhaul_label" text="Natychmiastowy remont kapitalny"/>
-        <text name="rms_instantOverhaul_tooltip" text="Gdy ta opcja jest włączona, remont kapitalny w warsztacie kończy się natychmiast. Trwające już prace tego typu również kończą się natychmiast."/>
+        <text name="rms_instantOverhaul_tooltip" text="Gdy ta opcja jest włączona, remont kapitalny w warsztacie kończy się natychmiast. Trwające już czynności tego typu również kończą się natychmiast."/>
         <text name="rms_debugMode_label" text="Tryb debugowania"/>
-        <text name="rms_debugMode_tooltip" text="Włącz lub wyłącz panel debugowania oraz rozbudowane logowanie debugowania w konsoli."/>
+        <text name="rms_debugMode_tooltip" text="Włącza panel debugowania i szczegółowe logowanie w konsoli."/>
         <text name="rms_warningMessages_label" text="Komunikaty ostrzegawcze"/>
         <text name="rms_warningMessages_tooltip" text="Włącza lub wyłącza ostrzeżenia w grze, takie jak zimny silnik lub przegrzanie."/>
         <text name="rms_serviceInterval_label" text="Okres międzyobsługowy"/>
         <text name="rms_serviceInterval_tooltip" text="Określa w godzinach okres wymiany oleju silnikowego. Olej przekładniowy i hydrauliczny wymienia się co dwa okresy, płyn chłodniczy co dziesięć. Rzeczywisty okres zależy od marki pojazdu."/>
         <text name="rms_vehicleLifespan_label" text="Okres eksploatacji pojazdu"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Ustaw bazową żywotność pojazdu w godzinach, po której jego stan techniczny osiągnie 0%. Im bliżej zera znajduje się stan pojazdu, tym staje się on bardziej zawodny. Wartość pojazdu również spada wraz z tymi godzinami."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Ustawia bazową żywotność pojazdu w godzinach, po której jego stan techniczny osiągnie 0%. Im bliżej zera znajduje się stan pojazdu, tym staje się on bardziej zawodny. Wartość pojazdu również spada wraz z tymi godzinami."/>
         <text name="rms_reinitializeVehicles_label" text="Dostosuj flotę"/>
         <text name="rms_reinitializeVehicles_text" text="Dostosuj"/>
         <text name="rms_reinitializeVehicles_tooltip" text="Dopasowuje stan floty do wybranego okresu eksploatacji. Bieżące awarie zostają usunięte."/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Wiek"/>
         <text name="rms_ws_label_operating_hours" text="Godziny pracy"/>
         <text name="rms_ws_label_service" text="Poziom obsługi technicznej"/>
-        <text name="rms_ws_label_next_service" text="Następna obsługa"/>
-        <text name="rms_ws_value_service_overdue" text="przekroczony o %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Obsługa standardowa"/>
+        <text name="rms_ws_label_maintenance_extended" text="Obsługa rozszerzona"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Obsługa prewencyjna"/>
         <text name="rms_ws_label_condition" text="Stan"/>
         <text name="rms_ws_label_reliability" text="Niezawodność"/>
         <text name="rms_ws_label_overhaul_count" text="Wykonane remonty"/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Poprawki lakiernicze"/>
         <text name="rms_bodywork_full" text="Pełne ponowne lakierowanie"/>
         <text name="rms_bodywork_colors_title" text="Kolory pojazdu"/>
-        <text name="rms_bodywork_keep_color" text="Zachowaj obecny kolor"/>
-        <text name="rms_bodywork_reset_color" text="Obecny"/>
         <text name="rms_bodywork_wear" text="Uszkodzenia lakieru"/>
         <text name="rms_bodywork_unavailable" text="Niedostępne"/>
-        <text name="rms_bodywork_ineligible" text="Usługa niedostępna dla tego pojazdu lub w tym warsztacie"/>
+        <text name="rms_bodywork_ineligible" text="Czynność niedostępna dla tego pojazdu lub w tym warsztacie"/>
         <text name="rms_bodywork_no_wear" text="Brak uszkodzeń lakieru do naprawy"/>
-        <text name="rms_bodywork_wear_limit" text="Poprawki lakiernicze dostępne przy uszkodzeniach do 30 %"/>
+        <text name="rms_bodywork_wear_limit" text="Poprawki lakiernicze dostępne przy uszkodzeniach do 30%"/>
         <text name="rms_bodywork_touchup_description" text="Naprawia drobne uszkodzenia lakieru. Obecne kolory pozostają bez zmian."/>
         <text name="rms_bodywork_full_description" text="Odnawia lakier. Wybierz dostępne kolory tego pojazdu lub zachowaj obecne."/>
-        <text name="rms_bodywork_touchup_colors" text="Obecny kolor zostanie zachowany."/>
         <text name="rms_bodywork_no_colors" text="Ten pojazd nie ma kolorów do wyboru. Obecne kolory zostaną zachowane."/>
-        <text name="rms_bodywork_unavailable_title" text="Usługa niedostępna"/>
+        <text name="rms_bodywork_unavailable_title" text="Czynność niedostępna"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Raport z przeglądu"/>
         <text name="rms_report_vehicle_specs_title" text="Dane techniczne pojazdu"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Zatrzymaj przelewanie"/>
         <text name="rms_fluid_select_vehicle_title" text="Wybór pojazdu"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Wybierz pojazd do uzupełnienia"/>
-        <text name="rms_fluid_select_circuit_title" text="Wybór obiegu"/>
         <text name="rms_fluid_select_circuit_prompt" text="Wybierz obieg do uzupełnienia"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Wybierz płyn do wlania"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Olej silnikowy"/>
         <text name="rms_fluid_circuit_coolant" text="Płyn chłodniczy"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Olej do skrzyni biegów"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Olej hydrauliczny"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Olej przekładniowo-hydrauliczny"/>
         <text name="rms_fluid_hud_engineOil" text="Olej silnikowy"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Olej przekładniowy"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Olej przekł./hydr."/>
         <text name="rms_fluid_hud_coolant" text="Płyn chłodniczy"/>
         <text name="rms_fluid_incompatible_title" text="Niezgodny płyn"/>
         <text name="rms_fluid_incompatible_message" text="Ten produkt nie jest przeznaczony do tego obiegu. Zanieczyści go i może nawet trzykrotnie zwiększyć zużycie układu, podnieść jego temperaturę lub spowolnić hydraulikę. Zanieczyszczenie usunie tylko całkowita wymiana płynu. Kontynuować?"/>
@@ -840,7 +840,7 @@
         <text name="rms_tutorial_service_interval_expired_message" text="Okres międzyobsługowy pojazdu %s został przekroczony.&#10;&#10;Jak najszybciej odwiedź warsztat i wybierz „Obsługa techniczna”. Dalsza eksploatacja pojazdu z zaległą obsługą znacznie zwiększa ryzyko wielu awarii."/>
         <text name="rms_tutorial_steering_title" text="Skręcanie na postoju"/>
         <text name="rms_tutorial_steering_message" text="Najlepiej nie skręcać kołami, gdy maszyna stoi w miejscu. To mocno obciąża przekładnię kierowniczą i elementy przedniej osi, zwiększając zużycie układu jezdnego.&#10;&#10;Wystarczy, że ruszysz choć trochę, a koła będą skręcać znacznie łatwiej."/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Chłodnica lub filtr powietrza jest zapchany. Patrząc na pojazd, przytrzymaj klawisz %s, aby sprawdzić który element. Oczyść go dmuchawą sprężonego powietrza. Jeśli filtra nie da się już przedmuchać, wybierz w warsztacie przegląd rozszerzony lub profilaktyczny, aby go wymienić."/>
+        <text name="rms_tutorial_cooling_air_check_message" text="Chłodnica lub filtr powietrza jest zapchany. Patrząc na pojazd, przytrzymaj klawisz %s, aby sprawdzić który element. Oczyść go dmuchawą sprężonego powietrza. Jeśli filtra nie da się już przedmuchać, wybierz w warsztacie obsługę rozszerzoną lub profilaktyczną, aby go wymienić."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Wymagane smarowanie"/>
         <text name="rms_tutorial_needs_lubrication_message" text="Pojazd %s wymaga regularnego smarowania.&#10;&#10;W RMS poziom smarowania spada wraz z godzinami pracy. Po długim okresie nieużywania maszynę trzeba również nasmarować przed ponownym uruchomieniem. Niedostateczne smarowanie przyspiesza zużycie podwozia.&#10;&#10;Kup w sklepie smarownicę i nasmaruj maszynę, gdy przegląd wykaże taką potrzebę.&#10;&#10;Poziom smarowania możesz sprawdzić, przytrzymując klawisz %s i patrząc na pojazd."/>
         <text name="rms_tutorial_needs_repair_title" text="Wykryto awarię"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Skręcasz na przyczepnym podłożu z załączoną blokadą mechanizmu różnicowego. W zakręcie koła po wewnętrznej i zewnętrznej stronie pokonują różne odległości, ale blokada mechanizmu różnicowego wymusza tę samą prędkość obrotową: układ napędowy zostaje obciążony, zwiększając zużycie skrzyni biegów. Zwolnij blokadę przed skrętem."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Tryby napędu i blokada mechanizmu różnicowego"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Ta maszyna pozwala wybrać tryb napędu: 2WD, 4WD lub AUTO, który załącza przedni most, gdy tylko koła zaczną się ślizgać.&#10;&#10;Blokada mechanizmu różnicowego pomaga odzyskać przyczepność, ale powoduje duże naprężenia podczas skręcania na przyczepnym podłożu: koła wewnętrzne i zewnętrzne nie mogą obracać się z taką samą prędkością, więc obciążenie przejmuje układ napędowy. Zwolnij blokadę przed skrętem."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Ładowarka Telwin na wózku, 150 A przy 12 V. Podłącz ją przy pojeździe i pozostaw akumulator do naładowania. Ładowanie odbywa się zgodnie z szybkością czasu w grze. Wspomaganie rozruchu (START, 200 A)."/>
+        <text name="rms_charger_start" text="Podłącz ładowarkę"/>
+        <text name="rms_charger_disconnect" text="Odłącz ładowarkę"/>
+        <text name="rms_charger_select" text="Wybierz pojazd do podłączenia."/>
+        <text name="rms_charger_no_vehicle" text="Brak odpowiedniego pojazdu w promieniu 4 m. Musi należeć do twojego gospodarstwa, stać nieruchomo i mieć wyłączony silnik."/>
+        <text name="rms_charger_idle" text="Dostępna"/>
+        <text name="rms_charger_charging" text="Ładowanie w toku"/>
+        <text name="rms_charger_full" text="Akumulator naładowany"/>
+        <text name="rms_charger_interrupted" text="Ładowanie przerwane"/>
+        <text name="rms_charger_interrupted_reason" text="Ładowanie przerwane. %s"/>
+        <text name="rms_charger_status" text="Stan"/>
+        <text name="rms_charger_battery" text="Akumulator"/>
+        <text name="rms_charger_voltage" text="Napięcie"/>
+        <text name="rms_charger_current" text="Prąd ładowania"/>
+        <text name="rms_charger_consumers" text="Wyłącz światła i akcesoria."/>
+        <text name="rms_charger_error_unavailable" text="Pojazdu nie ma lub nie jest obsługiwany."/>
+        <text name="rms_charger_error_access" text="Ten pojazd należy do innego gospodarstwa."/>
+        <text name="rms_charger_error_distance" text="Przesuń ładowarkę na odległość poniżej 4 m."/>
+        <text name="rms_charger_error_motor" text="Wyłącz silnik przed podłączeniem ładowarki."/>
+        <text name="rms_charger_error_moving" text="Pojazd się porusza."/>
+        <text name="rms_charger_error_service" text="W warsztacie trwa czynność."/>
+        <text name="rms_charger_error_cables" text="Odłącz przewody rozruchowe."/>
+        <text name="rms_charger_error_busy" text="Ładowarka jest już podłączona."/>
+        <text name="rms_charger_error_full" text="Ten akumulator jest już naładowany."/>
+        <text name="rms_charger_connected" text="Ładowarka podłączona. Ładowanie rozpoczęte."/>
+        <text name="rms_charger_disconnected" text="Ładowarka odłączona."/>
+        <text name="rms_charger_stopped_motor" text="Ładowanie przerwane: rozruch"/>
+        <text name="rms_charger_error_player_distance" text="Podejdź do ładowarki pieszo."/>
+        <text name="rms_charger_mode_select" text="Podłącz ładowarkę"/>
+        <text name="rms_charger_mode_start" text="Wspomaganie rozruchu (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START gotowy"/>
+        <text name="rms_charger_start_active" text="Wspomaganie rozruchu aktywne"/>
+        <text name="rms_charger_start_running" text="Silnik działa: odłącz"/>
+        <text name="rms_charger_start_countdown" text="Czekaj: %d s"/>
+        <text name="rms_charger_start_wait" text="Odczekaj 30 sekund między próbami rozruchu."/>
+        <text name="rms_charger_unplug_before_start" text="Odłącz ładowarkę lub wybierz START przed rozruchem."/>
+        <text name="rms_charger_start_connected" text="Wspomaganie rozruchu (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Naładuj akumulator (150 A)"/>
     </texts>
 </l10n>

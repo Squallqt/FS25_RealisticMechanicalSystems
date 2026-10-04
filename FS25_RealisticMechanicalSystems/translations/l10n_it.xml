@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Quadro acceso: preriscaldamento in corso"/>
         <text name="rms_preheat_system_failure_message" text="Guasto del sistema di preriscaldamento: avviamento a freddo non disponibile"/>
         <text name="rms_preheat_start_failed_message" text="Il motore non si è avviato: spegni il quadro prima di riprovare"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Controlla il veicolo"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Officina propria 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Mantiene la tua officina disponibile a qualsiasi ora del giorno e della notte."/>
         <text name="rms_instantInspection_label" text="Ispezione istantanea"/>
-        <text name="rms_instantInspection_tooltip" text="Se attivata, le ispezioni in officina vengono completate istantaneamente. Anche i lavori di questo tipo già in corso si concludono subito."/>
+        <text name="rms_instantInspection_tooltip" text="Se attivata, le ispezioni in officina vengono completate istantaneamente. Anche gli interventi di questo tipo già in corso si concludono subito."/>
         <text name="rms_instantMaintenanceRepair_label" text="Manutenzione e riparazione istantanee"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Se attivata, le manutenzioni e le riparazioni in officina vengono completate istantaneamente. Anche i lavori di questo tipo già in corso si concludono subito."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Se attivata, le manutenzioni e le riparazioni in officina vengono completate istantaneamente. Anche gli interventi di questo tipo già in corso si concludono subito."/>
         <text name="rms_instantBodywork_label" text="Verniciatura istantanea"/>
-        <text name="rms_instantBodywork_tooltip" text="Se attivata, la verniciatura in officina viene completata istantaneamente. Anche i lavori di questo tipo già in corso si concludono subito."/>
+        <text name="rms_instantBodywork_tooltip" text="Se attivata, la verniciatura in officina viene completata istantaneamente. Anche gli interventi di questo tipo già in corso si concludono subito."/>
         <text name="rms_instantOverhaul_label" text="Revisione meccanica istantanea"/>
-        <text name="rms_instantOverhaul_tooltip" text="Se attivata, la revisione meccanica in officina viene completata istantaneamente. Anche i lavori di questo tipo già in corso si concludono subito."/>
+        <text name="rms_instantOverhaul_tooltip" text="Se attivata, la revisione meccanica in officina viene completata istantaneamente. Anche gli interventi di questo tipo già in corso si concludono subito."/>
         <text name="rms_debugMode_label" text="Modalità debug"/>
         <text name="rms_debugMode_tooltip" text="Abilita o disabilita il pannello di debug e la registrazione estesa nella console."/>
         <text name="rms_warningMessages_label" text="Messaggi di avviso"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Età"/>
         <text name="rms_ws_label_operating_hours" text="Ore di funzionamento"/>
         <text name="rms_ws_label_service" text="Livello di manutenzione"/>
-        <text name="rms_ws_label_next_service" text="Prossima manutenzione"/>
-        <text name="rms_ws_value_service_overdue" text="scaduta da %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Manutenzione standard"/>
+        <text name="rms_ws_label_maintenance_extended" text="Manutenzione estesa"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Manutenzione preventiva"/>
         <text name="rms_ws_label_condition" text="Stato"/>
         <text name="rms_ws_label_reliability" text="Affidabilità"/>
         <text name="rms_ws_label_overhaul_count" text="Revisioni effettuate"/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Ritocchi"/>
         <text name="rms_bodywork_full" text="Riverniciatura completa"/>
         <text name="rms_bodywork_colors_title" text="Colori del veicolo"/>
-        <text name="rms_bodywork_keep_color" text="Mantieni il colore attuale"/>
-        <text name="rms_bodywork_reset_color" text="Attuale"/>
         <text name="rms_bodywork_wear" text="Danni alla vernice"/>
         <text name="rms_bodywork_unavailable" text="Non disponibile"/>
-        <text name="rms_bodywork_ineligible" text="Servizio non disponibile per questo veicolo o in questa officina"/>
+        <text name="rms_bodywork_ineligible" text="Intervento non disponibile per questo veicolo o in questa officina"/>
         <text name="rms_bodywork_no_wear" text="Nessun danno alla vernice da riparare"/>
-        <text name="rms_bodywork_wear_limit" text="Ritocchi disponibili fino al 30 % di danni alla vernice"/>
+        <text name="rms_bodywork_wear_limit" text="Ritocchi disponibili fino al 30% di danni alla vernice"/>
         <text name="rms_bodywork_touchup_description" text="Ripara i danni lievi alla vernice. I colori attuali restano invariati."/>
         <text name="rms_bodywork_full_description" text="Rinnova la verniciatura. Scegli i colori disponibili per questo veicolo o mantieni quelli attuali."/>
-        <text name="rms_bodywork_touchup_colors" text="Il colore attuale viene mantenuto."/>
         <text name="rms_bodywork_no_colors" text="Questo veicolo non offre colori selezionabili. I colori attuali vengono mantenuti."/>
-        <text name="rms_bodywork_unavailable_title" text="Servizio non disponibile"/>
+        <text name="rms_bodywork_unavailable_title" text="Intervento non disponibile"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Rapporto di ispezione"/>
         <text name="rms_report_vehicle_specs_title" text="Specifiche del veicolo"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Interrompi il travaso"/>
         <text name="rms_fluid_select_vehicle_title" text="Selezione del veicolo"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Scegli il veicolo da rifornire"/>
-        <text name="rms_fluid_select_circuit_title" text="Selezione del circuito"/>
         <text name="rms_fluid_select_circuit_prompt" text="Scegli il circuito da rifornire"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Scegli il fluido da versare"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Olio motore"/>
         <text name="rms_fluid_circuit_coolant" text="Liquido di raffreddamento"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Olio della trasmissione"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Olio idraulico"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Olio della trasmissione e idraulico"/>
         <text name="rms_fluid_hud_engineOil" text="Olio motore"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Olio trasmissione"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Olio trasm./idraul."/>
         <text name="rms_fluid_hud_coolant" text="Liq. raffreddamento"/>
         <text name="rms_fluid_incompatible_title" text="Fluido incompatibile"/>
         <text name="rms_fluid_incompatible_message" text="Questo prodotto non è previsto per questo circuito. Contaminerà la miscela e potrà triplicare l'usura del sistema, aumentare il riscaldamento o rallentare l'impianto idraulico. Solo una sostituzione completa del fluido eliminerà la contaminazione. Continuare?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Stai sterzando su un terreno ad alta aderenza con il blocco del differenziale inserito. In curva, le ruote interne ed esterne percorrono distanze diverse, ma il blocco le costringe a girare alla stessa velocità: la trasmissione viene sollecitata e la sua usura aumenta. Disinserisci il blocco prima di sterzare."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Modalità di trazione e bloccaggio"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Questa macchina permette di scegliere la modalità di trazione: 2RM, 4RM o AUTO, che inserisce l'assale anteriore non appena le ruote slittano.&#10;&#10;Il blocco del differenziale consente di trovare aderenza dove non ce n'è più, ma sollecita molto la trasmissione in curva su un terreno ad alta aderenza: le ruote interne ed esterne non possono girare alla stessa velocità. Disinseriscilo prima di sterzare."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Caricabatterie Telwin su carrello, 150 A a 12 V. Collegalo vicino al veicolo e lascia caricare la batteria. La ricarica segue la velocità del tempo di gioco. Aiuto avviamento (START, 200 A)."/>
+        <text name="rms_charger_start" text="Collegare il caricabatterie"/>
+        <text name="rms_charger_disconnect" text="Scollegare il caricabatterie"/>
+        <text name="rms_charger_select" text="Scegli il veicolo da collegare."/>
+        <text name="rms_charger_no_vehicle" text="Nessun veicolo idoneo entro 4 m. Deve appartenere alla tua fattoria, essere fermo e avere il motore spento."/>
+        <text name="rms_charger_idle" text="Disponibile"/>
+        <text name="rms_charger_charging" text="Ricarica in corso"/>
+        <text name="rms_charger_full" text="Batteria carica"/>
+        <text name="rms_charger_interrupted" text="Ricarica interrotta"/>
+        <text name="rms_charger_interrupted_reason" text="Ricarica interrotta. %s"/>
+        <text name="rms_charger_status" text="Stato"/>
+        <text name="rms_charger_battery" text="Batteria"/>
+        <text name="rms_charger_voltage" text="Tensione"/>
+        <text name="rms_charger_current" text="Corrente erogata"/>
+        <text name="rms_charger_consumers" text="Spegni luci e accessori."/>
+        <text name="rms_charger_error_unavailable" text="Veicolo assente o non supportato."/>
+        <text name="rms_charger_error_access" text="Questo veicolo appartiene a un'altra fattoria."/>
+        <text name="rms_charger_error_distance" text="Avvicina il caricabatterie entro 4 m."/>
+        <text name="rms_charger_error_motor" text="Spegni il motore prima di collegare il caricabatterie."/>
+        <text name="rms_charger_error_moving" text="Veicolo in movimento."/>
+        <text name="rms_charger_error_service" text="È in corso un intervento in officina."/>
+        <text name="rms_charger_error_cables" text="Scollega i cavi di avviamento."/>
+        <text name="rms_charger_error_busy" text="Un caricabatterie è già collegato."/>
+        <text name="rms_charger_error_full" text="Questa batteria è già carica."/>
+        <text name="rms_charger_connected" text="Caricabatterie collegato. Ricarica avviata."/>
+        <text name="rms_charger_disconnected" text="Caricabatterie scollegato."/>
+        <text name="rms_charger_stopped_motor" text="Ricarica interrotta: avvio"/>
+        <text name="rms_charger_error_player_distance" text="Avvicinati al caricabatterie a piedi."/>
+        <text name="rms_charger_mode_select" text="Collegare il caricabatterie"/>
+        <text name="rms_charger_mode_start" text="Aiuto avviamento (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START pronto"/>
+        <text name="rms_charger_start_active" text="Aiuto avviamento attivo"/>
+        <text name="rms_charger_start_running" text="Motore avviato: scollegare"/>
+        <text name="rms_charger_start_countdown" text="Attesa: %d s"/>
+        <text name="rms_charger_start_wait" text="Attendi i 30 secondi tra due avviamenti."/>
+        <text name="rms_charger_unplug_before_start" text="Scollega il caricabatterie o scegli START prima di avviare."/>
+        <text name="rms_charger_start_connected" text="Aiuto avviamento (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Ricaricare una batteria (150 A)"/>
     </texts>
 </l10n>

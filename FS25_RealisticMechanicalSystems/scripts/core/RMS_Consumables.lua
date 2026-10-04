@@ -228,6 +228,13 @@ function RMS_Consumables:cleanRadiatorAndAirFilter(dt)
     end
 end
 
+---Tells whether a blow out can no longer bring the air filter back below the cleaning threshold
+-- @param table spec vehicle spec
+-- @return boolean isWornOut true when the filter is due for replacement
+function RMS_Consumables.getIsAirFilterWornOut(spec)
+    return spec.airFilterResidue >= RMS_Config.FIELD_CARE.AIR_FILTER_REPLACEMENT_RESIDUE
+end
+
 ---Drops the lubrication level once per period, unless the vehicle was greased during it
 function RMS_Consumables:onLubricationPeriodChanged()
     local C = RMS_Config.FIELD_CARE

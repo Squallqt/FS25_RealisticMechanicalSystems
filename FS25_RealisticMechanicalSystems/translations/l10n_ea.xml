@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Contacto encendido: precalentamiento en curso"/>
         <text name="rms_preheat_system_failure_message" text="Fallo del sistema de precalentamiento: arranque en frío no disponible"/>
         <text name="rms_preheat_start_failed_message" text="El motor no arrancó: quita el contacto antes de volver a intentarlo"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Comprobar el vehículo"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Taller personal 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Mantiene tu taller personal disponible a cualquier hora del día y de la noche."/>
         <text name="rms_instantInspection_label" text="Inspección instantánea"/>
-        <text name="rms_instantInspection_tooltip" text="Cuando está activada, las inspecciones en el taller se completan al instante. Los trabajos de este tipo que ya estén en curso también se completan al instante."/>
+        <text name="rms_instantInspection_tooltip" text="Cuando está activada, las inspecciones en el taller se completan al instante. Los procedimientos de este tipo que ya estén en curso también se completan de inmediato."/>
         <text name="rms_instantMaintenanceRepair_label" text="Mantenimiento y reparación instantáneos"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Cuando está activada, el mantenimiento y las reparaciones en el taller se completan al instante. Los trabajos de este tipo que ya estén en curso también se completan al instante."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Cuando está activada, el mantenimiento y las reparaciones en el taller se completan al instante. Los procedimientos de este tipo que ya estén en curso también se completan de inmediato."/>
         <text name="rms_instantBodywork_label" text="Pintura instantánea"/>
-        <text name="rms_instantBodywork_tooltip" text="Cuando está activada, los trabajos de pintura en el taller se completan al instante. Los trabajos de este tipo que ya estén en curso también se completan al instante."/>
+        <text name="rms_instantBodywork_tooltip" text="Cuando está activada, los trabajos de pintura en el taller se completan al instante. Los procedimientos de este tipo que ya estén en curso también se completan de inmediato."/>
         <text name="rms_instantOverhaul_label" text="Revisión mecánica instantánea"/>
-        <text name="rms_instantOverhaul_tooltip" text="Cuando está activada, las revisiones mecánicas en el taller se completan al instante. Los trabajos de este tipo que ya estén en curso también se completan al instante."/>
+        <text name="rms_instantOverhaul_tooltip" text="Cuando está activada, las revisiones mecánicas en el taller se completan al instante. Los procedimientos de este tipo que ya estén en curso también se completan de inmediato."/>
         <text name="rms_debugMode_label" text="Modo depuración"/>
         <text name="rms_debugMode_tooltip" text="Activa el panel de depuración y los registros detallados en la consola."/>
         <text name="rms_warningMessages_label" text="Mensajes de advertencia"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Antigüedad"/>
         <text name="rms_ws_label_operating_hours" text="Horas de funcionamiento"/>
         <text name="rms_ws_label_service" text="Nivel de mantenimiento"/>
-        <text name="rms_ws_label_next_service" text="Próximo mantenimiento"/>
-        <text name="rms_ws_value_service_overdue" text="vencido hace %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Mantenimiento estándar"/>
+        <text name="rms_ws_label_maintenance_extended" text="Mantenimiento extendido"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Mantenimiento preventivo"/>
         <text name="rms_ws_label_condition" text="Estado"/>
         <text name="rms_ws_label_reliability" text="Confiabilidad"/>
         <text name="rms_ws_label_overhaul_count" text="Revisiones realizadas"/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Retoques"/>
         <text name="rms_bodywork_full" text="Repintado completo"/>
         <text name="rms_bodywork_colors_title" text="Colores del vehículo"/>
-        <text name="rms_bodywork_keep_color" text="Conservar el color actual"/>
-        <text name="rms_bodywork_reset_color" text="Actual"/>
         <text name="rms_bodywork_wear" text="Daños en la pintura"/>
         <text name="rms_bodywork_unavailable" text="No disponible"/>
-        <text name="rms_bodywork_ineligible" text="Servicio no disponible para este vehículo o en este taller"/>
+        <text name="rms_bodywork_ineligible" text="Procedimiento no disponible para este vehículo o en este taller"/>
         <text name="rms_bodywork_no_wear" text="No hay daños en la pintura que reparar"/>
         <text name="rms_bodywork_wear_limit" text="Retoques disponibles hasta un 30 % de daños en la pintura"/>
         <text name="rms_bodywork_touchup_description" text="Repara daños leves en la pintura. Se conservan los colores actuales."/>
         <text name="rms_bodywork_full_description" text="Renueva la pintura. Elige entre los colores disponibles para este vehículo o conserva los actuales."/>
-        <text name="rms_bodywork_touchup_colors" text="Se conserva el color actual."/>
         <text name="rms_bodywork_no_colors" text="Este vehículo no ofrece colores seleccionables. Se conservan sus colores actuales."/>
-        <text name="rms_bodywork_unavailable_title" text="Servicio no disponible"/>
+        <text name="rms_bodywork_unavailable_title" text="Procedimiento no disponible"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Informe de inspección"/>
         <text name="rms_report_vehicle_specs_title" text="Especificaciones del vehículo"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Detener la transferencia"/>
         <text name="rms_fluid_select_vehicle_title" text="Selección del vehículo"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Elige el vehículo a rellenar"/>
-        <text name="rms_fluid_select_circuit_title" text="Selección del circuito"/>
         <text name="rms_fluid_select_circuit_prompt" text="Elige el circuito a rellenar"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Elige el fluido a verter"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Aceite del motor"/>
         <text name="rms_fluid_circuit_coolant" text="Refrigerante"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Aceite de transmisión"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Aceite hidráulico"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Aceite de transmisión e hidráulico"/>
         <text name="rms_fluid_hud_engineOil" text="Aceite de motor"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Aceite transmisión"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Aceite transm./hidr."/>
         <text name="rms_fluid_hud_coolant" text="Refrigerante"/>
         <text name="rms_fluid_incompatible_title" text="Fluido incompatible"/>
         <text name="rms_fluid_incompatible_message" text="Este producto no está previsto para este circuito. Lo contaminará y puede triplicar el desgaste del sistema, aumentar su calentamiento o ralentizar el sistema hidráulico. Solo un cambio completo del fluido eliminará la contaminación. ¿Continuar?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Estás girando sobre suelo con buen agarre con el bloqueo de diferencial activado. En una curva, las ruedas interiores y exteriores recorren distancias diferentes, pero el bloqueo de diferencial las obliga a girar a la misma velocidad: la transmisión se tensa y su desgaste se acelera. Desactiva el bloqueo antes de girar."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Modos de tracción y bloqueo de diferencial"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Esta máquina te deja elegir su tracción: 4x2, 4x4 o AUTO, que conecta el eje delantero en cuanto las ruedas patinan.&#10;&#10;El bloqueo de diferencial busca agarre donde ya no queda, pero sale caro al girar sobre suelo con buen agarre: las ruedas interiores y exteriores no pueden girar a la misma velocidad, y la transmisión lo paga. Desactívalo antes de girar."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Cargador Telwin sobre carro, 150 A a 12 V. Conéctalo cerca del vehículo y deja que la batería se cargue. La recarga sigue la velocidad del tiempo de la partida. Ayuda de arranque (START, 200 A)."/>
+        <text name="rms_charger_start" text="Conectar el cargador"/>
+        <text name="rms_charger_disconnect" text="Desconectar el cargador"/>
+        <text name="rms_charger_select" text="Elige el vehículo que deseas conectar."/>
+        <text name="rms_charger_no_vehicle" text="No hay vehículos aptos a menos de 4 m. Deben pertenecer a tu granja, estar inmóviles y tener el motor apagado."/>
+        <text name="rms_charger_idle" text="Disponible"/>
+        <text name="rms_charger_charging" text="Recargando"/>
+        <text name="rms_charger_full" text="Batería cargada"/>
+        <text name="rms_charger_interrupted" text="Recarga interrumpida"/>
+        <text name="rms_charger_interrupted_reason" text="Recarga interrumpida. %s"/>
+        <text name="rms_charger_status" text="Estado"/>
+        <text name="rms_charger_battery" text="Batería"/>
+        <text name="rms_charger_voltage" text="Tensión"/>
+        <text name="rms_charger_current" text="Corriente suministrada"/>
+        <text name="rms_charger_consumers" text="Apaga las luces y los accesorios."/>
+        <text name="rms_charger_error_unavailable" text="Vehículo ausente o no compatible."/>
+        <text name="rms_charger_error_access" text="Este vehículo pertenece a otra granja."/>
+        <text name="rms_charger_error_distance" text="Acerca el cargador a menos de 4 m."/>
+        <text name="rms_charger_error_motor" text="Apaga el motor antes de conectar el cargador."/>
+        <text name="rms_charger_error_moving" text="Vehículo en movimiento."/>
+        <text name="rms_charger_error_service" text="Hay un procedimiento de taller en curso."/>
+        <text name="rms_charger_error_cables" text="Desconecta los cables de arranque."/>
+        <text name="rms_charger_error_busy" text="Ya hay un cargador conectado."/>
+        <text name="rms_charger_error_full" text="Esta batería ya está cargada."/>
+        <text name="rms_charger_connected" text="Cargador conectado. Recarga iniciada."/>
+        <text name="rms_charger_disconnected" text="Cargador desconectado."/>
+        <text name="rms_charger_stopped_motor" text="Recarga detenida: arranque"/>
+        <text name="rms_charger_error_player_distance" text="Acércate al cargador a pie."/>
+        <text name="rms_charger_mode_select" text="Conectar el cargador"/>
+        <text name="rms_charger_mode_start" text="Ayuda de arranque (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START listo"/>
+        <text name="rms_charger_start_active" text="Ayuda de arranque activa"/>
+        <text name="rms_charger_start_running" text="Motor arrancado: desconecta"/>
+        <text name="rms_charger_start_countdown" text="Espera: %d s"/>
+        <text name="rms_charger_start_wait" text="Espera los 30 segundos entre dos arranques."/>
+        <text name="rms_charger_unplug_before_start" text="Desconecta el cargador o elige START antes de arrancar."/>
+        <text name="rms_charger_start_connected" text="Ayuda de arranque (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Recargar una batería (150 A)"/>
     </texts>
 </l10n>

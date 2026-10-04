@@ -18,6 +18,7 @@
         <text name="rms_preheat_ignition_message" text="Đã bật khóa điện: đang sấy nóng"/>
         <text name="rms_preheat_system_failure_message" text="Hỏng hệ thống sấy nóng: không thể khởi động nguội"/>
         <text name="rms_preheat_start_failed_message" text="Động cơ không khởi động: hãy tắt khóa điện trước khi thử lại"/>
+        <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Kiểm tra xe"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
@@ -44,13 +45,13 @@
         <text name="rms_ownWorkshopAvailable_label" text="Xưởng cá nhân mở 24/24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Duy trì xưởng cá nhân của bạn hoạt động vào mọi giờ trong ngày và đêm."/>
         <text name="rms_instantInspection_label" text="Kiểm tra tức thì"/>
-        <text name="rms_instantInspection_tooltip" text="Khi bật tùy chọn này, các cuộc kiểm tra tại xưởng hoàn tất ngay lập tức. Các công việc cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
+        <text name="rms_instantInspection_tooltip" text="Khi bật tùy chọn này, các cuộc kiểm tra tại xưởng hoàn tất ngay lập tức. Các quy trình cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
         <text name="rms_instantMaintenanceRepair_label" text="Bảo dưỡng và sửa chữa tức thì"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Khi bật tùy chọn này, việc bảo dưỡng và sửa chữa tại xưởng hoàn tất ngay lập tức. Các công việc cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Khi bật tùy chọn này, việc bảo dưỡng và sửa chữa tại xưởng hoàn tất ngay lập tức. Các quy trình cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
         <text name="rms_instantBodywork_label" text="Sơn xe tức thì"/>
-        <text name="rms_instantBodywork_tooltip" text="Khi bật tùy chọn này, việc sơn xe tại xưởng hoàn tất ngay lập tức. Các công việc cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
+        <text name="rms_instantBodywork_tooltip" text="Khi bật tùy chọn này, việc sơn xe tại xưởng hoàn tất ngay lập tức. Các quy trình cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
         <text name="rms_instantOverhaul_label" text="Đại tu cơ khí tức thì"/>
-        <text name="rms_instantOverhaul_tooltip" text="Khi bật tùy chọn này, việc đại tu cơ khí tại xưởng hoàn tất ngay lập tức. Các công việc cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
+        <text name="rms_instantOverhaul_tooltip" text="Khi bật tùy chọn này, việc đại tu cơ khí tại xưởng hoàn tất ngay lập tức. Các quy trình cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
         <text name="rms_debugMode_label" text="Chế độ gỡ lỗi"/>
         <text name="rms_debugMode_tooltip" text="Bật bảng gỡ lỗi và nhật ký chi tiết trong bảng điều khiển."/>
         <text name="rms_warningMessages_label" text="Thông báo cảnh báo"/>
@@ -130,8 +131,9 @@
         <text name="rms_ws_label_age" text="Tuổi"/>
         <text name="rms_ws_label_operating_hours" text="Giờ hoạt động"/>
         <text name="rms_ws_label_service" text="Mức bảo dưỡng"/>
-        <text name="rms_ws_label_next_service" text="Lần bảo dưỡng tiếp theo"/>
-        <text name="rms_ws_value_service_overdue" text="quá hạn %s"/>
+        <text name="rms_ws_label_maintenance_standard" text="Bảo dưỡng tiêu chuẩn"/>
+        <text name="rms_ws_label_maintenance_extended" text="Bảo dưỡng mở rộng"/>
+        <text name="rms_ws_label_maintenance_preventive" text="Bảo dưỡng phòng ngừa"/>
         <text name="rms_ws_label_condition" text="Tình trạng"/>
         <text name="rms_ws_label_reliability" text="Độ tin cậy"/>
         <text name="rms_ws_label_overhaul_count" text="Số lần đại tu"/>
@@ -563,18 +565,15 @@
         <text name="rms_bodywork_touchup" text="Dặm sơn"/>
         <text name="rms_bodywork_full" text="Sơn lại toàn bộ"/>
         <text name="rms_bodywork_colors_title" text="Màu xe"/>
-        <text name="rms_bodywork_keep_color" text="Giữ màu hiện tại"/>
-        <text name="rms_bodywork_reset_color" text="Hiện tại"/>
         <text name="rms_bodywork_wear" text="Hư hại lớp sơn"/>
         <text name="rms_bodywork_unavailable" text="Không khả dụng"/>
-        <text name="rms_bodywork_ineligible" text="Dịch vụ không khả dụng cho xe này hoặc tại xưởng này"/>
+        <text name="rms_bodywork_ineligible" text="Quy trình không khả dụng cho xe này hoặc tại xưởng này"/>
         <text name="rms_bodywork_no_wear" text="Không có hư hại lớp sơn cần sửa"/>
-        <text name="rms_bodywork_wear_limit" text="Có thể dặm sơn khi hư hại không quá 30 %"/>
+        <text name="rms_bodywork_wear_limit" text="Có thể dặm sơn khi hư hại không quá 30%"/>
         <text name="rms_bodywork_touchup_description" text="Sửa các hư hại nhẹ trên lớp sơn. Màu hiện tại được giữ nguyên."/>
         <text name="rms_bodywork_full_description" text="Làm mới lớp sơn. Chọn các màu có sẵn cho xe này hoặc giữ màu hiện tại."/>
-        <text name="rms_bodywork_touchup_colors" text="Màu hiện tại được giữ nguyên."/>
         <text name="rms_bodywork_no_colors" text="Xe này không có màu để chọn. Các màu hiện tại được giữ nguyên."/>
-        <text name="rms_bodywork_unavailable_title" text="Dịch vụ không khả dụng"/>
+        <text name="rms_bodywork_unavailable_title" text="Quy trình không khả dụng"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Báo cáo kiểm tra"/>
         <text name="rms_report_vehicle_specs_title" text="Thông số xe"/>
@@ -663,15 +662,16 @@
         <text name="rms_fluid_container_action_cancel" text="Dừng chuyển"/>
         <text name="rms_fluid_select_vehicle_title" text="Chọn xe"/>
         <text name="rms_fluid_select_vehicle_prompt" text="Chọn xe cần đổ đầy"/>
-        <text name="rms_fluid_select_circuit_title" text="Chọn mạch"/>
         <text name="rms_fluid_select_circuit_prompt" text="Chọn mạch cần đổ đầy"/>
+        <text name="rms_fluid_select_fluid_prompt" text="Chọn chất lỏng cần đổ"/>
+        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
         <text name="rms_fluid_circuit_engineOil" text="Dầu động cơ"/>
         <text name="rms_fluid_circuit_coolant" text="Nước làm mát"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Dầu hộp số"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Dầu thủy lực"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Dầu hộp số và thủy lực"/>
         <text name="rms_fluid_hud_engineOil" text="Dầu động cơ"/>
-        <text name="rms_fluid_hud_transmissionHydraulic" text="Dầu hộp số"/>
+        <text name="rms_fluid_hud_transmissionHydraulic" text="Dầu hộp số/thủy lực"/>
         <text name="rms_fluid_hud_coolant" text="Nước làm mát"/>
         <text name="rms_fluid_incompatible_title" text="Chất lỏng không tương thích"/>
         <text name="rms_fluid_incompatible_message" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể tăng gấp ba lần độ hao mòn của hệ thống, tăng nhiệt hoặc làm chậm hệ thống thủy lực. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
@@ -904,5 +904,46 @@
         <text name="rms_tutorial_drivetrain_windup_message" text="Bạn đang rẽ trên bề mặt có độ bám cao khi khóa vi sai đang được gài. Trong khúc cua, các bánh xe bên trong và bên ngoài đi quãng đường khác nhau, nhưng khóa vi sai buộc chúng quay cùng tốc độ: hệ truyền động chịu ứng suất và mòn nhanh hơn. Hãy mở khóa vi sai trước khi rẽ."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Chế độ dẫn động và khóa vi sai"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="Máy này cho phép bạn chọn hệ dẫn động: 2WD, 4WD hoặc TỰ ĐỘNG, chế độ này sẽ gài cầu trước ngay khi bánh xe trượt.&#10;&#10;Khóa vi sai giúp lấy lại độ bám khi bánh xe bị trượt, nhưng gây tải cơ học lớn khi rẽ trên bề mặt có độ bám cao: các bánh xe bên trong và bên ngoài không thể quay cùng tốc độ nên hệ truyền động phải chịu ứng suất. Hãy mở khóa trước khi rẽ."/>
+
+        <!-- Mobile battery charger -->
+        <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
+        <text name="rms_charger_function" text="Bộ sạc Telwin trên xe đẩy, 150 A ở 12 V. Kết nối cạnh xe và để ắc quy sạc. Quá trình sạc theo tốc độ thời gian trong trò chơi. Hỗ trợ khởi động (START, 200 A)."/>
+        <text name="rms_charger_start" text="Kết nối bộ sạc"/>
+        <text name="rms_charger_disconnect" text="Ngắt bộ sạc"/>
+        <text name="rms_charger_select" text="Chọn xe cần kết nối."/>
+        <text name="rms_charger_no_vehicle" text="Không có xe phù hợp trong phạm vi 4 m. Xe phải thuộc trang trại của bạn, đứng yên và tắt động cơ."/>
+        <text name="rms_charger_idle" text="Sẵn sàng"/>
+        <text name="rms_charger_charging" text="Đang sạc"/>
+        <text name="rms_charger_full" text="Ắc quy đã sạc đầy"/>
+        <text name="rms_charger_interrupted" text="Sạc bị gián đoạn"/>
+        <text name="rms_charger_interrupted_reason" text="Sạc bị gián đoạn. %s"/>
+        <text name="rms_charger_status" text="Trạng thái"/>
+        <text name="rms_charger_battery" text="Ắc quy"/>
+        <text name="rms_charger_voltage" text="Điện áp"/>
+        <text name="rms_charger_current" text="Dòng điện cấp"/>
+        <text name="rms_charger_consumers" text="Tắt đèn và các phụ kiện."/>
+        <text name="rms_charger_error_unavailable" text="Không có xe hoặc xe không được hỗ trợ."/>
+        <text name="rms_charger_error_access" text="Xe này thuộc trang trại khác."/>
+        <text name="rms_charger_error_distance" text="Đưa bộ sạc đến gần trong phạm vi 4 m."/>
+        <text name="rms_charger_error_motor" text="Tắt động cơ trước khi kết nối bộ sạc."/>
+        <text name="rms_charger_error_moving" text="Xe đang di chuyển."/>
+        <text name="rms_charger_error_service" text="Đang có quy trình tại xưởng."/>
+        <text name="rms_charger_error_cables" text="Ngắt dây câu bình."/>
+        <text name="rms_charger_error_busy" text="Đã có bộ sạc kết nối."/>
+        <text name="rms_charger_error_full" text="Ắc quy này đã sạc đầy."/>
+        <text name="rms_charger_connected" text="Đã kết nối bộ sạc. Bắt đầu sạc."/>
+        <text name="rms_charger_disconnected" text="Đã ngắt bộ sạc."/>
+        <text name="rms_charger_stopped_motor" text="Ngừng sạc: khởi động máy"/>
+        <text name="rms_charger_error_player_distance" text="Đi bộ đến gần bộ sạc."/>
+        <text name="rms_charger_mode_select" text="Kết nối bộ sạc"/>
+        <text name="rms_charger_mode_start" text="Hỗ trợ khởi động (START, 200 A)"/>
+        <text name="rms_charger_start_ready" text="START sẵn sàng"/>
+        <text name="rms_charger_start_active" text="Đang hỗ trợ khởi động"/>
+        <text name="rms_charger_start_running" text="Máy đã nổ: ngắt kết nối"/>
+        <text name="rms_charger_start_countdown" text="Chờ: %d giây"/>
+        <text name="rms_charger_start_wait" text="Chờ 30 giây giữa hai lần khởi động."/>
+        <text name="rms_charger_unplug_before_start" text="Ngắt bộ sạc hoặc chọn START trước khi khởi động."/>
+        <text name="rms_charger_start_connected" text="Hỗ trợ khởi động (START, 200 A)."/>
+        <text name="rms_charger_mode_charge" text="Sạc ắc quy (150 A)"/>
     </texts>
 </l10n>
