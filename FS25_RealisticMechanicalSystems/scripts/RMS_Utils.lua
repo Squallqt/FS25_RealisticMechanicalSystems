@@ -322,20 +322,23 @@ end
 -- @param table? previousActiveLinks links active on the previous sample
 -- @param float? rpmShare engine speed share above idle on the previous sample
 -- @return float damage condition removed
+-- @return boolean isShock true when one of them was engaged above idle
 function RMS_Utils.getPtoEngagementDamage(vehicle, engagementTorques, previousActiveLinks, rpmShare)
     local config = RMS_Config.CORE.PTO_FACTOR_DATA
     local rpmFactor = RMS_Utils.calculateQuadraticMultiplier(math.clamp(tonumber(rpmShare) or 0, 0, 1),
         config.ENGAGEMENT_SHOCK_RPM_THRESHOLD, false)
     local damage = 0
+    local isShock = false
 
     for consumer, ratedTorque in pairs(engagementTorques or {}) do
         if previousActiveLinks == nil or previousActiveLinks[consumer] ~= true then
             local size = math.clamp(RMS_Utils.getPtoNativeCapacityData(vehicle, ratedTorque), config.ENGAGEMENT_SHOCK_MIN_SIZE, 1)
             damage = damage + config.ENGAGEMENT_CLUTCH_DAMAGE + config.ENGAGEMENT_SHOCK_DAMAGE * rpmFactor * size
+            isShock = isShock or rpmFactor > 0
         end
     end
 
-    return damage
+    return damage, isShock
 end
 
 ---Counts the PTO links that became active since the previous frame

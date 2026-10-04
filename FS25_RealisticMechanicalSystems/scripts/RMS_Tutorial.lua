@@ -135,6 +135,11 @@ function RMS_Tutorial:update(dt)
             if hasNewPtoEngagement then
                 spec.ptoTutorialObservedSequence = ptoEngagementSequence
             end
+            local ptoShockSequence = tonumber(spec.ptoShockSequence) or 0
+            local hasNewPtoShock = ptoShockSequence > (tonumber(spec.ptoTutorialObservedShockSequence) or 0)
+            if hasNewPtoShock then
+                spec.ptoTutorialObservedShockSequence = ptoShockSequence
+            end
             local transmissionConfig = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA
             local chassisBrakeState = spec.chassisBrakeState
             local isTruck = spec.isTruck == true
@@ -608,9 +613,10 @@ function RMS_Tutorial:update(dt)
                 messagedData.IDLE_DEPOSIT = true
                 self.messageDowntime = downtimeAfterMessage
 
+            -- the first engagement above idle, the moment the advice applies
             elseif not messagedData.PTO_ENGAGEMENT
                 and ptoSystemEnabled
-                and hasNewPtoEngagement then
+                and hasNewPtoShock then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_pto_engagement_message"),
                     0,
@@ -618,6 +624,18 @@ function RMS_Tutorial:update(dt)
                     true
                 )
                 messagedData.PTO_ENGAGEMENT = true
+                self.messageDowntime = downtimeAfterMessage
+
+            elseif not messagedData.PTO_RAISED
+                and ptoSystemEnabled
+                and spec.ptoRaisedTooLong == true then
+                RMS_Hud.showNotification(
+                    g_i18n:getText("rms_tutorial_pto_raised_message"),
+                    0,
+                    g_i18n:getText("rms_tutorial_pto_raised_title"),
+                    true
+                )
+                messagedData.PTO_RAISED = true
                 self.messageDowntime = downtimeAfterMessage
 
             elseif not messagedData.COLD_OIL

@@ -118,6 +118,8 @@ RMS_Config = {
             OVERLOAD_FACTOR_MULTIPLIER = 12.0,
             -- a liftable implement turning while raised drives the cardan joints at a steep angle
             RAISED_IMPLEMENT_MULTIPLIER = 4.0,
+            -- time raised and turning before the tutorial explains it, longer than a headland turn
+            RAISED_TUTORIAL_MS = 20000,
             -- condition every engagement takes from the clutch pack
             ENGAGEMENT_CLUTCH_DAMAGE = 0.0002,
             -- engaging above idle shocks the driveline: share of the idle to max rpm range it starts at,
@@ -1004,6 +1006,7 @@ RMS_Config = {
         ENGINE_OVERLOAD = false,
         LUGGING = false,
         PTO_ENGAGEMENT = false,
+        PTO_RAISED = false,
         FLUID_LEVEL = false,
         EXHAUST_SMOKE = false,
         DRIVETRAIN_MODES = false,

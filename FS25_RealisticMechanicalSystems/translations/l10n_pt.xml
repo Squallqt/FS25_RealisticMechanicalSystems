@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="O travão de estacionamento está acionado. Podes acioná-lo e libertá-lo com a tecla correspondente: se acelerares com o travão acionado, a máquina não se move e emite um aviso.&#10;&#10;Em declive, impede a máquina de se mover sozinha."/>
         <text name="rms_tutorial_preheat_title" text="Pré-aquecimento diesel"/>
         <text name="rms_tutorial_preheat_message" text="Com o motor diesel frio, uma pressão no comando de arranque liga a ignição e inicia automaticamente o ciclo das velas. As luzes do painel executam o autoteste e, depois, a luz de pré-aquecimento permanece acesa até o motor estar pronto. Não repitas o comando: o motor de arranque é acionado automaticamente quando a luz se apaga."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Ciclos de engate da TDF"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Ativações repetidas da TDF acumulam ciclos mecânicos de engate. Evita ligar e desligar a TDF sem necessidade."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Engate da TDF"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Engate a TDF ao ralenti e depois suba as rotações: engatá-la a rotações altas dá um choque a toda a transmissão, ainda mais com uma alfaia pesada. Cada engate desgasta também a sua embraiagem."/>
+        <text name="rms_tutorial_pto_raised_title" text="TDF e alfaia levantada"/>
+        <text name="rms_tutorial_pto_raised_message" text="Pôr a TDF a rodar com a alfaia levantada obriga os cardãs a trabalhar com um ângulo acentuado e desgasta-os depressa. Desligue a TDF antes de levantar a alfaia para o transporte."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralenti e tempo parado"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="O desgaste é muito menor quando a máquina está ligada sem trabalhar. Com o motor desligado, torna-se mínimo. Sob cobertura, desaparece completamente."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralenti prolongado"/>

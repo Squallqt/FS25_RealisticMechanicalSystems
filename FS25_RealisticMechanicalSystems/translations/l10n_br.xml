@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="O freio de estacionamento está acionado. Você o aciona e o libera com a tecla correspondente: se acelerar com o freio acionado, a máquina não se move e emite um aviso.&#10;&#10;Em declive, é ele que impede a máquina de sair sozinha."/>
         <text name="rms_tutorial_preheat_title" text="Pré-aquecimento diesel"/>
         <text name="rms_tutorial_preheat_message" text="Com o motor diesel frio, um toque no comando de partida liga a ignição e inicia automaticamente o ciclo das velas. As luzes do painel executam o autoteste e, depois, a luz de pré-aquecimento permanece acesa até o motor estar pronto. Não repita o comando: o motor de partida é acionado automaticamente quando a luz se apaga."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Ciclos de engate da TDP"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Ativações repetidas da TDP acumulam ciclos mecânicos de engate. Evite ligar e desligar a TDP sem necessidade."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Engate da TDP"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Engate a TDP em marcha lenta e depois aumente a rotação: engatá-la em alta rotação dá um tranco em toda a transmissão, ainda mais com um implemento pesado. Cada engate também desgasta a embreagem dela."/>
+        <text name="rms_tutorial_pto_raised_title" text="TDP e implemento levantado"/>
+        <text name="rms_tutorial_pto_raised_message" text="Girar a TDP com o implemento levantado faz os cardãs trabalharem em um ângulo acentuado e os desgasta rapidamente. Desligue a TDP antes de levantar o implemento para o transporte."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Marcha lenta e tempo parado"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="O desgaste é bem menor quando a máquina está ligada sem trabalhar. Com o motor desligado, ele se torna mínimo, e desaparece completamente se a máquina estiver guardada sob cobertura."/>
         <text name="rms_tutorial_idle_deposit_title" text="Marcha lenta prolongada"/>

@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Parkeringsbromsen är åtdragen. Det är du som drar åt och släpper den med dess egen tangent: gasar du med bromsen åtdragen står maskinen stilla och varnar dig.&#10;&#10;I en backe är det den som hindrar maskinen från att rulla i väg av sig själv."/>
         <text name="rms_tutorial_preheat_title" text="Förvärmning av dieselmotor"/>
         <text name="rms_tutorial_preheat_message" text="På en kall dieselmotor slår ett tryck på startreglaget på tändningen och startar förvärmningen automatiskt. Lamporna i instrumentpanelet tänds kort, och sedan fortsätter förvärmningslampan att lysa tills motorn är klar. Upprepa inte kommandot: startmotorn kopplar in av sig själv när lampan slocknar."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Kraftuttagets inkopplingscykler"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Att koppla in och ur kraftuttaget om och om igen bygger upp mekaniska cykler. Undvik onödiga inkopplingar."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Inkoppling av kraftuttag"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Koppla in kraftuttaget på tomgång och höj sedan varvtalet: inkoppling på högt varvtal ger hela drivlinan en stöt, särskilt med ett tungt redskap. Varje inkoppling sliter också på kopplingen."/>
+        <text name="rms_tutorial_pto_raised_title" text="Kraftuttag och lyft redskap"/>
+        <text name="rms_tutorial_pto_raised_message" text="Att köra kraftuttaget med redskapet lyft får kardanaxlarna att arbeta i skarp vinkel och sliter dem snabbt. Stäng av kraftuttaget innan du lyfter redskapet för transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgång och stillestånd"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Slitaget är långt lägre när maskinen går utan att arbeta. Med motorn avstängd blir det minimalt. Under tak försvinner det helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Långvarig tomgång"/>

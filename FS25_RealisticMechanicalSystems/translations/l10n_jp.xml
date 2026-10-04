@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="駐車ブレーキが作動しています。専用キーで作動と解除を切り替えます。ブレーキを作動させたままアクセルを踏むと、車両は動かず警告が表示されます。&#10;&#10;傾斜地では、車両が自然に動き出すのを防ぎます。"/>
         <text name="rms_tutorial_preheat_title" text="ディーゼル予熱"/>
         <text name="rms_tutorial_preheat_message" text="冷えたディーゼルエンジンでは、始動操作を一度行うとイグニッションがONになり、グロープラグの予熱サイクルが自動的に始まります。ダッシュボードの警告灯が短時間点灯した後、エンジンの準備が整うまで予熱灯が点灯します。操作を繰り返さないでください。予熱灯が消えるとスターターが自動的に作動します。"/>
-        <text name="rms_tutorial_pto_engagement_title" text="PTO接続サイクル"/>
-        <text name="rms_tutorial_pto_engagement_message" text="PTOの接続と切断を繰り返すと、機械的な作動サイクルが蓄積します。不必要な接続は避けてください。"/>
+        <text name="rms_tutorial_pto_engagement_title" text="PTOの接続"/>
+        <text name="rms_tutorial_pto_engagement_message" text="PTOはアイドリング中に接続し、その後で回転数を上げてください。高回転で接続すると駆動系全体に衝撃が加わり、重い作業機ほど大きくなります。接続のたびにクラッチも摩耗します。"/>
+        <text name="rms_tutorial_pto_raised_title" text="PTOと持ち上げた作業機"/>
+        <text name="rms_tutorial_pto_raised_message" text="作業機を持ち上げたままPTOを回すと、ユニバーサルジョイントが急角度で回り、すぐに摩耗します。輸送のために作業機を持ち上げる前にPTOを切ってください。"/>
         <text name="rms_tutorial_idle_and_downtime_title" text="アイドリングと保管"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="エンジンがかかっていても実作業をしていない間は、摩耗が大幅に少なくなります。エンジンを停止すると摩耗はごくわずかになり、屋内に保管すると完全に止まります。"/>
         <text name="rms_tutorial_idle_deposit_title" text="長時間のアイドリング"/>

@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="De parkeerrem is aangetrokken. Je trekt hem zelf aan en zet hem los met de bijbehorende toets: als je gas geeft terwijl de rem is aangetrokken, blijft de machine staan en krijg je een waarschuwing.&#10;&#10;Op een helling voorkomt hij dat de machine vanzelf wegrolt."/>
         <text name="rms_tutorial_preheat_title" text="Dieselvoorverwarming"/>
         <text name="rms_tutorial_preheat_message" text="Bij een koude dieselmotor schakelt één druk op de startknop het contact in en begint automatisch de voorgloeicyclus. De dashboardlampjes lichten kort op; daarna blijft het voorgloeilampje branden totdat de motor gereed is. Druk niet opnieuw: de startmotor schakelt automatisch in wanneer het lampje uitgaat."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Schakelcycli van de aftakas"/>
-        <text name="rms_tutorial_pto_engagement_message" text="De aftakas herhaaldelijk in- en uitschakelen bouwt mechanische cycli op. Vermijd onnodig inschakelen."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Aftakas inschakelen"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Schakel de aftakas stationair in en verhoog daarna het toerental: inschakelen bij hoge toeren geeft de hele aandrijflijn een klap, des te meer met een zwaar werktuig. Elke inschakeling slijt bovendien de koppeling."/>
+        <text name="rms_tutorial_pto_raised_title" text="Aftakas en geheven werktuig"/>
+        <text name="rms_tutorial_pto_raised_message" text="De aftakas laten draaien met het werktuig geheven laat de cardanassen onder een scherpe hoek werken en slijt ze snel. Schakel de aftakas uit voordat je het werktuig heft voor transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Stationair draaien en stilstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="De slijtage is veel lager wanneer de machine draait zonder te werken. Met uitgeschakelde motor is de slijtage minimaal. Onder een afdak verdwijnt de slijtage volledig."/>
         <text name="rms_tutorial_idle_deposit_title" text="Lang stationair draaien"/>

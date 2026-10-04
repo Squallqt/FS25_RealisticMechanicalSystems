@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Parkeringsbremsen er trukket. Det er dig, der trækker og udløser den med dens egen tast: giver du gas med bremsen trukket, står maskinen stille og advarer dig.&#10;&#10;På en skråning er det den, der holder maskinen fra at trille af sted af sig selv."/>
         <text name="rms_tutorial_preheat_title" text="Forglødning af dieselmotor"/>
         <text name="rms_tutorial_preheat_message" text="På en kold dieselmotor slår ét tryk på startknappen tændingen til og starter forglødningen automatisk. Lamperne i instrumentbrættet lyser kort op, hvorefter forglødningslampen bliver ved med at lyse, indtil motoren er klar. Gentag ikke kommandoen: startmotoren kobler ind af sig selv, når lampen slukker."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Kraftudtagets tilkoblingscyklusser"/>
-        <text name="rms_tutorial_pto_engagement_message" text="At koble kraftudtaget til og fra igen og igen bygger mekaniske cyklusser op. Undgå unødvendige tilkoblinger."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Indkobling af PTO"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Kobl PTO'en ind i tomgang, og hæv derefter omdrejningerne: indkobling ved høje omdrejninger giver hele drivlinjen et stød, særligt med et tungt redskab. Hver indkobling slider også dens kobling."/>
+        <text name="rms_tutorial_pto_raised_title" text="PTO og løftet redskab"/>
+        <text name="rms_tutorial_pto_raised_message" text="Kører PTO'en med redskabet løftet, arbejder kardanakslerne i en skarp vinkel og slides hurtigt. Slå PTO'en fra, før du løfter redskabet til transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgang og stilstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Sliddet er langt lavere, når maskinen kører uden at arbejde. Med motoren slukket bliver det minimalt. Under tag forsvinder det helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Længere tomgang"/>

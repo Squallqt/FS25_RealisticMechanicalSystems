@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Il freno di stazionamento è inserito. Sei tu a inserirlo e a rilasciarlo, con il suo tasto: se acceleri con il freno inserito, la macchina resta ferma e ti avvisa.&#10;&#10;In pendenza, è lui a impedire che la macchina scivoli via da sola."/>
         <text name="rms_tutorial_preheat_title" text="Preriscaldamento diesel"/>
         <text name="rms_tutorial_preheat_message" text="Con un motore diesel freddo, una pressione del comando di avviamento accende il quadro e avvia automaticamente il ciclo di preriscaldamento. Le spie del cruscotto si accendono brevemente, poi la spia di preriscaldamento resta accesa finché il motore non è pronto. Non ripetere il comando: il motorino di avviamento si inserisce automaticamente quando la spia si spegne."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Cicli di innesto della PDF"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Le attivazioni ripetute della PDF accumulano cicli meccanici di innesto. Evita attivazioni e disattivazioni non necessarie."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Innesto della PTO"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Innesta la PTO al minimo, poi aumenta i giri: innestarla ad alti giri dà un colpo a tutta la trasmissione, tanto più con un attrezzo pesante. Ogni innesto consuma anche la sua frizione."/>
+        <text name="rms_tutorial_pto_raised_title" text="PTO e attrezzo sollevato"/>
+        <text name="rms_tutorial_pto_raised_message" text="Far girare la PTO con l'attrezzo sollevato fa lavorare i cardani con un angolo accentuato e li consuma in fretta. Disinserisci la PTO prima di sollevare l'attrezzo per il trasporto."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Minimo e fermo macchina"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="L'usura è molto più bassa quando la macchina è accesa ma non lavora. A motore spento diventa minima, e scompare del tutto se la macchina è ricoverata al coperto."/>
         <text name="rms_tutorial_idle_deposit_title" text="Minimo prolungato"/>

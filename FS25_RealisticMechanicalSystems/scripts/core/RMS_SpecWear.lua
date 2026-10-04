@@ -706,6 +706,11 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
         wearRate = wearRate + expiredServiceFactor
     end
 
+    -- the tip waits past a headland turn, so it only answers a PTO left turning with the implement up
+    spec.ptoRaisedTutorialTimer = math.clamp((tonumber(spec.ptoRaisedTutorialTimer) or 0) + (ptoRaisedFactor > 0 and dt or -dt),
+        0, C.RAISED_TUTORIAL_MS)
+    spec.ptoRaisedTooLong = spec.ptoRaisedTutorialTimer >= C.RAISED_TUTORIAL_MS
+
     if engagementDamage > 0 then
         self:applyInstantDamageToSystem(systemData.name, engagementDamage, "ptoEngagementFactor")
     end

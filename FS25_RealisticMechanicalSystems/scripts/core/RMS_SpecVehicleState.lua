@@ -1169,8 +1169,11 @@ local function updatePtoState(vehicle, dt)
     if newEngagementCount > 0 then
         spec.ptoEngagementCount = (tonumber(spec.ptoEngagementCount) or 0) + newEngagementCount
         spec.ptoEngagementSequence = (tonumber(spec.ptoEngagementSequence) or 0) + newEngagementCount
-        spec.ptoEngagementDamage = (tonumber(spec.ptoEngagementDamage) or 0)
-            + RMS_Utils.getPtoEngagementDamage(vehicle, ptoData.engagementTorques, previousActiveLinks, spec.ptoLastRpmShare)
+        local damage, isShock = RMS_Utils.getPtoEngagementDamage(vehicle, ptoData.engagementTorques, previousActiveLinks, spec.ptoLastRpmShare)
+        spec.ptoEngagementDamage = (tonumber(spec.ptoEngagementDamage) or 0) + damage
+        if isShock then
+            spec.ptoShockSequence = (tonumber(spec.ptoShockSequence) or 0) + 1
+        end
     end
     spec.ptoPreviousActiveLinks = ptoData.activeLinks
     spec.isPtoImplementRaised = ptoData.isRaised

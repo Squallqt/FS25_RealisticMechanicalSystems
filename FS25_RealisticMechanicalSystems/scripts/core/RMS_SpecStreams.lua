@@ -5,21 +5,26 @@
 
 local getSyncOperatingTime = RealisticMechanicalSystems.getSyncOperatingTime
 
----Writes the PTO engagement counter
+---Writes the PTO engagement counters and the raised implement tutorial state
 -- @param table spec vehicle spec
 -- @param integer streamId streamId
 local function writePtoWearState(spec, streamId)
     streamWriteInt32(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.ptoEngagementSequence, 0, 0)))
+    streamWriteInt32(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.ptoShockSequence, 0, 0)))
+    streamWriteBool(streamId, spec.ptoRaisedTooLong == true)
 end
 
----Reads the PTO engagement counter, seeding the tutorial reference on the first read
+---Reads the PTO engagement counters and the raised implement tutorial state, seeding the tutorial references on the first read
 -- @param table spec vehicle spec
 -- @param integer streamId streamId
--- @param boolean? initializeTutorial true to seed the tutorial observed sequence
+-- @param boolean? initializeTutorial true to seed the tutorial observed sequences
 local function readPtoWearState(spec, streamId, initializeTutorial)
     spec.ptoEngagementSequence = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadInt32(streamId), 0, 0))
+    spec.ptoShockSequence = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadInt32(streamId), 0, 0))
+    spec.ptoRaisedTooLong = streamReadBool(streamId)
     if initializeTutorial then
         spec.ptoTutorialObservedSequence = spec.ptoEngagementSequence
+        spec.ptoTutorialObservedShockSequence = spec.ptoShockSequence
     end
 end
 

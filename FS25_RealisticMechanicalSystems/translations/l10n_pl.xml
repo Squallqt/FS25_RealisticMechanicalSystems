@@ -860,8 +860,10 @@
         <text name="rms_tutorial_park_brake_manual_message" text="Hamulec postojowy jest zaciągnięty. Zaciągasz go i zwalniasz sam, jego własnym klawiszem: jeśli dodasz gazu przy zaciągniętym hamulcu, maszyna nie ruszy i wyświetli ostrzeżenie.&#10;&#10;Na pochyłości to on nie pozwala maszynie stoczyć się samoczynnie."/>
         <text name="rms_tutorial_preheat_title" text="Podgrzewanie silnika Diesla"/>
         <text name="rms_tutorial_preheat_message" text="Przy zimnym silniku Diesla jedno naciśnięcie przycisku rozruchu włącza zapłon i automatycznie rozpoczyna cykl podgrzewania. Kontrolki na desce rozdzielczej zapalają się na chwilę, a kontrolka podgrzewania pozostaje włączona do chwili gotowości silnika. Nie naciskaj przycisku ponownie: rozrusznik włączy się automatycznie po zgaśnięciu kontrolki."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Cykle załączania WOM"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Wielokrotne załączanie i wyłączanie WOM zwiększa liczbę cykli mechanicznych. Unikaj niepotrzebnego załączania."/>
+        <text name="rms_tutorial_pto_engagement_title" text="Włączanie WOM"/>
+        <text name="rms_tutorial_pto_engagement_message" text="Włączaj WOM na wolnych obrotach, a dopiero potem zwiększ obroty: włączenie na wysokich obrotach to uderzenie dla całego układu napędowego, tym mocniejsze przy ciężkiej maszynie. Każde włączenie zużywa też jego sprzęgło."/>
+        <text name="rms_tutorial_pto_raised_title" text="WOM i podniesiona maszyna"/>
+        <text name="rms_tutorial_pto_raised_message" text="Praca WOM przy podniesionej maszynie zmusza wały przegubowe do pracy pod dużym kątem i szybko je zużywa. Wyłącz WOM, zanim podniesiesz maszynę do transportu."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Praca jałowa i postój"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Zużycie jest znacznie mniejsze, gdy maszyna pracuje bez wykonywania pracy. Gdy silnik jest wyłączony, zużycie staje się minimalne, a jeśli maszyna stoi pod dachem, znika całkowicie."/>
         <text name="rms_tutorial_idle_deposit_title" text="Długa praca na biegu jałowym"/>

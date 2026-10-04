@@ -757,6 +757,10 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.ptoEngagementDamage = 0
     self.spec_RealisticMechanicalSystems.ptoLastRpmShare = 0
     self.spec_RealisticMechanicalSystems.isPtoImplementRaised = false
+    self.spec_RealisticMechanicalSystems.ptoShockSequence = 0
+    self.spec_RealisticMechanicalSystems.ptoTutorialObservedShockSequence = 0
+    self.spec_RealisticMechanicalSystems.ptoRaisedTutorialTimer = 0
+    self.spec_RealisticMechanicalSystems.ptoRaisedTooLong = false
     self.spec_RealisticMechanicalSystems.ptoPreviousActiveLinks = {}
     self.spec_RealisticMechanicalSystems.ptoTutorialObservedSequence = 0
     self.spec_RealisticMechanicalSystems.ptoEngagementAttempt = false
@@ -1328,7 +1332,10 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     spec._lastSyncWear_coolantServiceLevel = spec.coolantServiceLevel
     spec._lastSyncWear_conditionLevel = spec.conditionLevel
     spec._lastSyncWear_ptoEngagementSequence = spec.ptoEngagementSequence
+    spec._lastSyncWear_ptoShockSequence = spec.ptoShockSequence
+    spec._lastSyncWear_ptoRaisedTooLong = spec.ptoRaisedTooLong
     spec.ptoTutorialObservedSequence = spec.ptoEngagementSequence
+    spec.ptoTutorialObservedShockSequence = spec.ptoShockSequence
     captureSystemsSync(spec)
     -- [8] breakdowns
     spec._lastSyncBreakdowns_serialized = RMS_Utils.serializeBreakdowns(spec.activeBreakdowns or {})
