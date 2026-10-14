@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Seiring kendaraan mengalami keausan, setiap sistem menerima penalti kecil pada karakteristik utamanya, seperti tenaga mesin, kecepatan hidraulis, atau efektivitas rem. Efek ini mulai aktif setelah sepertiga pertama masa pakai kendaraan, tetapi baru benar-benar terasa setelah dua pertiga dan semakin kuat mendekati akhir masa pakai mesin."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Asap Knalpot"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Mengatur kepulan asap knalpot berdasarkan kondisi nyata mesin. Asap berwarna hitam ketika bahan bakar melebihi udara yang tersedia: akselerasi mendadak, mesin bekerja berat pada putaran rendah, langsam berkepanjangan dengan beban rendah, filter udara tersumbat, atau injeksi aus. Asap berwarna biru ketika mesin yang aus membakar oli, dan putih ketika bahan bakar tidak terbakar. Kepulan juga membesar sesuai kerja yang dilakukan mesin. Mesin lama berasap jauh lebih banyak daripada mesin modern, yang hampir tidak berasap kecuali ada kerusakan serius. Di udara dingin, air hasil pembakaran juga mengembun menjadi jejak putih pendek yang menguap dalam satu atau dua meter, bahkan pada mesin yang sehat."/>
-        <text name="rms_option_off" text="Nonaktif"/>
         <text name="rms_tutorialMode_label" text="Mode Tutorial"/>
         <text name="rms_tutorialMode_tooltip" text="Menampilkan kiat tutorial selama bermain."/>
         <text name="rms_tutorialResetTips_label" text="Reset Kiat"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Cukup"/>
         <text name="rms_reliability_good" text="Baik"/>
         <text name="rms_reliability_very_good" text="Sangat baik"/>
+        <text name="rms_ws_label_service_access" text="Kemudahan perawatan"/>
+        <text name="rms_service_access_easy" text="Mudah"/>
+        <text name="rms_service_access_average" text="Sedang"/>
+        <text name="rms_service_access_demanding" text="Menuntut"/>
         <text name="rms_ws_label_overhaul_count" text="Rekondisi yang Dilakukan"/>
         <text name="rms_ws_label_maintenance_log" text="Log Perawatan"/>
         <text name="rms_ws_label_last_report" text="Laporan Terakhir"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Tidak ada kerusakan yang dicentang. Centang kerusakan yang akan diperbaiki di Diagnostik dan Perkiraan."/>
         <text name="rms_ws_reason_overhaul_none" text="Rekondisi mekanis memulihkan sistem di bawah 50% kondisi. Mesin ini tidak memilikinya."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Bengkel bergerak tidak melakukan pengecatan. Pengecatan dilakukan di dealer."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Gunakan bengkel yang lengkap."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Diagnosis elektronik diperlukan"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Pembongkaran atau alat khusus diperlukan"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Peralatan tegangan tinggi diperlukan"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s berlangsung..."/>
         <text name="rms_ws_status_in_progress_format" text="%s berlangsung hingga %s"/>
         <text name="rms_ws_status_open" text="Bengkel buka"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="kurang dari 1 h kerja lalu"/>
         <text name="rms_spec_maintenance_complete_notification" text="Prosedur selesai: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Prosedur dibatalkan: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Minimal"/>
         <text name="rms_spec_maintenance_level" text="Servis %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s hingga %s"/>
         <text name="rms_spec_workshop_dealer" text="Dealer"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Seketika"/>
         <text name="rms_option_menu_finish_time_text" text="Waktu Selesai"/>
         <text name="rms_option_menu_start_text" text="Mulai"/>
+        <text name="rms_service_months" text="%s bulan"/>
+        <text name="rms_service_month" text="%s bulan"/>
+        <text name="rms_service_calendar_due" text="Batas kalender tercapai"/>
+        <text name="rms_service_program_estimated" text="Jadwal perkiraan"/>
         <text name="rms_ws_levels_recommended_for" text="Disarankan untuk mesin ini"/>
         <text name="rms_ws_levels_interval" text="Setiap %s"/>
         <text name="rms_ws_levels_duration" text="%s j %s mnt"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Armada peralatan"/>
         <text name="rms_ingame_menu_section_service" text="Pekerjaan servis"/>
         <text name="rms_ingame_menu_section_other" text="Peralatan tidak dipantau"/>
-        <text name="rms_ingame_menu_header_time_left" text="Waktu Tersisa"/>
         <text name="rms_ingame_menu_header_cost" text="Total Biaya"/>
         <text name="rms_ingame_menu_header_interval" text="Interval"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Biaya Sewa"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Baterai terputus. Sambungkan kembali dengan sakelar pemutus baterai, dengan berjalan kaki di depan kendaraan."/>
         <text name="rms_battery_isolator_engine_running" text="Matikan mesin sebelum menggunakan sakelar pemutus baterai."/>
         <text name="rms_battery_isolator_info" text="Baterai terputus"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Gunakan bengkel yang lengkap."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Diagnosis elektronik diperlukan"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Pembongkaran atau alat khusus diperlukan"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Peralatan tegangan tinggi diperlukan"/>
-        <text name="rms_service_months" text="%s bulan"/>
-        <text name="rms_service_month" text="%s bulan"/>
-        <text name="rms_service_calendar_due" text="Batas kalender tercapai"/>
-        <text name="rms_service_program_estimated" text="Jadwal perkiraan"/>
-        <text name="rms_ws_label_service_access" text="Kemudahan perawatan"/>
-        <text name="rms_service_access_easy" text="Mudah"/>
-        <text name="rms_service_access_average" text="Sedang"/>
-        <text name="rms_service_access_demanding" text="Menuntut"/>
     </texts>
 </l10n>

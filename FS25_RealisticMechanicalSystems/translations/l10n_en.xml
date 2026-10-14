@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="As the vehicle wears out, each system receives small penalties to its core characteristics, such as engine power, hydraulic speed, or brake efficiency. The effect becomes active after the first third of the vehicle lifespan, but only becomes truly noticeable after the second third and grows stronger toward the end of the machine's life."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Exhaust Smoke"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Drives the exhaust plume from the real state of the engine. It is black when fuel outruns the available air: a hard pickup, an engine lugging at low speed, prolonged low-load idling, a clogged air filter or worn injection. It is blue when a tired engine burns oil, white when fuel leaves unburnt. The plume also grows with the work the engine is doing. Older machines smoke far more than modern ones, which barely smoke at all unless something is seriously wrong. In cold air, the water from combustion also condenses into a short white trail that evaporates within a meter or two, even on a healthy engine."/>
-        <text name="rms_option_off" text="Off"/>
         <text name="rms_tutorialMode_label" text="Tutorial Mode"/>
         <text name="rms_tutorialMode_tooltip" text="Shows tutorial tips during gameplay."/>
         <text name="rms_tutorialResetTips_label" text="Reset Tips"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Fair"/>
         <text name="rms_reliability_good" text="Good"/>
         <text name="rms_reliability_very_good" text="Very good"/>
+        <text name="rms_ws_label_service_access" text="Ease of maintenance"/>
+        <text name="rms_service_access_easy" text="Easy"/>
+        <text name="rms_service_access_average" text="Average"/>
+        <text name="rms_service_access_demanding" text="Demanding"/>
         <text name="rms_ws_label_overhaul_count" text="Overhauls Done"/>
         <text name="rms_ws_label_maintenance_log" text="Maintenance Log"/>
         <text name="rms_ws_label_last_report" text="Last Report"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="No breakdown ticked. Tick the breakdowns to repair in Diagnostic and Estimate."/>
         <text name="rms_ws_reason_overhaul_none" text="A mechanical overhaul restores the systems below 50% condition. None is on this machine."/>
         <text name="rms_ws_reason_bodywork_mobile" text="A mobile workshop does no repainting. It is done at the dealer."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Use an equipped workshop."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Electronic diagnostics required"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Dismantling or specialist equipment required"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="High-voltage equipment required"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s in progress..."/>
         <text name="rms_ws_status_in_progress_format" text="%s in progress until %s"/>
         <text name="rms_ws_status_open" text="Workshop is open"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="less than 1 h of work ago"/>
         <text name="rms_spec_maintenance_complete_notification" text="Procedure completed: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Procedure canceled: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Minimal"/>
         <text name="rms_spec_maintenance_level" text="%s service"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s until %s"/>
         <text name="rms_spec_workshop_dealer" text="Dealer"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Instant"/>
         <text name="rms_option_menu_finish_time_text" text="Finish Time"/>
         <text name="rms_option_menu_start_text" text="Start"/>
+        <text name="rms_service_months" text="%s months"/>
+        <text name="rms_service_month" text="%s month"/>
+        <text name="rms_service_calendar_due" text="Calendar limit reached"/>
+        <text name="rms_service_program_estimated" text="Estimated schedule"/>
         <text name="rms_ws_levels_recommended_for" text="Recommended for this machine"/>
         <text name="rms_ws_levels_interval" text="Every %s"/>
         <text name="rms_ws_levels_duration" text="%s h %s min"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Equipment fleet"/>
         <text name="rms_ingame_menu_section_service" text="Interventions"/>
         <text name="rms_ingame_menu_section_other" text="Untracked equipment"/>
-        <text name="rms_ingame_menu_header_time_left" text="Time Left"/>
         <text name="rms_ingame_menu_header_cost" text="Total Cost"/>
         <text name="rms_ingame_menu_header_interval" text="Interval"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Battery disconnected. Reconnect it at the battery disconnect switch, on foot in front of the vehicle."/>
         <text name="rms_battery_isolator_engine_running" text="Stop the engine before operating the battery disconnect switch."/>
         <text name="rms_battery_isolator_info" text="Battery disconnected"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Use an equipped workshop."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Electronic diagnostics required"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Dismantling or specialist equipment required"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="High-voltage equipment required"/>
-        <text name="rms_service_months" text="%s months"/>
-        <text name="rms_service_month" text="%s month"/>
-        <text name="rms_service_calendar_due" text="Calendar limit reached"/>
-        <text name="rms_service_program_estimated" text="Estimated schedule"/>
-        <text name="rms_ws_label_service_access" text="Ease of maintenance"/>
-        <text name="rms_service_access_easy" text="Easy"/>
-        <text name="rms_service_access_average" text="Average"/>
-        <text name="rms_service_access_demanding" text="Demanding"/>
     </texts>
 </l10n>

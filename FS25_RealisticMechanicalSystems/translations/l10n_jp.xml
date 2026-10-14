@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="車両が摩耗するにつれて、エンジン出力、油圧速度、ブレーキ性能など、各システムの主な特性に小さな低下が生じます。この影響は車両寿命の最初の三分の一を過ぎると始まり、三分の二を過ぎてから明確になり、寿命末期に近づくほど強くなります。"/>
         <text name="rms_exhaustSmokeEnabled_label" text="排気煙"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="エンジンの実際の状態に応じて排気煙を制御します。急加速、低回転での高負荷運転、低負荷での長時間アイドリング、エアフィルターの目詰まり、噴射装置の摩耗など、燃料に対して空気が不足すると黒煙になります。摩耗したエンジンがオイルを燃やすと青煙、燃料が未燃焼のまま排出されると白煙になります。煙の量はエンジンの仕事量によっても増えます。旧式の車両は現代の車両よりはるかに多く煙を出しますが、現代の車両は重大な故障がない限りほとんど煙を出しません。寒い日には、燃焼で生じた水分も凝結して短い白いすじとなり、1〜2メートルで蒸発します。これは健全なエンジンでも起こります。"/>
-        <text name="rms_option_off" text="オフ"/>
         <text name="rms_tutorialMode_label" text="チュートリアルモード"/>
         <text name="rms_tutorialMode_tooltip" text="ゲーム中にチュートリアルのヒントを表示します。"/>
         <text name="rms_tutorialResetTips_label" text="ヒントをリセット"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="まずまず"/>
         <text name="rms_reliability_good" text="良好"/>
         <text name="rms_reliability_very_good" text="とても良好"/>
+        <text name="rms_ws_label_service_access" text="整備のしやすさ"/>
+        <text name="rms_service_access_easy" text="容易"/>
+        <text name="rms_service_access_average" text="平均的"/>
+        <text name="rms_service_access_demanding" text="手間がかかる"/>
         <text name="rms_ws_label_overhaul_count" text="オーバーホール回数"/>
         <text name="rms_ws_label_maintenance_log" text="メンテナンス履歴"/>
         <text name="rms_ws_label_last_report" text="前回の報告書"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="故障が選択されていません。「診断と見積り」で修理する故障を選択してください。"/>
         <text name="rms_ws_reason_overhaul_none" text="機械オーバーホールは状態50%未満のシステムを整備します。この車両には該当がありません。"/>
         <text name="rms_ws_reason_bodywork_mobile" text="移動式ワークショップでは塗装できません。ディーラーで行います。"/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s：%s。設備のある整備工場をご利用ください。"/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="電子診断が必要"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="分解または専用工具が必要"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="高電圧用設備が必要"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s実施中…"/>
         <text name="rms_ws_status_in_progress_format" text="%s：%sまで実施中"/>
         <text name="rms_ws_status_open" text="ワークショップ営業中"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="1h未満稼働前"/>
         <text name="rms_spec_maintenance_complete_notification" text="作業完了：%s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="作業キャンセル：%s"/>
-        <text name="rms_spec_maintenance_minimal" text="最小"/>
         <text name="rms_spec_maintenance_level" text="%s整備"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s（%sまで）"/>
         <text name="rms_spec_workshop_dealer" text="ディーラー"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="即時"/>
         <text name="rms_option_menu_finish_time_text" text="完了時刻"/>
         <text name="rms_option_menu_start_text" text="開始"/>
+        <text name="rms_service_months" text="%sか月"/>
+        <text name="rms_service_month" text="%s か月"/>
+        <text name="rms_service_calendar_due" text="暦上の期限に到達"/>
+        <text name="rms_service_program_estimated" text="推定整備計画"/>
         <text name="rms_ws_levels_recommended_for" text="この機械に推奨"/>
         <text name="rms_ws_levels_interval" text="%sごと"/>
         <text name="rms_ws_levels_duration" text="%s時間%s分"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="保有機械"/>
         <text name="rms_ingame_menu_section_service" text="整備作業"/>
         <text name="rms_ingame_menu_section_other" text="管理対象外の機械"/>
-        <text name="rms_ingame_menu_header_time_left" text="残り時間"/>
         <text name="rms_ingame_menu_header_cost" text="総費用"/>
         <text name="rms_ingame_menu_header_interval" text="間隔"/>
         <text name="rms_ingame_menu_header_leasing_price" text="リース料金"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="バッテリーが遮断されています。車両の前に降りて、バッテリー遮断スイッチで接続してください。"/>
         <text name="rms_battery_isolator_engine_running" text="バッテリー遮断スイッチを操作する前にエンジンを切ってください。"/>
         <text name="rms_battery_isolator_info" text="バッテリー遮断中"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s：%s。設備のある整備工場をご利用ください。"/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="電子診断が必要"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="分解または専用工具が必要"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="高電圧用設備が必要"/>
-        <text name="rms_service_months" text="%sか月"/>
-        <text name="rms_service_month" text="%s か月"/>
-        <text name="rms_service_calendar_due" text="暦上の期限に到達"/>
-        <text name="rms_service_program_estimated" text="推定整備計画"/>
-        <text name="rms_ws_label_service_access" text="整備のしやすさ"/>
-        <text name="rms_service_access_easy" text="容易"/>
-        <text name="rms_service_access_average" text="平均的"/>
-        <text name="rms_service_access_demanding" text="手間がかかる"/>
     </texts>
 </l10n>

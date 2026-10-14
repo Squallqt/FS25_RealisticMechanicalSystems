@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Araç aşındıkça her sistem motor gücü, hidrolik hızı veya fren verimliliği gibi ana özelliklerinde küçük kayıplar yaşar. Etki ömrün ilk üçte birinden sonra başlar ancak ancak üçte ikisinden sonra belirginleşir ve makinenin ömrü sona yaklaştıkça güçlenir."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Egzoz Dumanı"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Egzoz dumanını motorun gerçek durumuna göre belirler: yakıt havayı aştığında, sert kalkışta, düşük devirde zorlanan motorda, düşük yükte uzun süre rölantide, tıkalı hava filtresinde veya yıpranmış enjeksiyonda siyah, yorgun bir motor yağ yaktığında mavi, yakıt yanmadan çıktığında beyaz. Duman ayrıca motorun yaptığı işle birlikte büyür. Eski makineler modern olanlardan çok daha fazla duman atar; modern makineler ciddi bir arıza olmadıkça neredeyse hiç duman çıkarmaz. Soğuk havada yanmadan çıkan su da yoğuşarak kısa beyaz bir iz oluşturur ve bir iki metre içinde buharlaşır; bu, sağlam bir motorda bile görülür."/>
-        <text name="rms_option_off" text="Kapalı"/>
         <text name="rms_tutorialMode_label" text="Eğitim Modu"/>
         <text name="rms_tutorialMode_tooltip" text="Oyun sırasında eğitim ipuçlarını gösterir."/>
         <text name="rms_tutorialResetTips_label" text="İpuçlarını Sıfırla"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Yeterli"/>
         <text name="rms_reliability_good" text="İyi"/>
         <text name="rms_reliability_very_good" text="Çok iyi"/>
+        <text name="rms_ws_label_service_access" text="Bakım kolaylığı"/>
+        <text name="rms_service_access_easy" text="Kolay"/>
+        <text name="rms_service_access_average" text="Ortalama"/>
+        <text name="rms_service_access_demanding" text="Zorlu"/>
         <text name="rms_ws_label_overhaul_count" text="Yapılan Revizyonlar"/>
         <text name="rms_ws_label_maintenance_log" text="Bakım Kaydı"/>
         <text name="rms_ws_label_last_report" text="Son Rapor"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="İşaretli arıza yok. Onarılacak arızaları Teşhis ve Teklif bölümünde işaretle."/>
         <text name="rms_ws_reason_overhaul_none" text="Mekanik revizyon, durumu %50'nin altındaki sistemleri yeniler. Bu makinede böyle bir sistem yok."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Mobil atölye boyama yapmaz. Boyama bayide yapılır."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Donanımlı bir atölye kullanın."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Elektronik teşhis gerekli"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Söküm veya özel aletler gerekli"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Yüksek gerilim ekipmanı gerekli"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s devam ediyor..."/>
         <text name="rms_ws_status_in_progress_format" text="%s devam ediyor; bitiş: %s"/>
         <text name="rms_ws_status_open" text="Atölye açık"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="en fazla 1 h çalışma önce"/>
         <text name="rms_spec_maintenance_complete_notification" text="İşlem tamamlandı: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="İşlem iptal edildi: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Minimum"/>
         <text name="rms_spec_maintenance_level" text="%s bakımı"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s; bitiş: %s"/>
         <text name="rms_spec_workshop_dealer" text="Bayi"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Anında"/>
         <text name="rms_option_menu_finish_time_text" text="Bitiş Saati"/>
         <text name="rms_option_menu_start_text" text="Başla"/>
+        <text name="rms_service_months" text="%s ay"/>
+        <text name="rms_service_month" text="%s ay"/>
+        <text name="rms_service_calendar_due" text="Takvim sınırına ulaşıldı"/>
+        <text name="rms_service_program_estimated" text="Tahmini bakım programı"/>
         <text name="rms_ws_levels_recommended_for" text="Bu makine için önerilen"/>
         <text name="rms_ws_levels_interval" text="Her %s"/>
         <text name="rms_ws_levels_duration" text="%s sa %s dk"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Makine parkı"/>
         <text name="rms_ingame_menu_section_service" text="İşlemler"/>
         <text name="rms_ingame_menu_section_other" text="Takip edilmeyen makineler"/>
-        <text name="rms_ingame_menu_header_time_left" text="Kalan Süre"/>
         <text name="rms_ingame_menu_header_cost" text="Toplam Maliyet"/>
         <text name="rms_ingame_menu_header_interval" text="Aralık"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Kiralama"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Akü devre dışı. Aracın önünde, yaya olarak akü şalterinden yeniden devreye al."/>
         <text name="rms_battery_isolator_engine_running" text="Akü şalterini kullanmadan önce motoru durdur."/>
         <text name="rms_battery_isolator_info" text="Akü devre dışı"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Donanımlı bir atölye kullanın."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Elektronik teşhis gerekli"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Söküm veya özel aletler gerekli"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Yüksek gerilim ekipmanı gerekli"/>
-        <text name="rms_service_months" text="%s ay"/>
-        <text name="rms_service_month" text="%s ay"/>
-        <text name="rms_service_calendar_due" text="Takvim sınırına ulaşıldı"/>
-        <text name="rms_service_program_estimated" text="Tahmini bakım programı"/>
-        <text name="rms_ws_label_service_access" text="Bakım kolaylığı"/>
-        <text name="rms_service_access_easy" text="Kolay"/>
-        <text name="rms_service_access_average" text="Ortalama"/>
-        <text name="rms_service_access_demanding" text="Zorlu"/>
     </texts>
 </l10n>

@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Naarmate het voertuig slijt, krijgt elk systeem kleine nadelen op de belangrijkste eigenschappen, zoals motorvermogen, hydraulieksnelheid of remefficiëntie. Het effect begint na het eerste derde deel van de levensduur, wordt pas echt merkbaar na twee derde en neemt verder toe tegen het einde van de levensduur van de machine."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Uitlaatrook"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Regelt de uitlaatrook aan de hand van de werkelijke motorconditie. De rook is zwart wanneer er meer brandstof dan lucht beschikbaar is: bij sterk accelereren, een motor die bij laag toerental zwaar wordt belast, lang stationair draaien bij lage belasting, een verstopt luchtfilter of versleten injectie. De rook is blauw wanneer een versleten motor olie verbrandt en wit wanneer brandstof onverbrand uitstroomt. De pluim groeit ook met de motorbelasting. Oudere machines roken veel meer dan moderne, die nauwelijks roken zolang niets ernstig beschadigd is. Bij koude lucht condenseert het water uit de verbranding bovendien tot een korte witte sliert die binnen een meter of twee verdampt, zelfs bij een gezonde motor."/>
-        <text name="rms_option_off" text="Uit"/>
         <text name="rms_tutorialMode_label" text="Tutorialmodus"/>
         <text name="rms_tutorialMode_tooltip" text="Toont tutorialtips tijdens het spelen."/>
         <text name="rms_tutorialResetTips_label" text="Tips opnieuw instellen"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Redelijk"/>
         <text name="rms_reliability_good" text="Goed"/>
         <text name="rms_reliability_very_good" text="Zeer goed"/>
+        <text name="rms_ws_label_service_access" text="Onderhoudsgemak"/>
+        <text name="rms_service_access_easy" text="Eenvoudig"/>
+        <text name="rms_service_access_average" text="Gemiddeld"/>
+        <text name="rms_service_access_demanding" text="Veeleisend"/>
         <text name="rms_ws_label_overhaul_count" text="Uitgevoerde revisies"/>
         <text name="rms_ws_label_maintenance_log" text="Onderhoudslogboek"/>
         <text name="rms_ws_label_last_report" text="Laatste rapport"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Geen storing aangevinkt. Vink in Diagnose en offerte de storingen aan die gerepareerd moeten worden."/>
         <text name="rms_ws_reason_overhaul_none" text="Een mechanische revisie herstelt de systemen onder 50% conditie. Deze machine heeft er geen."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Een mobiele werkplaats doet geen spuitwerk. Dat gebeurt bij de dealer."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Gebruik een uitgeruste werkplaats."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Elektronische diagnose vereist"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Demontage of speciaal gereedschap vereist"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Hoogspanningsapparatuur vereist"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s wordt uitgevoerd..."/>
         <text name="rms_ws_status_in_progress_format" text="%s wordt uitgevoerd tot %s"/>
         <text name="rms_ws_status_open" text="De werkplaats is geopend"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="minder dan 1 h werk geleden"/>
         <text name="rms_spec_maintenance_complete_notification" text="Procedure voltooid: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Procedure geannuleerd: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Minimaal"/>
         <text name="rms_spec_maintenance_level" text="Onderhoud %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s tot %s"/>
         <text name="rms_spec_workshop_dealer" text="Dealer"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Direct"/>
         <text name="rms_option_menu_finish_time_text" text="Eindtijd"/>
         <text name="rms_option_menu_start_text" text="Starten"/>
+        <text name="rms_service_months" text="%s maanden"/>
+        <text name="rms_service_month" text="%s maand"/>
+        <text name="rms_service_calendar_due" text="Kalendertermijn bereikt"/>
+        <text name="rms_service_program_estimated" text="Geschat onderhoudsschema"/>
         <text name="rms_ws_levels_recommended_for" text="Aanbevolen voor deze machine"/>
         <text name="rms_ws_levels_interval" text="Elke %s"/>
         <text name="rms_ws_levels_duration" text="%s u %s min"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Machinepark"/>
         <text name="rms_ingame_menu_section_service" text="Werkzaamheden"/>
         <text name="rms_ingame_menu_section_other" text="Niet gevolgde machines"/>
-        <text name="rms_ingame_menu_header_time_left" text="Resterende tijd"/>
         <text name="rms_ingame_menu_header_cost" text="Totale kosten"/>
         <text name="rms_ingame_menu_header_interval" text="Interval"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Accu uitgeschakeld. Schakel hem weer in met de accuschakelaar, te voet voor het voertuig."/>
         <text name="rms_battery_isolator_engine_running" text="Zet de motor uit voordat je de accuschakelaar bedient."/>
         <text name="rms_battery_isolator_info" text="Accu uitgeschakeld"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Gebruik een uitgeruste werkplaats."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Elektronische diagnose vereist"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Demontage of speciaal gereedschap vereist"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Hoogspanningsapparatuur vereist"/>
-        <text name="rms_service_months" text="%s maanden"/>
-        <text name="rms_service_month" text="%s maand"/>
-        <text name="rms_service_calendar_due" text="Kalendertermijn bereikt"/>
-        <text name="rms_service_program_estimated" text="Geschat onderhoudsschema"/>
-        <text name="rms_ws_label_service_access" text="Onderhoudsgemak"/>
-        <text name="rms_service_access_easy" text="Eenvoudig"/>
-        <text name="rms_service_access_average" text="Gemiddeld"/>
-        <text name="rms_service_access_demanding" text="Veeleisend"/>
     </texts>
 </l10n>

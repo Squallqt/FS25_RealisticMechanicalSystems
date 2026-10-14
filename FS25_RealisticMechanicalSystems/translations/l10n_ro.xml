@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Pe măsură ce vehiculul se uzează, fiecare sistem primește mici penalizări ale caracteristicilor principale, precum puterea motorului, viteza hidraulică sau eficiența frânării. Efectul se activează după prima treime a duratei de viață, dar devine cu adevărat vizibil abia după a doua treime și se intensifică spre sfârșitul vieții utilajului."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fum de eșapament"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Controlează fumul de eșapament după starea reală a motorului. Este negru când combustibilul depășește aerul disponibil: accelerare bruscă, motor forțat la turație joasă, ralanti prelungit la sarcină mică, filtru de aer colmatat sau injecție uzată. Este albastru când un motor uzat arde ulei și alb când combustibilul iese nears. Norul de fum crește și odată cu efortul motorului. Utilajele vechi scot mult mai mult fum decât cele moderne, care aproape nu scot fum cât timp nimic nu este grav defect. În aer rece, apa rezultată din ardere se condensează și ea într-o dâră albă scurtă, care se evaporă în unul sau doi metri, chiar și la un motor sănătos."/>
-        <text name="rms_option_off" text="Dezactivat"/>
         <text name="rms_tutorialMode_label" text="Mod tutorial"/>
         <text name="rms_tutorialMode_tooltip" text="Afișează sfaturile tutorialului în timpul jocului."/>
         <text name="rms_tutorialResetTips_label" text="Resetează sfaturile"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Acceptabilă"/>
         <text name="rms_reliability_good" text="Bună"/>
         <text name="rms_reliability_very_good" text="Foarte bună"/>
+        <text name="rms_ws_label_service_access" text="Ușurința întreținerii"/>
+        <text name="rms_service_access_easy" text="Ușoară"/>
+        <text name="rms_service_access_average" text="Medie"/>
+        <text name="rms_service_access_demanding" text="Exigentă"/>
         <text name="rms_ws_label_overhaul_count" text="Recondiționări efectuate"/>
         <text name="rms_ws_label_maintenance_log" text="Jurnal de întreținere"/>
         <text name="rms_ws_label_last_report" text="Ultimul raport"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Nicio avarie bifată. Bifează în Diagnostic și deviz avariile de reparat."/>
         <text name="rms_ws_reason_overhaul_none" text="O recondiționare mecanică repune în stare sistemele sub 50% stare. Acest utilaj nu are niciunul."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Un atelier mobil nu face vopsire. Aceasta se face la reprezentanță."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Folosește un atelier echipat."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Este necesar un diagnostic electronic"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Este necesară demontarea sau o unealtă specializată"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Este necesar echipament de înaltă tensiune"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s în curs..."/>
         <text name="rms_ws_status_in_progress_format" text="%s în curs până la %s"/>
         <text name="rms_ws_status_open" text="Atelierul este deschis"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="acum mai puțin de 1 h de lucru"/>
         <text name="rms_spec_maintenance_complete_notification" text="Intervenție încheiată: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Intervenție anulată: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Minimă"/>
         <text name="rms_spec_maintenance_level" text="Revizie %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s până la %s"/>
         <text name="rms_spec_workshop_dealer" text="Reprezentanță"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Instantanee"/>
         <text name="rms_option_menu_finish_time_text" text="Oră de încheiere"/>
         <text name="rms_option_menu_start_text" text="Începe"/>
+        <text name="rms_service_months" text="%s luni"/>
+        <text name="rms_service_month" text="%s lună"/>
+        <text name="rms_service_calendar_due" text="Termenul calendaristic a fost atins"/>
+        <text name="rms_service_program_estimated" text="Program estimat"/>
         <text name="rms_ws_levels_recommended_for" text="Recomandat pentru acest utilaj"/>
         <text name="rms_ws_levels_interval" text="La fiecare %s"/>
         <text name="rms_ws_levels_duration" text="%s h %s min"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Parc de utilaje"/>
         <text name="rms_ingame_menu_section_service" text="Intervenții"/>
         <text name="rms_ingame_menu_section_other" text="Utilaje nemonitorizate"/>
-        <text name="rms_ingame_menu_header_time_left" text="Timp rămas"/>
         <text name="rms_ingame_menu_header_cost" text="Cost total"/>
         <text name="rms_ingame_menu_header_interval" text="Interval"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Baterie decuplată. Recupleaz-o de la întrerupătorul general, pe jos, în fața vehiculului."/>
         <text name="rms_battery_isolator_engine_running" text="Oprește motorul înainte de a acționa întrerupătorul general."/>
         <text name="rms_battery_isolator_info" text="Baterie decuplată"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Folosește un atelier echipat."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Este necesar un diagnostic electronic"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Este necesară demontarea sau o unealtă specializată"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Este necesar echipament de înaltă tensiune"/>
-        <text name="rms_service_months" text="%s luni"/>
-        <text name="rms_service_month" text="%s lună"/>
-        <text name="rms_service_calendar_due" text="Termenul calendaristic a fost atins"/>
-        <text name="rms_service_program_estimated" text="Program estimat"/>
-        <text name="rms_ws_label_service_access" text="Ușurința întreținerii"/>
-        <text name="rms_service_access_easy" text="Ușoară"/>
-        <text name="rms_service_access_average" text="Medie"/>
-        <text name="rms_service_access_demanding" text="Exigentă"/>
     </texts>
 </l10n>

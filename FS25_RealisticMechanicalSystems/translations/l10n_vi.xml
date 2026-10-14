@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Khi xe hao mòn, mỗi hệ thống chịu một mức suy giảm nhỏ ở các đặc tính chính như công suất động cơ, tốc độ thủy lực hoặc hiệu quả phanh. Hiệu ứng bắt đầu sau một phần ba đầu tiên của tuổi thọ xe, nhưng chỉ thực sự rõ rệt sau hai phần ba và tăng dần khi máy gần hết tuổi thọ."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Khói xả"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Điều khiển luồng khói xả theo tình trạng thực tế của động cơ. Khói màu đen khi nhiên liệu vượt quá lượng không khí sẵn có: tăng ga đột ngột, động cơ ì ở vòng tua thấp, chạy không tải kéo dài với tải thấp, bộ lọc không khí bị tắc hoặc hệ thống phun nhiên liệu bị mòn. Khói màu xanh khi động cơ mòn đốt dầu và màu trắng khi nhiên liệu không cháy hết. Luồng khói cũng lớn hơn khi động cơ làm việc nặng hơn. Máy cũ thải nhiều khói hơn hẳn máy hiện đại, vốn gần như không có khói trừ khi xảy ra hỏng hóc nghiêm trọng. Khi trời lạnh, hơi nước sinh ra từ quá trình cháy còn ngưng tụ thành một vệt trắng ngắn, bay hơi trong vòng một hai mét, kể cả ở động cơ còn tốt."/>
-        <text name="rms_option_off" text="Tắt"/>
         <text name="rms_tutorialMode_label" text="Chế độ hướng dẫn"/>
         <text name="rms_tutorialMode_tooltip" text="Hiển thị mẹo hướng dẫn trong khi chơi."/>
         <text name="rms_tutorialResetTips_label" text="Đặt lại mẹo"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Khá"/>
         <text name="rms_reliability_good" text="Tốt"/>
         <text name="rms_reliability_very_good" text="Rất tốt"/>
+        <text name="rms_ws_label_service_access" text="Mức dễ bảo dưỡng"/>
+        <text name="rms_service_access_easy" text="Dễ"/>
+        <text name="rms_service_access_average" text="Trung bình"/>
+        <text name="rms_service_access_demanding" text="Đòi hỏi cao"/>
         <text name="rms_ws_label_overhaul_count" text="Số lần đại tu"/>
         <text name="rms_ws_label_maintenance_log" text="Nhật ký bảo dưỡng"/>
         <text name="rms_ws_label_last_report" text="Báo cáo gần nhất"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Chưa đánh dấu hỏng hóc nào. Hãy đánh dấu các hỏng hóc cần sửa trong Chẩn đoán và báo giá."/>
         <text name="rms_ws_reason_overhaul_none" text="Đại tu cơ khí phục hồi các hệ thống dưới 50% tình trạng. Máy này không có hệ thống nào như vậy."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Xưởng lưu động không sơn xe. Việc sơn xe được thực hiện tại đại lý."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Hãy dùng xưởng có đủ thiết bị."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Cần chẩn đoán điện tử"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Cần tháo dỡ hoặc dụng cụ chuyên dụng"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Cần thiết bị điện áp cao"/>
         <text name="rms_ws_status_in_progress_short_format" text="Đang thực hiện %s..."/>
         <text name="rms_ws_status_in_progress_format" text="Đang thực hiện %s đến %s"/>
         <text name="rms_ws_status_open" text="Xưởng đang mở cửa"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="chưa đến 1 h hoạt động trước"/>
         <text name="rms_spec_maintenance_complete_notification" text="Quy trình đã hoàn tất: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Quy trình đã hủy: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Tối thiểu"/>
         <text name="rms_spec_maintenance_level" text="Bảo dưỡng %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s đến %s"/>
         <text name="rms_spec_workshop_dealer" text="Đại lý"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Tức thì"/>
         <text name="rms_option_menu_finish_time_text" text="Giờ hoàn tất"/>
         <text name="rms_option_menu_start_text" text="Bắt đầu"/>
+        <text name="rms_service_months" text="%s tháng"/>
+        <text name="rms_service_month" text="%s tháng"/>
+        <text name="rms_service_calendar_due" text="Đã đến hạn theo lịch"/>
+        <text name="rms_service_program_estimated" text="Lịch bảo dưỡng ước tính"/>
         <text name="rms_ws_levels_recommended_for" text="Khuyến nghị cho máy này"/>
         <text name="rms_ws_levels_interval" text="Mỗi %s"/>
         <text name="rms_ws_levels_duration" text="%s giờ %s phút"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Đội máy"/>
         <text name="rms_ingame_menu_section_service" text="Công việc bảo dưỡng"/>
         <text name="rms_ingame_menu_section_other" text="Máy không được theo dõi"/>
-        <text name="rms_ingame_menu_header_time_left" text="Thời gian còn lại"/>
         <text name="rms_ingame_menu_header_cost" text="Tổng chi phí"/>
         <text name="rms_ingame_menu_header_interval" text="Chu kỳ"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Phí thuê"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Ắc quy đã ngắt. Hãy nối lại bằng công tắc ngắt ắc quy khi đứng trước xe."/>
         <text name="rms_battery_isolator_engine_running" text="Tắt động cơ trước khi dùng công tắc ngắt ắc quy."/>
         <text name="rms_battery_isolator_info" text="Ắc quy đã ngắt"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Hãy dùng xưởng có đủ thiết bị."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Cần chẩn đoán điện tử"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Cần tháo dỡ hoặc dụng cụ chuyên dụng"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Cần thiết bị điện áp cao"/>
-        <text name="rms_service_months" text="%s tháng"/>
-        <text name="rms_service_month" text="%s tháng"/>
-        <text name="rms_service_calendar_due" text="Đã đến hạn theo lịch"/>
-        <text name="rms_service_program_estimated" text="Lịch bảo dưỡng ước tính"/>
-        <text name="rms_ws_label_service_access" text="Mức dễ bảo dưỡng"/>
-        <text name="rms_service_access_easy" text="Dễ"/>
-        <text name="rms_service_access_average" text="Trung bình"/>
-        <text name="rms_service_access_demanding" text="Đòi hỏi cao"/>
     </texts>
 </l10n>

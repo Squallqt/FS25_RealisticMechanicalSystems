@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Etter hvert som kjøretøyet slites, får hvert system små fradrag på sine viktigste egenskaper, som motoreffekt, hydraulikkhastighet eller bremseevne. Virkningen setter inn etter den første tredjedelen av levetiden, blir først riktig merkbar etter to tredjedeler og forsterkes jo nærmere maskinen kommer slutten av sin levetid."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Eksosrøyk"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Styrer eksosrøyken etter motorens faktiske tilstand. Den er svart når det er mer drivstoff enn luft: kraftig akselerasjon, en motor som drar på for lavt turtall, lengre tomgang med lav belastning, et tett luftfilter eller slitt innsprøytning. Den er blå når en sliten motor brenner olje, og hvit når drivstoff slipper ut ubrent. Røykfanen vokser også med det arbeidet motoren yter. Eldre maskiner røyker langt mer enn moderne, som nesten ikke røyker så lenge ingenting er alvorlig i stykker. I kald luft kondenserer vannet fra forbrenningen også til en kort hvit stripe som fordamper i løpet av en meter eller to, selv på en frisk motor."/>
-        <text name="rms_option_off" text="Av"/>
         <text name="rms_tutorialMode_label" text="Opplæringsmodus"/>
         <text name="rms_tutorialMode_tooltip" text="Viser opplæringstips under spillet."/>
         <text name="rms_tutorialResetTips_label" text="Tilbakestill tipsene"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Akseptabel"/>
         <text name="rms_reliability_good" text="God"/>
         <text name="rms_reliability_very_good" text="Svært god"/>
+        <text name="rms_ws_label_service_access" text="Vedlikeholdsvennlighet"/>
+        <text name="rms_service_access_easy" text="Enkel"/>
+        <text name="rms_service_access_average" text="Middels"/>
+        <text name="rms_service_access_demanding" text="Krevende"/>
         <text name="rms_ws_label_overhaul_count" text="Utførte overhalinger"/>
         <text name="rms_ws_label_maintenance_log" text="Vedlikeholdslogg"/>
         <text name="rms_ws_label_last_report" text="Siste rapport"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Ingen feil krysset av. Kryss av feilene som skal repareres under Diagnose og prisoverslag."/>
         <text name="rms_ws_reason_overhaul_none" text="En mekanisk overhaling setter i stand systemer under 50 % tilstand. Denne maskinen har ingen."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Et mobilt verksted utfører ikke lakkering. Den utføres hos forhandleren."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Bruk et utstyrt verksted."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Elektronisk diagnose kreves"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Demontering eller spesialverktøy kreves"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Høyspenningsutstyr kreves"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s pågår..."/>
         <text name="rms_ws_status_in_progress_format" text="%s pågår til %s"/>
         <text name="rms_ws_status_open" text="Verkstedet er åpent"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="for under 1 h drift siden"/>
         <text name="rms_spec_maintenance_complete_notification" text="Prosedyre fullført: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Prosedyre avbrutt: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Minimal"/>
         <text name="rms_spec_maintenance_level" text="Service %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s til %s"/>
         <text name="rms_spec_workshop_dealer" text="Forhandler"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Øyeblikkelig"/>
         <text name="rms_option_menu_finish_time_text" text="Sluttidspunkt"/>
         <text name="rms_option_menu_start_text" text="Start"/>
+        <text name="rms_service_months" text="%s måneder"/>
+        <text name="rms_service_month" text="%s måned"/>
+        <text name="rms_service_calendar_due" text="Kalenderfrist nådd"/>
+        <text name="rms_service_program_estimated" text="Anslått serviceplan"/>
         <text name="rms_ws_levels_recommended_for" text="Anbefalt for denne maskinen"/>
         <text name="rms_ws_levels_interval" text="Hver %s"/>
         <text name="rms_ws_levels_duration" text="%s t %s min"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Maskinpark"/>
         <text name="rms_ingame_menu_section_service" text="Arbeider"/>
         <text name="rms_ingame_menu_section_other" text="Maskiner uten oppfølging"/>
-        <text name="rms_ingame_menu_header_time_left" text="Gjenstår"/>
         <text name="rms_ingame_menu_header_cost" text="Samlede kostnader"/>
         <text name="rms_ingame_menu_header_interval" text="Intervall"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Batteriet er frakoblet. Koble det til igjen med hovedstrømbryteren, til fots foran kjøretøyet."/>
         <text name="rms_battery_isolator_engine_running" text="Slå av motoren før hovedstrømbryteren betjenes."/>
         <text name="rms_battery_isolator_info" text="Batteriet er frakoblet"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Bruk et utstyrt verksted."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Elektronisk diagnose kreves"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Demontering eller spesialverktøy kreves"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Høyspenningsutstyr kreves"/>
-        <text name="rms_service_months" text="%s måneder"/>
-        <text name="rms_service_month" text="%s måned"/>
-        <text name="rms_service_calendar_due" text="Kalenderfrist nådd"/>
-        <text name="rms_service_program_estimated" text="Anslått serviceplan"/>
-        <text name="rms_ws_label_service_access" text="Vedlikeholdsvennlighet"/>
-        <text name="rms_service_access_easy" text="Enkel"/>
-        <text name="rms_service_access_average" text="Middels"/>
-        <text name="rms_service_access_demanding" text="Krevende"/>
     </texts>
 </l10n>

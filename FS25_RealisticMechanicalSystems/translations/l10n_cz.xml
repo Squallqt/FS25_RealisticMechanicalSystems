@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="S opotřebením vozidla dostává každý systém malé postihy ke svým hlavním vlastnostem, jako jsou výkon motoru, rychlost hydrauliky nebo účinnost brzd. Účinek se aktivuje po první třetině životnosti, skutečně patrný je až po dvou třetinách a zesiluje s blížícím se koncem životnosti stroje."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kouř z výfuku"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Řídí kouř z výfuku podle skutečného stavu motoru. Je černý, když motor dostává více paliva, než odpovídá dostupnému vzduchu: při prudké akceleraci, když motor pracuje namáhavě v nízkých otáčkách, po dlouhém volnoběhu s nízkým zatížením, při zaneseném vzduchovém filtru nebo opotřebeném vstřikování. Je modrý, když opotřebený motor spaluje olej, a bílý, když palivo odchází nespálené. Množství kouře se zvyšuje také s prací motoru. Starší stroje kouří výrazně více než moderní, které téměř nekouří, dokud není něco skutečně porouchané. Ve studeném vzduchu navíc voda ze spalování kondenzuje do krátké bílé stopy, která se odpaří během metru či dvou, a to i u zdravého motoru."/>
-        <text name="rms_option_off" text="Vypnuto"/>
         <text name="rms_tutorialMode_label" text="Režim výukového programu"/>
         <text name="rms_tutorialMode_tooltip" text="Zobrazuje během hry rady výukového programu."/>
         <text name="rms_tutorialResetTips_label" text="Resetovat rady"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Uspokojivá"/>
         <text name="rms_reliability_good" text="Dobrá"/>
         <text name="rms_reliability_very_good" text="Velmi dobrá"/>
+        <text name="rms_ws_label_service_access" text="Snadnost údržby"/>
+        <text name="rms_service_access_easy" text="Snadná"/>
+        <text name="rms_service_access_average" text="Průměrná"/>
+        <text name="rms_service_access_demanding" text="Náročná"/>
         <text name="rms_ws_label_overhaul_count" text="Provedené generální opravy"/>
         <text name="rms_ws_label_maintenance_log" text="Deník údržby"/>
         <text name="rms_ws_label_last_report" text="Poslední zpráva"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Není zaškrtnutá žádná porucha. Zaškrtni v Diagnostika a cenová nabídka poruchy k opravě."/>
         <text name="rms_ws_reason_overhaul_none" text="Generální oprava obnoví systémy pod 50 % stavu. Tento stroj žádný takový nemá."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Mobilní dílna lakování neprovádí. Provádí se u prodejce."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Použijte vybavenou dílnu."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Vyžadována elektronická diagnostika"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Vyžadována demontáž nebo speciální nástroje"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Vyžadováno vysokonapěťové vybavení"/>
         <text name="rms_ws_status_in_progress_short_format" text="Probíhá %s..."/>
         <text name="rms_ws_status_in_progress_format" text="Probíhá %s do %s"/>
         <text name="rms_ws_status_open" text="Dílna je otevřena"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="před méně než 1 h provozu"/>
         <text name="rms_spec_maintenance_complete_notification" text="Úkon dokončen: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Úkon zrušen: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Minimální"/>
         <text name="rms_spec_maintenance_level" text="Údržba %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s do %s"/>
         <text name="rms_spec_workshop_dealer" text="Prodejce"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Okamžitě"/>
         <text name="rms_option_menu_finish_time_text" text="Čas dokončení"/>
         <text name="rms_option_menu_start_text" text="Spustit"/>
+        <text name="rms_service_months" text="%s měsíců"/>
+        <text name="rms_service_month" text="%s měs."/>
+        <text name="rms_service_calendar_due" text="Kalendářní lhůta dosažena"/>
+        <text name="rms_service_program_estimated" text="Odhadovaný plán"/>
         <text name="rms_ws_levels_recommended_for" text="Doporučeno pro tento stroj"/>
         <text name="rms_ws_levels_interval" text="Každých %s"/>
         <text name="rms_ws_levels_duration" text="%s h %s min"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Strojový park"/>
         <text name="rms_ingame_menu_section_service" text="Zásahy"/>
         <text name="rms_ingame_menu_section_other" text="Nesledované stroje"/>
-        <text name="rms_ingame_menu_header_time_left" text="Zbývající čas"/>
         <text name="rms_ingame_menu_header_cost" text="Celkové náklady"/>
         <text name="rms_ingame_menu_header_interval" text="Interval"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Pronájem"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Baterie je odpojena. Připoj ji odpojovačem baterie, pěšky před vozidlem."/>
         <text name="rms_battery_isolator_engine_running" text="Před použitím odpojovače baterie vypni motor."/>
         <text name="rms_battery_isolator_info" text="Baterie odpojena"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Použijte vybavenou dílnu."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Vyžadována elektronická diagnostika"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Vyžadována demontáž nebo speciální nástroje"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Vyžadováno vysokonapěťové vybavení"/>
-        <text name="rms_service_months" text="%s měsíců"/>
-        <text name="rms_service_month" text="%s měs."/>
-        <text name="rms_service_calendar_due" text="Kalendářní lhůta dosažena"/>
-        <text name="rms_service_program_estimated" text="Odhadovaný plán"/>
-        <text name="rms_ws_label_service_access" text="Snadnost údržby"/>
-        <text name="rms_service_access_easy" text="Snadná"/>
-        <text name="rms_service_access_average" text="Průměrná"/>
-        <text name="rms_service_access_demanding" text="Náročná"/>
     </texts>
 </l10n>

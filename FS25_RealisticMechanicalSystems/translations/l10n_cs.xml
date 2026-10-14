@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="随着载具磨损，发动机功率、液压速度和制动效率等各系统的主要特性会受到轻微影响。该影响会在载具寿命的前三分之一结束后出现，在三分之二之后才会变得明显，并在机器接近寿命终点时继续加剧。"/>
         <text name="rms_exhaustSmokeEnabled_label" text="排气烟雾"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="根据发动机的实际状态控制排气烟雾。燃油量超过可用空气量时会冒黑烟，例如突然加速、发动机低转速重负荷运转、长时间低负荷怠速、空气滤清器堵塞或喷油系统磨损。磨损的发动机燃烧机油时会冒蓝烟，燃油未充分燃烧时会冒白烟。烟雾还会随发动机负荷增大。旧机器的烟雾远多于现代机器；现代机器只有在发生严重故障时才会明显冒烟。在寒冷空气中，燃烧产生的水分也会凝结成一小段白色尾迹，并在一两米内蒸发，即使发动机完好也会出现。"/>
-        <text name="rms_option_off" text="关闭"/>
         <text name="rms_tutorialMode_label" text="教程模式"/>
         <text name="rms_tutorialMode_tooltip" text="在游戏过程中显示教程提示。"/>
         <text name="rms_tutorialResetTips_label" text="重置提示"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="尚可"/>
         <text name="rms_reliability_good" text="良好"/>
         <text name="rms_reliability_very_good" text="很好"/>
+        <text name="rms_ws_label_service_access" text="保养便利性"/>
+        <text name="rms_service_access_easy" text="容易"/>
+        <text name="rms_service_access_average" text="一般"/>
+        <text name="rms_service_access_demanding" text="要求较高"/>
         <text name="rms_ws_label_overhaul_count" text="大修次数"/>
         <text name="rms_ws_label_maintenance_log" text="保养记录"/>
         <text name="rms_ws_label_last_report" text="上次报告"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="未勾选任何故障。请在“诊断与估价”中勾选要修理的故障。"/>
         <text name="rms_ws_reason_overhaul_none" text="机械大修用于修复状态低于50%的系统，这台机器没有此类系统。"/>
         <text name="rms_ws_reason_bodywork_mobile" text="移动维修车间不做喷漆，喷漆在经销商处进行。"/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s：%s。请使用设备齐全的维修车间。"/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="需要电子诊断"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="需要拆卸或专用工具"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="需要高压设备"/>
         <text name="rms_ws_status_in_progress_short_format" text="正在进行%s…"/>
         <text name="rms_ws_status_in_progress_format" text="正在进行%s，结束时间为%s"/>
         <text name="rms_ws_status_open" text="维修车间已开放"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="不到1h工作前"/>
         <text name="rms_spec_maintenance_complete_notification" text="作业完成：%s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="作业已取消：%s"/>
-        <text name="rms_spec_maintenance_minimal" text="最低限度"/>
         <text name="rms_spec_maintenance_level" text="%s保养"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s，有效至%s"/>
         <text name="rms_spec_workshop_dealer" text="经销商"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="即时"/>
         <text name="rms_option_menu_finish_time_text" text="完成时间"/>
         <text name="rms_option_menu_start_text" text="开始"/>
+        <text name="rms_service_months" text="%s个月"/>
+        <text name="rms_service_month" text="%s 个月"/>
+        <text name="rms_service_calendar_due" text="已到日历期限"/>
+        <text name="rms_service_program_estimated" text="估算保养计划"/>
         <text name="rms_ws_levels_recommended_for" text="建议用于本机"/>
         <text name="rms_ws_levels_interval" text="每 %s"/>
         <text name="rms_ws_levels_duration" text="%s 小时 %s 分钟"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="设备车队"/>
         <text name="rms_ingame_menu_section_service" text="作业项目"/>
         <text name="rms_ingame_menu_section_other" text="未跟踪设备"/>
-        <text name="rms_ingame_menu_header_time_left" text="剩余时间"/>
         <text name="rms_ingame_menu_header_cost" text="总费用"/>
         <text name="rms_ingame_menu_header_interval" text="间隔"/>
         <text name="rms_ingame_menu_header_leasing_price" text="租赁费用"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="电池已断开。请步行到载具前，用电池总开关重新接通。"/>
         <text name="rms_battery_isolator_engine_running" text="操作电池总开关前请关闭发动机。"/>
         <text name="rms_battery_isolator_info" text="电池已断开"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s：%s。请使用设备齐全的维修车间。"/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="需要电子诊断"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="需要拆卸或专用工具"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="需要高压设备"/>
-        <text name="rms_service_months" text="%s个月"/>
-        <text name="rms_service_month" text="%s 个月"/>
-        <text name="rms_service_calendar_due" text="已到日历期限"/>
-        <text name="rms_service_program_estimated" text="估算保养计划"/>
-        <text name="rms_ws_label_service_access" text="保养便利性"/>
-        <text name="rms_service_access_easy" text="容易"/>
-        <text name="rms_service_access_average" text="一般"/>
-        <text name="rms_service_access_demanding" text="要求较高"/>
     </texts>
 </l10n>

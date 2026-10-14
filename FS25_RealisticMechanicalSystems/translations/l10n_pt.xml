@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Ativa o desgaste relacionado com a idade. À medida que o veículo se desgasta, cada sistema sofre pequenas penalizações nas suas características principais, como a potência do motor, a velocidade hidráulica ou a eficiência de travagem. O efeito é ativado após o primeiro terço da vida útil, mas só se torna realmente percetível após os dois terços e intensifica-se à medida que a máquina se aproxima do fim da sua vida útil."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fumo do escape"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Controla o fumo do escape de acordo com o estado real do motor: preto quando entra mais combustível do que ar, numa retoma forte, com o motor a forçar a baixas rotações, após ralenti prolongado com pouca carga, com o filtro de ar entupido ou a injeção desgastada; azul quando um motor cansado queima óleo; branco quando o combustível sai sem arder. O penacho também aumenta com o trabalho do motor. As máquinas antigas fumegam muito mais do que as modernas, que quase não fumegam enquanto não houver uma avaria séria. Com ar frio, a água da combustão também condensa num rasto branco curto, que evapora num ou dois metros, mesmo num motor saudável."/>
-        <text name="rms_option_off" text="Desligado"/>
         <text name="rms_tutorialMode_label" text="Modo de tutorial"/>
         <text name="rms_tutorialMode_tooltip" text="Mostra dicas do tutorial durante o jogo."/>
         <text name="rms_tutorialResetTips_label" text="Repor dicas"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Razoável"/>
         <text name="rms_reliability_good" text="Boa"/>
         <text name="rms_reliability_very_good" text="Muito boa"/>
+        <text name="rms_ws_label_service_access" text="Facilidade de manutenção"/>
+        <text name="rms_service_access_easy" text="Fácil"/>
+        <text name="rms_service_access_average" text="Média"/>
+        <text name="rms_service_access_demanding" text="Exigente"/>
         <text name="rms_ws_label_overhaul_count" text="Revisões efetuadas"/>
         <text name="rms_ws_label_maintenance_log" text="Registo de manutenção"/>
         <text name="rms_ws_label_last_report" text="Último relatório"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Nenhuma avaria assinalada. Assinala em Diagnóstico e orçamento as avarias a reparar."/>
         <text name="rms_ws_reason_overhaul_none" text="Uma revisão mecânica recupera os sistemas abaixo de 50% de estado. Esta máquina não tem nenhum."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Uma oficina móvel não faz pintura. Faz-se no concessionário."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Utilize uma oficina equipada."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Diagnóstico eletrónico necessário"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Desmontagem ou ferramentas especializadas necessárias"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Equipamento de alta tensão necessário"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s em curso..."/>
         <text name="rms_ws_status_in_progress_format" text="%s em curso até %s"/>
         <text name="rms_ws_status_open" text="A oficina está aberta"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="menos de 1 h de trabalho atrás"/>
         <text name="rms_spec_maintenance_complete_notification" text="Intervenção concluída: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Intervenção cancelada: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Mínima"/>
         <text name="rms_spec_maintenance_level" text="Revisão %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s até %s"/>
         <text name="rms_spec_workshop_dealer" text="Concessionário"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Instantâneo"/>
         <text name="rms_option_menu_finish_time_text" text="Hora de conclusão"/>
         <text name="rms_option_menu_start_text" text="Iniciar"/>
+        <text name="rms_service_months" text="%s meses"/>
+        <text name="rms_service_month" text="%s mês"/>
+        <text name="rms_service_calendar_due" text="Prazo do calendário atingido"/>
+        <text name="rms_service_program_estimated" text="Programa estimado"/>
         <text name="rms_ws_levels_recommended_for" text="Recomendado para esta máquina"/>
         <text name="rms_ws_levels_interval" text="A cada %s"/>
         <text name="rms_ws_levels_duration" text="%s h %s min"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Parque de equipamentos"/>
         <text name="rms_ingame_menu_section_service" text="Intervenções"/>
         <text name="rms_ingame_menu_section_other" text="Equipamentos não acompanhados"/>
-        <text name="rms_ingame_menu_header_time_left" text="Restante"/>
         <text name="rms_ingame_menu_header_cost" text="Custo total"/>
         <text name="rms_ingame_menu_header_interval" text="Intervalo"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Aluguer"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Bateria desligada. Volta a ligá-la no corta-corrente, a pé à frente do veículo."/>
         <text name="rms_battery_isolator_engine_running" text="Desliga o motor antes de acionar o corta-corrente."/>
         <text name="rms_battery_isolator_info" text="Bateria desligada"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Utilize uma oficina equipada."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Diagnóstico eletrónico necessário"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Desmontagem ou ferramentas especializadas necessárias"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Equipamento de alta tensão necessário"/>
-        <text name="rms_service_months" text="%s meses"/>
-        <text name="rms_service_month" text="%s mês"/>
-        <text name="rms_service_calendar_due" text="Prazo do calendário atingido"/>
-        <text name="rms_service_program_estimated" text="Programa estimado"/>
-        <text name="rms_ws_label_service_access" text="Facilidade de manutenção"/>
-        <text name="rms_service_access_easy" text="Fácil"/>
-        <text name="rms_service_access_average" text="Média"/>
-        <text name="rms_service_access_demanding" text="Exigente"/>
     </texts>
 </l10n>

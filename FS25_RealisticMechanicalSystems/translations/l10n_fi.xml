@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Ajoneuvon kuluessa jokaisen järjestelmän tärkeät ominaisuudet heikkenevät hieman, kuten moottorin teho, hydrauliikan nopeus tai jarrutusteho. Vaikutus alkaa käyttöiän ensimmäisen kolmanneksen jälkeen, mutta näkyy selvästi vasta kahden kolmanneksen jälkeen ja voimistuu koneen käyttöiän loppua kohti."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Pakokaasusavu"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Ohjaa pakokaasupilveä moottorin todellisen kunnon mukaan: musta kun polttoainetta on enemmän kuin ilmaa, voimakkaassa kiihdytyksessä, moottorin jauhaessa matalilla kierroksilla, pitkän vähäkuormitteisen joutokäynnin jälkeen, tukkeutuneessa ilmansuodattimessa tai kuluneessa ruiskutuksessa, sininen kun väsynyt moottori polttaa öljyä, valkoinen kun polttoaine poistuu palamattomana. Pilvi myös kasvaa sen työn mukana, jota moottori tekee. Vanhemmat koneet savuavat huomattavasti enemmän kuin uudet, jotka tuskin savuavat ennen kuin jokin on vakavasti rikki. Kylmässä ilmassa palamisessa syntyvä vesi tiivistyy lisäksi lyhyeksi valkoiseksi vanaksi, joka haihtuu metrin tai kahden matkalla, myös terveessä moottorissa."/>
-        <text name="rms_option_off" text="Pois"/>
         <text name="rms_tutorialMode_label" text="Opetustila"/>
         <text name="rms_tutorialMode_tooltip" text="Näyttää opastusvihjeet pelin aikana."/>
         <text name="rms_tutorialResetTips_label" text="Nollaa vihjeet"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Tyydyttävä"/>
         <text name="rms_reliability_good" text="Hyvä"/>
         <text name="rms_reliability_very_good" text="Erittäin hyvä"/>
+        <text name="rms_ws_label_service_access" text="Huollon helppous"/>
+        <text name="rms_service_access_easy" text="Helppo"/>
+        <text name="rms_service_access_average" text="Keskitasoinen"/>
+        <text name="rms_service_access_demanding" text="Vaativa"/>
         <text name="rms_ws_label_overhaul_count" text="Tehdyt peruskorjaukset"/>
         <text name="rms_ws_label_maintenance_log" text="Huoltoloki"/>
         <text name="rms_ws_label_last_report" text="Viimeisin raportti"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Yhtään vikaa ei ole valittu. Valitse korjattavat viat kohdassa Vianmääritys ja arvio."/>
         <text name="rms_ws_reason_overhaul_none" text="Mekaaninen peruskorjaus kunnostaa alle 50 % kunnossa olevat järjestelmät. Tässä koneessa ei ole yhtään."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Liikkuva korjaamo ei tee maalausta. Se tehdään jälleenmyyjällä."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Käytä varusteltua korjaamoa."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Elektroninen diagnostiikka vaaditaan"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Purkaminen tai erikoistyökalut vaaditaan"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Suurjännitevarusteet vaaditaan"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s käynnissä..."/>
         <text name="rms_ws_status_in_progress_format" text="%s käynnissä %s asti"/>
         <text name="rms_ws_status_open" text="Korjaamo on auki"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="alle 1 h käyttöä sitten"/>
         <text name="rms_spec_maintenance_complete_notification" text="Toimenpide valmis: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Toimenpide peruutettu: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Minimaalinen"/>
         <text name="rms_spec_maintenance_level" text="%s huolto"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s %s asti"/>
         <text name="rms_spec_workshop_dealer" text="Jälleenmyyjä"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Välitön"/>
         <text name="rms_option_menu_finish_time_text" text="Valmistumisaika"/>
         <text name="rms_option_menu_start_text" text="Aloita"/>
+        <text name="rms_service_months" text="%s kuukautta"/>
+        <text name="rms_service_month" text="%s kuukausi"/>
+        <text name="rms_service_calendar_due" text="Kalenteriraja saavutettu"/>
+        <text name="rms_service_program_estimated" text="Arvioitu huolto-ohjelma"/>
         <text name="rms_ws_levels_recommended_for" text="Suositeltu tälle koneelle"/>
         <text name="rms_ws_levels_interval" text="%s välein"/>
         <text name="rms_ws_levels_duration" text="%s h %s min"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Konekalusto"/>
         <text name="rms_ingame_menu_section_service" text="Toimenpiteet"/>
         <text name="rms_ingame_menu_section_other" text="Seurannan ulkopuoliset koneet"/>
-        <text name="rms_ingame_menu_header_time_left" text="Aikaa jäljellä"/>
         <text name="rms_ingame_menu_header_cost" text="Kokonaiskulut"/>
         <text name="rms_ingame_menu_header_interval" text="Väli"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Akun virta on katkaistu. Kytke se takaisin päävirtakytkimestä, jalan ajoneuvon edessä."/>
         <text name="rms_battery_isolator_engine_running" text="Sammuta moottori ennen päävirtakytkimen käyttöä."/>
         <text name="rms_battery_isolator_info" text="Akun virta katkaistu"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Käytä varusteltua korjaamoa."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Elektroninen diagnostiikka vaaditaan"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Purkaminen tai erikoistyökalut vaaditaan"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Suurjännitevarusteet vaaditaan"/>
-        <text name="rms_service_months" text="%s kuukautta"/>
-        <text name="rms_service_month" text="%s kuukausi"/>
-        <text name="rms_service_calendar_due" text="Kalenteriraja saavutettu"/>
-        <text name="rms_service_program_estimated" text="Arvioitu huolto-ohjelma"/>
-        <text name="rms_ws_label_service_access" text="Huollon helppous"/>
-        <text name="rms_service_access_easy" text="Helppo"/>
-        <text name="rms_service_access_average" text="Keskitasoinen"/>
-        <text name="rms_service_access_demanding" text="Vaativa"/>
     </texts>
 </l10n>

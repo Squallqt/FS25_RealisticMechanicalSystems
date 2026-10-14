@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Зі зношуванням техніки кожна система зазнає невеликого погіршення основних характеристик, як-от потужності двигуна, швидкості гідравліки або ефективності гальмування. Ефект вмикається після першої третини терміну служби, стає справді помітним лише після двох третин і посилюється з наближенням кінця строку служби техніки."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Вихлопний дим"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Керує вихлопним димом відповідно до фактичного стану двигуна. Дим чорний, коли палива більше за доступне повітря: під час різкого прискорення, важкої роботи на низьких обертах, тривалого холостого ходу з малим навантаженням, із засміченим повітряним фільтром або зношеною системою впорскування. Дим синій, коли зношений двигун спалює оливу, і білий, коли паливо виходить незгорілим. Шлейф також збільшується разом із навантаженням двигуна. Стара техніка димить значно більше за сучасну, яка майже не димить, доки немає справжньої несправності. У холодному повітрі вода, що утворюється під час згоряння, ще й конденсується в короткий білий шлейф, який випаровується в межах метра-двох навіть у справного двигуна."/>
-        <text name="rms_option_off" text="Вимкнено"/>
         <text name="rms_tutorialMode_label" text="Режим навчання"/>
         <text name="rms_tutorialMode_tooltip" text="Показує підказки під час гри."/>
         <text name="rms_tutorialResetTips_label" text="Скинути підказки"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Задовільна"/>
         <text name="rms_reliability_good" text="Добра"/>
         <text name="rms_reliability_very_good" text="Дуже добра"/>
+        <text name="rms_ws_label_service_access" text="Зручність сервісу"/>
+        <text name="rms_service_access_easy" text="Просте"/>
+        <text name="rms_service_access_average" text="Середня"/>
+        <text name="rms_service_access_demanding" text="Складне"/>
         <text name="rms_ws_label_overhaul_count" text="Виконано капітальних ремонтів"/>
         <text name="rms_ws_label_maintenance_log" text="Журнал обслуговування"/>
         <text name="rms_ws_label_last_report" text="Останній звіт"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Жодну несправність не позначено. Позначте в розділі «Діагностика та кошторис» несправності для ремонту."/>
         <text name="rms_ws_reason_overhaul_none" text="Механічний капітальний ремонт відновлює системи зі станом нижче 50%. У цієї техніки таких немає."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Мобільна майстерня не виконує фарбування. Його виконують у дилера."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Скористайтеся обладнаною майстернею."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Потрібна електронна діагностика"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Потрібне розбирання або спеціальний інструмент"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Потрібне високовольтне обладнання"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s триває..."/>
         <text name="rms_ws_status_in_progress_format" text="%s триває до %s"/>
         <text name="rms_ws_status_open" text="Майстерня відкрита"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="менше 1 h роботи тому"/>
         <text name="rms_spec_maintenance_complete_notification" text="Роботу завершено: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Роботу скасовано: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Мінімальне"/>
         <text name="rms_spec_maintenance_level" text="ТО %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s до %s"/>
         <text name="rms_spec_workshop_dealer" text="Дилер"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Миттєво"/>
         <text name="rms_option_menu_finish_time_text" text="Час завершення"/>
         <text name="rms_option_menu_start_text" text="Почати"/>
+        <text name="rms_service_months" text="%s міс."/>
+        <text name="rms_service_month" text="%s міс."/>
+        <text name="rms_service_calendar_due" text="Календарний строк досягнуто"/>
+        <text name="rms_service_program_estimated" text="Орієнтовний графік"/>
         <text name="rms_ws_levels_recommended_for" text="Рекомендовано для цієї техніки"/>
         <text name="rms_ws_levels_interval" text="Кожні %s"/>
         <text name="rms_ws_levels_duration" text="%s год %s хв"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Парк техніки"/>
         <text name="rms_ingame_menu_section_service" text="Роботи"/>
         <text name="rms_ingame_menu_section_other" text="Техніка без обліку"/>
-        <text name="rms_ingame_menu_header_time_left" text="Залишилось часу"/>
         <text name="rms_ingame_menu_header_cost" text="Загальні витрати"/>
         <text name="rms_ingame_menu_header_interval" text="Інтервал"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Лізинг"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Масу вимкнено. Увімкніть її вимикачем маси, стоячи перед транспортом."/>
         <text name="rms_battery_isolator_engine_running" text="Вимкніть двигун перед використанням вимикача маси."/>
         <text name="rms_battery_isolator_info" text="Масу вимкнено"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Скористайтеся обладнаною майстернею."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Потрібна електронна діагностика"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Потрібне розбирання або спеціальний інструмент"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Потрібне високовольтне обладнання"/>
-        <text name="rms_service_months" text="%s міс."/>
-        <text name="rms_service_month" text="%s міс."/>
-        <text name="rms_service_calendar_due" text="Календарний строк досягнуто"/>
-        <text name="rms_service_program_estimated" text="Орієнтовний графік"/>
-        <text name="rms_ws_label_service_access" text="Зручність сервісу"/>
-        <text name="rms_service_access_easy" text="Просте"/>
-        <text name="rms_service_access_average" text="Середня"/>
-        <text name="rms_service_access_demanding" text="Складне"/>
     </texts>
 </l10n>

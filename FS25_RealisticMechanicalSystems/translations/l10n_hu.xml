@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="Ahogy a jármű elhasználódik, minden rendszer fő jellemzői kismértékben romlanak, például a motorteljesítmény, a hidraulika sebessége vagy a fékhatás. A hatás az élettartam első harmada után válik aktívvá, de csak a második harmad után lesz igazán észrevehető, majd a gép élettartamának vége felé erősödik."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kipufogófüst"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="A kipufogófüstöt a motor valós állapota vezérli. Fekete, amikor több az üzemanyag, mint a rendelkezésre álló levegő: erős gyorsításnál, alacsony fordulaton erőlködő motornál, hosszan tartó kis terhelésű alapjáratnál, eltömődött légszűrőnél vagy kopott befecskendezésnél. Kék, amikor egy fáradt motor olajat éget, és fehér, amikor az üzemanyag elégetlenül távozik. A füstcsóva a motor által végzett munkával együtt nő. A régebbi gépek sokkal jobban füstölnek, mint a modernek, amelyek komoly hiba nélkül alig füstölnek. Hideg levegőben az égés során keletkező víz is lecsapódik egy rövid fehér csíkká, amely egy-két méteren belül elpárolog, még egy ép motornál is."/>
-        <text name="rms_option_off" text="Ki"/>
         <text name="rms_tutorialMode_label" text="Oktató mód"/>
         <text name="rms_tutorialMode_tooltip" text="Játék közben oktató tippeket jelenít meg."/>
         <text name="rms_tutorialResetTips_label" text="Tippek visszaállítása"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="Megfelelő"/>
         <text name="rms_reliability_good" text="Jó"/>
         <text name="rms_reliability_very_good" text="Nagyon jó"/>
+        <text name="rms_ws_label_service_access" text="Karbantarthatóság"/>
+        <text name="rms_service_access_easy" text="Könnyű"/>
+        <text name="rms_service_access_average" text="Átlagos"/>
+        <text name="rms_service_access_demanding" text="Igényes"/>
         <text name="rms_ws_label_overhaul_count" text="Elvégzett nagyjavítások"/>
         <text name="rms_ws_label_maintenance_log" text="Karbantartási napló"/>
         <text name="rms_ws_label_last_report" text="Utolsó jelentés"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="Nincs kijelölt meghibásodás. Jelöld ki a javítandókat a Diagnosztika és árajánlat lapon."/>
         <text name="rms_ws_reason_overhaul_none" text="A mechanikai nagyjavítás az 50% állapot alatti rendszereket hozza rendbe. Ennél a gépnél nincs ilyen."/>
         <text name="rms_ws_reason_bodywork_mobile" text="A mobil műhely nem végez fényezést. Azt a kereskedőnél végzik."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Használj felszerelt műhelyt."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Elektronikus diagnosztika szükséges"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Szétszerelés vagy speciális szerszám szükséges"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Nagyfeszültségű felszerelés szükséges"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s folyamatban..."/>
         <text name="rms_ws_status_in_progress_format" text="%s folyamatban, befejezés: %s"/>
         <text name="rms_ws_status_open" text="A műhely nyitva van"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="max. 1 h üzemidővel ezelőtt"/>
         <text name="rms_spec_maintenance_complete_notification" text="Eljárás befejezve: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Eljárás megszakítva: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Minimális"/>
         <text name="rms_spec_maintenance_level" text="%s karbantartás"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s eddig: %s"/>
         <text name="rms_spec_workshop_dealer" text="Kereskedő"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="Azonnali"/>
         <text name="rms_option_menu_finish_time_text" text="Befejezési idő"/>
         <text name="rms_option_menu_start_text" text="Indítás"/>
+        <text name="rms_service_months" text="%s hónap"/>
+        <text name="rms_service_month" text="%s hónap"/>
+        <text name="rms_service_calendar_due" text="Naptári határidő elérve"/>
+        <text name="rms_service_program_estimated" text="Becsült karbantartási terv"/>
         <text name="rms_ws_levels_recommended_for" text="Ajánlott ehhez a géphez"/>
         <text name="rms_ws_levels_interval" text="Időköz: %s"/>
         <text name="rms_ws_levels_duration" text="%s ó %s p"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="Géppark"/>
         <text name="rms_ingame_menu_section_service" text="Munkálatok"/>
         <text name="rms_ingame_menu_section_other" text="Nem követett gépek"/>
-        <text name="rms_ingame_menu_header_time_left" text="Hátralévő idő"/>
         <text name="rms_ingame_menu_header_cost" text="Összes költség"/>
         <text name="rms_ingame_menu_header_interval" text="Intervallum"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Lízing"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="Az akkumulátor le van választva. Kapcsold vissza az akkumulátor-főkapcsolóval, gyalog a jármű előtt."/>
         <text name="rms_battery_isolator_engine_running" text="Az akkumulátor-főkapcsoló használata előtt állítsd le a motort."/>
         <text name="rms_battery_isolator_info" text="Akkumulátor leválasztva"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Használj felszerelt műhelyt."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="Elektronikus diagnosztika szükséges"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="Szétszerelés vagy speciális szerszám szükséges"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Nagyfeszültségű felszerelés szükséges"/>
-        <text name="rms_service_months" text="%s hónap"/>
-        <text name="rms_service_month" text="%s hónap"/>
-        <text name="rms_service_calendar_due" text="Naptári határidő elérve"/>
-        <text name="rms_service_program_estimated" text="Becsült karbantartási terv"/>
-        <text name="rms_ws_label_service_access" text="Karbantarthatóság"/>
-        <text name="rms_service_access_easy" text="Könnyű"/>
-        <text name="rms_service_access_average" text="Átlagos"/>
-        <text name="rms_service_access_demanding" text="Igényes"/>
     </texts>
 </l10n>

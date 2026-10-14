@@ -65,7 +65,6 @@
         <text name="rms_generalWearEnabled_tooltip" text="노후에 따른 마모를 활성화합니다. 차량이 노후화됨에 따라 엔진 출력, 유압 속도, 브레이크 효율 등 핵심 특성에 미세한 불이익이 발생합니다. 이 효과는 차량 수명의 1/3이 지난 시점부터 시작되어 2/3가 지난 후 뚜렷해지며, 수명 끝부분에 갈수록 강해집니다."/>
         <text name="rms_exhaustSmokeEnabled_label" text="배기 연기"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="엔진의 실제 상태에 따라 배기 연기를 표현합니다. 공기보다 연료가 많을 때, 급가속 순간, 저회전에서 무리하게 밀어붙일 때, 저부하 장시간 공회전, 에어 필터 막힘, 분사 장치 마모에서는 검은색, 노후한 엔진이 오일을 태울 때는 파란색, 연료가 연소되지 않고 배출될 때는 흰색으로 나타납니다. 연기는 엔진이 하는 일에 따라 굵어지기도 합니다. 오래된 기계일수록 훨씬 많은 연기를 내며, 최신 기계는 심각한 고장이 없는 한 거의 연기를 내지 않습니다. 추운 날에는 연소로 생긴 수분도 응결해 짧은 흰색 줄기가 되며, 1~2미터 안에 증발합니다. 이는 정상적인 엔진에서도 나타납니다."/>
-        <text name="rms_option_off" text="꺼짐"/>
         <text name="rms_tutorialMode_label" text="튜토리얼 모드"/>
         <text name="rms_tutorialMode_tooltip" text="게임 플레이 중 튜토리얼 팁을 표시합니다."/>
         <text name="rms_tutorialResetTips_label" text="팁 초기화"/>
@@ -119,6 +118,10 @@
         <text name="rms_reliability_fair" text="양호"/>
         <text name="rms_reliability_good" text="좋음"/>
         <text name="rms_reliability_very_good" text="매우 좋음"/>
+        <text name="rms_ws_label_service_access" text="정비 편의성"/>
+        <text name="rms_service_access_easy" text="쉬움"/>
+        <text name="rms_service_access_average" text="보통"/>
+        <text name="rms_service_access_demanding" text="까다로움"/>
         <text name="rms_ws_label_overhaul_count" text="완료된 오버홀"/>
         <text name="rms_ws_label_maintenance_log" text="정비 기록"/>
         <text name="rms_ws_label_last_report" text="최근 보고서"/>
@@ -135,6 +138,10 @@
         <text name="rms_ws_reason_repair_unselected" text="선택한 고장이 없습니다. 진단 및 견적에서 수리할 고장을 선택하십시오."/>
         <text name="rms_ws_reason_overhaul_none" text="기계 오버홀은 상태가 50% 미만인 시스템을 복원합니다. 이 차량에는 해당 시스템이 없습니다."/>
         <text name="rms_ws_reason_bodywork_mobile" text="이동식 정비소에서는 도장을 하지 않습니다. 대리점에서 합니다."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. 장비를 갖춘 정비소를 이용하세요."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="전자 진단 필요"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="분해 또는 전문 공구 필요"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="고전압 장비 필요"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s 진행 중..."/>
         <text name="rms_ws_status_in_progress_format" text="%s 진행 중 (완료 예정: %s)"/>
         <text name="rms_ws_status_open" text="정비소 영업 중"/>
@@ -535,7 +542,6 @@
         <text name="rms_spec_work_under_hour_ago" text="1 h 미만 가동 전"/>
         <text name="rms_spec_maintenance_complete_notification" text="작업 완료: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="작업 취소: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="최소"/>
         <text name="rms_spec_maintenance_level" text="%s 정비"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s (%s까지)"/>
         <text name="rms_spec_workshop_dealer" text="대리점"/>
@@ -600,6 +606,10 @@
         <text name="rms_option_menu_duration_instant" text="즉시"/>
         <text name="rms_option_menu_finish_time_text" text="완료 예정"/>
         <text name="rms_option_menu_start_text" text="시작"/>
+        <text name="rms_service_months" text="%s개월"/>
+        <text name="rms_service_month" text="%s개월"/>
+        <text name="rms_service_calendar_due" text="달력 기준 기한 도달"/>
+        <text name="rms_service_program_estimated" text="추정 정비 일정"/>
         <text name="rms_ws_levels_recommended_for" text="이 기계에 권장됨"/>
         <text name="rms_ws_levels_interval" text="%s마다"/>
         <text name="rms_ws_levels_duration" text="%s시간 %s분"/>
@@ -959,7 +969,6 @@
         <text name="rms_ingame_menu_section_active" text="보유 장비"/>
         <text name="rms_ingame_menu_section_service" text="정비 작업"/>
         <text name="rms_ingame_menu_section_other" text="관리되지 않는 장비"/>
-        <text name="rms_ingame_menu_header_time_left" text="남은 시간"/>
         <text name="rms_ingame_menu_header_cost" text="총 비용"/>
         <text name="rms_ingame_menu_header_interval" text="주기"/>
         <text name="rms_ingame_menu_header_leasing_price" text="리스료"/>
@@ -1135,17 +1144,5 @@
         <text name="rms_battery_isolator_open" text="배터리가 차단되었습니다. 차량 앞에서 도보로 배터리 차단 스위치를 사용해 다시 연결하십시오."/>
         <text name="rms_battery_isolator_engine_running" text="배터리 차단 스위치를 조작하기 전에 엔진을 끄십시오."/>
         <text name="rms_battery_isolator_info" text="배터리 차단됨"/>
-        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. 장비를 갖춘 정비소를 이용하세요."/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="전자 진단 필요"/>
-        <text name="rms_mobile_workshop_heavy_work_required" text="분해 또는 전문 공구 필요"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="고전압 장비 필요"/>
-        <text name="rms_service_months" text="%s개월"/>
-        <text name="rms_service_month" text="%s개월"/>
-        <text name="rms_service_calendar_due" text="달력 기준 기한 도달"/>
-        <text name="rms_service_program_estimated" text="추정 정비 일정"/>
-        <text name="rms_ws_label_service_access" text="정비 편의성"/>
-        <text name="rms_service_access_easy" text="쉬움"/>
-        <text name="rms_service_access_average" text="보통"/>
-        <text name="rms_service_access_demanding" text="까다로움"/>
     </texts>
 </l10n>
