@@ -677,6 +677,8 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.isImplementLowered = false
     self.spec_RealisticMechanicalSystems.isImplementOperating = false
     self.spec_RealisticMechanicalSystems.liftedMass = 0
+    self.spec_RealisticMechanicalSystems.raisingMass = 0
+    self.spec_RealisticMechanicalSystems.loadHeightCache = {}
     self.spec_RealisticMechanicalSystems.hydraulicsMoveAlphaCache = {}
     self.spec_RealisticMechanicalSystems.hydraulicsLiftRatioCache = {}
     self.spec_RealisticMechanicalSystems.hydraulicLiftMassByJoint = {}

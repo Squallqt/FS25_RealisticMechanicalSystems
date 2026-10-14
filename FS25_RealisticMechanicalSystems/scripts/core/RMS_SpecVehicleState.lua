@@ -345,6 +345,8 @@ local function updateWheelGroundState(vehicle)
 end
 
 local HYDRAULIC_LIFT_RATIO_DEADBAND = 0.05
+-- metres a load has to rise between two samples to be raised, above the jitter of the physics
+local LOAD_RISE_DEADBAND = 0.01
 local HYDRAULIC_LIFT_RATIO_INTERPOLATION_RATE = 1 / 1000
 
 ---Sums the tire load of the wheels touching ground
@@ -422,6 +424,7 @@ local function updateImplementChainState(vehicle, dt)
     end
 
     spec.liftedMass = 0
+    spec.raisingMass = 0
     spec.isImplementLifted = false
     spec.isImplementOperating = false
     spec.isImplementLowered = false
@@ -435,6 +438,8 @@ local function updateImplementChainState(vehicle, dt)
     local implements = {}
     local implementNames = RMS_Utils.getIsDebugDataWanted(vehicle) and {} or nil
     local liftBranches = {}
+    -- loads the arms of a loader or the forks carry: what each weighs and the node that shows its height
+    local loads = {}
     local visited = {}
     local maxCutterArea = 0
 
@@ -510,6 +515,21 @@ local function updateImplementChainState(vehicle, dt)
             liftBranch.supportLoad = liftBranch.supportLoad + supportWheelLoad
         end
 
+        if isHead or not isTrailerJointType(liftBranch.jointTypeId) then
+            -- a tool rides with whatever raises it: arms, a boom or a hitch
+            if not isHead then
+                loads[#loads + 1] = { node = vehicleObj.rootNode, mass = implementData.mass, branch = liftBranch }
+            end
+            -- a bale or a pallet on forks is a body of its own, weighed as the physics carries it
+            local mountAttacher = vehicleObj.spec_dynamicMountAttacher
+            if mountAttacher ~= nil then
+                for object in pairs(mountAttacher.dynamicMountedObjects) do
+                    local node = object.nodeId or object.rootNode
+                    loads[#loads + 1] = { node = node, mass = getMass(node) }
+                end
+            end
+        end
+
         local attachedImplements = vehicleObj.getAttachedImplements ~= nil and vehicleObj:getAttachedImplements() or nil
         if attachedImplements ~= nil then
             for _, implementData in pairs(attachedImplements) do
@@ -570,6 +590,10 @@ local function updateImplementChainState(vehicle, dt)
             if not branch.isLowered then
                 local liftedBranchMass = branch.mass * liftRatioState.applied
                 spec.liftedMass = spec.liftedMass + liftedBranchMass
+                -- a hitch on its way up: the pump pushes against the weight it carries
+                if branch.isMoving then
+                    spec.raisingMass = spec.raisingMass + liftedBranchMass
+                end
                 spec.isImplementLifted = spec.isImplementLifted or liftRatioState.applied > 0
                 if branch.jointDesc ~= nil and RMS_Utils.getIsHydraulicLiftJoint(branch.jointDesc) then
                     spec.hydraulicLiftMassByJoint[branch.jointDesc] = liftedBranchMass
@@ -581,6 +605,21 @@ local function updateImplementChainState(vehicle, dt)
     local isOnField = vehicle.getIsOnField ~= nil and vehicle:getIsOnField() or false
     local lastSpeed = vehicle.getLastSpeed ~= nil and vehicle:getLastSpeed() or 0
     local isTurnedOn = vehicle.getIsTurnedOn == nil or vehicle:getIsTurnedOn()
+
+    -- a load rising on the machine while its hydraulics move: the arms or the forks push it up. Read against the
+    -- machine, a climb or a bounce of the whole machine raises nothing; a hitch on its way up has weighed its own
+    local nextLoadHeightCache = {}
+    for _, load in ipairs(loads) do
+        local _, height, _ = localToLocal(load.node, vehicle.rootNode, 0, 0, 0)
+        local previousHeight = spec.loadHeightCache[load.node]
+        nextLoadHeightCache[load.node] = height
+        local isWeighedByHitch = load.branch ~= nil and load.branch.isMoving
+        if spec.isHydraulicActive and not isWeighedByHitch and previousHeight ~= nil
+            and height - previousHeight > LOAD_RISE_DEADBAND then
+            spec.raisingMass = spec.raisingMass + load.mass
+        end
+    end
+    spec.loadHeightCache = nextLoadHeightCache
 
     spec.hydraulicsMoveAlphaCache = nextMoveAlphaCache
     spec.hydraulicsLiftRatioCache = nextLiftRatioCache

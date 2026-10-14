@@ -665,7 +665,6 @@ function RealisticMechanicalSystems:updateHydraulicsSystem(dt)
     local wearRate = 0
     local vehicleMass = self.getTotalMass ~= nil and (self:getTotalMass(true) or 0) or 0
     local heavyLiftMassRatio = vehicleMass > 0 and math.max(spec.liftedMass or 0, 0) / vehicleMass or 0
-    heavyLiftFactor = math.clamp(heavyLiftMassRatio, 0, 1)
     local vibState = spec.chassisVibState or {}
     local vibSignal = tonumber(vibState.smoothed) or 0
     local vibConfig = RMS_Config.CORE.CHASSIS_FACTOR_DATA
@@ -676,6 +675,9 @@ function RealisticMechanicalSystems:updateHydraulicsSystem(dt)
 
     local motorStarted = self.getIsMotorStarted ~= nil and self:getIsMotorStarted()
     if motorStarted then
+        -- the pump works against a weight only while the hitch, the arms or the forks raise it: held up, the weight
+        -- rests on the oil shut in the rams, the pump idling
+        heavyLiftFactor = vehicleMass > 0 and math.min(spec.raisingMass / vehicleMass, 1) or 0
         wearRate = C.PUMP_WEAR_RATE + heavyLiftFactor
     end
 
