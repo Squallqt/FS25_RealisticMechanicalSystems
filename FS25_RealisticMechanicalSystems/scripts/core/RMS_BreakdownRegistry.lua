@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Declarative registry of every breakdown, its stages, its effects and its repair price
+---Registry of every breakdown, its stages, effects and repair price
 
 -- dashboard indicator ids
 RMS_Breakdowns.DASHBOARD = {
@@ -13,7 +13,10 @@ RMS_Breakdowns.DASHBOARD = {
     COOLANT = "coolant",
     SERVICE = "service",
     OIL = "oil",
-    PREHEAT = "preheat"
+    PREHEAT = "preheat",
+    -- the two lamps only an electric carries
+    TRACTION_BATTERY = "tractionBattery",
+    LIMITED_POWER = "limitedPower"
 }
 
 -- indicator colours
@@ -48,8 +51,8 @@ RMS_Breakdowns.COLOR_PRIORITY = {
 }
 
 
-local getIsElectricVehicle = RMS_Utils ~= nil and RMS_Utils.getIsElectricVehicle or function() return false end
-local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
+local getIsElectricVehicle = RMS_Utils.getIsElectricVehicle
+local hasCVTAddon = RMS_Utils.hasCVTAddon
 
 local systems = RealisticMechanicalSystems.SYSTEMS
 
@@ -59,6 +62,17 @@ RMS_Breakdowns.PARTS = {
     CONSUMABLES = "rms_breakdowns_part_consumables",
     ENGINE = "rms_breakdowns_part_engine",
     BATTERY = "rms_breakdowns_part_battery",
+    TRACTION_BATTERY = "rms_breakdowns_part_traction_battery",
+    HV_CONTACTOR = "rms_breakdowns_part_hv_contactor",
+    HV_WIRING = "rms_breakdowns_part_hv_wiring",
+    INVERTER = "rms_breakdowns_part_inverter",
+    DCDC_CONVERTER = "rms_breakdowns_part_dcdc_converter",
+    ONBOARD_CHARGER = "rms_breakdowns_part_onboard_charger",
+    ELECTRIC_MOTOR_BEARINGS = "rms_breakdowns_part_electric_motor_bearings",
+    ELECTRIC_MOTOR_WINDINGS = "rms_breakdowns_part_electric_motor_windings",
+    MOTOR_POSITION_SENSOR = "rms_breakdowns_part_motor_position_sensor",
+    COOLANT_PUMP = "rms_breakdowns_part_coolant_pump",
+    REDUCER = "rms_breakdowns_part_reducer",
     GLOW_PLUGS = "rms_breakdowns_part_glow_plugs",
     ECU = "rms_breakdowns_part_ecu",
     WIRING = "rms_breakdowns_part_wiring",
@@ -136,6 +150,17 @@ local breakdownPriceMultipliers = {
     PTO_DRIVE_COUPLING_WEAR = 1.30,
     PTO_DRIVE_OUTPUT_BEARING_WEAR = 0.60,
     PTO_ENGAGEMENT_CONTROL_MALFUNCTION = 0.75,
+    ELECTRIC_MOTOR_BEARING_WEAR = 0.90,
+    ELECTRIC_MOTOR_WINDING_FAULT = 1.60,
+    MOTOR_POSITION_SENSOR_FAULT = 0.50,
+    INVERTER_MALFUNCTION = 1.20,
+    DCDC_CONVERTER_FAILURE = 0.75,
+    ONBOARD_CHARGER_FAILURE = 0.70,
+    HV_INSULATION_LOSS = 0.50,
+    TRACTION_BATTERY_CELL_FAULT = 3.00,
+    HV_CONTACTOR_FAILURE = 0.60,
+    COOLANT_PUMP_FAILURE = 0.40,
+    REDUCER_GEAR_WEAR = 1.20,
 }
 
 -- how fast each breakdown moves to its next stage
@@ -159,7 +184,6 @@ local breakdownProgressMultipliers = {
     HYDRAULIC_PUMP_MALFUNCTION = 1.1,
     HYDRAULIC_CYLINDER_INTERNAL_LEAK = 0.6,
     HYDRAULIC_HOSE_EXTERNAL_LEAK = 0.8,
-    HYDRAULIC_FILTER_CLOGGING = 1.2,
     HYDRAULIC_OIL_COOLER_MALFUNCTION = 0.9,
     HYDRAULIC_SPOOL_VALVE_MALFUNCTION = 1.1,
     BRAKE_MALFUNCTION = 0.9,
@@ -171,18 +195,24 @@ local breakdownProgressMultipliers = {
     FAN_CLUTCH_FAILURE = 0.9,
     FUEL_PUMP_MALFUNCTION = 1.1,
     FUEL_INJECTOR_MALFUNCTION = 1.1,
-    FUEL_FILTER_CLOGGING = 1.2,
     FUEL_LINE_AIR_LEAK = 0.8,
     PTO_DRIVE_COUPLING_WEAR = 1.00,
     PTO_DRIVE_OUTPUT_BEARING_WEAR = 1.20,
     PTO_ENGAGEMENT_CONTROL_MALFUNCTION = 1.10,
+    ELECTRIC_MOTOR_BEARING_WEAR = 1.20,
+    ELECTRIC_MOTOR_WINDING_FAULT = 1.30,
+    MOTOR_POSITION_SENSOR_FAULT = 1.00,
+    INVERTER_MALFUNCTION = 1.00,
+    DCDC_CONVERTER_FAILURE = 1.10,
+    ONBOARD_CHARGER_FAILURE = 1.10,
+    HV_INSULATION_LOSS = 0.90,
+    TRACTION_BATTERY_CELL_FAULT = 1.40,
+    HV_CONTACTOR_FAILURE = 1.10,
+    COOLANT_PUMP_FAILURE = 1.20,
+    REDUCER_GEAR_WEAR = 1.20,
 }
 
----Returns the share the requested wear factors hold in the total wear of a system
--- @param table? vehicle vehicle
--- @param string systemName system name
--- @param any ... factor aliases, as strings or as a list
--- @return float percent share in percent, 0 when nothing matched
+---Returns the share some wear factors hold in the total wear of a system
 local function getBreakdownFactorWeightPercent(vehicle, systemName, ...)
     if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
         return 0
@@ -198,8 +228,8 @@ local function getBreakdownFactorWeightPercent(vehicle, systemName, ...)
         targetSystem = systems[targetSystem]
     end
 
-    local systemKey = RMS_Utils ~= nil and RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, targetSystem) or nil
-    if systemKey == nil or systemKey == "" then
+    local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, targetSystem)
+    if systemKey == "" then
         systemKey = string.lower(tostring(targetSystem or ""))
     end
 
@@ -252,14 +282,7 @@ end
 local BREAKDOWN_SECONDARY_FACTOR_WEIGHT = 0.35
 local BREAKDOWN_FALLBACK_WEIGHT = 1.0
 
----Weighs the primary and secondary wear factors into a breakdown probability, with a floor
--- @param table? vehicle vehicle
--- @param string systemName system name
--- @param table primaryAliases factor aliases weighed in full
--- @param table secondaryAliases factor aliases weighed down
--- @param float? fallbackWeight weight returned when no factor matched
--- @param float? secondaryWeight weight applied to the secondary factors
--- @return float weight probability weight
+---Weighs the primary and secondary wear factors into a breakdown probability
 local function getBreakdownProbabilityWeightPercent(vehicle, systemName, primaryAliases, secondaryAliases, fallbackWeight, secondaryWeight)
     local resolvedFallbackWeight = math.max(tonumber(fallbackWeight) or BREAKDOWN_FALLBACK_WEIGHT, 0)
     local resolvedSecondaryWeight = math.max(tonumber(secondaryWeight) or BREAKDOWN_SECONDARY_FACTOR_WEIGHT, 0)
@@ -276,38 +299,38 @@ local function getBreakdownProbabilityWeightPercent(vehicle, systemName, primary
 end
 
 ---Tells whether the vehicle has hydraulics at all
--- @param table? vehicle vehicle
--- @return boolean isApplicable true with a hydraulic circuit
 local function isHydraulicBreakdownApplicable(vehicle)
     return RMS_Utils.hasHydraulicCapability(vehicle)
 end
 
 ---Tells whether the vehicle can lift with its hydraulics
--- @param table? vehicle vehicle
--- @return boolean isApplicable true with a lift capability
 local function isHydraulicLiftBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicLiftCapability(vehicle)
 end
 
 ---Tells whether the vehicle carries hydraulic hoses
--- @param table? vehicle vehicle
--- @return boolean isApplicable true with hoses
 local function isHydraulicHoseBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicHoseCapability(vehicle)
 end
 
 ---Tells whether the vehicle has a hydraulic function the player can drive
--- @param table? vehicle vehicle
--- @return boolean isApplicable true with a controllable target
 local function isHydraulicActuatorBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicControllableTargetCapability(vehicle)
 end
 
 ---Tells whether the vehicle has a PTO output
--- @param table? vehicle vehicle
--- @return boolean isApplicable true with a PTO output
 local function isPtoBreakdownApplicable(vehicle)
     return RMS_Utils.hasPtoOutputCapability(vehicle)
+end
+
+---Tells whether the vehicle drives its wheels through a reducer
+local function isReducerBreakdownApplicable(vehicle)
+    return getIsElectricVehicle(vehicle) and vehicle:getMotor().minForwardGearRatio ~= nil
+end
+
+---Tells whether the vehicle runs a variator
+local function isVariatorBreakdownApplicable(vehicle)
+    return not hasCVTAddon(vehicle) and RMS_Utils.hasCVTTransmission(vehicle)
 end
 
 RMS_Breakdowns.BreakdownRegistry = {
@@ -344,7 +367,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         part = parts.ENGINE,
         isSelectable = false,
         isApplicable = function(vehicle)
-            return true
+            return not getIsElectricVehicle(vehicle)
         end,
         probability = function(vehicle)
             return 0.0
@@ -442,6 +465,81 @@ RMS_Breakdowns.BreakdownRegistry = {
                 },
                 indicators = {
                     { id = db.BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
+
+    COLD_TRACTION_BATTERY = {
+        system = systems.FUEL,
+        part = parts.TRACTION_BATTERY,
+        isSelectable = false,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return 0.0
+        end,
+        isCanProgress = function(vehicle)
+            return false
+        end,
+        -- a cold pack holds back energy and power: 80 % of its energy at 0 degrees, half at -20
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_reduce_power",
+                description = "",
+                detectionChance = 0.0,
+                progressMultiplier = 0.0,
+                repairPrice = 0.0,
+                effects = {
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.10, aggregation = "sum" },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" }
+                },
+                indicators = {}
+            },
+            {
+                severity = "rms_breakdowns_severity_reduce_power",
+                description = "",
+                detectionChance = 0.0,
+                progressMultiplier = 0.0,
+                repairPrice = 0.0,
+                effects = {
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.25, aggregation = "sum", extraData = { message = "rms_breakdowns_cold_traction_battery_message" } },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.10, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.COOL, switchOn = true, switchOff = false },
+                    { id = db.LIMITED_POWER, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_reduce_power",
+                description = "",
+                detectionChance = 0.0,
+                progressMultiplier = 0.0,
+                repairPrice = 0.0,
+                effects = {
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.50, aggregation = "sum", extraData = { message = "rms_breakdowns_cold_traction_battery_message" } },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.25, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.COOL, switchOn = true, switchOff = false },
+                    { id = db.LIMITED_POWER, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_reduce_power",
+                description = "",
+                detectionChance = 0.0,
+                progressMultiplier = 0.0,
+                repairPrice = 0.0,
+                effects = {
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 1.00, aggregation = "sum", extraData = { message = "rms_breakdowns_cold_traction_battery_message" } },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.40, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.COOL, switchOn = true, switchOff = false },
+                    { id = db.LIMITED_POWER, color = color.WARNING, switchOn = true, switchOff = false }
                 }
             }
         }
@@ -596,6 +694,46 @@ RMS_Breakdowns.BreakdownRegistry = {
         },
     },
 
+    -- shared ECU diesel protection, without overboost, shutdown or a repair to select
+    ENGINE_THERMAL_PROTECTION = {
+        isSelectable = false,
+        system = systems.ENGINE,
+        part = parts.VEHICLE,
+        isApplicable = function(vehicle)
+            return RMS_Thermal.getUsesEngineProtection(vehicle)
+        end,
+        probability = function(vehicle) return 1.0 end,
+        isCanProgress = function(vehicle) return false end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_reduce_power",
+                description = "rms_breakdowns_overheat_protection_stage1_description",
+                detectionChance = 0.0, progressMultiplier = 0.0, repairPrice = 0.0,
+                effects = {
+                    { id = "ENGINE_THERMAL_TORQUE_LIMIT", value = 0.8, aggregation = "min",
+                        extraData = { reason = "THERMAL_PROTECTION", message = "rms_breakdowns_overheat_protection_stage1_message" } }
+                },
+                indicators = {
+                    { id = db.WARNING, color = color.WARNING, switchOn = true, switchOff = false },
+                    { id = db.LIMITED_POWER, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_reduce_power",
+                description = "rms_breakdowns_overheat_protection_stage2_description",
+                detectionChance = 0.0, progressMultiplier = 0.0, repairPrice = 0.0,
+                effects = {
+                    { id = "ENGINE_THERMAL_TORQUE_LIMIT", value = 0.5, aggregation = "min",
+                        extraData = { reason = "THERMAL_PROTECTION", message = "rms_breakdowns_overheat_protection_stage2_message" } }
+                },
+                indicators = {
+                    { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false },
+                    { id = db.LIMITED_POWER, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
+
     OVERHEAT_PROTECTION = {
         isSelectable = false,
         system = systems.ENGINE,
@@ -634,7 +772,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                         color = color.CRITICAL,
                         switchOn = true,
                         switchOff = false
-                    }
+                    },
+                    { id = db.LIMITED_POWER, color = color.WARNING, switchOn = true, switchOff = false }
                 }
             },            
             {
@@ -661,7 +800,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                         color = color.CRITICAL,
                         switchOn = true,
                         switchOff = false
-                    }
+                    },
+                    { id = db.LIMITED_POWER, color = color.WARNING, switchOn = true, switchOff = false }
                 }
             },
             {
@@ -688,7 +828,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                         color = color.CRITICAL,
                         switchOn = true,
                         switchOff = false
-                    }
+                    },
+                    { id = db.LIMITED_POWER, color = color.WARNING, switchOn = true, switchOff = false }
                 }
             },
             {
@@ -717,7 +858,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                         color = color.CRITICAL,
                         switchOn = true,
                         switchOff = false
-                    }
+                    },
+                    { id = db.LIMITED_POWER, color = color.CRITICAL, switchOn = true, switchOff = false }
                 }
             }
         }
@@ -728,7 +870,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.ENGINE,
         part = parts.ENGINE,
         isApplicable = function(vehicle)
-            return true
+            return not getIsElectricVehicle(vehicle)
         end,
         probability = function(vehicle)
             return 1.0   
@@ -775,14 +917,10 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.ELECTRICAL,
         part = parts.ECU,
         isApplicable = function(vehicle)
-            local spec = vehicle.spec_RealisticMechanicalSystems
-            if spec.year >= 2000 and not getIsElectricVehicle(vehicle) then
-                return true
-            end
-            return false
+            return RMS_Utils.getUsesEngineECUProfile(vehicle)
         end,
         probability = function(vehicle)
-            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"ohf"}, {"crf", "idfg", "sf"})
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"ohf"}, {"crf", "idfg", "vf", "sf"})
         end,
         stages = {
             {
@@ -882,24 +1020,27 @@ RMS_Breakdowns.BreakdownRegistry = {
             return spec.year >= 2000 and vehicle.spec_lights ~= nil
         end,
         probability = function(vehicle)
-            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"wef"}, {"sf", "ltf"})
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"wef", "vf"}, {"sf", "ltf"})
         end,
         stages = {
             {
                 severity = "rms_breakdowns_severity_minor",
                 description = "rms_breakdowns_corroded_wiring_stage1_description",
+                electricDescription = "rms_breakdowns_corroded_wiring_electric_stage1_description",
                 detectionChance = 1.0,
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.CORRODED_WIRING,
                 repairPrice = 1.0 * breakdownPriceMultipliers.CORRODED_WIRING,
                 effects = {
                     { id = "LIGHTS_FLICKER_CHANCE", value = 1.0, extraData = {timer = 0, status = 'IDLE', duration = 200, maskBackup = 0}, aggregation = "min"},
                     { id = "ENGINE_HARD_START_MODIFIER", value = 3, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
-                    { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 1.0, extraData = { timer = 0, status = 'IDLE'}, aggregation = "min"}
+                    { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 1, aggregation = "max" },
+                    { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 1, aggregation = "sum" }
                 }
             },
             {
                 severity = "rms_breakdowns_severity_moderate", 
                 description = "rms_breakdowns_corroded_wiring_stage2_description",
+                electricDescription = "rms_breakdowns_corroded_wiring_electric_stage2_description",
                 detectionChance = 1.0,
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.CORRODED_WIRING,
                 repairPrice = 2.0 * breakdownPriceMultipliers.CORRODED_WIRING,
@@ -907,7 +1048,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "LIGHTS_FLICKER_CHANCE", value = 0.33, extraData = {timer = 0, status = 'IDLE', duration = 300, maskBackup = 0}, aggregation = "min" },
                     { id = "ENGINE_STALLS_CHANCE", value = 30.0, aggregation = "min" },
                     { id = "ENGINE_HARD_START_MODIFIER", value = 5, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
-                    { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 0.33, extraData = { timer = 0, status = 'IDLE'}, aggregation = "min"}
+                    { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 2, aggregation = "max" },
+                    { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 2, aggregation = "sum" }
                 },
                 inspection = {
                     { additional = "rms_inspection_hint_corroded_wiring_stage2" },
@@ -919,6 +1061,7 @@ RMS_Breakdowns.BreakdownRegistry = {
             { 
                 severity = "rms_breakdowns_severity_major",
                 description = "rms_breakdowns_corroded_wiring_stage3_description",
+                electricDescription = "rms_breakdowns_corroded_wiring_electric_stage3_description",
                 detectionChance = 1.0,
                 progressMultiplier = 0.5 * breakdownProgressMultipliers.CORRODED_WIRING,
                 repairPrice = 4.0 * breakdownPriceMultipliers.CORRODED_WIRING,
@@ -927,7 +1070,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "LIGHTS_FAILURE", value = 1.0, aggregation = "boolean_or" },
                     { id = "ENGINE_STALLS_CHANCE", value = 20.0, aggregation = "min" },
                     { id = "ENGINE_HARD_START_MODIFIER", value = 8, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
-                    { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 0.1, extraData = { timer = 0, status = 'IDLE'}, aggregation = "min"}
+                    { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 4, aggregation = "max" },
+                    { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 4, aggregation = "sum" }
                 },
                 inspection = {
                     { additional = "rms_inspection_hint_corroded_wiring_stage3" },
@@ -939,11 +1083,13 @@ RMS_Breakdowns.BreakdownRegistry = {
             { 
                 severity = "rms_breakdowns_severity_critical",
                 description = "rms_breakdowns_corroded_wiring_stage4_description",
+                electricDescription = "rms_breakdowns_corroded_wiring_electric_stage4_description",
                 detectionChance = 1.0,
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.CORRODED_WIRING,
-                effects = { 
+                effects = {
                     { id = "LIGHTS_FAILURE", value = 1.0, aggregation = "boolean_or" },
+                    { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 8, aggregation = "sum" },
                         {
                             id = "ENGINE_FAILURE",
                             value = 1.0,
@@ -951,6 +1097,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                                 status = 'IDLE',
                                 starter = false,
                                 message = "rms_breakdowns_corroded_wiring_stage4_message",
+                                electricMessage = "rms_breakdowns_corroded_wiring_electric_stage4_message",
                                 reason = "BREAKDOWN",
                                 disableAi = true
                             },
@@ -981,6 +1128,7 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_minor",
                 description = "rms_breakdowns_battery_sulfation_stage1_description",
+                electricDescription = "rms_breakdowns_battery_sulfation_electric_stage1_description",
                 detectionChance = 1.0,
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.BATTERY_SULFATION,
                 repairPrice = 1.0 * breakdownPriceMultipliers.BATTERY_SULFATION,
@@ -992,6 +1140,7 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_moderate", 
                 description = "rms_breakdowns_battery_sulfation_stage2_description",
+                electricDescription = "rms_breakdowns_battery_sulfation_electric_stage2_description",
                 detectionChance = 1.0,
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.BATTERY_SULFATION,
                 repairPrice = 2.0 * breakdownPriceMultipliers.BATTERY_SULFATION,
@@ -1006,11 +1155,12 @@ RMS_Breakdowns.BreakdownRegistry = {
             { 
                 severity = "rms_breakdowns_severity_major",
                 description = "rms_breakdowns_battery_sulfation_stage3_description",
+                electricDescription = "rms_breakdowns_battery_sulfation_electric_stage3_description",
                 detectionChance = 1.0,
                 progressMultiplier = 0.5 * breakdownProgressMultipliers.BATTERY_SULFATION,
                 repairPrice = 4.0 * breakdownPriceMultipliers.BATTERY_SULFATION,
                 effects = { 
-                    { id = "BATTERY_HEALTH_MODIFIER", value = -0.9, aggregation = "min"},
+                    { id = "BATTERY_HEALTH_MODIFIER", value = -0.75, aggregation = "min"},
                     { id = "ENGINE_HARD_START_MODIFIER", value = 6, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
                 },
                 indicators = {
@@ -1020,6 +1170,7 @@ RMS_Breakdowns.BreakdownRegistry = {
             { 
                 severity = "rms_breakdowns_severity_critical",
                 description = "rms_breakdowns_battery_sulfation_stage4_description",
+                electricDescription = "rms_breakdowns_battery_sulfation_electric_stage4_description",
                 detectionChance = 1.0,
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.BATTERY_SULFATION,
@@ -1112,10 +1263,10 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.ELECTRICAL,
         part = parts.ALTERNATOR_REGULATOR,
         isApplicable = function(vehicle)
-            return true
+            return not getIsElectricVehicle(vehicle)
         end,
         probability = function(vehicle)
-            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"ohf", "crf", "idfg"}, {"ltf", "sf"})
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"ohf", "crf", "idfg"}, {"ltf", "vf", "sf"})
         end,
         stages = {
             {
@@ -1125,7 +1276,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.ALTERNATOR_REGULATOR_FAILURE,
                 repairPrice = 1.0 * breakdownPriceMultipliers.ALTERNATOR_REGULATOR_FAILURE,
                 effects = {
-                    { id = "ALTERNATOR_HEALTH_MODIFIER", value = -0.2, aggregation = "min" }
+                    { id = "ALTERNATOR_HEALTH_MODIFIER", value = -0.2, aggregation = "min" },
+                    { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 1, aggregation = "sum" }
                 }
             },
             {
@@ -1136,7 +1288,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = 2.0 * breakdownPriceMultipliers.ALTERNATOR_REGULATOR_FAILURE,
                 effects = {
                     { id = "ALTERNATOR_HEALTH_MODIFIER", value = -0.5, aggregation = "min" },
-                    { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 2.0, extraData = { timer = 0, status = 'IDLE'}, aggregation = "min"}
+                    { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 2, aggregation = "sum" }
                 },
                 indicators = {
                     { id = db.BATTERY, color = color.WARNING, switchOn = true, switchOff = false }
@@ -1150,7 +1302,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = 4.0 * breakdownPriceMultipliers.ALTERNATOR_REGULATOR_FAILURE,
                 effects = {
                     { id = "ALTERNATOR_HEALTH_MODIFIER", value = -0.7, aggregation = "min" },
-                    { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 1.0, extraData = { timer = 0, status = 'IDLE'}, aggregation = "min"}
+                    { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 4, aggregation = "sum" }
                 },
                 inspection = {
                     { additional = "rms_inspection_hint_alternator_regulator_failure_stage3" },
@@ -1167,7 +1319,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = 8.0 * breakdownPriceMultipliers.ALTERNATOR_REGULATOR_FAILURE,
                 effects = {
                     { id = "ALTERNATOR_HEALTH_MODIFIER", value = -1.0, aggregation = "min" },
-                    { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 0.3, extraData = { timer = 0, status = 'IDLE'}, aggregation = "min"}
+                    { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 8, aggregation = "sum" }
                 },
                 inspection = {
                     { additional = "rms_inspection_hint_alternator_regulator_failure_stage4" },
@@ -1179,6 +1331,282 @@ RMS_Breakdowns.BreakdownRegistry = {
         }
     },
 
+    INVERTER_MALFUNCTION = {
+        isSelectable = true,
+        system = systems.ELECTRICAL,
+        part = parts.INVERTER,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"ohf"}, {"wef", "vf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_inverter_malfunction_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.INVERTER_MALFUNCTION,
+                repairPrice = 1.0 * breakdownPriceMultipliers.INVERTER_MALFUNCTION,
+                effects = {
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.10, aggregation = "sum" }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_inverter_malfunction_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.INVERTER_MALFUNCTION,
+                repairPrice = 2.0 * breakdownPriceMultipliers.INVERTER_MALFUNCTION,
+                effects = {
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.20, aggregation = "sum" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.10, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_inverter_malfunction_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.INVERTER_MALFUNCTION,
+                repairPrice = 4.0 * breakdownPriceMultipliers.INVERTER_MALFUNCTION,
+                effects = {
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.35, aggregation = "sum" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.20, aggregation = "sum" },
+                    { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_inverter_malfunction_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.INVERTER_MALFUNCTION,
+                effects = {
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_inverter_malfunction_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false },
+                    { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
+    DCDC_CONVERTER_FAILURE = {
+        isSelectable = true,
+        system = systems.ELECTRICAL,
+        part = parts.DCDC_CONVERTER,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"ohf", "ltf"}, {"vf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_dcdc_converter_failure_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.DCDC_CONVERTER_FAILURE,
+                repairPrice = 1.0 * breakdownPriceMultipliers.DCDC_CONVERTER_FAILURE,
+                effects = {
+                    { id = "ALTERNATOR_HEALTH_MODIFIER", value = -0.2, aggregation = "min" }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_dcdc_converter_failure_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.DCDC_CONVERTER_FAILURE,
+                repairPrice = 2.0 * breakdownPriceMultipliers.DCDC_CONVERTER_FAILURE,
+                effects = {
+                    { id = "ALTERNATOR_HEALTH_MODIFIER", value = -0.5, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.BATTERY, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_dcdc_converter_failure_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.DCDC_CONVERTER_FAILURE,
+                repairPrice = 4.0 * breakdownPriceMultipliers.DCDC_CONVERTER_FAILURE,
+                effects = {
+                    { id = "ALTERNATOR_HEALTH_MODIFIER", value = -0.7, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_dcdc_converter_failure_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.DCDC_CONVERTER_FAILURE,
+                effects = {
+                    { id = "ALTERNATOR_HEALTH_MODIFIER", value = -1.0, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
+    ONBOARD_CHARGER_FAILURE = {
+        isSelectable = true,
+        system = systems.ELECTRICAL,
+        part = parts.ONBOARD_CHARGER,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"wef"}, {"ohf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_onboard_charger_failure_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.ONBOARD_CHARGER_FAILURE,
+                repairPrice = 1.0 * breakdownPriceMultipliers.ONBOARD_CHARGER_FAILURE,
+                effects = {
+                    { id = "CHARGE_ACCEPTANCE_MODIFIER", value = -0.35, aggregation = "min" }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_onboard_charger_failure_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.ONBOARD_CHARGER_FAILURE,
+                repairPrice = 2.0 * breakdownPriceMultipliers.ONBOARD_CHARGER_FAILURE,
+                effects = {
+                    { id = "CHARGE_ACCEPTANCE_MODIFIER", value = -0.65, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_onboard_charger_failure_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.ONBOARD_CHARGER_FAILURE,
+                repairPrice = 4.0 * breakdownPriceMultipliers.ONBOARD_CHARGER_FAILURE,
+                effects = {
+                    { id = "CHARGE_ACCEPTANCE_MODIFIER", value = -0.90, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_onboard_charger_failure_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.ONBOARD_CHARGER_FAILURE,
+                effects = {
+                    { id = "CHARGE_ACCEPTANCE_MODIFIER", value = -1.0, aggregation = "min", extraData = { message = "rms_breakdowns_onboard_charger_failure_stage4_message" } }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
+    HV_INSULATION_LOSS = {
+        isSelectable = true,
+        system = systems.ELECTRICAL,
+        part = parts.HV_WIRING,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ELECTRICAL, {"wef"}, {"vf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_hv_insulation_loss_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.HV_INSULATION_LOSS,
+                repairPrice = 1.0 * breakdownPriceMultipliers.HV_INSULATION_LOSS,
+                effects = {},
+                indicators = {
+                    { id = db.WARNING, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_hv_insulation_loss_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.HV_INSULATION_LOSS,
+                repairPrice = 2.0 * breakdownPriceMultipliers.HV_INSULATION_LOSS,
+                effects = {
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.15, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.WARNING, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_hv_insulation_loss_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.HV_INSULATION_LOSS,
+                repairPrice = 4.0 * breakdownPriceMultipliers.HV_INSULATION_LOSS,
+                effects = {
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.30, aggregation = "sum" },
+                    { id = "ENGINE_STALLS_CHANCE", value = 20.0, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_hv_insulation_loss_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.HV_INSULATION_LOSS,
+                effects = {
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_hv_insulation_loss_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
+                },
+                indicators = {
+                    { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
     -- engine
     TURBOCHARGER_MALFUNCTION = {
         isSelectable = true,
@@ -1430,13 +1858,250 @@ RMS_Breakdowns.BreakdownRegistry = {
                         },
                 },
                 indicators = {
-                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }         
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
                 }
             }
         }
     },
 
-    -- transmission system
+    -- transmission system, electric motor
+    ELECTRIC_MOTOR_BEARING_WEAR = {
+        isSelectable = true,
+        system = systems.ENGINE,
+        part = parts.ELECTRIC_MOTOR_BEARINGS,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ENGINE, {"mlf"}, {"hmf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_electric_motor_bearing_wear_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.ELECTRIC_MOTOR_BEARING_WEAR,
+                repairPrice = 1.0 * breakdownPriceMultipliers.ELECTRIC_MOTOR_BEARING_WEAR,
+                effects = {
+                    { id = "WHEEL_HUB_BEARING_NOISE_EFFECT", value = 1.0, aggregation = "max" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.03, aggregation = "sum" }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_electric_motor_bearing_wear_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.ELECTRIC_MOTOR_BEARING_WEAR,
+                repairPrice = 2.0 * breakdownPriceMultipliers.ELECTRIC_MOTOR_BEARING_WEAR,
+                effects = {
+                    { id = "WHEEL_HUB_BEARING_NOISE_EFFECT", value = 1.5, aggregation = "max" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.06, aggregation = "sum" },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_electric_motor_bearing_wear_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.ELECTRIC_MOTOR_BEARING_WEAR,
+                repairPrice = 4.0 * breakdownPriceMultipliers.ELECTRIC_MOTOR_BEARING_WEAR,
+                effects = {
+                    { id = "WHEEL_HUB_BEARING_NOISE_EFFECT", value = 2.0, aggregation = "max" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.10, aggregation = "sum" },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.12, aggregation = "sum" },
+                    { id = "ENGINE_HEAT_MODIFIER", value = 0.10, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_electric_motor_bearing_wear_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.ELECTRIC_MOTOR_BEARING_WEAR,
+                effects = {
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_electric_motor_bearing_wear_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false },
+                    { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
+    ELECTRIC_MOTOR_WINDING_FAULT = {
+        isSelectable = true,
+        system = systems.ENGINE,
+        part = parts.ELECTRIC_MOTOR_WINDINGS,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ENGINE, {"hmf"}, {"mlf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_electric_motor_winding_fault_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.ELECTRIC_MOTOR_WINDING_FAULT,
+                repairPrice = 1.0 * breakdownPriceMultipliers.ELECTRIC_MOTOR_WINDING_FAULT,
+                effects = {
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.08, aggregation = "sum" },
+                    { id = "ENGINE_HEAT_MODIFIER", value = 0.05, aggregation = "sum" }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_electric_motor_winding_fault_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.ELECTRIC_MOTOR_WINDING_FAULT,
+                repairPrice = 2.0 * breakdownPriceMultipliers.ELECTRIC_MOTOR_WINDING_FAULT,
+                effects = {
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.18, aggregation = "sum" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.08, aggregation = "sum" },
+                    { id = "ENGINE_HEAT_MODIFIER", value = 0.10, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_electric_motor_winding_fault_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.ELECTRIC_MOTOR_WINDING_FAULT,
+                repairPrice = 4.0 * breakdownPriceMultipliers.ELECTRIC_MOTOR_WINDING_FAULT,
+                effects = {
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.30, aggregation = "sum" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.15, aggregation = "sum" },
+                    { id = "ENGINE_STALLS_CHANCE", value = 15.0, aggregation = "min" },
+                    { id = "ENGINE_HEAT_MODIFIER", value = 0.20, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_electric_motor_winding_fault_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.ELECTRIC_MOTOR_WINDING_FAULT,
+                effects = {
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_electric_motor_winding_fault_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false },
+                    { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
+    MOTOR_POSITION_SENSOR_FAULT = {
+        isSelectable = true,
+        system = systems.ENGINE,
+        part = parts.MOTOR_POSITION_SENSOR,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.ENGINE, {"mlf", "hmf"}, {"sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_motor_position_sensor_fault_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.MOTOR_POSITION_SENSOR_FAULT,
+                repairPrice = 1.0 * breakdownPriceMultipliers.MOTOR_POSITION_SENSOR_FAULT,
+                effects = {
+                    { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.4, motorLoad = 0.2, cruiseState = 0} }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_motor_position_sensor_fault_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.MOTOR_POSITION_SENSOR_FAULT,
+                repairPrice = 2.0 * breakdownPriceMultipliers.MOTOR_POSITION_SENSOR_FAULT,
+                effects = {
+                    { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 0.6, motorLoad = 0.2, cruiseState = 0} },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.10, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_motor_position_sensor_fault_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.MOTOR_POSITION_SENSOR_FAULT,
+                repairPrice = 4.0 * breakdownPriceMultipliers.MOTOR_POSITION_SENSOR_FAULT,
+                effects = {
+                    { id = "ENGINE_HESITATION_CHANCE", value = 0.1, aggregation = "min", extraData = {timer = 0, duration = 500, status = 'IDLE', amplitude = 0.8, motorLoad = 0.2, cruiseState = 0} },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.20, aggregation = "sum" },
+                    { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_motor_position_sensor_fault_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.MOTOR_POSITION_SENSOR_FAULT,
+                effects = {
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_motor_position_sensor_fault_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false },
+                    { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
     MANUAL_TRANSMISSION_CLUTCH_WEAR = {
         isSelectable = true,
         system = systems.TRANSMISSION,
@@ -1665,13 +2330,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.TRANSMISSION,
         part = parts.CVT_CHAIN,
-        isApplicable = function(vehicle)
-            if hasCVTAddon(vehicle) then return false end
-            local motor = vehicle:getMotor()
-            if not motor then return false end
-            if motor.minForwardGearRatio == nil then return false end
-            return true
-        end,
+        isApplicable = isVariatorBreakdownApplicable,
         probability = function(vehicle)
             return getBreakdownProbabilityWeightPercent(vehicle, systems.TRANSMISSION, {"wsf", "lf"}, {"hotf", "pof"})
         end,
@@ -1740,13 +2399,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.TRANSMISSION,
         part = parts.CVT_HYDRAULIC_CONTROL_VALVE,
-        isApplicable = function(vehicle)
-            if hasCVTAddon(vehicle) then return false end
-            local motor = vehicle:getMotor()
-            if not motor then return false end
-            if motor.minForwardGearRatio == nil then return false end
-            return true
-        end,
+        isApplicable = isVariatorBreakdownApplicable,
         probability = function(vehicle)
             return getBreakdownProbabilityWeightPercent(vehicle, systems.TRANSMISSION, {"hotf"}, {"ctf", "sf"})
         end,
@@ -1832,13 +2485,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.TRANSMISSION,
         part = parts.TRANSMISSION_THERMOSTAT,
-        isApplicable = function(vehicle)
-            if hasCVTAddon(vehicle) then return false end
-            local motor = vehicle:getMotor()
-            if not motor then return false end
-            if motor.minForwardGearRatio == nil then return false end
-            return true
-        end,
+        isApplicable = isVariatorBreakdownApplicable,
         probability = function(vehicle)
             return getBreakdownProbabilityWeightPercent(vehicle, systems.TRANSMISSION, {"hotf", "ctf"}, {"pof", "lf"})
         end,
@@ -1903,7 +2550,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.TRANSMISSION,
         part = parts.TRANSMISSION_SEAL,
         isApplicable = function(vehicle)
-            return not getIsElectricVehicle(vehicle)
+            return true
         end,
         probability = function(vehicle)
             return getBreakdownProbabilityWeightPercent(vehicle, systems.TRANSMISSION, {"hotf", "ctf"}, {"pof", "lf"})
@@ -2044,6 +2691,82 @@ RMS_Breakdowns.BreakdownRegistry = {
     },
 
     -- hydraulic system
+    REDUCER_GEAR_WEAR = {
+        isSelectable = true,
+        system = systems.TRANSMISSION,
+        part = parts.REDUCER,
+        isApplicable = isReducerBreakdownApplicable,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.TRANSMISSION, {"pof", "htf"}, {"wsf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_reducer_gear_wear_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.REDUCER_GEAR_WEAR,
+                repairPrice = 1.0 * breakdownPriceMultipliers.REDUCER_GEAR_WEAR,
+                effects = {
+                    { id = "WHEEL_HUB_BEARING_NOISE_EFFECT", value = 1.0, aggregation = "max" }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_reducer_gear_wear_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.REDUCER_GEAR_WEAR,
+                repairPrice = 2.0 * breakdownPriceMultipliers.REDUCER_GEAR_WEAR,
+                effects = {
+                    { id = "WHEEL_HUB_BEARING_NOISE_EFFECT", value = 1.5, aggregation = "max" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.05, aggregation = "sum" },
+                    { id = "TRANSMISSION_HEAT_MODIFIER", value = 0.05, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.TRANSMISSION, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_reducer_gear_wear_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.REDUCER_GEAR_WEAR,
+                repairPrice = 4.0 * breakdownPriceMultipliers.REDUCER_GEAR_WEAR,
+                effects = {
+                    { id = "WHEEL_HUB_BEARING_NOISE_EFFECT", value = 2.0, aggregation = "max" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.10, aggregation = "sum" },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.10, aggregation = "sum" },
+                    { id = "TRANSMISSION_HEAT_MODIFIER", value = 0.15, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.TRANSMISSION, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_reducer_gear_wear_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.REDUCER_GEAR_WEAR,
+                effects = {
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_reducer_gear_wear_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
+                },
+                indicators = {
+                    { id = db.TRANSMISSION, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
     HYDRAULIC_PUMP_MALFUNCTION = {
         isSelectable = true,
         system = systems.HYDRAULICS,
@@ -2254,23 +2977,21 @@ RMS_Breakdowns.BreakdownRegistry = {
         }
     },
 
+    -- shown by the filter's clogging, RMS_Consumables setting its stage
     HYDRAULIC_FILTER_CLOGGING = {
         isSelectable = true,
         system = systems.HYDRAULICS,
         part = parts.HYDRAULIC_FILTER,
         isApplicable = isHydraulicBreakdownApplicable,
         probability = function(vehicle)
-            return getBreakdownProbabilityWeightPercent(vehicle, systems.HYDRAULICS, {"sf", "cof"}, {})
-        end,
-        isCanProgress = function(vehicle)
-            return vehicle:getIsMotorStarted() and vehicle.spec_RealisticMechanicalSystems.isHydraulicActive
+            return 0.0
         end,
         stages = {
             {
                 severity = "rms_breakdowns_severity_minor",
                 description = "rms_breakdowns_hydraulic_filter_clogging_stage1_description",
                 detectionChance = 1.0,
-                progressMultiplier = 2.0 * breakdownProgressMultipliers.HYDRAULIC_FILTER_CLOGGING,
+                progressMultiplier = 0.0,
                 repairPrice = 1.0 * breakdownPriceMultipliers.HYDRAULIC_FILTER_CLOGGING,
                 effects = {
                     { id = "HYDRAULIC_SPEED_MODIFIER", value = -0.10, aggregation = "min" }
@@ -2280,7 +3001,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 severity = "rms_breakdowns_severity_moderate",
                 description = "rms_breakdowns_hydraulic_filter_clogging_stage2_description",
                 detectionChance = 1.0,
-                progressMultiplier = 1.0 * breakdownProgressMultipliers.HYDRAULIC_FILTER_CLOGGING,
+                progressMultiplier = 0.0,
                 repairPrice = 2.0 * breakdownPriceMultipliers.HYDRAULIC_FILTER_CLOGGING,
                 effects = {
                     { id = "HYDRAULIC_SPEED_MODIFIER", value = -0.25, aggregation = "min" }
@@ -2293,7 +3014,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 severity = "rms_breakdowns_severity_major",
                 description = "rms_breakdowns_hydraulic_filter_clogging_stage3_description",
                 detectionChance = 1.0,
-                progressMultiplier = 0.5 * breakdownProgressMultipliers.HYDRAULIC_FILTER_CLOGGING,
+                progressMultiplier = 0.0,
                 repairPrice = 4.0 * breakdownPriceMultipliers.HYDRAULIC_FILTER_CLOGGING,
                 effects = {
                     { id = "HYDRAULIC_SPEED_MODIFIER", value = -0.45, aggregation = "min" }
@@ -2733,7 +3454,7 @@ RMS_Breakdowns.BreakdownRegistry = {
             end
         end,
         probability = function(vehicle)
-            return getBreakdownProbabilityWeightPercent(vehicle, systems.CHASSIS, {"vf"}, {"bmf", "sf"})
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.CHASSIS, {"vf", "tif"}, {"bmf", "sf"})
         end,
         isCanProgress = function(vehicle)
             return vehicle:getLastSpeed() > 0.01
@@ -2816,11 +3537,12 @@ RMS_Breakdowns.BreakdownRegistry = {
             return true
         end,
         probability = function(vehicle)
-            return getBreakdownProbabilityWeightPercent(vehicle, systems.CHASSIS, {"slf"}, {"vf", "sf"})
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.CHASSIS, {"slf", "tif"}, {"vf", "sf"})
         end,
         isCanProgress = function(vehicle)
             return vehicle:getLastSpeed() > 0.01
         end,
+        -- pull and play in degrees at the wheel; no lamp, a rod end carries no sensor
         stages = {
             {
                 severity = "rms_breakdowns_severity_minor",
@@ -2829,8 +3551,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.STEERING_LINKAGE_WEAR,
                 repairPrice = 1.0 * breakdownPriceMultipliers.STEERING_LINKAGE_WEAR,
                 effects = {
-                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.003, aggregation = "max" },
-                    { id = "STEERING_SENSITIVITY_MODIFIER", value = 0.10, aggregation = "max" },
+                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.2, aggregation = "max" },
+                    { id = "STEERING_PLAY_EFFECT", value = 0.5, aggregation = "max" },
                 }
             },
             {
@@ -2840,8 +3562,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.STEERING_LINKAGE_WEAR,
                 repairPrice = 2.0 * breakdownPriceMultipliers.STEERING_LINKAGE_WEAR,
                 effects = {
-                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.01, aggregation = "max" },
-                    { id = "STEERING_SENSITIVITY_MODIFIER", value = 0.25, aggregation = "max" },
+                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.5, aggregation = "max" },
+                    { id = "STEERING_PLAY_EFFECT", value = 1.2, aggregation = "max" },
                 },
                 indicators = {
                 }
@@ -2853,11 +3575,8 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.5 * breakdownProgressMultipliers.STEERING_LINKAGE_WEAR,
                 repairPrice = 4.0 * breakdownPriceMultipliers.STEERING_LINKAGE_WEAR,
                 effects = {
-                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.03, aggregation = "max" },
-                    { id = "STEERING_SENSITIVITY_MODIFIER", value = 0.45, aggregation = "max" },
-                },
-                indicators = {
-                    { id = db.BRAKES, color = color.WARNING, switchOn = true, switchOff = false }
+                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 1.2, aggregation = "max" },
+                    { id = "STEERING_PLAY_EFFECT", value = 2.5, aggregation = "max" },
                 }
             },
             {
@@ -2867,10 +3586,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0,
                 repairPrice = 8.0 * breakdownPriceMultipliers.STEERING_LINKAGE_WEAR,
                 effects = {
-                    { id = "STEERING_SENSITIVITY_MODIFIER", value = 0.99, aggregation = "max", extraData = {message="rms_breakdowns_steering_linkage_wear_stage4_message", disableAi=true} },
-                },
-                indicators = {
-                    { id = db.BRAKES, color = color.CRITICAL, switchOn = true, switchOff = false }
+                    { id = "STEERING_WHEEL_FREE_EFFECT", value = 1.0, aggregation = "max", extraData = {message="rms_breakdowns_steering_linkage_wear_stage4_message", disableAi=true} },
                 }
             }
         }
@@ -2900,7 +3616,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.TRACK_TENSIONER_MALFUNCTION,
                 repairPrice = 1.0 * breakdownPriceMultipliers.TRACK_TENSIONER_MALFUNCTION,
                 effects = {
-                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.003, aggregation = "max" },
+                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.2, aggregation = "max" },
                     { id = "VIBRATION_NOISE_EFFECT", value = 1.0, aggregation = "max" },
                     { id = "WHEEL_SEIZURE_GRIND_NOISE_EFFECT", value = 0.5, aggregation = "max" },
                     { id = "MAX_SPEED_MODIFIER", value = 0.03, aggregation = "max" },
@@ -2914,7 +3630,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.TRACK_TENSIONER_MALFUNCTION,
                 repairPrice = 2.0 * breakdownPriceMultipliers.TRACK_TENSIONER_MALFUNCTION,
                 effects = {
-                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.01, aggregation = "max" },
+                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.5, aggregation = "max" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 0.6, motorLoad = 0.2, cruiseState = 0}},
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" },
                     { id = "VIBRATION_NOISE_EFFECT", value = 1.5, aggregation = "max" },
@@ -2935,7 +3651,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 0.5 * breakdownProgressMultipliers.TRACK_TENSIONER_MALFUNCTION,
                 repairPrice = 4.0 * breakdownPriceMultipliers.TRACK_TENSIONER_MALFUNCTION,
                 effects = {
-                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 0.05, aggregation = "max" },
+                    { id = "STEERING_STATIC_BIAS_EFFECT", value = 1.5, aggregation = "max" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.1, aggregation = "min", extraData = {timer = 0, duration = 500, status = 'IDLE', amplitude = 0.6, motorLoad = 0.2, cruiseState = 0}},
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.1, aggregation = "sum" },
                     { id = "VIBRATION_NOISE_EFFECT", value = 2.0, aggregation = "max" },
@@ -3039,7 +3755,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.COOLING,
         part = parts.COOLING_SYSTEM,
         isApplicable = function(vehicle)
-            return not getIsElectricVehicle(vehicle)
+            return true
         end,
         probability = function(vehicle)
             return getBreakdownProbabilityWeightPercent(vehicle, systems.COOLING, {"ohf"}, {"csf"})
@@ -3176,6 +3892,68 @@ RMS_Breakdowns.BreakdownRegistry = {
     },
 
     -- fuel system
+    COOLANT_PUMP_FAILURE = {
+        isSelectable = true,
+        system = systems.COOLING,
+        part = parts.COOLANT_PUMP,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.COOLING, {"hcf"}, {"ohf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_coolant_pump_failure_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.COOLANT_PUMP_FAILURE,
+                repairPrice = 1.0 * breakdownPriceMultipliers.COOLANT_PUMP_FAILURE,
+                effects = {
+                    { id = "RADIATOR_HEALTH_MODIFIER", value = -0.20, aggregation = "min" }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_coolant_pump_failure_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.COOLANT_PUMP_FAILURE,
+                repairPrice = 2.0 * breakdownPriceMultipliers.COOLANT_PUMP_FAILURE,
+                effects = {
+                    { id = "RADIATOR_HEALTH_MODIFIER", value = -0.40, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.COOLANT, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_coolant_pump_failure_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.COOLANT_PUMP_FAILURE,
+                repairPrice = 4.0 * breakdownPriceMultipliers.COOLANT_PUMP_FAILURE,
+                effects = {
+                    { id = "RADIATOR_HEALTH_MODIFIER", value = -0.60, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.COOLANT, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_coolant_pump_failure_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.COOLANT_PUMP_FAILURE,
+                effects = {
+                    { id = "RADIATOR_HEALTH_MODIFIER", value = -0.85, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.COOLANT, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
     FUEL_PUMP_MALFUNCTION = {
         isSelectable = true,
         system = systems.FUEL,
@@ -3368,6 +4146,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         }
     },
 
+    -- shown by the filter's clogging, RMS_Consumables setting its stage
     FUEL_FILTER_CLOGGING = {
         isSelectable = true,
         system = systems.FUEL,
@@ -3376,14 +4155,14 @@ RMS_Breakdowns.BreakdownRegistry = {
             return not getIsElectricVehicle(vehicle)
         end,
         probability = function(vehicle)
-            return getBreakdownProbabilityWeightPercent(vehicle, systems.FUEL, {"idf"}, {"cff", "sf"})
+            return 0.0
         end,
         stages = {
             {
                 severity = "rms_breakdowns_severity_minor",
                 description = "rms_breakdowns_fuel_filter_clogging_stage1_description",
                 detectionChance = 1.0,
-                progressMultiplier = 2.0 * breakdownProgressMultipliers.FUEL_FILTER_CLOGGING,
+                progressMultiplier = 0.0,
                 repairPrice = 1.0 * breakdownPriceMultipliers.FUEL_FILTER_CLOGGING,
                 effects = {
                         {
@@ -3406,7 +4185,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 severity = "rms_breakdowns_severity_moderate",
                 description = "rms_breakdowns_fuel_filter_clogging_stage2_description",
                 detectionChance = 1.0,
-                progressMultiplier = 1.0 * breakdownProgressMultipliers.FUEL_FILTER_CLOGGING,
+                progressMultiplier = 0.0,
                 repairPrice = 2.0 * breakdownPriceMultipliers.FUEL_FILTER_CLOGGING,
                 effects = {
                         {
@@ -3431,7 +4210,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 severity = "rms_breakdowns_severity_major",
                 description = "rms_breakdowns_fuel_filter_clogging_stage3_description",
                 detectionChance = 1.0,
-                progressMultiplier = 0.5 * breakdownProgressMultipliers.FUEL_FILTER_CLOGGING,
+                progressMultiplier = 0.0,
                 repairPrice = 4.0 * breakdownPriceMultipliers.FUEL_FILTER_CLOGGING,
                 effects = { 
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 500, status = 'IDLE', amplitude = 0.7, motorLoad = 0.9, cruiseState = 0} },
@@ -3534,10 +4313,163 @@ RMS_Breakdowns.BreakdownRegistry = {
                 }
             }
         }
-    }
+    },
+
+    -- traction battery
+    TRACTION_BATTERY_CELL_FAULT = {
+        isSelectable = true,
+        system = systems.FUEL,
+        part = parts.TRACTION_BATTERY,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.FUEL, {"ddf", "bhf"}, {"hdf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_traction_battery_cell_fault_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.TRACTION_BATTERY_CELL_FAULT,
+                repairPrice = 1.0 * breakdownPriceMultipliers.TRACTION_BATTERY_CELL_FAULT,
+                effects = {
+                    { id = "TRACTION_BATTERY_CAPACITY_MODIFIER", value = -0.05, aggregation = "sum" }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_traction_battery_cell_fault_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.TRACTION_BATTERY_CELL_FAULT,
+                repairPrice = 2.0 * breakdownPriceMultipliers.TRACTION_BATTERY_CELL_FAULT,
+                effects = {
+                    { id = "TRACTION_BATTERY_CAPACITY_MODIFIER", value = -0.12, aggregation = "sum" },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.10, aggregation = "sum" }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_traction_battery_cell_fault_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.TRACTION_BATTERY_CELL_FAULT,
+                repairPrice = 4.0 * breakdownPriceMultipliers.TRACTION_BATTERY_CELL_FAULT,
+                effects = {
+                    { id = "TRACTION_BATTERY_CAPACITY_MODIFIER", value = -0.25, aggregation = "sum" },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.25, aggregation = "sum" },
+                    { id = "ENGINE_STALLS_CHANCE", value = 15.0, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_traction_battery_cell_fault_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.TRACTION_BATTERY_CELL_FAULT,
+                effects = {
+                    { id = "TRACTION_BATTERY_CAPACITY_MODIFIER", value = -0.25, aggregation = "sum" },
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_traction_battery_cell_fault_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false },
+                    { id = db.WARNING, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
+    HV_CONTACTOR_FAILURE = {
+        isSelectable = true,
+        system = systems.FUEL,
+        part = parts.HV_CONTACTOR,
+        isApplicable = function(vehicle)
+            return getIsElectricVehicle(vehicle)
+        end,
+        probability = function(vehicle)
+            return getBreakdownProbabilityWeightPercent(vehicle, systems.FUEL, {"hdf"}, {"ddf", "sf"})
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_hv_contactor_failure_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 2.0 * breakdownProgressMultipliers.HV_CONTACTOR_FAILURE,
+                repairPrice = 1.0 * breakdownPriceMultipliers.HV_CONTACTOR_FAILURE,
+                effects = {
+                    { id = "ENGINE_STALLS_CHANCE", value = 60.0, aggregation = "min" }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_hv_contactor_failure_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 1.0 * breakdownProgressMultipliers.HV_CONTACTOR_FAILURE,
+                repairPrice = 2.0 * breakdownPriceMultipliers.HV_CONTACTOR_FAILURE,
+                effects = {
+                    { id = "ENGINE_STALLS_CHANCE", value = 30.0, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_hv_contactor_failure_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0.5 * breakdownProgressMultipliers.HV_CONTACTOR_FAILURE,
+                repairPrice = 4.0 * breakdownPriceMultipliers.HV_CONTACTOR_FAILURE,
+                effects = {
+                    { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_hv_contactor_failure_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = 8.0 * breakdownPriceMultipliers.HV_CONTACTOR_FAILURE,
+                effects = {
+                        {
+                            id = "ENGINE_FAILURE",
+                            value = 1.0,
+                            aggregation = "boolean_or",
+                            extraData = {
+                                status = 'IDLE',
+                                starter = false,
+                                message = "rms_breakdowns_hv_contactor_failure_stage4_message",
+                                reason = "BREAKDOWN",
+                                disableAi = true
+                            }
+                        }
+                },
+                indicators = {
+                    { id = db.TRACTION_BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
 }
 
----Wraps every applicability test so a breakdown never applies to a disabled system
+---Wraps every applicability test so a disabled system never breaks down
 local function wrapBreakdownApplicabilityByEnabledSystem()
     for _, entry in pairs(RMS_Breakdowns.BreakdownRegistry or {}) do
         if type(entry) == "table" and entry.system ~= nil and type(entry.isApplicable) == "function" then
@@ -3549,13 +4481,9 @@ local function wrapBreakdownApplicabilityByEnabledSystem()
                 end
 
                 local spec = vehicle.spec_RealisticMechanicalSystems
-                local systemKey = nil
+                local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, entry.system)
 
-                if RMS_Utils ~= nil and RealisticMechanicalSystems ~= nil and RealisticMechanicalSystems.SYSTEMS ~= nil then
-                    systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, entry.system)
-                end
-
-                if (systemKey == nil or systemKey == "") and type(entry.system) == "string" then
+                if systemKey == "" and type(entry.system) == "string" then
                     systemKey = string.lower(entry.system)
                 end
 

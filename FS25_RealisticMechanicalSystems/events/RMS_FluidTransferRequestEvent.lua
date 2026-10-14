@@ -7,10 +7,12 @@ local RMS_FluidTransferRequestEvent_mt = Class(RMS_FluidTransferRequestEvent, Ev
 
 InitEventClass(RMS_FluidTransferRequestEvent, "RMS_FluidTransferRequestEvent")
 
+---
 function RMS_FluidTransferRequestEvent.emptyNew()
     return Event.new(RMS_FluidTransferRequestEvent_mt)
 end
 
+---
 function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompatibleConfirmed, cancel, result)
     local self = RMS_FluidTransferRequestEvent.emptyNew()
     self.container = container
@@ -22,6 +24,7 @@ function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompati
     return self
 end
 
+---
 function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.container)
     NetworkUtil.writeNodeObject(streamId, self.target)
@@ -31,6 +34,7 @@ function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     streamWriteString(streamId, self.result)
 end
 
+---
 function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
     self.container = NetworkUtil.readNodeObject(streamId)
     self.target = NetworkUtil.readNodeObject(streamId)
@@ -41,10 +45,13 @@ function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---
 function RMS_FluidTransferRequestEvent:run(connection)
     if connection:getIsServer() then
-        if self.result == RMS_FluidTransfer.RESULT.SERVICE_BUSY then
-            InfoDialog.show(g_i18n:getText("rms_charger_error_service"))
+        -- tell the player why nothing runs, unless the container is gone
+        local textKey = self.container ~= nil and RMS_FluidTransfer.getRefusalTextKey(self.container, self.result) or nil
+        if textKey ~= nil then
+            g_currentMission:showBlinkingWarning(g_i18n:getText(textKey), 2000)
         end
         return
     end
@@ -76,11 +83,12 @@ function RMS_FluidTransferRequestEvent:run(connection)
         requester,
         self.incompatibleConfirmed
     )
-    if result == RMS_FluidTransfer.RESULT.SERVICE_BUSY then
+    if result ~= RMS_FluidTransfer.RESULT.OK then
         connection:sendEvent(RMS_FluidTransferRequestEvent.new(self.container, nil, self.circuit, false, false, result))
     end
 end
 
+---
 function RMS_FluidTransferRequestEvent.send(container, target, circuit, incompatibleConfirmed, cancel)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_FluidTransferRequestEvent.new(

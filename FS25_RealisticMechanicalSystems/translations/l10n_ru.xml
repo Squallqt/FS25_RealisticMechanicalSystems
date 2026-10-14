@@ -10,11 +10,11 @@
         <text name="rms_drivetrain_notify_mode" text="Режим привода: %s"/>
         <text name="rms_drivetrain_notify_lock_on" text="Блокировка дифференциала включена"/>
         <text name="rms_drivetrain_notify_lock_off" text="Блокировка дифференциала выключена"/>
-        <text name="rms_drivetrain_notify_park_on" text="Стояночный тормоз затянут"/>
-        <text name="rms_drivetrain_notify_park_off" text="Стояночный тормоз отпущен"/>
         <text name="rms_drivetrain_warning_4wd_windup" text="Трансмиссия под напряжением! Перед поворотом на покрытии с хорошим сцеплением отключите передний мост."/>
         <text name="rms_drivetrain_warning_difflock_windup" text="Блокировка дифференциала под напряжением! Отключите её или уменьшите угол поворота."/>
         <text name="rms_drivetrain_warning_parkbrake" text="Затянут стояночный тормоз!"/>
+        <text name="rms_drivetrain_warning_parkbrake_released" text="Стояночный тормоз не затянут!"/>
+        <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Запустите двигатель, чтобы отпустить стояночный тормоз"/>
         <text name="rms_preheat_ignition_message" text="Зажигание включено: идёт предпусковой подогрев"/>
         <text name="rms_preheat_system_failure_message" text="Отказ системы накаливания: холодный запуск невозможен"/>
         <text name="rms_preheat_start_failed_message" text="Двигатель не запустился: выключите зажигание перед новой попыткой"/>
@@ -22,15 +22,16 @@
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Проверить технику"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="ОК"/>
-        <text name="input_RMS_TOGGLE_4WD" text="Сменить режим привода"/>
-        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Включить/выключить блокировку дифференциала"/>
-        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Затянуть/отпустить стояночный тормоз"/>
+        <text name="input_RMS_TOGGLE_4WD" text="Режим привода"/>
+        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Блокировка дифф."/>
+        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Стояночный тормоз"/>
+        <text name="input_RMS_TOGGLE_ODOMETER" text="ODO/TRIP (держать: TRIP=0)"/>
+        <text name="input_RMS_TOGGLE_BATTERY_ISOLATOR" text="Выключатель массы"/>
+        <text name="input_RMS_TOGGLE_FLUID_CAN" text="Нести канистру, долить"/>
         <!-- Settings -->
         <text name="rms_settings_title" text="НАСТРОЙКИ RMS"/>
         <text name="rms_settings_admin_required" text="Для изменения настроек RMS в сетевой игре нужны права администратора."/>
         <text name="rms_settings_section_service_wear" text="Техобслуживание и износ"/>
-        <text name="rms_settings_section_thermal_model" text="Тепловая модель"/>
-        <text name="rms_settings_section_battery_alternator" text="Аккумулятор и генератор"/>
         <text name="rms_settings_section_drivetrain" text="Трансмиссия и стояночный тормоз"/>
         <text name="rms_workshopOpenHour_label" text="Время открытия мастерской"/>
         <text name="rms_workshopOpenHour_tooltip" text="Работы начинаются только с этого часа."/>
@@ -41,7 +42,7 @@
         <text name="rms_mobileWorkshopAvailable_label" text="Мобильная мастерская 24/7"/>
         <text name="rms_mobileWorkshopAvailable_tooltip" text="Делает мобильную мастерскую доступной в любое время суток."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Ограничения мобильной мастерской"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Когда включено, доступность разных работ в мобильной мастерской зависит от ремонтопригодности техники."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Ограничивает выездные работы по задаче и необходимому оборудованию. Обслуживание доступно; диагностика, тяжёлая разборка или высоковольтные работы могут потребовать оборудованной мастерской."/>
         <text name="rms_ownWorkshopAvailable_label" text="Своя мастерская 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Делает собственную мастерскую доступной в любое время суток."/>
         <text name="rms_instantInspection_label" text="Мгновенный осмотр"/>
@@ -55,35 +56,15 @@
         <text name="rms_debugMode_label" text="Режим отладки"/>
         <text name="rms_debugMode_tooltip" text="Включает панель отладки и подробное ведение журнала в консоли."/>
         <text name="rms_warningMessages_label" text="Предупреждающие сообщения"/>
-        <text name="rms_warningMessages_tooltip" text="Включает или отключает игровые предупреждения, например о холодном двигателе и перегреве."/>
-        <text name="rms_serviceInterval_label" text="Интервал техобслуживания"/>
-        <text name="rms_serviceInterval_tooltip" text="Задаёт интервал замены моторного масла в моточасах. Трансмиссионное и гидравлическое масло меняется каждые два интервала, охлаждающая жидкость каждые десять. Фактический интервал зависит от марки техники."/>
+        <text name="rms_warningMessages_tooltip" text="Включает или отключает игровые предупреждения, например о холодном двигателе и перегреве. Уведомления об ограничении мощности из-за температуры остаются включёнными."/>
+        <text name="rms_serviceInterval_label" text="Периодичность обслуживания"/>
+        <text name="rms_serviceInterval_tooltip" text="Задайте эталонные часы. При 100 ч предписание 500 ч становится 100 ч, а 600 ч — 120 ч. Для каждой жидкости действует программа машины; календарные сроки независимы."/>
         <text name="rms_vehicleLifespan_label" text="Ресурс техники"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Задаёт базовый ресурс техники в моточасах, после которого её состояние достигнет 0%. Чем ближе состояние к нулю, тем ниже надёжность машины. Стоимость техники также снижается за эти моточасы."/>
-        <text name="rms_reinitializeVehicles_label" text="Сбросить парк"/>
-        <text name="rms_reinitializeVehicles_text" text="Сбросить"/>
-        <text name="rms_reinitializeVehicles_tooltip" text="Приводит состояние парка к выбранному ресурсу. Текущие неисправности удаляются."/>
-        <text name="rms_reinitializeVehiclesConfirm_title" text="Сбросить парк"/>
-        <text name="rms_reinitializeVehiclesConfirm_message" text="Привести парк к выбранному ресурсу? Текущие неисправности будут удалены."/>
-        <text name="rms_reinitializeVehicles_result" text="Сброшено машин: %d. Не затронуто: %d."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Задаёт базовый ресурс техники в моточасах, после которого её состояние достигнет 0%. Чем ближе состояние к нулю, тем ниже надёжность машины. Стоимость техники также снижается за эти моточасы. Изменение действует с этого момента: техника сохраняет своё состояние, пересчитывается только её стоимость."/>
         <text name="rms_generalWearEnabled_label" text="Возрастной износ"/>
         <text name="rms_generalWearEnabled_tooltip" text="По мере износа техники каждая система немного теряет основные характеристики, например мощность двигателя, скорость гидравлики или эффективность торможения. Эффект начинается после первой трети ресурса, становится заметным после двух третей и усиливается к концу срока службы техники."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Выхлопной дым"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Управляет выхлопным дымом по реальному состоянию двигателя. Чёрный дым появляется, когда топлива больше, чем доступного воздуха: при резком разгоне, работе внатяг на низких оборотах, долгом холостом ходе с малой нагрузкой, забитом воздушном фильтре или изношенной системе впрыска. Синий дым означает, что изношенный двигатель сжигает масло, белый — что топливо не сгорает. Дым также густеет с ростом нагрузки двигателя. Старая техника дымит заметно сильнее современной, которая почти не дымит без серьёзной неисправности. В холодном воздухе вода, образующаяся при сгорании, ещё и конденсируется в короткий белый шлейф, который испаряется в пределах метра-двух даже у исправного двигателя."/>
-        <text name="rms_batteryCapacity_label" text="Ёмкость батареи"/>
-        <text name="rms_batteryCapacity_tooltip" text="Регулирует максимальную полезную ёмкость аккумулятора. Значение около 150 А·ч реалистичнее, но при нём проблемы с разрядом аккумулятора почти не возникают."/>
-        <text name="rms_option_off" text="Отключено"/>
-        <text name="rms_option_none" text="Нет"/>
-        <text name="rms_alternatorMaxOutput_label" text="Максимальный ток генератора"/>
-        <text name="rms_alternatorMaxOutput_tooltip" text="Задаёт максимальный выходной ток генератора. Чем выше значение, тем быстрее генератор заряжает аккумулятор."/>
-        <text name="rms_idleCurrent_label" text="Ток покоя"/>
-        <text name="rms_idleCurrent_tooltip" text="Задаёт ток разряда аккумулятора при заглушённом двигателе. Например, при 0,5 А аккумулятор ёмкостью 15 А·ч полностью разрядится примерно за 30 часов реального времени без учёта температуры."/>
-        <text name="rms_temperatureChangeSpeed_label" text="Скорость тепловой модели двигателя"/>
-        <text name="rms_temperatureChangeSpeed_tooltip" text="Регулирует скорость изменения температуры двигателя. Низкие значения замедляют нагрев и охлаждение, высокие ускоряют оба процесса. Значение по умолчанию: 1,4."/>
-        <text name="rms_transTemperatureChangeMultiplier_label" text="Скорость тепловой модели общего трансмиссионного и гидравлического масла"/>
-        <text name="rms_transTemperatureChangeMultiplier_tooltip" text="Отдельно регулирует скорость изменения температуры общего масла трансмиссии и гидравлики. Низкие значения замедляют нагрев и охлаждение, высокие ускоряют оба процесса. Значение по умолчанию: 1,0."/>
-        <text name="rms_radiatorDirtInfluence_label" text="Влияние загрязнения радиатора"/>
-        <text name="rms_radiatorDirtInfluence_tooltip" text="Уменьшает охлаждающую способность радиатора на этот процент при максимальном загрязнении."/>
         <text name="rms_tutorialMode_label" text="Режим обучения"/>
         <text name="rms_tutorialMode_tooltip" text="Показывает обучающие подсказки во время игры."/>
         <text name="rms_tutorialResetTips_label" text="Сбросить подсказки"/>
@@ -92,15 +73,11 @@
         <text name="rms_tutorialResetConfirm_title" text="Сбросить подсказки?"/>
         <text name="rms_tutorialResetConfirm_message" text="Сбросить историю обучающих подсказок и показывать их заново?"/>
         <text name="rms_drivetrainEnabled_label" text="Управление 4WD и блокировкой дифференциала"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Включает ручное управление подключаемым передним мостом и блокировками дифференциалов на тракторах. Если активно управление дифференциалами Enhanced Vehicle, мод полностью отключает своё управление, и Enhanced Vehicle самостоятельно управляет трансмиссией."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Включает ручное управление подключаемым передним мостом и блокировками дифференциалов на тракторах. Если установлен Enhanced Vehicle, его управление дифференциалами отключается; чтобы вернуть его, отключите эту настройку, а затем снова включите дифференциалы в меню Enhanced Vehicle."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Разрешить режим АВТО"/>
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="Добавляет положение АВТО: передний мост подключается автоматически при пробуксовке или на рабочей скорости под нагрузкой и отключается на дороге. Машины, оставленные в АВТО, переходят в 4WD при отключении этой опции."/>
-        <text name="rms_drivetrainWindupDamage_label" text="Повреждения трансмиссии от напряжения"/>
-        <text name="rms_drivetrainWindupDamage_tooltip" text="Повороты на покрытии с хорошим сцеплением при заблокированных дифференциалах создают напряжение в трансмиссии и постепенно повреждают её. Отключите эту настройку для более щадящего режима игры."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Стояночный тормоз"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Добавляет стояночный тормоз всей отслеживаемой технике с отдельной клавишей управления. При затянутом тормозе машина остаётся неподвижной и не реагирует на газ."/>
-        <text name="rms_drivetrainParkBrakeAuto_label" text="Автоматический стояночный тормоз"/>
-        <text name="rms_drivetrainParkBrakeAuto_tooltip" text="Автоматически затягивает стояночный тормоз, когда оператор покидает стоящую машину."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Добавляет стояночный тормоз всей отслеживаемой технике. Новые машины с трансмиссией CVT или Powershift затягивают и отпускают его сами; на остальных вы управляете им отдельной клавишей. Если установлен Enhanced Vehicle, его стояночный тормоз отключается; чтобы вернуть его, отключите эту настройку, а затем снова включите стояночный тормоз в меню Enhanced Vehicle."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Мастерская"/>
         <text name="rms_ws_tab_summary" text="Сводка"/>
@@ -113,38 +90,58 @@
         <text name="rms_ws_section_quote" text="Смета на ремонт"/>
         <text name="rms_ws_section_choose_intervention" text="Выбрать работу"/>
         <text name="rms_ws_section_work_order" text="Заказ-наряд"/>
+        <text name="rms_ws_section_paint_order" text="Заказ-наряд на покраску"/>
         <text name="rms_ws_section_recap" text="Итог"/>
         <text name="rms_ws_section_parts" text="Затрагиваемые детали"/>
         <text name="rms_ws_section_history" text="История"/>
         <text name="rms_ws_section_current_intervention" text="Выполняемая работа"/>
         <text name="rms_ws_label_last_check" text="Последняя проверка"/>
+        <text name="rms_ws_reading_outdated" text="Перепроверить"/>
         <text name="rms_ws_label_workshop_state" text="Состояние мастерской"/>
         <text name="rms_ws_label_more_parts" text="+ ещё %s"/>
         <text name="rms_ws_label_committed_cost" text="Затраченные средства"/>
         <text name="rms_ws_label_finish_time" text="Время окончания"/>
         <text name="rms_ws_label_total_estimate" text="Итого по смете"/>
         <text name="rms_ws_button_configure_repair" text="Настроить ремонт"/>
-        <text name="rms_ws_info_inspection_reveals" text="Осмотр может выявить другие дефекты."/>
+        <text name="rms_ws_info_inspection_reveals" text="Осмотр или техобслуживание может выявить другие неисправности."/>
         <text name="rms_ws_status_ready_title" text="Мастерская готова"/>
         <text name="rms_ws_status_ready_hint" text="Выберите работу. Параметры, детали и цена будут подтверждены до начала."/>
         <text name="rms_ws_label_value" text="Стоимость техники"/>
         <text name="rms_ws_label_age" text="Возраст"/>
         <text name="rms_ws_label_operating_hours" text="Моточасы"/>
+        <text name="rms_odometer_label" text="Пробег"/>
+        <text name="rms_odometer_not_recorded" text="Не зафиксирован"/>
         <text name="rms_ws_label_service" text="Уровень техобслуживания"/>
-        <text name="rms_ws_label_maintenance_standard" text="Стандартное ТО"/>
-        <text name="rms_ws_label_maintenance_extended" text="Расширенное ТО"/>
-        <text name="rms_ws_label_maintenance_preventive" text="Профилактическое ТО"/>
         <text name="rms_ws_label_condition" text="Состояние"/>
         <text name="rms_ws_label_reliability" text="Надёжность"/>
+        <text name="rms_reliability_average" text="Средняя"/>
+        <text name="rms_reliability_fair" text="Приемлемая"/>
+        <text name="rms_reliability_good" text="Хорошая"/>
+        <text name="rms_reliability_very_good" text="Очень хорошая"/>
+        <text name="rms_ws_label_service_access" text="Удобство обслуживания"/>
+        <text name="rms_service_access_easy" text="Простое"/>
+        <text name="rms_service_access_average" text="Средняя"/>
+        <text name="rms_service_access_demanding" text="Сложное"/>
         <text name="rms_ws_label_overhaul_count" text="Выполнено капремонтов"/>
-        <text name="rms_ws_label_maintainability" text="Ремонтопригодность"/>
         <text name="rms_ws_label_maintenance_log" text="Журнал техобслуживания"/>
         <text name="rms_ws_label_last_report" text="Последний отчёт"/>
         <text name="rms_ws_label_last_maintenance" text="Последнее техобслуживание"/>
         <text name="rms_ws_task_inspection" text="Осмотр"/>
         <text name="rms_ws_task_maintenance" text="Техобслуживание"/>
         <text name="rms_ws_task_overhaul" text="Капитальный ремонт"/>
-        <text name="rms_ws_info_no_breakdowns" text="Известных неисправностей нет. Возможны ещё не выявленные неисправности."/>
+        <text name="rms_ws_info_no_breakdowns" text="Выявленных неисправностей нет. Осмотр или техобслуживание выявит те, что техника ещё не показывает."/>
+        <text name="rms_ws_info_warning_unidentified" text="Горит индикатор: неисправность нужно выявить. Осмотр или техобслуживание её выявит, затем её можно отремонтировать."/>
+        <text name="rms_ws_faults_none_title" text="Выявленных неисправностей нет"/>
+        <text name="rms_ws_faults_none_hint" text="Осмотр или техобслуживание выявит неисправности, которые техника ещё не показывает."/>
+        <text name="rms_ws_faults_warning_title" text="Неисправность нужно выявить"/>
+        <text name="rms_ws_faults_warning_hint" text="Горит индикатор. Осмотр или техобслуживание выявит неисправность, затем её можно отремонтировать."/>
+        <text name="rms_ws_reason_repair_unselected" text="Ни одна неисправность не отмечена. Отметьте в разделе «Диагностика и смета» неисправности для ремонта."/>
+        <text name="rms_ws_reason_overhaul_none" text="Капитальный ремонт восстанавливает системы с состоянием ниже 50%. У этой техники таких нет."/>
+        <text name="rms_ws_reason_bodywork_mobile" text="Мобильная мастерская не выполняет покраску. Её выполняют у дилера."/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Используйте оборудованную мастерскую."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Требуется электронная диагностика"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Требуется разборка или специальный инструмент"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Требуется высоковольтное оборудование"/>
         <text name="rms_ws_status_in_progress_short_format" text="%s в процессе..."/>
         <text name="rms_ws_status_in_progress_format" text="%s в процессе до %s"/>
         <text name="rms_ws_status_open" text="Мастерская открыта"/>
@@ -159,18 +156,17 @@
         <text name="rms_ws_action_choice_repair" text="Ремонт неисправности"/>
         <text name="rms_ws_action_choice_overhaul" text="Капитальный ремонт"/>
         <text name="rms_ws_action_choice_refill" text="Долив жидкостей"/>
+        <text name="rms_ws_action_choice_bodywork" text="Покраска техники"/>
         <text name="rms_ws_action_cancel_service" text="Отменить работу"/>
         <text name="rms_ws_age_unit" text="мес."/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="Да"/>
         <text name="rms_ws_option_no" text="Нет"/>
         <text name="rms_ws_no_last_report_message" text="Отчётов пока нет"/>
-        <text name="rms_ws_systems_need_complete_inspection" text="Требуется полный осмотр"/>
         <text name="rms_ws_no_log_empty_message" text="Журнал пока пуст"/>
         <text name="rms_ws_no_report_message" text="Отчёт отсутствует"/>
         <text name="rms_ws_cancel_confirm_title" text="Отменить текущую работу? (%s)"/>
         <text name="rms_ws_cancel_confirm_text" text="Текущий прогресс будет зафиксирован. Деньги за работу не возвращаются."/>
-        <text name="rms_mobile_workshop_low_maintainability" text="Внимание: работа %s недоступна для %s в мобильной мастерской, потому что эту технику слишком сложно обслужить на месте."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="Журнал техобслуживания"/>
         <text name="rms_log_recorded_interventions_title" text="Учтённые работы"/>
@@ -207,10 +203,10 @@
         <text name="rms_breakdowns_severity_moderate" text="Умеренная"/>
         <text name="rms_breakdowns_severity_major" text="Серьёзная"/>
         <text name="rms_breakdowns_severity_critical" text="Критическая"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Лёгкий износ рулевых тяг. Рулевое управление становится немного менее точным."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Умеренный износ рулевых тяг. Люфт увеличивается, точность заметно снижается, поведение техники ухудшается."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Сильный износ рулевых тяг. Люфт большой, рулевое управление реагирует плохо, управление техникой затруднено."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Критический отказ рулевых тяг. Рулевое управление ненадёжно, продолжение движения опасно."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Лёгкий износ рулевых тяг. Появляется небольшой люфт, и рулевое управление становится немного менее точным."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Умеренный износ рулевых тяг. Люфт увеличивается, и нарушается установка колёс: рулевое управление теряет чёткость, технику слегка тянет в сторону."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Сильный износ рулевых тяг. Люфт большой, установка колёс заметно нарушена: технику тянет в сторону, она плохо держит курс, и один из шарниров может разрушиться."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Критический отказ рулевых тяг. Один из шарниров разрушен: рулевое управление больше не управляет колёсами как следует, продолжение движения опасно."/>
         <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="Отказ рулевого управления"/>
         <text name="rms_breakdowns_general_wear_stage1_description" text="Накопленная за годы эксплуатации нагрузка оставляет небольшой необратимый износ основных компонентов, который слегка снижает общую производительность."/>
         <text name="rms_breakdowns_gear_disengage_message" text="Переход на нейтраль"/>
@@ -223,12 +219,23 @@
         <text name="rms_breakdowns_part_consumables" text="Расходные материалы"/>
         <text name="rms_breakdowns_part_cooling_system" text="Система охлаждения"/>
         <text name="rms_breakdowns_part_clutch" text="Сцепление"/>
-        <text name="rms_breakdowns_part_cvt_chain" text="Цепь CVT"/>
-        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Гидрораспределитель CVT"/>
+        <text name="rms_breakdowns_part_cvt_chain" text="Бесступенчатая трансмиссия"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Управление передаточным отношением"/>
         <text name="rms_breakdowns_part_cvt" text="CVT"/>
         <text name="rms_breakdowns_part_engine" text="Двигатель"/>
         <text name="rms_breakdowns_part_ecu" text="ЭБУ"/>
         <text name="rms_breakdowns_part_battery" text="Аккумулятор"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Тяговая батарея"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Высоковольтный контактор"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Высоковольтная проводка"/>
+        <text name="rms_breakdowns_part_inverter" text="Инвертор"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Преобразователь напряжения"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Бортовое зарядное устройство"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Подшипники электродвигателя"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Обмотки электродвигателя"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Датчик положения двигателя"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Насос охлаждающей жидкости"/>
+        <text name="rms_breakdowns_part_reducer" text="Редуктор"/>
         <text name="rms_breakdowns_part_brake_system" text="Тормозная система"/>
         <text name="rms_breakdowns_part_wiring" text="Проводка и разъёмы"/>
         <text name="rms_breakdowns_part_wheel_bearing" text="Подшипник колеса"/>
@@ -281,7 +288,8 @@
         <text name="rms_breakdowns_quick_fix_stage" text="Временный ремонт"/>
         <text name="rms_breakdowns_defected_parts_stage" text="Дефект"/>
         <text name="rms_breakdowns_defected_parts_detected_description" text="Система работает нормально, но осмотр выявил дефектную деталь. У неё не осталось запаса надёжности, поэтому рекомендуется профилактическая замена во избежание внезапной неисправности."/>
-        <text name="rms_breakdowns_dead_battery_message" text="Аккумулятор разряжен"/>
+        <text name="rms_breakdowns_dead_battery_message" text="Аккумулятор слишком слаб"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Тяговая батарея холодная: запас хода и мощность снижены"/>
         <text name="rms_breakdowns_temporarily_repaired_description" text="Система работает нормально, но полностью зависит от временного ремонта. Чтобы избежать неисправности под нагрузкой, как можно скорее выполните полную замену деталей."/>
         <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Износ подшипников турбокомпрессора. Слышен слабый свист и наблюдается небольшая потеря мощности на высоких оборотах."/>
         <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Утечка через уплотнения турбокомпрессора. Заметная потеря мощности, повышенный расход топлива."/>
@@ -318,6 +326,7 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Защита от перегрева: мощность снижена"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Защита от перегрева усиливается. Двигатель выдаёт лишь половину мощности."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Защита от перегрева: мощность снижена вдвое"/>
+        <text name="rms_thermal_power_restored_message" text="Тепловая защита: ограничение мощности снято"/>
         <text name="rms_breakdowns_overheat_protection_stage3_description" text="Защита от перегрева работает на максимуме. Осталась лишь малая часть мощности двигателя."/>
         <text name="rms_breakdowns_overheat_protection_stage3_message" text="Защита от перегрева: мощность сильно снижена"/>
         <text name="rms_breakdowns_overheat_protection_stage4_description" text="Двигатель заглушен, чтобы избежать повреждений. Дайте ему остыть перед повторным запуском."/>
@@ -336,20 +345,25 @@
         <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Серьёзная неисправность ЭБУ. Значительная потеря мощности, высокий расход топлива и риск остановки двигателя."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Полный отказ ЭБУ. Двигатель не поддаётся управлению и не запускается."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="Отказ ЭБУ"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Лёгкая коррозия проводки и электрических разъёмов. Повышенное контактное сопротивление вызывает редкое мерцание света, нестабильное питание и затруднённый запуск двигателя."/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Умеренная коррозия проводки и электрических разъёмов. Потери контакта вызывают частое мерцание света, нестабильное питание и затруднённый запуск, двигатель может заглохнуть."/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Сильная коррозия проводки и электрических разъёмов. Питание критических цепей нестабильно, освещение может полностью отказать, крутящий момент двигателя снижен, двигатель может глохнуть, запуск ненадёжен."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Отказ цепи управления стартером из-за сильной коррозии проводки. Освещение не работает, запуск двигателя невозможен."/>
+        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Лёгкая коррозия проводки и электрических разъёмов. Повышенное контактное сопротивление вызывает редкое мерцание света, нестабильное питание и затруднённый запуск двигателя. Утечка тока разряжает аккумулятор, когда техника стоит."/>
+        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Умеренная коррозия проводки и электрических разъёмов. Потери контакта вызывают частое мерцание света, нестабильное питание и затруднённый запуск, двигатель может заглохнуть. Утечка тока разряжает аккумулятор, когда техника стоит."/>
+        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Сильная коррозия проводки и электрических разъёмов. Питание критических цепей нестабильно, освещение может полностью отказать, крутящий момент двигателя снижен, двигатель может глохнуть, запуск ненадёжен. Утечка тока разряжает аккумулятор, когда техника стоит."/>
+        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Отказ цепи управления стартером из-за сильной коррозии проводки. Освещение не работает, запуск двигателя невозможен. Утечка тока разряжает аккумулятор, когда техника стоит."/>
         <text name="rms_breakdowns_corroded_wiring_stage4_message" text="Отказ цепи стартера"/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage1_description" text="Лёгкая коррозия проводки и электрических разъёмов. Повышенное контактное сопротивление вызывает редкое мерцание света и нестабильное питание. Утечка тока разряжает аккумулятор бортовой сети, когда техника стоит."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage2_description" text="Умеренная коррозия проводки и электрических разъёмов. Потери контакта вызывают частое мерцание света и нестабильное питание, возможны отключения. Утечка тока разряжает аккумулятор бортовой сети, когда техника стоит."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage3_description" text="Сильная коррозия проводки и электрических разъёмов. Питание критических цепей нестабильно, освещение может полностью отказать, мощность снижена, вероятны отключения. Утечка тока разряжает аккумулятор бортовой сети, когда техника стоит."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_description" text="Критическая коррозия проводки и электрических разъёмов. Освещение не работает, техника не запускается. Утечка тока разряжает аккумулятор бортовой сети, когда техника стоит."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_message" text="Отказ проводки и разъёмов"/>
         <text name="rms_breakdowns_coolant_leak_stage1_description" text="Небольшая утечка охлаждающей жидкости. Эффективность охлаждения слегка снижена."/>
         <text name="rms_breakdowns_coolant_leak_stage2_description" text="Умеренная утечка охлаждающей жидкости. Эффективность охлаждения заметно снижается, температура двигателя растёт быстрее."/>
         <text name="rms_breakdowns_coolant_leak_stage3_description" text="Сильная утечка охлаждающей жидкости. Потеря охлаждения значительная, риск перегрева становится высоким."/>
         <text name="rms_breakdowns_coolant_leak_stage4_description" text="Критический отказ системы охлаждения. Охлаждающей жидкости недостаточно для безопасной работы двигателя."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Лёгкий износ цепи CVT. Под нагрузкой появляется лёгкое проскальзывание, что немного снижает эффективность передачи."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Умеренный износ цепи CVT. Проскальзывание под нагрузкой становится заметным, передаточное отношение регулируется менее точно."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Сильный износ цепи CVT. Проскальзывание значительное, эффективность резко падает, трансмиссия с трудом удерживает требуемое передаточное отношение."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Критический отказ цепи CVT. Трансмиссия больше не может нормально передавать момент, техника практически теряет работоспособность."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Отказ цепи CVT"/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Эффективность трансмиссии под нагрузкой немного снижается."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Эффективность под нагрузкой заметно снижается, передаточное отношение становится менее стабильным."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Трансмиссия с трудом передаёт тяговое усилие и поддерживает заданное передаточное отношение."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Трансмиссия больше не передаёт тяговое усилие надёжно; движение почти невозможно."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Отказ трансмиссии"/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Обнаружены первые признаки неисправности трансмиссии CVT. Требуются осмотр и ремонт."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Неисправность трансмиссии CVT прогрессирует. Продолжение эксплуатации может привести к переходу в аварийный режим."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Критическое повреждение трансмиссии CVT. Трансмиссия работает в аварийном режиме, максимальная скорость техники снижена."/>
@@ -359,6 +373,10 @@
         <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Умеренная сульфатация аккумулятора. Полезная ёмкость значительно снижена, запуск двигателя затруднён."/>
         <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Сильная сульфатация аккумулятора. Доступная ёмкость критически низкая, пусковые характеристики нестабильны."/>
         <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Критическая сульфатация аккумулятора. Полезная ёмкость почти нулевая, пусковой мощности недостаточно для надёжного запуска двигателя."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Лёгкая сульфатация аккумулятора бортовой сети. Полезная ёмкость снижена, из-за чего уменьшается электрический запас под нагрузкой."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Умеренная сульфатация аккумулятора бортовой сети. Полезная ёмкость значительно снижена, электрический запас расходуется быстрее."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Сильная сульфатация аккумулятора бортовой сети. Доступная ёмкость критически низкая, электрический запас расходуется очень быстро."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Критическая сульфатация аккумулятора бортовой сети. Полезная ёмкость почти нулевая, её уже недостаточно для надёжного запуска."/>
         <text name="rms_breakdowns_brake_malfunction_stage1_description" text="Износ тормозных колодок. Небольшое снижение эффективности торможения."/>
         <text name="rms_breakdowns_brake_malfunction_stage2_description" text="Утечка тормозной жидкости или износ дисков. Тормозной путь заметно увеличен."/>
         <text name="rms_breakdowns_brake_malfunction_stage3_description" text="Серьёзная потеря давления в тормозной системе. Тормоза очень слабые и ненадёжные."/>
@@ -369,10 +387,63 @@
         <text name="rms_breakdowns_bearing_wear_stage3_description" text="Сильный износ подшипников. Трение высокое, шум сильный, под нагрузкой есть реальный риск заклинивания."/>
         <text name="rms_breakdowns_bearing_wear_stage4_description" text="Критический износ подшипников. Затронутый узел близок к полному заклиниванию, эксплуатация становится невозможной."/>
         <text name="rms_breakdowns_bearing_wear_stage4_message" text="Разрушение подшипника"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Лёгкая неисправность регулятора генератора. Зарядный ток снижен, из-за чего аккумулятор заряжается хуже."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Умеренная неисправность регулятора генератора. Заряд нестабилен и снижен, что приводит к плохой зарядке аккумулятора и повышенным потерям напряжения в электросистеме."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Сильная неисправность регулятора генератора. Заряд сильно снижен, питание нестабильно, электрическая система работает с большими потерями."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Полный отказ регулятора генератора. Аккумулятор больше не заряжается, электросистема питается только от оставшегося в нём заряда."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Лёгкая неисправность регулятора генератора. Зарядный ток снижен, из-за чего аккумулятор заряжается хуже. Утечка тока разряжает аккумулятор, когда техника стоит."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Умеренная неисправность регулятора генератора. Заряд нестабилен и снижен, что приводит к плохой зарядке аккумулятора и повышенным потерям напряжения в электросистеме. Утечка тока разряжает аккумулятор, когда техника стоит."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Сильная неисправность регулятора генератора. Заряд сильно снижен, питание нестабильно, электрическая система работает с большими потерями. Утечка тока разряжает аккумулятор, когда техника стоит."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Полный отказ регулятора генератора. Аккумулятор больше не заряжается, электросистема питается только от оставшегося в нём заряда. Утечка тока разряжает аккумулятор, когда техника стоит."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Лёгкий износ подшипников электродвигателя. Появляется слабый шум, расход энергии немного возрастает."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Умеренный износ подшипников электродвигателя. Шум отчётливо слышен, расход энергии растёт, мощность слегка снижается."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Сильный износ подшипников электродвигателя. Шум сильный, двигатель греется, мощность заметно снижается."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Критический износ подшипников электродвигателя. Двигатель заклинило, техника больше не может двигаться."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_message" text="Отказ подшипников электродвигателя"/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Лёгкое повреждение обмоток электродвигателя. Мощность слегка снижается, двигатель греется сильнее."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Умеренное повреждение обмоток электродвигателя. Мощность заметно снижается, двигатель греется, расход энергии растёт."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Сильное повреждение обмоток электродвигателя. Потеря мощности значительна, двигатель сильно греется, возможны отключения."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Критическое повреждение обмоток электродвигателя. В двигателе короткое замыкание, работать он больше не может."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_message" text="Отказ обмоток электродвигателя"/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Лёгкая неисправность датчика положения двигателя. Под нагрузкой появляются короткие рывки."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Умеренная неисправность датчика положения двигателя. Рывки частые, мощность снижается."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Серьёзная неисправность датчика положения двигателя. Рывки резкие, мощность падает, происходят отключения."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Полный отказ датчика положения двигателя. Двигатель не поддаётся управлению, техника не запускается."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_message" text="Отказ датчика положения двигателя"/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Лёгкая неисправность инвертора. Мощность двигателя слегка снижена."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Умеренная неисправность инвертора. Потеря мощности ощутима, расход энергии растёт."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Серьёзная неисправность инвертора. Потеря мощности значительна, возможны отключения."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Полный отказ инвертора. Двигатель больше не получает питание, техника не запускается."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_message" text="Отказ инвертора"/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Лёгкая неисправность преобразователя напряжения. Аккумулятор бортовой сети заряжается хуже."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Умеренная неисправность преобразователя напряжения. Зарядка аккумулятора бортовой сети снижена и нестабильна."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Серьёзная неисправность преобразователя напряжения. Аккумулятор бортовой сети почти не заряжается и разряжается в движении."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Полный отказ преобразователя напряжения. Аккумулятор бортовой сети больше не заряжается, техника работает только на оставшемся заряде."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Лёгкая неисправность бортового зарядного устройства. Зарядка на станции идёт немного медленнее."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Умеренная неисправность бортового зарядного устройства. Зарядка на станции идёт заметно медленнее."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Серьёзная неисправность бортового зарядного устройства. Зарядка на станции идёт очень медленно."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Полный отказ бортового зарядного устройства. Тяговую батарею больше нельзя зарядить."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_message" text="Бортовое зарядное устройство не работает: зарядка невозможна"/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Лёгкая потеря изоляции высоковольтной проводки. Выводится предупреждение, других последствий нет."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Умеренная потеря изоляции высоковольтной проводки. Мощность снижена в целях безопасности."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Сильная потеря изоляции высоковольтной проводки. Мощность сильно снижена, происходят отключения."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Критическая потеря изоляции высоковольтной проводки. Техника не запускается в целях безопасности."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_message" text="Потеря изоляции высоковольтной проводки"/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Лёгкая неисправность ячеек тяговой батареи. Запас хода слегка снижается."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Умеренная неисправность ячеек тяговой батареи. Запас хода заметно снижается, мощность ограничена."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Серьёзная неисправность ячеек тяговой батареи. Запас хода и мощность падают, возможны отключения."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Критический отказ тяговой батареи. Технику больше нельзя включить."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_message" text="Отказ тяговой батареи"/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Лёгкий износ высоковольтного контактора. Изредка происходят перебои питания."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Умеренный износ высоковольтного контактора. Перебои питания становятся регулярными."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Сильный износ высоковольтного контактора. Перебои питания частые."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Критический отказ высоковольтного контактора. Тяговая батарея больше не питает технику, она не запускается."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_message" text="Отказ высоковольтного контактора"/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Лёгкая неисправность насоса охлаждающей жидкости. Жидкость циркулирует хуже, температура растёт немного сильнее."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Умеренная неисправность насоса охлаждающей жидкости. Охлаждение заметно ослаблено."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Серьёзная неисправность насоса охлаждающей жидкости. Охлаждение сильно ослаблено, под нагрузкой вероятен перегрев."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Полный отказ насоса охлаждающей жидкости. Жидкость почти не циркулирует, техника быстро перегревается."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Лёгкий износ шестерён и подшипников редуктора. При движении появляется слабый шум."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Умеренный износ шестерён и подшипников редуктора. Шум отчётливо слышен, расход энергии растёт."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Сильный износ шестерён и подшипников редуктора. Шум сильный, редуктор греется, мощность на колёсах снижается."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Критический отказ редуктора. Его заклинило, техника больше не может двигаться."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_message" text="Отказ редуктора"/>
         <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="Лёгкая неисправность клапанного механизма. Крутящий момент двигателя слегка снижен, расход топлива увеличен, в механизме появляется необычный шум."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="Умеренная неисправность клапанного механизма. Крутящий момент заметно снижен, расход топлива увеличен, шум выражен, под нагрузкой возможны провалы."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="Сильная неисправность клапанного механизма. Крутящий момент сильно снижен, расход топлива высокий, механический шум значительный, возможны перебои или остановки двигателя."/>
@@ -403,11 +474,11 @@
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Умеренная неисправность муфты вентилятора. Включение вентилятора становится нестабильным, эффективность охлаждения заметно падает."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Сильная неисправность муфты вентилятора. Вентилятор не обеспечивает достаточный поток воздуха, двигатель легче перегревается."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Критический отказ муфты вентилятора. Вентилятор больше не способен обеспечивать необходимое охлаждение."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Лёгкая неисправность гидрораспределителя CVT. Трансмиссия реагирует немного медленнее и менее точно."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Умеренная неисправность гидрораспределителя CVT. Давление нестабильно, изменение передаточного отношения замедлено, эффективность заметно снижена."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Серьёзная неисправность гидрораспределителя CVT. Давление крайне нестабильно, трансмиссия реагирует плохо, передаваемая мощность резко снижается."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Критический отказ гидрораспределителя CVT. Давление больше не регулируется, трансмиссия неработоспособна."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Отказ гидрораспределителя CVT"/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Управление передаточным отношением реагирует медленнее и менее точно."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Передаточное отношение меняется неравномерно, управление работает плохо."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Управление передаточным отношением серьёзно нарушено, передаваемое тяговое усилие снижается."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Управление передаточным отношением отказало; трансмиссия почти непригодна к работе."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Отказ управления передаточным отношением"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Небольшая внутренняя утечка в гидроцилиндре. Поднятое орудие медленно опускается под нагрузкой."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Умеренная внутренняя утечка в гидроцилиндре. Самопроизвольное опускание заметно и ускоряется с ростом нагрузки."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Сильная внутренняя утечка в гидроцилиндре. Тяжёлые орудия больше не удерживают положение надёжно."/>
@@ -467,12 +538,11 @@
         <text name="rms_spec_months_ago_unit" text="мес. назад"/>
         <text name="rms_spec_month_ago_one" text="мес. назад"/>
         <text name="rms_spec_months_ago_format" text="%s %s"/>
+        <text name="rms_spec_work_hours_ago_format" text="%s %s работы назад"/>
+        <text name="rms_spec_work_under_hour_ago" text="менее 1 h работы назад"/>
         <text name="rms_spec_maintenance_complete_notification" text="Работа завершена: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Работа отменена: %s"/>
-        <text name="rms_spec_maintenance_minimal" text="Минимальный"/>
-        <text name="rms_spec_maintenance_standard" text="Стандартный"/>
-        <text name="rms_spec_maintenance_extended" text="Расширенный"/>
-        <text name="rms_spec_maintenance_preventive" text="Профилактический"/>
+        <text name="rms_spec_maintenance_level" text="ТО %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s до %s"/>
         <text name="rms_spec_workshop_dealer" text="Дилерская"/>
         <text name="rms_spec_workshop_own" text="Собственная"/>
@@ -485,6 +555,8 @@
         <text name="rms_spec_system_chassis" text="Ходовая часть"/>
         <text name="rms_spec_system_fuel" text="Топливная система"/>
         <text name="rms_spec_system_pto" text="Вал отбора мощности"/>
+        <text name="rms_spec_system_electric_motor" text="Электродвигатель"/>
+        <text name="rms_spec_system_traction_battery" text="Тяговая батарея"/>
         <text name="rms_spec_state_ready" text="Готово"/>
         <text name="rms_spec_state_repair" text="Ремонт"/>
         <text name="rms_spec_state_refill" text="Долив"/>
@@ -493,24 +565,17 @@
         <text name="rms_spec_state_inspection" text="Осмотр"/>
         <text name="rms_spec_state_maintenance" text="Техобслуживание"/>
         <text name="rms_spec_state_overhaul" text="Капитальный ремонт"/>
+        <text name="rms_spec_state_bodywork" text="Покраска"/>
         <text name="rms_spec_state_overdue" text="Просрочено"/>
         <text name="rms_spec_state_optimal" text="Оптимальное"/>
         <text name="rms_spec_state_broken" text="Неисправно"/>
         <text name="rms_spec_state_bad" text="Плохое"/>
-        <text name="rms_spec_state_budget" text="Бюджетная"/>
         <text name="rms_spec_state_excellent" text="Отличное"/>
         <text name="rms_spec_state_good" text="Хорошее"/>
         <text name="rms_spec_state_service_good" text="Хорошее"/>
         <text name="rms_spec_state_normal" text="Нормальное"/>
         <text name="rms_spec_state_terrible" text="Ужасное"/>
         <text name="rms_spec_state_unknown" text="Неизвестно"/>
-        <text name="rms_spec_state_legendary" text="Легендарная"/>
-        <text name="rms_spec_state_low" text="Низкая"/>
-        <text name="rms_spec_state_premium" text="Премиальная"/>
-        <text name="rms_spec_state_standard" text="Стандартная"/>
-        <text name="rms_spec_state_average" text="Средняя"/>
-        <text name="rms_spec_state_high" text="Высокая"/>
-        <text name="rms_spec_state_workhorse" text="Неприхотливая"/>
         <text name="rms_spec_part_types_used" text="Подержанные"/>
         <text name="rms_spec_part_types_aftermarket" text="Аналоги"/>
         <text name="rms_spec_part_types_oem" text="Оригинальные"/>
@@ -531,36 +596,112 @@
         <text name="rms_option_menu_option_two_title_repair" text="Качество запчастей"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Система для капитального ремонта"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Если во время работы выявлены неисправности, после неё автоматически запускается стандартный ремонт с оригинальными деталями."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="После ремонта автоматически выполняет стандартное техобслуживание с оригинальными расходными материалами."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Частичный капитальный ремонт: приводит выбранную систему в хорошее состояние, устраняет поддающиеся ремонту неисправности и при необходимости меняет связанную жидкость."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Стандартный капитальный ремонт: приводит все системы в хорошее состояние, устраняет поддающиеся ремонту неисправности, меняет жидкости и обновляет техобслуживание."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Полный капитальный ремонт: приводит все системы в состояние новых, устраняет поддающиеся ремонту неисправности, меняет жидкости и обновляет техобслуживание."/>
+        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="После ремонта автоматически выполняет рекомендованное ТО с оригинальными расходными материалами."/>
         <text name="rms_option_menu_price_text" text="Цена"/>
-        <text name="rms_option_menu_part_used_description" text="Подержанные детали: минимальная цена и 50% риска последующего дефекта."/>
-        <text name="rms_option_menu_part_aftermarket_description" text="Аналоги: сниженная цена и 33% риска последующего дефекта."/>
-        <text name="rms_option_menu_part_oem_description" text="Оригинальные детали: стандартная цена, риск дефекта 10%."/>
-        <text name="rms_option_menu_part_premium_description" text="Премиальные детали: цена выше на 20%, но отсутствует риск дефекта, вызванного установленной деталью."/>
-        <text name="rms_option_menu_consumable_used_description" text="Экономичные расходные материалы: минимальная цена и 50% риска последующего дефекта."/>
-        <text name="rms_option_menu_consumable_aftermarket_description" text="Аналоги: сниженная цена и 33% риска последующего дефекта."/>
-        <text name="rms_option_menu_consumable_oem_description" text="Оригинальные расходные материалы: стандартная цена, риск дефекта 10%."/>
-        <text name="rms_option_menu_consumable_premium_description" text="Премиальные расходные материалы: цена выше на 20%, без риска дефекта из-за расходных материалов."/>
         <text name="rms_option_menu_perform_repair" text="Автоматический ремонт"/>
         <text name="rms_option_menu_perform_maintenance" text="Автоматическое техобслуживание"/>
         <text name="rms_option_menu_warranty_repair_text" text="Гарантийный ремонт"/>
-        <text name="rms_warranty_dealer_info" text="Гарантия у дилера для собственной техники младше 12 месяцев и с наработкой менее 20 моточасов: стандартный ремонт, оригинальные детали и необходимые жидкости."/>
+        <text name="rms_option_menu_lease_service_text" text="Входит в аренду"/>
         <text name="rms_option_menu_duration_text" text="Продолжительность"/>
         <text name="rms_option_menu_duration_instant" text="Мгновенно"/>
         <text name="rms_option_menu_finish_time_text" text="Время окончания"/>
         <text name="rms_option_menu_start_text" text="Начать"/>
-        <text name="rms_option_menu_inspection_visual_description" text="Визуальный: быстро и недорого ищет только действующие неисправности с пониженной вероятностью обнаружения. Отчёт не содержит подробного состояния компонентов."/>
-        <text name="rms_option_menu_inspection_standard_description" text="Стандартный: ищет действующие неисправности с обычной вероятностью обнаружения и формирует общий отчёт без подробных значений состояния."/>
-        <text name="rms_option_menu_inspection_complete_description" text="Полный: ищет действующие и потенциальные неисправности с обычной вероятностью обнаружения и формирует полный отчёт с подробным состоянием компонентов."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="Стандартный: заменяет моторное масло вместе с масляным и топливным фильтрами, при необходимости доливает остальные жидкости, очищает радиатор и продувает воздушный фильтр."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="Расширенный: стандартное техобслуживание плюс замена трансмиссионного и гидравлического масла с новым фильтром. Также заменяет воздушный фильтр и доливает охлаждающую жидкость."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="Профилактический: заменяет все масла и охлаждающую жидкость вместе с их фильтрами и ставит новый воздушный фильтр. Также снижает механическую нагрузку максимум в трёх приоритетных системах."/>
-        <text name="rms_option_menu_repair_type_fix_description" text="Временный: быстро и недорого возвращает машину в эксплуатацию, не устраняя неисправность. Она снова проявится через ограниченное время."/>
-        <text name="rms_option_menu_repair_type_replacement_description" text="Стандартный: устраняет неисправность, заменяет отказавший компонент и частично снижает механическую нагрузку в соответствующей системе."/>
-        <text name="rms_option_menu_repair_type_advanced_description" text="Углублённый: устраняет неисправность, заменяет повреждённый компонент и снимает накопленную механическую нагрузку в соответствующей системе."/>
+        <text name="rms_service_months" text="%s мес."/>
+        <text name="rms_service_month" text="%s мес."/>
+        <text name="rms_service_calendar_due" text="Календарный срок достигнут"/>
+        <text name="rms_service_program_estimated" text="Ориентировочный график"/>
+        <text name="rms_ws_levels_recommended_for" text="Рекомендуется для этой машины"/>
+        <text name="rms_ws_levels_interval" text="Каждые %s"/>
+        <text name="rms_ws_levels_duration" text="%s ч %s мин"/>
+        <text name="rms_ws_levels_duration_hours" text="%s ч"/>
+        <text name="rms_ws_levels_duration_minutes" text="%s мин"/>
+        <text name="rms_ws_levels_drain" text="Замена"/>
+        <text name="rms_ws_levels_top_up" text="Долив"/>
+        <text name="rms_ws_levels_blown" text="Продут"/>
+        <text name="rms_ws_levels_new" text="Новый"/>
+        <text name="rms_ws_levels_new_plural" text="Новые"/>
+        <text name="rms_ws_levels_filters" text="Фильтры"/>
+        <text name="rms_ws_levels_filters_all" text="Масло, топливо и гидравлика"/>
+        <text name="rms_ws_levels_filters_engine" text="Масло и топливо"/>
+        <text name="rms_ws_levels_filters_hydraulic" text="Гидравлика"/>
+        <text name="rms_ws_levels_checks" text="Регулировки и проверки"/>
+        <text name="rms_ws_levels_checks_detail" text="Клапаны, форсунки, термостат"/>
+        <text name="rms_ws_levels_checks_done" text="Выполнено"/>
+        <text name="rms_ws_levels_fault_search" text="Поиск неисправностей"/>
+        <text name="rms_ws_levels_fault_search_detail" text="Как стандартный осмотр"/>
+        <text name="rms_ws_levels_fault_search_mobile_detail" text="Без считывания кодов ошибок"/>
+        <text name="rms_ws_levels_included" text="Включён"/>
+        <text name="rms_ws_levels_mechanical" text="Механические"/>
+        <text name="rms_ws_levels_every_level" text="На каждом уровне: очистка радиатора и смазка."/>
+        <text name="rms_ws_quality_risk" text="Риск дефекта"/>
+        <text name="rms_ws_quality_reference" text="Базовая цена"/>
+        <text name="rms_ws_quality_delta" text="%s к оригиналу"/>
+        <text name="rms_ws_repair_row_faults" text="Устраняемые неисправности"/>
+        <text name="rms_ws_repair_row_faults_detail" text="Из отмеченных"/>
+        <text name="rms_ws_repair_faults_all" text="Все"/>
+        <text name="rms_ws_table_count" text="%s из %s"/>
+        <text name="rms_ws_repair_row_fault" text="Неисправность"/>
+        <text name="rms_ws_repair_row_fault_detail" text="После работы"/>
+        <text name="rms_ws_repair_fault_returns" text="Вернётся"/>
+        <text name="rms_ws_repair_fault_removed" text="Устранена"/>
+        <text name="rms_ws_repair_row_part" text="Отказавшая деталь"/>
+        <text name="rms_ws_repair_row_part_detail" text="Причина неисправности"/>
+        <text name="rms_ws_repair_part_replaced" text="Заменена"/>
+        <text name="rms_ws_repair_row_stress" text="Механическая нагрузка"/>
+        <text name="rms_ws_repair_row_stress_detail" text="Накопленная в системе"/>
+        <text name="rms_ws_repair_stress_cleared" text="Снята"/>
+        <text name="rms_ws_repair_row_quality" text="Качество деталей"/>
+        <text name="rms_ws_repair_row_quality_detail" text="Выбирается на карточках ниже"/>
+        <text name="rms_ws_repair_quality_choice" text="На выбор"/>
+        <text name="rms_ws_warranty_title" text="Гарантия дилера"/>
+        <text name="rms_ws_warranty_covered" text="Действует"/>
+        <text name="rms_ws_warranty_not_covered" text="Не действует"/>
+        <text name="rms_ws_warranty_free_here" text="Бесплатный стандартный ремонт с оригинальными деталями"/>
+        <text name="rms_ws_warranty_free_dealer" text="Бесплатный ремонт у дилера"/>
+        <text name="rms_ws_warranty_terms" text="Собственная техника, до 12 месяцев и 20 моточасов"/>
+        <text name="rms_ws_badge_warranty" text="Гарантия"/>
+        <text name="rms_ws_overhaul_row_systems" text="Восстанавливаемые системы"/>
+        <text name="rms_ws_overhaul_row_systems_detail" text="Приводятся в порядок"/>
+        <text name="rms_ws_overhaul_systems_one" text="Одна на выбор"/>
+        <text name="rms_ws_overhaul_systems_all" text="Все"/>
+        <text name="rms_ws_overhaul_row_condition" text="Состояние после ремонта"/>
+        <text name="rms_ws_overhaul_row_condition_detail" text="Не менее"/>
+        <text name="rms_ws_overhaul_row_treated_detail" text="В восстановленных системах"/>
+        <text name="rms_ws_overhaul_row_faults" text="Неисправности"/>
+        <text name="rms_ws_overhaul_row_faults_detail" text="Выявленные и нет"/>
+        <text name="rms_ws_overhaul_faults_repaired" text="Устранены"/>
+        <text name="rms_ws_overhaul_row_fluids" text="Жидкости"/>
+        <text name="rms_ws_overhaul_row_fluids_detail" text="Слив и заправка"/>
+        <text name="rms_ws_overhaul_fluids_all" text="Все"/>
+        <text name="rms_ws_overhaul_fluids_own" text="Свой контур"/>
+        <text name="rms_ws_overhaul_filters_both" text="Топливный и гидравлический"/>
+        <text name="rms_ws_overhaul_filters_fuel" text="Топливный"/>
+        <text name="rms_ws_overhaul_worn" text="Системы ниже 50% состояния"/>
+        <text name="rms_ws_paint_row_extent" text="Устраняемые повреждения"/>
+        <text name="rms_ws_paint_row_extent_detail" text="Доля повреждённой краски"/>
+        <text name="rms_ws_paint_extent_up_to" text="До %s"/>
+        <text name="rms_ws_paint_extent_all" text="Все"/>
+        <text name="rms_ws_paint_row_colors" text="Цвета"/>
+        <text name="rms_ws_paint_row_colors_detail" text="Доступные для этой машины"/>
+        <text name="rms_ws_paint_colors_kept" text="Сохраняются"/>
+        <text name="rms_ws_paint_colors_choice" text="На выбор"/>
+        <text name="rms_ws_paint_row_workshop" text="Мастерская"/>
+        <text name="rms_ws_paint_row_workshop_detail" text="Где выполняется"/>
+        <text name="rms_ws_inspection_mechanical" text="Механические неисправности"/>
+        <text name="rms_ws_inspection_mechanical_detail" text="Внешний осмотр и проверка функций"/>
+        <text name="rms_ws_inspection_electronic" text="Электронные неисправности"/>
+        <text name="rms_ws_inspection_electronic_detail" text="Коды ошибок, считанные сканером"/>
+        <text name="rms_ws_inspection_dormant" text="Скрытые дефекты"/>
+        <text name="rms_ws_inspection_dormant_detail" text="Дефектная деталь, временный ремонт"/>
+        <text name="rms_ws_inspection_report" text="Отчёт"/>
+        <text name="rms_ws_inspection_report_detail" text="Состояние техники и каждой системы"/>
+        <text name="rms_ws_inspection_risk_detail" text="По результатам проверок и измерений"/>
+        <text name="rms_ws_inspection_ratings" text="Оценки"/>
+        <text name="rms_ws_inspection_measures" text="Измерения"/>
+        <text name="rms_ws_inspection_assessed" text="Оценён"/>
+        <text name="rms_ws_inspection_maintenance_note" text="Техобслуживание тоже выполняет этот поиск неисправностей, как стандартный осмотр."/>
+        <text name="rms_ws_quote_title" text="Детализация сметы"/>
+        <text name="rms_ws_quote_oil_filter" text="Масляный фильтр"/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="Следующая работа оплачивается отдельно. При её начале необходимые жидкости будут предоставлены или взяты из вашего запаса."/>
         <text name="rms_bodywork_touchup" text="Подкраска"/>
         <text name="rms_bodywork_full" text="Полная перекраска"/>
@@ -570,25 +711,24 @@
         <text name="rms_bodywork_ineligible" text="Работа недоступна для этой машины или в этой мастерской"/>
         <text name="rms_bodywork_no_wear" text="Нет повреждений краски для ремонта"/>
         <text name="rms_bodywork_wear_limit" text="Подкраска доступна при повреждении краски до 30%"/>
-        <text name="rms_bodywork_touchup_description" text="Устраняет небольшие повреждения краски. Текущие цвета сохраняются."/>
-        <text name="rms_bodywork_full_description" text="Обновляет окраску. Выберите доступные цвета для этой машины или сохраните текущие."/>
         <text name="rms_bodywork_no_colors" text="У этой машины нет доступных цветов на выбор. Текущие цвета сохраняются."/>
         <text name="rms_bodywork_unavailable_title" text="Работа недоступна"/>
+        <text name="rms_bodywork_dealer_only" text="Полная перекраска выполняется у дилера"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Отчёт об осмотре"/>
         <text name="rms_report_vehicle_specs_title" text="Характеристики техники"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="Максимальный ток генератора"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="Заряд аккумулятора"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="Ёмкость аккумулятора"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_charge" text="Заряд аккумулятора бортовой сети"/>
+        <text name="rms_report_vehicle_spec_battery_24v_charge" text="Заряд аккумулятора 24 В"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_capacity" text="Ёмкость аккумулятора бортовой сети"/>
+        <text name="rms_report_vehicle_spec_battery_24v_capacity" text="Ёмкость аккумулятора 24 В"/>
+        <text name="rms_report_vehicle_spec_traction_battery_capacity" text="Ёмкость тяговой батареи"/>
         <text name="rms_report_detected_breakdowns_title" text="Выявленные неисправности"/>
         <text name="rms_report_overall_assessment_title" text="Общая оценка состояния"/>
         <text name="rms_report_overall_assessment_condition" text="Уровень состояния"/>
-        <text name="rms_report_overall_assessment_crit_fail_risk" text="Риск критического отказа"/>
         <text name="rms_report_overall_assessment_service" text="Уровень техобслуживания"/>
-        <text name="rms_report_overall_assessment_mtbf" text="Наработка на отказ (ч)"/>
-        <text name="rms_report_overall_assessment_rul" text="Остаточный срок службы (часы)"/>
-        <text name="rms_report_overall_assessment_wear_rate" text="Скорость износа (%/ч)"/>
-        <text name="rms_report_overall_assessment_nominal_wear_rate" text="Номинальная скорость износа (%/ч)"/>
         <text name="rms_report_recommendations_title" text="Выводы и рекомендации"/>
         <text name="rms_report_recommendation_repair_active_breakdowns" text="Обнаружены действующие неисправности. Рекомендуется стандартный ремонт каждой из них."/>
         <text name="rms_report_recommendation_repeat_maintenance" text="Обнаружены дефектные расходные материалы. Повторите техобслуживание, чтобы заменить их."/>
@@ -597,7 +737,7 @@
         <text name="rms_report_recommendation_service_due" text="Достигнут интервал техобслуживания. Выполните техобслуживание."/>
         <text name="rms_report_recommendation_service_urgent" text="Интервал техобслуживания просрочен. Без промедления выполните техобслуживание."/>
         <text name="rms_report_recommendation_system_overhaul" text="Обнаружен критический износ системы: %s. Выполните частичный капитальный ремонт."/>
-        <text name="rms_report_recommendation_system_preventive_maintenance" text="Повышен риск неисправности системы: %s. Выполните профилактическое техобслуживание, чтобы снизить риск."/>
+        <text name="rms_report_recommendation_system_preventive_maintenance" text="Повышен риск неисправности системы: %s. ТО %s заново регулирует её и снижает риск."/>
         <text name="rms_report_recommendation_overhaul" text="Обнаружен износ основных компонентов. Выполните капитальный ремонт."/>
         <text name="rms_report_recommendation_operating_conditions" text="Обнаружены признаки тяжелых условий эксплуатации. Рекомендуется скорректировать режим работы техники."/>
         <text name="rms_report_recommendation_all_ok" text="Особых рекомендаций нет. Техника находится в работоспособном состоянии."/>
@@ -607,50 +747,74 @@
         <text name="rms_report_state_degraded" text="Ухудшенное"/>
         <text name="rms_report_state_impaired" text="Сниженное"/>
         <text name="rms_report_state_critical" text="Критическое"/>
-        <text name="rms_report_stress_absent" text="Отсутствует"/>
         <text name="rms_report_stress_low" text="Низкий"/>
         <text name="rms_report_stress_moderate" text="Умеренный"/>
-        <text name="rms_report_stress_elevated" text="Повышенный"/>
         <text name="rms_report_stress_high" text="Высокий"/>
         <text name="rms_report_system_condition_title" text="Состояние системы"/>
         <text name="rms_report_breakdown_risk_title" text="Риск неисправности"/>
+        <text name="rms_report_wear_title" text="Износ относительно нормы"/>
+        <text name="rms_report_wear_normal" text="В норме"/>
+        <text name="rms_report_wear_no_cause" text="Нет заметных причин"/>
+        <text name="rms_report_wear_percent" text="+%s%%"/>
+        <text name="rms_report_wear_air_filter" text="Засорённый воздушный фильтр"/>
+        <text name="rms_report_wear_pull_overload" text="Перегрузка по тяге"/>
+        <text name="rms_report_wear_heavy_lift" text="Подъём тяжёлых грузов"/>
+        <text name="rms_report_wear_hydraulic_use" text="Работа гидравлики"/>
+        <text name="rms_report_wear_cold_hydraulic_oil" text="Холодное гидравлическое масло"/>
+        <text name="rms_report_wear_hot_hydraulic_oil" text="Перегрев гидравлического масла"/>
+        <text name="rms_report_wear_vibration" text="Вибрации"/>
+        <text name="rms_report_wear_hydraulic_filter_bypass" text="Засорённый гидравлический фильтр"/>
+        <text name="rms_report_wear_lights" text="Включённое освещение"/>
+        <text name="rms_report_wear_braking" text="Торможение под большой нагрузкой"/>
+        <text name="rms_report_wear_terrain_impact" text="Удары о неровности"/>
+        <text name="rms_report_wear_cold_fuel" text="Холодное топливо"/>
+        <text name="rms_report_wear_full_injection" text="Впрыск при полной нагрузке"/>
+        <text name="rms_report_wear_deep_discharge" text="Глубокий разряд аккумулятора"/>
+        <text name="rms_report_wear_high_draw" text="Высокая нагрузка на аккумулятор"/>
+        <text name="rms_report_wear_battery_heat" text="Перегрев аккумулятора"/>
+        <text name="rms_report_wear_lubrication" text="Просроченная смазка"/>
+        <text name="rms_report_wear_pto_overload" text="Перегрузка ВОМ"/>
         <text name="rms_report_component_title" text="Компонент"/>
         <text name="rms_report_system_condition_transmission" text="Трансмиссия"/>
         <text name="rms_report_system_condition_power" text="Текущая мощность"/>
         <text name="rms_report_system_condition_brakes" text="Эффективность тормозов"/>
         <text name="rms_report_system_condition_cooling" text="Эффективность охлаждения"/>
         <text name="rms_report_system_condition_consumption" text="Расход топлива"/>
+        <text name="rms_report_system_condition_energy_consumption" text="Расход энергии"/>
         <text name="rms_report_system_condition_hydraulic" text="Эффективность гидросистемы"/>
         <text name="rms_report_transmission_slipping" text="Пробуксовка"/>
         <text name="rms_report_transmission_shifting_impaired" text="Переключение передач затруднено"/>
         <text name="rms_report_transmission_shift_delay" text="Задержка переключения передач"/>
         <text name="rms_report_transmission_gear_rejection" text="Выбивание передачи"/>
-        <text name="rms_report_transmission_cvt_slipping" text="Проскальзывание ремня/цепи"/>
+        <text name="rms_report_transmission_cvt_slipping" text="Неэффективная передача тяги"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Передаточное отношение ограничено"/>
-        <text name="rms_report_transmission_cvt_pressure_instability" text="Нестабильное давление"/>
+        <text name="rms_report_transmission_cvt_pressure_instability" text="Неравномерная передача тяги"/>
         <text name="rms_report_transmission_thermostat_degraded" text="Износ термостата"/>
         <text name="rms_report_transmission_failed" text="Неисправна"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Смазочный шприц"/>
         <text name="rms_grease_gun_no_vehicle" text="Нет техники в зоне смазки"/>
         <text name="rms_grease_gun_function" text="Используется для смазки точек смазки техники"/>
-        <text name="rms_grease_gun_action" text="Нанести смазку"/>
+        <text name="rms_grease_gun_action" text="Смазать"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: смазка уже выполнена"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s не требует смазки"/>
         <text name="rms_air_blower_name" text="Воздуходувка"/>
         <text name="rms_air_blower_no_vehicle" text="Нет техники в зоне очистки"/>
         <text name="rms_air_blower_function" text="Используется для очистки радиаторов и воздушных фильтров"/>
         <text name="rms_air_blower_action" text="Очистить радиатор и воздушный фильтр"/>
+        <text name="rms_air_blower_action_short" text="Продуть"/>
         <text name="rms_air_blower_already_clean" text="%s: радиатор и воздушный фильтр уже чистые"/>
-        <text name="rms_air_blower_filter_requires_maintenance" text="%s: радиатор чистый. Воздушный фильтр достиг предела очистки продувкой. Для его замены требуется техобслуживание в мастерской"/>
+        <text name="rms_air_blower_filter_requires_maintenance" text="%s: радиатор чистый. Воздушный фильтр достиг предела очистки продувкой. Мастерская заменяет его начиная с ТО %s"/>
         <text name="rms_air_blower_cleaning_not_require" text="%s не требует очистки"/>
         <text name="rms_jumper_cables_name" text="Пусковые провода"/>
         <text name="rms_jumper_cables_function" text="Используются для соединения аккумуляторов техники и пуска двигателя при разряженной батарее"/>
-        <text name="rms_jumper_cables_action" text="Подключить/отключить пусковые провода"/>
+        <text name="rms_jumper_cables_action" text="Пусковые провода"/>
         <text name="rms_jumper_cables_auto_disconnected" text="Пусковые провода отключены, так как одна из машин начала движение"/>
         <text name="rms_jumper_cables_connected" text="Пусковые провода подключены к %s"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="Данная техника не подходит для подключения пусковых проводов"/>
         <text name="rms_jumper_cables_is_too_far" text="%s находится слишком далеко от %s"/>
+        <text name="rms_jumper_cables_electric_donor" text="Электрическую технику нельзя использовать для пуска двигателя внутреннего сгорания"/>
+        <text name="rms_jumper_cables_voltage_mismatch" text="Технику 12 В нельзя соединить с техникой 24 В"/>
         <text name="rms_jumper_cables_both_already_connected" text="Пусковые провода уже подключены к %s и %s"/>
         <text name="rms_jumper_cables_disconnected" text="Пусковые провода отключены от %s"/>
         <!-- Fluid containers -->
@@ -658,13 +822,24 @@
         <text name="rms_fluid_function_engine_oil" text="Моторное масло для ручного долива"/>
         <text name="rms_fluid_function_utto" text="Трансмиссионное и гидравлическое масло для ручного долива"/>
         <text name="rms_fluid_function_coolant" text="Охлаждающая жидкость для ручного долива"/>
-        <text name="rms_fluid_container_action_start" text="Перелить жидкость"/>
-        <text name="rms_fluid_container_action_cancel" text="Остановить перелив"/>
-        <text name="rms_fluid_select_vehicle_title" text="Выбор машины"/>
-        <text name="rms_fluid_select_vehicle_prompt" text="Выберите машину для долива"/>
-        <text name="rms_fluid_select_circuit_prompt" text="Выберите контур для долива"/>
-        <text name="rms_fluid_select_fluid_prompt" text="Выберите жидкость для долива"/>
-        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
+        <text name="rms_fluid_pour_action" text="Долить: %s"/>
+        <text name="rms_fluid_level_done" text="Уровень восстановлен"/>
+        <text name="rms_fluid_container_empty" text="Канистра пуста"/>
+        <text name="rms_fluid_drum_empty" text="Бочка пуста"/>
+        <text name="rms_fluid_container_label" text="Канистра"/>
+        <text name="rms_fluid_drum_label" text="Бочка"/>
+        <text name="rms_fluid_hand_take" text="Взять для долива"/>
+        <text name="rms_fluid_hand_carry" text="Нести канистру"/>
+        <text name="rms_drum_pump_name" text="Аккумуляторный бочковой насос"/>
+        <text name="rms_drum_pump_function" text="Ставится на бочку 200 л и заправляет машины через пистолет"/>
+        <text name="rms_drum_pump_mount" text="Поставить на бочку"/>
+        <text name="rms_drum_pump_take" text="Снять насос"/>
+        <text name="rms_drum_pump_nozzle_take" text="Взять пистолет"/>
+        <text name="rms_drum_pump_nozzle_return" text="Повесить пистолет"/>
+        <text name="rms_drum_pump_hose_range" text="Шланг насоса не даёт отойти дальше.&#10;Пистолет будет повешен через %.1f м!"/>
+        <text name="rms_drum_pump_machine_too_far" text="Подвиньте бочку ближе: длина шланга 4 м"/>
+        <text name="rms_drum_pump_required" text="Нужен бочковой насос"/>
+        <text name="rms_fluid_level_under_gauge" text="Ниже шкалы"/>
         <text name="rms_fluid_circuit_engineOil" text="Моторное масло"/>
         <text name="rms_fluid_circuit_coolant" text="Охлаждающая жидкость"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Трансмиссионное масло"/>
@@ -674,17 +849,21 @@
         <text name="rms_fluid_hud_transmissionHydraulic" text="Масло транс./гидр."/>
         <text name="rms_fluid_hud_coolant" text="Антифриз"/>
         <text name="rms_fluid_incompatible_title" text="Несовместимая жидкость"/>
-        <text name="rms_fluid_incompatible_message" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ системы, усилить нагрев или замедлить гидравлику. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
-        <text name="rms_fluid_error_no_vehicle" text="В радиусе 4 м нет подходящей машины, которой нужна жидкость"/>
+        <text name="rms_fluid_incompatible_message_engineOil" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ двигателя и усилить его нагрев. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
+        <text name="rms_fluid_incompatible_message_coolant" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ системы охлаждения и усилить нагрев двигателя. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
+        <text name="rms_fluid_incompatible_message_transmissionOil" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ трансмиссии и усилить её нагрев. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
+        <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ гидравлики, усилить её нагрев и замедлить её работу. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
+        <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ трансмиссии и гидравлики, усилить их нагрев и замедлить работу гидравлики. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
         <text name="rms_fluid_error_no_circuit" text="Этой машине не требуется долив жидкости"/>
         <text name="rms_fluid_error_motor_running" text="Заглушите двигатель перед переливом жидкости"/>
         <text name="rms_fluid_error_vehicle_moving" text="Машина должна стоять на месте"/>
-        <text name="rms_fluid_dealer_billed" text="Жидкости включены в счёт"/>
+        <text name="rms_fluid_error_busy" text="Этот контур уже заправляется из другой ёмкости"/>
         <text name="rms_fluid_warranty_covered" text="Жидкости по гарантии"/>
-        <text name="rms_fluid_stock_required" text="Совместимые канистры необходимы в зоне мастерской"/>
+        <text name="rms_fluid_lease_covered" text="Жидкости входят в аренду"/>
+        <text name="rms_fluid_stock_required" text="Из канистр в зоне мастерской"/>
+        <text name="rms_fluid_stock_missing" text="В зоне мастерской не хватает %s"/>
         <text name="rms_fluid_refill_work_order" text="Долив технических жидкостей"/>
         <text name="rms_fluid_refill_dealer_supply" text="Жидкости включены в смету"/>
-        <text name="rms_fluid_refill_stock_supply" text="Разместите свои совместимые канистры в зоне мастерской"/>
         <text name="rms_fluid_mode_top_up" text="долив"/>
         <text name="rms_fluid_mode_replace" text="замена"/>
         <text name="rms_fluid_mode_repair" text="долив после утечки"/>
@@ -694,28 +873,24 @@
         <text name="rms_fluid_service_refused" text="Работу нельзя начать в текущих условиях."/>
         <text name="rms_fluid_service_consumption_failed" text="Не удалось зарезервировать жидкости. Работа отменена."/>
         <!-- Inspection Dialog -->
-        <text name="rms_field_inspection_hold_to_start" text="Удерживайте, чтобы начать предсменную проверку"/>
+        <text name="rms_field_inspection_hold_to_start" text="Проверить (держать)"/>
         <text name="rms_field_inspection_progress" text="Выполняется предсменная проверка"/>
         <text name="rms_field_inspection_cancelled" text="Предсменная проверка отменена"/>
         <text name="rms_field_inspection_engine_must_be_stopped" text="Заглушите двигатель перед предсменной проверкой"/>
         <text name="rms_inspection_dialog_title" text="Предсменная проверка"/>
         <text name="rms_inspection_section_fluids" text="Технические жидкости"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
-        <text name="rms_inspection_section_cooling_air" text="Система охлаждения и воздушный фильтр"/>
-        <text name="rms_inspection_section_lubrication" text="Точки смазки"/>
+        <text name="rms_inspection_section_field_care" text="Фильтры, радиатор и смазка"/>
         <text name="rms_inspection_section_additional" text="Дополнительно"/>
         <text name="rms_inspection_verdict_ok_title" text="Можно эксплуатировать"/>
         <text name="rms_inspection_verdict_ok_message" text="Замечаний нет, машина может выезжать."/>
         <text name="rms_inspection_verdict_watch_title" text="Под наблюдением"/>
         <text name="rms_inspection_verdict_watch_message" text="Один или несколько пунктов требуют внимания. Машина может продолжать работать; займитесь ими сегодня."/>
-        <text name="rms_inspection_verdict_air_filter_service_message" text="Машина может работать. Запланируйте техобслуживание в мастерской для замены воздушного фильтра."/>
+        <text name="rms_inspection_verdict_air_filter_service_message" text="Машина может работать. Мастерская заменяет воздушный фильтр начиная с ТО %s."/>
         <text name="rms_inspection_verdict_stop_title" text="Не использовать"/>
         <text name="rms_inspection_verdict_stop_message" text="Критический пункт требует устранения. Не используйте машину до его устранения."/>
         <text name="rms_inspection_service_due_in" text="%s через %s"/>
         <text name="rms_inspection_service_overdue" text="%s просрочена на %s"/>
-        <text name="rms_inspection_service_clock_engine" text="замена моторного масла"/>
-        <text name="rms_inspection_service_clock_transmission" text="замена трансмиссионного масла"/>
-        <text name="rms_inspection_service_clock_coolant" text="замена охлаждающей жидкости"/>
         <text name="rms_inspection_status_slightly_low" text="Незначительно снижен"/>
         <text name="rms_inspection_status_slightly_dirty" text="Слегка забит"/>
         <text name="rms_inspection_status_slightly_dry" text="Слегка сухо"/>
@@ -735,6 +910,7 @@
         <text name="rms_inspection_status_not_required" text="Не требуется"/>
         <text name="rms_inspection_status_change_overdue" text="Замена просрочена"/>
         <text name="rms_inspection_status_change_long_overdue" text="Замена сильно просрочена"/>
+        <text name="rms_inspection_status_replacement_due" text="Требует замены"/>
         <text name="rms_inspection_engine_oil" text="Моторное масло"/>
         <text name="rms_inspection_coolant" text="Охлаждающая жидкость"/>
         <text name="rms_inspection_hydraulic_fluid" text="Гидравлическое масло"/>
@@ -756,8 +932,11 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="Воздушный фильтр слегка забит."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Воздушный фильтр заметно забит."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Воздушный фильтр сильно забит пылью и мусором."/>
-        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Воздушный фильтр достиг предела очистки продувкой. Для его замены требуется техобслуживание в мастерской."/>
-        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="Продуйте фильтр, чтобы удалить рыхлую пыль. Оставшиеся загрязнения потребуют последующей замены фильтра в мастерской."/>
+        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Воздушный фильтр достиг предела очистки продувкой. Мастерская заменяет его начиная с ТО %s."/>
+        <text name="rms_inspection_hint_fuel_filter_due" text="Топливный фильтр нужно заменить: его меняет любое техобслуживание, независимо от уровня, или ремонт в мастерской."/>
+        <text name="rms_inspection_hint_hydraulic_filter_due" text="Гидравлический фильтр нужно заменить: его меняет любое техобслуживание, независимо от уровня, или ремонт в мастерской."/>
+        <text name="rms_inspection_hint_hydraulic_filter_bypass" text="Гидравлический фильтр засорён: масло проходит без фильтрации и изнашивает контур. Его меняет любое техобслуживание, независимо от уровня, или ремонт в мастерской."/>
+        <text name="rms_inspection_hint_unidentified" text="Признак невыявленной неисправности: мастерская выявит её при осмотре или техобслуживании."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="В районе генератора заметны следы перегрева и потемнение отдельных соединений."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="В районе генератора и его проводки заметны выраженные следы перегрева и потемнение разъёмов."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Точки смазки выглядят слегка сухими."/>
@@ -774,9 +953,11 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="В районе турбокомпрессора заметны маслянистые следы и потемнение отдельных соединений."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="В районе турбокомпрессора заметны выраженные маслянистые следы, потемнение соединений и следы копоти."/>
         <text name="rms_inspection_hint_fluid_level_low" text="Уровень одной из жидкостей опустился ниже метки."/>
-        <text name="rms_inspection_hint_service_engine" text="Замена моторного масла просрочена: изношенное масло ускоряет износ двигателя и системы впрыска. Стандартное техобслуживание меняет его вместе с фильтрами."/>
-        <text name="rms_inspection_hint_service_transmission" text="Замена трансмиссионного масла просрочена: изношенное масло ускоряет износ трансмиссии и гидравлики. Расширенное техобслуживание меняет его вместе с фильтром."/>
-        <text name="rms_inspection_hint_service_coolant" text="Охлаждающую жидкость пора заменить: отработанная жидкость ускоряет износ системы охлаждения. Профилактическое техобслуживание заменяет её."/>
+        <text name="rms_inspection_hint_fluid_levels_low" text="Уровень нескольких жидкостей опустился ниже метки."/>
+        <text name="rms_inspection_hint_service_engine" text="Замена моторного масла просрочена: изношенное масло ускоряет износ двигателя и системы впрыска. Любое ТО меняет его вместе с фильтрами."/>
+        <text name="rms_inspection_hint_service_transmission" text="Замена трансмиссионного масла просрочена: изношенное масло ускоряет износ всего, что оно смазывает. Рекомендованное в мастерской ТО меняет его вместе с фильтром."/>
+        <text name="rms_inspection_hint_service_hydraulic" text="Замена гидравлического масла просрочена: изношенное масло ускоряет износ гидросистемы. Рекомендованное в мастерской ТО меняет его вместе с фильтром."/>
+        <text name="rms_inspection_hint_service_coolant" text="Охлаждающую жидкость пора заменить: отработанная жидкость ускоряет износ системы охлаждения. Рекомендованное в мастерской ТО заменяет её."/>
         <text name="rms_inspection_transmission_oil" text="Трансмиссионное масло"/>
         <text name="rms_inspection_radiator" text="Радиатор"/>
         <text name="rms_inspection_air_filter" text="Воздушный фильтр"/>
@@ -784,37 +965,40 @@
         <text name="rms_inspection_no_suspicious_symptoms" text="Подозрительных признаков не выявлено"/>
         <text name="rms_inspection_ok" text="ОК"/>
         <!-- In-Game Menu -->
-        <text name="rms_ingame_menu_title" text="Realistic Mechanical Systems"/>
-        <text name="rms_ingame_menu_section_active" text="Техника RMS"/>
-        <text name="rms_ingame_menu_section_service" text="На техобслуживании"/>
-        <text name="rms_ingame_menu_section_other" text="Другая техника"/>
-        <text name="rms_ingame_menu_header_vehicle" text="Техника"/>
-        <text name="rms_ingame_menu_header_type" text="Тип"/>
-        <text name="rms_ingame_menu_header_time_left" text="Осталось"/>
-        <text name="rms_ingame_menu_header_age" text="Возраст"/>
-        <text name="rms_ingame_menu_header_working_hours" text="Моточасы"/>
-        <text name="rms_ingame_menu_header_condition" text="Состояние"/>
+        <text name="rms_ingame_menu_title" text="Панель состояния техники"/>
+        <text name="rms_ingame_menu_section_active" text="Парк техники"/>
+        <text name="rms_ingame_menu_section_service" text="Работы"/>
+        <text name="rms_ingame_menu_section_other" text="Техника без учёта"/>
         <text name="rms_ingame_menu_header_cost" text="Затраты"/>
         <text name="rms_ingame_menu_header_interval" text="Интервал"/>
-        <text name="rms_ingame_menu_header_last_inspection" text="Последний осмотр"/>
-        <text name="rms_ingame_menu_header_last_maintenance" text="Последнее техобслуживание"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Аренда"/>
-        <text name="rms_ingame_menu_header_price" text="Продажа в меню"/>
         <text name="rms_ingame_menu_header_procedure" text="Работа"/>
-        <text name="rms_ingame_menu_header_finish_time" text="Готово"/>
-        <text name="rms_ingame_menu_header_service_cost" text="Стоимость"/>
         <text name="rms_ingame_menu_header_reason" text="Причина исключения"/>
-        <text name="rms_ingame_menu_empty_other" text="Техника без RMS отсутствует"/>
-        <text name="rms_ingame_menu_empty_active" text="У вас нет техники RMS"/>
-        <text name="rms_ingame_menu_empty_service" text="Нет техники на техобслуживании"/>
+        <text name="rms_ingame_menu_empty_other" text="Нет техники без учёта"/>
+        <text name="rms_ingame_menu_empty_active" text="Нет учитываемой техники"/>
+        <text name="rms_ingame_menu_empty_service" text="Нет выполняемых работ"/>
         <text name="rms_ingame_menu_reason_implement" text="Орудие или прицеп"/>
         <text name="rms_ingame_menu_reason_unsupported" text="Не поддерживается"/>
-        <text name="rms_ingame_menu_reason_electric" text="Электрическая"/>
         <text name="rms_ingame_menu_reason_towed" text="Орудие с собственным двигателем"/>
         <text name="rms_ingame_menu_reason_auxiliary" text="Вспомогательная машина"/>
         <text name="rms_ingame_menu_reason_user" text="Исключена вручную"/>
         <text name="rms_ingame_menu_include" text="Включить в RMS"/>
         <text name="rms_ingame_menu_exclude" text="Исключить из RMS"/>
+        <text name="rms_fleet_all" text="Вся техника"/>
+        <text name="rms_fleet_all_untracked" text="Вся техника без учёта"/>
+        <text name="rms_fleet_sort_by" text="Сортировка"/>
+        <text name="rms_fleet_sort_deadline" text="Срок"/>
+        <text name="rms_fleet_sort_name" text="Название"/>
+        <text name="rms_fleet_sort_hours" text="Часы"/>
+        <text name="rms_fleet_check" text="Осмотр"/>
+        <text name="rms_fleet_location" text="Местоположение"/>
+        <text name="rms_fleet_next_service" text="Следующее обслуживание"/>
+        <text name="rms_fleet_remaining" text="Осталось %s ч"/>
+        <text name="rms_fleet_overdue" text="Просрочено на %s ч"/>
+        <text name="rms_fleet_overdue_label" text="Просрочено"/>
+        <text name="rms_fleet_overdue_count" text="Просрочено: %d"/>
+        <text name="rms_fleet_due_soon_label" text="Скоро"/>
+        <text name="rms_fleet_due_soon_count" text="Скоро: %d"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Возврат техники"/>
         <text name="rms_sell_dialog_section_vehicle" text="Техника"/>
@@ -823,9 +1007,10 @@
         <text name="rms_sell_dialog_overdue_maintenance_penalty" text="Просроченное техобслуживание"/>
         <text name="rms_sell_dialog_repair_penalty" text="Ремонт"/>
         <text name="rms_sell_dialog_washing_penalty" text="Мойка"/>
+        <text name="rms_sell_dialog_deposit_refund" text="Возврат залога"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Низкий уровень жидкости"/>
-        <text name="rms_tutorial_fluid_level_message" text="Уровень одной из жидкостей этой машины опустился ниже отметки на шкале.&#10;&#10;Моторное масло расходуется с моточасами, а изношенный двигатель расходует его намного быстрее. Охлаждающая жидкость, трансмиссионное и гидравлическое масло убывают только из-за утечки.&#10;&#10;Если уровень лишь немного ниже отметки, достаточно долива, и машина продолжает работать нормально. Повреждения начинаются при очень низком уровне: нехватка охлаждающей жидкости или трансмиссионного масла вызывает перегрев, а нехватка моторного или гидравлического масла сильно ускоряет износ.&#10;&#10;Купите в магазине канистру совместимого продукта, поставьте её рядом с машиной и восстановите уровень. Все продукты для одного контура механически равноценны; неподходящая жидкость загрязняет только этот контур. У дилера необходимые литры предоставляются и включаются в счёт. В собственной или мобильной мастерской работа расходует канистры хозяйства, находящиеся в зоне мастерской."/>
+        <text name="rms_tutorial_fluid_level_message" text="Уровень одной из жидкостей этой машины опустился ниже отметки на шкале.&#10;&#10;Моторное масло расходуется с моточасами, а изношенный двигатель расходует его намного быстрее. Охлаждающая жидкость, трансмиссионное и гидравлическое масло убывают только из-за утечки.&#10;&#10;Если уровень лишь немного ниже отметки, достаточно долива, и машина продолжает работать нормально. Повреждения начинаются при очень низком уровне: нехватка охлаждающей жидкости или трансмиссионного масла вызывает перегрев, а нехватка моторного или гидравлического масла сильно ускоряет износ.&#10;&#10;Купите в магазине канистру совместимого продукта, доставьте её к машине и восстановите уровень. Все продукты для одного контура механически равноценны; неподходящая жидкость загрязняет только этот контур. У дилера необходимые литры предоставляются и включаются в счёт."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Добро пожаловать в Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Отключить подсказки"/>
         <text name="rms_tutorial_welcome_enable_button" text="Включить подсказки"/>
@@ -835,20 +1020,21 @@
         <text name="rms_tutorial_wheel_slip_title" text="Пробуксовка колёс"/>
         <text name="rms_tutorial_wheel_slip_message" text="Ваши колёса сильно буксуют. Пробуксовка — один из самых разрушительных факторов для трансмиссии и заметно приближает ваш следующий визит в мастерскую."/>
         <text name="rms_tutorial_service_due_soon_title" text="Плановое техобслуживание"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s скоро потребуется техобслуживание.&#10;&#10;В RMS техника нуждается в регулярном техобслуживании. Его задержка заметно повышает риск неисправности.&#10;&#10;Посетите ближайшую мастерскую и выберите «Техобслуживание». Интервал можно изменить в настройках мода."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s скоро потребуется обслуживание. В мастерской выберите рекомендованный пакет: он включает необходимые работы. Действует первый достигнутый предел моточасов или календарного времени, даже при редком использовании. Удобство обслуживания отражает сложность работ; обычное ТО остаётся доступным в мобильной мастерской."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Интервал техобслуживания истёк"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Интервал техобслуживания для %s истёк.&#10;&#10;Как можно скорее отправляйтесь в мастерскую и выберите «Техобслуживание». Дальнейшая эксплуатация техники с просроченным техобслуживанием заметно повышает риск нескольких неисправностей."/>
         <text name="rms_tutorial_steering_title" text="Руление на месте"/>
         <text name="rms_tutorial_steering_message" text="Не стоит крутить руль на месте. В этот момент сильно нагружаются рулевой механизм и элементы передней оси, а вместе с этим повышается и износ ходовой части.&#10;&#10;Достаточно начать движение хотя бы на небольшой скорости — и колёсам поворачиваться станет заметно легче."/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Радиатор или воздушный фильтр засорён. Смотрите на технику и удерживайте клавишу %s, чтобы узнать, какой именно. Очистите его воздуходувкой со сжатым воздухом. Если фильтр больше не продувается, выберите в мастерской расширенное или профилактическое техобслуживание для его замены."/>
+        <text name="rms_tutorial_cooling_air_check_title" text="Система охлаждения и воздушный фильтр"/>
+        <text name="rms_tutorial_cooling_air_check_message" text="Радиатор или воздушный фильтр засорён. Смотрите на технику и удерживайте клавишу %s, чтобы узнать, какой именно. Очистите его воздуходувкой со сжатым воздухом. Если фильтр больше не продувается, мастерская заменяет его начиная с ТО %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Требуется смазка"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%s требует регулярной смазки.&#10;&#10;В RMS уровень смазки снижается с моточасами. После длительного простоя технику также необходимо смазать перед возвращением в эксплуатацию. Недостаточная смазка ускоряет износ ходовой части.&#10;&#10;Купите смазочный шприц в магазине и смажьте технику, когда осмотр укажет на необходимость.&#10;&#10;Проверить уровень смазки можно предсменной проверкой: удерживайте клавишу %s, глядя на технику."/>
         <text name="rms_tutorial_needs_repair_title" text="Обнаружена неисправность"/>
-        <text name="rms_tutorial_needs_repair_message" text="У %s возникла проблема. Возможно, одна из деталей отказала.&#10;&#10;Посетите мастерскую и проведите осмотр. Не откладывайте: неисправность может усугубиться, а стоимость ремонта вырастет.&#10;&#10;Если осмотр подтвердит неисправность, отремонтируйте её в мастерской."/>
+        <text name="rms_tutorial_needs_repair_message" text="У %s возникла проблема. Возможно, одна из деталей отказала.&#10;&#10;Посетите мастерскую: осмотр или техобслуживание, если оно подошло, выявит неисправность. Не откладывайте: неисправность может усугубиться, а стоимость ремонта вырастет.&#10;&#10;Когда неисправность выявлена, отремонтируйте её в мастерской."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Требуется капитальный ремонт"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%s уже заметно стареет. Пора задуматься о замене или капитальном ремонте. Это долгая и дорогая работа, но только она вернёт технике исходное состояние.&#10;&#10;Ресурс можно изменить в настройках мода: чем он выше, тем медленнее изнашивается техника."/>
         <text name="rms_tutorial_needs_preventive_title" text="Неисправность неизбежна"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Одна из систем %s вот-вот выйдет из строя. Ещё есть время вмешаться.&#10;&#10;В мастерской доступно профилактическое техобслуживание: оно восстанавливает уровень техобслуживания, заменяет все жидкости и сильно снижает механическую нагрузку наиболее уязвимых систем."/>
+        <text name="rms_tutorial_needs_preventive_message" text="У двигателя, топливной системы или системы охлаждения %s повышен риск неисправности.&#10;&#10;ТО %s: регулирует клапаны, проверяет форсунки и термостат, что снижает этот риск."/>
         <text name="rms_tutorial_age_degradation_title" text="Возрастной износ"/>
         <text name="rms_tutorial_age_degradation_message" text="В RMS техника с возрастом постепенно теряет часть своих первоначальных характеристик.&#10;&#10;Примерно после трети срока службы возрастной износ начинает понемногу снижать некоторые важные параметры, такие как мощность или эффективность тормозов. Затем этот эффект усиливается и становится хорошо заметен ближе к концу срока службы.&#10;&#10;Возрастной износ можно отключить в настройках мода."/>
         <text name="rms_tutorial_poor_consumables_title" text="Некачественные расходники"/>
@@ -856,8 +1042,8 @@
         <text name="rms_tutorial_poor_parts_title" text="Некачественные запчасти"/>
         <text name="rms_tutorial_poor_parts_message" text="При ремонте на %s установили некачественную запчасть. Неисправность, вероятно, скоро повторится.&#10;&#10;Можно дождаться её возвращения или сразу провести полный осмотр, который надёжно выявит некачественную деталь."/>
         <text name="rms_tutorial_park_brake_title" text="Стояночный тормоз"/>
-        <text name="rms_tutorial_park_brake_message" text="Стояночный тормоз затянут. Он срабатывает сам, как только вы покидаете машину на стоянке, и отпускается, как только вы снова даёте газ.&#10;&#10;На склоне именно он не даёт машине укатиться самой."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Стояночный тормоз затянут. Вы затягиваете и отпускаете его сами, отдельной клавишей: при попытке тронуться с затянутым тормозом машина останется на месте и предупредит вас.&#10;&#10;На склоне именно он не даёт машине скатиться."/>
+        <text name="rms_tutorial_park_brake_message" text="Стояночный тормоз затянут. Он срабатывает сам, как только вы покидаете машину на стоянке, и отпускается, как только вы снова даёте газ. Он срабатывает и когда вы глушите двигатель, и после 45 секунд стоянки.&#10;&#10;На склоне именно он не даёт машине укатиться самой."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Стояночный тормоз затянут. Вы затягиваете и отпускаете его сами, отдельной клавишей: при попытке тронуться с затянутым тормозом машина едет через силу, а её тормоза изнашиваются.&#10;&#10;На склоне именно он не даёт машине скатиться: если покинуть машину, не затянув его, она может укатиться."/>
         <text name="rms_tutorial_preheat_title" text="Предпусковой подогрев дизеля"/>
         <text name="rms_tutorial_preheat_message" text="При холодном дизельном двигателе одно нажатие кнопки запуска включает зажигание и автоматически запускает цикл предпускового подогрева. Контрольные лампы панели выполняют самопроверку, затем лампа предпускового подогрева горит до готовности двигателя. Не нажимайте кнопку повторно: стартер включится автоматически после того, как лампа погаснет."/>
         <text name="rms_tutorial_pto_engagement_title" text="Включение ВОМ"/>
@@ -875,7 +1061,7 @@
         <text name="rms_tutorial_hard_start_title" text="Запуск затруднён"/>
         <text name="rms_tutorial_hard_start_message" text="Запуск двигателя %s затруднён. Это может быть вызвано низким зарядом аккумулятора, морозом, техническими неисправностями или износом стартера. Удерживайте кнопку запуска, пока двигатель не заведётся.&#10;&#10;Электросистема подвергается высоким нагрузкам во время запуска из-за больших пусковых токов."/>
         <text name="rms_tutorial_low_fuel_title" text="Мало топлива"/>
-        <text name="rms_tutorial_low_fuel_message" text="Топливо в баке приближается к резерву. Чем меньше его остаётся, тем больше усилий требуется топливному насосу для всасывания, что ускоряет его износ."/>
+        <text name="rms_tutorial_low_fuel_message" text="Топливо в баке приближается к резерву. Чем меньше его остаётся, тем больше усилий требуется топливному насосу для всасывания, а со дна бака в фильтр попадают вода и осадок, и он быстрее засоряется.&#10;&#10;Лучше заправляться до полного бака в конце дня: в полном баке образуется меньше конденсата."/>
         <text name="rms_tutorial_lugging_title" text="Работа двигателя внатяг"/>
         <text name="rms_tutorial_lugging_message" text="Двигатель и особенно трансмиссия страдают при работе внатяг, то есть на низких оборотах под высокой нагрузкой. Возможно, орудие слишком тяжёлое для машины, либо при механической коробке выбрана неподходящая передача."/>
         <text name="rms_tutorial_engine_overheat_title" text="Перегрев двигателя"/>
@@ -887,7 +1073,9 @@
         <text name="rms_tutorial_cvt_overheat_title" text="Перегрев CVT"/>
         <text name="rms_tutorial_cvt_overheat_message" text="Трансмиссия CVT начинает перегреваться. Причиной может быть чрезмерная нагрузка, загрязнённый радиатор, сильная жара или неисправность системы охлаждения трансмиссии. Например, к этому приводит слишком тяжёлый плуг или перегруженный прицеп.&#10;&#10;Будьте внимательны: перегрев — один из самых разрушительных факторов для трансмиссии CVT."/>
         <text name="rms_tutorial_chassis_vibration_title" text="Нагрузка на ходовую часть"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Быстрая езда по пересечённой местности очень быстро изнашивает подвеску %s. Такие вибрации вредят и другим системам, в первую очередь гидравлике и электрике.&#10;&#10;Двигайтесь плавно по неровной поверхности."/>
+        <text name="rms_tutorial_chassis_vibration_message" text="Быстрая езда по пересечённой местности быстро изнашивает ходовую часть %s. Такие удары вредят также проводке с её разъёмами и гидравлике, когда поднято тяжёлое орудие.&#10;&#10;Снижайте скорость на неровной поверхности."/>
+        <text name="rms_tutorial_terrain_impact_title" text="Сильный удар"/>
+        <text name="rms_tutorial_terrain_impact_message" text="Ходовая часть только что получила сильный удар. Препятствие, которое резко останавливает или тормозит машину, сразу изнашивает ходовую часть и приближает её следующую поломку, чаще всего рулевого управления или подшипников.&#10;&#10;Снижайте скорость перед препятствиями."/>
         <text name="rms_tutorial_cranking_title" text="Частый запуск"/>
         <text name="rms_tutorial_cranking_message" text="Вы слишком часто запускаете двигатель. Каждый запуск пропускает по электросистеме очень высокий ток, а это ускоряет износ проводки, стартера и других электрических компонентов.&#10;&#10;Избегайте глушить двигатель ради коротких остановок."/>
         <text name="rms_tutorial_critical_failure_title" text="Критическая неисправность"/>
@@ -901,7 +1089,7 @@
         <text name="rms_tutorial_overload_indicator_title" text="Предупреждение о перегрузке"/>
         <text name="rms_tutorial_overload_indicator_message" text="%s работает под высокой нагрузкой. Об этом вас предупреждает индикатор, который только что загорелся на приборной панели.&#10;&#10;Возможно, машине не хватает мощности для текущей работы. Попробуйте снизить нагрузку: ограничьте скорость круиз-контролем или немного сбросьте газ вместо того, чтобы работать на полной мощности."/>
         <text name="rms_tutorial_battery_low_title" text="Слабый аккумулятор"/>
-        <text name="rms_tutorial_battery_low_message" text="Аккумулятор этой техники вот-вот полностью разрядится. Такое может случиться после долгой стоянки, из-за сильного мороза или неисправностей в электросистеме.&#10;&#10;При низком заряде запуск становится затруднённым, а затем невозможным. В этом случае можно запустить двигатель от другой машины с помощью пусковых проводов."/>
+        <text name="rms_tutorial_battery_low_message" text="Аккумулятор этой техники вот-вот полностью разрядится. Такое может случиться после долгой стоянки, из-за сильного мороза или неисправностей в электросистеме.&#10;&#10;При низком заряде запуск становится затруднённым, а затем невозможным. В этом случае можно запустить двигатель от другой машины с помощью пусковых проводов. Перед долгой стоянкой, или если аккумулятор разряжается сам, отключите массу выключателем массы, стоя перед техникой."/>
         <text name="rms_tutorial_drivetrain_windup_title" text="Нагрузка на трансмиссию"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Вы поворачиваете на покрытии с хорошим сцеплением при включённой блокировке дифференциала. В повороте внутренние и внешние колёса проходят разные расстояния, но блокировка заставляет их вращаться с одинаковой скоростью: в трансмиссии возникает напряжение и её износ ускоряется. Отключайте блокировку перед поворотом."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Привод и блокировка"/>
@@ -909,7 +1097,7 @@
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
-        <text name="rms_charger_function" text="Зарядное устройство Telwin на тележке, 150 А при 12 В. Подключите его рядом с машиной и оставьте аккумулятор заряжаться. Скорость зарядки зависит от скорости времени в игре. Помощь при запуске (START, 200 A)."/>
+        <text name="rms_charger_function" text="Зарядное устройство Telwin на тележке, 150 А при 12 В, 80 А при 24 В. Подключите его рядом с машиной и выберите автоматическую зарядку, подобранную под аккумулятор, быструю зарядку или помощь при запуске (START, 200 A при 12 В). Скорость зарядки зависит от скорости времени в игре."/>
         <text name="rms_charger_start" text="Подключить зарядное устройство"/>
         <text name="rms_charger_disconnect" text="Отключить зарядное устройство"/>
         <text name="rms_charger_select" text="Выберите автомобиль для подключения."/>
@@ -931,6 +1119,7 @@
         <text name="rms_charger_error_moving" text="Машина движется."/>
         <text name="rms_charger_error_service" text="Идут работы в мастерской."/>
         <text name="rms_charger_error_cables" text="Отключите пусковые провода."/>
+        <text name="rms_charger_error_voltage" text="Помощь при запуске работает только при 12 В."/>
         <text name="rms_charger_error_busy" text="Зарядное устройство уже подключено."/>
         <text name="rms_charger_error_full" text="Этот аккумулятор уже заряжен."/>
         <text name="rms_charger_connected" text="Зарядное устройство подключено. Зарядка началась."/>
@@ -938,7 +1127,7 @@
         <text name="rms_charger_stopped_motor" text="Зарядка прервана: запуск"/>
         <text name="rms_charger_error_player_distance" text="Подойдите к зарядному устройству пешком."/>
         <text name="rms_charger_mode_select" text="Подключить зарядное устройство"/>
-        <text name="rms_charger_mode_start" text="Помощь при запуске (START, 200 A)"/>
+        <text name="rms_charger_mode_start" text="Помощь при запуске (START, 200 A, 12 V)"/>
         <text name="rms_charger_start_ready" text="START готов"/>
         <text name="rms_charger_start_active" text="Помощь при запуске активна"/>
         <text name="rms_charger_start_running" text="Двигатель запущен: отключите"/>
@@ -946,6 +1135,14 @@
         <text name="rms_charger_start_wait" text="Подождите 30 секунд между попытками запуска."/>
         <text name="rms_charger_unplug_before_start" text="Отключите зарядное устройство или выберите START перед запуском."/>
         <text name="rms_charger_start_connected" text="Помощь при запуске (START, 200 A)."/>
-        <text name="rms_charger_mode_charge" text="Зарядить аккумулятор (150 A)"/>
+        <text name="rms_charger_mode_charge" text="Автоматическая зарядка"/>
+        <text name="rms_charger_mode_fast" text="Быстрая зарядка (150 A, 80 A при 24 В)"/>
+
+        <!-- Battery isolator -->
+        <text name="rms_battery_isolator_cut" text="Отключить массу"/>
+        <text name="rms_battery_isolator_restore" text="Включить массу"/>
+        <text name="rms_battery_isolator_open" text="Масса отключена. Включите её выключателем массы, стоя перед машиной."/>
+        <text name="rms_battery_isolator_engine_running" text="Выключите двигатель перед использованием выключателя массы."/>
+        <text name="rms_battery_isolator_info" text="Масса отключена"/>
     </texts>
 </l10n>

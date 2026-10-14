@@ -1,13 +1,18 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Physical RMS fluid container holding its own liters, so the game's 255 fill type limit never empties it
+---Physical RMS fluid container holding its own liters, so the game's fill type limit never empties it
 RMS_FluidContainer = {}
 RMS_FluidContainer.SPEC_NAME = "FS25_RealisticMechanicalSystems.rmsFluidContainer"
 RMS_FluidContainer.SPEC_TABLE_NAME = "spec_" .. RMS_FluidContainer.SPEC_NAME
 RMS_FluidContainer.DRUM_I3D_FILENAME = "data/maps/textures/shared/props/motorex/motorexOilBarrel.i3d"
+-- largest container a player carries and pours by hand, the drum staying on its pallet
+RMS_FluidContainer.CARRIED_CAPACITY = 25
+RMS_FluidContainer.PUMP_I3D_FILENAME = "objects/drumPump/drumPumpMounted.i3d"
+-- bung of the game drum under its link node, measured on its mesh
+RMS_FluidContainer.PUMP_TRANSLATION = { 0, 0.898252845, 0.1980392635 }
 
----Requires the native FillUnit specialization, whose configuration picks the 5, 25 or 200 liter format
+---Checks if all prerequisite specializations are loaded
 function RMS_FluidContainer.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(FillUnit, specializations)
 end
@@ -29,6 +34,8 @@ function RMS_FluidContainer.initSpecialization()
 
     Vehicle.xmlSchemaSavegame:register(XMLValueType.FLOAT,
         "vehicles.vehicle(?)." .. RMS_FluidContainer.SPEC_NAME .. "#liters", "Liters left in the container")
+    Vehicle.xmlSchemaSavegame:register(XMLValueType.BOOL,
+        "vehicles.vehicle(?)." .. RMS_FluidContainer.SPEC_NAME .. "#hasPump", "Whether a pump sits on the drum")
 end
 
 ---Registers public container functions
@@ -43,6 +50,15 @@ function RMS_FluidContainer.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "restoreRMSFluidLiters", RMS_FluidContainer.restoreRMSFluidLiters)
     SpecializationUtil.registerFunction(vehicleType, "deleteRMSContainerIfEmpty", RMS_FluidContainer.deleteRMSContainerIfEmpty)
     SpecializationUtil.registerFunction(vehicleType, "getIsRMSFluidTransferActive", RMS_FluidContainer.getIsRMSFluidTransferActive)
+    SpecializationUtil.registerFunction(vehicleType, "getRMSFluidCarrier", RMS_FluidContainer.getRMSFluidCarrier)
+    SpecializationUtil.registerFunction(vehicleType, "setRMSFluidCarried", RMS_FluidContainer.setRMSFluidCarried)
+    SpecializationUtil.registerFunction(vehicleType, "applyRMSFluidVisuals", RMS_FluidContainer.applyRMSFluidVisuals)
+    SpecializationUtil.registerFunction(vehicleType, "getRMSFluidKindText", RMS_FluidContainer.getRMSFluidKindText)
+    SpecializationUtil.registerFunction(vehicleType, "getHasRMSFluidPump", RMS_FluidContainer.getHasRMSFluidPump)
+    SpecializationUtil.registerFunction(vehicleType, "setRMSFluidPump", RMS_FluidContainer.setRMSFluidPump)
+    SpecializationUtil.registerFunction(vehicleType, "setRMSFluidStored", RMS_FluidContainer.setRMSFluidStored)
+    SpecializationUtil.registerFunction(vehicleType, "setRMSFluidNozzle", RMS_FluidContainer.setRMSFluidNozzle)
+    SpecializationUtil.registerFunction(vehicleType, "getRMSFluidHoseSpan", RMS_FluidContainer.getRMSFluidHoseSpan)
 end
 
 ---Registers native container behavior overrides
@@ -53,6 +69,7 @@ function RMS_FluidContainer.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getFillLevelInformation", RMS_FluidContainer.getFillLevelInformation)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "showInfo", RMS_FluidContainer.showInfo)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getAdditionalComponentMass", RMS_FluidContainer.getAdditionalComponentMass)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateMass", RMS_FluidContainer.updateMass)
 end
 
 ---Registers load, save and network callbacks
@@ -89,7 +106,27 @@ function RMS_FluidContainer.loadNativeDrumVisual(parentNode)
     return true
 end
 
----Loads the immutable catalogue product and the liters left, a new container starting full
+---Loads the pump a drum carries on its bung
+local function loadPump(container, drumLink)
+    local i3dRoot = g_i3DManager:loadI3DFile(Utils.getFilename(RMS_FluidContainer.PUMP_I3D_FILENAME, container.baseDirectory), false, false)
+    local node = getChildAt(i3dRoot, 0)
+    link(drumLink, node)
+    delete(i3dRoot)
+    setTranslation(node, unpack(RMS_FluidContainer.PUMP_TRANSLATION))
+
+    local graphics = getChildAt(node, 0)
+    return { node = node, hoseOutlet = getChildAt(graphics, 2), restHose = getChildAt(graphics, 4), storedNozzle = getChildAt(graphics, 5) }
+end
+
+---Shows the pump of a drum as it stands
+local function applyPump(container)
+    local spec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
+    setVisibility(spec.pump.node, spec.hasPump)
+    setVisibility(spec.pump.storedNozzle, not spec.isNozzleOut)
+    setVisibility(spec.pump.restHose, not spec.isNozzleOut)
+end
+
+---Loads the catalogue product and the liters left, a new container full
 function RMS_FluidContainer:onLoad(savegame)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     if spec == nil then
@@ -110,10 +147,17 @@ function RMS_FluidContainer:onLoad(savegame)
 
     spec.capacity = product.capacities[Utils.getNoNil(self.configurations["fillUnit"], 1)]
     spec.liters = spec.capacity
+    spec.hasPump = false
     if savegame ~= nil and not savegame.resetVehicles then
-        spec.liters = math.clamp(savegame.xmlFile:getValue(savegame.key .. "." .. RMS_FluidContainer.SPEC_NAME .. "#liters", 0), 0, spec.capacity)
+        local savegameKey = savegame.key .. "." .. RMS_FluidContainer.SPEC_NAME
+        spec.liters = math.clamp(savegame.xmlFile:getValue(savegameKey .. "#liters", 0), 0, spec.capacity)
+        spec.hasPump = savegame.xmlFile:getValue(savegameKey .. "#hasPump", false)
     end
     spec.dirtyFlag = self:getNextDirtyFlag()
+    spec.carriedDirtyFlag = self:getNextDirtyFlag()
+    spec.pumpDirtyFlag = self:getNextDirtyFlag()
+    spec.isCarried = false
+    spec.isNozzleOut = false
     self:setMassDirty()
 
     local baseKey = "vehicle.rmsFluidContainer"
@@ -126,31 +170,14 @@ function RMS_FluidContainer:onLoad(savegame)
     RMS_FluidContainer.stripChildCollision(drumRoots[1])
     RMS_FluidContainer.stripChildCollision(self.i3dMappings.drumPalletVisualLink.nodeId)
 
-    RMS_FluidContainer.applyDiffuseByName(
-        mediumRoots,
-        "body",
-        Utils.getFilename(self.xmlFile:getValue(baseKey .. "#mediumBodyDiffuse"), self.baseDirectory)
-    )
-    RMS_FluidContainer.applyDiffuseByName(
-        mediumRoots,
-        "cap",
-        Utils.getFilename(self.xmlFile:getValue(baseKey .. "#mediumCapDiffuse"), self.baseDirectory)
-    )
-    RMS_FluidContainer.applyDiffuseByName(
-        mediumRoots,
-        "label",
-        Utils.getFilename(self.xmlFile:getValue(baseKey .. "#mediumLabelDiffuse"), self.baseDirectory)
-    )
-    RMS_FluidContainer.applyDiffuseByName(
-        largeRoots,
-        "body60",
-        Utils.getFilename(self.xmlFile:getValue(baseKey .. "#largeBodyDiffuse"), self.baseDirectory)
-    )
-    RMS_FluidContainer.applyDiffuseByName(
-        largeRoots,
-        "label60",
-        Utils.getFilename(self.xmlFile:getValue(baseKey .. "#largeLabelDiffuse"), self.baseDirectory)
-    )
+    -- the product colours of the two cans, kept for the can a player carries in hand
+    spec.canDiffuseFilenames = {}
+    for _, name in ipairs({ "mediumBody", "mediumCap", "mediumLabel", "largeBody", "largeLabel" }) do
+        spec.canDiffuseFilenames[name] = Utils.getFilename(self.xmlFile:getValue(baseKey .. "#" .. name .. "Diffuse"), self.baseDirectory)
+    end
+    self:applyRMSFluidVisuals(mediumRoots[1], 5)
+    self:applyRMSFluidVisuals(largeRoots[1], 25)
+
     if hasDrumVisual then
         RMS_FluidContainer.applyDiffuseByName(
             drumRoots,
@@ -164,13 +191,14 @@ function RMS_FluidContainer:onLoad(savegame)
         )
     end
 
-    if self.isClient and g_currentMission ~= nil and g_currentMission.activatableObjectsSystem ~= nil then
-        spec.activatable = RMS_FluidContainerActivatable.new(self)
-        g_currentMission.activatableObjectsSystem:addActivatable(spec.activatable)
+    -- a can pours from the hand that carries it, a drum through the pump set on its bung
+    if hasDrumVisual and spec.capacity > RMS_FluidContainer.CARRIED_CAPACITY then
+        spec.pump = loadPump(self, drumRoots[1])
+        applyPump(self)
     end
 end
 
----Temporary cleanup for empty containers persisted before 1.0; remove this onLoadEnd hook for the 1.0 release
+---Deletes the empty containers saved before 1.0, hook to remove at 1.0 beta 1
 function RMS_FluidContainer:onLoadEnd()
     if self.isServer and self.propertyState ~= VehiclePropertyState.SHOP_CONFIG then
         self:deleteRMSContainerIfEmpty()
@@ -217,6 +245,21 @@ function RMS_FluidContainer.applyDiffuseByName(roots, nodeName, filename)
     RMS_FluidContainer.applyDiffuseToNodes(nodes, filename)
 end
 
+---Dresses a can in the colours and label of its product
+-- @param entityId root node holding the can
+-- @param float capacity format of the can in liters
+function RMS_FluidContainer:applyRMSFluidVisuals(root, capacity)
+    local filenames = self[RMS_FluidContainer.SPEC_TABLE_NAME].canDiffuseFilenames
+    if capacity > 5 then
+        RMS_FluidContainer.applyDiffuseByName({ root }, "body60", filenames.largeBody)
+        RMS_FluidContainer.applyDiffuseByName({ root }, "label60", filenames.largeLabel)
+    else
+        RMS_FluidContainer.applyDiffuseByName({ root }, "body", filenames.mediumBody)
+        RMS_FluidContainer.applyDiffuseByName({ root }, "cap", filenames.mediumCap)
+        RMS_FluidContainer.applyDiffuseByName({ root }, "label", filenames.mediumLabel)
+    end
+end
+
 ---Collects every distinct material used below the node
 function RMS_FluidContainer.collectMaterials(node, materials)
     if getHasClassId(node, ClassIds.SHAPE) then
@@ -242,30 +285,100 @@ function RMS_FluidContainer.stripCollision(node)
     end
 end
 
----Drops collisions carried by referenced visuals while preserving the RMS collision root
+---Drops the collisions of referenced visuals, keeping the RMS collision root
 function RMS_FluidContainer.stripChildCollision(node)
     for index = 0, getNumOfChildren(node) - 1 do
         RMS_FluidContainer.stripCollision(getChildAt(node, index))
     end
 end
 
----Cancels any in-progress transfer before the container is deleted
+---Cancels a running transfer and empties the hand before deletion
 function RMS_FluidContainer:onDelete()
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
-    if spec.activatable ~= nil and g_currentMission ~= nil and g_currentMission.activatableObjectsSystem ~= nil then
-        g_currentMission.activatableObjectsSystem:removeActivatable(spec.activatable)
-        spec.activatable = nil
+    RMS_FluidTransfer.cancel(self)
+    if spec.carrierTool ~= nil then
+        RMS_FluidHandTool.queueSetDown(spec.carrierTool)
     end
-    if RMS_FluidTransfer ~= nil then
-        RMS_FluidTransfer.cancel(self)
+end
+
+---Takes the container out of the world while carried, or sets it back down
+local function applyCarried(container, isCarried, x, y, z, rotY)
+    if isCarried then
+        container:removeFromPhysics()
+        container:setVisibility(false)
+    else
+        container:setAbsolutePosition(x, y, z, 0, rotY, 0)
+        container:setVisibility(true)
+        container:addToPhysics()
     end
+end
+
+---Tells which player carries the container in hand, as the server knows it
+-- @return table? player carrying player
+function RMS_FluidContainer:getRMSFluidCarrier()
+    local handTool = self[RMS_FluidContainer.SPEC_TABLE_NAME].carrierTool
+    return handTool ~= nil and handTool:getCarryingPlayer() or nil
+end
+
+---Hands the container to the hand tool standing for it, or sets it down
+-- @param table? handTool hand tool carrying it, nil to set it down
+-- @param float? x world position it is set down at
+-- @param float? y
+-- @param float? z
+-- @param float? rotY heading it is set down with
+function RMS_FluidContainer:setRMSFluidCarried(handTool, x, y, z, rotY)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    spec.carrierTool = handTool
+    spec.isCarried = handTool ~= nil
+    spec.setDownPose = { x, y, z, rotY }
+    RMS_FluidTransfer.cancel(self)
+    applyCarried(self, spec.isCarried, x, y, z, rotY)
+    self:raiseDirtyFlags(spec.carriedDirtyFlag)
+end
+
+---Tells whether a pump sits on the drum
+-- @return boolean hasPump
+function RMS_FluidContainer:getHasRMSFluidPump()
+    return self[RMS_FluidContainer.SPEC_TABLE_NAME].hasPump
+end
+
+---Sets a pump on the bung of the drum or takes it off, on the server
+-- @param boolean hasPump
+function RMS_FluidContainer:setRMSFluidPump(hasPump)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    spec.hasPump = hasPump
+    applyPump(self)
+    self:raiseDirtyFlags(spec.pumpDirtyFlag)
+    if not hasPump then
+        self:deleteRMSContainerIfEmpty()
+    end
+end
+
+---Hands the nozzle of the drum to its hand tool, or hangs it up
+-- @param table? handTool hand tool carrying it, nil to hang it up
+function RMS_FluidContainer:setRMSFluidNozzle(handTool)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    spec.carrierTool = handTool
+    spec.isNozzleOut = handTool ~= nil
+    RMS_FluidTransfer.cancel(self)
+    applyPump(self)
+    self:raiseDirtyFlags(spec.pumpDirtyFlag)
+end
+
+---Returns how much of the hose a player has pulled out
+-- @param table player player holding or taking the nozzle
+-- @return float span metres between the player and the pump
+function RMS_FluidContainer:getRMSFluidHoseSpan(player)
+    local x, _, z = player:getPosition()
+    local outletX, _, outletZ = getWorldTranslation(self[RMS_FluidContainer.SPEC_TABLE_NAME].pump.hoseOutlet)
+    return MathUtil.vector2Length(x - outletX, z - outletZ)
 end
 
 ---Advances the active transfer only on the authoritative server
 function RMS_FluidContainer:onUpdate(dt, isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
 
-    if self.isServer and RMS_FluidTransfer ~= nil and spec.activeTransfer ~= nil then
+    if self.isServer and spec.activeTransfer ~= nil then
         RMS_FluidTransfer.update(self, dt)
         if spec.activeTransfer ~= nil then
             self:raiseActive()
@@ -275,10 +388,12 @@ end
 
 ---Saves the liters left and cancels transient transfer state
 function RMS_FluidContainer:saveToXMLFile(xmlFile, key, usedModNames)
-    if self.isServer and RMS_FluidTransfer ~= nil then
+    if self.isServer then
         RMS_FluidTransfer.cancel(self)
     end
-    xmlFile:setValue(key .. "#liters", self[RMS_FluidContainer.SPEC_TABLE_NAME].liters)
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    xmlFile:setValue(key .. "#liters", spec.liters)
+    xmlFile:setValue(key .. "#hasPump", spec.hasPump)
 end
 
 ---Sends the liters to a joining client
@@ -286,18 +401,30 @@ function RMS_FluidContainer:onWriteStream(streamId, connection)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     streamWriteFloat32(streamId, spec.liters)
     streamWriteBool(streamId, spec.activeTransfer ~= nil)
+    streamWriteBool(streamId, spec.isCarried)
+    streamWriteBool(streamId, spec.hasPump)
+    streamWriteBool(streamId, spec.isNozzleOut)
 end
 
----Receives the liters on joining
+---Receives the liters on joining, and whether a player carries the container
 function RMS_FluidContainer:onReadStream(streamId, connection)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     spec.liters = streamReadFloat32(streamId)
     spec.isTransferActive = streamReadBool(streamId)
+    spec.isCarried = streamReadBool(streamId)
+    spec.hasPump = streamReadBool(streamId)
+    spec.isNozzleOut = streamReadBool(streamId)
     -- the game weighs a vehicle only inside its update, which a container at rest never gets
     self:updateMass()
+    if spec.isCarried then
+        applyCarried(self, true)
+    end
+    if spec.pump ~= nil then
+        applyPump(self)
+    end
 end
 
----Sends the changed liters to the clients
+---Sends the changed liters and the carried state to the clients
 function RMS_FluidContainer:onWriteUpdateStream(streamId, connection, dirtyMask)
     if not connection:getIsServer() then
         local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
@@ -305,16 +432,44 @@ function RMS_FluidContainer:onWriteUpdateStream(streamId, connection, dirtyMask)
             streamWriteFloat32(streamId, spec.liters)
             streamWriteBool(streamId, spec.activeTransfer ~= nil)
         end
+        if streamWriteBool(streamId, bit32.band(dirtyMask, spec.carriedDirtyFlag) ~= 0)
+            and not streamWriteBool(streamId, spec.isCarried) then
+            for index = 1, 4 do
+                streamWriteFloat32(streamId, spec.setDownPose[index])
+            end
+        end
+        if streamWriteBool(streamId, bit32.band(dirtyMask, spec.pumpDirtyFlag) ~= 0) then
+            streamWriteBool(streamId, spec.hasPump)
+            streamWriteBool(streamId, spec.isNozzleOut)
+        end
     end
 end
 
----Receives the changed liters from the server
+---Receives the changed liters and the carried state from the server
 function RMS_FluidContainer:onReadUpdateStream(streamId, timestamp, connection)
-    if connection:getIsServer() and streamReadBool(streamId) then
+    if connection:getIsServer() then
         local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
-        spec.liters = streamReadFloat32(streamId)
-        spec.isTransferActive = streamReadBool(streamId)
-        self:updateMass()
+        if streamReadBool(streamId) then
+            spec.liters = streamReadFloat32(streamId)
+            spec.isTransferActive = streamReadBool(streamId)
+            self:updateMass()
+        end
+        if streamReadBool(streamId) then
+            spec.isCarried = streamReadBool(streamId)
+            if spec.isCarried then
+                applyCarried(self, true)
+            else
+                local x = streamReadFloat32(streamId)
+                local y = streamReadFloat32(streamId)
+                local z = streamReadFloat32(streamId)
+                applyCarried(self, false, x, y, z, streamReadFloat32(streamId))
+            end
+        end
+        if streamReadBool(streamId) then
+            spec.hasPump = streamReadBool(streamId)
+            spec.isNozzleOut = streamReadBool(streamId)
+            applyPump(self)
+        end
     end
 end
 
@@ -370,8 +525,14 @@ local function getFluidKind(product)
     return "transmissionHydraulic"
 end
 
----Shows the container in the fill level display under its brand logo and its kind of fluid; when the game's
--- 255 fill type limit refused the brand types, the line keeps the kind without logo nor unit
+---Returns the short name of the kind of fluid a container holds
+-- @return string text kind of fluid, as the container shows it
+function RMS_FluidContainer:getRMSFluidKindText()
+    local product = RMS_Fluids.PRODUCTS[self[RMS_FluidContainer.SPEC_TABLE_NAME].productKey]
+    return g_i18n:getText(FLUID_KIND_TEXT_KEYS[getFluidKind(product)])
+end
+
+---Shows the container in the fill level display under its brand logo
 function RMS_FluidContainer:getFillLevelInformation(superFunc, display)
     superFunc(self, display)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
@@ -395,7 +556,7 @@ function RMS_FluidContainer:getFillLevelInformation(superFunc, display)
         g_i18n:getText(FLUID_KIND_TEXT_KEYS[kind]), infoText)
 end
 
----Shows the kind of fluid, its liters, then the brand and product when the player looks at the container
+---Shows the fluid, its liters, the brand and the product in the info box
 function RMS_FluidContainer:showInfo(superFunc, box)
     superFunc(self, box)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
@@ -403,6 +564,10 @@ function RMS_FluidContainer:showInfo(superFunc, box)
     box:addLine(g_i18n:getText(FLUID_KIND_TEXT_KEYS[getFluidKind(product)]), string.format("%s / %s %s", RMS_FluidWorkshop.formatLiters(spec.liters),
         RMS_FluidWorkshop.formatLiters(spec.capacity), g_i18n:getText("unit_literShort")))
     box:addLine(g_brandManager:getBrandByName(product.brand).title, product.name)
+    -- a drum delivers nothing without its pump: told the way the game tells what stops a machine
+    if spec.pump ~= nil and not spec.hasPump then
+        box:addLine(g_i18n:getText("rms_drum_pump_required"), "", true)
+    end
 end
 
 ---Adds the weight of the fluid to the container body
@@ -415,12 +580,24 @@ function RMS_FluidContainer:getAdditionalComponentMass(superFunc, component)
     return additionalMass
 end
 
----Allows native hand pickup for the 5 and 25 liter formats
-function RMS_FluidContainer:getCanBePickedUp(superFunc, byPlayer)
-    return self:getRMSFluidCapacity() <= 25 and superFunc(self, byPlayer)
+---Applies the fluid changes under 20 kg to the mass of a can
+function RMS_FluidContainer:updateMass(superFunc)
+    superFunc(self)
+    if self.isServer and self:getRMSFluidCapacity() <= RMS_FluidContainer.CARRIED_CAPACITY then
+        local component = self.components[1]
+        if component.isDynamic and component.lastMass ~= component.mass then
+            setMass(component.node, component.mass)
+            component.lastMass = component.mass
+        end
+    end
 end
 
----Makes delayed vehicle deletion idempotent while preserving the final immediate delete
+---Lets a player aim at the 5 and 25 liter formats to take them in hand
+function RMS_FluidContainer:getCanBePickedUp(superFunc, byPlayer)
+    return self:getRMSFluidCapacity() <= RMS_FluidContainer.CARRIED_CAPACITY and superFunc(self, byPlayer)
+end
+
+---Makes the delayed vehicle deletion idempotent
 function RMS_FluidContainer:delete(superFunc, immediate)
     if self.isDeleted or self.isDeleting or (self.markedForDeletion and not immediate) then
         return
@@ -443,7 +620,7 @@ function RMS_FluidContainer:getMeshNodes(superFunc)
     }
 end
 
----Prevents an empty container from disappearing in the middle of an atomic allocation
+---Keeps an empty container alive during an allocation
 function RMS_FluidContainer:beginRMSFluidTransaction()
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     spec.transactionDepth = (spec.transactionDepth or 0) + 1
@@ -498,283 +675,22 @@ function RMS_FluidContainer:restoreRMSFluidLiters(liters)
     return spec.liters - before
 end
 
----Deletes an empty container
+---Gives a container back the liters and the pump it was stored with
+-- @param float liters liters it held
+-- @param boolean hasPump true when a pump sat on the drum
+function RMS_FluidContainer:setRMSFluidStored(liters, hasPump)
+    setLiters(self, liters)
+    if hasPump then
+        self:setRMSFluidPump(true)
+    end
+end
+
+---Deletes an empty container, a drum once its pump is taken off
 function RMS_FluidContainer:deleteRMSContainerIfEmpty()
     if not self.isServer or self.isDeleted or self.isDeleting or self.markedForDeletion
-        or self:getRMSFluidLiters() > RMS_Fluids.EPSILON then
+        or self:getRMSFluidLiters() > RMS_Fluids.EPSILON or self[RMS_FluidContainer.SPEC_TABLE_NAME].hasPump then
         return
     end
 
     self:delete()
-end
-
-RMS_FluidContainerActivatable = {}
-local RMS_FluidContainerActivatable_mt = Class(RMS_FluidContainerActivatable)
-
-function RMS_FluidContainerActivatable.new(container)
-    local self = setmetatable({}, RMS_FluidContainerActivatable_mt)
-    self.container = container
-    self.activateText = g_i18n:getText("rms_fluid_container_action_start")
-    return self
-end
-
-local function getObjectDistance(objectA, objectB)
-    if objectA == nil or objectB == nil or objectA.rootNode == nil or objectB.rootNode == nil then
-        return math.huge
-    end
-    local ax, ay, az = getWorldTranslation(objectA.rootNode)
-    local bx, by, bz = getWorldTranslation(objectB.rootNode)
-    return MathUtil.vector3Length(ax - bx, ay - by, az - bz)
-end
-
----Lists the farm containers the player can pour from, the one carrying the action first
--- @return table containers containers in reach of the player, holding fluid and not pouring
-function RMS_FluidContainerActivatable:getNearbyContainers()
-    local containers = {}
-    local farmId = g_currentMission:getFarmId()
-    for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
-        if vehicle[RMS_FluidContainer.SPEC_TABLE_NAME] ~= nil and vehicle:getOwnerFarmId() == farmId
-            and vehicle:getRMSFluidLiters() > RMS_Fluids.EPSILON and not vehicle:getIsRMSFluidTransferActive()
-            and getObjectDistance(g_localPlayer, vehicle) <= RMS_FluidTransfer.MAX_DISTANCE then
-            table.insert(containers, vehicle)
-        end
-    end
-    table.sort(containers, function(a, b)
-        if (a == self.container) ~= (b == self.container) then
-            return a == self.container
-        end
-        return getObjectDistance(g_localPlayer, a) < getObjectDistance(g_localPlayer, b)
-    end)
-    return containers
-end
-
----Lists what the containers can pour into a machine, the fluids made for the circuit first
--- @param table target machine to fill
--- @param table containers containers the player can pour from
--- @return table pours container and circuit pairs, in display order
-function RMS_FluidContainerActivatable:getPours(target, containers)
-    local pours = {}
-    for containerIndex, container in ipairs(containers) do
-        if getObjectDistance(container, target) <= RMS_FluidTransfer.MAX_DISTANCE then
-            local productKey = container:getRMSFluidProductKey()
-            for circuitIndex, circuit in ipairs(RMS_Fluids.getSumpCircuits(target)) do
-                if RMS_Fluids.getCapacity(target, circuit) > RMS_Fluids.EPSILON
-                    and RMS_Fluids.getMissingLiters(target, circuit) > RMS_Fluids.EPSILON then
-                    table.insert(pours, {
-                        container = container,
-                        circuit = circuit,
-                        isCompatible = RMS_Fluids.getIsProductCompatible(productKey, circuit),
-                        order = circuitIndex * #containers + containerIndex
-                    })
-                end
-            end
-        end
-    end
-    table.sort(pours, function(a, b)
-        if a.isCompatible ~= b.isCompatible then
-            return a.isCompatible
-        end
-        return a.order < b.order
-    end)
-    return pours
-end
-
----Lists the farm machines within reach of the player that one of the containers can fill
--- @param table containers containers the player can pour from
--- @return table vehicles machines lacking fluid
-function RMS_FluidContainerActivatable:getNearbyVehicles(containers)
-    local vehicles = {}
-    local farmId = g_currentMission:getFarmId()
-    for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
-        if vehicle.spec_RealisticMechanicalSystems ~= nil
-            and vehicle.getOwnerFarmId ~= nil and vehicle:getOwnerFarmId() == farmId
-            and getObjectDistance(g_localPlayer, vehicle) <= RMS_FluidTransfer.MAX_DISTANCE
-            and #self:getPours(vehicle, containers) > 0 then
-            table.insert(vehicles, vehicle)
-        end
-    end
-    table.sort(vehicles, function(a, b)
-        return tostring(a.configFileName or "") < tostring(b.configFileName or "")
-    end)
-    return vehicles
-end
-
-function RMS_FluidContainerActivatable:getIsActivatable()
-    local container = self.container
-    if container == nil or container.isDeleted == true or container.isDeleting == true
-        or container.markedForDeletion == true or container:getRMSFluidLiters() <= RMS_Fluids.EPSILON
-        or g_currentMission == nil or g_localPlayer == nil or g_localPlayer:getIsInVehicle() then
-        return false
-    end
-
-    local containerNode = container.rootNode
-    local playerNode = g_localPlayer.rootNode
-    if container.isAddedToPhysics ~= true
-        or containerNode == nil or containerNode == 0 or not entityExists(containerNode)
-        or playerNode == nil or playerNode == 0 or not entityExists(playerNode)
-        or g_currentMission:getNodeObject(containerNode) ~= container then
-        return false
-    end
-
-    local playerX, playerY, playerZ = getWorldTranslation(playerNode)
-    if self:getDistance(playerX, playerY, playerZ) > RMS_FluidTransfer.MAX_DISTANCE then
-        return false
-    end
-
-    local farmId = g_currentMission:getFarmId()
-    if farmId == FarmManager.SPECTATOR_FARM_ID or container.getOwnerFarmId == nil
-        or container:getOwnerFarmId() ~= farmId then
-        return false
-    end
-    self:updateActivateText()
-    return true
-end
-
-function RMS_FluidContainerActivatable:updateActivateText()
-    self.activateText = g_i18n:getText(
-        self.container:getIsRMSFluidTransferActive()
-            and "rms_fluid_container_action_cancel"
-            or "rms_fluid_container_action_start"
-    )
-end
-
-function RMS_FluidContainerActivatable:getDistance(x, y, z)
-    local tx, ty, tz = getWorldTranslation(self.container.rootNode)
-    return MathUtil.vector3Length(tx - x, ty - y, tz - z)
-end
-
----Asks which circuit of the machine to fill, then which fluid to pour, skipping a question that has a single answer
--- @param table target machine to fill
--- @param table containers containers the player can pour from
-function RMS_FluidContainerActivatable:selectPour(target, containers)
-    if target.isUnderService ~= nil and target:isUnderService() then
-        InfoDialog.show(g_i18n:getText("rms_charger_error_service"))
-        return
-    end
-    if target.getIsMotorStarted ~= nil and target:getIsMotorStarted() then
-        InfoDialog.show(g_i18n:getText("rms_fluid_error_motor_running"))
-        return
-    end
-    if target.getLastSpeed ~= nil and math.abs(tonumber(target:getLastSpeed()) or 0) > RMS_FluidTransfer.STOPPED_SPEED then
-        InfoDialog.show(g_i18n:getText("rms_fluid_error_vehicle_moving"))
-        return
-    end
-
-    local pours = self:getPours(target, containers)
-    if #pours == 0 then
-        InfoDialog.show(g_i18n:getText("rms_fluid_error_no_circuit"))
-        return
-    end
-
-    -- the circuits one of the containers holds the right fluid for come first, as do those fluids within a circuit
-    local circuits, poursByCircuit = {}, {}
-    for _, pour in ipairs(pours) do
-        if poursByCircuit[pour.circuit] == nil then
-            poursByCircuit[pour.circuit] = {}
-            table.insert(circuits, pour.circuit)
-        end
-        table.insert(poursByCircuit[pour.circuit], pour)
-    end
-
-    local function start(pour)
-        if pour.isCompatible then
-            RMS_FluidTransferRequestEvent.send(pour.container, target, pour.circuit, false, false)
-        else
-            local callback = function(confirmed)
-                if confirmed then
-                    RMS_FluidTransferRequestEvent.send(pour.container, target, pour.circuit, true, false)
-                end
-            end
-            YesNoDialog.show(
-                callback,
-                nil,
-                g_i18n:getText("rms_fluid_incompatible_message"),
-                g_i18n:getText("rms_fluid_incompatible_title")
-            )
-        end
-    end
-
-    local function selectFluid(circuit)
-        local circuitPours = poursByCircuit[circuit]
-        if #circuitPours == 1 then
-            start(circuitPours[1])
-            return
-        end
-
-        local options = {}
-        for _, pour in ipairs(circuitPours) do
-            local product = RMS_Fluids.PRODUCTS[pour.container:getRMSFluidProductKey()]
-            -- the kind of fluid and its brand, as the container itself is labelled: a trade name tells the player nothing
-            table.insert(options, string.format(
-                g_i18n:getText("rms_fluid_pour_option"),
-                g_i18n:getText(FLUID_KIND_TEXT_KEYS[getFluidKind(product)]),
-                g_brandManager:getBrandByName(product.brand).title,
-                string.format("%s %s", RMS_FluidWorkshop.formatLiters(pour.container:getRMSFluidLiters()), g_i18n:getText("unit_literShort"))
-            ))
-        end
-        OptionDialog.show(
-            function(index)
-                if circuitPours[index] ~= nil then
-                    start(circuitPours[index])
-                end
-            end,
-            g_i18n:getText("rms_fluid_select_fluid_prompt"),
-            g_i18n:getText(RMS_Fluids.getCircuitTextKey(target, circuit, "rms_fluid_circuit_" .. circuit)),
-            options
-        )
-    end
-
-    if #circuits == 1 then
-        selectFluid(circuits[1])
-        return
-    end
-
-    local options = {}
-    for _, circuit in ipairs(circuits) do
-        table.insert(options, g_i18n:getText(RMS_Fluids.getCircuitTextKey(target, circuit, "rms_fluid_circuit_" .. circuit)))
-    end
-    OptionDialog.show(
-        function(index)
-            if circuits[index] ~= nil then
-                selectFluid(circuits[index])
-            end
-        end,
-        g_i18n:getText("rms_fluid_select_circuit_prompt"),
-        g_i18n:getText("rms_fluid_container_action_start"),
-        options
-    )
-end
-
-function RMS_FluidContainerActivatable:run()
-    if self.container:getIsRMSFluidTransferActive() then
-        RMS_FluidTransferRequestEvent.send(self.container, nil, nil, false, true)
-        return
-    end
-
-    local containers = self:getNearbyContainers()
-    local vehicles = self:getNearbyVehicles(containers)
-    if #vehicles == 0 then
-        InfoDialog.show(g_i18n:getText("rms_fluid_error_no_vehicle"))
-        return
-    end
-
-    if #vehicles == 1 then
-        self:selectPour(vehicles[1], containers)
-        return
-    end
-
-    local options = {}
-    for _, vehicle in ipairs(vehicles) do
-        table.insert(options, vehicle.getFullName ~= nil and vehicle:getFullName() or tostring(vehicle.configFileName))
-    end
-    OptionDialog.show(
-        function(index)
-            if vehicles[index] ~= nil then
-                self:selectPour(vehicles[index], containers)
-            end
-        end,
-        g_i18n:getText("rms_fluid_select_vehicle_prompt"),
-        g_i18n:getText("rms_fluid_select_vehicle_title"),
-        options
-    )
 end

@@ -3,14 +3,12 @@
 
 ---HUD of the mod: dashboard indicators, telemetry cards, notifications and the damage bar
 RMS_Hud = {}
-RMS_Hud.modDirectory = g_currentModDirectory
 RMS_Hud.debugViewMode = RMS_Hud.debugViewMode or "default"
 local RMS_Hud_mt = Class(RMS_Hud, HUDDisplay)
 
 RMS_Hud.COLOR_GAME_GREEN = HUD.COLOR.ACTIVE
 RMS_Hud.INSPECTION_RING_SIZE = 138
 RMS_Hud.CONSUMPTION_REFRESH_INTERVAL = 500
-RMS_Hud.CONSUMPTION_PER_HOUR_BUCKETS = 2
 RMS_Hud.CONSUMPTION_PER_AREA_BUCKETS = 10
 RMS_Hud.MOTOR_LOAD_BUCKETS = 2
 RMS_Hud.TRANSMISSION_OIL_TEMP_WARNING = 99
@@ -19,11 +17,11 @@ RMS_Hud.TRANSMISSION_TELLTALE = {
     TEMPERATURE = "temperature",
     FAULT = "fault"
 }
+-- year each telltale reached dashboards; the glow lamp and the two lamps of an electric follow the machine instead
+RMS_Hud.TELLTALE_YEARS = { engine = 1990, transmission = 1990, brakes = 1980, battery = 1950, coolant = 1950, warning = 1990,
+    service = 1970, oil = 1950 }
 
 ---Formats a number, dropping its decimals when it rounds to zero
--- @param float value value to format
--- @param string numberFormat format applied to a non zero value
--- @return string text formatted value
 local function formatValue(value, numberFormat)
     local amount = tonumber(value) or 0
     local text = string.format(numberFormat, amount)
@@ -36,8 +34,6 @@ local function formatValue(value, numberFormat)
 end
 
 ---Formats a consumption readout, one decimal below a hundred
--- @param float value consumption value
--- @return string text formatted value
 local function formatConsumptionValue(value)
     local amount = math.max(tonumber(value) or 0, 0)
     return formatValue(amount, amount < 100 and "%.1f" or "%.0f")
@@ -54,13 +50,12 @@ function RMS_Hud:new()
     self.motorLoadAverage = { buckets = {}, current = { value = 0, time = 0 }, timer = 0 }
     self.consumption = {
         buckets = {},
-        current = { fuel = 0, time = 0, litres = 0, hectares = 0 },
+        current = { litres = 0, hectares = 0 },
         timer = 0,
         perHour = 0,
         perArea = nil
     }
 
-    g_overlayManager:addTextureConfigFile(RMS_Hud.modDirectory .. "hud/rms_dashboardHud.xml", "rms_DashboardHud")
     self.wheelSlipHud = {
         icon = g_overlayManager:createOverlay("rms_DashboardHud.wheelSlip", 0, 0, 0, 0)
     }
@@ -104,9 +99,9 @@ function RMS_Hud:new()
             icons = {
                 normal = engineLoadIcon,
                 fault = g_overlayManager:createOverlay("rms_DashboardHud.engineFault", 0, 0, 0, 0),
-                road = g_overlayManager:createOverlay("rms_DashboardHud.engine", 0, 0, 0, 0)
+                classic = g_overlayManager:createOverlay("rms_DashboardHud.engine", 0, 0, 0, 0)
             },
-            year = 1990
+            year = RMS_Hud.TELLTALE_YEARS.engine
         },
         transmission = {
             name = 'transmission',
@@ -116,27 +111,27 @@ function RMS_Hud:new()
                 temperature = g_overlayManager:createOverlay("rms_DashboardHud.transmissionTemperature", 0, 0, 0, 0),
                 fault = g_overlayManager:createOverlay("rms_DashboardHud.transmissionFault", 0, 0, 0, 0)
             },
-            year = 1990
+            year = RMS_Hud.TELLTALE_YEARS.transmission
         },
         brakes = {
             name = 'brakes',
             icon = g_overlayManager:createOverlay("rms_DashboardHud.brakes", 0, 0, 0, 0),
-            year = 1980
+            year = RMS_Hud.TELLTALE_YEARS.brakes
         },
         battery = {
             name = 'battery',
             icon = g_overlayManager:createOverlay("rms_DashboardHud.battery", 0, 0, 0, 0),
-            year = 1950
+            year = RMS_Hud.TELLTALE_YEARS.battery
         },
         coolant = {
             name = 'coolant',
             icon = g_overlayManager:createOverlay("rms_DashboardHud.coolant", 0, 0, 0, 0),
-            year = 1950
+            year = RMS_Hud.TELLTALE_YEARS.coolant
         },
         warning = {
             name = 'warning',
             icon = g_overlayManager:createOverlay("rms_DashboardHud.warning", 0, 0, 0, 0),
-            year = 1990
+            year = RMS_Hud.TELLTALE_YEARS.warning
         },
         preheat = {
             name = 'preheat',
@@ -145,12 +140,21 @@ function RMS_Hud:new()
         service = {
             name = 'service',
             icon = g_overlayManager:createOverlay("rms_DashboardHud.service", 0, 0, 0, 0),
-            year = 1970
+            year = RMS_Hud.TELLTALE_YEARS.service
         },
         oil = {
             name = 'oil',
             icon = g_overlayManager:createOverlay("rms_DashboardHud.oil", 0, 0, 0, 0),
-            year = 1950
+            year = RMS_Hud.TELLTALE_YEARS.oil
+        },
+        -- the two lamps only an electric carries, in the places of the oil lamp and of the glow lamp
+        tractionBattery = {
+            name = 'tractionBattery',
+            icon = g_overlayManager:createOverlay("rms_DashboardHud.battery", 0, 0, 0, 0)
+        },
+        limitedPower = {
+            name = 'limitedPower',
+            icon = g_overlayManager:createOverlay("rms_DashboardHud.limitedPower", 0, 0, 0, 0)
         }
     }
 
@@ -164,7 +168,9 @@ function RMS_Hud:new()
         warning =       { cooldownMs = 1400, sampleName = "warning" },
         preheat =       { cooldownMs = 1800, sampleName = "warning" },
         service =       { cooldownMs = 2500, sampleName = "warning" },
-        oil =           { cooldownMs = 1800, sampleName = "warning" }
+        oil =           { cooldownMs = 1800, sampleName = "warning" },
+        tractionBattery = { cooldownMs = 1800, sampleName = "warning" },
+        limitedPower =  { cooldownMs = 1800, sampleName = "warning" }
     }
 
     self.indicatorValueText = {}
@@ -320,7 +326,7 @@ function RMS_Hud:startIndicatorBlink(indicatorId)
         return
     end
 
-    local now = (g_currentMission ~= nil and g_currentMission.time) or g_time or 0
+    local now = g_currentMission.time
 
     runtimeState.blinkActive = true
     runtimeState.blinkStartTime = now
@@ -332,9 +338,9 @@ end
 -- @param boolean blinkWhileActive true to keep blinking while it stays lit
 function RMS_Hud:applyIndicatorBlink(indicatorId, targetColor, blinkWhileActive)
     local runtimeState = self:getIndicatorRuntimeState(indicatorId)
-    local colors = RMS_Breakdowns ~= nil and RMS_Breakdowns.COLORS or nil
+    local colors = RMS_Breakdowns.COLORS
     local vehicle = self.vehicle
-    if runtimeState == nil or colors == nil or runtimeState.blinkActive ~= true then
+    if runtimeState == nil or runtimeState.blinkActive ~= true then
         return targetColor
     end
 
@@ -344,7 +350,7 @@ function RMS_Hud:applyIndicatorBlink(indicatorId, targetColor, blinkWhileActive)
         return targetColor
     end
 
-    local now = (g_currentMission ~= nil and g_currentMission.time) or g_time or 0
+    local now = g_currentMission.time
     local blinkIntervalMs = 600
     local totalPhases = 4
     local elapsed = math.max(now - (runtimeState.blinkStartTime or 0), 0)
@@ -393,7 +399,7 @@ function RMS_Hud:tryPlayIndicatorActivationSound(indicatorId, runtimeState, seve
         return false
     end
 
-    local now = (g_currentMission ~= nil and g_currentMission.time) or g_time or 0
+    local now = g_currentMission.time
     local cooldownMs = math.max(tonumber(config.cooldownMs) or 0, 0)
     local elapsed = now - (runtimeState.lastSoundTime or 0)
 
@@ -412,16 +418,16 @@ function RMS_Hud:tryPlayIndicatorActivationSound(indicatorId, runtimeState, seve
     return true
 end
 
----Lights or clears an indicator, starting its blink and its sound on the transition
+---Lights or clears an indicator, with its blink and its sound
 -- @param string indicatorId dashboard indicator id
 -- @param boolean shouldLight true when the indicator must be lit
 -- @param table targetColor colour the indicator lights in
 function RMS_Hud:syncIndicatorActivation(indicatorId, shouldLight, targetColor)
     local runtimeState = self:getIndicatorRuntimeState(indicatorId)
-    local colors = RMS_Breakdowns ~= nil and RMS_Breakdowns.COLORS or nil
+    local colors = RMS_Breakdowns.COLORS
     local severity = 0
 
-    if shouldLight and colors ~= nil then
+    if shouldLight then
         if targetColor == colors.CRITICAL then
             severity = 2
         elseif targetColor == colors.WARNING then
@@ -473,7 +479,7 @@ function RMS_Hud:getVehicleTypeCategoryLabel(vehicle)
         vehicleTypeName = tostring(vehicle.type.name)
     end
 
-    if vehicle ~= nil and g_storeManager ~= nil and g_storeManager.getItemByXMLFilename ~= nil then
+    if vehicle ~= nil then
         local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
         if storeItem ~= nil and storeItem.categoryName ~= nil then
             categoryName = tostring(storeItem.categoryName)
@@ -483,18 +489,14 @@ function RMS_Hud:getVehicleTypeCategoryLabel(vehicle)
     return string.format("%s/%s", vehicleTypeName, categoryName)
 end
 
-local hasCVTTransmission = RMS_Utils ~= nil and RMS_Utils.hasCVTTransmission or function() return false end
-local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
+local hasCVTTransmission = RMS_Utils.hasCVTTransmission
+local hasCVTAddon = RMS_Utils.hasCVTAddon
 
 
 ---Draws the whole HUD for the current frame
 function RMS_Hud:draw()
-    if g_currentMission == nil then
-        return
-    end
-
     local isHudVisible = g_currentMission.hud.isVisible
-    local isGuiVisible = g_gui ~= nil and g_gui:getIsGuiVisible()
+    local isGuiVisible = g_gui:getIsGuiVisible()
     self:setNotificationInputActive(isHudVisible and not isGuiVisible and self:hasClosableNotification())
 
     if not isHudVisible then
@@ -521,7 +523,7 @@ end
 -- @param string? title notification title
 -- @param boolean? playSound true to play the notification sound
 function RMS_Hud.showNotification(text, durationMs, title, playSound)
-    if RMS_Main ~= nil and RMS_Main.hud ~= nil then
+    if RMS_Main.hud ~= nil then
         RMS_Main.hud:setNotification(text, durationMs, title, playSound)
     end
 end
@@ -529,7 +531,7 @@ end
 ---Sets the inspection progress on the shared HUD instance
 -- @param float? ratio progress between 0 and 1
 function RMS_Hud.showInspectionProgress(ratio)
-    if RMS_Main ~= nil and RMS_Main.hud ~= nil then
+    if RMS_Main.hud ~= nil then
         RMS_Main.hud:setInspectionProgress(ratio)
     end
 end
@@ -538,7 +540,7 @@ end
 -- @param string text message shown
 -- @param float durationMs time the message stays on screen
 function RMS_Hud.showInspectionMessage(text, durationMs)
-    if RMS_Main ~= nil and RMS_Main.hud ~= nil then
+    if RMS_Main.hud ~= nil then
         RMS_Main.hud:setInspectionMessage(text, durationMs)
     end
 end
@@ -957,6 +959,14 @@ function RMS_Hud:storeScaledValues()
     self.indicators.preheat.offsetY = warningRowCenterY - preheatHeight * (35.5 / 72)
     self.indicators.preheat.icon:setDimension(preheatWidth, preheatHeight)
 
+    -- on an electric the traction battery lamp sits where the oil lamp is, the limited power one where the glow lamp is
+    self.indicators.tractionBattery.offsetX = self:scalePixelToScreenWidth(28) - oilWidth * 0.5
+    self.indicators.tractionBattery.offsetY = warningRowCenterY - oilHeight * (33.5 / 72)
+    self.indicators.tractionBattery.icon:setDimension(oilWidth, oilHeight)
+    self.indicators.limitedPower.offsetX = self:scalePixelToScreenWidth(-28) - oilWidth * 0.5
+    self.indicators.limitedPower.offsetY = warningRowCenterY - oilHeight * 0.5
+    self.indicators.limitedPower.icon:setDimension(oilWidth, oilHeight)
+
     local serviceWidth, serviceHeight = self:scalePixelValuesToScreenVector(42, 10)
     self.indicators.service.offsetX = -serviceWidth * 0.5
     self.indicators.service.offsetY = serviceAnchorY
@@ -1023,6 +1033,94 @@ function RMS_Hud.getTransmissionTelltaleState(params)
     return isVisible, iconKey, isVisible and hasOilTempDisplay
 end
 
+---Tells whether a vehicle carries a telltale
+-- @param string indicatorId telltale name
+-- @param integer? indicatorYear year the telltale appeared on dashboards
+-- @param table spec vehicle RMS state
+-- @param boolean hasEngineOil true when the vehicle holds engine oil
+-- @return boolean isFitted true when the dashboard of this vehicle has it
+function RMS_Hud.getIsTelltaleFitted(indicatorId, indicatorYear, spec, hasEngineOil)
+    if indicatorId == "preheat" then
+        return spec.isDieselVehicle == true
+    elseif indicatorId == "tractionBattery" or indicatorId == "limitedPower" then
+        return spec.isElectricVehicle == true
+    elseif indicatorId == "oil" and not hasEngineOil then
+        return false
+    end
+    return indicatorYear <= spec.year
+end
+
+---Returns the picture the motor telltale takes
+-- @param table spec vehicle RMS state
+-- @param boolean isRoadVehicle true for a car or a truck
+-- @param boolean isFaultShown true during the lamp test and while a breakdown lights the telltale
+-- @return string iconKey classic, fault or normal
+function RMS_Hud.getEngineTelltaleIconKey(spec, isRoadVehicle, isFaultShown)
+    if isRoadVehicle or spec.isElectricVehicle then
+        return "classic"
+    elseif isFaultShown then
+        return "fault"
+    end
+    return "normal"
+end
+
+---Tells whether the level of the engine oil lights the oil lamp
+-- @param table spec vehicle RMS state
+-- @return boolean isLow true when the engine oil is critically low
+function RMS_Hud.getIsOilPressureLow(spec)
+    return (tonumber(spec.engineOilLevel) or 1) <= RMS_Config.FLUIDS.LEVEL_CRITICALLY_LOW
+end
+
+---Returns the colour the temperature of the drive gives the coolant telltale
+-- @param table spec vehicle RMS state
+-- @return string? colorKey COOL, WARNING or CRITICAL, nil while the temperature lights nothing
+function RMS_Hud.getCoolantTelltaleState(spec)
+    local telltale = RMS_Thermal.getDriveValues(spec).TELLTALE
+    local temperature = spec.engineTemperature
+
+    if temperature >= telltale.CRITICAL then
+        return "CRITICAL"
+    elseif temperature > telltale.WARNING then
+        return "WARNING"
+    -- an electric drive has no warm-up to wait for: its cold is the traction battery's, on the battery telltale
+    elseif not spec.isElectricVehicle and temperature < RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD then
+        return "COOL"
+    end
+    return nil
+end
+
+---Builds the figures drawn beside the telltales
+-- @param table spec vehicle RMS state
+-- @param float motorLoad averaged motor load from 0 to 1
+-- @param boolean showTransmissionTemperature true when the gearbox has an oil temperature readout
+-- @param boolean useFahrenheit true to show temperatures in Fahrenheit
+-- @return table values text by telltale name, with isWarning where the figure is out of its range
+function RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperature, useFahrenheit)
+    local engineTemp, transTemp, tempSign = spec.engineTemperature, spec.transmissionTemperature, "°C"
+    if useFahrenheit then
+        engineTemp = engineTemp * 1.8 + 32
+        transTemp = transTemp * 1.8 + 32
+        tempSign = "°F"
+    end
+
+    local overloadThreshold = spec.isElectricVehicle and RMS_Config.ELECTRIC_DRIVE.MOTOR_OVERLOADED_THRESHOLD
+        or RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD
+    local overloadLoad = motorLoad
+    if not spec.isElectricVehicle and motorLoad > 0 then
+        -- The capped readout cannot expose the diesel overload used by the wear calculation.
+        overloadLoad = tonumber(spec.dynamicMotorLoad) or motorLoad
+    end
+    local values = {
+        coolant = { text = string.format("%.0f%s", engineTemp, tempSign) },
+        engine = { text = string.format("%.0f%%", math.max(motorLoad * 100, 0)), isWarning = overloadLoad > overloadThreshold },
+        battery = { text = formatValue(spec.batteryIsolated and 0 or spec.systemVoltageV, "%.1f") .. "V" }
+    }
+    if showTransmissionTemperature then
+        values.transmission = { text = string.format("%.0f%s", transTemp, tempSign) }
+    end
+    return values
+end
+
 ---Draws the dashboard indicators, the gauges and the vehicle condition
 function RMS_Hud:drawDashboard()
     if self.vehicle == nil or self.vehicle.spec_RealisticMechanicalSystems == nil or self.vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
@@ -1031,13 +1129,14 @@ function RMS_Hud:drawDashboard()
 
     local vehicle = self.vehicle
     local spec = vehicle.spec_RealisticMechanicalSystems
+    RMS_Thermal.getEngineTemperature(vehicle)
     local colors = RMS_Breakdowns.COLORS
     local activeIndicators = spec.activeIndicators
     local isServiceOverdue = self.vehicle:getServiceLevel() < RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
     local motorState = vehicle:getMotorState()
     local preheatState = spec.preheatState or RMS_Preheat.STATE.IDLE
     local isLampTestActive = RMS_Preheat.isLampTestActive(vehicle)
-    local isRoadVehicle = RMS_Drivetrain ~= nil and RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
+    local isRoadVehicle = RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
     local cvtAddonSpec = hasCVTAddon(vehicle) and vehicle.spec_CVTaddon or nil
     local hasCVTFaultWarning = cvtAddonSpec ~= nil
         and (cvtAddonSpec.forDBL_warndamage == 1
@@ -1046,11 +1145,7 @@ function RMS_Hud:drawDashboard()
     local hasCVTCriticalFault = cvtAddonSpec ~= nil
         and cvtAddonSpec.forDBL_critdamage == 1
 
-    ---Returns the colour an indicator must light in, the highest priority breakdown winning
-    -- @param string hudIndicatorId dashboard indicator id
-    -- @param boolean mutateActiveState true to update the stored active state as well
-    -- @return table? color rgba channels, nil when the indicator stays off
-    -- @return boolean isRoutineIgnitionIndicator true for an indicator that lights on every ignition
+    ---Returns the colour an indicator lights in, the highest priority winning
     local function calculateIndicatorTargetColor(hudIndicatorId, mutateActiveState)
         local targetColor = colors.DEFAULT
         local isRoutineIgnitionIndicator = false
@@ -1082,11 +1177,12 @@ function RMS_Hud:drawDashboard()
                 end
             end
 
-            local isEngineNotHeated = spec.engineTemperature < RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD
-
-            if hudIndicatorId == self.indicators.coolant.name and targetColor == colors.DEFAULT and isEngineNotHeated then targetColor = colors.COOL
-            elseif hudIndicatorId == self.indicators.coolant.name and targetColor == colors.DEFAULT and spec.engineTemperature > 99 and spec.engineTemperature < 110 then targetColor = colors.WARNING
-            elseif hudIndicatorId == self.indicators.coolant.name and spec.engineTemperature >= 110 then targetColor = colors.CRITICAL end
+            if hudIndicatorId == self.indicators.coolant.name then
+                local coolantState = RMS_Hud.getCoolantTelltaleState(spec)
+                if coolantState == "CRITICAL" or (coolantState ~= nil and targetColor == colors.DEFAULT) then
+                    targetColor = colors[coolantState]
+                end
+            end
             if hudIndicatorId == self.indicators.transmission.name
                     and targetColor == colors.DEFAULT
                     and spec.transmissionTemperature > RMS_Hud.TRANSMISSION_OIL_TEMP_WARNING
@@ -1095,8 +1191,7 @@ function RMS_Hud:drawDashboard()
             elseif hudIndicatorId == self.indicators.transmission.name and spec.transmissionTemperature >= 110 then targetColor = colors.CRITICAL end
 
             if hudIndicatorId == self.indicators.service.name and isServiceOverdue then targetColor = colors.WARNING end
-            if hudIndicatorId == self.indicators.oil.name
-                    and (tonumber(spec.engineOilLevel) or 1) < RMS_Config.FLUIDS.LEVEL_MIN_MARK then
+            if hudIndicatorId == self.indicators.oil.name and RMS_Hud.getIsOilPressureLow(spec) then
                 targetColor = colors.CRITICAL
             end
 
@@ -1130,6 +1225,7 @@ function RMS_Hud:drawDashboard()
     local posY = speedBgY + g_currentMission.hud.speedMeter.speedGaugeCenterOffsetY
     local hasTransmissionOilTempDisplay = hasCVTTransmission(vehicle) or cvtAddonSpec ~= nil
     local showTransmissionTemperatureText = false
+    local hasEngineOil = RMS_Fluids.getCapacity(vehicle, "engineOil") > 0
 
     for hudIndicatorId, hudIndicatorData in pairs(self.indicators) do
         local targetColor, isRoutineIgnitionIndicator = calculateIndicatorTargetColor(hudIndicatorId, true)
@@ -1139,13 +1235,7 @@ function RMS_Hud:drawDashboard()
         local isIndicatorVisible = true
 
         if hudIndicatorId == self.indicators.engine.name then
-            if isRoadVehicle then
-                icon = hudIndicatorData.icons.road
-            elseif isLampTestActive or hasActiveBreakdown then
-                icon = hudIndicatorData.icons.fault
-            else
-                icon = hudIndicatorData.icons.normal
-            end
+            icon = hudIndicatorData.icons[RMS_Hud.getEngineTelltaleIconKey(spec, isRoadVehicle, isLampTestActive or hasActiveBreakdown)]
         elseif hudIndicatorId == self.indicators.transmission.name then
             local isTransmissionVisible, transmissionIconKey, shouldShowTemperatureText = RMS_Hud.getTransmissionTelltaleState({
                 year = spec.year,
@@ -1164,13 +1254,8 @@ function RMS_Hud:drawDashboard()
         hudIndicatorData.icon = icon
 
         icon:setPosition(posX + hudIndicatorData.offsetX, posY + hudIndicatorData.offsetY)
-        if hudIndicatorId == self.indicators.preheat.name and not spec.isDieselVehicle then
-            isIndicatorVisible = false
-        elseif hudIndicatorId == self.indicators.coolant.name and spec.isElectricVehicle then
-            isIndicatorVisible = false
-        elseif hudIndicatorId ~= self.indicators.preheat.name
-                and hudIndicatorId ~= self.indicators.transmission.name then
-            isIndicatorVisible = hudIndicatorData.year <= spec.year
+        if hudIndicatorId ~= self.indicators.transmission.name then
+            isIndicatorVisible = RMS_Hud.getIsTelltaleFitted(hudIndicatorId, hudIndicatorData.year, spec, hasEngineOil)
         end
 
         icon:setVisible(isIndicatorVisible)
@@ -1185,88 +1270,102 @@ function RMS_Hud:drawDashboard()
         icon:render()
     end
 
-    local engineTemp, transTemp, systemVoltageV = spec.engineTemperature, spec.transmissionTemperature, spec.systemVoltageV
     local motorLoad = 0
     if vehicle:getIsMotorStarted() then
         motorLoad = self:updateMotorLoadAverage(math.clamp(tonumber(spec.dynamicMotorLoad) or 0, 0, 1))
     end
     self.telemetryDisplayValues.motorLoad = motorLoad
 
-    local tempSign = "°C"
-    local voltageSing = "V"
+    local gaugeValues = RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperatureText,
+        g_gameSettings:getValue(GameSettings.SETTING.USE_FAHRENHEIT))
 
-    if g_gameSettings:getValue(GameSettings.SETTING.USE_FAHRENHEIT) then
-        engineTemp = engineTemp * 1.8 + 32
-        transTemp = transTemp * 1.8 + 32
-        tempSign = "°F"
-    end
+    setTextAlignment(RenderText.ALIGN_CENTER)
+    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_MIDDLE)
+    setTextBold(true)
 
-    local tempText = string.format("%.0f%s", engineTemp, tempSign)
-    local transTempText = nil
-    if showTransmissionTemperatureText then
-        transTempText = string.format("%.0f%s", transTemp, tempSign)
-    end
-
-    local batteryVoltageText = formatValue(systemVoltageV, "%.1f") .. voltageSing
-    local motorText = string.format("%.0f%%", math.max(motorLoad * 100, 0))
-
-    local batteryVoltageTextColor = {1, 1, 1, 1}
-    if systemVoltageV < 12 then
-        batteryVoltageTextColor = colors.WARNING
-    end
-
-    local motorLoadTextColor = {1, 1, 1, 1}
-    if motorLoad > RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD then
-        motorLoadTextColor = colors.WARNING
-    end
-
-    if not spec.isElectricVehicle then
-        setTextAlignment(RenderText.ALIGN_CENTER)
-        setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_MIDDLE)
-        setTextBold(true)
-
-        ---Draws one gauge value in its colour
-    -- @param table indicator gauge element
-    -- @param any value value to draw
-    -- @param table color rgba channels
-    local function renderIndicatorValue(indicator, value, color)
-            if value == nil or not indicator.icon.visible then
-                return
-            end
-
+    local defaultTextColor = {1, 1, 1, 1}
+    for _, indicatorName in ipairs({ "coolant", "transmission", "engine", "battery" }) do
+        local indicator = self.indicators[indicatorName]
+        local gaugeValue = gaugeValues[indicatorName]
+        if gaugeValue ~= nil and indicator.icon.visible then
             local iconX, iconY = indicator.icon:getPosition()
             local valueSize = self.indicatorValueText.size
-            local valueWidth = getTextWidth(valueSize, value)
+            local valueWidth = getTextWidth(valueSize, gaugeValue.text)
             if indicator.valueMaxWidth ~= nil and valueWidth > indicator.valueMaxWidth then
                 valueSize = valueSize * indicator.valueMaxWidth / valueWidth
             end
-            local valueCenterX = iconX + indicator.icon.width * 0.5 + indicator.valueOffsetX
-            local valueY = iconY + indicator.valueOffsetY
 
+            local color = gaugeValue.isWarning and colors.WARNING or defaultTextColor
             setTextColor(color[1], color[2], color[3], color[4])
-            renderText(
-                valueCenterX,
-                valueY,
-                valueSize,
-                value
-            )
+            renderText(iconX + indicator.icon.width * 0.5 + indicator.valueOffsetX, iconY + indicator.valueOffsetY, valueSize,
+                gaugeValue.text)
         end
-
-        local defaultTextColor = {1, 1, 1, 1}
-        renderIndicatorValue(self.indicators.coolant, tempText, defaultTextColor)
-        renderIndicatorValue(self.indicators.transmission, transTempText, defaultTextColor)
-        renderIndicatorValue(self.indicators.engine, motorText, motorLoadTextColor)
-        renderIndicatorValue(self.indicators.battery, batteryVoltageText, batteryVoltageTextColor)
-        setTextColor(1, 1, 1, 1)
     end
+    setTextColor(1, 1, 1, 1)
 
     if not isRoadVehicle then
         self:drawWheelSlipDisplay(spec, posX, posY)
     end
     self:drawDrivetrainDisplay(vehicle, spec, posX, posY)
     self:drawParkBrakeDisplay(vehicle)
+    self:drawOdometer()
 
     setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_BOTTOM)
+    setTextBold(false)
+end
+
+---Draws the native odometer, or the trip meter read off it
+function RMS_Hud:drawOdometer()
+    local speedMeter = g_currentMission.hud.speedMeter
+    local kilometers = RMS_Utils.getOdometerKilometers(self.vehicle)
+    if kilometers == nil or speedMeter == nil or speedMeter.vehicle ~= self.vehicle or not speedMeter.isVehicleDrawSafe then
+        return
+    end
+
+    local label = "ODO"
+    local spec = self.vehicle.spec_RealisticMechanicalSystems
+    if spec.odometerShowsTrip then
+        label = "TRIP"
+        kilometers = math.max(kilometers - spec.tripStartKilometers, 0)
+    end
+    -- Wrap only the displayed tenths; keep the native lifetime reading intact.
+    local displayTenths = math.floor(kilometers * 10 + 0.5) % 100000
+    local value = string.format("%04d.%d km", math.floor(displayTenths / 10), displayTenths % 10)
+    local size = speedMeter:scalePixelToScreenHeight(10)
+    local gap = speedMeter:scalePixelToScreenWidth(4)
+    setTextBold(true)
+    setTextAlignment(RenderText.ALIGN_LEFT)
+    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_BOTTOM)
+
+    -- Keep the line anchored as digits change by reserving maximum native glyph widths.
+    local widestDigit = "0"
+    for digit = 1, 9 do
+        local text = tostring(digit)
+        if getTextWidth(size, text) > getTextWidth(size, widestDigit) then
+            widestDigit = text
+        end
+    end
+    local layoutValue = value:gsub("%d", widestDigit)
+
+    local labelWidth = getTextWidth(size, label)
+    local valueWidth = getTextWidth(size, layoutValue)
+    local width = labelWidth + gap + valueWidth
+
+    local bgX, bgY = speedMeter.speedBg:getPosition()
+    local x = bgX + speedMeter.speedGaugeCenterOffsetX - width * 0.5
+    local y = bgY + speedMeter.speedGaugeCenterOffsetY + speedMeter.workingHoursSeperatorOffsetY
+        + speedMeter:scalePixelToScreenHeight(4)
+    setTextColor(unpack(HUD.COLOR.ACTIVE))
+    renderText(x, y, size, label)
+    local valueX = x + labelWidth + gap
+    local prefix = (value:match("^0+") or ""):sub(1, 3)
+    if prefix ~= "" then
+        setTextColor(unpack(HUD.COLOR.INACTIVE))
+        renderText(valueX, y, size, prefix)
+        valueX = valueX + getTextWidth(size, prefix)
+    end
+    setTextColor(1, 1, 1, 1)
+    renderText(valueX, y, size, value:sub(#prefix + 1))
     setTextBold(false)
 end
 
@@ -1304,7 +1403,7 @@ end
 -- @param float posX x position
 -- @param float posY y position
 function RMS_Hud:drawDrivetrainDisplay(vehicle, spec, posX, posY)
-    if self.drivetrainHud == nil or RMS_Drivetrain == nil then
+    if self.drivetrainHud == nil then
         return
     end
 
@@ -1380,13 +1479,8 @@ function RMS_Hud:drawParkBrakeDisplay(vehicle)
     if self.parkBrakeHud == nil or self.parkBrakeHud.icon == nil then
         return
     end
-    if not RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED or RMS_Drivetrain == nil then
+    if not RMS_Drivetrain.getIsParkBrakeManaged(vehicle) then
         return
-    end
-
-    local state = RMS_Drivetrain.getState(vehicle)
-    if state == nil or state.parkExternallyManaged then
-        return -- EV's own parking brake (and HUD) takes over
     end
 
     local sm = g_currentMission.hud.speedMeter
@@ -1402,7 +1496,7 @@ function RMS_Hud:drawParkBrakeDisplay(vehicle)
     icon:setVisible(true)
 
     local colors = RMS_Breakdowns.COLORS
-    local color = state.parkBrake and colors.CRITICAL or colors.DEFAULT
+    local color = RMS_Drivetrain.getState(vehicle).parkBrake and colors.CRITICAL or colors.DEFAULT
     icon:setColor(color[1], color[2], color[3], color[4])
     icon:render()
 end
@@ -1421,8 +1515,6 @@ function RMS_Hud:drawTelemetryCards()
 end
 
 ---Returns the widest steering assist work area of the whole combination
--- @param table vehicle controlled vehicle
--- @return float width working width in metres
 local function getSteeringAssistWidth(vehicle)
     local width = 0
     local root = vehicle.rootVehicle or vehicle
@@ -1469,13 +1561,13 @@ end
 function RMS_Hud:resetConsumptionAverages()
     local state = self.consumption
     state.buckets = {}
-    state.current = { fuel = 0, time = 0, litres = 0, hectares = 0 }
+    state.current = { litres = 0, hectares = 0 }
     state.timer = 0
     state.perHour = 0
     state.perArea = nil
 end
 
----Samples the consumption and refreshes both averages once a second
+---Uses the native hourly readout and samples the consumption per worked area
 -- @param float consumptionPerHour consumption in units per hour
 -- @param float areaRate worked area rate in hectares per hour
 function RMS_Hud:updateConsumptionAverages(consumptionPerHour, areaRate)
@@ -1483,8 +1575,8 @@ function RMS_Hud:updateConsumptionAverages(consumptionPerHour, areaRate)
     local dt = tonumber(g_currentDt) or 0
     local current = state.current
 
-    current.fuel = current.fuel + consumptionPerHour * dt
-    current.time = current.time + dt
+    -- GIANTS already averages lastFuelUsageDisplay; do not delay it again.
+    state.perHour = consumptionPerHour
 
     if areaRate > 0 then
         current.litres = current.litres + consumptionPerHour * dt / (60 * 60 * 1000)
@@ -1501,19 +1593,14 @@ function RMS_Hud:updateConsumptionAverages(consumptionPerHour, areaRate)
     while #state.buckets > RMS_Hud.CONSUMPTION_PER_AREA_BUCKETS do
         table.remove(state.buckets)
     end
-    state.current = { fuel = 0, time = 0, litres = 0, hectares = 0 }
+    state.current = { litres = 0, hectares = 0 }
 
-    local fuelSum, timeSum, litresSum, hectaresSum = 0, 0, 0, 0
-    for index, bucket in ipairs(state.buckets) do
-        if index <= RMS_Hud.CONSUMPTION_PER_HOUR_BUCKETS then
-            fuelSum = fuelSum + bucket.fuel
-            timeSum = timeSum + bucket.time
-        end
+    local litresSum, hectaresSum = 0, 0
+    for _, bucket in ipairs(state.buckets) do
         litresSum = litresSum + bucket.litres
         hectaresSum = hectaresSum + bucket.hectares
     end
 
-    state.perHour = timeSum > 0 and fuelSum / timeSum or 0
     state.perArea = hectaresSum > 0.0001 and litresSum / hectaresSum or nil
 end
 
@@ -1666,7 +1753,7 @@ function RMS_Hud:formatMass(massTons)
     return formatValue(math.max(tonumber(massTons) or 0, 0), "%.1f") .. " t"
 end
 
----Returns a mass that only changes past a threshold, so the readout stops flickering
+---Returns a mass that only changes past a threshold
 -- @param string cacheKey key the mass is cached under
 -- @param float massTons mass in tons
 -- @return float mass stable mass
@@ -1829,7 +1916,7 @@ SpeedMeterDisplay.draw = function(self, ...)
         return originalSpeedMeterDisplayDraw(self, ...)
     end
 
-    local rmsHud = RMS_Main ~= nil and RMS_Main.hud or nil
+    local rmsHud = RMS_Main.hud
     local dashExt = nil
     if spec ~= nil and rmsHud ~= nil and rmsHud.dashExtension ~= nil and rmsHud.dashExtension.stretchWidth ~= nil then
         dashExt = rmsHud.dashExtension
@@ -1926,23 +2013,31 @@ function RMS_Hud:showInfoVehicle(box)
     if self.spec_RealisticMechanicalSystems ~= nil and not self.spec_RealisticMechanicalSystems.isExcludedVehicle then
         local spec = self.spec_RealisticMechanicalSystems
         
-        local _, serviceHours, serviceInterval = self:getNextServiceClock()
-        local remaining = serviceInterval - serviceHours
+        local schedule = self:getServiceSchedule()
+        -- a report that no longer describes the machine is pointed out in the colour of the game for what needs a look
+        local _, isReportOutdated = self:getInspectionReportAge()
+        box:addLine(g_i18n:getText('rms_ws_label_condition'), RMS_Utils.formatCondition(self:getLastInspectedCondition()), isReportOutdated)
+        if schedule ~= nil then
+            -- Native info-box rows have no text resizing. Keep the two limits on adjacent rows.
+            local hasHours = schedule.interval < math.huge
+            local deadline = hasHours and RMS_Utils.formatHours(math.max(schedule.interval - schedule.used, 0))
+                or RMS_Utils.formatMonths(schedule.remainingMonths)
+            box:addLine(RMS_Utils.formatMaintenanceLevel(self, schedule.maintenanceType), deadline, schedule.overdue)
+            if hasHours and schedule.months ~= nil then
+                box:addLine(RMS_Utils.formatServiceReason(self, schedule, true), RMS_Utils.formatMonths(schedule.remainingMonths), schedule.calendarDue)
+            end
+        end
 
-        box:addLine(g_i18n:getText('rms_ws_label_condition'), RMS_Utils.formatCondition(self:getLastInspectedCondition()))
-        -- the maintenance to order and the hours left before one of its changes falls due; past that the line
-        -- takes the warning style of the game, its value staying a bare figure as in every native line
-        box:addLine(
-            g_i18n:getText(RealisticMechanicalSystems.MAINTENANCE_LABEL_TEXT_KEYS[self:getDueMaintenanceType()]),
-            string.format("%.0f %s", math.max(remaining, 0), g_i18n:getText("rms_spec_op_hours_short")),
-            remaining < 0
-        )
+        -- a machine that will not start is first checked for its battery isolator
+        if spec.batteryIsolated then
+            box:addLine(g_i18n:getText("rms_battery_isolator_info"), nil, true)
+        end
 
         
         if spec.currentState ~= RealisticMechanicalSystems.STATUS.READY and spec.currentState ~= RealisticMechanicalSystems.STATUS.BROKEN then
             local maintenanceStatusText = string.format(
                 g_i18n:getText("rms_spec_last_maintenance_until_format"),
-                g_i18n:getText(spec.currentState),
+                RMS_Utils.formatServiceState(spec.currentState),
                 RMS_Utils.formatFinishTime(self:getServiceFinishTime())
             )
             box:addLine(maintenanceStatusText)

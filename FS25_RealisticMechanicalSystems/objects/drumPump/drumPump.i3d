@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="drumPump" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="20" filename="textures/pumpBatteryLabel_diffuse.dds"/>
+    <File fileId="12" filename="textures/pumpBlack_diffuse.dds"/>
+    <File fileId="1" filename="textures/pumpBlue_diffuse.dds"/>
+    <File fileId="21" filename="textures/pumpBrand_diffuse.dds"/>
+    <File fileId="3" filename="textures/pumpPaint_vmask.dds"/>
+    <File fileId="13" filename="textures/pumpPolymer_vmask.dds"/>
+    <File fileId="22" filename="textures/pumpRed_diffuse.dds"/>
+    <File fileId="17" filename="textures/pumpSteel_diffuse.dds"/>
+    <File fileId="4" filename="$data/shaders/vehicleShader.xml"/>
+    <File fileId="2" filename="$data/shared/default_normal.dds"/>
+    <File fileId="6" filename="$data/shared/detailLibrary/flat_normal.png"/>
+    <File fileId="19" filename="$data/shared/detailLibrary/metallic/clear_diffuse.png"/>
+    <File fileId="18" filename="$data/shared/detailLibrary/metallic/clear_specular.png"/>
+    <File fileId="7" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_diffuse.png"/>
+    <File fileId="5" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_specular.png"/>
+    <File fileId="16" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubberBlack_diffuse.png"/>
+    <File fileId="15" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_normal.png"/>
+    <File fileId="14" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_specular.png"/>
+  </Files>
+
+
+  <Materials>
+    <Material name="pumpBatteryLabel" materialId="4" alphaBlending="true" customShaderId="4">
+      <Texture fileId="20"/>
+      <Normalmap fileId="2"/>
+      <Glossmap fileId="13"/>
+      <Custommap name="detailSpecular" fileId="5"/>
+      <Custommap name="detailNormal" fileId="6"/>
+      <Custommap name="detailDiffuse" fileId="7"/>
+    </Material>
+    <Material name="pumpBlack" materialId="2" customShaderId="4">
+      <Texture fileId="12"/>
+      <Normalmap fileId="2"/>
+      <Glossmap fileId="13"/>
+      <Custommap name="detailSpecular" fileId="14"/>
+      <Custommap name="detailNormal" fileId="15"/>
+      <Custommap name="detailDiffuse" fileId="16"/>
+      <CustomParameter name="porosity" value="0.5"/>
+    </Material>
+    <Material name="pumpBlue" materialId="1" customShaderId="4">
+      <Texture fileId="1"/>
+      <Normalmap fileId="2"/>
+      <Glossmap fileId="3"/>
+      <Custommap name="detailSpecular" fileId="5"/>
+      <Custommap name="detailNormal" fileId="6"/>
+      <Custommap name="detailDiffuse" fileId="7"/>
+    </Material>
+    <Material name="pumpBrand" materialId="5" alphaBlending="true" customShaderId="4">
+      <Texture fileId="21"/>
+      <Normalmap fileId="2"/>
+      <Glossmap fileId="13"/>
+      <Custommap name="detailSpecular" fileId="5"/>
+      <Custommap name="detailNormal" fileId="6"/>
+      <Custommap name="detailDiffuse" fileId="7"/>
+    </Material>
+    <Material name="pumpRed" materialId="6" customShaderId="4">
+      <Texture fileId="22"/>
+      <Normalmap fileId="2"/>
+      <Glossmap fileId="3"/>
+      <Custommap name="detailSpecular" fileId="5"/>
+      <Custommap name="detailNormal" fileId="6"/>
+      <Custommap name="detailDiffuse" fileId="7"/>
+    </Material>
+    <Material name="pumpSteel" materialId="3" customShaderId="4">
+      <Texture fileId="17"/>
+      <Normalmap fileId="2"/>
+      <Glossmap fileId="3"/>
+      <Custommap name="detailSpecular" fileId="18"/>
+      <Custommap name="detailNormal" fileId="6"/>
+      <Custommap name="detailDiffuse" fileId="19"/>
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="drumPump.i3d.shapes">
+  </Shapes>
+
+  <Scene>
+    <TransformGroup name="drumPump" nodeId="265">
+      <TransformGroup name="graphics" nodeId="266">
+        <TransformGroup name="bungSeat" nodeId="267"/>
+        <TransformGroup name="nozzleHolder" translation="0.059 0.088 0.065" rotation="-90 -0 16" nodeId="268"/>
+        <TransformGroup name="pumpHoseOutlet" translation="-0.12 0.145 0" rotation="-0 -90 0" nodeId="269"/>
+        <TransformGroup name="pumpLod" lodDistance="0 8 25" nodeId="270">
+          <TransformGroup name="pumpLod0" nodeId="271">
+            <Shape name="adapterGripRib0" translation="0.036 0.012 0" shapeId="1" clipDistance="100" nodeId="272" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib1" translation="0.0347733 0.012 0.00931749" rotation="0 -15 0" shapeId="2" clipDistance="100" nodeId="273" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib2" translation="0.0311769 0.012 0.018" rotation="0 -30 0" shapeId="3" clipDistance="100" nodeId="274" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib3" translation="0.0254558 0.012 0.0254558" rotation="0 -45 0" shapeId="4" clipDistance="100" nodeId="275" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib4" translation="0.018 0.012 0.0311769" rotation="0 -60 0" shapeId="2" clipDistance="100" nodeId="276" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib5" translation="0.00931749 0.012 0.0347733" rotation="0 -75 0" shapeId="5" clipDistance="100" nodeId="277" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib6" translation="2.20436e-18 0.012 0.036" rotation="-0 -90 0" shapeId="1" clipDistance="100" nodeId="278" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib7" translation="-0.00931749 0.012 0.0347733" rotation="-0 -105 -0" shapeId="6" clipDistance="100" nodeId="279" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib8" translation="-0.018 0.012 0.0311769" rotation="-0 -120 -0" shapeId="4" clipDistance="100" nodeId="280" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib9" translation="-0.0254558 0.012 0.0254558" rotation="-0 -135 -0" shapeId="2" clipDistance="100" nodeId="281" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib10" translation="-0.0311769 0.012 0.018" rotation="-0 -150 -0" shapeId="7" clipDistance="100" nodeId="282" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib11" translation="-0.0347733 0.012 0.00931749" rotation="-0 -165 -0" shapeId="8" clipDistance="100" nodeId="283" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib12" translation="-0.036 0.012 4.40873e-18" rotation="-0 180 -0" shapeId="7" clipDistance="100" nodeId="284" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib13" translation="-0.0347733 0.012 -0.00931749" rotation="-0 165 -0" shapeId="7" clipDistance="100" nodeId="285" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib14" translation="-0.0311769 0.012 -0.018" rotation="-0 150 -0" shapeId="8" clipDistance="100" nodeId="286" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib15" translation="-0.0254558 0.012 -0.0254558" rotation="-0 135 -0" shapeId="7" clipDistance="100" nodeId="287" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib16" translation="-0.018 0.012 -0.0311769" rotation="-0 120 -0" shapeId="8" clipDistance="100" nodeId="288" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib17" translation="-0.00931749 0.012 -0.0347733" rotation="-0 105 -0" shapeId="9" clipDistance="100" nodeId="289" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib18" translation="-6.61309e-18 0.012 -0.036" rotation="-0 90 0" shapeId="8" clipDistance="100" nodeId="290" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib19" translation="0.00931749 0.012 -0.0347733" rotation="0 75 0" shapeId="7" clipDistance="100" nodeId="291" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib20" translation="0.018 0.012 -0.0311769" rotation="0 60 0" shapeId="8" clipDistance="100" nodeId="292" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib21" translation="0.0254558 0.012 -0.0254558" rotation="0 45 0" shapeId="7" clipDistance="100" nodeId="293" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib22" translation="0.0311769 0.012 -0.018" rotation="0 30 0" shapeId="8" clipDistance="100" nodeId="294" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib23" translation="0.0347733 0.012 -0.00931749" rotation="0 15 0" shapeId="7" clipDistance="100" nodeId="295" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="batteryBottomRib0" translation="0.092 0.22 -0.015" shapeId="10" clipDistance="100" nodeId="296" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryBottomRib1" translation="0.092 0.2245 -0.015" shapeId="10" clipDistance="100" nodeId="297" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryBottomRib2" translation="0.092 0.229 -0.015" shapeId="10" clipDistance="100" nodeId="298" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryBottomRib3" translation="0.092 0.2335 -0.015" shapeId="11" clipDistance="100" nodeId="299" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryCradleToe" translation="0 0 -0.012" shapeId="12" clipDistance="100" nodeId="300" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryRelease" translation="0.091 0.332 0.022" shapeId="13" clipDistance="100" nodeId="301" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="batteryShell" translation="0 0 -0.015" shapeId="14" clipDistance="100" nodeId="302" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batterySlideRail" translation="0.07 0.28 -0.015" shapeId="15" clipDistance="100" nodeId="303" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryTopCap" translation="0.09 0.344 -0.015" shapeId="16" clipDistance="100" nodeId="304" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="blueOuterSuctionSleeve" translation="0 -0.406 0" shapeId="17" clipDistance="100" nodeId="305" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="bungSeatFlange" shapeId="18" clipDistance="100" nodeId="306" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="closedSafetyCarryHandle" shapeId="19" clipDistance="100" nodeId="307" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="continuousMouldedPowerhead" shapeId="20" clipDistance="100" nodeId="308" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="coveredNativeCap" translation="0 0.018 0" shapeId="21" clipDistance="100" nodeId="309" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="darkVentCavity" translation="0.052 0.28 -0.002" shapeId="22" clipDistance="100" nodeId="310" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="drainBackAdapter" translation="0 0.055 0" shapeId="23" clipDistance="100" nodeId="311" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="drainBackBranch" shapeId="24" clipDistance="100" nodeId="312" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="fastenerSlot1" translation="0.022 0.35 0.0515" shapeId="25" clipDistance="100" nodeId="313" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="fastenerSlot-1" translation="0.022 0.35 -0.0515" shapeId="25" clipDistance="100" nodeId="314" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunHanger" shapeId="26" clipDistance="100" nodeId="315" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="hoseCouplingNut" translation="-0.099 0.145 0" rotation="0 -0 -90" shapeId="27" clipDistance="100" nodeId="316" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFoot" shapeId="28" clipDistance="100" nodeId="317" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="intakeFootSlot0" translation="0.013 -0.863 0" shapeId="29" clipDistance="100" nodeId="318" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot1" translation="0.0065 -0.863 0.0112583" shapeId="29" clipDistance="100" nodeId="319" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot2" translation="-0.0065 -0.863 0.0112583" shapeId="29" clipDistance="100" nodeId="320" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot3" translation="-0.013 -0.863 1.59204e-18" shapeId="29" clipDistance="100" nodeId="321" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot4" translation="-0.0065 -0.863 -0.0112583" shapeId="29" clipDistance="100" nodeId="322" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot5" translation="0.0065 -0.863 -0.0112583" shapeId="29" clipDistance="100" nodeId="323" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="latchPivot" translation="0.015 0.365 0" rotation="90 -0 0" shapeId="30" clipDistance="100" nodeId="324" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="lowerTelescopingTube" translation="0 -0.78 0" shapeId="31" clipDistance="100" nodeId="325" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="manufacturerBatteryLabel" shapeId="32" clipDistance="100" nodeId="326" castsShadows="true" receiveShadows="true" materialIds="4"/>
+            <Shape name="manufacturerMacnaughtLogo" shapeId="33" clipDistance="100" nodeId="327" castsShadows="true" receiveShadows="true" materialIds="5"/>
+            <Shape name="nozzleDrainBackCup" translation="0.059 0.088 0.065" rotation="0 -0 16" shapeId="34" clipDistance="100" nodeId="328" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="powerheadFastener1" translation="0.022 0.35 0.05" rotation="90 -0 0" shapeId="35" clipDistance="100" nodeId="329" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="powerheadFastener-1" translation="0.022 0.35 -0.05" rotation="90 -0 0" shapeId="35" clipDistance="100" nodeId="330" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpChamber" translation="0 0.143 0" shapeId="36" clipDistance="100" nodeId="331" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpHoseSleeve" translation="-0.115 0.145 0" rotation="90 -90 0" shapeId="37" clipDistance="100" nodeId="332" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="pumpHoseSpigot" translation="-0.06 0.145 0" rotation="0 -0 -90" shapeId="38" clipDistance="100" nodeId="333" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpOutletUnion" translation="-0.085 0.145 0" rotation="0 -0 -90" shapeId="39" clipDistance="100" nodeId="334" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpSleeveClamp" translation="-0.1205 0.145 0" rotation="90 -90 0" shapeId="40" clipDistance="100" nodeId="335" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="pumpStemNut" translation="0 0.105 0" shapeId="41" clipDistance="100" nodeId="336" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpTopFlange" translation="0 0.181 0" shapeId="42" clipDistance="100" nodeId="337" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="redPowerSwitch" translation="-0.0356987 0.358442 0" rotation="0 -0 -23.1986" shapeId="43" clipDistance="100" nodeId="338" castsShadows="true" receiveShadows="true" materialIds="6"/>
+            <Shape name="stemNutRib0" translation="0.039 0.105 0" shapeId="44" clipDistance="100" nodeId="339" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib1" translation="0.0360313 0.105 0.0149247" rotation="0 -22.5 0" shapeId="44" clipDistance="100" nodeId="340" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib2" translation="0.0275772 0.105 0.0275772" rotation="0 -45 0" shapeId="44" clipDistance="100" nodeId="341" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib3" translation="0.0149247 0.105 0.0360313" rotation="0 -67.5 0" shapeId="45" clipDistance="100" nodeId="342" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib4" translation="2.38806e-18 0.105 0.039" rotation="-0 -90 0" shapeId="44" clipDistance="100" nodeId="343" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib5" translation="-0.0149247 0.105 0.0360313" rotation="-0 -112.5 -0" shapeId="44" clipDistance="100" nodeId="344" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib6" translation="-0.0275772 0.105 0.0275772" rotation="-0 -135 -0" shapeId="44" clipDistance="100" nodeId="345" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib7" translation="-0.0360313 0.105 0.0149247" rotation="-0 -157.5 -0" shapeId="44" clipDistance="100" nodeId="346" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib8" translation="-0.039 0.105 4.77612e-18" rotation="-0 180 -0" shapeId="44" clipDistance="100" nodeId="347" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib9" translation="-0.0360313 0.105 -0.0149247" rotation="-0 157.5 -0" shapeId="44" clipDistance="100" nodeId="348" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib10" translation="-0.0275772 0.105 -0.0275772" rotation="-0 135 -0" shapeId="44" clipDistance="100" nodeId="349" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib11" translation="-0.0149247 0.105 -0.0360313" rotation="-0 112.5 -0" shapeId="44" clipDistance="100" nodeId="350" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib12" translation="-7.16418e-18 0.105 -0.039" rotation="-0 90 0" shapeId="44" clipDistance="100" nodeId="351" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib13" translation="0.0149247 0.105 -0.0360313" rotation="0 67.5 0" shapeId="44" clipDistance="100" nodeId="352" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib14" translation="0.0275772 0.105 -0.0275772" rotation="0 45 0" shapeId="44" clipDistance="100" nodeId="353" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib15" translation="0.0360313 0.105 -0.0149247" rotation="0 22.5 0" shapeId="45" clipDistance="100" nodeId="354" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="switchBezel" translation="-0.0320221 0.356867 0" rotation="0 -0 -23.1986" shapeId="46" clipDistance="100" nodeId="355" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="upperSuctionTube" translation="0 -0.055 0" shapeId="47" clipDistance="100" nodeId="356" castsShadows="true" receiveShadows="true" materialIds="3"/>
+          </TransformGroup>
+          <TransformGroup name="pumpLod1" nodeId="357">
+            <Shape name="adapterGripRib0_lod1" translation="0.036 0.012 0" shapeId="48" clipDistance="100" nodeId="358" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib1_lod1" translation="0.0347733 0.012 0.00931749" rotation="0 -15 0" shapeId="48" clipDistance="100" nodeId="359" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib2_lod1" translation="0.0311769 0.012 0.018" rotation="0 -30 0" shapeId="48" clipDistance="100" nodeId="360" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib3_lod1" translation="0.0254558 0.012 0.0254558" rotation="0 -45 0" shapeId="48" clipDistance="100" nodeId="361" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib4_lod1" translation="0.018 0.012 0.0311769" rotation="0 -60 0" shapeId="48" clipDistance="100" nodeId="362" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib5_lod1" translation="0.00931749 0.012 0.0347733" rotation="0 -75 0" shapeId="48" clipDistance="100" nodeId="363" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib6_lod1" translation="2.20436e-18 0.012 0.036" rotation="-0 -90 0" shapeId="48" clipDistance="100" nodeId="364" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib7_lod1" translation="-0.00931749 0.012 0.0347733" rotation="-0 -105 -0" shapeId="48" clipDistance="100" nodeId="365" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib8_lod1" translation="-0.018 0.012 0.0311769" rotation="-0 -120 -0" shapeId="48" clipDistance="100" nodeId="366" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib9_lod1" translation="-0.0254558 0.012 0.0254558" rotation="-0 -135 -0" shapeId="48" clipDistance="100" nodeId="367" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib10_lod1" translation="-0.0311769 0.012 0.018" rotation="-0 -150 -0" shapeId="48" clipDistance="100" nodeId="368" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib11_lod1" translation="-0.0347733 0.012 0.00931749" rotation="-0 -165 -0" shapeId="49" clipDistance="100" nodeId="369" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib12_lod1" translation="-0.036 0.012 4.40873e-18" rotation="-0 180 -0" shapeId="48" clipDistance="100" nodeId="370" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib13_lod1" translation="-0.0347733 0.012 -0.00931749" rotation="-0 165 -0" shapeId="48" clipDistance="100" nodeId="371" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib14_lod1" translation="-0.0311769 0.012 -0.018" rotation="-0 150 -0" shapeId="49" clipDistance="100" nodeId="372" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib15_lod1" translation="-0.0254558 0.012 -0.0254558" rotation="-0 135 -0" shapeId="48" clipDistance="100" nodeId="373" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib16_lod1" translation="-0.018 0.012 -0.0311769" rotation="-0 120 -0" shapeId="49" clipDistance="100" nodeId="374" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib17_lod1" translation="-0.00931749 0.012 -0.0347733" rotation="-0 105 -0" shapeId="48" clipDistance="100" nodeId="375" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib18_lod1" translation="-6.61309e-18 0.012 -0.036" rotation="-0 90 0" shapeId="49" clipDistance="100" nodeId="376" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib19_lod1" translation="0.00931749 0.012 -0.0347733" rotation="0 75 0" shapeId="48" clipDistance="100" nodeId="377" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib20_lod1" translation="0.018 0.012 -0.0311769" rotation="0 60 0" shapeId="49" clipDistance="100" nodeId="378" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib21_lod1" translation="0.0254558 0.012 -0.0254558" rotation="0 45 0" shapeId="48" clipDistance="100" nodeId="379" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib22_lod1" translation="0.0311769 0.012 -0.018" rotation="0 30 0" shapeId="49" clipDistance="100" nodeId="380" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="adapterGripRib23_lod1" translation="0.0347733 0.012 -0.00931749" rotation="0 15 0" shapeId="48" clipDistance="100" nodeId="381" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="batteryBottomRib0_lod1" translation="0.092 0.22 -0.015" shapeId="50" clipDistance="100" nodeId="382" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryBottomRib1_lod1" translation="0.092 0.2245 -0.015" shapeId="50" clipDistance="100" nodeId="383" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryBottomRib2_lod1" translation="0.092 0.229 -0.015" shapeId="50" clipDistance="100" nodeId="384" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryBottomRib3_lod1" translation="0.092 0.2335 -0.015" shapeId="50" clipDistance="100" nodeId="385" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryCradleToe_lod1" translation="0 0 -0.012" shapeId="51" clipDistance="100" nodeId="386" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryRelease_lod1" translation="0.091 0.332 0.022" shapeId="52" clipDistance="100" nodeId="387" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="batteryShell_lod1" translation="0 0 -0.015" shapeId="53" clipDistance="100" nodeId="388" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batterySlideRail_lod1" translation="0.07 0.28 -0.015" shapeId="54" clipDistance="100" nodeId="389" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryTopCap_lod1" translation="0.09 0.344 -0.015" shapeId="55" clipDistance="100" nodeId="390" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="blueOuterSuctionSleeve_lod1" translation="0 -0.406 0" shapeId="56" clipDistance="100" nodeId="391" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="bungSeatFlange_lod1" shapeId="57" clipDistance="100" nodeId="392" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="closedSafetyCarryHandle_lod1" shapeId="58" clipDistance="100" nodeId="393" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="continuousMouldedPowerhead_lod1" shapeId="59" clipDistance="100" nodeId="394" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="coveredNativeCap_lod1" translation="0 0.018 0" shapeId="60" clipDistance="100" nodeId="395" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="darkVentCavity_lod1" translation="0.052 0.28 -0.002" shapeId="61" clipDistance="100" nodeId="396" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="drainBackAdapter_lod1" translation="0 0.055 0" shapeId="62" clipDistance="100" nodeId="397" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="drainBackBranch_lod1" shapeId="63" clipDistance="100" nodeId="398" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="fastenerSlot1_lod1" translation="0.022 0.35 0.0515" shapeId="64" clipDistance="100" nodeId="399" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="fastenerSlot-1_lod1" translation="0.022 0.35 -0.0515" shapeId="64" clipDistance="100" nodeId="400" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunHanger_lod1" shapeId="65" clipDistance="100" nodeId="401" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="hoseCouplingNut_lod1" translation="-0.099 0.145 0" rotation="0 -0 -90" shapeId="66" clipDistance="100" nodeId="402" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFoot_lod1" shapeId="67" clipDistance="100" nodeId="403" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="intakeFootSlot0_lod1" translation="0.013 -0.863 0" shapeId="68" clipDistance="100" nodeId="404" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot1_lod1" translation="0.0065 -0.863 0.0112583" shapeId="68" clipDistance="100" nodeId="405" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot2_lod1" translation="-0.0065 -0.863 0.0112583" shapeId="68" clipDistance="100" nodeId="406" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot3_lod1" translation="-0.013 -0.863 1.59204e-18" shapeId="68" clipDistance="100" nodeId="407" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot4_lod1" translation="-0.0065 -0.863 -0.0112583" shapeId="68" clipDistance="100" nodeId="408" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFootSlot5_lod1" translation="0.0065 -0.863 -0.0112583" shapeId="68" clipDistance="100" nodeId="409" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="latchPivot_lod1" translation="0.015 0.365 0" rotation="90 -0 0" shapeId="69" clipDistance="100" nodeId="410" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="lowerTelescopingTube_lod1" translation="0 -0.78 0" shapeId="70" clipDistance="100" nodeId="411" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="manufacturerBatteryLabel_lod1" shapeId="32" clipDistance="100" nodeId="412" castsShadows="true" receiveShadows="true" materialIds="4"/>
+            <Shape name="manufacturerMacnaughtLogo_lod1" shapeId="71" clipDistance="100" nodeId="413" castsShadows="true" receiveShadows="true" materialIds="5"/>
+            <Shape name="nozzleDrainBackCup_lod1" translation="0.059 0.088 0.065" rotation="0 -0 16" shapeId="34" clipDistance="100" nodeId="414" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="powerheadFastener1_lod1" translation="0.022 0.35 0.05" rotation="90 -0 0" shapeId="72" clipDistance="100" nodeId="415" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="powerheadFastener-1_lod1" translation="0.022 0.35 -0.05" rotation="90 -0 0" shapeId="72" clipDistance="100" nodeId="416" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpChamber_lod1" translation="0 0.143 0" shapeId="73" clipDistance="100" nodeId="417" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpHoseSleeve_lod1" translation="-0.115 0.145 0" rotation="90 -90 0" shapeId="74" clipDistance="100" nodeId="418" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="pumpHoseSpigot_lod1" translation="-0.06 0.145 0" rotation="0 -0 -90" shapeId="75" clipDistance="100" nodeId="419" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpOutletUnion_lod1" translation="-0.085 0.145 0" rotation="0 -0 -90" shapeId="76" clipDistance="100" nodeId="420" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpSleeveClamp_lod1" translation="-0.1205 0.145 0" rotation="90 -90 0" shapeId="77" clipDistance="100" nodeId="421" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="pumpStemNut_lod1" translation="0 0.105 0" shapeId="78" clipDistance="100" nodeId="422" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpTopFlange_lod1" translation="0 0.181 0" shapeId="79" clipDistance="100" nodeId="423" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="redPowerSwitch_lod1" translation="-0.0356987 0.358442 0" rotation="0 -0 -23.1986" shapeId="80" clipDistance="100" nodeId="424" castsShadows="true" receiveShadows="true" materialIds="6"/>
+            <Shape name="stemNutRib0_lod1" translation="0.039 0.105 0" shapeId="81" clipDistance="100" nodeId="425" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib1_lod1" translation="0.0360313 0.105 0.0149247" rotation="0 -22.5 0" shapeId="81" clipDistance="100" nodeId="426" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib2_lod1" translation="0.0275772 0.105 0.0275772" rotation="0 -45 0" shapeId="81" clipDistance="100" nodeId="427" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib3_lod1" translation="0.0149247 0.105 0.0360313" rotation="0 -67.5 0" shapeId="82" clipDistance="100" nodeId="428" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib4_lod1" translation="2.38806e-18 0.105 0.039" rotation="-0 -90 0" shapeId="81" clipDistance="100" nodeId="429" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib5_lod1" translation="-0.0149247 0.105 0.0360313" rotation="-0 -112.5 -0" shapeId="81" clipDistance="100" nodeId="430" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib6_lod1" translation="-0.0275772 0.105 0.0275772" rotation="-0 -135 -0" shapeId="81" clipDistance="100" nodeId="431" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib7_lod1" translation="-0.0360313 0.105 0.0149247" rotation="-0 -157.5 -0" shapeId="81" clipDistance="100" nodeId="432" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib8_lod1" translation="-0.039 0.105 4.77612e-18" rotation="-0 180 -0" shapeId="81" clipDistance="100" nodeId="433" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib9_lod1" translation="-0.0360313 0.105 -0.0149247" rotation="-0 157.5 -0" shapeId="81" clipDistance="100" nodeId="434" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib10_lod1" translation="-0.0275772 0.105 -0.0275772" rotation="-0 135 -0" shapeId="81" clipDistance="100" nodeId="435" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib11_lod1" translation="-0.0149247 0.105 -0.0360313" rotation="-0 112.5 -0" shapeId="81" clipDistance="100" nodeId="436" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib12_lod1" translation="-7.16418e-18 0.105 -0.039" rotation="-0 90 0" shapeId="81" clipDistance="100" nodeId="437" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib13_lod1" translation="0.0149247 0.105 -0.0360313" rotation="0 67.5 0" shapeId="81" clipDistance="100" nodeId="438" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib14_lod1" translation="0.0275772 0.105 -0.0275772" rotation="0 45 0" shapeId="81" clipDistance="100" nodeId="439" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="stemNutRib15_lod1" translation="0.0360313 0.105 -0.0149247" rotation="0 22.5 0" shapeId="82" clipDistance="100" nodeId="440" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="switchBezel_lod1" translation="-0.0320221 0.356867 0" rotation="0 -0 -23.1986" shapeId="83" clipDistance="100" nodeId="441" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="upperSuctionTube_lod1" translation="0 -0.055 0" shapeId="84" clipDistance="100" nodeId="442" castsShadows="true" receiveShadows="true" materialIds="3"/>
+          </TransformGroup>
+          <TransformGroup name="pumpLod2" nodeId="443">
+            <Shape name="batteryCradleToe_lod2" translation="0 0 -0.012" shapeId="85" clipDistance="100" nodeId="444" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryRelease_lod2" translation="0.091 0.332 0.022" shapeId="86" clipDistance="100" nodeId="445" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="batteryShell_lod2" translation="0 0 -0.015" shapeId="87" clipDistance="100" nodeId="446" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batterySlideRail_lod2" translation="0.07 0.28 -0.015" shapeId="88" clipDistance="100" nodeId="447" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="batteryTopCap_lod2" translation="0.09 0.344 -0.015" shapeId="89" clipDistance="100" nodeId="448" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="blueOuterSuctionSleeve_lod2" translation="0 -0.406 0" shapeId="90" clipDistance="100" nodeId="449" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="bungSeatFlange_lod2" shapeId="91" clipDistance="100" nodeId="450" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="closedSafetyCarryHandle_lod2" shapeId="92" clipDistance="100" nodeId="451" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="continuousMouldedPowerhead_lod2" shapeId="93" clipDistance="100" nodeId="452" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="coveredNativeCap_lod2" translation="0 0.018 0" shapeId="94" clipDistance="100" nodeId="453" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="darkVentCavity_lod2" translation="0.052 0.28 -0.002" shapeId="95" clipDistance="100" nodeId="454" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="drainBackAdapter_lod2" translation="0 0.055 0" shapeId="96" clipDistance="100" nodeId="455" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="drainBackBranch_lod2" shapeId="97" clipDistance="100" nodeId="456" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="gunHanger_lod2" shapeId="65" clipDistance="100" nodeId="457" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="hoseCouplingNut_lod2" translation="-0.099 0.145 0" rotation="0 -0 -90" shapeId="98" clipDistance="100" nodeId="458" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="intakeFoot_lod2" shapeId="99" clipDistance="100" nodeId="459" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="lowerTelescopingTube_lod2" translation="0 -0.78 0" shapeId="100" clipDistance="100" nodeId="460" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="nozzleDrainBackCup_lod2" translation="0.059 0.088 0.065" rotation="0 -0 16" shapeId="34" clipDistance="100" nodeId="461" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpChamber_lod2" translation="0 0.143 0" shapeId="101" clipDistance="100" nodeId="462" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpHoseSleeve_lod2" translation="-0.115 0.145 0" rotation="90 -90 0" shapeId="102" clipDistance="100" nodeId="463" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="pumpHoseSpigot_lod2" translation="-0.06 0.145 0" rotation="0 -0 -90" shapeId="103" clipDistance="100" nodeId="464" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpOutletUnion_lod2" translation="-0.085 0.145 0" rotation="0 -0 -90" shapeId="104" clipDistance="100" nodeId="465" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpSleeveClamp_lod2" translation="-0.1205 0.145 0" rotation="90 -90 0" shapeId="105" clipDistance="100" nodeId="466" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="pumpStemNut_lod2" translation="0 0.105 0" shapeId="106" clipDistance="100" nodeId="467" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="pumpTopFlange_lod2" translation="0 0.181 0" shapeId="107" clipDistance="100" nodeId="468" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="redPowerSwitch_lod2" translation="-0.0356987 0.358442 0" rotation="0 -0 -23.1986" shapeId="108" clipDistance="100" nodeId="469" castsShadows="true" receiveShadows="true" materialIds="6"/>
+            <Shape name="switchBezel_lod2" translation="-0.0320221 0.356867 0" rotation="0 -0 -23.1986" shapeId="109" clipDistance="100" nodeId="470" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="upperSuctionTube_lod2" translation="0 -0.055 0" shapeId="110" clipDistance="100" nodeId="471" castsShadows="true" receiveShadows="true" materialIds="3"/>
+          </TransformGroup>
+        </TransformGroup>
+        <TransformGroup name="restHose" nodeId="472">
+          <TransformGroup name="hoseLod" lodDistance="0 8 25" nodeId="473">
+            <TransformGroup name="hoseLod0" nodeId="474">
+              <Shape name="restHose0" shapeId="111" clipDistance="100" nodeId="475" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            </TransformGroup>
+            <TransformGroup name="hoseLod1" nodeId="476">
+              <Shape name="restHose1" shapeId="112" clipDistance="100" nodeId="477" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            </TransformGroup>
+            <TransformGroup name="hoseLod2" nodeId="478">
+              <Shape name="restHose2" shapeId="113" clipDistance="100" nodeId="479" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            </TransformGroup>
+          </TransformGroup>
+        </TransformGroup>
+        <TransformGroup name="storedNozzle" translation="0.105897 0.224772 0.065" rotation="0 -0 120" nodeId="480">
+          <TransformGroup name="nozzleHoseInlet" translation="-1.49012e-08 -0.184 0" rotation="90 -0 0" nodeId="481"/>
+          <TransformGroup name="spoutTip" translation="-0.095 0.109 0" rotation="-14 -90 0" nodeId="482"/>
+          <TransformGroup name="storedNozzleLod" lodDistance="0 8 25" nodeId="483">
+            <TransformGroup name="storedNozzleLod0" nodeId="484">
+              <Shape name="bentStainlessSpout" shapeId="114" clipDistance="100" nodeId="485" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="blueGunTrigger" shapeId="115" clipDistance="100" nodeId="486" castsShadows="true" receiveShadows="true" materialIds="1"/>
+              <Shape name="contouredGunGrip" shapeId="116" clipDistance="100" nodeId="487" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="dustCapTether" shapeId="117" clipDistance="100" nodeId="488" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="gunHoseSleeve" translation="0 -0.1755 0" rotation="5.00896e-06 5.00896e-06 180" shapeId="118" clipDistance="100" nodeId="489" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="gunHoseTailAdapter" translation="0 -0.153 0" shapeId="119" clipDistance="100" nodeId="490" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="gunLowerGripCollar" translation="0 -0.139 0" shapeId="120" clipDistance="100" nodeId="491" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="gunSleeveClamp" translation="1.49012e-08 -0.17 0" rotation="-0 -180 -0" shapeId="121" clipDistance="100" nodeId="492" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="gunSleeveClamp.001" translation="0 -0.183 0" rotation="-0 -180 -0" shapeId="121" clipDistance="100" nodeId="493" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="gunValveEnd" translation="0.024 0.00400001 0" rotation="0 -0 -90" shapeId="122" clipDistance="100" nodeId="494" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute" shapeId="123" clipDistance="100" nodeId="495" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.001" shapeId="124" clipDistance="100" nodeId="496" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.002" shapeId="125" clipDistance="100" nodeId="497" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.003" shapeId="126" clipDistance="100" nodeId="498" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.004" shapeId="127" clipDistance="100" nodeId="499" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.005" shapeId="128" clipDistance="100" nodeId="500" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.006" shapeId="129" clipDistance="100" nodeId="501" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.007" shapeId="130" clipDistance="100" nodeId="502" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="spoutBase" translation="-0.019 0.029 0" shapeId="131" clipDistance="100" nodeId="503" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="spoutOpenBore" translation="-0.095 0.109 0" rotation="0 -0 -104" shapeId="132" clipDistance="100" nodeId="504" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="tetheredDustCap" translation="-0.1 0.079 0.013" rotation="0 -0 -90" shapeId="133" clipDistance="100" nodeId="505" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="triggerPivot" translation="-0.028 0.006 0" rotation="90 -0 0" shapeId="134" clipDistance="100" nodeId="506" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            </TransformGroup>
+            <TransformGroup name="storedNozzleLod1" nodeId="507">
+              <Shape name="bentStainlessSpout_lod1" shapeId="135" clipDistance="100" nodeId="508" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="blueGunTrigger_lod1" shapeId="136" clipDistance="100" nodeId="509" castsShadows="true" receiveShadows="true" materialIds="1"/>
+              <Shape name="contouredGunGrip_lod1" shapeId="137" clipDistance="100" nodeId="510" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="dustCapTether_lod1" shapeId="138" clipDistance="100" nodeId="511" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="gunHoseSleeve_lod1" translation="0 -0.1755 0" rotation="5.00896e-06 5.00896e-06 180" shapeId="139" clipDistance="100" nodeId="512" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="gunHoseTailAdapter_lod1" translation="0 -0.153 0" shapeId="140" clipDistance="100" nodeId="513" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="gunLowerGripCollar_lod1" translation="0 -0.139 0" shapeId="141" clipDistance="100" nodeId="514" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="gunSleeveClamp.001_lod1" translation="0 -0.183 0" rotation="-0 -180 -0" shapeId="142" clipDistance="100" nodeId="515" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="gunSleeveClamp_lod1" translation="1.49012e-08 -0.17 0" rotation="-0 -180 -0" shapeId="142" clipDistance="100" nodeId="516" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="gunValveEnd_lod1" translation="0.024 0.00400001 0" rotation="0 -0 -90" shapeId="143" clipDistance="100" nodeId="517" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.001_lod1" shapeId="124" clipDistance="100" nodeId="518" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.002_lod1" shapeId="125" clipDistance="100" nodeId="519" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.003_lod1" shapeId="126" clipDistance="100" nodeId="520" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.004_lod1" shapeId="127" clipDistance="100" nodeId="521" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.005_lod1" shapeId="128" clipDistance="100" nodeId="522" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.006_lod1" shapeId="129" clipDistance="100" nodeId="523" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute.007_lod1" shapeId="130" clipDistance="100" nodeId="524" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="mouldedGripFlute_lod1" shapeId="123" clipDistance="100" nodeId="525" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="spoutBase_lod1" translation="-0.019 0.029 0" shapeId="144" clipDistance="100" nodeId="526" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="spoutOpenBore_lod1" translation="-0.095 0.109 0" rotation="0 -0 -104" shapeId="145" clipDistance="100" nodeId="527" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="tetheredDustCap_lod1" translation="-0.1 0.079 0.013" rotation="0 -0 -90" shapeId="146" clipDistance="100" nodeId="528" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="triggerPivot_lod1" translation="-0.028 0.006 0" rotation="90 -0 0" shapeId="147" clipDistance="100" nodeId="529" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            </TransformGroup>
+            <TransformGroup name="storedNozzleLod2" nodeId="530">
+              <Shape name="bentStainlessSpout_lod2" shapeId="148" clipDistance="100" nodeId="531" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="blueGunTrigger_lod2" shapeId="149" clipDistance="100" nodeId="532" castsShadows="true" receiveShadows="true" materialIds="1"/>
+              <Shape name="contouredGunGrip_lod2" shapeId="150" clipDistance="100" nodeId="533" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="gunHoseSleeve_lod2" translation="0 -0.1755 0" rotation="5.00896e-06 5.00896e-06 180" shapeId="151" clipDistance="100" nodeId="534" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="gunHoseTailAdapter_lod2" translation="0 -0.153 0" shapeId="152" clipDistance="100" nodeId="535" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="gunLowerGripCollar_lod2" translation="0 -0.139 0" shapeId="153" clipDistance="100" nodeId="536" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="gunSleeveClamp.001_lod2" translation="0 -0.183 0" rotation="-0 -180 -0" shapeId="154" clipDistance="100" nodeId="537" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="gunSleeveClamp_lod2" translation="1.49012e-08 -0.17 0" rotation="-0 -180 -0" shapeId="154" clipDistance="100" nodeId="538" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="gunValveEnd_lod2" translation="0.024 0.00400001 0" rotation="0 -0 -90" shapeId="155" clipDistance="100" nodeId="539" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="spoutBase_lod2" translation="-0.019 0.029 0" shapeId="156" clipDistance="100" nodeId="540" castsShadows="true" receiveShadows="true" materialIds="2"/>
+              <Shape name="spoutOpenBore_lod2" translation="-0.095 0.109 0" rotation="0 -0 -104" shapeId="157" clipDistance="100" nodeId="541" castsShadows="true" receiveShadows="true" materialIds="3"/>
+              <Shape name="tetheredDustCap_lod2" translation="-0.1 0.079 0.013" rotation="0 -0 -90" shapeId="158" clipDistance="100" nodeId="542" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            </TransformGroup>
+          </TransformGroup>
+        </TransformGroup>
+      </TransformGroup>
+      <TransformGroup name="handNode" translation="0.062 0.389 0" rotation="0 -55.1019 90" nodeId="543"/>
+      <TransformGroup name="firstPersonNode" translation="-0.358 0.439 0.75" rotation="0 180 0" nodeId="544"/>
+    </TransformGroup>
+  </Scene>
+
+</i3D>

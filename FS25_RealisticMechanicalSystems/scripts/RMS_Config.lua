@@ -51,17 +51,20 @@ RMS_Config = {
         AVG_STRESS_WARNING_THRESHOLD = 0.22,
         AVG_STRESS_CRITICAL_THRESHOLD = 0.44,
 
+        -- low-speed band within the native idle to maximum rpm range
+        LUGGING_RPM_RANGE_THRESHOLD = 0.25,
+
         ENGINE_FACTOR_DATA = {
             MOTOR_IDLING_MULTIPLIER = 0.5,
             SERVICE_EXPIRED_MULTIPLIER = 6.0,
             MOTOR_IDLING_THRESHOLD = 0.3,
             MOTOR_OVERLOADED_MULTIPLIER = 1.5, 
-            MOTOR_OVERLOADED_THRESHOLD = 0.85,
-            MOTOR_OVERLOADED_MAX_EFFECT = 1.05,
+            MOTOR_OVERLOADED_THRESHOLD = 1.0,
+            MOTOR_OVERLOADED_MAX_EFFECT = 1.15,
             LUGGING_MULTIPLIER = 3.0,       
-            LUGGING_RPM_THRESHOLD = 0.6,
             LUGGING_MOTORLOAD_THRESHOLD = 0.80,
             COLD_MOTOR_RPM_INFLUENCE = 0.35,
+            COLD_MOTOR_LOAD_THRESHOLD = 0.85,
             COLD_MOTOR_TEMP_THRESHOLD = 50,
             COLD_MOTOR_WARNING_EXPOSURE_MS = 2000,
             COLD_MOTOR_MULTIPLIER = 60.0,
@@ -75,11 +78,10 @@ RMS_Config = {
             TRANSMISSION_IDLING_MULTIPLIER = 0.5,
             SERVICE_EXPIRED_MULTIPLIER = 4.0,
             PULL_OVERLOAD_MULTIPLIER = 1.5,    
-            PULL_OVERLOAD_THRESHOLD = 0.85,
+            PULL_OVERLOAD_THRESHOLD = 1.0,
             PULL_OVERLOAD_TIMER_THRESHOLD = 60,
             PULL_OVERLOAD_TIMER_MAX_EFFECT = 90,
             LUGGING_MULTIPLIER = 10.0,
-            LUGGING_RPM_THRESHOLD = 0.6,
             LUGGING_MOTORLOAD_THRESHOLD = 0.80,
             WHEEL_SLIP_MULTIPLIER = 10.0,        
             WHEEL_SLIP_THRESHOLD = 0.05,
@@ -104,12 +106,17 @@ RMS_Config = {
             COLD_OIL_MULTIPLIER = 0.95,
             COLD_OIL_THRESHOLD = 30,
             HOT_OIL_MULTIPLIER = 100.0,
-            HOT_OIL_THRESHOLD = 90
+            HOT_OIL_THRESHOLD = 90,
+            -- lifted mass ratio from which a bouncing implement shakes the lift in full
+            VIB_FULL_LIFT_MASS_RATIO = 0.33,
+            -- breakdown stage from which a clogged filter's bypass wears the circuits it feeds
+            FILTER_BYPASS_STAGE = 2,
+            FILTER_BYPASS_MULTIPLIER = 0.5
         },
 
         PTO_FACTOR_DATA = {
             SERVICE_EXPIRED_MULTIPLIER = 4.0,
-            -- share of the torque the engine can pass to the PTO a sustained load starts to strain the driveline at
+            -- PTO torque share from which a sustained load strains the driveline
             LOAD_FACTOR_THRESHOLD = 0.40,
             LOAD_FACTOR_FULL_EFFECT = 0.90,
             LOAD_FACTOR_MULTIPLIER = 6.0,
@@ -122,8 +129,7 @@ RMS_Config = {
             RAISED_TUTORIAL_MS = 20000,
             -- condition every engagement takes from the clutch pack
             ENGAGEMENT_CLUTCH_DAMAGE = 0.0002,
-            -- engaging above idle shocks the driveline: share of the idle to max rpm range it starts at,
-            -- condition taken at full engine speed by an implement sized to the engine, and the smallest size counted
+            -- engagement shock: rpm share it starts at, condition taken at full rpm, smallest implement
             ENGAGEMENT_SHOCK_RPM_THRESHOLD = 0.25,
             ENGAGEMENT_SHOCK_DAMAGE = 0.005,
             ENGAGEMENT_SHOCK_MIN_SIZE = 0.25
@@ -151,8 +157,8 @@ RMS_Config = {
             LIGHTS_FACTOR_MULTIPLIER = 0.2,
             VIB_FACTOR_THRESHOLD = 0.08,
             VIB_FACTOR_MAX_SIGNAL = 0.36,
-            VIB_FACTOR_MULTIPLIER = 36.0,
-            VIB_FIELD_MULTIPLIER = 2.0
+            -- a quarter of the chassis, the wiring riding on the frame
+            VIB_FACTOR_MULTIPLIER = 9.0
         },
 
         CHASSIS_FACTOR_DATA = {
@@ -161,11 +167,40 @@ RMS_Config = {
             VIB_FACTOR_THRESHOLD = 0.08,
             VIB_FACTOR_MAX_SIGNAL = 0.36,
             VIB_FACTOR_MULTIPLIER = 36.0,
-            VIB_FIELD_MULTIPLIER = 2.0,
-            STEER_LOAD_FACTOR_MULTIPLIER = 2.0,
+            -- steering at rest: wear per lock a second on grip 1, fade speed, moving threshold, stall load
+            STEER_LOAD_FACTOR_MULTIPLIER = 1.33,
             STEER_LOAD_SPEED_THRESHOLD = 4.0,
             STEER_LOAD_RATE_DEADZONE = 0.02,
             STEER_LOAD_AXLE_RATIO_MAX = 3.0,
+            -- share of its play a full suspension stroke kicks a steered wheel by, and its full-kick speed
+            STEER_PLAY_KICK_GAIN = 3.0,
+            STEER_PLAY_FULL_SPEED = 30.0,
+            -- seconds a rolling wheel takes to trail straight inside its play
+            STEER_PLAY_RECENTER_TIME = 0.6,
+            -- degrees before a steering stop within which a fault fades out
+            STEER_STOP_BLEND = 4.0,
+            -- play in degrees a worn chassis reaches without a declared breakdown
+            STEER_GENERAL_WEAR_PLAY = 1.5,
+            -- front end wobble: start play in degrees, speed band, frequency, share of the play
+            STEER_SHIMMY_MIN_PLAY = 2.0,
+            STEER_SHIMMY_SPEED_MIN = 25.0,
+            STEER_SHIMMY_SPEED_PEAK = 35.0,
+            STEER_SHIMMY_SPEED_MAX = 45.0,
+            STEER_SHIMMY_FREQUENCY = 6.0,
+            STEER_SHIMMY_SHARE = 0.4,
+            -- wheel with a broken rod end: flutter in degrees, over the speed band in km/h it grows on
+            STEER_FREE_FLUTTER_ANGLE = 12.0,
+            STEER_FREE_FLUTTER_SPEED_MIN = 8.0,
+            STEER_FREE_FLUTTER_SPEED_MAX = 25.0,
+            -- play in degrees of an articulation whose linkage let go
+            STEER_FREE_ARTICULATION_PLAY = 6.0,
+            -- impact: km/h lost beyond the tyres' grip for a hit, condition per km/h lost and at most
+            TERRAIN_IMPACT_MIN_SPEED_LOSS = 10.0,
+            TERRAIN_IMPACT_DAMAGE_PER_KMH = 0.001,
+            TERRAIN_IMPACT_MAX_DAMAGE = 0.05,
+            -- tips: ms of shaking wear before its tip, ms a hit stays news
+            VIB_TUTORIAL_MS = 3000,
+            TERRAIN_IMPACT_TUTORIAL_MS = 5000,
             BRAKE_MASS_FACTOR_MULTIPLIER = 36.0,
             BRAKE_MASS_RATIO_THRESHOLD = 10.0,
             BRAKE_MASS_RATIO_FULL_EFFECT = 5.0,
@@ -218,8 +253,6 @@ RMS_Config = {
         GENERAL_WEAR_EARLY_STAGE_THRESHOLD = 0.66,
         GENERAL_WEAR_LATE_STAGE_THRESHOLD = 0.33,
 
-        RELIABILITY_YEAR_FACTOR = 0.01,
-        RELIABILITY_YEAR_FACTOR_THRESHOLD = 2000,
 
         -- engine power counting as turbocharged, in kw
         TURBO_MIN_POWER_KW = 56,
@@ -227,8 +260,8 @@ RMS_Config = {
         BASE_BREAKDOWN_PROGRESS_TIME = 1 * 3600000,
         BREAKDOWN_PROBABILITIES = {
             STRESS_THRESHOLD = 0.5,
-            MIN_MTBF = 30,
-            MAX_MTBF = 5200,
+            MIN_FAILURE_DELAY_MINUTES = 30,
+            MAX_FAILURE_DELAY_MINUTES = 5200,
             DEGREE = 3.0,
             CRITICAL_MIN = 0.05,
             CRITICAL_MAX = 0.33,
@@ -252,31 +285,7 @@ RMS_Config = {
         },
 
         MOBILE_WORKSHOP_RESTRICTIONS_ENABLED = true,
-        MOBILE_WORKSHOP_SERVICES_BY_MAINTAINABILITY = {
-            INSPECTION = {
-                STANDARD = 0.0,
-                VISUAL   = 0.0,
-                COMPLETE = 99.0,
-            },
 
-            MAINTENANCE = {
-                STANDARD   = 1.1,
-                EXTENDED   = 1.2,
-                PREVENTIVE = 1.4,
-            },
-
-            REPAIR = {
-                LOW    = 0.0,
-                MEDIUM = 1.1,
-                HIGH   = 99.0,
-            },
-
-            OVERHAUL = {
-                STANDARD = 99.0,
-                PARTIAL  = 99.0,
-                FULL     = 99.0,
-            },
-        }
     },
     -- service prices, durations and restore ratios
     MAINTENANCE = {
@@ -292,17 +301,61 @@ RMS_Config = {
             VISUAL   = 0.1,
             COMPLETE = 4.0,
         },
-        MAINTENANCE_TIME = 6 * 3600000,
-        MAINTENANCE_TIME_MULTIPLIERS = {
-            STANDARD   = 1.0,
-            EXTENDED   = 1.5,
-            PREVENTIVE = 2.0,
-        },
-        REPAIR_TIME = 4 * 3600000,
         REPAIR_TIME_MULTIPLIERS = {
             LOW    = 0.2,
             MEDIUM = 1.0,
             HIGH   = 2.0,
+        },
+        -- estimated complete jobs on the reference machine, access and testing included
+        REPAIR_OPERATIONS = {
+            ECU_MALFUNCTION = {hours = 3, category = "diagnostic", mobileRequirement = "MOBILE_DIAGNOSTIC"},
+            CORRODED_WIRING = {hours = 2, category = "diagnostic"},
+            BATTERY_SULFATION = {hours = 0.5, category = "external"},
+            GLOW_PLUG_FAILURE = {hours = 1.5, category = "mechanical"},
+            ALTERNATOR_REGULATOR_FAILURE = {hours = 2, category = "mechanical"},
+            INVERTER_MALFUNCTION = {hours = 4, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
+            DCDC_CONVERTER_FAILURE = {hours = 3, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
+            ONBOARD_CHARGER_FAILURE = {hours = 3, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
+            HV_INSULATION_LOSS = {hours = 4, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
+            ENGINE_JAM = {hours = 40, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            TURBOCHARGER_MALFUNCTION = {hours = 4, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            OIL_PUMP_MALFUNCTION = {hours = 8, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            VALVE_TRAIN_MALFUNCTION = {hours = 12, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            ELECTRIC_MOTOR_BEARING_WEAR = {hours = 8, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
+            ELECTRIC_MOTOR_WINDING_FAULT = {hours = 12, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
+            MOTOR_POSITION_SENSOR_FAULT = {hours = 3, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
+            MANUAL_TRANSMISSION_CLUTCH_WEAR = {hours = 12, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            MANUAL_TRANSMISSION_SYNCHRONIZER_MALFUNCTION = {hours = 18, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            POWERSHIFT_HYDRAULIC_PUMP_MALFUNCTION = {hours = 12, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            CVT_CHAIN_WEAR = {hours = 24, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            CVT_HYDRAULIC_CONTROL_VALVE_MALFUNCTION = {hours = 6, category = "transmission", mobileRequirement = "MOBILE_DIAGNOSTIC"},
+            TRANSMISSION_THERMOSTAT_MALFUNCTION = {hours = 2, category = "mechanical"},
+            TRANSMISSION_OIL_LEAK = {hours = 10, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            CVT_ADDON_MALFUNCTION = {hours = 8, category = "transmission", mobileRequirement = "MOBILE_DIAGNOSTIC"},
+            REDUCER_GEAR_WEAR = {hours = 12, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            HYDRAULIC_PUMP_MALFUNCTION = {hours = 6, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            HYDRAULIC_CYLINDER_INTERNAL_LEAK = {hours = 4, category = "mechanical"},
+            HYDRAULIC_HOSE_EXTERNAL_LEAK = {hours = 1, category = "external"},
+            HYDRAULIC_FILTER_CLOGGING = {hours = 0.75, category = "external"},
+            HYDRAULIC_OIL_COOLER_MALFUNCTION = {hours = 3, category = "mechanical"},
+            HYDRAULIC_SPOOL_VALVE_MALFUNCTION = {hours = 5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            PTO_DRIVE_COUPLING_WEAR = {hours = 10, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            PTO_DRIVE_OUTPUT_BEARING_WEAR = {hours = 8, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            PTO_ENGAGEMENT_CONTROL_MALFUNCTION = {hours = 3, category = "diagnostic", mobileRequirement = "MOBILE_DIAGNOSTIC"},
+            BRAKE_MALFUNCTION = {hours = 6, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            BEARING_WEAR = {hours = 4, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            STEERING_LINKAGE_WEAR = {hours = 2, category = "external"},
+            TRACK_TENSIONER_MALFUNCTION = {hours = 5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            THERMOSTAT_MALFUNCTION = {hours = 2, category = "mechanical"},
+            COOLANT_LEAK = {hours = 4, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            FAN_CLUTCH_FAILURE = {hours = 3, category = "mechanical"},
+            COOLANT_PUMP_FAILURE = {hours = 3, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            FUEL_PUMP_MALFUNCTION = {hours = 4, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            FUEL_INJECTOR_MALFUNCTION = {hours = 4, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            FUEL_FILTER_CLOGGING = {hours = 0.75, category = "external"},
+            FUEL_LINE_AIR_LEAK = {hours = 1.5, category = "external"},
+            TRACTION_BATTERY_CELL_FAULT = {hours = 12, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
+            HV_CONTACTOR_FAILURE = {hours = 4, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
         },
         OVERHAUL_TIME = 24 * 3600000,
         OVERHAUL_TIME_MULTIPLIERS = {
@@ -318,9 +371,10 @@ RMS_Config = {
             VISUAL   = 0.8,
             COMPLETE = 1.0,
         },
+        -- repair categories only a diagnostic tool reads
+        INSPECTION_TOOL_CATEGORIES = { diagnostic = true, highVoltage = true },
 
         MAINTENANCE_PREVENTIVE_STRESS_REMOVE_MULTIPLIER = 0.6,
-        MAINTENANCE_PREVENTIVE_SYSTEMS_COUNT = 3,
 
         REPAIR_REMAINING_STRESS_RATIO = {
             MEDIUM = 0.5,
@@ -347,12 +401,11 @@ RMS_Config = {
             AFTERMARKET = 0.66,
             PREMIUM     = 1.20,
         },
-        -- prices are real ones for a machine of this power, the engine sizing them and the game's cost multiplier
-        -- scaling them with the economic difficulty; the service interval, not the price, carries the game's pace
+        -- real dealer prices sized on engine power, scaled by the economic difficulty
         REFERENCE_POWER = 160,
         -- a dealer's hourly rate in euros
         LABOUR_RATE = 90,
-        -- how labour and parts follow the engine power, measured on filter kits from 75 to 430 hp
+        -- how labour and parts follow engine power, from filter kits of 75 to 430 hp
         LABOUR_POWER_EXPONENT = 0.4,
         PARTS_POWER_EXPONENT = 0.6,
         -- labour, filters and parts of a road vehicle against a machine of the same power
@@ -360,18 +413,18 @@ RMS_Config = {
             ROAD_LIGHT = { labour = 0.3,  filters = 0.2, parts = 0.5  },
             ROAD_HEAVY = { labour = 0.55, filters = 0.2, parts = 0.75 },
         },
-        -- a real dealer's maintenance of the reference machine, fluids apart: labour hours and filters in euros
+        -- dealer maintenance of the reference machine: labour hours and filters in euros
         MAINTENANCE_LABOUR_HOURS = {
             STANDARD   = 2.5,
             EXTENDED   = 5.0,
             PREVENTIVE = 8.0,
         },
         MAINTENANCE_FILTER_PRICES = {
-            STANDARD   = 250,
+            STANDARD   = 350,
             EXTENDED   = 550,
             PREVENTIVE = 700,
         },
-        -- real value of the reference machine the breakdown registry's repair percentages and the overhauls apply to
+        -- reference machine value the repair percentages and overhauls apply to
         REPAIR_REFERENCE_VALUE = 57700,
         OVERHAUL_REFERENCE_VALUE = 32500,
 
@@ -387,117 +440,140 @@ RMS_Config = {
         },
         OVERHAUL_MAX_PRICE_RATIO = 1.0,
     },
-    -- engine and transmission temperature model
+    -- common thermal rates in C/s and cooling in 1/s, one approximation for every model
     THERMAL = {
-        -- shared thermal physics
-
-        -- user multiplier of the engine temperature change rate
-        TEMPERATURE_CHANGE_SPEED = 1.4,
-
-        -- speed at which airflow cooling starts, in km/h
-        SPEED_COOLING_MIN_SPEED = 15,
-        -- speed at which airflow cooling peaks, in km/h
-        SPEED_COOLING_MAX_SPEED = 50,
-        -- peak airflow cooling factor
-        SPEED_COOLING_MAX_EFFECT = 0.3,
-
-        -- convection cooling rate while stationary
-        CONVECTION_FACTOR = 0.0005,
-        -- exponent applied to the gap with ambient, above 1 a hotter vehicle cools disproportionately faster
-        DELTATEMP_FACTOR_DEGREE = 1.25,
-
-        -- share of the radiator effectiveness a fully dirty vehicle loses
-        MAX_DIRT_INFLUENCE = 1.0,
-        
-        -- time constant of the temperature gauge filter
         TAU = 5000,
-
-        -- engine thermal values
-
-        -- engine heat at full load
-        ENGINE_MAX_HEAT = 1.05,
-        -- engine heat at idle
-        ENGINE_MIN_HEAT = 0.4,
-        -- base engine temperature change rate before the user multiplier
-        ENGINE_TEMPERATURE_CHANGE_SPEED = 0.35,
-        -- temperature the engine thermostat starts opening at, in degrees
-        ENGINE_THERMOSTAT_MIN_TEMP = 80,
-        -- radiator cooling with the thermostat closed
-        ENGINE_RADIATOR_MIN_COOLING = 0.0005,
-        -- radiator cooling with the thermostat open
-        ENGINE_RADIATOR_MAX_COOLING = 0.005,
-
-        -- transmission thermal values
-
-        -- transmission heat at full load
-        TRANS_MAX_HEAT = 1.05,
-        -- oil circulation and churning heat at low idle
-        TRANS_IDLE_HEAT = 0.06,
-        -- pump loss heat, produced whenever the motor turns
-        TRANS_PUMP_HEAT = 0.03,
-        -- share of the pto load that heats the shared oil
-        TRANS_PTO_HEAT_SHARE = 0.15,
-        -- extra load heat at a standstill, where the hydrostatic path carries the power
-        TRANS_HYDROSTATIC_MAX_BOOST = 0.8,
-        -- speed above which the mechanical path carries the power, in km/h
-        TRANS_HYDROSTATIC_MAX_SPEED = 10,
-        -- base transmission temperature change rate before the user multiplier
-        TRANS_TEMPERATURE_CHANGE_SPEED = 0.14,
-        TRANS_TEMPERATURE_CHANGE_MULTIPLIER = 1.0,
-        HYDRAULIC_OPERATING_HEAT = 0.15,
-        -- temperature the thermostat starts letting oil into the cooler, in degrees
-        TRANS_THERMOSTAT_MIN_TEMP = 45,
-        -- temperature the cooler runs at full flow, in degrees
-        TRANS_THERMOSTAT_MAX_TEMP = 70,
-        -- degrees a fully worn thermostat waits before it opens
-        TRANS_THERMOSTAT_HEALTH_LAG = 30,
-        -- oil cooler capacity at full flow
-        TRANS_COOLER_MAX_COOLING = 0.0035,
-        -- temperature the fan reaches its maximum at, in degrees
-        TRANS_FAN_MAX_TEMP = 95,
-        -- extra cooler capacity brought by the fan at its maximum
-        TRANS_FAN_MAX_BOOST = 0.4,
-
-        -- temperature the engine thermostat controller aims at, in degrees
         PID_TARGET_TEMP = 90,
-        -- proportional gain, reacting to the current error
-        PID_KP_MAX = 0.4,
-        PID_KP_MIN = 0.1,
-        -- integral gain, correcting a lasting error
-        PID_KI = 0.02,
-        -- derivative gain, damping the reaction
-        PID_KD = 1.8,
-        -- cap on the integral term
-        PID_MAX_INTEGRAL = 200,
-
-        -- natural cooling slowdown below the regulated temperature, by thermal mass
-        ENGINE_COOLING_SLOWDOWN_POWER = 3.0,
-        TRANS_COOLING_SLOWDOWN_POWER = 1.5,
-
-        THERMOSTAT_TYPE_YEAR_DIVIDER = 2000,
-        MECHANIC_THERMOSTAT_MIN_YEAR = 1950,
-        ELECTRONIC_THERMOSTAT_MAX_YEAR = 2025,
-
-        MECHANIC_THERMOSTAT_MIN_WAX_SPEED = 0.025,
-        MECHANIC_THERMOSTAT_MAX_STICTION = 0.1,
-        MECHANIC_THERMOSTAT_WAX_YEAR_SLOPE = 0.0005,
-
-        ELECTRONIC_THERMOSTAT_MIN_WAX_SPEED = 0.05,
-        ELECTRONIC_THERMOSTAT_MAX_WAX_SPEED = 0.10,
-        ELECTRONIC_THERMOSTAT_MIN_STICTION = 0.01,
-        ELECTRONIC_THERMOSTAT_MAX_STICTION = 0.05,
-        ELECTRONIC_THERMOSTAT_WAX_YEAR_SLOPE = 0.0016,
-
-        STICTION_YEAR_SLOPE = 0.0016
+        TELLTALE = { WARNING = 99, CRITICAL = 110 },
+        -- ECU diesel thresholds anchored on documented Deere alerts
+        ENGINE_PROTECTION = {
+            START_TEMP = 110,
+            SEVERE_TEMP = 115,
+            RELEASE_TEMP = 107,
+            SEVERE_RELEASE_TEMP = 112,
+        },
+        PROFILES = {
+            diesel = {
+                warmup = {
+                    power = { 0.0694, 1 / 3, 2 / 3, 1 },
+                    climates = {
+                        { ambient = 0, cooling = 0.00159200378482027,
+                            heat = { 0.126440431514204, 0.193839492462645, 0.207207189634561, 0.280168086068943 } },
+                        { ambient = 10, cooling = 0.00178584873723889,
+                            heat = { 0.124437828513334, 0.183692665311297, 0.197328232968797, 0.256371523588326 } },
+                        { ambient = 20, cooling = 0.0022334592320928,
+                            heat = { 0.136166071790457, 0.186364516906941, 0.19606598642592, 0.265217056918726 } },
+                    },
+                },
+                activeResponseRate = 1.15,
+                heatIdle = 0.0025000000000000001,
+                heatLoad = 0.12633658888290838,
+                heatRpm = 0.001,
+                heatDrive = 0,
+                heatExternal = 0,
+                heatHydraulic = 0,
+                heatChargeCapacityShare = 0,
+                passiveCooling = 0.00035,
+                speedCooling = 0.00014999999999999999,
+                forcedCooling = 0.0027000000000000001,
+                regulatedMin = 82,
+                regulatedMax = 97,
+                faultHeatScale = 0.12365389417419846,
+            },
+            evDrive = {
+                heatIdle = 0,
+                heatLoad = 0.027,
+                heatRpm = 0.002,
+                heatDrive = 0,
+                heatExternal = 0,
+                heatHydraulic = 0,
+                heatChargeCapacityShare = 0,
+                passiveCooling = 0.00038508176697774738,
+                speedCooling = 0.0001,
+                forcedCooling = 0.0011999999999999999,
+                regulatedMin = 50,
+                regulatedMax = 65,
+                faultHeatScale = 0.064444444444444443,
+            },
+            separateTrans = {
+                activeResponseRate = 1.30,
+                heatIdle = 0.0030000000000000001,
+                heatLoad = 0,
+                heatRpm = 0.002,
+                heatDrive = 0.022371747050598544,
+                heatExternal = 0.0040000000000000001,
+                heatHydraulic = 0,
+                heatChargeCapacityShare = 0,
+                passiveCooling = 0.00012836058899258246,
+                speedCooling = 5.0000000000000002e-05,
+                forcedCooling = 0.001,
+                regulatedMin = 45,
+                regulatedMax = 70,
+                faultHeatScale = 0.029877854333903376,
+            },
+            commonOil = {
+                activeResponseRate = 1.30,
+                heatIdle = 0.0030000000000000001,
+                heatLoad = 0,
+                heatRpm = 0.002,
+                heatDrive = 0.022371747050598544,
+                heatExternal = 0.0040000000000000001,
+                heatHydraulic = 0.012,
+                heatChargeCapacityShare = 0,
+                passiveCooling = 0.00012836058899258246,
+                speedCooling = 5.0000000000000002e-05,
+                forcedCooling = 0.001,
+                regulatedMin = 45,
+                regulatedMax = 70,
+                faultHeatScale = 0.029877854333903376,
+            },
+            hydraulic = {
+                activeResponseRate = 1.30,
+                heatIdle = 0.002,
+                heatLoad = 0,
+                heatRpm = 0.002,
+                heatDrive = 0,
+                heatExternal = 0,
+                heatHydraulic = 0.025000000000000001,
+                heatChargeCapacityShare = 0,
+                passiveCooling = 0.00012836058899258246,
+                speedCooling = 5.0000000000000002e-05,
+                forcedCooling = 0.001,
+                regulatedMin = 45,
+                regulatedMax = 70,
+                faultHeatScale = 0.19333333333333336,
+            },
+            battery = {
+                heatIdle = 0,
+                heatLoad = 0.0013888888888888889,
+                heatRpm = 0.00027777777777777778,
+                heatDrive = 0,
+                heatExternal = 0,
+                heatHydraulic = 0,
+                heatChargeCapacityShare = 14.184023258336397,
+                passiveCooling = 4.6296296296296294e-05,
+                speedCooling = 5.0000000000000004e-06,
+                forcedCooling = 0,
+                regulatedMin = 0,
+                regulatedMax = 1,
+                faultHeatScale = 0,
+            },
+        }
     },
 
     FIELD_CARE = {
         CLEANING_SPEED = 0.05,
         AIR_FILTER_BREAKDOWN_THRESHOLD = 0.5,
         AIR_FILTER_BLOWOUT_RESIDUE_SHARE = 0.25,
-        -- embedded dust that leaves a blown out filter at the cleaning threshold, the filter then due for replacement
+        -- dust left in a blown out filter at the cleaning threshold, the filter then due
         AIR_FILTER_REPLACEMENT_RESIDUE = 0.35,
-        -- Decoded length of sounds/inspection.ogg at pitch 1.0.
+        -- fuel and hydraulic filters: one service interval brings them to 1, each threshold a stage
+        FILTER_STAGE_THRESHOLDS = { 1.0, 4 / 3, 5 / 3, 2.0 },
+        -- a tank run on its reserve sends water and sediment to the fuel filter
+        FUEL_FILTER_LOW_FUEL_MULTIPLIER = 3.0,
+        -- working hydraulics send the filter what the pump and the cylinders wear off
+        HYDRAULIC_FILTER_ACTIVE_MULTIPLIER = 2.0,
+        -- length of sounds/inspection.ogg at pitch 1
         VISUAL_INSPECTION_DURATION = 6850,
         LUBRICATION_REDUCE_PER_OPERATING_HOUR = 0.05,
         LUBRICATION_RESTORE_PER_USE = 0.1,
@@ -515,21 +591,19 @@ RMS_Config = {
         -- exact normalized vehicle XML keys take precedence over category profiles
         CAPACITY_OVERRIDES = {},
 
-        -- engine oil burnt over one service interval by a healthy engine
-        ENGINE_OIL_CONSUMPTION_PER_INTERVAL = 0.03,
-        -- extra consumption of a fully worn engine
-        ENGINE_OIL_WEAR_CONSUMPTION = 3.0,
+        -- oil a healthy engine burns per interval: 0.09 g/kWh, a fifth of a 160 hp sump
+        ENGINE_OIL_CONSUMPTION_PER_INTERVAL = 0.20,
+        -- extra burn of a worn engine: 0.3 % of its fuel, one and a half sumps per interval
+        ENGINE_OIL_WEAR_CONSUMPTION = 6.5,
         -- share of the consumption that follows the motor load
         ENGINE_OIL_LOAD_SHARE = 1.5,
 
-        -- minimum mark of the gauge, the level the check asks for a top up at
+        -- minimum mark of the gauge: 2.1 of the 14.2 L of a Cummins 6B 5.9 lie between the marks
         LEVEL_MIN_MARK = 0.85,
         -- levels the inspection reports under the mark
         LEVEL_LOW = 0.70,
         LEVEL_VERY_LOW = 0.50,
         LEVEL_CRITICALLY_LOW = 0.30,
-        -- cooling capacity left with an empty circuit
-        MIN_COOLING_FACTOR = 0.15,
         -- wear multiplier of a system running dry
         LOW_LEVEL_WEAR_MULTIPLIER = 4.0,
     },
@@ -548,7 +622,6 @@ RMS_Config = {
         AUTO_DISENGAGE_SPEED = 20,
         AUTO_HYSTERESIS_MS = 250,
 
-        WINDUP_DAMAGE_ENABLED = true,
         WINDUP_STEER_THRESHOLD = 0.12,
         WINDUP_FRICTION_THRESHOLD = 0.85,
         WINDUP_4WD_FACTOR = 0.15,
@@ -568,16 +641,19 @@ RMS_Config = {
         },
 
         PARKBRAKE_ENABLED = true,
-        PARKBRAKE_AUTO_MODE = true
+        PARKBRAKE_AUTO_MIN_YEAR = 2010,
+        PARKBRAKE_AUTO_STANDSTILL_MS = 45000,
+        PARKBRAKE_LEVER_HOLD = 0.5,
+        PARKBRAKE_AIR_HOLD = 1.0,
+        PARKBRAKE_ROLLING_RESISTANCE = 0.03, -- brake pedal the game itself keeps on a vehicle out of gear
+        PARKBRAKE_DRAG_WEAR_MULTIPLIER = 5.0 -- as much as a chassis run without grease
     },
 
     -- exhaust smoke colour and opacity
     EXHAUST = {
         ENABLED = true,
 
-        -- smoke tints, mixed by concentration and kept saturated so the colour reads as the diagnosis it is:
-        -- black soot, blue burnt oil, white unburnt fuel, the off white of condensed water, and the colourless
-        -- gas of a clean pipe
+        -- smoke tints: black soot, blue oil, white fuel, off white water, colourless clean gas
         SOOT_TINT = {0.020, 0.020, 0.025},
         OIL_TINT = {0.050, 0.090, 0.350},
         UNBURNT_TINT = {0.980, 0.980, 0.980},
@@ -604,35 +680,25 @@ RMS_Config = {
         PLUME_FILE = "plume.i3d",
 
         PUFF = {
-            -- neighbours overlapping any point of the plume from the outlet on, what keeps it continuous instead
-            -- of a string of puffs, and the bounds of the rate that holds it, in puffs per second and outlet
+            -- neighbours overlapping any point of the plume, and the rate bounds in puffs a second
             OVERLAP_TARGET = 5,
             RATE_MIN = 8,
             RATE_MAX = 720,
-            -- once the neighbours overlap more than needed, puffs retire in halves, fading into the ones that
-            -- remain, up to this many halvings
+            -- most halvings the puffs retire in once they overlap more than needed
             THIN_LEVEL_MAX = 6,
-            -- exit speed in m/s: a floor while cranking, and the speed at full gas flow with the gas at its full
-            -- load temperature, about 4 m/s at idle and 30 at full power through a pipe sized for the rated flow;
-            -- and the share of it each puff leaves sideways at, for a ragged edge
+            -- exit speed in m/s: cranking floor, full flow speed, sideways share of each puff
             EXIT_SPEED_MIN = 2.0,
             EXIT_SPEED_FULL = 30.0,
             SPREAD_SHARE = 0.02,
-            -- tailpipe diameter in metres per square root of kW, about 75 mm at 70 kW, 110 at 150 and 155 at 300,
-            -- within bounds
+            -- tailpipe diameter in metres per square root of kW, within bounds
             PIPE_DIAMETER_PER_SQRT_KW = 0.009,
             PIPE_DIAMETER_MIN = 0.06,
             PIPE_DIAMETER_MAX = 0.16,
-            -- sprite width over the gas width it draws: the smoke texture reaches half its opacity at about 60 % of
-            -- the sprite, so a sprite that wide shows the gas at its real width; the share of the sprite width the
-            -- visible smoke reaches from its centre, which surfaces stop; and the widest a sprite grows far
-            -- downstream, where a heavy plume has spread over metres
+            -- sprite width over gas width, visible share of the sprite, widest sprite downstream
             SPRITE_GAS_RATIO = 1.65,
             RADIUS_SHARE = 0.45,
             SIZE_MAX = 8.0,
-            -- width the gas gains per metre it travels through the air, the concentration width at half maximum
-            -- of a round jet (half-width 0.11 per metre), and per metre of crosswind it takes in until the wind has
-            -- bent it over
+            -- width the gas gains per metre through the air, and per metre of crosswind taken in
             JET_SPREAD = 0.22,
             JET_CROSS_SPREAD = 0.10,
             -- step in ms of the jet profile the spacing and the sprite growth are read on
@@ -640,16 +706,14 @@ RMS_Config = {
             -- growth the eddies of the air add in m/s, a floor and the crosswind mixing it
             GROWTH_BASE = 0.18,
             GROWTH_PER_WIND = 0.15,
-            -- a sprite grows at one steady rate, fitted to the gas width over this share of its life, within bounds
-            -- in ms: the plume schedule on its visible life, each thinning level on its own
+            -- share of its life a sprite growth is fitted over, and its bounds in ms
             GROWTH_FIT_SHARE = 0.35,
             GROWTH_FIT_MIN_MS = 400,
             GROWTH_FIT_LEVEL_MIN_MS = 20,
             GROWTH_FIT_MAX_MS = 4000,
             -- speed the rising plume carries its puffs apart at even in still air, in m/s
             RISE_SPEED = 0.40,
-            -- width at which the condensed water shows the model vapour, a few decimetres from the outlet where
-            -- the gas has mixed with the cold air, the smoke opacity being read at the outlet itself
+            -- width the condensed water shows the model vapour at, a few decimetres out
             REFERENCE_SIZE = 0.50,
             -- life bounds in ms, and the plume optical depth under which it no longer shows
             LIFE_MIN = 800,
@@ -659,35 +723,26 @@ RMS_Config = {
             SPRITE_ALPHA_GAIN = 1.60,
             -- relative change under which a puff is not rewritten, so a faint puff among many still thins
             ALPHA_EPSILON = 0.03,
-            -- fade out drawn by RMS in ms for the puffs that reach the end of the visible plume, the sprite asset
-            -- carrying no blend of its own since its blend times would scale with lifespans that differ a lot;
-            -- the retiring puffs fade through the thinning, and a new one among five overlapping needs no fade in
+            -- fade out in ms of the puffs reaching the end of the plume, the asset having none
             FADE_OUT_MS = 300,
-            -- drag toward the surrounding air on top of entrainment, per second, a spent jet being a tracer; with
-            -- the entrainment above it puts a jet in crossflow on the measured y/(rD) = 2.05 (x/rD)^0.28 path
+            -- drag toward the surrounding air per second, on top of the entrainment
             BASE_DAMPING = 1.20,
             -- crosswind in m/s from which that drag applies in full, and the share left in still air
             DAMPING_CROSS_SPEED = 2.0,
             DAMPING_FLOOR_SHARE = 0.30,
-            -- share of the blocked speed a puff keeps sliding along a surface, and of the air speed the flow
-            -- keeps once a surface turns it aside
+            -- speed share a puff keeps along a surface, and the air flow share a surface turns aside
             SURFACE_SPREAD = 0.06,
             SURFACE_FLOW_SHARE = 0.85,
             -- speed a puff that overlaps a surface eases off it at, in m/s, instead of jumping clear in one step
             SURFACE_PUSH_SPEED = 1.5,
             -- a puff wider than this also looks straight above itself for a roof, in metres
             ROOF_PROBE_MIN_RADIUS = 0.30,
-            -- share of the wind left under a roof, how far around a sheltered vehicle its roof counts, in metres,
-            -- how often a puff checks it, in ms, and how fast it feels the change
+            -- wind share under a roof, its reach in metres, check interval in ms and response
             SHELTER_WIND_SHARE = 0.15,
             SHELTER_RADIUS = 8.0,
             SHELTER_CHECK_MS = 200,
             SHELTER_TAU = 400,
-            -- a building, a hedge or a tree line upwind keeps part of the wind off its lee: how far upwind of the
-            -- outlet one is looked for and how high above it its top, in metres, the least wind worth it in m/s, the
-            -- share of the wind left up to so many obstacle heights behind it, the heights by which it is back in
-            -- full, how far above the top a puff is in the free wind again, and the height of the outlet above the
-            -- ground assumed without terrain, in metres
+            -- lee of an obstacle upwind: search range and height, least wind, wind share and recovery
             LEE_SEARCH_DISTANCE = 40,
             LEE_PROBE_HEIGHT = 30,
             LEE_MIN_WIND = 0.5,
@@ -702,10 +757,7 @@ RMS_Config = {
             POOL_MAX = 400
         },
 
-        -- exhaust gas temperature rise over the air in kelvin at the tailpipe, idle and full load, about 100 to
-        -- 150 C at idle and 350 to 500 C at full power past the turbo, and the share a cold engine reaches; the
-        -- excess heat is shared with the air the gas takes in, falling as a power of its width between the 1 of a
-        -- jet and the 5/3 of a rising plume
+        -- exhaust gas temperature rise in kelvin at idle and full load, cold share, mixing exponents
         EGT = {
             RISE_IDLE_K = 120,
             RISE_FULL_K = 430,
@@ -713,8 +765,7 @@ RMS_Config = {
             DILUTION_EXPONENT = 1.30
         },
 
-        -- eddies of the air in m/s, a floor plus a share of the wind speed, the vertical ones weaker near the
-        -- ground, each octave a wavelength in metres, a frequency in hertz and a weight
+        -- eddies of the air in m/s, with the wavelength, frequency and weight of each octave
         TURBULENCE = {
             BASE = 0.35,
             PER_WIND = 0.30,
@@ -726,9 +777,7 @@ RMS_Config = {
             }
         },
 
-        -- combustion water condensing in cold air: the ambient range it appears over in degrees, its optical
-        -- depth, the humidity weights, the idle share of the fuel burnt, the extra of a cold engine, and the
-        -- evaporation time in ms from the mildest to the coldest air
+        -- condensing combustion water: ambient range, depth, humidity, fuel, cold engine, evaporation
         VAPOUR = {
             START_C = 8,
             FULL_C = -10,
@@ -785,7 +834,7 @@ RMS_Config = {
             {9999, 0.18}
         },
 
-        -- emission eras of the unburnt channel, injection pressure and glow plugs improving far less than particulate control
+        -- unburnt channel eras, injection and glow plugs improving far less than particulate control
         UNBURNT_ERA_FACTORS = {
             {2001, 1.00},
             {2006, 0.90},
@@ -853,125 +902,219 @@ RMS_Config = {
         }
     },
 
+    -- 12 and 24 V circuits, each value sourced in docs/RMS_ELECTRICAL_REFERENCES.md
     ELECTRICAL = {
-        BATTERY_NOMINAL_CAPACITY = 150,
-        BATTERY_USABLE_CAPACITY_FACTOR = 0.1,
-        AMBIENT_DEFAULT_C = 15,
-        BATTERY_THERMAL_TAU_S = 600,
-        BATTERY_THERMAL_CAPACITY_J_PER_K = 2400,
-        ENGINE_BAY_COUPLING = 0.30,
-        RINT_REF_OHM = 0.005,
-        BATTERY_HEALTH_RINT_MAX_MULT = 3.0,
-        OCV_EMPTY_V = 11.7,
-        OCV_FULL_V = 12.7,
-        BATTERY_CRANK_CURRENT_A = 250,
-        GLOW_CIRCUIT_PROXY_LOAD_A = 50,
-        BATTERY_CHARGE_RISE_PER_20A_V = 0.18,
-        BATTERY_CHARGE_RISE_MAX_V = 1.6,
-        BATTERY_CHARGE_TARGET_MAX_V = 14.4,
-        BATTERY_CHARGE_IR_SCALE = 0.0,
-        BATTERY_TERMINAL_MIN_V = 8.5,
-        BATTERY_TERMINAL_MAX_V = 14.8,
-        CHARGE_ACCEPT_TEMP_MIN_C = -15,
-        CHARGE_ACCEPT_TEMP_MAX_C = 25,
-        CHARGE_TAPER_SOC_START = 0.80,
-        CHARGE_TAPER_SOC_END = 0.98,
-        BATTERY_HEALTH_ACCEPTANCE_MIN = 0.35,
-        ALT_MAX_OUTPUT = 100,
-        ALT_IDLE_FACTOR = 0.30,
-        ALT_RPM_CURVE = {
-            {0.00, 0.30},
-            {0.25, 0.55},
-            {0.50, 0.80},
-            {0.75, 0.95},
-            {1.00, 1.00}
+        -- sizing law measured on tractors: value at 100 hp in 2000, power exponent, factor per decade
+        RATING = {
+            POWER_RANGE_HP = { 20, 705 },
+            YEAR_RANGE = { 1970, 2026 },
+            ALTERNATOR_A = { base = 80.7, powerExponent = 0.53, decadeFactor = 1.27 },
+            BATTERY_AH = { base = 124.6, powerExponent = 0.60, decadeFactor = 0.93 },
+            STARTER_KW = { base = 2.93, powerExponent = 0.44, decadeFactor = 1 },
+            -- a machine carries parts of a catalogue: alternators are sold by 5 A, batteries read by 10 Ah
+            ALTERNATOR_STEP_A = 5,
+            BATTERY_STEP_AH = 10,
+            TELEHANDLER_ALTERNATOR_A = 90,
+            -- these run 24 V on two 12 V batteries in series, of a capacity that does not follow their power
+            SYSTEM_24V_FAMILIES = { FORESTRY = true, ROAD_HEAVY = true },
+            WHEEL_LOADER_24V_ABOVE_HP = 110,
+            BATTERY_24V_AH = 180,
+            -- the diesel pickup published in full stands for every light road vehicle
+            ROAD_LIGHT = { alternatorA = 175, batteryCapacityAh = 156, starterKw = 4.2 }
         },
-        ALTERNATOR_REGULATED_VOLTAGE = 14.1, 
-        ALTERNATOR_MIN_REGULATED_VOLTAGE = 13.6,
-        SYSTEM_VOLTAGE_TAU_MS = 250,          
-        BATTERY_VOLTAGE_TAU_MS = 300,      
-        ALT_DEFICIT_SAG_PER_AMP = 0.045,
-        ALT_HEALTH_REGULATION_THRESHOLD = 0.15,
-        ALT_LOW_HEALTH_DEFICIT_MULT = 1.8,
-        ALT_BATTERY_SUPPORT_GAIN = 0.45,
-        ALT_SURPLUS_CHARGE_HEADROOM_V = 0.3,  
-        MAX_SYSTEM_VOLTAGE = 14.4,
-        MIN_SYSTEM_VOLTAGE = 9.0,
-        IDLE_CURRENT_A = 0.5,
+        -- resting voltage of one 12 V battery by state of charge; every voltage below is that of one battery
+        OCV_CURVE = { { 0, 11.7 }, { 0.25, 12.0 }, { 0.5, 12.2 }, { 0.75, 12.4 }, { 1, 12.6 } },
+        REGULATED_VOLTAGE_V = 14.0,
+        MIN_CRANKING_VOLTAGE_V = 7.2,
+        -- ohms of a battery of one amp hour, by temperature
+        INTERNAL_RESISTANCE_CURVE = { { -18, 0.51 }, { -10, 0.49 }, { 0, 0.46 }, { 25, 0.30 } },
+        -- resistance of an empty battery against a full one, an estimate
+        EMPTY_RESISTANCE_FACTOR = 2.0,
+        -- starter speed share on a full battery by engine temperature: 250 rpm at 22 C, 150 at -19
+        CRANKING_DRAG_CURVE = { { -19, 0.65 }, { 22, 1 } },
+        -- share of that reference speed a diesel needs to fire: 100 of 250 rpm (Caterpillar)
+        FIRING_CRANKING_SPEED = 0.4,
+        -- share of the charge the cold keeps out of reach, by temperature
+        INACCESSIBLE_CHARGE_CURVE = { { -18, 0.54 }, { -12, 0.44 }, { -7, 0.34 }, { -1, 0.27 }, { 2, 0.21 }, { 10, 0.12 }, { 27, 0 } },
+        -- charge a battery takes, in capacities per hour, below then above the topping level
+        CHARGE_ACCEPTANCE_BULK = 1.5,
+        CHARGE_ACCEPTANCE_TOPPING = 0.04,
+        CHARGE_TOPPING_SOC = 0.80,
+        ALTERNATOR_IDLE_FACTOR = 2 / 3,
+        BASE_LOAD_ECU_A = 15,
+        BASE_LOAD_A = 8,
+        CAB_FAN_A = 14,
+        AIR_CONDITIONING_A = 4,
+        AIR_CONDITIONING_MIN_TEMP_C = 20,
+        ROAD_LIGHTS_A = 9,
+        LAMP_VOLTAGE_V = 12,
+        -- standard work lamps: by era, then by power from 2012 on; twice as many on a combine or a forage harvester
+        WORK_LAMPS_BEFORE_1990 = 2,
+        WORK_LAMPS_BEFORE_2012 = 6,
+        WORK_LAMPS_BY_POWER = { { 100, 4 }, { 170, 6 }, { 300, 8 }, { 400, 10 }, { math.huge, 12 } },
+        WORK_LAMPS_HARVESTER_FACTOR = 2,
+        WORK_LAMP_HALOGEN_W = 55,
+        WORK_LAMP_LED_W = 45,
+        WORK_LAMP_LED_YEAR = 2014,
+        -- starter current for one kilowatt, by temperature
+        STARTER_CURRENT_CURVE = { { -20, 165 }, { 0, 145 } },
+        GLOW_PLUG_A = 12,
+        GLOW_PLUGS_BY_POWER = { { 130, 4 }, { math.huge, 6 } },
+        STANDBY_A = 0.05,
+        -- resting draw a circuit is held faulty from, a failing regulator or wiring leaking 1 to 8 times it
+        LEAKAGE_FAULT_A = 0.1,
+        SELF_DISCHARGE_PER_MONTH = 0.05,
+        SELF_DISCHARGE_REFERENCE_TEMP_C = 25,
+        SELF_DISCHARGE_DOUBLING_C = 10,
+        MONTH_HOURS = 730.5,
+        -- drop a healthy circuit is allowed under the starter, positive and ground sides together
+        CIRCUIT_ADMISSIBLE_DROP_V = 0.7,
+        -- 2 AWG copper cables of 20 feet, out and back
+        JUMPER_CABLE_RESISTANCE_OHM = 0.00625,
+        VOLTAGE_SAG_V = 12.0,
+        VOLTAGE_SAG_DELAY_MS = 2000,
+        -- needle inertia of the voltmeter
+        SYSTEM_VOLTAGE_TAU_MS = 250
     },
 
-    -- per brand reliability and maintainability, {reliability, maintainability}
-    -- an unlisted brand uses 1.0 and 1.0
+    -- electric vehicles: motor and traction battery
+    ELECTRIC_DRIVE = {
+        -- a motor at rest does not turn, sustained overload heats its windings
+        MOTOR_STANDSTILL_MULTIPLIER = 0.1,
+        MOTOR_OVERLOADED_THRESHOLD = 0.90,
+        MOTOR_OVERLOADED_MAX_EFFECT = 1.05,
+        MOTOR_OVERLOADED_MULTIPLIER = 1.0,
+        MOTOR_OVERHEAT_MULTIPLIER = 50.0,
+        -- emptying the pack under load, a sustained high draw and heat age the cells
+        DEEP_DISCHARGE_THRESHOLD = 0.15,
+        DEEP_DISCHARGE_MULTIPLIER = 3.0,
+        HIGH_DRAW_THRESHOLD = 0.85,
+        HIGH_DRAW_MULTIPLIER = 1.0,
+        BATTERY_HEAT_THRESHOLD = 40,
+        BATTERY_HEAT_FULL_EFFECT = 60,
+        BATTERY_HEAT_MULTIPLIER = 10.0,
+
+        -- representative motor and inverter temperature limits
+        THERMAL = {
+            PID_TARGET_TEMP = 60,
+            OVERHEAT_THRESHOLD = 70,
+            OVERHEAT_FULL_EFFECT = 100,
+            TELLTALE = { WARNING = 75, CRITICAL = 85 }
+        },
+        -- temperatures each cold stage of the pack starts under
+        BATTERY_COLD_STAGES = { 10, 0, -10, -20 },
+
+        -- share of its capacity a worn out pack has lost
+        BATTERY_CAPACITY_FADE = 0.20,
+        -- share of a station's power the pack takes at each temperature, cold cells accepting little
+        CHARGE_ACCEPTANCE_CURVE = { { -10, 0.2 }, { 0, 0.5 }, { 10, 1.0 } },
+        -- energy a slowed charge hands over at once, well above the amount a station takes for a full battery
+        CHARGE_SLICE = 0.001
+    },
+
+    -- qualitative calibration, model entries first, unknown brands on the fair baseline
     BRANDS = {
-
-            FENDT           = {1.25, 0.80}, 
-            JOHNDEERE       = {1.25, 0.85},
-            VOLVO           = {1.25, 0.90},
-            KOMATSU         = {1.25, 0.95},
-            PONSSE          = {1.20, 0.90}, 
-            ROTTNE          = {1.20, 0.90},
-            CATERPILLAR     = {1.25, 0.80},
-            KENWORTH        = {1.20, 0.90},
-            PETERBILT       = {1.20, 0.90},
-            SCHLUETER       = {1.20, 0.95},
-
-            CLAAS           = {1.15, 0.95},
-            ROPA            = {1.15, 0.85},
-            HOLMER          = {1.15, 0.85},
-            MACK            = {1.15, 1.00},
-            KRONE           = {1.10, 1.00},
-            KUBOTA          = {1.15, 1.10},
-            MAN             = {1.10, 0.95},
-            CHALLENGER      = {1.10, 0.90},
-            AGCO            = {1.10, 0.90},
-            MERCEDES        = {1.10, 0.90},
-            MERCEDESBENZ    = {1.10, 0.90},
-            MERCEDESBENZTRUCKS    = {1.10, 0.90},
-            KRAMER          = {1.10, 0.95},
-
-            VALTRA          = {1.10, 1.05},
-            LINDNER         = {1.05, 1.00},
-            GMC             = {1.05, 1.05},
-            CASEIH          = {1.00, 1.00},
-            NEWHOLLAND      = {1.00, 1.00},
-            SDF             = {1.00, 1.00},
-            MASSEYFERGUSON  = {1.00, 1.05},
-            JCB             = {1.00, 0.90},
-            DEUTZFAHR       = {1.00, 1.00},
-            STEYR           = {1.00, 0.95},
-            VERSATILE       = {1.00, 1.15}, 
-            INTERNATIONAL   = {1.00, 1.15},
-            FORD            = {1.00, 1.10},
-            RENAULT         = {1.00, 1.05},
-            INTERNATIONALHARVESTER = {1.00, 1.15},
-            LANDROVER       = {0.90, 0.90}, 
-            NEXAT           = {0.95, 0.65},
-
-            ZETOR           = {0.85, 1.35},
-            FIAT            = {0.90, 1.20},
-            LANDINI         = {0.90, 1.15},
-            SAME            = {0.90, 1.15},
-            MCCORMICK       = {0.90, 1.10},
-            ARMATRAC        = {0.85, 1.20},
-            MAHINDRA        = {0.85, 1.25},
-            STARA           = {0.85, 1.15},
-            
-            PTZKIROWEC      = {0.85, 1.30},
-            MTZ             = {0.80, 1.50},
-            SKODA           = {0.85, 1.20},
-            GAZ             = {0.80, 1.40},
-            MAZ             = {0.80, 1.35},
-            BUEHRER         = {0.80, 1.30},
-            LTZ             = {0.75, 1.55},
-            PORSCHEDIESEL   = {0.70, 1.30},
-            OLIVER          = {0.85, 1.25}, 
-            ALLISCHALMERS   = {0.85, 1.25},
-
-            LIZARD          = {1.00, 1.00},
-            GIANTS          = {1.00, 1.00},
-            NONE            = {1.00, 1.00}
+        FENDT = 1.2,
+        JOHNDEERE = 1.2,
+        VOLVO = 1.1,
+        KOMATSU = 1.1,
+        PONSSE = 1.1,
+        ROTTNE = 1.1,
+        CATERPILLAR = 1.1,
+        KENWORTH = 1.1,
+        PETERBILT = 1.1,
+        SCHLUETER = 1.1,
+        CLAAS = 1.1,
+        ROPA = 1.1,
+        HOLMER = 1.1,
+        MACK = 1.1,
+        KRONE = 1.1,
+        KUBOTA = 1.1,
+        MAN = 1.1,
+        CHALLENGER = 1.1,
+        AGCO = 1.1,
+        MERCEDES = 1.1,
+        MERCEDESBENZ = 1.1,
+        MERCEDESBENZTRUCKS = 1.1,
+        KRAMER = 1.1,
+        VALTRA = 1.2,
+        LINDNER = 1.1,
+        GMC = 1.1,
+        CASEIH = 1.1,
+        NEWHOLLAND = 1.1,
+        SDF = 1.1,
+        MASSEYFERGUSON = 1.2,
+        JCB = 1.1,
+        DEUTZFAHR = 1.1,
+        STEYR = 1.1,
+        VERSATILE = 1.1,
+        INTERNATIONAL = 1.1,
+        FORD = 1.1,
+        RENAULT = 1.1,
+        INTERNATIONALHARVESTER = 1.1,
+        LANDROVER = 1.0,
+        NEXAT = 1.0,
+        ZETOR = 1.0,
+        FIAT = 1.1,
+        LANDINI = 1.1,
+        SAME = 1.1,
+        MCCORMICK = 1.1,
+        ARMATRAC = 1.1,
+        MAHINDRA = 1.1,
+        STARA = 1.1,
+        PTZKIROWEC = 1.1,
+        MTZ = 1.1,
+        SKODA = 1.1,
+        GAZ = 1.0,
+        MAZ = 1.0,
+        BUEHRER = 1.1,
+        LTZ = 1.1,
+        PORSCHEDIESEL = 1.1,
+        OLIVER = 1.1,
+        ALLISCHALMERS = 1.1,
+        LIZARD = 1.0,
+        GIANTS = 1.0,
+        NONE = 1.0,
     },
-    
+
+    -- one 500 hour reference keeps the documented differences between programmes
+    SERVICE_REFERENCE_HOURS = 500,
+    -- ratings follow actual labour, not brand prestige
+    SERVICE_ACCESS_PROFILES = {
+        SIMPLE = {label = "rms_service_access_easy", transmission = 0.9},
+        STANDARD = {label = "rms_service_access_average"},
+        COMPLEX = {label = "rms_service_access_demanding", transmission = 1.25, diagnostic = 1.25}
+    },
+    SERVICE_ACCESS_OVERRIDES = {
+        -- accessible routine service points, internal gearbox work apart
+        ["data/vehicles/deutzfahr/series6c/series6c.xml"] = {maintenance = 0.9},
+        ["data/vehicles/zetor/proximahs120/proximahs120.xml"] = {profile = "SIMPLE", maintenance = 0.9}
+    },
+    SERVICE_PROGRAM = {
+        engine = { hours = 500, months = 12 },
+        transmission = { hours = 1000, months = 24 },
+        hydraulic = { hours = 1000, months = 24 },
+        coolant = { hours = 2000, months = 24 }
+    },
+    SERVICE_PROGRAMS = {
+        -- Deutz-Fahr 6C brochure p.43, the FS25 RVshift models having the Deutz 3.6 engine
+        ["data/vehicles/deutzfahr/series6c/series6c.xml"] = {
+            engine = { hours = 500, months = 12 },
+            transmission = { hours = 1000, months = 12 },
+            hydraulic = { hours = 1000, months = 12 }
+        },
+        -- Stage V T Series: 600 hour service and yearly minimum, other circuits estimated
+        ["data/vehicles/valtra/tseries/tseries.xml"] = {
+            engine = { hours = 600, months = 12 }
+        },
+        -- Stage V Puma family, the 260 approximated on it
+        ["data/vehicles/caseih/puma/puma.xml"] = {
+            engine = { hours = 750, months = 18, estimated = true },
+            transmission = { hours = 1500, estimated = true },
+            hydraulic = { hours = 1500, estimated = true }
+        }
+    },
+
     TUTORIAL_MESSAGES = {
         SERVICE_DUE_SOON = false,
         SERVICE_INTERVAL_EXPIRED = false,
@@ -992,6 +1135,7 @@ RMS_Config = {
         CVT_OVERHEAT = false,
         HEAVY_TRAILER = false,
         CHASSIS_VIBRATION = false,
+        TERRAIN_IMPACT = false,
         DRIVETRAIN_WINDUP = false,
         STEERING = false,
         CRANKING = false,
@@ -1011,6 +1155,7 @@ RMS_Config = {
         EXHAUST_SMOKE = false,
         DRIVETRAIN_MODES = false,
         PARK_BRAKE = false,
+        PARK_BRAKE_MANUAL = false,
         TRANSMISSION_OVERHEAT = false,
     }
 }
@@ -1143,17 +1288,15 @@ function RMS_Config.syncTutorialState()
     local state = RMS_Config.captureTutorialState()
     if g_server ~= nil then
         RMS_Config.setTutorialPlayerState(RMS_Config.TUTORIAL_LOCAL_USER_ID, state)
-    elseif RMS_TutorialStateEvent ~= nil then
+    else
         RMS_TutorialStateEvent.sendToServer(state)
     end
 end
 
 RMS_Config.savegameFile = "realisticMechanicalSystems.xml"
 RMS_Config.legacySavegameFile = "advancedDamageSystem.xml"
-RMS_Config.sharedSettingsDirectory = "modSettings/FS25_RealisticMechanicalSystems/"
 
 ---Prints a debug line while debug mode is on
--- @param any ... values to print
 local function log_dbg(...)
     if RMS_Config.DEBUG then
         local args = {...}
@@ -1163,8 +1306,6 @@ local function log_dbg(...)
 end
 
 ---Writes the tutorial state of every player to the settings file
--- @param number xmlFile XML file handle
--- @param string root xml root key
 local function saveTutorialPlayerStates(xmlFile, root)
     local userIds = {}
     for uniqueUserId, _ in pairs(RMS_Config.TUTORIAL_PLAYER_STATES) do
@@ -1185,8 +1326,6 @@ local function saveTutorialPlayerStates(xmlFile, root)
 end
 
 ---Reads the tutorial state of every player from the settings file
--- @param number xmlFile XML file handle
--- @param string root xml root key
 local function loadTutorialPlayerStates(xmlFile, root)
     RMS_Config.TUTORIAL_PLAYER_STATES = {}
     local index = 0
@@ -1210,9 +1349,6 @@ local function loadTutorialPlayerStates(xmlFile, root)
 end
 
 ---Writes every adjustable setting to a settings file
--- @param string xmlFileName settings file path
--- @param boolean includeTutorialStates true to write the tutorial progress as well
--- @return boolean written true once the file is written
 local function writeConfigFile(xmlFileName, includeTutorialStates)
     local xmlFile = createXMLFile("realisticMechanicalSystems", xmlFileName, "realisticMechanicalSystems")
     if xmlFile == nil or xmlFile == 0 then
@@ -1244,21 +1380,11 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
     setXMLFloat(xmlFile, root .. ".CLOSE_HOUR",             RMS_Config.WORKSHOP.CLOSE_HOUR)
 
     -- thermal
-    setXMLFloat(xmlFile, root .. ".TEMPERATURE_CHANGE_SPEED", RMS_Config.THERMAL.TEMPERATURE_CHANGE_SPEED)
-    setXMLFloat(xmlFile, root .. ".TRANS_TEMPERATURE_CHANGE_MULTIPLIER", RMS_Config.THERMAL.TRANS_TEMPERATURE_CHANGE_MULTIPLIER)
-    setXMLFloat(xmlFile, root .. ".MAX_DIRT_INFLUENCE",     RMS_Config.THERMAL.MAX_DIRT_INFLUENCE)
-
-    -- electrical
-    setXMLFloat(xmlFile, root .. ".BATTERY_USABLE_CAPACITY_FACTOR", RMS_Config.ELECTRICAL.BATTERY_USABLE_CAPACITY_FACTOR)
-    setXMLFloat(xmlFile, root .. ".ALT_MAX_OUTPUT",         RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT)
-    setXMLFloat(xmlFile, root .. ".IDLE_CURRENT_A",         RMS_Config.ELECTRICAL.IDLE_CURRENT_A)
 
     -- drivetrain
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_ENABLED",           RMS_Config.DRIVETRAIN.ENABLED)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_ALLOW_AUTO_MODE",   RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE)
-    setXMLBool (xmlFile, root .. ".DRIVETRAIN_WINDUP_DAMAGE",     RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED)
     setXMLBool (xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_ENABLED", RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED)
-    setXMLBool (xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_AUTO",    RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE)
 
     -- exhaust
     setXMLBool (xmlFile, root .. ".EXHAUST_SMOKE_ENABLED",   RMS_Config.EXHAUST.ENABLED)
@@ -1278,21 +1404,10 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
     return true
 end
 
----Returns the path of the settings file shared by the new savegames
--- @return string path shared settings file path
-function RMS_Config.getSharedSettingsFilePath()
-    return getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory .. RMS_Config.savegameFile
-end
-
----Writes every adjustable setting to the savegame file, then to the shared one
--- @return boolean written true once both files are written
+---Writes every adjustable setting to the savegame file
+-- @return boolean written true once the file is written
 function RMS_Config.saveToXMLFile()
-    if g_currentMission == nil or not g_currentMission:getIsServer() then
-        return false
-    end
-
-    if g_currentMission.missionInfo == nil then
-        log_dbg("SAVE ABORT - missionInfo is nil")
+    if not g_currentMission:getIsServer() then
         return false
     end
 
@@ -1303,25 +1418,12 @@ function RMS_Config.saveToXMLFile()
 
     local savegameWritten = writeConfigFile(savegameFolderPath .. "/" .. RMS_Config.savegameFile, true)
 
-    createFolder(getUserProfileAppPath() .. RMS_Config.sharedSettingsDirectory)
-    local sharedWritten = writeConfigFile(RMS_Config.getSharedSettingsFilePath(), false)
-
-    return savegameWritten and sharedWritten
+    return savegameWritten
 end
 
 ---Reads every adjustable setting from the savegame settings file
 function RMS_Config.loadFromXMLFile()
     if RMS_Config._loaded then
-        return
-    end
-
-    if g_currentMission == nil then
-        log_dbg("LOAD SKIP - g_currentMission is nil")
-        return
-    end
-
-    if g_currentMission.missionInfo == nil then
-        log_dbg("LOAD SKIP - missionInfo is nil")
         return
     end
 
@@ -1336,10 +1438,6 @@ function RMS_Config.loadFromXMLFile()
     if not fileExists(xmlFileName) then
         xmlFileName = savegameFolderPath .. "/" .. RMS_Config.legacySavegameFile
         isLegacyFile = fileExists(xmlFileName)
-    end
-
-    if not fileExists(xmlFileName) then
-        xmlFileName = RMS_Config.getSharedSettingsFilePath()
     end
 
     if not fileExists(xmlFileName) then
@@ -1408,26 +1506,6 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLFloat(xmlFile, root .. ".CLOSE_HOUR")
     if v ~= nil then RMS_Config.WORKSHOP.CLOSE_HOUR = v end
 
-    -- thermal
-    v = getXMLFloat(xmlFile, root .. ".TEMPERATURE_CHANGE_SPEED")
-    if v ~= nil then RMS_Config.THERMAL.TEMPERATURE_CHANGE_SPEED = math.clamp(v, 0.5, 2.0) end
-
-    v = getXMLFloat(xmlFile, root .. ".TRANS_TEMPERATURE_CHANGE_MULTIPLIER")
-    if v ~= nil then RMS_Config.THERMAL.TRANS_TEMPERATURE_CHANGE_MULTIPLIER = math.clamp(v, 0.5, 2.0) end
-
-    v = getXMLFloat(xmlFile, root .. ".MAX_DIRT_INFLUENCE")
-    if v ~= nil then RMS_Config.THERMAL.MAX_DIRT_INFLUENCE = math.clamp(v, 0.0, 1.0) end
-
-    -- electrical
-    v = getXMLFloat(xmlFile, root .. ".BATTERY_USABLE_CAPACITY_FACTOR")
-    if v ~= nil then RMS_Config.ELECTRICAL.BATTERY_USABLE_CAPACITY_FACTOR = v end
-
-    v = getXMLFloat(xmlFile, root .. ".ALT_MAX_OUTPUT")
-    if v ~= nil then RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT = v end
-
-    v = getXMLFloat(xmlFile, root .. ".IDLE_CURRENT_A")
-    if v ~= nil then RMS_Config.ELECTRICAL.IDLE_CURRENT_A = v end
-
     -- drivetrain
     v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_ENABLED")
     if v ~= nil then RMS_Config.DRIVETRAIN.ENABLED = v end
@@ -1435,15 +1513,9 @@ function RMS_Config.loadFromXMLFile()
     v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_ALLOW_AUTO_MODE")
     if v ~= nil then RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE = v end
 
-    v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_WINDUP_DAMAGE")
-    if v ~= nil then RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED = v end
-
 
     v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_ENABLED")
     if v ~= nil then RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED = v end
-
-    v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_AUTO")
-    if v ~= nil then RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE = v end
 
     -- exhaust
     v = getXMLBool(xmlFile, root .. ".EXHAUST_SMOKE_ENABLED")
@@ -1468,18 +1540,6 @@ function RMS_Config.applyLoadedVersion()
     local loadedVersion = tonumber(RMS_Config.loadedConfigVersion) or 0
     local currentVersion = RMS_Config.CONFIG_VERSION
     if loadedVersion > currentVersion then
-        if Logging ~= nil and Logging.warning ~= nil then
-            Logging.warning("RMS: settings file version %d is newer than supported %d", loadedVersion, currentVersion)
-        end
-        return
+        Logging.warning("RMS: settings file version %d is newer than supported %d", loadedVersion, currentVersion)
     end
-
-    if loadedVersion < currentVersion then
-        RMS_Config.migrateLoadedSettings(loadedVersion)
-    end
-end
-
----Migrates settings loaded from an older configuration file
--- @param integer loadedVersion version read from the file
-function RMS_Config.migrateLoadedSettings(loadedVersion)
 end

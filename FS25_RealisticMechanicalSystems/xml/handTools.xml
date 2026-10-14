@@ -9,6 +9,12 @@
         <type name="jumperCables" parent="base" xmlFile="objects/jumperCables/jumperCables.xml">
             <specialization name="rmsHandTools"/>
         </type>
+        <type name="rmsFluidCanister" parent="base">
+            <specialization name="rmsFluidHandTool"/>
+        </type>
+        <type name="rmsDrumPump" parent="base">
+            <specialization name="rmsDrumPump"/>
+        </type>
     </types>
 
     <specializations>
@@ -16,5 +22,13 @@
             name="rmsHandTools"
             className="rmsHandTools"
             filename="scripts/RMS_HandTools.lua"/>
+        <specialization
+            name="rmsFluidHandTool"
+            className="RMS_FluidHandTool"
+            filename="scripts/RMS_FluidHandTool.lua"/>
+        <specialization
+            name="rmsDrumPump"
+            className="RMS_DrumPump"
+            filename="scripts/RMS_DrumPump.lua"/>
     </specializations>
 </handTools>

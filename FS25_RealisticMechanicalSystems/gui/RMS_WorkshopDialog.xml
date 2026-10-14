@@ -37,7 +37,7 @@
                 </Button>
             </BoxLayout>
             <ThreePartBitmap profile="rms_workshopTabSeparator" />
-            <MultiTextOption profile="rms_workshopTabPaging" id="workshopTabPaging" focusInit="onOpen" onClick="onWorkshopTabPagingChanged" />
+            <MultiTextOption profile="rms_workshopTabPaging" id="workshopTabPaging" onClick="onWorkshopTabPagingChanged" />
 
             <!-- Summary -->
             <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="workshopPages[1]">
@@ -55,11 +55,11 @@
 
                         <GuiElement profile="rms_workshopCardVehicle">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
-                            <Bitmap profile="rms_workshopVehiclePicture" id="vehicleImage" position="20px -90px" size="341px 288px" />
+                            <Bitmap profile="rms_workshopVehiclePicture" id="vehicleImage" position="50.785px -90px" size="279.43px 236px" />
                             <Text profile="rms_workshopVehicleBrand" id="vehicleBrandValue" position="20px -16px" size="341px 22px" />
                             <Text profile="rms_workshopVehicleModel" id="vehicleNameValue" position="20px -38px" size="341px 62px" />
 
-                            <BoxLayout profile="rms_workshopStack" position="20px -398px" size="341px 148px" elementSpacing="8px">
+                            <BoxLayout profile="rms_workshopStack" position="20px -346px" size="341px 200px" elementSpacing="8px">
                                 <GuiElement profile="rms_workshopBlock" size="341px 44px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
                                     <Bitmap profile="rms_workshopIcon" position="12px -4px" imageSliceId="gui.icon_calendar" />
@@ -73,6 +73,13 @@
                                     <Text profile="rms_workshopDetail" position="58px -9px" size="139px 26px" text="$l10n_rms_ws_label_operating_hours" />
                                     <RoundCorner profile="rms_workshopValuePill" position="203px -8px" size="126px 28px" />
                                     <Text profile="rms_workshopPillValue" id="operatingHoursValue" position="215px -8px" size="102px 28px" />
+                                </GuiElement>
+                                <GuiElement profile="rms_workshopBlock" size="341px 44px">
+                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                    <Text profile="rms_workshopPillValue" position="12px -4px" size="36px 36px" text="ODO" textSize="15px" />
+                                    <Text profile="rms_workshopDetail" position="58px -9px" size="139px 26px" text="$l10n_rms_odometer_label" />
+                                    <RoundCorner profile="rms_workshopValuePill" position="203px -8px" size="126px 28px" />
+                                    <Text profile="rms_workshopPillValue" id="odometerValue" position="215px -8px" size="102px 28px" />
                                 </GuiElement>
                                 <GuiElement profile="rms_workshopBlock" size="341px 44px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
@@ -93,56 +100,68 @@
                             </GuiElement>
                             <GuiElement profile="rms_workshopBlock" id="conditionRingArea" position="60px -70px" size="160px 160px" onDraw="onDrawConditionRing" />
                             <Text profile="rms_workshopRingValue" id="conditionValue" position="88px -122px" size="104px 56px" textAlignment="center" />
+                            <BoxLayout profile="rms_ringValueStack" id="conditionOutdatedStack" position="88px -102px" size="104px 96px" visible="false">
+                                <Text profile="rms_ringOutdatedValue" id="conditionOutdatedValue" size="104px 34px" />
+                                <Text profile="rms_ringOutdated" size="104px 16px" text="$l10n_rms_ws_reading_outdated" />
+                            </BoxLayout>
                             <GuiElement profile="rms_workshopBlock" position="20px -246px" size="241px 228px">
                                 <RoundCorner profile="rms_workshopSurfaceSoft" size="241px 228px" />
                                 <BoxLayout profile="rms_workshopStack" id="summarySystemsLayout" position="12px -12px" size="217px 204px" elementSpacing="4px">
                                     <GuiElement profile="rms_workshopBlock" size="217px 22px" id="summarySystemRow[1]">
                                         <Text profile="rms_workshopSystemName" size="124px 22px" id="summarySystemName[1]" />
-                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" />
+                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" id="summarySystemTrack[1]" />
                                         <Bitmap profile="rms_workshopGaugeFill" position="130px -7px" size="56px 8px" id="summarySystemGauge[1]" />
                                         <Text profile="rms_workshopSystemValue" position="190px 0px" size="27px 22px" id="summarySystemValue[1]" />
+                                        <Text profile="rms_workshopSystemRating" position="130px 0px" size="87px 22px" id="summarySystemRating[1]" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" size="217px 22px" id="summarySystemRow[2]">
                                         <Text profile="rms_workshopSystemName" size="124px 22px" id="summarySystemName[2]" />
-                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" />
+                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" id="summarySystemTrack[2]" />
                                         <Bitmap profile="rms_workshopGaugeFill" position="130px -7px" size="56px 8px" id="summarySystemGauge[2]" />
                                         <Text profile="rms_workshopSystemValue" position="190px 0px" size="27px 22px" id="summarySystemValue[2]" />
+                                        <Text profile="rms_workshopSystemRating" position="130px 0px" size="87px 22px" id="summarySystemRating[2]" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" size="217px 22px" id="summarySystemRow[3]">
                                         <Text profile="rms_workshopSystemName" size="124px 22px" id="summarySystemName[3]" />
-                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" />
+                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" id="summarySystemTrack[3]" />
                                         <Bitmap profile="rms_workshopGaugeFill" position="130px -7px" size="56px 8px" id="summarySystemGauge[3]" />
                                         <Text profile="rms_workshopSystemValue" position="190px 0px" size="27px 22px" id="summarySystemValue[3]" />
+                                        <Text profile="rms_workshopSystemRating" position="130px 0px" size="87px 22px" id="summarySystemRating[3]" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" size="217px 22px" id="summarySystemRow[4]">
                                         <Text profile="rms_workshopSystemName" size="124px 22px" id="summarySystemName[4]" />
-                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" />
+                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" id="summarySystemTrack[4]" />
                                         <Bitmap profile="rms_workshopGaugeFill" position="130px -7px" size="56px 8px" id="summarySystemGauge[4]" />
                                         <Text profile="rms_workshopSystemValue" position="190px 0px" size="27px 22px" id="summarySystemValue[4]" />
+                                        <Text profile="rms_workshopSystemRating" position="130px 0px" size="87px 22px" id="summarySystemRating[4]" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" size="217px 22px" id="summarySystemRow[5]">
                                         <Text profile="rms_workshopSystemName" size="124px 22px" id="summarySystemName[5]" />
-                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" />
+                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" id="summarySystemTrack[5]" />
                                         <Bitmap profile="rms_workshopGaugeFill" position="130px -7px" size="56px 8px" id="summarySystemGauge[5]" />
                                         <Text profile="rms_workshopSystemValue" position="190px 0px" size="27px 22px" id="summarySystemValue[5]" />
+                                        <Text profile="rms_workshopSystemRating" position="130px 0px" size="87px 22px" id="summarySystemRating[5]" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" size="217px 22px" id="summarySystemRow[6]">
                                         <Text profile="rms_workshopSystemName" size="124px 22px" id="summarySystemName[6]" />
-                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" />
+                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" id="summarySystemTrack[6]" />
                                         <Bitmap profile="rms_workshopGaugeFill" position="130px -7px" size="56px 8px" id="summarySystemGauge[6]" />
                                         <Text profile="rms_workshopSystemValue" position="190px 0px" size="27px 22px" id="summarySystemValue[6]" />
+                                        <Text profile="rms_workshopSystemRating" position="130px 0px" size="87px 22px" id="summarySystemRating[6]" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" size="217px 22px" id="summarySystemRow[7]">
                                         <Text profile="rms_workshopSystemName" size="124px 22px" id="summarySystemName[7]" />
-                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" />
+                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" id="summarySystemTrack[7]" />
                                         <Bitmap profile="rms_workshopGaugeFill" position="130px -7px" size="56px 8px" id="summarySystemGauge[7]" />
                                         <Text profile="rms_workshopSystemValue" position="190px 0px" size="27px 22px" id="summarySystemValue[7]" />
+                                        <Text profile="rms_workshopSystemRating" position="130px 0px" size="87px 22px" id="summarySystemRating[7]" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" size="217px 22px" id="summarySystemRow[8]">
                                         <Text profile="rms_workshopSystemName" size="124px 22px" id="summarySystemName[8]" />
-                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" />
+                                        <Bitmap profile="rms_workshopGaugeTrack" position="130px -7px" size="56px 8px" id="summarySystemTrack[8]" />
                                         <Bitmap profile="rms_workshopGaugeFill" position="130px -7px" size="56px 8px" id="summarySystemGauge[8]" />
                                         <Text profile="rms_workshopSystemValue" position="190px 0px" size="27px 22px" id="summarySystemValue[8]" />
+                                        <Text profile="rms_workshopSystemRating" position="130px 0px" size="87px 22px" id="summarySystemRating[8]" />
                                     </GuiElement>
                                 </BoxLayout>
                             </GuiElement>
@@ -161,6 +180,10 @@
                             </GuiElement>
                             <GuiElement profile="rms_workshopBlock" id="serviceRingArea" position="60px -70px" size="160px 160px" onDraw="onDrawServiceRing" />
                             <Text profile="rms_workshopRingValue" id="serviceValue" position="88px -122px" size="104px 56px" textAlignment="center" />
+                            <BoxLayout profile="rms_ringValueStack" id="serviceOutdatedStack" position="88px -102px" size="104px 96px" visible="false">
+                                <Text profile="rms_ringOutdatedValue" id="serviceOutdatedValue" size="104px 34px" />
+                                <Text profile="rms_ringOutdated" size="104px 16px" text="$l10n_rms_ws_reading_outdated" />
+                            </BoxLayout>
                             <BoxLayout profile="rms_workshopStack" position="20px -246px" size="241px 228px" elementSpacing="12px">
                                 <GuiElement profile="rms_workshopBlock" size="241px 48px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" size="241px 48px" />
@@ -170,9 +193,9 @@
                                 </GuiElement>
                                 <GuiElement profile="rms_workshopBlock" size="241px 48px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" size="241px 48px" />
-                                    <Text profile="rms_workshopDetail" position="14px 0px" size="117px 48px" text="$l10n_rms_ws_label_maintainability" />
+                                    <Text profile="rms_workshopDetail" position="14px 0px" size="117px 48px" text="$l10n_rms_ws_label_service_access" />
                                     <RoundCorner profile="rms_workshopValuePill" position="141px -10px" size="90px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="summaryMaintainability" position="153px -10px" size="66px 28px" />
+                                    <Text profile="rms_workshopPillValue" id="summaryServiceAccess" position="153px -10px" size="66px 28px" />
                                 </GuiElement>
                                 <GuiElement profile="rms_workshopBlock" size="241px 48px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" size="241px 48px" />
@@ -228,6 +251,10 @@
                                         <Text profile="rms_workshopPillValue" id="engineOilValue" position="292px -8px" size="132px 22px" />
                                         <Bitmap profile="rms_workshopGaugeTrack" position="56px -38px" size="380px 10px" />
                                         <Bitmap profile="rms_workshopGaugeFill" id="engineOilGauge" position="56px -38px" size="380px 10px" />
+                                        <Bitmap profile="rms_fluidGaugeUnder" id="engineOilGaugeUnder" position="56px -38px" size="6px 10px" visible="false" />
+                                        <Bitmap profile="rms_workshopGaugeZone" position="208px -38px" size="152px 10px" />
+                                        <Bitmap profile="rms_fluidGaugeMark" position="207px -35px" size="2px 16px" />
+                                        <Bitmap profile="rms_fluidGaugeMark" position="359px -35px" size="2px 16px" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" id="coolantRow" size="454px 56px">
                                         <RoundCorner profile="rms_workshopSurfaceSoft" />
@@ -237,6 +264,10 @@
                                         <Text profile="rms_workshopPillValue" id="coolantValue" position="292px -8px" size="132px 22px" />
                                         <Bitmap profile="rms_workshopGaugeTrack" position="56px -38px" size="380px 10px" />
                                         <Bitmap profile="rms_workshopGaugeFill" id="coolantGauge" position="56px -38px" size="380px 10px" />
+                                        <Bitmap profile="rms_fluidGaugeUnder" id="coolantGaugeUnder" position="56px -38px" size="6px 10px" visible="false" />
+                                        <Bitmap profile="rms_workshopGaugeZone" position="208px -38px" size="152px 10px" />
+                                        <Bitmap profile="rms_fluidGaugeMark" position="207px -35px" size="2px 16px" />
+                                        <Bitmap profile="rms_fluidGaugeMark" position="359px -35px" size="2px 16px" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" id="transmissionOilRow" size="454px 56px">
                                         <RoundCorner profile="rms_workshopSurfaceSoft" />
@@ -246,6 +277,10 @@
                                         <Text profile="rms_workshopPillValue" id="transmissionOilValue" position="292px -8px" size="132px 22px" />
                                         <Bitmap profile="rms_workshopGaugeTrack" position="56px -38px" size="380px 10px" />
                                         <Bitmap profile="rms_workshopGaugeFill" id="transmissionOilGauge" position="56px -38px" size="380px 10px" />
+                                        <Bitmap profile="rms_fluidGaugeUnder" id="transmissionOilGaugeUnder" position="56px -38px" size="6px 10px" visible="false" />
+                                        <Bitmap profile="rms_workshopGaugeZone" position="208px -38px" size="152px 10px" />
+                                        <Bitmap profile="rms_fluidGaugeMark" position="207px -35px" size="2px 16px" />
+                                        <Bitmap profile="rms_fluidGaugeMark" position="359px -35px" size="2px 16px" />
                                     </GuiElement>
                                     <GuiElement profile="rms_workshopBlock" id="hydraulicFluidRow" size="454px 56px">
                                         <RoundCorner profile="rms_workshopSurfaceSoft" />
@@ -255,6 +290,10 @@
                                         <Text profile="rms_workshopPillValue" id="hydraulicFluidValue" position="292px -8px" size="132px 22px" />
                                         <Bitmap profile="rms_workshopGaugeTrack" position="56px -38px" size="380px 10px" />
                                         <Bitmap profile="rms_workshopGaugeFill" id="hydraulicFluidGauge" position="56px -38px" size="380px 10px" />
+                                        <Bitmap profile="rms_fluidGaugeUnder" id="hydraulicFluidGaugeUnder" position="56px -38px" size="6px 10px" visible="false" />
+                                        <Bitmap profile="rms_workshopGaugeZone" position="208px -38px" size="152px 10px" />
+                                        <Bitmap profile="rms_fluidGaugeMark" position="207px -35px" size="2px 16px" />
+                                        <Bitmap profile="rms_fluidGaugeMark" position="359px -35px" size="2px 16px" />
                                     </GuiElement>
                                 </BoxLayout>
                             </GuiElement>
@@ -291,16 +330,16 @@
                                 <GuiElement profile="rms_workshopBlock" size="272px 44px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
                                     <Bitmap profile="rms_workshopIcon" position="12px -4px" imageSliceId="gui.storeAttribute_condition" />
-                                    <Text profile="rms_workshopDetail" position="58px -9px" size="90px 26px" text="$l10n_rms_ws_label_condition" />
-                                    <RoundCorner profile="rms_workshopValuePill" position="154px -8px" size="106px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="diagnosticCondition" position="166px -8px" size="82px 28px" />
+                                    <Text profile="rms_workshopDetail" position="54px -9px" size="94px 26px" text="$l10n_rms_ws_label_condition" />
+                                    <RoundCorner profile="rms_workshopValuePill" position="152px -8px" size="112px 28px" />
+                                    <Text profile="rms_workshopPillValue" id="diagnosticCondition" position="164px -8px" size="88px 28px" />
                                 </GuiElement>
                                 <GuiElement profile="rms_workshopBlock" size="272px 44px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
                                     <GuiElement profile="rms_workshopMaintenanceIcon" position="14.5px -6.5px" onDraw="onDrawMaintenanceIcon" />
-                                    <Text profile="rms_workshopDetail" position="58px -9px" size="90px 26px" text="$l10n_rms_ws_label_service" />
-                                    <RoundCorner profile="rms_workshopValuePill" position="154px -8px" size="106px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="diagnosticService" position="166px -8px" size="82px 28px" />
+                                    <Text profile="rms_workshopDetail" position="54px -9px" size="94px 26px" text="$l10n_rms_ws_label_service" />
+                                    <RoundCorner profile="rms_workshopValuePill" position="152px -8px" size="112px 28px" />
+                                    <Text profile="rms_workshopPillValue" id="diagnosticService" position="164px -8px" size="88px 28px" />
                                 </GuiElement>
                             </BoxLayout>
                         </GuiElement>
@@ -312,17 +351,17 @@
                                 <Text profile="rms_workshopSectionTitle" position="16px 0px" size="689px 32px" text="$l10n_rms_ws_section_breakdowns" />
                                 <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="689px 1px" />
                             </GuiElement>
-                            <GuiElement profile="rms_workshopBlock" position="20px -60px" size="705px 44px">
+                            <GuiElement profile="rms_workshopBlock" id="breakdownInfoRow" position="20px -60px" size="705px 44px">
                                 <BoxLayout profile="rms_workshopInfoGroup" size="705px 44px">
                                     <Bitmap profile="rms_workshopIcon" imageSliceId="gui.storeAttribute_info" />
                                     <Text profile="rms_workshopInfoText" size="0px 26px" text="$l10n_rms_ws_info_inspection_reveals" />
                                 </BoxLayout>
                             </GuiElement>
                             <GuiElement profile="rms_workshopBlock" position="20px -116px" size="705px 430px">
-                                <SmoothList profile="rms_workshopTableList" id="breakdownTable" position="0px 0px" size="683px 430px" visible="false">
-                                    <ListItem profile="rms_workshopTableRow" name="orderRowTemplate" size="683px 72px" updateChildrenState="false">
-                                        <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                        <Button profile="rms_workshopSelectionToggle" position="14px -16px" name="rms_tableBreakdownSelect" onClick="onRowClick">
+                                <SmoothList profile="rms_workshopTableList" id="breakdownTable" position="0px 0px" size="683px 430px" onClick="onBreakdownClick" selectedWithoutFocus="false" showHighlights="true" visible="false">
+                                    <ListItem profile="rms_workshopTableRow" name="orderRowTemplate" size="683px 72px" updateChildrenState="false" handleFocus="true">
+                                        <RoundCorner profile="rms_logRowSurface" name="surface" />
+                                        <Button profile="rms_workshopSelectionToggle" position="14px -16px" name="rms_tableBreakdownSelect" handleFocus="false">
                                             <RoundCorner profile="rms_workshopSelectionToggleBg" />
                                             <Bitmap profile="rms_workshopSelectionIcon" imageSliceId="gui.tick" />
                                         </Button>
@@ -337,10 +376,14 @@
                                     </ListItem>
                                 </SmoothList>
                                 <ThreePartBitmap profile="rms_listSliderBox" position="0px 0px" size="6px 100%">
-                                    <Slider profile="fs25_listSlider" dataElementId="breakdownTable" />
+                                    <Slider profile="fs25_listSlider" dataElementId="breakdownTable" hideParentWhenEmpty="true" />
                                 </ThreePartBitmap>
                             </GuiElement>
-                            <Text profile="rms_workshopCenteredDetail" id="emptyTableText" position="20px -236px" size="705px 110px" text="$l10n_rms_ws_info_no_breakdowns" />
+                            <GuiElement profile="rms_workshopBlock" id="breakdownEmptyPanel" size="745px 566px" visible="false">
+                                <Bitmap profile="rms_workshopIcon" position="336.5px -207px" size="72px 72px" imageSliceId="gui.icon_vehicleDealer_search" />
+                                <Text profile="rms_workshopTitle" id="breakdownEmptyTitle" position="20px -303px" size="705px 36px" textAlignment="center" text="$l10n_rms_ws_faults_none_title" />
+                                <Text profile="rms_workshopCenteredDetail" id="breakdownEmptyHint" position="112.5px -347px" size="520px 40px" text="$l10n_rms_ws_faults_none_hint" />
+                            </GuiElement>
                         </GuiElement>
 
                         <GuiElement profile="rms_workshopCardQuote">
@@ -356,7 +399,7 @@
                                     <RoundCorner profile="rms_workshopSubsectionAccent" position="3px 0px" />
                                     <Text profile="rms_workshopListLabel" position="12px 0px" size="308px 18px" text="$l10n_rms_ws_section_parts" />
                                 </GuiElement>
-                                <SmoothList profile="rms_workshopQuotePartsList" id="diagnosticSelectedPartsTable" position="16px -44px" size="320px 288px">
+                                <SmoothList profile="rms_workshopQuotePartsList" id="diagnosticSelectedPartsTable" position="16px -44px" size="320px 288px" handleFocus="false">
                                     <ListItem profile="rms_workshopQuotePartRow" name="diagnosticEstimatePartRowTemplate" size="320px 18px" updateChildrenState="false">
                                         <Text profile="rms_workshopListBullet" position="0px 0px" size="8px 18px" text="·" />
                                         <Text profile="rms_workshopQuotePart" position="12px 0px" size="308px 18px" name="diagnosticEstimatePart" />
@@ -418,7 +461,7 @@
                                     <RoundCorner profile="rms_workshopActionBg" />
                                     <GuiElement profile="rms_workshopOilActionIcon" onDraw="onDrawOilActionIcon" />
                                 </Button>
-                                <Button profile="rms_workshopActionChoice" id="interventionActionButtons[6]" size="310px 50px" text="$l10n_button_repaint" onClick="onClickBodywork">
+                                <Button profile="rms_workshopActionChoice" id="interventionActionButtons[6]" size="310px 50px" text="$l10n_rms_ws_action_choice_bodywork" onClick="onClickBodywork">
                                     <RoundCorner profile="rms_workshopActionBg" />
                                     <Bitmap profile="rms_workshopActionIcon" imageSliceId="gui.icon_vehicleDealer_machines" />
                                 </Button>
@@ -434,36 +477,65 @@
                                     <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="631px 1px" />
                                 </GuiElement>
                                 <Bitmap profile="rms_workshopIcon" position="307px -207px" size="72px 72px" imageSliceId="gui.icon_construction_buildings" />
-                                <Text profile="rms_workshopTitle" position="20px -303px" size="647px 36px" textAlignment="center" text="$l10n_rms_ws_status_ready_title" />
-                                <Text profile="rms_workshopCenteredDetail" position="84px -347px" size="520px 40px" text="$l10n_rms_ws_status_ready_hint" />
+                                <Text profile="rms_workshopTitle" id="interventionReadyTitle" position="20px -303px" size="647px 36px" textAlignment="center" text="$l10n_rms_ws_status_ready_title" />
+                                <Text profile="rms_workshopCenteredDetail" id="interventionReadyHint" position="84px -347px" size="520px 40px" text="$l10n_rms_ws_status_ready_hint" />
                             </GuiElement>
                             <GuiElement profile="rms_workshopBlock" id="bodyworkOrderPanel" size="687px 566px" visible="false">
                                 <GuiElement profile="rms_workshopBlock" position="20px -16px" size="647px 32px">
                                     <RoundCorner profile="rms_workshopSectionAccent" />
-                                    <Text profile="rms_workshopSectionTitle" position="16px 0px" size="631px 32px" text="$l10n_button_repaint" />
+                                    <Text profile="rms_workshopSectionTitle" position="16px 0px" size="631px 32px" text="$l10n_rms_ws_section_paint_order" />
                                     <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="631px 1px" />
                                 </GuiElement>
-                                <BoxLayout profile="rms_workshopSegmentRow" id="bodyworkServiceSegmentRow" position="20px -82px" size="647px 50px">
-                                    <Button profile="rms_workshopConfigSegmentButton" id="bodyworkServiceButtons[1]" size="317.5px 50px" focusInit="onOpen" onClick="onClickBodyworkTouchup">
-                                        <RoundCorner profile="rms_workshopActionBg" />
+                                <GuiElement profile="rms_workshopBlock" id="bodyworkTable" position="20px -56px" size="647px 202px">
+                                    <Text profile="rms_workshopLevelCornerLabel" position="0px -6px" size="212px 18px" text="$l10n_rms_bodywork_wear" />
+                                    <Text profile="rms_workshopInspectionLastReport" id="bodyworkWearValue" position="0px -25px" size="212px 22px" />
+                                    <Text profile="rms_workshopLevelCornerReason" id="bodyworkWearReason" position="0px -48px" size="212px 30px" />
+                                    <RoundCorner profile="rms_workshopRule" position="0px -80px" size="220px 1px" />
+                                    <Text profile="rms_workshopLevelRowName" position="0px -82px" size="216px 20px" text="$l10n_rms_ws_paint_row_extent" />
+                                    <Text profile="rms_workshopLevelRowDetail" position="0px -100px" size="216px 16px" text="$l10n_rms_ws_paint_row_extent_detail" />
+                                    <RoundCorner profile="rms_workshopRule" position="0px -118px" size="220px 1px" />
+                                    <Text profile="rms_workshopLevelRowName" position="0px -120px" size="216px 20px" text="$l10n_rms_ws_paint_row_colors" />
+                                    <Text profile="rms_workshopLevelRowDetail" position="0px -138px" size="216px 16px" text="$l10n_rms_ws_paint_row_colors_detail" />
+                                    <RoundCorner profile="rms_workshopRule" position="0px -156px" size="220px 1px" />
+                                    <Text profile="rms_workshopLevelRowName" position="0px -158px" size="216px 20px" text="$l10n_rms_ws_paint_row_workshop" />
+                                    <Text profile="rms_workshopLevelRowDetail" position="0px -176px" size="216px 16px" text="$l10n_rms_ws_paint_row_workshop_detail" />
+                                    <Button profile="rms_workshopLevelColumn" id="bodyworkColumns[1]" position="228px 0px" size="205.5px 202px" onClick="onClickBodyworkTouchup">
+                                        <RoundCorner profile="rms_workshopLevelColumnFrame" position="0px 0px" size="205.5px 202px" />
+                                        <RoundCorner profile="rms_workshopLevelColumnBg" position="2px -2px" size="201.5px 198px" />
+                                        <Text profile="rms_workshopLevelName" position="4px -10px" size="197.5px 18px" text="$l10n_rms_bodywork_touchup" />
+                                        <Text profile="rms_workshopLevelPrice" id="bodyworkPrice[1]" position="4px -30px" size="197.5px 24px" />
+                                        <Text profile="rms_workshopLevelDuration" id="bodyworkDuration[1]" position="4px -54px" size="197.5px 18px" />
+                                        <RoundCorner profile="rms_workshopRule" position="10px -80px" size="185.5px 1px" />
+                                        <Text profile="rms_workshopLevelCellDone" id="bodyworkCellDone1[1]" position="4px -89px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellLight" id="bodyworkCellLight1[1]" position="4px -89px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellNone" id="bodyworkCellNone1[1]" position="4px -89px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellDone" id="bodyworkCellDone1[2]" position="4px -127px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellLight" id="bodyworkCellLight1[2]" position="4px -127px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellNone" id="bodyworkCellNone1[2]" position="4px -127px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellDone" id="bodyworkCellDone1[3]" position="4px -165px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellLight" id="bodyworkCellLight1[3]" position="4px -165px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellNone" id="bodyworkCellNone1[3]" position="4px -165px" size="197.5px 20px" />
                                     </Button>
-                                    <Button profile="rms_workshopConfigSegmentButton" id="bodyworkServiceButtons[2]" size="317.5px 50px" onClick="onClickBodyworkFull">
-                                        <RoundCorner profile="rms_workshopActionBg" />
+                                    <Button profile="rms_workshopLevelColumn" id="bodyworkColumns[2]" position="441.5px 0px" size="205.5px 202px" onClick="onClickBodyworkFull">
+                                        <RoundCorner profile="rms_workshopLevelColumnFrame" position="0px 0px" size="205.5px 202px" />
+                                        <RoundCorner profile="rms_workshopLevelColumnBg" position="2px -2px" size="201.5px 198px" />
+                                        <Text profile="rms_workshopLevelName" position="4px -10px" size="197.5px 18px" text="$l10n_rms_bodywork_full" />
+                                        <Text profile="rms_workshopLevelPrice" id="bodyworkPrice[2]" position="4px -30px" size="197.5px 24px" />
+                                        <Text profile="rms_workshopLevelDuration" id="bodyworkDuration[2]" position="4px -54px" size="197.5px 18px" />
+                                        <RoundCorner profile="rms_workshopRule" position="10px -80px" size="185.5px 1px" />
+                                        <Text profile="rms_workshopLevelCellDone" id="bodyworkCellDone2[1]" position="4px -89px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellLight" id="bodyworkCellLight2[1]" position="4px -89px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellNone" id="bodyworkCellNone2[1]" position="4px -89px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellDone" id="bodyworkCellDone2[2]" position="4px -127px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellLight" id="bodyworkCellLight2[2]" position="4px -127px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellNone" id="bodyworkCellNone2[2]" position="4px -127px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellDone" id="bodyworkCellDone2[3]" position="4px -165px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellLight" id="bodyworkCellLight2[3]" position="4px -165px" size="197.5px 20px" />
+                                        <Text profile="rms_workshopLevelCellNone" id="bodyworkCellNone2[3]" position="4px -165px" size="197.5px 20px" />
                                     </Button>
-                                </BoxLayout>
-                                <GuiElement profile="rms_workshopBlock" position="20px -152px" size="647px 102px">
-                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopValue" position="20px -10px" size="425px 30px" text="$l10n_rms_bodywork_wear" />
-                                    <Text profile="rms_workshopValue" id="bodyworkWearValue" position="476px -10px" size="151px 30px" textAlignment="right" />
-                                    <RoundCorner profile="rms_workshopRule" position="20px -46px" size="607px 1px" />
-                                    <Text profile="rms_workshopBodyworkDescription" id="bodyworkDescription" position="20px -52px" size="607px 36px" />
                                 </GuiElement>
-                                <GuiElement profile="rms_workshopBlock" id="bodyworkColorsHeader" position="20px -270px" size="647px 22px">
-                                    <RoundCorner profile="rms_workshopSectionAccent" />
-                                    <Text profile="rms_workshopSectionTitle" position="16px 0px" size="631px 22px" text="$l10n_rms_bodywork_colors_title" />
-                                    <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="631px 1px" />
-                                </GuiElement>
-                                <ScrollingLayout profile="rms_workshopBodyworkColorList" id="bodyworkColorList" position="20px -298px" size="625px 248px">
+                                <Text profile="rms_workshopConfigPrompt" id="bodyworkColorsHeader" position="20px -266px" size="647px 24px" text="$l10n_rms_bodywork_colors_title" />
+                                <ScrollingLayout profile="rms_workshopBodyworkColorList" id="bodyworkColorList" position="20px -299px" size="625px 247px">
                                     <GuiElement profile="rms_workshopBlock" id="bodyworkBaseColorRow" size="625px 77px">
                                         <RoundCorner profile="rms_workshopSurfaceSoft" />
                                         <Text profile="rms_workshopConfigChoiceTitle" name="colorTitle" position="16px -7px" size="593px 23px" text="$l10n_configuration_baseColor" />
@@ -501,10 +573,10 @@
                                         </Button>
                                     </GuiElement>
                                 </ScrollingLayout>
-                                <ThreePartBitmap profile="rms_inspectionObservationsSliderBox" id="bodyworkColorSliderBox" position="-20px -298px" size="6px 248px">
+                                <ThreePartBitmap profile="rms_inspectionObservationsSliderBox" id="bodyworkColorSliderBox" position="-20px -299px" size="6px 247px">
                                     <Slider profile="fs25_listSlider" dataElementId="bodyworkColorList" />
                                 </ThreePartBitmap>
-                                <GuiElement profile="rms_workshopBlock" id="bodyworkNoColorPanel" position="20px -298px" size="647px 80px" visible="false">
+                                <GuiElement profile="rms_workshopBlock" id="bodyworkNoColorPanel" position="20px -299px" size="647px 80px" visible="false">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
                                     <Text profile="rms_workshopCenteredDetail" id="bodyworkNoColorChoices" position="20px -16px" size="607px 48px" />
                                 </GuiElement>
@@ -613,7 +685,7 @@
 
                     <GuiElement profile="rms_workshopHeaderStrip">
                         <RoundCorner profile="rms_workshopSurfaceBand" />
-                        <Bitmap profile="rms_workshopVehiclePicture" id="technicalVehicleImage" position="20px -10px" size="96px 64px" />
+                        <Bitmap profile="rms_workshopVehiclePicture" id="technicalVehicleImage" position="30px -10px" size="76px 64px" />
                         <Text profile="rms_workshopHeroName" id="technicalVehicleName" position="132px -12px" size="318px 34px" textMinSize="26px" textLayoutMode="scrolling" textScrollOnFocusOnly="false" />
                         <Text profile="rms_workshopReportSubtitle" position="132px -46px" size="318px 24px" text="$l10n_rms_ws_tab_record" />
                         <BoxLayout profile="rms_workshopStackRow" position="470px -12px" size="983px 60px" elementSpacing="17px">
@@ -661,7 +733,7 @@
                                 <Slider profile="fs25_listSlider" dataElementId="technicalLogTable" />
                             </ThreePartBitmap>
                             <Text profile="rms_workshopCenteredDetail" id="technicalEmptyText" position="20px -200px" size="579px 100px" text="$l10n_rms_log_empty" />
-                            <Button profile="rms_workshopPrimaryButton" position="20px -496px" size="579px 50px" text="$l10n_rms_ws_label_maintenance_log" onClick="onClickShowLog">
+                            <Button profile="rms_workshopPrimaryButton" id="technicalShowLogButton" position="20px -496px" size="579px 50px" text="$l10n_rms_ws_label_maintenance_log" onClick="onClickShowLog">
                                 <RoundCorner profile="rms_workshopPrimaryButtonBg" />
                             </Button>
                         </GuiElement>
@@ -700,7 +772,7 @@
                                     <RoundCorner profile="rms_workshopSubsectionAccent" position="3px 0px" />
                                     <Text profile="rms_workshopListLabel" position="12px 0px" size="758px 18px" text="$l10n_rms_report_detected_breakdowns_title" />
                                 </GuiElement>
-                                <SmoothList profile="rms_logDetailPartsList" id="technicalReportBreakdownTable" position="16px -44px" size="748px 110px">
+                                <SmoothList profile="rms_logDetailPartsList" id="technicalReportBreakdownTable" position="16px -44px" size="748px 110px" handleFocus="false">
                                     <ListItem profile="rms_logDetailPartRow" name="technicalReportBreakdownRowTemplate" size="748px 22px" updateChildrenState="false">
                                         <Text profile="rms_workshopListBullet" position="0px 0px" size="8px 22px" text="·" />
                                         <Text profile="rms_logDetailPart" position="12px 0px" size="228px 22px" name="technicalReportBreakdownLeft" textLayoutMode="scrolling" textScrollOnFocusOnly="false" />
@@ -722,7 +794,7 @@
                                     <RoundCorner profile="rms_workshopSubsectionAccent" position="3px 0px" />
                                     <Text profile="rms_workshopListLabel" position="12px 0px" size="758px 18px" text="$l10n_rms_report_recommendations_title" />
                                 </GuiElement>
-                                <SmoothList profile="rms_logDetailPartsList" id="technicalReportRecommendationTable" position="16px -38px" size="748px 66px">
+                                <SmoothList profile="rms_logDetailPartsList" id="technicalReportRecommendationTable" position="16px -38px" size="748px 66px" handleFocus="false">
                                     <ListItem profile="rms_logDetailPartRow" name="technicalReportRecommendationRowTemplate" size="748px 22px" updateChildrenState="false">
                                         <Text profile="rms_workshopListBullet" position="0px 0px" size="8px 22px" text="·" />
                                         <Text profile="rms_logDetailPart" position="12px 0px" size="736px 22px" name="technicalReportRecommendationText" />
@@ -752,7 +824,7 @@
             <Bitmap profile="fs25_dialogButtonBoxSeparator" id="overhaulButtonSeparator" />
             <Button profile="buttonActivate" text="$l10n_rms_ws_action_refill" onClick="onClickRefill" id="refillButton" />
             <Bitmap profile="fs25_dialogButtonBoxSeparator" id="refillButtonSeparator" />
-            <Button profile="buttonExtra1" text="$l10n_button_repaint" onClick="onClickBodywork" id="bodyworkButton" />
+            <Button profile="buttonExtra1" text="$l10n_rms_spec_state_bodywork" onClick="onClickBodywork" id="bodyworkButton" handleFocus="false" />
             <Bitmap profile="fs25_dialogButtonBoxSeparator" id="bodyworkButtonSeparator" />
             <Button profile="buttonBack" text="$l10n_button_back" onClick="onClickBack" id="backButton" />
         </BoxLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture>
+    <meta>
+        <filename>rms_levelGauge.dds</filename>
+        <size width="256" height="16" />
+    </meta>
+    <slices>
+        <slice id="pourZone" uvs="0px 0px 208px 10px" />
+        <slice id="inspectionZone" uvs="0px 0px 235px 10px" />
+        <slice id="workshopZone" uvs="0px 0px 152px 10px" />
+        <slice id="workOrderZone" uvs="0px 0px 225px 8px" />
+    </slices>
+</texture>

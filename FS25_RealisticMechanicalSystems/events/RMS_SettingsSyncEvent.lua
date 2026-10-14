@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Replicates every adjustable RMS_Config value between the admin client, the server and the other clients
+---Event syncing the RMS settings
 RMS_SettingsSyncEvent = {}
 local RMS_SettingsSyncEvent_mt = Class(RMS_SettingsSyncEvent, Event)
 
@@ -15,7 +15,7 @@ function RMS_SettingsSyncEvent.emptyNew()
 end
 
 
----Create new instance of event holding a snapshot of the local configuration
+---Create new instance of event
 -- @return table self instance of class event
 function RMS_SettingsSyncEvent.new()
     local self = RMS_SettingsSyncEvent.emptyNew()
@@ -34,25 +34,17 @@ function RMS_SettingsSyncEvent.new()
     self.mobileWorkshopRestrictionsEnabled = RMS_Config.WORKSHOP.MOBILE_WORKSHOP_RESTRICTIONS_ENABLED
     self.openHour                  = RMS_Config.WORKSHOP.OPEN_HOUR
     self.closeHour                 = RMS_Config.WORKSHOP.CLOSE_HOUR
-    self.temperatureChangeSpeed    = RMS_Config.THERMAL.TEMPERATURE_CHANGE_SPEED
-    self.transTemperatureChangeMultiplier = RMS_Config.THERMAL.TRANS_TEMPERATURE_CHANGE_MULTIPLIER
-    self.maxDirtInfluence          = RMS_Config.THERMAL.MAX_DIRT_INFLUENCE
-    self.batteryUsableCapacityFactor = RMS_Config.ELECTRICAL.BATTERY_USABLE_CAPACITY_FACTOR
-    self.alternatorMaxOutput       = RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT
-    self.idleCurrentA              = RMS_Config.ELECTRICAL.IDLE_CURRENT_A
     self.debugMode                 = RMS_Config.DEBUG
     self.drivetrainEnabled         = RMS_Config.DRIVETRAIN.ENABLED
     self.drivetrainAllowAutoMode   = RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE
-    self.drivetrainWindupDamage    = RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED
     self.drivetrainParkBrakeEnabled = RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED
-    self.drivetrainParkBrakeAuto   = RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE
     self.exhaustSmokeEnabled       = RMS_Config.EXHAUST.ENABLED
 
     return self
 end
 
 
----Called on server side on join, values are written in the order readStream expects them
+---Called on server side on join
 -- @param integer streamId streamId
 -- @param any connection connection
 function RMS_SettingsSyncEvent:writeStream(streamId, connection)
@@ -70,23 +62,15 @@ function RMS_SettingsSyncEvent:writeStream(streamId, connection)
     streamWriteBool(streamId,    self.mobileWorkshopRestrictionsEnabled or false)
     streamWriteFloat32(streamId, self.openHour               or 8)
     streamWriteFloat32(streamId, self.closeHour              or 19)
-    streamWriteFloat32(streamId, self.temperatureChangeSpeed or 1.4)
-    streamWriteFloat32(streamId, self.transTemperatureChangeMultiplier or 1.0)
-    streamWriteFloat32(streamId, self.maxDirtInfluence       or 1.0)
-    streamWriteFloat32(streamId, self.batteryUsableCapacityFactor or 0.1)
-    streamWriteFloat32(streamId, self.alternatorMaxOutput    or 100)
-    streamWriteFloat32(streamId, self.idleCurrentA           or 0.5)
     streamWriteBool(streamId,    self.debugMode              or false)
     streamWriteBool(streamId,    self.drivetrainEnabled ~= false)
     streamWriteBool(streamId,    self.drivetrainAllowAutoMode ~= false)
-    streamWriteBool(streamId,    self.drivetrainWindupDamage ~= false)
     streamWriteBool(streamId,    self.drivetrainParkBrakeEnabled ~= false)
-    streamWriteBool(streamId,    self.drivetrainParkBrakeAuto ~= false)
     streamWriteBool(streamId,    self.exhaustSmokeEnabled ~= false)
 end
 
 
----Called on client side on join, values are read in the order writeStream sends them
+---Called on client side on join
 -- @param integer streamId streamId
 -- @param any connection connection
 function RMS_SettingsSyncEvent:readStream(streamId, connection)
@@ -104,28 +88,18 @@ function RMS_SettingsSyncEvent:readStream(streamId, connection)
     self.mobileWorkshopRestrictionsEnabled = streamReadBool(streamId)
     self.openHour                  = streamReadFloat32(streamId)
     self.closeHour                 = streamReadFloat32(streamId)
-    self.temperatureChangeSpeed    = streamReadFloat32(streamId)
-    self.transTemperatureChangeMultiplier = streamReadFloat32(streamId)
-    self.maxDirtInfluence          = streamReadFloat32(streamId)
-    self.batteryUsableCapacityFactor = streamReadFloat32(streamId)
-    self.alternatorMaxOutput       = streamReadFloat32(streamId)
-    self.idleCurrentA              = streamReadFloat32(streamId)
     self.debugMode                 = streamReadBool(streamId)
     self.drivetrainEnabled         = streamReadBool(streamId)
     self.drivetrainAllowAutoMode   = streamReadBool(streamId)
-    self.drivetrainWindupDamage    = streamReadBool(streamId)
     self.drivetrainParkBrakeEnabled = streamReadBool(streamId)
-    self.drivetrainParkBrakeAuto   = streamReadBool(streamId)
     self.exhaustSmokeEnabled       = streamReadBool(streamId)
 
     self:run(connection)
 end
 
 
----Writes the received values into RMS_Config, clamping those with a bounded range
--- @param table event event carrying the configuration snapshot
+---Writes the received values into RMS_Config
 local function applyConfig(event)
-    local oldBatteryCapacityFactor = RMS_Config.ELECTRICAL.BATTERY_USABLE_CAPACITY_FACTOR
     local oldConfig = {
         instantInspection = RMS_Config.MAINTENANCE.INSTANT_INSPECTION,
         instantMaintenanceRepair = RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR,
@@ -147,18 +121,10 @@ local function applyConfig(event)
     RMS_Config.WORKSHOP.MOBILE_WORKSHOP_RESTRICTIONS_ENABLED = event.mobileWorkshopRestrictionsEnabled
     RMS_Config.WORKSHOP.OPEN_HOUR                           = event.openHour
     RMS_Config.WORKSHOP.CLOSE_HOUR                          = event.closeHour
-    RMS_Config.THERMAL.TEMPERATURE_CHANGE_SPEED             = math.clamp(event.temperatureChangeSpeed, 0.5, 2.0)
-    RMS_Config.THERMAL.TRANS_TEMPERATURE_CHANGE_MULTIPLIER  = math.clamp(event.transTemperatureChangeMultiplier, 0.5, 2.0)
-    RMS_Config.THERMAL.MAX_DIRT_INFLUENCE                   = math.clamp(event.maxDirtInfluence, 0.0, 1.0)
-    RMS_Config.ELECTRICAL.BATTERY_USABLE_CAPACITY_FACTOR    = event.batteryUsableCapacityFactor
-    RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT                    = event.alternatorMaxOutput
-    RMS_Config.ELECTRICAL.IDLE_CURRENT_A                    = event.idleCurrentA
     RMS_Config.DEBUG                                        = event.debugMode
     RMS_Config.DRIVETRAIN.ENABLED                           = event.drivetrainEnabled ~= false
     RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE                   = event.drivetrainAllowAutoMode ~= false
-    RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED             = event.drivetrainWindupDamage ~= false
     RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED                 = event.drivetrainParkBrakeEnabled ~= false
-    RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE               = event.drivetrainParkBrakeAuto ~= false
     RMS_Config.EXHAUST.ENABLED                              = event.exhaustSmokeEnabled ~= false
 
     local newConfig = {
@@ -169,24 +135,14 @@ local function applyConfig(event)
     }
 
     RMS_SettingsPage.applyPendingConfigSideEffects(oldConfig, newConfig)
-
-    -- a changed battery capacity factor rescales the charge of every tracked vehicle
-    if math.abs((oldBatteryCapacityFactor or 0) - (event.batteryUsableCapacityFactor or 0)) > 0.0001
-        and RMS_Main ~= nil and RMS_Main.vehicles ~= nil then
-        for _, vehicle in pairs(RMS_Main.vehicles) do
-            if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
-                RMS_Electrical.rescaleBatteryChargeFromSoc(vehicle)
-
-                RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.ELECTRICAL)
-            end
-        end
-    end
+    RMS_Drivetrain.refreshAllParkBrakePedals()
+    RMS_Drivetrain.claimFromOtherMod()
 
     RMS_Main:forceWorkshopUpdate(true)
 end
 
 
----Applies the configuration, and on the server relays it to the other clients for a master user only
+---Run action on receiving side
 -- @param any connection connection
 function RMS_SettingsSyncEvent:run(connection)
     if not connection:getIsServer() then

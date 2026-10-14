@@ -5,8 +5,12 @@
 RMS_FluidTransfer = {}
 
 RMS_FluidTransfer.MAX_DISTANCE = 4
-RMS_FluidTransfer.STOPPED_SPEED = 0.01
-RMS_FluidTransfer.LITERS_PER_SECOND = 1
+-- km/h under which a machine stands still, as the game counts it
+RMS_FluidTransfer.STOPPED_SPEED = 0.5
+-- liters a second a container delivers: 5 L can, 25 L can, drum through its pump
+RMS_FluidTransfer.LITERS_PER_SECOND = { [5] = 0.2, [25] = 0.3, [200] = 1 }
+-- metres of hose between the pump of a drum and its nozzle, twice the 2 m its maker ships
+RMS_FluidTransfer.HOSE_LENGTH = 4
 
 RMS_FluidTransfer.RESULT = {
     OK = "OK",
@@ -22,24 +26,23 @@ RMS_FluidTransfer.RESULT = {
     CONTAINER_EMPTY = "CONTAINER_EMPTY"
 }
 
-local function getDistance(objectA, objectB)
-    local nodeA = objectA ~= nil and (objectA.rootNode or objectA.nodeId) or nil
-    local nodeB = objectB ~= nil and (objectB.rootNode or objectB.nodeId) or nil
-    if nodeA == nil or nodeB == nil then
-        return math.huge
-    end
-
-    local ax, ay, az = getWorldTranslation(nodeA)
-    local bx, by, bz = getWorldTranslation(nodeB)
-    return MathUtil.vector3Length(ax - bx, ay - by, az - bz)
+---Returns how far a node stands from the body of a machine, on the ground
+-- @param table vehicle machine
+-- @param entityId node node standing beside it
+-- @return float distance metres to the footprint of the machine, zero inside it
+function RMS_FluidTransfer.getDistanceToVehicle(vehicle, node)
+    local x, _, z = worldToLocal(vehicle.rootNode, getWorldTranslation(node))
+    local size = vehicle.size
+    local dx = math.max(math.abs(x - size.widthOffset) - size.width * 0.5, 0)
+    local dz = math.max(math.abs(z - size.lengthOffset) - size.length * 0.5, 0)
+    return math.sqrt(dx * dx + dz * dz)
 end
 
----Resolves the authenticated player, user and farm attached to a network connection
+---Returns the player, user and farm of a network connection
 -- @param Connection connection requester connection
 -- @return table? requester authenticated requester context
 function RMS_FluidTransfer.getRequesterContext(connection)
-    if connection == nil or g_currentMission == nil or g_currentMission.userManager == nil
-        or g_currentMission.playerSystem == nil or g_farmManager == nil then
+    if connection == nil then
         return nil
     end
 
@@ -57,6 +60,7 @@ function RMS_FluidTransfer.getRequesterContext(connection)
     }
 end
 
+---
 local function getIsOwnedByRequester(container, target, requester)
     return requester ~= nil and requester.farmId ~= nil
         and container ~= nil and container.getOwnerFarmId ~= nil
@@ -65,6 +69,7 @@ local function getIsOwnedByRequester(container, target, requester)
         and target:getOwnerFarmId() == requester.farmId
 end
 
+---
 local function getRuntimeValidation(container, target, circuit, requester)
     if g_server == nil or container == nil or target == nil or requester == nil
         or container.isDeleted == true or target.isDeleted == true
@@ -78,10 +83,15 @@ local function getRuntimeValidation(container, target, circuit, requester)
         return RMS_FluidTransfer.RESULT.NO_ACCESS
     end
 
-    if requester.player == nil
-        or getDistance(requester.player, container) > RMS_FluidTransfer.MAX_DISTANCE
-        or getDistance(requester.player, target) > RMS_FluidTransfer.MAX_DISTANCE
-        or getDistance(container, target) > RMS_FluidTransfer.MAX_DISTANCE then
+    -- the container pours from the hand that carries it, the can or the nozzle of a drum
+    if container:getRMSFluidCarrier() ~= requester.player then
+        return RMS_FluidTransfer.RESULT.INVALID
+    end
+
+    -- a drum delivers no further than its hose
+    if RMS_FluidTransfer.getDistanceToVehicle(target, requester.player.rootNode) > RMS_FluidTransfer.MAX_DISTANCE
+        or (container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY
+            and RMS_FluidTransfer.getDistanceToVehicle(target, container.rootNode) > RMS_FluidTransfer.HOSE_LENGTH) then
         return RMS_FluidTransfer.RESULT.OUT_OF_RANGE
     end
 
@@ -107,6 +117,29 @@ local function getRuntimeValidation(container, target, circuit, requester)
     end
 
     return RMS_FluidTransfer.RESULT.OK
+end
+
+-- what a player is told of a refused pour
+local REFUSAL_TEXT_KEYS = {
+    [RMS_FluidTransfer.RESULT.MOTOR_RUNNING] = "rms_fluid_error_motor_running",
+    [RMS_FluidTransfer.RESULT.VEHICLE_MOVING] = "rms_fluid_error_vehicle_moving",
+    [RMS_FluidTransfer.RESULT.SERVICE_BUSY] = "rms_charger_error_service",
+    [RMS_FluidTransfer.RESULT.CIRCUIT_FULL] = "rms_fluid_error_no_circuit",
+    [RMS_FluidTransfer.RESULT.BUSY] = "rms_fluid_error_busy"
+}
+
+---Returns the text telling a player why the server refused the pour
+-- @param table container container the player poured from
+-- @param string result result of the server
+-- @return string? textKey text of the refusal, nil for a result no legitimate request meets
+function RMS_FluidTransfer.getRefusalTextKey(container, result)
+    local isDrum = container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY
+    if result == RMS_FluidTransfer.RESULT.OUT_OF_RANGE then
+        return isDrum and "rms_drum_pump_machine_too_far" or nil
+    elseif result == RMS_FluidTransfer.RESULT.CONTAINER_EMPTY then
+        return isDrum and "rms_fluid_drum_empty" or "rms_fluid_container_empty"
+    end
+    return REFUSAL_TEXT_KEYS[result]
 end
 
 ---Starts one locked manual transfer after all authoritative checks
@@ -175,9 +208,9 @@ function RMS_FluidTransfer.cancel(container)
     container:raiseDirtyFlags(containerSpec.dirtyFlag)
 end
 
+---
 local function getActiveRequester(transfer)
-    local player = g_currentMission ~= nil and g_currentMission.playerSystem ~= nil
-        and transfer.requesterUserId ~= nil
+    local player = transfer.requesterUserId ~= nil
         and g_currentMission.playerSystem:getPlayerByUserId(transfer.requesterUserId) or nil
     if player == nil then
         return nil
@@ -187,10 +220,6 @@ local function getActiveRequester(transfer)
         farmId = player.farmId,
         player = player
     }
-end
-
-local function getTransferAmount(dt)
-    return RMS_FluidTransfer.LITERS_PER_SECOND * math.max(tonumber(dt) or 0, 0) / 1000
 end
 
 ---Advances the active server transfer and puts back any liters the target refused
@@ -210,7 +239,7 @@ function RMS_FluidTransfer.update(container, dt)
         return
     end
 
-    local amount = getTransferAmount(dt)
+    local amount = RMS_FluidTransfer.LITERS_PER_SECOND[container:getRMSFluidCapacity()] * math.max(tonumber(dt) or 0, 0) / 1000
     if amount <= RMS_Fluids.EPSILON then
         return
     end

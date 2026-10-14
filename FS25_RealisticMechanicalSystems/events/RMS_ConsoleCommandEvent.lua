@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Client-to-server request running a whitelisted console command on the server
+---Event running a console command on the server
 RMS_ConsoleCommandEvent = {}
 local RMS_ConsoleCommandEvent_mt = Class(RMS_ConsoleCommandEvent, Event)
 
@@ -13,22 +13,20 @@ RMS_ConsoleCommandEvent.ALLOWED_COMMANDS = {
     setCondition = true,
     setSystemCondition = true,
     setSystemStress = true,
-    resetVehicle = true,
     addBreakdown = true,
     removeBreakdown = true,
     changeBreakdownStage = true,
     setDirtAmount = true,
+    setPaintWear = true,
     setFuelLevel = true,
-    setHorsePower = true,
-    setPlowMaxForce = true,
     resetFactorStats = true,
     reinitializeVehicle = true,
     reinitializeFluidCapacities = true,
-    printSpecVar = true,
     setSpecVar = true,
-    setConfigVar = true,
-    setExcluded = true,
-    debug = true
+    printSpecVar = true,
+    getServiceState = true,
+    showServiceLog = true,
+    getDebugVehicleInfo = true,
 }
 
 ---Create instance of Event class
@@ -89,10 +87,15 @@ function RMS_ConsoleCommandEvent:readStream(streamId, connection)
 end
 
 
----Runs the requested console command on the server against the carried vehicle
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_ConsoleCommandEvent:run(connection)
     if connection:getIsServer() then
+        if self.commandName == "__response" and self.argsOne ~= nil then
+            print(self.argsOne)
+        elseif self.commandName == "__configVar" and RealisticMechanicalSystems.ConsoleCommands.applyConfigVar ~= nil then
+            RealisticMechanicalSystems.ConsoleCommands.applyConfigVar(self.argsOne, self.argsTwo)
+        end
         return
     end
 
@@ -112,13 +115,19 @@ function RMS_ConsoleCommandEvent:run(connection)
         return
     end
 
-    -- the carried vehicle replaces the console target for the duration of the call
-    RealisticMechanicalSystems.ConsoleCommands._overrideVehicle = self.vehicle
-    func(RealisticMechanicalSystems.ConsoleCommands, self.argsOne, self.argsTwo)
-    RealisticMechanicalSystems.ConsoleCommands._overrideVehicle = nil
+    -- the command runs against the carried vehicle and answers the requester
+    local commands = RealisticMechanicalSystems.ConsoleCommands
+    commands._overrideVehicle = self.vehicle
+    commands._outputConnection = connection
+    func(commands, self.argsOne, self.argsTwo)
+    commands._overrideVehicle = nil
+    commands._outputConnection = nil
+
+    local isReadOnly = self.commandName == "printSpecVar" or self.commandName == "getServiceState"
+        or self.commandName == "showServiceLog" or self.commandName == "getDebugVehicleInfo"
 
     -- replicate every sync group of the modified vehicle
-    if self.vehicle ~= nil and self.vehicle.spec_RealisticMechanicalSystems ~= nil then
+    if not isReadOnly and self.vehicle ~= nil and self.vehicle.spec_RealisticMechanicalSystems ~= nil then
         local spec = self.vehicle.spec_RealisticMechanicalSystems
         RealisticMechanicalSystems.raiseRMSDirty(self.vehicle, RealisticMechanicalSystems.SYNC_GROUP.STATE)
         RealisticMechanicalSystems.raiseRMSDirty(self.vehicle, RealisticMechanicalSystems.SYNC_GROUP.SERVICE_CONTEXT)
@@ -131,9 +140,6 @@ function RMS_ConsoleCommandEvent:run(connection)
         RealisticMechanicalSystems.raiseRMSDirty(self.vehicle, RealisticMechanicalSystems.SYNC_GROUP.SERVICE_PROGRESS)
     end
 
-    if self.commandName == "setConfigVar" then
-        g_server:broadcastEvent(RMS_SettingsSyncEvent.new())
-    end
 end
 
 

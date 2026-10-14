@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="drumPumpNozzle" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="15" filename="textures/pumpBlack_diffuse.dds"/>
+    <File fileId="12" filename="textures/pumpBlue_diffuse.dds"/>
+    <File fileId="3" filename="textures/pumpPaint_vmask.dds"/>
+    <File fileId="16" filename="textures/pumpPolymer_vmask.dds"/>
+    <File fileId="1" filename="textures/pumpSteel_diffuse.dds"/>
+    <File fileId="4" filename="$data/shaders/vehicleShader.xml"/>
+    <File fileId="2" filename="$data/shared/default_normal.dds"/>
+    <File fileId="6" filename="$data/shared/detailLibrary/flat_normal.png"/>
+    <File fileId="7" filename="$data/shared/detailLibrary/metallic/clear_diffuse.png"/>
+    <File fileId="5" filename="$data/shared/detailLibrary/metallic/clear_specular.png"/>
+    <File fileId="14" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_diffuse.png"/>
+    <File fileId="13" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_specular.png"/>
+    <File fileId="19" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubberBlack_diffuse.png"/>
+    <File fileId="18" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_normal.png"/>
+    <File fileId="17" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_specular.png"/>
+  </Files>
+
+
+  <Materials>
+    <Material name="pumpBlack" materialId="3" customShaderId="4">
+      <Texture fileId="15"/>
+      <Normalmap fileId="2"/>
+      <Glossmap fileId="16"/>
+      <Custommap name="detailSpecular" fileId="17"/>
+      <Custommap name="detailNormal" fileId="18"/>
+      <Custommap name="detailDiffuse" fileId="19"/>
+      <CustomParameter name="porosity" value="0.5"/>
+    </Material>
+    <Material name="pumpBlue" materialId="2" customShaderId="4">
+      <Texture fileId="12"/>
+      <Normalmap fileId="2"/>
+      <Glossmap fileId="3"/>
+      <Custommap name="detailSpecular" fileId="13"/>
+      <Custommap name="detailNormal" fileId="6"/>
+      <Custommap name="detailDiffuse" fileId="14"/>
+    </Material>
+    <Material name="pumpSteel" materialId="1" customShaderId="4">
+      <Texture fileId="1"/>
+      <Normalmap fileId="2"/>
+      <Glossmap fileId="3"/>
+      <Custommap name="detailSpecular" fileId="5"/>
+      <Custommap name="detailNormal" fileId="6"/>
+      <Custommap name="detailDiffuse" fileId="7"/>
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="drumPumpNozzle.i3d.shapes">
+  </Shapes>
+
+  <Scene>
+    <TransformGroup name="drumPumpNozzle" nodeId="61">
+      <TransformGroup name="graphics" nodeId="62">
+        <TransformGroup name="nozzleHoseInlet" translation="0 -0.184 0" rotation="90 -0 0" nodeId="63"/>
+        <TransformGroup name="nozzleLod" lodDistance="0 8 25" nodeId="64">
+          <TransformGroup name="nozzleLod0" nodeId="65">
+            <Shape name="bentStainlessSpout" shapeId="1" clipDistance="100" nodeId="66" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="blueGunTrigger" shapeId="2" clipDistance="100" nodeId="67" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="contouredGunGrip" shapeId="3" clipDistance="100" nodeId="68" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="dustCapTether" shapeId="4" clipDistance="100" nodeId="69" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunHoseSleeve" translation="0 -0.1755 0" rotation="5.00896e-06 5.00896e-06 180" shapeId="5" clipDistance="100" nodeId="70" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="gunHoseTailAdapter" translation="0 -0.153 0" shapeId="6" clipDistance="100" nodeId="71" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunLowerGripCollar" translation="0 -0.139 0" shapeId="7" clipDistance="100" nodeId="72" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunSleeveClamp" translation="0 -0.17 0" rotation="-0 -180 -0" shapeId="8" clipDistance="100" nodeId="73" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="gunSleeveClamp.001" translation="0 -0.183 0" rotation="-0 -180 -0" shapeId="8" clipDistance="100" nodeId="74" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="gunValveEnd" translation="0.024 0.004 0" rotation="0 -0 -90" shapeId="9" clipDistance="100" nodeId="75" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute" shapeId="10" clipDistance="100" nodeId="76" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.001" shapeId="11" clipDistance="100" nodeId="77" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.002" shapeId="12" clipDistance="100" nodeId="78" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.003" shapeId="13" clipDistance="100" nodeId="79" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.004" shapeId="14" clipDistance="100" nodeId="80" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.005" shapeId="15" clipDistance="100" nodeId="81" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.006" shapeId="16" clipDistance="100" nodeId="82" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.007" shapeId="17" clipDistance="100" nodeId="83" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="spoutBase" translation="-0.019 0.029 0" shapeId="18" clipDistance="100" nodeId="84" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="spoutOpenBore" translation="-0.095 0.109 0" rotation="0 -0 -104" shapeId="19" clipDistance="100" nodeId="85" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="tetheredDustCap" translation="-0.1 0.079 0.013" rotation="0 -0 -90" shapeId="20" clipDistance="100" nodeId="86" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="triggerPivot" translation="-0.028 0.006 0" rotation="90 -0 0" shapeId="21" clipDistance="100" nodeId="87" castsShadows="true" receiveShadows="true" materialIds="3"/>
+          </TransformGroup>
+          <TransformGroup name="nozzleLod1" nodeId="88">
+            <Shape name="bentStainlessSpout_lod1" shapeId="22" clipDistance="100" nodeId="89" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="blueGunTrigger_lod1" shapeId="23" clipDistance="100" nodeId="90" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="contouredGunGrip_lod1" shapeId="24" clipDistance="100" nodeId="91" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="dustCapTether_lod1" shapeId="25" clipDistance="100" nodeId="92" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunHoseSleeve_lod1" translation="0 -0.1755 0" rotation="5.00896e-06 5.00896e-06 180" shapeId="26" clipDistance="100" nodeId="93" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="gunHoseTailAdapter_lod1" translation="0 -0.153 0" shapeId="27" clipDistance="100" nodeId="94" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunLowerGripCollar_lod1" translation="0 -0.139 0" shapeId="28" clipDistance="100" nodeId="95" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunSleeveClamp.001_lod1" translation="0 -0.183 0" rotation="-0 -180 -0" shapeId="29" clipDistance="100" nodeId="96" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="gunSleeveClamp_lod1" translation="0 -0.17 0" rotation="-0 -180 -0" shapeId="29" clipDistance="100" nodeId="97" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="gunValveEnd_lod1" translation="0.024 0.004 0" rotation="0 -0 -90" shapeId="30" clipDistance="100" nodeId="98" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.001_lod1" shapeId="11" clipDistance="100" nodeId="99" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.002_lod1" shapeId="12" clipDistance="100" nodeId="100" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.003_lod1" shapeId="13" clipDistance="100" nodeId="101" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.004_lod1" shapeId="14" clipDistance="100" nodeId="102" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.005_lod1" shapeId="15" clipDistance="100" nodeId="103" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.006_lod1" shapeId="16" clipDistance="100" nodeId="104" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute.007_lod1" shapeId="17" clipDistance="100" nodeId="105" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="mouldedGripFlute_lod1" shapeId="10" clipDistance="100" nodeId="106" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="spoutBase_lod1" translation="-0.019 0.029 0" shapeId="31" clipDistance="100" nodeId="107" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="spoutOpenBore_lod1" translation="-0.095 0.109 0" rotation="0 -0 -104" shapeId="32" clipDistance="100" nodeId="108" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="tetheredDustCap_lod1" translation="-0.1 0.079 0.013" rotation="0 -0 -90" shapeId="33" clipDistance="100" nodeId="109" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="triggerPivot_lod1" translation="-0.028 0.006 0" rotation="90 -0 0" shapeId="34" clipDistance="100" nodeId="110" castsShadows="true" receiveShadows="true" materialIds="3"/>
+          </TransformGroup>
+          <TransformGroup name="nozzleLod2" nodeId="111">
+            <Shape name="bentStainlessSpout_lod2" shapeId="35" clipDistance="100" nodeId="112" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="blueGunTrigger_lod2" shapeId="36" clipDistance="100" nodeId="113" castsShadows="true" receiveShadows="true" materialIds="2"/>
+            <Shape name="contouredGunGrip_lod2" shapeId="37" clipDistance="100" nodeId="114" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunHoseSleeve_lod2" translation="0 -0.1755 0" rotation="5.00896e-06 5.00896e-06 180" shapeId="38" clipDistance="100" nodeId="115" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="gunHoseTailAdapter_lod2" translation="0 -0.153 0" shapeId="39" clipDistance="100" nodeId="116" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunLowerGripCollar_lod2" translation="0 -0.139 0" shapeId="40" clipDistance="100" nodeId="117" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="gunSleeveClamp.001_lod2" translation="0 -0.183 0" rotation="-0 -180 -0" shapeId="41" clipDistance="100" nodeId="118" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="gunSleeveClamp_lod2" translation="0 -0.17 0" rotation="-0 -180 -0" shapeId="41" clipDistance="100" nodeId="119" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="gunValveEnd_lod2" translation="0.024 0.004 0" rotation="0 -0 -90" shapeId="42" clipDistance="100" nodeId="120" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="spoutBase_lod2" translation="-0.019 0.029 0" shapeId="43" clipDistance="100" nodeId="121" castsShadows="true" receiveShadows="true" materialIds="3"/>
+            <Shape name="spoutOpenBore_lod2" translation="-0.095 0.109 0" rotation="0 -0 -104" shapeId="44" clipDistance="100" nodeId="122" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <Shape name="tetheredDustCap_lod2" translation="-0.1 0.079 0.013" rotation="0 -0 -90" shapeId="45" clipDistance="100" nodeId="123" castsShadows="true" receiveShadows="true" materialIds="3"/>
+          </TransformGroup>
+        </TransformGroup>
+        <TransformGroup name="spoutTip" translation="-0.095 0.109 0" rotation="-14 -90 0" nodeId="124"/>
+      </TransformGroup>
+      <TransformGroup name="handNode" translation="-0.0395 0.08 -0.035" rotation="111.813 4.65387 85.2232" nodeId="125"/>
+      <TransformGroup name="firstPersonNode" translation="0.5955 0.191 0.214" rotation="0 -90 0" nodeId="126"/>
+    </TransformGroup>
+  </Scene>
+
+</i3D>

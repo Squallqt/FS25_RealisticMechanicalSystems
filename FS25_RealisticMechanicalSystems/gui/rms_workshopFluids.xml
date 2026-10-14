@@ -2,12 +2,18 @@
 <texture>
     <meta>
         <filename>rms_workshopFluids.dds</filename>
-        <size width="256" height="256" />
+        <size width="512" height="512" />
     </meta>
     <slices>
         <slice id="engineOil" uvs="0px 0px 128px 128px" />
         <slice id="coolant" uvs="128px 0px 128px 128px" />
         <slice id="transmissionOil" uvs="0px 128px 128px 128px" />
         <slice id="hydraulicFluid" uvs="128px 128px 128px 128px" />
+        <slice id="airFilter" uvs="256px 0px 128px 128px" />
+        <slice id="filters" uvs="384px 0px 128px 128px" />
+        <slice id="adjustments" uvs="256px 128px 128px 128px" />
+        <slice id="hydraulicFilter" uvs="384px 128px 128px 128px" />
+        <slice id="radiator" uvs="0px 256px 128px 128px" />
+        <slice id="lubrication" uvs="128px 256px 128px 128px" />
     </slices>
 </texture>

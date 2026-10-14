@@ -54,7 +54,7 @@ function RMS_HandToolSyncEvent:readStream(streamId, connection)
 end
 
 
----Validates and rebroadcasts the tool action on the server, applies its effect on a client
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_HandToolSyncEvent:run(connection)
     local tool = self.tool
@@ -68,7 +68,7 @@ function RMS_HandToolSyncEvent:run(connection)
     end
 
     if not connection:getIsServer() then
-        local player = g_currentMission ~= nil and g_currentMission.connectionsToPlayer ~= nil and g_currentMission.connectionsToPlayer[connection] or nil
+        local player = g_currentMission.connectionsToPlayer[connection]
         if player == nil or tool.getCarryingPlayer == nil or tool:getCarryingPlayer() ~= player then
             return
         end
@@ -95,7 +95,7 @@ function RMS_HandToolSyncEvent:run(connection)
 end
 
 
----Applies and broadcasts the action on the server, sends it to the server from a client
+---Sends the tool action through the server
 -- @param table tool hand tool
 -- @param string state tool state
 -- @param table? targetVehicle vehicle the tool is aimed at

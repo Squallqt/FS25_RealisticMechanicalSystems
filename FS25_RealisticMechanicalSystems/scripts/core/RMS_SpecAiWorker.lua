@@ -1,11 +1,9 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----AI worker driving: the helper eases off while the machine is overloaded, like a careful driver
+---AI worker easing off while the machine is overloaded
 
 ---Returns the pace an AI worker is eased to
--- @param table vehicle vehicle
--- @return float? speedLimit speed limit in km/h, nil while the helper drives freely
 local function getAiWorkerSpeedLimit(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec ~= nil and vehicle:getIsAIActive() then
@@ -14,7 +12,7 @@ local function getAiWorkerSpeedLimit(vehicle)
     return nil
 end
 
----Eases the helper off while the machine runs into overload, and gives its pace back once the load eases
+---Eases the helper off under overload and gives its pace back after
 -- @param float dt time since last call in ms
 function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
     if not self.isServer then return end
@@ -24,6 +22,11 @@ function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
         spec.aiWorkerSpeedLimit = nil
         spec.aiWorkerOverload = 0
         return
+    end
+
+    -- a worker closes the battery isolator of the machine it takes, like any driver
+    if spec.batteryIsolated then
+        RMS_Electrical.setBatteryIsolated(self, false)
     end
 
     local C = RMS_Config.CORE.AI_WORKER
@@ -48,8 +51,7 @@ function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
     end
 end
 
----Holds the helper under its eased pace, which the game's helpers and its gearbox read, the player's
--- cruise speed staying as set
+---Holds the helper under its eased pace, the player's cruise speed untouched
 -- @param function superFunc original function
 -- @return float speed cruise control speed in km/h
 function RealisticMechanicalSystems:getCruiseControlSpeed(superFunc)

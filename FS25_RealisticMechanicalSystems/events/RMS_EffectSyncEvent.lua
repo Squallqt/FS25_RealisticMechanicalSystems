@@ -181,7 +181,7 @@ function RMS_EffectSyncEvent:run(connection)
 end
 
 
----Broadcast the effect state from the server, send it to the server for the three engine start effects only
+---Sends the effect state from the server, or the start effects to it
 -- @param table vehicle vehicle
 -- @param string effectId effect id
 -- @param string? status effect status

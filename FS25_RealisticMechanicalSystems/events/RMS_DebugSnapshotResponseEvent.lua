@@ -13,7 +13,7 @@ function RMS_DebugSnapshotResponseEvent.emptyNew()
     return Event.new(RMS_DebugSnapshotResponseEvent_mt)
 end
 
----Create new instance of event carrying a snapshot built from the current vehicle state
+---Create new instance of event
 -- @param table vehicle vehicle
 -- @return table self instance of class event
 function RMS_DebugSnapshotResponseEvent.new(vehicle)

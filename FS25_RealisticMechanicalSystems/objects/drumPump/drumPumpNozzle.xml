@@ -1,0 +1,30 @@
+<handTool type="rmsFluidCanister" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/handTool.xsd">
+    <!-- The nozzle of a drum pump while a player holds it, standing for the drum. Never sold nor saved. -->
+    <storeData>
+        <name>$l10n_rms_drum_pump_name</name>
+        <image>objects/drumPump/store_drumPump.dds</image>
+        <price>0</price>
+        <lifetime>1000</lifetime>
+        <dailyUpkeep>0</dailyUpkeep>
+        <rotation>0</rotation>
+        <brand>MACNAUGHT</brand>
+        <species>HANDTOOL</species>
+        <category>handtoolsMisc</category>
+        <showInStore>false</showInStore>
+        <canBeSold>false</canBeSold>
+    </storeData>
+
+    <base canBeDropped="false" canBeSaved="false">
+        <filename>objects/drumPump/drumPumpNozzle.i3d</filename>
+        <typeDesc>$l10n_rms_drum_pump_name</typeDesc>
+        <graphics node="graphics" lockFirstPerson="true"/>
+        <handNode node="handNode"/>
+        <firstPersonNode node="firstPersonNode"/>
+    </base>
+
+    <i3dMappings>
+        <i3dMapping id="graphics" node="0>0"/>
+        <i3dMapping id="handNode" node="0>1"/>
+        <i3dMapping id="firstPersonNode" node="0>2"/>
+    </i3dMappings>
+</handTool>

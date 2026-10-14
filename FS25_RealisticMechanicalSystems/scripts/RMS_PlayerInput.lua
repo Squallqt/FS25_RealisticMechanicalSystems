@@ -1,10 +1,11 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----On foot field inspection: hold the action while looking at a tracked vehicle
+---On foot field inspection and battery isolator actions
 
 local rmsInspectionVehicle = nil
 local rmsInspectionActionId = nil
+local rmsBatteryIsolatorActionId = nil
 local rmsInspectionHoldVehicle = nil
 local rmsInspectionHoldTime = 0
 local rmsInspectionHoldThreshold = 600
@@ -22,12 +23,8 @@ local function rmsResetInspectionHoldState()
     rmsInspectionHoldTriggered = false
 end
 
----Runs the native activatable-object action after a short inspection-key press
+---Runs the native interaction after a short press of the inspection key
 local function rmsActivateCurrentObject()
-    if g_currentMission == nil then
-        return
-    end
-
     local system = g_currentMission.activatableObjectsSystem
     if system == nil then
         return
@@ -52,9 +49,7 @@ local function rmsActivateCurrentObject()
     end
 end
 
----Returns the vehicle the player looks at, if RMS tracks it and the player may access it
--- @param table player player
--- @return table? vehicle vehicle that can be inspected
+---Returns the tracked vehicle the player looks at and may access
 local function rmsGetInspectionVehicleFromTargeter(player)
     local object = nil
 
@@ -75,7 +70,7 @@ local function rmsGetInspectionVehicleFromTargeter(player)
         return nil
     end
 
-    if g_currentMission ~= nil and g_currentMission.accessHandler ~= nil and not g_currentMission.accessHandler:canPlayerAccess(object, player) then
+    if not g_currentMission.accessHandler:canPlayerAccess(object, player) then
         return nil
     end
 
@@ -83,7 +78,6 @@ local function rmsGetInspectionVehicleFromTargeter(player)
 end
 
 ---Stops the running inspection and tells the player why
--- @param string? reasonText message shown, none to just hide the notification
 local function rmsCancelActiveInspection(reasonText)
     local vehicle = rmsActiveInspectionVehicle
     if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil then
@@ -131,14 +125,10 @@ local function rmsCompleteActiveInspection()
     rmsActiveInspectionVehicle = nil
     RMS_Hud.showInspectionProgress(nil)
 
-    if RMS_InspectionDialog ~= nil then
-        RMS_InspectionDialog.show(vehicle)
-    end
+    RMS_InspectionDialog.show(vehicle)
 end
 
----Advances the inspection, cancelling it when the player looks away, moves off or gets busy
--- @param table inputComponent player input component
--- @param float dt time since last call in ms
+---Advances the inspection, cancelling it when the player looks away or moves
 local function rmsUpdateActiveInspection(inputComponent, dt)
     local vehicle = rmsActiveInspectionVehicle
     if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
@@ -190,12 +180,7 @@ local function rmsUpdateActiveInspection(inputComponent, dt)
     end
 end
 
----Starts the inspection on hold or forwards a short press to the native interaction
--- @param table inputComponent player input component
--- @param string actionName input action name
--- @param float inputValue input value
--- @param any callbackState callback state
--- @param boolean isAnalog true for an analog input
+---Starts the inspection on hold, a short press going to the native action
 local function rmsOnInputFieldInspection(inputComponent, actionName, inputValue, callbackState, isAnalog)
     if inputValue == 0 then
         local activateObject = not rmsInspectionConsumeUntilRelease
@@ -247,10 +232,39 @@ local function rmsOnInputFieldInspection(inputComponent, actionName, inputValue,
     end
 end
 
----Offers the inspection action while the player looks at a tracked vehicle on foot
--- @param table inputComponent player input component
--- @param function superFunc super function
--- @param float dt time since last call in ms
+---Opens or closes the battery isolator of the machine in front of the player
+local function rmsOnInputBatteryIsolator()
+    local vehicle = rmsInspectionVehicle
+    if vehicle == nil or not RMS_Electrical.getHasBatteryIsolator(vehicle) then
+        return
+    end
+
+    local refusal = RMS_Electrical.getBatteryIsolatorRefusal(vehicle)
+    if refusal ~= nil then
+        g_currentMission:showBlinkingWarning(g_i18n:getText(refusal), 2000)
+        return
+    end
+
+    RMS_BatteryIsolatorEvent.send(vehicle, not vehicle.spec_RealisticMechanicalSystems.batteryIsolated)
+end
+
+---Offers the battery isolator action, named after what it will do
+local function rmsUpdateBatteryIsolatorAction(vehicle)
+    if rmsBatteryIsolatorActionId == nil then
+        return
+    end
+
+    local hasIsolator = vehicle ~= nil and RMS_Electrical.getHasBatteryIsolator(vehicle)
+    g_inputBinding:setActionEventActive(rmsBatteryIsolatorActionId, hasIsolator)
+
+    if hasIsolator then
+        local isIsolated = vehicle.spec_RealisticMechanicalSystems.batteryIsolated
+        g_inputBinding:setActionEventText(rmsBatteryIsolatorActionId,
+            g_i18n:getText(isIsolated and "rms_battery_isolator_restore" or "rms_battery_isolator_cut"))
+    end
+end
+
+---Offers the inspection action while the player looks at a tracked vehicle
 local function rmsOnPlayerInputComponentUpdate(inputComponent, superFunc, dt)
     superFunc(inputComponent, dt)
 
@@ -262,6 +276,7 @@ local function rmsOnPlayerInputComponentUpdate(inputComponent, superFunc, dt)
 
     if rmsActiveInspectionVehicle ~= nil then
         g_inputBinding:setActionEventActive(rmsInspectionActionId, true)
+        rmsUpdateBatteryIsolatorAction(nil)
         rmsUpdateActiveInspection(inputComponent, dt)
         return
     end
@@ -281,6 +296,8 @@ local function rmsOnPlayerInputComponentUpdate(inputComponent, superFunc, dt)
         rmsResetInspectionHoldState()
     end
 
+    rmsUpdateBatteryIsolatorAction(rmsInspectionVehicle)
+
     local isActive = rmsInspectionVehicle ~= nil or rmsInspectionConsumeUntilRelease
     g_inputBinding:setActionEventActive(rmsInspectionActionId, isActive)
 
@@ -291,8 +308,7 @@ local function rmsOnPlayerInputComponentUpdate(inputComponent, superFunc, dt)
     end
 end
 
----Registers the field inspection action on the player
--- @param table inputComponent player input component
+---Registers the field inspection and battery isolator actions
 local function rmsOnPlayerInputComponentRegisterActionEvents(inputComponent)
     if not inputComponent.player.isOwner then
         return
@@ -319,13 +335,26 @@ local function rmsOnPlayerInputComponentRegisterActionEvents(inputComponent)
         g_inputBinding:setActionEventTextPriority(rmsInspectionActionId, GS_PRIO_NORMAL)
     end
 
+    _, rmsBatteryIsolatorActionId = g_inputBinding:registerActionEvent(
+        InputAction.RMS_TOGGLE_BATTERY_ISOLATOR,
+        inputComponent,
+        rmsOnInputBatteryIsolator,
+        false,
+        true,
+        false,
+        true,
+        nil,
+        true
+    )
+    if rmsBatteryIsolatorActionId ~= nil then
+        g_inputBinding:setActionEventActive(rmsBatteryIsolatorActionId, false)
+        g_inputBinding:setActionEventTextPriority(rmsBatteryIsolatorActionId, GS_PRIO_NORMAL)
+    end
+
     g_inputBinding:endActionEventsModification()
 end
 
 ---Hides the hand crosshair while an inspection runs
--- @param table self hand tool hands instance
--- @param function superFunc overwritten function
--- @param any ... forwarded draw arguments
 local function rmsOnHandToolHandsDraw(self, superFunc, ...)
     if rmsActiveInspectionVehicle ~= nil then
         return

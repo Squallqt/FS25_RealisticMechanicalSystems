@@ -58,7 +58,7 @@ function RMS_JumperCablesEvent:readStream(streamId, connection)
 end
 
 
----Handles the request on the server for the carrying player, applies the state on a client
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_JumperCablesEvent:run(connection)
     local tool = self.tool
@@ -72,7 +72,7 @@ function RMS_JumperCablesEvent:run(connection)
     end
 
     if connection ~= nil and not connection:getIsServer() then
-        local player = g_currentMission ~= nil and g_currentMission.connectionsToPlayer ~= nil and g_currentMission.connectionsToPlayer[connection] or nil
+        local player = g_currentMission.connectionsToPlayer[connection]
         if player == nil or tool.getCarryingPlayer == nil or tool:getCarryingPlayer() ~= player then
             return
         end

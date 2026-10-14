@@ -28,7 +28,7 @@ RMS_Preheat.STATE_NAME = {
 function RMS_Preheat.getEngineTemperatureC(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     local engineTemperature = spec ~= nil and tonumber(spec.rawEngineTemperature or spec.engineTemperature) or nil
-    local environmentTemperature = RMS_Electrical.getEnvironmentTemperatureC()
+    local environmentTemperature = RMS_Utils.getAmbientTemperature()
 
     if engineTemperature == nil or engineTemperature <= -90 then
         return environmentTemperature
@@ -38,8 +38,6 @@ function RMS_Preheat.getEngineTemperatureC(vehicle)
 end
 
 ---Writes the preheat state on the vehicle spec
--- @param table? vehicle vehicle
--- @param integer state preheat state
 local function setState(vehicle, state)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec == nil then
@@ -61,20 +59,8 @@ end
 ---Resets every preheat field of the vehicle spec to its initial value
 -- @param table? vehicle vehicle
 function RMS_Preheat.initSpec(vehicle)
-    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec == nil then
-        return
-    end
-
-    spec.preheatState = RMS_Preheat.STATE.IDLE
-    spec.preheatLampTestActive = false
-    spec.preheatLampTestRemainingMs = 0
-    spec.preheatRemainingMs = 0
-    spec.preheatRequiredMs = 0
-    spec.preheatWasRequired = false
-    spec.preheatAutomaticCrank = false
-    spec.preheatAutomaticCrankElapsedMs = 0
-    spec.preheatColdStartFaultSeverity = 0
+    RMS_Preheat.reset(vehicle, false)
+    local spec = vehicle.spec_RealisticMechanicalSystems
     spec.glowPlugColdIdleRpmBackup = nil
     spec._lastPreheatUxState = RMS_Preheat.STATE.IDLE
 end
@@ -86,7 +72,7 @@ function RMS_Preheat.getStateName(state)
     return RMS_Preheat.STATE_NAME[state] or "UNKNOWN"
 end
 
----Tells whether the vehicle burns diesel, reading the spec flag or the motorized consumers
+---Tells whether the vehicle burns diesel
 -- @param table? vehicle vehicle
 -- @return boolean isDiesel true for a diesel vehicle
 function RMS_Preheat.isDieselVehicle(vehicle)
@@ -191,7 +177,7 @@ function RMS_Preheat.onCrankPassed(vehicle)
     spec.preheatAutomaticCrank = false
 end
 
----Tells whether a hard start applies, preheating having been required with failing glow plugs
+---Tells whether failing glow plugs give a hard start
 -- @param table? vehicle vehicle
 -- @return boolean shouldApply true when the hard start effect applies
 function RMS_Preheat.shouldApplyGlowPlugHardStart(vehicle)
@@ -205,7 +191,7 @@ function RMS_Preheat.shouldApplyGlowPlugHardStart(vehicle)
         and RMS_Preheat.getGlowPlugFailureSeverity(vehicle) > 0
 end
 
----Starts the preheat sequence, switching the motor to ignition and choosing lamp test or preheating
+---Starts the preheat sequence: ignition, then lamp test or preheating
 -- @param table? vehicle vehicle
 -- @param function? canMotorRunFunc previous getCanMotorRun function when called from its overwrite
 -- @return boolean accepted true when the sequence runs or already runs
@@ -289,7 +275,7 @@ function RMS_Preheat.reset(vehicle, preserveColdStartFault)
     end
 end
 
----Tells whether the motor must stay blocked, starting the sequence when the ignition key asks for it
+---Tells whether the motor must stay blocked, starting the sequence on the key
 -- @param table? vehicle vehicle
 -- @param function? canMotorRunFunc previous getCanMotorRun function
 -- @return boolean shouldBlock true while the motor may not run
@@ -316,8 +302,7 @@ function RMS_Preheat.shouldBlockMotorRun(vehicle, canMotorRunFunc)
     end
 
     -- the key only turns the vehicle the local player drives, as the game reads it, while this runs for any vehicle
-    local ignitionStartRequested = g_ignitionLockManager ~= nil
-        and g_ignitionLockManager:getIsAvailable()
+    local ignitionStartRequested = g_ignitionLockManager:getIsAvailable()
         and g_ignitionLockManager:getState() == IgnitionLockState.START
         and vehicle:getIsActiveForInput(true)
 

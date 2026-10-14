@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="canisterHand25L" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="1" filename="canister25LVisual.i3d"/>
+  </Files>
+
+  <Materials>
+  </Materials>
+
+  <Scene>
+    <TransformGroup name="canisterHand25L" nodeId="1">
+      <TransformGroup name="graphics" translation="0 0.154 0" nodeId="2">
+        <TransformGroup name="visualLink" translation="0 -0.154 0" scale="0.7 0.7 0.7" nodeId="3">
+
+          <ReferenceNode name="visual" referenceId="1" nodeId="4"/>
+
+        </TransformGroup>
+      </TransformGroup>
+      <TransformGroup name="handNode" translation="0 0.294 0" rotation="0 0 90" nodeId="5"/>
+      <TransformGroup name="firstPersonNode" translation="0.2 0.424 -0.75" nodeId="6"/>
+    </TransformGroup>
+  </Scene>
+
+</i3D>

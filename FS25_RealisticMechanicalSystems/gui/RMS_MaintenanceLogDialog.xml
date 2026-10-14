@@ -14,7 +14,7 @@
                 <Bitmap profile="fs25_menuHeaderIconBg">
                     <Bitmap profile="rms_menuHeaderIcon" />
                 </Bitmap>
-                <Text profile="fs25_menuHeaderTitle" id="headerText" text="$l10n_rms_ws_header_title" />
+                <Text profile="fs25_menuHeaderTitle" id="headerText" text="$l10n_rms_ws_tab_record" />
                 <RoundCorner profile="fs25_shopMoneyBoxBg" id="moneyBoxBg" />
                 <BoxLayout profile="fs25_shopMoneyBox" id="moneyBox">
                     <Text profile="fs25_shopBalance" id="balanceTitleElement" text="$l10n_ui_balance" />
@@ -37,7 +37,7 @@
                 </Button>
             </BoxLayout>
             <ThreePartBitmap profile="rms_workshopTabSeparator" />
-            <MultiTextOption profile="rms_workshopTabPaging" id="workshopTabPaging" focusInit="onOpen" onClick="onWorkshopTabPagingChanged" />
+            <MultiTextOption profile="rms_workshopTabPaging" id="workshopTabPaging" onClick="onWorkshopTabPagingChanged" />
 
             <GuiElement profile="fs25_subCategorySelectorTabbedContainer">
                 <BoxLayout profile="rms_logPageFlow">
@@ -45,9 +45,9 @@
                         <RoundCorner profile="rms_workshopSurfaceBand" />
                         <BoxLayout profile="rms_logHeroContentRow">
                             <GuiElement profile="rms_logHeroIdentity">
-                                <Bitmap profile="rms_workshopVehiclePicture" id="logVehicleImage" position="0px 0px" size="104px 68px" />
+                                <Bitmap profile="rms_workshopVehiclePicture" id="logVehicleImage" position="11.5px 0px" size="81px 68px" />
                                 <Text profile="rms_workshopHeroName" id="vehicleNameValue" position="124px -2px" size="496px 36px" />
-                                <Text profile="rms_workshopLabel" position="124px -42px" size="496px 24px" text="$l10n_rms_log_header_title" />
+                                <Text profile="rms_workshopLabel" id="vehicleLogIdentityValue" position="124px -42px" size="496px 24px" text="$l10n_rms_log_header_title" />
                             </GuiElement>
                             <GuiElement profile="rms_logHeroMetric">
                                 <RoundCorner profile="rms_workshopSurfaceSoft" />
@@ -124,7 +124,7 @@
                             <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="858px 1px" />
                         </GuiElement>
 
-                        <SmoothList profile="rms_logTableList" id="logTable" focusInit="onOpen" position="20px -58px" size="852px 374px">
+                        <SmoothList profile="rms_logTableList" id="logTable" position="20px -58px" size="852px 374px">
                             <ListItem profile="rms_logTableRow" name="logRowTemplate" size="852px 68px" onClick="onRowClick">
                                 <RoundCorner profile="rms_logRowSurface" />
                                 <Bitmap profile="rms_logTypeIcon" name="logTypeIcon" />
@@ -187,7 +187,7 @@
                                 <RoundCorner profile="rms_workshopSubsectionAccent" position="3px 0px" />
                                 <Text profile="rms_logDetailListLabel" id="selectedLogDetailsLabel" position="12px 0px" size="459px 18px" />
                             </GuiElement>
-                            <SmoothList profile="rms_logDetailPartsList" id="detailPartsTable" position="18px -74px" size="471px 154px">
+                            <SmoothList profile="rms_logDetailPartsList" id="detailPartsTable" position="18px -74px" size="471px 154px" handleFocus="false">
                                 <ListItem profile="rms_logDetailPartRow" name="detailPartRowTemplate" size="471px 22px" updateChildrenState="false">
                                     <Text profile="rms_logDetailPartBullet" position="0px 0px" size="8px 22px" text="·" />
                                     <Text profile="rms_logDetailPart" position="12px 0px" size="207.5px 22px" name="detailPartLeft" />
@@ -195,7 +195,7 @@
                                     <Text profile="rms_logDetailPart" position="247.5px 0px" size="207.5px 22px" name="detailPartRight" />
                                 </ListItem>
                             </SmoothList>
-                            <SmoothList profile="rms_logDetailPartsList" id="invoiceTable" position="18px -74px" size="471px 154px">
+                            <SmoothList profile="rms_logDetailPartsList" id="invoiceTable" position="18px -74px" size="471px 154px" handleFocus="false">
                                 <ListItem profile="rms_logDetailPartRow" name="invoiceRowTemplate" size="471px 22px" updateChildrenState="false">
                                     <Text profile="rms_logDetailPartBullet" position="0px 0px" size="8px 22px" text="·" />
                                     <Text profile="rms_logDetailPart" position="12px 0px" size="335px 22px" name="invoiceLabel" />

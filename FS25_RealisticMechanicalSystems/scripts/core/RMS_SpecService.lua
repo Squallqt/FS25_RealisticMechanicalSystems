@@ -3,16 +3,10 @@
 
 ---Workshop services on a vehicle: inspection, maintenance, repair and overhaul, with their prices and durations
 
-local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
-    and RMS_Utils.createLogger("[RMS_SPEC]")
-    or function(...) end
+local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
 local getSafeMissionTimeScale = RealisticMechanicalSystems.getSafeMissionTimeScale
 
----Tells whether a visible breakdown was picked for this repair type, quick fix needing it active
--- @param string breakdownId breakdown id
--- @param table breakdown active breakdown entry
--- @param string? optionOne repair type
--- @return boolean isSelected true when the repair covers it
+---Tells whether a visible breakdown was picked for this repair type
 local function isBreakdownSelectedForPlayerRepair(breakdownId, breakdown, optionOne)
     local breakdownDef = RMS_Breakdowns.BreakdownRegistry[breakdownId]
     if breakdownDef == nil or breakdownDef.isSelectable ~= true then
@@ -28,8 +22,6 @@ local function isBreakdownSelectedForPlayerRepair(breakdownId, breakdown, option
 end
 
 ---Tells whether a breakdown can be picked by the player
--- @param string breakdownId breakdown id
--- @return boolean isSelectable true when the player can pick it
 local function getIsSelectableBreakdown(breakdownId)
     local breakdownDef = RMS_Breakdowns.BreakdownRegistry[breakdownId]
     if breakdownDef == nil or breakdownDef.isSelectable ~= true then
@@ -38,8 +30,97 @@ local function getIsSelectableBreakdown(breakdownId)
     return true
 end
 
+-- an agricultural machine, priced as the reference machine's family
+local AGRICULTURAL_PRICE_FACTORS = { labour = 1, filters = 1, parts = 1 }
+
+---Returns how a machine's size scales a real price
+local function getSizeScale(vehicle, exponent, factorKey)
+    local C = RMS_Config.MAINTENANCE
+    local factors = C.PROFILE_PRICE_FACTORS[RMS_Fluids.getProfileName(vehicle)] or AGRICULTURAL_PRICE_FACTORS
+    return (RMS_Fluids.getEnginePower(vehicle) / C.REFERENCE_POWER) ^ exponent * factors[factorKey]
+end
+
+---Returns the labour hours of an operation, for billing and work timers
+local function getLabourHours(vehicle, hours, category)
+    return hours * getSizeScale(vehicle, RMS_Config.MAINTENANCE.LABOUR_POWER_EXPONENT, "labour")
+        * RMS_Utils.getServiceAccessLabourFactor(vehicle, category)
+end
+
+---
+local function getRepairLabourHours(vehicle, breakdownId, repairType)
+    local C = RMS_Config.MAINTENANCE
+    local operation = C.REPAIR_OPERATIONS[breakdownId]
+    -- Virtual warnings cleared by maintenance do not have replacement labour.
+    if operation == nil then return 0 end
+    local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, repairType)
+    return getLabourHours(vehicle, operation.hours * C.REPAIR_TIME_MULTIPLIERS[key], operation.category)
+end
+
+---
+local function getOverhaulAccessFactor(vehicle, systemName)
+    local systems = RealisticMechanicalSystems.SYSTEMS
+    ---
+    local function getFactor(name)
+        local key = RMS_Utils.getKeyByValue(systems, name) or string.upper(name)
+        local category = (key == "TRANSMISSION" or key == "PTO") and "transmission" or "mechanical"
+        return RMS_Utils.getServiceAccessLabourFactor(vehicle, category)
+    end
+    if systemName ~= nil then return getFactor(systemName) end
+    local factor = 1
+    for key in pairs(vehicle.spec_RealisticMechanicalSystems.systems) do
+        factor = factor + (getFactor(key) - 1) * RMS_Utils.getEffectiveSystemWeight(vehicle, key, systems)
+    end
+    return factor
+end
+
+---Returns the real work hours of a service
+function RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, optionOne, optionTwo, optionThree)
+    local C, states = RMS_Config.MAINTENANCE, RealisticMechanicalSystems.STATUS
+    if serviceType == states.INSPECTION then
+        local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.INSPECTION_TYPES, optionOne)
+        return getLabourHours(vehicle, C.INSPECTION_TIME * C.INSPECTION_TIME_MULTIPLIERS[key] / 3600000,
+            key == "VISUAL" and "external" or "diagnostic")
+    elseif serviceType == states.MAINTENANCE then
+        local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.MAINTENANCE_TYPES, optionOne)
+        return getLabourHours(vehicle, C.MAINTENANCE_LABOUR_HOURS[key], "maintenance")
+    elseif serviceType == states.REPAIR then
+        local hours = 0
+        for id, breakdown in pairs(vehicle:getActiveBreakdowns() or {}) do
+            if isBreakdownSelectedForPlayerRepair(id, breakdown, optionOne) then
+                hours = hours + getRepairLabourHours(vehicle, id, optionOne)
+            end
+        end
+        return hours
+    elseif serviceType == states.OVERHAUL then
+        local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.OVERHAUL_TYPES, optionOne)
+        local hours = C.OVERHAUL_TIME * C.OVERHAUL_TIME_MULTIPLIERS[key] / 3600000
+        if optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL then
+            hours = hours * RMS_Utils.getEffectiveSystemWeight(vehicle, optionTwo, RealisticMechanicalSystems.SYSTEMS)
+        end
+        local selectedSystem = optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL and optionTwo or nil
+        hours = getLabourHours(vehicle, hours, "mechanical") * getOverhaulAccessFactor(vehicle, selectedSystem)
+        return hours + (optionThree and C.REPAINT_TIME / 3600000 or 0)
+    elseif serviceType == states.BODYWORK then
+        return (RMS_Bodywork.getDurationMs(vehicle, optionOne) or 0) / 3600000
+    elseif serviceType == states.REFILL then
+        return C.REFILL_TIME / 3600000
+    end
+    return 0
+end
+
+---
+local function getServiceWorkDurationMs(vehicle, serviceType, optionOne, optionTwo, optionThree)
+    local hours = RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, optionOne, optionTwo, optionThree)
+    if hours <= 0 then return 0 end
+    local C, states = RMS_Config.MAINTENANCE, RealisticMechanicalSystems.STATUS
+    local instant = serviceType == states.INSPECTION and C.INSTANT_INSPECTION
+        or (serviceType == states.MAINTENANCE or serviceType == states.REPAIR) and C.INSTANT_MAINTENANCE_REPAIR
+        or serviceType == states.OVERHAUL and C.INSTANT_OVERHAUL
+        or serviceType == states.BODYWORK and C.INSTANT_BODYWORK
+    return instant and 1000 or hours * 3600000
+end
+
 ---Clears every pending service field of the spec
--- @param table spec vehicle spec
 local function resetPendingServiceProgress(spec)
     spec.pendingSelectedBreakdowns = {}
     spec.pendingServicePrice = nil
@@ -63,11 +144,7 @@ local function resetPendingServiceProgress(spec)
     spec.pendingFluidRequirements = {}
 end
 
----Interpolates the stress of the listed systems between their start and target values
--- @param table? spec vehicle spec
--- @param table? startMap stress at the start of the service
--- @param table? targetMap stress at the end of the service
--- @param float ratio service progress ratio
+---Interpolates the stress of the listed systems toward their targets
 local function applyPendingSystemStressInterpolation(spec, startMap, targetMap, ratio)
     if spec == nil or spec.systems == nil then
         return false
@@ -88,9 +165,6 @@ local function applyPendingSystemStressInterpolation(spec, startMap, targetMap, 
 end
 
 ---Returns the sumps a service clock covers on the vehicle, those holding oil
--- @param table vehicle vehicle
--- @param table clock service clock definition
--- @return table sumps set of sump circuits, empty when the vehicle holds none of its oils
 local function getServiceClockSumps(vehicle, clock)
     local sumps = {}
     for _, circuit in ipairs(clock.circuits) do
@@ -103,52 +177,7 @@ local function getServiceClockSumps(vehicle, clock)
     return sumps
 end
 
----Returns the engine oil intervals a service clock has run since its reset
--- @param table spec vehicle spec
--- @param table clock service clock definition
--- @return float intervals engine oil intervals run
-local function getClockUsedIntervals(spec, clock)
-    local usedShare = (spec.baseServiceLevel - spec[clock.levelKey]) / (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
-    return usedShare * clock.intervalFactor
-end
-
----Returns the services a clock went through since its oils were changed: the clocks run down together, so what
--- a clock has run beyond the current engine oil interval is the services it was left out of
--- @param table spec vehicle spec
--- @param table clock service clock definition
--- @param float engineIntervals engine oil intervals run by the engine clock
--- @return integer services services since the change
-local function getServicesSinceChange(spec, clock, engineIntervals)
-    return math.max(math.floor(getClockUsedIntervals(spec, clock) - engineIntervals + 0.5), 0)
-end
-
----Sets the clocks a service left out on a whole number of services, so that every change falls due at a service
--- and never between two: a maintenance counts as one more, any other work restarting the engine clock as none
--- @param table vehicle vehicle
--- @param boolean isMaintenance true when the service is a maintenance
-local function alignServiceClocks(vehicle, isMaintenance)
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local engineClock = RealisticMechanicalSystems.SERVICE_CLOCKS[1]
-    local engineStartLevel = spec.pendingServiceClockStart[engineClock.key]
-    if engineStartLevel == nil or spec.pendingServiceClockTarget[engineClock.key] == nil then
-        return
-    end
-
-    local levelRange = spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
-    local engineIntervals = (spec.baseServiceLevel - engineStartLevel) / levelRange
-    for _, clock in ipairs(vehicle:getServiceClocks()) do
-        if spec.pendingServiceClockTarget[clock.key] == nil then
-            local services = getServicesSinceChange(spec, clock, engineIntervals) + (isMaintenance and 1 or 0)
-            spec[clock.levelKey] = math.max(spec.baseServiceLevel - services / clock.intervalFactor * levelRange, 0)
-        end
-    end
-end
-
 ---Collects the service clocks a service resets, those whose every oil it changes
--- @param table vehicle vehicle
--- @param table requirements fluid work of the service
--- @return table startLevels clock levels at the start of the service, by clock key
--- @return table targetLevels clock levels the service restores, by clock key
 local function collectServiceClockTargets(vehicle, requirements)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local changedSumps = {}
@@ -174,9 +203,7 @@ local function collectServiceClockTargets(vehicle, requirements)
     return startLevels, targetLevels
 end
 
----Brings the service clocks the running service resets from their start level toward the restored one
--- @param table spec vehicle spec
--- @param float ratio service progress ratio
+---Brings the service clocks a running service resets toward their new level
 local function applyPendingServiceClockInterpolation(spec, ratio)
     for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
         local startLevel = spec.pendingServiceClockStart[clock.key]
@@ -188,8 +215,6 @@ local function applyPendingServiceClockInterpolation(spec, ratio)
 end
 
 ---Interpolates the stress of the systems covered by a preventive maintenance
--- @param table? spec vehicle spec
--- @param float ratio service progress ratio
 local function applyPendingPreventiveStressInterpolation(spec, ratio)
     if spec == nil then
         return false
@@ -199,8 +224,6 @@ local function applyPendingPreventiveStressInterpolation(spec, ratio)
 end
 
 ---Interpolates the stress of the systems covered by an overhaul
--- @param table? spec vehicle spec
--- @param float ratio service progress ratio
 local function applyPendingOverhaulStressInterpolation(spec, ratio)
     if spec == nil then
         return false
@@ -209,10 +232,7 @@ local function applyPendingOverhaulStressInterpolation(spec, ratio)
     applyPendingSystemStressInterpolation(spec, spec.pendingOverhaulSystemStressStart, spec.pendingOverhaulSystemStressTarget, ratio)
 end
 
----Records the stress a repair will remove from a system, drawn once with a random spread
--- @param table? spec vehicle spec
--- @param string? systemKey system key
--- @param string optionOne repair type
+---Records the stress a repair will remove from a system
 local function markRepairStressReduction(spec, systemKey, optionOne)
     if spec == nil or spec.systems == nil or systemKey == nil or systemKey == "" then
         return false
@@ -237,9 +257,7 @@ local function markRepairStressReduction(spec, systemKey, optionOne)
     end
 end
 
----Interpolates the repair stress reduction, each system starting from the ratio it was booked at
--- @param table? spec vehicle spec
--- @param float ratio service progress ratio
+---Interpolates the stress reduction of a repair
 local function applyPendingRepairStressInterpolation(spec, ratio)
     if spec == nil or spec.systems == nil then
         return
@@ -266,66 +284,36 @@ local function applyPendingRepairStressInterpolation(spec, ratio)
     end
 end
 
----Picks the configured number of systems with the shortest mtbf and returns their stress targets
--- @param table? vehicle vehicle
--- @return table startMap stress at the start of the service
--- @return table targetMap stress at the end of the service
+---Lists the systems the adjustments of a major service reach
+-- @param table vehicle vehicle
+-- @return table systemKeys system keys
+function RealisticMechanicalSystems.getMajorServiceSystems(vehicle)
+    local systems = vehicle.spec_RealisticMechanicalSystems.systems
+    local systemKeys = {}
+    for _, breakdownId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
+        local breakdown = RMS_Breakdowns.BreakdownRegistry[breakdownId]
+        local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, breakdown.system)
+        if systems[systemKey].enabled and breakdown.isApplicable(vehicle) then
+            table.insert(systemKeys, systemKey)
+        end
+    end
+    return systemKeys
+end
+
+---Returns the stress the adjustments of a major service leave
 local function collectPreventiveMaintenanceStressTargets(vehicle)
-    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec == nil or type(spec.systems) ~= "table" then
-        return {}, {}
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local startMap, targetMap = {}, {}
+    for _, systemKey in ipairs(RealisticMechanicalSystems.getMajorServiceSystems(vehicle)) do
+        local systemData = spec.systems[systemKey]
+        startMap[systemKey] = systemData.stress
+        targetMap[systemKey] = math.min(systemData.stress,
+            systemData.condition * RMS_Config.MAINTENANCE.MAINTENANCE_PREVENTIVE_STRESS_REMOVE_MULTIPLIER)
     end
-
-    local config = RMS_Config.MAINTENANCE or {}
-    local systemsCount = math.max(math.floor(tonumber(config.MAINTENANCE_PREVENTIVE_SYSTEMS_COUNT) or 0), 0)
-    if systemsCount <= 0 then
-        return {}, {}
-    end
-
-    local targetMultiplier = math.clamp(tonumber(config.MAINTENANCE_PREVENTIVE_STRESS_REMOVE_MULTIPLIER) or 0, 0, 1)
-    local candidates = {}
-
-    for systemKey, systemData in pairs(spec.systems) do
-        if type(systemData) == "table" and systemData.enabled ~= false then
-            local condition = math.clamp(tonumber(systemData.condition) or spec.conditionLevel or 1.0, 0.001, 1.0)
-            local currentStress = math.max(tonumber(systemData.stress) or 0, 0)
-            local targetStress = math.min(currentStress, condition * targetMultiplier)
-            local removableStress = currentStress - targetStress
-            if removableStress > 0.0001 then
-                table.insert(candidates, {
-                    systemKey = systemKey,
-                    startStress = currentStress,
-                    targetStress = targetStress,
-                    mtbf = RMS_Utils.getEstimatedMTBF(condition, currentStress),
-                    removableStress = removableStress
-                })
-            end
-        end
-    end
-
-    table.sort(candidates, function(a, b)
-        if a.mtbf ~= b.mtbf then
-            return a.mtbf < b.mtbf
-        end
-        if a.removableStress ~= b.removableStress then
-            return a.removableStress > b.removableStress
-        end
-        return tostring(a.systemKey) < tostring(b.systemKey)
-    end)
-
-    local startMap = {}
-    local targetMap = {}
-    local selectedCount = math.min(systemsCount, #candidates)
-    for i = 1, selectedCount do
-        local candidate = candidates[i]
-        startMap[candidate.systemKey] = candidate.startStress
-        targetMap[candidate.systemKey] = candidate.targetStress
-    end
-
     return startMap, targetMap
 end
 
----Skips a vehicle while its service runs, preserving its native tab selection setting
+---Skips a vehicle in the tab selection while its service runs
 -- @param function superFunc native or previously overwritten function
 -- @return boolean isTabbable true when the vehicle may be selected with the tab key
 function RealisticMechanicalSystems:getIsTabbable(superFunc)
@@ -347,16 +335,13 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     local states = RealisticMechanicalSystems.STATUS
     local vehicleState = self:getCurrentStatus()
     local C = RMS_Config.MAINTENANCE
-    local totalTimeMs = 0
     local repairPrice = nil
 
     if vehicleState ~= states.READY or (spec.maintenanceTimer or 0) ~= 0 then
         return false
     end
 
-    if RMS_Main ~= nil
-        and RMS_Main.isWorkshopTypeOpen ~= nil
-        and not RMS_Main:isWorkshopTypeOpen(workshopType) then
+    if not RMS_Main:isWorkshopTypeOpen(workshopType) then
         return false
     end
 
@@ -382,6 +367,11 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
         return false
     end
 
+    if not RMS_FluidWorkshop.getMobileWorkshopAvailability(self, type, workshopType, optionOne) then
+        return false
+    end
+
+    local totalTimeMs = getServiceWorkDurationMs(self, type, optionOne, optionTwo, optionThree)
     if self:getIsOperating() then
         self:stopMotor()
     end
@@ -400,17 +390,7 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     -- inspection
     if type == states.INSPECTION or type == states.MAINTENANCE then
         if type == states.INSPECTION then
-            if C.INSTANT_INSPECTION and optionOne == RealisticMechanicalSystems.INSPECTION_TYPES.VISUAL then
-                optionOne = RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD
-                spec.serviceOptionOne = optionOne
-            end
 
-            local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.INSPECTION_TYPES, optionOne)
-            if C.INSTANT_INSPECTION then
-                totalTimeMs = 1000
-            else
-                totalTimeMs = C.INSPECTION_TIME * C.INSPECTION_TIME_MULTIPLIERS[key]
-            end
             repairPrice = self:getServicePrice(type, optionOne, optionTwo, optionThree)
         end
 
@@ -424,8 +404,6 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     -- maintenance
     if type == states.MAINTENANCE then
         local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.MAINTENANCE_TYPES, optionOne)
-        totalTimeMs = C.INSTANT_MAINTENANCE_REPAIR and 1000
-            or C.MAINTENANCE_TIME * C.MAINTENANCE_TIME_MULTIPLIERS[key]
         spec.pendingPreventiveSystemStressStart = {}
         spec.pendingPreventiveSystemStressTarget = {}
 
@@ -440,7 +418,6 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
 
     -- repair
     elseif type == states.REPAIR then
-        local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, optionOne)
         local idsToRepair = {}
         for id, breakdown in pairs(self:getActiveBreakdowns()) do
             if isBreakdownSelectedForPlayerRepair(id, breakdown, optionOne) then
@@ -449,37 +426,27 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
         end
 
         spec.pendingRepairQueue = RMS_Utils.shallowCopy(idsToRepair)
-        totalTimeMs = C.INSTANT_MAINTENANCE_REPAIR and #idsToRepair > 0 and 1000
-            or C.REPAIR_TIME * C.REPAIR_TIME_MULTIPLIERS[key] * #idsToRepair
         repairPrice = self:getServicePrice(type, optionOne, optionTwo, optionThree)
 
     -- fluid top up
     elseif type == states.REFILL then
-        totalTimeMs = C.REFILL_TIME
         repairPrice = self:getServicePrice(type, optionOne, optionTwo, optionThree)
 
     -- bodywork
     elseif type == states.BODYWORK then
-        totalTimeMs = C.INSTANT_BODYWORK and 1000 or RMS_Bodywork.getDurationMs(self, optionOne) or 0
         repairPrice = RMS_Bodywork.getPrice(self, optionOne, workshopType)
 
     -- overhaul
     elseif type == states.OVERHAUL then
         local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.OVERHAUL_TYPES, optionOne)
-        totalTimeMs = C.OVERHAUL_TIME * C.OVERHAUL_TIME_MULTIPLIERS[key]
         local targetOverhaulSystemKey = nil
         if optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL then 
-            local systemWeight = RMS_Utils.getEffectiveSystemWeight(self, optionTwo or "", RealisticMechanicalSystems.SYSTEMS)
-            totalTimeMs = totalTimeMs * systemWeight
             targetOverhaulSystemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, optionTwo)
             if (targetOverhaulSystemKey == nil or targetOverhaulSystemKey == "") and type(optionTwo) == "string" then
                 targetOverhaulSystemKey = string.lower(optionTwo)
             end
         end
 
-        if C.INSTANT_OVERHAUL then
-            totalTimeMs = 1000
-        end
 
         local desiredSystemTarget = C.OVERHAUL_CONDITION_TARGETS[key]
         spec.pendingOverhaulSystemStart = {}
@@ -527,18 +494,13 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     spec.pendingServicePrice = repairPrice
 
     if totalTimeMs > 0 then
-        local isInstantService = (type == states.INSPECTION and C.INSTANT_INSPECTION)
-            or ((type == states.MAINTENANCE or type == states.REPAIR) and C.INSTANT_MAINTENANCE_REPAIR)
-            or (type == states.BODYWORK and C.INSTANT_BODYWORK)
-            or (type == states.OVERHAUL and C.INSTANT_OVERHAUL)
-        local adjustedTotalTimeMs = (type == states.BODYWORK or isInstantService)
-            and totalTimeMs or totalTimeMs / spec.maintainability
+        local adjustedTotalTimeMs = totalTimeMs
         spec.maintenanceTimer = adjustedTotalTimeMs
         spec.pendingProgressTotalTime = adjustedTotalTimeMs
         spec.pendingProgressElapsedTime = 0
         spec.pendingProgressStepIndex = 0
         log_dbg(string.format(
-            '%s initiated for %s, will take %.2f seconds (%.2f seconds after reliability adjustment). Next planned state: %s',
+            '%s initiated for %s, will take %.2f seconds (%.2f seconds booked). Next planned state: %s',
             spec.currentState,
             self:getFullName(),
             totalTimeMs / 1000,
@@ -559,13 +521,7 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     return spec.currentState == type and (spec.maintenanceTimer or 0) > 0
 end
 
----Repairs one breakdown, suspending it on a quick fix and possibly fitting a defective part
--- @param table vehicle vehicle
--- @param table spec vehicle spec
--- @param string? breakdownId breakdown id
--- @param string optionOne repair type
--- @param string optionTwo part type
--- @param string optionTwoKey part type key
+---Repairs one breakdown of the running service
 local function processPendingRepairStep(vehicle, spec, breakdownId, optionOne, optionTwo, optionTwoKey)
     if breakdownId == nil or vehicle:getActiveBreakdowns()[breakdownId] == nil then
         return
@@ -592,7 +548,10 @@ local function processPendingRepairStep(vehicle, spec, breakdownId, optionOne, o
             log_dbg(string.format("Repair effect skipped: missing system mapping for breakdown '%s' (system='%s')", tostring(breakdownId), tostring(systemName)))
         end
 
-        if optionTwo ~= RealisticMechanicalSystems.PART_TYPES.PREMIUM then
+        if RMS_Consumables.getFilterOfBreakdown(breakdownId) ~= nil then
+            -- a new filter starts clean, whatever its quality
+            RMS_Consumables.renewFilters(vehicle, breakdownId)
+        elseif optionTwo ~= RealisticMechanicalSystems.PART_TYPES.PREMIUM then
             local defectChance = C.PARTS_BREAKDOWN_CHANCES[optionTwoKey]
             if math.random() < defectChance then
                 local serviceScale = RMS_Config.CORE.REFERENCE_SERVICE_WEAR / RMS_Config.CORE.BASE_SERVICE_WEAR
@@ -610,7 +569,7 @@ local function processPendingRepairStep(vehicle, spec, breakdownId, optionOne, o
     end
 end
 
----Advances the running service, consuming its step queue and interpolating the stress changes
+---Advances the running service through its step queue
 -- @param float dt time since last call in ms
 -- @param boolean? ignoreWorkshopHours true to advance independently of opening hours
 function RealisticMechanicalSystems:processService(dt, ignoreWorkshopHours)
@@ -620,10 +579,7 @@ function RealisticMechanicalSystems:processService(dt, ignoreWorkshopHours)
     local C = RMS_Config.MAINTENANCE
 
     if vehicleState == states.READY
-        or (not ignoreWorkshopHours
-            and RMS_Main ~= nil
-            and RMS_Main.isWorkshopTypeOpen ~= nil
-            and not RMS_Main:isWorkshopTypeOpen(spec.workshopType)) then
+        or (not ignoreWorkshopHours and not RMS_Main:isWorkshopTypeOpen(spec.workshopType)) then
         return
     end
 
@@ -653,14 +609,16 @@ function RealisticMechanicalSystems:processService(dt, ignoreWorkshopHours)
                 if breakdown ~= nil and not breakdown.isVisible then
                     local breakdownDef = RMS_Breakdowns.BreakdownRegistry[breakdownId]
                     if breakdownDef ~= nil and breakdownDef.stages ~= nil and breakdownDef.stages[breakdown.stage] ~= nil then
+                        local needsTool = RealisticMechanicalSystems.getBreakdownNeedsDiagnosticTool(breakdownId)
                         local inspectionDetectionMul = 1.0
                         if serviceType == states.INSPECTION then
-                            local optionOneKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.INSPECTION_TYPES, optionOne)
-                            inspectionDetectionMul = C.INSPECTION_DETECTION_CHANCE_MULTIPLIERS[optionOneKey] or 1.0
+                            inspectionDetectionMul = RealisticMechanicalSystems.getInspectionDetectionShare(optionOne, needsTool)
+                        elseif needsTool and not RealisticMechanicalSystems.getMaintenanceReadsFaultCodes(self, spec.workshopType) then
+                            inspectionDetectionMul = 0
                         end
                         local chance = (breakdownDef.stages[breakdown.stage].detectionChance * inspectionDetectionMul) or 0
                         if math.random() < chance then
-                            if breakdown.isActive or optionOne == RealisticMechanicalSystems.INSPECTION_TYPES.COMPLETE then
+                            if breakdown.isActive or RealisticMechanicalSystems.getInspectionFindsDormant(optionOne) then
                                 breakdown.isVisible = true
                                 breakdownsRevealed = true
                                 table.insert(spec.pendingSelectedBreakdowns, breakdownId)
@@ -728,7 +686,69 @@ function RealisticMechanicalSystems:processService(dt, ignoreWorkshopHours)
     end
 end
 
----Applies the final service result, writes the log entry and returns the vehicle to ready
+---Tells whether only a diagnostic tool reads a breakdown
+-- @param string breakdownId breakdown id
+-- @return boolean needsTool true when a look at the machine cannot find it
+function RealisticMechanicalSystems.getBreakdownNeedsDiagnosticTool(breakdownId)
+    local operation = RMS_Config.MAINTENANCE.REPAIR_OPERATIONS[breakdownId]
+    return operation ~= nil and RMS_Config.MAINTENANCE.INSPECTION_TOOL_CATEGORIES[operation.category] == true
+end
+
+---Returns the share of its detection chance a fault keeps under an inspection
+-- @param string inspectionType inspection type
+-- @param boolean needsTool true for a fault only a diagnostic tool reads
+-- @return float share share of the detection chance of the fault
+function RealisticMechanicalSystems.getInspectionDetectionShare(inspectionType, needsTool)
+    if needsTool and inspectionType == RealisticMechanicalSystems.INSPECTION_TYPES.VISUAL then
+        return 0
+    end
+    return RMS_Config.MAINTENANCE.INSPECTION_DETECTION_CHANCE_MULTIPLIERS[
+        RMS_Utils.getKeyByValue(RealisticMechanicalSystems.INSPECTION_TYPES, inspectionType)]
+end
+
+---Tells whether an inspection also looks for the dormant faults
+-- @param string inspectionType inspection type
+-- @return boolean findsDormant true for the complete inspection
+function RealisticMechanicalSystems.getInspectionFindsDormant(inspectionType)
+    return inspectionType == RealisticMechanicalSystems.INSPECTION_TYPES.COMPLETE
+end
+
+---Tells whether a maintenance reads the fault codes of a machine
+-- @param table vehicle vehicle
+-- @param string workshopType workshop type
+-- @return boolean readsFaultCodes true when the faults a diagnostic tool reads are found too
+function RealisticMechanicalSystems.getMaintenanceReadsFaultCodes(vehicle, workshopType)
+    return RMS_FluidWorkshop.getMobileWorkshopAvailability(vehicle, RealisticMechanicalSystems.STATUS.INSPECTION, workshopType,
+        RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD) == true
+end
+
+---Tells whether a machine lights a telltale for an unidentified fault
+-- @param table vehicle vehicle
+-- @return boolean hasWarning true when a lamp of its dashboard is lit by an unidentified fault
+function RealisticMechanicalSystems.getHasUnidentifiedWarning(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local hasEngineOil = RMS_Fluids.hasCircuit(vehicle, "engineOil")
+    for breakdownId, breakdown in pairs(vehicle:getActiveBreakdowns()) do
+        local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
+        if definition.isSelectable and breakdown.isActive and not breakdown.isVisible then
+            for _, indicator in ipairs(definition.stages[breakdown.stage].indicators or {}) do
+                if RMS_Hud.getIsTelltaleFitted(indicator.id, RMS_Hud.TELLTALE_YEARS[indicator.id] or 0, spec, hasEngineOil) then
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+---Tells whether a maintenance level fits a new air filter
+-- @param string maintenanceType maintenance type
+-- @return boolean renews true when the filter is replaced
+function RealisticMechanicalSystems.getMaintenanceRenewsAirFilter(maintenanceType)
+    return maintenanceType ~= RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD
+end
+
+---Applies the service result, writes the log entry and frees the vehicle
 function RealisticMechanicalSystems:completeService()
     local spec = self.spec_RealisticMechanicalSystems
     local states = RealisticMechanicalSystems.STATUS
@@ -740,19 +760,12 @@ function RealisticMechanicalSystems:completeService()
     local selectedBreakdowns = RMS_Utils.shallowCopy(spec.pendingSelectedBreakdowns or {})
     local plannedRepairCandidateIds = {}
 
-    if serviceType ~= states.INSPECTION and serviceType ~= states.BODYWORK then
-        local nominalCapacityAh = math.max(spec.batteryCapacityAh or 0, 1)
-        local usableCapacityAh = math.max(
-            nominalCapacityAh * RMS_Config.ELECTRICAL.BATTERY_USABLE_CAPACITY_FACTOR,
-            0.01
-        )
-        local effectiveCapacityAh = math.max(usableCapacityAh * math.max(spec.batteryHealth or 0, 0.0001), 0.01)
-        spec.batterySoc = 1.0
-        spec.batteryChargeAh = effectiveCapacityAh
-    end
-
     applyPendingServiceClockInterpolation(spec, 1)
-    alignServiceClocks(self, serviceType == states.MAINTENANCE)
+    -- Only completed renewals restart their own calendar. Top-ups and cancelled work do not.
+    spec.serviceCalendar = spec.serviceCalendar or {}
+    for key in pairs(spec.pendingServiceClockTarget or {}) do
+        spec.serviceCalendar[key] = tonumber(self.age) or 0
+    end
 
     if serviceType == states.MAINTENANCE then
         for systemKey, targetStress in pairs(spec.pendingPreventiveSystemStressTarget or {}) do
@@ -762,9 +775,12 @@ function RealisticMechanicalSystems:completeService()
             end
         end
 
-        -- the hydraulic filter goes with the transmission oil
-        if spec.pendingServiceClockTarget.transmission ~= nil and self:hasBreakdown("HYDRAULIC_FILTER_CLOGGING") then
-            self:removeBreakdown("HYDRAULIC_FILTER_CLOGGING")
+        -- every level fits new fuel and hydraulic filters, so their breakdowns are no finding of this visit
+        RMS_Consumables.renewFilters(self)
+        for index = #selectedBreakdowns, 1, -1 do
+            if not self:hasBreakdown(selectedBreakdowns[index]) then
+                table.remove(selectedBreakdowns, index)
+            end
         end
     end
 
@@ -794,6 +810,7 @@ function RealisticMechanicalSystems:completeService()
         if #idsToRepair > 0 then
             self:removeBreakdown(table.unpack(idsToRepair))
         end
+        RMS_Consumables.renewFilters(self)
     elseif serviceType == states.REPAIR then
         local optionTwoKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, optionTwo)
         local repairQueue = spec.pendingRepairQueue or {}
@@ -885,18 +902,17 @@ function RealisticMechanicalSystems:completeService()
 
     if serviceType == states.MAINTENANCE then
         spec.radiatorClogging = 0
-        if optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD then
-            spec.airFilterClogging = spec.airFilterResidue
-        else
+        if RealisticMechanicalSystems.getMaintenanceRenewsAirFilter(optionOne) then
             spec.airFilterClogging = 0
             spec.airFilterResidue = 0
+        else
+            spec.airFilterClogging = spec.airFilterResidue
         end
         spec.lubricationLevel = 1.0
         spec.lubricationUsedThisPeriod = true
     end
 
     ---Clears the paint wear of every wearable node of the vehicle
-    -- @param table? vehicle vehicle
     local function resetVehicleRepaintWear(vehicle)
         if vehicle == nil or vehicle.spec_wearable == nil then
             return
@@ -916,7 +932,8 @@ function RealisticMechanicalSystems:completeService()
         resetVehicleRepaintWear(self)
     end
 
-    local maintenanceCompletedText = string.format(g_i18n:getText("rms_hud_vehicle_notification"), self:getFullName(), string.format(g_i18n:getText("rms_spec_maintenance_complete_notification"), g_i18n:getText(serviceType)))
+    local maintenanceCompletedText = string.format(g_i18n:getText("rms_hud_vehicle_notification"), self:getFullName(),
+        string.format(g_i18n:getText("rms_spec_maintenance_complete_notification"), RMS_Utils.formatServiceState(serviceType)))
 
     if serviceType == states.INSPECTION or serviceType == states.MAINTENANCE then
         local activeBreakdowns = self:getActiveBreakdowns()
@@ -1053,6 +1070,11 @@ function RealisticMechanicalSystems:cancelService()
         RMS_Bodywork.restorePreview(self, true)
     end
 
+    -- Fluids are replaced only on completion. A cancelled job must not renew their hourly clocks.
+    for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
+        local start = spec.pendingServiceClockStart ~= nil and spec.pendingServiceClockStart[clock.key] or nil
+        if start ~= nil then spec[clock.levelKey] = start end
+    end
     spec.pendingSelectedBreakdowns = selectedBreakdowns
     self:recalculateAndApplyEffects()
     self:addEntryToMaintenanceLog(serviceType, optionOne, optionTwo, optionThree, spec.pendingServicePrice, false, spec.pendingServiceInvoice)
@@ -1062,7 +1084,8 @@ function RealisticMechanicalSystems:cancelService()
         lastEntry.isVisible = true
     end
 
-    local cancelText = string.format(g_i18n:getText("rms_hud_vehicle_notification"), self:getFullName(), string.format(g_i18n:getText("rms_spec_maintenance_cancelled_notification"), g_i18n:getText(serviceType)))
+    local cancelText = string.format(g_i18n:getText("rms_hud_vehicle_notification"), self:getFullName(),
+        string.format(g_i18n:getText("rms_spec_maintenance_cancelled_notification"), RMS_Utils.formatServiceState(serviceType)))
     if g_currentMission.hud ~= nil and g_currentMission.hud.addSideNotification ~= nil
             and self:getOwnerFarmId() == g_currentMission:getFarmId() then
         g_currentMission.hud:addSideNotification({1, 1, 1, 1}, cancelText)
@@ -1083,14 +1106,54 @@ function RealisticMechanicalSystems:cancelService()
     spec.serviceOptionTwo = nil
     spec.serviceOptionThree = false
 
-    RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.STATE
+    RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.STATE + RealisticMechanicalSystems.SYNC_GROUP.WEAR
         + RealisticMechanicalSystems.SYNC_GROUP.SERVICE_PROGRESS
         + RealisticMechanicalSystems.SYNC_GROUP.SERVICE_CONTEXT)
 
     RMS_VehicleChangeStatusEvent.send(self, cancelText)
 end
 
----Appends a log entry holding the service options, its price and a snapshot of the condition
+---Returns the hours the engine of a vehicle has run, the reading a log entry keeps
+local function getRealOperatingHours(vehicle)
+    local realHours = (vehicle.spec_RealisticMechanicalSystems.realOperatingTime or 0) / (60 * 60 * 1000)
+    if realHours <= 0 then
+        realHours = vehicle:getFormattedOperatingTime() or 0
+    end
+    return realHours
+end
+
+---Returns how many hours the hour meter shows for one hour of the engine
+local function getHourMeterCoefficient()
+    return g_modIsLoaded["FS25_ingameTimeOperatingHours"] and getSafeMissionTimeScale() or 1
+end
+
+---Tells how much faster than normal the machine has worn, and from what
+local function getWearExcess(spec)
+    local normal, causes = 0, {}
+    for systemKey, weight in pairs(RMS_Config.CORE.SYSTEM_WEIGHTS) do
+        local stats = spec.factorStats ~= nil and spec.factorStats[systemKey] or nil
+        if stats ~= nil then
+            normal = normal + weight * (tonumber(stats.total) or 0)
+            for alias in pairs(RealisticMechanicalSystems.FACTOR_STATS_KEYS) do
+                local wear = weight * (tonumber(stats[alias]) or 0)
+                normal = normal - wear
+                causes[alias] = (causes[alias] or 0) + wear
+            end
+        end
+    end
+    if normal <= 0 then
+        return nil, {}
+    end
+
+    local excess = 0
+    for alias, wear in pairs(causes) do
+        causes[alias] = wear / normal
+        excess = excess + causes[alias]
+    end
+    return excess, causes
+end
+
+---Appends a log entry: options, price and condition snapshot
 -- @param string maintenanceType service status constant
 -- @param string? optionOne first service option
 -- @param string? optionTwo second service option
@@ -1106,10 +1169,8 @@ function RealisticMechanicalSystems:addEntryToMaintenanceLog(maintenanceType, op
     local env = g_currentMission.environment
     local selectedBreakdowns = RMS_Utils.shallowCopy(spec.pendingSelectedBreakdowns or {})
     local systemsSnapshot = RMS_Utils.createSystemsSnapshot(spec.systems)
-    local realHours = ((spec.realOperatingTime or 0) / (60 * 60 * 1000))
-    if realHours <= 0 then
-        realHours = self:getFormattedOperatingTime() or 0
-    end
+    local realHours = getRealOperatingHours(self)
+    local wearExcess, wearCauses = getWearExcess(spec)
 
     local entry = {
         id = entryId,                     
@@ -1132,6 +1193,7 @@ function RealisticMechanicalSystems:addEntryToMaintenanceLog(maintenanceType, op
         conditionData = {
             year = spec.year,
             operatingHours = realHours,
+            odometerKilometers = RMS_Utils.getOdometerKilometers(self),
             age = self.age or 0,
             condition = self:getConditionLevel(),
             service = self:getServiceLevel(),
@@ -1142,7 +1204,8 @@ function RealisticMechanicalSystems:addEntryToMaintenanceLog(maintenanceType, op
             activeEffects = RMS_Utils.shallowCopy(spec.activeEffects),
             activeIndicators = RMS_Utils.shallowCopy(spec.activeIndicators),
             reliability = spec.reliability,
-            maintainability = spec.maintainability,
+            wearExcess = wearExcess,
+            wearCauses = wearCauses
         }
     }
 
@@ -1175,56 +1238,84 @@ function RealisticMechanicalSystems.getIsCompleteReport(entry)
     return entry.optionOne == RealisticMechanicalSystems.INSPECTION_TYPES.COMPLETE or entry.type == RealisticMechanicalSystems.STATUS.OVERHAUL
 end
 
----Returns the condition recorded by the newest inspection
+-- share of a service interval of work an inspection report stands for
+local REPORT_VALIDITY_SHARE = 0.5
+
+---Tells how old a report is in work hours, and whether it still holds
+local function getReportAge(vehicle, report)
+    local hours = math.max(getRealOperatingHours(vehicle) - report.conditionData.operatingHours, 0)
+    local isOutdated = hours >= vehicle:getServiceReferenceInterval() * REPORT_VALIDITY_SHARE
+    local reported = report.conditionData.activeBreakdowns
+    for id, breakdown in pairs(vehicle:getActiveBreakdowns()) do
+        isOutdated = isOutdated or (breakdown.isVisible and not (reported[id] ~= nil and reported[id].isVisible))
+    end
+    return hours * getHourMeterCoefficient(), isOutdated
+end
+
+---Returns the report the screens read their figures from
+-- @param boolean? forService true to read the service level
+-- @return table? report log entry, nil when the vehicle was never inspected
+function RealisticMechanicalSystems:getReferenceReport(forService)
+    local log = self.spec_RealisticMechanicalSystems.maintenanceLog or {}
+    local newest = nil
+    for index = #log, 1, -1 do
+        local entry = log[index]
+        if RealisticMechanicalSystems.getIsLogEntryHasReport(entry) then
+            newest = newest or entry
+            if RealisticMechanicalSystems.getIsCompleteReport(entry) then
+                local _, isOutdated = getReportAge(self, entry)
+                return isOutdated and newest or entry
+            elseif forService and entry.type == RealisticMechanicalSystems.STATUS.MAINTENANCE then
+                return newest
+            end
+        end
+    end
+    return newest
+end
+
+---Returns the condition the reference report recorded
 -- @return float? condition recorded condition
--- @return boolean isComplete true when the inspection was complete
+-- @return boolean isComplete true when the report holds measures
 function RealisticMechanicalSystems:getLastInspectedCondition()
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not spec.maintenanceLog or #spec.maintenanceLog == 0 then
         return 0
     end
 
-    for i = #spec.maintenanceLog, 1, -1 do
-        local entry = spec.maintenanceLog[i]
-        if RealisticMechanicalSystems.getIsLogEntryHasReport(entry) then
-            return entry.conditionData.condition, RealisticMechanicalSystems.getIsCompleteReport(entry)
-        end
+    local report = RealisticMechanicalSystems.getReferenceReport(self)
+    if report ~= nil then
+        return report.conditionData.condition, RealisticMechanicalSystems.getIsCompleteReport(report)
     end
     return 1.0
 end
 
----Returns the service level recorded by the newest inspection
+---Returns the service level the reference report recorded
 -- @return float? service recorded service level
--- @return boolean isComplete true when the inspection was complete
+-- @return boolean isComplete true when the report holds measures
 function RealisticMechanicalSystems:getLastInspectedService()
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not spec.maintenanceLog or #spec.maintenanceLog == 0 then
         return 0
     end
 
-    for i = #spec.maintenanceLog, 1, -1 do
-        local entry = spec.maintenanceLog[i]
-        if RealisticMechanicalSystems.getIsLogEntryHasReport(entry) then
-            return entry.conditionData.service, RealisticMechanicalSystems.getIsCompleteReport(entry)
-        end
+    local report = RealisticMechanicalSystems.getReferenceReport(self, true)
+    if report ~= nil then
+        return report.conditionData.service, RealisticMechanicalSystems.getIsCompleteReport(report)
     end
     return 1.0
 end
 
----Returns the date of the newest inspection
--- @return table? date inspection date
-function RealisticMechanicalSystems:getLastInspectionDate()
-    local spec = self.spec_RealisticMechanicalSystems
-    if not spec or not spec.maintenanceLog or #spec.maintenanceLog == 0 then
-        return 0
-    end
-
-    for i = #spec.maintenanceLog, 1, -1 do
-        local entry = spec.maintenanceLog[i]
-        if RealisticMechanicalSystems.getIsLogEntryHasReport(entry) then
-            return entry.date
+---Tells how old the newest inspection report is, and whether it still holds
+-- @return float? hours hours of work since the report in the hour meter's units, nil without one
+-- @return boolean isOutdated true when the report no longer describes the machine
+function RealisticMechanicalSystems:getInspectionReportAge()
+    local log = self.spec_RealisticMechanicalSystems.maintenanceLog
+    for index = #log, 1, -1 do
+        if RealisticMechanicalSystems.getIsLogEntryHasReport(log[index]) then
+            return getReportAge(self, log[index])
         end
     end
+    return nil, false
 end
 
 ---Returns the date of the newest maintenance
@@ -1243,81 +1334,185 @@ function RealisticMechanicalSystems:getLastMaintenanceDate()
     end
 end
 
----Returns the hours of engine running the engine oil lasts, the interval set by the player stretched by the vehicle reliability
--- @return float interval interval in hours of engine running, the time the wear model counts
-function RealisticMechanicalSystems:getEngineMaintenanceInterval()
+---Returns the service reference interval the player selected
+function RealisticMechanicalSystems:getServiceReferenceInterval()
     local spec = self.spec_RealisticMechanicalSystems
-    return (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD) / RMS_Config.CORE.BASE_SERVICE_WEAR * spec.reliability
+    return (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD) / RMS_Config.CORE.BASE_SERVICE_WEAR
 end
 
----Returns the service clocks of the vehicle, those covering at least one oil it holds
--- @return table clocks clock definitions, in the order of SERVICE_CLOCKS
+---Resolves the documented programme only for the exact native vehicle XML.
+local function getServiceProgram(vehicle)
+    local filename = string.lower((vehicle.configFileName or ""):gsub("\\", "/"))
+    for suffix, program in pairs(RMS_Config.SERVICE_PROGRAMS) do
+        if filename:sub(-#suffix) == suffix then return program end
+    end
+    return {}
+end
+
+---Returns the service clocks of the circuits present, a common sump once
 function RealisticMechanicalSystems:getServiceClocks()
-    local clocks = {}
-    for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
-        if next(getServiceClockSumps(self, clock)) ~= nil then
-            table.insert(clocks, clock)
+    local spec = self.spec_RealisticMechanicalSystems
+    if spec.fluidCapacityVersion ~= nil and spec.serviceClocks ~= nil and spec.serviceClocksCapacityVersion == spec.fluidCapacityVersion
+        and spec.serviceClocksCapacities == spec.fluidCapacities
+        and spec.serviceClocksFilename == self.configFileName then return spec.serviceClocks end
+    local program = getServiceProgram(self)
+    local referenceHours = RMS_Config.SERVICE_REFERENCE_HOURS
+    local clocks, bySump = {}, {}
+    for _, definition in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
+        local limits = program[definition.key] or RMS_Config.SERVICE_PROGRAM[definition.key]
+        for sump in pairs(getServiceClockSumps(self, definition)) do
+            local clock = bySump[sump]
+            if clock == nil then
+                clock = RMS_Utils.shallowCopy(definition)
+                clock.intervalFactor = limits.hours ~= nil and limits.hours / referenceHours or nil
+                clock.months = limits.months
+                clock.estimated = program[definition.key] == nil or limits.estimated == true
+                clock.circuits = {sump}
+                clock.systems = RMS_Utils.shallowCopy(definition.systems)
+                bySump[sump] = clock
+                table.insert(clocks, clock)
+            else
+                if limits.hours ~= nil then
+                    clock.intervalFactor = math.min(clock.intervalFactor or math.huge, limits.hours / referenceHours)
+                end
+                if limits.months ~= nil then clock.months = math.min(clock.months or math.huge, limits.months) end
+                clock.estimated = clock.estimated or program[definition.key] == nil or limits.estimated == true
+                for _, systemKey in ipairs(definition.systems) do table.insert(clock.systems, systemKey) end
+            end
         end
     end
-
+    spec.serviceCalendar = spec.serviceCalendar or {}
+    for _, clock in ipairs(clocks) do
+        -- Absence of a saved date starts calendar observation now, without renewing hourly progress.
+        if spec.serviceCalendar[clock.key] == nil then spec.serviceCalendar[clock.key] = tonumber(self.age) or 0 end
+    end
+    spec.serviceClocks, spec.serviceClocksCapacityVersion = clocks, spec.fluidCapacityVersion
+    spec.serviceClocksFilename = self.configFileName
+    spec.serviceClocksCapacities = spec.fluidCapacities
     return clocks
 end
 
----Returns the hours a service clock has run since its reset and the hours it lasts, as the hour meter counts them;
--- the hours follow the clock, so poor consumables and a machine parked outside bring its oil change closer
--- @param table clock service clock definition
--- @return float hours hours run since the clock was reset
--- @return float interval hours the clock lasts
+---Returns elapsed hourly progress and its limit in the hour meter's units.
 function RealisticMechanicalSystems:getServiceClockHours(clock)
+    if clock == nil then return 0, 0 end
     local spec = self.spec_RealisticMechanicalSystems
-    local gameTimeCoeff = 1.0
-    if g_modIsLoaded ~= nil and g_modIsLoaded["FS25_ingameTimeOperatingHours"] then
-        gameTimeCoeff = getSafeMissionTimeScale()
-    end
-
-    local interval = self:getEngineMaintenanceInterval() * clock.intervalFactor * gameTimeCoeff
-    local usedShare = (spec.baseServiceLevel - spec[clock.levelKey]) / (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
-    return usedShare * interval, interval
+    local coefficient = getHourMeterCoefficient()
+    if clock.intervalFactor == nil then return 0, math.huge end
+    local interval = self:getServiceReferenceInterval() * clock.intervalFactor * coefficient
+    local share = (spec.baseServiceLevel - (spec[clock.levelKey] or spec.baseServiceLevel))
+        / (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
+    return share * interval, interval
 end
 
----Returns the service clock with the fewest hours left, the most overdue one past its interval; the clocks
--- falling due at the same service tie, and the last one, the heaviest change of that service, names it
--- @return table clock service clock definition
--- @return float hours hours run since the clock was reset
--- @return float interval hours the clock lasts
+---Returns the worse of the hourly and calendar progress of a clock
+function RealisticMechanicalSystems:getServiceClockLevel(clock)
+    local spec = self.spec_RealisticMechanicalSystems
+    local level = spec[clock.levelKey] or spec.baseServiceLevel
+    local startAge = spec.serviceCalendar ~= nil and spec.serviceCalendar[clock.key] or tonumber(self.age) or 0
+    if clock.months ~= nil then
+        local elapsed = math.max((tonumber(self.age) or 0) - startAge, 0)
+        level = math.min(level, spec.baseServiceLevel - elapsed / clock.months
+            * (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD))
+    end
+    return math.max(level, 0)
+end
+
+---Returns the next service to recommend, overdue work first
+function RealisticMechanicalSystems:getServiceSchedule()
+    local spec = self.spec_RealisticMechanicalSystems
+    local clocks = self:getServiceClocks()
+    local candidates, result, requiredRank = {}, nil, 0
+    local ranks = {STANDARD = 1, EXTENDED = 2, PREVENTIVE = 3}
+    for _, clock in ipairs(clocks) do
+        local used, interval = self:getServiceClockHours(clock)
+        local elapsed = math.max((tonumber(self.age) or 0) - (spec.serviceCalendar[clock.key] or tonumber(self.age) or 0), 0)
+        local calendarShare = clock.months ~= nil and elapsed / clock.months or 0
+        local hourlyShare = interval < math.huge and used / interval or 0
+        local progress = math.max(hourlyShare, calendarShare)
+        local rank = ranks[clock.maintenanceType]
+        local candidate = {clock = clock, used = used, interval = interval, months = clock.months,
+            remainingMonths = clock.months ~= nil and clock.months - elapsed or nil,
+            calendarDue = calendarShare >= 1, calendarLeading = calendarShare > hourlyShare,
+            progress = progress, rank = rank, overdue = progress >= 1}
+        table.insert(candidates, candidate)
+        if candidate.overdue then requiredRank = math.max(requiredRank, rank) end
+        local choose = result == nil
+        if result ~= nil then
+            if candidate.overdue ~= result.overdue then
+                choose = candidate.overdue
+            elseif candidate.overdue then
+                choose = progress > result.progress + 0.000001
+                    or (math.abs(progress - result.progress) <= 0.000001 and rank > result.rank)
+            else
+                local remaining, previous = interval - used, result.interval - result.used
+                choose = remaining < previous - 0.000001
+                    or (math.abs(remaining - previous) <= 0.000001 and rank > result.rank)
+            end
+        end
+        if choose then result = candidate end
+    end
+    if result == nil then return nil end
+    if not result.overdue then
+        for _, candidate in ipairs(candidates) do
+            if candidate.interval - candidate.used <= result.interval - result.used + 0.000001 then
+                requiredRank = math.max(requiredRank, candidate.rank)
+            end
+        end
+    end
+    result.maintenanceType = RealisticMechanicalSystems.MAINTENANCE_TYPES[
+        ({"STANDARD", "EXTENDED", "PREVENTIVE"})[math.max(requiredRank, result.rank)]]
+    result.level = self:getServiceClockLevel(result.clock)
+    return result
+end
+
+---
 function RealisticMechanicalSystems:getNextServiceClock()
-    local nextClock, nextHours, nextInterval = nil, 0, 0
-    for _, clock in ipairs(self:getServiceClocks()) do
-        local hours, interval = self:getServiceClockHours(clock)
-        if nextClock == nil or interval - hours < nextInterval - nextHours + 0.001 then
-            nextClock, nextHours, nextInterval = clock, hours, interval
-        end
-    end
-
-    return nextClock, nextHours, nextInterval
+    local schedule = self:getServiceSchedule()
+    if schedule == nil then return nil, 0, 0 end
+    return schedule.clock, schedule.used, schedule.interval
 end
 
----Returns the hours run and the hours of the service countdown: every service is set on the engine oil interval
--- @return float hours hours run since the last service
--- @return float interval hours between two services
+---
 function RealisticMechanicalSystems:getServiceCountdown()
-    return self:getServiceClockHours(RealisticMechanicalSystems.SERVICE_CLOCKS[1])
+    local _, used, interval = self:getNextServiceClock()
+    return used, interval
 end
 
----Returns the maintenance the schedule calls for at the next service: the lightest one reaching every clock that
--- falls due by then, the engine oil at every service, the other oils every second one, the coolant every tenth
--- @return string maintenanceType maintenance type constant
+---
 function RealisticMechanicalSystems:getDueMaintenanceType()
-    local spec = self.spec_RealisticMechanicalSystems
-    local engineIntervals = getClockUsedIntervals(spec, RealisticMechanicalSystems.SERVICE_CLOCKS[1])
-    local dueType = RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD
-    for _, clock in ipairs(self:getServiceClocks()) do
-        if getServicesSinceChange(spec, clock, engineIntervals) + 1 >= clock.intervalFactor then
-            dueType = RealisticMechanicalSystems.MAINTENANCE_TYPES[clock.maintenanceType]
+    local schedule = self:getServiceSchedule()
+    return schedule ~= nil and schedule.maintenanceType or RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD
+end
+
+---
+function RealisticMechanicalSystems:getMaintenanceTypes()
+    local clocks = self:getServiceClocks()
+    local minimum = clocks[1] ~= nil and clocks[1].maintenanceType or "STANDARD"
+    local result, include = {}, false
+    for _, key in ipairs({"STANDARD", "EXTENDED", "PREVENTIVE"}) do
+        include = include or key == minimum
+        if include then table.insert(result, RealisticMechanicalSystems.MAINTENANCE_TYPES[key]) end
+    end
+    return result
+end
+
+---Returns the hours between two maintenances of a level
+-- @param string maintenanceType maintenance type
+-- @return float hours interval in the hour meter's units
+function RealisticMechanicalSystems:getMaintenanceLevelInterval(maintenanceType)
+    local program = getServiceProgram(self)
+    local held, programmed = math.huge, math.huge
+    for _, definition in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
+        if RealisticMechanicalSystems.MAINTENANCE_TYPES[definition.maintenanceType] == maintenanceType then
+            local hours = (program[definition.key] or RMS_Config.SERVICE_PROGRAM[definition.key]).hours
+            programmed = math.min(programmed, hours)
+            if next(getServiceClockSumps(self, definition)) ~= nil then
+                held = math.min(held, hours)
+            end
         end
     end
-
-    return dueType
+    return self:getServiceReferenceInterval() * (held < math.huge and held or programmed)
+        / RMS_Config.SERVICE_REFERENCE_HOURS * getHourMeterCoefficient()
 end
 
 ---Returns the options of the newest service
@@ -1355,7 +1550,7 @@ end
 local WARRANTY_MAX_OPERATING_HOURS = 20
 local WARRANTY_MAX_AGE_MONTHS = 12
 
----Tells whether the dealer warranty pays for a repair, on ownership, vehicle age and hours, and the chosen options
+---Tells whether the dealer warranty pays for a repair
 -- @param string repairType repair type
 -- @param string partType part type
 -- @param string workshopType workshop type
@@ -1385,60 +1580,42 @@ function RealisticMechanicalSystems:isWarrantyRepairCovered(repairType, partType
     return true
 end
 
--- an agricultural machine, priced as the reference machine's family
-local AGRICULTURAL_PRICE_FACTORS = { labour = 1, filters = 1, parts = 1 }
-
----Returns how a machine's size scales a real price: its engine against the reference power, then its family
--- @param table vehicle vehicle
--- @param float exponent how the price follows the engine power
--- @param string factorKey labour, filters or parts
--- @return float scale price scale
-local function getSizeScale(vehicle, exponent, factorKey)
-    local C = RMS_Config.MAINTENANCE
-    local factors = C.PROFILE_PRICE_FACTORS[RMS_Fluids.getProfileName(vehicle)] or AGRICULTURAL_PRICE_FACTORS
-    return (RMS_Fluids.getEnginePower(vehicle) / C.REFERENCE_POWER) ^ exponent * factors[factorKey]
+---Tells whether the lease pays a maintenance
+-- @param string workshopType workshop type
+-- @return boolean isCovered true when the lease pays
+function RealisticMechanicalSystems:isLeaseMaintenanceCovered(workshopType)
+    return self.propertyState == VehiclePropertyState.LEASED
+        and (workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER or workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE)
 end
 
 ---Returns a real price in game euros, rounded up to ten
--- @param float realPrice real price in euros
--- @return float price game price
 local function getBilledPrice(realPrice)
-    return math.ceil(RMS_Utils.getGamePrice(realPrice) / 10) * 10
+    -- counted in whole cents first, so a price a float hair over a round ten is not billed ten more
+    local cents = math.floor(RMS_Utils.getGamePrice(realPrice) * 100 + 0.5)
+    return math.ceil(cents / 1000) * 10
 end
 
----Returns the labour of a job: its real hours on the reference machine sized on the engine, at the workshop's rate,
--- the machine's ease of maintenance shortening or lengthening them
--- @param table vehicle vehicle
--- @param float hours real hours on the reference machine
--- @param string workshopType workshop type
--- @return float price labour price
+---Returns the labour price of a job at the workshop's rate
 local function getLabourPrice(vehicle, hours, workshopType)
     local C = RMS_Config.MAINTENANCE
     local workshopKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, workshopType)
-    return getBilledPrice(hours * getSizeScale(vehicle, C.LABOUR_POWER_EXPONENT, "labour") * C.LABOUR_RATE
-        * RMS_Config.WORKSHOP.PRICE_MULTIPLIERS[workshopKey] / vehicle.spec_RealisticMechanicalSystems.maintainability)
+    return getBilledPrice(hours * C.LABOUR_RATE
+        * RMS_Config.WORKSHOP.PRICE_MULTIPLIERS[workshopKey])
 end
 
----Returns the price of repairing a breakdown at a stage: its registry share of the reference repair value, sized on
--- the engine, for the part and repair type chosen
--- @param table vehicle vehicle
--- @param string breakdownId breakdown id
--- @param integer stage breakdown stage
--- @param string repairType repair type
--- @param string partType part type
--- @param string workshopType workshop type
--- @return float price repair price
+---Returns the price of repairing a breakdown at a stage
 local function getBreakdownLinePrice(vehicle, breakdownId, stage, repairType, partType, workshopType)
     local C = RMS_Config.MAINTENANCE
     local workshopKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, workshopType)
-    return getBilledPrice(RMS_Breakdowns.BreakdownRegistry[breakdownId].stages[stage].repairPrice / 100 * C.REPAIR_REFERENCE_VALUE
+    local partsPrice = getBilledPrice(RMS_Breakdowns.BreakdownRegistry[breakdownId].stages[stage].repairPrice / 100 * C.REPAIR_REFERENCE_VALUE
         * getSizeScale(vehicle, C.PARTS_POWER_EXPONENT, "parts")
         * C.PARTS_PRICE_MULTIPLIERS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, partType)]
         * C.REPAIR_PRICE_MULTIPLIERS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, repairType)]
-        * RMS_Config.WORKSHOP.PRICE_MULTIPLIERS[workshopKey] / vehicle.spec_RealisticMechanicalSystems.maintainability)
+        * RMS_Config.WORKSHOP.PRICE_MULTIPLIERS[workshopKey])
+    return partsPrice + getLabourPrice(vehicle, getRepairLabourHours(vehicle, breakdownId, repairType), workshopType)
 end
 
----Returns the price of a service, the warranty bringing it to zero when it applies; a top up charges its fluids only
+---Returns the price of a service, zero under warranty
 -- @param string? maintenanceType service status constant
 -- @param string? optionOne first service option
 -- @param string? optionTwo second service option
@@ -1467,9 +1644,8 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
     local ownWorkshopDiscount = RMS_Config.WORKSHOP.PRICE_MULTIPLIERS[workshopKey] or 1.0
 
     if maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
-        -- an inspection is billed for the time it takes
-        local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.INSPECTION_TYPES, optionOne)
-        return getLabourPrice(self, C.INSPECTION_TIME * C.INSPECTION_TIME_MULTIPLIERS[key] / 3600000, workshopType)
+        -- Instantaneous completion never changes the billed work.
+        return getLabourPrice(self, RealisticMechanicalSystems.getServiceWorkHours(self, maintenanceType, optionOne), workshopType)
 
     elseif maintenanceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
         local maintenancePrice = 0
@@ -1489,7 +1665,9 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
             share = share * systemWeight
         end
         local overhaulPrice = getBilledPrice(share * C.OVERHAUL_REFERENCE_VALUE * getSizeScale(self, C.PARTS_POWER_EXPONENT, "parts")
-            * ownWorkshopDiscount / spec.maintainability)
+            * ownWorkshopDiscount)
+        overhaulPrice = overhaulPrice + getLabourPrice(self,
+            RealisticMechanicalSystems.getServiceWorkHours(self, maintenanceType, optionOne, optionTwo, optionThree), workshopType)
         return math.min(math.max(overhaulPrice, 100), price * C.OVERHAUL_MAX_PRICE_RATIO)
     
     elseif maintenanceType == RealisticMechanicalSystems.STATUS.REPAIR then
@@ -1502,25 +1680,29 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
     return 0
 end
 
----Returns the labour and the filters of a maintenance, a real dealer's service sized on the engine power and
--- turned into game prices; the workshop changes the labour, the parts the filters, the ease of maintenance its hours
+---Returns the labour and the filters of a maintenance
 -- @param string optionOne maintenance type
 -- @param string optionTwo part type
 -- @param string? workshopTypeOverride workshop type replacing the stored one
--- @return table lines kind and price of the labour line then the filters line
-function RealisticMechanicalSystems:getMaintenancePriceLines(optionOne, optionTwo, workshopTypeOverride)
+-- @param boolean? isFullPrice true for what the dealer bills, the lease left aside
+-- @return table lines kind and price of the labour line, none in the farm workshop, then the filters line
+function RealisticMechanicalSystems:getMaintenancePriceLines(optionOne, optionTwo, workshopTypeOverride, isFullPrice)
     local C = RMS_Config.MAINTENANCE
     local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.MAINTENANCE_TYPES, optionOne)
     local partKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, optionTwo)
-    return {
-        { kind = "labour", price = getLabourPrice(self, C.MAINTENANCE_LABOUR_HOURS[key],
-            workshopTypeOverride or self.spec_RealisticMechanicalSystems.workshopType) },
-        { kind = "filters", price = getBilledPrice(C.MAINTENANCE_FILTER_PRICES[key]
-            * getSizeScale(self, C.PARTS_POWER_EXPONENT, "filters") * C.PARTS_PRICE_MULTIPLIERS[partKey]) }
-    }
+    local workshopType = workshopTypeOverride or self.spec_RealisticMechanicalSystems.workshopType
+    local billedShare = (not isFullPrice and self:isLeaseMaintenanceCovered(workshopType)) and 0 or 1
+    local lines = {}
+    if workshopType ~= RealisticMechanicalSystems.WORKSHOP.OWN then
+        table.insert(lines, { kind = "labour", price = billedShare * getLabourPrice(self,
+            RealisticMechanicalSystems.getServiceWorkHours(self, RealisticMechanicalSystems.STATUS.MAINTENANCE, optionOne), workshopType) })
+    end
+    table.insert(lines, { kind = "filters", price = billedShare * getBilledPrice(C.MAINTENANCE_FILTER_PRICES[key]
+        * getSizeScale(self, C.PARTS_POWER_EXPONENT, "filters") * C.PARTS_PRICE_MULTIPLIERS[partKey]) })
+    return lines
 end
 
----Returns the price of each breakdown a repair puts right, the warranty bringing every line to zero
+---Returns the price of each breakdown a repair puts right
 -- @param string? optionOne repair type
 -- @param string? optionTwo part type
 -- @param string? workshopTypeOverride workshop type replacing the stored one
@@ -1578,7 +1760,6 @@ end
 -- @return float duration service duration in ms
 function RealisticMechanicalSystems:getServiceDuration(maintenanceType, optionOne, optionTwo, optionThree, workshopTypeOverride)
     local spec = self.spec_RealisticMechanicalSystems
-    local C = RMS_Config.MAINTENANCE
     local workshopType = workshopTypeOverride or spec.workshopType
 
     if not maintenanceType then maintenanceType = spec.currentState end
@@ -1592,70 +1773,7 @@ function RealisticMechanicalSystems:getServiceDuration(maintenanceType, optionOn
     if spec.currentState ~= RealisticMechanicalSystems.STATUS.READY and spec.currentState ~= RealisticMechanicalSystems.STATUS.BROKEN then
         workDurationHours = spec.maintenanceTimer / 3600000
     else
-        local totalDurationMs = 0
-        if maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
-            if C.INSTANT_INSPECTION and optionOne == RealisticMechanicalSystems.INSPECTION_TYPES.VISUAL then
-                optionOne = RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD
-            end
-            local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.INSPECTION_TYPES, optionOne)
-            if C.INSTANT_INSPECTION then
-                totalDurationMs = 1000
-            else
-                totalDurationMs = C.INSPECTION_TIME * C.INSPECTION_TIME_MULTIPLIERS[key] / spec.maintainability
-            end
-        elseif maintenanceType == RealisticMechanicalSystems.STATUS.REFILL then
-            totalDurationMs = C.REFILL_TIME
-
-        elseif maintenanceType == RealisticMechanicalSystems.STATUS.BODYWORK then
-            totalDurationMs = C.INSTANT_BODYWORK and 1000 or RMS_Bodywork.getDurationMs(self, optionOne) or 0
-
-        elseif maintenanceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
-            local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.MAINTENANCE_TYPES, optionOne)
-            if C.INSTANT_MAINTENANCE_REPAIR then
-                totalDurationMs = 1000
-            else
-                totalDurationMs = C.MAINTENANCE_TIME * C.MAINTENANCE_TIME_MULTIPLIERS[key] / spec.maintainability
-            end
-        elseif maintenanceType == RealisticMechanicalSystems.STATUS.OVERHAUL then
-            local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.OVERHAUL_TYPES, optionOne)
-            totalDurationMs = C.OVERHAUL_TIME * C.OVERHAUL_TIME_MULTIPLIERS[key] / spec.maintainability
-            if optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL then
-                 local systemWeight = RMS_Utils.getEffectiveSystemWeight(self, optionTwo, RealisticMechanicalSystems.SYSTEMS)
-                 if systemWeight <= 0 then
-                    return 0
-                 end
-                 totalDurationMs = totalDurationMs * systemWeight
-            end
-            if optionThree then
-                totalDurationMs = totalDurationMs + C.REPAINT_TIME
-            end
-            if C.INSTANT_OVERHAUL then
-                totalDurationMs = 1000
-            end
-        elseif maintenanceType == RealisticMechanicalSystems.STATUS.REPAIR then
-            local repairCount = 0
-            local breakdowns = self:getActiveBreakdowns()
-
-            if breakdowns ~= nil and next(breakdowns) ~= nil then
-                for id, breakdown in pairs(breakdowns) do
-                    if isBreakdownSelectedForPlayerRepair(id, breakdown, optionOne) then
-                        repairCount = repairCount + 1
-                    end
-                end
-            end
-
-            -- no breakdown ticked leaves the repair type unset, and there is nothing to time
-            if repairCount == 0 then
-                return 0
-            end
-
-            local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, optionOne)
-            if C.INSTANT_MAINTENANCE_REPAIR then
-                totalDurationMs = 1000
-            else
-                totalDurationMs = C.REPAIR_TIME * C.REPAIR_TIME_MULTIPLIERS[key] * repairCount / spec.maintainability
-            end
-        end
+        local totalDurationMs = getServiceWorkDurationMs(self, maintenanceType, optionOne, optionTwo, optionThree)
         workDurationHours = totalDurationMs / 3600000
     end
 
@@ -1665,9 +1783,7 @@ function RealisticMechanicalSystems:getServiceDuration(maintenanceType, optionOn
 
     local totalElapsedHours
 
-    if RMS_Main ~= nil
-        and RMS_Main.isWorkshopTypeAlwaysAvailable ~= nil
-        and RMS_Main:isWorkshopTypeAlwaysAvailable(workshopType) then
+    if RMS_Main:isWorkshopTypeAlwaysAvailable(workshopType) then
         totalElapsedHours = workDurationHours
     else
         local WORKSHOP_HOURS = RMS_Config.WORKSHOP

@@ -46,7 +46,7 @@ function RMS_VehicleExclusionEvent:readStream(streamId, connection)
 end
 
 
----Applies the flag the server sent, or the one a player asked for when the player may change it
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_VehicleExclusionEvent:run(connection)
     local vehicle = self.vehicle
@@ -72,7 +72,7 @@ function RMS_VehicleExclusionEvent.sendToClients(vehicle, isExcludedByUser)
 end
 
 
----Asks for a new exclusion flag, applied at once on the server and sent to it from a client
+---Asks for a new exclusion flag, through the server
 -- @param table vehicle vehicle
 -- @param boolean isExcludedByUser true to exclude the vehicle
 function RMS_VehicleExclusionEvent.request(vehicle, isExcludedByUser)

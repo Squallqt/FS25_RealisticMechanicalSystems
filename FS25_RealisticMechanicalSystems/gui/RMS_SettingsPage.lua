@@ -8,20 +8,7 @@ RMS_SettingsPage.modDirectory = g_currentModDirectory
 
 RMS_SettingsPage.steps = {}
 
----Formats a capacity in amp hours, trailing zeroes removed
--- @param float val capacity
--- @return string text formatted capacity
-local function formatAh(val)
-    local text = string.format("%.2f", val)
-    text = text:gsub("(%..-)0+$", "%1")
-    text = text:gsub("%.$", "")
-    return text .. " Ah"
-end
-
 ---Compares two setting values, numbers within 0.0001 counting as equal
--- @param any a first value
--- @param any b second value
--- @return boolean differ true when the values differ
 local function valuesDiffer(a, b)
     if type(a) == "number" or type(b) == "number" then
         return math.abs((tonumber(a) or 0) - (tonumber(b) or 0)) > 0.0001
@@ -31,7 +18,6 @@ local function valuesDiffer(a, b)
 end
 
 ---Snapshots the live configuration into the flat table the page edits
--- @return table config pending configuration
 local function buildPendingConfigFromRMSConfig()
     return {
         tutorialMode = RMS_Config.TUTORIAL_MODE,
@@ -54,26 +40,15 @@ local function buildPendingConfigFromRMSConfig()
         openHour = RMS_Config.WORKSHOP.OPEN_HOUR,
         closeHour = RMS_Config.WORKSHOP.CLOSE_HOUR,
 
-        temperatureChangeSpeed = RMS_Config.THERMAL.TEMPERATURE_CHANGE_SPEED,
-        transTemperatureChangeMultiplier = RMS_Config.THERMAL.TRANS_TEMPERATURE_CHANGE_MULTIPLIER,
-        maxDirtInfluence = RMS_Config.THERMAL.MAX_DIRT_INFLUENCE,
-
-        batteryUsableCapacityFactor = RMS_Config.ELECTRICAL.BATTERY_USABLE_CAPACITY_FACTOR,
-        alternatorMaxOutput = RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT,
-        idleCurrentA = RMS_Config.ELECTRICAL.IDLE_CURRENT_A,
-
         drivetrainEnabled = RMS_Config.DRIVETRAIN.ENABLED,
         drivetrainAllowAutoMode = RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE,
-        drivetrainWindupDamage = RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED,
         drivetrainParkBrakeEnabled = RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED,
-        drivetrainParkBrakeAuto = RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE,
 
         debugMode = RMS_Config.DEBUG
     }
 end
 
 ---Returns the pending configuration, snapshotting the live one on first use
--- @return table config pending configuration
 local function getPendingConfig()
     if RMS_SettingsPage.pendingConfig == nil then
         RMS_SettingsPage.pendingConfig = buildPendingConfigFromRMSConfig()
@@ -83,14 +58,11 @@ local function getPendingConfig()
 end
 
 ---Returns a GUI profile by name
--- @param string defaultProfileName profile name
--- @return table profile GUI profile
 local function getSettingsProfile(defaultProfileName)
     return g_gui:getProfile(defaultProfileName)
 end
 
 ---Swaps the vanilla button background of a settings row for the mod one
--- @param table? button button element
 local function applyButtonBackgroundProfile(button)
     if button == nil or button.elements == nil then
         return
@@ -105,7 +77,6 @@ local function applyButtonBackgroundProfile(button)
 end
 
 ---Swaps the vanilla multi text option background for the mod one
--- @param table? option multi text option element
 local function applyMultiTextOptionBackgroundProfile(option)
     if option == nil or option.elements == nil then
         return
@@ -120,10 +91,6 @@ local function applyMultiTextOptionBackgroundProfile(option)
 end
 
 ---Adds a padlock to a settings row, shown while the option itself is disabled
--- @param table? rowElement settings row element
--- @param table? optionElement option element of the row
--- @param string tooltip text shown next to the padlock
--- @return table? lockButton padlock element, nil when the row is incomplete
 local function addDisabledLockToSettingsRow(rowElement, optionElement, tooltip)
     if rowElement == nil or optionElement == nil then
         return nil
@@ -157,9 +124,7 @@ local function addDisabledLockToSettingsRow(rowElement, optionElement, tooltip)
     return lockButton
 end
 
----Paints a settings row with the alternating background and flips the parity for the next one
--- @param table? page settings page
--- @param table? rowElement settings row element
+---Paints a settings row with the alternating background
 local function applySettingsRowColor(page, rowElement)
     if page == nil or not page.rmsUseFleetMenuStyle or rowElement == nil or rowElement.setImageColor == nil then
         return
@@ -173,10 +138,9 @@ local function applySettingsRowColor(page, rowElement)
     page.rmsSettingsRowIsEven = not page.rmsSettingsRowIsEven
 end
 
----Finds a vanilla settings row holding a button, used as a template for the mod rows
--- @return table? template vanilla row element, nil when the settings page is unavailable
+---Finds a vanilla settings row holding a button, as a template
 local function getVanillaSettingsButtonTemplate()
-    local settingsPage = g_inGameMenu ~= nil and g_inGameMenu.pageSettings or nil
+    local settingsPage = g_inGameMenu.pageSettings
     local scrollPanel = settingsPage ~= nil and settingsPage.gameSettingsLayout or nil
 
     if scrollPanel == nil or scrollPanel.elements == nil then
@@ -209,13 +173,10 @@ function RMS_SettingsPage:onFocusSettingsLockedIcon(icon)
 end
 
 ---Returns the embedded page only while the settings tab is the active one
--- @return table? page settings page, nil on any other tab
 local function getCurrentSettingsPage()
     local embeddedPage = RMS_SettingsPage.embeddedPage
     if embeddedPage ~= nil
         and embeddedPage.getCurrentSubCategory ~= nil
-        and RMS_InGameMenuFrame ~= nil
-        and RMS_InGameMenuFrame.SUB_CATEGORY ~= nil
         and embeddedPage:getCurrentSubCategory() == RMS_InGameMenuFrame.SUB_CATEGORY.SETTINGS then
         return embeddedPage
     end
@@ -224,19 +185,13 @@ local function getCurrentSettingsPage()
 end
 
 ---Tells whether the mission runs in multiplayer
--- @return boolean isMultiplayer true in multiplayer
 local function isCurrentMissionMultiplayer()
-    return g_currentMission ~= nil
-        and g_currentMission.missionDynamicInfo ~= nil
-        and g_currentMission.missionDynamicInfo.isMultiplayer == true
+    return g_currentMission.missionDynamicInfo.isMultiplayer == true
 end
 
----Tells whether the player may edit the settings, multiplayer requiring server or administrator rights
--- @return boolean canChange true when the controls stay enabled
+---Tells whether the player may edit the settings
 local function canChangeRMSSettings()
-    return g_currentMission ~= nil
-        and g_currentMission.getIsClient ~= nil
-        and g_currentMission:getIsClient()
+    return g_currentMission:getIsClient()
         and (not isCurrentMissionMultiplayer() or g_currentMission:getIsServer() or g_currentMission.isMasterUser)
 end
 
@@ -252,11 +207,11 @@ end
 -- @param table? oldConfig configuration before the change
 -- @param table? newConfig configuration after the change
 function RMS_SettingsPage.applyPendingConfigSideEffects(oldConfig, newConfig)
-    if g_currentMission == nil or not g_currentMission:getIsServer() then
+    if not g_currentMission:getIsServer() then
         return
     end
 
-    if oldConfig == nil or newConfig == nil or RMS_Main == nil or RMS_Main.vehicles == nil then
+    if oldConfig == nil or newConfig == nil or RMS_Main.vehicles == nil then
         return
     end
 
@@ -289,7 +244,7 @@ function RMS_SettingsPage.applyPendingConfigSideEffects(oldConfig, newConfig)
     end
 end
 
----Writes the pending configuration into RMS_Config and replicates it over the network
+---Writes the pending configuration into RMS_Config and syncs it
 -- @param table? current configuration currently applied
 -- @param table? pending configuration edited on the page
 function RMS_SettingsPage.commitPendingConfig(current, pending)
@@ -297,7 +252,6 @@ function RMS_SettingsPage.commitPendingConfig(current, pending)
         return
     end
 
-    local batteryFactorChanged = valuesDiffer(pending.batteryUsableCapacityFactor, current.batteryUsableCapacityFactor)
     local workshopChanged =
         valuesDiffer(pending.dealerAlwaysAvailable, current.dealerAlwaysAvailable) or
         valuesDiffer(pending.mobileAlwaysAvailable, current.mobileAlwaysAvailable) or
@@ -331,48 +285,28 @@ function RMS_SettingsPage.commitPendingConfig(current, pending)
     RMS_Config.WORKSHOP.OPEN_HOUR = pending.openHour
     RMS_Config.WORKSHOP.CLOSE_HOUR = pending.closeHour
 
-    RMS_Config.THERMAL.TEMPERATURE_CHANGE_SPEED = pending.temperatureChangeSpeed
-    RMS_Config.THERMAL.TRANS_TEMPERATURE_CHANGE_MULTIPLIER = pending.transTemperatureChangeMultiplier
-    RMS_Config.THERMAL.MAX_DIRT_INFLUENCE = pending.maxDirtInfluence
-
-    RMS_Config.ELECTRICAL.BATTERY_USABLE_CAPACITY_FACTOR = pending.batteryUsableCapacityFactor
-    RMS_Config.ELECTRICAL.ALT_MAX_OUTPUT = pending.alternatorMaxOutput
-    RMS_Config.ELECTRICAL.IDLE_CURRENT_A = pending.idleCurrentA
-
     RMS_Config.DRIVETRAIN.ENABLED = pending.drivetrainEnabled
     RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE = pending.drivetrainAllowAutoMode
-    RMS_Config.DRIVETRAIN.WINDUP_DAMAGE_ENABLED = pending.drivetrainWindupDamage
     RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED = pending.drivetrainParkBrakeEnabled
-    RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE = pending.drivetrainParkBrakeAuto
 
     RMS_Config.DEBUG = pending.debugMode
 
     RMS_SettingsPage.applyPendingConfigSideEffects(current, pending)
+    RMS_Drivetrain.refreshAllParkBrakePedals()
+    RMS_Drivetrain.claimFromOtherMod()
 
-    -- a changed battery capacity factor rescales the charge of every tracked vehicle
-    if batteryFactorChanged and RMS_Main ~= nil and RMS_Main.vehicles ~= nil then
-        for _, vehicle in pairs(RMS_Main.vehicles) do
-            if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
-                RMS_Electrical.rescaleBatteryChargeFromSoc(vehicle)
-                RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.ELECTRICAL)
-            end
-        end
-    end
-
-    if workshopChanged and RMS_Main ~= nil and RMS_Main.forceWorkshopUpdate ~= nil then
+    if workshopChanged then
         RMS_Main:forceWorkshopUpdate(true)
     end
 
-    if g_currentMission ~= nil then
-        if g_currentMission:getIsServer() then
-            RMS_Config.saveToXMLFile()
-        end
+    if g_currentMission:getIsServer() then
+        RMS_Config.saveToXMLFile()
+    end
 
-        if g_currentMission:getIsServer() and g_server ~= nil then
-            g_server:broadcastEvent(RMS_SettingsSyncEvent.new())
-        elseif g_client ~= nil then
-            RMS_SettingsSyncEvent.send()
-        end
+    if g_currentMission:getIsServer() and g_server ~= nil then
+        g_server:broadcastEvent(RMS_SettingsSyncEvent.new())
+    elseif g_client ~= nil then
+        RMS_SettingsSyncEvent.send()
     end
 end
 
@@ -391,7 +325,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
     end
 
     ---Deletes a settings element by id
-    -- @param string elementId element id
     local function deleteElementById(elementId)
         local root = page.settingsPage or page.settingsLayout or page
         local element = root ~= nil and root:getDescendantById(elementId) or nil
@@ -443,13 +376,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         RMS_SettingsPage.steps.conditionWear.texts,
         g_i18n:getText("rms_vehicleLifespan_label"),
         g_i18n:getText("rms_vehicleLifespan_tooltip")
-    )
-    page.rmsReinitializeVehicles = RMS_SettingsPage:addButtonOption(
-        page,
-        "onReinitializeVehiclesClicked",
-        g_i18n:getText("rms_reinitializeVehicles_label"),
-        g_i18n:getText("rms_reinitializeVehicles_text"),
-        g_i18n:getText("rms_reinitializeVehicles_tooltip")
     )
     page.rmsGeneralWearEnabled = RMS_SettingsPage:addBinaryOption(
         page,
@@ -548,53 +474,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_workshopCloseHour_tooltip")
     )
 
-    RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_settings_section_thermal_model"))
-
-    page.rmsTemperatureChangeSpeed = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onTemperatureChangeSpeedChanged",
-        RMS_SettingsPage.steps.temperatureChangeSpeed.texts,
-        g_i18n:getText("rms_temperatureChangeSpeed_label"),
-        g_i18n:getText("rms_temperatureChangeSpeed_tooltip")
-    )
-    page.rmsTransTemperatureChangeMultiplier = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onTransTemperatureChangeMultiplierChanged",
-        RMS_SettingsPage.steps.transTemperatureChangeMultiplier.texts,
-        g_i18n:getText("rms_transTemperatureChangeMultiplier_label"),
-        g_i18n:getText("rms_transTemperatureChangeMultiplier_tooltip")
-    )
-    page.rmsRadiatorDirtInfluence = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onRadiatorDirtInfluenceChanged",
-        RMS_SettingsPage.steps.radiatorDirtInfluence.texts,
-        g_i18n:getText("rms_radiatorDirtInfluence_label"),
-        g_i18n:getText("rms_radiatorDirtInfluence_tooltip")
-    )
-
-    RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_settings_section_battery_alternator"))
-
-    page.rmsBatteryCapacity = RMS_SettingsPage:addMultiTextOption(
-        page, "onBatteryCapacityChanged",
-        RMS_SettingsPage.steps.batteryCapacity.texts,
-        g_i18n:getText("rms_batteryCapacity_label"),
-        g_i18n:getText("rms_batteryCapacity_tooltip")
-    )
-    page.rmsAlternatorMaxOutput = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onAlternatorMaxOutputChanged",
-        RMS_SettingsPage.steps.alternatorMaxOutput.texts,
-        g_i18n:getText("rms_alternatorMaxOutput_label"),
-        g_i18n:getText("rms_alternatorMaxOutput_tooltip")
-    )
-    page.rmsIdleCurrent = RMS_SettingsPage:addMultiTextOption(
-        page,
-        "onIdleCurrentChanged",
-        RMS_SettingsPage.steps.idleCurrent.texts,
-        g_i18n:getText("rms_idleCurrent_label"),
-        g_i18n:getText("rms_idleCurrent_tooltip")
-    )
-
     RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_settings_section_drivetrain"))
 
     page.rmsDrivetrainEnabled = RMS_SettingsPage:addBinaryOption(
@@ -609,23 +488,11 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_drivetrainAllowAutoMode_label"),
         g_i18n:getText("rms_drivetrainAllowAutoMode_tooltip")
     )
-    page.rmsDrivetrainWindupDamage = RMS_SettingsPage:addBinaryOption(
-        page,
-        "onDrivetrainWindupDamageChanged",
-        g_i18n:getText("rms_drivetrainWindupDamage_label"),
-        g_i18n:getText("rms_drivetrainWindupDamage_tooltip")
-    )
     page.rmsDrivetrainParkBrakeEnabled = RMS_SettingsPage:addBinaryOption(
         page,
         "onDrivetrainParkBrakeEnabledChanged",
         g_i18n:getText("rms_drivetrainParkBrakeEnabled_label"),
         g_i18n:getText("rms_drivetrainParkBrakeEnabled_tooltip")
-    )
-    page.rmsDrivetrainParkBrakeAuto = RMS_SettingsPage:addBinaryOption(
-        page,
-        "onDrivetrainParkBrakeAutoChanged",
-        g_i18n:getText("rms_drivetrainParkBrakeAuto_label"),
-        g_i18n:getText("rms_drivetrainParkBrakeAuto_tooltip")
     )
 
     deleteElementById("subTitlePrefab")
@@ -636,7 +503,7 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
     page.rmsInitSettingsMenuDone = true
 end
 
----Takes over the settings tab of the fleet menu, building its controls on first activation
+---Takes over the settings tab of the fleet menu
 -- @param table? page page hosting the settings tab
 function RMS_SettingsPage:activateEmbeddedSettingsPage(page)
     if page == nil then
@@ -661,28 +528,24 @@ function RMS_SettingsPage:activateEmbeddedSettingsPage(page)
     self:updateRMSSettings(page)
 end
 
----Registers the settings layout with the focus manager, restoring the previous gui afterwards
+---Registers the settings layout with the focus manager
 -- @param table? page page hosting the settings tab
 function RMS_SettingsPage.registerEmbeddedFocus(page)
     if page == nil
         or page.rmsSettingsFocusLoaded
-        or page.settingsLayout == nil
-        or FocusManager == nil
-        or FocusManager.loadElementFromCustomValues == nil then
+        or page.settingsLayout == nil then
         return
     end
 
     local currentGui = FocusManager.currentGui
-    if page.name ~= nil and FocusManager.setGui ~= nil then
+    if page.name ~= nil then
         FocusManager:setGui(page.name)
     end
 
-    if FocusManager.removeElement ~= nil then
-        FocusManager:removeElement(page.settingsLayout)
-    end
+    FocusManager:removeElement(page.settingsLayout)
     FocusManager:loadElementFromCustomValues(page.settingsLayout)
 
-    if currentGui ~= nil and FocusManager.setGui ~= nil then
+    if currentGui ~= nil then
         FocusManager:setGui(currentGui)
     end
 
@@ -754,9 +617,6 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     local tutorialOption = currentPage.rmsTutorialMode
 
     ---Selects the step whose value is closest to the target
-    -- @param table element multi text option element
-    -- @param table valueList step values
-    -- @param any targetValue value to match
     local function setIndex(element, valueList, targetValue)
         local bestIndex = 1
         local bestDiff = math.huge
@@ -772,14 +632,8 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
         element:setState(bestIndex)
     end
 
-    setIndex(currentPage.rmsBatteryCapacity, steps.batteryCapacity.values, pending.batteryUsableCapacityFactor)
-    setIndex(currentPage.rmsAlternatorMaxOutput, steps.alternatorMaxOutput.values, pending.alternatorMaxOutput)
-    setIndex(currentPage.rmsIdleCurrent, steps.idleCurrent.values, pending.idleCurrentA)
     setIndex(currentPage.rmsServiceWear, steps.serviceWear.values, pending.baseServiceWear)
     setIndex(currentPage.rmsConditionWear, steps.conditionWear.values, pending.baseSystemsWear)
-    setIndex(currentPage.rmsTemperatureChangeSpeed, steps.temperatureChangeSpeed.values, pending.temperatureChangeSpeed)
-    setIndex(currentPage.rmsTransTemperatureChangeMultiplier, steps.transTemperatureChangeMultiplier.values, pending.transTemperatureChangeMultiplier)
-    setIndex(currentPage.rmsRadiatorDirtInfluence, steps.radiatorDirtInfluence.values, pending.maxDirtInfluence)
 
     if tutorialOption ~= nil then
         tutorialOption:setIsChecked(pending.tutorialMode, false, false)
@@ -797,9 +651,7 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     currentPage.rmsMobileWorkshopRestrictions:setIsChecked(pending.mobileWorkshopRestrictionsEnabled, false, false)
     currentPage.rmsDrivetrainEnabled:setIsChecked(pending.drivetrainEnabled, false, false)
     currentPage.rmsDrivetrainAllowAutoMode:setIsChecked(pending.drivetrainAllowAutoMode, false, false)
-    currentPage.rmsDrivetrainWindupDamage:setIsChecked(pending.drivetrainWindupDamage, false, false)
     currentPage.rmsDrivetrainParkBrakeEnabled:setIsChecked(pending.drivetrainParkBrakeEnabled, false, false)
-    currentPage.rmsDrivetrainParkBrakeAuto:setIsChecked(pending.drivetrainParkBrakeAuto, false, false)
     currentPage.rmsDebugMode:setIsChecked(pending.debugMode, false, false)
     
     setIndex(currentPage.rmsWorkshopOpenHour, steps.hours.values, pending.openHour)
@@ -817,13 +669,9 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
 
     currentPage.rmsServiceWear:setDisabled(disableAll)
     currentPage.rmsConditionWear:setDisabled(disableAll)
-    currentPage.rmsReinitializeVehicles:setDisabled(disableAll)
     currentPage.rmsGeneralWearEnabled:setDisabled(disableAll)
     currentPage.rmsExhaustSmokeEnabled:setDisabled(disableAll)
 
-    currentPage.rmsBatteryCapacity:setDisabled(disableAll)
-    currentPage.rmsAlternatorMaxOutput:setDisabled(disableAll)
-    currentPage.rmsIdleCurrent:setDisabled(disableAll)
     currentPage.rmsInstantInspection:setDisabled(disableAll)
     currentPage.rmsInstantMaintenanceRepair:setDisabled(disableAll)
     currentPage.rmsInstantBodywork:setDisabled(disableAll)
@@ -834,12 +682,7 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     currentPage.rmsMobileWorkshopRestrictions:setDisabled(disableAll)
     currentPage.rmsDrivetrainEnabled:setDisabled(disableAll)
     currentPage.rmsDrivetrainAllowAutoMode:setDisabled(disableAll or not pending.drivetrainEnabled)
-    currentPage.rmsDrivetrainWindupDamage:setDisabled(disableAll or not pending.drivetrainEnabled)
     currentPage.rmsDrivetrainParkBrakeEnabled:setDisabled(disableAll)
-    currentPage.rmsDrivetrainParkBrakeAuto:setDisabled(disableAll or not pending.drivetrainParkBrakeEnabled)
-    currentPage.rmsTemperatureChangeSpeed:setDisabled(disableAll)
-    currentPage.rmsTransTemperatureChangeMultiplier:setDisabled(disableAll)
-    currentPage.rmsRadiatorDirtInfluence:setDisabled(disableAll)
     currentPage.rmsWarningMessages:setDisabled(disableAll)
     currentPage.rmsDebugMode:setDisabled(disableAll)
 
@@ -867,7 +710,7 @@ function RMS_SettingsPage:onServiceWearChanged(state)
     refreshCurrentSettingsPage()
 end
 
----Stores whether the tutorial tips are shown, reading the checkbox when it is reachable
+---Stores whether the tutorial tips are shown
 -- @param any state binary option state or boolean
 -- @param table? optionElement option element that fired the callback
 function RMS_SettingsPage:onTutorialModeChanged(state, optionElement)
@@ -880,7 +723,7 @@ function RMS_SettingsPage:onTutorialModeChanged(state, optionElement)
         and RMS_SettingsPage.embeddedPage.rmsTutorialMode ~= nil
         and RMS_SettingsPage.embeddedPage.rmsTutorialMode.getIsChecked ~= nil then
         newValue = RMS_SettingsPage.embeddedPage.rmsTutorialMode:getIsChecked()
-    elseif BinaryOptionElement ~= nil and state == BinaryOptionElement.STATE_RIGHT then
+    elseif state == BinaryOptionElement.STATE_RIGHT then
         newValue = true
     elseif type(state) == "boolean" then
         newValue = not state
@@ -889,35 +732,6 @@ function RMS_SettingsPage:onTutorialModeChanged(state, optionElement)
     pending.tutorialMode = newValue
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
     refreshCurrentSettingsPage()
-end
-
----Shows how many vehicles the recomputation reached
--- @param integer recalculated number of vehicles recomputed
--- @param integer busy number of vehicles left untouched
-function RMS_SettingsPage.showReinitializeVehiclesResult(recalculated, busy)
-    InfoDialog.show(string.format(
-        g_i18n:getText("rms_reinitializeVehicles_result"),
-        tonumber(recalculated) or 0,
-        tonumber(busy) or 0
-    ))
-end
-
----Recomputes the whole fleet after a confirmation, the pending settings applied first
-function RMS_SettingsPage:onReinitializeVehiclesClicked()
-    YesNoDialog.show(function(shouldReinitialize)
-        if not shouldReinitialize then
-            return
-        end
-
-        RMS_SettingsPage:onFrameClose()
-        RMS_SettingsPage.beginSettingsSession()
-
-        if g_currentMission:getIsServer() then
-            RMS_SettingsPage.showReinitializeVehiclesResult(RealisticMechanicalSystems.reinitializeAllVehicles())
-        else
-            RMS_ReinitializeVehiclesEvent.sendToServer()
-        end
-    end, nil, g_i18n:getText("rms_reinitializeVehiclesConfirm_message"), g_i18n:getText("rms_reinitializeVehiclesConfirm_title"))
 end
 
 ---Asks the player to confirm, then clears the seen tutorial messages
@@ -1002,7 +816,7 @@ function RMS_SettingsPage:onOwnWorkshopAvailableChanged(state)
     refreshCurrentSettingsPage()
 end
 
----Stores whether the mobile workshop restricts services by maintainability
+---Stores whether the mobile workshop restricts services by its equipment
 -- @param integer state binary option state
 function RMS_SettingsPage:onMobileWorkshopRestrictionsChanged(state)
     getPendingConfig().mobileWorkshopRestrictionsEnabled = (state == BinaryOptionElement.STATE_RIGHT)
@@ -1055,54 +869,6 @@ function RMS_SettingsPage:onWorkshopCloseHourChanged(state)
 end
 
 
----Stores the usable battery capacity factor step
--- @param integer state selected step index
-function RMS_SettingsPage:onBatteryCapacityChanged(state)
-    getPendingConfig().batteryUsableCapacityFactor = RMS_SettingsPage.steps.batteryCapacity.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the maximum alternator output step
--- @param integer state selected step index
-function RMS_SettingsPage:onAlternatorMaxOutputChanged(state)
-    getPendingConfig().alternatorMaxOutput = RMS_SettingsPage.steps.alternatorMaxOutput.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the idle current draw step
--- @param integer state selected step index
-function RMS_SettingsPage:onIdleCurrentChanged(state)
-    getPendingConfig().idleCurrentA = RMS_SettingsPage.steps.idleCurrent.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
-
----Stores the temperature change speed step
--- @param integer state selected step index
-function RMS_SettingsPage:onTemperatureChangeSpeedChanged(state)
-    getPendingConfig().temperatureChangeSpeed = RMS_SettingsPage.steps.temperatureChangeSpeed.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the transmission temperature change multiplier step
--- @param integer state selected step index
-function RMS_SettingsPage:onTransTemperatureChangeMultiplierChanged(state)
-    getPendingConfig().transTemperatureChangeMultiplier = RMS_SettingsPage.steps.transTemperatureChangeMultiplier.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores the maximum dirt influence step
--- @param integer state selected step index
-function RMS_SettingsPage:onRadiatorDirtInfluenceChanged(state)
-    getPendingConfig().maxDirtInfluence = RMS_SettingsPage.steps.radiatorDirtInfluence.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
 
 ---Stores whether the drivetrain system is simulated
 -- @param integer state binary option state
@@ -1120,26 +886,10 @@ function RMS_SettingsPage:onDrivetrainAllowAutoModeChanged(state)
     refreshCurrentSettingsPage()
 end
 
----Stores whether drivetrain windup causes damage
--- @param integer state binary option state
-function RMS_SettingsPage:onDrivetrainWindupDamageChanged(state)
-    getPendingConfig().drivetrainWindupDamage = (state == BinaryOptionElement.STATE_RIGHT)
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
 ---Stores whether the park brake is simulated
 -- @param integer state binary option state
 function RMS_SettingsPage:onDrivetrainParkBrakeEnabledChanged(state)
     getPendingConfig().drivetrainParkBrakeEnabled = (state == BinaryOptionElement.STATE_RIGHT)
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores whether the park brake engages itself
--- @param integer state binary option state
-function RMS_SettingsPage:onDrivetrainParkBrakeAutoChanged(state)
-    getPendingConfig().drivetrainParkBrakeAuto = (state == BinaryOptionElement.STATE_RIGHT)
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
     refreshCurrentSettingsPage()
 end
@@ -1267,7 +1017,7 @@ function RMS_SettingsPage:addBinaryOption(inGameMenuSettingsFrame, onClickCallba
     return binaryOption
 end
 
----Appends a button row to the settings layout, cloned from the vanilla settings template
+---Appends a button row cloned from the vanilla settings template
 -- @param table inGameMenuSettingsFrame frame hosting the settings layout
 -- @param string onClickCallback name of the callback fired on click
 -- @param string title row title
@@ -1356,11 +1106,6 @@ function RMS_SettingsPage:generateAllSteps()
     if self.steps.generated then return end
 
     ---Builds a step list of evenly spaced values
-    -- @param float startVal first value
-    -- @param integer count number of steps
-    -- @param float stepSize gap between two steps
-    -- @param function? formatter builds the label of a value
-    -- @return table data values and texts
     local function createSteps(startVal, count, stepSize, formatter)
         local data = { values = {}, texts = {} }
         for i = 0, count - 1 do
@@ -1376,14 +1121,11 @@ function RMS_SettingsPage:generateAllSteps()
         local data = { values = {}, texts = {} }
 
         ---Appends one hour range to the step list
-        -- @param float startHour first hour
-        -- @param float endHour last hour
-        -- @param float stepHour gap between two hours
         local function addHourRange(startHour, endHour, stepHour)
             local hours = startHour
             while hours <= endHour + 0.0001 do
                 table.insert(data.values, 0.5 / hours)
-                table.insert(data.texts, string.format("%.1f h", hours))
+                table.insert(data.texts, RMS_Utils.formatHours(hours))
                 hours = hours + stepHour
             end
         end
@@ -1401,14 +1143,11 @@ function RMS_SettingsPage:generateAllSteps()
         local data = { values = {}, texts = {} }
 
         ---Appends one hour range to the step list
-        -- @param float startHour first hour
-        -- @param float endHour last hour
-        -- @param float stepHour gap between two hours
         local function addHourRange(startHour, endHour, stepHour)
             local hours = startHour
             while hours <= endHour + 0.0001 do
                 table.insert(data.values, 1.0 / hours)
-                table.insert(data.texts, string.format("%d h", hours))
+                table.insert(data.texts, RMS_Utils.formatHours(hours))
                 hours = hours + stepHour
             end
         end
@@ -1422,62 +1161,10 @@ function RMS_SettingsPage:generateAllSteps()
         self.steps.conditionWear = data
     end
 
-    -- Battery Capacity in Ah (stored as usable capacity factor)
-    do
-        local nominalCapacity = tonumber(RMS_Config.ELECTRICAL.BATTERY_NOMINAL_CAPACITY) or 150
-        local data = { values = {}, texts = {} }
-        local factors = {0.025, 0.05, 0.075, 0.1}
-
-        for factor = 0.2, 1.0, 0.1 do
-            table.insert(factors, factor)
-        end
-
-        for _, factor in ipairs(factors) do
-            table.insert(data.values, factor)
-            table.insert(data.texts, formatAh(nominalCapacity * factor))
-        end
-
-        self.steps.batteryCapacity = data
-    end
-
-    -- Alternator Max Output: 100 A to 300 A.
-    self.steps.alternatorMaxOutput = createSteps(100, 5, 50, function(v)
-        return string.format("%d A", v)
-    end)
-
-    -- Idle Current: none, then 0.1 A to 2.0 A.
-    do
-        local data = { values = {0.0}, texts = {g_i18n:getText("rms_option_none")} }
-        for tenths = 1, 20 do
-            local value = tenths / 10
-            table.insert(data.values, value)
-            table.insert(data.texts, string.format("%.1f A", value))
-        end
-        self.steps.idleCurrent = data
-    end
-
     -- Hours: 00:00 to 23:00
     self.steps.hours = createSteps(0, 24, 1, function(v)
         return string.format("%02d:00", v)
     end)
-
-    -- Engine thermal model speed: 0.5x to 2.0x.
-    self.steps.temperatureChangeSpeed = createSteps(0.5, 16, 0.1, function(v)
-        return string.format("%.1fx", v)
-    end)
-    self.steps.transTemperatureChangeMultiplier = createSteps(0.5, 16, 0.1, function(v)
-        return string.format("%.1fx", v)
-    end)
-
-    -- Radiator Dirt Influence: Off, then 25% to 100%.
-    do
-        local data = { values = {0.0}, texts = {g_i18n:getText("rms_option_off")} }
-        for percent = 25, 100, 25 do
-            table.insert(data.values, percent / 100)
-            table.insert(data.texts, string.format("%d%%", percent))
-        end
-        self.steps.radiatorDirtInfluence = data
-    end
 
     self.steps.generated = true
 end

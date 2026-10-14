@@ -46,7 +46,7 @@ function RMS_LogEntrySyncEvent:readStream(streamId, connection)
 end
 
 
----Replaces the log entry of the same id on the client vehicle, appends it when absent
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_LogEntrySyncEvent:run(connection)
     local vehicle = self.vehicle
@@ -73,7 +73,7 @@ function RMS_LogEntrySyncEvent:run(connection)
 end
 
 
----Serializes the entry and broadcasts it from the server to the clients of the vehicle
+---Sends the entry from the server to the clients of the vehicle
 -- @param table vehicle vehicle
 -- @param table entry maintenance log entry
 function RMS_LogEntrySyncEvent.sendToClients(vehicle, entry)

@@ -42,7 +42,7 @@ function RMS_CancelServiceEvent:readStream(streamId, connection)
 end
 
 
----Cancels the service on the server if the requesting farm owns the vehicle and a service is running
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_CancelServiceEvent:run(connection)
     if not connection:getIsServer() then

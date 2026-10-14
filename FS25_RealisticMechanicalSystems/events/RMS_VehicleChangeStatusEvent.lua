@@ -71,7 +71,7 @@ function RMS_VehicleChangeStatusEvent:readStream(streamId, connection)
 end
 
 
----Reapplies effects and indicators, notifies the owning farm, and relays the event on the server
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_VehicleChangeStatusEvent:run(connection)
     if self.vehicle ~= nil and self.vehicle:getIsSynchronized() then
@@ -110,13 +110,10 @@ function RMS_VehicleChangeStatusEvent:run(connection)
         self.vehicle:recalculateAndApplyIndicators()
 
         -- notification and sound for the owning farm only
-        if connection:getIsServer() and self.notificationText ~= nil and self.notificationText ~= "" then
-            if g_currentMission:getFarmId() == self.vehicle.ownerFarmId and g_currentMission ~= nil and g_currentMission.hud ~= nil then
-                g_currentMission.hud:addSideNotification({1, 1, 1, 1}, self.notificationText)
-            end
-            if g_currentMission:getFarmId() == self.vehicle.ownerFarmId then
-                RMS_SoundManager.playSample(RMS_Main.samples.maintenanceCompleted2D)
-            end
+        if connection:getIsServer() and self.notificationText ~= nil and self.notificationText ~= ""
+                and g_currentMission:getFarmId() == self.vehicle.ownerFarmId then
+            g_currentMission.hud:addSideNotification({1, 1, 1, 1}, self.notificationText)
+            RMS_SoundManager.playSample(RMS_Main.samples.maintenanceCompleted2D)
         end
 
         g_messageCenter:publish(MessageType.RMS_VEHICLE_CHANGE_STATUS, self.vehicle)

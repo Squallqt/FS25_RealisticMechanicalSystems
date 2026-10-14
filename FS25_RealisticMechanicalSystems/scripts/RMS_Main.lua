@@ -80,6 +80,7 @@ source(g_currentModDirectory .. "scripts/RMS_Config.lua")
 source(g_currentModDirectory .. "scripts/RMS_Utils.lua")
 source(g_currentModDirectory .. "scripts/RMS_Fluids.lua")
 source(g_currentModDirectory .. "scripts/RMS_FluidTransfer.lua")
+source(g_currentModDirectory .. "scripts/RMS_FluidStorage.lua")
 source(g_currentModDirectory .. "scripts/RMS_Bodywork.lua")
 source(g_currentModDirectory .. "scripts/RMS_FluidWorkshop.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProgressRing.lua")
@@ -109,7 +110,6 @@ source(g_currentModDirectory .. "events/RMS_FluidTransferRequestEvent.lua")
 source(g_currentModDirectory .. "events/RMS_BatteryChargerRequestEvent.lua")
 source(g_currentModDirectory .. "events/RMS_CancelServiceEvent.lua")
 source(g_currentModDirectory .. "events/RMS_SettingsSyncEvent.lua")
-source(g_currentModDirectory .. "events/RMS_ReinitializeVehiclesEvent.lua")
 source(g_currentModDirectory .. "events/RMS_TutorialStateEvent.lua")
 source(g_currentModDirectory .. "events/RMS_EffectSyncEvent.lua")
 source(g_currentModDirectory .. "events/RMS_LogEntrySyncEvent.lua")
@@ -117,28 +117,37 @@ source(g_currentModDirectory .. "events/RMS_ConsoleCommandEvent.lua")
 source(g_currentModDirectory .. "events/RMS_VehicleExclusionEvent.lua")
 source(g_currentModDirectory .. "events/RMS_StartButtonEvent.lua")
 source(g_currentModDirectory .. "events/RMS_FieldInspectionEvent.lua")
+source(g_currentModDirectory .. "events/RMS_BatteryIsolatorEvent.lua")
 source(g_currentModDirectory .. "events/RMS_HandToolSyncEvent.lua")
 source(g_currentModDirectory .. "events/RMS_JumperCablesEvent.lua")
 source(g_currentModDirectory .. "events/RMS_DrivetrainEvent.lua")
+source(g_currentModDirectory .. "events/RMS_TripResetEvent.lua")
 source(g_currentModDirectory .. "events/RMS_DebugSnapshotResponseEvent.lua")
 source(g_currentModDirectory .. "events/RMS_DebugSnapshotRequestEvent.lua")
 
 ---Loads the GUI profiles of the mod
 function RMS_Main.loadGuiProfiles()
-    if RMS_Main.guiProfilesLoaded or g_gui == nil then
+    if RMS_Main.guiProfilesLoaded then
         return
     end
 
     g_gui:loadProfiles(modDirectory .. "gui/guiProfiles.xml")
 
-    if g_overlayManager ~= nil
-        and (g_overlayManager.textureConfigs == nil or g_overlayManager.textureConfigs.rms_MenuIcon == nil) then
+    if g_overlayManager.textureConfigs.rms_MenuIcon == nil then
         g_overlayManager:addTextureConfigFile(modDirectory .. "images/menuIcon.xml", "rms_MenuIcon")
     end
 
-    if g_overlayManager ~= nil
-        and (g_overlayManager.textureConfigs == nil or g_overlayManager.textureConfigs.rms_WorkshopFluids == nil) then
+    if g_overlayManager.textureConfigs.rms_WorkshopFluids == nil then
         g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_workshopFluids.xml", "rms_WorkshopFluids")
+    end
+
+    if g_overlayManager.textureConfigs.rms_LevelGauge == nil then
+        g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_levelGauge.xml", "rms_LevelGauge")
+    end
+
+    -- the fleet page is built before the HUD and names glyphs of its atlas
+    if g_overlayManager.textureConfigs.rms_DashboardHud == nil then
+        g_overlayManager:addTextureConfigFile(modDirectory .. "hud/rms_dashboardHud.xml", "rms_DashboardHud")
     end
 
     RMS_Main.guiProfilesLoaded = true
@@ -156,8 +165,6 @@ local RMS_REQUIRED_SPECIALIZATIONS = {"motorized", "wheels", "enterable"}
 local RMS_REJECTED_SPECIALIZATIONS = {"pushHandTool", "locomotive", "motorbike"}
 
 ---Tells whether a vehicle type gets the RMS specialization
--- @param table vehicleType vehicle type
--- @return boolean isManaged true when RMS attaches to it
 local function getIsTypeManagedByRMS(vehicleType)
 	local specializations = vehicleType.specializationsByName
 	if specializations.RealisticMechanicalSystems ~= nil then
@@ -181,7 +188,7 @@ end
 
 ---Attaches the RMS specialization to every managed vehicle type
 function RMS_Main.registerSpecializationToVehicles()
-	if g_modIsLoaded ~= nil and g_modIsLoaded["FS25_AdvancedDamageSystem"] then
+	if g_modIsLoaded["FS25_AdvancedDamageSystem"] then
 		if not RMS_Main.conflictLogged then
 			Logging.warning("RMS: Advanced Damage System is loaded, RMS stays out. Keep only one of the two.")
 			RMS_Main.conflictLogged = true
@@ -300,7 +307,6 @@ function RMS_Main.onCustomRepairClick(screenInstance)
     RMS_WorkshopDialog.show(screenInstance.vehicle)
 end
 
--- workshop repairButton control for RMS vehicles
 ---Redirects the vanilla repair button to the mod workshop dialog
 -- @param table screenInstance workshop screen
 -- @param table? vehicle vehicle
@@ -391,7 +397,7 @@ function RMS_Main.hookRepaintButton(screenInstance, vehicle)
 end
 
 
----Stops native repaint transactions for RMS vehicles when another entry point calls the event.
+---Stops the native repaint event on RMS vehicles
 -- @param table event repaint event
 -- @param function superFunc native event handler
 -- @param table connection event connection
@@ -405,21 +411,21 @@ function RMS_Main.runNativeRepaintEvent(event, superFunc, connection)
 end
 
 
----Writes the vehicle transaction price missing from the native BuyVehicleData stream
+---Writes the vehicle price missing from the native BuyVehicleData stream
 function RMS_Main.writeBuyVehicleDataPrice(data, superFunc, streamId, connection)
     superFunc(data, streamId, connection)
     streamWriteInt32(streamId, math.floor(tonumber(data.price) or 0))
 end
 
 
----Reads the vehicle transaction price missing from the native BuyVehicleData stream
+---Reads the vehicle price missing from the native BuyVehicleData stream
 function RMS_Main.readBuyVehicleDataPrice(data, superFunc, streamId, connection)
     superFunc(data, streamId, connection)
     data.price = streamReadInt32(streamId)
 end
 
 
----Detects changes to the vehicle's native color configurations, including custom colors.
+---Detects changes to the vehicle's color configurations, custom ones included
 function RMS_Main.hasConfigurationColorChange(vehicle, configurations, configurationData)
     if vehicle == nil or configurations == nil then
         return false
@@ -489,7 +495,7 @@ function RMS_Main.getConfigurationCostsAndChanges(screen, superFunc, storeItem, 
     return basePrice, upgradePrice, hasChanges
 end
 
----Enforces the RMS paint charge before the native server transaction reloads the vehicle.
+---Charges the RMS paint before the native transaction reloads the vehicle
 function RMS_Main.runChangeVehicleConfigEvent(event, superFunc, connection)
     if not connection:getIsServer() and event.vehicle ~= nil and event.vehicleBuyData ~= nil then
         local spec = event.vehicle.spec_RealisticMechanicalSystems
@@ -507,26 +513,19 @@ function RMS_Main.runChangeVehicleConfigEvent(event, superFunc, connection)
     return superFunc(event, connection)
 end
 
----Loads whether RMS tracks the store item, kept under the reliability spec both ratings read
--- @param XMLFile xmlFile vehicle file of the store item
--- @param string? customEnvironment mod of the store item
--- @return boolean isTracked true when RMS tracks the machine by default
+---Loads whether RMS tracks the store item, stored under the reliability spec
 local function loadIsTracked(xmlFile, customEnvironment)
     return RealisticMechanicalSystems.getIsStoreItemTracked(xmlFile, customEnvironment)
 end
 
----Tells whether a store item gets the RMS ratings, a vehicle answering for itself
--- @param table storeItem store item
--- @param table? vehicle vehicle
--- @param table? configurations configuration ids the shop shows
--- @return boolean isRated true when RMS tracks the machine and its power is known
-local function getIsRated(storeItem, vehicle, configurations)
+---Tells whether a store item gets the RMS rating, a vehicle answering for itself
+local function getIsRated(storeItem, vehicle)
     if vehicle ~= nil then
         local spec = vehicle.spec_RealisticMechanicalSystems
         if spec == nil or spec.isExcludedVehicle then
             return false
         end
-    elseif storeItem.specs.reliability ~= true or RealisticMechanicalSystems.getIsStoreItemElectric(storeItem, configurations) then
+    elseif storeItem.specs.reliability ~= true then
         return false
     end
 
@@ -534,33 +533,24 @@ local function getIsRated(storeItem, vehicle, configurations)
 end
 
 ---Returns the reliability of a store item, the vehicle value taking precedence
--- @param table storeItem store item
--- @param table? vehicle vehicle
--- @param table? configurations configuration ids the shop shows
--- @return float reliability reliability value
-local function getReliability(storeItem, vehicle, configurations)
-    if getIsRated(storeItem, vehicle, configurations) then
-        local reliability = RealisticMechanicalSystems.getBrandReliability(nil, storeItem)
+local function getReliability(storeItem, vehicle)
+    if getIsRated(storeItem, vehicle) then
+        local reliability = RealisticMechanicalSystems.getBrandReliability(vehicle, storeItem)
         return RMS_Utils.formatReliability(reliability)
     end
 end
 
----Returns the maintainability of a store item, the vehicle value taking precedence
--- @param table storeItem store item
--- @param table? vehicle vehicle
--- @param table? configurations configuration ids the shop shows
--- @return float maintainability maintainability value
-local function getMaintainability(storeItem, vehicle, configurations)
-    if getIsRated(storeItem, vehicle, configurations) then
-        local _, maintainability = RealisticMechanicalSystems.getBrandReliability(nil, storeItem)
-        return RMS_Utils.formatMaintainability(maintainability)
+---
+local function getServiceAccess(storeItem, vehicle, configurations)
+    if getIsRated(storeItem, vehicle) then
+        return RMS_Utils.formatServiceAccess(vehicle, storeItem, configurations)
     end
 end
 
 -- adds spec while browsing
-if g_modIsLoaded == nil or not g_modIsLoaded["FS25_AdvancedDamageSystem"] then
+if not g_modIsLoaded["FS25_AdvancedDamageSystem"] then
     g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", loadIsTracked, getReliability, StoreSpecies.VEHICLE)
-    g_storeManager:addSpecType("maintainability", "shopListAttributeIconMaintainability", nil, getMaintainability, StoreSpecies.VEHICLE)
+    g_storeManager:addSpecType("serviceAccess", "shopListAttributeIconServiceAccess", RMS_Utils.loadServiceAccess, getServiceAccess, StoreSpecies.VEHICLE)
 end
 
 ---Inserts a page into the shop menu
@@ -625,7 +615,7 @@ function RMS_Main.addShopMenuPage(frame, pageName, uvs, predicateFunc, insertAft
     g_shopMenu:rebuildTabList()
 end
 
----Clones the last menu button until the menu holds enough of them, the vanilla shop menu declaring only six
+---Clones the last menu button until the menu holds enough of them
 -- @param table menu tabbed menu
 -- @param integer count buttons needed
 function RMS_Main.ensureMenuButtonCount(menu, count)
@@ -653,7 +643,7 @@ function RMS_Main:tryRegisterShopMenuPage()
         return true
     end
 
-    if RMS_InGameMenuFrame == nil or g_shopMenu == nil then
+    if g_shopMenu == nil then
         return false
     end
 
@@ -674,8 +664,7 @@ function RMS_Main:tryRegisterShopMenuPage()
 end
 
 
--- adds spec in config screen 
----Adds the reliability and maintainability attributes to a shop item
+---Adds the reliability attribute to a shop item
 -- @param table self shop frame
 -- @param table storeItem store item
 -- @param table? vehicle vehicle
@@ -686,22 +675,17 @@ function RMS_Main.processAttributeData(self, storeItem, vehicle, saleItem)
         local reliabilityIconElement = reliabilityItemElement:getDescendantByName("icon")
         local reliabilityTextElement = reliabilityItemElement:getDescendantByName("text")
 
-        local rel, mel = RealisticMechanicalSystems.getBrandReliability(vehicle, nil)
+        local rel = RealisticMechanicalSystems.getBrandReliability(vehicle, nil)
         reliabilityIconElement:applyProfile("shopConfigAttributeIconReliability")
         reliabilityTextElement:setText(RMS_Utils.formatReliability(rel))
+        local accessItemElement = self.attributeItem:clone(self.attributesLayout)
+        accessItemElement:getDescendantByName("icon"):applyProfile("shopConfigAttributeIconServiceAccess")
+        accessItemElement:getDescendantByName("text"):setText(RMS_Utils.formatServiceAccess(vehicle, storeItem, self.configurations))
         self.attributesLayout:invalidateLayout()
 
-        local maintainabilityItemElement = self.attributeItem:clone(self.attributesLayout)
-        local maintainabilityIconElement = maintainabilityItemElement:getDescendantByName("icon")
-        local maintainabilityTextElement = maintainabilityItemElement:getDescendantByName("text")
-
-        maintainabilityIconElement:applyProfile("shopConfigAttributeIconMaintainability")
-        maintainabilityTextElement:setText(RMS_Utils.formatMaintainability(mel))
-        self.attributesLayout:invalidateLayout()
     end
 end
 
--- garage overwiev fix
 ---Fills a shop list cell, adding the RMS attributes to it
 -- @param table self shop frame
 -- @param function superFunc super function
@@ -715,8 +699,14 @@ function RMS_Main.populateCellForItemInSection(self, superFunc, list, section, i
         if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
             superFunc(self, list, section, index, cell)
             local condition, isCompleteInspection = vehicle:getLastInspectedCondition()
+            local _, isReportOutdated = vehicle:getInspectionReportAge()
             cell:getAttribute("damage"):setText(RMS_Utils.formatCondition(condition, isCompleteInspection))
-            cell:getAttribute("damage"):setTextColor(RMS_Utils.getConditionColor(condition, isCompleteInspection))
+            -- a report that no longer describes the machine keeps its figure, greyed out
+            if isReportOutdated then
+                cell:getAttribute("damage"):setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
+            else
+                cell:getAttribute("damage"):setTextColor(RMS_Utils.getConditionColor(condition, isCompleteInspection))
+            end
         else
             superFunc(self, list, section, index, cell)
         end
@@ -726,10 +716,16 @@ function RMS_Main.populateCellForItemInSection(self, superFunc, list, section, i
 end
 
 
+-- 511 fill types instead of 255, set before the map registers its first one
+FillTypeManager.SEND_NUM_BITS = math.max(FillTypeManager.SEND_NUM_BITS, 9)
+
 FSBaseMission.onStartMission = Utils.prependedFunction(FSBaseMission.onStartMission, RMS_Main.onStartMission)
 FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, RMS_Config.saveToXMLFile)
 Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, function()
     RMS_Config.loadFromXMLFile()
+    if g_currentMission:getIsServer() then
+        RMS_Drivetrain.claimFromOtherMod()
+    end
 end)
 FSBaseMission.sendInitialClientState = Utils.appendedFunction(FSBaseMission.sendInitialClientState, function(_, connection)
     if g_server ~= nil then
@@ -737,9 +733,10 @@ FSBaseMission.sendInitialClientState = Utils.appendedFunction(FSBaseMission.send
         RMS_TutorialStateEvent.sendToClient(connection)
     end
 end)
-if WorkshopScreen.update ~= nil then
-    WorkshopScreen.update = Utils.appendedFunction(WorkshopScreen.update, RMS_Main.refreshWorkshopResalePrices)
-end
+WorkshopScreen.update = Utils.appendedFunction(WorkshopScreen.update, RMS_Main.refreshWorkshopResalePrices)
+LoadTrigger.update = Utils.overwrittenFunction(LoadTrigger.update, function(trigger, superFunc, dt)
+    RMS_ElectricDrive.updateLoadTrigger(trigger, superFunc, dt)
+end)
 WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RMS_Main.hookRepairButton)
 WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RMS_Main.hookRepaintButton)
 WearableRepaintEvent.run = Utils.overwrittenFunction(WearableRepaintEvent.run, RMS_Main.runNativeRepaintEvent)
@@ -751,12 +748,8 @@ ShopConfigScreen.updateData = Utils.overwrittenFunction(
     ShopConfigScreen.updateData, RMS_Main.updateShopConfigData)
 ChangeVehicleConfigEvent.run = Utils.overwrittenFunction(
     ChangeVehicleConfigEvent.run, RMS_Main.runChangeVehicleConfigEvent)
-if BuyVehicleData ~= nil and BuyVehicleData.writeStream ~= nil then
-    BuyVehicleData.writeStream = Utils.overwrittenFunction(BuyVehicleData.writeStream, RMS_Main.writeBuyVehicleDataPrice)
-end
-if BuyVehicleData ~= nil and BuyVehicleData.readStream ~= nil then
-    BuyVehicleData.readStream = Utils.overwrittenFunction(BuyVehicleData.readStream, RMS_Main.readBuyVehicleDataPrice)
-end
+BuyVehicleData.writeStream = Utils.overwrittenFunction(BuyVehicleData.writeStream, RMS_Main.writeBuyVehicleDataPrice)
+BuyVehicleData.readStream = Utils.overwrittenFunction(BuyVehicleData.readStream, RMS_Main.readBuyVehicleDataPrice)
 
 
 RMS_Main.initSpec()
@@ -773,9 +766,6 @@ RMS_Main.currentWeatherFactor = 1.0
 
 ---Recomputes whether the workshop is open from the time of day
 function RMS_Main:evaluateWorkshopState()
-    if g_currentMission == nil or g_currentMission.environment == nil then
-        return self.isWorkshopOpen
-    end
     local currentDayHour = g_currentMission.environment.dayTime / (60 * 60 * 1000)
     return (currentDayHour >= RMS_Config.WORKSHOP.OPEN_HOUR
         and currentDayHour < RMS_Config.WORKSHOP.CLOSE_HOUR)
@@ -806,7 +796,6 @@ function RMS_Main:isWorkshopTypeOpen(workshopType)
 end
 
 
--- Re-evaluate and broadcast workshop state immediately (settings change).
 ---Recomputes the workshop state at once and replicates it
 -- @param boolean? forceNotify true to notify even without a change
 function RMS_Main:forceWorkshopUpdate(forceNotify)
@@ -850,7 +839,7 @@ end
 ---Runs the mod update: workshop hours and the simulation step of every vehicle
 -- @param float dt time since last call in ms
 function RMS_Main:update(dt)
-    if g_currentMission ~= nil and g_currentMission.getIsClient ~= nil and g_currentMission:getIsClient() then
+    if g_currentMission:getIsClient() then
         if not self.shopMenuPageInstalled then
             self:tryRegisterShopMenuPage()
         end
@@ -907,17 +896,15 @@ function RMS_Main:update(dt)
             spec.metaUpdateTimer = spec.metaUpdateTimer + RMS_Config.CORE_UPDATE_DELAY
             if spec.metaUpdateTimer > RMS_Config.META_UPDATE_DELAY then
 
-                if g_currentMission ~= nil and g_currentMission.environment ~= nil and g_currentMission.environment.weather ~= nil then
-                    RMS_Main.currentWeather = g_currentMission.environment.weather:getCurrentWeatherType()
-                    if RMS_Main.currentWeather == WeatherType.RAIN then
-                        RMS_Main.currentWeatherFactor = RMS_Config.CORE.RAIN_FACTOR or 1.0
-                    elseif RMS_Main.currentWeather == WeatherType.SNOW then
-                        RMS_Main.currentWeatherFactor = RMS_Config.CORE.SNOW_FACTOR or 1.0
-                    elseif RMS_Main.currentWeather == WeatherType.HAIL then
-                        RMS_Main.currentWeatherFactor = RMS_Config.CORE.HAIL_FACTOR or 1.0
-                    else
-                        RMS_Main.currentWeatherFactor = 1.0
-                    end
+                RMS_Main.currentWeather = g_currentMission.environment.weather:getCurrentWeatherType()
+                if RMS_Main.currentWeather == WeatherType.RAIN then
+                    RMS_Main.currentWeatherFactor = RMS_Config.CORE.RAIN_FACTOR or 1.0
+                elseif RMS_Main.currentWeather == WeatherType.SNOW then
+                    RMS_Main.currentWeatherFactor = RMS_Config.CORE.SNOW_FACTOR or 1.0
+                elseif RMS_Main.currentWeather == WeatherType.HAIL then
+                    RMS_Main.currentWeatherFactor = RMS_Config.CORE.HAIL_FACTOR or 1.0
+                else
+                    RMS_Main.currentWeatherFactor = 1.0
                 end
 
                 if not vehicle:getIsOperating() then

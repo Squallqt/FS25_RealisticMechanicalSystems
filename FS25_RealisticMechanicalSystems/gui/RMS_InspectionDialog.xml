@@ -47,48 +47,35 @@
                 <SmoothList profile="rms_inspectionList" id="technicalFluidsList" position="14px -12px" size="660px 250px">
                     <ListItem profile="rms_inspectionRow" name="technicalFluidsRowTemplate" size="660px 58px">
                         <RoundCorner profile="rms_inspectionRowSurface" size="660px 58px" />
-                        <Text profile="rms_inspectionRowTitle" position="18px -7.5px" size="374px 22px" name="inspectionTitle" />
-                        <Text profile="rms_inspectionRowTitle" position="18px -34.5px" size="30px 18px" name="inspectionGaugeMinLabel" text="MIN" textSize="11px" />
-                        <Bitmap profile="rms_fluidGaugeFill" position="54px -37.5px" size="552px 14px" name="inspectionGaugeAlert" visible="false" />
-                        <Bitmap profile="rms_fluidGaugeTrack" position="56px -39.5px" size="548px 10px" name="inspectionGaugeTrack" />
-                        <Bitmap profile="rms_fluidGaugeFill" position="56px -39.5px" size="548px 10px" name="inspectionGaugeFill" />
-                        <Text profile="rms_inspectionRowTitle" position="612px -36.5px" size="30px 14px" name="inspectionGaugeMaxLabel" text="MAX" textSize="11px" textAlignment="right" />
+                        <Bitmap profile="rms_workshopFluidIconEngineOil" position="18px -16px" size="26px 26px" name="inspectionIcon" />
+                        <Text profile="rms_inspectionRowTitle" position="52px -3px" size="588px 22px" name="inspectionTitle" />
+                        <Bitmap profile="rms_fluidGaugeTrack" position="52px -30px" size="588px 10px" name="inspectionGaugeTrack" />
+                        <Bitmap profile="rms_fluidGaugeFill" position="52px -30px" size="588px 10px" name="inspectionGaugeFill" />
+                        <Bitmap profile="rms_fluidGaugeUnder" position="52px -30px" size="6px 10px" name="inspectionGaugeUnder" visible="false" />
+                        <Bitmap profile="rms_inspectionGaugeZone" position="287.2px -30px" size="235.2px 10px" name="inspectionGaugeZone" />
+                        <Bitmap profile="rms_fluidGaugeMark" position="286.2px -27px" size="2px 16px" name="inspectionGaugeMinMark" />
+                        <Bitmap profile="rms_fluidGaugeMark" position="521.4px -27px" size="2px 16px" name="inspectionGaugeMaxMark" />
+                        <Text profile="rms_inspectionRowTitle" position="257.2px -43px" size="60px 12px" name="inspectionGaugeMinLabel" text="MIN" textSize="11px" textAlignment="center" />
+                        <Text profile="rms_inspectionRowTitle" position="492.4px -43px" size="60px 12px" name="inspectionGaugeMaxLabel" text="MAX" textSize="11px" textAlignment="center" />
                     </ListItem>
                 </SmoothList>
             </GuiElement>
 
-            <!-- Cooling and air filter -->
+            <!-- Filters, radiator and lubrication -->
             <GuiElement profile="rms_inspectionBlock" position="740px -228px" size="411px 32px">
                 <RoundCorner profile="rms_inspectionSectionAccent" />
-                <Text profile="rms_inspectionSectionTitle" position="16px 0px" size="379px 32px" text="$l10n_rms_inspection_section_cooling_air" />
+                <Text profile="rms_inspectionSectionTitle" position="16px 0px" size="379px 32px" text="$l10n_rms_inspection_section_field_care" />
                 <RoundCorner profile="rms_inspectionSectionLine" position="16px 0px" size="395px 1px" />
             </GuiElement>
-            <GuiElement profile="rms_inspectionBlock" position="740px -270px" size="411px 134px">
-                <RoundCorner profile="rms_inspectionCardSurface" size="411px 134px" />
-                <SmoothList profile="rms_inspectionList" id="coolingAndAirList" position="14px -12px" size="383px 110px">
-                    <ListItem profile="rms_inspectionRow" name="coolingAndAirRowTemplate" size="383px 52px">
-                        <RoundCorner profile="rms_inspectionRowSurface" size="383px 52px" />
-                        <Text profile="rms_inspectionRowTitle" position="18px 0px" size="163px 52px" name="inspectionTitle" />
-                        <RoundCorner profile="rms_inspectionValuePill" position="195px -12px" size="170px 28px" name="inspectionValuePill" />
-                        <Text profile="rms_inspectionRowValue" position="207px -12px" size="146px 28px" name="inspectionValue" />
-                    </ListItem>
-                </SmoothList>
-            </GuiElement>
-
-            <!-- Lubrication -->
-            <GuiElement profile="rms_inspectionBlock" position="740px -422px" size="411px 32px">
-                <RoundCorner profile="rms_inspectionSectionAccent" />
-                <Text profile="rms_inspectionSectionTitle" position="16px 0px" size="379px 32px" text="$l10n_rms_inspection_section_lubrication" />
-                <RoundCorner profile="rms_inspectionSectionLine" position="16px 0px" size="395px 1px" />
-            </GuiElement>
-            <GuiElement profile="rms_inspectionBlock" position="740px -464px" size="411px 80px">
-                <RoundCorner profile="rms_inspectionCardSurface" size="411px 80px" />
-                <SmoothList profile="rms_inspectionList" id="lubricationList" position="14px -12px" size="383px 56px">
-                    <ListItem profile="rms_inspectionRow" name="lubricationRowTemplate" size="383px 56px">
-                        <RoundCorner profile="rms_inspectionRowSurface" size="383px 56px" />
-                        <Text profile="rms_inspectionRowTitle" position="18px 0px" size="163px 56px" name="inspectionTitle" />
-                        <RoundCorner profile="rms_inspectionValuePill" position="195px -14px" size="170px 28px" name="inspectionValuePill" />
-                        <Text profile="rms_inspectionRowValue" position="207px -14px" size="146px 28px" name="inspectionValue" />
+            <GuiElement profile="rms_inspectionBlock" position="740px -270px" size="411px 274px">
+                <RoundCorner profile="rms_inspectionCardSurface" id="fieldCareCard" size="411px 274px" />
+                <SmoothList profile="rms_inspectionList" id="fieldCareList" position="14px -12px" size="383px 249px">
+                    <ListItem profile="rms_inspectionRow" name="fieldCareRowTemplate" size="383px 45px">
+                        <RoundCorner profile="rms_inspectionRowSurface" size="383px 45px" />
+                        <Bitmap profile="rms_workshopFluidIconAirFilter" position="14px -9.5px" size="26px 26px" name="inspectionIcon" />
+                        <Text profile="rms_inspectionRowTitle" position="48px 0px" size="134px 45px" name="inspectionTitle" />
+                        <RoundCorner profile="rms_inspectionValuePill" position="195px -8px" size="170px 28px" name="inspectionValuePill" />
+                        <Text profile="rms_inspectionRowValue" position="207px -8px" size="146px 28px" name="inspectionValue" />
                     </ListItem>
                 </SmoothList>
             </GuiElement>
