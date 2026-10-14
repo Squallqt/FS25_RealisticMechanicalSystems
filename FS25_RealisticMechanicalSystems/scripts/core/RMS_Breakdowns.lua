@@ -804,7 +804,7 @@ VehicleMotor.getMinMaxGearRatio = Utils.overwrittenFunction(VehicleMotor.getMinM
     end
 
     local pressureDropEffect = spec_rms.activeEffects.CVT_PRESSURE_DROP_CHANCE
-    if pressureDropEffect ~= nil and pressureDropEffect.extraData ~= nil 
+    if pressureDropEffect ~= nil and pressureDropEffect.extraData ~= nil
         and pressureDropEffect.extraData.status == "PROGRESS"
         and (pressureDropEffect.extraData.timer or 0) > 0 then
         minRatio = minRatio * 1.5

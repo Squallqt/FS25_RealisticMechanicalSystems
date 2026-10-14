@@ -338,7 +338,7 @@ For testing and debugging. Unless noted, a command acts on the vehicle you sit i
 | `rms_setFuelLevel <value>` | Sets fuel or electric traction charge: values from `0` to `1` are fractions, values above `1` to `100` are percentages |
 | `rms_reinitializeVehicle` | Seeds the vehicle again as when RMS first met it: Condition from its resale price and the Vehicle Lifespan, Stress and breakdowns cleared, service clocks reset, and possibly one hidden breakdown on a machine with hours; unavailable during a workshop procedure |
 | `rms_reinitializeFluidCapacities` | Recomputes physical fluid capacities for the current vehicle, keeping its litres |
-| `rms_resetFactorStats` | Restarts the wear statistics: the HUD statistics view and the wear block of inspection reports read them, and they decide which breakdown a worn system gets |
+| `rms_resetFactorStats` | Restarts the wear statistics: the HUD statistics view and the wear block of inspection reports read them, and they decide which breakdown a worn system gets. Also restarts the collision and PTO engagement counts of the debug HUD |
 | `rms_getServiceState` | Prints workshop and service state: procedure, timers, options, service clocks and dates, queues |
 | `rms_showServiceLog [index]` | Prints the service log, or one entry in detail using its integer index |
 | `rms_getDebugVehicleInfo [1]` | Prints how RMS reads the vehicle: brand, type, category, electrical circuit and transmission; lists its specializations when given `1` |

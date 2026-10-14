@@ -266,6 +266,22 @@ local function getGripLimit(vehicle)
     return GRAVITY * math.sqrt(1 + grip * grip)
 end
 
+---Tells whether a player carries the machine, or a machine coupled to it, in the hands
+-- @param table vehicle vehicle
+-- @return boolean isHeld true while a player holds it
+local function getIsHeldByPlayer(vehicle)
+    for _, player in pairs(g_currentMission.playerSystem.players) do
+        local hands = player.hands
+        if hands ~= nil and hands:getIsHoldingItem() then
+            local object = g_currentMission:getNodeObject(hands:getHeldItem())
+            if object ~= nil and object.rootVehicle == vehicle.rootVehicle then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 ---Damages the chassis for one impact, by the speed it took off the machine
 local function applyImpact(vehicle, speedLoss)
     local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
@@ -318,7 +334,10 @@ function RMS_Steering.updateTerrainImpacts(vehicle, dt)
     if speedLoss >= C.TERRAIN_IMPACT_MIN_SPEED_LOSS and speedLoss >= impacts.speedLoss then
         impacts.speedLoss = speedLoss
     elseif impacts.speedLoss > 0 then
-        applyImpact(vehicle, impacts.speedLoss)
+        -- the hands of a player swinging the machine about are no obstacle
+        if not getIsHeldByPlayer(vehicle) then
+            applyImpact(vehicle, impacts.speedLoss)
+        end
         impacts.speedLoss = 0
         heldSpeed = speed
     end

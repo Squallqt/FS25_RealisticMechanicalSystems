@@ -1858,7 +1858,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                         },
                 },
                 indicators = {
-                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }         
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
                 }
             }
         }

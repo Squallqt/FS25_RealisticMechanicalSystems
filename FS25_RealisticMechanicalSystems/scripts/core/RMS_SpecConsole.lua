@@ -1199,6 +1199,10 @@ function RealisticMechanicalSystems.ConsoleCommands:resetFactorStats()
             systemStats.operatingHours = getVehicleOperatingHours(vehicle)
         end
     end
+    -- the tallies the debug view shows beside the statistics belong to the same history
+    spec.terrainImpacts.count = 0
+    spec.terrainImpacts.lastSpeedLoss = 0
+    spec.ptoEngagementCount = 0
 
     print(string.format("RMS: Factor stats reset for '%s'.", vehicle:getFullName()))
 end
