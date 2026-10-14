@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Tutorial tips, each shown once when the player first meets the situation it teaches
+---Tutorial tips, each shown once
 RMS_Tutorial = {}
 RMS_Tutorial.modDirectory = g_currentModDirectory
 RMS_Tutorial.vehicle = nil
@@ -81,9 +81,7 @@ function RMS_Tutorial:update(dt)
         return
     end
 
-    if RMS_Main ~= nil
-        and RMS_Main.hud ~= nil
-        and RMS_Main.hud:hasClosableNotification() then
+    if RMS_Main.hud ~= nil and RMS_Main.hud:hasClosableNotification() then
         return
     end
 
@@ -106,18 +104,19 @@ function RMS_Tutorial:update(dt)
 
     if self.messageDowntime <= 0 then
 
-        -- gLOBAL MESSAGES
+        -- GLOBAL MESSAGES
         if not RMS_Config.WELCOME_MESSAGE_SEEN then
             self:showMessage(g_i18n:getText("rms_tutorial_welcome_message"), false, 5000)
             RMS_Config.WELCOME_MESSAGE_SEEN = true
         end
 
-        -- vEHICLE MESSAGES
+        -- VEHICLE MESSAGES
         if self.vehicle ~= nil and spec ~= nil then
             local vehicle = self.vehicle
             local isMotorStarted = vehicle:getIsMotorStarted()
             local speed = vehicle:getLastSpeed()
             local systems = spec.systems or {}
+            ---
             local function isSystemEnabled(systemKey)
                 local systemData = systems[systemKey]
                 return type(systemData) == "table" and systemData.enabled == true
@@ -150,25 +149,20 @@ function RMS_Tutorial:update(dt)
             local heavyTrailerThreshold = RMS_Utils.getHeavyTrailerRatioLevels(isTruck) * transmissionConfig.HEAVY_TRAILER_TUTORIAL_MARGIN
             local hasHeavyTrailer = heavyTrailerMass > 0.1
                 and heavyTrailerRatio <= heavyTrailerThreshold
+            local parkBrakeTip = spec.drivetrain.parkKind == RMS_Drivetrain.PARK_KIND.AUTOMATIC
+                and "PARK_BRAKE"
+                or "PARK_BRAKE_MANUAL"
             local preventiveRiskSystem = nil
             local hasPoorPartsBreakdown = false
-            local localWeatherType = (g_currentMission ~= nil and g_currentMission.environment ~= nil and g_currentMission.environment.weather ~= nil)
-                and g_currentMission.environment.weather:getCurrentWeatherType()
-                or WeatherType.SUN
+            local localWeatherType = g_currentMission.environment.weather:getCurrentWeatherType()
 
-            if not messagedData.NEEDS_PREVENTIVE and spec.systems ~= nil then
-                for _, systemData in pairs(spec.systems) do
-                    if type(systemData) == "table"
-                        and systemData.enabled == true
-                        and systemData.condition ~= nil
-                        and systemData.stress ~= nil then
-                        local condition = math.max(systemData.condition, 0.001)
-                        local stress = systemData.stress
-
-                        if stress / condition > 0.7 then
-                            preventiveRiskSystem = systemData
-                            break
-                        end
+            -- only a system the adjustments of the major service reach
+            if not messagedData.NEEDS_PREVENTIVE then
+                for _, systemKey in ipairs(RealisticMechanicalSystems.getMajorServiceSystems(vehicle)) do
+                    local systemData = spec.systems[systemKey]
+                    if systemData.stress / math.max(systemData.condition, 0.001) > 0.7 then
+                        preventiveRiskSystem = systemData
+                        break
                     end
                 end
             end
@@ -227,13 +221,7 @@ function RMS_Tutorial:update(dt)
             -- hot weather
             elseif not messagedData.HOT_WEATHER
                 and (engineSystemEnabled or coolingSystemEnabled)
-                and g_currentMission ~= nil
-                and g_currentMission.environment ~= nil
-                and g_currentMission.environment.weather ~= nil
-                and g_currentMission.environment.weather.forecast ~= nil
-                and g_currentMission.environment.weather.forecast:getCurrentWeather() ~= nil
-                and g_currentMission.environment.weather.forecast:getCurrentWeather().temperature ~= nil
-                and g_currentMission.environment.weather.forecast:getCurrentWeather().temperature > 30 then
+                and RMS_Utils.getAmbientTemperature() > 30 then
                 RMS_Hud.showNotification(
                     string.format(
                         g_i18n:getText("rms_tutorial_hot_weather_message"),
@@ -252,7 +240,7 @@ function RMS_Tutorial:update(dt)
                 and (
                     localWeatherType == WeatherType.RAIN
                     or localWeatherType == WeatherType.SNOW
-                    or (WeatherType.HAIL ~= nil and localWeatherType == WeatherType.HAIL)
+                    or localWeatherType == WeatherType.HAIL
                 ) then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_wet_weather_message"),
@@ -266,14 +254,17 @@ function RMS_Tutorial:update(dt)
             elseif not messagedData.RAD_OR_FILTER_CLOGGED
                 and (engineSystemEnabled or coolingSystemEnabled)
                 and spec.isVehicleNeedBlowOut
-                and (spec.radiatorClogging >= 0.35 or spec.airFilterClogging >= 0.35) then
+                and (spec.radiatorClogging >= 0.35
+                    or RMS_Consumables.getAirFilterBlowOutStage(spec) >= 2
+                    or RMS_Consumables.getIsAirFilterWornOut(spec)) then
                 RMS_Hud.showNotification(
                     string.format(
                         g_i18n:getText("rms_tutorial_cooling_air_check_message"),
-                        RMS_Utils.getPrimaryKeyboardInputText("RMS_FIELD_INSPECTION", "R")
+                        RMS_Utils.getPrimaryKeyboardInputText("RMS_FIELD_INSPECTION", "R"),
+                        RMS_Utils.formatAirFilterServiceHours(vehicle)
                     ),
                     0,
-                    g_i18n:getText("rms_inspection_section_cooling_air"),
+                    g_i18n:getText("rms_tutorial_cooling_air_check_title"),
                     true
                 )
                 messagedData.RAD_OR_FILTER_CLOGGED = true
@@ -419,8 +410,7 @@ function RMS_Tutorial:update(dt)
             elseif not messagedData.DRIVETRAIN_MODES
                 and isMotorStarted
                 and spec.drivetrain ~= nil
-                and spec.drivetrain.hasControl == true
-                and spec.drivetrain.externallyManaged ~= true then
+                and spec.drivetrain.hasControl == true then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_drivetrain_modes_message"),
                     0,
@@ -430,13 +420,9 @@ function RMS_Tutorial:update(dt)
                 messagedData.DRIVETRAIN_MODES = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- park brake engaged
-            elseif not messagedData.PARK_BRAKE
-                and spec.drivetrain ~= nil
-                and spec.drivetrain.parkBrake == true
-                and spec.drivetrain.hasControl == true
-                and spec.drivetrain.parkExternallyManaged ~= true then
-                local parkBrakeMessage = RMS_Config.DRIVETRAIN.PARKBRAKE_AUTO_MODE
+            -- park brake engaged, automatic or by hand
+            elseif not messagedData[parkBrakeTip] and RMS_Drivetrain.getIsParkBrakeEngaged(vehicle) then
+                local parkBrakeMessage = parkBrakeTip == "PARK_BRAKE"
                     and "rms_tutorial_park_brake_message"
                     or "rms_tutorial_park_brake_manual_message"
                 RMS_Hud.showNotification(
@@ -445,7 +431,7 @@ function RMS_Tutorial:update(dt)
                     g_i18n:getText("rms_tutorial_park_brake_title"),
                     true
                 )
-                messagedData.PARK_BRAKE = true
+                messagedData[parkBrakeTip] = true
                 self.messageDowntime = downtimeAfterMessage
 
             -- wheel slip
@@ -481,8 +467,22 @@ function RMS_Tutorial:update(dt)
                 messagedData.DRIVETRAIN_WINDUP = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- chassis vibration
-            elseif not messagedData.CHASSIS_VIBRATION and chassisSystemEnabled and isMotorStarted and speed > 40 and vehicle:getIsOnField() then
+            -- terrain impact, checked before the shaking
+            elseif not messagedData.TERRAIN_IMPACT and chassisSystemEnabled and spec.terrainImpactTutorialTimer > 0 then
+                RMS_Hud.showNotification(
+                    g_i18n:getText("rms_tutorial_terrain_impact_message"),
+                    0,
+                    g_i18n:getText("rms_tutorial_terrain_impact_title"),
+                    true
+                )
+                messagedData.TERRAIN_IMPACT = true
+                self.messageDowntime = downtimeAfterMessage
+
+            -- chassis vibration, once it has lasted
+            elseif not messagedData.CHASSIS_VIBRATION
+                and chassisSystemEnabled
+                and isMotorStarted
+                and spec.vibrationTutorialTimer >= RMS_Config.CORE.CHASSIS_FACTOR_DATA.VIB_TUTORIAL_MS then
                 RMS_Hud.showNotification(
                     string.format(g_i18n:getText("rms_tutorial_chassis_vibration_message"), vehicle:getFullName()),
                     0,
@@ -700,7 +700,8 @@ function RMS_Tutorial:update(dt)
                 and isMotorStarted
                 and preventiveRiskSystem ~= nil then
                 RMS_Hud.showNotification(
-                    string.format(g_i18n:getText("rms_tutorial_needs_preventive_message"), vehicle:getFullName()),
+                    string.format(g_i18n:getText("rms_tutorial_needs_preventive_message"), vehicle:getFullName(),
+                        RMS_Utils.formatHours(vehicle:getMaintenanceLevelInterval(RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE))),
                     0,
                     g_i18n:getText("rms_tutorial_needs_preventive_title"),
                     true

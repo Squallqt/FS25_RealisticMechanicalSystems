@@ -68,7 +68,7 @@ function RMS_ServiceRequestEvent:readStream(streamId, connection)
 end
 
 
----Starts the service on the server after checking farm ownership, vehicle state, service type and workshop hours
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_ServiceRequestEvent:run(connection)
     if not connection:getIsServer() then
@@ -96,9 +96,7 @@ function RMS_ServiceRequestEvent:run(connection)
                 return
             end
 
-            if RMS_Main ~= nil
-                and RMS_Main.isWorkshopTypeOpen ~= nil
-                and not RMS_Main:isWorkshopTypeOpen(self.workshopType) then
+            if not RMS_Main:isWorkshopTypeOpen(self.workshopType) then
                 return
             end
 

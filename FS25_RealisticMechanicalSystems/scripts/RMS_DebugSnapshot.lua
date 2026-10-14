@@ -31,13 +31,11 @@ local DEBUG_SECTIONS = {
     "radiator",
     "engineTemp",
     "transmissionTemp",
-    "aiWorker"
+    "aiWorker",
+    "implements"
 }
 
----Copies a value the snapshot can carry, walking tables and guarding against cycles
--- @param any value value to copy
--- @param table? visited tables already copied
--- @return any copy copied value, nil for a type the snapshot cannot carry
+---Copies a value the snapshot can carry, guarding against cycles
 local function copyPlainValue(value, visited)
     local valueType = type(value)
     if valueType == "number" or valueType == "boolean" or valueType == "string" then
@@ -69,8 +67,6 @@ local function copyPlainValue(value, visited)
 end
 
 ---Copies the debug sections listed for the snapshot
--- @param table? debugData debug data of the vehicle
--- @return table copy copied sections
 local function copyDebugData(debugData)
     local result = {}
 
@@ -85,8 +81,6 @@ local function copyDebugData(debugData)
 end
 
 ---Copies the accumulated wear factor statistics
--- @param table? factorStats factor statistics
--- @return table copy copied statistics
 local function copyFactorStats(factorStats)
     local result = {}
 
@@ -110,9 +104,7 @@ local function copyFactorStats(factorStats)
     return result
 end
 
----Writes one snapshot value, its type first so the reader knows what follows
--- @param integer streamId streamId
--- @param any value value to write
+---Writes one snapshot value, its type first
 local function writeSnapshotValue(streamId, value)
     local valueType = type(value)
 
@@ -158,9 +150,7 @@ local function writeSnapshotValue(streamId, value)
     end
 end
 
----Reads one snapshot value, dispatching on the type written before it
--- @param integer streamId streamId
--- @return any value value read
+---Reads one snapshot value after its type
 local function readSnapshotValue(streamId)
     local valueType = streamReadUIntN(streamId, 2)
 
@@ -192,9 +182,6 @@ function RMS_DebugSnapshot.build(vehicle)
     end
 
     local motor = vehicle.getMotor ~= nil and vehicle:getMotor() or nil
-    local motorizedSpec = vehicle.spec_motorized or {}
-    local lastControlParameters = motorizedSpec.lastControlParameters or {}
-    local chassisBrakeState = spec.chassisBrakeState or {}
     local preheatState = tonumber(spec.preheatState) or RMS_Preheat.STATE.IDLE
     local preheatIsDiesel = RMS_Preheat.isDieselVehicle(vehicle)
     local preheatEngineTemperatureC = RMS_Preheat.getEngineTemperatureC(vehicle)
@@ -215,12 +202,13 @@ function RMS_DebugSnapshot.build(vehicle)
         state = {
             year = tonumber(spec.year) or 0,
             reliability = tonumber(spec.reliability) or 0,
-            maintainability = tonumber(spec.maintainability) or 0,
             realOperatingTime = tonumber(spec.realOperatingTime) or 0,
             conditionLevel = tonumber(spec.conditionLevel) or 0,
             serviceLevel = tonumber(spec.serviceLevel) or 0,
             transmissionServiceLevel = tonumber(spec.transmissionServiceLevel) or 0,
             coolantServiceLevel = tonumber(spec.coolantServiceLevel) or 0,
+            hydraulicServiceLevel = tonumber(spec.hydraulicServiceLevel) or 0,
+            serviceCalendar = copyPlainValue(spec.serviceCalendar or {}),
             currentState = tostring(spec.currentState or ""),
             plannedState = tostring(spec.plannedState or ""),
             workshopType = tostring(spec.workshopType or ""),
@@ -235,18 +223,12 @@ function RMS_DebugSnapshot.build(vehicle)
             activeBreakdowns = copyPlainValue(spec.activeBreakdowns or {}),
             activeEffects = copyPlainValue(spec.activeEffects or {}),
             isUnderRoof = spec.isUnderRoof == true,
-            weatherFactor = tonumber(RMS_Main ~= nil and RMS_Main.currentWeatherFactor) or 1,
+            weatherFactor = tonumber(RMS_Main.currentWeatherFactor) or 1,
             operatingTimeMs = vehicle.getOperatingTime ~= nil and (tonumber(vehicle:getOperatingTime()) or 0) or 0,
             dirtAmount = vehicle.getDirtAmount ~= nil and (tonumber(vehicle:getDirtAmount()) or 0) or 0,
-            wearTotalAmount = vehicle.getWearTotalAmount ~= nil and (tonumber(vehicle:getWearTotalAmount()) or 0) or 0,
             currentSpeedKmh = vehicle.getLastSpeed ~= nil and (tonumber(vehicle:getLastSpeed()) or 0) or 0,
-            actualAccelerationMps2 = (tonumber(vehicle.lastSpeedAcceleration) or 0) * 1000000,
             isAiActive = vehicle.getIsAIActive ~= nil and vehicle:getIsAIActive() == true,
             cruiseControlState = vehicle.getCruiseControlState ~= nil and (tonumber(vehicle:getCruiseControlState()) or 0) or 0,
-            cruiseControlAccelerator = vehicle.getCruiseControlAxis ~= nil and (tonumber(vehicle:getCruiseControlAxis()) or 0) or 0,
-            inputAcceleratorPedal = vehicle.getAccelerationAxis ~= nil and (tonumber(vehicle:getAccelerationAxis()) or 0) or 0,
-            requestedAcceleratorPedal = motor ~= nil and (tonumber(motor.lastAcceleratorPedal) or 0) or 0,
-            appliedAcceleratorPedal = tonumber(lastControlParameters.acceleratorPedal) or 0,
             motorAvailableTorque = motor ~= nil and motor.getMotorAvailableTorque ~= nil and (tonumber(motor:getMotorAvailableTorque()) or 0) or 0,
             motorExternalTorque = motor ~= nil and motor.getMotorExternalTorque ~= nil and (tonumber(motor:getMotorExternalTorque()) or 0) or 0,
             motorRotSpeed = motor ~= nil and motor.getMotorRotSpeed ~= nil and (tonumber(motor:getMotorRotSpeed()) or 0) or 0,
@@ -255,31 +237,19 @@ function RMS_DebugSnapshot.build(vehicle)
             maxMotorRpm = motor ~= nil and (tonumber(motor.maxRpm) or 0) or 0,
             motorLoad = vehicle.getMotorLoadPercentage ~= nil and (tonumber(vehicle:getMotorLoadPercentage()) or 0) or 0,
             currentGear = motor ~= nil and (tonumber(motor.gear) or 0) or 0,
-            targetGear = motor ~= nil and (tonumber(motor.targetGear) or 0) or 0,
-            currentDirection = motor ~= nil and (tonumber(motor.currentDirection) or 1) or 1,
-            activeGearGroupIndex = motor ~= nil and (tonumber(motor.activeGearGroupIndex) or 0) or 0,
-            gearRatio = motor ~= nil and motor.getGearRatio ~= nil and (tonumber(motor:getGearRatio()) or 0) or 0,
-            avgDynamicMotorLoad = tonumber(spec.avgDynamicMotorLoad) or 0,
-            avgSpeed = tonumber(spec.avgSpeed) or 0,
             avgAbsDiffAcc = tonumber(spec.avgAbsDiffAcc) or 0,
             avgTireGroundFrictionCoeff = tonumber(spec.avgTireGroundFrictionCoeff) or 0,
-            wheelSlipIntensity = tonumber(spec.wheelSlipIntensity) or 0,
             activeDraftMaxForce = tonumber(spec.activeDraftMaxForce) or 0,
             activeDraftEffectiveForceCap = tonumber(spec.activeDraftEffectiveForceCap) or 0,
-            chassisBrakePedal = tonumber(chassisBrakeState.pedal) or 0,
             dynamicMotorLoad = tonumber(spec.dynamicMotorLoad) or 0,
             isCranking = spec.isCranking == true,
             engineTemperature = tonumber(spec.engineTemperature) or -99,
-            rawEngineTemperature = tonumber(spec.rawEngineTemperature) or -99,
             thermostatState = tonumber(spec.thermostatState) or 0,
             transmissionTemperature = tonumber(spec.transmissionTemperature) or -99,
             rawTransmissionTemperature = tonumber(spec.rawTransmissionTemperature) or -99,
             transmissionThermostatState = tonumber(spec.transmissionThermostatState) or 0,
             batterySoc = tonumber(spec.batterySoc) or 0,
-            batteryChargeAh = tonumber(spec.batteryChargeAh) or 0,
-            batteryTerminalVoltageV = tonumber(spec.batteryTerminalVoltageV) or 0,
             systemVoltageV = tonumber(spec.systemVoltageV) or 0,
-            batteryTempC = tonumber(spec.batteryTempC) or 0,
             radiatorClogging = tonumber(spec.radiatorClogging) or 0,
             airFilterClogging = tonumber(spec.airFilterClogging) or 0,
             airFilterResidue = tonumber(spec.airFilterResidue) or 0,
@@ -320,7 +290,6 @@ function RMS_DebugSnapshot.build(vehicle)
             pendingOverhaulSystemStressTarget = copyPlainValue(spec.pendingOverhaulSystemStressTarget or {}),
             pendingRepairSystemStressStart = copyPlainValue(spec.pendingRepairSystemStressStart or {}),
             pendingRepairSystemStressTarget = copyPlainValue(spec.pendingRepairSystemStressTarget or {}),
-            implements = copyPlainValue(spec.implements or {}),
             isImplementLowered = spec.isImplementLowered == true,
             isImplementOperating = spec.isImplementOperating == true,
             isImplementLifted = spec.isImplementLifted == true,
@@ -363,7 +332,7 @@ function RMS_DebugSnapshot.apply(vehicle, snapshot)
     end
 
     spec.rmsDebugSnapshot = snapshot
-    spec.rmsDebugSnapshotReceivedAt = (g_currentMission ~= nil and g_currentMission.time) or g_time or 0
+    spec.rmsDebugSnapshotReceivedAt = g_currentMission.time
 end
 
 ---Returns the stored snapshot while it is younger than its maximum age
@@ -376,7 +345,7 @@ function RMS_DebugSnapshot.get(vehicle)
     end
 
     local receivedAt = tonumber(spec.rmsDebugSnapshotReceivedAt)
-    local now = (g_currentMission ~= nil and g_currentMission.time) or g_time or 0
+    local now = g_currentMission.time
     if receivedAt == nil or now - receivedAt > RMS_DebugSnapshot.MAX_SNAPSHOT_AGE_MS then
         return nil
     end
@@ -384,7 +353,7 @@ function RMS_DebugSnapshot.get(vehicle)
     return spec.rmsDebugSnapshot
 end
 
----Keeps debug calculations active briefly for the vehicle an administrator is inspecting
+---Keeps debug calculations active for the inspected vehicle
 -- @param table? vehicle vehicle
 function RMS_DebugSnapshot.markVehicleRequested(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
@@ -392,7 +361,7 @@ function RMS_DebugSnapshot.markVehicleRequested(vehicle)
         return
     end
 
-    local now = (g_currentMission ~= nil and g_currentMission.time) or g_time or 0
+    local now = g_currentMission.time
     spec.rmsDebugDataRequestedUntil = now + RMS_DebugSnapshot.DATA_REQUEST_TTL_MS
 end
 
@@ -402,7 +371,7 @@ function RMS_DebugSnapshot.request(vehicle)
     if vehicle == nil or not RMS_Config.DEBUG then
         return
     end
-    if g_currentMission == nil or not g_currentMission.isMasterUser then
+    if not g_currentMission.isMasterUser then
         return
     end
 
@@ -413,10 +382,6 @@ function RMS_DebugSnapshot.request(vehicle)
     if g_client == nil then
         return
     end
-    if RMS_DebugSnapshotRequestEvent == nil then
-        return
-    end
-
     local now = g_currentMission.time or g_time or 0
     if RMS_DebugSnapshot.lastRequestedVehicle ~= vehicle then
         RMS_DebugSnapshot.lastRequestedVehicle = vehicle

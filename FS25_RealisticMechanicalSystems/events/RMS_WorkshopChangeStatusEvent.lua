@@ -43,7 +43,7 @@ function RMS_WorkshopChangeStatusEvent:readStream(streamId, connection)
 end
 
 
----Stores the received workshop state on the client and publishes it on the message center
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_WorkshopChangeStatusEvent:run(connection)
     if not connection:getIsServer() then

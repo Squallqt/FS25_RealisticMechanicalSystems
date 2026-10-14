@@ -48,7 +48,7 @@ function RMS_DrivetrainEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
----Applies the received drivetrain state on the server if the sending connection owns the vehicle
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_DrivetrainEvent:run(connection)
     if self.vehicle == nil or not self.vehicle:getIsSynchronized() then

@@ -54,7 +54,7 @@ function RMS_StartButtonEvent:readStream(streamId, connection)
 end
 
 
----Stores the button state on the vehicle, then requests the start and rebroadcasts it on the server
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_StartButtonEvent:run(connection)
     local vehicle = self.vehicle

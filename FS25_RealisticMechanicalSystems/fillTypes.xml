@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../shared/xml/schema/fillTypes.xsd">
-    <!-- display only: the containers keep their own liters, these give their line in the fill level display a logo and a unit -->
+    <!-- display only: logo and unit of a container in the fill level display, liters kept by the container -->
     <fillTypes>
         <fillType name="RMS_HUD_MOTOREX" title="Motorex" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <image hud="brands/hud_brand_motorex.dds" />

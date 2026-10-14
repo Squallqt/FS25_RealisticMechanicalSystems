@@ -3,14 +3,10 @@
 
 ---Breakdown occurrence and lifecycle on a vehicle, and the effects they apply
 
-local log_dbg = RMS_Utils ~= nil and RMS_Utils.createLogger ~= nil
-    and RMS_Utils.createLogger("[RMS_SPEC]")
-    or function() end
-local hasCVTAddon = RMS_Utils ~= nil and RMS_Utils.hasCVTAddon or function() return false end
+local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
+local hasCVTAddon = RMS_Utils.hasCVTAddon
 
----Tells whether a player sits in the vehicle or in one of its attached implements
--- @param table? rootVehicle vehicle at the head of the chain
--- @return boolean hasPlayer true when a player is inside
+---Tells whether a player sits in the vehicle or its implements
 local function hasEnteredPlayerInVehicleChain(rootVehicle)
     if rootVehicle == nil then
         return false
@@ -32,9 +28,7 @@ local function hasEnteredPlayerInVehicleChain(rootVehicle)
 end
 
 
----Builds the general wear breakdown definition from the current condition of every system
--- @param table vehicle vehicle
--- @return table breakdown generated breakdown definition
+---Builds the general wear breakdown from the condition of every system
 local function buildGeneralWearBreakdown(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if not spec then
@@ -73,18 +67,20 @@ local function buildGeneralWearBreakdown(vehicle)
                 }
                 if effect ~= nil then table.insert(effects, effect) end
 
-                -- oil smoke from engine wear
-                effect = {
-                    id = "EXHAUST_OIL",
-                    value = function()
-                        local baseEffect = 0.55
-                        local condition = systemCondition
-                        local multiplier = (1 - condition) ^ 2
-                        return baseEffect * multiplier
-                    end,
-                    aggregation = "max"
-                }
-                if effect ~= nil then table.insert(effects, effect) end
+                -- oil smoke from engine wear, an electric motor burning none
+                if not spec.isElectricVehicle then
+                    effect = {
+                        id = "EXHAUST_OIL",
+                        value = function()
+                            local baseEffect = 0.55
+                            local condition = systemCondition
+                            local multiplier = (1 - condition) ^ 2
+                            return baseEffect * multiplier
+                        end,
+                        aggregation = "max"
+                    }
+                    table.insert(effects, effect)
+                end
 
             -- TRANSMISSION
             elseif systemName == systems.TRANSMISSION then
@@ -186,9 +182,9 @@ local function buildGeneralWearBreakdown(vehicle)
 
                 -- late stage
                 effect = {
-                    id = "STEERING_SENSITIVITY_MODIFIER", 
+                    id = "STEERING_PLAY_EFFECT",
                     value = function ()
-                        local baseEffect = 0.30
+                        local baseEffect = RMS_Config.CORE.CHASSIS_FACTOR_DATA.STEER_GENERAL_WEAR_PLAY
                         local condition = systemCondition
                         local multiplier = (1 - condition) ^ 3
                         return baseEffect * multiplier
@@ -230,16 +226,26 @@ local function buildGeneralWearBreakdown(vehicle)
                 if effect ~= nil then table.insert(effects, effect) end
 
                 effect = {
-                    id = "BATTERY_HEALTH_MODIFIER", 
+                    id = "BATTERY_HEALTH_MODIFIER",
                     value = function ()
                         local baseEffect = -0.60
                         local condition = systemCondition
                         local multiplier = (1 - condition) ^ 3
                         return baseEffect * multiplier
-                    end,  
+                    end,
                     aggregation = "min"
                 }
                 if effect ~= nil then table.insert(effects, effect) end
+
+                -- a worn circuit leaks at rest, up to the draw a circuit is held faulty from
+                effect = {
+                    id = "ELECTRICAL_LEAKAGE_EFFECT",
+                    value = function ()
+                        return (1 - systemCondition) ^ 3
+                    end,
+                    aggregation = "sum"
+                }
+                table.insert(effects, effect)
 
                 -- late stage
                 effect = {
@@ -262,10 +268,7 @@ local function buildGeneralWearBreakdown(vehicle)
     return generalWearBreakdown
 end
 
----Returns a breakdown definition, the vehicle dynamic one taking precedence over the registry
--- @param table vehicle vehicle
--- @param string breakdownId breakdown id
--- @return table? definition breakdown definition
+---Returns a breakdown definition, the vehicle's own one first
 local function getBreakdownDefinition(vehicle, breakdownId)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec ~= nil and spec.dynamicBreakdowns ~= nil and spec.dynamicBreakdowns[breakdownId] ~= nil then
@@ -274,7 +277,7 @@ local function getBreakdownDefinition(vehicle, breakdownId)
     return RMS_Breakdowns.BreakdownRegistry[breakdownId]
 end
 
----Rolls a breakdown per system once its stress over condition ratio passes the threshold
+---Rolls a breakdown per system once stress over condition passes the threshold
 -- @param float dt time since last call in ms
 function RealisticMechanicalSystems:tryTriggerBreakdown(dt)
     local spec = self.spec_RealisticMechanicalSystems
@@ -283,25 +286,16 @@ function RealisticMechanicalSystems:tryTriggerBreakdown(dt)
     end
 
     local probabilityData = RMS_Config.CORE.BREAKDOWN_PROBABILITIES
-    local conditionEffectiveFloor = RMS_Config.CORE.CONDITION_EFFECTIVE_FLOOR or 0.15
 
     for systemName, systemData in pairs(spec.systems) do
-        if systemData.name == RealisticMechanicalSystems.SYSTEMS.TRANSMISSION and hasCVTAddon(self) then
-            -- skip transmission breakdowns if CVT addon is present
-        else
+        local failureChancePerFrame = RMS_Utils.getSystemBreakdownRisk(self, systemData, dt)
+        if failureChancePerFrame ~= nil then
             local systemCondition = math.max(systemData.condition or 1.0, 0.001)
-            local effectiveCondition = math.max(systemCondition, conditionEffectiveFloor)
             local systemStress = math.max(systemData.stress or 0.0, 0.0)
-            local stressThreshold = probabilityData.STRESS_THRESHOLD
-            local hourlyProb = 0.0
 
-            local stressRatio = math.max(systemStress / effectiveCondition, 0.0)
-            if stressRatio >= stressThreshold then
-                local failureChancePerFrame = RealisticMechanicalSystems.calculateBreakdownProbability(stressRatio, probabilityData, dt)
-                hourlyProb = 1 - (1 - failureChancePerFrame) ^ (3600000 / dt)
-
+            if failureChancePerFrame > 0 then
                 local random = math.random()
-                if random < failureChancePerFrame or systemStress >= effectiveCondition then
+                if random < failureChancePerFrame then
                     local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemData.name)
                     if systemKey == nil or systemKey == "" then
                         systemKey = string.lower(tostring(systemData.name or ""))
@@ -370,26 +364,19 @@ function RealisticMechanicalSystems:tryTriggerBreakdown(dt)
                     systemData.stress = systemStress * RMS_Config.CORE.STRESS_COOLDOWN
                     systemStress = math.max(systemData.stress or 0.0, 0.0)
 
-                    local cooledStressRatio = math.max(systemStress / effectiveCondition, 0.0)
-                    if cooledStressRatio >= stressThreshold then
-                        local cooledFailureChancePerFrame = RealisticMechanicalSystems.calculateBreakdownProbability(cooledStressRatio, probabilityData, dt)
-                        hourlyProb = 1 - (1 - cooledFailureChancePerFrame) ^ (3600000 / dt)
-                    else
-                        hourlyProb = 0.0
-                    end
                 end
             end
 
             if RMS_Utils.getIsDebugDataWanted(self) and spec.debugData[systemName] ~= nil then
                 local criticalChance = math.clamp((1 - systemCondition) ^ probabilityData.CRITICAL_DEGREE, probabilityData.CRITICAL_MIN, probabilityData.CRITICAL_MAX)
-                spec.debugData[systemName].breakdownProbability = hourlyProb
+                spec.debugData[systemName].breakdownProbability = RMS_Utils.getBreakdownRisk(systemCondition, systemStress, 3600000)
                 spec.debugData[systemName].critBreakdownProbability = criticalChance
             end
         end
     end
 end
 
----Draws a breakdown among the applicable ones, weighted by their probability
+---Draws a breakdown among the applicable ones, weighted by probability
 -- @return string? breakdownId drawn breakdown id, nil when none applies
 function RealisticMechanicalSystems:getRandomBreakdown()
     if not self.spec_RealisticMechanicalSystems then
@@ -437,7 +424,7 @@ function RealisticMechanicalSystems:getRandomBreakdown()
     return nil
 end
 
----Draws a breakdown of one system among the applicable ones, weighted by their probability
+---Draws a breakdown of one system, weighted by probability
 -- @param string systemName system name
 -- @return string? breakdownId drawn breakdown id, nil when none applies
 function RealisticMechanicalSystems:getRandomBreakdownBySystem(systemName)
@@ -572,11 +559,7 @@ function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
     end
 
     local activeBreakdowns = self:getActiveBreakdowns()
-    local breakdownRegistry = RMS_Breakdowns ~= nil and RMS_Breakdowns.BreakdownRegistry or nil
-    if breakdownRegistry == nil then
-        log_dbg("addBreakdown skipped: BreakdownRegistry is nil for id:", tostring(breakdownId))
-        return
-    end
+    local breakdownRegistry = RMS_Breakdowns.BreakdownRegistry
     
     local activeBreakdownsCount = 0
     for _, breakdownData in pairs(activeBreakdowns) do
@@ -682,7 +665,7 @@ function RealisticMechanicalSystems:removeBreakdown(...)
     end
 end
 
----Tells whether a breakdown is active, or any selectable one when called without an id
+---Tells whether a breakdown is active, any selectable one without an id
 -- @param string? breakdownId breakdown id
 -- @return boolean hasBreakdown true when the breakdown is active
 function RealisticMechanicalSystems:hasBreakdown(breakdownId)
@@ -752,7 +735,7 @@ function RealisticMechanicalSystems:hasSystemBreakdowns(system)
     return false
 end
 
----Moves a breakdown to a stage, or one stage back when asked to reverse
+---Moves a breakdown to a stage, or one stage back
 -- @param string breakdownId breakdown id
 -- @param any targetStageOrReverse target stage index, or true to step back
 function RealisticMechanicalSystems:changeBreakdownStage(breakdownId, targetStageOrReverse)
@@ -788,7 +771,7 @@ function RealisticMechanicalSystems:changeBreakdownStage(breakdownId, targetStag
     end
 end
 
----Counts down the suspended breakdowns and advances the progressing ones to their next stage
+---Counts down suspended breakdowns and advances progressing ones
 -- @param float dt time since last call in ms
 function RealisticMechanicalSystems:processBreakdowns(dt)
     local spec = self.spec_RealisticMechanicalSystems
@@ -859,7 +842,7 @@ function RealisticMechanicalSystems:processBreakdowns(dt)
     end
 end
 
----Adds, removes or refreshes the general wear breakdown from the condition of the systems
+---Adds, removes or refreshes the general wear breakdown
 function RealisticMechanicalSystems:processGeneralWearBreakdown()
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not self.isServer then
@@ -900,7 +883,7 @@ function RealisticMechanicalSystems:processGeneralWearBreakdown()
     end
 end
 
----Rebuilds the active effect set from the active breakdowns and applies the difference
+---Rebuilds the active effects from the breakdowns and applies the difference
 -- @param boolean? noSideNotifications true when restoring an initial network snapshot
 function RealisticMechanicalSystems:recalculateAndApplyEffects(noSideNotifications)
     local spec = self.spec_RealisticMechanicalSystems
@@ -1034,6 +1017,15 @@ function RealisticMechanicalSystems:recalculateAndApplyEffects(noSideNotificatio
         RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.BREAKDOWNS)
     end
 
+    -- an electric reads its own message where the usual one speaks of a starter
+    if spec.isElectricVehicle then
+        for _, effect in pairs(aggregatedEffects) do
+            if effect.extraData ~= nil and effect.extraData.electricMessage ~= nil then
+                effect.extraData.message = effect.extraData.electricMessage
+            end
+        end
+    end
+
     spec.activeEffects = aggregatedEffects
 
     for effectId, applicator in pairs(RMS_Breakdowns.EffectApplicators) do
@@ -1045,8 +1037,11 @@ function RealisticMechanicalSystems:recalculateAndApplyEffects(noSideNotificatio
                 applicator.apply(self, spec.activeEffects[effectId], applicator)
             end
 
-            if self.isClient and not noSideNotifications and not wasPreviouslyActive
-                    and RMS_Config.CORE.ENABLE_WARNING_MESSAGES ~= false
+            local thermalMessageChanged = effectId == "ENGINE_THERMAL_TORQUE_LIMIT" and wasPreviouslyActive
+                and previouslyActiveEffects[effectId].extraData ~= nil and spec.activeEffects[effectId].extraData ~= nil
+                and previouslyActiveEffects[effectId].extraData.message ~= spec.activeEffects[effectId].extraData.message
+            if self.isClient and not noSideNotifications and (not wasPreviouslyActive or thermalMessageChanged)
+                    and (RMS_Config.CORE.ENABLE_WARNING_MESSAGES ~= false or effectId == "ENGINE_THERMAL_TORQUE_LIMIT")
                     and self:getOwnerFarmId() == g_currentMission:getFarmId() then
                 local currentEffect = spec.activeEffects[effectId]
                 local rootVehicle = self.rootVehicle or self
@@ -1067,10 +1062,17 @@ function RealisticMechanicalSystems:recalculateAndApplyEffects(noSideNotificatio
         end
     end
     
+    if self.isClient and not noSideNotifications
+            and previouslyActiveEffects.ENGINE_THERMAL_TORQUE_LIMIT ~= nil
+            and spec.activeEffects.ENGINE_THERMAL_TORQUE_LIMIT == nil
+            and self:getOwnerFarmId() == g_currentMission:getFarmId() then
+        spec.pendingSideNotifications = spec.pendingSideNotifications or {}
+        spec.pendingSideNotifications.ENGINE_THERMAL_TORQUE_LIMIT = "rms_thermal_power_restored_message"
+    end
     self:recalculateAndApplyIndicators()
 end
 
----Rebuilds the dashboard indicator set from the active breakdowns, the highest priority colour winning
+---Rebuilds the dashboard indicators from the active breakdowns
 function RealisticMechanicalSystems:recalculateAndApplyIndicators()
     local spec = self.spec_RealisticMechanicalSystems
     if not spec then return end

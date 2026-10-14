@@ -10,11 +10,11 @@
         <text name="rms_drivetrain_notify_mode" text="Hajtásmód: %s"/>
         <text name="rms_drivetrain_notify_lock_on" text="Differenciálzár bekapcsolva"/>
         <text name="rms_drivetrain_notify_lock_off" text="Differenciálzár kioldva"/>
-        <text name="rms_drivetrain_notify_park_on" text="Rögzítőfék behúzva"/>
-        <text name="rms_drivetrain_notify_park_off" text="Rögzítőfék kiengedve"/>
         <text name="rms_drivetrain_warning_4wd_windup" text="A hajtáslánc terhelés alatt áll! Tapadós talajon kanyarodás előtt kapcsold ki az összkerékhajtást."/>
         <text name="rms_drivetrain_warning_difflock_windup" text="A differenciálzár feszül! Oldd ki, vagy csökkentsd a kormányzási szöget."/>
         <text name="rms_drivetrain_warning_parkbrake" text="Behúzott rögzítőfék!"/>
+        <text name="rms_drivetrain_warning_parkbrake_released" text="A rögzítőfék nincs behúzva!"/>
+        <text name="rms_drivetrain_warning_parkbrake_engine_off" text="A rögzítőfék kiengedéséhez indítsd be a motort"/>
         <text name="rms_preheat_ignition_message" text="Gyújtás bekapcsolva: előizzítás folyamatban"/>
         <text name="rms_preheat_system_failure_message" text="Az előizzító rendszer hibája: hidegindítás nem lehetséges"/>
         <text name="rms_preheat_start_failed_message" text="A motor nem indult el: újabb próbálkozás előtt kapcsold ki a gyújtást"/>
@@ -22,15 +22,16 @@
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Jármű ellenőrzése"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
-        <text name="input_RMS_TOGGLE_4WD" text="Hajtásmód váltása"/>
-        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Differenciálzár bekapcsolása/kioldása"/>
-        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Rögzítőfék behúzása/kioldása"/>
+        <text name="input_RMS_TOGGLE_4WD" text="Hajtásmód"/>
+        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Differenciálzár"/>
+        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Rögzítőfék"/>
+        <text name="input_RMS_TOGGLE_ODOMETER" text="ODO/TRIP (tartsd: TRIP=0)"/>
+        <text name="input_RMS_TOGGLE_BATTERY_ISOLATOR" text="Akkumulátor-főkapcsoló"/>
+        <text name="input_RMS_TOGGLE_FLUID_CAN" text="Kanna vitele vagy betöltés"/>
         <!-- Settings -->
         <text name="rms_settings_title" text="RMS BEÁLLÍTÁSOK"/>
         <text name="rms_settings_admin_required" text="Az RMS beállításai többjátékos módban rendszergazdai jogosultságot igényelnek."/>
         <text name="rms_settings_section_service_wear" text="Karbantartás és kopás"/>
-        <text name="rms_settings_section_thermal_model" text="Hőmodell"/>
-        <text name="rms_settings_section_battery_alternator" text="Akkumulátor és generátor"/>
         <text name="rms_settings_section_drivetrain" text="Hajtáslánc és rögzítőfék"/>
         <text name="rms_workshopOpenHour_label" text="Műhely nyitási ideje"/>
         <text name="rms_workshopOpenHour_tooltip" text="A javítási eljárások csak ettől az órától kezdődnek."/>
@@ -41,7 +42,7 @@
         <text name="rms_mobileWorkshopAvailable_label" text="Mobil műhely 0–24"/>
         <text name="rms_mobileWorkshopAvailable_tooltip" text="A mobil műhely a nap bármely szakában elérhető marad."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Mobil műhely korlátozásai"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Bekapcsolva a mobil műhelyben elérhető különböző eljárások a jármű javíthatóságától függenek."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="A feladat és a szükséges eszközök alapján korlátozza a mobil munkákat. A karbantartás elérhető marad; diagnosztika, nehéz szétszerelés vagy nagyfeszültségű munka felszerelt műhelyt igényelhet."/>
         <text name="rms_ownWorkshopAvailable_label" text="Saját műhely 0–24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="A saját műhelyed a nap bármely szakában elérhető marad."/>
         <text name="rms_instantInspection_label" text="Azonnali átvizsgálás"/>
@@ -55,35 +56,16 @@
         <text name="rms_debugMode_label" text="Hibakeresési mód"/>
         <text name="rms_debugMode_tooltip" text="Be- vagy kikapcsolja a hibakeresési panelt és a részletes konzolos hibakeresési naplózást."/>
         <text name="rms_warningMessages_label" text="Figyelmeztető üzenetek"/>
-        <text name="rms_warningMessages_tooltip" text="Be- vagy kikapcsolja a játékmeneti figyelmeztetéseket, például a hideg motorra és túlmelegedésre vonatkozó riasztásokat."/>
-        <text name="rms_serviceInterval_label" text="Karbantartási intervallum"/>
-        <text name="rms_serviceInterval_tooltip" text="Beállítja a motorolajcsere intervallumát órában. A váltó- és hidraulikaolaj minden második, a hűtőfolyadék minden tizedik intervallumban cserélődik. A tényleges intervallum a jármű márkájától függ."/>
+        <text name="rms_warningMessages_tooltip" text="Be- vagy kikapcsolja a játékmeneti figyelmeztetéseket, például a hideg motorra és túlmelegedésre vonatkozó riasztásokat. A hőmérséklet miatti teljesítménykorlátozás értesítései aktívak maradnak."/>
+        <text name="rms_serviceInterval_label" text="Karbantartások távolsága"/>
+        <text name="rms_serviceInterval_tooltip" text="Állítsa be a referenciaórákat. 100 h esetén az 500 h előírás 100 h-ra, a 600 h 120 h-ra változik. Minden folyadék a jármű programját követi; a naptári határidők függetlenek."/>
         <text name="rms_vehicleLifespan_label" text="Jármű élettartama"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Beállítja a jármű alap élettartamát órában, amely után az állapota 0%-ra csökken. Minél közelebb van az állapot a nullához, annál megbízhatatlanabbá válik a jármű. A jármű értéke is csökken ezen órák során."/>
-        <text name="rms_reinitializeVehicles_label" text="Flotta visszaállítása"/>
-        <text name="rms_reinitializeVehicles_text" text="Visszaállítás"/>
-        <text name="rms_reinitializeVehicles_tooltip" text="A flotta állapotát a választott élettartamhoz igazítja. A jelenlegi meghibásodások törlődnek."/>
-        <text name="rms_reinitializeVehiclesConfirm_title" text="Flotta visszaállítása"/>
-        <text name="rms_reinitializeVehiclesConfirm_message" text="Igazítja a flottát a választott élettartamhoz? A jelenlegi meghibásodások törlődnek."/>
-        <text name="rms_reinitializeVehicles_result" text="Visszaállított járművek: %d. Érintetlen: %d."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Beállítja a jármű alap élettartamát órában, amely után az állapota 0%-ra csökken. Minél közelebb van az állapot a nullához, annál megbízhatatlanabbá válik a jármű. A jármű értéke is csökken ezen órák során. A módosítás attól a pillanattól érvényes: a járművek megtartják állapotukat, csak az értékük számítódik újra."/>
         <text name="rms_generalWearEnabled_label" text="Életkor miatti kopás"/>
         <text name="rms_generalWearEnabled_tooltip" text="Ahogy a jármű elhasználódik, minden rendszer fő jellemzői kismértékben romlanak, például a motorteljesítmény, a hidraulika sebessége vagy a fékhatás. A hatás az élettartam első harmada után válik aktívvá, de csak a második harmad után lesz igazán észrevehető, majd a gép élettartamának vége felé erősödik."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kipufogófüst"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="A kipufogófüstöt a motor valós állapota vezérli. Fekete, amikor több az üzemanyag, mint a rendelkezésre álló levegő: erős gyorsításnál, alacsony fordulaton erőlködő motornál, hosszan tartó kis terhelésű alapjáratnál, eltömődött légszűrőnél vagy kopott befecskendezésnél. Kék, amikor egy fáradt motor olajat éget, és fehér, amikor az üzemanyag elégetlenül távozik. A füstcsóva a motor által végzett munkával együtt nő. A régebbi gépek sokkal jobban füstölnek, mint a modernek, amelyek komoly hiba nélkül alig füstölnek. Hideg levegőben az égés során keletkező víz is lecsapódik egy rövid fehér csíkká, amely egy-két méteren belül elpárolog, még egy ép motornál is."/>
-        <text name="rms_batteryCapacity_label" text="Akkumulátor kapacitása"/>
-        <text name="rms_batteryCapacity_tooltip" text="Módosítja a maximálisan használható akkumulátorkapacitást. A 150 Ah körüli értékek valósághűbbek, de ilyen szinten alig találkozhatsz akkumulátorlemerülési problémákkal."/>
         <text name="rms_option_off" text="Ki"/>
-        <text name="rms_option_none" text="Nincs"/>
-        <text name="rms_alternatorMaxOutput_label" text="Generátor maximális áramerőssége"/>
-        <text name="rms_alternatorMaxOutput_tooltip" text="Beállítja a generátor maximális kimenő áramát. Magasabb értékeknél a generátor gyorsabban tölti vissza az akkumulátort."/>
-        <text name="rms_idleCurrent_label" text="Készenléti áramfelvétel"/>
-        <text name="rms_idleCurrent_tooltip" text="Beállítja az akkumulátor merülési áramát leállított motor mellett. Például 0,5 A esetén egy 15 Ah-s akkumulátor nagyjából 30 valós óra alatt merülne le teljesen, még a hőmérsékleti hatások előtt."/>
-        <text name="rms_temperatureChangeSpeed_label" text="Motor hőmodelljének sebessége"/>
-        <text name="rms_temperatureChangeSpeed_tooltip" text="A motor hőmérséklet-változásának sebességét szabályozza. Az alacsonyabb értékek lassítják a melegedést és a hűlést, a magasabbak mindkettőt gyorsítják. Az alapérték 1,4."/>
-        <text name="rms_transTemperatureChangeMultiplier_label" text="Közös hajtómű- és hidraulikaolaj hőmodelljének sebessége"/>
-        <text name="rms_transTemperatureChangeMultiplier_tooltip" text="A közös hajtómű- és hidraulikaolaj hőmérséklet-változásának sebességét külön szabályozza. Az alacsonyabb értékek lassítják a melegedést és a hűlést, a magasabbak mindkettőt gyorsítják. Az alapérték 1,0."/>
-        <text name="rms_radiatorDirtInfluence_label" text="Hűtőszennyeződés hatása"/>
-        <text name="rms_radiatorDirtInfluence_tooltip" text="A hűtő maximális szennyeződésénél ennyi százalékkal csökkenti a hűtési kapacitást."/>
         <text name="rms_tutorialMode_label" text="Oktató mód"/>
         <text name="rms_tutorialMode_tooltip" text="Játék közben oktató tippeket jelenít meg."/>
         <text name="rms_tutorialResetTips_label" text="Tippek visszaállítása"/>
@@ -92,15 +74,11 @@
         <text name="rms_tutorialResetConfirm_title" text="Oktató tippek visszaállítása?"/>
         <text name="rms_tutorialResetConfirm_message" text="Visszaállítod az oktató tippek előzményeit, és újra megjeleníted az összes tippet?"/>
         <text name="rms_drivetrainEnabled_label" text="Összkerékhajtás és differenciálzár kezelése"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Bekapcsolja a kapcsolható első híd és a differenciálzárak kézi vezérlését a traktorokon. Ha az Enhanced Vehicle differenciálkezelése aktív, az RMS teljesen visszavonul, és az Enhanced Vehicle egyedül kezeli a hajtásláncot."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Bekapcsolja a kapcsolható első híd és a differenciálzárak kézi vezérlését a traktorokon. Ha az Enhanced Vehicle telepítve van, a differenciálkezelése kikapcsol; ha vissza akarod adni neki, kapcsold ki ezt a beállítást, majd kapcsold vissza a differenciálműveket az Enhanced Vehicle menüjében."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="AUTO hajtásmód engedélyezése"/>
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="AUTO állást ad a hajtásválasztóhoz: az első híd kerékcsúszásnál vagy munkasebességnél terhelés alatt automatikusan bekapcsol, közúton pedig kikapcsol. Az AUTO-ban hagyott gépek összkerékhajtásra váltanak, ha ezt a beállítást kikapcsolják."/>
-        <text name="rms_drivetrainWindupDamage_label" text="Hajtáslánc-terhelési károk"/>
-        <text name="rms_drivetrainWindupDamage_tooltip" text="A zárt differenciálművekkel tapadós felületen való kanyarodás terheli a hajtásláncot és idővel károsítja a váltót. Engedékenyebb játékhoz kapcsold ki."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Rögzítőfék"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Rögzítőféket ad minden RMS-járműhöz, saját billentyűvel. A behúzott fék lehorgonyozza a gépet és figyelmen kívül hagyja a gázt."/>
-        <text name="rms_drivetrainParkBrakeAuto_label" text="Automatikus rögzítőfék"/>
-        <text name="rms_drivetrainParkBrakeAuto_tooltip" text="Automatikusan behúzza a rögzítőféket, amikor a kezelő elhagyja az álló gépet."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Rögzítőféket ad minden RMS-járműhöz. Az újabb, CVT vagy Powershift váltós gépek maguktól behúzzák és kioldják; a többin te kezeled, saját billentyűvel. Ha az Enhanced Vehicle telepítve van, a rögzítőfékje kikapcsol; ha vissza akarod adni neki, kapcsold ki ezt a beállítást, majd kapcsold vissza a rögzítőféket az Enhanced Vehicle menüjében."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Műhely"/>
         <text name="rms_ws_tab_summary" text="Összegzés"/>
@@ -113,38 +91,50 @@
         <text name="rms_ws_section_quote" text="Javítási árajánlat"/>
         <text name="rms_ws_section_choose_intervention" text="Eljárás kiválasztása"/>
         <text name="rms_ws_section_work_order" text="Munkalap"/>
+        <text name="rms_ws_section_paint_order" text="Fényezési munkalap"/>
         <text name="rms_ws_section_recap" text="Áttekintés"/>
         <text name="rms_ws_section_parts" text="Érintett alkatrészek"/>
         <text name="rms_ws_section_history" text="Előzmények"/>
         <text name="rms_ws_section_current_intervention" text="Folyamatban lévő eljárás"/>
-        <text name="rms_ws_label_last_check" text="Utolsó műszak előtti ellenőrzés"/>
+        <text name="rms_ws_label_last_check" text="Utolsó ellenőrzés"/>
+        <text name="rms_ws_reading_outdated" text="Ellenőrizendő"/>
         <text name="rms_ws_label_workshop_state" text="Műhely állapota"/>
         <text name="rms_ws_label_more_parts" text="+ %s további"/>
         <text name="rms_ws_label_committed_cost" text="Lekötött költség"/>
         <text name="rms_ws_label_finish_time" text="Befejezési idő"/>
         <text name="rms_ws_label_total_estimate" text="Becsült összeg"/>
         <text name="rms_ws_button_configure_repair" text="Javítás beállítása"/>
-        <text name="rms_ws_info_inspection_reveals" text="Egy átvizsgálás további hibákat tárhat fel."/>
+        <text name="rms_ws_info_inspection_reveals" text="Egy átvizsgálás vagy karbantartás további meghibásodásokat azonosíthat."/>
         <text name="rms_ws_status_ready_title" text="A műhely készen áll"/>
         <text name="rms_ws_status_ready_hint" text="Válassz eljárást. A beállításokat, az alkatrészeket és az árat indítás előtt kell megerősíteni."/>
         <text name="rms_ws_label_value" text="Jármű értéke"/>
         <text name="rms_ws_label_age" text="Kor"/>
         <text name="rms_ws_label_operating_hours" text="Üzemórák"/>
+        <text name="rms_odometer_label" text="Kilométeróra állása"/>
+        <text name="rms_odometer_not_recorded" text="Nincs rögzítve"/>
         <text name="rms_ws_label_service" text="Karbantartási szint"/>
-        <text name="rms_ws_label_maintenance_standard" text="Normál karbantartás"/>
-        <text name="rms_ws_label_maintenance_extended" text="Bővített karbantartás"/>
-        <text name="rms_ws_label_maintenance_preventive" text="Megelőző karbantartás"/>
         <text name="rms_ws_label_condition" text="Állapot"/>
         <text name="rms_ws_label_reliability" text="Megbízhatóság"/>
+        <text name="rms_reliability_average" text="Átlagos"/>
+        <text name="rms_reliability_fair" text="Megfelelő"/>
+        <text name="rms_reliability_good" text="Jó"/>
+        <text name="rms_reliability_very_good" text="Nagyon jó"/>
         <text name="rms_ws_label_overhaul_count" text="Elvégzett nagyjavítások"/>
-        <text name="rms_ws_label_maintainability" text="Karbantarthatóság"/>
         <text name="rms_ws_label_maintenance_log" text="Karbantartási napló"/>
         <text name="rms_ws_label_last_report" text="Utolsó jelentés"/>
         <text name="rms_ws_label_last_maintenance" text="Utolsó karbantartás"/>
         <text name="rms_ws_task_inspection" text="Átvizsgálás"/>
         <text name="rms_ws_task_maintenance" text="Karbantartás"/>
         <text name="rms_ws_task_overhaul" text="Nagyjavítás"/>
-        <text name="rms_ws_info_no_breakdowns" text="Nincsenek meghibásodások, vagy még nem lettek felismerve."/>
+        <text name="rms_ws_info_no_breakdowns" text="Nincs azonosított meghibásodás. Egy átvizsgálás vagy karbantartás azonosítja azokat, amelyeket a gép még nem mutat."/>
+        <text name="rms_ws_info_warning_unidentified" text="Figyelmeztető lámpa ég: azonosítandó meghibásodás. Egy átvizsgálás vagy karbantartás azonosítja, utána javítható."/>
+        <text name="rms_ws_faults_none_title" text="Nincs azonosított meghibásodás"/>
+        <text name="rms_ws_faults_none_hint" text="Egy átvizsgálás vagy karbantartás azonosítja azokat a meghibásodásokat, amelyeket a gép még nem mutat."/>
+        <text name="rms_ws_faults_warning_title" text="Azonosítandó meghibásodás"/>
+        <text name="rms_ws_faults_warning_hint" text="Figyelmeztető lámpa ég. Egy átvizsgálás vagy karbantartás azonosítja a meghibásodást, utána javítható."/>
+        <text name="rms_ws_reason_repair_unselected" text="Nincs kijelölt meghibásodás. Jelöld ki a javítandókat a Diagnosztika és árajánlat lapon."/>
+        <text name="rms_ws_reason_overhaul_none" text="A mechanikai nagyjavítás az 50% állapot alatti rendszereket hozza rendbe. Ennél a gépnél nincs ilyen."/>
+        <text name="rms_ws_reason_bodywork_mobile" text="A mobil műhely nem végez fényezést. Azt a kereskedőnél végzik."/>
         <text name="rms_ws_status_in_progress_short_format" text="%s folyamatban..."/>
         <text name="rms_ws_status_in_progress_format" text="%s folyamatban, befejezés: %s"/>
         <text name="rms_ws_status_open" text="A műhely nyitva van"/>
@@ -159,18 +149,17 @@
         <text name="rms_ws_action_choice_repair" text="Meghibásodás javítása"/>
         <text name="rms_ws_action_choice_overhaul" text="Mechanikai nagyjavítás"/>
         <text name="rms_ws_action_choice_refill" text="Folyadékok utántöltése"/>
+        <text name="rms_ws_action_choice_bodywork" text="Jármű fényezése"/>
         <text name="rms_ws_action_cancel_service" text="Eljárás megszakítása"/>
         <text name="rms_ws_age_unit" text="hónap"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="Igen"/>
         <text name="rms_ws_option_no" text="Nem"/>
         <text name="rms_ws_no_last_report_message" text="Még nincs jelentés"/>
-        <text name="rms_ws_systems_need_complete_inspection" text="Teljes átvizsgálás szükséges"/>
         <text name="rms_ws_no_log_empty_message" text="A napló még üres"/>
         <text name="rms_ws_no_report_message" text="Nincs jelentés"/>
         <text name="rms_ws_cancel_confirm_title" text="Megszakítod a folyamatban lévő eljárást? (%s)"/>
         <text name="rms_ws_cancel_confirm_text" text="Az aktuális előrehaladás így kerül mentésre. Pénzvisszatérítés nem jár."/>
-        <text name="rms_mobile_workshop_low_maintainability" text="Figyelem: a mobil műhelyben nem érhető el a következő eljárás: %s. Jármű: %s. Ezt a járművet túl nehéz helyben karbantartani."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="Karbantartási napló"/>
         <text name="rms_log_recorded_interventions_title" text="Rögzített eljárások"/>
@@ -207,10 +196,10 @@
         <text name="rms_breakdowns_severity_moderate" text="Közepes"/>
         <text name="rms_breakdowns_severity_major" text="Súlyos"/>
         <text name="rms_breakdowns_severity_critical" text="Kritikus"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Enyhe kormánymű-rudazat kopás. A kormányzás kissé kevésbé pontos lesz."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Közepes kormánymű-rudazat kopás. A holtjáték megnő, a pontosság érezhetően csökken, és az úttartás romlik."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Súlyos kormánymű-rudazat kopás. A holtjáték jelentős, a kormányzás rosszul reagál, és a jármű irányítása nehézzé válik."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kritikus kormánymű-rudazat hiba. A kormányzás megbízhatatlanná válik, és a vezetés veszélyessé válik."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Enyhe kormánymű-rudazat kopás. Kis holtjáték jelenik meg, és a kormányzás kissé kevésbé pontos lesz."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Közepes kormánymű-rudazat kopás. A holtjáték megnő, és a kerekek beállítása elállítódik: a kormányzás bizonytalan, és enyhén oldalra húz."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Súlyos kormánymű-rudazat kopás. A holtjáték jelentős, és a kerekek beállítása érezhetően elállítódott: a jármű oldalra húz, rosszul tartja a nyomvonalat, és egy gömbcsukló kiszakadhat."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kritikus kormánymű-rudazat hiba. Egy gömbcsukló kiszakadt: a kormányzás már nem vezeti megfelelően a kerekeket, és a továbbhaladás veszélyes."/>
         <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="Kormányrudazat hibája"/>
         <text name="rms_breakdowns_general_wear_stage1_description" text="Évek munkájának felhalmozott igénybevétele kisebb, visszafordíthatatlan kopást hagyott az alapvető alkatrészeken, ami enyhén csökkenti az összteljesítményt."/>
         <text name="rms_breakdowns_gear_disengage_message" text="A sebességfokozat kiugrott"/>
@@ -223,12 +212,23 @@
         <text name="rms_breakdowns_part_consumables" text="Fogyóanyagok"/>
         <text name="rms_breakdowns_part_cooling_system" text="Hűtőrendszer"/>
         <text name="rms_breakdowns_part_clutch" text="Kuplung"/>
-        <text name="rms_breakdowns_part_cvt_chain" text="CVT lánc"/>
-        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="CVT hidraulikus vezérlőszelep"/>
+        <text name="rms_breakdowns_part_cvt_chain" text="Fokozatmentes váltó"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Áttételvezérlés"/>
         <text name="rms_breakdowns_part_cvt" text="CVT"/>
         <text name="rms_breakdowns_part_engine" text="Motor"/>
         <text name="rms_breakdowns_part_ecu" text="ECU"/>
         <text name="rms_breakdowns_part_battery" text="Akkumulátor"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Hajtóakkumulátor"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Nagyfeszültségű kontaktor"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Nagyfeszültségű kábelezés"/>
+        <text name="rms_breakdowns_part_inverter" text="Inverter"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Feszültségátalakító"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Fedélzeti töltő"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Villanymotor-csapágyak"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Villanymotor-tekercsek"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Motorhelyzet-érzékelő"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Hűtőfolyadék-szivattyú"/>
+        <text name="rms_breakdowns_part_reducer" text="Reduktor"/>
         <text name="rms_breakdowns_part_brake_system" text="Fékrendszer"/>
         <text name="rms_breakdowns_part_wiring" text="Kábelezés és csatlakozók"/>
         <text name="rms_breakdowns_part_wheel_bearing" text="Kerékcsapágy"/>
@@ -281,7 +281,8 @@
         <text name="rms_breakdowns_quick_fix_stage" text="Ideiglenes javítás"/>
         <text name="rms_breakdowns_defected_parts_stage" text="Hiba"/>
         <text name="rms_breakdowns_defected_parts_detected_description" text="A rendszer normálisan működik, de az átvizsgálás hibás alkatrészt talált. Az alkatrésznek már nincs biztonsági tartaléka, ezért a hirtelen meghibásodás elkerülésére megelőző csere ajánlott."/>
-        <text name="rms_breakdowns_dead_battery_message" text="Az akkumulátor lemerült"/>
+        <text name="rms_breakdowns_dead_battery_message" text="Az akkumulátor túl gyenge"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Hideg hajtóakkumulátor: csökkent hatótáv és teljesítmény"/>
         <text name="rms_breakdowns_temporarily_repaired_description" text="A rendszer normálisan működik, de teljes mértékben egy ideiglenes javítástól függ. A terhelés alatti meghibásodás elkerülésére mielőbbi teljes alkatrészcsere ajánlott."/>
         <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="A turbófeltöltő kopott csapágyai miatt halk fütyülés hallható, és magas fordulaton enyhe teljesítményvesztés jelentkezik."/>
         <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="A turbófeltöltő tömítései szivárognak. Érezhető teljesítményvesztés és megnövekedett üzemanyag-fogyasztás."/>
@@ -318,6 +319,7 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Túlmelegedés elleni védelem: teljesítmény csökkentve"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="A túlmelegedés elleni védelem erősödik. A motor már csak a teljesítménye felét adja le."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Túlmelegedés elleni védelem: teljesítmény felére csökkentve"/>
+        <text name="rms_thermal_power_restored_message" text="Hővédelem: a teljesítménykorlátozás megszűnt"/>
         <text name="rms_breakdowns_overheat_protection_stage3_description" text="A túlmelegedés elleni védelem a maximumon van. Csak a motorteljesítmény töredéke marad."/>
         <text name="rms_breakdowns_overheat_protection_stage3_message" text="Túlmelegedés elleni védelem: teljesítmény erősen csökkentve"/>
         <text name="rms_breakdowns_overheat_protection_stage4_description" text="A motor leállt a károsodás elkerülése érdekében. Hagyd lehűlni újraindítás előtt."/>
@@ -336,20 +338,25 @@
         <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Súlyos ECU-meghibásodás. Jelentős teljesítményvesztés, magas üzemanyag-fogyasztás és motorleállási kockázat."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Teljes ECU-hiba. A motor nem vezérelhető, és nem indítható be."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="ECU-hiba"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Enyhe korrózió a kábelezésen és az elektromos csatlakozókon. A megnövekedett érintkezési ellenállás időnkénti fényvillogást, instabil feszültségellátást és nehéz motorindítást okoz."/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Közepes korrózió a kábelezésen és az elektromos csatlakozókon. Az érintkezési veszteségek gyakori fényvillogást, instabil feszültségellátást, nehéz motorindítást és esetleges motorleállásokat okoznak."/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Súlyos korrózió a kábelezésen és az elektromos csatlakozókon. A kritikus áramkörök ellátása instabil, a világítás teljesen kieshet, a motor nyomatéka csökken, motorleállások valószínűek, az indítás pedig megbízhatatlan."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Az indítóvezérlő áramkör súlyos kábelkorrózió miatti meghibásodása. A világítás nem működik, és a motor indítása lehetetlen."/>
+        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Enyhe korrózió a kábelezésen és az elektromos csatlakozókon. A megnövekedett érintkezési ellenállás időnkénti fényvillogást, instabil feszültségellátást és nehéz motorindítást okoz. Szivárgó áram meríti az akkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Közepes korrózió a kábelezésen és az elektromos csatlakozókon. Az érintkezési veszteségek gyakori fényvillogást, instabil feszültségellátást, nehéz motorindítást és esetleges motorleállásokat okoznak. Szivárgó áram meríti az akkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Súlyos korrózió a kábelezésen és az elektromos csatlakozókon. A kritikus áramkörök ellátása instabil, a világítás teljesen kieshet, a motor nyomatéka csökken, motorleállások valószínűek, az indítás pedig megbízhatatlan. Szivárgó áram meríti az akkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Az indítóvezérlő áramkör súlyos kábelkorrózió miatti meghibásodása. A világítás nem működik, és a motor indítása lehetetlen. Szivárgó áram meríti az akkumulátort, amikor a gép áll."/>
         <text name="rms_breakdowns_corroded_wiring_stage4_message" text="Indítóáramkör-hiba"/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage1_description" text="Enyhe korrózió a kábelezésen és az elektromos csatlakozókon. A megnövekedett érintkezési ellenállás időnkénti fényvillogást és instabil feszültségellátást okoz. Szivárgó áram meríti a segédakkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage2_description" text="Közepes korrózió a kábelezésen és az elektromos csatlakozókon. Az érintkezési veszteségek gyakori fényvillogást, instabil feszültségellátást és esetleges kimaradásokat okoznak. Szivárgó áram meríti a segédakkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage3_description" text="Súlyos korrózió a kábelezésen és az elektromos csatlakozókon. A kritikus áramkörök ellátása instabil, a világítás teljesen kieshet, a teljesítmény csökken, és kimaradások valószínűek. Szivárgó áram meríti a segédakkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_description" text="Kritikus korrózió a kábelezésen és az elektromos csatlakozókon. A világítás nem működik, és a gép nem indul el. Szivárgó áram meríti a segédakkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_message" text="A kábelezés és a csatlakozók hibája"/>
         <text name="rms_breakdowns_coolant_leak_stage1_description" text="Enyhe hűtőfolyadék-szivárgás. A hűtőrendszer hatékonysága enyhén csökkent."/>
         <text name="rms_breakdowns_coolant_leak_stage2_description" text="Közepes hűtőfolyadék-szivárgás. A hűtési teljesítmény érezhetően csökken, és a motor hőmérséklete gyorsabban emelkedik."/>
         <text name="rms_breakdowns_coolant_leak_stage3_description" text="Súlyos hűtőfolyadék-szivárgás. A hűtési teljesítmény jelentősen csökkent, és a túlmelegedés kockázata magas."/>
         <text name="rms_breakdowns_coolant_leak_stage4_description" text="A hűtőrendszer kritikusan meghibásodott. Nincs elegendő hűtőfolyadék a motor biztonságos működéséhez."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Enyhe CVT lánckopás. Terhelés alatt enyhe csúszás jelentkezik, ami kissé csökkenti az átviteli hatékonyságot."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Közepes CVT lánckopás. A csúszás terhelés alatt észrevehetővé válik, és az áttétel kevésbé pontosan tartható."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Súlyos CVT lánckopás. A csúszás jelentős, a hatékonyság erősen csökken, és a váltó nehezen tartja a kért áttételt."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Kritikus CVT lánckopás. A váltó már nem továbbítja megfelelően a nyomatékot, a jármű gyakorlatilag használhatatlanná válik."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="CVT-lánc meghibásodása"/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="A váltó hatásfoka terhelés alatt kissé csökken."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="A hatásfok terhelés alatt jelentősen csökken, az áttétel kevésbé stabil."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="A váltó nehezen adja át a hajtóerőt és tartja a kért áttételt."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="A váltó már nem adja át megbízhatóan a hajtóerőt; a haladás szinte lehetetlen."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Váltóhiba"/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="A CVT váltó meghibásodásának korai jelei észlelhetők. Átvizsgálás és javítás szükséges."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="A CVT váltó meghibásodása súlyosbodik. A további használat vészüzemhez vezethet."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Kritikus CVT váltókárosodás. A váltó vészüzemben van, a jármű maximális sebessége csökkent."/>
@@ -359,6 +366,10 @@
         <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Közepes akkumulátor-szulfátosodás. A tényleges akkumulátorkapacitás jelentősen csökkent, a motor indítása nehezebb."/>
         <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Súlyos akkumulátor-szulfátosodás. A használható kapacitás kritikusan alacsony, az indítózási teljesítmény instabil."/>
         <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Kritikus akkumulátor-szulfátosodás. A tényleges kapacitás szinte megszűnt, az indítózási teljesítmény nem elegendő a megbízható motorindításhoz."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="A segédakkumulátor enyhe szulfátosodása. A tényleges akkumulátorkapacitás csökkent, így terhelés alatt kisebb az elektromos tartalék."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="A segédakkumulátor közepes szulfátosodása. A tényleges akkumulátorkapacitás jelentősen csökkent, az elektromos tartalék gyorsabban kimerül."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="A segédakkumulátor súlyos szulfátosodása. A használható kapacitás kritikusan alacsony, az elektromos tartalék nagyon gyorsan kimerül."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="A segédakkumulátor kritikus szulfátosodása. A tényleges kapacitás szinte megszűnt, és már nem elegendő a megbízható indításhoz."/>
         <text name="rms_breakdowns_brake_malfunction_stage1_description" text="Kopott fékbetétek. A fékhatás enyhén csökkent."/>
         <text name="rms_breakdowns_brake_malfunction_stage2_description" text="Szivárgó fékfolyadék vagy kopott féktárcsák. A fékút érezhetően megnőtt."/>
         <text name="rms_breakdowns_brake_malfunction_stage3_description" text="Súlyos féknyomás-vesztés. A fékek nagyon gyengék és megbízhatatlanok."/>
@@ -369,10 +380,63 @@
         <text name="rms_breakdowns_bearing_wear_stage3_description" text="Súlyos csapágykopás. A súrlódás nagy, a zaj jelentős, és terhelés alatt valós a megszorulás kockázata."/>
         <text name="rms_breakdowns_bearing_wear_stage4_description" text="Kritikus csapágyhiba. A csapágyak közel állnak a teljes megszoruláshoz, és a működés lehetetlenné válik."/>
         <text name="rms_breakdowns_bearing_wear_stage4_message" text="Csapágyhiba"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Enyhe generátorszabályzó-meghibásodás. A töltőáram csökkent, emiatt romlik az akkumulátor töltési hatékonysága."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Közepes generátorszabályzó-meghibásodás. A töltés instabil és csökkent, ami gyenge akkumulátortöltést és nagyobb feszültségveszteséget okoz az elektromos rendszerben."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Súlyos generátorszabályzó-meghibásodás. A töltés erősen csökkent, a feszültségellátás instabil, az elektromos rendszer pedig jelentős veszteségekkel működik."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Teljes generátorszabályzó-hiba. Nincs akkumulátortöltés, az elektromos rendszer kizárólag a megmaradt akkumulátortartalékról működik."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Enyhe generátorszabályzó-meghibásodás. A töltőáram csökkent, emiatt romlik az akkumulátor töltési hatékonysága. Szivárgó áram meríti az akkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Közepes generátorszabályzó-meghibásodás. A töltés instabil és csökkent, ami gyenge akkumulátortöltést és nagyobb feszültségveszteséget okoz az elektromos rendszerben. Szivárgó áram meríti az akkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Súlyos generátorszabályzó-meghibásodás. A töltés erősen csökkent, a feszültségellátás instabil, az elektromos rendszer pedig jelentős veszteségekkel működik. Szivárgó áram meríti az akkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Teljes generátorszabályzó-hiba. Nincs akkumulátortöltés, az elektromos rendszer kizárólag a megmaradt akkumulátortartalékról működik. Szivárgó áram meríti az akkumulátort, amikor a gép áll."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="A villanymotor csapágyainak enyhe kopása. Halk zaj jelentkezik, és a fogyasztás kissé megnő."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="A villanymotor csapágyainak közepes kopása. A zaj jól hallható, a fogyasztás megnő, és a teljesítmény enyhén csökken."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="A villanymotor csapágyainak súlyos kopása. A zaj erős, a motor melegszik, és a teljesítmény érezhetően csökken."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="A villanymotor csapágyainak kritikus hibája. A motor megszorult, és a gép nem tud tovább haladni."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_message" text="A villanymotor csapágyainak hibája"/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="A villanymotor tekercseinek enyhe károsodása. A teljesítmény enyhén csökken, és a motor jobban melegszik."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="A villanymotor tekercseinek közepes károsodása. A teljesítmény érezhetően csökken, a motor melegszik, és a fogyasztás megnő."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="A villanymotor tekercseinek súlyos károsodása. A teljesítményvesztés jelentős, a motor erősen melegszik, és kimaradások léphetnek fel."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="A villanymotor tekercseinek kritikus hibája. A motor zárlatos, és nem tud tovább működni."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_message" text="A villanymotor tekercseinek hibája"/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Enyhe motorhelyzetérzékelő-meghibásodás. Terhelés alatt rövid rángatás jelentkezik."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Közepes motorhelyzetérzékelő-meghibásodás. A rángatás gyakori, és a teljesítmény csökken."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Súlyos motorhelyzetérzékelő-meghibásodás. A rángatás heves, a teljesítmény visszaesik, és kimaradások lépnek fel."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Teljes motorhelyzetérzékelő-hiba. A motor nem vezérelhető, és a gép nem indítható be."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_message" text="Motorhelyzetérzékelő-hiba"/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Enyhe invertermeghibásodás. A motorteljesítmény enyhén csökkent."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Közepes invertermeghibásodás. A teljesítményvesztés érezhető, és a fogyasztás megnő."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Súlyos invertermeghibásodás. A teljesítményvesztés jelentős, és kimaradások léphetnek fel."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Teljes inverterhiba. A motor nem kap áramot, és a gép nem indítható be."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_message" text="Inverterhiba"/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Enyhe meghibásodás a feszültségátalakítóban. A segédakkumulátor rosszabbul töltődik."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Közepes meghibásodás a feszültségátalakítóban. A segédakkumulátor töltése csökkent és ingadozó."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Súlyos meghibásodás a feszültségátalakítóban. A segédakkumulátor alig töltődik, és menet közben lemerül."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Teljes hiba a feszültségátalakítóban. Nincs akkumulátortöltés, a gép kizárólag a megmaradt tartalékról működik."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Enyhe meghibásodás a fedélzeti töltőben. A töltés a töltőállomáson kissé lassabb."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Közepes meghibásodás a fedélzeti töltőben. A töltés a töltőállomáson érezhetően lassabb."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Súlyos meghibásodás a fedélzeti töltőben. A töltés a töltőállomáson nagyon lassú."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Teljes hiba a fedélzeti töltőben. A hajtóakkumulátor nem tölthető tovább."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_message" text="A fedélzeti töltő nem működik: a töltés nem lehetséges"/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="A nagyfeszültségű kábelezés enyhe szigetelésvesztése. Figyelmeztetés jelenik meg, más hatás nélkül."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="A nagyfeszültségű kábelezés közepes szigetelésvesztése. A teljesítmény biztonsági okból csökken."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="A nagyfeszültségű kábelezés súlyos szigetelésvesztése. A teljesítmény erősen csökken, és kimaradások lépnek fel."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="A nagyfeszültségű kábelezés kritikus szigetelésvesztése. A gép biztonsági okból nem indul el."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_message" text="A nagyfeszültségű kábelezés szigetelésvesztése"/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="A hajtóakkumulátor celláinak enyhe hibája. A hatótáv enyhén csökken."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="A hajtóakkumulátor celláinak közepes hibája. A hatótáv érezhetően csökken, és a teljesítmény korlátozott."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="A hajtóakkumulátor celláinak súlyos hibája. A hatótáv és a teljesítmény visszaesik, és kimaradások léphetnek fel."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="A hajtóakkumulátor kritikus hibája. A gép nem kapcsolható be."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_message" text="A hajtóakkumulátor hibája"/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="A nagyfeszültségű kontaktor enyhe kopása. Ritkán áramkimaradás lép fel."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="A nagyfeszültségű kontaktor közepes kopása. Az áramkimaradások rendszeressé válnak."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="A nagyfeszültségű kontaktor súlyos kopása. Az áramkimaradások gyakoriak."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="A nagyfeszültségű kontaktor kritikus hibája. A hajtóakkumulátor nem látja el árammal a gépet, amely nem indul el."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_message" text="A nagyfeszültségű kontaktor hibája"/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Enyhe hűtőfolyadékszivattyú-meghibásodás. A folyadék rosszabbul kering, és a hőmérséklet kissé jobban emelkedik."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Közepes hűtőfolyadékszivattyú-meghibásodás. A hűtés érezhetően csökkent."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Súlyos hűtőfolyadékszivattyú-meghibásodás. A hűtés erősen csökkent, és terhelés alatt valószínű a túlmelegedés."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Teljes hűtőfolyadékszivattyú-hiba. A folyadék alig kering, és a gép gyorsan túlmelegszik."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="A reduktor fogaskerekeinek és csapágyainak enyhe kopása. Menet közben halk zaj jelentkezik."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="A reduktor fogaskerekeinek és csapágyainak közepes kopása. A zaj jól hallható, és a fogyasztás megnő."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="A reduktor fogaskerekeinek és csapágyainak súlyos kopása. A zaj erős, a reduktor melegszik, és a kerekeken leadott teljesítmény csökken."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="A reduktor kritikus hibája. Megszorult, és a gép nem tud tovább haladni."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_message" text="A reduktor hibája"/>
         <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="Enyhe szelepvezérlés-meghibásodás. A motor nyomatéka enyhén csökkent, az üzemanyag-fogyasztás nőtt, és rendellenes szelepvezérlési zaj hallható."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="Közepes szelepvezérlés-meghibásodás. A motor nyomatéka érezhetően csökkent, a fogyasztás nőtt, a szelepvezérlés zaja erősebb, és terhelés alatt akadozás jelentkezhet."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="Súlyos szelepvezérlés-meghibásodás. A motor nyomatéka erősen csökkent, az üzemanyag-fogyasztás magas, a mechanikai zaj erős, és gyújtáskimaradás vagy motorleállás is előfordulhat."/>
@@ -403,11 +467,11 @@
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Közepes ventilátorkuplung-hiba. A ventilátor bekapcsolása szabálytalan, és a hűtés hatékonysága érezhetően csökken."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Súlyos ventilátorkuplung-hiba. A ventilátor már nem biztosít elegendő légáramlást, és a motor könnyebben túlmelegszik."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Kritikus ventilátorkuplung-hiba. A ventilátor már nem tudja biztosítani a szükséges hűtést."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Enyhe CVT hidraulikus vezérlőszelep-hiba. A váltó reakciója kissé lassabb és kevésbé pontos."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Közepes CVT hidraulikus vezérlőszelep-hiba. A nyomás instabil, az áttételváltás lelassul, és a hatékonyság érezhetően csökken."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Súlyos CVT hidraulikus vezérlőszelep-hiba. A nyomás nagyon szabálytalan, a váltó rosszul reagál, és az átvitt teljesítmény erősen csökken."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Kritikus CVT hidraulikus vezérlőszelep-hiba. A nyomás már nem szabályozható, és a váltó használhatatlanná válik."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="A CVT hidraulikus vezérlőszelepének hibája"/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Az áttételvezérlés lassabban és pontatlanabbul reagál."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Az áttétel szabálytalanul változik, a vezérlés rosszul reagál."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Az áttételvezérlés súlyosan zavart, az átadott hajtóerő csökken."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Az áttételvezérlés meghibásodott; a váltó szinte használhatatlan."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Áttételvezérlési hiba"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Enyhe belső szivárgás a hidraulikahengerben. A felemelt munkagép terhelés alatt lassan lesüllyed."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Közepes belső szivárgás a hidraulikahengerben. Az önkéntelen süllyedés jól észrevehető, és a teher növekedésével gyorsul."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Súlyos belső szivárgás a hidraulikahengerben. A nehéz munkagépek már nem tartják megbízhatóan a helyzetüket."/>
@@ -467,12 +531,12 @@
         <text name="rms_spec_months_ago_unit" text="hónapja"/>
         <text name="rms_spec_month_ago_one" text="hónapja"/>
         <text name="rms_spec_months_ago_format" text="%s %s"/>
+        <text name="rms_spec_work_hours_ago_format" text="%s %s üzemidővel ezelőtt"/>
+        <text name="rms_spec_work_under_hour_ago" text="max. 1 h üzemidővel ezelőtt"/>
         <text name="rms_spec_maintenance_complete_notification" text="Eljárás befejezve: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Eljárás megszakítva: %s"/>
         <text name="rms_spec_maintenance_minimal" text="Minimális"/>
-        <text name="rms_spec_maintenance_standard" text="Normál"/>
-        <text name="rms_spec_maintenance_extended" text="Bővített"/>
-        <text name="rms_spec_maintenance_preventive" text="Megelőző"/>
+        <text name="rms_spec_maintenance_level" text="%s karbantartás"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s eddig: %s"/>
         <text name="rms_spec_workshop_dealer" text="Kereskedő"/>
         <text name="rms_spec_workshop_own" text="Saját"/>
@@ -485,6 +549,8 @@
         <text name="rms_spec_system_chassis" text="Alváz"/>
         <text name="rms_spec_system_fuel" text="Üzemanyagrendszer"/>
         <text name="rms_spec_system_pto" text="Teljesítményleadó tengely"/>
+        <text name="rms_spec_system_electric_motor" text="Villanymotor"/>
+        <text name="rms_spec_system_traction_battery" text="Hajtóakkumulátor"/>
         <text name="rms_spec_state_ready" text="Kész"/>
         <text name="rms_spec_state_repair" text="Javítás"/>
         <text name="rms_spec_state_refill" text="Utántöltés"/>
@@ -493,24 +559,17 @@
         <text name="rms_spec_state_inspection" text="Átvizsgálás"/>
         <text name="rms_spec_state_maintenance" text="Karbantartás"/>
         <text name="rms_spec_state_overhaul" text="Nagyjavítás"/>
+        <text name="rms_spec_state_bodywork" text="Fényezés"/>
         <text name="rms_spec_state_overdue" text="Lejárt"/>
         <text name="rms_spec_state_optimal" text="Optimális"/>
         <text name="rms_spec_state_broken" text="Meghibásodott"/>
         <text name="rms_spec_state_bad" text="Rossz"/>
-        <text name="rms_spec_state_budget" text="Olcsó"/>
         <text name="rms_spec_state_excellent" text="Kiváló"/>
         <text name="rms_spec_state_good" text="Jó"/>
         <text name="rms_spec_state_service_good" text="Jó"/>
         <text name="rms_spec_state_normal" text="Normál"/>
         <text name="rms_spec_state_terrible" text="Nagyon rossz"/>
         <text name="rms_spec_state_unknown" text="Ismeretlen"/>
-        <text name="rms_spec_state_legendary" text="Legendás"/>
-        <text name="rms_spec_state_low" text="Alacsony"/>
-        <text name="rms_spec_state_premium" text="Prémium"/>
-        <text name="rms_spec_state_standard" text="Normál"/>
-        <text name="rms_spec_state_average" text="Átlagos"/>
-        <text name="rms_spec_state_high" text="Magas"/>
-        <text name="rms_spec_state_workhorse" text="Strapabíró"/>
         <text name="rms_spec_part_types_used" text="Használt"/>
         <text name="rms_spec_part_types_aftermarket" text="Utángyártott"/>
         <text name="rms_spec_part_types_oem" text="Eredeti"/>
@@ -531,36 +590,108 @@
         <text name="rms_option_menu_option_two_title_repair" text="Pótalkatrészek minősége"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Nagyjavításra váró rendszer"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Ha az eljárás meghibásodásokat tár fel, automatikusan normál javítás következik eredeti alkatrészekkel."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="A javítás után automatikusan normál karbantartás következik eredeti fogyóanyagokkal."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Részleges nagyjavítás: jó állapotba hozza a kiválasztott rendszert, kijavítja a javítható meghibásodásokat, és szükség esetén lecseréli a hozzá tartozó folyadékot."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Normál nagyjavítás: jó állapotba hozza az összes rendszert, kijavítja a javítható meghibásodásokat, lecseréli a folyadékokat és megújítja a karbantartást."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Teljes nagyjavítás: újszerű állapotba hozza az összes rendszert, kijavítja a javítható meghibásodásokat, lecseréli a folyadékokat és megújítja a karbantartást."/>
+        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="A javítás után automatikusan az ajánlott karbantartás következik eredeti fogyóanyagokkal."/>
         <text name="rms_option_menu_price_text" text="Ár"/>
-        <text name="rms_option_menu_part_used_description" text="Használt alkatrészek: legalacsonyabb költség, 50% későbbi hibakockázattal."/>
-        <text name="rms_option_menu_part_aftermarket_description" text="Utángyártott alkatrészek: alacsonyabb költség, 33% későbbi hibakockázattal."/>
-        <text name="rms_option_menu_part_oem_description" text="Eredeti gyártói alkatrészek: normál ár, 10% későbbi hibakockázattal."/>
-        <text name="rms_option_menu_part_premium_description" text="Prémium alkatrészek: 20% felár, az alkatrész által okozott hibakockázat nélkül."/>
-        <text name="rms_option_menu_consumable_used_description" text="Gazdaságos fogyóanyagok: legalacsonyabb költség, 50% későbbi hibakockázattal."/>
-        <text name="rms_option_menu_consumable_aftermarket_description" text="Utángyártott fogyóanyagok: alacsonyabb költség, 33% későbbi hibakockázattal."/>
-        <text name="rms_option_menu_consumable_oem_description" text="Eredeti gyártói fogyóanyagok: normál ár, 10% későbbi hibakockázattal."/>
-        <text name="rms_option_menu_consumable_premium_description" text="Prémium fogyóanyagok: 20% felár, a fogyóanyagok által okozott hibakockázat nélkül."/>
         <text name="rms_option_menu_perform_repair" text="Automatikus javítás"/>
         <text name="rms_option_menu_perform_maintenance" text="Automatikus karbantartás"/>
         <text name="rms_option_menu_warranty_repair_text" text="Garanciális javítás"/>
-        <text name="rms_warranty_dealer_info" text="Márkakereskedői garancia saját járműre 12 hónap és 20 üzemóra alatt: standard javítás, eredeti alkatrészek és szükséges folyadékok."/>
+        <text name="rms_option_menu_lease_service_text" text="A lízing tartalmazza"/>
         <text name="rms_option_menu_duration_text" text="Időtartam"/>
         <text name="rms_option_menu_duration_instant" text="Azonnali"/>
         <text name="rms_option_menu_finish_time_text" text="Befejezési idő"/>
         <text name="rms_option_menu_start_text" text="Indítás"/>
-        <text name="rms_option_menu_inspection_visual_description" text="Vizuális átvizsgálás: gyors és gazdaságos, csak a már aktív meghibásodásokat keresi, csökkentett felismerési képességgel. A jelentés nem mutat részletes alkatrészállapotot."/>
-        <text name="rms_option_menu_inspection_standard_description" text="Normál átvizsgálás: normál felismerési képességgel keresi az aktív meghibásodásokat, és részletes állapotértékek nélküli általános jelentést készít."/>
-        <text name="rms_option_menu_inspection_complete_description" text="Teljes átvizsgálás: normál felismerési képességgel keresi az aktív és lehetséges meghibásodásokat, majd részletes alkatrészállapotot tartalmazó teljes jelentést készít."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="Normál karbantartás: lecseréli a motorolajat az olaj- és üzemanyagszűrővel együtt, szükség szerint feltölti a többi kört, kitisztítja a hűtőt, és kifújja a levegőszűrőt."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="Bővített karbantartás: a normál karbantartás, továbbá a váltó- és hidraulikaolaj cseréje új szűrővel. A levegőszűrőt is kicseréli, és feltölti a hűtőfolyadékot."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="Megelőző karbantartás: minden olajat és a hűtőfolyadékot lecseréli a szűrőikkel együtt, és új levegőszűrőt szerel be. Emellett legfeljebb három elsődleges rendszer mechanikai igénybevételét csökkenti."/>
-        <text name="rms_option_menu_repair_type_fix_description" text="Ideiglenes javítás: gyorsan és olcsón visszaállítja a gépet üzembe a meghibásodás megszüntetése nélkül. A meghibásodás korlátozott idő után visszatér."/>
-        <text name="rms_option_menu_repair_type_replacement_description" text="Normál javítás: megszünteti a meghibásodást, és kicseréli a meghibásodott alkatrészt. Az érintett rendszer mechanikai igénybevétele részben csökken."/>
-        <text name="rms_option_menu_repair_type_advanced_description" text="Alapos javítás: megszünteti a meghibásodást, kicseréli a meghibásodott alkatrészt, és lenullázza az érintett rendszerben felhalmozódott mechanikai igénybevételt."/>
+        <text name="rms_ws_levels_recommended_for" text="Ajánlott ehhez a géphez"/>
+        <text name="rms_ws_levels_interval" text="Időköz: %s"/>
+        <text name="rms_ws_levels_duration" text="%s ó %s p"/>
+        <text name="rms_ws_levels_duration_hours" text="%s ó"/>
+        <text name="rms_ws_levels_duration_minutes" text="%s p"/>
+        <text name="rms_ws_levels_drain" text="Csere"/>
+        <text name="rms_ws_levels_top_up" text="Utántöltés"/>
+        <text name="rms_ws_levels_blown" text="Kifújva"/>
+        <text name="rms_ws_levels_new" text="Új"/>
+        <text name="rms_ws_levels_new_plural" text="Újak"/>
+        <text name="rms_ws_levels_filters" text="Szűrők"/>
+        <text name="rms_ws_levels_filters_all" text="Olaj, üzemanyag és hidraulika"/>
+        <text name="rms_ws_levels_filters_engine" text="Olaj és üzemanyag"/>
+        <text name="rms_ws_levels_filters_hydraulic" text="Hidraulika"/>
+        <text name="rms_ws_levels_checks" text="Beállítások és ellenőrzések"/>
+        <text name="rms_ws_levels_checks_detail" text="Szelepek, befecskendezők, termosztát"/>
+        <text name="rms_ws_levels_checks_done" text="Elvégezve"/>
+        <text name="rms_ws_levels_fault_search" text="Hibakeresés"/>
+        <text name="rms_ws_levels_fault_search_detail" text="Mint egy normál átvizsgálás"/>
+        <text name="rms_ws_levels_fault_search_mobile_detail" text="Hibakódok kiolvasása nélkül"/>
+        <text name="rms_ws_levels_included" text="Tartalmazza"/>
+        <text name="rms_ws_levels_mechanical" text="Mechanikai"/>
+        <text name="rms_ws_levels_every_level" text="Minden szinten: hűtőtisztítás és kenés."/>
+        <text name="rms_ws_quality_risk" text="Hibakockázat"/>
+        <text name="rms_ws_quality_reference" text="Referenciaár"/>
+        <text name="rms_ws_quality_delta" text="%s az eredetihez"/>
+        <text name="rms_ws_repair_row_faults" text="Kezelt meghibásodások"/>
+        <text name="rms_ws_repair_row_faults_detail" text="A kijelöltek közül"/>
+        <text name="rms_ws_repair_faults_all" text="Mind"/>
+        <text name="rms_ws_table_count" text="%s / %s"/>
+        <text name="rms_ws_repair_row_fault" text="Meghibásodás"/>
+        <text name="rms_ws_repair_row_fault_detail" text="Az eljárás után"/>
+        <text name="rms_ws_repair_fault_returns" text="Visszatér"/>
+        <text name="rms_ws_repair_fault_removed" text="Megszűnt"/>
+        <text name="rms_ws_repair_row_part" text="Hibás alkatrész"/>
+        <text name="rms_ws_repair_row_part_detail" text="A meghibásodás oka"/>
+        <text name="rms_ws_repair_part_replaced" text="Kicserélve"/>
+        <text name="rms_ws_repair_row_stress" text="Mechanikai igénybevétel"/>
+        <text name="rms_ws_repair_row_stress_detail" text="A rendszerben felhalmozódott"/>
+        <text name="rms_ws_repair_stress_cleared" text="Lenullázva"/>
+        <text name="rms_ws_repair_row_quality" text="Alkatrészminőség"/>
+        <text name="rms_ws_repair_row_quality_detail" text="Az alábbi kártyákon választható"/>
+        <text name="rms_ws_repair_quality_choice" text="Választható"/>
+        <text name="rms_ws_warranty_title" text="Kereskedői garancia"/>
+        <text name="rms_ws_warranty_covered" text="Érvényes"/>
+        <text name="rms_ws_warranty_not_covered" text="Nem érvényes"/>
+        <text name="rms_ws_warranty_free_here" text="Ingyenes normál javítás eredeti alkatrészekkel"/>
+        <text name="rms_ws_warranty_free_dealer" text="Ingyenes javítás a kereskedőnél"/>
+        <text name="rms_ws_warranty_terms" text="Saját jármű, 12 hónap és 20 üzemóra alatt"/>
+        <text name="rms_ws_badge_warranty" text="Garancia"/>
+        <text name="rms_ws_overhaul_row_systems" text="Kezelt rendszerek"/>
+        <text name="rms_ws_overhaul_row_systems_detail" text="Rendbe hozva"/>
+        <text name="rms_ws_overhaul_systems_one" text="Egy választható"/>
+        <text name="rms_ws_overhaul_systems_all" text="Mind"/>
+        <text name="rms_ws_overhaul_row_condition" text="Állapot a nagyjavítás után"/>
+        <text name="rms_ws_overhaul_row_condition_detail" text="Legalább"/>
+        <text name="rms_ws_overhaul_row_treated_detail" text="A kezelt rendszerekben"/>
+        <text name="rms_ws_overhaul_row_faults" text="Meghibásodások"/>
+        <text name="rms_ws_overhaul_row_faults_detail" text="Azonosítva vagy sem"/>
+        <text name="rms_ws_overhaul_faults_repaired" text="Kijavítva"/>
+        <text name="rms_ws_overhaul_row_fluids" text="Folyadékok"/>
+        <text name="rms_ws_overhaul_row_fluids_detail" text="Leeresztés és feltöltés"/>
+        <text name="rms_ws_overhaul_fluids_all" text="Mind"/>
+        <text name="rms_ws_overhaul_fluids_own" text="Saját köre"/>
+        <text name="rms_ws_overhaul_filters_both" text="Üzemanyag és hidraulika"/>
+        <text name="rms_ws_overhaul_filters_fuel" text="Üzemanyag"/>
+        <text name="rms_ws_overhaul_worn" text="50% állapot alatti rendszerek"/>
+        <text name="rms_ws_paint_row_extent" text="Javított fényezési sérülések"/>
+        <text name="rms_ws_paint_row_extent_detail" text="A sérült fényezés aránya"/>
+        <text name="rms_ws_paint_extent_up_to" text="Legfeljebb %s"/>
+        <text name="rms_ws_paint_extent_all" text="Mind"/>
+        <text name="rms_ws_paint_row_colors" text="Színek"/>
+        <text name="rms_ws_paint_row_colors_detail" text="Ehhez a járműhöz kínált"/>
+        <text name="rms_ws_paint_colors_kept" text="Megmaradnak"/>
+        <text name="rms_ws_paint_colors_choice" text="Választható"/>
+        <text name="rms_ws_paint_row_workshop" text="Műhely"/>
+        <text name="rms_ws_paint_row_workshop_detail" text="Hol végzik"/>
+        <text name="rms_ws_inspection_mechanical" text="Mechanikai meghibásodások"/>
+        <text name="rms_ws_inspection_mechanical_detail" text="Szemrevételezés és funkciópróba"/>
+        <text name="rms_ws_inspection_electronic" text="Elektronikai meghibásodások"/>
+        <text name="rms_ws_inspection_electronic_detail" text="Diagnosztikai műszerrel kiolvasott hibakódok"/>
+        <text name="rms_ws_inspection_dormant" text="Rejtett hibák"/>
+        <text name="rms_ws_inspection_dormant_detail" text="Hibás alkatrész, ideiglenes javítás"/>
+        <text name="rms_ws_inspection_report" text="Jelentés"/>
+        <text name="rms_ws_inspection_report_detail" text="A gép és minden rendszer állapota"/>
+        <text name="rms_ws_inspection_risk_detail" text="A próbák és mérések alapján"/>
+        <text name="rms_ws_inspection_ratings" text="Minősítések"/>
+        <text name="rms_ws_inspection_measures" text="Mért értékek"/>
+        <text name="rms_ws_inspection_assessed" text="Értékelve"/>
+        <text name="rms_ws_inspection_maintenance_note" text="A karbantartás is elvégzi ezt a hibakeresést, akárcsak a normál átvizsgálás."/>
+        <text name="rms_ws_quote_title" text="Árajánlat részletei"/>
+        <text name="rms_ws_quote_oil_filter" text="Olajszűrő"/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="A következő eljárás külön kerül felszámításra. A szükséges folyadékokat az induláskor biztosítják vagy veszik ki a készletből."/>
         <text name="rms_bodywork_touchup" text="Fényezés javítása"/>
         <text name="rms_bodywork_full" text="Teljes újrafényezés"/>
@@ -570,25 +701,24 @@
         <text name="rms_bodywork_ineligible" text="Az eljárás ehhez a járműhöz vagy ebben a műhelyben nem érhető el"/>
         <text name="rms_bodywork_no_wear" text="Nincs javítható fényezési sérülés"/>
         <text name="rms_bodywork_wear_limit" text="Fényezésjavítás legfeljebb 30% sérülésig érhető el"/>
-        <text name="rms_bodywork_touchup_description" text="Kijavítja a kisebb fényezési sérüléseket. A jelenlegi színek megmaradnak."/>
-        <text name="rms_bodywork_full_description" text="Megújítja a fényezést. Válassz a jármű elérhető színei közül, vagy tartsd meg a jelenlegieket."/>
         <text name="rms_bodywork_no_colors" text="Ehhez a járműhöz nem választható más szín. A jelenlegi színek megmaradnak."/>
         <text name="rms_bodywork_unavailable_title" text="Az eljárás nem érhető el"/>
+        <text name="rms_bodywork_dealer_only" text="Teljes újrafényezés csak a kereskedőnél"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Átvizsgálási jelentés"/>
         <text name="rms_report_vehicle_specs_title" text="Jármű adatai"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="Generátor maximális áramerőssége"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="Akkumulátor töltöttsége"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="Akkumulátor kapacitása"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_charge" text="Segédakkumulátor töltöttsége"/>
+        <text name="rms_report_vehicle_spec_battery_24v_charge" text="24 V-os akkumulátor töltöttsége"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_capacity" text="Segédakkumulátor kapacitása"/>
+        <text name="rms_report_vehicle_spec_battery_24v_capacity" text="24 V-os akkumulátor kapacitása"/>
+        <text name="rms_report_vehicle_spec_traction_battery_capacity" text="Hajtóakkumulátor kapacitása"/>
         <text name="rms_report_detected_breakdowns_title" text="Észlelt meghibásodások"/>
         <text name="rms_report_overall_assessment_title" text="Általános állapotértékelés"/>
         <text name="rms_report_overall_assessment_condition" text="Állapotszint"/>
-        <text name="rms_report_overall_assessment_crit_fail_risk" text="Kritikus meghibásodás kockázata"/>
         <text name="rms_report_overall_assessment_service" text="Karbantartási szint"/>
-        <text name="rms_report_overall_assessment_mtbf" text="Meghibásodások közötti átlagos idő (h)"/>
-        <text name="rms_report_overall_assessment_rul" text="Hátralévő élettartam (h)"/>
-        <text name="rms_report_overall_assessment_wear_rate" text="Kopási ütem (%/h)"/>
-        <text name="rms_report_overall_assessment_nominal_wear_rate" text="Névleges kopási ütem (%/h)"/>
         <text name="rms_report_recommendations_title" text="Következtetés és ajánlások"/>
         <text name="rms_report_recommendation_repair_active_breakdowns" text="Aktív meghibásodások észlelve. Az összes aktív meghibásodás normál javítása ajánlott."/>
         <text name="rms_report_recommendation_repeat_maintenance" text="Hibás fogyóanyagok észlelve. Ismételd meg a karbantartást a hibás elemek cseréjéhez."/>
@@ -597,7 +727,7 @@
         <text name="rms_report_recommendation_service_due" text="A karbantartási intervallum elérte a határt. Végezz karbantartást."/>
         <text name="rms_report_recommendation_service_urgent" text="A karbantartási intervallum lejárt. Sürgősen végezz karbantartást!"/>
         <text name="rms_report_recommendation_system_overhaul" text="Kritikus állapotromlás észlelve ebben a rendszerben: %s. Végezz részleges nagyjavítást ezen a rendszeren."/>
-        <text name="rms_report_recommendation_system_preventive_maintenance" text="Emelkedett meghibásodási kockázat észlelve ebben a rendszerben: %s. Végezz megelőző karbantartást a hiba kockázatának csökkentésére."/>
+        <text name="rms_report_recommendation_system_preventive_maintenance" text="Emelkedett meghibásodási kockázat észlelve ebben a rendszerben: %s. A(z) %s karbantartás újra beállítja, és csökkenti a kockázatot."/>
         <text name="rms_report_recommendation_overhaul" text="Az alapvető alkatrészek romlása észlelve. Végezz nagyjavítást."/>
         <text name="rms_report_recommendation_operating_conditions" text="Intenzív túlhasználat jelei észlelve. Javíts az üzemeltetési körülményeken."/>
         <text name="rms_report_recommendation_all_ok" text="Nincs különösebb ajánlás. A jármű üzemképes állapotban van."/>
@@ -607,50 +737,74 @@
         <text name="rms_report_state_degraded" text="Leromlott"/>
         <text name="rms_report_state_impaired" text="Korlátozott"/>
         <text name="rms_report_state_critical" text="Kritikus"/>
-        <text name="rms_report_stress_absent" text="Nincs"/>
         <text name="rms_report_stress_low" text="Alacsony"/>
         <text name="rms_report_stress_moderate" text="Közepes"/>
-        <text name="rms_report_stress_elevated" text="Emelkedett"/>
         <text name="rms_report_stress_high" text="Nagyon magas"/>
         <text name="rms_report_system_condition_title" text="Rendszerállapot"/>
         <text name="rms_report_breakdown_risk_title" text="Meghibásodási kockázat"/>
+        <text name="rms_report_wear_title" text="Kopás a normálishoz képest"/>
+        <text name="rms_report_wear_normal" text="Normális"/>
+        <text name="rms_report_wear_no_cause" text="Nincs jelentős ok"/>
+        <text name="rms_report_wear_percent" text="+%s%%"/>
+        <text name="rms_report_wear_air_filter" text="Eltömődött légszűrő"/>
+        <text name="rms_report_wear_pull_overload" text="Vonóerő-túlterhelés"/>
+        <text name="rms_report_wear_heavy_lift" text="Nehéz terhek emelése"/>
+        <text name="rms_report_wear_hydraulic_use" text="Hidraulika használatban"/>
+        <text name="rms_report_wear_cold_hydraulic_oil" text="Hideg hidraulikaolaj"/>
+        <text name="rms_report_wear_hot_hydraulic_oil" text="Hidraulikaolaj túlmelegedése"/>
+        <text name="rms_report_wear_vibration" text="Rezgések"/>
+        <text name="rms_report_wear_hydraulic_filter_bypass" text="Eltömődött hidraulikaszűrő"/>
+        <text name="rms_report_wear_lights" text="Bekapcsolt világítás"/>
+        <text name="rms_report_wear_braking" text="Fékezés nagy teherrel"/>
+        <text name="rms_report_wear_terrain_impact" text="Terepi ütések"/>
+        <text name="rms_report_wear_cold_fuel" text="Hideg üzemanyag"/>
+        <text name="rms_report_wear_full_injection" text="Befecskendezés teljes terhelésen"/>
+        <text name="rms_report_wear_deep_discharge" text="Mélykisütött akkumulátor"/>
+        <text name="rms_report_wear_high_draw" text="Erősen terhelt akkumulátor"/>
+        <text name="rms_report_wear_battery_heat" text="Akkumulátor túlmelegedése"/>
+        <text name="rms_report_wear_lubrication" text="Elmaradt kenés"/>
+        <text name="rms_report_wear_pto_overload" text="TLT túlterhelése"/>
         <text name="rms_report_component_title" text="Alkatrész"/>
         <text name="rms_report_system_condition_transmission" text="Váltó"/>
         <text name="rms_report_system_condition_power" text="Aktuális teljesítmény"/>
         <text name="rms_report_system_condition_brakes" text="Fékhatás"/>
         <text name="rms_report_system_condition_cooling" text="Hűtési hatékonyság"/>
         <text name="rms_report_system_condition_consumption" text="Üzemanyag-fogyasztás"/>
+        <text name="rms_report_system_condition_energy_consumption" text="Energiafogyasztás"/>
         <text name="rms_report_system_condition_hydraulic" text="Hidraulika hatékonysága"/>
         <text name="rms_report_transmission_slipping" text="Csúszik"/>
         <text name="rms_report_transmission_shifting_impaired" text="Váltás korlátozott"/>
         <text name="rms_report_transmission_shift_delay" text="Váltási késés"/>
         <text name="rms_report_transmission_gear_rejection" text="Fokozatkidobás"/>
-        <text name="rms_report_transmission_cvt_slipping" text="Szíj/lánc csúszás"/>
+        <text name="rms_report_transmission_cvt_slipping" text="Gyenge erőátvitel"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Áttétel korlátozva"/>
-        <text name="rms_report_transmission_cvt_pressure_instability" text="Nyomás instabil"/>
+        <text name="rms_report_transmission_cvt_pressure_instability" text="Egyenetlen erőátvitel"/>
         <text name="rms_report_transmission_thermostat_degraded" text="Gyengülő termosztát"/>
         <text name="rms_report_transmission_failed" text="Meghibásodott"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Zsírzópisztoly"/>
         <text name="rms_grease_gun_no_vehicle" text="Nincs jármű kenési hatótávban"/>
         <text name="rms_grease_gun_function" text="A gép kenési pontjainak megkenésére használható"/>
-        <text name="rms_grease_gun_action" text="Kenőzsír felvitele"/>
+        <text name="rms_grease_gun_action" text="Zsírozás"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: a kenés már megtörtént"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s nem igényel kenést"/>
         <text name="rms_air_blower_name" text="Légfúvó"/>
         <text name="rms_air_blower_no_vehicle" text="Nincs jármű tisztítási hatótávban"/>
         <text name="rms_air_blower_function" text="Hűtők és légszűrők tisztítására használható"/>
         <text name="rms_air_blower_action" text="Hűtő és légszűrő tisztítása"/>
+        <text name="rms_air_blower_action_short" text="Kifúvatás"/>
         <text name="rms_air_blower_already_clean" text="%s: a hűtő és a légszűrő már tiszta"/>
-        <text name="rms_air_blower_filter_requires_maintenance" text="%s: a hűtő tiszta. A légszűrő elérte a kifúvással történő tisztítás határát. A cseréjéhez műhelyben végzett karbantartás szükséges"/>
+        <text name="rms_air_blower_filter_requires_maintenance" text="%s: a hűtő tiszta. A légszűrő elérte a kifúvással történő tisztítás határát. A műhely a(z) %s karbantartástól kezdve cseréli"/>
         <text name="rms_air_blower_cleaning_not_require" text="%s nem igényel tisztítást"/>
         <text name="rms_jumper_cables_name" text="Indítókábel"/>
         <text name="rms_jumper_cables_function" text="Járműakkumulátorok összekötésére és lemerült akkumulátorú járművek indítására használható"/>
-        <text name="rms_jumper_cables_action" text="Indítókábel csatlakoztatása/leválasztása"/>
+        <text name="rms_jumper_cables_action" text="Indítókábel"/>
         <text name="rms_jumper_cables_auto_disconnected" text="Az indítókábel levált, mert az egyik jármű elindult"/>
         <text name="rms_jumper_cables_connected" text="Indítókábel csatlakoztatva ehhez: %s"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="A jármű nem alkalmas indítókábel csatlakoztatására"/>
         <text name="rms_jumper_cables_is_too_far" text="Túl nagy a távolság a következő járművek között: %s és %s"/>
+        <text name="rms_jumper_cables_electric_donor" text="Elektromos jármű nem használható belső égésű motor indítására"/>
+        <text name="rms_jumper_cables_voltage_mismatch" text="12 V-os jármű nem köthető össze 24 V-os járművel"/>
         <text name="rms_jumper_cables_both_already_connected" text="Az indítókábel már a következő két járműhöz csatlakozik: %s és %s"/>
         <text name="rms_jumper_cables_disconnected" text="Indítókábel leválasztva erről: %s"/>
         <!-- Fluid containers -->
@@ -658,13 +812,24 @@
         <text name="rms_fluid_function_engine_oil" text="Motorolaj kézi utántöltéshez"/>
         <text name="rms_fluid_function_utto" text="Hajtómű- és hidraulikaolaj kézi utántöltéshez"/>
         <text name="rms_fluid_function_coolant" text="Hűtőfolyadék kézi utántöltéshez"/>
-        <text name="rms_fluid_container_action_start" text="Folyadék áttöltése"/>
-        <text name="rms_fluid_container_action_cancel" text="Áttöltés leállítása"/>
-        <text name="rms_fluid_select_vehicle_title" text="Jármű kiválasztása"/>
-        <text name="rms_fluid_select_vehicle_prompt" text="Válaszd ki a feltöltendő járművet"/>
-        <text name="rms_fluid_select_circuit_prompt" text="Válaszd ki a feltöltendő kört"/>
-        <text name="rms_fluid_select_fluid_prompt" text="Válaszd ki a betöltendő folyadékot"/>
-        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
+        <text name="rms_fluid_pour_action" text="Betöltés: %s"/>
+        <text name="rms_fluid_level_done" text="Szint feltöltve"/>
+        <text name="rms_fluid_container_empty" text="Üres kanna"/>
+        <text name="rms_fluid_drum_empty" text="Üres hordó"/>
+        <text name="rms_fluid_container_label" text="Kanna"/>
+        <text name="rms_fluid_drum_label" text="Hordó"/>
+        <text name="rms_fluid_hand_take" text="Kézbe vétel betöltéshez"/>
+        <text name="rms_fluid_hand_carry" text="Kanna vitele"/>
+        <text name="rms_drum_pump_name" text="Akkus hordószivattyú"/>
+        <text name="rms_drum_pump_function" text="200 literes hordóra szerelve a gépek pisztollyal tölthetők fel"/>
+        <text name="rms_drum_pump_mount" text="Felszerelés a hordóra"/>
+        <text name="rms_drum_pump_take" text="Szivattyú levétele"/>
+        <text name="rms_drum_pump_nozzle_take" text="Pisztoly kézbe vétele"/>
+        <text name="rms_drum_pump_nozzle_return" text="Pisztoly visszaakasztása"/>
+        <text name="rms_drum_pump_hose_range" text="A szivattyú tömlője nem enged tovább menni.&#10;A pisztoly %.1f m múlva visszaakad a helyére!"/>
+        <text name="rms_drum_pump_machine_too_far" text="Vigye közelebb a hordót: a tömlő 4 m hosszú"/>
+        <text name="rms_drum_pump_required" text="Hordószivattyú szükséges"/>
+        <text name="rms_fluid_level_under_gauge" text="A skála alatt"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorolaj"/>
         <text name="rms_fluid_circuit_coolant" text="Hűtőfolyadék"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Váltóolaj"/>
@@ -674,17 +839,21 @@
         <text name="rms_fluid_hud_transmissionHydraulic" text="Váltó/hidraulikaolaj"/>
         <text name="rms_fluid_hud_coolant" text="Hűtőfolyadék"/>
         <text name="rms_fluid_incompatible_title" text="Nem megfelelő folyadék"/>
-        <text name="rms_fluid_incompatible_message" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a rendszer kopását, fokozhatja a melegedést vagy lassíthatja a hidraulikát. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
-        <text name="rms_fluid_error_no_vehicle" text="Négy méteren belül nincs olyan kompatibilis jármű, amely folyadékot igényelne"/>
+        <text name="rms_fluid_incompatible_message_engineOil" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a motor kopását, valamint fokozhatja a melegedését. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
+        <text name="rms_fluid_incompatible_message_coolant" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a hűtőrendszer kopását, valamint fokozhatja a motor melegedését. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
+        <text name="rms_fluid_incompatible_message_transmissionOil" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a váltó kopását, valamint fokozhatja a melegedését. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
+        <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a hidraulika kopását, fokozhatja a melegedését és lassíthatja a működését. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
+        <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a váltó és a hidraulika kopását, fokozhatja a melegedésüket és lassíthatja a hidraulikát. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
         <text name="rms_fluid_error_no_circuit" text="Ennél a járműnél nincs szükség folyadék utántöltésére"/>
         <text name="rms_fluid_error_motor_running" text="Állítsd le a motort a folyadék áttöltése előtt"/>
         <text name="rms_fluid_error_vehicle_moving" text="A járműnek állnia kell"/>
-        <text name="rms_fluid_dealer_billed" text="Kiszámlázott folyadékok"/>
+        <text name="rms_fluid_error_busy" text="Egy másik tartály már tölti ezt a kört"/>
         <text name="rms_fluid_warranty_covered" text="Garanciával fedezett folyadékok"/>
-        <text name="rms_fluid_stock_required" text="Kompatibilis edények szükségesek a műhely területén"/>
+        <text name="rms_fluid_lease_covered" text="A folyadékokat a lízing tartalmazza"/>
+        <text name="rms_fluid_stock_required" text="A műhely területén lévő edényekből"/>
+        <text name="rms_fluid_stock_missing" text="%s hiányzik a műhely területén"/>
         <text name="rms_fluid_refill_work_order" text="Folyadékszintek utántöltése"/>
         <text name="rms_fluid_refill_dealer_supply" text="A folyadékellátás szerepel az árajánlatban"/>
-        <text name="rms_fluid_refill_stock_supply" text="Helyezd a kompatibilis edényeidet a műhely területére"/>
         <text name="rms_fluid_mode_top_up" text="utántöltés"/>
         <text name="rms_fluid_mode_replace" text="csere"/>
         <text name="rms_fluid_mode_repair" text="utántöltés szivárgás után"/>
@@ -694,28 +863,24 @@
         <text name="rms_fluid_service_refused" text="Az eljárás a jelenlegi feltételek mellett nem indítható el."/>
         <text name="rms_fluid_service_consumption_failed" text="A folyadékok lefoglalása sikertelen. Az eljárás megszakítva."/>
         <!-- Inspection Dialog -->
-        <text name="rms_field_inspection_hold_to_start" text="Tartsd nyomva az ellenőrzés indításához"/>
+        <text name="rms_field_inspection_hold_to_start" text="Ellenőrzés (tartsd)"/>
         <text name="rms_field_inspection_progress" text="Ellenőrzés folyamatban"/>
         <text name="rms_field_inspection_cancelled" text="Ellenőrzés megszakítva"/>
         <text name="rms_field_inspection_engine_must_be_stopped" text="Ellenőrzés előtt állítsd le a motort"/>
         <text name="rms_inspection_dialog_title" text="Műszak előtti ellenőrzés"/>
         <text name="rms_inspection_section_fluids" text="Műszaki folyadékok"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
-        <text name="rms_inspection_section_cooling_air" text="Hűtés és légszűrő"/>
-        <text name="rms_inspection_section_lubrication" text="Kenési pontok"/>
+        <text name="rms_inspection_section_field_care" text="Szűrők, hűtő és kenés"/>
         <text name="rms_inspection_section_additional" text="További megjegyzések"/>
         <text name="rms_inspection_verdict_ok_title" text="Munkára kész"/>
         <text name="rms_inspection_verdict_ok_message" text="Nincs észrevétel, a gép indulhat."/>
         <text name="rms_inspection_verdict_watch_title" text="Figyelni kell"/>
         <text name="rms_inspection_verdict_watch_message" text="Egy vagy több pont figyelmet igényel. A gép tovább dolgozhat; foglalkozz velük még ma."/>
-        <text name="rms_inspection_verdict_air_filter_service_message" text="A gép dolgozhat. Tervezd be a műhelyben végzett karbantartást a légszűrő cseréjéhez."/>
+        <text name="rms_inspection_verdict_air_filter_service_message" text="A gép dolgozhat. A műhely a(z) %s karbantartástól kezdve cseréli a légszűrőt."/>
         <text name="rms_inspection_verdict_stop_title" text="Ne használd"/>
         <text name="rms_inspection_verdict_stop_message" text="Egy pont kritikus. Ne dolgoztasd ezt a gépet, amíg nem oldottad meg."/>
         <text name="rms_inspection_service_due_in" text="%s %s múlva"/>
         <text name="rms_inspection_service_overdue" text="%s késése: %s"/>
-        <text name="rms_inspection_service_clock_engine" text="motorolajcsere"/>
-        <text name="rms_inspection_service_clock_transmission" text="váltóolajcsere"/>
-        <text name="rms_inspection_service_clock_coolant" text="hűtőfolyadék-csere"/>
         <text name="rms_inspection_status_slightly_low" text="Kissé alacsony"/>
         <text name="rms_inspection_status_slightly_dirty" text="Kissé eltömődött"/>
         <text name="rms_inspection_status_slightly_dry" text="Kissé száraz"/>
@@ -735,6 +900,7 @@
         <text name="rms_inspection_status_not_required" text="Nem szükséges"/>
         <text name="rms_inspection_status_change_overdue" text="Csere késésben"/>
         <text name="rms_inspection_status_change_long_overdue" text="Csere nagy késésben"/>
+        <text name="rms_inspection_status_replacement_due" text="Csere szükséges"/>
         <text name="rms_inspection_engine_oil" text="Motorolaj"/>
         <text name="rms_inspection_coolant" text="Hűtőfolyadék"/>
         <text name="rms_inspection_hydraulic_fluid" text="Hidraulikaolaj"/>
@@ -756,8 +922,11 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="A légszűrő kissé eltömődött."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="A légszűrő érezhetően eltömődött."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="A légszűrő erősen eltömődött porral és törmelékkel."/>
-        <text name="rms_inspection_hint_air_filter_blowout_limit" text="A légszűrő elérte a kifúvással történő tisztítás határát. A cseréjéhez műhelyben végzett karbantartás szükséges."/>
-        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="Fújd ki a szűrőt, hogy eltávolítsd a laza port. A visszamaradó szennyeződés miatt a szűrőt később műhelyben kell kicserélni."/>
+        <text name="rms_inspection_hint_air_filter_blowout_limit" text="A légszűrő elérte a kifúvással történő tisztítás határát. A műhely a(z) %s karbantartástól kezdve cseréli."/>
+        <text name="rms_inspection_hint_fuel_filter_due" text="Az üzemanyagszűrőt cserélni kell: bármilyen szintű karbantartás vagy egy műhelyi javítás kicseréli."/>
+        <text name="rms_inspection_hint_hydraulic_filter_due" text="A hidraulikaszűrőt cserélni kell: bármilyen szintű karbantartás vagy egy műhelyi javítás kicseréli."/>
+        <text name="rms_inspection_hint_hydraulic_filter_bypass" text="A hidraulikaszűrő eltömődött: az olaj szűretlenül folyik át és koptatja a kört. Bármilyen szintű karbantartás vagy egy műhelyi javítás kicseréli."/>
+        <text name="rms_inspection_hint_unidentified" text="Nem azonosított meghibásodás tünete: a műhely egy átvizsgálással vagy karbantartással azonosítja."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Túlmelegedés és elsötétedés jelei láthatók a generátor és néhány csatlakozás körül."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Erős túlmelegedési nyomok és elsötétedett csatlakozók láthatók a generátor és a kábelezése körül."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="A kenési pontok kissé száraznak tűnnek."/>
@@ -774,9 +943,11 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Olajos nyomok és elsötétedett csatlakozások láthatók a turbófeltöltő környékén."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Erős olajos nyomok, elsötétedett csatlakozások és koromnyomok láthatók a turbófeltöltő környékén."/>
         <text name="rms_inspection_hint_fluid_level_low" text="Az egyik folyadékszint a jelzés alá csökkent."/>
-        <text name="rms_inspection_hint_service_engine" text="A motorolajcsere késésben van: az elhasznált olaj gyorsítja a motor és a befecskendezés kopását. A normál karbantartás a szűrőkkel együtt cseréli az olajat."/>
-        <text name="rms_inspection_hint_service_transmission" text="A váltóolajcsere késésben van: az elhasznált olaj gyorsítja a váltó és a hidraulika kopását. A bővített karbantartás a szűrővel együtt cseréli az olajat."/>
-        <text name="rms_inspection_hint_service_coolant" text="A hűtőfolyadékot cserélni kell: az elhasznált folyadék gyorsítja a hűtőrendszer kopását. A megelőző karbantartás kicseréli."/>
+        <text name="rms_inspection_hint_fluid_levels_low" text="Több folyadékszint a jelzés alá csökkent."/>
+        <text name="rms_inspection_hint_service_engine" text="A motorolajcsere késésben van: az elhasznált olaj gyorsítja a motor és a befecskendezés kopását. Minden karbantartás a szűrőkkel együtt cseréli az olajat."/>
+        <text name="rms_inspection_hint_service_transmission" text="A váltóolajcsere késésben van: az elhasznált olaj gyorsítja mindannak a kopását, amit ken. A műhelyben ajánlott karbantartás a szűrővel együtt cseréli az olajat."/>
+        <text name="rms_inspection_hint_service_hydraulic" text="A hidraulikaolaj-csere késésben van: az elhasznált olaj gyorsítja a hidraulikarendszer kopását. A műhelyben ajánlott karbantartás a szűrővel együtt cseréli az olajat."/>
+        <text name="rms_inspection_hint_service_coolant" text="A hűtőfolyadékot cserélni kell: az elhasznált folyadék gyorsítja a hűtőrendszer kopását. A műhelyben ajánlott karbantartás kicseréli."/>
         <text name="rms_inspection_transmission_oil" text="Váltóolaj"/>
         <text name="rms_inspection_radiator" text="Hűtő"/>
         <text name="rms_inspection_air_filter" text="Légszűrő"/>
@@ -784,37 +955,41 @@
         <text name="rms_inspection_no_suspicious_symptoms" text="Nem láthatók gyanús tünetek"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
-        <text name="rms_ingame_menu_title" text="Realistic Mechanical Systems"/>
-        <text name="rms_ingame_menu_section_active" text="RMS járművek"/>
-        <text name="rms_ingame_menu_section_service" text="Karbantartás alatt"/>
-        <text name="rms_ingame_menu_section_other" text="Egyéb járművek"/>
-        <text name="rms_ingame_menu_header_vehicle" text="Jármű"/>
-        <text name="rms_ingame_menu_header_type" text="Típus"/>
+        <text name="rms_ingame_menu_title" text="Gépészeti áttekintés"/>
+        <text name="rms_ingame_menu_section_active" text="Géppark"/>
+        <text name="rms_ingame_menu_section_service" text="Munkálatok"/>
+        <text name="rms_ingame_menu_section_other" text="Nem követett gépek"/>
         <text name="rms_ingame_menu_header_time_left" text="Hátralévő idő"/>
-        <text name="rms_ingame_menu_header_age" text="Kor"/>
-        <text name="rms_ingame_menu_header_working_hours" text="Üzemórák"/>
-        <text name="rms_ingame_menu_header_condition" text="Állapot"/>
         <text name="rms_ingame_menu_header_cost" text="Összes költség"/>
         <text name="rms_ingame_menu_header_interval" text="Intervallum"/>
-        <text name="rms_ingame_menu_header_last_inspection" text="Utolsó átvizsgálás"/>
-        <text name="rms_ingame_menu_header_last_maintenance" text="Utolsó karbantartás"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Lízing"/>
-        <text name="rms_ingame_menu_header_price" text="Menüs eladás"/>
         <text name="rms_ingame_menu_header_procedure" text="Eljárás"/>
-        <text name="rms_ingame_menu_header_finish_time" text="Befejezési idő"/>
-        <text name="rms_ingame_menu_header_service_cost" text="Költség"/>
         <text name="rms_ingame_menu_header_reason" text="Kizárás oka"/>
-        <text name="rms_ingame_menu_empty_other" text="Nincs más jármű"/>
-        <text name="rms_ingame_menu_empty_active" text="Nincs RMS-jármű"/>
-        <text name="rms_ingame_menu_empty_service" text="Nincs karbantartás alatt álló jármű"/>
+        <text name="rms_ingame_menu_empty_other" text="Nincsenek nem követett gépek"/>
+        <text name="rms_ingame_menu_empty_active" text="Nincsenek követett gépek"/>
+        <text name="rms_ingame_menu_empty_service" text="Nincs folyamatban lévő munka"/>
         <text name="rms_ingame_menu_reason_implement" text="Eszköz vagy pótkocsi"/>
         <text name="rms_ingame_menu_reason_unsupported" text="Nem támogatott"/>
-        <text name="rms_ingame_menu_reason_electric" text="Elektromos"/>
         <text name="rms_ingame_menu_reason_towed" text="Saját motoros eszköz"/>
         <text name="rms_ingame_menu_reason_auxiliary" text="Segédgép"/>
         <text name="rms_ingame_menu_reason_user" text="Kézzel kizárva"/>
         <text name="rms_ingame_menu_include" text="Felvétel az RMS-be"/>
         <text name="rms_ingame_menu_exclude" text="Kizárás az RMS-ből"/>
+        <text name="rms_fleet_all" text="Összes gép"/>
+        <text name="rms_fleet_all_untracked" text="Összes nem követett gép"/>
+        <text name="rms_fleet_sort_by" text="Rendezés"/>
+        <text name="rms_fleet_sort_deadline" text="Esedékesség"/>
+        <text name="rms_fleet_sort_name" text="Név"/>
+        <text name="rms_fleet_sort_hours" text="Órák"/>
+        <text name="rms_fleet_check" text="Ellenőrzés"/>
+        <text name="rms_fleet_location" text="Helyzet"/>
+        <text name="rms_fleet_next_service" text="Következő karbantartás"/>
+        <text name="rms_fleet_remaining" text="%s óra van hátra"/>
+        <text name="rms_fleet_overdue" text="%s óra késés"/>
+        <text name="rms_fleet_overdue_label" text="Késésben"/>
+        <text name="rms_fleet_overdue_count" text="Késésben: %d"/>
+        <text name="rms_fleet_due_soon_label" text="Hamarosan"/>
+        <text name="rms_fleet_due_soon_count" text="Hamarosan: %d"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Jármű visszaadása"/>
         <text name="rms_sell_dialog_section_vehicle" text="Jármű"/>
@@ -823,9 +998,10 @@
         <text name="rms_sell_dialog_overdue_maintenance_penalty" text="Lejárt karbantartás"/>
         <text name="rms_sell_dialog_repair_penalty" text="Javítás"/>
         <text name="rms_sell_dialog_washing_penalty" text="Mosás"/>
+        <text name="rms_sell_dialog_deposit_refund" text="Visszakapott kaució"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Alacsony folyadékszint"/>
-        <text name="rms_tutorial_fluid_level_message" text="A gép egyik folyadéka a mérőjén lévő jelzés alá süllyedt.&#10;&#10;A motorolaj az üzemórákkal fogy, és egy fáradt motor sokkal többet fogyaszt belőle. A hűtőfolyadék, a váltóolaj és a hidraulikaolaj csak szivárgás miatt csökken.&#10;&#10;A jelzés alatt a gép csak utántöltést kér, továbbra is rendesen dolgozik. Akkor kerül pénzbe, ha egy szint tényleg mélyre esik: hűtőfolyadék vagy váltóolaj hiányában a gép melegszik, motorolaj vagy hidraulikaolaj hiányában pedig sokkal gyorsabban kopik.&#10;&#10;Vásárolj a boltban megfelelő terméket tartalmazó edényt, tedd a gép mellé, és töltsd fel a szintet. Az adott körhöz való minden termék mechanikailag egyenértékű; a nem megfelelő folyadék csak azt a kört szennyezi. A márkakereskedés biztosítja és felszámítja a szükséges litereket. A saját vagy mobil műhelyben az eljárás a műhely területén lévő, a gazdaság tulajdonában álló edényekből fogyaszt."/>
+        <text name="rms_tutorial_fluid_level_message" text="A gép egyik folyadéka a mérőjén lévő jelzés alá süllyedt.&#10;&#10;A motorolaj az üzemórákkal fogy, és egy fáradt motor sokkal többet fogyaszt belőle. A hűtőfolyadék, a váltóolaj és a hidraulikaolaj csak szivárgás miatt csökken.&#10;&#10;A jelzés alatt a gép csak utántöltést kér, továbbra is rendesen dolgozik. Akkor kerül pénzbe, ha egy szint tényleg mélyre esik: hűtőfolyadék vagy váltóolaj hiányában a gép melegszik, motorolaj vagy hidraulikaolaj hiányában pedig sokkal gyorsabban kopik.&#10;&#10;Vásárolj a boltban megfelelő terméket tartalmazó edényt, vidd a géphez, és töltsd fel a szintet. Az adott körhöz való minden termék mechanikailag egyenértékű; a nem megfelelő folyadék csak azt a kört szennyezi. A márkakereskedés biztosítja és felszámítja a szükséges litereket."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Üdvözöl a Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Tippek kikapcsolása"/>
         <text name="rms_tutorial_welcome_enable_button" text="Tippek bekapcsolása"/>
@@ -835,20 +1011,21 @@
         <text name="rms_tutorial_wheel_slip_title" text="Kerékcsúszás"/>
         <text name="rms_tutorial_wheel_slip_message" text="A kerekeid erősen csúsznak. A kerékcsúszás az egyik legpusztítóbb tényező a váltó számára, és jelentősen közelebb hozza a következő műhelylátogatást."/>
         <text name="rms_tutorial_service_due_soon_title" text="Közelgő karbantartás"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s hamarosan karbantartást igényel.&#10;&#10;Az RMS-ben a járművek rendszeres karbantartást igényelnek. Ha halogatod, a meghibásodások kockázata jelentősen nő.&#10;&#10;Látogass el a legközelebbi műhelybe, és válaszd a „Karbantartás” lehetőséget. A karbantartási intervallum a mod beállításaiban módosítható."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s hamarosan karbantartást igényel. Válassza a műhely ajánlott csomagját: lefedi az esedékes munkákat. Az első elért üzemóra- vagy naptári határ dönt, kevés használat esetén is. A karbantarthatóság a beavatkozások összetettségét jelzi; a szokásos karbantartás továbbra is elvégezhető mobil műhelyben."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Lejárt karbantartási intervallum"/>
         <text name="rms_tutorial_service_interval_expired_message" text="%s karbantartási intervalluma lejárt.&#10;&#10;Menj mielőbb egy műhelybe, és válaszd a „Karbantartás” eljárást. A lejárt karbantartási intervallumú jármű további használata jelentősen növeli több meghibásodás kockázatát."/>
         <text name="rms_tutorial_steering_title" text="Kormányzás álló helyzetben"/>
         <text name="rms_tutorial_steering_message" text="A legjobb, ha álló helyzetben nem kormányzol. Ez erősen terheli a kormányművet és az első tengely alkatrészeit, ami növeli a futómű kopását.&#10;&#10;Indulj el legalább egy kicsit, és a kerekek sokkal könnyebben fordulnak majd."/>
-        <text name="rms_tutorial_cooling_air_check_message" text="A hűtő vagy a légszűrő eltömődött. Nézz a járműre, és tartsd lenyomva a %s billentyűt, hogy megtudd, melyik. Tisztítsd meg sűrített levegős fúvóval. Ha a szűrő már nem fújható tisztára, válassz bővített vagy megelőző karbantartást a műhelyben a cseréjéhez."/>
+        <text name="rms_tutorial_cooling_air_check_title" text="Hűtés és légszűrő"/>
+        <text name="rms_tutorial_cooling_air_check_message" text="A hűtő vagy a légszűrő eltömődött. Nézz a járműre, és tartsd lenyomva a %s billentyűt, hogy megtudd, melyik. Tisztítsd meg sűrített levegős fúvóval. Ha a szűrő már nem fújható tisztára, a műhely a(z) %s karbantartástól kezdve cseréli."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Kenés szükséges"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%s rendszeres kenést igényel.&#10;&#10;Az RMS-ben a kenési szint az üzemórákkal csökken. Hosszabb használaton kívüli időszak után a gépet az újbóli üzembe helyezés előtt is meg kell kenni. Az elégtelen kenés felgyorsítja az alváz kopását.&#10;&#10;Vásárolj zsírzópisztolyt a boltban, és kend meg a gépet, amikor az átvizsgálás ezt szükségesnek jelzi.&#10;&#10;A kenési szintet ellenőrizheted: nézz a járműre, és tartsd nyomva az %s billentyűt."/>
         <text name="rms_tutorial_needs_repair_title" text="Meghibásodás észlelve"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s problémát jelez. Lehet, hogy az egyik alkatrésze meghibásodott.&#10;&#10;Látogass el egy műhelybe átvizsgálásra. Ne halogasd: a meghibásodás tovább súlyosbodhat, és vele együtt a javítás költsége is nő.&#10;&#10;Ha az átvizsgálás megerősíti a meghibásodást, javíttasd meg a műhelyben."/>
+        <text name="rms_tutorial_needs_repair_message" text="%s problémát jelez. Lehet, hogy az egyik alkatrésze meghibásodott.&#10;&#10;Látogass el egy műhelybe: egy átvizsgálás, vagy a karbantartás, ha esedékes, azonosítja a meghibásodást. Ne halogasd: a meghibásodás tovább súlyosbodhat, és vele együtt a javítás költsége is nő.&#10;&#10;Ha a meghibásodás azonosítva van, javíttasd meg a műhelyben."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Nagyjavítás szükséges"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%s már érezteti a korát. Itt az ideje elgondolkodni a cserén vagy egy nagyjavításon. Ez egy hosszú és költséges művelet, de ez az egyetlen mód, hogy a gép visszanyerje eredeti állapotát.&#10;&#10;Az élettartam a mod beállításaiban módosítható: minél magasabb, annál lassabban kopnak a járműveid."/>
         <text name="rms_tutorial_needs_preventive_title" text="Közelgő meghibásodás"/>
-        <text name="rms_tutorial_needs_preventive_message" text="%s egyik rendszere hamarosan meghibásodik. Ezt még el lehet kerülni.&#10;&#10;A műhelyben elérhető a megelőző karbantartás: helyreállítja a karbantartási szintet, lecseréli az összes folyadékot, és jelentősen csökkenti a leginkább veszélyeztetett rendszerek mechanikai igénybevételét."/>
+        <text name="rms_tutorial_needs_preventive_message" text="A(z) %s motorjánál, üzemanyagrendszerénél vagy hűtőrendszerénél megnőtt a meghibásodás kockázata.&#10;&#10;%s karbantartás: beállítja a szelepeket, ellenőrzi a befecskendezőket és a termosztátot, ami csökkenti ezt a kockázatot."/>
         <text name="rms_tutorial_age_degradation_title" text="Életkor miatti állapotromlás"/>
         <text name="rms_tutorial_age_degradation_message" text="Az RMS-ben a járművek fokozatosan veszítenek eredeti teljesítményükből, ahogy öregednek.&#10;&#10;A jármű élettartamának nagyjából egyharmada után az életkor miatti kopás elkezdi enyhén csökkenteni néhány fontos jellemzőt, például a teljesítményt vagy a fékezést. A hatás ezután erősödik, és az élettartam vége felé jól láthatóvá válik.&#10;&#10;Ez a kopás kikapcsolható a mod beállításaiban."/>
         <text name="rms_tutorial_poor_consumables_title" text="Gyenge minőségű fogyóanyagok"/>
@@ -856,8 +1033,8 @@
         <text name="rms_tutorial_poor_parts_title" text="Gyenge minőségű alkatrészek"/>
         <text name="rms_tutorial_poor_parts_message" text="%s gyenge minőségű alkatrészt kapott egy javítás során. A meghibásodás nagy valószínűséggel hamarosan visszatér.&#10;&#10;Megvárhatod, amíg ez megtörténik, vagy elvégezhetsz egy teljes átvizsgálást, amely megbízhatóan azonosítja az érintett alkatrészt."/>
         <text name="rms_tutorial_park_brake_title" text="Rögzítőfék"/>
-        <text name="rms_tutorial_park_brake_message" text="A rögzítőfék be van húzva. Magától behúz, amint álló helyzetben elhagyod a gépet, és kienged, amint újra gázt adsz.&#10;&#10;Lejtőn ez akadályozza meg, hogy a gép magától elguruljon."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="A rögzítőfék be van húzva. Te húzod be és oldod ki, a saját billentyűddel: ha behúzott fékkel adsz gázt, a gép nem indul el, és figyelmeztet.&#10;&#10;Lejtőn ez akadályozza meg, hogy a gép magától elguruljon."/>
+        <text name="rms_tutorial_park_brake_message" text="A rögzítőfék be van húzva. Magától behúz, amint álló helyzetben elhagyod a gépet, és kienged, amint újra gázt adsz. Akkor is behúz, amikor leállítod a motort, vagy 45 másodperc állás után.&#10;&#10;Lejtőn ez akadályozza meg, hogy a gép magától elguruljon."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="A rögzítőfék be van húzva. Te húzod be és oldod ki, a saját billentyűddel: ha behúzott fékkel adsz gázt, a gép a fék ellen dolgozik, és a fékjei kopnak.&#10;&#10;Lejtőn ez akadályozza meg, hogy a gép magától elguruljon: ha behúzás nélkül hagyod el a gépet, elgurulhat."/>
         <text name="rms_tutorial_preheat_title" text="Dízel előizzítás"/>
         <text name="rms_tutorial_preheat_message" text="Hideg dízelmotornál az indításvezérlő egyszeri megnyomása bekapcsolja a gyújtást, és automatikusan elindítja az izzítási ciklust. A műszerfal visszajelzői rövid időre felgyulladnak, majd az előizzítás jelzőfénye addig világít, amíg a motor készen nem áll. Ne ismételd meg a parancsot: az önindító a jelzőfény kialvásakor automatikusan bekapcsol."/>
         <text name="rms_tutorial_pto_engagement_title" text="A TLT bekapcsolása"/>
@@ -875,7 +1052,7 @@
         <text name="rms_tutorial_hard_start_title" text="Nehéz indítás"/>
         <text name="rms_tutorial_hard_start_message" text="A következő jármű motorja nehezen indul: %s. Ezt okozhatja alacsony akkumulátortöltöttség, fagyos hőmérséklet, mechanikai hiba vagy az önindító kopása. Tartsd nyomva az indítógombot, amíg a motor be nem indul.&#10;&#10;Indítás közben az elektromos rendszer nagy terhelést kap a magas indulóáramok miatt."/>
         <text name="rms_tutorial_low_fuel_title" text="Kevés üzemanyag"/>
-        <text name="rms_tutorial_low_fuel_message" text="A tartály közelít a tartalékszinthez. Minél kevesebb üzemanyag marad, annál nagyobb erővel kell szívnia az üzemanyag-szivattyúnak, ami növeli a kopását."/>
+        <text name="rms_tutorial_low_fuel_message" text="A tartály közelít a tartalékszinthez. Minél kevesebb üzemanyag marad, annál nagyobb erővel kell szívnia az üzemanyag-szivattyúnak, és a tartály aljáról víz és üledék kerül a szűrőbe, amely így gyorsabban eltömődik.&#10;&#10;Érdemes a nap végén teletankolni: a teli tartályban kevesebb pára csapódik le."/>
         <text name="rms_tutorial_lugging_title" text="Motor erőltetése alacsony fordulaton"/>
         <text name="rms_tutorial_lugging_message" text="A motor, és különösen a váltó, megsínyli az alacsony fordulaton történő erőltetést, vagyis az alacsony fordulatszámot nagy motorterhelés mellett. Lehet, hogy túl nehéz eszközt csatlakoztattál a géphez, vagy kézi váltónál egyszerűen rossz fokozatot választottál."/>
         <text name="rms_tutorial_engine_overheat_title" text="Motor túlmelegedése"/>
@@ -887,7 +1064,9 @@
         <text name="rms_tutorial_cvt_overheat_title" text="CVT túlmelegedés"/>
         <text name="rms_tutorial_cvt_overheat_message" text="A CVT kezd túlmelegedni. Ennek egy vagy több oka is lehet: a váltó túlzott terhelés alatt van, a hűtő eltömődött, nagyon meleg az idő, vagy hiba van a váltó hűtőrendszerében. Például lehet, hogy túl nehéz ekét húzol, vagy túlterhelt pótkocsit vontatsz.&#10;&#10;Légy résen: a túlmelegedés az egyik legpusztítóbb dolog, ami egy CVT váltóval történhet."/>
         <text name="rms_tutorial_chassis_vibration_title" text="Alváz terhelés alatt"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Az egyenetlen terepen való gyors haladás gyorsan elkoptatja a következő jármű felfüggesztését: %s. A rezgések más rendszereket is károsítanak, elsősorban a hidraulikát és az elektromos rendszert.&#10;&#10;Vezess finoman egyenetlen talajon."/>
+        <text name="rms_tutorial_chassis_vibration_message" text="Az egyenetlen terepen való gyors haladás gyorsan elkoptatja a következő jármű futóművét: %s. A rázkódás a kábelezést és a csatlakozóit is károsítja, valamint a hidraulikát, ha nehéz munkagép van kiemelve.&#10;&#10;Lassíts egyenetlen talajon."/>
+        <text name="rms_tutorial_terrain_impact_title" text="Erős ütés"/>
+        <text name="rms_tutorial_terrain_impact_message" text="A futómű éppen erős ütést kapott. Az az akadály, amely hirtelen megállítja vagy erősen lefékezi a gépet, azonnal koptatja az alvázat, és közelebb hozza a következő meghibásodását, leggyakrabban a kormányzásét vagy a csapágyakét.&#10;&#10;Lassíts az akadályok előtt."/>
         <text name="rms_tutorial_cranking_title" text="Gyakori indítózás"/>
         <text name="rms_tutorial_cranking_message" text="Túl gyakran indítod a motort. Minden indítás nagyon nagy áramot küld át az elektromos rendszeren, ami gyorsítja a kábelezés, az önindító és más elektromos alkatrészek kopását.&#10;&#10;Kerüld a motor leállítását rövid megállásokra."/>
         <text name="rms_tutorial_critical_failure_title" text="Kritikus meghibásodás"/>
@@ -901,7 +1080,7 @@
         <text name="rms_tutorial_overload_indicator_title" text="Túlterhelési figyelmeztetés"/>
         <text name="rms_tutorial_overload_indicator_message" text="%s nagy terhelés alatt van. Ezt jelzi a műszerfalon most felgyulladt figyelmeztető lámpa.&#10;&#10;Lehet, hogy a gépnek nincs elég ereje az aktuális feladathoz. Próbáld csökkenteni a terhelést: korlátozd a sebességet tempomattal, vagy vegyél vissza a gázból ahelyett, hogy teljes erőn dolgoztatod."/>
         <text name="rms_tutorial_battery_low_title" text="Gyenge akkumulátor"/>
-        <text name="rms_tutorial_battery_low_message" text="Ennek a gépnek az akkumulátora mindjárt teljesen lemerül. Ez hosszú állásidő, erős hideg vagy az elektromos rendszer hibái miatt is előfordulhat.&#10;&#10;Alacsony töltöttségnél az indítás nehézzé, majd lehetetlenné válik. Ekkor indítókábellel egy másik járműről is beindíthatod a motort."/>
+        <text name="rms_tutorial_battery_low_message" text="Ennek a gépnek az akkumulátora mindjárt teljesen lemerül. Ez hosszú állásidő, erős hideg vagy az elektromos rendszer hibái miatt is előfordulhat.&#10;&#10;Alacsony töltöttségnél az indítás nehézzé, majd lehetetlenné válik. Ekkor indítókábellel egy másik járműről is beindíthatod a motort. Hosszú állás előtt, vagy ha az akkumulátor magától lemerül, válaszd le az akkumulátor-főkapcsolóval, gyalog a gép előtt."/>
         <text name="rms_tutorial_drivetrain_windup_title" text="Hajtáslánc-terhelés"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Tapadós talajon kanyarodsz bekapcsolt differenciálzárral. Kanyarban a belső és külső kerekek eltérő utat tesznek meg, de a differenciálzár azonos fordulatszámra kényszeríti őket: a hajtáslánc terhelés alá kerül, és fokozódik a váltó kopása. Oldd ki a zárat, mielőtt kanyarodsz."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Hajtásmódok és differenciálzár"/>
@@ -909,7 +1088,7 @@
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
-        <text name="rms_charger_function" text="Telwin-töltő kocsin, 150 A 12 V-on. Csatlakoztasd a jármű mellett, és hagyd feltöltődni az akkumulátort. A töltés a játékidő sebességét követi. Indítássegítés (START, 200 A)."/>
+        <text name="rms_charger_function" text="Telwin-töltő kocsin, 150 A 12 V-on, 80 A 24 V-on. Csatlakoztasd a jármű mellett, és válaszd az akkumulátorhoz igazodó automatikus töltést, a gyorstöltést vagy az indítássegítést (START, 200 A 12 V-on). A töltés a játékidő sebességét követi."/>
         <text name="rms_charger_start" text="Töltő csatlakoztatása"/>
         <text name="rms_charger_disconnect" text="Töltő leválasztása"/>
         <text name="rms_charger_select" text="Válaszd ki a csatlakoztatandó járművet."/>
@@ -931,6 +1110,7 @@
         <text name="rms_charger_error_moving" text="A jármű mozog."/>
         <text name="rms_charger_error_service" text="Műhelyeljárás van folyamatban."/>
         <text name="rms_charger_error_cables" text="Válaszd le az indítókábeleket."/>
+        <text name="rms_charger_error_voltage" text="Az indítássegítés csak 12 V-on működik."/>
         <text name="rms_charger_error_busy" text="Már csatlakozik egy töltő."/>
         <text name="rms_charger_error_full" text="Ez az akkumulátor már fel van töltve."/>
         <text name="rms_charger_connected" text="Töltő csatlakoztatva. Töltés elindítva."/>
@@ -938,7 +1118,7 @@
         <text name="rms_charger_stopped_motor" text="Töltés leállt: indítás"/>
         <text name="rms_charger_error_player_distance" text="Gyalog menj a töltőhöz."/>
         <text name="rms_charger_mode_select" text="Töltő csatlakoztatása"/>
-        <text name="rms_charger_mode_start" text="Indítássegítés (START, 200 A)"/>
+        <text name="rms_charger_mode_start" text="Indítássegítés (START, 200 A, 12 V)"/>
         <text name="rms_charger_start_ready" text="START kész"/>
         <text name="rms_charger_start_active" text="Indítássegítés aktív"/>
         <text name="rms_charger_start_running" text="Motor jár: válaszd le"/>
@@ -946,6 +1126,26 @@
         <text name="rms_charger_start_wait" text="Két indítás között várj 30 másodpercet."/>
         <text name="rms_charger_unplug_before_start" text="Indítás előtt válaszd le a töltőt vagy válaszd a START módot."/>
         <text name="rms_charger_start_connected" text="Indítássegítés (START, 200 A)."/>
-        <text name="rms_charger_mode_charge" text="Akkumulátor töltése (150 A)"/>
+        <text name="rms_charger_mode_charge" text="Automatikus töltés"/>
+        <text name="rms_charger_mode_fast" text="Gyorstöltés (150 A, 80 A 24 V-on)"/>
+
+        <!-- Battery isolator -->
+        <text name="rms_battery_isolator_cut" text="Akku leválasztása"/>
+        <text name="rms_battery_isolator_restore" text="Akku visszakapcsolása"/>
+        <text name="rms_battery_isolator_open" text="Az akkumulátor le van választva. Kapcsold vissza az akkumulátor-főkapcsolóval, gyalog a jármű előtt."/>
+        <text name="rms_battery_isolator_engine_running" text="Az akkumulátor-főkapcsoló használata előtt állítsd le a motort."/>
+        <text name="rms_battery_isolator_info" text="Akkumulátor leválasztva"/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Használj felszerelt műhelyt."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Elektronikus diagnosztika szükséges"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Szétszerelés vagy speciális szerszám szükséges"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Nagyfeszültségű felszerelés szükséges"/>
+        <text name="rms_service_months" text="%s hónap"/>
+        <text name="rms_service_month" text="%s hónap"/>
+        <text name="rms_service_calendar_due" text="Naptári határidő elérve"/>
+        <text name="rms_service_program_estimated" text="Becsült karbantartási terv"/>
+        <text name="rms_ws_label_service_access" text="Karbantarthatóság"/>
+        <text name="rms_service_access_easy" text="Könnyű"/>
+        <text name="rms_service_access_average" text="Átlagos"/>
+        <text name="rms_service_access_demanding" text="Igényes"/>
     </texts>
 </l10n>

@@ -1,13 +1,10 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Charges applied when a leased vehicle is returned: overdue maintenance, repairs and washing
+---Charges of a leased vehicle returned: overdue maintenance, repairs and washing
 RMS_Leasing = {}
 
 ---Converts a value to a number, falling back when it cannot
--- @param any value value to convert
--- @param float? fallback value used when the conversion fails
--- @return float number converted number
 local function getNumber(value, fallback)
     local numericValue = tonumber(value)
     if numericValue == nil then
@@ -20,10 +17,10 @@ end
 ---Tells whether the extended leasing mod is loaded
 -- @return boolean hasMod true when it is present
 function RMS_Leasing.hasExtendedLeasing()
-    return g_modIsLoaded ~= nil and g_modIsLoaded["FS25_ExtendedLeasing"] == true
+    return g_modIsLoaded["FS25_ExtendedLeasing"] == true
 end
 
----Wraps the vanilla vehicle sale so a leased RMS vehicle goes through the mod dialog
+---Routes the sale of a leased RMS vehicle through the mod dialog
 -- @param table _mission current mission
 function RMS_Leasing.preLoad(_mission)
     SellVehicleEvent.run = Utils.overwrittenFunction(SellVehicleEvent.run, RMS_Leasing.onSellVehicleEventRun)
@@ -52,8 +49,7 @@ function RMS_Leasing.isLeasedVehicle(vehicle)
         return false
     end
 
-    local leasedState = Vehicle ~= nil and Vehicle.PROPERTY_STATE_LEASED or 3
-    return vehicle.propertyState == leasedState
+    return vehicle.propertyState == VehiclePropertyState.LEASED
 end
 
 ---Tells whether the vehicle is both leased and tracked by RMS
@@ -63,7 +59,17 @@ function RMS_Leasing.isSupportedVehicle(vehicle)
     return RMS_Leasing.isRMSVehicle(vehicle) and RMS_Leasing.isLeasedVehicle(vehicle)
 end
 
----Computes the return charges, the extended leasing mod taking the washing over
+---Returns what the dealer bills for a maintenance, the lease left aside
+local function getDealerMaintenancePrice(vehicle, maintenanceType)
+    local price = 0
+    for _, line in ipairs(vehicle:getMaintenancePriceLines(maintenanceType, RealisticMechanicalSystems.PART_TYPES.OEM,
+        RealisticMechanicalSystems.WORKSHOP.DEALER, true)) do
+        price = price + line.price
+    end
+    return price
+end
+
+---Computes the return charges, Extended Leasing refunding the deposit
 -- @param table? vehicle vehicle
 -- @return table breakdown raw amounts, displayed amounts, charged amounts and rows
 function RMS_Leasing.getReturnBreakdown(vehicle)
@@ -107,14 +113,9 @@ function RMS_Leasing.getReturnBreakdown(vehicle)
     local serviceLevel = getNumber(vehicle.getServiceLevel ~= nil and vehicle:getServiceLevel(), RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
     local serviceExpiredThreshold = math.max(getNumber(RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD, 0), 0.0001)
     local overdueMaintenanceRatio = math.max(serviceExpiredThreshold - serviceLevel, 0) * (1 / serviceExpiredThreshold)
+    -- an overdue service is billed at the dealer's price
     local overdueMaintenanceCost = overdueMaintenanceRatio * getNumber(
-        vehicle.getServicePrice ~= nil and vehicle:getServicePrice(
-            rms.STATUS.MAINTENANCE,
-            rms.MAINTENANCE_TYPES.STANDARD,
-            rms.PART_TYPES.OEM,
-            false,
-            rms.WORKSHOP.DEALER
-        ),
+        vehicle.getMaintenancePriceLines ~= nil and getDealerMaintenancePrice(vehicle, vehicle:getMaintenanceTypes()[1]),
         0
     )
     local repairCost = getNumber(
@@ -156,6 +157,13 @@ function RMS_Leasing.getReturnBreakdown(vehicle)
     emptyResult.rows[1].value = emptyResult.display.overdueMaintenance
     emptyResult.rows[2].value = emptyResult.display.repair
     emptyResult.rows[3].value = emptyResult.display.washing
+
+    -- the deposit Extended Leasing refunds counts in the total
+    if hasExtendedLeasing then
+        emptyResult.display.deposit = deposit
+        emptyResult.display.total = emptyResult.display.total + deposit
+        table.insert(emptyResult.rows, { label = "rms_sell_dialog_deposit_refund", key = "deposit", value = deposit })
+    end
 
     return emptyResult
 end
@@ -208,7 +216,7 @@ function RMS_Leasing.onSellVehicleEventRun(self, overwrittenFunc, connection)
         and hasPermission
         and not isVehicleInUse
 
-    -- Use the native constant again after its Float32 network transport, before rounding the payment.
+    -- the native constant again after its Float32 transport, before rounding the payment
     if not connection:getIsServer() and RMS_Leasing.isRMSVehicle(vehicle)
         and vehicle.propertyState == VehiclePropertyState.OWNED then
         self.multiplier = self.isDirectSell and EconomyManager.DIRECT_SELL_MULTIPLIER or 1

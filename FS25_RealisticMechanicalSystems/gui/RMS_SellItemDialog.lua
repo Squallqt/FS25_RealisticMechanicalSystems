@@ -9,15 +9,11 @@ local RMS_SellItemDialog_mt = Class(RMS_SellItemDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
 
 ---Rounds an amount to the precision used by the dialog
--- @param any value amount
--- @return number amount rounded for display
 local function getDisplayedMoney(value)
     return MathUtil.round(tonumber(value) or 0, 0)
 end
 
 ---Formats an amount as money with an explicit sign, and no sign at zero
--- @param any value amount
--- @return string text formatted amount
 local function formatSignedMoney(value)
     local amount = getDisplayedMoney(value)
     local sign = amount > 0 and "+" or amount < 0 and "-" or ""
@@ -25,8 +21,6 @@ local function formatSignedMoney(value)
 end
 
 ---Colours a text element green for a credit, red for a debit, dimmed at zero
--- @param table? element text element
--- @param any value amount
 local function applyMoneyColor(element, value)
     if element == nil then
         return
@@ -124,8 +118,7 @@ function RMS_SellItemDialog:updateScreen()
     if self.vehicleNameElement ~= nil then
         self.vehicleNameElement:setText(name)
 
-        -- the header block hugs the longer of its two lines, otherwise the layout centres the icon
-        -- and an empty text box and the name runs off to the right of the block
+        -- the header block hugs the longer of its two lines
         local textWidth = math.max(self.dialogTitleElement.size[1], self.vehicleNameElement.size[1])
         self.headerTextLayout:setSize(textWidth, nil)
         self.headerTextLayout:invalidateLayout()

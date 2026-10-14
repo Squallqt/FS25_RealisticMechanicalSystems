@@ -9,7 +9,27 @@ local initializeVehicleConditionFromVanillaPrice = RealisticMechanicalSystems.in
 
 RealisticMechanicalSystems.ConsoleCommands = {}
 
----Returns the vehicle the commands act on, the override one or the one the player sits in
+local consolePrint = print
+
+---Prints locally, or sends a server command's output to its requester
+function RealisticMechanicalSystems.ConsoleCommands:printOutput(...)
+    if self._outputConnection ~= nil then
+        local values = {}
+        for index = 1, select("#", ...) do
+            values[index] = tostring(select(index, ...))
+        end
+        self._outputConnection:sendEvent(RMS_ConsoleCommandEvent.new("__response", table.concat(values, "\t")))
+        return
+    end
+    consolePrint(...)
+end
+
+---
+local function print(...)
+    RealisticMechanicalSystems.ConsoleCommands:printOutput(...)
+end
+
+---Returns the vehicle the commands act on
 -- @return table? vehicle target vehicle, nil when none qualifies
 function RealisticMechanicalSystems.ConsoleCommands:getTargetVehicle()
     if RealisticMechanicalSystems.ConsoleCommands._overrideVehicle ~= nil then
@@ -31,10 +51,7 @@ function RealisticMechanicalSystems.ConsoleCommands:getTargetVehicle()
     return vehicle
 end
 
----Splits the console arguments on whitespace, accepting them as one string or as several
--- @param string? argString first console argument
--- @param any ... further console arguments
--- @return table args argument tokens
+---Splits the console arguments on whitespace
 local function parseArguments(argString, ...)
     local extraArgs = { ... }
     local hasExtraArgs = #extraArgs > 0
@@ -42,8 +59,7 @@ local function parseArguments(argString, ...)
     if hasExtraArgs then
         local args = {}
 
-        ---Appends a token to the argument list, splitting it further when it holds whitespace
-        -- @param any token console token
+        ---Appends a token to the argument list, split on whitespace
         local function appendToken(token)
             if token == nil then
                 return
@@ -81,9 +97,7 @@ end
     return args
 end
 
----Splits a dotted path into tokens, numeric ones being converted to numbers
--- @param string? path dotted path
--- @return table tokens path tokens
+---Splits a dotted path into tokens, numbers converted
 local function parsePathTokens(path)
     local tokens = {}
     if type(path) ~= "string" or path == "" then
@@ -103,9 +117,6 @@ local function parsePathTokens(path)
 end
 
 ---Converts a console value to a boolean, nil, a number or the raw string
--- @param any rawValue console value
--- @return any value converted value
--- @return boolean isValid true when a value was recognised
 local function parseConsoleValue(rawValue)
     if rawValue == nil then
         return nil, false
@@ -130,13 +141,7 @@ local function parseConsoleValue(rawValue)
     return rawValue, true
 end
 
----Walks a dotted path and returns the table holding its last token
--- @param table rootTable table the path starts from
--- @param string fullPath dotted path
--- @return table? parent table holding the value
--- @return any key last path token
--- @return table? tokens path tokens
--- @return string? errorMessage reason the path could not be walked
+---Returns the table holding the last token of a dotted path
 local function resolvePathParent(rootTable, fullPath)
     if type(rootTable) ~= "table" then
         return nil, nil, nil, "Root is not a table."
@@ -164,23 +169,14 @@ local function resolvePathParent(rootTable, fullPath)
 end
 
 ---Returns the fill unit and fill type the vehicle actually burns
--- @param table? vehicle vehicle
--- @return table? info fuel consumer information
 local function getPrimaryFuelConsumerInfo(vehicle)
     if vehicle == nil or vehicle.spec_motorized == nil or vehicle.spec_motorized.consumers == nil then
         return nil, nil
     end
 
-    local preferredTypes = {}
-    if FillType ~= nil then
-        if FillType.DIESEL ~= nil then table.insert(preferredTypes, FillType.DIESEL) end
-        if FillType.METHANE ~= nil then table.insert(preferredTypes, FillType.METHANE) end
-        if FillType.ELECTRICCHARGE ~= nil then table.insert(preferredTypes, FillType.ELECTRICCHARGE) end
-    end
+    local preferredTypes = { FillType.DIESEL, FillType.METHANE, FillType.ELECTRICCHARGE }
 
     ---Tells whether a fill type is one the engine burns
-    -- @param integer fillType fill type index
-    -- @return boolean isPreferred true for a fuel the engine burns
     local function isPreferred(fillType)
         for _, preferredType in ipairs(preferredTypes) do
             if fillType == preferredType then
@@ -191,7 +187,7 @@ local function getPrimaryFuelConsumerInfo(vehicle)
     end
 
     local fallbackConsumer = nil
-    local defFillType = FillType ~= nil and FillType.DEF or nil
+    local defFillType = FillType.DEF
     for _, consumer in pairs(vehicle.spec_motorized.consumers) do
         if consumer ~= nil and consumer.fillUnitIndex ~= nil and consumer.fillType ~= nil then
             if isPreferred(consumer.fillType) then
@@ -211,11 +207,7 @@ local function getPrimaryFuelConsumerInfo(vehicle)
     return nil, nil
 end
 
----Keeps the radiator and air intake clogging consistent after a console write
--- @param table vehicle vehicle
--- @param table spec vehicle spec
--- @param table parent table holding the written value
--- @param any key written key
+---Keeps the clogging consistent after a console write
 local function syncConsoleCloggingState(vehicle, spec, parent, key)
     if vehicle == nil or spec == nil or parent ~= spec then
         return false
@@ -233,11 +225,7 @@ local function syncConsoleCloggingState(vehicle, spec, parent, key)
     return true
 end
 
----Prints a spec value, walking nested tables and guarding against cycles
--- @param string prefix printed key prefix
--- @param any value value to print
--- @param table visited tables already printed
--- @param integer depth recursion depth
+---Prints a spec value, walking nested tables
 local function printSpecValueRecursive(prefix, value, visited, depth)
     visited = visited or {}
     depth = depth or 0
@@ -285,55 +273,7 @@ local function printSpecValueRecursive(prefix, value, visited, depth)
     print(string.format("%s}", string.rep("  ", depth)))
 end
 
----Sets an RMS_Config variable, usage rms_setConfigVar <path> <value>
--- @param string? rawArgs console arguments
--- @param string? rawValue value to write
-function RealisticMechanicalSystems.ConsoleCommands:setConfigVar(rawArgs, rawValue)
-    if not g_currentMission:getIsServer() then
-        RMS_ConsoleCommandEvent.sendToServer("setConfigVar", rawArgs, rawValue, nil)
-        return
-    end
-    local path = nil
-    local valueToken = nil
-
-    if rawValue ~= nil then
-        path = tostring(rawArgs)
-        valueToken = tostring(rawValue)
-    else
-        local args = parseArguments(rawArgs)
-        path = args and args[1] or nil
-        valueToken = args and args[2] or nil
-    end
-
-    if path == nil or valueToken == nil then
-        print("RMS Error: Usage: rms_setConfigVar <path> <value>")
-        print("Example: rms_setConfigVar CORE.BASE_SYSTEMS_WEAR 0.02")
-        return
-    end
-
-    local value, valueParsed = parseConsoleValue(valueToken)
-    if not valueParsed then
-        print("RMS Error: Failed to parse value.")
-        return
-    end
-
-    local parent, key, _, err = resolvePathParent(RMS_Config, path)
-    if parent == nil then
-        print(string.format("RMS Error: Invalid RMS_Config path '%s': %s", path, tostring(err)))
-        return
-    end
-
-    local oldValue = parent[key]
-    if oldValue == nil then
-        print(string.format("RMS Error: Invalid RMS_Config path '%s': setting does not exist.", path))
-        return
-    end
-    parent[key] = value
-
-    print(string.format("RMS: RMS_Config.%s changed: %s -> %s", path, tostring(oldValue), tostring(value)))
-end
-
----Sets a spec variable on the current vehicle, usage rms_setSpecVar <path> <value>
+---Sets a spec variable, usage rms_setSpecVar <path> <value>
 -- @param string? rawArgs console arguments
 -- @param string? rawValue value to write
 function RealisticMechanicalSystems.ConsoleCommands:setSpecVar(rawArgs, rawValue)
@@ -377,11 +317,55 @@ function RealisticMechanicalSystems.ConsoleCommands:setSpecVar(rawArgs, rawValue
     end
 
     local oldValue = parent[key]
-    parent[key] = value
+    if parent == spec and (key == "conditionLevel" or key == "transmissionTemperature" or key == "hydraulicTemperature") then
+        print("RMS Error: This value is calculated. Set system condition or the raw oil temperature instead.")
+        return
+    end
+    if parent == spec.electricalRating or parent == spec and (key == "systemVoltageV" or key == "rawSystemVoltageV") then
+        print("RMS Error: This value is calculated. Set batterySoc instead.")
+        return
+    end
+    if parent == spec and key == "batterySoc" and (type(value) ~= "number" or value ~= value or value < 0 or value > 1) then
+        print("RMS Error: The state of charge is a number between 0 and 1.")
+        return
+    end
+    if parent == spec and (key == "rawTransmissionTemperature" or key == "rawHydraulicTemperature") then
+        if type(value) ~= "number" or value ~= value or value <= -math.huge or value >= math.huge or value == -99 then
+            print("RMS Error: Oil temperature must be a finite number in degrees Celsius.")
+            return
+        end
+        if key == "rawHydraulicTemperature" and not RMS_Thermal.getHasSeparateHydraulicCircuit(spec) then
+            print("RMS Error: This vehicle has no separate hydraulic oil circuit. For a common sump, use rawTransmissionTemperature.")
+            return
+        end
+    end
+    if parent == spec and (key == "rawEngineTemperature" or key == "engineTemperature") then
+        if RMS_Thermal.setEngineTemperature(vehicle, value) == nil then
+            print("RMS Error: Invalid physical engine temperature.")
+            return
+        end
+    else
+        parent[key] = value
+    end
+    if parent == spec then
+        if key == "rawEngineTemperature" or key == "engineTemperature" then
+            spec._thermalEngineWorldTime = RMS_Thermal.getWorldTimeMS()
+            spec._thermalEngineAmbient = nil
+        elseif key == "rawTransmissionTemperature" or key == "rawHydraulicTemperature" then
+            spec._thermalOilWorldTime = RMS_Thermal.getWorldTimeMS()
+            spec._thermalOilAmbient = nil
+        end
+    end
+    for _, system in pairs(spec.systems or {}) do
+        if parent == system and key == "condition" then
+            vehicle:updateConditionLevel()
+            break
+        end
+    end
 
     local syncedCloggingState = syncConsoleCloggingState(vehicle, spec, parent, key)
 
-    print(string.format("RMS: spec_RealisticMechanicalSystems.%s changed on '%s': %s -> %s", path, vehicle:getFullName(), tostring(oldValue), tostring(value)))
+    print(string.format("RMS: spec_RealisticMechanicalSystems.%s changed on '%s': %s -> %s", path, vehicle:getFullName(), tostring(oldValue), tostring(parent[key])))
     if syncedCloggingState then
         print(string.format(
             "RMS: clogging state synced on '%s' (radiator=%.2f, airFilter=%.2f).",
@@ -392,7 +376,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setSpecVar(rawArgs, rawValue
     end
 end
 
----Prints a spec variable of the current vehicle, usage rms_printSpecVar <path>
+---Prints a spec variable, usage rms_printSpecVar <path>
 -- @param string? rawArgs console arguments
 function RealisticMechanicalSystems.ConsoleCommands:printSpecVar(rawArgs)
     if not g_currentMission:getIsServer() then
@@ -419,6 +403,9 @@ function RealisticMechanicalSystems.ConsoleCommands:printSpecVar(rawArgs)
         return
     end
 
+    if parent == spec and (key == "rawEngineTemperature" or key == "engineTemperature") then
+        RMS_Thermal.getEngineTemperature(vehicle)
+    end
     local value = parent[key]
     if value == nil then
         print(string.format("RMS: spec_RealisticMechanicalSystems.%s = nil", path))
@@ -479,7 +466,7 @@ function RealisticMechanicalSystems.ConsoleCommands:addBreakdown(rawArgs, rawArg
     end
 
     local breakdownId = string.upper(args[1])
-    local stage = tonumber(args[2]) or 1
+    local stage = tonumber(args[2] or 1)
 
     local registryEntry = RMS_Breakdowns.BreakdownRegistry[breakdownId]
     if not registryEntry then
@@ -489,8 +476,8 @@ function RealisticMechanicalSystems.ConsoleCommands:addBreakdown(rawArgs, rawArg
     end
     
     local maxStages = #registryEntry.stages
-    if stage < 1 or stage > maxStages then
-        print(string.format("RMS Error: Invalid stage '%d' for breakdown '%s'. Valid stages are 1 to %d.", stage, breakdownId, maxStages))
+    if stage == nil or stage ~= math.floor(stage) or stage < 1 or stage > maxStages then
+        print(string.format("RMS Error: Invalid integer stage '%s' for breakdown '%s'. Valid stages are 1 to %d.", tostring(args[2]), breakdownId, maxStages))
         return
     end
 
@@ -499,7 +486,14 @@ function RealisticMechanicalSystems.ConsoleCommands:addBreakdown(rawArgs, rawArg
         return
     end
     
-    vehicle:addBreakdown(breakdownId, stage)
+    -- a filter breakdown follows the filter's clogging, which is set to the stage instead
+    local filter = RMS_Consumables.getFilterOfBreakdown(breakdownId)
+    if filter ~= nil then
+        vehicle.spec_RealisticMechanicalSystems[filter.stateKey] = RMS_Config.FIELD_CARE.FILTER_STAGE_THRESHOLDS[stage]
+        RMS_Consumables.syncFilterBreakdowns(vehicle)
+    else
+        vehicle:addBreakdown(breakdownId, stage)
+    end
     print(string.format("RMS: Added breakdown '%s' at stage %d to '%s'.", breakdownId, stage, vehicle:getFullName()))
 end
 
@@ -515,23 +509,30 @@ function RealisticMechanicalSystems.ConsoleCommands:removeBreakdown(rawArgs)
     local vehicle = self:getTargetVehicle()
     if not vehicle then return end
 
+    -- a filter breakdown would come back from the clogging left behind, so the filter is renewed
     if args and args[1] then
         local breakdownId = string.upper(args[1])
-        vehicle:removeBreakdown(breakdownId)
+        if RMS_Consumables.getFilterOfBreakdown(breakdownId) ~= nil then
+            RMS_Consumables.renewFilters(vehicle, breakdownId)
+        else
+            vehicle:removeBreakdown(breakdownId)
+        end
     else
-        vehicle:removeBreakdown() 
+        RMS_Consumables.renewFilters(vehicle)
+        vehicle:removeBreakdown()
     end
 end
 
----Advances a breakdown to its next stage, usage rms_advanceBreakdown [id]
+---Changes a breakdown stage, usage rms_advanceBreakdown [id] [stage|reverse]
 -- @param string? rawArgs console arguments
-function RealisticMechanicalSystems.ConsoleCommands:changeBreakdownStage(rawArgs)
+-- @param string? rawArgTwo target stage or reverse
+function RealisticMechanicalSystems.ConsoleCommands:changeBreakdownStage(rawArgs, rawArgTwo)
     if not g_currentMission:getIsServer() then
         local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("changeBreakdownStage", rawArgs, nil, vehicle) end
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("changeBreakdownStage", rawArgs, rawArgTwo, vehicle) end
         return
     end
-    local args = parseArguments(rawArgs)
+    local args = parseArguments(rawArgs, rawArgTwo)
     local vehicle = self:getTargetVehicle()
     if not vehicle then return end
 
@@ -539,8 +540,6 @@ function RealisticMechanicalSystems.ConsoleCommands:changeBreakdownStage(rawArgs
     local advancedCount = 0
 
     ---Parses the stage argument, accepting a number or the reverse keyword
-    -- @param any rawValue stage argument
-    -- @return any stage stage index or true to step back
     local function parseStageArg(rawValue)
         if rawValue == nil then
             return nil
@@ -552,7 +551,7 @@ function RealisticMechanicalSystems.ConsoleCommands:changeBreakdownStage(rawArgs
         end
 
         local numeric = tonumber(rawValue)
-        if numeric ~= nil then
+        if numeric ~= nil and numeric >= 1 and numeric == math.floor(numeric) then
             return numeric
         end
 
@@ -584,8 +583,15 @@ function RealisticMechanicalSystems.ConsoleCommands:changeBreakdownStage(rawArgs
             return
         end
 
+        local targetStage = parseStageArg(args[2])
+        local registryEntry = RMS_Breakdowns.BreakdownRegistry[breakdownId]
+        if args[2] ~= nil and (targetStage == nil
+            or (type(targetStage) == "number" and registryEntry ~= nil and targetStage > #registryEntry.stages)) then
+            print("RMS Error: Use an existing integer stage or reverse. Usage: rms_advanceBreakdown [id] [stage|reverse]")
+            return
+        end
         local previousStage = foundBreakdown.stage
-        vehicle:changeBreakdownStage(breakdownId, parseStageArg(args[2]))
+        vehicle:changeBreakdownStage(breakdownId, targetStage)
         if foundBreakdown.stage ~= previousStage then
             print(string.format("RMS: Changed breakdown '%s' from stage %d to stage %d.", breakdownId, previousStage, foundBreakdown.stage))
             advancedCount = advancedCount + 1
@@ -599,7 +605,7 @@ function RealisticMechanicalSystems.ConsoleCommands:changeBreakdownStage(rawArgs
     end
 end
 
----Sets the condition of one system, usage rms_setSystemCondition [system] [0.0-1.0]
+---Sets one system condition, usage rms_setSystemCondition [system] [0-1]
 -- @param string? rawArgs console arguments
 -- @param string? rawArgTwo second console argument
 function RealisticMechanicalSystems.ConsoleCommands:setSystemCondition(rawArgs, rawArgTwo)
@@ -649,7 +655,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setSystemCondition(rawArgs, 
     vehicle:updateConditionLevel()
 end
 
----Sets the condition of every enabled system, usage rms_setCondition [0.0-1.0]
+---Sets every system condition, usage rms_setCondition [0-1]
 -- @param string? rawArgs console arguments
 function RealisticMechanicalSystems.ConsoleCommands:setCondition(rawArgs)
     if not g_currentMission:getIsServer() then
@@ -690,7 +696,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setCondition(rawArgs)
         changedSystems, vehicle:getFullName(), targetCondition, vehicle.spec_RealisticMechanicalSystems.conditionLevel or 0))
 end
 
----Sets the stress of one system, usage rms_setSystemStress [system] [>=0.0]
+---Sets one system stress, usage rms_setSystemStress [system] [>=0]
 -- @param string? rawArgs console arguments
 -- @param string? rawArgTwo second console argument
 function RealisticMechanicalSystems.ConsoleCommands:setSystemStress(rawArgs, rawArgTwo)
@@ -738,7 +744,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setSystemStress(rawArgs, raw
     print(string.format("RMS: Set stress for system '%s' on '%s' to %.4f.", tostring(systemKey), vehicle:getFullName(), value))
 end
 
----Sets the service clocks, usage rms_setService [0.0-1.0] [engine|transmission|coolant], every clock without a name
+---Sets the service clocks, usage rms_setService [0-1] [clock]
 -- @param string? rawArgs console arguments
 -- @param string? rawArgTwo second console argument
 function RealisticMechanicalSystems.ConsoleCommands:setService(rawArgs, rawArgTwo)
@@ -773,53 +779,11 @@ function RealisticMechanicalSystems.ConsoleCommands:setService(rawArgs, rawArgTw
     end
 
     if #setClockKeys == 0 then
-        print("RMS Error: Unknown service clock. Use engine, transmission or coolant.")
+        print("RMS Error: Unknown service clock. Use engine, transmission, hydraulic or coolant.")
         return
     end
 
     print(string.format("RMS: Set service clocks %s for '%s' to %.2f.", table.concat(setClockKeys, ", "), vehicle:getFullName(), value))
-end
-
----Resets the vehicle state
-function RealisticMechanicalSystems.ConsoleCommands:resetVehicle()
-    if not g_currentMission:getIsServer() then
-        local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("resetVehicle", nil, nil, vehicle) end
-        return
-    end
-    local vehicle = self:getTargetVehicle()
-    if not vehicle then return end
-    
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    spec.conditionLevel = 1.0
-    for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
-        spec[clock.levelKey] = 1.0
-    end
-    vehicle:removeBreakdown()
-
-    local found = false
-    for i = #spec.maintenanceLog, 1, -1 do
-        local entry = spec.maintenanceLog[i]
-        if entry.type == RealisticMechanicalSystems.STATUS.MAINTENANCE or entry.id == 1 then
-            entry.conditionData.condition = 1.0
-            entry.conditionData.service = 1.0
-            if vehicle.isServer then
-                RMS_LogEntrySyncEvent.sendToClients(vehicle, entry)
-            end
-            found = true
-            break
-        end
-    end
-    if not found and vehicle.isServer then
-        vehicle:addEntryToMaintenanceLog(RealisticMechanicalSystems.STATUS.INSPECTION, RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD, "NONE", false, 0)
-        local entry = spec.maintenanceLog[#spec.maintenanceLog]
-        entry.conditionData.condition = 1.0
-        entry.conditionData.service = 1.0
-        entry.isVisible = false
-        RMS_LogEntrySyncEvent.sendToClients(vehicle, entry)
-    end
-
-    print(string.format("RMS: Fully reset state for '%s'.", vehicle:getFullName()))
 end
 
 ---Reinitializes the vehicle from the vanilla resale price
@@ -832,6 +796,12 @@ function RealisticMechanicalSystems.ConsoleCommands:reinitializeVehicle()
 
     local vehicle = self:getTargetVehicle()
     if not vehicle then return end
+
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if (vehicle.isUnderService ~= nil and vehicle:isUnderService()) or (tonumber(spec.maintenanceTimer) or 0) > 0 then
+        print("RMS Error: Wait until the current workshop procedure is finished before reinitializing this vehicle.")
+        return
+    end
 
     local ok, targetCondition = initializeVehicleConditionFromVanillaPrice(vehicle, true)
     if not ok then
@@ -847,7 +817,7 @@ function RealisticMechanicalSystems.ConsoleCommands:reinitializeVehicle()
     ))
 end
 
----Re-resolves physical fluid capacities while preserving absolute liters
+---Re-resolves fluid capacities, keeping the liters
 function RealisticMechanicalSystems.ConsoleCommands:reinitializeFluidCapacities()
     if not g_currentMission:getIsServer() then
         local vehicle = self:getTargetVehicle()
@@ -873,6 +843,11 @@ end
 
 ---Prints the service and workshop state variables
 function RealisticMechanicalSystems.ConsoleCommands:getServiceState()
+    if not g_currentMission:getIsServer() then
+        local vehicle = self:getTargetVehicle()
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("getServiceState", nil, nil, vehicle) end
+        return
+    end
     local vehicle = self:getTargetVehicle()
     if not vehicle then return end
 
@@ -905,8 +880,9 @@ function RealisticMechanicalSystems.ConsoleCommands:getServiceState()
 
     print(string.format("Targets: serviceStart=%s serviceTarget=%s overhaulSystems=%d",
         RMS_Utils.serializeNumericMap(spec.pendingServiceClockStart), RMS_Utils.serializeNumericMap(spec.pendingServiceClockTarget), pendingOverhaulSystemsCount))
-    print(string.format("Levels: service engine=%.4f transmission=%.4f coolant=%.4f condition=%.4f",
-        spec.serviceLevel, spec.transmissionServiceLevel, spec.coolantServiceLevel, spec.conditionLevel or 0))
+    print(string.format("Levels: service engine=%.4f transmission=%.4f hydraulics=%.4f coolant=%.4f condition=%.4f",
+        spec.serviceLevel, spec.transmissionServiceLevel, spec.hydraulicServiceLevel, spec.coolantServiceLevel, spec.conditionLevel or 0))
+    print("Service calendar: " .. RMS_Utils.serializeNumericMap(spec.serviceCalendar))
     print(string.format("Queues: selected=%d inspection=%d repair=%d", #(spec.pendingSelectedBreakdowns or {}), #(spec.pendingInspectionQueue or {}), #(spec.pendingRepairQueue or {})))
     print(string.format("Breakdowns: active=%d selectedForRepair=%d", activeBreakdownsCount, selectedForRepairCount))
 
@@ -924,6 +900,11 @@ end
 ---Prints the service log, usage rms_showServiceLog [index]
 -- @param string? rawArgs console arguments
 function RealisticMechanicalSystems.ConsoleCommands:showServiceLog(rawArgs)
+    if not g_currentMission:getIsServer() then
+        local vehicle = self:getTargetVehicle()
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("showServiceLog", rawArgs, nil, vehicle) end
+        return
+    end
     local vehicle = self:getTargetVehicle()
     if not vehicle then return end
 
@@ -937,8 +918,6 @@ function RealisticMechanicalSystems.ConsoleCommands:showServiceLog(rawArgs)
     end
 
     ---Formats a log entry date as day, month and year
-    -- @param table? date date holding day, month and year
-    -- @return string text formatted date
     local function formatDate(date)
         if date == nil then
             return "n/a"
@@ -947,8 +926,6 @@ function RealisticMechanicalSystems.ConsoleCommands:showServiceLog(rawArgs)
     end
 
     ---Formats a value as a comma separated list, or as itself when it is not a table
-    -- @param any value value to format
-    -- @return string text formatted list
     local function formatList(value)
         if value == nil or #value == 0 then
             return "-"
@@ -957,9 +934,6 @@ function RealisticMechanicalSystems.ConsoleCommands:showServiceLog(rawArgs)
     end
 
     ---Prints one maintenance log entry, verbose adding its condition snapshot
-    -- @param integer index entry index
-    -- @param table entry maintenance log entry
-    -- @param boolean verbose true to print the condition data
     local function printLogEntry(index, entry, verbose)
         local cond = entry.conditionData or {}
         local selectedBreakdowns = cond.selectedBreakdowns or {}
@@ -974,8 +948,8 @@ function RealisticMechanicalSystems.ConsoleCommands:showServiceLog(rawArgs)
             tostring(entry.optionOne), tostring(entry.optionTwo), tostring(entry.optionThree), tostring(entry.location)))
 
         if verbose then
-            print(string.format("    conditionData: year=%s opHours=%s age=%s condition=%s service=%s reliability=%s maintainability=%s",
-                tostring(cond.year), tostring(cond.operatingHours), tostring(cond.age), tostring(cond.condition), tostring(cond.service), tostring(cond.reliability), tostring(cond.maintainability)))
+            print(string.format("    conditionData: year=%s opHours=%s age=%s condition=%s service=%s reliability=%s",
+                tostring(cond.year), tostring(cond.operatingHours), tostring(cond.age), tostring(cond.condition), tostring(cond.service), tostring(cond.reliability)))
             local systemsCount = 0
             for _, _ in pairs(cond.systems or {}) do
                 systemsCount = systemsCount + 1
@@ -989,8 +963,8 @@ function RealisticMechanicalSystems.ConsoleCommands:showServiceLog(rawArgs)
 
     if args ~= nil and args[1] ~= nil then
         local index = tonumber(args[1])
-        if index == nil or index < 1 or index > #log then
-            print(string.format("RMS Error: Invalid log index '%s'. Valid range: 1..%d", tostring(args[1]), #log))
+        if index == nil or index ~= math.floor(index) or index < 1 or index > #log then
+            print(string.format("RMS Error: Invalid integer log index '%s'. Valid range: 1..%d", tostring(args[1]), #log))
             return
         end
 
@@ -1008,6 +982,11 @@ end
 ---Prints the debug information of the vehicle
 -- @param string? rawArgs console arguments
 function RealisticMechanicalSystems.ConsoleCommands:getDebugVehicleInfo(rawArgs)
+    if not g_currentMission:getIsServer() then
+        local vehicle = self:getTargetVehicle()
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("getDebugVehicleInfo", rawArgs, nil, vehicle) end
+        return
+    end
     local args = parseArguments(rawArgs)
     local vehicle = self:getTargetVehicle()
     if not vehicle then return end
@@ -1021,76 +1000,13 @@ function RealisticMechanicalSystems.ConsoleCommands:getDebugVehicleInfo(rawArgs)
     print(string.format("Name: %s", vehicle:getFullName()))
     print(string.format("Type/Category: %s/%s", vehicle.type.name, storeItem.categoryName))
     print(string.format("Property state: %s", vehicle.propertyState))
+    local rating = spec.electricalRating
+    print(string.format("%d V circuit: battery %.0f Ah, alternator %.0f A, starter %.1f kW (%.0f A), %d work lamps, base load %.0f A, calculators %s",
+        12 * rating.seriesBatteries, rating.batteryCapacityAh, rating.alternatorA, rating.starterKw, rating.starterRatedA, rating.workLamps,
+        rating.baseLoadA, tostring(rating.hasCalculators)))
     print(string.format("Transmission: %s, %s, %s", motor.minForwardGearRatio, motor.gearType, motor.groupType))
     print(string.format("RMS transmission type: %s", tostring(vehicle:getTransmissionType())))
     print(string.format("XML/shop transmission name: %s", tostring(RealisticMechanicalSystems.getTransmissionNameFromXML(vehicle))))
-
-    local hasTurboBaseSound = false
-    local hasTurboCurrentConfigSound = false
-    local hasTurboAnyConfigSound = false
-    local hasTurboLoadedSample = false
-    local turboMotorConfigKey = "-"
-    local turboConfigIndices = {}
-    local motorConfigCount = 0
-
-    if vehicle.xmlFile ~= nil and vehicle.xmlFile.hasProperty ~= nil then
-        hasTurboBaseSound = vehicle.xmlFile:hasProperty("vehicle.motorized.sounds.blowOffValve")
-
-        local motorConfigIndex = 1
-        if vehicle.configurations ~= nil and vehicle.configurations.motor ~= nil then
-            motorConfigIndex = math.max(tonumber(vehicle.configurations.motor) or 1, 1)
-        end
-
-        turboMotorConfigKey = string.format("vehicle.motorized.motorConfigurations.motorConfiguration(%d)", motorConfigIndex - 1)
-        hasTurboCurrentConfigSound = vehicle.xmlFile:hasProperty(turboMotorConfigKey .. ".sounds.blowOffValve")
-
-        local maxScanCount = 64
-        for idx = 0, maxScanCount - 1 do
-            local cfgKey = string.format("vehicle.motorized.motorConfigurations.motorConfiguration(%d)", idx)
-            if not vehicle.xmlFile:hasProperty(cfgKey) then
-                break
-            end
-
-            motorConfigCount = motorConfigCount + 1
-            if vehicle.xmlFile:hasProperty(cfgKey .. ".sounds.blowOffValve") then
-                hasTurboAnyConfigSound = true
-                table.insert(turboConfigIndices, tostring(idx + 1))
-            end
-        end
-    end
-
-    local spec_motorized = vehicle.spec_motorized
-    if spec_motorized ~= nil and spec_motorized.samples ~= nil then
-        hasTurboLoadedSample = spec_motorized.samples.blowOffValve ~= nil
-    end
-
-    local turboConfigList = (#turboConfigIndices > 0) and table.concat(turboConfigIndices, ",") or "-"
-    local hasTurbo = hasTurboBaseSound or hasTurboCurrentConfigSound or hasTurboAnyConfigSound or hasTurboLoadedSample
-    print(string.format(
-        "Turbo detect: %s | base=%s | cfgCurrent=%s | cfgAny=%s (%s/%d) | sample=%s | motorCfgKey=%s",
-        tostring(hasTurbo),
-        tostring(hasTurboBaseSound),
-        tostring(hasTurboCurrentConfigSound),
-        tostring(hasTurboAnyConfigSound),
-        turboConfigList,
-        motorConfigCount,
-        tostring(hasTurboLoadedSample),
-        tostring(turboMotorConfigKey)
-    ))
-
-    for _, entry in ipairs(spec.maintenanceLog) do
-        for _, breakdown in pairs(entry.conditionData.selectedBreakdowns) do
-            print(breakdown)
-        end
-    end
-
-    if vehicle.spec_attacherJoints and vehicle.spec_attacherJoints.attachedImplements then
-        for _, v in pairs(vehicle.spec_attacherJoints.attachedImplements) do
-            if v.object.speedLimit ~= nil then
-                print(v.object:getFullName() .. " " .. v.object.speedLimit)
-            end
-	    end
-    end
 
     if args and args[1] then
         print("--------------------------")
@@ -1153,7 +1069,35 @@ function RealisticMechanicalSystems.ConsoleCommands:setDirtAmount(rawArgs)
     print(string.format("RMS: Set Dirt amount for '%s' to %.2f.", vehicle:getFullName(), value))
 end
 
----Sets the fuel level, usage rms_setFuelLevel [0.0-1.0 or 0..100]
+---Sets the paint wear, usage rms_setPaintWear [0-1]
+-- @param string? rawArgs console arguments
+function RealisticMechanicalSystems.ConsoleCommands:setPaintWear(rawArgs)
+    if not g_currentMission:getIsServer() then
+        local vehicle = self:getTargetVehicle()
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setPaintWear", rawArgs, nil, vehicle) end
+        return
+    end
+    local vehicle = self:getTargetVehicle()
+    if not vehicle then return end
+
+    if vehicle.spec_wearable == nil then
+        print(string.format("RMS Error: Vehicle '%s' has no paint wear.", vehicle:getFullName()))
+        return
+    end
+
+    local value = tonumber(parseArguments(rawArgs)[1])
+    if value == nil or value < 0 or value > 1 then
+        print("RMS Error: Invalid value. Usage: rms_setPaintWear <0.0-1.0>")
+        return
+    end
+
+    for _, nodeData in ipairs(vehicle.spec_wearable.wearableNodes) do
+        vehicle:setNodeWearAmount(nodeData, value, true)
+    end
+    print(string.format("RMS: Set paint wear for '%s' to %.2f.", vehicle:getFullName(), value))
+end
+
+---Sets fuel or traction charge, usage rms_setFuelLevel [0-1 or 1-100]
 -- @param string? rawArgs console arguments
 function RealisticMechanicalSystems.ConsoleCommands:setFuelLevel(rawArgs)
     if not g_currentMission:getIsServer() then
@@ -1169,7 +1113,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setFuelLevel(rawArgs)
     local args = parseArguments(rawArgs)
     if not args or not args[1] then
         print("RMS Error: Usage: rms_setFuelLevel <value>")
-        print("Value: 0.0..1.0 or 0..100 (percent)")
+        print("Value: 0..1 is a fraction; above 1..100 is a percentage (use 0.01 for 1%).")
         print("Example: rms_setFuelLevel 0.25")
         print("Example: rms_setFuelLevel 25")
         return
@@ -1218,225 +1162,13 @@ function RealisticMechanicalSystems.ConsoleCommands:setFuelLevel(rawArgs)
     local resultLevel = tonumber(vehicle:getFillUnitFillLevel(fillUnitIndex)) or targetLevel
     local resultRatio = resultLevel / math.max(capacity, 0.0001)
     print(string.format(
-        "RMS: Fuel level set on '%s' -> %.1f / %.1f L (%.1f%%), fillType=%s, fillUnit=%s",
+        "RMS: Energy fill level set on '%s' -> %.1f / %.1f (%.1f%%), fillType=%s, fillUnit=%s",
         vehicle:getFullName(),
         resultLevel,
         capacity,
         resultRatio * 100,
         tostring(fillType),
         tostring(fillUnitIndex)
-    ))
-end
-
----Sets the engine power, usage rms_setHorsePower [hp]
--- @param string? rawArgs console arguments
-function RealisticMechanicalSystems.ConsoleCommands:setHorsePower(rawArgs)
-    if not g_currentMission:getIsServer() then
-        local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setHorsePower", rawArgs, nil, vehicle) end
-        return
-    end
-
-    local vehicle = self:getTargetVehicle()
-    if not vehicle then
-        return
-    end
-
-    local args = parseArguments(rawArgs)
-    if not args or not args[1] then
-        print("RMS Error: Usage: rms_setHorsePower <hp>")
-        return
-    end
-
-    local targetHp = tonumber(args[1])
-    if targetHp == nil or targetHp <= 0 then
-        print("RMS Error: Horsepower must be a positive number.")
-        return
-    end
-
-    local motor = vehicle.getMotor ~= nil and vehicle:getMotor() or nil
-    if motor == nil or motor.torqueCurve == nil or motor.torqueCurve.keyframes == nil then
-        print(string.format("RMS Error: Vehicle '%s' has no editable motor torque curve.", vehicle:getFullName()))
-        return
-    end
-
-    local currentPeakKw = tonumber(motor.peakMotorPower) or 0
-    if currentPeakKw <= 0 then
-        print(string.format("RMS Error: Vehicle '%s' has invalid peak motor power.", vehicle:getFullName()))
-        return
-    end
-
-    local targetPeakKw = targetHp / 1.36
-    local scale = targetPeakKw / currentPeakKw
-    local scaledKeys = 0
-
-    for _, keyframe in ipairs(motor.torqueCurve.keyframes) do
-        if type(keyframe) == "table" then
-            if keyframe[1] ~= nil then
-                keyframe[1] = keyframe[1] * scale
-                scaledKeys = scaledKeys + 1
-            elseif keyframe.value ~= nil then
-                keyframe.value = keyframe.value * scale
-                scaledKeys = scaledKeys + 1
-            end
-        end
-    end
-
-    if scaledKeys == 0 then
-        print(string.format("RMS Error: Failed to scale torque curve for '%s'.", vehicle:getFullName()))
-        return
-    end
-
-    motor.peakMotorTorque = motor.torqueCurve:getMaximum()
-    motor.peakMotorPower = 0
-    motor.peakMotorPowerRotSpeed = 0
-
-    local numKeyFrames = #motor.torqueCurve.keyframes
-    if numKeyFrames >= 2 then
-        for i = 2, numKeyFrames do
-            local v0 = motor.torqueCurve.keyframes[i - 1]
-            local v1 = motor.torqueCurve.keyframes[i]
-            local torque0 = motor.torqueCurve:getFromKeyframes(v0, v0, i - 1, i - 1, 0)
-            local torque1 = motor.torqueCurve:getFromKeyframes(v1, v1, i, i, 0)
-            local rpm
-            local torque
-
-            if math.abs(torque0 - torque1) > 0.0001 then
-                rpm = (v1.time * torque0 - v0.time * torque1) / (2.0 * (torque0 - torque1))
-                rpm = math.min(math.max(rpm, v0.time), v1.time)
-                torque = motor.torqueCurve:getFromKeyframes(v0, v1, i - 1, i, (v1.time - rpm) / (v1.time - v0.time))
-            else
-                rpm = v0.time
-                torque = torque0
-            end
-
-            local power = torque * rpm
-            if power > motor.peakMotorPower then
-                motor.peakMotorPower = power
-                motor.peakMotorPowerRotSpeed = rpm
-            end
-        end
-
-        motor.peakMotorPower = motor.peakMotorPower * math.pi / 30
-        motor.peakMotorPowerRotSpeed = motor.peakMotorPowerRotSpeed * math.pi / 30
-    elseif numKeyFrames == 1 then
-        local v = motor.torqueCurve.keyframes[1]
-        local rotSpeed = v.time * math.pi / 30
-        local torque = motor.torqueCurve:getFromKeyframes(v, v, 1, 1, 0)
-        motor.peakMotorPower = rotSpeed * torque
-        motor.peakMotorPowerRotSpeed = rotSpeed
-    end
-
-    if vehicle.updateMotorProperties ~= nil then
-        vehicle:updateMotorProperties()
-    end
-
-    ---Recomputes the peak power of the vehicle and of its attached implements
-    -- @param table? rootVehicle vehicle at the head of the chain
-    local function refreshAttachedPeakPower(rootVehicle)
-        if rootVehicle == nil or rootVehicle.getAttachedImplements == nil then
-            return
-        end
-
-        local rootPeakMotorPower = rootVehicle.getMotor ~= nil and rootVehicle:getMotor().peakMotorPower or math.huge
-        for _, implement in pairs(rootVehicle:getAttachedImplements()) do
-            local object = implement ~= nil and implement.object or nil
-            if object ~= nil then
-                if object.spec_powerConsumer ~= nil then
-                    object.spec_powerConsumer.sourceMotorPeakPower = rootPeakMotorPower
-                end
-                refreshAttachedPeakPower(object)
-            end
-        end
-    end
-
-    refreshAttachedPeakPower(vehicle)
-
-    local specMotorized = vehicle.spec_motorized
-    if specMotorized ~= nil and specMotorized.motorizedNode ~= nil and I3DUtil ~= nil and I3DUtil.wakeUpObject ~= nil then
-        I3DUtil.wakeUpObject(specMotorized.motorizedNode)
-    end
-
-    print(string.format(
-        "RMS: Set horsepower for '%s' to %.1f hp (was %.1f hp).",
-        vehicle:getFullName(),
-        (tonumber(motor.peakMotorPower) or 0) * 1.36,
-        currentPeakKw * 1.36
-    ))
-end
-
----Sets the maximum force of the attached plow, usage rms_setPlowMaxForce [kN]
--- @param string? rawArgs console arguments
-function RealisticMechanicalSystems.ConsoleCommands:setPlowMaxForce(rawArgs)
-    if not g_currentMission:getIsServer() then
-        local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setPlowMaxForce", rawArgs, nil, vehicle) end
-        return
-    end
-
-    local vehicle = self:getTargetVehicle()
-    if not vehicle then
-        return
-    end
-
-    local args = parseArguments(rawArgs)
-    if not args or not args[1] then
-        print("RMS Error: Usage: rms_setPlowMaxForce <kN>")
-        return
-    end
-
-    local targetMaxForce = tonumber(args[1])
-    if targetMaxForce == nil or targetMaxForce < 0 then
-        print("RMS Error: Max force must be a number >= 0.")
-        return
-    end
-
-    local implement = nil
-    if vehicle.getSelectedImplement ~= nil then
-        local selectedImplement = vehicle:getSelectedImplement()
-        local selectedObject = selectedImplement ~= nil and selectedImplement.object or nil
-        if selectedObject ~= nil and selectedObject.spec_powerConsumer ~= nil then
-            implement = selectedObject
-        end
-    end
-
-    if implement == nil and vehicle.getAttachedImplements ~= nil then
-        for _, attachedImplement in pairs(vehicle:getAttachedImplements()) do
-            local object = attachedImplement ~= nil and attachedImplement.object or nil
-            if object ~= nil and object.spec_plow ~= nil and object.spec_powerConsumer ~= nil then
-                implement = object
-                break
-            end
-        end
-    end
-
-    if implement == nil and vehicle.getAttachedImplements ~= nil then
-        for _, attachedImplement in pairs(vehicle:getAttachedImplements()) do
-            local object = attachedImplement ~= nil and attachedImplement.object or nil
-            if object ~= nil and object.spec_powerConsumer ~= nil then
-                implement = object
-                break
-            end
-        end
-    end
-
-    if implement == nil or implement.spec_powerConsumer == nil then
-        print(string.format("RMS Error: No attached plow/implement with powerConsumer found for '%s'.", vehicle:getFullName()))
-        return
-    end
-
-    local specPowerConsumer = implement.spec_powerConsumer
-    local previousMaxForce = tonumber(specPowerConsumer.maxForce) or 0
-    specPowerConsumer.maxForce = targetMaxForce
-    if specPowerConsumer.maxForceOrig ~= nil then
-        specPowerConsumer.maxForceOrig = targetMaxForce
-    end
-
-    print(string.format(
-        "RMS: Set maxForce for '%s' to %.2f kN (was %.2f kN).",
-        implement.getFullName ~= nil and implement:getFullName() or tostring(implement.configFileName or "implement"),
-        specPowerConsumer.maxForce,
-        previousMaxForce
     ))
 end
 
@@ -1471,12 +1203,12 @@ function RealisticMechanicalSystems.ConsoleCommands:resetFactorStats()
     print(string.format("RMS: Factor stats reset for '%s'.", vehicle:getFullName()))
 end
 
----Switches the debug HUD view, usage rms_toggleHudDebugView [default|stats|toggle]
+---Switches the debug HUD view, usage rms_toggleHudDebugView [view]
 -- @param string? rawArgs console arguments
 function RealisticMechanicalSystems.ConsoleCommands:toggleHudDebugView(rawArgs)
     local args = parseArguments(rawArgs)
     local requestedMode = args and args[1] and string.lower(tostring(args[1])) or nil
-    local currentMode = tostring((RMS_Hud ~= nil and RMS_Hud.debugViewMode) or "default")
+    local currentMode = tostring(RMS_Hud.debugViewMode or "default")
     local nextMode = "default"
 
     if requestedMode == nil or requestedMode == "" or requestedMode == "toggle" then
@@ -1494,82 +1226,12 @@ function RealisticMechanicalSystems.ConsoleCommands:toggleHudDebugView(rawArgs)
         return
     end
 
-    if RMS_Hud ~= nil then
-        RMS_Hud.debugViewMode = nextMode
-    end
+    RMS_Hud.debugViewMode = nextMode
 
     print(string.format("RMS: HUD debug view mode = %s", nextMode))
 end
 
----Excludes or includes the vehicle in RMS, usage rms_setExcluded <true|false>
--- @param string? rawArgs console arguments
-function RealisticMechanicalSystems.ConsoleCommands:setExcluded(rawArgs)
-    if not g_currentMission:getIsServer() then
-        local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setExcluded", rawArgs, nil, vehicle) end
-        return
-    end
-
-    local vehicle = self:getTargetVehicle()
-    if not vehicle then return end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local args = parseArguments(rawArgs)
-    local rawValue = args and args[1] and string.lower(tostring(args[1])) or nil
-
-    if rawValue == nil then
-        print(string.format(
-            "RMS: '%s' exclusion state: user=%s, rule=%s, unsupported=%s, effective=%s. Usage: rms_setExcluded <true|false>",
-            vehicle:getFullName(),
-            tostring(spec.isExcludedByUser),
-            tostring(spec.isExcludedByRule == true),
-            tostring(spec.isExcludedByDefault == true),
-            tostring(spec.isExcludedVehicle == true)
-        ))
-        return
-    end
-
-    local isExcluded
-    if rawValue == "true" or rawValue == "1" or rawValue == "on" or rawValue == "yes" then
-        isExcluded = true
-    elseif rawValue == "false" or rawValue == "0" or rawValue == "off" or rawValue == "no" then
-        isExcluded = false
-    else
-        print("RMS Error: Usage: rms_setExcluded <true|false>")
-        return
-    end
-
-    local changed, reason = vehicle:setRMSUserExcluded(isExcluded)
-    if reason == "default" then
-        print(string.format("RMS: '%s' is not supported by RMS and cannot be managed.", vehicle:getFullName()))
-        return
-    end
-
-    if not changed then
-        print(string.format("RMS: '%s' is already %s by the user flag.", vehicle:getFullName(), isExcluded and "excluded" or "included"))
-        return
-    end
-
-    print(string.format("RMS: '%s' is now %s.", vehicle:getFullName(), isExcluded and "excluded from RMS" or "managed by RMS"))
-end
-
----Toggles the RMS debug mode
-function RealisticMechanicalSystems.ConsoleCommands:debug()
-    if not g_currentMission:getIsServer() then
-        RMS_ConsoleCommandEvent.sendToServer("debug", nil, nil, nil)
-        return
-    end
-    if RMS_Config.DEBUG then
-        RMS_Config.DEBUG = false
-    else
-        RMS_Config.DEBUG = true
-    end
-    if g_server ~= nil and RMS_SettingsSyncEvent ~= nil then
-        g_server:broadcastEvent(RMS_SettingsSyncEvent.new())
-    end
-end
-
----Forces the exhaust smoke drawn on this machine, to tune the plume without hunting for the matching engine
+---Forces the exhaust smoke this computer draws on every vehicle
 -- @param string? rawArgs "off", or an opacity, a gas flow and a vapour depth, a dash keeping the engine value
 -- @param any ... further console arguments
 function RealisticMechanicalSystems.ConsoleCommands:exhaustOverride(rawArgs, ...)
@@ -1600,29 +1262,33 @@ function RealisticMechanicalSystems.ConsoleCommands:exhaustOverride(rawArgs, ...
         tostring(override.opacity or "engine"), tostring(override.flow or "engine"), tostring(override.vapour or "engine")))
 end
 
+-- parsing helpers shared with the development console tools
+RealisticMechanicalSystems.ConsoleCommands.parseArguments = parseArguments
+RealisticMechanicalSystems.ConsoleCommands.resolvePathParent = resolvePathParent
+
 addConsoleCommand("rms_listBreakdowns", "Lists all available breakdown IDs.", "listBreakdowns", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_addBreakdown", "Adds a breakdown. Usage: rms_addBreakdown [id] [stage]", "addBreakdown", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_removeBreakdown", "Removes a breakdown. Usage: rms_removeBreakdown [id]", "removeBreakdown", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_advanceBreakdown", "Advances a breakdown to the next stage. Usage: rms_advanceBreakdown [id]", "changeBreakdownStage", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_advanceBreakdown", "Changes breakdown stages. Usage: rms_advanceBreakdown [id] [stage|reverse]", "changeBreakdownStage", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setCondition", "Sets condition for all enabled systems. Usage: rms_setCondition [0.0-1.0]", "setCondition", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSystemCondition", "Sets system condition. Usage: rms_setSystemCondition [system] [0.0-1.0]", "setSystemCondition", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSystemStress", "Sets system stress. Usage: rms_setSystemStress [system] [>=0.0]", "setSystemStress", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_setService", "Sets vehicle service clocks. Usage: rms_setService [0.0-1.0] [engine|transmission|coolant]", "setService", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_resetVehicle", "Resets vehicle state.", "resetVehicle", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_reinitializeVehicle", "Reinitializes vehicle from vanilla resale price logic.", "reinitializeVehicle", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_setService", "Sets vehicle service clocks. Usage: rms_setService [0.0-1.0] [engine|transmission|hydraulic|coolant]",
+    "setService", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_reinitializeVehicle", "Reinitializes vehicle from vanilla resale price logic; unavailable during workshop service.",
+    "reinitializeVehicle", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_reinitializeFluidCapacities", "Re-resolves physical fluid capacities while preserving liters.", "reinitializeFluidCapacities", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_getServiceState", "Prints current service/workshop state variables.", "getServiceState", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_showServiceLog", "Shows service log. Usage: rms_showServiceLog [index]", "showServiceLog", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_getDebugVehicleInfo", "Vehicle debug info", "getDebugVehicleInfo", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_showServiceLog", "Shows service log. Usage: rms_showServiceLog [integer index]", "showServiceLog", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_getDebugVehicleInfo", "Prints how RMS reads the vehicle. Usage: rms_getDebugVehicleInfo [1 to list its specializations]",
+    "getDebugVehicleInfo", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setDirtAmount", "Sets vehicle dirt amount. Usage: rms_setDirtAmount [0.0-1.0]", "setDirtAmount", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_setFuelLevel", "Sets vehicle fuel level. Usage: rms_setFuelLevel [0.0-1.0 or 0..100]", "setFuelLevel", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_setHorsePower", "Sets horsepower on current vehicle. Usage: rms_setHorsePower [hp]", "setHorsePower", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_setPlowMaxForce", "Sets maxForce on selected/attached plow. Usage: rms_setPlowMaxForce [kN]", "setPlowMaxForce", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_setPaintWear", "Sets vehicle paint wear. Usage: rms_setPaintWear [0.0-1.0]", "setPaintWear", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_setFuelLevel", "Sets fuel or traction charge. Usage: rms_setFuelLevel [fraction 0..1 or percentage >1..100]", "setFuelLevel", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_resetFactorStats", "Resets accumulated factor stats for current vehicle.", "resetFactorStats", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_toggleHudDebugView", "Switch debug HUD view. Usage: rms_toggleHudDebugView [default|stats|toggle]", "toggleHudDebugView", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_setExcluded", "Excludes or includes the current vehicle in RMS. Usage: rms_setExcluded <true|false>", "setExcluded", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_debug", "Enbales/disabled RMS debug", "debug", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_setConfigVar", "Sets RMS_Config variable. Usage: rms_setConfigVar <path> <value>", "setConfigVar", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_setSpecVar", "Sets RMS specialization variable on current vehicle. Usage: rms_setSpecVar <path> <value>", "setSpecVar", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_setSpecVar", "Sets physical RMS vehicle state, including raw oil temperatures. Usage: rms_setSpecVar <path> <value>", "setSpecVar", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_printSpecVar", "Prints RMS specialization variable on current vehicle. Usage: rms_printSpecVar <path>", "printSpecVar", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_exhaustOverride", "Forces the exhaust smoke drawn on this machine. Usage: rms_exhaustOverride <opacity 0-1|-> [flow 0-1|-] [vapour >=0|-] | off", "exhaustOverride", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_exhaustOverride",
+    "Forces the exhaust smoke this computer draws on every vehicle. Usage: rms_exhaustOverride <opacity 0-1|-> [flow 0-1|-] [vapour >=0|-] | off",
+    "exhaustOverride", RealisticMechanicalSystems.ConsoleCommands)

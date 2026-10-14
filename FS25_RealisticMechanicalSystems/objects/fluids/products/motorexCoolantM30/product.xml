@@ -39,12 +39,12 @@
             <fillUnitConfiguration name="5 L" price="0" isDefault="true">
                 <objectChange node="mediumCanCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="mediumVisualLink" visibilityActive="true" visibilityInactive="false"/>
-                <objectChange node="fluidContainer_component1" massActive="1" centerOfMassActive="0 0.1943 0"/>
+                <objectChange node="fluidContainer_component1" massActive="0.25" centerOfMassActive="0 0.1166 0"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="25 L" price="289">
                 <objectChange node="largeCanCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="largeVisualLink" visibilityActive="true" visibilityInactive="false"/>
-                <objectChange node="fluidContainer_component1" massActive="1"/>
+                <objectChange node="fluidContainer_component1" massActive="1.2" centerOfMassActive="0 0.21 0"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="200 L" price="2545">
                 <objectChange node="drumPalletCollision" compoundChildActive="true" compoundChildInactive="false"/>
@@ -53,7 +53,7 @@
                 <objectChange node="drumCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="drumVisualLink" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
-                <objectChange node="fluidContainer_component1" massActive="1"/>
+                <objectChange node="fluidContainer_component1" massActive="43"/>
             </fillUnitConfiguration>
     </fillUnitConfigurations></fillUnit>
     <pallet/>

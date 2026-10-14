@@ -1,0 +1,31 @@
+<handTool type="rmsFluidCanister" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/handTool.xsd">
+    <!-- The 25 liter can while a player carries it, some 25 kg slowing the walk. Never sold nor saved. -->
+    <storeData>
+        <name>$l10n_rms_fluid_container_typedesc</name>
+        <image>objects/fluids/products/motorexFarmerPro/store_motorexFarmerPro.dds</image>
+        <price>0</price>
+        <lifetime>1000</lifetime>
+        <dailyUpkeep>0</dailyUpkeep>
+        <rotation>0</rotation>
+        <brand>LIZARD</brand>
+        <species>HANDTOOL</species>
+        <category>handtoolsMisc</category>
+        <showInStore>false</showInStore>
+        <canBeSold>false</canBeSold>
+    </storeData>
+
+    <base canBeDropped="false" canBeSaved="false" walkMultiplier="0.8" runMultiplier="0.7" jumpMultiplier="0.6">
+        <filename>objects/fluids/shared/canisterHand25L.i3d</filename>
+        <typeDesc>$l10n_rms_fluid_container_typedesc</typeDesc>
+        <graphics node="graphics" lockFirstPerson="true"/>
+        <handNode node="handNode"/>
+        <firstPersonNode node="firstPersonNode"/>
+    </base>
+
+    <i3dMappings>
+        <i3dMapping id="graphics" node="0>0"/>
+        <i3dMapping id="visualLink" node="0>0|0"/>
+        <i3dMapping id="handNode" node="0>1"/>
+        <i3dMapping id="firstPersonNode" node="0>2"/>
+    </i3dMappings>
+</handTool>

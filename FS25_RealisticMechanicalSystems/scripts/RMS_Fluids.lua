@@ -44,8 +44,7 @@ RMS_Fluids.SYSTEM_TO_CIRCUIT = {
     hydraulics = "hydraulicFluid"
 }
 
--- liters of a 100 hp machine of each family, from the real machines of docs/RMS_FLUID_CAPACITY_REFERENCES.md;
--- maxPower is twice the most powerful of them, the volumes no longer growing past it
+-- liters of a 100 hp machine of each family, from docs/RMS_FLUID_CAPACITY_REFERENCES.md
 RMS_Fluids.PROFILES = {
     ROAD_LIGHT =          { engineOil = 5.9,  coolant = 11.0, transmissionOil = 7.1,  hydraulicFluid = 0.0,   maxPower = 950,
                             exponents = { engineOil = 0.4, coolant = 0.55, transmissionOil = 0.3 } },
@@ -126,8 +125,7 @@ RMS_Fluids.CATEGORY_PROFILES = {
     TRUCKS = "ROAD"
 }
 
--- tractors are the machines whose transmission and hydraulics may share one sump; these brands keep
--- two separate oils, every other tractor shares one, checked in docs/RMS_FLUID_CAPACITY_REFERENCES.md
+-- tractor brands keeping two separate oils, every other tractor sharing one sump
 RMS_Fluids.TRACTOR_CATEGORIES = { TRACTORSS = true, TRACTORSM = true, TRACTORSL = true }
 RMS_Fluids.SEPARATE_SUMP_TRACTOR_BRANDS = { FENDT = true, VALTRA = true, LINDNER = true }
 RMS_Fluids.COMMON_SUMP_TEXT_KEY = "rms_fluid_circuit_transmissionHydraulic"
@@ -215,15 +213,13 @@ RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS = {
 
 RMS_Fluids._warnedUnknownVehicles = {}
 
+---
 local function clamp(value, minimum, maximum)
     value = tonumber(value) or minimum
     return math.max(minimum, math.min(value, maximum))
 end
 
----Returns the circuit holding a circuit's oil, the transmission sump for the hydraulics of a common sump
--- @param table? spec vehicle spec
--- @param string circuit circuit key
--- @return string sumpCircuit circuit whose capacity, level and mixture hold the oil
+---Returns the circuit holding a circuit's oil
 local function getSpecSumpCircuit(spec, circuit)
     if circuit == "hydraulicFluid" and spec ~= nil and spec.hasCommonSump then
         return "transmissionOil"
@@ -231,6 +227,7 @@ local function getSpecSumpCircuit(spec, circuit)
     return circuit
 end
 
+---
 local function copyCapacities(source)
     local result = {}
     for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
@@ -251,10 +248,7 @@ function RMS_Fluids.getVehicleXMLKey(vehicle)
         return ""
     end
 
-    local storeItem = nil
-    if g_storeManager ~= nil and vehicle.configFileName ~= nil then
-        storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
-    end
+    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
 
     if storeItem ~= nil then
         local prefix = ""
@@ -273,7 +267,7 @@ end
 -- @param table? vehicle vehicle
 -- @return string category upper-case category
 function RMS_Fluids.getVehicleCategory(vehicle)
-    if vehicle == nil or g_storeManager == nil or vehicle.configFileName == nil then
+    if vehicle == nil or vehicle.configFileName == nil then
         return ""
     end
 
@@ -295,7 +289,7 @@ function RMS_Fluids.getVehicleCategory(vehicle)
     return string.upper(tostring(storeItem.categoryName or ""))
 end
 
----Returns the advertised power of the engine fitted, the torque curve telling it when the shop leaves it out
+---Returns the advertised power of the engine fitted
 -- @param table vehicle vehicle
 -- @return float power engine power in hp
 function RMS_Fluids.getEnginePower(vehicle)
@@ -309,7 +303,7 @@ function RMS_Fluids.getEnginePower(vehicle)
     return vehicle.spec_motorized.motor.peakMotorPower * RMS_Fluids.KW_TO_HP
 end
 
----Tells whether a road vehicle is a heavy truck, from its fifth wheel or its empty mass
+---Tells whether a road vehicle is a heavy truck
 -- @param table vehicle vehicle
 -- @return boolean isHeavy true for a heavy truck
 function RMS_Fluids.getIsHeavyRoadVehicle(vehicle)
@@ -329,7 +323,7 @@ function RMS_Fluids.getIsHeavyRoadVehicle(vehicle)
     return false
 end
 
----Tells whether a tractor's transmission and hydraulics share one sump, which its brand decides
+---Tells whether a tractor's transmission and hydraulics share one sump
 -- @param table vehicle vehicle
 -- @return boolean hasCommonSump true for one oil serving both
 function RMS_Fluids.getHasCommonSump(vehicle)
@@ -339,7 +333,7 @@ function RMS_Fluids.getHasCommonSump(vehicle)
     return not RMS_Fluids.SEPARATE_SUMP_TRACTOR_BRANDS[g_brandManager:getBrandByIndex(vehicle:getBrand()).name]
 end
 
----Returns the circuit holding a circuit's oil, the transmission sump for the hydraulics of a common sump
+---Returns the circuit holding a circuit's oil
 -- @param table? vehicle vehicle
 -- @param string circuit circuit key
 -- @return string sumpCircuit circuit whose capacity, level and mixture hold the oil
@@ -347,7 +341,15 @@ function RMS_Fluids.getSumpCircuit(vehicle, circuit)
     return getSpecSumpCircuit(vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil, circuit)
 end
 
----Returns the circuits that hold their own oil, the hydraulics of a common sump drawing on the transmission's
+---Tells whether a vehicle holds a circuit of its own
+-- @param table vehicle vehicle
+-- @param string circuit circuit key
+-- @return boolean hasCircuit true when the circuit holds its own fluid
+function RMS_Fluids.hasCircuit(vehicle, circuit)
+    return RMS_Fluids.getSumpCircuit(vehicle, circuit) == circuit and RMS_Fluids.getCapacity(vehicle, circuit) > 0
+end
+
+---Returns the circuits that hold their own oil
 -- @param table vehicle vehicle
 -- @return table circuits circuit keys in display order
 function RMS_Fluids.getSumpCircuits(vehicle)
@@ -373,6 +375,18 @@ function RMS_Fluids.getCircuitTextKey(vehicle, circuit, textKey)
     return textKey
 end
 
+---Returns the text warning what an unsuited fluid does to a circuit
+-- @param table vehicle vehicle
+-- @param string circuit circuit key
+-- @return string textKey warning before the fluid is poured
+function RMS_Fluids.getIncompatibleMessageKey(vehicle, circuit)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec.hasCommonSump and getSpecSumpCircuit(spec, circuit) == "transmissionOil" then
+        return "rms_fluid_incompatible_message_transmissionHydraulic"
+    end
+    return "rms_fluid_incompatible_message_" .. circuit
+end
+
 ---Scales the volumes of a profile to an engine power, rounded to the deciliter
 -- @param table profile capacity profile
 -- @param float power engine power in hp
@@ -387,7 +401,7 @@ function RMS_Fluids.getProfileCapacities(profile, power)
     return capacities
 end
 
----Returns the family of machines a vehicle belongs to, the road ones split on the vehicle itself
+---Returns the family of machines a vehicle belongs to
 -- @param table vehicle vehicle
 -- @return string profileName capacity profile name
 function RMS_Fluids.getProfileName(vehicle)
@@ -401,9 +415,7 @@ function RMS_Fluids.getProfileName(vehicle)
         if not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
             and not RMS_Fluids._warnedUnknownVehicles[warningKey] then
             RMS_Fluids._warnedUnknownVehicles[warningKey] = true
-            if Logging ~= nil and Logging.warning ~= nil then
-                Logging.warning("RMS: no fluid capacity profile for category '%s' (%s); using TRACTOR", category, warningKey)
-            end
+            Logging.warning("RMS: no fluid capacity profile for category '%s' (%s); using TRACTOR", category, warningKey)
         end
     elseif profileName == "ROAD" then
         profileName = RMS_Fluids.getIsHeavyRoadVehicle(vehicle) and "ROAD_HEAVY" or "ROAD_LIGHT"
@@ -417,14 +429,18 @@ end
 -- @return string source override key or profile name
 function RMS_Fluids.resolveCapacities(vehicle)
     local xmlKey = RMS_Fluids.getVehicleXMLKey(vehicle)
-    local overrides = RMS_Config ~= nil and RMS_Config.FLUIDS ~= nil and RMS_Config.FLUIDS.CAPACITY_OVERRIDES or nil
-    local override = type(overrides) == "table" and overrides[xmlKey] or nil
+    local override = RMS_Config.FLUIDS.CAPACITY_OVERRIDES[xmlKey]
     if type(override) == "table" then
         return copyCapacities(override), "override:" .. xmlKey
     end
 
     local profileName = RMS_Fluids.getProfileName(vehicle)
-    return RMS_Fluids.getProfileCapacities(RMS_Fluids.PROFILES[profileName], RMS_Fluids.getEnginePower(vehicle)), "profile:" .. profileName
+    local capacities = RMS_Fluids.getProfileCapacities(RMS_Fluids.PROFILES[profileName], RMS_Fluids.getEnginePower(vehicle))
+    -- an electric motor holds no engine oil
+    if vehicle.spec_RealisticMechanicalSystems.isElectricVehicle then
+        capacities.engineOil = 0
+    end
+    return capacities, "profile:" .. profileName
 end
 
 ---Initializes or restores a vehicle's physical fluid data
@@ -496,7 +512,7 @@ end
 -- @param table vehicle vehicle
 function RMS_Fluids.reinitializeVehicleCapacities(vehicle)
     RMS_Fluids.initializeVehicle(vehicle, true)
-    if vehicle ~= nil and vehicle.isServer and RealisticMechanicalSystems ~= nil then
+    if vehicle ~= nil and vehicle.isServer then
         RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
     end
 end
@@ -520,6 +536,21 @@ end
 function RMS_Fluids.getLevel(vehicle, circuit)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return clamp(spec[RMS_Fluids.CIRCUITS[getSpecSumpCircuit(spec, circuit)].levelKey] or 1, 0, 1)
+end
+
+-- level gauge of every screen: the stretch a dipstick shows around its two marks
+RMS_Fluids.GAUGE_MIN_POSITION = 0.4
+RMS_Fluids.GAUGE_MAX_POSITION = 0.8
+
+---Reads a level on the level gauge
+-- @param float level fill ratio of the circuit
+-- @return float fill share of the bar the level fills, 0 when it does not reach the gauge
+-- @return table color colour of the fill: the green of the game from the MIN mark up, the warning colour below
+function RMS_Fluids.getGaugeFill(level)
+    local minMark = RMS_Config.FLUIDS.LEVEL_MIN_MARK
+    local stretch = (1 - minMark) / (RMS_Fluids.GAUGE_MAX_POSITION - RMS_Fluids.GAUGE_MIN_POSITION)
+    local fill = RMS_Fluids.GAUGE_MAX_POSITION - (1 - level) / stretch
+    return math.max(fill, 0), level < minMark and RMS_Breakdowns.COLORS.WARNING or HUD.COLOR.ACTIVE
 end
 
 ---Returns the current circuit quantity in liters
@@ -631,7 +662,7 @@ function RMS_Fluids.addLiters(vehicle, circuit, liters, productKey, skipDebtRedu
     end
 
     RMS_Fluids.updateEffects(vehicle)
-    if vehicle.isServer and RealisticMechanicalSystems ~= nil then
+    if vehicle.isServer then
         RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
     end
     return accepted
@@ -676,7 +707,7 @@ function RMS_Fluids.replaceCircuit(vehicle, circuit)
         end
     end
     RMS_Fluids.updateEffects(vehicle)
-    if vehicle.isServer and RealisticMechanicalSystems ~= nil then
+    if vehicle.isServer then
         RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
     end
 end
@@ -688,8 +719,7 @@ end
 -- @return float rate normalized circuit share per hour
 function RMS_Fluids.getBreakdownLeakRate(breakdownId, breakdown, circuit)
     local definition = RMS_Fluids.CIRCUITS[circuit]
-    local registry = RMS_Breakdowns ~= nil and RMS_Breakdowns.BreakdownRegistry or nil
-    local breakdownDef = registry ~= nil and registry[breakdownId] or nil
+    local breakdownDef = RMS_Breakdowns.BreakdownRegistry[breakdownId]
     local stage = math.max(math.floor(tonumber(breakdown ~= nil and breakdown.stage or 1) or 1), 1)
     local stageDef = breakdownDef ~= nil and breakdownDef.stages ~= nil and breakdownDef.stages[stage] or nil
     if definition == nil or definition.leakEffectId == nil or stageDef == nil then
@@ -877,6 +907,22 @@ function RMS_Fluids.deserializeLeakDebt(serialized)
     return debts
 end
 
+-- circuits each maintenance level changes the fluid of, the others being topped up
+local MAINTENANCE_CHANGES = {
+    STANDARD = { engineOil = true },
+    EXTENDED = { engineOil = true, transmissionOil = true, hydraulicFluid = true },
+    PREVENTIVE = { engineOil = true, transmissionOil = true, hydraulicFluid = true, coolant = true }
+}
+
+---Returns what a maintenance level does to a circuit
+-- @param string maintenanceType maintenance type
+-- @param string circuit circuit
+-- @return string mode replace when its fluid is changed, topUp otherwise
+function RMS_Fluids.getMaintenanceMode(maintenanceType, circuit)
+    local level = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.MAINTENANCE_TYPES, maintenanceType)
+    return MAINTENANCE_CHANGES[level][circuit] and "replace" or "topUp"
+end
+
 ---Builds the exact physical fluid requirements for a service
 -- @param table vehicle vehicle
 -- @param string serviceType service status
@@ -888,6 +934,7 @@ function RMS_Fluids.getServiceRequirements(vehicle, serviceType, optionOne, opti
     local requirements = {}
     local states = RealisticMechanicalSystems.STATUS
 
+    ---
     local function append(circuit, mode, liters, breakdownIds)
         circuit = RMS_Fluids.getSumpCircuit(vehicle, circuit)
         liters = math.max(tonumber(liters) or 0, 0)
@@ -901,6 +948,7 @@ function RMS_Fluids.getServiceRequirements(vehicle, serviceType, optionOne, opti
         end
     end
 
+    ---
     local function appendAll(modeForCircuit)
         for _, circuit in ipairs(RMS_Fluids.getSumpCircuits(vehicle)) do
             local mode = modeForCircuit(circuit)
@@ -917,20 +965,9 @@ function RMS_Fluids.getServiceRequirements(vehicle, serviceType, optionOne, opti
             return "topUp"
         end)
     elseif serviceType == states.MAINTENANCE then
-        if optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.STANDARD then
-            appendAll(function(circuit)
-                return circuit == "engineOil" and "replace" or "topUp"
-            end)
-        elseif optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.EXTENDED then
-            -- every oil, the coolant lasting several of these services
-            appendAll(function(circuit)
-                return circuit == "coolant" and "topUp" or "replace"
-            end)
-        elseif optionOne == RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE then
-            appendAll(function()
-                return "replace"
-            end)
-        end
+        appendAll(function(circuit)
+            return RMS_Fluids.getMaintenanceMode(optionOne, circuit)
+        end)
     elseif serviceType == states.REPAIR then
         local spec = vehicle.spec_RealisticMechanicalSystems
         local idsByCircuit = {}

@@ -10,11 +10,11 @@
         <text name="rms_drivetrain_notify_mode" text="Vetotila: %s"/>
         <text name="rms_drivetrain_notify_lock_on" text="Tasauspyörästön lukko kytketty"/>
         <text name="rms_drivetrain_notify_lock_off" text="Tasauspyörästön lukko vapautettu"/>
-        <text name="rms_drivetrain_notify_park_on" text="Seisontajarru kytketty"/>
-        <text name="rms_drivetrain_notify_park_off" text="Seisontajarru vapautettu"/>
         <text name="rms_drivetrain_warning_4wd_windup" text="Voimansiirto kuormittuu! Kytke etuakseli pois ennen kääntymistä pitävällä alustalla."/>
         <text name="rms_drivetrain_warning_difflock_windup" text="Tasauspyörästön lukko kuormittuu! Vapauta lukko tai vähennä ohjauskulmaa."/>
         <text name="rms_drivetrain_warning_parkbrake" text="Seisontajarru kytketty!"/>
+        <text name="rms_drivetrain_warning_parkbrake_released" text="Seisontajarru ei ole kytketty!"/>
+        <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Käynnistä moottori vapauttaaksesi seisontajarrun"/>
         <text name="rms_preheat_ignition_message" text="Virta kytketty: hehkutus käynnissä"/>
         <text name="rms_preheat_system_failure_message" text="Hehkutusjärjestelmän vika: kylmäkäynnistys ei ole mahdollista"/>
         <text name="rms_preheat_start_failed_message" text="Moottori ei käynnistynyt: katkaise virta ennen uutta yritystä"/>
@@ -22,15 +22,16 @@
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Tarkista ajoneuvo"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
-        <text name="input_RMS_TOGGLE_4WD" text="Vaihda vetotilaa"/>
-        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Kytke/vapauta tasauspyörästön lukko"/>
-        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Kytke/vapauta seisontajarru"/>
+        <text name="input_RMS_TOGGLE_4WD" text="Vetotila"/>
+        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Tasauspyörästön lukko"/>
+        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Seisontajarru"/>
+        <text name="input_RMS_TOGGLE_ODOMETER" text="ODO/TRIP (pidä: TRIP=0)"/>
+        <text name="input_RMS_TOGGLE_BATTERY_ISOLATOR" text="Päävirtakytkin"/>
+        <text name="input_RMS_TOGGLE_FLUID_CAN" text="Kanna kanisteria tai lisää"/>
         <!-- Settings -->
         <text name="rms_settings_title" text="RMS-ASETUKSET"/>
         <text name="rms_settings_admin_required" text="RMS-asetukset vaativat järjestelmänvalvojan oikeudet moninpelissä."/>
         <text name="rms_settings_section_service_wear" text="Huolto ja kuluminen"/>
-        <text name="rms_settings_section_thermal_model" text="Lämpömalli"/>
-        <text name="rms_settings_section_battery_alternator" text="Akku ja laturi"/>
         <text name="rms_settings_section_drivetrain" text="Voimansiirto ja seisontajarru"/>
         <text name="rms_workshopOpenHour_label" text="Korjaamon aukioloaika"/>
         <text name="rms_workshopOpenHour_tooltip" text="Korjaustoimenpiteet voivat alkaa vasta tästä kellonajasta."/>
@@ -41,7 +42,7 @@
         <text name="rms_mobileWorkshopAvailable_label" text="Liikkuva korjaamo 24/7"/>
         <text name="rms_mobileWorkshopAvailable_tooltip" text="Pitää liikkuvan korjaamon käytettävissä mihin vuorokauden aikaan tahansa."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Liikkuvan korjaamon rajoitukset"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Kun käytössä, liikkuvassa korjaamossa saatavilla olevat toimenpiteet riippuvat ajoneuvon huollettavuudesta."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Rajoittaa liikkuvan korjaamon töitä tehtävän ja tarvittavien varusteiden mukaan. Huollot ovat edelleen mahdollisia; diagnostiikka, raskas purkaminen tai suurjännitetöiden teko voi vaatia varustellun korjaamon."/>
         <text name="rms_ownWorkshopAvailable_label" text="Oma korjaamo 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Pitää oman korjaamon käytettävissä mihin vuorokauden aikaan tahansa."/>
         <text name="rms_instantInspection_label" text="Välitön tarkastus"/>
@@ -55,35 +56,16 @@
         <text name="rms_debugMode_label" text="Virheenkorjaustila"/>
         <text name="rms_debugMode_tooltip" text="Ottaa virheenkorjauspaneelin ja yksityiskohtaiset konsolilokit käyttöön."/>
         <text name="rms_warningMessages_label" text="Varoitusviestit"/>
-        <text name="rms_warningMessages_tooltip" text="Ottaa käyttöön tai poistaa käytöstä pelisisäiset varoitusviestit, kuten kylmän moottorin ja ylikuumenemisen hälytykset."/>
-        <text name="rms_serviceInterval_label" text="Huoltoväli"/>
-        <text name="rms_serviceInterval_tooltip" text="Asettaa moottoriöljyn vaihtovälin tunteina. Vaihteisto- ja hydrauliöljy vaihdetaan joka toisella välillä, jäähdytysneste joka kymmenennellä. Todellinen väli riippuu ajoneuvon merkistä."/>
+        <text name="rms_warningMessages_tooltip" text="Ottaa käyttöön tai poistaa käytöstä pelisisäiset varoitusviestit, kuten kylmän moottorin ja ylikuumenemisen hälytykset. Lämpötilasta johtuvan tehonrajoituksen ilmoitukset pysyvät käytössä."/>
+        <text name="rms_serviceInterval_label" text="Huoltojen väli"/>
+        <text name="rms_serviceInterval_tooltip" text="Aseta vertailutunnit. Arvolla 100 h valmistajan 500 h muuttuu 100 tunniksi ja 600 h 120 tunniksi. Kukin neste noudattaa ajoneuvon ohjelmaa; kalenterirajat ovat erillisiä."/>
         <text name="rms_vehicleLifespan_label" text="Ajoneuvon käyttöikä"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Asettaa ajoneuvon peruskäyttöiän tunteina, jonka jälkeen sen kunto saavuttaa 0 %. Mitä lähempänä nolla on, sitä epäluotettavammaksi ajoneuvo tulee. Myös ajoneuvon arvo laskee näiden tuntien myötä."/>
-        <text name="rms_reinitializeVehicles_label" text="Nollaa kalusto"/>
-        <text name="rms_reinitializeVehicles_text" text="Nollaa"/>
-        <text name="rms_reinitializeVehicles_tooltip" text="Sovittaa kaluston kunnon valittuun käyttöikään. Nykyiset viat poistetaan."/>
-        <text name="rms_reinitializeVehiclesConfirm_title" text="Nollaa kalusto"/>
-        <text name="rms_reinitializeVehiclesConfirm_message" text="Sovitetaanko kalusto valittuun käyttöikään? Nykyiset viat poistetaan."/>
-        <text name="rms_reinitializeVehicles_result" text="Nollatut ajoneuvot: %d. Muuttamattomat: %d."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Asettaa ajoneuvon peruskäyttöiän tunteina, jonka jälkeen sen kunto saavuttaa 0 %. Mitä lähempänä nolla on, sitä epäluotettavammaksi ajoneuvo tulee. Myös ajoneuvon arvo laskee näiden tuntien myötä. Muutos koskee siitä hetkestä eteenpäin: ajoneuvot säilyttävät kuntonsa, vain niiden arvo lasketaan uudelleen."/>
         <text name="rms_generalWearEnabled_label" text="Ikääntymiseen liittyvä kuluminen"/>
         <text name="rms_generalWearEnabled_tooltip" text="Ajoneuvon kuluessa jokaisen järjestelmän tärkeät ominaisuudet heikkenevät hieman, kuten moottorin teho, hydrauliikan nopeus tai jarrutusteho. Vaikutus alkaa käyttöiän ensimmäisen kolmanneksen jälkeen, mutta näkyy selvästi vasta kahden kolmanneksen jälkeen ja voimistuu koneen käyttöiän loppua kohti."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Pakokaasusavu"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Ohjaa pakokaasupilveä moottorin todellisen kunnon mukaan: musta kun polttoainetta on enemmän kuin ilmaa, voimakkaassa kiihdytyksessä, moottorin jauhaessa matalilla kierroksilla, pitkän vähäkuormitteisen joutokäynnin jälkeen, tukkeutuneessa ilmansuodattimessa tai kuluneessa ruiskutuksessa, sininen kun väsynyt moottori polttaa öljyä, valkoinen kun polttoaine poistuu palamattomana. Pilvi myös kasvaa sen työn mukana, jota moottori tekee. Vanhemmat koneet savuavat huomattavasti enemmän kuin uudet, jotka tuskin savuavat ennen kuin jokin on vakavasti rikki. Kylmässä ilmassa palamisessa syntyvä vesi tiivistyy lisäksi lyhyeksi valkoiseksi vanaksi, joka haihtuu metrin tai kahden matkalla, myös terveessä moottorissa."/>
-        <text name="rms_batteryCapacity_label" text="Akun kapasiteetti"/>
-        <text name="rms_batteryCapacity_tooltip" text="Säätää maksimikäyttökelpoista akun kapasiteettia. Arvot lähellä 150 Ah ovat realistisempia, mutta akun tyhjenemisongelmia kohtaa harvoin tuolla tasolla."/>
         <text name="rms_option_off" text="Pois"/>
-        <text name="rms_option_none" text="Ei mitään"/>
-        <text name="rms_alternatorMaxOutput_label" text="Laturin maksimiteho"/>
-        <text name="rms_alternatorMaxOutput_tooltip" text="Asettaa laturin maksimilatausvirran. Suuremmat arvot mahdollistavat akun nopeamman latauksen."/>
-        <text name="rms_idleCurrent_label" text="Valmiustilan virta"/>
-        <text name="rms_idleCurrent_tooltip" text="Asettaa akun purkausvirran moottorin ollessa sammutettuna. Esimerkiksi 0,5 A:n virralla 15 Ah:n akku tyhjenee kokonaan noin 30 todellisessa tunnissa ennen lämpötilan vaikutuksia."/>
-        <text name="rms_temperatureChangeSpeed_label" text="Moottorin lämpömallin nopeus"/>
-        <text name="rms_temperatureChangeSpeed_tooltip" text="Säätää moottorin lämpötilan muutosnopeutta. Pienemmät arvot hidastavat lämpenemistä ja jäähtymistä, suuremmat nopeuttavat molempia. Oletusarvo on 1,4."/>
-        <text name="rms_transTemperatureChangeMultiplier_label" text="Vaihteisto- ja hydrauliöljyn lämpömallin nopeus"/>
-        <text name="rms_transTemperatureChangeMultiplier_tooltip" text="Säätää erikseen yhteisen vaihteisto- ja hydrauliöljyn lämpötilan muutosnopeutta. Pienemmät arvot hidastavat lämpenemistä ja jäähtymistä, suuremmat nopeuttavat molempia. Oletusarvo on 1,0."/>
-        <text name="rms_radiatorDirtInfluence_label" text="Jäähdyttimen lian vaikutus"/>
-        <text name="rms_radiatorDirtInfluence_tooltip" text="Vähentää jäähdyttimen jäähdytyskapasiteettia tällä prosenttiosuudella enimmäislikaantumisella."/>
         <text name="rms_tutorialMode_label" text="Opetustila"/>
         <text name="rms_tutorialMode_tooltip" text="Näyttää opastusvihjeet pelin aikana."/>
         <text name="rms_tutorialResetTips_label" text="Nollaa vihjeet"/>
@@ -92,15 +74,11 @@
         <text name="rms_tutorialResetConfirm_title" text="Nollataanko opetusvihjeet?"/>
         <text name="rms_tutorialResetConfirm_message" text="Nollataanko opetusvihjehistoria ja näytetäänkö kaikki vihjeet uudelleen?"/>
         <text name="rms_drivetrainEnabled_label" text="Nelivedon ja tasauspyörästön lukon hallinta"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Ottaa käyttöön vetävän etuakselin ja tasauspyörästön lukkojen manuaalisen hallinnan traktoreissa. Jos Enhanced Vehiclen tasauspyörästöjen hallinta on käytössä, modi väistyy kokonaan ja Enhanced Vehicle hallitsee voimansiirtoa yksin."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Ottaa käyttöön vetävän etuakselin ja tasauspyörästön lukkojen manuaalisen hallinnan traktoreissa. Jos Enhanced Vehicle on asennettu, sen tasauspyörästöjen hallinta poistetaan käytöstä; jos haluat palauttaa sen, poista tämä asetus käytöstä ja ota tasauspyörästöt sitten uudelleen käyttöön Enhanced Vehiclen valikossa."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Salli AUTO-vetotila"/>
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="Lisää valitsimeen AUTO-asennon: etuakseli kytkeytyy automaattisesti pyörien luistaessa tai työnopeudella kuormitettuna ja irtikytkeytyy tiellä. AUTO-tilaan jätetyt ajoneuvot palaavat nelivedolle, kun asetus poistetaan käytöstä."/>
-        <text name="rms_drivetrainWindupDamage_label" text="Voimansiirron rasitusvauriot"/>
-        <text name="rms_drivetrainWindupDamage_tooltip" text="Kääntyminen pitävällä alustalla tasauspyörästöt lukittuina rasittaa voimansiirtoa ja vaurioittaa sitä vähitellen. Poista asetus käytöstä sallivampaa pelikokemusta varten."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Seisontajarru"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Lisää seisontajarrun kaikkiin seurattuihin ajoneuvoihin ja sille oman näppäimen. Kytketty jarru pitää koneen paikallaan ja ohittaa kaasun."/>
-        <text name="rms_drivetrainParkBrakeAuto_label" text="Automaattinen seisontajarru"/>
-        <text name="rms_drivetrainParkBrakeAuto_tooltip" text="Kytkee seisontajarrun automaattisesti, kun kuljettaja poistuu paikallaan olevasta koneesta."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Lisää seisontajarrun kaikkiin seurattuihin ajoneuvoihin. Uudet CVT- tai Powershift-vaihteistolla varustetut koneet kytkevät ja vapauttavat sen itse; muissa käytät sitä sen omalla näppäimellä. Jos Enhanced Vehicle on asennettu, sen seisontajarru poistetaan käytöstä; jos haluat palauttaa sen, poista tämä asetus käytöstä ja ota seisontajarru sitten uudelleen käyttöön Enhanced Vehiclen valikossa."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Korjaamo"/>
         <text name="rms_ws_tab_summary" text="Yhteenveto"/>
@@ -113,38 +91,50 @@
         <text name="rms_ws_section_quote" text="Korjausarvio"/>
         <text name="rms_ws_section_choose_intervention" text="Valitse toimenpide"/>
         <text name="rms_ws_section_work_order" text="Korjaustilaus"/>
+        <text name="rms_ws_section_paint_order" text="Maalaustilaus"/>
         <text name="rms_ws_section_recap" text="Kooste"/>
         <text name="rms_ws_section_parts" text="Kyseiset osat"/>
         <text name="rms_ws_section_history" text="Historia"/>
         <text name="rms_ws_section_current_intervention" text="Toimenpide käynnissä"/>
-        <text name="rms_ws_label_last_check" text="Viimeisin tarkistus ennen vuoroa"/>
+        <text name="rms_ws_label_last_check" text="Viimeisin tarkistus"/>
+        <text name="rms_ws_reading_outdated" text="Tarkistettava"/>
         <text name="rms_ws_label_workshop_state" text="Korjaamon tila"/>
         <text name="rms_ws_label_more_parts" text="+ %s muuta"/>
         <text name="rms_ws_label_committed_cost" text="Sitoutunut kustannus"/>
         <text name="rms_ws_label_finish_time" text="Valmistumisaika"/>
         <text name="rms_ws_label_total_estimate" text="Arvioitu yhteensä"/>
         <text name="rms_ws_button_configure_repair" text="Määritä korjaus"/>
-        <text name="rms_ws_info_inspection_reveals" text="Tarkastus voi paljastaa lisää vikoja."/>
+        <text name="rms_ws_info_inspection_reveals" text="Tarkastus tai huolto voi todeta lisää vikoja."/>
         <text name="rms_ws_status_ready_title" text="Korjaamo valmis"/>
         <text name="rms_ws_status_ready_hint" text="Valitse toimenpide. Vaihtoehdot, osat ja hinta vahvistetaan ennen aloitusta."/>
         <text name="rms_ws_label_value" text="Ajoneuvon arvo"/>
         <text name="rms_ws_label_age" text="Ikä"/>
         <text name="rms_ws_label_operating_hours" text="Käyttötunnit"/>
+        <text name="rms_odometer_label" text="Matkamittarilukema"/>
+        <text name="rms_odometer_not_recorded" text="Ei kirjattu"/>
         <text name="rms_ws_label_service" text="Huoltotaso"/>
-        <text name="rms_ws_label_maintenance_standard" text="Standardihuolto"/>
-        <text name="rms_ws_label_maintenance_extended" text="Laajennettu huolto"/>
-        <text name="rms_ws_label_maintenance_preventive" text="Ennaltaehkäisevä huolto"/>
         <text name="rms_ws_label_condition" text="Kunto"/>
         <text name="rms_ws_label_reliability" text="Luotettavuus"/>
+        <text name="rms_reliability_average" text="Keskitasoinen"/>
+        <text name="rms_reliability_fair" text="Tyydyttävä"/>
+        <text name="rms_reliability_good" text="Hyvä"/>
+        <text name="rms_reliability_very_good" text="Erittäin hyvä"/>
         <text name="rms_ws_label_overhaul_count" text="Tehdyt peruskorjaukset"/>
-        <text name="rms_ws_label_maintainability" text="Huollettavuus"/>
         <text name="rms_ws_label_maintenance_log" text="Huoltoloki"/>
         <text name="rms_ws_label_last_report" text="Viimeisin raportti"/>
         <text name="rms_ws_label_last_maintenance" text="Viimeisin huolto"/>
         <text name="rms_ws_task_inspection" text="Tarkastus"/>
         <text name="rms_ws_task_maintenance" text="Huolto"/>
         <text name="rms_ws_task_overhaul" text="Peruskorjaus"/>
-        <text name="rms_ws_info_no_breakdowns" text="Ei tunnettuja vikoja. Havaitsematon vika on silti mahdollinen."/>
+        <text name="rms_ws_info_no_breakdowns" text="Ei todettuja vikoja. Tarkastus tai huolto toteaa viat, joita kone ei vielä näytä."/>
+        <text name="rms_ws_info_warning_unidentified" text="Varoitusvalo palaa: vika on todettava. Tarkastus tai huolto toteaa sen, minkä jälkeen sen voi korjata."/>
+        <text name="rms_ws_faults_none_title" text="Ei todettuja vikoja"/>
+        <text name="rms_ws_faults_none_hint" text="Tarkastus tai huolto toteaa viat, joita kone ei vielä näytä."/>
+        <text name="rms_ws_faults_warning_title" text="Vika on todettava"/>
+        <text name="rms_ws_faults_warning_hint" text="Varoitusvalo palaa. Tarkastus tai huolto toteaa vian, minkä jälkeen sen voi korjata."/>
+        <text name="rms_ws_reason_repair_unselected" text="Yhtään vikaa ei ole valittu. Valitse korjattavat viat kohdassa Vianmääritys ja arvio."/>
+        <text name="rms_ws_reason_overhaul_none" text="Mekaaninen peruskorjaus kunnostaa alle 50 % kunnossa olevat järjestelmät. Tässä koneessa ei ole yhtään."/>
+        <text name="rms_ws_reason_bodywork_mobile" text="Liikkuva korjaamo ei tee maalausta. Se tehdään jälleenmyyjällä."/>
         <text name="rms_ws_status_in_progress_short_format" text="%s käynnissä..."/>
         <text name="rms_ws_status_in_progress_format" text="%s käynnissä %s asti"/>
         <text name="rms_ws_status_open" text="Korjaamo on auki"/>
@@ -159,18 +149,17 @@
         <text name="rms_ws_action_choice_repair" text="Vian korjaus"/>
         <text name="rms_ws_action_choice_overhaul" text="Mekaaninen peruskorjaus"/>
         <text name="rms_ws_action_choice_refill" text="Nesteiden täydennys"/>
+        <text name="rms_ws_action_choice_bodywork" text="Ajoneuvon maalaus"/>
         <text name="rms_ws_action_cancel_service" text="Peruuta toimenpide"/>
         <text name="rms_ws_age_unit" text="kuukautta"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="Kyllä"/>
         <text name="rms_ws_option_no" text="Ei"/>
         <text name="rms_ws_no_last_report_message" text="Raportteja ei ole vielä"/>
-        <text name="rms_ws_systems_need_complete_inspection" text="Täydellinen tarkastus vaaditaan"/>
         <text name="rms_ws_no_log_empty_message" text="Loki on vielä tyhjä"/>
         <text name="rms_ws_no_report_message" text="Raporttia ei ole"/>
         <text name="rms_ws_cancel_confirm_title" text="Peruutetaanko käynnissä oleva toimenpide? (%s)"/>
         <text name="rms_ws_cancel_confirm_text" text="Nykyinen edistyminen tallennetaan sellaisenaan. Rahoja ei palauteta."/>
-        <text name="rms_mobile_workshop_low_maintainability" text="Varoitus: %s ei ole saatavilla ajoneuvolle %s liikkuvassa korjaamossa, koska tätä ajoneuvoa on liian vaikea huoltaa paikan päällä."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="Huoltoloki"/>
         <text name="rms_log_recorded_interventions_title" text="Kirjatut toimenpiteet"/>
@@ -207,10 +196,10 @@
         <text name="rms_breakdowns_severity_moderate" text="Kohtalainen"/>
         <text name="rms_breakdowns_severity_major" text="Vakava"/>
         <text name="rms_breakdowns_severity_critical" text="Kriittinen"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Lievä ohjausvarsiston kuluminen. Ohjaus muuttuu hieman epätarkemmaksi."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Kohtalainen ohjausvarsiston kuluminen. Välys kasvaa, tarkkuus heikkenee selvästi ja ajokäyttäytyminen huononee."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Vakava ohjausvarsiston kuluminen. Välys on suuri, ohjaus reagoi huonosti ja ajoneuvon hallinta vaikeutuu."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Ohjausvarsistossa on kriittinen vika. Ohjaus ei ole enää luotettava ja ajaminen muuttuu vaaralliseksi."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Lievä ohjausvarsiston kuluminen. Ohjaukseen syntyy hieman välystä ja se muuttuu hieman epätarkemmaksi."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Kohtalainen ohjausvarsiston kuluminen. Välys kasvaa ja pyörien suuntaus heittää: ohjaus tuntuu löysältä ja puoltaa hieman toiselle sivulle."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Vakava ohjausvarsiston kuluminen. Välys on suuri ja pyörien suuntaus heittää selvästi: ajoneuvo puoltaa toiselle sivulle, pitää linjansa huonosti, ja nivel voi pettää."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Ohjausvarsistossa on kriittinen vika. Nivel on pettänyt: ohjaus ei enää ohjaa pyöriä kunnolla, ja ajon jatkaminen on vaarallista."/>
         <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="Ohjausvarsiston vika"/>
         <text name="rms_breakdowns_general_wear_stage1_description" text="Vuosien käytön aikana kertynyt rasitus jättää pääkomponentteihin vähäisiä ja peruuttamattomia kulumajälkiä, jotka heikentävät hieman kokonaissuorituskykyä."/>
         <text name="rms_breakdowns_gear_disengage_message" text="Vaihde irrotettu"/>
@@ -223,12 +212,23 @@
         <text name="rms_breakdowns_part_consumables" text="Kulutustarvikkeet"/>
         <text name="rms_breakdowns_part_cooling_system" text="Jäähdytysjärjestelmä"/>
         <text name="rms_breakdowns_part_clutch" text="Kytkin"/>
-        <text name="rms_breakdowns_part_cvt_chain" text="CVT-ketju"/>
-        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="CVT-hydrauliohjausventtiili"/>
+        <text name="rms_breakdowns_part_cvt_chain" text="Portaaton vaihteisto"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Välityssuhteen ohjaus"/>
         <text name="rms_breakdowns_part_cvt" text="CVT"/>
         <text name="rms_breakdowns_part_engine" text="Moottori"/>
         <text name="rms_breakdowns_part_ecu" text="ECU"/>
         <text name="rms_breakdowns_part_battery" text="Akku"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Ajoakku"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Suurjännitekontaktori"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Suurjännitejohdotus"/>
+        <text name="rms_breakdowns_part_inverter" text="Invertteri"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Jännitemuunnin"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Sisäinen laturi"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Sähkömoottorin laakerit"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Sähkömoottorin käämit"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Moottorin asentoanturi"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Jäähdytysnestepumppu"/>
+        <text name="rms_breakdowns_part_reducer" text="Alennusvaihde"/>
         <text name="rms_breakdowns_part_brake_system" text="Jarrujärjestelmä"/>
         <text name="rms_breakdowns_part_wiring" text="Johdotus ja liittimet"/>
         <text name="rms_breakdowns_part_wheel_bearing" text="Pyörän laakeri"/>
@@ -281,7 +281,8 @@
         <text name="rms_breakdowns_quick_fix_stage" text="Tilapäiskorjaus"/>
         <text name="rms_breakdowns_defected_parts_stage" text="Vika"/>
         <text name="rms_breakdowns_defected_parts_detected_description" text="Järjestelmä toimii normaalisti, mutta tarkastuksessa havaittiin viallinen osa. Osa ei enää tarjoa turvamarginaalia, joten ennaltaehkäisevää vaihtoa suositellaan äkillisen vian välttämiseksi."/>
-        <text name="rms_breakdowns_dead_battery_message" text="Akku tyhjentynyt"/>
+        <text name="rms_breakdowns_dead_battery_message" text="Akku liian heikko"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Ajoakku kylmä: toimintamatka ja teho alentuneet"/>
         <text name="rms_breakdowns_temporarily_repaired_description" text="Järjestelmä toimii normaalisti, mutta on täysin tilapäiskorjauksen varassa. Osat kannattaa vaihtaa kokonaan mahdollisimman pian, jotta vältetään vika kuormituksessa."/>
         <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Turboahdinlaakerien kuluminen. Kuuluu heikko vinkuna ja pienehkö tehonlasku suurilla kierroksilla."/>
         <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Turboahtimen tiivisteet vuotavat. Teho laskee selvästi ja polttoaineen kulutus kasvaa."/>
@@ -318,6 +319,7 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Ylikuumenemissuoja: teho alennettu"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Ylikuumenemissuoja tehostuu. Moottori tuottaa enää puolet tehostaan."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Ylikuumenemissuoja: teho alennettu puoleen"/>
+        <text name="rms_thermal_power_restored_message" text="Lämpösuojaus: tehonrajoitus poistettu"/>
         <text name="rms_breakdowns_overheat_protection_stage3_description" text="Ylikuumenemissuoja on maksimissaan. Moottorin tehosta on jäljellä enää murto-osa."/>
         <text name="rms_breakdowns_overheat_protection_stage3_message" text="Ylikuumenemissuoja: teho voimakkaasti alennettu"/>
         <text name="rms_breakdowns_overheat_protection_stage4_description" text="Moottori on sammutettu vaurioiden estämiseksi. Anna sen jäähtyä ennen uudelleenkäynnistystä."/>
@@ -336,20 +338,25 @@
         <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Vakava ECU:n toimintahäiriö. Teho laskee voimakkaasti, polttoaineen kulutus kasvaa ja moottori voi sammua."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Täydellinen ECU-vika. Moottoria ei voida ohjata eikä se käynnisty."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="ECU-vika"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Lievä johdotuksen ja sähköliittimien korroosio. Lisääntynyt kosketusresistanssi aiheuttaa satunnaista valojen välkkymistä, epävakaata jännitesyöttöä ja vaikeutunutta moottorin käynnistystä."/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Kohtalainen johdotuksen ja sähköliittimien korroosio. Kontaktiongelmat aiheuttavat tiheää valojen välkkymistä, epävakaata jännitesyöttöä, vaikeutunutta moottorin käynnistystä ja mahdollisia moottorin sammumisia."/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Vakava johdotuksen ja sähköliittimien korroosio. Kriittisten piirien jännitesyöttö on epävakaa, valaistus voi lakata kokonaan, moottorin vääntömomentti on alentunut, moottorin sammuminen on todennäköistä ja käynnistys on epäluotettavaa."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Käynnistimen ohjauspiirissä on vika johdotuksen vakavan korroosion vuoksi. Valaistus ei toimi eikä moottoria voi käynnistää."/>
+        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Lievä johdotuksen ja sähköliittimien korroosio. Lisääntynyt kosketusresistanssi aiheuttaa satunnaista valojen välkkymistä, epävakaata jännitesyöttöä ja vaikeutunutta moottorin käynnistystä. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Kohtalainen johdotuksen ja sähköliittimien korroosio. Kontaktiongelmat aiheuttavat tiheää valojen välkkymistä, epävakaata jännitesyöttöä, vaikeutunutta moottorin käynnistystä ja mahdollisia moottorin sammumisia. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Vakava johdotuksen ja sähköliittimien korroosio. Kriittisten piirien jännitesyöttö on epävakaa, valaistus voi lakata kokonaan, moottorin vääntömomentti on alentunut, moottorin sammuminen on todennäköistä ja käynnistys on epäluotettavaa. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Käynnistimen ohjauspiirissä on vika johdotuksen vakavan korroosion vuoksi. Valaistus ei toimi eikä moottoria voi käynnistää. Vuotovirta tyhjentää akun, kun kone seisoo."/>
         <text name="rms_breakdowns_corroded_wiring_stage4_message" text="Käynnistinpiirin vika"/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage1_description" text="Lievä johdotuksen ja sähköliittimien korroosio. Lisääntynyt kosketusresistanssi aiheuttaa satunnaista valojen välkkymistä ja epävakaata jännitesyöttöä. Vuotovirta tyhjentää apuakun, kun kone seisoo."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage2_description" text="Kohtalainen johdotuksen ja sähköliittimien korroosio. Kontaktiongelmat aiheuttavat tiheää valojen välkkymistä, epävakaata jännitesyöttöä ja mahdollisia katkoja. Vuotovirta tyhjentää apuakun, kun kone seisoo."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage3_description" text="Vakava johdotuksen ja sähköliittimien korroosio. Kriittisten piirien jännitesyöttö on epävakaa, valaistus voi lakata kokonaan, teho on alentunut ja katkot ovat todennäköisiä. Vuotovirta tyhjentää apuakun, kun kone seisoo."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_description" text="Kriittinen johdotuksen ja sähköliittimien korroosio. Valaistus ei toimi eikä kone käynnisty. Vuotovirta tyhjentää apuakun, kun kone seisoo."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_message" text="Johdotuksen ja liittimien vika"/>
         <text name="rms_breakdowns_coolant_leak_stage1_description" text="Lievä jäähdytysnesteen vuoto. Jäähdytysjärjestelmän tehokkuus on hieman alentunut."/>
         <text name="rms_breakdowns_coolant_leak_stage2_description" text="Kohtalainen jäähdytysnesteen vuoto. Jäähdytysjärjestelmän tehokkuus on alentunut ja moottorin käyttölämpötila nousee nopeammin kuormituksessa."/>
         <text name="rms_breakdowns_coolant_leak_stage3_description" text="Vakava jäähdytysnestevuoto. Jäähdytysteho heikkenee merkittävästi ja ylikuumenemisriski kasvaa suureksi."/>
         <text name="rms_breakdowns_coolant_leak_stage4_description" text="Jäähdytysjärjestelmässä on kriittinen vika. Jäähdytysnestettä ei ole riittävästi moottorin turvalliseen käyttöön."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Lievä CVT-ketjun kuluminen. Kuormituksessa esiintyy lievää luistamista, mikä heikentää hieman voimansiirron tehokkuutta."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Kohtalainen CVT-ketjun kuluminen. Luistaminen muuttuu havaittavaksi kuormituksessa ja välityssuhde vaihtelee epätarkemmin."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Vakava CVT-ketjun kuluminen. Luistaminen on voimakasta, tehokkuus laskee jyrkästi ja vaihteisto ei pysy vaaditussa välityssuhteessa."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="CVT-ketjussa on kriittinen vika. Vaihteisto ei enää välitä vääntömomenttia oikein ja ajoneuvo muuttuu käytännössä käyttökelvottomaksi."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="CVT-ketjun vika"/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Vaihteiston hyötysuhde heikkenee hieman kuormitettuna."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Hyötysuhde heikkenee selvästi kuormitettuna ja välityssuhde muuttuu epävakaammaksi."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Vaihteiston on vaikea välittää vetovoimaa ja pitää pyydetty välityssuhde."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Vaihteisto ei enää välitä vetovoimaa luotettavasti; ajaminen on lähes mahdotonta."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Vaihteiston vika"/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="CVT-vaihteistossa on havaittu varhaismerkkejä toimintahäiriöstä. Tarkastus ja korjaus vaaditaan."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="CVT-vaihteiston toimintahäiriö pahenee. Jatkokäyttö voi johtaa hätätilaan."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="CVT-vaihteistossa on kriittinen vaurio. Vaihteisto on hätätilassa ja ajoneuvon enimmäisnopeus on alentunut."/>
@@ -359,6 +366,10 @@
         <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Kohtalainen akun sulfatoituminen. Todellinen akun kapasiteetti on merkittävästi alentunut ja moottorin käynnistys on vaikeutunut."/>
         <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Vakava akun sulfatoituminen. Käyttökelpoinen kapasiteetti on kriittisen alhainen ja käynnistysteho epävakaa."/>
         <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Kriittinen akun sulfatoituminen. Todellinen akun kapasiteetti on lähes nolla eikä käynnistysteho riitä luotettavaan moottorin käynnistykseen."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Lievä apuakun sulfatoituminen. Todellinen akun kapasiteetti on alentunut, mikä vähentää sähköistä varausta kuormituksessa."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Kohtalainen apuakun sulfatoituminen. Todellinen akun kapasiteetti on merkittävästi alentunut ja sähköinen varaus ehtyy nopeammin."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Vakava apuakun sulfatoituminen. Käyttökelpoinen kapasiteetti on kriittisen alhainen ja sähköinen varaus ehtyy hyvin nopeasti."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Kriittinen apuakun sulfatoituminen. Todellinen akun kapasiteetti on lähes nolla eikä riitä enää luotettavaan käynnistykseen."/>
         <text name="rms_breakdowns_brake_malfunction_stage1_description" text="Kuluneet jarrupalat. Jarruteho on hieman heikentynyt."/>
         <text name="rms_breakdowns_brake_malfunction_stage2_description" text="Jarruletkuvuoto tai kuluneet levyt. Jarrutusmatka on havaittavasti pidentynyt."/>
         <text name="rms_breakdowns_brake_malfunction_stage3_description" text="Vakava jarrupaineen menetys. Jarrut ovat erittäin heikot ja epäluotettavat."/>
@@ -369,10 +380,63 @@
         <text name="rms_breakdowns_bearing_wear_stage3_description" text="Vakava laakerien kuluminen. Kitka on suuri, ääni on voimakas ja kuormituksessa on todellinen jumiutumisriski."/>
         <text name="rms_breakdowns_bearing_wear_stage4_description" text="Kriittinen laakerivika. Laakerit ovat lähellä täydellistä jumiutumista, eikä käyttö ole enää mahdollista."/>
         <text name="rms_breakdowns_bearing_wear_stage4_message" text="Laakerivika"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Lievä laturin säätimen toimintahäiriö. Latausvirta on alentunut, mikä vähentää akun lataustehokkuutta."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Laturin säätimessä on kohtalainen toimintahäiriö. Lataus on alentunut ja epävakaa, mikä heikentää akun latausta ja lisää sähköjärjestelmän jännitehäviöitä."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Laturin säätimessä on vakava toimintahäiriö. Lataus on voimakkaasti alentunut, virransyöttö epävakaa ja sähköjärjestelmä toimii suurilla häviöillä."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Laturin säätimessä on täydellinen vika. Akku ei enää lataudu ja sähköjärjestelmä toimii vain jäljellä olevalla akkuvarauksella."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Lievä laturin säätimen toimintahäiriö. Latausvirta on alentunut, mikä vähentää akun lataustehokkuutta. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Laturin säätimessä on kohtalainen toimintahäiriö. Lataus on alentunut ja epävakaa, mikä heikentää akun latausta ja lisää sähköjärjestelmän jännitehäviöitä. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Laturin säätimessä on vakava toimintahäiriö. Lataus on voimakkaasti alentunut, virransyöttö epävakaa ja sähköjärjestelmä toimii suurilla häviöillä. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Laturin säätimessä on täydellinen vika. Akku ei enää lataudu ja sähköjärjestelmä toimii vain jäljellä olevalla akkuvarauksella. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Lievä sähkömoottorin laakerien kuluminen. Kuuluu heikkoa ääntä ja kulutus kasvaa hieman."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Kohtalainen sähkömoottorin laakerien kuluminen. Ääni kuuluu selvästi, kulutus kasvaa ja teho laskee hieman."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Vakava sähkömoottorin laakerien kuluminen. Ääni on voimakas, moottori kuumenee ja teho laskee selvästi."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Kriittinen sähkömoottorin laakerivika. Moottori on jumissa, eikä kone voi enää liikkua."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_message" text="Sähkömoottorin laakerivika"/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Lievä sähkömoottorin käämien heikkeneminen. Teho laskee hieman ja moottori lämpenee enemmän."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Kohtalainen sähkömoottorin käämien heikkeneminen. Teho laskee selvästi, moottori kuumenee ja kulutus kasvaa."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Vakava sähkömoottorin käämien heikkeneminen. Tehohäviö on suuri, moottori kuumenee voimakkaasti ja katkoja voi esiintyä."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Kriittinen sähkömoottorin käämivika. Moottorissa on oikosulku, eikä se voi enää toimia."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_message" text="Sähkömoottorin käämivika"/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Lievä moottorin asentoanturin toimintahäiriö. Kuormituksessa esiintyy lyhyttä nykimistä."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Kohtalainen moottorin asentoanturin toimintahäiriö. Nykimistä esiintyy usein ja teho laskee."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Vakava moottorin asentoanturin toimintahäiriö. Nykiminen on rajua, teho romahtaa ja katkoja esiintyy."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Täydellinen moottorin asentoanturin vika. Moottoria ei voida enää ohjata, eikä kone käynnisty."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_message" text="Moottorin asentoanturin vika"/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Lievä invertterin toimintahäiriö. Moottorin teho on hieman alentunut."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Kohtalainen invertterin toimintahäiriö. Tehohäviö on huomattava ja kulutus kasvaa."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Vakava invertterin toimintahäiriö. Tehohäviö on suuri ja katkoja voi esiintyä."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Täydellinen invertterivika. Moottori ei saa enää virtaa, eikä kone käynnisty."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_message" text="Invertterivika"/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Lievä jännitemuuntimen toimintahäiriö. Apuakku latautuu heikommin."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Kohtalainen jännitemuuntimen toimintahäiriö. Apuakun lataus on alentunut ja epävakaa."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Vakava jännitemuuntimen toimintahäiriö. Apuakku ei juuri enää lataudu ja tyhjenee ajon aikana."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Täydellinen jännitemuuntimen vika. Apuakku ei enää lataudu ja kone toimii vain jäljellä olevalla varauksella."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Lievä sisäisen laturin toimintahäiriö. Lataus latausasemalla on hieman hitaampaa."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Kohtalainen sisäisen laturin toimintahäiriö. Lataus latausasemalla on selvästi hitaampaa."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Vakava sisäisen laturin toimintahäiriö. Lataus latausasemalla on erittäin hidasta."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Täydellinen sisäisen laturin vika. Ajoakkua ei voida enää ladata."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_message" text="Sisäinen laturi ei toimi: lataus ei onnistu"/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Lievä suurjännitejohdotuksen eristysvika. Näkyviin tulee varoitus ilman muuta vaikutusta."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Kohtalainen suurjännitejohdotuksen eristysvika. Tehoa alennetaan turvallisuussyistä."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Vakava suurjännitejohdotuksen eristysvika. Tehoa alennetaan voimakkaasti ja katkoja esiintyy."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Kriittinen suurjännitejohdotuksen eristysvika. Kone ei käynnisty turvallisuussyistä."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_message" text="Suurjännitejohdotuksen eristysvika"/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Lievä ajoakun kennovika. Toimintamatka lyhenee hieman."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Kohtalainen ajoakun kennovika. Toimintamatka lyhenee selvästi ja teho on alentunut."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Vakava ajoakun kennovika. Toimintamatka ja teho romahtavat, ja katkoja voi esiintyä."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Kriittinen ajoakkuvika. Konetta ei voida enää kytkeä päälle."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_message" text="Ajoakkuvika"/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Lievä suurjännitekontaktorin kuluminen. Virransyötössä esiintyy harvoin katkoja."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Kohtalainen suurjännitekontaktorin kuluminen. Virransyötön katkoista tulee säännöllisiä."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Vakava suurjännitekontaktorin kuluminen. Virransyötössä esiintyy usein katkoja."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Kriittinen suurjännitekontaktorin vika. Ajoakku ei enää syötä virtaa koneelle, eikä kone käynnisty."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_message" text="Suurjännitekontaktorin vika"/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Lievä jäähdytysnestepumpun toimintahäiriö. Neste kiertää heikommin ja lämpötila nousee hieman enemmän."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Kohtalainen jäähdytysnestepumpun toimintahäiriö. Jäähdytys on selvästi heikentynyt."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Vakava jäähdytysnestepumpun toimintahäiriö. Jäähdytys on voimakkaasti heikentynyt ja ylikuumeneminen on todennäköistä kuormituksessa."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Täydellinen jäähdytysnestepumpun vika. Neste ei juuri enää kierrä ja kone ylikuumenee nopeasti."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Lievä alennusvaihteen hammaspyörien ja laakerien kuluminen. Ajon aikana kuuluu heikkoa ääntä."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Kohtalainen alennusvaihteen hammaspyörien ja laakerien kuluminen. Ääni kuuluu selvästi ja kulutus kasvaa."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Vakava alennusvaihteen hammaspyörien ja laakerien kuluminen. Ääni on voimakas, alennusvaihde kuumenee ja teho pyörillä laskee."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Kriittinen alennusvaihteen vika. Se on jumissa, eikä kone voi enää liikkua."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_message" text="Alennusvaihteen vika"/>
         <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="Lievä venttiilimekanismin toimintahäiriö. Moottorin vääntömomentti on hieman alentunut, polttoaineen kulutus on lisääntynyt ja epänormaalia venttiilimekanismin melua esiintyy."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="Kohtalainen venttiilimekanismin toimintahäiriö. Moottorin vääntömomentti on havaittavasti alentunut, polttoaineen kulutus on lisääntynyt, venttiilimekanismin melu on voimakasta ja moottorin epäröintiä saattaa esiintyä kuormituksessa."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="Vakava venttiilimekanismin toimintahäiriö. Moottorin vääntömomentti on voimakkaasti alentunut, polttoaineen kulutus on merkittävästi lisääntynyt, venttiilimekanismin melu on vakavaa, moottorin epäröinti on tiheää ja moottorin sammuminen on mahdollista."/>
@@ -403,11 +467,11 @@
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Kohtalainen tuuletinkytkimen toimintahäiriö. Tuulettimen kytkeytyminen on epäsäännöllistä ja jäähdytystehokkuus laskee selvästi."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Vakava tuuletinkytkimen toimintahäiriö. Tuuletin ei enää tuota riittävää ilmavirtaa ja moottori ylikuumenee helpommin."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Tuuletinkytkimessä on kriittinen vika. Tuuletin ei enää pysty tuottamaan tarvittavaa jäähdytystä."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Lievä CVT-hydrauliohjausventtiilin toimintahäiriö. Vaihteiston vaste on hieman hitaampi ja epätarkempi."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Kohtalainen CVT-hydrauliohjausventtiilin toimintahäiriö. Paine on epävakaa, välityssuhteen muutos hidastuu ja tehokkuus laskee selvästi."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Vakava CVT-hydrauliohjausventtiilin toimintahäiriö. Paine on hyvin epäsäännöllinen, vaihteisto reagoi huonosti ja välitetty teho laskee jyrkästi."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="CVT:n hydraulisessa ohjausventtiilissä on kriittinen vika. Painetta ei voida enää hallita ja vaihteisto muuttuu käyttökelvottomaksi."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="CVT:n hydraulisen ohjausventtiilin vika"/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Välityssuhteen ohjaus reagoi hitaammin ja epätarkemmin."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Välityssuhde vaihtelee epäsäännöllisesti ja ohjaus reagoi huonosti."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Välityssuhteen ohjauksessa on vakavia häiriöitä ja välitetty vetovoima vähenee."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Välityssuhteen ohjaus on rikkoutunut; vaihteisto on lähes käyttökelvoton."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Välityssuhteen ohjausvika"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Hydraulisylinterissä on pieni sisäinen vuoto. Nostettu työkone laskeutuu hitaasti kuormitettuna."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Hydraulisylinterissä on kohtalainen sisäinen vuoto. Tahaton laskeutuminen on selvästi havaittavaa ja nopeutuu kuorman kasvaessa."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Hydraulisylinterissä on vakava sisäinen vuoto. Raskaat työkoneet eivät enää pysy luotettavasti asennossaan."/>
@@ -467,12 +531,12 @@
         <text name="rms_spec_months_ago_unit" text="kuukautta sitten"/>
         <text name="rms_spec_month_ago_one" text="kuukausi sitten"/>
         <text name="rms_spec_months_ago_format" text="%s %s"/>
+        <text name="rms_spec_work_hours_ago_format" text="%s %s käyttöä sitten"/>
+        <text name="rms_spec_work_under_hour_ago" text="alle 1 h käyttöä sitten"/>
         <text name="rms_spec_maintenance_complete_notification" text="Toimenpide valmis: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Toimenpide peruutettu: %s"/>
         <text name="rms_spec_maintenance_minimal" text="Minimaalinen"/>
-        <text name="rms_spec_maintenance_standard" text="Standardi"/>
-        <text name="rms_spec_maintenance_extended" text="Laajennettu"/>
-        <text name="rms_spec_maintenance_preventive" text="Ennaltaehkäisevä"/>
+        <text name="rms_spec_maintenance_level" text="%s huolto"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s %s asti"/>
         <text name="rms_spec_workshop_dealer" text="Jälleenmyyjä"/>
         <text name="rms_spec_workshop_own" text="Oma"/>
@@ -485,6 +549,8 @@
         <text name="rms_spec_system_chassis" text="Alusta"/>
         <text name="rms_spec_system_fuel" text="Polttoainejärjestelmä"/>
         <text name="rms_spec_system_pto" text="Voimanotto"/>
+        <text name="rms_spec_system_electric_motor" text="Sähkömoottori"/>
+        <text name="rms_spec_system_traction_battery" text="Ajoakku"/>
         <text name="rms_spec_state_ready" text="Valmis"/>
         <text name="rms_spec_state_repair" text="Korjaus"/>
         <text name="rms_spec_state_refill" text="Täydennys"/>
@@ -493,24 +559,17 @@
         <text name="rms_spec_state_inspection" text="Tarkastus"/>
         <text name="rms_spec_state_maintenance" text="Huolto"/>
         <text name="rms_spec_state_overhaul" text="Peruskorjaus"/>
+        <text name="rms_spec_state_bodywork" text="Maalaus"/>
         <text name="rms_spec_state_overdue" text="Myöhässä"/>
         <text name="rms_spec_state_optimal" text="Optimaalinen"/>
         <text name="rms_spec_state_broken" text="Rikki"/>
         <text name="rms_spec_state_bad" text="Huono"/>
-        <text name="rms_spec_state_budget" text="Edullinen"/>
         <text name="rms_spec_state_excellent" text="Erinomainen"/>
         <text name="rms_spec_state_good" text="Hyvä"/>
         <text name="rms_spec_state_service_good" text="Hyvä"/>
         <text name="rms_spec_state_normal" text="Normaali"/>
         <text name="rms_spec_state_terrible" text="Surkea"/>
         <text name="rms_spec_state_unknown" text="Tuntematon"/>
-        <text name="rms_spec_state_legendary" text="Legendaarinen"/>
-        <text name="rms_spec_state_low" text="Alhainen"/>
-        <text name="rms_spec_state_premium" text="Premium"/>
-        <text name="rms_spec_state_standard" text="Standardi"/>
-        <text name="rms_spec_state_average" text="Keskimääräinen"/>
-        <text name="rms_spec_state_high" text="Korkea"/>
-        <text name="rms_spec_state_workhorse" text="Työjuhta"/>
         <text name="rms_spec_part_types_used" text="Käytetty"/>
         <text name="rms_spec_part_types_aftermarket" text="Tarvike"/>
         <text name="rms_spec_part_types_oem" text="Alkuperäinen"/>
@@ -531,36 +590,108 @@
         <text name="rms_option_menu_option_two_title_repair" text="Varaosien laatu"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Peruskorjattava järjestelmä"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Jos toimenpide paljastaa vikoja, sen jälkeen käynnistyy automaattisesti standardikorjaus alkuperäisillä osilla."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Korjauksen jälkeen käynnistyy automaattisesti standardihuolto alkuperäisillä kulutustarvikkeilla."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Osittainen peruskorjaus: palauttaa valitun järjestelmän hyvään kuntoon, korjaa korjattavissa olevat viat ja vaihtaa sen nesteen tarvittaessa."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Standardiperuskorjaus: palauttaa kaikki järjestelmät hyvään kuntoon, korjaa korjattavissa olevat viat, vaihtaa nesteet ja uusii huollon."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Täydellinen peruskorjaus: palauttaa kaikki järjestelmät uudenveroisiksi, korjaa korjattavissa olevat viat, vaihtaa nesteet ja uusii huollon."/>
+        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Korjauksen jälkeen käynnistyy automaattisesti suositeltu huolto alkuperäisillä kulutustarvikkeilla."/>
         <text name="rms_option_menu_price_text" text="Hinta"/>
-        <text name="rms_option_menu_part_used_description" text="Käytetyt osat: alhaisin hinta ja 50 %:n riski myöhempään vikaan."/>
-        <text name="rms_option_menu_part_aftermarket_description" text="Tarvikeosat: alhaisempi hinta ja 33 %:n riski myöhempään vikaan."/>
-        <text name="rms_option_menu_part_oem_description" text="Alkuperäiset valmistajan osat: standardihinta ja 10 %:n riski myöhempään vikaan."/>
-        <text name="rms_option_menu_part_premium_description" text="Premium-osat: 20 %:n lisähinta ilman osan aiheuttamaa vikariskiä."/>
-        <text name="rms_option_menu_consumable_used_description" text="Edulliset kulutustarvikkeet: alhaisin hinta ja 50 %:n riski myöhempään vikaan."/>
-        <text name="rms_option_menu_consumable_aftermarket_description" text="Tarvikekulutusaineet: alhaisempi hinta ja 33 %:n riski myöhempään vikaan."/>
-        <text name="rms_option_menu_consumable_oem_description" text="Alkuperäiset valmistajan kulutustarvikkeet: standardihinta ja 10 %:n riski myöhempään vikaan."/>
-        <text name="rms_option_menu_consumable_premium_description" text="Premium-kulutustarvikkeet: 20 %:n lisähinta ilman kulutustarvikkeen aiheuttamaa vikariskiä."/>
         <text name="rms_option_menu_perform_repair" text="Automaattinen korjaus"/>
         <text name="rms_option_menu_perform_maintenance" text="Automaattinen huolto"/>
         <text name="rms_option_menu_warranty_repair_text" text="Takuukorjaus"/>
-        <text name="rms_warranty_dealer_info" text="Jälleenmyyjän takuu omistetulle ajoneuvolle alle 12 kuukauden ja 20 käyttötunnin ajan: vakiokorjaus, alkuperäisosat ja tarvittavat nesteet."/>
+        <text name="rms_option_menu_lease_service_text" text="Sisältyy vuokraan"/>
         <text name="rms_option_menu_duration_text" text="Kesto"/>
         <text name="rms_option_menu_duration_instant" text="Välitön"/>
         <text name="rms_option_menu_finish_time_text" text="Valmistumisaika"/>
         <text name="rms_option_menu_start_text" text="Aloita"/>
-        <text name="rms_option_menu_inspection_visual_description" text="Visuaalinen tarkastus: nopea ja edullinen, etsii vain aktiivisia vikoja tavallista heikommalla tunnistuskyvyllä. Raportti ei näytä komponenttien yksityiskohtaista kuntoa."/>
-        <text name="rms_option_menu_inspection_standard_description" text="Standarditarkastus: etsii aktiivisia vikoja normaalilla tunnistuskyvyllä ja tuottaa yleisraportin ilman yksityiskohtaisia kuntoarvoja."/>
-        <text name="rms_option_menu_inspection_complete_description" text="Täydellinen tarkastus: etsii aktiivisia ja mahdollisia vikoja normaalilla tunnistuskyvyllä ja tuottaa kattavan raportin komponenttien yksityiskohtaisesta kunnosta."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="Standardihuolto: vaihtaa moottoriöljyn sekä öljyn- ja polttoainesuodattimen, täydentää muut piirit tarvittaessa, puhdistaa jäähdyttimen ja puhaltaa ilmansuodattimen puhtaaksi."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="Laajennettu huolto: standardihuolto sekä vaihteisto- ja hydrauliöljyn vaihto uuden suodattimen kanssa. Vaihtaa myös ilmansuodattimen ja täydentää jäähdytysnesteen."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="Ennaltaehkäisevä huolto: vaihtaa kaikki öljyt ja jäähdytysnesteen suodattimineen ja asentaa uuden ilmansuodattimen. Vähentää myös enintään kolmen ensisijaisen järjestelmän mekaanista rasitusta."/>
-        <text name="rms_option_menu_repair_type_fix_description" text="Tilapäinen korjaus: palauttaa koneen nopeasti ja edullisesti käyttöön poistamatta vikaa. Vika palaa rajallisen ajan kuluttua."/>
-        <text name="rms_option_menu_repair_type_replacement_description" text="Standardikorjaus: poistaa vian ja vaihtaa viallisen komponentin. Kyseisen järjestelmän mekaanista rasitusta vähennetään osittain."/>
-        <text name="rms_option_menu_repair_type_advanced_description" text="Perusteellinen korjaus: poistaa vian, vaihtaa viallisen komponentin ja poistaa kyseiseen järjestelmään kertyneen mekaanisen rasituksen."/>
+        <text name="rms_ws_levels_recommended_for" text="Suositeltu tälle koneelle"/>
+        <text name="rms_ws_levels_interval" text="%s välein"/>
+        <text name="rms_ws_levels_duration" text="%s h %s min"/>
+        <text name="rms_ws_levels_duration_hours" text="%s h"/>
+        <text name="rms_ws_levels_duration_minutes" text="%s min"/>
+        <text name="rms_ws_levels_drain" text="Vaihto"/>
+        <text name="rms_ws_levels_top_up" text="Täydennys"/>
+        <text name="rms_ws_levels_blown" text="Puhallettu"/>
+        <text name="rms_ws_levels_new" text="Uusi"/>
+        <text name="rms_ws_levels_new_plural" text="Uudet"/>
+        <text name="rms_ws_levels_filters" text="Suodattimet"/>
+        <text name="rms_ws_levels_filters_all" text="Öljy, polttoaine ja hydrauliikka"/>
+        <text name="rms_ws_levels_filters_engine" text="Öljy ja polttoaine"/>
+        <text name="rms_ws_levels_filters_hydraulic" text="Hydrauliikka"/>
+        <text name="rms_ws_levels_checks" text="Säädöt ja tarkastukset"/>
+        <text name="rms_ws_levels_checks_detail" text="Venttiilit, ruiskut, termostaatti"/>
+        <text name="rms_ws_levels_checks_done" text="Tehty"/>
+        <text name="rms_ws_levels_fault_search" text="Vianetsintä"/>
+        <text name="rms_ws_levels_fault_search_detail" text="Kuten vakiotarkastus"/>
+        <text name="rms_ws_levels_fault_search_mobile_detail" text="Ilman vikakoodien lukua"/>
+        <text name="rms_ws_levels_included" text="Sisältyy"/>
+        <text name="rms_ws_levels_mechanical" text="Mekaaniset"/>
+        <text name="rms_ws_levels_every_level" text="Joka tasolla: jäähdyttimen puhdistus ja voitelu."/>
+        <text name="rms_ws_quality_risk" text="Vikariski"/>
+        <text name="rms_ws_quality_reference" text="Vertailuhinta"/>
+        <text name="rms_ws_quality_delta" text="%s vs. alkuperäinen"/>
+        <text name="rms_ws_repair_row_faults" text="Käsitellyt viat"/>
+        <text name="rms_ws_repair_row_faults_detail" text="Valituista"/>
+        <text name="rms_ws_repair_faults_all" text="Kaikki"/>
+        <text name="rms_ws_table_count" text="%s / %s"/>
+        <text name="rms_ws_repair_row_fault" text="Vika"/>
+        <text name="rms_ws_repair_row_fault_detail" text="Toimenpiteen jälkeen"/>
+        <text name="rms_ws_repair_fault_returns" text="Palaa"/>
+        <text name="rms_ws_repair_fault_removed" text="Poistettu"/>
+        <text name="rms_ws_repair_row_part" text="Viallinen osa"/>
+        <text name="rms_ws_repair_row_part_detail" text="Vian aiheuttaja"/>
+        <text name="rms_ws_repair_part_replaced" text="Vaihdettu"/>
+        <text name="rms_ws_repair_row_stress" text="Mekaaninen rasitus"/>
+        <text name="rms_ws_repair_row_stress_detail" text="Järjestelmään kertynyt"/>
+        <text name="rms_ws_repair_stress_cleared" text="Poistettu"/>
+        <text name="rms_ws_repair_row_quality" text="Osien laatu"/>
+        <text name="rms_ws_repair_row_quality_detail" text="Valitaan alla olevista korteista"/>
+        <text name="rms_ws_repair_quality_choice" text="Oma valinta"/>
+        <text name="rms_ws_warranty_title" text="Jälleenmyyjän takuu"/>
+        <text name="rms_ws_warranty_covered" text="Voimassa"/>
+        <text name="rms_ws_warranty_not_covered" text="Ei voimassa"/>
+        <text name="rms_ws_warranty_free_here" text="Maksuton vakiokorjaus alkuperäisosilla"/>
+        <text name="rms_ws_warranty_free_dealer" text="Maksuton korjaus jälleenmyyjällä"/>
+        <text name="rms_ws_warranty_terms" text="Oma ajoneuvo, alle 12 kuukautta ja 20 h"/>
+        <text name="rms_ws_badge_warranty" text="Takuu"/>
+        <text name="rms_ws_overhaul_row_systems" text="Käsitellyt järjestelmät"/>
+        <text name="rms_ws_overhaul_row_systems_detail" text="Kunnostettu"/>
+        <text name="rms_ws_overhaul_systems_one" text="Yksi valittava"/>
+        <text name="rms_ws_overhaul_systems_all" text="Kaikki"/>
+        <text name="rms_ws_overhaul_row_condition" text="Kunto korjauksen jälkeen"/>
+        <text name="rms_ws_overhaul_row_condition_detail" text="Vähintään"/>
+        <text name="rms_ws_overhaul_row_treated_detail" text="Käsitellyistä järjestelmistä"/>
+        <text name="rms_ws_overhaul_row_faults" text="Viat"/>
+        <text name="rms_ws_overhaul_row_faults_detail" text="Todetut tai ei"/>
+        <text name="rms_ws_overhaul_faults_repaired" text="Korjattu"/>
+        <text name="rms_ws_overhaul_row_fluids" text="Nesteet"/>
+        <text name="rms_ws_overhaul_row_fluids_detail" text="Tyhjennys ja täyttö"/>
+        <text name="rms_ws_overhaul_fluids_all" text="Kaikki"/>
+        <text name="rms_ws_overhaul_fluids_own" text="Sen piiri"/>
+        <text name="rms_ws_overhaul_filters_both" text="Polttoaine ja hydrauliikka"/>
+        <text name="rms_ws_overhaul_filters_fuel" text="Polttoaine"/>
+        <text name="rms_ws_overhaul_worn" text="Alle 50 % kunnon järjestelmät"/>
+        <text name="rms_ws_paint_row_extent" text="Korjatut maalivauriot"/>
+        <text name="rms_ws_paint_row_extent_detail" text="Vaurioitunut osuus maalista"/>
+        <text name="rms_ws_paint_extent_up_to" text="Enintään %s"/>
+        <text name="rms_ws_paint_extent_all" text="Kaikki"/>
+        <text name="rms_ws_paint_row_colors" text="Värit"/>
+        <text name="rms_ws_paint_row_colors_detail" text="Tälle ajoneuvolle tarjotut"/>
+        <text name="rms_ws_paint_colors_kept" text="Säilytetään"/>
+        <text name="rms_ws_paint_colors_choice" text="Oma valinta"/>
+        <text name="rms_ws_paint_row_workshop" text="Korjaamo"/>
+        <text name="rms_ws_paint_row_workshop_detail" text="Missä se tehdään"/>
+        <text name="rms_ws_inspection_mechanical" text="Mekaaniset viat"/>
+        <text name="rms_ws_inspection_mechanical_detail" text="Silmämääräinen tarkastus ja toimintakoe"/>
+        <text name="rms_ws_inspection_electronic" text="Elektroniset viat"/>
+        <text name="rms_ws_inspection_electronic_detail" text="Vikakoodit luettu diagnoosilaitteella"/>
+        <text name="rms_ws_inspection_dormant" text="Piilevät viat"/>
+        <text name="rms_ws_inspection_dormant_detail" text="Viallinen osa, tilapäinen korjaus"/>
+        <text name="rms_ws_inspection_report" text="Raportti"/>
+        <text name="rms_ws_inspection_report_detail" text="Koneen ja jokaisen järjestelmän kunto"/>
+        <text name="rms_ws_inspection_risk_detail" text="Kokeiden ja mittausten perusteella"/>
+        <text name="rms_ws_inspection_ratings" text="Arviot"/>
+        <text name="rms_ws_inspection_measures" text="Mittaukset"/>
+        <text name="rms_ws_inspection_assessed" text="Arvioitu"/>
+        <text name="rms_ws_inspection_maintenance_note" text="Myös huolto tekee tämän vianetsinnän, kuten vakiotarkastus."/>
+        <text name="rms_ws_quote_title" text="Tarjouksen erittely"/>
+        <text name="rms_ws_quote_oil_filter" text="Öljynsuodatin"/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="Seuraava toimenpide veloitetaan erikseen. Tarvittavat nesteet toimitetaan tai otetaan varastosta sen alkaessa."/>
         <text name="rms_bodywork_touchup" text="Maalin paikkaukset"/>
         <text name="rms_bodywork_full" text="Täysi uudelleenmaalaus"/>
@@ -570,25 +701,24 @@
         <text name="rms_bodywork_ineligible" text="Toimenpide ei ole saatavilla tälle ajoneuvolle tai tässä korjaamossa"/>
         <text name="rms_bodywork_no_wear" text="Ei korjattavia maalivaurioita"/>
         <text name="rms_bodywork_wear_limit" text="Maalin paikkaukset ovat mahdollisia enintään 30 %:n maalivaurioihin"/>
-        <text name="rms_bodywork_touchup_description" text="Korjaa pienet maalivauriot. Nykyiset värit säilyvät."/>
-        <text name="rms_bodywork_full_description" text="Uusii maalipinnan. Valitse ajoneuvon saatavilla olevat värit tai säilytä nykyiset."/>
         <text name="rms_bodywork_no_colors" text="Tässä ajoneuvossa ei ole valittavia värejä. Nykyiset värit säilyvät."/>
         <text name="rms_bodywork_unavailable_title" text="Toimenpide ei ole saatavilla"/>
+        <text name="rms_bodywork_dealer_only" text="Täysi uudelleenmaalaus tehdään jälleenmyyjällä"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Tarkastusraportti"/>
         <text name="rms_report_vehicle_specs_title" text="Ajoneuvon tekniset tiedot"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="Laturin enimmäisvirta"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="Akun varaus"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="Akun kapasiteetti"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_charge" text="Apuakun varaus"/>
+        <text name="rms_report_vehicle_spec_battery_24v_charge" text="24 V:n akun varaus"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_capacity" text="Apuakun kapasiteetti"/>
+        <text name="rms_report_vehicle_spec_battery_24v_capacity" text="24 V:n akun kapasiteetti"/>
+        <text name="rms_report_vehicle_spec_traction_battery_capacity" text="Ajoakun kapasiteetti"/>
         <text name="rms_report_detected_breakdowns_title" text="Havaitut viat"/>
         <text name="rms_report_overall_assessment_title" text="Kokonaiskunnon arviointi"/>
         <text name="rms_report_overall_assessment_condition" text="Kuntotaso"/>
-        <text name="rms_report_overall_assessment_crit_fail_risk" text="Kriittisen vian riski"/>
         <text name="rms_report_overall_assessment_service" text="Huoltotaso"/>
-        <text name="rms_report_overall_assessment_mtbf" text="Keskimääräinen aika vikojen välillä (h)"/>
-        <text name="rms_report_overall_assessment_rul" text="Jäljellä oleva käyttöikä (h)"/>
-        <text name="rms_report_overall_assessment_wear_rate" text="Kulumisnopeus (%/h)"/>
-        <text name="rms_report_overall_assessment_nominal_wear_rate" text="Nimellinen kulumisnopeus (%/h)"/>
         <text name="rms_report_recommendations_title" text="Johtopäätökset ja suositukset"/>
         <text name="rms_report_recommendation_repair_active_breakdowns" text="Aktiiviset viat havaittu. Kaikkien aktiivisten vikojen standardikorjaus on suositeltavaa."/>
         <text name="rms_report_recommendation_repeat_maintenance" text="Viallisia kulutustarvikkeita havaittu. Toista huolto niiden vaihtamiseksi."/>
@@ -597,7 +727,7 @@
         <text name="rms_report_recommendation_service_due" text="Huoltovälin raja saavutettu. Suorita huolto."/>
         <text name="rms_report_recommendation_service_urgent" text="Huoltoväli on ylitetty. Suorita huolto kiireellisesti!"/>
         <text name="rms_report_recommendation_system_overhaul" text="Järjestelmä %s: kriittistä heikkenemistä havaittu. Suorita osittainen peruskorjaus."/>
-        <text name="rms_report_recommendation_system_preventive_maintenance" text="Järjestelmä %s: vikaantumisriski on kohonnut. Suorita ennaltaehkäisevä huolto riskin vähentämiseksi."/>
+        <text name="rms_report_recommendation_system_preventive_maintenance" text="Järjestelmä %s: vikaantumisriski on kohonnut. %s huolto säätää sen uudelleen ja pienentää riskiä."/>
         <text name="rms_report_recommendation_overhaul" text="Pääkomponenttien heikkenemistä havaittu. Suorita peruskorjaus."/>
         <text name="rms_report_recommendation_operating_conditions" text="Liian kuormittavan käytön merkkejä havaittu. Paranna käyttöolosuhteita."/>
         <text name="rms_report_recommendation_all_ok" text="Ei erityisiä suosituksia. Ajoneuvo on käyttökunnossa."/>
@@ -607,50 +737,74 @@
         <text name="rms_report_state_degraded" text="Heikentynyt"/>
         <text name="rms_report_state_impaired" text="Vahingoittunut"/>
         <text name="rms_report_state_critical" text="Kriittinen"/>
-        <text name="rms_report_stress_absent" text="Poissa"/>
         <text name="rms_report_stress_low" text="Alhainen"/>
         <text name="rms_report_stress_moderate" text="Kohtalainen"/>
-        <text name="rms_report_stress_elevated" text="Kohonnut"/>
         <text name="rms_report_stress_high" text="Erittäin korkea"/>
         <text name="rms_report_system_condition_title" text="Järjestelmän kunto"/>
         <text name="rms_report_breakdown_risk_title" text="Vikaantumisriski"/>
+        <text name="rms_report_wear_title" text="Kuluminen normaaliin verrattuna"/>
+        <text name="rms_report_wear_normal" text="Normaali"/>
+        <text name="rms_report_wear_no_cause" text="Ei merkittävää syytä"/>
+        <text name="rms_report_wear_percent" text="+%s %%"/>
+        <text name="rms_report_wear_air_filter" text="Tukkeutunut ilmasuodatin"/>
+        <text name="rms_report_wear_pull_overload" text="Vetovoiman ylikuormitus"/>
+        <text name="rms_report_wear_heavy_lift" text="Raskaiden kuormien nostaminen"/>
+        <text name="rms_report_wear_hydraulic_use" text="Hydrauliikka käytössä"/>
+        <text name="rms_report_wear_cold_hydraulic_oil" text="Kylmä hydrauliöljy"/>
+        <text name="rms_report_wear_hot_hydraulic_oil" text="Hydrauliöljy ylikuumenee"/>
+        <text name="rms_report_wear_vibration" text="Tärinä"/>
+        <text name="rms_report_wear_hydraulic_filter_bypass" text="Tukkeutunut hydraulisuodatin"/>
+        <text name="rms_report_wear_lights" text="Valot päällä"/>
+        <text name="rms_report_wear_braking" text="Jarrutus raskaalla kuormalla"/>
+        <text name="rms_report_wear_terrain_impact" text="Maaston iskut"/>
+        <text name="rms_report_wear_cold_fuel" text="Kylmä polttoaine"/>
+        <text name="rms_report_wear_full_injection" text="Ruiskutus täydellä kuormalla"/>
+        <text name="rms_report_wear_deep_discharge" text="Syväpurkautunut akku"/>
+        <text name="rms_report_wear_high_draw" text="Akku kovalla kuormituksella"/>
+        <text name="rms_report_wear_battery_heat" text="Akku ylikuumenee"/>
+        <text name="rms_report_wear_lubrication" text="Voitelu myöhässä"/>
+        <text name="rms_report_wear_pto_overload" text="Voimanoton ylikuormitus"/>
         <text name="rms_report_component_title" text="Komponentti"/>
         <text name="rms_report_system_condition_transmission" text="Vaihteisto"/>
         <text name="rms_report_system_condition_power" text="Nykyinen teho"/>
         <text name="rms_report_system_condition_brakes" text="Jarrujen tehokkuus"/>
         <text name="rms_report_system_condition_cooling" text="Jäähdytyksen tehokkuus"/>
         <text name="rms_report_system_condition_consumption" text="Polttoaineen kulutus"/>
+        <text name="rms_report_system_condition_energy_consumption" text="Energiankulutus"/>
         <text name="rms_report_system_condition_hydraulic" text="Hydrauliikan tehokkuus"/>
         <text name="rms_report_transmission_slipping" text="Luistaminen"/>
         <text name="rms_report_transmission_shifting_impaired" text="Vaihteenvaihto heikentynyt"/>
         <text name="rms_report_transmission_shift_delay" text="Vaihteen viive"/>
         <text name="rms_report_transmission_gear_rejection" text="Vaihteen irtoaminen"/>
-        <text name="rms_report_transmission_cvt_slipping" text="Hihnan/ketjun luistaminen"/>
+        <text name="rms_report_transmission_cvt_slipping" text="Heikko voimansiirto"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Välityssuhde rajoittunut"/>
-        <text name="rms_report_transmission_cvt_pressure_instability" text="Paineen epävakaus"/>
+        <text name="rms_report_transmission_cvt_pressure_instability" text="Epätasainen voimansiirto"/>
         <text name="rms_report_transmission_thermostat_degraded" text="Termostaatti heikentynyt"/>
         <text name="rms_report_transmission_failed" text="Vikaantunut"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Rasvaruisku"/>
         <text name="rms_grease_gun_no_vehicle" text="Ei ajoneuvoa voitelualueella"/>
         <text name="rms_grease_gun_function" text="Käytetään koneen voitelupisteiden rasvaamiseen"/>
-        <text name="rms_grease_gun_action" text="Levitä rasvaa"/>
+        <text name="rms_grease_gun_action" text="Rasvaa"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: voitelu on jo tehty"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s ei tarvitse voitelua"/>
         <text name="rms_air_blower_name" text="Paineilmapuhallin"/>
         <text name="rms_air_blower_no_vehicle" text="Ei ajoneuvoa puhdistusalueella"/>
         <text name="rms_air_blower_function" text="Käytetään jäähdyttimien ja ilmansuodattimien puhdistukseen"/>
         <text name="rms_air_blower_action" text="Puhdista jäähdytin ja ilmansuodatin"/>
+        <text name="rms_air_blower_action_short" text="Puhalla puhtaaksi"/>
         <text name="rms_air_blower_already_clean" text="%s: jäähdytin ja ilmansuodatin ovat jo puhtaat"/>
-        <text name="rms_air_blower_filter_requires_maintenance" text="%s: jäähdytin on puhdas. Ilmansuodatin on saavuttanut paineilmapuhdistuksen rajan. Sen vaihtaminen vaatii huollon korjaamolla"/>
+        <text name="rms_air_blower_filter_requires_maintenance" text="%s: jäähdytin on puhdas. Ilmansuodatin on saavuttanut paineilmapuhdistuksen rajan. Korjaamo vaihtaa sen %s huollosta alkaen"/>
         <text name="rms_air_blower_cleaning_not_require" text="%s ei tarvitse puhdistusta"/>
         <text name="rms_jumper_cables_name" text="Käynnistyskaapelit"/>
         <text name="rms_jumper_cables_function" text="Käytetään kahden akun yhdistämiseen ja ajoneuvon käynnistämiseen tyhjällä akulla"/>
-        <text name="rms_jumper_cables_action" text="Yhdistä/irrota käynnistyskaapelit"/>
+        <text name="rms_jumper_cables_action" text="Käynnistyskaapelit"/>
         <text name="rms_jumper_cables_auto_disconnected" text="Käynnistyskaapelit irrotettu, koska yksi ajoneuvoista alkoi liikkua"/>
         <text name="rms_jumper_cables_connected" text="Käynnistyskaapelit yhdistetty kohteeseen %s"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="Ajoneuvo ei sovellu käynnistyskaapeleiden kytkemiseen"/>
         <text name="rms_jumper_cables_is_too_far" text="%s on liian kaukana kohteesta %s"/>
+        <text name="rms_jumper_cables_electric_donor" text="Sähköajoneuvolla ei voi antaa käynnistysapua polttomoottorille"/>
+        <text name="rms_jumper_cables_voltage_mismatch" text="12 V:n ajoneuvoa ei voi kytkeä 24 V:n ajoneuvoon"/>
         <text name="rms_jumper_cables_both_already_connected" text="Käynnistyskaapelit on jo yhdistetty kohteisiin %s ja %s"/>
         <text name="rms_jumper_cables_disconnected" text="Käynnistyskaapelit irrotettu kohteesta %s"/>
         <!-- Fluid containers -->
@@ -658,13 +812,24 @@
         <text name="rms_fluid_function_engine_oil" text="Moottoriöljy käsin tehtävään täydennykseen"/>
         <text name="rms_fluid_function_utto" text="Vaihteisto- ja hydrauliöljy käsin tehtävään täydennykseen"/>
         <text name="rms_fluid_function_coolant" text="Jäähdytysneste käsin tehtävään täydennykseen"/>
-        <text name="rms_fluid_container_action_start" text="Siirrä nestettä"/>
-        <text name="rms_fluid_container_action_cancel" text="Lopeta nesteen siirto"/>
-        <text name="rms_fluid_select_vehicle_title" text="Ajoneuvon valinta"/>
-        <text name="rms_fluid_select_vehicle_prompt" text="Valitse täytettävä ajoneuvo"/>
-        <text name="rms_fluid_select_circuit_prompt" text="Valitse täytettävä piiri"/>
-        <text name="rms_fluid_select_fluid_prompt" text="Valitse lisättävä neste"/>
-        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
+        <text name="rms_fluid_pour_action" text="Lisää: %s"/>
+        <text name="rms_fluid_level_done" text="Taso täytetty"/>
+        <text name="rms_fluid_container_empty" text="Kanisteri tyhjä"/>
+        <text name="rms_fluid_drum_empty" text="Tynnyri tyhjä"/>
+        <text name="rms_fluid_container_label" text="Kanisteri"/>
+        <text name="rms_fluid_drum_label" text="Tynnyri"/>
+        <text name="rms_fluid_hand_take" text="Ota lisätäksesi"/>
+        <text name="rms_fluid_hand_carry" text="Kanna kanisteria"/>
+        <text name="rms_drum_pump_name" text="Akkukäyttöinen tynnyripumppu"/>
+        <text name="rms_drum_pump_function" text="Asetetaan 200 litran tynnyriin koneiden täyttämiseksi pistoolilla"/>
+        <text name="rms_drum_pump_mount" text="Aseta tynnyriin"/>
+        <text name="rms_drum_pump_take" text="Ota pumppu pois"/>
+        <text name="rms_drum_pump_nozzle_take" text="Ota pistooli"/>
+        <text name="rms_drum_pump_nozzle_return" text="Ripusta pistooli"/>
+        <text name="rms_drum_pump_hose_range" text="Pumpun letku estää sinua menemästä pidemmälle.&#10;Pistooli ripustetaan paikalleen %.1f m päästä!"/>
+        <text name="rms_drum_pump_machine_too_far" text="Tuo tynnyri lähemmäs: letku on 4 m pitkä"/>
+        <text name="rms_drum_pump_required" text="Tynnyripumppu tarvitaan"/>
+        <text name="rms_fluid_level_under_gauge" text="Asteikon alapuolella"/>
         <text name="rms_fluid_circuit_engineOil" text="Moottoriöljy"/>
         <text name="rms_fluid_circuit_coolant" text="Jäähdytysneste"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Vaihteistoöljy"/>
@@ -674,17 +839,21 @@
         <text name="rms_fluid_hud_transmissionHydraulic" text="Vaiht./hydrauliöljy"/>
         <text name="rms_fluid_hud_coolant" text="Jäähdytysneste"/>
         <text name="rms_fluid_incompatible_title" text="Yhteensopimaton neste"/>
-        <text name="rms_fluid_incompatible_message" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi kolminkertaistaa järjestelmän kulumisen, lisätä lämpenemistä tai hidastaa hydrauliikkaa. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
-        <text name="rms_fluid_error_no_vehicle" text="Neljän metrin säteellä ei ole nestettä tarvitsevaa ajoneuvoa"/>
+        <text name="rms_fluid_incompatible_message_engineOil" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa moottorin kulumisen ja lisätä sen lämpenemistä. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
+        <text name="rms_fluid_incompatible_message_coolant" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa jäähdytysjärjestelmän kulumisen ja lisätä moottorin lämpenemistä. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
+        <text name="rms_fluid_incompatible_message_transmissionOil" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa vaihteiston kulumisen ja lisätä sen lämpenemistä. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
+        <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa hydrauliikan kulumisen, lisätä sen lämpenemistä ja hidastaa sitä. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
+        <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa vaihteiston ja hydrauliikan kulumisen, lisätä niiden lämpenemistä ja hidastaa hydrauliikkaa. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
         <text name="rms_fluid_error_no_circuit" text="Tämä ajoneuvo ei tarvitse nesteen täydennystä"/>
         <text name="rms_fluid_error_motor_running" text="Sammuta moottori ennen nesteen siirtoa"/>
         <text name="rms_fluid_error_vehicle_moving" text="Ajoneuvon on oltava paikallaan"/>
-        <text name="rms_fluid_dealer_billed" text="Laskutettavat nesteet"/>
+        <text name="rms_fluid_error_busy" text="Toinen astia täyttää jo tätä piiriä"/>
         <text name="rms_fluid_warranty_covered" text="Takuun kattamat nesteet"/>
-        <text name="rms_fluid_stock_required" text="Sopivat säiliöt tarvitaan korjaamoalueella"/>
+        <text name="rms_fluid_lease_covered" text="Nesteet sisältyvät vuokraan"/>
+        <text name="rms_fluid_stock_required" text="Otetaan korjaamoalueen säiliöistä"/>
+        <text name="rms_fluid_stock_missing" text="Korjaamoalueelta puuttuu %s"/>
         <text name="rms_fluid_refill_work_order" text="Nesteiden täydennys"/>
         <text name="rms_fluid_refill_dealer_supply" text="Nesteet sisältyvät kustannusarvioon"/>
-        <text name="rms_fluid_refill_stock_supply" text="Aseta sopivat säiliösi korjaamoalueelle"/>
         <text name="rms_fluid_mode_top_up" text="täydennys"/>
         <text name="rms_fluid_mode_replace" text="vaihto"/>
         <text name="rms_fluid_mode_repair" text="täydennys vuodon jälkeen"/>
@@ -694,28 +863,24 @@
         <text name="rms_fluid_service_refused" text="Toimenpidettä ei voida aloittaa nykyisissä olosuhteissa."/>
         <text name="rms_fluid_service_consumption_failed" text="Nesteiden varaus epäonnistui. Toimenpide peruutettiin."/>
         <!-- Inspection Dialog -->
-        <text name="rms_field_inspection_hold_to_start" text="Pidä painettuna aloittaaksesi tarkistuksen"/>
+        <text name="rms_field_inspection_hold_to_start" text="Tarkista (pidä)"/>
         <text name="rms_field_inspection_progress" text="Tarkistus käynnissä"/>
         <text name="rms_field_inspection_cancelled" text="Tarkistus peruutettu"/>
         <text name="rms_field_inspection_engine_must_be_stopped" text="Sammuta moottori ennen tarkistusta"/>
         <text name="rms_inspection_dialog_title" text="Tarkistus ennen vuoroa"/>
         <text name="rms_inspection_section_fluids" text="Tekniset nesteet"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
-        <text name="rms_inspection_section_cooling_air" text="Jäähdytys ja ilmansuodatin"/>
-        <text name="rms_inspection_section_lubrication" text="Voitelupisteet"/>
+        <text name="rms_inspection_section_field_care" text="Suodattimet, jäähdytin ja voitelu"/>
         <text name="rms_inspection_section_additional" text="Lisähuomiot"/>
         <text name="rms_inspection_verdict_ok_title" text="Ajokunnossa"/>
         <text name="rms_inspection_verdict_ok_message" text="Ei huomautettavaa, kone voi lähteä töihin."/>
         <text name="rms_inspection_verdict_watch_title" text="Pidä silmällä"/>
         <text name="rms_inspection_verdict_watch_message" text="Yksi tai useampi kohta vaatii huomiotasi. Kone voi jatkaa työskentelyä; hoida ne tänään."/>
-        <text name="rms_inspection_verdict_air_filter_service_message" text="Kone voi työskennellä. Suunnittele huolto korjaamolla ilmansuodattimen vaihtoa varten."/>
+        <text name="rms_inspection_verdict_air_filter_service_message" text="Kone voi työskennellä. Korjaamo vaihtaa ilmansuodattimen %s huollosta alkaen."/>
         <text name="rms_inspection_verdict_stop_title" text="Älä käytä"/>
         <text name="rms_inspection_verdict_stop_message" text="Yksi kohta on kriittinen. Älä käytä tätä konetta ennen kuin se on hoidettu."/>
         <text name="rms_inspection_service_due_in" text="%s %s kuluttua"/>
         <text name="rms_inspection_service_overdue" text="%s myöhässä %s"/>
-        <text name="rms_inspection_service_clock_engine" text="moottoriöljyn vaihto"/>
-        <text name="rms_inspection_service_clock_transmission" text="vaihteistoöljyn vaihto"/>
-        <text name="rms_inspection_service_clock_coolant" text="jäähdytysnesteen vaihto"/>
         <text name="rms_inspection_status_slightly_low" text="Hieman alhainen"/>
         <text name="rms_inspection_status_slightly_dirty" text="Hieman tukossa"/>
         <text name="rms_inspection_status_slightly_dry" text="Hieman kuiva"/>
@@ -735,6 +900,7 @@
         <text name="rms_inspection_status_not_required" text="Ei tarvita"/>
         <text name="rms_inspection_status_change_overdue" text="Vaihto myöhässä"/>
         <text name="rms_inspection_status_change_long_overdue" text="Vaihto pahasti myöhässä"/>
+        <text name="rms_inspection_status_replacement_due" text="Vaihdettava"/>
         <text name="rms_inspection_engine_oil" text="Moottoriöljy"/>
         <text name="rms_inspection_coolant" text="Jäähdytysneste"/>
         <text name="rms_inspection_hydraulic_fluid" text="Hydrauliöljy"/>
@@ -756,8 +922,11 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="Ilmansuodatin on hieman tukossa."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Ilmansuodatin on havaittavasti tukossa."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Ilmansuodatin on pahasti tukossa pölyn ja roskan johdosta."/>
-        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Ilmansuodatin on saavuttanut paineilmapuhdistuksen rajan. Sen vaihtaminen vaatii huollon korjaamolla."/>
-        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="Puhalla suodattimesta irtopöly pois. Suodattimeen jäänyt lika tarkoittaa, että suodatin on myöhemmin vaihdettava korjaamolla."/>
+        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Ilmansuodatin on saavuttanut paineilmapuhdistuksen rajan. Korjaamo vaihtaa sen %s huollosta alkaen."/>
+        <text name="rms_inspection_hint_fuel_filter_due" text="Polttoainesuodatin on vaihdettava: mikä tahansa huolto tasosta riippumatta tai korjaus korjaamolla vaihtaa sen."/>
+        <text name="rms_inspection_hint_hydraulic_filter_due" text="Hydraulisuodatin on vaihdettava: mikä tahansa huolto tasosta riippumatta tai korjaus korjaamolla vaihtaa sen."/>
+        <text name="rms_inspection_hint_hydraulic_filter_bypass" text="Hydraulisuodatin on tukossa: öljy virtaa suodattamattomana ja kuluttaa piiriä. Mikä tahansa huolto tasosta riippumatta tai korjaus korjaamolla vaihtaa sen."/>
+        <text name="rms_inspection_hint_unidentified" text="Toteamattoman vian oire: korjaamo toteaa sen tarkastuksella tai huollolla."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Laturin ympärillä ja joissakin liitännöissä on nähtävissä ylikuumenemisen ja tummentumisen merkkejä."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Laturin ja sen johdotuksen ympärillä on nähtävissä voimakkaita ylikuumenemisen merkkejä ja tummentuneita liitäntöjä."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Voitelupisteet näyttävät hieman kuivilta."/>
@@ -774,9 +943,11 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Turboahtimen ympärillä näkyy öljyisiä jälkiä ja tummentuneita liitäntöjä."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Turboahtimen ympärillä näkyy runsaasti öljyisiä jälkiä, tummentuneita liitäntöjä ja nokijälkiä."/>
         <text name="rms_inspection_hint_fluid_level_low" text="Yhden nesteen taso on laskenut merkin alapuolelle."/>
-        <text name="rms_inspection_hint_service_engine" text="Moottoriöljyn vaihto on myöhässä: kulunut öljy nopeuttaa moottorin ja ruiskutuksen kulumista. Standardihuolto vaihtaa öljyn suodattimineen."/>
-        <text name="rms_inspection_hint_service_transmission" text="Vaihteistoöljyn vaihto on myöhässä: kulunut öljy nopeuttaa vaihteiston ja hydrauliikan kulumista. Laajennettu huolto vaihtaa öljyn suodattimineen."/>
-        <text name="rms_inspection_hint_service_coolant" text="Jäähdytysneste on vaihdettava: kulunut neste nopeuttaa jäähdytysjärjestelmän kulumista. Ennaltaehkäisevä huolto vaihtaa sen."/>
+        <text name="rms_inspection_hint_fluid_levels_low" text="Usean nesteen taso on laskenut merkin alapuolelle."/>
+        <text name="rms_inspection_hint_service_engine" text="Moottoriöljyn vaihto on myöhässä: kulunut öljy nopeuttaa moottorin ja ruiskutuksen kulumista. Jokainen huolto vaihtaa öljyn suodattimineen."/>
+        <text name="rms_inspection_hint_service_transmission" text="Vaihteistoöljyn vaihto on myöhässä: kulunut öljy nopeuttaa kaiken voitelemansa kulumista. Korjaamon suosittelema huolto vaihtaa öljyn suodattimineen."/>
+        <text name="rms_inspection_hint_service_hydraulic" text="Hydrauliöljyn vaihto on myöhässä: kulunut öljy nopeuttaa hydraulijärjestelmän kulumista. Korjaamon suosittelema huolto vaihtaa öljyn suodattimineen."/>
+        <text name="rms_inspection_hint_service_coolant" text="Jäähdytysneste on vaihdettava: kulunut neste nopeuttaa jäähdytysjärjestelmän kulumista. Korjaamon suosittelema huolto vaihtaa sen."/>
         <text name="rms_inspection_transmission_oil" text="Vaihteistoöljy"/>
         <text name="rms_inspection_radiator" text="Jäähdytin"/>
         <text name="rms_inspection_air_filter" text="Ilmasuodatin"/>
@@ -784,37 +955,41 @@
         <text name="rms_inspection_no_suspicious_symptoms" text="Ei epäilyttäviä oireita havaittu"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
-        <text name="rms_ingame_menu_title" text="Realistic Mechanical Systems"/>
-        <text name="rms_ingame_menu_section_active" text="RMS-ajoneuvot"/>
-        <text name="rms_ingame_menu_section_service" text="Huollossa"/>
-        <text name="rms_ingame_menu_section_other" text="Muut ajoneuvot"/>
-        <text name="rms_ingame_menu_header_vehicle" text="Ajoneuvo"/>
-        <text name="rms_ingame_menu_header_type" text="Tyyppi"/>
+        <text name="rms_ingame_menu_title" text="Koneiden hallintapaneeli"/>
+        <text name="rms_ingame_menu_section_active" text="Konekalusto"/>
+        <text name="rms_ingame_menu_section_service" text="Toimenpiteet"/>
+        <text name="rms_ingame_menu_section_other" text="Seurannan ulkopuoliset koneet"/>
         <text name="rms_ingame_menu_header_time_left" text="Aikaa jäljellä"/>
-        <text name="rms_ingame_menu_header_age" text="Ikä"/>
-        <text name="rms_ingame_menu_header_working_hours" text="Käyttötunnit"/>
-        <text name="rms_ingame_menu_header_condition" text="Kunto"/>
         <text name="rms_ingame_menu_header_cost" text="Kokonaiskulut"/>
         <text name="rms_ingame_menu_header_interval" text="Väli"/>
-        <text name="rms_ingame_menu_header_last_inspection" text="Viimeisin tarkastus"/>
-        <text name="rms_ingame_menu_header_last_maintenance" text="Viimeisin huolto"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Leasing"/>
-        <text name="rms_ingame_menu_header_price" text="Myynti valikosta"/>
         <text name="rms_ingame_menu_header_procedure" text="Toimenpide"/>
-        <text name="rms_ingame_menu_header_finish_time" text="Valmistumisaika"/>
-        <text name="rms_ingame_menu_header_service_cost" text="Kustannus"/>
         <text name="rms_ingame_menu_header_reason" text="Poisjättämisen syy"/>
-        <text name="rms_ingame_menu_empty_other" text="Ei RMS-järjestelmän ulkopuolisia ajoneuvoja saatavilla"/>
-        <text name="rms_ingame_menu_empty_active" text="Ei RMS-ajoneuvoja saatavilla"/>
-        <text name="rms_ingame_menu_empty_service" text="Yhtään ajoneuvoa ei ole tällä hetkellä huollossa"/>
+        <text name="rms_ingame_menu_empty_other" text="Ei seurannan ulkopuolisia koneita"/>
+        <text name="rms_ingame_menu_empty_active" text="Ei seurattavia koneita"/>
+        <text name="rms_ingame_menu_empty_service" text="Ei käynnissä olevia toimenpiteitä"/>
         <text name="rms_ingame_menu_reason_implement" text="Työkone tai perävaunu"/>
         <text name="rms_ingame_menu_reason_unsupported" text="Ei tuettu"/>
-        <text name="rms_ingame_menu_reason_electric" text="Sähkökäyttöinen"/>
         <text name="rms_ingame_menu_reason_towed" text="Työkone omalla moottorilla"/>
         <text name="rms_ingame_menu_reason_auxiliary" text="Apukone"/>
         <text name="rms_ingame_menu_reason_user" text="Jätetty pois käsin"/>
         <text name="rms_ingame_menu_include" text="Ota mukaan RMS:ään"/>
         <text name="rms_ingame_menu_exclude" text="Jätä pois RMS:stä"/>
+        <text name="rms_fleet_all" text="Kaikki koneet"/>
+        <text name="rms_fleet_all_untracked" text="Kaikki seurannan ulkopuoliset"/>
+        <text name="rms_fleet_sort_by" text="Lajittele"/>
+        <text name="rms_fleet_sort_deadline" text="Määräaika"/>
+        <text name="rms_fleet_sort_name" text="Nimi"/>
+        <text name="rms_fleet_sort_hours" text="Tunnit"/>
+        <text name="rms_fleet_check" text="Tarkastus"/>
+        <text name="rms_fleet_location" text="Sijainti"/>
+        <text name="rms_fleet_next_service" text="Seuraava huolto"/>
+        <text name="rms_fleet_remaining" text="%s h jäljellä"/>
+        <text name="rms_fleet_overdue" text="%s h myöhässä"/>
+        <text name="rms_fleet_overdue_label" text="Myöhässä"/>
+        <text name="rms_fleet_overdue_count" text="Myöhässä: %d"/>
+        <text name="rms_fleet_due_soon_label" text="Pian"/>
+        <text name="rms_fleet_due_soon_count" text="Pian: %d"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Ajoneuvon palautus"/>
         <text name="rms_sell_dialog_section_vehicle" text="Ajoneuvo"/>
@@ -823,9 +998,10 @@
         <text name="rms_sell_dialog_overdue_maintenance_penalty" text="Myöhässä oleva huolto"/>
         <text name="rms_sell_dialog_repair_penalty" text="Korjaus"/>
         <text name="rms_sell_dialog_washing_penalty" text="Pesu"/>
+        <text name="rms_sell_dialog_deposit_refund" text="Vakuuden palautus"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nestetaso alhaalla"/>
-        <text name="rms_tutorial_fluid_level_message" text="Yksi tämän koneen nesteistä on laskenut mittarin merkin alapuolelle.&#10;&#10;Moottoriöljyä kuluu käyttötuntien myötä, ja kulunut moottori kuluttaa sitä paljon enemmän. Jäähdytysneste, vaihteistoöljy ja hydrauliöljy vähenevät vain vuodon vuoksi.&#10;&#10;Merkin alapuolella kone tarvitsee vain täydennyksen ja toimii edelleen normaalisti. Vauriot alkavat vasta, kun taso laskee todella alas: liian vähäinen jäähdytysneste tai vaihteistoöljy kuumentaa konetta, ja liian vähäinen moottoriöljy tai hydrauliöljy nopeuttaa kulumista huomattavasti.&#10;&#10;Osta kaupasta yhteensopivan tuotteen säiliö, aseta se koneen viereen ja täydennä nestetaso. Kaikilla tähän piiriin tarkoitetuilla tuotteilla on sama vaikutus; väärä neste saastuttaa vain kyseisen piirin. Jälleenmyyjän korjaamossa tarvittavat litrat toimitetaan ja laskutetaan. Omassa tai liikkuvassa korjaamossa toimenpide kuluttaa korjaamoalueella olevia tilan säiliöitä."/>
+        <text name="rms_tutorial_fluid_level_message" text="Yksi tämän koneen nesteistä on laskenut mittarin merkin alapuolelle.&#10;&#10;Moottoriöljyä kuluu käyttötuntien myötä, ja kulunut moottori kuluttaa sitä paljon enemmän. Jäähdytysneste, vaihteistoöljy ja hydrauliöljy vähenevät vain vuodon vuoksi.&#10;&#10;Merkin alapuolella kone tarvitsee vain täydennyksen ja toimii edelleen normaalisti. Vauriot alkavat vasta, kun taso laskee todella alas: liian vähäinen jäähdytysneste tai vaihteistoöljy kuumentaa konetta, ja liian vähäinen moottoriöljy tai hydrauliöljy nopeuttaa kulumista huomattavasti.&#10;&#10;Osta kaupasta yhteensopivan tuotteen säiliö, vie se koneen luo ja täydennä nestetaso. Kaikilla tähän piiriin tarkoitetuilla tuotteilla on sama vaikutus; väärä neste saastuttaa vain kyseisen piirin. Jälleenmyyjän korjaamossa tarvittavat litrat toimitetaan ja laskutetaan."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Tervetuloa Realistic Mechanical Systems -modiin"/>
         <text name="rms_tutorial_welcome_disable_button" text="Poista vihjeet käytöstä"/>
         <text name="rms_tutorial_welcome_enable_button" text="Ota vihjeet käyttöön"/>
@@ -835,20 +1011,21 @@
         <text name="rms_tutorial_wheel_slip_title" text="Pyörän luistaminen"/>
         <text name="rms_tutorial_wheel_slip_message" text="Pyöräsi luistavat pahasti. Luistaminen on yksi vaihteiston tuhoisimmista tekijöistä ja tuo seuraavan huoltokäynnin selvästi lähemmäksi."/>
         <text name="rms_tutorial_service_due_soon_title" text="Huolto lähestyy"/>
-        <text name="rms_tutorial_service_due_soon_message" text="Kone %s tarvitsee pian huollon.&#10;&#10;RMS:ssä ajoneuvot tarvitsevat säännöllistä huoltoa. Huollon viivästyttäminen kasvattaa vikaantumisriskiä huomattavasti.&#10;&#10;Mene lähimpään korjaamoon ja valitse ”Huolto”. Huoltoväliä voi säätää modin asetuksissa."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s tarvitsee pian huoltoa. Valitse korjaamolla suositeltu paketti: se kattaa erääntyvät työt. Huolto erääntyy ensimmäisen käyttötunti- tai kalenterirajan täyttyessä, myös vähäisessä käytössä. Huollon helppous kuvaa toimenpiteiden vaativuutta; tavallinen huolto onnistuu edelleen liikkuvassa korjaamossa."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Huoltoväli ylitetty"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Kone %s: huoltoväli on ylittynyt.&#10;&#10;Mene korjaamolle mahdollisimman pian ja valitse ”Huolto”. Huollon viivästyessä ajoneuvon käytön jatkaminen lisää huomattavasti useiden vikojen riskiä."/>
         <text name="rms_tutorial_steering_title" text="Ohjaaminen paikallaan"/>
         <text name="rms_tutorial_steering_message" text="Vältä ohjaamista paikallaan. Se kuormittaa voimakkaasti ohjausmekanismia ja etuakselin osia, mikä lisää alustan kulumista.&#10;&#10;Liiku hieman eteenpäin ennen ohjaamista, niin pyörät kääntyvät paljon helpommin."/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Jäähdytin tai ilmansuodatin on tukossa. Pidä %s-näppäintä painettuna, kun katsot ajoneuvoa, niin näet kumman. Puhdista se paineilmapuhaltimella. Jos suodatinta ei voi enää puhdistaa puhaltamalla, valitse korjaamolla laajennettu tai ennaltaehkäisevä huolto sen vaihtamiseksi."/>
+        <text name="rms_tutorial_cooling_air_check_title" text="Jäähdytys ja ilmansuodatin"/>
+        <text name="rms_tutorial_cooling_air_check_message" text="Jäähdytin tai ilmansuodatin on tukossa. Pidä %s-näppäintä painettuna, kun katsot ajoneuvoa, niin näet kumman. Puhdista se paineilmapuhaltimella. Jos suodatinta ei voi enää puhdistaa puhaltamalla, korjaamo vaihtaa sen %s huollosta alkaen."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Voitelu tarpeen"/>
         <text name="rms_tutorial_needs_lubrication_message" text="Kone %s tarvitsee säännöllistä voitelua.&#10;&#10;RMS:ssä voitelutaso laskee käyttötuntien myötä. Pitkän käyttämättömän jakson jälkeen kone on myös voideltava ennen käyttöönottoa. Riittämätön voitelu nopeuttaa alustan kulumista.&#10;&#10;Osta kaupasta rasvaruisku ja voitele kone, kun tarkastus sitä edellyttää.&#10;&#10;Voit tarkistaa voitelutason pitämällä %s-näppäintä painettuna ajoneuvoa katsoessasi."/>
         <text name="rms_tutorial_needs_repair_title" text="Ajoneuvon vika"/>
-        <text name="rms_tutorial_needs_repair_message" text="Kone %s: siinä on ongelma, ja yksi osa on saattanut vikaantua.&#10;&#10;Vie se korjaamolle tarkastukseen. Älä viivyttele: vika voi pahentua edelleen ja korjauskustannukset kasvavat sen mukana.&#10;&#10;Jos tarkastus vahvistaa vian, anna korjaamon korjata se."/>
+        <text name="rms_tutorial_needs_repair_message" text="Kone %s: siinä on ongelma, ja yksi osa on saattanut vikaantua.&#10;&#10;Vie se korjaamolle: tarkastus, tai huolto jos se on erääntynyt, toteaa vian. Älä viivyttele: vika voi pahentua edelleen ja korjauskustannukset kasvavat sen mukana.&#10;&#10;Kun vika on todettu, anna korjaamon korjata se."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Peruskorjaus tarpeen"/>
         <text name="rms_tutorial_needs_overhaul_message" text="Kone %s alkaa näyttää ikänsä. On aika harkita vaihtoa tai peruskorjausta. Se on pitkä ja kallis toimenpide, mutta ainoa tapa palauttaa kone alkuperäiseen kuntoonsa.&#10;&#10;Käyttöikä määritetään modin asetuksissa: mitä suurempi arvo, sitä hitaammin ajoneuvosi kuluvat."/>
         <text name="rms_tutorial_needs_preventive_title" text="Vikaantuminen lähellä"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Kone %s: yksi järjestelmistä on vikaantumassa. Vielä on aikaa toimia.&#10;&#10;Korjaamo tarjoaa ennaltaehkäisevän huollon: se palauttaa huoltotason, vaihtaa kaikki nesteet ja vähentää voimakkaasti eniten kuormittuneiden järjestelmien mekaanista rasitusta."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Koneen %s moottorin, polttoainejärjestelmän tai jäähdytysjärjestelmän vikaantumisriski on kohonnut.&#10;&#10;%s huolto: säätää venttiilit ja tarkastaa ruiskut ja termostaatin, mikä pienentää tätä riskiä."/>
         <text name="rms_tutorial_age_degradation_title" text="Ikääntymisrapautuminen"/>
         <text name="rms_tutorial_age_degradation_message" text="RMS:ssä ajoneuvot menettävät vähitellen osan alkuperäisestä suorituskyvystään ikääntyessään.&#10;&#10;Noin kolmanneksen jälkeen käyttöiästä ikääntymiseen liittyvä kuluminen alkaa hieman heikentää joitakin tärkeitä ominaisuuksia, kuten tehoa tai jarrutusta. Vaikutus voimistuu sen jälkeen ja on selvästi havaittavissa käyttöiän lopussa.&#10;&#10;Tämä kuluminen voidaan poistaa käytöstä modin asetuksissa."/>
         <text name="rms_tutorial_poor_consumables_title" text="Heikkolaatuiset kulutustarvikkeet"/>
@@ -856,8 +1033,8 @@
         <text name="rms_tutorial_poor_parts_title" text="Heikkolaatuiset osat"/>
         <text name="rms_tutorial_poor_parts_message" text="Kone %s: korjauksen yhteydessä asennettiin heikkolaatuinen osa. Vika palaa todennäköisesti pian.&#10;&#10;Voit odottaa sen palaamista tai tehdä täydellisen tarkastuksen, joka tunnistaa kyseisen osan luotettavasti."/>
         <text name="rms_tutorial_park_brake_title" text="Seisontajarru"/>
-        <text name="rms_tutorial_park_brake_message" text="Seisontajarru on päällä. Se kytkeytyy itsestään heti kun poistut koneesta paikallaan, ja vapautuu heti kun painat taas kaasua.&#10;&#10;Rinteessä juuri se estää konetta lähtemästä itsekseen liikkeelle."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Seisontajarru on päällä. Kytket ja vapautat sen itse omalla näppäimellään: jos annat kaasua jarru päällä, kone ei liiku ja varoittaa sinua.&#10;&#10;Rinteessä se estää konetta lähtemästä liikkeelle itsestään."/>
+        <text name="rms_tutorial_park_brake_message" text="Seisontajarru on päällä. Se kytkeytyy itsestään heti kun poistut koneesta paikallaan, ja vapautuu heti kun painat taas kaasua. Se kytkeytyy myös, kun sammutat moottorin, tai kun kone on ollut paikallaan 45 sekuntia.&#10;&#10;Rinteessä juuri se estää konetta lähtemästä itsekseen liikkeelle."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Seisontajarru on päällä. Kytket ja vapautat sen itse omalla näppäimellään: jos annat kaasua jarru päällä, kone työskentelee jarrua vastaan ja sen jarrut kuluvat.&#10;&#10;Rinteessä se estää konetta lähtemästä liikkeelle itsestään: jos poistut koneesta kytkemättä sitä, kone voi lähteä liikkeelle."/>
         <text name="rms_tutorial_preheat_title" text="Dieselin hehkutus"/>
         <text name="rms_tutorial_preheat_message" text="Kun dieselmoottori on kylmä, käynnistysohjaimen yksi painallus kytkee virran ja aloittaa hehkutuksen automaattisesti. Kojelaudan merkkivalot suorittavat itsetestin, minkä jälkeen hehkutuksen merkkivalo palaa, kunnes moottori on valmis. Älä paina uudelleen: käynnistin kytkeytyy automaattisesti merkkivalon sammuttua."/>
         <text name="rms_tutorial_pto_engagement_title" text="Voimanottoakselin kytkentä"/>
@@ -875,7 +1052,7 @@
         <text name="rms_tutorial_hard_start_title" text="Vaikea käynnistys"/>
         <text name="rms_tutorial_hard_start_message" text="Kone %s: moottori käynnistyy vaikeasti. Syynä voi olla heikko akku, pakkanen, mekaaninen vika tai käynnistimen kuluminen. Pidä käynnistyspainiketta painettuna, kunnes moottori käynnistyy.&#10;&#10;Sähköjärjestelmä kuormittuu käynnistyksen aikana voimakkaasti suurten käynnistysvirtojen vuoksi."/>
         <text name="rms_tutorial_low_fuel_title" text="Vähän polttoainetta"/>
-        <text name="rms_tutorial_low_fuel_message" text="Säiliö lähestyy varatasoa. Mitä vähemmän polttoainetta on jäljellä, sitä kovemmalla polttoainepumpun on imettävä sitä, mikä lisää sen kulumista."/>
+        <text name="rms_tutorial_low_fuel_message" text="Säiliö lähestyy varatasoa. Mitä vähemmän polttoainetta on jäljellä, sitä kovemmalla polttoainepumpun on imettävä sitä, ja säiliön pohjalta kulkeutuu vettä ja sakkaa suodattimeen, joka tukkeutuu nopeammin.&#10;&#10;Tankkaa mieluiten päivän päätteeksi: täyteen säiliöön tiivistyy vähemmän vettä."/>
         <text name="rms_tutorial_lugging_title" text="Moottorin alikierrosrasitus"/>
         <text name="rms_tutorial_lugging_message" text="Moottori, ja erityisesti vaihteisto, kärsii alikierrosajosta eli alhaisista kierroksista raskaassa kuormituksessa. Kytketty työkone saattaa olla liian raskas koneelle, tai valittu vaihde ei ole oikea, jos vaihteisto on manuaalinen."/>
         <text name="rms_tutorial_engine_overheat_title" text="Moottorin ylikuumeneminen"/>
@@ -887,7 +1064,9 @@
         <text name="rms_tutorial_cvt_overheat_title" text="CVT:n ylikuumeneminen"/>
         <text name="rms_tutorial_cvt_overheat_message" text="CVT alkaa ylikuumentua. Tämä voi tapahtua yhdestä tai useammasta syystä: vaihteisto on liiallisessa kuormituksessa, jäähdytin on tukossa, sää on erittäin kuuma tai vaihteiston jäähdytysjärjestelmässä on vika. Esimerkiksi saattaa olla, että vedät liian raskasta auraa tai hinaat ylikuormitettua perävaunua.&#10;&#10;Pysy valppaana: ylikuumeneminen on yksi tuhoisimmista asioista, joita CVT-vaihteistolle voi tapahtua."/>
         <text name="rms_tutorial_chassis_vibration_title" text="Alusta rasituksessa"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Kone %s: nopea ajaminen epätasaisessa maastossa kuluttaa jousitusta nopeasti. Tärinä vahingoittaa myös muita järjestelmiä, erityisesti hydrauliikkaa ja sähköjärjestelmää.&#10;&#10;Aja rauhallisesti epätasaisella alustalla."/>
+        <text name="rms_tutorial_chassis_vibration_message" text="Kone %s: nopea ajaminen epätasaisessa maastossa kuluttaa alustaa nopeasti. Iskut vahingoittavat myös johdotusta ja sen liittimiä sekä hydrauliikkaa, kun raskas työkone on nostettuna.&#10;&#10;Hidasta epätasaisella alustalla."/>
+        <text name="rms_tutorial_terrain_impact_title" text="Kova isku"/>
+        <text name="rms_tutorial_terrain_impact_message" text="Alusta sai juuri kovan iskun. Este, joka pysäyttää koneen äkisti tai hidastaa sitä rajusti, kuluttaa alustaa heti ja tuo sen seuraavan vian lähemmäs, useimmiten ohjaukseen tai laakereihin.&#10;&#10;Hidasta ennen esteitä."/>
         <text name="rms_tutorial_cranking_title" text="Toistuva käynnistäminen"/>
         <text name="rms_tutorial_cranking_message" text="Käynnistät moottoria liian usein. Jokainen käynnistys lähettää erittäin suuren virran sähköjärjestelmän läpi, mikä kiihdyttää johdotuksen, käynnistimen ja muiden sähkökomponenttien kulumista.&#10;&#10;Vältä moottorin sammuttamista lyhyiden pysähdysten ajaksi."/>
         <text name="rms_tutorial_critical_failure_title" text="Kriittinen vika"/>
@@ -901,7 +1080,7 @@
         <text name="rms_tutorial_overload_indicator_title" text="Ylikuormitusvaroitus"/>
         <text name="rms_tutorial_overload_indicator_message" text="%s on raskaassa kuormituksessa. Kojelaudalle äsken syttynyt varoitusvalo kertoo sinulle tästä.&#10;&#10;Koneessa ei ehkä ole tarpeeksi tehoa nykyiseen tehtävään. Yritä vähentää kuormaa: rajoita nopeuttasi vakionopeussäätimellä tai hellitä kaasua täysitehon ajamisen sijaan."/>
         <text name="rms_tutorial_battery_low_title" text="Heikko akku"/>
-        <text name="rms_tutorial_battery_low_message" text="Tämän koneen akku on lähellä täydellistä tyhjenemistä. Tämä voi tapahtua pitkän seisonta-ajan, ankaran pakkasen tai sähköjärjestelmän vikojen vuoksi.&#10;&#10;Alhaisella varauksella käynnistäminen muuttuu vaikeaksi ja lopulta mahdottomaksi. Voit tällöin käynnistää moottorin toisesta ajoneuvosta käynnistyskaapeleilla."/>
+        <text name="rms_tutorial_battery_low_message" text="Tämän koneen akku on lähellä täydellistä tyhjenemistä. Tämä voi tapahtua pitkän seisonta-ajan, ankaran pakkasen tai sähköjärjestelmän vikojen vuoksi.&#10;&#10;Alhaisella varauksella käynnistäminen muuttuu vaikeaksi ja lopulta mahdottomaksi. Voit tällöin käynnistää moottorin toisesta ajoneuvosta käynnistyskaapeleilla. Katkaise akun virta päävirtakytkimestä ennen pitkää seisonta-aikaa tai jos akku tyhjenee itsestään, jalan koneen edessä."/>
         <text name="rms_tutorial_drivetrain_windup_title" text="Voimansiirron rasitus"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Käännyt pitävällä alustalla tasauspyörästön lukko kytkettynä. Kaarteessa sisä- ja ulkopyörät kulkevat eri matkat, mutta tasauspyörästön lukko pakottaa ne pyörimään samalla nopeudella: voimansiirto kuormittuu ja vaihteiston kuluminen lisääntyy. Vapauta lukko ennen kääntymistä."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Voimansiirto ja tasauspyörästön lukko"/>
@@ -909,7 +1088,7 @@
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
-        <text name="rms_charger_function" text="Telwin-laturi kärryssä, 150 A 12 V:n jännitteellä. Kytke se ajoneuvon viereen ja anna akun latautua. Lataus seuraa pelin ajan nopeutta. Käynnistysapu (START, 200 A)."/>
+        <text name="rms_charger_function" text="Telwin-laturi kärryssä, 150 A 12 V:n ja 80 A 24 V:n jännitteellä. Kytke se ajoneuvon viereen ja valitse akun mukaan mitoitettu automaattinen lataus, pikalataus tai käynnistysapu (START, 200 A 12 V:n jännitteellä). Lataus seuraa pelin ajan nopeutta."/>
         <text name="rms_charger_start" text="Kytke laturi"/>
         <text name="rms_charger_disconnect" text="Irrota laturi"/>
         <text name="rms_charger_select" text="Valitse kytkettävä ajoneuvo."/>
@@ -931,6 +1110,7 @@
         <text name="rms_charger_error_moving" text="Ajoneuvo liikkuu."/>
         <text name="rms_charger_error_service" text="Korjaamotoimenpide on käynnissä."/>
         <text name="rms_charger_error_cables" text="Irrota käynnistyskaapelit."/>
+        <text name="rms_charger_error_voltage" text="Käynnistysapu toimii vain 12 V:n jännitteellä."/>
         <text name="rms_charger_error_busy" text="Laturi on jo kytketty."/>
         <text name="rms_charger_error_full" text="Tämä akku on jo ladattu."/>
         <text name="rms_charger_connected" text="Laturi kytketty. Lataus aloitettu."/>
@@ -938,7 +1118,7 @@
         <text name="rms_charger_stopped_motor" text="Lataus pysähtyi: käynnistys"/>
         <text name="rms_charger_error_player_distance" text="Siirry laturin luo jalan."/>
         <text name="rms_charger_mode_select" text="Kytke laturi"/>
-        <text name="rms_charger_mode_start" text="Käynnistysapu (START, 200 A)"/>
+        <text name="rms_charger_mode_start" text="Käynnistysapu (START, 200 A, 12 V)"/>
         <text name="rms_charger_start_ready" text="START valmis"/>
         <text name="rms_charger_start_active" text="Käynnistysapu käytössä"/>
         <text name="rms_charger_start_running" text="Moottori käynnissä: irrota"/>
@@ -946,6 +1126,26 @@
         <text name="rms_charger_start_wait" text="Odota 30 sekuntia käynnistysyritysten välillä."/>
         <text name="rms_charger_unplug_before_start" text="Irrota laturi tai valitse START ennen käynnistystä."/>
         <text name="rms_charger_start_connected" text="Käynnistysapu (START, 200 A)."/>
-        <text name="rms_charger_mode_charge" text="Lataa akku (150 A)"/>
+        <text name="rms_charger_mode_charge" text="Automaattinen lataus"/>
+        <text name="rms_charger_mode_fast" text="Pikalataus (150 A, 80 A 24 V:n jännitteellä)"/>
+
+        <!-- Battery isolator -->
+        <text name="rms_battery_isolator_cut" text="Katkaise akun virta"/>
+        <text name="rms_battery_isolator_restore" text="Kytke akun virta"/>
+        <text name="rms_battery_isolator_open" text="Akun virta on katkaistu. Kytke se takaisin päävirtakytkimestä, jalan ajoneuvon edessä."/>
+        <text name="rms_battery_isolator_engine_running" text="Sammuta moottori ennen päävirtakytkimen käyttöä."/>
+        <text name="rms_battery_isolator_info" text="Akun virta katkaistu"/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Käytä varusteltua korjaamoa."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Elektroninen diagnostiikka vaaditaan"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Purkaminen tai erikoistyökalut vaaditaan"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Suurjännitevarusteet vaaditaan"/>
+        <text name="rms_service_months" text="%s kuukautta"/>
+        <text name="rms_service_month" text="%s kuukausi"/>
+        <text name="rms_service_calendar_due" text="Kalenteriraja saavutettu"/>
+        <text name="rms_service_program_estimated" text="Arvioitu huolto-ohjelma"/>
+        <text name="rms_ws_label_service_access" text="Huollon helppous"/>
+        <text name="rms_service_access_easy" text="Helppo"/>
+        <text name="rms_service_access_average" text="Keskitasoinen"/>
+        <text name="rms_service_access_demanding" text="Vaativa"/>
     </texts>
 </l10n>

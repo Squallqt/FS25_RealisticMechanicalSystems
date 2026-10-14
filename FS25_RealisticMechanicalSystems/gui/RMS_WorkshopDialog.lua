@@ -28,69 +28,27 @@ local modDirectory = g_currentModDirectory
 local log_dbg = RMS_Utils.createLogger("[RMS_WORKSHOP_DIALOG]")
 
 local FLUID_FIELDS = {
-    {circuit = "engineOil", row = "engineOilRow", value = "engineOilValue", gauge = "engineOilGauge"},
-    {circuit = "coolant", row = "coolantRow", value = "coolantValue", gauge = "coolantGauge"},
-    {circuit = "transmissionOil", row = "transmissionOilRow", value = "transmissionOilValue", gauge = "transmissionOilGauge"},
-    {circuit = "hydraulicFluid", row = "hydraulicFluidRow", value = "hydraulicFluidValue", gauge = "hydraulicFluidGauge"}
+    {circuit = "engineOil", row = "engineOilRow", value = "engineOilValue", gauge = "engineOilGauge", under = "engineOilGaugeUnder"},
+    {circuit = "coolant", row = "coolantRow", value = "coolantValue", gauge = "coolantGauge", under = "coolantGaugeUnder"},
+    {circuit = "transmissionOil", row = "transmissionOilRow", value = "transmissionOilValue", gauge = "transmissionOilGauge", under = "transmissionOilGaugeUnder"},
+    {circuit = "hydraulicFluid", row = "hydraulicFluidRow", value = "hydraulicFluidValue", gauge = "hydraulicFluidGauge", under = "hydraulicFluidGaugeUnder"}
 }
 
 ---Clamps a value to the range used by progress indicators
--- @param any value source value
--- @return float ratio clamped ratio
 local function clampRatio(value)
     local clamped = math.max(0, math.min(tonumber(value) or 0, 1))
     return math.floor(clamped * 100 + 0.5) / 100
 end
 
 ---Returns a label without its trailing colon for recap cards
--- @param string? value localized label
--- @return string label without a trailing colon
 local function stripTrailingColon(value)
     return (tostring(value or ""):gsub("%s*:%s*$", ""))
 end
 
----Updates the bodywork service buttons from the available modes
--- @param table dialog workshop dialog instance
--- @param string selectedMode selected bodywork mode
--- @param boolean isDealer whether the dealer service is selected
-local function updateBodyworkServiceButtons(dialog, selectedMode, isDealer)
-    local buttons = dialog.bodyworkServiceButtons or {}
-    local values = {RMS_Bodywork.TOUCHUP}
-    if isDealer then
-        table.insert(values, RMS_Bodywork.FULL)
-    end
-
-    local labels = {}
-    for _, value in ipairs(values) do
-        table.insert(labels, g_i18n:getText(value))
-    end
-
-    local visibleCount = math.min(#buttons, #values)
-    local layout = buttons[1] ~= nil and buttons[1].parent or nil
-    if visibleCount > 0 and layout ~= nil and layout.size ~= nil then
-        local spacing = layout.elementSpacing or 0
-        local segmentWidth = (layout.size[1] - spacing * (visibleCount - 1)) / visibleCount
-        for index = 1, visibleCount do
-            buttons[index]:setSize(segmentWidth, nil)
-        end
-    end
-
-    for index, button in ipairs(buttons) do
-        local value = values[index]
-        local isVisible = value ~= nil and index <= visibleCount
-        button:setVisible(isVisible)
-        button:setText(isVisible and labels[index] or "")
-        button:setSelected(isVisible and value == selectedMode)
-    end
-
-    if layout ~= nil and layout.invalidateLayout ~= nil then
-        layout:invalidateLayout()
-    end
-end
+-- the look of a cell of the repaint table by what a repaint does: all of it, part of it, nothing
+local BODYWORK_CELL_KINDS = { [2] = "Done", [1] = "Light", [0] = "None" }
 
 ---Tells whether a log entry belongs in the technical record
--- @param table? entry maintenance log entry
--- @return boolean isVisible true when the entry is visible
 local function isLogEntryVisible(entry)
     if entry == nil then
         return false
@@ -100,8 +58,6 @@ local function isLogEntryVisible(entry)
 end
 
 ---Formats a stored service date with the period formatter
--- @param table? entry maintenance log entry
--- @return string text formatted date
 local function formatLogDate(entry)
     local date = entry ~= nil and entry.date or nil
     if date == nil then
@@ -114,34 +70,16 @@ local function formatLogDate(entry)
     return string.format("%d %s %d", day, g_i18n:formatPeriod(month, true), year)
 end
 
----Returns the newest maintenance log entry that carries an inspection report
--- @param table vehicle vehicle
--- @return table? entry log entry holding the report
-local function getLastReportEntry(vehicle)
-    local log = vehicle.spec_RealisticMechanicalSystems.maintenanceLog or {}
-    for index = #log, 1, -1 do
-        if RealisticMechanicalSystems.getIsLogEntryHasReport(log[index]) then
-            return log[index]
-        end
-    end
-
-    return nil
-end
-
 ---Returns the localized name of a service state
--- @param string? serviceType service state
--- @return string text localized state name
 local function getServiceTypeText(serviceType)
     if serviceType == nil then
         return "-"
     end
 
-    return g_i18n:getText(serviceType)
+    return RMS_Utils.formatServiceState(serviceType)
 end
 
 ---Counts the repaired breakdowns stored in completed repair and overhaul entries
--- @param table logEntries maintenance log entries
--- @return integer count repaired breakdown count
 local function getResolvedBreakdownsCount(logEntries)
     local count = 0
     local STATUS = RealisticMechanicalSystems.STATUS
@@ -170,7 +108,7 @@ local CURRENCY_SLICES = {
 local MAX_LISTED_PARTS = 16
 
 local currencyOverlays = {}
-local MAINTENANCE_ICON_SLICE_ID = "rms_DashboardHud.maintainability"
+local MAINTENANCE_ICON_SLICE_ID = "rms_DashboardHud.maintenance"
 local OIL_ICON_SLICE_ID = "rms_WorkshopFluids.engineOil"
 local workshopIconOverlays = {}
 local IMAGE_COLOR_ATTRIBUTES = {
@@ -206,11 +144,8 @@ function RMS_WorkshopDialog.drawCurrencyIcon(area)
 end
 
 ---Draws a verified atlas glyph without passing through a Bitmap overlay
--- @param table? area transparent GUI element defining the render bounds and state
--- @param string sliceId registered overlay slice id
--- @param string profileName profile providing the native RMS state colors
 local function drawWorkshopIcon(area, sliceId, profileName)
-    if area == nil or g_overlayManager == nil then
+    if area == nil then
         return
     end
 
@@ -251,9 +186,7 @@ function RMS_WorkshopDialog.drawOilIcon(area, profileName)
 end
 
 ---Draws an RMS progress ring centered inside a GUI area
--- @param table? area GUI draw area
--- @param float ratio progress ratio
-local function drawProgressRing(area, ratio)
+local function drawProgressRing(area, ratio, arcColor)
     if area == nil then
         return
     end
@@ -262,9 +195,42 @@ local function drawProgressRing(area, ratio)
     local ringWidth = ringHeight * (g_screenHeight / g_screenWidth)
     local centerX = area.absPosition[1] + area.absSize[1] * 0.5
     local centerY = area.absPosition[2] + area.absSize[2] * 0.5
-    RMS_ProgressRing.render(centerX, centerY, ringWidth, ringHeight, clampRatio(ratio), false, RMS_ProgressRing.THIN_DOT)
+    RMS_ProgressRing.render(centerX, centerY, ringWidth, ringHeight, clampRatio(ratio), false, RMS_ProgressRing.THIN_DOT, arcColor)
 end
 
+
+---Says what the workshop knows of the faults of a machine with none identified
+-- @param table vehicle vehicle
+-- @return string text localized sentence
+-- @return boolean isWarning true when a telltale is lit for a fault to identify
+function RMS_WorkshopDialog.getFaultStateText(vehicle)
+    if RealisticMechanicalSystems.getHasUnidentifiedWarning(vehicle) then
+        return g_i18n:getText("rms_ws_info_warning_unidentified"), true
+    end
+    return g_i18n:getText("rms_ws_info_no_breakdowns"), false
+end
+
+---Says why an intervention has nothing to do here
+-- @param table vehicle vehicle
+-- @param string serviceType intervention picked
+-- @param string workshopType workshop the machine is in
+-- @return string? text localized sentence, nil when the intervention has work to do
+-- @return boolean isWarning true when a telltale is lit for a fault to identify
+function RMS_WorkshopDialog.getInterventionUnavailableText(vehicle, serviceType, workshopType)
+    if serviceType == RealisticMechanicalSystems.STATUS.REPAIR and not RMS_Utils.hasSelectedVisibleBreakdown(vehicle) then
+        for id, breakdown in pairs(vehicle:getActiveBreakdowns()) do
+            if breakdown.isVisible and RMS_Breakdowns.BreakdownRegistry[id].isSelectable then
+                return g_i18n:getText("rms_ws_reason_repair_unselected"), false
+            end
+        end
+        return RMS_WorkshopDialog.getFaultStateText(vehicle)
+    elseif serviceType == RealisticMechanicalSystems.STATUS.OVERHAUL and #RMS_Utils.getEligibleOverhaulSystems(vehicle) == 0 then
+        return g_i18n:getText("rms_ws_reason_overhaul_none"), false
+    elseif serviceType == RealisticMechanicalSystems.STATUS.BODYWORK and workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE then
+        return g_i18n:getText("rms_ws_reason_bodywork_mobile"), false
+    end
+    return nil, false
+end
 
 ---Loads the dialog layout and stores the shared instance
 function RMS_WorkshopDialog.register()
@@ -296,7 +262,35 @@ function RMS_WorkshopDialog.new(target, customMt)
 end
 
 
----Opens the dialog on a vehicle, taking the workshop type from the vanilla workshop screen
+---Tells whether the workshop the dialog stands in takes an order now
+-- @return boolean isOpen true when the workshop accepts a service now
+function RMS_WorkshopDialog.getIsWorkshopOpen()
+    return RMS_Main:isWorkshopTypeOpen(RMS_WorkshopDialog.INSTANCE.workshopType)
+end
+
+---Writes the yes and the no of the follow-up of an order on their cards
+-- @param table dialog order dialog
+function RMS_WorkshopDialog.updateFollowUpCards(dialog)
+    for index, isYes in ipairs({ false, true }) do
+        dialog.optionThreeLabel[index]:setText(g_i18n:getText(isYes and BinaryOptionElement.STRING_YES or BinaryOptionElement.STRING_NO))
+        dialog.optionThreeButtons[index]:setSelected(dialog.selectedOptionThree == isYes)
+    end
+end
+
+---Rebuilds the scrolling settings of an order
+-- @param table dialog order dialog
+function RMS_WorkshopDialog.refreshOrderScroll(dialog)
+    local layout = dialog.configScroll
+    layout:invalidateLayout()
+    if dialog.resetConfigScroll then
+        layout:scrollTo(0, false)
+        dialog.resetConfigScroll = false
+    end
+    layout:raiseSliderUpdateEvent()
+    dialog.configSliderBox:setVisible(dialog.configSlider.needsSlider == true)
+end
+
+---Opens the dialog on a vehicle, at the workshop of the vanilla screen
 -- @param table vehicle vehicle
 function RMS_WorkshopDialog.show(vehicle, selectBodywork)
     if RMS_WorkshopDialog.INSTANCE == nil then RMS_WorkshopDialog.register() end
@@ -337,7 +331,7 @@ function RMS_WorkshopDialog.show(vehicle, selectBodywork)
     g_gui:showDialog("RMS_WorkshopDialog")
 end
 
----Rebuilds the info panel, the breakdown table, the status line and the action buttons
+---Rebuilds the info panel, the breakdown table, the status and the buttons
 function RMS_WorkshopDialog:updateScreen()
     if self.vehicle == nil then return end
     local spec = self.vehicle.spec_RealisticMechanicalSystems
@@ -394,30 +388,14 @@ function RMS_WorkshopDialog:updateScreen()
     end
     
     self.ageValue:setText(string.format("%d %s", vehicle.age, g_i18n:getText("rms_ws_age_unit")))
-    self.operatingHoursValue:setText(string.format("%s %s", vehicle:getFormattedOperatingTime(), g_i18n:getText("rms_ws_hours_unit")))
+    self.operatingHoursValue:setText(RMS_Utils.formatHours(vehicle:getFormattedOperatingTime()))
+    self.odometerValue:setText(RMS_Utils.formatOdometerKilometers(RMS_Utils.getOdometerKilometers(vehicle)))
     
-    local monthsSinceInspectionText = RMS_Utils.formatTimeAgo(self.vehicle:getLastInspectionDate())
-    local inspectedService, isCompleteServiceInspection = self.vehicle:getLastInspectedService()
-    local inspectedCondition, isCompleteInspection = self.vehicle:getLastInspectedCondition()
+    self:updateInspectionReading()
 
-    self.serviceValue:setText(RMS_Utils.formatService(inspectedService, isCompleteServiceInspection))
-    self.serviceValue:setTextColor(RMS_Utils.getServiceColor(inspectedService, isCompleteServiceInspection))
-    self.conditionValue:setText(RMS_Utils.formatCondition(inspectedCondition, isCompleteInspection))
-    self.conditionValue:setTextColor(RMS_Utils.getConditionColor(inspectedCondition, isCompleteInspection))
-    self.conditionLastInspectionDeltaValue:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
-    self.conditionLastInspectionDeltaValue:setText(monthsSinceInspectionText)
-    self.diagnosticLastInspection:setText(monthsSinceInspectionText)
-    self.diagnosticService:setText(RMS_Utils.formatService(inspectedService, isCompleteServiceInspection))
-    self.diagnosticService:setTextColor(RMS_Utils.getServiceColor(inspectedService, isCompleteServiceInspection))
-    self.diagnosticCondition:setText(RMS_Utils.formatCondition(inspectedCondition, isCompleteInspection))
-    self.diagnosticCondition:setTextColor(RMS_Utils.getConditionColor(inspectedCondition, isCompleteInspection))
-    self.conditionRingRatio = RMS_Utils.getConditionRingRatio(inspectedCondition, isCompleteInspection)
-    self.serviceRingRatio = RMS_Utils.getServiceRingRatio(inspectedService, isCompleteServiceInspection)
-
-    local serviceHours, serviceInterval = self.vehicle:getServiceCountdown()
-    self.relAndMainLabel:setText(g_i18n:getText(
-        RealisticMechanicalSystems.MAINTENANCE_LABEL_TEXT_KEYS[self.vehicle:getDueMaintenanceType()]))
-    self.relAndMainValue:setText(RMS_Utils.formatOperatingHours(serviceHours, serviceInterval))
+    local schedule = self.vehicle:getServiceSchedule()
+    self.relAndMainLabel:setText(RMS_Utils.formatServiceReason(self.vehicle, schedule))
+    self.relAndMainValue:setText(RMS_Utils.formatServiceDeadline(schedule))
 
     -- breakdown table, restricted to the breakdowns already discovered
     self.visibleBreakdowns = {}
@@ -443,9 +421,7 @@ function RMS_WorkshopDialog:updateScreen()
     local buttonsDisabled = false
     local statusText = ""
     
-    local isWorkshopTypeOpen = RMS_Main == nil
-        or RMS_Main.isWorkshopTypeOpen == nil
-        or RMS_Main:isWorkshopTypeOpen(self.workshopType)
+    local isWorkshopTypeOpen = RMS_Main:isWorkshopTypeOpen(self.workshopType)
 
     if not isWorkshopTypeOpen then
         buttonsDisabled = true
@@ -457,7 +433,7 @@ function RMS_WorkshopDialog:updateScreen()
     if spec.currentState ~= STATUS.READY then
         buttonsDisabled = true
         local finishTimeText = RMS_Utils.formatFinishTime(self.vehicle:getServiceFinishTime(nil, nil, nil, nil))
-        local localizedStatus = g_i18n:getText(spec.currentState)
+        local localizedStatus = RMS_Utils.formatServiceState(spec.currentState)
         statusText = string.format(g_i18n:getText("rms_ws_status_in_progress_format"), localizedStatus, finishTimeText)
         if spec.currentState ~= STATUS.REPAIR and spec.currentState ~= STATUS.REFILL then
             local operationInProgressText = string.format(g_i18n:getText("rms_ws_status_in_progress_short_format"), localizedStatus)
@@ -481,14 +457,11 @@ function RMS_WorkshopDialog:updateScreen()
     self.diagnosticStatusText:setText(statusText)
     self.diagnosticStatusText:setTextColor(unpack(statusColor))
 
-    -- An overhaul requires at least one eligible system.
-    local hasSystemEligibleForOverhaul = #RMS_Utils.getEligibleOverhaulSystems(self.vehicle) > 0
-
     if g_workshopScreen.isDealer or g_workshopScreen.isOwnWorkshop then
         self.inspectionButton.disabled = buttonsDisabled 
         self.maintenanceButton.disabled = buttonsDisabled
         self.repairButton.disabled = buttonsDisabled
-        self.overhaulButton:setDisabled(buttonsDisabled or not hasSystemEligibleForOverhaul)
+        self.overhaulButton:setDisabled(buttonsDisabled)
     else
         self.inspectionButton.disabled = buttonsDisabled or spec.currentState ~= STATUS.READY
         self.maintenanceButton.disabled = buttonsDisabled or spec.currentState ~= STATUS.READY
@@ -503,7 +476,8 @@ function RMS_WorkshopDialog:updateScreen()
     self.maintenanceButton:setVisible(not isUnderService)
     self.repairButton:setVisible(not isUnderService)
     self.overhaulButton:setVisible(not isUnderService)
-    self.refillButton:setVisible(not isUnderService)
+    local isTopUpOffered = RMS_FluidWorkshop.getIsTopUpOffered(self.workshopType)
+    self.refillButton:setVisible(not isUnderService and isTopUpOffered)
     self.refillButton:setDisabled(self.vehicle.getMissingFluidShare ~= nil and self.vehicle:getMissingFluidShare() <= 0.001)
     self.bodyworkButton:setVisible(not isUnderService)
     self.cancelServiceButtonSeparator:setVisible(isUnderService)
@@ -511,7 +485,7 @@ function RMS_WorkshopDialog:updateScreen()
     self.maintenanceButtonSeparator:setVisible(not isUnderService)
     self.repairButtonSeparator:setVisible(not isUnderService)
     self.overhaulButtonSeparator:setVisible(not isUnderService)
-    self.refillButtonSeparator:setVisible(not isUnderService)
+    self.refillButtonSeparator:setVisible(not isUnderService and isTopUpOffered)
     self.bodyworkButtonSeparator:setVisible(not isUnderService)
     self:updateInterventionPanels(statusText, isWorkshopTypeOpen, isUnderService)
 
@@ -531,25 +505,22 @@ function RMS_WorkshopDialog:updateScreen()
         end
     end
 
-    -- with no breakdown ticked there is no repair to configure, and the three ways into the repair
-    -- dialog close together: the bottom bar, the card of the interventions tab and the estimate
-    if selectedRepairCount == 0 then
-        self.repairButton.disabled = true
-    end
+    -- the card and the bar of a repair stay open and say why nothing is to repair
     self.diagnosticConfigureButton:setDisabled(selectedRepairCount == 0 or isUnderService)
     -- a closed workshop or a running service leaves nothing to configure: the whole list waits
     for _, button in ipairs(self.interventionActionButtons) do
         button:setDisabled(buttonsDisabled)
     end
-    self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.REPAIR]:setDisabled(buttonsDisabled or selectedRepairCount == 0)
-    -- the mobile workshop cannot repaint, so the card and the bottom bar close together
-    local isBodyworkDisabled = buttonsDisabled or self.workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE
-    self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.BODYWORK]:setDisabled(isBodyworkDisabled)
-    self.bodyworkButton:setDisabled(isBodyworkDisabled)
-    self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.OVERHAUL]:setDisabled(
-        buttonsDisabled or not hasSystemEligibleForOverhaul)
+    self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.REPAIR]:setSelected(
+        self.unavailableIntervention == STATUS.REPAIR and not isUnderService)
+    local refillAction = self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.REFILL]
+    refillAction:setVisible(isTopUpOffered)
+    refillAction.parent:invalidateLayout()
+    self.bodyworkButton:setDisabled(buttonsDisabled)
+    self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.OVERHAUL]:setSelected(
+        self.unavailableIntervention == STATUS.OVERHAUL and not isUnderService)
     self.interventionActionButtons[RMS_WorkshopDialog.INTERVENTION_ACTION.BODYWORK]:setSelected(
-        self.bodyworkSelected == true and not isUnderService)
+        (self.bodyworkSelected == true or self.unavailableIntervention == STATUS.BODYWORK) and not isUnderService)
     self:updateBodyworkQuote(isWorkshopTypeOpen, isUnderService)
     self:updateDiagnosticEstimate(selectedRepairCount, repairPrice)
     -- the bar carries the shortcuts, not a price list: each figure is quoted by the dialog that starts the work
@@ -562,13 +533,7 @@ function RMS_WorkshopDialog:updateScreen()
         self.refillButton.parent:invalidateLayout()
     end
 
-    -- The status bar reports a running service; the diagnostic list remains deterministic.
-    local isListEmpty = #self.visibleBreakdowns == 0
-    self.breakdownTable:setVisible(not isListEmpty)
-    self.emptyTableText:setVisible(isListEmpty)
-    self.emptyTableText:setText(g_i18n:getText("rms_ws_info_no_breakdowns"))
-    self.emptyTableText:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
-
+    self:updateFaultList()
     self:updateSummaryPanels()
     self:updateTechnicalRecord()
     self:setCurrentTab(self.currentTab)
@@ -577,20 +542,62 @@ function RMS_WorkshopDialog:updateScreen()
     RMS_Utils.fitValuePills(self)
 end
 
----Fills the system bars of the condition card from the report snapshot, never the live systems
+---Shows the known faults, or a title and a sentence when the workshop has none to list
+function RMS_WorkshopDialog:updateFaultList()
+    local isListEmpty = #self.visibleBreakdowns == 0
+    local isFaultWarning = RealisticMechanicalSystems.getHasUnidentifiedWarning(self.vehicle)
+    self.breakdownTable:setVisible(not isListEmpty)
+    self.breakdownInfoRow:setVisible(not isListEmpty)
+    self.breakdownEmptyPanel:setVisible(isListEmpty)
+    self.breakdownEmptyTitle:setText(g_i18n:getText(isFaultWarning and "rms_ws_faults_warning_title" or "rms_ws_faults_none_title"))
+    self.breakdownEmptyHint:setText(g_i18n:getText(isFaultWarning and "rms_ws_faults_warning_hint" or "rms_ws_faults_none_hint"))
+    self.breakdownEmptyHint:setTextColor(unpack(isFaultWarning and RMS_Breakdowns.COLORS.WARNING or self.readyHintColor))
+end
+
+---Fills the rings, the pills and the age of the last inspection report
+function RMS_WorkshopDialog:updateInspectionReading()
+    local reportHours, isReportOutdated = self.vehicle:getInspectionReportAge()
+    local inspectedService, isCompleteServiceInspection = self.vehicle:getLastInspectedService()
+    local inspectedCondition, isCompleteInspection = self.vehicle:getLastInspectedCondition()
+    -- a report that no longer describes the machine keeps its figures, greyed out
+    local serviceColor = isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or {RMS_Utils.getServiceColor(inspectedService, isCompleteServiceInspection)}
+    local conditionColor = isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or {RMS_Utils.getConditionColor(inspectedCondition, isCompleteInspection)}
+    self.isReportOutdated = isReportOutdated
+
+    self.serviceValue:setText(RMS_Utils.formatService(inspectedService, isCompleteServiceInspection))
+    self.serviceValue:setTextColor(unpack(serviceColor))
+    self.conditionValue:setText(RMS_Utils.formatCondition(inspectedCondition, isCompleteInspection))
+    self.conditionValue:setTextColor(unpack(conditionColor))
+    -- out of date, each ring shows its figure on one line over the mark asking for a new check
+    self.serviceOutdatedValue:setText(RMS_Utils.formatService(inspectedService, isCompleteServiceInspection))
+    self.conditionOutdatedValue:setText(RMS_Utils.formatCondition(inspectedCondition, isCompleteInspection))
+    self.serviceValue:setVisible(not isReportOutdated)
+    self.conditionValue:setVisible(not isReportOutdated)
+    self.serviceOutdatedStack:setVisible(isReportOutdated)
+    self.conditionOutdatedStack:setVisible(isReportOutdated)
+    self.conditionLastInspectionDeltaValue:setTextColor(unpack(isReportOutdated and RMS_Breakdowns.COLORS.WARNING or RMS_Utils.COLOR.TEXT_DIM))
+    self.conditionLastInspectionDeltaValue:setText(RMS_Utils.formatReportAge(reportHours))
+    self.diagnosticLastInspection:setTextColor(unpack(isReportOutdated and RMS_Breakdowns.COLORS.WARNING or self.lastCheckColor))
+    self.diagnosticLastInspection:setText(RMS_Utils.formatReportAge(reportHours))
+    self.diagnosticService:setText(RMS_Utils.formatService(inspectedService, isCompleteServiceInspection))
+    self.diagnosticService:setTextColor(unpack(serviceColor))
+    self.diagnosticCondition:setText(RMS_Utils.formatCondition(inspectedCondition, isCompleteInspection))
+    self.diagnosticCondition:setTextColor(unpack(conditionColor))
+    self.conditionRingRatio = RMS_Utils.getConditionRingRatio(inspectedCondition, isCompleteInspection)
+    self.serviceRingRatio = RMS_Utils.getServiceRingRatio(inspectedService, isCompleteServiceInspection)
+end
+
+---Fills the systems of the condition card from the report snapshot
 function RMS_WorkshopDialog:updateSummarySystems()
-    local entry = getLastReportEntry(self.vehicle)
+    local entry = RealisticMechanicalSystems.getReferenceReport(self.vehicle)
     local systems = entry ~= nil and entry.conditionData ~= nil and entry.conditionData.systems or nil
-    -- per system figures are a measurement: without a complete diagnosis the card says so instead
+    -- per system figures are a measurement: a report without them rates each system in a word
     local isMeasured = systems ~= nil and RealisticMechanicalSystems.getIsCompleteReport(entry)
 
-    self.summarySystemsLayout:setVisible(isMeasured)
-    self.summarySystemsEmptyText:setVisible(not isMeasured)
-    self.summarySystemsEmptyText:setText(g_i18n:getText(systems == nil
-        and "rms_ws_no_last_report_message"
-        or "rms_ws_systems_need_complete_inspection"))
+    self.summarySystemsLayout:setVisible(systems ~= nil)
+    self.summarySystemsEmptyText:setVisible(systems == nil)
 
-    if not isMeasured then
+    if systems == nil then
         return
     end
 
@@ -607,11 +614,22 @@ function RMS_WorkshopDialog:updateSummarySystems()
         local rowElement = self.summarySystemRow[index]
 
         rowElement:setVisible(isEnabled)
-        self.summarySystemName[index]:setText(isEnabled and g_i18n:getText(systemL10nKey) or "")
+        self.summarySystemName[index]:setText(isEnabled and g_i18n:getText(RMS_Utils.getSystemLabel(self.vehicle, systemL10nKey)) or "")
         self.summarySystemValue[index]:setText(isEnabled and string.format("%d", math.floor(percent + 0.5)) or "")
-        gaugeElement:setVisible(isEnabled)
+        self.summarySystemValue[index]:setTextColor(unpack(self.isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or self.systemValueColor))
+        self.summarySystemValue[index]:setVisible(isMeasured)
+        self.summarySystemTrack[index]:setVisible(isMeasured)
+        self.summarySystemRating[index]:setVisible(not isMeasured)
+        self.summarySystemRating[index]:setText(RMS_Utils.formatCondition(condition, false))
+        gaugeElement:setVisible(isEnabled and isMeasured)
         gaugeElement:setSize(self.systemGaugeWidths[index] * condition, nil)
-        gaugeElement:setImageColor(nil, RMS_Utils.getGaugeColor(percent, 95, 80, 60, 40, true))
+        if self.isReportOutdated then
+            gaugeElement:setImageColor(nil, unpack(RMS_Utils.COLOR.TEXT_DIM))
+            self.summarySystemRating[index]:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
+        else
+            gaugeElement:setImageColor(nil, RMS_Utils.getGaugeColor(percent, 95, 80, 60, 40, true))
+            self.summarySystemRating[index]:setTextColor(RMS_Utils.getConditionColor(condition, false))
+        end
     end
 
     self.summarySystemsLayout:invalidateLayout()
@@ -622,8 +640,8 @@ function RMS_WorkshopDialog:updateSummaryService()
     local spec = self.vehicle.spec_RealisticMechanicalSystems
     local lastMaintenanceDate = self.vehicle:getLastMaintenanceDate()
 
-    self.summaryReliability:setText(string.format("%d %%", math.floor(clampRatio(spec.reliability or 1) * 100 + 0.5)))
-    self.summaryMaintainability:setText(string.format("%.2f", spec.maintainability or 1))
+    self.summaryReliability:setText(RMS_Utils.formatReliability(spec.reliability))
+    self.summaryServiceAccess:setText(RMS_Utils.formatServiceAccess(self.vehicle))
     self.summaryLastMaintenance:setText(type(lastMaintenanceDate) == "table"
         and formatLogDate({date = lastMaintenanceDate})
         or g_i18n:getText("rms_spec_never"))
@@ -643,6 +661,9 @@ function RMS_WorkshopDialog:updateSummaryPanels()
 
     self.summaryAlertRow:setVisible(hasAlert)
     self.summaryNoAlertText:setVisible(not hasAlert)
+    local faultStateText, isFaultWarning = RMS_WorkshopDialog.getFaultStateText(self.vehicle)
+    self.summaryNoAlertText:setText(faultStateText)
+    self.summaryNoAlertText:setTextColor(unpack(isFaultWarning and RMS_Breakdowns.COLORS.WARNING or self.noAlertColor))
 
     -- only the worst breakdown gets a row, so the count tells how many more wait in the diagnostic tab
     local alertCount = #self.visibleBreakdowns
@@ -656,7 +677,7 @@ function RMS_WorkshopDialog:updateSummaryPanels()
         local stageDefinition = alertData.stage ~= nil and alertDefinition.stages ~= nil
             and alertDefinition.stages[alertData.stage] or nil
         local partKey = alertDefinition.part or alertDefinition.system
-        local descriptionKey = stageDefinition ~= nil and stageDefinition.description or nil
+        local descriptionKey = stageDefinition ~= nil and RMS_Breakdowns.getStageDescription(self.vehicle, stageDefinition) or nil
         local descriptionText = descriptionKey ~= nil and g_i18n:getText(descriptionKey) or "-"
 
         if alertData.isActive == false and alertData.source == RealisticMechanicalSystems.BREAKDOWN_SOURCES.QUICK_FIX then
@@ -679,8 +700,7 @@ function RMS_WorkshopDialog:updateSummaryPanels()
     local quantityFormat = g_i18n:getText("rms_inspection_fluid_quantity_format")
     for _, fields in ipairs(FLUID_FIELDS) do
         -- a row only for the oils the machine holds, one for a common sump
-        local hasCircuit = spec.systems[RMS_Fluids.CIRCUITS[fields.circuit].systemKey].enabled ~= false
-            and RMS_Fluids.getSumpCircuit(self.vehicle, fields.circuit) == fields.circuit
+        local hasCircuit = RMS_Fluids.hasCircuit(self.vehicle, fields.circuit)
         self[fields.row]:setVisible(hasCircuit)
 
         if hasCircuit then
@@ -696,7 +716,7 @@ function RMS_WorkshopDialog:updateSummaryPanels()
                 RMS_FluidWorkshop.formatLiters(RMS_Fluids.getCapacity(self.vehicle, fields.circuit)),
                 fluidUnit
             ))
-            gaugeElement:setSize(GuiUtils.alignValueToScreenPixels(baseWidth * level, true), nil)
+            RMS_Utils.setLevelGauge(gaugeElement, self[fields.under], baseWidth, level)
         end
     end
 
@@ -736,7 +756,7 @@ function RMS_WorkshopDialog:updateDiagnosticEstimate(selectedRepairCount, repair
     self.diagnosticTotal:setText(g_i18n:formatMoney(repairPrice or 0, 0, true, false))
 end
 
----Updates the ready and running intervention panels from the persisted service context
+---Updates the ready and running intervention panels
 -- @param string statusText workshop status text
 -- @param boolean isWorkshopTypeOpen true when the current workshop accepts work
 -- @param boolean isUnderService true while an intervention is running
@@ -747,14 +767,28 @@ function RMS_WorkshopDialog:updateInterventionPanels(statusText, isWorkshopTypeO
     local optionTexts = {}
 
     if spec.serviceOptionOne ~= nil and spec.serviceOptionOne ~= "NONE" then
-        table.insert(optionTexts, g_i18n:getText(spec.serviceOptionOne))
+        table.insert(optionTexts, RMS_Utils.formatServiceOption(self.vehicle, spec.currentState, spec.serviceOptionOne))
     end
     if spec.currentState ~= RealisticMechanicalSystems.STATUS.BODYWORK
         and spec.serviceOptionTwo ~= nil and spec.serviceOptionTwo ~= "NONE" then
-        table.insert(optionTexts, g_i18n:getText(spec.serviceOptionTwo))
+        table.insert(optionTexts, g_i18n:getText(RMS_Utils.getSystemLabel(self.vehicle, spec.serviceOptionTwo)))
     end
 
     local showBodywork = self.bodyworkSelected == true and not isUnderService
+    local unavailableText, isWarning
+    if self.unavailableIntervention ~= nil then
+        unavailableText, isWarning = RMS_WorkshopDialog.getInterventionUnavailableText(self.vehicle, self.unavailableIntervention,
+            self.workshopType)
+        if unavailableText == nil then
+            self.unavailableIntervention = nil
+        end
+    end
+    local STATUS = RealisticMechanicalSystems.STATUS
+    local titleKeys = { [STATUS.REPAIR] = "rms_ws_action_choice_repair", [STATUS.OVERHAUL] = "rms_ws_action_choice_overhaul",
+        [STATUS.BODYWORK] = "rms_ws_action_choice_bodywork" }
+    self.interventionReadyTitle:setText(g_i18n:getText(titleKeys[self.unavailableIntervention] or "rms_ws_status_ready_title"))
+    self.interventionReadyHint:setText(unavailableText or g_i18n:getText("rms_ws_status_ready_hint"))
+    self.interventionReadyHint:setTextColor(unpack(isWarning and RMS_Breakdowns.COLORS.WARNING or self.readyHintColor))
     self.interventionReadyPanel:setVisible(not isUnderService and not showBodywork)
     self.bodyworkOrderPanel:setVisible(showBodywork)
     self.interventionProgressPanel:setVisible(isUnderService)
@@ -995,15 +1029,15 @@ end
 
 ---Draws the last inspected condition ring
 function RMS_WorkshopDialog:onDrawConditionRing()
-    drawProgressRing(self.conditionRingArea, self.conditionRingRatio)
+    drawProgressRing(self.conditionRingArea, self.conditionRingRatio, self.isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or nil)
 end
 
 ---Draws the last inspected service ring
 function RMS_WorkshopDialog:onDrawServiceRing()
-    drawProgressRing(self.serviceRingArea, self.serviceRingRatio)
+    drawProgressRing(self.serviceRingArea, self.serviceRingRatio, self.isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or nil)
 end
 
----Reads the live progress of the running intervention and keeps the printed percentage in step
+---Reads the live progress of the running intervention
 -- @return float ratio progress between 0 and 1
 function RMS_WorkshopDialog:refreshInterventionProgress()
     local progressPercent = self:getServiceProgressPercent() or 0
@@ -1048,7 +1082,7 @@ function RMS_WorkshopDialog:getNumberOfItemsInSection(list, section)
 end
 
 
----Fills one breakdown row, the stage colour rising from white to red, dimmed when not selected
+---Fills one breakdown row
 -- @param table list list element
 -- @param integer section section index
 -- @param integer index row index
@@ -1089,7 +1123,7 @@ function RMS_WorkshopDialog:populateCellForItemInSection(list, section, index, c
 
     local part_key = self.breakdownRegistry[breakdownId].part or self.breakdownRegistry[breakdownId].system
     local stage_key = self.breakdownRegistry[breakdownId].stages[data.stage].severity
-    local description_key = self.breakdownRegistry[breakdownId].stages[data.stage].description
+    local description_key = RMS_Breakdowns.getStageDescription(self.vehicle, self.breakdownRegistry[breakdownId].stages[data.stage])
     local price = self.vehicle:getBreakdownRepairPrice(breakdownId, data.stage, RealisticMechanicalSystems.PART_TYPES.OEM, self.workshopType)
     local selected = data.isSelectedForRepair
     local descriptionElement = cell:getAttribute("rms_tableBreakdownDisc")
@@ -1121,6 +1155,10 @@ function RMS_WorkshopDialog:populateCellForItemInSection(list, section, index, c
     local selectionToggle = cell:getAttribute("rms_tableBreakdownSelect")
     RMS_Utils.mirrorSelectionToChildren(selectionToggle)
     selectionToggle:setSelected(selected)
+    -- the row shows where the list stands, its tick box whether the breakdown is picked for repair
+    cell:getAttribute("surface").getIsSelected = function()
+        return cell:getIsSelected()
+    end
 
     if selected then
         cell:getAttribute("rms_tableBreakdownName"):setDisabled(false)
@@ -1154,7 +1192,7 @@ function RMS_WorkshopDialog:populateTechnicalLogCell(index, cell)
     if entry.isCompleted == false then
         metaText = string.format("%s · %s", metaText, g_i18n:getText("rms_log_cancelled_desc"))
     elseif entry.optionOne ~= nil and entry.optionOne ~= "NONE" then
-        metaText = string.format("%s · %s", metaText, g_i18n:getText(entry.optionOne))
+        metaText = string.format("%s · %s", metaText, RMS_Utils.formatServiceOption(self.vehicle, entry.type, entry.optionOne))
     end
 
     local typeIcon = cell:getAttribute("technicalLogIcon")
@@ -1168,13 +1206,15 @@ function RMS_WorkshopDialog:populateTechnicalLogCell(index, cell)
 end
 
 
----Toggles the repair selection of the clicked breakdown
--- @param table button clicked button
-function RMS_WorkshopDialog:onRowClick(button)
+---Toggles the repair selection of a breakdown
+-- @param table _list list element
+-- @param integer _section section index
+-- @param integer index row index
+function RMS_WorkshopDialog:onBreakdownClick(_list, _section, index)
     if self.vehicle:getCurrentStatus() ~= RealisticMechanicalSystems.STATUS.READY then return end
-    if button == nil or self.visibleBreakdowns[button.parent.indexInSection] == nil then return end
+    if self.visibleBreakdowns[index] == nil then return end
     
-    local id = self.visibleBreakdowns[button.parent.indexInSection]
+    local id = self.visibleBreakdowns[index]
     local breakdown = self.activeBreakdowns[id]
     if breakdown then
         breakdown.isSelectedForRepair = not breakdown.isSelectedForRepair
@@ -1211,9 +1251,33 @@ function RMS_WorkshopDialog:setCurrentTab(tabIndex)
     end
 
     self.workshopTabPaging:setState(selectedIndex, false)
+    self:updateFocusLinks()
 end
 
----Applies the tab the pager landed on, moved by a click, by its arrows or by left and right
+---Chains the focus over the page on screen, under the tab selector
+function RMS_WorkshopDialog:updateFocusLinks()
+    local columns = {}
+    if self.currentTab == RMS_WorkshopDialog.TAB.DIAGNOSTIC then
+        columns = {{{self.breakdownTable}}, {{self.diagnosticConfigureButton}}}
+    elseif self.currentTab == RMS_WorkshopDialog.TAB.INTERVENTIONS then
+        local actions = {}
+        for _, button in ipairs(self.interventionActionButtons) do
+            table.insert(actions, {button})
+        end
+        columns = {
+            actions,
+            {self.bodyworkColumns, {self.bodyworkBaseColorOption}, {self.bodyworkDesignColorOption}, {self.bodyworkRimColorOption}},
+            {{self.bodyworkStartButton}}
+        }
+    elseif self.currentTab == RMS_WorkshopDialog.TAB.TECHNICAL then
+        columns = {{{self.technicalLogTable}, {self.technicalShowLogButton}}, {{self.technicalOpenReportButton}}}
+    end
+
+    self.focusEntry = RMS_Utils.linkFocusColumns(self.workshopTabPaging, columns)
+    RMS_Utils.keepFocusShown(self.focusEntry)
+end
+
+---Applies the tab the pager landed on
 function RMS_WorkshopDialog:onWorkshopTabPagingChanged()
     self:setCurrentTab(self.workshopTabPaging:getState())
     if self.currentTab == RMS_WorkshopDialog.TAB.INTERVENTIONS and self.vehicle ~= nil then
@@ -1244,7 +1308,7 @@ function RMS_WorkshopDialog:onClickTechnicalTab()
     self:setCurrentTab(RMS_WorkshopDialog.TAB.TECHNICAL)
 end
 
----Opens the maintenance log, or tells the player it holds nothing but the purchase entry
+---Opens the maintenance log, or tells the player it is empty
 function RMS_WorkshopDialog:onClickShowLog()
     local spec = self.vehicle.spec_RealisticMechanicalSystems
     if #spec.maintenanceLog > 1 then
@@ -1254,21 +1318,19 @@ function RMS_WorkshopDialog:onClickShowLog()
     end
 end
 
----Opens the newest log entry carrying a report, or tells the player there is none
+---Opens the report of the picked entry or of the condition card
 function RMS_WorkshopDialog:onClickShowReport()
-    local spec = self.vehicle.spec_RealisticMechanicalSystems
     local selectedEntry = self.currentTab == RMS_WorkshopDialog.TAB.TECHNICAL and self:getSelectedTechnicalLogEntry() or nil
     if selectedEntry ~= nil and RealisticMechanicalSystems.getIsLogEntryHasReport(selectedEntry) then
         RMS_ReportDialog.show(self.vehicle, selectedEntry, self)
         return
     end
 
-    for i = #spec.maintenanceLog, 1, -1 do
-        local entry = spec.maintenanceLog[i]
-        if RealisticMechanicalSystems.getIsLogEntryHasReport(entry) then
-            RMS_ReportDialog.show(self.vehicle, entry, self)
-            return
-        end
+    -- the report the condition card reads its figures from
+    local entry = RealisticMechanicalSystems.getReferenceReport(self.vehicle)
+    if entry ~= nil then
+        RMS_ReportDialog.show(self.vehicle, entry, self)
+        return
     end
     InfoDialog.show(g_i18n:getText("rms_ws_no_last_report_message"))
 end
@@ -1283,19 +1345,6 @@ function RMS_WorkshopDialog:selectIntervention(serviceType, sourceDialog)
     if sourceDialog ~= nil and sourceDialog.maintenanceType == serviceType then
         return
     end
-    if serviceType == RealisticMechanicalSystems.STATUS.REPAIR
-        and not RMS_Utils.hasSelectedVisibleBreakdown(self.vehicle) then
-        return
-    end
-    if serviceType == RealisticMechanicalSystems.STATUS.OVERHAUL
-        and #RMS_Utils.getEligibleOverhaulSystems(self.vehicle) == 0 then
-        return
-    end
-    if serviceType == RealisticMechanicalSystems.STATUS.BODYWORK
-        and self.workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE then
-        return
-    end
-
     if sourceDialog ~= nil then
         sourceDialog:close()
     end
@@ -1305,10 +1354,15 @@ function RMS_WorkshopDialog:selectIntervention(serviceType, sourceDialog)
     end
 
     self.bodyworkSelected = false
+    -- a repair or an overhaul with nothing to do stays on the interventions, saying why
+    self.unavailableIntervention = RMS_WorkshopDialog.getInterventionUnavailableText(self.vehicle, serviceType,
+        self.workshopType) ~= nil and serviceType or nil
     self:setCurrentTab(RMS_WorkshopDialog.TAB.INTERVENTIONS)
     self:updateScreen()
-    if serviceType == RealisticMechanicalSystems.STATUS.INSPECTION then
-        RMS_MaintenanceTwoOptionsDialog.show(self.vehicle, serviceType)
+    if self.unavailableIntervention ~= nil then
+        return
+    elseif serviceType == RealisticMechanicalSystems.STATUS.INSPECTION then
+        RMS_MaintenanceTwoOptionsDialog.show(self.vehicle)
     else
         RMS_MaintenanceThreeOptionsDialog.show(self.vehicle, serviceType)
     end
@@ -1340,7 +1394,7 @@ function RMS_WorkshopDialog.initializeChildTabPaging(sourceDialog, selectedTab)
     RMS_WorkshopDialog.updateChildTabAvailability(sourceDialog)
 end
 
----Enables navigation to workshop pages only when this dialog was opened over that workshop
+---Enables the workshop tabs only when opened over that workshop
 -- @param table sourceDialog child dialog with workshopNavTabs
 function RMS_WorkshopDialog.updateChildTabAvailability(sourceDialog)
     local isAvailable = RMS_WorkshopDialog.canNavigateFromChildDialog(sourceDialog)
@@ -1388,22 +1442,27 @@ function RMS_WorkshopDialog.selectInterventionFromConfiguration(sourceDialog, se
     end
 end
 
+---
 function RMS_WorkshopDialog:onClickInspection()
     self:selectIntervention(RealisticMechanicalSystems.STATUS.INSPECTION)
 end
 
+---
 function RMS_WorkshopDialog:onClickService()
     self:selectIntervention(RealisticMechanicalSystems.STATUS.MAINTENANCE)
 end
 
+---
 function RMS_WorkshopDialog:onClickRepair()
     self:selectIntervention(RealisticMechanicalSystems.STATUS.REPAIR)
 end
 
+---
 function RMS_WorkshopDialog:onClickOverhaul()
     self:selectIntervention(RealisticMechanicalSystems.STATUS.OVERHAUL)
 end
 
+---
 function RMS_WorkshopDialog:onClickRefill()
     self:selectIntervention(RealisticMechanicalSystems.STATUS.REFILL)
 end
@@ -1418,6 +1477,7 @@ function RMS_WorkshopDialog:getBodyworkColorTitle(zone)
         or desc.title
 end
 
+---
 function RMS_WorkshopDialog:ensureBodyworkColorRows(zones)
     self.bodyworkExtraColorRows = self.bodyworkExtraColorRows or {}
     local fixed = {
@@ -1427,6 +1487,7 @@ function RMS_WorkshopDialog:ensureBodyworkColorRows(zones)
     }
     local active = {}
     local rows = {}
+    ---
     local function addRow(key, title, callback)
         local zone = key
         active[zone] = true
@@ -1467,6 +1528,7 @@ function RMS_WorkshopDialog:ensureBodyworkColorRows(zones)
     return rows
 end
 
+---
 function RMS_WorkshopDialog:updateBodyworkColorOption(zone, row, control)
     local choices = RMS_Bodywork.getColorChoices(self.vehicle, zone, self.bodyworkSelectedColors)
     local customChoice = RMS_Bodywork.getCustomColorChoice(self.vehicle, zone, self.bodyworkSelectedColors)
@@ -1526,6 +1588,76 @@ function RMS_WorkshopDialog:updateBodyworkColorOption(zone, row, control)
     return hasChoices
 end
 
+---Tells whether a full repaint can give the vehicle other colors than its own
+-- @param table vehicle vehicle
+-- @return boolean hasColors true when a color zone offers a choice
+function RMS_WorkshopDialog.getHasBodyworkColors(vehicle)
+    for _, zone in ipairs(RMS_Bodywork.getColorZones(vehicle)) do
+        if #RMS_Bodywork.getColorChoices(vehicle, zone, {}) > 0 or RMS_Bodywork.getCustomColorChoice(vehicle, zone, {}) ~= nil then
+            return true
+        end
+    end
+    return false
+end
+
+---Returns what a repaint does on each row of its table
+-- @param table vehicle vehicle
+-- @param string mode repaint
+-- @return table cells text and kind of each row, 2 for all of it, 1 for part of it, 0 for nothing
+function RMS_WorkshopDialog.getBodyworkCells(vehicle, mode)
+    local dealer = g_i18n:getText(RealisticMechanicalSystems.WORKSHOP.DEALER)
+    if mode == RMS_Bodywork.TOUCHUP then
+        return {
+            { string.format(g_i18n:getText("rms_ws_paint_extent_up_to"),
+                string.format("%d%%", math.floor(RMS_Bodywork.MAX_TOUCHUP_WEAR * 100 + 0.5))), 1 },
+            { g_i18n:getText("rms_ws_paint_colors_kept"), 1 },
+            { g_i18n:getText(RealisticMechanicalSystems.WORKSHOP.OWN) .. " · " .. dealer, 2 }
+        }
+    end
+    local hasColors = RMS_WorkshopDialog.getHasBodyworkColors(vehicle)
+    return {
+        { g_i18n:getText("rms_ws_paint_extent_all"), 2 },
+        { g_i18n:getText(hasColors and "rms_ws_paint_colors_choice" or "rms_ws_paint_colors_kept"), hasColors and 2 or 1 },
+        { dealer, 1 }
+    }
+end
+
+---Writes the repaint table, the chosen repaint selected
+-- @param string selectedMode repaint chosen
+function RMS_WorkshopDialog:updateBodyworkTable(selectedMode)
+    local wear = RMS_Bodywork.getWear(self.vehicle)
+    local isBeyondTouchUp = wear ~= nil and wear > RMS_Bodywork.MAX_TOUCHUP_WEAR
+    local reasonKey = nil
+    if wear ~= nil and wear < RMS_Bodywork.MIN_TOUCHUP_WEAR then
+        reasonKey = "rms_bodywork_no_wear"
+    elseif isBeyondTouchUp then
+        reasonKey = "rms_bodywork_wear_limit"
+    end
+    self.bodyworkWearValue:setText(wear ~= nil and string.format("%s%%", g_i18n:formatNumber(wear * 100, 1))
+        or g_i18n:getText("rms_bodywork_unavailable"))
+    self.bodyworkWearValue:setTextColor(unpack(isBeyondTouchUp and RMS_Breakdowns.COLORS.WARNING or RMS_Utils.COLOR.TEXT))
+    self.bodyworkWearReason:setText(reasonKey ~= nil and g_i18n:getText(reasonKey) or "")
+
+    for column, mode in ipairs({ RMS_Bodywork.TOUCHUP, RMS_Bodywork.FULL }) do
+        local colors = mode == RMS_Bodywork.FULL and RMS_Bodywork.encodeColors(self.vehicle, self.bodyworkSelectedColors) or nil
+        local price = RMS_FluidWorkshop.getTransactionPrice(self.vehicle, RealisticMechanicalSystems.STATUS.BODYWORK,
+            self.workshopType, mode, colors, false)
+        local isDone = RMS_Bodywork.isAllowed(self.vehicle, self.workshopType, mode, colors)
+        self.bodyworkColumns[column]:setSelected(mode == selectedMode)
+        self.bodyworkPrice[column]:setText(isDone and price ~= nil and g_i18n:formatMoney(price, 0, true, false) or "-")
+        self.bodyworkDuration[column]:setText(RMS_Config.MAINTENANCE.INSTANT_BODYWORK and g_i18n:getText("rms_option_menu_duration_instant")
+            or RMS_Utils.formatShortDuration(self.vehicle:getServiceDuration(RealisticMechanicalSystems.STATUS.BODYWORK, mode,
+                colors, false, self.workshopType)))
+        for row, cell in ipairs(RMS_WorkshopDialog.getBodyworkCells(self.vehicle, mode)) do
+            for kind, suffix in pairs(BODYWORK_CELL_KINDS) do
+                local element = self["bodyworkCell" .. suffix .. column][row]
+                element:setVisible(kind == cell[2])
+                element:setText(cell[1])
+            end
+        end
+    end
+end
+
 ---Keeps the bodywork work order and estimate inside the workshop page.
 function RMS_WorkshopDialog:updateBodyworkQuote(isWorkshopTypeOpen, isUnderService)
     local showBodywork = self.bodyworkSelected == true and not isUnderService
@@ -1534,9 +1666,6 @@ function RMS_WorkshopDialog:updateBodyworkQuote(isWorkshopTypeOpen, isUnderServi
         return
     end
 
-    if self.workshopType == RealisticMechanicalSystems.WORKSHOP.OWN then
-        self.bodyworkSelectedMode = RMS_Bodywork.TOUCHUP
-    end
     local mode = self.bodyworkSelectedMode or RMS_Bodywork.FULL
     local colors = mode == RMS_Bodywork.FULL and RMS_Bodywork.encodeColors(self.vehicle, self.bodyworkSelectedColors) or nil
     local wear = RMS_Bodywork.getWear(self.vehicle)
@@ -1548,14 +1677,8 @@ function RMS_WorkshopDialog:updateBodyworkQuote(isWorkshopTypeOpen, isUnderServi
         RealisticMechanicalSystems.STATUS.BODYWORK, mode, colors, false, self.workshopType)
     local allowed = isWorkshopTypeOpen and RMS_Bodywork.isAllowed(self.vehicle, self.workshopType, mode, colors)
     local isDealer = self.workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
-    updateBodyworkServiceButtons(self, mode, isDealer)
-
-    local wearText = wear ~= nil and string.format("%.1f %%", wear * 100)
-        or g_i18n:getText("rms_bodywork_unavailable")
-    self.bodyworkWearValue:setText(wearText)
-    self.bodyworkDescription:setText(g_i18n:getText(mode == RMS_Bodywork.TOUCHUP
-        and "rms_bodywork_touchup_description" or "rms_bodywork_full_description"))
-    self.bodyworkRecapType:setText(g_i18n:getText("button_repaint"))
+    self:updateBodyworkTable(mode)
+    self.bodyworkRecapType:setText(RMS_Utils.formatServiceState(RealisticMechanicalSystems.STATUS.BODYWORK))
     self.bodyworkRecapOptions:setText(g_i18n:getText(mode))
     self.bodyworkRecapPriceLabel:setText(stripTrailingColon(g_i18n:getText("rms_option_menu_price_text")))
     self.bodyworkRecapPrice:setText(allowed and price ~= nil and g_i18n:formatMoney(price, 0, true, false) or "-")
@@ -1567,6 +1690,8 @@ function RMS_WorkshopDialog:updateBodyworkQuote(isWorkshopTypeOpen, isUnderServi
     local eligibilityKey = "rms_bodywork_ineligible"
     if not isWorkshopTypeOpen then
         eligibilityKey = "rms_ws_status_closed"
+    elseif mode == RMS_Bodywork.FULL and not isDealer then
+        eligibilityKey = "rms_bodywork_dealer_only"
     elseif mode == RMS_Bodywork.TOUCHUP and wear ~= nil then
         if wear < RMS_Bodywork.MIN_TOUCHUP_WEAR then
             eligibilityKey = "rms_bodywork_no_wear"
@@ -1583,7 +1708,8 @@ function RMS_WorkshopDialog:updateBodyworkQuote(isWorkshopTypeOpen, isUnderServi
 
     local hasColors = false
     local colorRowCount = 0
-    if mode == RMS_Bodywork.FULL then
+    local choosesColors = mode == RMS_Bodywork.FULL and isDealer
+    if choosesColors then
         local zones = RMS_Bodywork.getColorZones(self.vehicle)
         colorRowCount = #zones
         local rows = self:ensureBodyworkColorRows(zones)
@@ -1591,16 +1717,26 @@ function RMS_WorkshopDialog:updateBodyworkQuote(isWorkshopTypeOpen, isUnderServi
             hasColors = self:updateBodyworkColorOption(zone, rows[zone][1], rows[zone][2]) or hasColors
         end
     end
-    self.bodyworkColorsHeader:setVisible(mode == RMS_Bodywork.FULL)
+    self.bodyworkColorsHeader:setVisible(choosesColors)
     self.bodyworkColorList:setVisible(hasColors)
     self.bodyworkColorSliderBox:setVisible(hasColors and colorRowCount > 3)
     self.bodyworkColorList:invalidateLayout()
-    self.bodyworkNoColorPanel:setVisible(mode == RMS_Bodywork.FULL and not hasColors)
+    self.bodyworkNoColorPanel:setVisible(choosesColors and not hasColors)
     self.bodyworkNoColorChoices:setText(g_i18n:getText("rms_bodywork_no_colors"))
 end
 
+---
 function RMS_WorkshopDialog:onClickBodywork()
     if self.vehicle == nil then
+        return
+    end
+    -- a workshop that does no repaint stays on the interventions, saying where it is done
+    local bodywork = RealisticMechanicalSystems.STATUS.BODYWORK
+    if RMS_WorkshopDialog.getInterventionUnavailableText(self.vehicle, bodywork, self.workshopType) ~= nil then
+        self.bodyworkSelected = false
+        self.unavailableIntervention = bodywork
+        self:setCurrentTab(RMS_WorkshopDialog.TAB.INTERVENTIONS)
+        self:updateScreen()
         return
     end
     if self.bodyworkSelected then
@@ -1609,6 +1745,7 @@ function RMS_WorkshopDialog:onClickBodywork()
         return
     end
     self.bodyworkSelected = true
+    self.unavailableIntervention = nil
     self.bodyworkSelectedColors = {}
     local wear = RMS_Bodywork.getWear(self.vehicle)
     self.bodyworkSelectedMode = (self.workshopType == RealisticMechanicalSystems.WORKSHOP.OWN
@@ -1619,6 +1756,7 @@ function RMS_WorkshopDialog:onClickBodywork()
     self:updateScreen()
 end
 
+---
 function RMS_WorkshopDialog:setBodyworkColor(zone, selectedIndex)
     self.bodyworkSelectedColors[zone] = selectedIndex
     for _, otherZone in ipairs(RMS_Bodywork.getColorZones(self.vehicle)) do
@@ -1647,11 +1785,9 @@ function RMS_WorkshopDialog:setBodyworkColor(zone, selectedIndex)
     self:updateScreen()
 end
 
+---
 function RMS_WorkshopDialog:selectBodyworkMode(mode)
     if mode ~= RMS_Bodywork.TOUCHUP and mode ~= RMS_Bodywork.FULL then
-        return
-    end
-    if mode == RMS_Bodywork.FULL and self.workshopType ~= RealisticMechanicalSystems.WORKSHOP.DEALER then
         return
     end
 
@@ -1659,10 +1795,12 @@ function RMS_WorkshopDialog:selectBodyworkMode(mode)
     self:updateScreen()
 end
 
+---
 function RMS_WorkshopDialog:onClickBodyworkTouchup()
     self:selectBodyworkMode(RMS_Bodywork.TOUCHUP)
 end
 
+---
 function RMS_WorkshopDialog:onClickBodyworkFull()
     self:selectBodyworkMode(RMS_Bodywork.FULL)
 end
@@ -1689,6 +1827,7 @@ function RMS_WorkshopDialog:onBodyworkColorPicked(zone, choices, selectedIndex, 
     end
 end
 
+---
 function RMS_WorkshopDialog:openBodyworkColorPicker(zone)
     if self.vehicle == nil or self.bodyworkSelectedMode ~= RMS_Bodywork.FULL
         or self.workshopType ~= RealisticMechanicalSystems.WORKSHOP.DEALER then
@@ -1699,7 +1838,7 @@ function RMS_WorkshopDialog:openBodyworkColorPicker(zone)
     if #choices == 0 and customChoice == nil then
         return
     end
-    if ColorPickerDialog == nil or ColorPickerDialog.INSTANCE == nil then
+    if ColorPickerDialog.INSTANCE == nil then
         InfoDialog.show(g_i18n:getText("rms_bodywork_unavailable"))
         return
     end
@@ -1746,18 +1885,22 @@ function RMS_WorkshopDialog:openBodyworkColorPicker(zone)
         customChoice ~= nil, false, true)
 end
 
+---
 function RMS_WorkshopDialog:onClickBodyworkBaseColor()
     self:openBodyworkColorPicker("baseColor")
 end
 
+---
 function RMS_WorkshopDialog:onClickBodyworkDesignColor()
     self:openBodyworkColorPicker("designColor")
 end
 
+---
 function RMS_WorkshopDialog:onClickBodyworkRimColor()
     self:openBodyworkColorPicker("rimColor")
 end
 
+---
 function RMS_WorkshopDialog:onClickStartBodywork()
     local vehicle = self.vehicle
     if vehicle == nil then
@@ -1803,15 +1946,13 @@ function RMS_WorkshopDialog:onClickCancelService()
     local spec = self.vehicle.spec_RealisticMechanicalSystems
     if spec == nil or spec.currentState == RealisticMechanicalSystems.STATUS.READY then return end
 
-    local title = string.format(g_i18n:getText("rms_ws_cancel_confirm_title"), g_i18n:getText(spec.currentState))
+    local title = string.format(g_i18n:getText("rms_ws_cancel_confirm_title"), RMS_Utils.formatServiceState(spec.currentState))
     local text = g_i18n:getText("rms_ws_cancel_confirm_text")
 
-    if YesNoDialog ~= nil and YesNoDialog.show ~= nil then
-        YesNoDialog.show(self.onCancelServiceConfirm, self, text, title, nil, nil)
-    end
+    YesNoDialog.show(self.onCancelServiceConfirm, self, text, title, nil, nil)
 end
 
----Cancels the service on confirmation, locally on the server, by request from a client
+---Cancels the service on confirmation, on the server or by request
 -- @param boolean yes true when the player confirmed
 function RMS_WorkshopDialog:onCancelServiceConfirm(yes)
     if yes and self.vehicle ~= nil then
@@ -1839,11 +1980,15 @@ function RMS_WorkshopDialog:onCreate()
     for index, gaugeElement in ipairs(self.summarySystemGauge or {}) do
         self.systemGaugeWidths[index] = gaugeElement.size[1]
     end
+    self.systemValueColor = {unpack(self.summarySystemValue[1].textColor)}
+    self.lastCheckColor = {unpack(self.diagnosticLastInspection.textColor)}
+    self.noAlertColor = {unpack(self.summaryNoAlertText.textColor)}
+    self.readyHintColor = {unpack(self.interventionReadyHint.textColor)}
     for _, tab in ipairs(self.workshopTabs or {}) do
         RMS_Utils.mirrorSelectionToChildren(tab)
     end
-    for _, button in ipairs(self.bodyworkServiceButtons or {}) do
-        RMS_Utils.mirrorSelectionToChildren(button)
+    for _, column in ipairs(self.bodyworkColumns) do
+        RMS_Utils.mirrorSelectionToChildren(column)
     end
 
     self:setCurrentTab(self.currentTab or RMS_WorkshopDialog.TAB.SUMMARY)
@@ -1872,7 +2017,6 @@ function RMS_WorkshopDialog:onOpen()
     end
 
     ---Refreshes the screen when the displayed vehicle changed status
-    -- @param table vehicle vehicle carried by the message
     local function onVehicleChangeStatusEvent(vehicle)
         if self.vehicle.node == vehicle.node then
             self:updateScreen()
@@ -1887,6 +2031,9 @@ function RMS_WorkshopDialog:onOpen()
     g_messageCenter:subscribe(MessageType.MONEY_CHANGED, self.updateScreen, self)
     g_messageCenter:subscribe(MessageType.RMS_VEHICLE_CHANGE_STATUS, onVehicleChangeStatusEvent, self)
     g_messageCenter:subscribe(MessageType.RMS_WORKSHOP_CHANGE_STATUS, onWorkshopChangeStatusEvent, self)
+
+    self:updateFocusLinks()
+    FocusManager:setFocus(self.focusEntry)
 end
 
 ---Clears the dialog state and flushes the pending money changes

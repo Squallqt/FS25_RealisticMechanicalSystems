@@ -51,7 +51,7 @@ function RMS_TutorialStateEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
----Applies the state locally on a client, stores it against the sending player on the server
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_TutorialStateEvent:run(connection)
     if connection:getIsServer() then

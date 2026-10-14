@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Production year of a vehicle, read from its xml and falling back to the generated table
+---Production year of a vehicle, from its xml or the generated table
 RMS_VehicleYears = {}
 
 RMS_VehicleYears.DEFAULT_YEAR = 2000
@@ -9,10 +9,9 @@ RMS_VehicleYears.DEFAULT_YEAR = 2000
 RMS_VehicleYears.SCR_MIN_YEAR = 2011
 
 local resolvedYears = {}
+local knownYears = {}
 
----Builds the lookup key of a store item, mod name then raw xml path in lower case
--- @param table storeItem store item
--- @return string key lookup key
+---Builds the lookup key of a store item
 local function getStoreItemKey(storeItem)
     local prefix = ""
 
@@ -24,8 +23,6 @@ local function getStoreItemKey(storeItem)
 end
 
 ---Reads the production year declared in a vehicle xml
--- @param string xmlFilename vehicle xml path
--- @return integer? year declared year
 local function getDeclaredYear(xmlFilename)
     local xmlFile = XMLFile.load("RMS_VehicleYear", xmlFilename)
     local year = tonumber(xmlFile:getString("vehicle.storeData.year"))
@@ -37,33 +34,37 @@ end
 ---Returns the production year of a store item, caching the result
 -- @param table storeItem store item
 -- @return integer year production year
+-- @return boolean isKnown true when XML or the generated table supplies the year
 function RMS_VehicleYears.getYear(storeItem)
     local key = getStoreItemKey(storeItem)
     local year = resolvedYears[key]
 
     if year == nil then
-        year = getDeclaredYear(storeItem.xmlFilename) or RMS_VehicleYearsData[key] or RMS_VehicleYears.DEFAULT_YEAR
+        year = getDeclaredYear(storeItem.xmlFilename) or RMS_VehicleYearsData[key]
+        knownYears[key] = year ~= nil
+        year = year or RMS_VehicleYears.DEFAULT_YEAR
         resolvedYears[key] = year
     end
 
-    return year
+    return year, knownYears[key]
 end
 
----Returns the production year of a vehicle, raised to the SCR era when it consumes AdBlue
+---Returns the production year of a vehicle, raised to the SCR era with AdBlue
 -- @param table? vehicle vehicle
 -- @param table storeItem store item
 -- @return integer year production year
+-- @return boolean isKnown true when XML or the generated table supplies the underlying year
 function RMS_VehicleYears.getVehicleYear(vehicle, storeItem)
-    local year = RMS_VehicleYears.getYear(storeItem)
+    local year, isKnown = RMS_VehicleYears.getYear(storeItem)
     if year >= RMS_VehicleYears.SCR_MIN_YEAR then
-        return year
+        return year, isKnown
     end
 
     local motorizedSpec = vehicle ~= nil and vehicle.spec_motorized or nil
     local consumers = motorizedSpec ~= nil and motorizedSpec.consumersByFillTypeName or nil
     if consumers == nil or consumers["DEF"] == nil then
-        return year
+        return year, isKnown
     end
 
-    return RMS_VehicleYears.SCR_MIN_YEAR
+    return RMS_VehicleYears.SCR_MIN_YEAR, isKnown
 end

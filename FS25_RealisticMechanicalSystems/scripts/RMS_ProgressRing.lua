@@ -17,7 +17,7 @@ function RMS_ProgressRing.register()
     RMS_ProgressRing.dot = g_overlayManager:createOverlay("rms_ProgressRing.dot", 0, 0, 0, 0)
 end
 
----Draws the ring with its arc filled to the given ratio and its percentage inside
+---Draws the ring filled to a ratio, its percentage inside
 -- @param float centerX horizontal center in screen space
 -- @param float centerY vertical center in screen space
 -- @param float width ring width in screen space
@@ -25,9 +25,11 @@ end
 -- @param float ratio progress between 0 and 1
 -- @param boolean? showText true to render the percentage inside the ring
 -- @param float? dotShare arc thickness as a share of the ring box, the baked ring image when nil
-function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, showText, dotShare)
-    local grey = Dashboard.COLORS.GREY
-    local green = HUD.COLOR.ACTIVE
+-- @param table? arcColor explicit state color, native active color when nil
+-- @param table? trackColor explicit track color, native grey when nil
+function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, showText, dotShare, arcColor, trackColor)
+    local grey = trackColor or Dashboard.COLORS.GREY
+    local green = arcColor or HUD.COLOR.ACTIVE
     local dot = RMS_ProgressRing.dot
     local segments = math.ceil(RMS_ProgressRing.SEGMENTS * RMS_ProgressRing.DOT / (dotShare or RMS_ProgressRing.DOT))
     local step = (2 * math.pi) / segments
@@ -36,7 +38,6 @@ function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, showTex
     local radiusX, radiusY = width * RMS_ProgressRing.RADIUS, height * RMS_ProgressRing.RADIUS
 
     ---Places the dot on the ring at an angle and draws it
-    -- @param float angle angle from the top of the ring, clockwise
     local function renderDotAt(angle)
         dot:setPosition(centerX + math.sin(angle) * radiusX - dotWidth * 0.5, centerY + math.cos(angle) * radiusY - dotHeight * 0.5)
         dot:render()

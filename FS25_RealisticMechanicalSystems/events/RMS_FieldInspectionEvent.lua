@@ -55,7 +55,7 @@ function RMS_FieldInspectionEvent:run(connection)
     end
 end
 
----Applies the inspection state directly on the server, sends it to the server from a client
+---Sends the inspection state through the server
 -- @param table vehicle vehicle
 -- @param boolean isActive true if the inspection is starting
 function RMS_FieldInspectionEvent.send(vehicle, isActive)

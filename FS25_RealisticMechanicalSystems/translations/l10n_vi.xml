@@ -10,11 +10,11 @@
         <text name="rms_drivetrain_notify_mode" text="Chế độ dẫn động: %s"/>
         <text name="rms_drivetrain_notify_lock_on" text="Khóa vi sai đã khóa"/>
         <text name="rms_drivetrain_notify_lock_off" text="Khóa vi sai đã mở"/>
-        <text name="rms_drivetrain_notify_park_on" text="Phanh đỗ đã kéo"/>
-        <text name="rms_drivetrain_notify_park_off" text="Phanh đỗ đã nhả"/>
         <text name="rms_drivetrain_warning_4wd_windup" text="Hệ truyền động chịu ứng suất! Hãy ngắt cầu trước để rẽ trên bề mặt có độ bám cao."/>
         <text name="rms_drivetrain_warning_difflock_windup" text="Khóa vi sai chịu ứng suất! Hãy mở khóa hoặc giảm góc lái."/>
         <text name="rms_drivetrain_warning_parkbrake" text="Phanh đỗ đang được kéo!"/>
+        <text name="rms_drivetrain_warning_parkbrake_released" text="Phanh đỗ chưa được kéo!"/>
+        <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Hãy khởi động động cơ để nhả phanh đỗ"/>
         <text name="rms_preheat_ignition_message" text="Đã bật khóa điện: đang sấy nóng"/>
         <text name="rms_preheat_system_failure_message" text="Hỏng hệ thống sấy nóng: không thể khởi động nguội"/>
         <text name="rms_preheat_start_failed_message" text="Động cơ không khởi động: hãy tắt khóa điện trước khi thử lại"/>
@@ -22,15 +22,16 @@
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Kiểm tra xe"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
-        <text name="input_RMS_TOGGLE_4WD" text="Thay đổi chế độ dẫn động"/>
-        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Khóa hoặc mở khóa vi sai"/>
-        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Kéo hoặc nhả phanh đỗ"/>
+        <text name="input_RMS_TOGGLE_4WD" text="Chế độ dẫn động"/>
+        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Khóa vi sai"/>
+        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Phanh đỗ"/>
+        <text name="input_RMS_TOGGLE_ODOMETER" text="ODO/TRIP (giữ: TRIP=0)"/>
+        <text name="input_RMS_TOGGLE_BATTERY_ISOLATOR" text="Công tắc ngắt ắc quy"/>
+        <text name="input_RMS_TOGGLE_FLUID_CAN" text="Mang bình hoặc đổ"/>
         <!-- Settings -->
         <text name="rms_settings_title" text="CÀI ĐẶT RMS"/>
         <text name="rms_settings_admin_required" text="Cài đặt RMS yêu cầu quyền quản trị viên trong chế độ nhiều người chơi."/>
         <text name="rms_settings_section_service_wear" text="Bảo dưỡng và hao mòn"/>
-        <text name="rms_settings_section_thermal_model" text="Mô hình nhiệt"/>
-        <text name="rms_settings_section_battery_alternator" text="Ắc quy và máy phát điện"/>
         <text name="rms_settings_section_drivetrain" text="Hệ truyền động và phanh đỗ"/>
         <text name="rms_workshopOpenHour_label" text="Giờ mở cửa xưởng"/>
         <text name="rms_workshopOpenHour_tooltip" text="Các quy trình chỉ bắt đầu từ giờ này trở đi."/>
@@ -41,7 +42,7 @@
         <text name="rms_mobileWorkshopAvailable_label" text="Xưởng lưu động mở 24/24"/>
         <text name="rms_mobileWorkshopAvailable_tooltip" text="Duy trì xưởng lưu động hoạt động vào mọi giờ trong ngày và đêm."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Hạn chế của xưởng lưu động"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Khi bật tùy chọn này, mức độ sẵn có của từng quy trình trong xưởng lưu động phụ thuộc vào khả năng bảo dưỡng của xe."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Giới hạn công việc lưu động theo nhiệm vụ và thiết bị cần thiết. Vẫn có thể bảo dưỡng; chẩn đoán, tháo dỡ nặng hoặc công việc điện áp cao có thể cần xưởng đủ thiết bị."/>
         <text name="rms_ownWorkshopAvailable_label" text="Xưởng cá nhân mở 24/24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Duy trì xưởng cá nhân của bạn hoạt động vào mọi giờ trong ngày và đêm."/>
         <text name="rms_instantInspection_label" text="Kiểm tra tức thì"/>
@@ -55,35 +56,16 @@
         <text name="rms_debugMode_label" text="Chế độ gỡ lỗi"/>
         <text name="rms_debugMode_tooltip" text="Bật bảng gỡ lỗi và nhật ký chi tiết trong bảng điều khiển."/>
         <text name="rms_warningMessages_label" text="Thông báo cảnh báo"/>
-        <text name="rms_warningMessages_tooltip" text="Bật hoặc tắt các cảnh báo trong trò chơi như động cơ nguội hoặc quá nhiệt."/>
-        <text name="rms_serviceInterval_label" text="Chu kỳ bảo dưỡng"/>
-        <text name="rms_serviceInterval_tooltip" text="Đặt chu kỳ thay dầu động cơ theo giờ. Dầu hộp số và thủy lực được thay sau mỗi hai chu kỳ, nước làm mát sau mỗi mười chu kỳ. Chu kỳ thực tế phụ thuộc vào thương hiệu xe."/>
+        <text name="rms_warningMessages_tooltip" text="Bật hoặc tắt các cảnh báo trong trò chơi như động cơ nguội hoặc quá nhiệt. Thông báo giới hạn công suất do nhiệt độ vẫn được bật."/>
+        <text name="rms_serviceInterval_label" text="Khoảng cách bảo dưỡng"/>
+        <text name="rms_serviceInterval_tooltip" text="Đặt số giờ tham chiếu. Với 100 giờ, quy định 500 giờ thành 100 giờ và 600 giờ thành 120 giờ. Mỗi chất lỏng theo lịch của xe; thời hạn lịch vẫn độc lập."/>
         <text name="rms_vehicleLifespan_label" text="Tuổi thọ xe"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Đặt tuổi thọ cơ bản của xe theo giờ; sau khoảng thời gian này, tình trạng xe đạt 0%. Tình trạng càng gần mức không thì xe càng kém tin cậy. Giá trị xe cũng giảm dần theo số giờ này."/>
-        <text name="rms_reinitializeVehicles_label" text="Đặt lại đội xe"/>
-        <text name="rms_reinitializeVehicles_text" text="Đặt lại"/>
-        <text name="rms_reinitializeVehicles_tooltip" text="Điều chỉnh lại tình trạng đội xe theo tuổi thọ đã chọn. Các hỏng hóc hiện tại sẽ bị xóa."/>
-        <text name="rms_reinitializeVehiclesConfirm_title" text="Đặt lại đội xe"/>
-        <text name="rms_reinitializeVehiclesConfirm_message" text="Điều chỉnh lại đội xe theo tuổi thọ đã chọn? Các hỏng hóc hiện tại sẽ bị xóa."/>
-        <text name="rms_reinitializeVehicles_result" text="Xe đã đặt lại: %d. Xe không thay đổi: %d."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Đặt tuổi thọ cơ bản của xe theo giờ; sau khoảng thời gian này, tình trạng xe đạt 0%. Tình trạng càng gần mức không thì xe càng kém tin cậy. Giá trị xe cũng giảm dần theo số giờ này. Thay đổi có hiệu lực từ lúc đó: xe giữ nguyên tình trạng, chỉ giá trị xe được tính lại."/>
         <text name="rms_generalWearEnabled_label" text="Hao mòn do tuổi tác"/>
         <text name="rms_generalWearEnabled_tooltip" text="Khi xe hao mòn, mỗi hệ thống chịu một mức suy giảm nhỏ ở các đặc tính chính như công suất động cơ, tốc độ thủy lực hoặc hiệu quả phanh. Hiệu ứng bắt đầu sau một phần ba đầu tiên của tuổi thọ xe, nhưng chỉ thực sự rõ rệt sau hai phần ba và tăng dần khi máy gần hết tuổi thọ."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Khói xả"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Điều khiển luồng khói xả theo tình trạng thực tế của động cơ. Khói màu đen khi nhiên liệu vượt quá lượng không khí sẵn có: tăng ga đột ngột, động cơ ì ở vòng tua thấp, chạy không tải kéo dài với tải thấp, bộ lọc không khí bị tắc hoặc hệ thống phun nhiên liệu bị mòn. Khói màu xanh khi động cơ mòn đốt dầu và màu trắng khi nhiên liệu không cháy hết. Luồng khói cũng lớn hơn khi động cơ làm việc nặng hơn. Máy cũ thải nhiều khói hơn hẳn máy hiện đại, vốn gần như không có khói trừ khi xảy ra hỏng hóc nghiêm trọng. Khi trời lạnh, hơi nước sinh ra từ quá trình cháy còn ngưng tụ thành một vệt trắng ngắn, bay hơi trong vòng một hai mét, kể cả ở động cơ còn tốt."/>
-        <text name="rms_batteryCapacity_label" text="Dung lượng ắc quy"/>
-        <text name="rms_batteryCapacity_tooltip" text="Điều chỉnh dung lượng tối đa thực sự có thể sử dụng của ắc quy. Giá trị gần 150 Ah tương ứng với ắc quy thực tế, nhưng ở mức đó bạn hầu như không gặp vấn đề cạn điện."/>
         <text name="rms_option_off" text="Tắt"/>
-        <text name="rms_option_none" text="Không"/>
-        <text name="rms_alternatorMaxOutput_label" text="Dòng điện tối đa của máy phát"/>
-        <text name="rms_alternatorMaxOutput_tooltip" text="Đặt dòng điện đầu ra tối đa của máy phát. Giá trị cao hơn cho phép máy phát sạc ắc quy nhanh hơn."/>
-        <text name="rms_idleCurrent_label" text="Dòng tĩnh"/>
-        <text name="rms_idleCurrent_tooltip" text="Đặt dòng điện tiêu thụ từ ắc quy khi động cơ tắt. Ví dụ, ở mức 0,5 A, một ắc quy 15 Ah cần khoảng 30 giờ thực để cạn hoàn toàn trước khi tính đến ảnh hưởng của nhiệt độ."/>
-        <text name="rms_temperatureChangeSpeed_label" text="Tốc độ nhiệt của động cơ"/>
-        <text name="rms_temperatureChangeSpeed_tooltip" text="Điều chỉnh tốc độ thay đổi nhiệt độ động cơ. Giá trị thấp làm chậm cả quá trình nóng lên lẫn nguội đi; giá trị cao làm tăng tốc cả hai. Giá trị mặc định là 1,4."/>
-        <text name="rms_transTemperatureChangeMultiplier_label" text="Tốc độ thay đổi nhiệt độ của dầu hộp số và dầu thủy lực"/>
-        <text name="rms_transTemperatureChangeMultiplier_tooltip" text="Điều chỉnh riêng tốc độ thay đổi nhiệt độ của dầu dùng chung cho hộp số và hệ thống thủy lực. Giá trị thấp làm chậm cả quá trình nóng lên lẫn nguội đi; giá trị cao làm tăng tốc cả hai. Giá trị mặc định là 1,0."/>
-        <text name="rms_radiatorDirtInfluence_label" text="Ảnh hưởng của độ bẩn két tản nhiệt"/>
-        <text name="rms_radiatorDirtInfluence_tooltip" text="Giảm khả năng làm mát của két tản nhiệt theo tỷ lệ phần trăm này khi độ bẩn đạt mức tối đa."/>
         <text name="rms_tutorialMode_label" text="Chế độ hướng dẫn"/>
         <text name="rms_tutorialMode_tooltip" text="Hiển thị mẹo hướng dẫn trong khi chơi."/>
         <text name="rms_tutorialResetTips_label" text="Đặt lại mẹo"/>
@@ -92,15 +74,11 @@
         <text name="rms_tutorialResetConfirm_title" text="Đặt lại mẹo hướng dẫn?"/>
         <text name="rms_tutorialResetConfirm_message" text="Đặt lại lịch sử mẹo hướng dẫn và hiển thị lại tất cả các mẹo?"/>
         <text name="rms_drivetrainEnabled_label" text="Quản lý 4WD và khóa vi sai"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Bật điều khiển thủ công cầu trước chủ động và khóa vi sai trên máy kéo. Khi tính năng điều khiển vi sai của Enhanced Vehicle hoạt động, mod sẽ ngừng can thiệp hoàn toàn và Enhanced Vehicle tự quản lý hệ truyền động."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Bật điều khiển thủ công cầu trước chủ động và khóa vi sai trên máy kéo. Nếu đã cài Enhanced Vehicle, tính năng điều khiển vi sai của mod đó sẽ bị tắt; để trả lại, hãy tắt tùy chọn này rồi bật lại vi sai trong menu của Enhanced Vehicle."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Cho phép chế độ TỰ ĐỘNG"/>
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="Thêm vị trí TỰ ĐỘNG vào bộ chọn chế độ dẫn động: cầu trước tự động gài khi bánh xe trượt hoặc khi xe làm việc có tải ở tốc độ thấp và ngắt trên đường. Xe đang để ở chế độ TỰ ĐỘNG sẽ trở về 4WD khi tùy chọn này bị tắt."/>
-        <text name="rms_drivetrainWindupDamage_label" text="Hư hại do ứng suất hệ truyền động"/>
-        <text name="rms_drivetrainWindupDamage_tooltip" text="Rẽ trên bề mặt có độ bám cao khi khóa vi sai làm hệ truyền động chịu ứng suất và dần bị hư hại. Hãy tắt tùy chọn này để chơi dễ hơn."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Phanh đỗ"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Thêm phanh đỗ cho mọi xe được theo dõi, điều khiển bằng một phím riêng. Khi được kéo, phanh giữ máy đứng yên và vô hiệu hóa bàn đạp ga."/>
-        <text name="rms_drivetrainParkBrakeAuto_label" text="Phanh đỗ tự động"/>
-        <text name="rms_drivetrainParkBrakeAuto_tooltip" text="Tự động kéo phanh đỗ khi người vận hành rời khỏi máy đang đứng yên."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Thêm phanh đỗ cho mọi xe được theo dõi. Máy đời mới có hộp số CVT hoặc Powershift tự kéo và tự nhả phanh; với các máy khác, bạn điều khiển phanh bằng một phím riêng. Nếu đã cài Enhanced Vehicle, phanh đỗ của mod đó sẽ bị tắt; để trả lại, hãy tắt tùy chọn này rồi bật lại phanh đỗ trong menu của Enhanced Vehicle."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Xưởng"/>
         <text name="rms_ws_tab_summary" text="Tổng quan"/>
@@ -113,38 +91,50 @@
         <text name="rms_ws_section_quote" text="Báo giá sửa chữa"/>
         <text name="rms_ws_section_choose_intervention" text="Chọn quy trình"/>
         <text name="rms_ws_section_work_order" text="Lệnh sửa chữa"/>
+        <text name="rms_ws_section_paint_order" text="Lệnh sơn xe"/>
         <text name="rms_ws_section_recap" text="Tóm tắt"/>
         <text name="rms_ws_section_parts" text="Linh kiện liên quan"/>
         <text name="rms_ws_section_history" text="Lịch sử"/>
         <text name="rms_ws_section_current_intervention" text="Quy trình đang thực hiện"/>
         <text name="rms_ws_label_last_check" text="Lần kiểm tra gần nhất"/>
+        <text name="rms_ws_reading_outdated" text="Kiểm tra lại"/>
         <text name="rms_ws_label_workshop_state" text="Trạng thái xưởng"/>
         <text name="rms_ws_label_more_parts" text="+ %s linh kiện khác"/>
         <text name="rms_ws_label_committed_cost" text="Chi phí đã phát sinh"/>
         <text name="rms_ws_label_finish_time" text="Giờ hoàn tất"/>
         <text name="rms_ws_label_total_estimate" text="Tổng ước tính"/>
         <text name="rms_ws_button_configure_repair" text="Thiết lập sửa chữa"/>
-        <text name="rms_ws_info_inspection_reveals" text="Một cuộc kiểm tra có thể phát hiện thêm lỗi."/>
+        <text name="rms_ws_info_inspection_reveals" text="Kiểm tra hoặc bảo dưỡng có thể xác định thêm hỏng hóc."/>
         <text name="rms_ws_status_ready_title" text="Xưởng đã sẵn sàng"/>
         <text name="rms_ws_status_ready_hint" text="Chọn một quy trình. Các tùy chọn, linh kiện và giá sẽ được xác nhận trước khi bắt đầu."/>
         <text name="rms_ws_label_value" text="Giá trị xe"/>
         <text name="rms_ws_label_age" text="Tuổi"/>
         <text name="rms_ws_label_operating_hours" text="Giờ hoạt động"/>
+        <text name="rms_odometer_label" text="Quãng đường đã đi"/>
+        <text name="rms_odometer_not_recorded" text="Chưa ghi nhận"/>
         <text name="rms_ws_label_service" text="Mức bảo dưỡng"/>
-        <text name="rms_ws_label_maintenance_standard" text="Bảo dưỡng tiêu chuẩn"/>
-        <text name="rms_ws_label_maintenance_extended" text="Bảo dưỡng mở rộng"/>
-        <text name="rms_ws_label_maintenance_preventive" text="Bảo dưỡng phòng ngừa"/>
         <text name="rms_ws_label_condition" text="Tình trạng"/>
         <text name="rms_ws_label_reliability" text="Độ tin cậy"/>
+        <text name="rms_reliability_average" text="Trung bình"/>
+        <text name="rms_reliability_fair" text="Khá"/>
+        <text name="rms_reliability_good" text="Tốt"/>
+        <text name="rms_reliability_very_good" text="Rất tốt"/>
         <text name="rms_ws_label_overhaul_count" text="Số lần đại tu"/>
-        <text name="rms_ws_label_maintainability" text="Khả năng bảo dưỡng"/>
         <text name="rms_ws_label_maintenance_log" text="Nhật ký bảo dưỡng"/>
         <text name="rms_ws_label_last_report" text="Báo cáo gần nhất"/>
         <text name="rms_ws_label_last_maintenance" text="Lần bảo dưỡng gần nhất"/>
         <text name="rms_ws_task_inspection" text="Kiểm tra"/>
         <text name="rms_ws_task_maintenance" text="Bảo dưỡng"/>
         <text name="rms_ws_task_overhaul" text="Đại tu"/>
-        <text name="rms_ws_info_no_breakdowns" text="Không có hỏng hóc nào đã biết. Vẫn có thể tồn tại hỏng hóc chưa được phát hiện."/>
+        <text name="rms_ws_info_no_breakdowns" text="Chưa xác định hỏng hóc nào. Kiểm tra hoặc bảo dưỡng sẽ xác định những hỏng hóc mà máy chưa biểu hiện."/>
+        <text name="rms_ws_info_warning_unidentified" text="Đèn cảnh báo sáng: cần xác định hỏng hóc. Kiểm tra hoặc bảo dưỡng sẽ xác định, sau đó có thể sửa chữa."/>
+        <text name="rms_ws_faults_none_title" text="Chưa xác định hỏng hóc nào"/>
+        <text name="rms_ws_faults_none_hint" text="Kiểm tra hoặc bảo dưỡng sẽ xác định những hỏng hóc mà máy chưa biểu hiện."/>
+        <text name="rms_ws_faults_warning_title" text="Cần xác định hỏng hóc"/>
+        <text name="rms_ws_faults_warning_hint" text="Đèn cảnh báo đang sáng. Kiểm tra hoặc bảo dưỡng sẽ xác định hỏng hóc, sau đó có thể sửa chữa."/>
+        <text name="rms_ws_reason_repair_unselected" text="Chưa đánh dấu hỏng hóc nào. Hãy đánh dấu các hỏng hóc cần sửa trong Chẩn đoán và báo giá."/>
+        <text name="rms_ws_reason_overhaul_none" text="Đại tu cơ khí phục hồi các hệ thống dưới 50% tình trạng. Máy này không có hệ thống nào như vậy."/>
+        <text name="rms_ws_reason_bodywork_mobile" text="Xưởng lưu động không sơn xe. Việc sơn xe được thực hiện tại đại lý."/>
         <text name="rms_ws_status_in_progress_short_format" text="Đang thực hiện %s..."/>
         <text name="rms_ws_status_in_progress_format" text="Đang thực hiện %s đến %s"/>
         <text name="rms_ws_status_open" text="Xưởng đang mở cửa"/>
@@ -159,18 +149,17 @@
         <text name="rms_ws_action_choice_repair" text="Sửa chữa hỏng hóc"/>
         <text name="rms_ws_action_choice_overhaul" text="Đại tu cơ khí"/>
         <text name="rms_ws_action_choice_refill" text="Bổ sung chất lỏng"/>
+        <text name="rms_ws_action_choice_bodywork" text="Sơn lại xe"/>
         <text name="rms_ws_action_cancel_service" text="Hủy quy trình"/>
         <text name="rms_ws_age_unit" text="tháng"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="Có"/>
         <text name="rms_ws_option_no" text="Không"/>
         <text name="rms_ws_no_last_report_message" text="Chưa có báo cáo"/>
-        <text name="rms_ws_systems_need_complete_inspection" text="Cần kiểm tra toàn diện"/>
         <text name="rms_ws_no_log_empty_message" text="Nhật ký hiện vẫn trống"/>
         <text name="rms_ws_no_report_message" text="Chưa có báo cáo"/>
         <text name="rms_ws_cancel_confirm_title" text="Hủy quy trình đang thực hiện? (%s)"/>
         <text name="rms_ws_cancel_confirm_text" text="Tiến độ hiện tại sẽ được lưu nguyên trạng. Không có khoản tiền nào được hoàn lại."/>
-        <text name="rms_mobile_workshop_low_maintainability" text="Cảnh báo: quy trình %s không khả dụng cho %s tại xưởng lưu động vì xe này quá khó bảo dưỡng tại chỗ."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="Nhật ký bảo dưỡng"/>
         <text name="rms_log_recorded_interventions_title" text="Quy trình đã ghi"/>
@@ -207,10 +196,10 @@
         <text name="rms_breakdowns_severity_moderate" text="Trung bình"/>
         <text name="rms_breakdowns_severity_major" text="Nặng"/>
         <text name="rms_breakdowns_severity_critical" text="Nghiêm trọng"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Cơ cấu liên kết lái bị mòn nhẹ. Hệ thống lái trở nên kém chính xác hơn một chút."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Cơ cấu liên kết lái bị mòn ở mức trung bình. Độ rơ tăng, độ chính xác giảm rõ rệt và khả năng vận hành trên đường suy giảm."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Cơ cấu liên kết lái bị mòn nặng. Độ rơ lớn, hệ thống lái phản hồi kém và việc điều khiển xe trở nên khó khăn."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Cơ cấu liên kết lái hư hỏng nghiêm trọng. Hệ thống lái không còn đáng tin cậy và việc lái xe trở nên nguy hiểm."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Cơ cấu liên kết lái bị mòn nhẹ. Xuất hiện một chút độ rơ và hệ thống lái trở nên kém chính xác hơn một chút."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Cơ cấu liên kết lái bị mòn ở mức trung bình. Độ rơ tăng và các bánh xe không còn thẳng hàng: hệ thống lái lỏng và hơi kéo lệch về một bên."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Cơ cấu liên kết lái bị mòn nặng. Độ rơ lớn và các bánh xe lệch rõ rệt: xe kéo lệch về một bên, khó giữ hướng, và một khớp nối có thể bung ra."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Cơ cấu liên kết lái hư hỏng nghiêm trọng. Một khớp nối đã bung ra: hệ thống lái không còn điều khiển bánh xe đúng cách và việc tiếp tục lái xe rất nguy hiểm."/>
         <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="Cơ cấu lái hư hỏng"/>
         <text name="rms_breakdowns_general_wear_stage1_description" text="Ứng suất tích tụ sau nhiều năm hoạt động để lại hao mòn nhẹ và không thể phục hồi trên các bộ phận chính, làm giảm nhẹ hiệu suất tổng thể."/>
         <text name="rms_breakdowns_gear_disengage_message" text="Đã chuyển về số mo"/>
@@ -223,12 +212,23 @@
         <text name="rms_breakdowns_part_consumables" text="Vật tư tiêu hao"/>
         <text name="rms_breakdowns_part_cooling_system" text="Hệ thống làm mát"/>
         <text name="rms_breakdowns_part_clutch" text="Ly hợp"/>
-        <text name="rms_breakdowns_part_cvt_chain" text="Xích CVT"/>
-        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Van điều khiển thủy lực CVT"/>
+        <text name="rms_breakdowns_part_cvt_chain" text="Hộp số biến thiên liên tục"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Điều khiển tỷ số truyền"/>
         <text name="rms_breakdowns_part_cvt" text="CVT"/>
         <text name="rms_breakdowns_part_engine" text="Động cơ"/>
         <text name="rms_breakdowns_part_ecu" text="ECU"/>
         <text name="rms_breakdowns_part_battery" text="Ắc quy"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Pin cao áp"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Công tắc tơ cao áp"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Dây dẫn cao áp"/>
+        <text name="rms_breakdowns_part_inverter" text="Bộ biến tần"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Bộ chuyển đổi điện áp"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Bộ sạc trên xe"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Vòng bi động cơ điện"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Cuộn dây động cơ điện"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Cảm biến vị trí động cơ"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Bơm nước làm mát"/>
+        <text name="rms_breakdowns_part_reducer" text="Bộ giảm tốc"/>
         <text name="rms_breakdowns_part_brake_system" text="Hệ thống phanh"/>
         <text name="rms_breakdowns_part_wiring" text="Dây điện và đầu nối"/>
         <text name="rms_breakdowns_part_wheel_bearing" text="Vòng bi bánh xe"/>
@@ -281,7 +281,8 @@
         <text name="rms_breakdowns_quick_fix_stage" text="Sửa chữa tạm thời"/>
         <text name="rms_breakdowns_defected_parts_stage" text="Lỗi"/>
         <text name="rms_breakdowns_defected_parts_detected_description" text="Hệ thống hoạt động bình thường, nhưng đã phát hiện một linh kiện bị lỗi trong quá trình kiểm tra. Linh kiện này không còn biên độ an toàn, vì vậy nên thay thế phòng ngừa để tránh hỏng hóc đột ngột."/>
-        <text name="rms_breakdowns_dead_battery_message" text="Ắc quy đã cạn"/>
+        <text name="rms_breakdowns_dead_battery_message" text="Ắc quy quá yếu"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Pin cao áp lạnh: tầm hoạt động và công suất giảm"/>
         <text name="rms_breakdowns_temporarily_repaired_description" text="Hệ thống hoạt động bình thường nhưng phụ thuộc hoàn toàn vào một sửa chữa tạm thời. Để tránh hỏng hóc khi có tải, nên thay thế toàn bộ linh kiện càng sớm càng tốt."/>
         <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Vòng bi bộ tăng áp bị mòn. Có thể nghe thấy tiếng rít nhẹ và công suất giảm nhẹ ở vòng tua động cơ cao."/>
         <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Phớt bộ tăng áp bị rò rỉ. Công suất giảm rõ rệt và mức tiêu thụ nhiên liệu tăng."/>
@@ -318,6 +319,7 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Bảo vệ quá nhiệt: công suất giảm"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Mức bảo vệ quá nhiệt tăng lên. Động cơ chỉ còn cung cấp một nửa công suất."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Bảo vệ quá nhiệt: công suất giảm một nửa"/>
+        <text name="rms_thermal_power_restored_message" text="Bảo vệ nhiệt: đã gỡ giới hạn công suất"/>
         <text name="rms_breakdowns_overheat_protection_stage3_description" text="Bảo vệ quá nhiệt đã đạt mức tối đa. Chỉ còn lại một phần công suất động cơ."/>
         <text name="rms_breakdowns_overheat_protection_stage3_message" text="Bảo vệ quá nhiệt: công suất giảm mạnh"/>
         <text name="rms_breakdowns_overheat_protection_stage4_description" text="Động cơ đã tắt để tránh hư hại. Hãy để động cơ nguội trước khi khởi động lại."/>
@@ -336,20 +338,25 @@
         <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="ECU gặp trục trặc nặng. Công suất giảm nhiều, mức tiêu thụ nhiên liệu cao và động cơ có nguy cơ chết máy."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="ECU hỏng hoàn toàn. Không thể điều khiển và khởi động động cơ."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="ECU hư hỏng"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Dây điện và đầu nối điện bị ăn mòn nhẹ. Điện trở tiếp xúc tăng làm đèn đôi khi chập chờn, nguồn điện không ổn định và khó khởi động."/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Dây điện và đầu nối điện bị ăn mòn ở mức trung bình. Mất tiếp xúc làm đèn thường xuyên chập chờn, nguồn điện không ổn định, khó khởi động và động cơ có thể chết máy."/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Dây điện và đầu nối điện bị ăn mòn nặng. Nguồn điện cho các mạch thiết yếu không ổn định, đèn có thể hỏng hoàn toàn, mô-men xoắn động cơ giảm, động cơ dễ chết máy và việc khởi động không ổn định."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Mạch điều khiển bộ đề hư hỏng do dây điện bị ăn mòn nghiêm trọng. Đèn không hoạt động và không thể khởi động động cơ."/>
+        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Dây điện và đầu nối điện bị ăn mòn nhẹ. Điện trở tiếp xúc tăng làm đèn đôi khi chập chờn, nguồn điện không ổn định và khó khởi động. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Dây điện và đầu nối điện bị ăn mòn ở mức trung bình. Mất tiếp xúc làm đèn thường xuyên chập chờn, nguồn điện không ổn định, khó khởi động và động cơ có thể chết máy. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Dây điện và đầu nối điện bị ăn mòn nặng. Nguồn điện cho các mạch thiết yếu không ổn định, đèn có thể hỏng hoàn toàn, mô-men xoắn động cơ giảm, động cơ dễ chết máy và việc khởi động không ổn định. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Mạch điều khiển bộ đề hư hỏng do dây điện bị ăn mòn nghiêm trọng. Đèn không hoạt động và không thể khởi động động cơ. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
         <text name="rms_breakdowns_corroded_wiring_stage4_message" text="Mạch bộ đề hư hỏng"/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage1_description" text="Dây điện và đầu nối điện bị ăn mòn nhẹ. Điện trở tiếp xúc tăng làm đèn đôi khi chập chờn và nguồn điện không ổn định. Dòng điện rò làm cạn ắc quy phụ khi máy đỗ."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage2_description" text="Dây điện và đầu nối điện bị ăn mòn ở mức trung bình. Mất tiếp xúc làm đèn thường xuyên chập chờn, nguồn điện không ổn định và có thể xảy ra ngắt điện. Dòng điện rò làm cạn ắc quy phụ khi máy đỗ."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage3_description" text="Dây điện và đầu nối điện bị ăn mòn nặng. Nguồn điện cho các mạch thiết yếu không ổn định, đèn có thể hỏng hoàn toàn, công suất giảm và dễ xảy ra ngắt điện. Dòng điện rò làm cạn ắc quy phụ khi máy đỗ."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_description" text="Dây điện và đầu nối điện bị ăn mòn nghiêm trọng. Đèn không hoạt động và máy không khởi động. Dòng điện rò làm cạn ắc quy phụ khi máy đỗ."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_message" text="Dây điện và đầu nối hư hỏng"/>
         <text name="rms_breakdowns_coolant_leak_stage1_description" text="Nước làm mát rò rỉ nhẹ. Hiệu quả làm mát giảm nhẹ."/>
         <text name="rms_breakdowns_coolant_leak_stage2_description" text="Nước làm mát rò rỉ ở mức trung bình. Khả năng làm mát giảm rõ rệt và nhiệt độ động cơ tăng nhanh hơn."/>
         <text name="rms_breakdowns_coolant_leak_stage3_description" text="Nước làm mát rò rỉ nặng. Khả năng làm mát suy giảm nhiều và nguy cơ quá nhiệt trở nên cao."/>
         <text name="rms_breakdowns_coolant_leak_stage4_description" text="Hệ thống làm mát hư hỏng nghiêm trọng. Không còn đủ nước làm mát để động cơ hoạt động an toàn."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Xích CVT bị mòn nhẹ. Hiện tượng trượt nhẹ xuất hiện khi có tải và làm giảm một chút hiệu suất truyền động."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Xích CVT bị mòn ở mức trung bình. Hiện tượng trượt trở nên rõ rệt khi có tải và tỷ số truyền thay đổi kém chính xác hơn."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Xích CVT bị mòn nặng. Hiện tượng trượt lớn, hiệu suất giảm mạnh và hộp số khó duy trì tỷ số truyền được yêu cầu."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Xích CVT hư hỏng nghiêm trọng. Hộp số không còn truyền mô-men xoắn đúng cách và xe gần như không thể sử dụng."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Xích CVT hư hỏng"/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Hiệu suất hộp số giảm nhẹ khi chịu tải."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Hiệu suất giảm rõ khi chịu tải và tỷ số truyền kém ổn định hơn."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Hộp số khó truyền lực kéo và giữ tỷ số truyền yêu cầu."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Hộp số không còn truyền lực kéo tin cậy; gần như không thể di chuyển."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Hỏng hộp số"/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Đã phát hiện dấu hiệu ban đầu của trục trặc hộp số CVT. Cần kiểm tra và sửa chữa."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Trục trặc hộp số CVT đang trở nên nghiêm trọng hơn. Tiếp tục vận hành có thể khiến hộp số chuyển sang chế độ khẩn cấp."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Hộp số CVT bị hư hại nghiêm trọng. Hộp số đang ở chế độ khẩn cấp và tốc độ tối đa của xe bị giảm."/>
@@ -359,6 +366,10 @@
         <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Ắc quy bị sunfat hóa ở mức trung bình. Dung lượng hữu dụng giảm nhiều và việc khởi động động cơ trở nên khó khăn."/>
         <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Ắc quy bị sunfat hóa nặng. Dung lượng hữu dụng xuống mức nghiêm trọng và khả năng quay khởi động không ổn định."/>
         <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Ắc quy bị sunfat hóa nghiêm trọng. Dung lượng hữu dụng gần bằng không và công suất đề không đủ để khởi động ổn định."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Ắc quy phụ bị sunfat hóa nhẹ. Dung lượng hữu dụng giảm, làm giảm lượng điện dự trữ khi có tải."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Ắc quy phụ bị sunfat hóa ở mức trung bình. Dung lượng hữu dụng giảm nhiều và lượng điện dự trữ cạn nhanh hơn."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Ắc quy phụ bị sunfat hóa nặng. Dung lượng hữu dụng xuống mức nghiêm trọng và lượng điện dự trữ cạn rất nhanh."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Ắc quy phụ bị sunfat hóa nghiêm trọng. Dung lượng hữu dụng gần bằng không và không còn đủ để khởi động ổn định."/>
         <text name="rms_breakdowns_brake_malfunction_stage1_description" text="Má phanh bị mòn. Hiệu quả phanh giảm nhẹ."/>
         <text name="rms_breakdowns_brake_malfunction_stage2_description" text="Dầu phanh bị rò rỉ hoặc đĩa phanh bị mòn. Quãng đường phanh tăng rõ rệt."/>
         <text name="rms_breakdowns_brake_malfunction_stage3_description" text="Áp suất phanh giảm nghiêm trọng. Phanh rất yếu và không đáng tin cậy."/>
@@ -369,10 +380,63 @@
         <text name="rms_breakdowns_bearing_wear_stage3_description" text="Vòng bi bị mòn nặng. Ma sát cao, tiếng ồn lớn và có nguy cơ thực sự bị bó kẹt khi có tải."/>
         <text name="rms_breakdowns_bearing_wear_stage4_description" text="Vòng bi hư hỏng nghiêm trọng. Chúng sắp bó kẹt hoàn toàn và không thể tiếp tục vận hành."/>
         <text name="rms_breakdowns_bearing_wear_stage4_message" text="Vòng bi hư hỏng"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Bộ điều chỉnh máy phát hư hỏng nhẹ. Công suất sạc giảm, làm giảm hiệu quả sạc ắc quy."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Bộ điều chỉnh máy phát hư hỏng ở mức trung bình. Quá trình sạc giảm và không ổn định, khiến ắc quy sạc kém và tổn thất điện áp tăng."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Bộ điều chỉnh máy phát hư hỏng nặng. Khả năng sạc giảm mạnh, nguồn điện không ổn định và hệ thống điện hoạt động với tổn thất lớn."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Bộ điều chỉnh máy phát hỏng hoàn toàn. Ắc quy không còn được sạc và hệ thống điện chỉ hoạt động bằng lượng điện dự trữ còn lại."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Bộ điều chỉnh máy phát hư hỏng nhẹ. Công suất sạc giảm, làm giảm hiệu quả sạc ắc quy. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Bộ điều chỉnh máy phát hư hỏng ở mức trung bình. Quá trình sạc giảm và không ổn định, khiến ắc quy sạc kém và tổn thất điện áp tăng. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Bộ điều chỉnh máy phát hư hỏng nặng. Khả năng sạc giảm mạnh, nguồn điện không ổn định và hệ thống điện hoạt động với tổn thất lớn. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Bộ điều chỉnh máy phát hỏng hoàn toàn. Ắc quy không còn được sạc và hệ thống điện chỉ hoạt động bằng lượng điện dự trữ còn lại. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Vòng bi động cơ điện bị mòn nhẹ. Xuất hiện tiếng động nhỏ và mức tiêu thụ điện tăng nhẹ."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Vòng bi động cơ điện bị mòn ở mức trung bình. Tiếng ồn nghe rõ, mức tiêu thụ điện tăng và công suất giảm nhẹ."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Vòng bi động cơ điện bị mòn nặng. Tiếng ồn lớn, động cơ nóng lên và công suất giảm rõ rệt."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Vòng bi động cơ điện hư hỏng nghiêm trọng. Động cơ bị bó kẹt và máy không thể di chuyển nữa."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_message" text="Vòng bi động cơ điện hư hỏng"/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Cuộn dây động cơ điện bị xuống cấp nhẹ. Công suất giảm nhẹ và động cơ nóng hơn."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Cuộn dây động cơ điện bị xuống cấp ở mức trung bình. Công suất giảm rõ rệt, động cơ nóng lên và mức tiêu thụ điện tăng."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Cuộn dây động cơ điện bị xuống cấp nặng. Công suất giảm nhiều, động cơ rất nóng và có thể bị ngắt điện."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Cuộn dây động cơ điện hư hỏng nghiêm trọng. Động cơ bị chập mạch và không thể hoạt động nữa."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_message" text="Cuộn dây động cơ điện hư hỏng"/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Cảm biến vị trí động cơ gặp trục trặc nhẹ. Xuất hiện những cú giật ngắn khi có tải."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Cảm biến vị trí động cơ gặp trục trặc ở mức trung bình. Hiện tượng giật xảy ra thường xuyên và công suất giảm."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Cảm biến vị trí động cơ gặp trục trặc nặng. Hiện tượng giật rất mạnh, công suất tụt hẳn và xảy ra ngắt điện."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Cảm biến vị trí động cơ hỏng hoàn toàn. Không thể điều khiển động cơ và máy không khởi động."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_message" text="Cảm biến vị trí động cơ hư hỏng"/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Bộ biến tần gặp trục trặc nhẹ. Công suất động cơ giảm nhẹ."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Bộ biến tần gặp trục trặc ở mức trung bình. Công suất giảm thấy rõ và mức tiêu thụ điện tăng."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Bộ biến tần gặp trục trặc nặng. Công suất giảm nhiều và có thể bị ngắt điện."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Bộ biến tần hỏng hoàn toàn. Động cơ không còn được cấp điện và máy không khởi động."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_message" text="Bộ biến tần hư hỏng"/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Bộ chuyển đổi điện áp hư hỏng nhẹ. Ắc quy phụ sạc kém hơn."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Bộ chuyển đổi điện áp hư hỏng ở mức trung bình. Việc sạc ắc quy phụ giảm và không ổn định."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Bộ chuyển đổi điện áp hư hỏng nặng. Ắc quy phụ gần như không còn được sạc và cạn dần khi chạy."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Bộ chuyển đổi điện áp hỏng hoàn toàn. Ắc quy phụ không còn được sạc và máy chỉ hoạt động bằng lượng điện dự trữ còn lại."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Bộ sạc trên xe hư hỏng nhẹ. Việc sạc tại trạm chậm hơn một chút."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Bộ sạc trên xe hư hỏng ở mức trung bình. Việc sạc tại trạm chậm hơn rõ rệt."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Bộ sạc trên xe hư hỏng nặng. Việc sạc tại trạm rất chậm."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Bộ sạc trên xe hỏng hoàn toàn. Không thể sạc pin cao áp nữa."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_message" text="Bộ sạc trên xe ngừng hoạt động: không thể sạc"/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Dây dẫn cao áp bị mất cách điện nhẹ. Một cảnh báo hiển thị, không có ảnh hưởng nào khác."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Dây dẫn cao áp bị mất cách điện ở mức trung bình. Công suất bị giảm để bảo đảm an toàn."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Dây dẫn cao áp bị mất cách điện nặng. Công suất bị giảm mạnh và xảy ra ngắt điện."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Dây dẫn cao áp bị mất cách điện nghiêm trọng. Máy từ chối khởi động để bảo đảm an toàn."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_message" text="Dây dẫn cao áp bị mất cách điện"/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Các cell của pin cao áp hư hỏng nhẹ. Tầm hoạt động giảm nhẹ."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Các cell của pin cao áp hư hỏng ở mức trung bình. Tầm hoạt động giảm rõ rệt và công suất bị giảm."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Các cell của pin cao áp hư hỏng nặng. Tầm hoạt động và công suất tụt hẳn, và có thể bị ngắt điện."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Pin cao áp hư hỏng nghiêm trọng. Không thể bật máy nữa."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_message" text="Pin cao áp hư hỏng"/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Công tắc tơ cao áp bị mòn nhẹ. Thỉnh thoảng xảy ra ngắt nguồn."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Công tắc tơ cao áp bị mòn ở mức trung bình. Việc ngắt nguồn xảy ra đều đặn."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Công tắc tơ cao áp bị mòn nặng. Việc ngắt nguồn xảy ra thường xuyên."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Công tắc tơ cao áp hư hỏng nghiêm trọng. Pin cao áp không còn cấp điện cho máy và máy không khởi động."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_message" text="Công tắc tơ cao áp hư hỏng"/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Bơm nước làm mát hư hỏng nhẹ. Nước làm mát lưu thông kém hơn và nhiệt độ tăng thêm một chút."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Bơm nước làm mát hư hỏng ở mức trung bình. Khả năng làm mát giảm rõ rệt."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Bơm nước làm mát hư hỏng nặng. Khả năng làm mát giảm mạnh và dễ xảy ra quá nhiệt khi có tải."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Bơm nước làm mát hỏng hoàn toàn. Nước làm mát gần như không lưu thông và máy nhanh chóng quá nhiệt."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Bánh răng và vòng bi của bộ giảm tốc bị mòn nhẹ. Xuất hiện tiếng động nhỏ khi di chuyển."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Bánh răng và vòng bi của bộ giảm tốc bị mòn ở mức trung bình. Tiếng ồn nghe rõ và mức tiêu thụ điện tăng."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Bánh răng và vòng bi của bộ giảm tốc bị mòn nặng. Tiếng ồn lớn, bộ giảm tốc nóng lên và công suất ở bánh xe giảm."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Bộ giảm tốc hư hỏng nghiêm trọng. Bộ giảm tốc bị bó kẹt và máy không thể di chuyển nữa."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_message" text="Bộ giảm tốc hư hỏng"/>
         <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="Hệ thống phối khí gặp trục trặc nhẹ. Mô-men xoắn động cơ giảm nhẹ, mức tiêu thụ nhiên liệu tăng và xuất hiện tiếng động bất thường trong cơ cấu."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="Hệ thống phối khí gặp trục trặc ở mức trung bình. Mô-men xoắn động cơ giảm rõ rệt, mức tiêu thụ nhiên liệu tăng, tiếng động lớn hơn và động cơ có thể hụt khi có tải."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="Hệ thống phối khí gặp trục trặc nặng. Mô-men xoắn động cơ giảm mạnh, mức tiêu thụ nhiên liệu cao, tiếng động cơ khí lớn và động cơ có thể bỏ máy hoặc chết máy."/>
@@ -403,11 +467,11 @@
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Ly hợp quạt hư hỏng ở mức trung bình. Quạt gài không đều và hiệu quả làm mát giảm rõ rệt."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Ly hợp quạt hư hỏng nặng. Quạt không còn tạo đủ lưu lượng khí và động cơ dễ quá nhiệt hơn."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Ly hợp quạt hư hỏng nghiêm trọng. Quạt không còn đảm bảo khả năng làm mát cần thiết."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Van điều khiển thủy lực CVT gặp trục trặc nhẹ. Phản hồi của hộp số hơi chậm và kém chính xác hơn."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Van điều khiển thủy lực CVT gặp trục trặc ở mức trung bình. Áp suất không ổn định, quá trình thay đổi tỷ số truyền chậm hơn và hiệu suất giảm rõ rệt."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Van điều khiển thủy lực CVT gặp trục trặc nặng. Áp suất rất thất thường, hộp số phản hồi kém và công suất truyền đi giảm mạnh."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Van điều khiển thủy lực CVT hư hỏng nghiêm trọng. Không thể kiểm soát áp suất và hộp số không còn sử dụng được."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Van điều khiển thủy lực CVT hư hỏng"/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Điều khiển tỷ số truyền phản hồi chậm hơn và kém chính xác hơn."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Tỷ số truyền thay đổi thất thường và bộ điều khiển phản hồi kém."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Điều khiển tỷ số truyền bị rối loạn nghiêm trọng và lực kéo truyền đi giảm."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Điều khiển tỷ số truyền đã hỏng; hộp số gần như không dùng được."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Hỏng điều khiển tỷ số truyền"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Xi lanh thủy lực bị rò rỉ nhẹ bên trong. Nông cụ đang nâng từ từ hạ xuống khi có tải."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Xi lanh thủy lực bị rò rỉ bên trong ở mức trung bình. Hiện tượng tự hạ xuống trở nên rõ rệt và tăng theo tải được nâng."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Xi lanh thủy lực bị rò rỉ nặng bên trong. Nông cụ nặng không còn giữ vị trí một cách tin cậy."/>
@@ -467,12 +531,12 @@
         <text name="rms_spec_months_ago_unit" text="tháng"/>
         <text name="rms_spec_month_ago_one" text="tháng"/>
         <text name="rms_spec_months_ago_format" text="%s %s trước"/>
+        <text name="rms_spec_work_hours_ago_format" text="%s %s hoạt động trước"/>
+        <text name="rms_spec_work_under_hour_ago" text="chưa đến 1 h hoạt động trước"/>
         <text name="rms_spec_maintenance_complete_notification" text="Quy trình đã hoàn tất: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Quy trình đã hủy: %s"/>
         <text name="rms_spec_maintenance_minimal" text="Tối thiểu"/>
-        <text name="rms_spec_maintenance_standard" text="Tiêu chuẩn"/>
-        <text name="rms_spec_maintenance_extended" text="Mở rộng"/>
-        <text name="rms_spec_maintenance_preventive" text="Phòng ngừa"/>
+        <text name="rms_spec_maintenance_level" text="Bảo dưỡng %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s đến %s"/>
         <text name="rms_spec_workshop_dealer" text="Đại lý"/>
         <text name="rms_spec_workshop_own" text="Cá nhân"/>
@@ -485,6 +549,8 @@
         <text name="rms_spec_system_chassis" text="Khung gầm"/>
         <text name="rms_spec_system_fuel" text="Hệ thống nhiên liệu"/>
         <text name="rms_spec_system_pto" text="PTO"/>
+        <text name="rms_spec_system_electric_motor" text="Động cơ điện"/>
+        <text name="rms_spec_system_traction_battery" text="Pin cao áp"/>
         <text name="rms_spec_state_ready" text="Sẵn sàng"/>
         <text name="rms_spec_state_repair" text="Sửa chữa"/>
         <text name="rms_spec_state_refill" text="Bổ sung"/>
@@ -493,24 +559,17 @@
         <text name="rms_spec_state_inspection" text="Kiểm tra"/>
         <text name="rms_spec_state_maintenance" text="Bảo dưỡng"/>
         <text name="rms_spec_state_overhaul" text="Đại tu"/>
+        <text name="rms_spec_state_bodywork" text="Sơn xe"/>
         <text name="rms_spec_state_overdue" text="Quá hạn"/>
         <text name="rms_spec_state_optimal" text="Tối ưu"/>
         <text name="rms_spec_state_broken" text="Bị hỏng"/>
         <text name="rms_spec_state_bad" text="Kém"/>
-        <text name="rms_spec_state_budget" text="Tiết kiệm"/>
         <text name="rms_spec_state_excellent" text="Xuất sắc"/>
         <text name="rms_spec_state_good" text="Tốt"/>
         <text name="rms_spec_state_service_good" text="Tốt"/>
         <text name="rms_spec_state_normal" text="Bình thường"/>
         <text name="rms_spec_state_terrible" text="Rất kém"/>
         <text name="rms_spec_state_unknown" text="Không xác định"/>
-        <text name="rms_spec_state_legendary" text="Huyền thoại"/>
-        <text name="rms_spec_state_low" text="Thấp"/>
-        <text name="rms_spec_state_premium" text="Cao cấp"/>
-        <text name="rms_spec_state_standard" text="Tiêu chuẩn"/>
-        <text name="rms_spec_state_average" text="Trung bình"/>
-        <text name="rms_spec_state_high" text="Cao"/>
-        <text name="rms_spec_state_workhorse" text="Bền bỉ"/>
         <text name="rms_spec_part_types_used" text="Đã qua sử dụng"/>
         <text name="rms_spec_part_types_aftermarket" text="Ngoài hãng"/>
         <text name="rms_spec_part_types_oem" text="Chính hãng"/>
@@ -531,36 +590,108 @@
         <text name="rms_option_menu_option_two_title_repair" text="Chất lượng phụ tùng"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Hệ thống cần đại tu"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Nếu quy trình phát hiện hỏng hóc, hệ thống sẽ tự động thực hiện tiếp quy trình sửa chữa tiêu chuẩn bằng linh kiện chính hãng."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Sau khi sửa chữa, hệ thống sẽ tự động thực hiện tiếp quy trình bảo dưỡng tiêu chuẩn bằng vật tư tiêu hao chính hãng."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Đại tu một phần: đưa hệ thống đã chọn về tình trạng tốt, sửa các hỏng hóc có thể khắc phục và thay chất lỏng liên quan khi cần."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Đại tu tiêu chuẩn: đưa tất cả hệ thống về tình trạng tốt, sửa các hỏng hóc có thể khắc phục, thay chất lỏng và làm mới việc bảo dưỡng."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Đại tu toàn diện: đưa tất cả hệ thống về tình trạng như mới, sửa các hỏng hóc có thể khắc phục, thay chất lỏng và làm mới việc bảo dưỡng."/>
+        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Sau khi sửa chữa, hệ thống sẽ tự động thực hiện tiếp mức bảo dưỡng được khuyến nghị bằng vật tư tiêu hao chính hãng."/>
         <text name="rms_option_menu_price_text" text="Giá"/>
-        <text name="rms_option_menu_part_used_description" text="Linh kiện đã qua sử dụng: chi phí thấp nhất, với 50% nguy cơ xuất hiện lỗi sau này."/>
-        <text name="rms_option_menu_part_aftermarket_description" text="Linh kiện ngoài hãng: chi phí thấp hơn, với 33% nguy cơ xuất hiện lỗi sau này."/>
-        <text name="rms_option_menu_part_oem_description" text="Linh kiện chính hãng: giá tiêu chuẩn, với 10% nguy cơ xuất hiện lỗi sau này."/>
-        <text name="rms_option_menu_part_premium_description" text="Linh kiện cao cấp: phụ phí 20%, không có nguy cơ lỗi do linh kiện gây ra."/>
-        <text name="rms_option_menu_consumable_used_description" text="Vật tư tiêu hao tiết kiệm: chi phí thấp nhất, với 50% nguy cơ xuất hiện lỗi sau này."/>
-        <text name="rms_option_menu_consumable_aftermarket_description" text="Vật tư tiêu hao ngoài hãng: chi phí thấp hơn, với 33% nguy cơ xuất hiện lỗi sau này."/>
-        <text name="rms_option_menu_consumable_oem_description" text="Vật tư tiêu hao chính hãng: giá tiêu chuẩn, với 10% nguy cơ xuất hiện lỗi sau này."/>
-        <text name="rms_option_menu_consumable_premium_description" text="Vật tư tiêu hao cao cấp: phụ phí 20%, không có nguy cơ lỗi do vật tư gây ra."/>
         <text name="rms_option_menu_perform_repair" text="Sửa chữa tự động"/>
         <text name="rms_option_menu_perform_maintenance" text="Bảo dưỡng tự động"/>
         <text name="rms_option_menu_warranty_repair_text" text="Sửa chữa bảo hành"/>
-        <text name="rms_warranty_dealer_info" text="Bảo hành tại đại lý cho xe sở hữu dưới 12 tháng và 20 giờ hoạt động: sửa chữa tiêu chuẩn, phụ tùng chính hãng và chất lỏng cần thiết."/>
+        <text name="rms_option_menu_lease_service_text" text="Đã gồm trong phí thuê"/>
         <text name="rms_option_menu_duration_text" text="Thời gian"/>
         <text name="rms_option_menu_duration_instant" text="Tức thì"/>
         <text name="rms_option_menu_finish_time_text" text="Giờ hoàn tất"/>
         <text name="rms_option_menu_start_text" text="Bắt đầu"/>
-        <text name="rms_option_menu_inspection_visual_description" text="Kiểm tra trực quan: nhanh và ít tốn kém, chỉ tìm các hỏng hóc đang tồn tại với khả năng phát hiện hạn chế. Báo cáo không hiển thị tình trạng chi tiết của các bộ phận."/>
-        <text name="rms_option_menu_inspection_standard_description" text="Kiểm tra tiêu chuẩn: tìm các hỏng hóc đang tồn tại với khả năng phát hiện bình thường và tạo báo cáo tổng quát, không có giá trị tình trạng chi tiết."/>
-        <text name="rms_option_menu_inspection_complete_description" text="Kiểm tra toàn diện: tìm các hỏng hóc đang tồn tại và tiềm ẩn với khả năng phát hiện bình thường, sau đó cung cấp báo cáo đầy đủ cùng tình trạng chi tiết của các bộ phận."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="Bảo dưỡng tiêu chuẩn: thay dầu động cơ cùng bộ lọc dầu và bộ lọc nhiên liệu, bổ sung các mạch khác khi cần, làm sạch két tản nhiệt và thổi sạch bộ lọc không khí."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="Bảo dưỡng mở rộng: gồm bảo dưỡng tiêu chuẩn và thay dầu hộp số, dầu thủy lực cùng bộ lọc mới. Cũng thay bộ lọc không khí và bổ sung nước làm mát."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="Bảo dưỡng phòng ngừa: thay mọi loại dầu và nước làm mát cùng các bộ lọc, lắp bộ lọc không khí mới. Cũng giảm ứng suất cơ học trên tối đa ba hệ thống ưu tiên."/>
-        <text name="rms_option_menu_repair_type_fix_description" text="Sửa chữa tạm thời: nhanh chóng đưa máy trở lại hoạt động với chi phí thấp mà không loại bỏ hỏng hóc. Hỏng hóc sẽ tái xuất hiện sau một khoảng thời gian giới hạn."/>
-        <text name="rms_option_menu_repair_type_replacement_description" text="Sửa chữa tiêu chuẩn: loại bỏ hỏng hóc và thay bộ phận bị hư hỏng. Ứng suất cơ học trong hệ thống liên quan được giảm một phần."/>
-        <text name="rms_option_menu_repair_type_advanced_description" text="Sửa chữa chuyên sâu: loại bỏ hỏng hóc, thay bộ phận bị hư hỏng và xóa ứng suất cơ học tích tụ trong hệ thống liên quan."/>
+        <text name="rms_ws_levels_recommended_for" text="Khuyến nghị cho máy này"/>
+        <text name="rms_ws_levels_interval" text="Mỗi %s"/>
+        <text name="rms_ws_levels_duration" text="%s giờ %s phút"/>
+        <text name="rms_ws_levels_duration_hours" text="%s giờ"/>
+        <text name="rms_ws_levels_duration_minutes" text="%s phút"/>
+        <text name="rms_ws_levels_drain" text="Thay"/>
+        <text name="rms_ws_levels_top_up" text="Bổ sung"/>
+        <text name="rms_ws_levels_blown" text="Thổi sạch"/>
+        <text name="rms_ws_levels_new" text="Mới"/>
+        <text name="rms_ws_levels_new_plural" text="Mới"/>
+        <text name="rms_ws_levels_filters" text="Bộ lọc"/>
+        <text name="rms_ws_levels_filters_all" text="Dầu, nhiên liệu và thủy lực"/>
+        <text name="rms_ws_levels_filters_engine" text="Dầu và nhiên liệu"/>
+        <text name="rms_ws_levels_filters_hydraulic" text="Thủy lực"/>
+        <text name="rms_ws_levels_checks" text="Điều chỉnh và kiểm tra"/>
+        <text name="rms_ws_levels_checks_detail" text="Xupáp, kim phun, van hằng nhiệt"/>
+        <text name="rms_ws_levels_checks_done" text="Đã làm"/>
+        <text name="rms_ws_levels_fault_search" text="Tìm hỏng hóc"/>
+        <text name="rms_ws_levels_fault_search_detail" text="Như kiểm tra tiêu chuẩn"/>
+        <text name="rms_ws_levels_fault_search_mobile_detail" text="Không đọc mã lỗi"/>
+        <text name="rms_ws_levels_included" text="Đã bao gồm"/>
+        <text name="rms_ws_levels_mechanical" text="Cơ khí"/>
+        <text name="rms_ws_levels_every_level" text="Ở mọi cấp: vệ sinh két tản nhiệt và bôi trơn."/>
+        <text name="rms_ws_quality_risk" text="Nguy cơ lỗi"/>
+        <text name="rms_ws_quality_reference" text="Giá tham chiếu"/>
+        <text name="rms_ws_quality_delta" text="%s so với chính hãng"/>
+        <text name="rms_ws_repair_row_faults" text="Hỏng hóc được xử lý"/>
+        <text name="rms_ws_repair_row_faults_detail" text="Trong số đã đánh dấu"/>
+        <text name="rms_ws_repair_faults_all" text="Tất cả"/>
+        <text name="rms_ws_table_count" text="%s/%s"/>
+        <text name="rms_ws_repair_row_fault" text="Hỏng hóc"/>
+        <text name="rms_ws_repair_row_fault_detail" text="Sau quy trình"/>
+        <text name="rms_ws_repair_fault_returns" text="Tái phát"/>
+        <text name="rms_ws_repair_fault_removed" text="Đã loại bỏ"/>
+        <text name="rms_ws_repair_row_part" text="Bộ phận hỏng"/>
+        <text name="rms_ws_repair_row_part_detail" text="Nguyên nhân hỏng hóc"/>
+        <text name="rms_ws_repair_part_replaced" text="Đã thay"/>
+        <text name="rms_ws_repair_row_stress" text="Ứng suất cơ học"/>
+        <text name="rms_ws_repair_row_stress_detail" text="Tích tụ trong hệ thống"/>
+        <text name="rms_ws_repair_stress_cleared" text="Đã xóa"/>
+        <text name="rms_ws_repair_row_quality" text="Chất lượng phụ tùng"/>
+        <text name="rms_ws_repair_row_quality_detail" text="Chọn ở các thẻ bên dưới"/>
+        <text name="rms_ws_repair_quality_choice" text="Tùy chọn"/>
+        <text name="rms_ws_warranty_title" text="Bảo hành đại lý"/>
+        <text name="rms_ws_warranty_covered" text="Áp dụng"/>
+        <text name="rms_ws_warranty_not_covered" text="Không áp dụng"/>
+        <text name="rms_ws_warranty_free_here" text="Sửa chữa tiêu chuẩn miễn phí bằng phụ tùng chính hãng"/>
+        <text name="rms_ws_warranty_free_dealer" text="Sửa chữa miễn phí tại đại lý"/>
+        <text name="rms_ws_warranty_terms" text="Xe sở hữu, dưới 12 tháng và 20 giờ"/>
+        <text name="rms_ws_badge_warranty" text="Bảo hành"/>
+        <text name="rms_ws_overhaul_row_systems" text="Hệ thống được xử lý"/>
+        <text name="rms_ws_overhaul_row_systems_detail" text="Được phục hồi"/>
+        <text name="rms_ws_overhaul_systems_one" text="Một tùy chọn"/>
+        <text name="rms_ws_overhaul_systems_all" text="Tất cả"/>
+        <text name="rms_ws_overhaul_row_condition" text="Tình trạng sau đại tu"/>
+        <text name="rms_ws_overhaul_row_condition_detail" text="Tối thiểu"/>
+        <text name="rms_ws_overhaul_row_treated_detail" text="Của các hệ thống được xử lý"/>
+        <text name="rms_ws_overhaul_row_faults" text="Hỏng hóc"/>
+        <text name="rms_ws_overhaul_row_faults_detail" text="Đã xác định hay chưa"/>
+        <text name="rms_ws_overhaul_faults_repaired" text="Đã sửa"/>
+        <text name="rms_ws_overhaul_row_fluids" text="Chất lỏng"/>
+        <text name="rms_ws_overhaul_row_fluids_detail" text="Xả và nạp lại"/>
+        <text name="rms_ws_overhaul_fluids_all" text="Tất cả"/>
+        <text name="rms_ws_overhaul_fluids_own" text="Mạch của nó"/>
+        <text name="rms_ws_overhaul_filters_both" text="Nhiên liệu và thủy lực"/>
+        <text name="rms_ws_overhaul_filters_fuel" text="Nhiên liệu"/>
+        <text name="rms_ws_overhaul_worn" text="Hệ thống dưới 50% tình trạng"/>
+        <text name="rms_ws_paint_row_extent" text="Hư hại sơn được sửa"/>
+        <text name="rms_ws_paint_row_extent_detail" text="Phần sơn bị hư hại"/>
+        <text name="rms_ws_paint_extent_up_to" text="Tối đa %s"/>
+        <text name="rms_ws_paint_extent_all" text="Tất cả"/>
+        <text name="rms_ws_paint_row_colors" text="Màu sắc"/>
+        <text name="rms_ws_paint_row_colors_detail" text="Có sẵn cho xe này"/>
+        <text name="rms_ws_paint_colors_kept" text="Giữ nguyên"/>
+        <text name="rms_ws_paint_colors_choice" text="Tùy chọn"/>
+        <text name="rms_ws_paint_row_workshop" text="Xưởng"/>
+        <text name="rms_ws_paint_row_workshop_detail" text="Nơi thực hiện"/>
+        <text name="rms_ws_inspection_mechanical" text="Hỏng hóc cơ khí"/>
+        <text name="rms_ws_inspection_mechanical_detail" text="Kiểm tra bằng mắt và thử chức năng"/>
+        <text name="rms_ws_inspection_electronic" text="Hỏng hóc điện tử"/>
+        <text name="rms_ws_inspection_electronic_detail" text="Mã lỗi đọc bằng thiết bị chẩn đoán"/>
+        <text name="rms_ws_inspection_dormant" text="Lỗi tiềm ẩn"/>
+        <text name="rms_ws_inspection_dormant_detail" text="Phụ tùng lỗi, sửa chữa tạm thời"/>
+        <text name="rms_ws_inspection_report" text="Báo cáo"/>
+        <text name="rms_ws_inspection_report_detail" text="Tình trạng máy và từng hệ thống"/>
+        <text name="rms_ws_inspection_risk_detail" text="Dựa trên thử nghiệm và đo đạc"/>
+        <text name="rms_ws_inspection_ratings" text="Đánh giá"/>
+        <text name="rms_ws_inspection_measures" text="Số đo"/>
+        <text name="rms_ws_inspection_assessed" text="Đã đánh giá"/>
+        <text name="rms_ws_inspection_maintenance_note" text="Bảo dưỡng cũng thực hiện việc tìm hỏng hóc này, như kiểm tra tiêu chuẩn."/>
+        <text name="rms_ws_quote_title" text="Chi tiết báo giá"/>
+        <text name="rms_ws_quote_oil_filter" text="Bộ lọc dầu"/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="Quy trình tiếp theo được tính phí riêng. Các chất lỏng cần thiết sẽ được cung cấp hoặc lấy từ kho khi quy trình bắt đầu."/>
         <text name="rms_bodywork_touchup" text="Dặm sơn"/>
         <text name="rms_bodywork_full" text="Sơn lại toàn bộ"/>
@@ -570,25 +701,24 @@
         <text name="rms_bodywork_ineligible" text="Quy trình không khả dụng cho xe này hoặc tại xưởng này"/>
         <text name="rms_bodywork_no_wear" text="Không có hư hại lớp sơn cần sửa"/>
         <text name="rms_bodywork_wear_limit" text="Có thể dặm sơn khi hư hại không quá 30%"/>
-        <text name="rms_bodywork_touchup_description" text="Sửa các hư hại nhẹ trên lớp sơn. Màu hiện tại được giữ nguyên."/>
-        <text name="rms_bodywork_full_description" text="Làm mới lớp sơn. Chọn các màu có sẵn cho xe này hoặc giữ màu hiện tại."/>
         <text name="rms_bodywork_no_colors" text="Xe này không có màu để chọn. Các màu hiện tại được giữ nguyên."/>
         <text name="rms_bodywork_unavailable_title" text="Quy trình không khả dụng"/>
+        <text name="rms_bodywork_dealer_only" text="Sơn lại toàn bộ được thực hiện tại đại lý"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Báo cáo kiểm tra"/>
         <text name="rms_report_vehicle_specs_title" text="Thông số xe"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="Dòng điện tối đa của máy phát"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="Mức sạc ắc quy"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="Dung lượng ắc quy"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_charge" text="Mức sạc ắc quy phụ"/>
+        <text name="rms_report_vehicle_spec_battery_24v_charge" text="Mức sạc ắc quy 24 V"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_capacity" text="Dung lượng ắc quy phụ"/>
+        <text name="rms_report_vehicle_spec_battery_24v_capacity" text="Dung lượng ắc quy 24 V"/>
+        <text name="rms_report_vehicle_spec_traction_battery_capacity" text="Dung lượng pin cao áp"/>
         <text name="rms_report_detected_breakdowns_title" text="Hỏng hóc đã phát hiện"/>
         <text name="rms_report_overall_assessment_title" text="Đánh giá tình trạng tổng thể"/>
         <text name="rms_report_overall_assessment_condition" text="Mức tình trạng"/>
-        <text name="rms_report_overall_assessment_crit_fail_risk" text="Nguy cơ hư hỏng nghiêm trọng"/>
         <text name="rms_report_overall_assessment_service" text="Mức bảo dưỡng"/>
-        <text name="rms_report_overall_assessment_mtbf" text="Thời gian trung bình giữa các hỏng hóc (giờ)"/>
-        <text name="rms_report_overall_assessment_rul" text="Tuổi thọ còn lại (giờ)"/>
-        <text name="rms_report_overall_assessment_wear_rate" text="Tốc độ hao mòn (%/h)"/>
-        <text name="rms_report_overall_assessment_nominal_wear_rate" text="Tốc độ hao mòn danh định (%/h)"/>
         <text name="rms_report_recommendations_title" text="Kết luận và khuyến nghị"/>
         <text name="rms_report_recommendation_repair_active_breakdowns" text="Đã phát hiện hỏng hóc đang tồn tại. Khuyến nghị sửa chữa tiêu chuẩn tất cả các hỏng hóc này."/>
         <text name="rms_report_recommendation_repeat_maintenance" text="Đã phát hiện vật tư tiêu hao bị lỗi. Hãy thực hiện lại bảo dưỡng để thay chúng."/>
@@ -597,7 +727,7 @@
         <text name="rms_report_recommendation_service_due" text="Đã đến ngưỡng chu kỳ bảo dưỡng. Hãy thực hiện bảo dưỡng."/>
         <text name="rms_report_recommendation_service_urgent" text="Đã vượt quá chu kỳ bảo dưỡng. Hãy thực hiện bảo dưỡng ngay."/>
         <text name="rms_report_recommendation_system_overhaul" text="Đã phát hiện hệ thống này xuống cấp nghiêm trọng: %s. Hãy thực hiện đại tu một phần."/>
-        <text name="rms_report_recommendation_system_preventive_maintenance" text="Nguy cơ hỏng hóc tăng cao trên hệ thống này: %s. Hãy thực hiện bảo dưỡng phòng ngừa để giảm nguy cơ."/>
+        <text name="rms_report_recommendation_system_preventive_maintenance" text="Nguy cơ hỏng hóc tăng cao trên hệ thống này: %s. Bảo dưỡng %s chỉnh lại hệ thống và giảm nguy cơ."/>
         <text name="rms_report_recommendation_overhaul" text="Đã phát hiện các bộ phận chính xuống cấp. Hãy thực hiện đại tu."/>
         <text name="rms_report_recommendation_operating_conditions" text="Đã phát hiện dấu hiệu sử dụng quá mức. Hãy cải thiện điều kiện vận hành."/>
         <text name="rms_report_recommendation_all_ok" text="Không có khuyến nghị đặc biệt. Xe đang trong tình trạng hoạt động tốt."/>
@@ -607,27 +737,48 @@
         <text name="rms_report_state_degraded" text="Xuống cấp"/>
         <text name="rms_report_state_impaired" text="Suy giảm"/>
         <text name="rms_report_state_critical" text="Nghiêm trọng"/>
-        <text name="rms_report_stress_absent" text="Không"/>
         <text name="rms_report_stress_low" text="Thấp"/>
         <text name="rms_report_stress_moderate" text="Trung bình"/>
-        <text name="rms_report_stress_elevated" text="Cao"/>
         <text name="rms_report_stress_high" text="Rất cao"/>
         <text name="rms_report_system_condition_title" text="Tình trạng hệ thống"/>
         <text name="rms_report_breakdown_risk_title" text="Nguy cơ hỏng hóc"/>
+        <text name="rms_report_wear_title" text="Hao mòn so với bình thường"/>
+        <text name="rms_report_wear_normal" text="Bình thường"/>
+        <text name="rms_report_wear_no_cause" text="Không có nguyên nhân đáng kể"/>
+        <text name="rms_report_wear_percent" text="+%s%%"/>
+        <text name="rms_report_wear_air_filter" text="Bộ lọc không khí bị tắc"/>
+        <text name="rms_report_wear_pull_overload" text="Quá tải lực kéo"/>
+        <text name="rms_report_wear_heavy_lift" text="Nâng tải nặng"/>
+        <text name="rms_report_wear_hydraulic_use" text="Thủy lực đang hoạt động"/>
+        <text name="rms_report_wear_cold_hydraulic_oil" text="Dầu thủy lực nguội"/>
+        <text name="rms_report_wear_hot_hydraulic_oil" text="Dầu thủy lực quá nhiệt"/>
+        <text name="rms_report_wear_vibration" text="Rung động"/>
+        <text name="rms_report_wear_hydraulic_filter_bypass" text="Bộ lọc thủy lực bị tắc"/>
+        <text name="rms_report_wear_lights" text="Đèn đang bật"/>
+        <text name="rms_report_wear_braking" text="Phanh khi chở nặng"/>
+        <text name="rms_report_wear_terrain_impact" text="Va đập địa hình"/>
+        <text name="rms_report_wear_cold_fuel" text="Nhiên liệu lạnh"/>
+        <text name="rms_report_wear_full_injection" text="Phun nhiên liệu khi đầy tải"/>
+        <text name="rms_report_wear_deep_discharge" text="Ắc quy xả cạn"/>
+        <text name="rms_report_wear_high_draw" text="Ắc quy chịu tải nặng"/>
+        <text name="rms_report_wear_battery_heat" text="Ắc quy quá nhiệt"/>
+        <text name="rms_report_wear_lubrication" text="Bôi trơn chậm trễ"/>
+        <text name="rms_report_wear_pto_overload" text="PTO quá tải"/>
         <text name="rms_report_component_title" text="Bộ phận"/>
         <text name="rms_report_system_condition_transmission" text="Hộp số"/>
         <text name="rms_report_system_condition_power" text="Công suất hiện tại"/>
         <text name="rms_report_system_condition_brakes" text="Hiệu quả phanh"/>
         <text name="rms_report_system_condition_cooling" text="Hiệu quả làm mát"/>
         <text name="rms_report_system_condition_consumption" text="Mức tiêu thụ nhiên liệu"/>
+        <text name="rms_report_system_condition_energy_consumption" text="Mức tiêu thụ điện"/>
         <text name="rms_report_system_condition_hydraulic" text="Hiệu quả thủy lực"/>
         <text name="rms_report_transmission_slipping" text="Trượt"/>
         <text name="rms_report_transmission_shifting_impaired" text="Khả năng chuyển số suy giảm"/>
         <text name="rms_report_transmission_shift_delay" text="Độ trễ chuyển số"/>
         <text name="rms_report_transmission_gear_rejection" text="Nhảy số"/>
-        <text name="rms_report_transmission_cvt_slipping" text="Trượt đai/xích"/>
+        <text name="rms_report_transmission_cvt_slipping" text="Truyền lực kém hiệu quả"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Tỷ số truyền bị giới hạn"/>
-        <text name="rms_report_transmission_cvt_pressure_instability" text="Áp suất không ổn định"/>
+        <text name="rms_report_transmission_cvt_pressure_instability" text="Truyền lực thất thường"/>
         <text name="rms_report_transmission_thermostat_degraded" text="Van hằng nhiệt xuống cấp"/>
         <text name="rms_report_transmission_failed" text="Hư hỏng"/>
         <!-- Tools and Inspection -->
@@ -641,16 +792,19 @@
         <text name="rms_air_blower_no_vehicle" text="Không có xe nào trong tầm vệ sinh"/>
         <text name="rms_air_blower_function" text="Dùng để vệ sinh két tản nhiệt và bộ lọc không khí"/>
         <text name="rms_air_blower_action" text="Vệ sinh két tản nhiệt và bộ lọc không khí"/>
+        <text name="rms_air_blower_action_short" text="Thổi sạch"/>
         <text name="rms_air_blower_already_clean" text="%s: két tản nhiệt và bộ lọc không khí đã sạch"/>
-        <text name="rms_air_blower_filter_requires_maintenance" text="%s: két tản nhiệt đã sạch. Bộ lọc không khí đã đạt giới hạn làm sạch bằng khí thổi. Việc thay bộ lọc cần được thực hiện trong quá trình bảo dưỡng tại xưởng"/>
+        <text name="rms_air_blower_filter_requires_maintenance" text="%s: két tản nhiệt đã sạch. Bộ lọc không khí đã đạt giới hạn làm sạch bằng khí thổi. Xưởng thay bộ lọc từ mức bảo dưỡng %s trở lên"/>
         <text name="rms_air_blower_cleaning_not_require" text="%s không cần vệ sinh"/>
         <text name="rms_jumper_cables_name" text="Cáp kích bình"/>
         <text name="rms_jumper_cables_function" text="Dùng để nối hai ắc quy và khởi động xe có ắc quy đã cạn"/>
-        <text name="rms_jumper_cables_action" text="Kết nối/ngắt kết nối cáp kích bình"/>
+        <text name="rms_jumper_cables_action" text="Cáp kích bình"/>
         <text name="rms_jumper_cables_auto_disconnected" text="Cáp kích bình đã ngắt kết nối: một trong hai xe đã di chuyển"/>
         <text name="rms_jumper_cables_connected" text="Cáp kích bình đã kết nối với %s"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="Xe không phù hợp để kết nối cáp kích bình"/>
         <text name="rms_jumper_cables_is_too_far" text="%s ở quá xa %s"/>
+        <text name="rms_jumper_cables_electric_donor" text="Xe điện không thể dùng để khởi động động cơ đốt trong"/>
+        <text name="rms_jumper_cables_voltage_mismatch" text="Không thể nối xe 12 V với xe 24 V"/>
         <text name="rms_jumper_cables_both_already_connected" text="Cáp kích bình đã kết nối với %s và %s"/>
         <text name="rms_jumper_cables_disconnected" text="Cáp kích bình đã ngắt khỏi %s"/>
         <!-- Fluid containers -->
@@ -658,13 +812,24 @@
         <text name="rms_fluid_function_engine_oil" text="Dầu động cơ để bổ sung thủ công"/>
         <text name="rms_fluid_function_utto" text="Dầu hộp số và thủy lực để bổ sung thủ công"/>
         <text name="rms_fluid_function_coolant" text="Nước làm mát để bổ sung thủ công"/>
-        <text name="rms_fluid_container_action_start" text="Chuyển chất lỏng"/>
-        <text name="rms_fluid_container_action_cancel" text="Dừng chuyển"/>
-        <text name="rms_fluid_select_vehicle_title" text="Chọn xe"/>
-        <text name="rms_fluid_select_vehicle_prompt" text="Chọn xe cần đổ đầy"/>
-        <text name="rms_fluid_select_circuit_prompt" text="Chọn mạch cần đổ đầy"/>
-        <text name="rms_fluid_select_fluid_prompt" text="Chọn chất lỏng cần đổ"/>
-        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
+        <text name="rms_fluid_pour_action" text="Đổ: %s"/>
+        <text name="rms_fluid_level_done" text="Đã đủ mức"/>
+        <text name="rms_fluid_container_empty" text="Bình đã hết"/>
+        <text name="rms_fluid_drum_empty" text="Thùng phuy đã hết"/>
+        <text name="rms_fluid_container_label" text="Bình"/>
+        <text name="rms_fluid_drum_label" text="Thùng phuy"/>
+        <text name="rms_fluid_hand_take" text="Cầm lên để đổ"/>
+        <text name="rms_fluid_hand_carry" text="Mang bình"/>
+        <text name="rms_drum_pump_name" text="Bơm thùng phuy dùng pin"/>
+        <text name="rms_drum_pump_function" text="Lắp lên thùng phuy 200 L để bơm cho máy qua súng bơm"/>
+        <text name="rms_drum_pump_mount" text="Lắp lên thùng phuy"/>
+        <text name="rms_drum_pump_take" text="Lấy lại bơm"/>
+        <text name="rms_drum_pump_nozzle_take" text="Cầm súng bơm"/>
+        <text name="rms_drum_pump_nozzle_return" text="Treo súng bơm"/>
+        <text name="rms_drum_pump_hose_range" text="Ống của bơm không cho bạn đi xa hơn.&#10;Súng bơm sẽ được treo lại sau %.1f m!"/>
+        <text name="rms_drum_pump_machine_too_far" text="Đưa thùng phuy lại gần: ống dài 4 m"/>
+        <text name="rms_drum_pump_required" text="Cần có bơm thùng phuy"/>
+        <text name="rms_fluid_level_under_gauge" text="Dưới thang đo"/>
         <text name="rms_fluid_circuit_engineOil" text="Dầu động cơ"/>
         <text name="rms_fluid_circuit_coolant" text="Nước làm mát"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Dầu hộp số"/>
@@ -674,17 +839,21 @@
         <text name="rms_fluid_hud_transmissionHydraulic" text="Dầu hộp số/thủy lực"/>
         <text name="rms_fluid_hud_coolant" text="Nước làm mát"/>
         <text name="rms_fluid_incompatible_title" text="Chất lỏng không tương thích"/>
-        <text name="rms_fluid_incompatible_message" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể tăng gấp ba lần độ hao mòn của hệ thống, tăng nhiệt hoặc làm chậm hệ thống thủy lực. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
-        <text name="rms_fluid_error_no_vehicle" text="Không có xe nào cần chất lỏng trong phạm vi 4 m"/>
+        <text name="rms_fluid_incompatible_message_engineOil" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể làm động cơ hao mòn nhanh gấp tới ba lần và nóng hơn. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
+        <text name="rms_fluid_incompatible_message_coolant" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể làm hệ thống làm mát hao mòn nhanh gấp tới ba lần và làm động cơ nóng hơn. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
+        <text name="rms_fluid_incompatible_message_transmissionOil" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể làm hộp số hao mòn nhanh gấp tới ba lần và nóng hơn. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
+        <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể làm hệ thống thủy lực hao mòn nhanh gấp tới ba lần, nóng hơn và chậm hơn. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
+        <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể làm hộp số và hệ thống thủy lực hao mòn nhanh gấp tới ba lần, nóng hơn, đồng thời làm hệ thống thủy lực chậm hơn. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
         <text name="rms_fluid_error_no_circuit" text="Xe này không cần bổ sung chất lỏng"/>
         <text name="rms_fluid_error_motor_running" text="Hãy tắt động cơ trước khi chuyển chất lỏng"/>
         <text name="rms_fluid_error_vehicle_moving" text="Xe phải đứng yên"/>
-        <text name="rms_fluid_dealer_billed" text="Chất lỏng đã tính phí"/>
+        <text name="rms_fluid_error_busy" text="Một bình chứa khác đang nạp cho hệ thống này"/>
         <text name="rms_fluid_warranty_covered" text="Chất lỏng được bảo hành"/>
-        <text name="rms_fluid_stock_required" text="Cần bình chứa tương thích trong khu vực xưởng"/>
+        <text name="rms_fluid_lease_covered" text="Chất lỏng đã gồm trong phí thuê"/>
+        <text name="rms_fluid_stock_required" text="Lấy từ bình chứa trong khu vực xưởng"/>
+        <text name="rms_fluid_stock_missing" text="Còn thiếu %s trong khu vực xưởng"/>
         <text name="rms_fluid_refill_work_order" text="Bổ sung chất lỏng"/>
         <text name="rms_fluid_refill_dealer_supply" text="Nguồn chất lỏng đã bao gồm trong báo giá"/>
-        <text name="rms_fluid_refill_stock_supply" text="Đặt các bình chứa tương thích của bạn trong khu vực xưởng"/>
         <text name="rms_fluid_mode_top_up" text="bổ sung"/>
         <text name="rms_fluid_mode_replace" text="thay thế"/>
         <text name="rms_fluid_mode_repair" text="bổ sung sau rò rỉ"/>
@@ -694,28 +863,24 @@
         <text name="rms_fluid_service_refused" text="Không thể bắt đầu quy trình trong điều kiện hiện tại."/>
         <text name="rms_fluid_service_consumption_failed" text="Không thể dành trước lượng chất lỏng cần thiết. Quy trình đã bị hủy."/>
         <!-- Inspection Dialog -->
-        <text name="rms_field_inspection_hold_to_start" text="Giữ để bắt đầu kiểm tra"/>
+        <text name="rms_field_inspection_hold_to_start" text="Kiểm tra (giữ)"/>
         <text name="rms_field_inspection_progress" text="Đang kiểm tra"/>
         <text name="rms_field_inspection_cancelled" text="Đã hủy kiểm tra"/>
         <text name="rms_field_inspection_engine_must_be_stopped" text="Hãy tắt động cơ trước khi kiểm tra"/>
         <text name="rms_inspection_dialog_title" text="Kiểm tra trước ca"/>
         <text name="rms_inspection_section_fluids" text="Chất lỏng kỹ thuật"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
-        <text name="rms_inspection_section_cooling_air" text="Hệ thống làm mát và bộ lọc không khí"/>
-        <text name="rms_inspection_section_lubrication" text="Điểm bôi trơn"/>
+        <text name="rms_inspection_section_field_care" text="Bộ lọc, két tản nhiệt và bôi trơn"/>
         <text name="rms_inspection_section_additional" text="Ghi chú bổ sung"/>
         <text name="rms_inspection_verdict_ok_title" text="Đủ điều kiện hoạt động"/>
         <text name="rms_inspection_verdict_ok_message" text="Không có gì cần báo cáo, máy có thể hoạt động."/>
         <text name="rms_inspection_verdict_watch_title" text="Cần theo dõi"/>
         <text name="rms_inspection_verdict_watch_message" text="Một hoặc nhiều điểm cần bạn chú ý. Máy vẫn có thể tiếp tục làm việc; hãy xử lý chúng trong hôm nay."/>
-        <text name="rms_inspection_verdict_air_filter_service_message" text="Máy vẫn có thể làm việc. Hãy lên lịch bảo dưỡng tại xưởng để thay bộ lọc không khí."/>
+        <text name="rms_inspection_verdict_air_filter_service_message" text="Máy vẫn có thể làm việc. Xưởng thay bộ lọc không khí từ mức bảo dưỡng %s trở lên."/>
         <text name="rms_inspection_verdict_stop_title" text="Không được sử dụng"/>
         <text name="rms_inspection_verdict_stop_message" text="Một điểm phải được xử lý trước khi sử dụng. Không vận hành máy trong tình trạng này."/>
         <text name="rms_inspection_service_due_in" text="%s sau %s"/>
         <text name="rms_inspection_service_overdue" text="%s quá hạn %s"/>
-        <text name="rms_inspection_service_clock_engine" text="thay dầu động cơ"/>
-        <text name="rms_inspection_service_clock_transmission" text="thay dầu hộp số"/>
-        <text name="rms_inspection_service_clock_coolant" text="thay nước làm mát"/>
         <text name="rms_inspection_status_slightly_low" text="Hơi thấp"/>
         <text name="rms_inspection_status_slightly_dirty" text="Hơi tắc"/>
         <text name="rms_inspection_status_slightly_dry" text="Hơi khô"/>
@@ -735,6 +900,7 @@
         <text name="rms_inspection_status_not_required" text="Không cần"/>
         <text name="rms_inspection_status_change_overdue" text="Quá hạn thay"/>
         <text name="rms_inspection_status_change_long_overdue" text="Quá hạn thay nhiều"/>
+        <text name="rms_inspection_status_replacement_due" text="Cần thay"/>
         <text name="rms_inspection_engine_oil" text="Dầu động cơ"/>
         <text name="rms_inspection_coolant" text="Nước làm mát"/>
         <text name="rms_inspection_hydraulic_fluid" text="Dầu thủy lực"/>
@@ -756,8 +922,11 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="Bộ lọc không khí bị tắc nhẹ."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Bộ lọc không khí bị tắc rõ rệt."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Bộ lọc không khí bị tắc nặng do bụi và mảnh vụn."/>
-        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Bộ lọc không khí đã đạt giới hạn làm sạch bằng khí thổi. Việc thay bộ lọc cần được thực hiện trong quá trình bảo dưỡng tại xưởng."/>
-        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="Thổi bộ lọc để loại bỏ lớp bụi bám lỏng. Phần cặn còn lại sẽ khiến bộ lọc cần được thay tại xưởng."/>
+        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Bộ lọc không khí đã đạt giới hạn làm sạch bằng khí thổi. Xưởng thay bộ lọc từ mức bảo dưỡng %s trở lên."/>
+        <text name="rms_inspection_hint_fuel_filter_due" text="Cần thay bộ lọc nhiên liệu: bất kỳ lần bảo dưỡng nào, ở mọi cấp, hoặc một lần sửa chữa tại xưởng đều thay nó."/>
+        <text name="rms_inspection_hint_hydraulic_filter_due" text="Cần thay bộ lọc thủy lực: bất kỳ lần bảo dưỡng nào, ở mọi cấp, hoặc một lần sửa chữa tại xưởng đều thay nó."/>
+        <text name="rms_inspection_hint_hydraulic_filter_bypass" text="Bộ lọc thủy lực bị tắc: dầu chảy qua mà không được lọc và làm mòn mạch. Bất kỳ lần bảo dưỡng nào, ở mọi cấp, hoặc một lần sửa chữa tại xưởng đều thay nó."/>
+        <text name="rms_inspection_hint_unidentified" text="Triệu chứng của hỏng hóc chưa xác định: xưởng sẽ xác định bằng kiểm tra hoặc bảo dưỡng."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Có thể thấy dấu hiệu quá nhiệt và một số đầu nối bị sẫm màu gần máy phát."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Có thể thấy dấu hiệu quá nhiệt rõ rệt và các đầu nối bị sẫm màu gần máy phát cùng dây điện của máy phát."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Các điểm bôi trơn có vẻ hơi khô."/>
@@ -774,9 +943,11 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Có thể thấy vết dầu và các đầu nối bị sẫm màu quanh bộ tăng áp."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Có thể thấy nhiều vết dầu, các đầu nối bị sẫm màu và vết muội quanh bộ tăng áp."/>
         <text name="rms_inspection_hint_fluid_level_low" text="Mức của một chất lỏng đã xuống dưới vạch đánh dấu."/>
-        <text name="rms_inspection_hint_service_engine" text="Đã quá hạn thay dầu động cơ: dầu cũ làm động cơ và hệ thống phun mòn nhanh hơn. Bảo dưỡng tiêu chuẩn sẽ thay dầu cùng các bộ lọc."/>
-        <text name="rms_inspection_hint_service_transmission" text="Đã quá hạn thay dầu hộp số: dầu cũ làm hộp số và hệ thống thủy lực mòn nhanh hơn. Bảo dưỡng mở rộng sẽ thay dầu cùng bộ lọc."/>
-        <text name="rms_inspection_hint_service_coolant" text="Đã đến lúc thay nước làm mát: nước làm mát cũ làm hệ thống làm mát mòn nhanh hơn. Bảo dưỡng phòng ngừa sẽ thay mới."/>
+        <text name="rms_inspection_hint_fluid_levels_low" text="Mức của nhiều chất lỏng đã xuống dưới vạch đánh dấu."/>
+        <text name="rms_inspection_hint_service_engine" text="Đã quá hạn thay dầu động cơ: dầu cũ làm động cơ và hệ thống phun mòn nhanh hơn. Mọi mức bảo dưỡng đều thay dầu cùng các bộ lọc."/>
+        <text name="rms_inspection_hint_service_transmission" text="Đã quá hạn thay dầu hộp số: dầu cũ làm mọi bộ phận được nó bôi trơn mòn nhanh hơn. Mức bảo dưỡng được khuyến nghị tại xưởng sẽ thay dầu cùng bộ lọc."/>
+        <text name="rms_inspection_hint_service_hydraulic" text="Đã quá hạn thay dầu thủy lực: dầu cũ làm hệ thống thủy lực mòn nhanh hơn. Mức bảo dưỡng được khuyến nghị tại xưởng sẽ thay dầu cùng bộ lọc."/>
+        <text name="rms_inspection_hint_service_coolant" text="Đã đến lúc thay nước làm mát: nước làm mát cũ làm hệ thống làm mát mòn nhanh hơn. Mức bảo dưỡng được khuyến nghị tại xưởng sẽ thay mới."/>
         <text name="rms_inspection_transmission_oil" text="Dầu hộp số"/>
         <text name="rms_inspection_radiator" text="Két tản nhiệt"/>
         <text name="rms_inspection_air_filter" text="Bộ lọc không khí"/>
@@ -784,37 +955,41 @@
         <text name="rms_inspection_no_suspicious_symptoms" text="Không phát hiện triệu chứng đáng ngờ"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
-        <text name="rms_ingame_menu_title" text="Realistic Mechanical Systems"/>
-        <text name="rms_ingame_menu_section_active" text="Xe RMS"/>
-        <text name="rms_ingame_menu_section_service" text="Đang bảo dưỡng"/>
-        <text name="rms_ingame_menu_section_other" text="Xe khác"/>
-        <text name="rms_ingame_menu_header_vehicle" text="Xe"/>
-        <text name="rms_ingame_menu_header_type" text="Loại"/>
+        <text name="rms_ingame_menu_title" text="Bảng theo dõi máy móc"/>
+        <text name="rms_ingame_menu_section_active" text="Đội máy"/>
+        <text name="rms_ingame_menu_section_service" text="Công việc bảo dưỡng"/>
+        <text name="rms_ingame_menu_section_other" text="Máy không được theo dõi"/>
         <text name="rms_ingame_menu_header_time_left" text="Thời gian còn lại"/>
-        <text name="rms_ingame_menu_header_age" text="Tuổi"/>
-        <text name="rms_ingame_menu_header_working_hours" text="Giờ hoạt động"/>
-        <text name="rms_ingame_menu_header_condition" text="Tình trạng"/>
         <text name="rms_ingame_menu_header_cost" text="Tổng chi phí"/>
         <text name="rms_ingame_menu_header_interval" text="Chu kỳ"/>
-        <text name="rms_ingame_menu_header_last_inspection" text="Lần kiểm tra gần nhất"/>
-        <text name="rms_ingame_menu_header_last_maintenance" text="Lần bảo dưỡng gần nhất"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Phí thuê"/>
-        <text name="rms_ingame_menu_header_price" text="Bán qua menu"/>
         <text name="rms_ingame_menu_header_procedure" text="Quy trình"/>
-        <text name="rms_ingame_menu_header_finish_time" text="Hoàn tất"/>
-        <text name="rms_ingame_menu_header_service_cost" text="Chi phí"/>
         <text name="rms_ingame_menu_header_reason" text="Lý do loại trừ"/>
-        <text name="rms_ingame_menu_empty_other" text="Không có xe nào khác"/>
-        <text name="rms_ingame_menu_empty_active" text="Không có xe RMS"/>
-        <text name="rms_ingame_menu_empty_service" text="Không có xe nào đang bảo dưỡng"/>
+        <text name="rms_ingame_menu_empty_other" text="Không có máy ngoài theo dõi"/>
+        <text name="rms_ingame_menu_empty_active" text="Không có máy được theo dõi"/>
+        <text name="rms_ingame_menu_empty_service" text="Không có công việc đang diễn ra"/>
         <text name="rms_ingame_menu_reason_implement" text="Nông cụ hoặc rơ-moóc"/>
         <text name="rms_ingame_menu_reason_unsupported" text="Không hỗ trợ"/>
-        <text name="rms_ingame_menu_reason_electric" text="Điện"/>
         <text name="rms_ingame_menu_reason_towed" text="Nông cụ có động cơ"/>
         <text name="rms_ingame_menu_reason_auxiliary" text="Máy phụ trợ"/>
         <text name="rms_ingame_menu_reason_user" text="Loại trừ thủ công"/>
         <text name="rms_ingame_menu_include" text="Đưa vào RMS"/>
         <text name="rms_ingame_menu_exclude" text="Loại khỏi RMS"/>
+        <text name="rms_fleet_all" text="Tất cả máy"/>
+        <text name="rms_fleet_all_untracked" text="Tất cả máy ngoài theo dõi"/>
+        <text name="rms_fleet_sort_by" text="Sắp xếp theo"/>
+        <text name="rms_fleet_sort_deadline" text="Hạn bảo dưỡng"/>
+        <text name="rms_fleet_sort_name" text="Tên"/>
+        <text name="rms_fleet_sort_hours" text="Giờ"/>
+        <text name="rms_fleet_check" text="Kiểm tra"/>
+        <text name="rms_fleet_location" text="Vị trí"/>
+        <text name="rms_fleet_next_service" text="Bảo dưỡng tiếp theo"/>
+        <text name="rms_fleet_remaining" text="Còn %s giờ"/>
+        <text name="rms_fleet_overdue" text="Trễ %s giờ"/>
+        <text name="rms_fleet_overdue_label" text="Quá hạn"/>
+        <text name="rms_fleet_overdue_count" text="Quá hạn: %d"/>
+        <text name="rms_fleet_due_soon_label" text="Sắp đến"/>
+        <text name="rms_fleet_due_soon_count" text="Sắp đến: %d"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Trả lại xe"/>
         <text name="rms_sell_dialog_section_vehicle" text="Xe"/>
@@ -823,9 +998,10 @@
         <text name="rms_sell_dialog_overdue_maintenance_penalty" text="Bảo dưỡng quá hạn"/>
         <text name="rms_sell_dialog_repair_penalty" text="Sửa chữa"/>
         <text name="rms_sell_dialog_washing_penalty" text="Rửa xe"/>
+        <text name="rms_sell_dialog_deposit_refund" text="Hoàn tiền đặt cọc"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Mức chất lỏng thấp"/>
-        <text name="rms_tutorial_fluid_level_message" text="Một trong các chất lỏng của máy này đã giảm xuống dưới vạch đánh dấu trên đồng hồ.&#10;&#10;Dầu động cơ bị tiêu hao theo giờ hoạt động, và động cơ đã mòn tiêu thụ nhiều dầu hơn hẳn. Nước làm mát, dầu hộp số và dầu thủy lực chỉ giảm khi có rò rỉ.&#10;&#10;Khi mức chất lỏng chỉ thấp hơn vạch đánh dấu, máy mới cần bổ sung và vẫn hoạt động bình thường. Hư hại bắt đầu khi mức chất lỏng thực sự xuống thấp: máy thiếu nước làm mát hoặc dầu hộp số sẽ nóng lên, còn máy thiếu dầu động cơ hoặc dầu thủy lực sẽ mòn nhanh hơn nhiều.&#10;&#10;Mua một bình sản phẩm tương thích trong cửa hàng, đặt cạnh máy và bổ sung đến đúng mức. Mọi sản phẩm dành cho mạch đó đều có cùng tác dụng; chất lỏng không phù hợp chỉ làm nhiễm bẩn mạch đó. Tại đại lý, số lít cần thiết được cung cấp và tính phí. Tại xưởng cá nhân hoặc xưởng lưu động, quy trình sử dụng các bình chứa của trang trại nằm trong khu vực xưởng."/>
+        <text name="rms_tutorial_fluid_level_message" text="Một trong các chất lỏng của máy này đã giảm xuống dưới vạch đánh dấu trên đồng hồ.&#10;&#10;Dầu động cơ bị tiêu hao theo giờ hoạt động, và động cơ đã mòn tiêu thụ nhiều dầu hơn hẳn. Nước làm mát, dầu hộp số và dầu thủy lực chỉ giảm khi có rò rỉ.&#10;&#10;Khi mức chất lỏng chỉ thấp hơn vạch đánh dấu, máy mới cần bổ sung và vẫn hoạt động bình thường. Hư hại bắt đầu khi mức chất lỏng thực sự xuống thấp: máy thiếu nước làm mát hoặc dầu hộp số sẽ nóng lên, còn máy thiếu dầu động cơ hoặc dầu thủy lực sẽ mòn nhanh hơn nhiều.&#10;&#10;Mua một bình sản phẩm tương thích trong cửa hàng, mang đến chỗ máy và bổ sung đến đúng mức. Mọi sản phẩm dành cho mạch đó đều có cùng tác dụng; chất lỏng không phù hợp chỉ làm nhiễm bẩn mạch đó. Tại đại lý, số lít cần thiết được cung cấp và tính phí."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Chào mừng bạn đến với Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Tắt mẹo"/>
         <text name="rms_tutorial_welcome_enable_button" text="Bật mẹo"/>
@@ -835,20 +1011,21 @@
         <text name="rms_tutorial_wheel_slip_title" text="Trượt bánh"/>
         <text name="rms_tutorial_wheel_slip_message" text="Các bánh xe của bạn đang trượt mạnh. Trượt bánh là một trong những yếu tố gây hư hại lớn nhất cho hộp số và khiến lần đến xưởng tiếp theo xảy ra sớm hơn đáng kể."/>
         <text name="rms_tutorial_service_due_soon_title" text="Sắp đến hạn bảo dưỡng"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s sẽ sớm cần được bảo dưỡng.&#10;&#10;Trong RMS, xe cần được bảo dưỡng thường xuyên. Trì hoãn bảo dưỡng làm tăng đáng kể nguy cơ hỏng hóc.&#10;&#10;Đến xưởng gần nhất và chọn “Bảo dưỡng”. Chu kỳ có thể được điều chỉnh trong cài đặt mod."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s sẽ sớm cần bảo dưỡng. Chọn gói được đề xuất tại xưởng: gói này bao gồm các công việc đến hạn. Giới hạn giờ vận hành hoặc thời gian lịch nào đến trước sẽ áp dụng, kể cả khi ít sử dụng. Mức dễ bảo dưỡng thể hiện độ phức tạp của công việc; bảo dưỡng thường xuyên vẫn thực hiện được tại xưởng di động."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Đã quá chu kỳ bảo dưỡng"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Chu kỳ bảo dưỡng của %s đã hết hạn.&#10;&#10;Hãy đến xưởng sớm nhất có thể và chọn “Bảo dưỡng”. Tiếp tục vận hành một chiếc xe đã quá hạn bảo dưỡng làm tăng mạnh nguy cơ xảy ra nhiều hỏng hóc."/>
         <text name="rms_tutorial_steering_title" text="Đánh lái khi đứng yên"/>
         <text name="rms_tutorial_steering_message" text="Tốt nhất không nên đánh lái khi đứng yên. Việc này đặt tải nặng lên cơ cấu lái và các bộ phận cầu trước, làm tăng hao mòn hệ thống gầm.&#10;&#10;Hãy cho xe tiến nhẹ trước khi rẽ: các bánh xe sẽ xoay dễ dàng hơn nhiều."/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Két tản nhiệt hoặc bộ lọc không khí bị tắc. Giữ phím %s khi nhìn vào xe để biết bộ phận nào. Dùng máy thổi khí nén để làm sạch. Nếu không thể thổi sạch bộ lọc nữa, hãy chọn bảo dưỡng mở rộng hoặc phòng ngừa tại xưởng để thay bộ lọc."/>
+        <text name="rms_tutorial_cooling_air_check_title" text="Hệ thống làm mát và bộ lọc không khí"/>
+        <text name="rms_tutorial_cooling_air_check_message" text="Két tản nhiệt hoặc bộ lọc không khí bị tắc. Giữ phím %s khi nhìn vào xe để biết bộ phận nào. Dùng máy thổi khí nén để làm sạch. Nếu không thể thổi sạch bộ lọc nữa, xưởng sẽ thay bộ lọc từ mức bảo dưỡng %s trở lên."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Cần bôi trơn"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%s của bạn cần được bôi trơn thường xuyên.&#10;&#10;Trong RMS, mức bôi trơn giảm theo giờ hoạt động. Sau một thời gian dài không sử dụng, máy cũng cần được bôi trơn trước khi hoạt động trở lại. Bôi trơn không đủ làm khung gầm mòn nhanh hơn.&#10;&#10;Mua một Súng bơm mỡ trong cửa hàng và bơm mỡ cho máy khi kết quả kiểm tra yêu cầu.&#10;&#10;Bạn có thể kiểm tra mức bôi trơn: giữ phím %s khi nhìn vào xe."/>
         <text name="rms_tutorial_needs_repair_title" text="Đã phát hiện hỏng hóc"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s của bạn đang gặp vấn đề. Một trong các linh kiện có thể đã hỏng.&#10;&#10;Hãy đưa xe đến xưởng để kiểm tra. Đừng trì hoãn: hỏng hóc có thể tiếp tục trở nên nghiêm trọng hơn và chi phí sửa chữa sẽ tăng theo.&#10;&#10;Nếu kết quả kiểm tra xác nhận hỏng hóc, hãy sửa chữa tại xưởng."/>
+        <text name="rms_tutorial_needs_repair_message" text="%s của bạn đang gặp vấn đề. Một trong các linh kiện có thể đã hỏng.&#10;&#10;Hãy đưa xe đến xưởng: kiểm tra, hoặc bảo dưỡng nếu đã đến hạn, sẽ xác định hỏng hóc. Đừng trì hoãn: hỏng hóc có thể tiếp tục trở nên nghiêm trọng hơn và chi phí sửa chữa sẽ tăng theo.&#10;&#10;Khi hỏng hóc đã được xác định, hãy sửa chữa tại xưởng."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Cần đại tu"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%s của bạn đã có dấu hiệu xuống cấp do tuổi tác. Đã đến lúc cân nhắc thay thế hoặc đại tu. Đây là một quy trình lâu và tốn kém, nhưng là cách duy nhất để phục hồi máy về tình trạng ban đầu.&#10;&#10;Tuổi thọ xe được đặt trong cài đặt mod: giá trị càng cao thì xe của bạn càng mòn chậm."/>
         <text name="rms_tutorial_needs_preventive_title" text="Hỏng hóc sắp xảy ra"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Một trong các hệ thống của %s sắp hỏng. Vẫn còn thời gian để xử lý.&#10;&#10;Xưởng cung cấp bảo dưỡng phòng ngừa: quy trình này phục hồi mức bảo dưỡng, thay mọi chất lỏng và giảm mạnh ứng suất cơ học trong những hệ thống chịu ảnh hưởng nhiều nhất."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Động cơ, hệ thống nhiên liệu hoặc hệ thống làm mát của %s có nguy cơ hỏng cao hơn.&#10;&#10;Bảo dưỡng %s: chỉnh xupáp, kiểm tra kim phun và van hằng nhiệt, nhờ đó giảm nguy cơ này."/>
         <text name="rms_tutorial_age_degradation_title" text="Xuống cấp do tuổi tác"/>
         <text name="rms_tutorial_age_degradation_message" text="Trong RMS, xe dần mất một phần hiệu suất ban đầu khi cũ đi.&#10;&#10;Sau khoảng một phần ba tuổi thọ, hao mòn do tuổi tác làm giảm nhẹ các đặc tính quan trọng như công suất hoặc hiệu quả phanh. Sau đó, tác động tăng dần và trở nên rõ rệt khi gần hết tuổi thọ.&#10;&#10;Có thể tắt sự xuống cấp này trong cài đặt mod."/>
         <text name="rms_tutorial_poor_consumables_title" text="Vật tư tiêu hao chất lượng kém"/>
@@ -856,8 +1033,8 @@
         <text name="rms_tutorial_poor_parts_title" text="Linh kiện chất lượng kém"/>
         <text name="rms_tutorial_poor_parts_message" text="%s của bạn đã nhận một linh kiện chất lượng kém trong quá trình sửa chữa. Hỏng hóc rất có thể sẽ sớm tái xuất hiện.&#10;&#10;Bạn có thể chờ hỏng hóc quay lại hoặc thực hiện kiểm tra toàn diện để xác định chắc chắn linh kiện gây ra vấn đề."/>
         <text name="rms_tutorial_park_brake_title" text="Phanh đỗ"/>
-        <text name="rms_tutorial_park_brake_message" text="Phanh đỗ đã được kéo. Phanh tự kéo khi bạn rời khỏi máy đang đứng yên và tự nhả ngay khi bạn nhấn ga trở lại.&#10;&#10;Trên dốc, phanh này ngăn máy tự trôi."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Phanh đỗ đã được kéo. Bạn tự kéo và nhả phanh bằng phím riêng: nếu nhấn ga khi vẫn kéo phanh, máy sẽ đứng yên và phát cảnh báo.&#10;&#10;Trên dốc, phanh này ngăn máy tự trôi."/>
+        <text name="rms_tutorial_park_brake_message" text="Phanh đỗ đã được kéo. Phanh tự kéo khi bạn rời khỏi máy đang đứng yên và tự nhả ngay khi bạn nhấn ga trở lại. Phanh cũng tự kéo khi bạn tắt động cơ, hoặc sau 45 giây đứng yên.&#10;&#10;Trên dốc, phanh này ngăn máy tự trôi."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Phanh đỗ đã được kéo. Bạn tự kéo và nhả phanh bằng phím riêng: nếu nhấn ga khi vẫn kéo phanh, máy vẫn chạy nhưng bị phanh ghì lại và phanh sẽ mòn.&#10;&#10;Trên dốc, phanh này ngăn máy tự trôi: nếu bạn rời khỏi máy mà không kéo phanh, máy có thể trôi."/>
         <text name="rms_tutorial_preheat_title" text="Sấy nóng động cơ diesel"/>
         <text name="rms_tutorial_preheat_message" text="Trên động cơ diesel nguội, nhấn lệnh khởi động một lần sẽ bật khóa điện và tự động bắt đầu chu trình sấy nóng. Các đèn trên bảng điều khiển sáng trong chốc lát, sau đó đèn sấy tiếp tục sáng cho đến khi động cơ sẵn sàng. Không lặp lại lệnh: bộ đề tự động hoạt động khi đèn tắt."/>
         <text name="rms_tutorial_pto_engagement_title" text="Gài PTO"/>
@@ -875,7 +1052,7 @@
         <text name="rms_tutorial_hard_start_title" text="Khó khởi động"/>
         <text name="rms_tutorial_hard_start_message" text="Động cơ của %s khó khởi động. Nguyên nhân có thể là ắc quy yếu, thời tiết giá rét, hỏng hóc cơ học hoặc bộ đề bị mòn. Giữ nút khởi động cho đến khi động cơ nổ máy.&#10;&#10;Hệ thống điện chịu tải nặng trong lúc khởi động do dòng khởi động rất cao."/>
         <text name="rms_tutorial_low_fuel_title" text="Nhiên liệu dự trữ"/>
-        <text name="rms_tutorial_low_fuel_message" text="Bình nhiên liệu sắp chạm mức dự trữ. Nhiên liệu còn lại càng ít thì bơm nhiên liệu càng phải làm việc nhiều hơn để hút nhiên liệu, làm tăng độ hao mòn của bơm."/>
+        <text name="rms_tutorial_low_fuel_message" text="Bình nhiên liệu sắp chạm mức dự trữ. Nhiên liệu còn lại càng ít thì bơm nhiên liệu càng phải làm việc nhiều hơn để hút nhiên liệu, và nước cùng cặn dưới đáy bình bị đưa tới bộ lọc, khiến bộ lọc tắc nhanh hơn.&#10;&#10;Tốt nhất nên đổ đầy bình vào cuối ngày: bình đầy ít bị ngưng tụ hơi nước hơn."/>
         <text name="rms_tutorial_lugging_title" text="Động cơ ì ở vòng tua thấp"/>
         <text name="rms_tutorial_lugging_message" text="Động cơ, đặc biệt là hộp số, chịu ảnh hưởng xấu khi động cơ ì ở vòng tua thấp, tức là vòng tua thấp dưới tải nặng. Nông cụ được nối có thể quá nặng đối với máy, hoặc số đang chọn không phù hợp nếu dùng hộp số sàn."/>
         <text name="rms_tutorial_engine_overheat_title" text="Động cơ quá nhiệt"/>
@@ -887,7 +1064,9 @@
         <text name="rms_tutorial_cvt_overheat_title" text="Hộp số CVT quá nhiệt"/>
         <text name="rms_tutorial_cvt_overheat_message" text="Hộp số CVT đang bắt đầu quá nhiệt. Nguyên nhân có thể là tải quá lớn, két tản nhiệt bị tắc, thời tiết rất nóng hoặc mạch làm mát hộp số gặp lỗi. Một chiếc cày quá nặng hoặc rơ-moóc quá tải cũng đủ gây ra tình trạng này.&#10;&#10;Hãy luôn cảnh giác: quá nhiệt là một trong những yếu tố gây hư hại lớn nhất cho hộp số CVT."/>
         <text name="rms_tutorial_chassis_vibration_title" text="Khung gầm chịu ứng suất"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Lái nhanh trên địa hình gồ ghề làm hệ thống treo của %s mòn rất nhanh. Những rung động này cũng làm hư hại các hệ thống khác, trước hết là hệ thống thủy lực và điện.&#10;&#10;Hãy lái nhẹ nhàng trên mặt đất không bằng phẳng."/>
+        <text name="rms_tutorial_chassis_vibration_message" text="Lái nhanh trên địa hình gồ ghề làm hệ thống gầm của %s mòn nhanh. Những cú xóc này cũng làm hư hại dây điện cùng các đầu nối, và hệ thống thủy lực khi đang nâng một nông cụ nặng.&#10;&#10;Hãy giảm tốc trên mặt đất không bằng phẳng."/>
+        <text name="rms_tutorial_terrain_impact_title" text="Va đập mạnh"/>
+        <text name="rms_tutorial_terrain_impact_message" text="Hệ thống gầm vừa chịu một cú va đập mạnh. Chướng ngại vật khiến xe dừng khựng lại hoặc giảm tốc đột ngột sẽ làm mòn khung gầm ngay lập tức và khiến hư hỏng tiếp theo đến sớm hơn, thường là ở hệ thống lái hoặc vòng bi.&#10;&#10;Hãy giảm tốc trước chướng ngại vật."/>
         <text name="rms_tutorial_cranking_title" text="Khởi động thường xuyên"/>
         <text name="rms_tutorial_cranking_message" text="Động cơ đang được khởi động quá thường xuyên. Mỗi lần khởi động đưa dòng điện rất cao qua hệ thống điện, làm dây điện, bộ đề và các bộ phận điện khác mòn nhanh hơn.&#10;&#10;Tránh tắt động cơ trong những lần dừng ngắn."/>
         <text name="rms_tutorial_critical_failure_title" text="Hỏng hóc nghiêm trọng"/>
@@ -901,7 +1080,7 @@
         <text name="rms_tutorial_overload_indicator_title" text="Cảnh báo quá tải"/>
         <text name="rms_tutorial_overload_indicator_message" text="%s đang chịu tải nặng. Đèn cảnh báo vừa sáng trên bảng điều khiển cho biết tình trạng này.&#10;&#10;Máy có thể không đủ công suất cho công việc hiện tại. Hãy thử giảm tải: giới hạn tốc độ bằng điều khiển hành trình hoặc nhả nhẹ bàn đạp ga thay vì chạy hết công suất."/>
         <text name="rms_tutorial_battery_low_title" text="Ắc quy yếu"/>
-        <text name="rms_tutorial_battery_low_message" text="Ắc quy của máy này sắp cạn hoàn toàn. Điều này xảy ra sau một thời gian dài không hoạt động, trong thời tiết cực lạnh hoặc do hệ thống điện gặp lỗi.&#10;&#10;Khi mức sạc thấp, việc khởi động trở nên khó khăn rồi không thể thực hiện. Khi đó, bạn có thể khởi động động cơ từ một xe khác bằng cáp kích bình."/>
+        <text name="rms_tutorial_battery_low_message" text="Ắc quy của máy này sắp cạn hoàn toàn. Điều này xảy ra sau một thời gian dài không hoạt động, trong thời tiết cực lạnh hoặc do hệ thống điện gặp lỗi.&#10;&#10;Khi mức sạc thấp, việc khởi động trở nên khó khăn rồi không thể thực hiện. Khi đó, bạn có thể khởi động động cơ từ một xe khác bằng cáp kích bình. Trước khi để máy lâu không dùng, hoặc khi ắc quy tự cạn, hãy ngắt ắc quy bằng công tắc ngắt ắc quy khi đứng trước máy."/>
         <text name="rms_tutorial_drivetrain_windup_title" text="Ứng suất hệ truyền động"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Bạn đang rẽ trên bề mặt có độ bám cao khi khóa vi sai đang được gài. Trong khúc cua, các bánh xe bên trong và bên ngoài đi quãng đường khác nhau, nhưng khóa vi sai buộc chúng quay cùng tốc độ: hệ truyền động chịu ứng suất và mòn nhanh hơn. Hãy mở khóa vi sai trước khi rẽ."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Chế độ dẫn động và khóa vi sai"/>
@@ -909,7 +1088,7 @@
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
-        <text name="rms_charger_function" text="Bộ sạc Telwin trên xe đẩy, 150 A ở 12 V. Kết nối cạnh xe và để ắc quy sạc. Quá trình sạc theo tốc độ thời gian trong trò chơi. Hỗ trợ khởi động (START, 200 A)."/>
+        <text name="rms_charger_function" text="Bộ sạc Telwin trên xe đẩy, 150 A ở 12 V, 80 A ở 24 V. Kết nối cạnh xe và chọn sạc tự động theo ắc quy, sạc nhanh hoặc hỗ trợ khởi động (START, 200 A ở 12 V). Quá trình sạc theo tốc độ thời gian trong trò chơi."/>
         <text name="rms_charger_start" text="Kết nối bộ sạc"/>
         <text name="rms_charger_disconnect" text="Ngắt bộ sạc"/>
         <text name="rms_charger_select" text="Chọn xe cần kết nối."/>
@@ -931,6 +1110,7 @@
         <text name="rms_charger_error_moving" text="Xe đang di chuyển."/>
         <text name="rms_charger_error_service" text="Đang có quy trình tại xưởng."/>
         <text name="rms_charger_error_cables" text="Ngắt dây câu bình."/>
+        <text name="rms_charger_error_voltage" text="Hỗ trợ khởi động chỉ hoạt động ở 12 V."/>
         <text name="rms_charger_error_busy" text="Đã có bộ sạc kết nối."/>
         <text name="rms_charger_error_full" text="Ắc quy này đã sạc đầy."/>
         <text name="rms_charger_connected" text="Đã kết nối bộ sạc. Bắt đầu sạc."/>
@@ -938,7 +1118,7 @@
         <text name="rms_charger_stopped_motor" text="Ngừng sạc: khởi động máy"/>
         <text name="rms_charger_error_player_distance" text="Đi bộ đến gần bộ sạc."/>
         <text name="rms_charger_mode_select" text="Kết nối bộ sạc"/>
-        <text name="rms_charger_mode_start" text="Hỗ trợ khởi động (START, 200 A)"/>
+        <text name="rms_charger_mode_start" text="Hỗ trợ khởi động (START, 200 A, 12 V)"/>
         <text name="rms_charger_start_ready" text="START sẵn sàng"/>
         <text name="rms_charger_start_active" text="Đang hỗ trợ khởi động"/>
         <text name="rms_charger_start_running" text="Máy đã nổ: ngắt kết nối"/>
@@ -946,6 +1126,26 @@
         <text name="rms_charger_start_wait" text="Chờ 30 giây giữa hai lần khởi động."/>
         <text name="rms_charger_unplug_before_start" text="Ngắt bộ sạc hoặc chọn START trước khi khởi động."/>
         <text name="rms_charger_start_connected" text="Hỗ trợ khởi động (START, 200 A)."/>
-        <text name="rms_charger_mode_charge" text="Sạc ắc quy (150 A)"/>
+        <text name="rms_charger_mode_charge" text="Sạc tự động"/>
+        <text name="rms_charger_mode_fast" text="Sạc nhanh (150 A, 80 A ở 24 V)"/>
+
+        <!-- Battery isolator -->
+        <text name="rms_battery_isolator_cut" text="Ngắt ắc quy"/>
+        <text name="rms_battery_isolator_restore" text="Nối lại ắc quy"/>
+        <text name="rms_battery_isolator_open" text="Ắc quy đã ngắt. Hãy nối lại bằng công tắc ngắt ắc quy khi đứng trước xe."/>
+        <text name="rms_battery_isolator_engine_running" text="Tắt động cơ trước khi dùng công tắc ngắt ắc quy."/>
+        <text name="rms_battery_isolator_info" text="Ắc quy đã ngắt"/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Hãy dùng xưởng có đủ thiết bị."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Cần chẩn đoán điện tử"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Cần tháo dỡ hoặc dụng cụ chuyên dụng"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Cần thiết bị điện áp cao"/>
+        <text name="rms_service_months" text="%s tháng"/>
+        <text name="rms_service_month" text="%s tháng"/>
+        <text name="rms_service_calendar_due" text="Đã đến hạn theo lịch"/>
+        <text name="rms_service_program_estimated" text="Lịch bảo dưỡng ước tính"/>
+        <text name="rms_ws_label_service_access" text="Mức dễ bảo dưỡng"/>
+        <text name="rms_service_access_easy" text="Dễ"/>
+        <text name="rms_service_access_average" text="Trung bình"/>
+        <text name="rms_service_access_demanding" text="Đòi hỏi cao"/>
     </texts>
 </l10n>

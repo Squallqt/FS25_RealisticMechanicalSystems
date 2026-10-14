@@ -43,12 +43,12 @@
             <GuiElement profile="rms_inspectionBlock" position="346px -164px" size="485px 210px">
                 <RoundCorner profile="rms_inspectionCardSurface" size="485px 210px"/>
                 <SmoothList profile="rms_inspectionList" id="costList" position="14px -12px" size="457px 186px">
-                    <ListItem profile="rms_inspectionRow" name="costRowTemplate" size="457px 58px">
-                        <RoundCorner profile="rms_inspectionRowSurface" size="457px 58px"/>
-                        <Text profile="rms_sellCostBullet" position="18px 0px" size="8px 58px" text="·"/>
-                        <Text profile="rms_sellCostLabel" position="30px 0px" size="195px 58px" name="costLabel"/>
-                        <RoundCorner profile="rms_inspectionValuePill" position="239px -15px" size="200px 28px" name="costValuePill"/>
-                        <Text profile="rms_sellCostValue" position="251px -15px" size="176px 28px" name="costValue"/>
+                    <ListItem profile="rms_inspectionRow" name="costRowTemplate" size="457px 42px">
+                        <RoundCorner profile="rms_inspectionRowSurface" size="457px 42px"/>
+                        <Text profile="rms_sellCostBullet" position="18px 0px" size="8px 42px" text="·"/>
+                        <Text profile="rms_sellCostLabel" position="30px 0px" size="195px 42px" name="costLabel"/>
+                        <RoundCorner profile="rms_inspectionValuePill" position="239px -7px" size="200px 28px" name="costValuePill"/>
+                        <Text profile="rms_sellCostValue" position="251px -7px" size="176px 28px" name="costValue"/>
                     </ListItem>
                 </SmoothList>
             </GuiElement>

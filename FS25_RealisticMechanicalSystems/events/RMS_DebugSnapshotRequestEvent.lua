@@ -37,7 +37,7 @@ function RMS_DebugSnapshotRequestEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
----Answers the request with a snapshot of the vehicle sent back to the requesting connection
+---Run action on receiving side
 -- @param Connection connection connection
 function RMS_DebugSnapshotRequestEvent:run(connection)
     if connection == nil or connection:getIsServer() or not RMS_Config.DEBUG then

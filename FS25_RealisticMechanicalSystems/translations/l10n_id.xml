@@ -10,11 +10,11 @@
         <text name="rms_drivetrain_notify_mode" text="Mode penggerak: %s"/>
         <text name="rms_drivetrain_notify_lock_on" text="Pengunci diferensial diaktifkan"/>
         <text name="rms_drivetrain_notify_lock_off" text="Pengunci diferensial dinonaktifkan"/>
-        <text name="rms_drivetrain_notify_park_on" text="Rem parkir diaktifkan"/>
-        <text name="rms_drivetrain_notify_park_off" text="Rem parkir dilepas"/>
         <text name="rms_drivetrain_warning_4wd_windup" text="Sistem penggerak mengalami tegangan! Nonaktifkan gandar depan untuk berbelok di permukaan dengan daya cengkeram tinggi."/>
         <text name="rms_drivetrain_warning_difflock_windup" text="Pengunci diferensial mengalami tegangan! Nonaktifkan atau kurangi sudut kemudi."/>
         <text name="rms_drivetrain_warning_parkbrake" text="Rem parkir diaktifkan!"/>
+        <text name="rms_drivetrain_warning_parkbrake_released" text="Rem parkir belum diaktifkan!"/>
+        <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Nyalakan mesin untuk melepaskan rem parkir"/>
         <text name="rms_preheat_ignition_message" text="Kontak dinyalakan: pemanasan awal berlangsung"/>
         <text name="rms_preheat_system_failure_message" text="Kegagalan sistem pemanasan awal: mesin tidak dapat dinyalakan dalam kondisi dingin"/>
         <text name="rms_preheat_start_failed_message" text="Mesin tidak menyala: matikan kontak sebelum mencoba lagi"/>
@@ -22,15 +22,16 @@
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Periksa kendaraan"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
-        <text name="input_RMS_TOGGLE_4WD" text="Ubah mode penggerak"/>
-        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Aktifkan atau nonaktifkan pengunci diferensial"/>
-        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Aktifkan atau lepaskan rem parkir"/>
+        <text name="input_RMS_TOGGLE_4WD" text="Mode penggerak"/>
+        <text name="input_RMS_TOGGLE_DIFFLOCK" text="Pengunci diferensial"/>
+        <text name="input_RMS_TOGGLE_PARKBRAKE" text="Rem parkir"/>
+        <text name="input_RMS_TOGGLE_ODOMETER" text="ODO/TRIP (tahan: TRIP=0)"/>
+        <text name="input_RMS_TOGGLE_BATTERY_ISOLATOR" text="Sakelar pemutus baterai"/>
+        <text name="input_RMS_TOGGLE_FLUID_CAN" text="Bawa wadah atau tuang"/>
         <!-- Settings -->
         <text name="rms_settings_title" text="PENGATURAN RMS"/>
         <text name="rms_settings_admin_required" text="Pengaturan RMS memerlukan hak administrator dalam multipemain."/>
         <text name="rms_settings_section_service_wear" text="Perawatan dan Keausan"/>
-        <text name="rms_settings_section_thermal_model" text="Model Termal"/>
-        <text name="rms_settings_section_battery_alternator" text="Baterai dan Alternator"/>
         <text name="rms_settings_section_drivetrain" text="Sistem Penggerak dan Rem Parkir"/>
         <text name="rms_workshopOpenHour_label" text="Waktu Buka Bengkel"/>
         <text name="rms_workshopOpenHour_tooltip" text="Prosedur hanya dapat dimulai pada atau setelah waktu ini."/>
@@ -41,7 +42,7 @@
         <text name="rms_mobileWorkshopAvailable_label" text="Bengkel Bergerak 24 Jam"/>
         <text name="rms_mobileWorkshopAvailable_tooltip" text="Menjaga bengkel bergerak tetap tersedia kapan saja, siang maupun malam."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Pembatasan Bengkel Bergerak"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Saat opsi ini diaktifkan, ketersediaan setiap prosedur di bengkel bergerak bergantung pada kemudahan perawatan kendaraan."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Membatasi pekerjaan bengkel bergerak sesuai tugas dan peralatan yang diperlukan. Perawatan tetap tersedia; diagnosis, pembongkaran berat atau pekerjaan tegangan tinggi dapat memerlukan bengkel lengkap."/>
         <text name="rms_ownWorkshopAvailable_label" text="Bengkel Pribadi 24 Jam"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Menjaga bengkel pribadimu tetap tersedia kapan saja, siang maupun malam."/>
         <text name="rms_instantInspection_label" text="Inspeksi Seketika"/>
@@ -55,35 +56,16 @@
         <text name="rms_debugMode_label" text="Mode Debug"/>
         <text name="rms_debugMode_tooltip" text="Mengaktifkan panel debug dan log terperinci di konsol."/>
         <text name="rms_warningMessages_label" text="Pesan Peringatan"/>
-        <text name="rms_warningMessages_tooltip" text="Mengaktifkan atau menonaktifkan pesan peringatan permainan seperti mesin dingin dan panas berlebih."/>
-        <text name="rms_serviceInterval_label" text="Interval Perawatan"/>
-        <text name="rms_serviceInterval_tooltip" text="Mengatur interval ganti oli mesin dalam jam. Oli transmisi dan hidraulis diganti setiap dua interval, cairan pendingin setiap sepuluh interval. Interval sebenarnya bergantung pada merek kendaraan."/>
+        <text name="rms_warningMessages_tooltip" text="Mengaktifkan atau menonaktifkan pesan peringatan permainan seperti mesin dingin dan panas berlebih. Pemberitahuan pembatasan daya akibat suhu tetap aktif."/>
+        <text name="rms_serviceInterval_label" text="Jarak antarperawatan"/>
+        <text name="rms_serviceInterval_tooltip" text="Atur jam acuan. Pada 100 jam, ketentuan 500 jam menjadi 100 jam dan 600 jam menjadi 120 jam. Setiap cairan mengikuti jadwal kendaraan; batas kalender tetap terpisah."/>
         <text name="rms_vehicleLifespan_label" text="Masa Pakai Kendaraan"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Mengatur masa pakai dasar kendaraan dalam jam, yang setelahnya kondisinya mencapai 0%. Semakin mendekati nol kondisinya, semakin tidak andal kendaraannya. Nilai kendaraan juga turun seiring jam-jam tersebut."/>
-        <text name="rms_reinitializeVehicles_label" text="Reset Armada"/>
-        <text name="rms_reinitializeVehicles_text" text="Reset"/>
-        <text name="rms_reinitializeVehicles_tooltip" text="Menyelaraskan kembali kondisi armada dengan masa pakai kendaraan yang dipilih. Kerusakan yang sedang berlangsung dihapus."/>
-        <text name="rms_reinitializeVehiclesConfirm_title" text="Reset Armada"/>
-        <text name="rms_reinitializeVehiclesConfirm_message" text="Selaraskan kembali armada dengan masa pakai yang dipilih? Kerusakan yang sedang berlangsung akan dihapus."/>
-        <text name="rms_reinitializeVehicles_result" text="Kendaraan direset: %d. Tidak diubah: %d."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Mengatur masa pakai dasar kendaraan dalam jam, yang setelahnya kondisinya mencapai 0%. Semakin mendekati nol kondisinya, semakin tidak andal kendaraannya. Nilai kendaraan juga turun seiring jam-jam tersebut. Perubahan berlaku sejak saat itu: kendaraan mempertahankan kondisinya, hanya nilainya yang dihitung ulang."/>
         <text name="rms_generalWearEnabled_label" text="Keausan akibat Usia"/>
         <text name="rms_generalWearEnabled_tooltip" text="Seiring kendaraan mengalami keausan, setiap sistem menerima penalti kecil pada karakteristik utamanya, seperti tenaga mesin, kecepatan hidraulis, atau efektivitas rem. Efek ini mulai aktif setelah sepertiga pertama masa pakai kendaraan, tetapi baru benar-benar terasa setelah dua pertiga dan semakin kuat mendekati akhir masa pakai mesin."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Asap Knalpot"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Mengatur kepulan asap knalpot berdasarkan kondisi nyata mesin. Asap berwarna hitam ketika bahan bakar melebihi udara yang tersedia: akselerasi mendadak, mesin bekerja berat pada putaran rendah, langsam berkepanjangan dengan beban rendah, filter udara tersumbat, atau injeksi aus. Asap berwarna biru ketika mesin yang aus membakar oli, dan putih ketika bahan bakar tidak terbakar. Kepulan juga membesar sesuai kerja yang dilakukan mesin. Mesin lama berasap jauh lebih banyak daripada mesin modern, yang hampir tidak berasap kecuali ada kerusakan serius. Di udara dingin, air hasil pembakaran juga mengembun menjadi jejak putih pendek yang menguap dalam satu atau dua meter, bahkan pada mesin yang sehat."/>
-        <text name="rms_batteryCapacity_label" text="Kapasitas Baterai"/>
-        <text name="rms_batteryCapacity_tooltip" text="Menyesuaikan kapasitas maksimum baterai yang dapat digunakan. Nilai mendekati 150 Ah sesuai dengan baterai nyata, tetapi pada tingkat itu kamu hampir tidak akan mengalami masalah kehabisan daya."/>
         <text name="rms_option_off" text="Nonaktif"/>
-        <text name="rms_option_none" text="Tidak Ada"/>
-        <text name="rms_alternatorMaxOutput_label" text="Arus Maksimum Alternator"/>
-        <text name="rms_alternatorMaxOutput_tooltip" text="Mengatur arus keluaran maksimum alternator. Nilai yang lebih tinggi memungkinkan alternator mengisi baterai lebih cepat."/>
-        <text name="rms_idleCurrent_label" text="Arus Diam"/>
-        <text name="rms_idleCurrent_tooltip" text="Mengatur arus pengosongan baterai saat mesin mati. Misalnya, pada 0,5 A, baterai 15 Ah memerlukan sekitar 30 jam nyata untuk benar-benar habis sebelum pengaruh suhu diperhitungkan."/>
-        <text name="rms_temperatureChangeSpeed_label" text="Kecepatan Termal Mesin"/>
-        <text name="rms_temperatureChangeSpeed_tooltip" text="Mengatur seberapa cepat suhu mesin berubah. Nilai rendah memperlambat pemanasan dan pendinginan; nilai tinggi mempercepat keduanya. Nilai standarnya 1,4."/>
-        <text name="rms_transTemperatureChangeMultiplier_label" text="Kecepatan Termal Oli Transmisi dan Hidraulis"/>
-        <text name="rms_transTemperatureChangeMultiplier_tooltip" text="Mengatur secara terpisah seberapa cepat suhu oli bersama untuk transmisi dan sistem hidraulis berubah. Nilai rendah memperlambat pemanasan dan pendinginan; nilai tinggi mempercepat keduanya. Nilai standarnya 1,0."/>
-        <text name="rms_radiatorDirtInfluence_label" text="Pengaruh Kotoran Radiator"/>
-        <text name="rms_radiatorDirtInfluence_tooltip" text="Mengurangi kapasitas pendinginan radiator sebesar persentase ini saat penumpukan kotoran mencapai maksimum."/>
         <text name="rms_tutorialMode_label" text="Mode Tutorial"/>
         <text name="rms_tutorialMode_tooltip" text="Menampilkan kiat tutorial selama bermain."/>
         <text name="rms_tutorialResetTips_label" text="Reset Kiat"/>
@@ -92,15 +74,11 @@
         <text name="rms_tutorialResetConfirm_title" text="Reset Kiat Tutorial?"/>
         <text name="rms_tutorialResetConfirm_message" text="Reset riwayat kiat tutorial dan tampilkan semua kiat lagi?"/>
         <text name="rms_drivetrainEnabled_label" text="Pengelolaan 4WD dan Pengunci Diferensial"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Mengaktifkan kontrol manual gandar depan penggerak dan pengunci diferensial pada traktor. Saat kontrol diferensial Enhanced Vehicle aktif, mod ini sepenuhnya menyingkir dan Enhanced Vehicle menangani sistem penggerak sendiri."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Mengaktifkan kontrol manual gandar depan penggerak dan pengunci diferensial pada traktor. Jika Enhanced Vehicle terpasang, kontrol diferensialnya dinonaktifkan; untuk mengembalikannya, nonaktifkan opsi ini, lalu aktifkan kembali diferensial di menu Enhanced Vehicle."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Izinkan Mode Penggerak OTOMATIS"/>
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="Menambahkan posisi OTOMATIS pada pemilih mode penggerak: gandar depan otomatis aktif ketika roda selip atau pada kecepatan kerja di bawah beban, dan nonaktif di jalan. Kendaraan yang dibiarkan dalam mode OTOMATIS kembali ke 4WD saat opsi ini dinonaktifkan."/>
-        <text name="rms_drivetrainWindupDamage_label" text="Kerusakan akibat Tegangan Sistem Penggerak"/>
-        <text name="rms_drivetrainWindupDamage_tooltip" text="Berbelok di permukaan dengan daya cengkeram tinggi saat diferensial terkunci menyebabkan tegangan pada sistem penggerak dan secara bertahap merusak transmisi. Nonaktifkan opsi ini untuk pengalaman yang lebih mudah."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Rem Parkir"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Menambahkan rem parkir pada semua kendaraan yang dilacak, yang dikendalikan dengan tombol tersendiri. Rem yang aktif menahan mesin agar tidak bergerak dan mengabaikan pedal gas."/>
-        <text name="rms_drivetrainParkBrakeAuto_label" text="Rem Parkir Otomatis"/>
-        <text name="rms_drivetrainParkBrakeAuto_tooltip" text="Mengaktifkan rem parkir secara otomatis saat operator meninggalkan mesin yang berhenti."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Menambahkan rem parkir pada semua kendaraan yang dilacak. Mesin baru dengan transmisi CVT atau Powershift mengaktifkan dan melepaskannya sendiri; pada yang lain, kamu mengendalikannya dengan tombol tersendiri. Jika Enhanced Vehicle terpasang, rem parkirnya dinonaktifkan; untuk mengembalikannya, nonaktifkan opsi ini, lalu aktifkan kembali rem parkir di menu Enhanced Vehicle."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Bengkel"/>
         <text name="rms_ws_tab_summary" text="Ringkasan"/>
@@ -113,38 +91,50 @@
         <text name="rms_ws_section_quote" text="Perkiraan Perbaikan"/>
         <text name="rms_ws_section_choose_intervention" text="Pilih Prosedur"/>
         <text name="rms_ws_section_work_order" text="Perintah Perbaikan"/>
+        <text name="rms_ws_section_paint_order" text="Perintah Pengecatan"/>
         <text name="rms_ws_section_recap" text="Rekap"/>
         <text name="rms_ws_section_parts" text="Suku Cadang Terkait"/>
         <text name="rms_ws_section_history" text="Riwayat"/>
         <text name="rms_ws_section_current_intervention" text="Prosedur yang Berlangsung"/>
         <text name="rms_ws_label_last_check" text="Pemeriksaan Terakhir"/>
+        <text name="rms_ws_reading_outdated" text="Periksa Ulang"/>
         <text name="rms_ws_label_workshop_state" text="Status Bengkel"/>
         <text name="rms_ws_label_more_parts" text="+ %s lainnya"/>
         <text name="rms_ws_label_committed_cost" text="Biaya yang Dikeluarkan"/>
         <text name="rms_ws_label_finish_time" text="Waktu Selesai"/>
         <text name="rms_ws_label_total_estimate" text="Total Perkiraan"/>
         <text name="rms_ws_button_configure_repair" text="Atur perbaikan"/>
-        <text name="rms_ws_info_inspection_reveals" text="Inspeksi dapat mengungkap cacat lain."/>
+        <text name="rms_ws_info_inspection_reveals" text="Inspeksi atau perawatan dapat mengidentifikasi kerusakan lain."/>
         <text name="rms_ws_status_ready_title" text="Bengkel siap"/>
         <text name="rms_ws_status_ready_hint" text="Pilih prosedur. Opsi, suku cadang, dan harga akan dikonfirmasi sebelum prosedur dimulai."/>
         <text name="rms_ws_label_value" text="Nilai Kendaraan"/>
         <text name="rms_ws_label_age" text="Usia"/>
         <text name="rms_ws_label_operating_hours" text="Jam Operasi"/>
+        <text name="rms_odometer_label" text="Jarak tempuh"/>
+        <text name="rms_odometer_not_recorded" text="Tidak tercatat"/>
         <text name="rms_ws_label_service" text="Tingkat Perawatan"/>
-        <text name="rms_ws_label_maintenance_standard" text="Perawatan Standar"/>
-        <text name="rms_ws_label_maintenance_extended" text="Perawatan Diperluas"/>
-        <text name="rms_ws_label_maintenance_preventive" text="Perawatan Preventif"/>
         <text name="rms_ws_label_condition" text="Kondisi"/>
         <text name="rms_ws_label_reliability" text="Keandalan"/>
+        <text name="rms_reliability_average" text="Sedang"/>
+        <text name="rms_reliability_fair" text="Cukup"/>
+        <text name="rms_reliability_good" text="Baik"/>
+        <text name="rms_reliability_very_good" text="Sangat baik"/>
         <text name="rms_ws_label_overhaul_count" text="Rekondisi yang Dilakukan"/>
-        <text name="rms_ws_label_maintainability" text="Kemudahan Perawatan"/>
         <text name="rms_ws_label_maintenance_log" text="Log Perawatan"/>
         <text name="rms_ws_label_last_report" text="Laporan Terakhir"/>
         <text name="rms_ws_label_last_maintenance" text="Perawatan Terakhir"/>
         <text name="rms_ws_task_inspection" text="Inspeksi"/>
         <text name="rms_ws_task_maintenance" text="Perawatan"/>
         <text name="rms_ws_task_overhaul" text="Rekondisi"/>
-        <text name="rms_ws_info_no_breakdowns" text="Tidak ada kerusakan yang diketahui. Kerusakan yang belum terdeteksi tetap mungkin terjadi."/>
+        <text name="rms_ws_info_no_breakdowns" text="Tidak ada kerusakan yang teridentifikasi. Inspeksi atau perawatan mengidentifikasi kerusakan yang belum ditunjukkan mesin."/>
+        <text name="rms_ws_info_warning_unidentified" text="Lampu peringatan menyala: kerusakan perlu diidentifikasi. Inspeksi atau perawatan mengidentifikasinya, lalu kerusakan dapat diperbaiki."/>
+        <text name="rms_ws_faults_none_title" text="Tidak ada kerusakan yang teridentifikasi"/>
+        <text name="rms_ws_faults_none_hint" text="Inspeksi atau perawatan mengidentifikasi kerusakan yang belum ditunjukkan mesin."/>
+        <text name="rms_ws_faults_warning_title" text="Kerusakan perlu diidentifikasi"/>
+        <text name="rms_ws_faults_warning_hint" text="Lampu peringatan menyala. Inspeksi atau perawatan mengidentifikasi kerusakan, lalu kerusakan dapat diperbaiki."/>
+        <text name="rms_ws_reason_repair_unselected" text="Tidak ada kerusakan yang dicentang. Centang kerusakan yang akan diperbaiki di Diagnostik dan Perkiraan."/>
+        <text name="rms_ws_reason_overhaul_none" text="Rekondisi mekanis memulihkan sistem di bawah 50% kondisi. Mesin ini tidak memilikinya."/>
+        <text name="rms_ws_reason_bodywork_mobile" text="Bengkel bergerak tidak melakukan pengecatan. Pengecatan dilakukan di dealer."/>
         <text name="rms_ws_status_in_progress_short_format" text="%s berlangsung..."/>
         <text name="rms_ws_status_in_progress_format" text="%s berlangsung hingga %s"/>
         <text name="rms_ws_status_open" text="Bengkel buka"/>
@@ -159,18 +149,17 @@
         <text name="rms_ws_action_choice_repair" text="Perbaikan Kerusakan"/>
         <text name="rms_ws_action_choice_overhaul" text="Rekondisi Mekanis"/>
         <text name="rms_ws_action_choice_refill" text="Penambahan Fluida"/>
+        <text name="rms_ws_action_choice_bodywork" text="Pengecatan Kendaraan"/>
         <text name="rms_ws_action_cancel_service" text="Batalkan prosedur"/>
         <text name="rms_ws_age_unit" text="bulan"/>
         <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_option_yes" text="Ya"/>
         <text name="rms_ws_option_no" text="Tidak"/>
         <text name="rms_ws_no_last_report_message" text="Belum ada laporan"/>
-        <text name="rms_ws_systems_need_complete_inspection" text="Inspeksi lengkap diperlukan"/>
         <text name="rms_ws_no_log_empty_message" text="Log masih kosong"/>
         <text name="rms_ws_no_report_message" text="Belum ada laporan"/>
         <text name="rms_ws_cancel_confirm_title" text="Batalkan prosedur yang berlangsung? (%s)"/>
         <text name="rms_ws_cancel_confirm_text" text="Kemajuan saat ini akan disimpan apa adanya. Tidak ada uang yang akan dikembalikan."/>
-        <text name="rms_mobile_workshop_low_maintainability" text="Peringatan: prosedur %s tidak tersedia untuk %s di bengkel bergerak karena kendaraan ini terlalu sulit dirawat di lokasi."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="Log Perawatan"/>
         <text name="rms_log_recorded_interventions_title" text="Prosedur Tercatat"/>
@@ -207,10 +196,10 @@
         <text name="rms_breakdowns_severity_moderate" text="Sedang"/>
         <text name="rms_breakdowns_severity_major" text="Berat"/>
         <text name="rms_breakdowns_severity_critical" text="Kritis"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Keausan ringan pada mekanisme sambungan kemudi. Kemudi menjadi sedikit kurang presisi."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Keausan sedang pada mekanisme sambungan kemudi. Gerak bebas bertambah, presisi jelas menurun, dan perilaku di jalan memburuk."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Keausan berat pada mekanisme sambungan kemudi. Gerak bebas sangat besar, respons kemudi buruk, dan kendaraan menjadi sulit dikendalikan."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kegagalan kritis pada mekanisme sambungan kemudi. Kemudi tidak lagi andal dan berkendara menjadi berbahaya."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Keausan ringan pada mekanisme sambungan kemudi. Muncul sedikit gerak bebas dan kemudi menjadi sedikit kurang presisi."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Keausan sedang pada mekanisme sambungan kemudi. Gerak bebas bertambah dan roda tidak lagi sejajar dengan baik: kemudi terasa longgar dan sedikit menarik ke satu sisi."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Keausan berat pada mekanisme sambungan kemudi. Gerak bebas sangat besar dan roda jelas tidak sejajar: kendaraan menarik ke satu sisi, sulit menjaga jalur, dan salah satu sambungan bisa lepas."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kegagalan kritis pada mekanisme sambungan kemudi. Salah satu sambungan lepas: kemudi tidak lagi mengendalikan roda dengan benar dan melanjutkan perjalanan berbahaya."/>
         <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="Kegagalan mekanisme sambungan kemudi"/>
         <text name="rms_breakdowns_general_wear_stage1_description" text="Tegangan yang menumpuk selama bertahun-tahun pengoperasian menimbulkan keausan ringan yang tidak dapat dipulihkan pada komponen utama, sehingga sedikit mengurangi kinerja keseluruhan."/>
         <text name="rms_breakdowns_gear_disengage_message" text="Beralih ke netral"/>
@@ -223,12 +212,23 @@
         <text name="rms_breakdowns_part_consumables" text="Bahan Habis Pakai"/>
         <text name="rms_breakdowns_part_cooling_system" text="Sistem Pendingin"/>
         <text name="rms_breakdowns_part_clutch" text="Kopling"/>
-        <text name="rms_breakdowns_part_cvt_chain" text="Rantai CVT"/>
-        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Katup Kontrol Hidraulis CVT"/>
+        <text name="rms_breakdowns_part_cvt_chain" text="Transmisi Variabel Kontinu"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Kontrol Rasio"/>
         <text name="rms_breakdowns_part_cvt" text="CVT"/>
         <text name="rms_breakdowns_part_engine" text="Mesin"/>
         <text name="rms_breakdowns_part_ecu" text="ECU"/>
         <text name="rms_breakdowns_part_battery" text="Baterai"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Baterai traksi"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Kontaktor tegangan tinggi"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Kabel tegangan tinggi"/>
+        <text name="rms_breakdowns_part_inverter" text="Inverter"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Konverter tegangan"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Pengisi daya internal"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Bantalan motor listrik"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Lilitan motor listrik"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Sensor posisi motor"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Pompa cairan pendingin"/>
+        <text name="rms_breakdowns_part_reducer" text="Gigi reduksi"/>
         <text name="rms_breakdowns_part_brake_system" text="Sistem Rem"/>
         <text name="rms_breakdowns_part_wiring" text="Kabel dan Konektor"/>
         <text name="rms_breakdowns_part_wheel_bearing" text="Bantalan Roda"/>
@@ -281,7 +281,8 @@
         <text name="rms_breakdowns_quick_fix_stage" text="Perbaikan sementara"/>
         <text name="rms_breakdowns_defected_parts_stage" text="Cacat"/>
         <text name="rms_breakdowns_defected_parts_detected_description" text="Sistem berfungsi normal, tetapi inspeksi mengungkap suku cadang yang cacat. Suku cadang tersebut tidak lagi memiliki margin keselamatan, sehingga penggantian pencegahan disarankan untuk menghindari kegagalan mendadak."/>
-        <text name="rms_breakdowns_dead_battery_message" text="Baterai habis"/>
+        <text name="rms_breakdowns_dead_battery_message" text="Baterai terlalu lemah"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Baterai traksi dingin: jarak tempuh dan daya berkurang"/>
         <text name="rms_breakdowns_temporarily_repaired_description" text="Sistem berfungsi normal, tetapi sepenuhnya bergantung pada perbaikan sementara. Untuk menghindari kerusakan saat dibebani, penggantian lengkap suku cadang disarankan sesegera mungkin."/>
         <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Bantalan turbocharger aus. Terdengar siulan halus dan terjadi sedikit kehilangan daya pada putaran mesin tinggi."/>
         <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Seal turbocharger bocor. Kehilangan daya terasa jelas dan konsumsi bahan bakar meningkat."/>
@@ -318,6 +319,7 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Perlindungan panas berlebih: daya dikurangi"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Perlindungan panas berlebih diperketat. Mesin hanya menghasilkan separuh dayanya."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Perlindungan panas berlebih: daya dikurangi separuh"/>
+        <text name="rms_thermal_power_restored_message" text="Perlindungan termal: pembatasan daya dinonaktifkan"/>
         <text name="rms_breakdowns_overheat_protection_stage3_description" text="Perlindungan panas berlebih berada pada tingkat maksimum. Hanya sebagian kecil daya mesin yang tersisa."/>
         <text name="rms_breakdowns_overheat_protection_stage3_message" text="Perlindungan panas berlebih: daya sangat dikurangi"/>
         <text name="rms_breakdowns_overheat_protection_stage4_description" text="Mesin dimatikan untuk mencegah kerusakan. Biarkan mesin mendingin sebelum dinyalakan kembali."/>
@@ -336,20 +338,25 @@
         <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Gangguan berat pada ECU. Kehilangan daya besar, konsumsi bahan bakar tinggi, dan mesin berisiko mati."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Kegagalan total ECU. Mesin tidak dapat dikendalikan dan tidak dapat dinyalakan."/>
         <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="Kegagalan ECU"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Korosi ringan pada kabel dan konektor listrik. Peningkatan hambatan kontak menyebabkan lampu sesekali berkedip, suplai listrik tidak stabil, dan mesin sulit dinyalakan."/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Korosi sedang pada kabel dan konektor listrik. Hilangnya kontak menyebabkan lampu sering berkedip, tegangan listrik tidak stabil, mesin sulit dinyalakan, dan mesin mungkin mati."/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Korosi berat pada kabel dan konektor listrik. Suplai listrik ke sirkuit kritis tidak stabil, lampu dapat mati total, torsi mesin berkurang, mesin kemungkinan mati, dan penyalaan tidak andal."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Kegagalan sirkuit kontrol starter akibat korosi berat pada kabel. Lampu tidak berfungsi dan mesin tidak dapat dinyalakan."/>
+        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Korosi ringan pada kabel dan konektor listrik. Peningkatan hambatan kontak menyebabkan lampu sesekali berkedip, suplai listrik tidak stabil, dan mesin sulit dinyalakan. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Korosi sedang pada kabel dan konektor listrik. Hilangnya kontak menyebabkan lampu sering berkedip, tegangan listrik tidak stabil, mesin sulit dinyalakan, dan mesin mungkin mati. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Korosi berat pada kabel dan konektor listrik. Suplai listrik ke sirkuit kritis tidak stabil, lampu dapat mati total, torsi mesin berkurang, mesin kemungkinan mati, dan penyalaan tidak andal. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Kegagalan sirkuit kontrol starter akibat korosi berat pada kabel. Lampu tidak berfungsi dan mesin tidak dapat dinyalakan. Arus bocor menguras baterai saat mesin diparkir."/>
         <text name="rms_breakdowns_corroded_wiring_stage4_message" text="Kegagalan sirkuit starter"/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage1_description" text="Korosi ringan pada kabel dan konektor listrik. Peningkatan hambatan kontak menyebabkan lampu sesekali berkedip dan suplai listrik tidak stabil. Arus bocor menguras baterai bantu saat mesin diparkir."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage2_description" text="Korosi sedang pada kabel dan konektor listrik. Hilangnya kontak menyebabkan lampu sering berkedip, tegangan listrik tidak stabil, dan daya mungkin terputus. Arus bocor menguras baterai bantu saat mesin diparkir."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage3_description" text="Korosi berat pada kabel dan konektor listrik. Suplai listrik ke sirkuit kritis tidak stabil, lampu dapat mati total, daya berkurang, dan daya kemungkinan terputus. Arus bocor menguras baterai bantu saat mesin diparkir."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_description" text="Korosi kritis pada kabel dan konektor listrik. Lampu tidak berfungsi dan mesin tidak dapat dinyalakan. Arus bocor menguras baterai bantu saat mesin diparkir."/>
+        <text name="rms_breakdowns_corroded_wiring_electric_stage4_message" text="Kegagalan kabel dan konektor"/>
         <text name="rms_breakdowns_coolant_leak_stage1_description" text="Kebocoran ringan cairan pendingin. Efisiensi pendinginan sedikit berkurang."/>
         <text name="rms_breakdowns_coolant_leak_stage2_description" text="Kebocoran sedang cairan pendingin. Kapasitas pendinginan jelas menurun dan suhu mesin naik lebih cepat."/>
         <text name="rms_breakdowns_coolant_leak_stage3_description" text="Kebocoran berat cairan pendingin. Kemampuan pendinginan berkurang drastis dan risiko panas berlebih menjadi tinggi."/>
         <text name="rms_breakdowns_coolant_leak_stage4_description" text="Kegagalan kritis pada sistem pendingin. Cairan pendingin tidak cukup untuk mengoperasikan mesin dengan aman."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Keausan ringan pada rantai CVT. Sedikit selip terjadi saat dibebani dan efisiensi transmisi sedikit menurun."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Keausan sedang pada rantai CVT. Selip menjadi jelas saat dibebani dan perubahan rasio menjadi kurang presisi."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Keausan berat pada rantai CVT. Selip sangat besar, efisiensi turun drastis, dan transmisi kesulitan mempertahankan rasio yang diminta."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Kegagalan kritis pada rantai CVT. Transmisi tidak lagi menyalurkan torsi dengan benar dan kendaraan hampir tidak dapat digunakan."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Kegagalan rantai CVT"/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Efisiensi transmisi sedikit menurun saat dibebani."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Efisiensi menurun nyata saat dibebani dan rasio menjadi kurang stabil."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Transmisi sulit meneruskan gaya penggerak dan mempertahankan rasio yang diminta."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Transmisi tidak lagi meneruskan gaya penggerak dengan andal; pergerakan hampir mustahil."/>
+        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Kegagalan Transmisi"/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Tanda awal gangguan transmisi CVT terdeteksi. Inspeksi dan perbaikan diperlukan."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Gangguan transmisi CVT memburuk. Pengoperasian berkelanjutan dapat mengaktifkan mode darurat."/>
         <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Kerusakan kritis pada transmisi CVT. Transmisi berada dalam mode darurat dan kecepatan maksimum kendaraan berkurang."/>
@@ -359,6 +366,10 @@
         <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Sulfasi sedang pada baterai. Kapasitas efektif sangat berkurang dan mesin menjadi sulit dinyalakan."/>
         <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Sulfasi berat pada baterai. Kapasitas yang dapat digunakan sangat rendah dan kinerja starter tidak stabil."/>
         <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Sulfasi kritis pada baterai. Kapasitas efektif hampir nol dan daya starter tidak memadai untuk penyalaan yang andal."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Sulfasi ringan pada baterai bantu. Kapasitas efektif berkurang sehingga cadangan listrik saat dibebani menurun."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Sulfasi sedang pada baterai bantu. Kapasitas efektif sangat berkurang dan cadangan listrik lebih cepat habis."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Sulfasi berat pada baterai bantu. Kapasitas yang dapat digunakan sangat rendah dan cadangan listrik sangat cepat habis."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Sulfasi kritis pada baterai bantu. Kapasitas efektif hampir nol dan tidak lagi memadai untuk penyalaan yang andal."/>
         <text name="rms_breakdowns_brake_malfunction_stage1_description" text="Kampas rem aus. Efektivitas pengereman sedikit menurun."/>
         <text name="rms_breakdowns_brake_malfunction_stage2_description" text="Cairan rem bocor atau cakram aus. Jarak pengereman menjadi jauh lebih panjang."/>
         <text name="rms_breakdowns_brake_malfunction_stage3_description" text="Tekanan rem sangat berkurang. Rem sangat lemah dan tidak andal."/>
@@ -369,10 +380,63 @@
         <text name="rms_breakdowns_bearing_wear_stage3_description" text="Keausan berat pada bantalan. Gesekan tinggi, suaranya keras, dan terdapat risiko nyata bantalan macet saat dibebani."/>
         <text name="rms_breakdowns_bearing_wear_stage4_description" text="Kegagalan kritis bantalan. Bantalan hampir macet sepenuhnya dan pengoperasian menjadi mustahil."/>
         <text name="rms_breakdowns_bearing_wear_stage4_message" text="Kegagalan bantalan"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Kegagalan ringan regulator alternator. Daya pengisian berkurang sehingga efisiensi pengisian baterai menurun."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Kegagalan sedang regulator alternator. Pengisian berkurang dan tidak stabil sehingga baterai tidak terisi dengan baik dan kehilangan tegangan meningkat."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Kegagalan berat regulator alternator. Pengisian sangat berkurang, suplai listrik tidak stabil, dan sistem kelistrikan bekerja dengan kerugian daya yang besar."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Kegagalan total regulator alternator. Baterai tidak lagi diisi dan sistem kelistrikan hanya bekerja dari cadangan baterai yang tersisa."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Kegagalan ringan regulator alternator. Daya pengisian berkurang sehingga efisiensi pengisian baterai menurun. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Kegagalan sedang regulator alternator. Pengisian berkurang dan tidak stabil sehingga baterai tidak terisi dengan baik dan kehilangan tegangan meningkat. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Kegagalan berat regulator alternator. Pengisian sangat berkurang, suplai listrik tidak stabil, dan sistem kelistrikan bekerja dengan kerugian daya yang besar. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Kegagalan total regulator alternator. Baterai tidak lagi diisi dan sistem kelistrikan hanya bekerja dari cadangan baterai yang tersisa. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Keausan ringan pada bantalan motor listrik. Muncul suara halus dan konsumsi daya sedikit meningkat."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Keausan sedang pada bantalan motor listrik. Suara terdengar jelas, konsumsi daya meningkat, dan daya sedikit menurun."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Keausan berat pada bantalan motor listrik. Suaranya keras, motor memanas, dan daya jelas menurun."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Kegagalan kritis bantalan motor listrik. Motor macet dan mesin tidak dapat lagi bergerak."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_message" text="Kegagalan bantalan motor listrik"/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Kerusakan ringan pada lilitan motor listrik. Daya sedikit menurun dan motor lebih panas."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Kerusakan sedang pada lilitan motor listrik. Daya jelas menurun, motor memanas, dan konsumsi daya meningkat."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Kerusakan berat pada lilitan motor listrik. Kehilangan daya besar, motor sangat panas, dan daya dapat terputus."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Kegagalan kritis lilitan motor listrik. Motor mengalami hubungan pendek dan tidak dapat lagi bekerja."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_message" text="Kegagalan lilitan motor listrik"/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Gangguan ringan pada sensor posisi motor. Sentakan singkat muncul saat dibebani."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Gangguan sedang pada sensor posisi motor. Sentakan sering terjadi dan daya menurun."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Gangguan berat pada sensor posisi motor. Sentakan keras, daya anjlok, dan daya terputus."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Kegagalan total sensor posisi motor. Motor tidak dapat dikendalikan dan mesin tidak dapat dinyalakan."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_message" text="Kegagalan sensor posisi motor"/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Gangguan ringan pada inverter. Daya motor sedikit berkurang."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Gangguan sedang pada inverter. Kehilangan daya terasa dan konsumsi daya meningkat."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Gangguan berat pada inverter. Kehilangan daya besar dan daya dapat terputus."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Kegagalan total inverter. Motor tidak lagi mendapat daya dan mesin tidak dapat dinyalakan."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_message" text="Kegagalan inverter"/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Kegagalan ringan konverter tegangan. Baterai bantu terisi kurang baik."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Kegagalan sedang konverter tegangan. Pengisian baterai bantu berkurang dan tidak stabil."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Kegagalan berat konverter tegangan. Baterai bantu hampir tidak terisi dan terkuras saat berjalan."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Kegagalan total konverter tegangan. Baterai bantu tidak lagi diisi dan mesin hanya bekerja dari cadangan yang tersisa."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Kegagalan ringan pengisi daya internal. Pengisian di stasiun sedikit lebih lambat."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Kegagalan sedang pengisi daya internal. Pengisian di stasiun jelas lebih lambat."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Kegagalan berat pengisi daya internal. Pengisian di stasiun sangat lambat."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Kegagalan total pengisi daya internal. Baterai traksi tidak dapat lagi diisi."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_message" text="Pengisi daya internal tidak berfungsi: pengisian tidak dapat dilakukan"/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Kehilangan isolasi ringan pada kabel tegangan tinggi. Peringatan ditampilkan, tanpa dampak lain."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Kehilangan isolasi sedang pada kabel tegangan tinggi. Daya dikurangi demi keselamatan."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Kehilangan isolasi berat pada kabel tegangan tinggi. Daya sangat dikurangi dan daya terputus."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Kehilangan isolasi kritis pada kabel tegangan tinggi. Mesin menolak menyala demi keselamatan."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_message" text="Kehilangan isolasi pada kabel tegangan tinggi"/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Kegagalan ringan sel baterai traksi. Jarak tempuh sedikit menurun."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Kegagalan sedang sel baterai traksi. Jarak tempuh jelas menurun dan daya dikurangi."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Kegagalan berat sel baterai traksi. Jarak tempuh dan daya anjlok, dan daya dapat terputus."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Kegagalan kritis baterai traksi. Mesin tidak dapat lagi dihidupkan."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_message" text="Kegagalan baterai traksi"/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Keausan ringan pada kontaktor tegangan tinggi. Sesekali pasokan daya terputus."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Keausan sedang pada kontaktor tegangan tinggi. Pasokan daya terputus secara berkala."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Keausan berat pada kontaktor tegangan tinggi. Pasokan daya sering terputus."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Kegagalan kritis kontaktor tegangan tinggi. Baterai traksi tidak lagi memasok daya ke mesin, yang tidak dapat dinyalakan."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_message" text="Kegagalan kontaktor tegangan tinggi"/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Kegagalan ringan pompa cairan pendingin. Cairan bersirkulasi kurang baik dan suhu naik sedikit lebih tinggi."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Kegagalan sedang pompa cairan pendingin. Pendinginan jelas berkurang."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Kegagalan berat pompa cairan pendingin. Pendinginan sangat berkurang dan panas berlebih mungkin terjadi saat dibebani."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Kegagalan total pompa cairan pendingin. Cairan hampir tidak bersirkulasi dan mesin cepat mengalami panas berlebih."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Keausan ringan pada roda gigi dan bantalan gigi reduksi. Muncul suara halus saat berjalan."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Keausan sedang pada roda gigi dan bantalan gigi reduksi. Suara terdengar jelas dan konsumsi daya meningkat."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Keausan berat pada roda gigi dan bantalan gigi reduksi. Suaranya keras, gigi reduksi memanas, dan daya di roda menurun."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Kegagalan kritis gigi reduksi. Gigi reduksi macet dan mesin tidak dapat lagi bergerak."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_message" text="Kegagalan gigi reduksi"/>
         <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="Gangguan ringan pada mekanisme katup. Torsi mesin sedikit berkurang, konsumsi bahan bakar meningkat, dan muncul suara tidak normal dari mekanisme."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="Gangguan sedang pada mekanisme katup. Torsi mesin jelas menurun, konsumsi meningkat, suara mekanisme katup menguat, dan mesin dapat tersendat saat dibebani."/>
         <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="Gangguan berat pada mekanisme katup. Torsi mesin sangat berkurang, konsumsi bahan bakar tinggi, suara mekanis sangat keras, mesin sering tersendat, dan dapat mati."/>
@@ -403,11 +467,11 @@
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Kegagalan sedang kopling kipas. Pengaktifan kipas tidak teratur dan efisiensi pendinginan jelas menurun."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Kegagalan berat kopling kipas. Kipas tidak lagi menghasilkan aliran udara yang cukup dan mesin lebih mudah mengalami panas berlebih."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Kegagalan kritis kopling kipas. Kipas tidak lagi dapat menyediakan pendinginan yang diperlukan."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Gangguan ringan pada katup kontrol hidraulis CVT. Respons transmisi sedikit lebih lambat dan kurang presisi."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Gangguan sedang pada katup kontrol hidraulis CVT. Tekanan tidak stabil, perubahan rasio lebih lambat, dan efisiensi jelas menurun."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Gangguan berat pada katup kontrol hidraulis CVT. Tekanan sangat tidak teratur, respons transmisi buruk, dan daya yang disalurkan turun drastis."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Kegagalan kritis katup kontrol hidraulis CVT. Tekanan tidak lagi dapat dikendalikan dan transmisi tidak dapat digunakan."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Kegagalan katup kontrol hidraulis CVT"/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Kontrol rasio merespons lebih lambat dan kurang tepat."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Rasio berubah tidak teratur dan kontrol merespons buruk."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Kontrol rasio sangat terganggu dan gaya penggerak yang diteruskan menurun."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Kontrol rasio gagal; transmisi hampir tidak dapat digunakan."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Kegagalan Kontrol Rasio"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Kebocoran internal ringan pada silinder hidraulis. Implemen yang diangkat turun perlahan saat dibebani."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Kebocoran internal sedang pada silinder hidraulis. Penurunan yang tidak disengaja terlihat jelas dan meningkat bersama beban yang ditopang."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Kebocoran internal berat pada silinder hidraulis. Implemen berat tidak lagi dapat mempertahankan posisinya dengan andal."/>
@@ -467,12 +531,12 @@
         <text name="rms_spec_months_ago_unit" text="bulan"/>
         <text name="rms_spec_month_ago_one" text="bulan"/>
         <text name="rms_spec_months_ago_format" text="%s %s lalu"/>
+        <text name="rms_spec_work_hours_ago_format" text="%s %s kerja lalu"/>
+        <text name="rms_spec_work_under_hour_ago" text="kurang dari 1 h kerja lalu"/>
         <text name="rms_spec_maintenance_complete_notification" text="Prosedur selesai: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Prosedur dibatalkan: %s"/>
         <text name="rms_spec_maintenance_minimal" text="Minimal"/>
-        <text name="rms_spec_maintenance_standard" text="Standar"/>
-        <text name="rms_spec_maintenance_extended" text="Diperluas"/>
-        <text name="rms_spec_maintenance_preventive" text="Preventif"/>
+        <text name="rms_spec_maintenance_level" text="Servis %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s hingga %s"/>
         <text name="rms_spec_workshop_dealer" text="Dealer"/>
         <text name="rms_spec_workshop_own" text="Pribadi"/>
@@ -485,6 +549,8 @@
         <text name="rms_spec_system_chassis" text="Sasis"/>
         <text name="rms_spec_system_fuel" text="Sistem Bahan Bakar"/>
         <text name="rms_spec_system_pto" text="PTO"/>
+        <text name="rms_spec_system_electric_motor" text="Motor listrik"/>
+        <text name="rms_spec_system_traction_battery" text="Baterai traksi"/>
         <text name="rms_spec_state_ready" text="Siap"/>
         <text name="rms_spec_state_repair" text="Perbaikan"/>
         <text name="rms_spec_state_refill" text="Penambahan"/>
@@ -493,24 +559,17 @@
         <text name="rms_spec_state_inspection" text="Inspeksi"/>
         <text name="rms_spec_state_maintenance" text="Perawatan"/>
         <text name="rms_spec_state_overhaul" text="Rekondisi"/>
+        <text name="rms_spec_state_bodywork" text="Pengecatan"/>
         <text name="rms_spec_state_overdue" text="Terlambat"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
         <text name="rms_spec_state_broken" text="Rusak"/>
         <text name="rms_spec_state_bad" text="Buruk"/>
-        <text name="rms_spec_state_budget" text="Ekonomis"/>
         <text name="rms_spec_state_excellent" text="Sangat Baik"/>
         <text name="rms_spec_state_good" text="Baik"/>
         <text name="rms_spec_state_service_good" text="Baik"/>
         <text name="rms_spec_state_normal" text="Normal"/>
         <text name="rms_spec_state_terrible" text="Sangat Buruk"/>
         <text name="rms_spec_state_unknown" text="Tidak Diketahui"/>
-        <text name="rms_spec_state_legendary" text="Legendaris"/>
-        <text name="rms_spec_state_low" text="Rendah"/>
-        <text name="rms_spec_state_premium" text="Premium"/>
-        <text name="rms_spec_state_standard" text="Standar"/>
-        <text name="rms_spec_state_average" text="Sedang"/>
-        <text name="rms_spec_state_high" text="Tinggi"/>
-        <text name="rms_spec_state_workhorse" text="Tangguh"/>
         <text name="rms_spec_part_types_used" text="Bekas"/>
         <text name="rms_spec_part_types_aftermarket" text="Purnajual"/>
         <text name="rms_spec_part_types_oem" text="Asli"/>
@@ -531,36 +590,108 @@
         <text name="rms_option_menu_option_two_title_repair" text="Kualitas Suku Cadang Pengganti"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Sistem yang Direkondisi"/>
         <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Jika prosedur mengungkap kerusakan, prosedur otomatis dilanjutkan dengan perbaikan standar menggunakan suku cadang asli."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Setelah perbaikan, prosedur otomatis dilanjutkan dengan perawatan standar menggunakan bahan habis pakai asli."/>
-        <text name="rms_option_menu_overhaul_partial_description" text="Rekondisi parsial: mengembalikan sistem yang dipilih ke kondisi baik, memperbaiki kerusakan yang dapat ditangani, dan mengganti fluidanya bila perlu."/>
-        <text name="rms_option_menu_overhaul_standard_description" text="Rekondisi standar: mengembalikan semua sistem ke kondisi baik, memperbaiki kerusakan yang dapat ditangani, mengganti fluida, dan memperbarui perawatan."/>
-        <text name="rms_option_menu_overhaul_full_description" text="Rekondisi lengkap: mengembalikan semua sistem seperti baru, memperbaiki kerusakan yang dapat ditangani, mengganti fluida, dan memperbarui perawatan."/>
+        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Setelah perbaikan, prosedur otomatis dilanjutkan dengan servis yang disarankan menggunakan bahan habis pakai asli."/>
         <text name="rms_option_menu_price_text" text="Harga"/>
-        <text name="rms_option_menu_part_used_description" text="Suku cadang bekas: biaya terendah, dengan risiko 50% mengalami cacat di kemudian hari."/>
-        <text name="rms_option_menu_part_aftermarket_description" text="Suku cadang purnajual: biaya lebih rendah, dengan risiko 33% mengalami cacat di kemudian hari."/>
-        <text name="rms_option_menu_part_oem_description" text="Suku cadang produsen asli: harga standar, dengan risiko 10% mengalami cacat di kemudian hari."/>
-        <text name="rms_option_menu_part_premium_description" text="Suku cadang premium: biaya tambahan 20%, tanpa risiko cacat akibat suku cadang."/>
-        <text name="rms_option_menu_consumable_used_description" text="Bahan habis pakai ekonomis: biaya terendah, dengan risiko 50% mengalami cacat di kemudian hari."/>
-        <text name="rms_option_menu_consumable_aftermarket_description" text="Bahan habis pakai purnajual: biaya lebih rendah, dengan risiko 33% mengalami cacat di kemudian hari."/>
-        <text name="rms_option_menu_consumable_oem_description" text="Bahan habis pakai produsen asli: harga standar, dengan risiko 10% mengalami cacat di kemudian hari."/>
-        <text name="rms_option_menu_consumable_premium_description" text="Bahan habis pakai premium: biaya tambahan 20%, tanpa risiko cacat akibat bahan habis pakai."/>
         <text name="rms_option_menu_perform_repair" text="Perbaikan Otomatis"/>
         <text name="rms_option_menu_perform_maintenance" text="Perawatan Otomatis"/>
         <text name="rms_option_menu_warranty_repair_text" text="Perbaikan Garansi"/>
-        <text name="rms_warranty_dealer_info" text="Garansi dealer untuk kendaraan milik sendiri di bawah 12 bulan dan 20 jam operasi: perbaikan standar, suku cadang asli, dan fluida yang diperlukan."/>
+        <text name="rms_option_menu_lease_service_text" text="Termasuk dalam sewa"/>
         <text name="rms_option_menu_duration_text" text="Durasi"/>
         <text name="rms_option_menu_duration_instant" text="Seketika"/>
         <text name="rms_option_menu_finish_time_text" text="Waktu Selesai"/>
         <text name="rms_option_menu_start_text" text="Mulai"/>
-        <text name="rms_option_menu_inspection_visual_description" text="Inspeksi visual: cepat dan murah, hanya mencari kerusakan yang sudah aktif dengan kemampuan deteksi terbatas. Laporan tidak menampilkan kondisi komponen secara terperinci."/>
-        <text name="rms_option_menu_inspection_standard_description" text="Inspeksi standar: mencari kerusakan aktif dengan kemampuan deteksi normal dan menghasilkan laporan umum tanpa nilai kondisi terperinci."/>
-        <text name="rms_option_menu_inspection_complete_description" text="Inspeksi lengkap: mencari kerusakan aktif dan potensial dengan kemampuan deteksi normal, lalu memberikan laporan lengkap dengan kondisi komponen terperinci."/>
-        <text name="rms_option_menu_maintenance_standard_description" text="Perawatan standar: mengganti oli mesin beserta filter oli dan filter bahan bakar, menambah fluida di sirkuit lain bila diperlukan, membersihkan radiator, dan meniup filter udara."/>
-        <text name="rms_option_menu_maintenance_extended_description" text="Perawatan diperluas: perawatan standar ditambah ganti oli transmisi dan hidraulis dengan filter baru. Juga mengganti filter udara dan menambah cairan pendingin."/>
-        <text name="rms_option_menu_maintenance_preventive_description" text="Perawatan preventif: mengganti semua oli dan cairan pendingin beserta filternya serta memasang filter udara baru. Juga mengurangi tegangan mekanis pada maksimal tiga sistem prioritas."/>
-        <text name="rms_option_menu_repair_type_fix_description" text="Perbaikan sementara: mengembalikan mesin agar cepat dapat digunakan dengan biaya rendah tanpa menghapus kerusakan. Kerusakan akan kembali setelah waktu terbatas."/>
-        <text name="rms_option_menu_repair_type_replacement_description" text="Perbaikan standar: menghapus kerusakan dan mengganti komponen yang gagal. Tegangan mekanis pada sistem terkait dikurangi sebagian."/>
-        <text name="rms_option_menu_repair_type_advanced_description" text="Perbaikan menyeluruh: menghapus kerusakan, mengganti komponen yang gagal, dan menghilangkan tegangan mekanis yang menumpuk pada sistem terkait."/>
+        <text name="rms_ws_levels_recommended_for" text="Disarankan untuk mesin ini"/>
+        <text name="rms_ws_levels_interval" text="Setiap %s"/>
+        <text name="rms_ws_levels_duration" text="%s j %s mnt"/>
+        <text name="rms_ws_levels_duration_hours" text="%s j"/>
+        <text name="rms_ws_levels_duration_minutes" text="%s mnt"/>
+        <text name="rms_ws_levels_drain" text="Ganti"/>
+        <text name="rms_ws_levels_top_up" text="Tambah"/>
+        <text name="rms_ws_levels_blown" text="Ditiup"/>
+        <text name="rms_ws_levels_new" text="Baru"/>
+        <text name="rms_ws_levels_new_plural" text="Baru"/>
+        <text name="rms_ws_levels_filters" text="Filter"/>
+        <text name="rms_ws_levels_filters_all" text="Oli, bahan bakar, dan hidraulis"/>
+        <text name="rms_ws_levels_filters_engine" text="Oli dan bahan bakar"/>
+        <text name="rms_ws_levels_filters_hydraulic" text="Hidraulis"/>
+        <text name="rms_ws_levels_checks" text="Penyetelan dan pemeriksaan"/>
+        <text name="rms_ws_levels_checks_detail" text="Katup, injektor, termostat"/>
+        <text name="rms_ws_levels_checks_done" text="Selesai"/>
+        <text name="rms_ws_levels_fault_search" text="Pencarian kerusakan"/>
+        <text name="rms_ws_levels_fault_search_detail" text="Seperti inspeksi standar"/>
+        <text name="rms_ws_levels_fault_search_mobile_detail" text="Tanpa membaca kode kesalahan"/>
+        <text name="rms_ws_levels_included" text="Termasuk"/>
+        <text name="rms_ws_levels_mechanical" text="Mekanis"/>
+        <text name="rms_ws_levels_every_level" text="Di setiap tingkat: radiator dibersihkan dan pelumasan."/>
+        <text name="rms_ws_quality_risk" text="Risiko cacat"/>
+        <text name="rms_ws_quality_reference" text="Harga acuan"/>
+        <text name="rms_ws_quality_delta" text="%s dibanding asli"/>
+        <text name="rms_ws_repair_row_faults" text="Kerusakan yang Ditangani"/>
+        <text name="rms_ws_repair_row_faults_detail" text="Dari yang dicentang"/>
+        <text name="rms_ws_repair_faults_all" text="Semua"/>
+        <text name="rms_ws_table_count" text="%s dari %s"/>
+        <text name="rms_ws_repair_row_fault" text="Kerusakan"/>
+        <text name="rms_ws_repair_row_fault_detail" text="Setelah prosedur"/>
+        <text name="rms_ws_repair_fault_returns" text="Kembali"/>
+        <text name="rms_ws_repair_fault_removed" text="Dihapus"/>
+        <text name="rms_ws_repair_row_part" text="Komponen yang Gagal"/>
+        <text name="rms_ws_repair_row_part_detail" text="Penyebab kerusakan"/>
+        <text name="rms_ws_repair_part_replaced" text="Diganti"/>
+        <text name="rms_ws_repair_row_stress" text="Tegangan Mekanis"/>
+        <text name="rms_ws_repair_row_stress_detail" text="Menumpuk di sistem"/>
+        <text name="rms_ws_repair_stress_cleared" text="Dihilangkan"/>
+        <text name="rms_ws_repair_row_quality" text="Kualitas Suku Cadang"/>
+        <text name="rms_ws_repair_row_quality_detail" text="Dipilih di kartu di bawah"/>
+        <text name="rms_ws_repair_quality_choice" text="Sesuai pilihan"/>
+        <text name="rms_ws_warranty_title" text="Garansi Dealer"/>
+        <text name="rms_ws_warranty_covered" text="Berlaku"/>
+        <text name="rms_ws_warranty_not_covered" text="Tidak Berlaku"/>
+        <text name="rms_ws_warranty_free_here" text="Perbaikan standar gratis dengan suku cadang asli"/>
+        <text name="rms_ws_warranty_free_dealer" text="Perbaikan gratis di dealer"/>
+        <text name="rms_ws_warranty_terms" text="Kendaraan milik sendiri, di bawah 12 bulan dan 20 jam"/>
+        <text name="rms_ws_badge_warranty" text="Garansi"/>
+        <text name="rms_ws_overhaul_row_systems" text="Sistem yang Ditangani"/>
+        <text name="rms_ws_overhaul_row_systems_detail" text="Dipulihkan"/>
+        <text name="rms_ws_overhaul_systems_one" text="Satu pilihanmu"/>
+        <text name="rms_ws_overhaul_systems_all" text="Semua"/>
+        <text name="rms_ws_overhaul_row_condition" text="Kondisi Setelah Rekondisi"/>
+        <text name="rms_ws_overhaul_row_condition_detail" text="Minimal"/>
+        <text name="rms_ws_overhaul_row_treated_detail" text="Pada sistem yang ditangani"/>
+        <text name="rms_ws_overhaul_row_faults" text="Kerusakan"/>
+        <text name="rms_ws_overhaul_row_faults_detail" text="Teridentifikasi atau belum"/>
+        <text name="rms_ws_overhaul_faults_repaired" text="Diperbaiki"/>
+        <text name="rms_ws_overhaul_row_fluids" text="Fluida"/>
+        <text name="rms_ws_overhaul_row_fluids_detail" text="Pengurasan dan pengisian"/>
+        <text name="rms_ws_overhaul_fluids_all" text="Semua"/>
+        <text name="rms_ws_overhaul_fluids_own" text="Sirkuitnya"/>
+        <text name="rms_ws_overhaul_filters_both" text="Bahan bakar dan hidraulis"/>
+        <text name="rms_ws_overhaul_filters_fuel" text="Bahan bakar"/>
+        <text name="rms_ws_overhaul_worn" text="Sistem di Bawah 50% Kondisi"/>
+        <text name="rms_ws_paint_row_extent" text="Kerusakan Cat yang Diperbaiki"/>
+        <text name="rms_ws_paint_row_extent_detail" text="Bagian cat yang rusak"/>
+        <text name="rms_ws_paint_extent_up_to" text="Hingga %s"/>
+        <text name="rms_ws_paint_extent_all" text="Semua"/>
+        <text name="rms_ws_paint_row_colors" text="Warna"/>
+        <text name="rms_ws_paint_row_colors_detail" text="Ditawarkan untuk kendaraan ini"/>
+        <text name="rms_ws_paint_colors_kept" text="Dipertahankan"/>
+        <text name="rms_ws_paint_colors_choice" text="Sesuai pilihan"/>
+        <text name="rms_ws_paint_row_workshop" text="Bengkel"/>
+        <text name="rms_ws_paint_row_workshop_detail" text="Tempat dikerjakan"/>
+        <text name="rms_ws_inspection_mechanical" text="Kerusakan Mekanis"/>
+        <text name="rms_ws_inspection_mechanical_detail" text="Pemeriksaan visual dan uji fungsi"/>
+        <text name="rms_ws_inspection_electronic" text="Kerusakan Elektronik"/>
+        <text name="rms_ws_inspection_electronic_detail" text="Kode kesalahan dibaca dengan alat diagnostik"/>
+        <text name="rms_ws_inspection_dormant" text="Cacat Tersembunyi"/>
+        <text name="rms_ws_inspection_dormant_detail" text="Komponen cacat, perbaikan sementara"/>
+        <text name="rms_ws_inspection_report" text="Laporan"/>
+        <text name="rms_ws_inspection_report_detail" text="Kondisi mesin dan setiap sistem"/>
+        <text name="rms_ws_inspection_risk_detail" text="Berdasarkan uji dan pengukuran"/>
+        <text name="rms_ws_inspection_ratings" text="Penilaian"/>
+        <text name="rms_ws_inspection_measures" text="Pengukuran"/>
+        <text name="rms_ws_inspection_assessed" text="Dinilai"/>
+        <text name="rms_ws_inspection_maintenance_note" text="Perawatan juga melakukan pencarian kerusakan ini, seperti inspeksi standar."/>
+        <text name="rms_ws_quote_title" text="Rincian Penawaran"/>
+        <text name="rms_ws_quote_oil_filter" text="Filter Oli"/>
         <text name="rms_option_menu_follow_up_separate_transaction" text="Prosedur berikutnya ditagih secara terpisah. Fluida yang diperlukan disediakan atau diambil dari persediaan saat prosedur dimulai."/>
         <text name="rms_bodywork_touchup" text="Perbaikan Cat"/>
         <text name="rms_bodywork_full" text="Pengecatan Ulang Penuh"/>
@@ -570,25 +701,24 @@
         <text name="rms_bodywork_ineligible" text="Prosedur tidak tersedia untuk kendaraan ini atau di bengkel ini"/>
         <text name="rms_bodywork_no_wear" text="Tidak ada kerusakan cat yang perlu diperbaiki"/>
         <text name="rms_bodywork_wear_limit" text="Perbaikan cat tersedia hingga kerusakan cat 30%"/>
-        <text name="rms_bodywork_touchup_description" text="Memperbaiki kerusakan cat ringan. Warna saat ini tetap dipertahankan."/>
-        <text name="rms_bodywork_full_description" text="Memperbarui cat. Pilih warna yang tersedia untuk kendaraan ini atau pertahankan warna saat ini."/>
         <text name="rms_bodywork_no_colors" text="Kendaraan ini tidak memiliki pilihan warna. Warna saat ini tetap digunakan."/>
         <text name="rms_bodywork_unavailable_title" text="Prosedur Tidak Tersedia"/>
+        <text name="rms_bodywork_dealer_only" text="Pengecatan ulang penuh dilakukan di dealer"/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Laporan Inspeksi"/>
         <text name="rms_report_vehicle_specs_title" text="Spesifikasi Kendaraan"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="Arus Maksimum Alternator"/>
         <text name="rms_report_vehicle_spec_battery_charge" text="Tingkat Daya Baterai"/>
         <text name="rms_report_vehicle_spec_battery_capacity" text="Kapasitas Baterai"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_charge" text="Tingkat Daya Baterai Bantu"/>
+        <text name="rms_report_vehicle_spec_battery_24v_charge" text="Tingkat Daya Baterai 24 V"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_capacity" text="Kapasitas Baterai Bantu"/>
+        <text name="rms_report_vehicle_spec_battery_24v_capacity" text="Kapasitas Baterai 24 V"/>
+        <text name="rms_report_vehicle_spec_traction_battery_capacity" text="Kapasitas Baterai Traksi"/>
         <text name="rms_report_detected_breakdowns_title" text="Kerusakan Terdeteksi"/>
         <text name="rms_report_overall_assessment_title" text="Penilaian Kondisi Keseluruhan"/>
         <text name="rms_report_overall_assessment_condition" text="Tingkat Kondisi"/>
-        <text name="rms_report_overall_assessment_crit_fail_risk" text="Risiko Kegagalan Kritis"/>
         <text name="rms_report_overall_assessment_service" text="Tingkat Perawatan"/>
-        <text name="rms_report_overall_assessment_mtbf" text="Waktu Rata-Rata Antar Kerusakan (jam)"/>
-        <text name="rms_report_overall_assessment_rul" text="Sisa Masa Pakai (jam)"/>
-        <text name="rms_report_overall_assessment_wear_rate" text="Laju Keausan (%/h)"/>
-        <text name="rms_report_overall_assessment_nominal_wear_rate" text="Laju Keausan Nominal (%/h)"/>
         <text name="rms_report_recommendations_title" text="Kesimpulan dan Rekomendasi"/>
         <text name="rms_report_recommendation_repair_active_breakdowns" text="Kerusakan aktif terdeteksi. Perbaikan standar untuk semua kerusakan tersebut disarankan."/>
         <text name="rms_report_recommendation_repeat_maintenance" text="Bahan habis pakai yang cacat terdeteksi. Ulangi perawatan untuk menggantinya."/>
@@ -597,7 +727,7 @@
         <text name="rms_report_recommendation_service_due" text="Batas interval perawatan tercapai. Lakukan perawatan."/>
         <text name="rms_report_recommendation_service_urgent" text="Interval perawatan telah terlampaui. Segera lakukan perawatan."/>
         <text name="rms_report_recommendation_system_overhaul" text="Penurunan kondisi kritis terdeteksi pada sistem ini: %s. Lakukan rekondisi parsial."/>
-        <text name="rms_report_recommendation_system_preventive_maintenance" text="Risiko kerusakan meningkat pada sistem ini: %s. Lakukan perawatan preventif untuk menguranginya."/>
+        <text name="rms_report_recommendation_system_preventive_maintenance" text="Risiko kerusakan meningkat pada sistem ini: %s. Servis %s menyetelnya kembali dan mengurangi risikonya."/>
         <text name="rms_report_recommendation_overhaul" text="Penurunan kondisi komponen utama terdeteksi. Lakukan rekondisi."/>
         <text name="rms_report_recommendation_operating_conditions" text="Tanda penggunaan yang terlalu intensif terdeteksi. Perbaiki kondisi pengoperasian."/>
         <text name="rms_report_recommendation_all_ok" text="Tidak ada rekomendasi khusus. Kendaraan dalam kondisi siap digunakan."/>
@@ -607,50 +737,74 @@
         <text name="rms_report_state_degraded" text="Menurun"/>
         <text name="rms_report_state_impaired" text="Terganggu"/>
         <text name="rms_report_state_critical" text="Kritis"/>
-        <text name="rms_report_stress_absent" text="Tidak Ada"/>
         <text name="rms_report_stress_low" text="Rendah"/>
         <text name="rms_report_stress_moderate" text="Sedang"/>
-        <text name="rms_report_stress_elevated" text="Meningkat"/>
         <text name="rms_report_stress_high" text="Sangat Tinggi"/>
         <text name="rms_report_system_condition_title" text="Kondisi Sistem"/>
         <text name="rms_report_breakdown_risk_title" text="Risiko Kerusakan"/>
+        <text name="rms_report_wear_title" text="Keausan Dibanding Normal"/>
+        <text name="rms_report_wear_normal" text="Normal"/>
+        <text name="rms_report_wear_no_cause" text="Tidak Ada Penyebab Berarti"/>
+        <text name="rms_report_wear_percent" text="+%s%%"/>
+        <text name="rms_report_wear_air_filter" text="Filter Udara Tersumbat"/>
+        <text name="rms_report_wear_pull_overload" text="Beban Tarik Berlebih"/>
+        <text name="rms_report_wear_heavy_lift" text="Mengangkat Beban Berat"/>
+        <text name="rms_report_wear_hydraulic_use" text="Hidraulis Digunakan"/>
+        <text name="rms_report_wear_cold_hydraulic_oil" text="Oli Hidraulis Dingin"/>
+        <text name="rms_report_wear_hot_hydraulic_oil" text="Panas Berlebih pada Oli Hidraulis"/>
+        <text name="rms_report_wear_vibration" text="Getaran"/>
+        <text name="rms_report_wear_hydraulic_filter_bypass" text="Filter Hidraulis Tersumbat"/>
+        <text name="rms_report_wear_lights" text="Lampu Menyala"/>
+        <text name="rms_report_wear_braking" text="Pengereman dengan Beban Berat"/>
+        <text name="rms_report_wear_terrain_impact" text="Benturan Medan"/>
+        <text name="rms_report_wear_cold_fuel" text="Bahan Bakar Dingin"/>
+        <text name="rms_report_wear_full_injection" text="Injeksi Beban Penuh"/>
+        <text name="rms_report_wear_deep_discharge" text="Baterai Terkuras Habis"/>
+        <text name="rms_report_wear_high_draw" text="Baterai Dibebani Berat"/>
+        <text name="rms_report_wear_battery_heat" text="Panas Berlebih pada Baterai"/>
+        <text name="rms_report_wear_lubrication" text="Pelumasan Terlambat"/>
+        <text name="rms_report_wear_pto_overload" text="Beban Berlebih pada PTO"/>
         <text name="rms_report_component_title" text="Komponen"/>
         <text name="rms_report_system_condition_transmission" text="Transmisi"/>
         <text name="rms_report_system_condition_power" text="Daya Saat Ini"/>
         <text name="rms_report_system_condition_brakes" text="Efisiensi Rem"/>
         <text name="rms_report_system_condition_cooling" text="Efisiensi Pendinginan"/>
         <text name="rms_report_system_condition_consumption" text="Konsumsi Bahan Bakar"/>
+        <text name="rms_report_system_condition_energy_consumption" text="Konsumsi Energi"/>
         <text name="rms_report_system_condition_hydraulic" text="Efisiensi Hidraulis"/>
         <text name="rms_report_transmission_slipping" text="Selip"/>
         <text name="rms_report_transmission_shifting_impaired" text="Perpindahan Gigi Terganggu"/>
         <text name="rms_report_transmission_shift_delay" text="Jeda Perpindahan"/>
         <text name="rms_report_transmission_gear_rejection" text="Gigi Terlepas"/>
-        <text name="rms_report_transmission_cvt_slipping" text="Selip Sabuk/Rantai"/>
+        <text name="rms_report_transmission_cvt_slipping" text="Penyaluran Daya Lemah"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Rasio Berkurang"/>
-        <text name="rms_report_transmission_cvt_pressure_instability" text="Tekanan Tidak Stabil"/>
+        <text name="rms_report_transmission_cvt_pressure_instability" text="Penyaluran Daya Tidak Teratur"/>
         <text name="rms_report_transmission_thermostat_degraded" text="Kondisi Termostat Menurun"/>
         <text name="rms_report_transmission_failed" text="Gagal"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistol Gemuk"/>
         <text name="rms_grease_gun_no_vehicle" text="Tidak ada kendaraan dalam jangkauan pelumasan"/>
         <text name="rms_grease_gun_function" text="Digunakan untuk memberi gemuk pada titik pelumasan mesin"/>
-        <text name="rms_grease_gun_action" text="Berikan gemuk"/>
+        <text name="rms_grease_gun_action" text="Beri gemuk"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: pelumasan sudah dilakukan"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s tidak memerlukan pelumasan"/>
         <text name="rms_air_blower_name" text="Peniup Udara Bertekanan"/>
         <text name="rms_air_blower_no_vehicle" text="Tidak ada kendaraan dalam jangkauan pembersihan"/>
         <text name="rms_air_blower_function" text="Digunakan untuk membersihkan radiator dan filter udara"/>
         <text name="rms_air_blower_action" text="Bersihkan radiator dan filter udara"/>
+        <text name="rms_air_blower_action_short" text="Tiup bersih"/>
         <text name="rms_air_blower_already_clean" text="%s: radiator dan filter udara sudah bersih"/>
-        <text name="rms_air_blower_filter_requires_maintenance" text="%s: radiator sudah bersih. Filter udara tidak dapat dibersihkan lebih lanjut dengan ditiup. Penggantiannya memerlukan perawatan bengkel"/>
+        <text name="rms_air_blower_filter_requires_maintenance" text="%s: radiator sudah bersih. Filter udara tidak dapat dibersihkan lebih lanjut dengan ditiup. Bengkel menggantinya mulai dari servis %s"/>
         <text name="rms_air_blower_cleaning_not_require" text="%s tidak memerlukan pembersihan"/>
         <text name="rms_jumper_cables_name" text="Kabel Starter"/>
         <text name="rms_jumper_cables_function" text="Digunakan untuk menghubungkan dua baterai dan menyalakan kendaraan yang baterainya habis"/>
-        <text name="rms_jumper_cables_action" text="Hubungkan/lepaskan kabel starter"/>
+        <text name="rms_jumper_cables_action" text="Kabel starter"/>
         <text name="rms_jumper_cables_auto_disconnected" text="Kabel starter terlepas: salah satu kendaraan bergerak"/>
         <text name="rms_jumper_cables_connected" text="Kabel starter terhubung ke %s"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="Kendaraan tidak cocok untuk dihubungkan dengan kabel starter"/>
         <text name="rms_jumper_cables_is_too_far" text="%s terlalu jauh dari %s"/>
+        <text name="rms_jumper_cables_electric_donor" text="Kendaraan listrik tidak dapat digunakan untuk menyalakan mesin pembakaran"/>
+        <text name="rms_jumper_cables_voltage_mismatch" text="Kendaraan 12 V tidak dapat dihubungkan ke kendaraan 24 V"/>
         <text name="rms_jumper_cables_both_already_connected" text="Kabel starter sudah terhubung ke %s dan %s"/>
         <text name="rms_jumper_cables_disconnected" text="Kabel starter dilepas dari %s"/>
         <!-- Fluid containers -->
@@ -658,13 +812,24 @@
         <text name="rms_fluid_function_engine_oil" text="Oli mesin untuk penambahan manual"/>
         <text name="rms_fluid_function_utto" text="Oli transmisi dan hidraulis untuk penambahan manual"/>
         <text name="rms_fluid_function_coolant" text="Cairan pendingin untuk penambahan manual"/>
-        <text name="rms_fluid_container_action_start" text="Pindahkan fluida"/>
-        <text name="rms_fluid_container_action_cancel" text="Hentikan pemindahan fluida"/>
-        <text name="rms_fluid_select_vehicle_title" text="Pemilihan Kendaraan"/>
-        <text name="rms_fluid_select_vehicle_prompt" text="Pilih kendaraan yang akan diisi"/>
-        <text name="rms_fluid_select_circuit_prompt" text="Pilih sirkuit yang akan diisi"/>
-        <text name="rms_fluid_select_fluid_prompt" text="Pilih fluida yang akan dituang"/>
-        <text name="rms_fluid_pour_option" text="%s, %s (%s)"/>
+        <text name="rms_fluid_pour_action" text="Tuang: %s"/>
+        <text name="rms_fluid_level_done" text="Level terisi penuh"/>
+        <text name="rms_fluid_container_empty" text="Wadah kosong"/>
+        <text name="rms_fluid_drum_empty" text="Drum kosong"/>
+        <text name="rms_fluid_container_label" text="Wadah"/>
+        <text name="rms_fluid_drum_label" text="Drum"/>
+        <text name="rms_fluid_hand_take" text="Ambil untuk dituang"/>
+        <text name="rms_fluid_hand_carry" text="Bawa wadah"/>
+        <text name="rms_drum_pump_name" text="Pompa drum baterai"/>
+        <text name="rms_drum_pump_function" text="Dipasang pada drum 200 L untuk mengisi mesin melalui nozelnya"/>
+        <text name="rms_drum_pump_mount" text="Pasang pada drum"/>
+        <text name="rms_drum_pump_take" text="Ambil kembali pompa"/>
+        <text name="rms_drum_pump_nozzle_take" text="Ambil nozel"/>
+        <text name="rms_drum_pump_nozzle_return" text="Gantung nozel"/>
+        <text name="rms_drum_pump_hose_range" text="Selang pompa menahan Anda untuk pergi lebih jauh.&#10;Nozel akan digantung dalam %.1f m!"/>
+        <text name="rms_drum_pump_machine_too_far" text="Dekatkan drum: panjang selang 4 m"/>
+        <text name="rms_drum_pump_required" text="Perlu pompa drum"/>
+        <text name="rms_fluid_level_under_gauge" text="Di bawah skala"/>
         <text name="rms_fluid_circuit_engineOil" text="Oli Mesin"/>
         <text name="rms_fluid_circuit_coolant" text="Cairan Pendingin"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Oli Transmisi"/>
@@ -674,17 +839,21 @@
         <text name="rms_fluid_hud_transmissionHydraulic" text="Oli Trans./Hidraulis"/>
         <text name="rms_fluid_hud_coolant" text="Cairan Pendingin"/>
         <text name="rms_fluid_incompatible_title" text="Fluida Tidak Kompatibel"/>
-        <text name="rms_fluid_incompatible_message" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan sistem menjadi tiga kali lipat, meningkatkan suhu, atau memperlambat sistem hidraulis. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
-        <text name="rms_fluid_error_no_vehicle" text="Tidak ada kendaraan yang memerlukan fluida dalam jarak 4 m"/>
+        <text name="rms_fluid_incompatible_message_engineOil" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan mesin hingga tiga kali lipat serta meningkatkan suhu mesin. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
+        <text name="rms_fluid_incompatible_message_coolant" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan sistem pendingin hingga tiga kali lipat serta meningkatkan suhu mesin. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
+        <text name="rms_fluid_incompatible_message_transmissionOil" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan transmisi hingga tiga kali lipat serta meningkatkan suhu transmisi. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
+        <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan hidraulis hingga tiga kali lipat, meningkatkan suhunya, dan memperlambatnya. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
+        <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan transmisi dan hidraulis hingga tiga kali lipat, meningkatkan suhu keduanya, dan memperlambat hidraulis. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
         <text name="rms_fluid_error_no_circuit" text="Kendaraan ini tidak memerlukan penambahan fluida"/>
         <text name="rms_fluid_error_motor_running" text="Matikan mesin sebelum memindahkan fluida"/>
         <text name="rms_fluid_error_vehicle_moving" text="Kendaraan harus berhenti"/>
-        <text name="rms_fluid_dealer_billed" text="Fluida Ditagihkan"/>
+        <text name="rms_fluid_error_busy" text="Wadah lain sedang mengisi sirkuit ini"/>
         <text name="rms_fluid_warranty_covered" text="Fluida ditanggung garansi"/>
-        <text name="rms_fluid_stock_required" text="Wadah kompatibel diperlukan di area bengkel"/>
+        <text name="rms_fluid_lease_covered" text="Fluida termasuk dalam sewa"/>
+        <text name="rms_fluid_stock_required" text="Diambil dari wadah di area bengkel"/>
+        <text name="rms_fluid_stock_missing" text="Kurang %s di area bengkel"/>
         <text name="rms_fluid_refill_work_order" text="Penambahan Fluida"/>
         <text name="rms_fluid_refill_dealer_supply" text="Pasokan fluida termasuk dalam perkiraan"/>
-        <text name="rms_fluid_refill_stock_supply" text="Letakkan wadah kompatibel milikmu di area bengkel"/>
         <text name="rms_fluid_mode_top_up" text="penambahan"/>
         <text name="rms_fluid_mode_replace" text="penggantian"/>
         <text name="rms_fluid_mode_repair" text="penambahan setelah kebocoran"/>
@@ -694,28 +863,24 @@
         <text name="rms_fluid_service_refused" text="Prosedur tidak dapat dimulai dalam kondisi saat ini."/>
         <text name="rms_fluid_service_consumption_failed" text="Pencadangan fluida gagal. Prosedur dibatalkan."/>
         <!-- Inspection Dialog -->
-        <text name="rms_field_inspection_hold_to_start" text="Tahan untuk memulai pemeriksaan"/>
+        <text name="rms_field_inspection_hold_to_start" text="Periksa (tahan)"/>
         <text name="rms_field_inspection_progress" text="Pemeriksaan berlangsung"/>
         <text name="rms_field_inspection_cancelled" text="Pemeriksaan dibatalkan"/>
         <text name="rms_field_inspection_engine_must_be_stopped" text="Matikan mesin sebelum pemeriksaan"/>
         <text name="rms_inspection_dialog_title" text="Pemeriksaan Sebelum Kerja"/>
         <text name="rms_inspection_section_fluids" text="Fluida Teknis"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
-        <text name="rms_inspection_section_cooling_air" text="Pendinginan dan Filter Udara"/>
-        <text name="rms_inspection_section_lubrication" text="Titik Pelumasan"/>
+        <text name="rms_inspection_section_field_care" text="Filter, Radiator dan Pelumasan"/>
         <text name="rms_inspection_section_additional" text="Catatan Tambahan"/>
         <text name="rms_inspection_verdict_ok_title" text="Layak digunakan"/>
         <text name="rms_inspection_verdict_ok_message" text="Tidak ada yang perlu dilaporkan, mesin dapat digunakan."/>
         <text name="rms_inspection_verdict_watch_title" text="Perlu diawasi"/>
         <text name="rms_inspection_verdict_watch_message" text="Satu atau beberapa masalah memerlukan perhatianmu. Mesin masih dapat bekerja; tangani semuanya hari ini."/>
-        <text name="rms_inspection_verdict_air_filter_service_message" text="Mesin masih dapat bekerja. Jadwalkan perawatan bengkel untuk mengganti filter udara."/>
+        <text name="rms_inspection_verdict_air_filter_service_message" text="Mesin masih dapat bekerja. Bengkel mengganti filter udara mulai dari servis %s."/>
         <text name="rms_inspection_verdict_stop_title" text="Jangan digunakan"/>
         <text name="rms_inspection_verdict_stop_message" text="Satu hal harus ditangani sebelum mesin digunakan. Jangan gunakan mesin dalam kondisi ini."/>
         <text name="rms_inspection_service_due_in" text="%s dalam %s"/>
         <text name="rms_inspection_service_overdue" text="%s terlambat %s"/>
-        <text name="rms_inspection_service_clock_engine" text="ganti oli mesin"/>
-        <text name="rms_inspection_service_clock_transmission" text="ganti oli transmisi"/>
-        <text name="rms_inspection_service_clock_coolant" text="ganti cairan pendingin"/>
         <text name="rms_inspection_status_slightly_low" text="Sedikit Rendah"/>
         <text name="rms_inspection_status_slightly_dirty" text="Sedikit Tersumbat"/>
         <text name="rms_inspection_status_slightly_dry" text="Sedikit Kering"/>
@@ -735,6 +900,7 @@
         <text name="rms_inspection_status_not_required" text="Tidak Diperlukan"/>
         <text name="rms_inspection_status_change_overdue" text="Ganti Terlambat"/>
         <text name="rms_inspection_status_change_long_overdue" text="Ganti Sangat Terlambat"/>
+        <text name="rms_inspection_status_replacement_due" text="Perlu Diganti"/>
         <text name="rms_inspection_engine_oil" text="Oli Mesin"/>
         <text name="rms_inspection_coolant" text="Cairan Pendingin"/>
         <text name="rms_inspection_hydraulic_fluid" text="Oli Hidraulis"/>
@@ -756,8 +922,11 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="Filter udara sedikit tersumbat."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Filter udara terlihat tersumbat."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Filter udara sangat tersumbat oleh debu dan serpihan."/>
-        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Filter udara tidak dapat dibersihkan lebih lanjut dengan ditiup. Penggantiannya memerlukan perawatan bengkel."/>
-        <text name="rms_inspection_hint_air_filter_blowout_residue_service" text="Tiup filter udara untuk menghilangkan debu lepas. Residu yang tertinggal kemudian mengharuskan filter diganti di bengkel."/>
+        <text name="rms_inspection_hint_air_filter_blowout_limit" text="Filter udara tidak dapat dibersihkan lebih lanjut dengan ditiup. Bengkel menggantinya mulai dari servis %s."/>
+        <text name="rms_inspection_hint_fuel_filter_due" text="Filter bahan bakar perlu diganti: servis apa pun, berapa pun tingkatnya, atau perbaikan di bengkel akan menggantinya."/>
+        <text name="rms_inspection_hint_hydraulic_filter_due" text="Filter hidraulis perlu diganti: servis apa pun, berapa pun tingkatnya, atau perbaikan di bengkel akan menggantinya."/>
+        <text name="rms_inspection_hint_hydraulic_filter_bypass" text="Filter hidraulis tersumbat: oli mengalir tanpa tersaring dan mengausi sirkuit. Servis apa pun, berapa pun tingkatnya, atau perbaikan di bengkel akan menggantinya."/>
+        <text name="rms_inspection_hint_unidentified" text="Gejala kerusakan yang belum teridentifikasi: bengkel mengidentifikasinya dengan inspeksi atau perawatan."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Tanda panas berlebih dan penggelapan terlihat di sekitar alternator dan beberapa sambungan."/>
         <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Tanda panas berlebih yang jelas dan konektor yang menggelap terlihat di sekitar alternator serta kabelnya."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Titik pelumasan tampak sedikit kering."/>
@@ -774,9 +943,11 @@
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Jejak berminyak dan sambungan yang menggelap terlihat di sekitar turbocharger."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Banyak jejak berminyak, sambungan yang menggelap, dan bekas jelaga terlihat di sekitar turbocharger."/>
         <text name="rms_inspection_hint_fluid_level_low" text="Ketinggian salah satu fluida telah turun di bawah tanda batasnya."/>
-        <text name="rms_inspection_hint_service_engine" text="Ganti oli mesin sudah terlambat: oli yang aus mempercepat keausan mesin dan injeksi. Perawatan standar menggantinya beserta filternya."/>
-        <text name="rms_inspection_hint_service_transmission" text="Ganti oli transmisi sudah terlambat: oli yang aus mempercepat keausan transmisi dan hidraulis. Perawatan diperluas menggantinya beserta filternya."/>
-        <text name="rms_inspection_hint_service_coolant" text="Cairan pendingin perlu diganti: cairan yang aus mempercepat keausan sistem pendingin. Perawatan preventif menggantinya."/>
+        <text name="rms_inspection_hint_fluid_levels_low" text="Ketinggian beberapa fluida telah turun di bawah tanda batasnya."/>
+        <text name="rms_inspection_hint_service_engine" text="Ganti oli mesin sudah terlambat: oli yang aus mempercepat keausan mesin dan injeksi. Setiap servis menggantinya beserta filternya."/>
+        <text name="rms_inspection_hint_service_transmission" text="Ganti oli transmisi sudah terlambat: oli yang aus mempercepat keausan semua yang dilumasinya. Servis yang disarankan di bengkel menggantinya beserta filternya."/>
+        <text name="rms_inspection_hint_service_hydraulic" text="Ganti oli hidraulis sudah terlambat: oli yang aus mempercepat keausan sistem hidraulis. Servis yang disarankan di bengkel menggantinya beserta filternya."/>
+        <text name="rms_inspection_hint_service_coolant" text="Cairan pendingin perlu diganti: cairan yang aus mempercepat keausan sistem pendingin. Servis yang disarankan di bengkel menggantinya."/>
         <text name="rms_inspection_transmission_oil" text="Oli Transmisi"/>
         <text name="rms_inspection_radiator" text="Radiator"/>
         <text name="rms_inspection_air_filter" text="Filter Udara"/>
@@ -784,37 +955,41 @@
         <text name="rms_inspection_no_suspicious_symptoms" text="Tidak ada gejala mencurigakan yang terdeteksi"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
-        <text name="rms_ingame_menu_title" text="Realistic Mechanical Systems"/>
-        <text name="rms_ingame_menu_section_active" text="Kendaraan RMS"/>
-        <text name="rms_ingame_menu_section_service" text="Dalam Perawatan"/>
-        <text name="rms_ingame_menu_section_other" text="Kendaraan Lain"/>
-        <text name="rms_ingame_menu_header_vehicle" text="Kendaraan"/>
-        <text name="rms_ingame_menu_header_type" text="Jenis"/>
+        <text name="rms_ingame_menu_title" text="Dasbor Mekanis"/>
+        <text name="rms_ingame_menu_section_active" text="Armada peralatan"/>
+        <text name="rms_ingame_menu_section_service" text="Pekerjaan servis"/>
+        <text name="rms_ingame_menu_section_other" text="Peralatan tidak dipantau"/>
         <text name="rms_ingame_menu_header_time_left" text="Waktu Tersisa"/>
-        <text name="rms_ingame_menu_header_age" text="Usia"/>
-        <text name="rms_ingame_menu_header_working_hours" text="Jam Operasi"/>
-        <text name="rms_ingame_menu_header_condition" text="Kondisi"/>
         <text name="rms_ingame_menu_header_cost" text="Total Biaya"/>
         <text name="rms_ingame_menu_header_interval" text="Interval"/>
-        <text name="rms_ingame_menu_header_last_inspection" text="Inspeksi Terakhir"/>
-        <text name="rms_ingame_menu_header_last_maintenance" text="Perawatan Terakhir"/>
         <text name="rms_ingame_menu_header_leasing_price" text="Biaya Sewa"/>
-        <text name="rms_ingame_menu_header_price" text="Jual di menu"/>
         <text name="rms_ingame_menu_header_procedure" text="Prosedur"/>
-        <text name="rms_ingame_menu_header_finish_time" text="Selesai"/>
-        <text name="rms_ingame_menu_header_service_cost" text="Biaya"/>
         <text name="rms_ingame_menu_header_reason" text="Alasan Pengecualian"/>
-        <text name="rms_ingame_menu_empty_other" text="Tidak ada kendaraan lain"/>
-        <text name="rms_ingame_menu_empty_active" text="Tidak ada kendaraan RMS"/>
-        <text name="rms_ingame_menu_empty_service" text="Tidak ada kendaraan dalam perawatan"/>
+        <text name="rms_ingame_menu_empty_other" text="Tidak ada peralatan tanpa pemantauan"/>
+        <text name="rms_ingame_menu_empty_active" text="Tidak ada peralatan dipantau"/>
+        <text name="rms_ingame_menu_empty_service" text="Tidak ada pekerjaan berlangsung"/>
         <text name="rms_ingame_menu_reason_implement" text="Implemen atau Trailer"/>
         <text name="rms_ingame_menu_reason_unsupported" text="Tidak Didukung"/>
-        <text name="rms_ingame_menu_reason_electric" text="Listrik"/>
         <text name="rms_ingame_menu_reason_towed" text="Implemen Bermesin"/>
         <text name="rms_ingame_menu_reason_auxiliary" text="Mesin Bantu"/>
         <text name="rms_ingame_menu_reason_user" text="Dikecualikan Manual"/>
         <text name="rms_ingame_menu_include" text="Masukkan ke RMS"/>
         <text name="rms_ingame_menu_exclude" text="Keluarkan dari RMS"/>
+        <text name="rms_fleet_all" text="Semua peralatan"/>
+        <text name="rms_fleet_all_untracked" text="Semua peralatan tanpa pemantauan"/>
+        <text name="rms_fleet_sort_by" text="Urutkan menurut"/>
+        <text name="rms_fleet_sort_deadline" text="Tenggat"/>
+        <text name="rms_fleet_sort_name" text="Nama"/>
+        <text name="rms_fleet_sort_hours" text="Jam"/>
+        <text name="rms_fleet_check" text="Pemeriksaan"/>
+        <text name="rms_fleet_location" text="Lokasi"/>
+        <text name="rms_fleet_next_service" text="Perawatan berikutnya"/>
+        <text name="rms_fleet_remaining" text="Sisa %s jam"/>
+        <text name="rms_fleet_overdue" text="Terlambat %s jam"/>
+        <text name="rms_fleet_overdue_label" text="Terlambat"/>
+        <text name="rms_fleet_overdue_count" text="Terlambat: %d"/>
+        <text name="rms_fleet_due_soon_label" text="Segera"/>
+        <text name="rms_fleet_due_soon_count" text="Segera: %d"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Pengembalian Kendaraan"/>
         <text name="rms_sell_dialog_section_vehicle" text="Kendaraan"/>
@@ -823,9 +998,10 @@
         <text name="rms_sell_dialog_overdue_maintenance_penalty" text="Perawatan Terlambat"/>
         <text name="rms_sell_dialog_repair_penalty" text="Perbaikan"/>
         <text name="rms_sell_dialog_washing_penalty" text="Pencucian"/>
+        <text name="rms_sell_dialog_deposit_refund" text="Pengembalian deposit"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Ketinggian Fluida Rendah"/>
-        <text name="rms_tutorial_fluid_level_message" text="Salah satu fluida pada mesin ini telah turun di bawah tanda batas pada pengukurnya.&#10;&#10;Oli mesin berkurang seiring bertambahnya jam operasi, dan mesin yang aus mengonsumsi jauh lebih banyak oli. Cairan pendingin, oli transmisi, dan oli hidraulis hanya berkurang karena kebocoran.&#10;&#10;Saat berada di bawah tanda batas, mesin hanya memerlukan penambahan dan masih bekerja normal. Kerusakan baru dimulai ketika ketinggian fluida benar-benar rendah: mesin yang kekurangan cairan pendingin atau oli transmisi menjadi panas, sedangkan mesin yang kekurangan oli mesin atau oli hidraulis mengalami keausan jauh lebih cepat.&#10;&#10;Beli wadah produk yang kompatibel di toko, letakkan di samping mesin, lalu tambahkan fluidanya. Semua produk yang ditujukan untuk sirkuit tersebut memberikan efek yang sama; fluida yang salah hanya mencemari sirkuit itu. Di dealer, liter yang diperlukan disediakan dan ditagihkan. Di bengkel pribadi atau bergerak, prosedur mengonsumsi wadah milik pertanian yang berada di area bengkel."/>
+        <text name="rms_tutorial_fluid_level_message" text="Salah satu fluida pada mesin ini telah turun di bawah tanda batas pada pengukurnya.&#10;&#10;Oli mesin berkurang seiring bertambahnya jam operasi, dan mesin yang aus mengonsumsi jauh lebih banyak oli. Cairan pendingin, oli transmisi, dan oli hidraulis hanya berkurang karena kebocoran.&#10;&#10;Saat berada di bawah tanda batas, mesin hanya memerlukan penambahan dan masih bekerja normal. Kerusakan baru dimulai ketika ketinggian fluida benar-benar rendah: mesin yang kekurangan cairan pendingin atau oli transmisi menjadi panas, sedangkan mesin yang kekurangan oli mesin atau oli hidraulis mengalami keausan jauh lebih cepat.&#10;&#10;Beli wadah produk yang kompatibel di toko, bawa ke mesin, lalu tambahkan fluidanya. Semua produk yang ditujukan untuk sirkuit tersebut memberikan efek yang sama; fluida yang salah hanya mencemari sirkuit itu. Di dealer, liter yang diperlukan disediakan dan ditagihkan."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Selamat Datang di Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Nonaktifkan kiat"/>
         <text name="rms_tutorial_welcome_enable_button" text="Aktifkan kiat"/>
@@ -835,20 +1011,21 @@
         <text name="rms_tutorial_wheel_slip_title" text="Roda Selip"/>
         <text name="rms_tutorial_wheel_slip_message" text="Rodamu mengalami selip berat. Selip merupakan salah satu faktor yang paling merusak transmisi dan membuatmu harus kembali ke bengkel jauh lebih cepat."/>
         <text name="rms_tutorial_service_due_soon_title" text="Perawatan Segera Diperlukan"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s akan segera memerlukan perawatan.&#10;&#10;Dalam RMS, kendaraan memerlukan perawatan rutin. Menundanya sangat meningkatkan risiko kerusakan.&#10;&#10;Kunjungi bengkel terdekat dan pilih &quot;Perawatan&quot;. Intervalnya dapat diatur dalam pengaturan mod."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s akan segera membutuhkan perawatan. Pilih paket yang disarankan di bengkel: paket ini mencakup pekerjaan yang jatuh tempo. Batas jam operasi atau kalender yang tercapai lebih dahulu berlaku, meski jarang digunakan. Kemudahan perawatan menunjukkan kerumitan pekerjaan; perawatan rutin tetap dapat dilakukan di bengkel bergerak."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Interval Perawatan Terlampaui"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Interval perawatan %s telah terlampaui.&#10;&#10;Kunjungi bengkel sesegera mungkin dan pilih &quot;Perawatan&quot;. Terus menggunakan kendaraan yang perawatannya terlambat sangat meningkatkan risiko terjadinya beberapa kerusakan."/>
         <text name="rms_tutorial_steering_title" text="Memutar Kemudi saat Berhenti"/>
         <text name="rms_tutorial_steering_message" text="Sebaiknya jangan memutar kemudi saat berhenti. Hal ini memberikan beban berat pada mekanisme kemudi dan komponen gandar depan sehingga meningkatkan keausan sistem gerak.&#10;&#10;Majukan kendaraan sedikit sebelum berbelok: roda akan berputar jauh lebih mudah."/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Radiator atau filter udara tersumbat. Tahan tombol %s sambil melihat kendaraan untuk mengetahui yang mana. Bersihkan dengan peniup udara bertekanan. Jika filter tidak dapat dibersihkan lagi, pilih perawatan diperluas atau preventif di bengkel untuk menggantinya."/>
+        <text name="rms_tutorial_cooling_air_check_title" text="Pendinginan dan Filter Udara"/>
+        <text name="rms_tutorial_cooling_air_check_message" text="Radiator atau filter udara tersumbat. Tahan tombol %s sambil melihat kendaraan untuk mengetahui yang mana. Bersihkan dengan peniup udara bertekanan. Jika filter tidak dapat dibersihkan lagi, bengkel menggantinya mulai dari servis %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Pelumasan Diperlukan"/>
         <text name="rms_tutorial_needs_lubrication_message" text="%s milikmu memerlukan pelumasan rutin.&#10;&#10;Dalam RMS, tingkat pelumasan menurun seiring jam operasi. Setelah lama tidak digunakan, pelumasan juga diperlukan sebelum mesin digunakan kembali. Pelumasan yang tidak memadai mempercepat keausan sasis.&#10;&#10;Beli Pistol Gemuk di toko dan beri gemuk pada mesin ketika inspeksi memintanya.&#10;&#10;Kamu dapat memeriksa tingkat pelumasan: tahan tombol %s sambil melihat kendaraan."/>
         <text name="rms_tutorial_needs_repair_title" text="Kerusakan Terdeteksi"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s milikmu mengalami masalah. Salah satu suku cadangnya mungkin gagal.&#10;&#10;Bawa kendaraan ke bengkel untuk menjalani inspeksi. Jangan menunda: kerusakan dapat terus memburuk dan biaya perbaikan ikut meningkat.&#10;&#10;Jika inspeksi memastikan adanya kerusakan, lakukan perbaikan di bengkel."/>
+        <text name="rms_tutorial_needs_repair_message" text="%s milikmu mengalami masalah. Salah satu suku cadangnya mungkin gagal.&#10;&#10;Bawa kendaraan ke bengkel: inspeksi, atau perawatan jika sudah waktunya, mengidentifikasi kerusakan. Jangan menunda: kerusakan dapat terus memburuk dan biaya perbaikan ikut meningkat.&#10;&#10;Setelah kerusakan teridentifikasi, lakukan perbaikan di bengkel."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Rekondisi Diperlukan"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%s milikmu menunjukkan tanda penuaan. Sudah waktunya mempertimbangkan penggantian atau rekondisi. Prosedur ini lama dan mahal, tetapi merupakan satu-satunya cara mengembalikan mesin ke kondisi aslinya.&#10;&#10;Masa pakai kendaraan diatur dalam pengaturan mod: semakin tinggi nilainya, semakin lambat kendaraanmu mengalami keausan."/>
         <text name="rms_tutorial_needs_preventive_title" text="Kerusakan Segera Terjadi"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Salah satu sistem pada %s milikmu akan segera mengalami kerusakan. Masih ada waktu untuk bertindak.&#10;&#10;Bengkel menawarkan perawatan preventif: prosedur ini memulihkan tingkat perawatan, mengganti semua fluida, dan sangat mengurangi tegangan mekanis pada sistem yang paling terdampak."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Mesin, sistem bahan bakar, atau sistem pendingin pada %s memiliki risiko kerusakan yang meningkat.&#10;&#10;Servis %s: menyetel katup serta memeriksa injektor dan termostat, sehingga risiko itu berkurang."/>
         <text name="rms_tutorial_age_degradation_title" text="Penurunan Kondisi akibat Usia"/>
         <text name="rms_tutorial_age_degradation_message" text="Dalam RMS, kendaraan secara bertahap kehilangan sebagian kinerja aslinya seiring bertambahnya usia.&#10;&#10;Setelah sekitar sepertiga masa pakainya, keausan akibat usia sedikit mengurangi karakteristik penting seperti daya atau pengereman. Efeknya kemudian menguat dan terlihat jelas menjelang akhir masa pakai.&#10;&#10;Penurunan kondisi ini dapat dinonaktifkan dalam pengaturan mod."/>
         <text name="rms_tutorial_poor_consumables_title" text="Bahan Habis Pakai Berkualitas Buruk"/>
@@ -856,8 +1033,8 @@
         <text name="rms_tutorial_poor_parts_title" text="Suku Cadang Berkualitas Buruk"/>
         <text name="rms_tutorial_poor_parts_message" text="%s milikmu menerima suku cadang berkualitas buruk saat perbaikan. Kerusakan kemungkinan besar akan segera muncul kembali.&#10;&#10;Kamu dapat menunggu hingga kerusakan kembali, atau melakukan inspeksi lengkap yang dapat mengidentifikasi suku cadang penyebabnya dengan andal."/>
         <text name="rms_tutorial_park_brake_title" text="Rem Parkir"/>
-        <text name="rms_tutorial_park_brake_message" text="Rem parkir diaktifkan. Rem ini aktif dengan sendirinya ketika kamu meninggalkan mesin yang berhenti dan terlepas segera setelah kamu kembali menekan pedal gas.&#10;&#10;Di lereng, rem inilah yang mencegah mesin bergerak sendiri."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Rem parkir diaktifkan. Kamu sendiri yang mengaktifkan dan melepaskannya dengan tombol tersendiri: jika kamu menekan pedal gas saat rem aktif, mesin tetap diam dan memberikan peringatan.&#10;&#10;Di lereng, rem inilah yang mencegah mesin bergerak sendiri."/>
+        <text name="rms_tutorial_park_brake_message" text="Rem parkir diaktifkan. Rem ini aktif dengan sendirinya ketika kamu meninggalkan mesin yang berhenti dan terlepas segera setelah kamu kembali menekan pedal gas. Rem ini juga aktif ketika kamu mematikan mesin, atau setelah 45 detik berhenti.&#10;&#10;Di lereng, rem inilah yang mencegah mesin bergerak sendiri."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Rem parkir diaktifkan. Kamu sendiri yang mengaktifkan dan melepaskannya dengan tombol tersendiri: jika kamu menekan pedal gas saat rem aktif, mesin bekerja melawan rem dan remnya menjadi aus.&#10;&#10;Di lereng, rem inilah yang mencegah mesin bergerak sendiri: jika kamu meninggalkan mesin tanpa mengaktifkannya, mesin bisa meluncur."/>
         <text name="rms_tutorial_preheat_title" text="Pemanasan Awal Diesel"/>
         <text name="rms_tutorial_preheat_message" text="Pada mesin diesel yang dingin, satu kali menekan kontrol starter akan menyalakan kontak dan memulai siklus busi pijar secara otomatis. Lampu dasbor menyala sebentar, lalu lampu pemanasan awal tetap menyala hingga mesin siap. Jangan ulangi perintah: starter aktif secara otomatis ketika lampu padam."/>
         <text name="rms_tutorial_pto_engagement_title" text="Pengaktifan PTO"/>
@@ -875,7 +1052,7 @@
         <text name="rms_tutorial_hard_start_title" text="Mesin Sulit Dinyalakan"/>
         <text name="rms_tutorial_hard_start_message" text="Mesin %s milikmu sulit dinyalakan. Baterai lemah, suhu beku, kerusakan mekanis, atau keausan starter dapat menjadi penyebabnya. Tahan tombol starter hingga mesin menyala.&#10;&#10;Sistem kelistrikan menerima beban berat selama penyalaan akibat arus masuk awal yang tinggi."/>
         <text name="rms_tutorial_low_fuel_title" text="Cadangan Bahan Bakar"/>
-        <text name="rms_tutorial_low_fuel_message" text="Tangki mendekati tingkat cadangan. Semakin sedikit bahan bakar yang tersisa, semakin berat kerja pompa bahan bakar untuk mengisapnya sehingga keausannya meningkat."/>
+        <text name="rms_tutorial_low_fuel_message" text="Tangki mendekati tingkat cadangan. Semakin sedikit bahan bakar yang tersisa, semakin berat kerja pompa bahan bakar untuk mengisapnya, dan dasar tangki mengirim air serta endapannya ke filter sehingga filter lebih cepat tersumbat.&#10;&#10;Sebaiknya isi penuh tangki di akhir hari: tangki yang penuh menghasilkan lebih sedikit embun."/>
         <text name="rms_tutorial_lugging_title" text="Mesin Terbebani pada Putaran Rendah"/>
         <text name="rms_tutorial_lugging_message" text="Mesin, dan terutama transmisi, menderita ketika terbebani pada putaran rendah, yaitu saat putaran mesin rendah dengan beban berat. Implemen yang terpasang mungkin terlalu berat untuk mesin, atau gigi yang dipilih tidak tepat jika transmisinya manual."/>
         <text name="rms_tutorial_engine_overheat_title" text="Panas Berlebih pada Mesin"/>
@@ -887,7 +1064,9 @@
         <text name="rms_tutorial_cvt_overheat_title" text="Panas Berlebih pada CVT"/>
         <text name="rms_tutorial_cvt_overheat_message" text="Transmisi CVT mulai mengalami panas berlebih. Penyebabnya dapat berupa beban berlebihan, radiator tersumbat, cuaca sangat panas, atau gangguan pada sirkuit pendingin transmisi. Bajak yang terlalu berat atau trailer yang kelebihan muatan sudah cukup untuk memicunya.&#10;&#10;Tetap waspada: panas berlebih merupakan salah satu faktor yang paling merusak transmisi CVT."/>
         <text name="rms_tutorial_chassis_vibration_title" text="Sasis Mengalami Tegangan"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Mengemudi cepat di medan kasar mempercepat keausan suspensi %s milikmu. Getaran ini juga merusak sistem lain, terutama sistem hidraulis dan kelistrikan.&#10;&#10;Berkendaralah dengan perlahan di permukaan yang tidak rata."/>
+        <text name="rms_tutorial_chassis_vibration_message" text="Mengemudi cepat di medan kasar mempercepat keausan kaki-kaki %s milikmu. Guncangan ini juga merusak kabel beserta konektornya, serta sistem hidraulis saat alat berat sedang terangkat.&#10;&#10;Kurangi kecepatan di permukaan yang tidak rata."/>
+        <text name="rms_tutorial_terrain_impact_title" text="Benturan Keras"/>
+        <text name="rms_tutorial_terrain_impact_message" text="Kaki-kaki baru saja terkena benturan keras. Rintangan yang menghentikan kendaraan seketika atau memperlambatnya secara tiba-tiba langsung mengikis sasis dan mendekatkan kerusakan berikutnya, paling sering pada kemudi atau bantalan.&#10;&#10;Kurangi kecepatan sebelum rintangan."/>
         <text name="rms_tutorial_cranking_title" text="Penyalaan Terlalu Sering"/>
         <text name="rms_tutorial_cranking_message" text="Mesin terlalu sering dinyalakan. Setiap penyalaan mengalirkan arus yang sangat tinggi melalui sistem kelistrikan sehingga mempercepat keausan kabel, starter, dan komponen listrik lainnya.&#10;&#10;Hindari mematikan mesin untuk jeda singkat."/>
         <text name="rms_tutorial_critical_failure_title" text="Kerusakan Kritis"/>
@@ -901,7 +1080,7 @@
         <text name="rms_tutorial_overload_indicator_title" text="Peringatan Beban Berlebih"/>
         <text name="rms_tutorial_overload_indicator_message" text="%s menerima beban berat. Indikator peringatan yang baru menyala di dasbor menunjukkan kondisi tersebut.&#10;&#10;Mesin mungkin tidak memiliki cukup daya untuk tugas saat ini. Coba kurangi beban: batasi kecepatan dengan kontrol jelajah, atau kurangi tekanan pada pedal gas alih-alih bekerja dengan daya penuh."/>
         <text name="rms_tutorial_battery_low_title" text="Baterai Lemah"/>
-        <text name="rms_tutorial_battery_low_message" text="Baterai mesin ini hampir habis sepenuhnya. Hal ini terjadi setelah lama tidak digunakan, dalam suhu yang sangat dingin, atau akibat gangguan pada sistem kelistrikan.&#10;&#10;Saat daya rendah, penyalaan menjadi sulit lalu mustahil. Kamu dapat menyalakan mesin dari kendaraan lain menggunakan kabel starter."/>
+        <text name="rms_tutorial_battery_low_message" text="Baterai mesin ini hampir habis sepenuhnya. Hal ini terjadi setelah lama tidak digunakan, dalam suhu yang sangat dingin, atau akibat gangguan pada sistem kelistrikan.&#10;&#10;Saat daya rendah, penyalaan menjadi sulit lalu mustahil. Kamu dapat menyalakan mesin dari kendaraan lain menggunakan kabel starter. Sebelum lama tidak digunakan, atau jika baterai habis dengan sendirinya, putuskan baterai dengan sakelar pemutus baterai, dengan berjalan kaki di depan mesin."/>
         <text name="rms_tutorial_drivetrain_windup_title" text="Tegangan Sistem Penggerak"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Kamu berbelok di permukaan dengan daya cengkeram tinggi saat pengunci diferensial aktif. Roda bagian dalam dan luar menempuh jarak berbeda di tikungan, tetapi pengunci diferensial memaksanya berputar pada kecepatan yang sama: sistem penggerak mengalami tegangan dan keausan transmisi meningkat. Nonaktifkan pengunci diferensial sebelum berbelok."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Mode Sistem Penggerak dan Pengunci Diferensial"/>
@@ -909,7 +1088,7 @@
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
-        <text name="rms_charger_function" text="Pengisi Telwin pada troli, 150 A pada 12 V. Hubungkan di dekat kendaraan dan biarkan baterai terisi. Pengisian mengikuti kecepatan waktu dalam permainan. Bantuan starter (START, 200 A)."/>
+        <text name="rms_charger_function" text="Pengisi Telwin pada troli, 150 A pada 12 V, 80 A pada 24 V. Hubungkan di dekat kendaraan dan pilih pengisian otomatis yang disesuaikan dengan baterai, pengisian cepat, atau bantuan starter (START, 200 A pada 12 V). Pengisian mengikuti kecepatan waktu dalam permainan."/>
         <text name="rms_charger_start" text="Hubungkan pengisi daya"/>
         <text name="rms_charger_disconnect" text="Lepaskan pengisi"/>
         <text name="rms_charger_select" text="Pilih kendaraan yang akan dihubungkan."/>
@@ -931,6 +1110,7 @@
         <text name="rms_charger_error_moving" text="Kendaraan bergerak."/>
         <text name="rms_charger_error_service" text="Prosedur bengkel sedang berlangsung."/>
         <text name="rms_charger_error_cables" text="Lepaskan kabel jumper."/>
+        <text name="rms_charger_error_voltage" text="Bantuan starter hanya berfungsi pada 12 V."/>
         <text name="rms_charger_error_busy" text="Pengisi sudah terhubung."/>
         <text name="rms_charger_error_full" text="Baterai ini sudah terisi."/>
         <text name="rms_charger_connected" text="Pengisi terhubung. Pengisian dimulai."/>
@@ -938,7 +1118,7 @@
         <text name="rms_charger_stopped_motor" text="Pengisian berhenti: mesin hidup"/>
         <text name="rms_charger_error_player_distance" text="Dekati pengisi dengan berjalan kaki."/>
         <text name="rms_charger_mode_select" text="Hubungkan pengisi daya"/>
-        <text name="rms_charger_mode_start" text="Bantuan starter (START, 200 A)"/>
+        <text name="rms_charger_mode_start" text="Bantuan starter (START, 200 A, 12 V)"/>
         <text name="rms_charger_start_ready" text="START siap"/>
         <text name="rms_charger_start_active" text="Bantuan starter aktif"/>
         <text name="rms_charger_start_running" text="Mesin menyala: lepaskan"/>
@@ -946,6 +1126,26 @@
         <text name="rms_charger_start_wait" text="Tunggu 30 detik di antara dua kali menyalakan mesin."/>
         <text name="rms_charger_unplug_before_start" text="Lepaskan pengisi daya atau pilih START sebelum menyalakan mesin."/>
         <text name="rms_charger_start_connected" text="Bantuan starter (START, 200 A)."/>
-        <text name="rms_charger_mode_charge" text="Isi baterai (150 A)"/>
+        <text name="rms_charger_mode_charge" text="Pengisian otomatis"/>
+        <text name="rms_charger_mode_fast" text="Pengisian cepat (150 A, 80 A pada 24 V)"/>
+
+        <!-- Battery isolator -->
+        <text name="rms_battery_isolator_cut" text="Putuskan baterai"/>
+        <text name="rms_battery_isolator_restore" text="Sambungkan baterai"/>
+        <text name="rms_battery_isolator_open" text="Baterai terputus. Sambungkan kembali dengan sakelar pemutus baterai, dengan berjalan kaki di depan kendaraan."/>
+        <text name="rms_battery_isolator_engine_running" text="Matikan mesin sebelum menggunakan sakelar pemutus baterai."/>
+        <text name="rms_battery_isolator_info" text="Baterai terputus"/>
+        <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Gunakan bengkel yang lengkap."/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="Diagnosis elektronik diperlukan"/>
+        <text name="rms_mobile_workshop_heavy_work_required" text="Pembongkaran atau alat khusus diperlukan"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Peralatan tegangan tinggi diperlukan"/>
+        <text name="rms_service_months" text="%s bulan"/>
+        <text name="rms_service_month" text="%s bulan"/>
+        <text name="rms_service_calendar_due" text="Batas kalender tercapai"/>
+        <text name="rms_service_program_estimated" text="Jadwal perkiraan"/>
+        <text name="rms_ws_label_service_access" text="Kemudahan perawatan"/>
+        <text name="rms_service_access_easy" text="Mudah"/>
+        <text name="rms_service_access_average" text="Sedang"/>
+        <text name="rms_service_access_demanding" text="Menuntut"/>
     </texts>
 </l10n>
