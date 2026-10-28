@@ -4,6 +4,9 @@
         <text name="rms_hud_mass_tractor" text="载具"/>
         <text name="rms_hud_mass_towed" text="牵引"/>
         <text name="rms_hud_mass_total" text="总计"/>
+        <text name="rms_hud_drive_2wd" text="两驱"/>
+        <text name="rms_hud_drive_4wd" text="四驱"/>
+        <text name="rms_hud_drive_auto" text="自动"/>
         <text name="rms_drivetrain_mode_4x2" text="两轮驱动（前桥分离）"/>
         <text name="rms_drivetrain_mode_4wd" text="四轮驱动（前桥接合）"/>
         <text name="rms_drivetrain_mode_auto" text="四轮驱动（自动）"/>
@@ -12,27 +15,29 @@
         <text name="rms_drivetrain_notify_lock_off" text="差速锁已解除"/>
         <text name="rms_drivetrain_warning_4wd_windup" text="传动系统承受应力！在高附着力地面转弯时请分离前桥。"/>
         <text name="rms_drivetrain_warning_difflock_windup" text="差速锁承受应力！请解除差速锁或减小转向角度。"/>
-        <text name="rms_drivetrain_warning_parkbrake" text="驻车制动已启用！"/>
-        <text name="rms_drivetrain_warning_parkbrake_released" text="驻车制动未启用！"/>
-        <text name="rms_drivetrain_warning_parkbrake_engine_off" text="请启动发动机以解除驻车制动"/>
+        <text name="rms_drivetrain_warning_parkbrake" text="停车制动已启用！"/>
+        <text name="rms_drivetrain_warning_parkbrake_released" text="停车制动未启用！"/>
+        <text name="rms_drivetrain_warning_parkbrake_engine_off" text="请启动发动机以解除停车制动"/>
         <text name="rms_preheat_ignition_message" text="点火开关已打开：正在预热"/>
         <text name="rms_preheat_system_failure_message" text="预热系统故障：无法冷启动"/>
         <text name="rms_preheat_start_failed_message" text="发动机未启动：再次尝试前请关闭点火开关"/>
         <text name="rms_hud_vehicle_notification" text="%s：%s"/>
         <!-- Inputs -->
-        <text name="input_RMS_FIELD_INSPECTION" text="进行班前检查"/>
+        <text name="input_RMS_FIELD_INSPECTION" text="进行作业前检查"/>
         <text name="input_RMS_CLOSE_NOTIFICATION" text="确定"/>
         <text name="input_RMS_TOGGLE_4WD" text="驱动模式"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="差速锁"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="停车制动"/>
         <text name="input_RMS_TOGGLE_ODOMETER" text="ODO/TRIP（按住:TRIP=0）"/>
+        <text name="input_RMS_REVERSE_FAN" text="风扇反转"/>
+        <text name="input_RMS_TOGGLE_DEBUG_WINDOW" text="调试窗口"/>
         <text name="input_RMS_TOGGLE_BATTERY_ISOLATOR" text="电池总开关"/>
         <text name="input_RMS_TOGGLE_FLUID_CAN" text="搬运容器或加注"/>
         <!-- Settings -->
         <text name="rms_settings_title" text="RMS设置"/>
         <text name="rms_settings_admin_required" text="多人游戏中需要管理员权限才能更改RMS设置。"/>
         <text name="rms_settings_section_service_wear" text="保养与磨损"/>
-        <text name="rms_settings_section_drivetrain" text="传动系统与驻车制动"/>
+        <text name="rms_settings_section_drivetrain" text="传动系统与停车制动"/>
         <text name="rms_workshopOpenHour_label" text="维修车间开放时间"/>
         <text name="rms_workshopOpenHour_tooltip" text="作业只能从此时间开始。"/>
         <text name="rms_workshopCloseHour_label" text="维修车间关闭时间"/>
@@ -41,8 +46,8 @@
         <text name="rms_dealerWorkshopAvailable_tooltip" text="使经销商维修车间昼夜均可使用。"/>
         <text name="rms_mobileWorkshopAvailable_label" text="移动维修车间全天开放"/>
         <text name="rms_mobileWorkshopAvailable_tooltip" text="使移动维修车间昼夜均可使用。"/>
-        <text name="rms_mobileWorkshopRestrictions_label" text="移动维修车间限制"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="根据工作内容和所需设备限制移动维修。保养仍可进行；诊断、大型拆卸或高压作业可能需要设备齐全的车间。"/>
+        <text name="rms_mobileWorkshopRestrictions_label" text="维修车间限制"/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="根据所需设备限制移动维修车间和自有维修车间的工作。保养仍可进行；电子维修需要将检测设备连接到机器上，移动维修车间进行大型拆卸或高压作业则需要设备齐全的车间。"/>
         <text name="rms_ownWorkshopAvailable_label" text="自有维修车间全天开放"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="使自有维修车间昼夜均可使用。"/>
         <text name="rms_instantInspection_label" text="即时检查"/>
@@ -54,17 +59,15 @@
         <text name="rms_instantOverhaul_label" text="即时机械大修"/>
         <text name="rms_instantOverhaul_tooltip" text="启用后，维修车间机械大修会立即完成。已在进行的同类作业也会立即完成。"/>
         <text name="rms_debugMode_label" text="调试模式"/>
-        <text name="rms_debugMode_tooltip" text="启用调试面板，并在控制台中显示详细日志。"/>
+        <text name="rms_debugMode_tooltip" text="在当前驾驶的载具中显示调试窗口；%s键也可打开和关闭该窗口。多人游戏中，只有管理员能看到该窗口。还会在控制台中写入详细日志。"/>
         <text name="rms_warningMessages_label" text="警告消息"/>
         <text name="rms_warningMessages_tooltip" text="启用或禁用冷机、过热等游戏警告消息。 温度导致的动力限制通知仍会显示。"/>
         <text name="rms_serviceInterval_label" text="保养间隔"/>
         <text name="rms_serviceInterval_tooltip" text="设置参考小时数。选择100小时后，厂家规定的500小时换算为100小时，600小时换算为120小时。各油液遵循车辆保养计划；日历期限不受影响。"/>
-        <text name="rms_vehicleLifespan_label" text="载具使用寿命"/>
-        <text name="rms_vehicleLifespan_tooltip" text="以小时设置载具的基本使用寿命，达到该时数后状况降至0%。状况越接近零，载具越不可靠。载具价值也随这些时数下降。更改从此刻起生效：载具保持当前状况，只有载具价值会重新计算。"/>
-        <text name="rms_generalWearEnabled_label" text="老化磨损"/>
-        <text name="rms_generalWearEnabled_tooltip" text="随着载具磨损，发动机功率、液压速度和制动效率等各系统的主要特性会受到轻微影响。该影响会在载具寿命的前三分之一结束后出现，在三分之二之后才会变得明显，并在机器接近寿命终点时继续加剧。"/>
-        <text name="rms_exhaustSmokeEnabled_label" text="排气烟雾"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="根据发动机的实际状态控制排气烟雾。燃油量超过可用空气量时会冒黑烟，例如突然加速、发动机低转速重负荷运转、长时间低负荷怠速、空气滤清器堵塞或喷油系统磨损。磨损的发动机燃烧机油时会冒蓝烟，燃油未充分燃烧时会冒白烟。烟雾还会随发动机负荷增大。旧机器的烟雾远多于现代机器；现代机器只有在发生严重故障时才会明显冒烟。在寒冷空气中，燃烧产生的水分也会凝结成一小段白色尾迹，并在一两米内蒸发，即使发动机完好也会出现。"/>
+        <text name="rms_vehicleLifespan_label" text="载具使用期限"/>
+        <text name="rms_vehicleLifespan_tooltip" text="以小时设置载具的基本使用期限，达到该时数后状况降至0%。状况越接近零，载具越不可靠。载具价值也随这些时数下降。更改从此刻起生效：载具保持当前状况，只有载具价值会重新计算。"/>
+        <text name="rms_exhaustSmokeEnabled_label" text="可见尾气"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="根据发动机的实际状态控制可见尾气。燃油量超过可用空气量时会冒黑色尾气，例如突然加速、发动机低转速重负荷运转、长时间低负荷空转、空气滤清器堵塞或喷油系统磨损。磨损的发动机燃烧机油时会冒蓝色尾气，燃油未充分燃烧时会冒白色尾气。可见尾气量还会随发动机负荷增大。旧机器的可见尾气远多于现代机器；现代机器只有在发生严重故障时才会明显排出可见尾气。在低温空气中，燃烧产生的水分也会凝结成一小段白色尾迹，并在一两米内气化，即使发动机完好也会出现。"/>
         <text name="rms_tutorialMode_label" text="教程模式"/>
         <text name="rms_tutorialMode_tooltip" text="在游戏过程中显示教程提示。"/>
         <text name="rms_tutorialResetTips_label" text="重置提示"/>
@@ -76,18 +79,18 @@
         <text name="rms_drivetrainEnabled_tooltip" text="允许手动控制拖拉机的驱动前桥和差速锁。如果已安装Enhanced Vehicle，其差速器控制会被关闭；如需交还，可关闭此选项，再在Enhanced Vehicle的菜单中重新启用差速器。"/>
         <text name="rms_drivetrainAllowAutoMode_label" text="允许自动驱动模式"/>
         <text name="rms_drivetrainAllowAutoMode_tooltip" text="为驱动模式选择器添加自动位置：车轮打滑或在负载下以作业速度行驶时，前桥会自动接合；在道路上则会分离。关闭此选项时，留在自动模式的载具会恢复为四轮驱动。"/>
-        <text name="rms_drivetrainParkBrakeEnabled_label" text="驻车制动"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="为所有受管理的载具添加驻车制动。配备CVT或动力换挡变速箱的新型机器会自动启用和解除驻车制动；其他机器则需使用独立按键控制。如果已安装Enhanced Vehicle，其驻车制动会被关闭；如需交还，可关闭此选项，再在Enhanced Vehicle的菜单中重新启用驻车制动。"/>
+        <text name="rms_drivetrainParkBrakeEnabled_label" text="停车制动"/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="为所有受管理的载具添加停车制动。配备CVT或动力换挡变速箱的新型机器会自动启用和解除停车制动；其他机器则需使用独立按键控制。如果已安装Enhanced Vehicle，其停车制动会被关闭；如需交还，可关闭此选项，再在Enhanced Vehicle的菜单中重新启用停车制动。"/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="维修车间"/>
         <text name="rms_ws_tab_summary" text="概览"/>
-        <text name="rms_ws_tab_diagnostic" text="诊断与估价"/>
+        <text name="rms_ws_tab_diagnostic" text="检测与报价"/>
         <text name="rms_ws_tab_interventions" text="作业"/>
         <text name="rms_ws_tab_record" text="技术档案"/>
         <text name="rms_ws_section_alerts" text="警告与优先事项"/>
         <text name="rms_ws_section_fluids" text="油液"/>
         <text name="rms_ws_section_breakdowns" text="已知故障"/>
-        <text name="rms_ws_section_quote" text="修理估价"/>
+        <text name="rms_ws_section_quote" text="修理报价"/>
         <text name="rms_ws_section_choose_intervention" text="选择作业"/>
         <text name="rms_ws_section_work_order" text="维修工单"/>
         <text name="rms_ws_section_paint_order" text="喷漆工单"/>
@@ -101,7 +104,7 @@
         <text name="rms_ws_label_more_parts" text="另有%s个"/>
         <text name="rms_ws_label_committed_cost" text="已确定费用"/>
         <text name="rms_ws_label_finish_time" text="完成时间"/>
-        <text name="rms_ws_label_total_estimate" text="估价总额"/>
+        <text name="rms_ws_label_total_estimate" text="报价总额"/>
         <text name="rms_ws_button_configure_repair" text="配置修理"/>
         <text name="rms_ws_info_inspection_reveals" text="检查或保养可能确认更多故障。"/>
         <text name="rms_ws_status_ready_title" text="维修车间已就绪"/>
@@ -122,6 +125,16 @@
         <text name="rms_service_access_easy" text="容易"/>
         <text name="rms_service_access_average" text="一般"/>
         <text name="rms_service_access_demanding" text="要求较高"/>
+        <text name="rms_shop_reliability_average" text="可靠性一般"/>
+        <text name="rms_shop_reliability_fair" text="可靠性尚可"/>
+        <text name="rms_shop_reliability_good" text="可靠性良好"/>
+        <text name="rms_shop_reliability_very_good" text="可靠性很好"/>
+        <text name="rms_shop_service_access_easy" text="保养便利性高"/>
+        <text name="rms_shop_service_access_average" text="保养便利性一般"/>
+        <text name="rms_shop_service_access_demanding" text="保养便利性低"/>
+        <text name="rms_owner_care_careful" text="精心保养"/>
+        <text name="rms_owner_care_regular" text="定期保养"/>
+        <text name="rms_owner_care_neglected" text="疏于保养"/>
         <text name="rms_ws_label_overhaul_count" text="大修次数"/>
         <text name="rms_ws_label_maintenance_log" text="保养记录"/>
         <text name="rms_ws_label_last_report" text="上次报告"/>
@@ -135,11 +148,12 @@
         <text name="rms_ws_faults_none_hint" text="检查或保养可以确认机器尚未表现出来的故障。"/>
         <text name="rms_ws_faults_warning_title" text="有待确认的故障"/>
         <text name="rms_ws_faults_warning_hint" text="警告灯亮起。检查或保养确认故障后即可修理。"/>
-        <text name="rms_ws_reason_repair_unselected" text="未勾选任何故障。请在“诊断与估价”中勾选要修理的故障。"/>
+        <text name="rms_ws_reason_repair_unselected" text="未勾选任何故障。请在“检测与报价”中勾选要修理的故障。"/>
         <text name="rms_ws_reason_overhaul_none" text="机械大修用于修复状态低于50%的系统，这台机器没有此类系统。"/>
         <text name="rms_ws_reason_bodywork_mobile" text="移动维修车间不做喷漆，喷漆在经销商处进行。"/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s：%s。请使用设备齐全的维修车间。"/>
-        <text name="rms_mobile_workshop_diagnostic_required" text="需要电子诊断"/>
+        <text name="rms_workshop_diagnostic_blocked" text="%s：%s。请将推车的检测设备连接到机器上。"/>
+        <text name="rms_mobile_workshop_diagnostic_required" text="需要电子检测"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="需要拆卸或专用工具"/>
         <text name="rms_mobile_workshop_high_voltage_required" text="需要高压设备"/>
         <text name="rms_ws_status_in_progress_short_format" text="正在进行%s…"/>
@@ -160,8 +174,6 @@
         <text name="rms_ws_action_cancel_service" text="取消作业"/>
         <text name="rms_ws_age_unit" text="个月"/>
         <text name="rms_ws_hours_unit" text="h"/>
-        <text name="rms_ws_option_yes" text="是"/>
-        <text name="rms_ws_option_no" text="否"/>
         <text name="rms_ws_no_last_report_message" text="暂无报告"/>
         <text name="rms_ws_no_log_empty_message" text="记录仍为空"/>
         <text name="rms_ws_no_report_message" text="暂无报告"/>
@@ -196,314 +208,7 @@
         <text name="rms_log_button_show_report" text="显示报告"/>
         <text name="rms_log_empty" text="记录仍为空"/>
         <!-- Breakdowns -->
-        <text name="rms_breakdowns_severity_permanent" text="永久"/>
-        <text name="rms_breakdowns_severity_reduce_power" text="功率损失"/>
-        <text name="rms_breakdowns_severity_shutdown" text="停止运行"/>
-        <text name="rms_breakdowns_severity_minor" text="轻微"/>
-        <text name="rms_breakdowns_severity_moderate" text="中等"/>
-        <text name="rms_breakdowns_severity_major" text="严重"/>
-        <text name="rms_breakdowns_severity_critical" text="危急"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="转向拉杆机构轻微磨损。出现少量间隙，转向精度略有降低。"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="转向拉杆机构中度磨损。间隙增大，车轮定位出现偏差：转向发飘，并略微向一侧跑偏。"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="转向拉杆机构严重磨损。间隙很大，车轮定位明显偏差：载具向一侧跑偏，难以保持行驶路线，球头有脱开的风险。"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="转向拉杆机构发生危急失效。一处球头已脱开：转向已无法正确控制车轮，继续行驶十分危险。"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="转向拉杆机构失效"/>
-        <text name="rms_breakdowns_general_wear_stage1_description" text="多年使用积累的应力使主要部件留下轻微且不可逆的磨损，整体性能略有下降。"/>
-        <text name="rms_breakdowns_gear_disengage_message" text="已切换至空挡"/>
-        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="预热塞开始退化。冷启动所需时间变长，热启动不受影响。"/>
-        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="多个预热塞性能减弱或已失效。冷启动困难，发动机升温前可能怠速不稳。"/>
-        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="预热塞严重失效。冷启动很不可靠，暖机过程中仍会运行不稳。"/>
-        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="预热塞完全失效。温度过低时无法启动发动机。"/>
-        <text name="rms_breakdowns_part_vehicle" text="载具"/>
-        <text name="rms_breakdowns_part_valve_train" text="配气机构"/>
-        <text name="rms_breakdowns_part_consumables" text="消耗品"/>
-        <text name="rms_breakdowns_part_cooling_system" text="冷却系统"/>
-        <text name="rms_breakdowns_part_clutch" text="离合器"/>
-        <text name="rms_breakdowns_part_cvt_chain" text="无级变速箱"/>
-        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="传动比控制"/>
-        <text name="rms_breakdowns_part_cvt" text="CVT"/>
-        <text name="rms_breakdowns_part_engine" text="发动机"/>
-        <text name="rms_breakdowns_part_ecu" text="ECU"/>
-        <text name="rms_breakdowns_part_battery" text="蓄电池"/>
-        <text name="rms_breakdowns_part_traction_battery" text="动力电池"/>
-        <text name="rms_breakdowns_part_hv_contactor" text="高压接触器"/>
-        <text name="rms_breakdowns_part_hv_wiring" text="高压线束"/>
-        <text name="rms_breakdowns_part_inverter" text="逆变器"/>
-        <text name="rms_breakdowns_part_dcdc_converter" text="电压转换器"/>
-        <text name="rms_breakdowns_part_onboard_charger" text="车载充电机"/>
-        <text name="rms_breakdowns_part_electric_motor_bearings" text="电动机轴承"/>
-        <text name="rms_breakdowns_part_electric_motor_windings" text="电动机绕组"/>
-        <text name="rms_breakdowns_part_motor_position_sensor" text="电机位置传感器"/>
-        <text name="rms_breakdowns_part_coolant_pump" text="冷却液泵"/>
-        <text name="rms_breakdowns_part_reducer" text="减速器"/>
-        <text name="rms_breakdowns_part_brake_system" text="制动系统"/>
-        <text name="rms_breakdowns_part_wiring" text="线束与连接器"/>
-        <text name="rms_breakdowns_part_wheel_bearing" text="车轮轴承"/>
-        <text name="rms_breakdowns_part_alternator_regulator" text="交流发电机调节器"/>
-        <text name="rms_breakdowns_part_turbocharger" text="涡轮增压器"/>
-        <text name="rms_breakdowns_part_transmission_thermostat" text="变速箱恒温阀"/>
-        <text name="rms_breakdowns_part_transmission_seal" text="变速箱密封件"/>
-        <text name="rms_breakdowns_part_track_tensioner" text="履带张紧器"/>
-        <text name="rms_breakdowns_part_thermostat" text="节温器"/>
-        <text name="rms_breakdowns_part_oil_pump" text="机油泵"/>
-        <text name="rms_breakdowns_part_synchronizer" text="同步器"/>
-        <text name="rms_breakdowns_part_steering_linkage" text="转向拉杆机构"/>
-        <text name="rms_breakdowns_part_powershift_hydraulic_pump" text="动力换挡液压泵"/>
-        <text name="rms_breakdowns_part_pto_drive_coupling" text="动力输出轴传动联轴器"/>
-        <text name="rms_breakdowns_part_pto_engagement_control" text="动力输出轴接合控制"/>
-        <text name="rms_breakdowns_part_pto_drive_output" text="动力输出轴"/>
-        <text name="rms_breakdowns_part_hydraulic_pump" text="液压泵"/>
-        <text name="rms_breakdowns_part_hydraulic_cylinder" text="液压缸"/>
-        <text name="rms_breakdowns_part_hydraulic_hose" text="液压软管"/>
-        <text name="rms_breakdowns_part_hydraulic_filter" text="液压滤清器"/>
-        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="液压油冷却器"/>
-        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="液压控制阀"/>
-        <text name="rms_breakdowns_part_fan_clutch" text="风扇离合器"/>
-        <text name="rms_breakdowns_part_fuel_pump" text="燃油泵"/>
-        <text name="rms_breakdowns_part_fuel_injectors" text="喷油器"/>
-        <text name="rms_breakdowns_part_fuel_filter" text="燃油滤清器"/>
-        <text name="rms_breakdowns_part_fuel_line" text="燃油管路"/>
-        <text name="rms_breakdowns_part_glow_plugs" text="预热塞"/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage1_description" text="动力换挡液压泵压力下降。换挡时会有轻微延迟和生硬感。"/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage2_description" text="动力换挡液压泵的密封件磨损。换挡时会出现明显延迟和冲击。"/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage3_description" text="动力换挡液压泵失效。换挡时会有严重延迟并伴随猛烈冲击。"/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage4_description" text="动力换挡变速箱的液压泵已经失效。变速箱卡在空挡。"/>
-        <text name="rms_breakdowns_pto_auto_disengage_message" text="动力输出轴已脱开"/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage1_description" text="动力输出轴传动联轴器开始磨损。动力输出轴有时可能脱开。"/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage2_description" text="动力输出轴传动联轴器中度磨损。脱开变得更加频繁。"/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage3_description" text="动力输出轴传动联轴器严重磨损。动力输出轴会反复脱开。"/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_description" text="动力输出轴传动联轴器发生危急失效。动力输出轴无法再传递动力。"/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_message" text="动力输出轴传动联轴器失效"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage1_description" text="动力输出轴轴承开始磨损，运行时会产生轻微噪声。"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage2_description" text="动力输出轴轴承中度磨损，会产生清晰可闻的运行噪声。"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage3_description" text="动力输出轴轴承严重磨损，会产生很大的噪声并偶尔脱开。"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_description" text="动力输出轴发生危急失效，无法再运行。"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_message" text="动力输出轴失效"/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage1_description" text="动力输出轴接合控制响应时断时续，可能会拒绝接合指令。"/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage2_description" text="动力输出轴接合控制经常无法接合动力输出轴。"/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage3_description" text="动力输出轴接合控制严重失效，大多数接合尝试都会失败。"/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_description" text="动力输出轴接合控制完全失效，无法接合动力输出轴。"/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_message" text="动力输出轴接合控制失效"/>
-        <text name="rms_breakdowns_pto_engagement_blocked_message" text="动力输出轴拒绝接合"/>
-        <text name="rms_breakdowns_quick_fix_stage" text="临时修理"/>
-        <text name="rms_breakdowns_defected_parts_stage" text="缺陷"/>
-        <text name="rms_breakdowns_defected_parts_detected_description" text="系统运行正常，但检查发现了一个有缺陷的部件。该部件已没有安全余量，建议预防性更换，以避免突然失效。"/>
-        <text name="rms_breakdowns_dead_battery_message" text="蓄电池电力不足"/>
-        <text name="rms_breakdowns_cold_traction_battery_message" text="动力电池低温：续航和功率降低"/>
-        <text name="rms_breakdowns_temporarily_repaired_description" text="系统运行正常，但完全依赖临时修理。为避免负载下发生故障，建议尽快彻底更换相关部件。"/>
-        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="涡轮增压器轴承磨损。可听到轻微啸叫声，高转速时功率略有下降。"/>
-        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="涡轮增压器密封件泄漏。功率明显下降，燃油消耗增加。"/>
-        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="涡轮叶片损坏。功率大幅下降，重负载时发动机可能熄火。"/>
-        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="涡轮增压器发生危急失效。发动机已失去大部分功率，并可能遭受严重内部损伤。"/>
-        <text name="rms_breakdowns_transmission_slip_stage1_description" text="离合器片磨损。负载下离合器打滑会偶尔导致功率损失。"/>
-        <text name="rms_breakdowns_transmission_slip_stage2_description" text="离合器明显磨损。加速和重负载时会明显打滑。"/>
-        <text name="rms_breakdowns_transmission_slip_stage3_description" text="离合器严重磨损。剧烈打滑使动力难以传递到车轮。"/>
-        <text name="rms_breakdowns_transmission_slip_stage4_description" text="离合器已完全烧毁。载具无法行驶。"/>
-        <text name="rms_breakdowns_transmission_slip_stage4_message" text="离合器失效"/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="同步器磨损。换挡时偶尔会发出齿轮摩擦声或难以换挡。"/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="同步器损坏。换挡经常困难并可能失败。"/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="同步器轮齿断裂。换挡失败或负载下跳挡的概率很高。"/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="同步器完全失效。无法换挡。"/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_message" text="同步器失效"/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage1_description" text="变速箱恒温阀开始失效。油冷却器开启过晚，变速箱油温略高于正常值。"/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage2_description" text="变速箱恒温阀响应不良。油冷却器开启得过晚，变速箱油温明显高于正常值，油液老化加快。"/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage3_description" text="变速箱恒温阀几乎不再开启油冷却器。负载一升高，变速箱油便接近过热。"/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage4_description" text="变速箱恒温阀完全失效。阀门卡在固定开度，变速箱油会因卡住的位置不同而过热或无法升温。"/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="变速箱油轻微泄漏。作业时油位缓慢下降。"/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="变速箱油中度泄漏。油位明显下降，变速箱温度升高。"/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="变速箱油严重泄漏。油位迅速下降，变速箱在负载下过热。"/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="变速箱油发生危急泄漏。剩余油量不足以保证变速箱安全运行。"/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="履带张紧器发生轻微故障。履带张力略显不稳，阻力和磨损轻微增加。"/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="履带张紧器发生中度故障。张力变得不稳定，行驶效率降低，跑偏风险增加。"/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="履带张紧器发生严重故障。张力严重失常，动力传递效率降低，履带脱落的风险增加。"/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="履带张紧器发生危急失效。履带无法保持正确张紧，载具不能再安全使用。"/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_message" text="履带张紧器失效"/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage1_description" text="发动机节温器开始失效。发动机需要更长时间才能达到最佳温度，或在略高的温度下运行。"/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage2_description" text="节温器响应不良。发动机温度调节不稳定，磨损随之增加。"/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage3_description" text="节温器几乎不再开启。负载一升高，发动机便会过热。"/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage4_description" text="节温器完全失效。发动机冷却液无法正常循环，导致迅速且严重的过热。"/>
-        <text name="rms_breakdowns_overheat_protection_stage1_description" text="发动机已进入保护模式。温度下降前，功率会受到限制。"/>
-        <text name="rms_breakdowns_overheat_protection_stage1_message" text="过热保护：功率降低"/>
-        <text name="rms_breakdowns_overheat_protection_stage2_description" text="过热保护进一步加强。发动机只能输出一半功率。"/>
-        <text name="rms_breakdowns_overheat_protection_stage2_message" text="过热保护：功率减半"/>
         <text name="rms_thermal_power_restored_message" text="过热保护：功率限制已解除"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="过热保护已达到最大强度。发动机只剩一小部分功率。"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="过热保护：功率大幅降低"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="为防止损坏，发动机已关闭。请等待发动机冷却后再重新启动。"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="过热保护：发动机已关闭"/>
-        <text name="rms_breakdowns_overload_breakdown_stage2_message" text="严重过载！请立即降低载具负载。"/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="机油泵发生轻微故障。机油压力降低，发动机扭矩略有下降，发动机温度升高，并可能出现机械敲击声。"/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="机油泵发生中度故障。机油压力不足，发动机扭矩明显下降，发动机温度升高，并能清楚听到机械敲击声。"/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="机油泵发生严重故障。机油压力降至危险水平，发动机扭矩大幅下降，很可能过热，机械敲击严重，并可能熄火。"/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="机油泵发生危急失效。机油循环不足以保证发动机安全运行，无法启动或继续运行。"/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_message" text="机油泵失效"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="发动机已抱死，无法继续转动。"/>
-        <text name="rms_breakdowns_engine_jam_stage1_message" text="发动机抱死"/>
-        <text name="rms_breakdowns_engine_stalled_message" text="发动机熄火"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU发生轻微故障。发动机功率略有降低。"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU发生中度故障。功率明显下降，燃油消耗增加。"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="ECU发生严重故障。功率大幅下降，燃油消耗很高，并存在发动机熄火风险。"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="ECU完全失效。发动机无法控制，也无法启动。"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="ECU失效"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="线束和电气连接器轻微腐蚀。接触电阻增加会导致灯光偶尔闪烁、供电不稳和启动困难。停放时，漏电流会使蓄电池放电。"/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="线束和电气连接器中度腐蚀。接触不良会导致灯光频繁闪烁、供电不稳、启动困难，并可能使发动机熄火。停放时，漏电流会使蓄电池放电。"/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="线束和电气连接器严重腐蚀。关键电路供电不稳，灯光可能完全失效，发动机扭矩降低，熄火概率很高，启动也不可靠。停放时，漏电流会使蓄电池放电。"/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="线束严重腐蚀导致启动机控制电路失效。灯光无法工作，发动机也无法启动。停放时，漏电流会使蓄电池放电。"/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_message" text="启动机电路失效"/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage1_description" text="线束和电气连接器轻微腐蚀。接触电阻增加会导致灯光偶尔闪烁和供电不稳。停放时，漏电流会使辅助蓄电池放电。"/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage2_description" text="线束和电气连接器中度腐蚀。接触不良会导致灯光频繁闪烁、供电不稳，并可能出现断电。停放时，漏电流会使辅助蓄电池放电。"/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage3_description" text="线束和电气连接器严重腐蚀。关键电路供电不稳，灯光可能完全失效，功率降低，断电概率很高。停放时，漏电流会使辅助蓄电池放电。"/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage4_description" text="线束和电气连接器危急腐蚀。灯光无法工作，载具也无法启动。停放时，漏电流会使辅助蓄电池放电。"/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage4_message" text="线束和连接器失效"/>
-        <text name="rms_breakdowns_coolant_leak_stage1_description" text="冷却液轻微泄漏。冷却效率略有降低。"/>
-        <text name="rms_breakdowns_coolant_leak_stage2_description" text="冷却液中度泄漏。冷却能力明显下降，发动机温度上升得更快。"/>
-        <text name="rms_breakdowns_coolant_leak_stage3_description" text="冷却液严重泄漏。冷却能力大幅下降，过热风险很高。"/>
-        <text name="rms_breakdowns_coolant_leak_stage4_description" text="冷却系统发生危急失效。冷却液不足以保证发动机安全运行。"/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="负载下变速箱效率略有下降。"/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="负载下效率明显下降，传动比变得不稳定。"/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="变速箱难以传递驱动力并维持所要求的传动比。"/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="变速箱无法可靠地传递驱动力，车辆几乎无法行驶。"/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="变速箱故障"/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="检测到CVT变速箱故障的早期迹象。需要检查和修理。"/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="CVT变速箱故障正在恶化。继续使用可能导致变速箱进入应急模式。"/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="CVT变速箱发生危急损坏。变速箱处于应急模式，载具最高速度受到限制。"/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="CVT变速箱完全失效。修理前无法使用载具。"/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_message" text="CVT变速箱失效"/>
-        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="蓄电池轻微硫化。有效容量降低，负载下的电量储备减少。"/>
-        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="蓄电池中度硫化。有效容量大幅降低，发动机启动困难。"/>
-        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="蓄电池严重硫化。可用容量严重不足，发动机启动性能变得不稳定。"/>
-        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="蓄电池危急硫化。可用容量几乎为零，启动功率不足以保证可靠启动。"/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="辅助蓄电池轻微硫化。有效容量降低，负载下的电量储备减少。"/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="辅助蓄电池中度硫化。有效容量大幅降低，电量储备消耗得更快。"/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="辅助蓄电池严重硫化。可用容量严重不足，电量储备很快耗尽。"/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="辅助蓄电池危急硫化。可用容量几乎为零，已不足以保证可靠启动。"/>
-        <text name="rms_breakdowns_brake_malfunction_stage1_description" text="制动片磨损。制动效果略有下降。"/>
-        <text name="rms_breakdowns_brake_malfunction_stage2_description" text="制动液泄漏或制动盘磨损。制动距离明显增加。"/>
-        <text name="rms_breakdowns_brake_malfunction_stage3_description" text="制动压力大幅下降。制动效果极弱且不可靠。"/>
-        <text name="rms_breakdowns_brake_malfunction_stage4_description" text="制动系统完全失效。继续驾驶极其危险。"/>
-        <text name="rms_breakdowns_brake_malfunction_stage4_message" text="制动失效"/>
-        <text name="rms_breakdowns_bearing_wear_stage1_description" text="轴承轻微磨损。机械阻力略有增加，可能出现异常运行噪声。"/>
-        <text name="rms_breakdowns_bearing_wear_stage2_description" text="轴承中度磨损。摩擦明显增加，噪声加重，机械效率下降。"/>
-        <text name="rms_breakdowns_bearing_wear_stage3_description" text="轴承严重磨损。摩擦和噪声很大，负载下确实存在卡死风险。"/>
-        <text name="rms_breakdowns_bearing_wear_stage4_description" text="轴承发生危急失效。轴承接近完全卡死，无法继续运行。"/>
-        <text name="rms_breakdowns_bearing_wear_stage4_message" text="轴承失效"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="交流发电机调节器发生轻微故障。充电输出降低，蓄电池充电效率下降。停放时，漏电流会使蓄电池放电。"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="交流发电机调节器发生中度故障。充电输出降低且不稳定，导致蓄电池充电不足，电压损失增大。停放时，漏电流会使蓄电池放电。"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="交流发电机调节器发生严重故障。充电输出大幅降低，供电不稳，电气系统存在严重损耗。停放时，漏电流会使蓄电池放电。"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="交流发电机调节器完全失效。蓄电池不再充电，电气系统只能依靠剩余电量工作。停放时，漏电流会使蓄电池放电。"/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="电动机轴承轻微磨损。出现轻微噪声，耗电量略有增加。"/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="电动机轴承中度磨损。噪声清晰可闻，耗电量增加，功率略有下降。"/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="电动机轴承严重磨损。噪声很大，电动机发热，功率明显下降。"/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="电动机轴承发生危急失效。电动机卡死，载具无法继续行驶。"/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_message" text="电动机轴承失效"/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="电动机绕组轻微劣化。功率略有下降，电动机发热增加。"/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="电动机绕组中度劣化。功率明显下降，电动机发热，耗电量增加。"/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="电动机绕组严重劣化。功率大幅下降，电动机严重发热，并可能出现断电。"/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="电动机绕组发生危急失效。电动机短路，无法继续运行。"/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_message" text="电动机绕组失效"/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="电机位置传感器发生轻微故障。负载下出现短暂顿挫。"/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="电机位置传感器发生中度故障。顿挫频繁，功率下降。"/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="电机位置传感器发生严重故障。顿挫剧烈，功率骤降，并出现断电。"/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="电机位置传感器完全失效。电动机无法控制，载具也无法启动。"/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_message" text="电机位置传感器失效"/>
-        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="逆变器发生轻微故障。电动机功率略有降低。"/>
-        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="逆变器发生中度故障。功率下降明显，耗电量增加。"/>
-        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="逆变器发生严重故障。功率大幅下降，并可能出现断电。"/>
-        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="逆变器完全失效。电动机不再获得供电，载具无法启动。"/>
-        <text name="rms_breakdowns_inverter_malfunction_stage4_message" text="逆变器失效"/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="电压转换器发生轻微故障。辅助蓄电池充电效果变差。"/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="电压转换器发生中度故障。辅助蓄电池充电减少且不稳定。"/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="电压转换器发生严重故障。辅助蓄电池几乎不再充电，并在行驶中耗尽。"/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="电压转换器完全失效。辅助蓄电池不再充电，载具只能依靠剩余电量工作。"/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="车载充电机发生轻微故障。在充电站充电略微变慢。"/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="车载充电机发生中度故障。在充电站充电明显变慢。"/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="车载充电机发生严重故障。在充电站充电非常缓慢。"/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="车载充电机完全失效。动力电池无法再充电。"/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage4_message" text="车载充电机停止工作：无法充电"/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="高压线束绝缘轻微下降。显示一条警告，没有其他影响。"/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="高压线束绝缘中度下降。出于安全考虑，功率被降低。"/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="高压线束绝缘严重下降。功率被大幅降低，并出现断电。"/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="高压线束绝缘发生危急失效。出于安全考虑，载具拒绝启动。"/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage4_message" text="高压线束绝缘下降"/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="动力电池电芯发生轻微故障。续航略有下降。"/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="动力电池电芯发生中度故障。续航明显下降，功率受到限制。"/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="动力电池电芯发生严重故障。续航和功率骤降，并可能出现断电。"/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="动力电池发生危急失效。载具无法再通电启用。"/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_message" text="动力电池失效"/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="高压接触器轻微磨损。偶尔出现供电中断。"/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="高压接触器中度磨损。供电中断变得有规律。"/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="高压接触器严重磨损。供电中断频繁。"/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="高压接触器发生危急失效。动力电池不再向载具供电，载具无法启动。"/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage4_message" text="高压接触器失效"/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="冷却液泵发生轻微故障。冷却液循环变差，温度升得略高一些。"/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="冷却液泵发生中度故障。冷却能力明显下降。"/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="冷却液泵发生严重故障。冷却能力大幅下降，负载下很可能过热。"/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="冷却液泵完全失效。冷却液几乎不再循环，载具很快过热。"/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="减速器齿轮和轴承轻微磨损。行驶时出现轻微噪声。"/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="减速器齿轮和轴承中度磨损。噪声清晰可闻，耗电量增加。"/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="减速器齿轮和轴承严重磨损。噪声很大，减速器发热，传到车轮的功率下降。"/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="减速器发生危急失效。减速器卡死，载具无法继续行驶。"/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage4_message" text="减速器失效"/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="配气机构发生轻微故障。发动机扭矩略有下降，燃油消耗增加，机构中出现异常噪声。"/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="配气机构发生中度故障。发动机扭矩明显下降，燃油消耗增加，机构噪声明显，负载下发动机可能出现迟滞。"/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="配气机构发生严重故障。发动机扭矩大幅下降，燃油消耗很高，机械噪声严重，并可能失火或熄火。"/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage4_description" text="配气机构发生危急失效。发动机无法可靠运行，不能启动或继续使用。"/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage4_message" text="配气机构失效"/>
-        <text name="rms_breakdowns_voltage_sag_message" text="电路电压不足"/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="燃油泵开始提前磨损。发动机功率略有下降，燃油消耗增加。"/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="燃油压力下降。功率明显降低，燃油消耗增加，发动机偶尔熄火。"/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="燃油压力已降至危险水平。功率大幅降低，燃油消耗很高，发动机频繁熄火。"/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="燃油泵完全失效。燃油不再输送至发动机。"/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_message" text="燃油泵失效"/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="一个或多个喷油器喷嘴轻微堵塞。发动机可能运行稍显不稳，功率略有下降。"/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="燃油雾化不良。发动机在负载下出现迟滞，功率明显下降并伴有顿挫。"/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="一个喷油器卡住。发动机运行状况很差，功率大幅下降，启动不可靠。"/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="一个喷油器完全失效。发动机无法正常运行，并可能完全无法启动。"/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_message" text="喷油器失效"/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="燃油滤清器轻微堵塞。重负载下燃油流量略有下降。"/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="燃油滤清器中度堵塞。负载下流量不足，功率下降，发动机有时出现迟滞。"/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="燃油滤清器严重堵塞。燃油供应受到严重限制，功率明显下降，并可能熄火。"/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="燃油滤清器完全堵塞。发动机无法获得可靠运行所需的燃油。"/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_message" text="燃油滤清器堵塞"/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage1_description" text="燃油管路轻微进气。燃油供应变得略有波动。"/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage2_description" text="燃油管路中度进气。燃油供应变得不稳定，功率下降并出现迟滞。"/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage3_description" text="燃油管路严重进气。发动机运行非常不稳，熄火风险很高。"/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_description" text="燃油管路发生危急失效并大量进气。发动机无法正常获得燃油。"/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_message" text="燃油管路进气"/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="风扇离合器发生轻微故障。风扇响应效率降低，冷却性能略有下降。"/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="风扇离合器发生中度故障。风扇接合不稳定，冷却效率明显下降。"/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="风扇离合器发生严重故障。风扇无法提供足够气流，发动机更容易过热。"/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="风扇离合器发生危急失效。风扇无法提供必要的冷却。"/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="传动比控制响应变慢，精度下降。"/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="传动比变化不规律，控制响应不佳。"/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="传动比控制受到严重干扰，传递的驱动力下降。"/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="传动比控制失效，变速箱几乎无法使用。"/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="传动比控制故障"/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="液压缸轻微内泄。升起的农具会在负载下缓慢下沉。"/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="液压缸中度内泄。意外下沉已经明显，承载越重，下沉越快。"/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="液压缸严重内泄。重型农具无法可靠保持位置。"/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="液压缸危急内泄。任何升起的负载都会自行快速下降。"/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="液压泵轻微内泄。农具动作略微变慢。"/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="液压泵密封件磨损。液压动作明显变慢。"/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="液压泵损坏。农具动作极慢且出力很低。"/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="液压泵失效。液压系统无法工作。"/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_message" text="液压泵失效"/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="液压软管表面略微潮湿。少量液压油渗出，液压响应略有降低。"/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="液压软管明显渗油。液压油持续流失，液压功能响应变慢。"/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="液压软管正在泄漏。液压油流失明显，液压功能显著减弱。"/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="液压软管严重外泄。液压油迅速流失，液压性能大幅下降。"/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="液压滤清器轻微堵塞，并开始限制流量。液压功能略有变慢。保养会更换滤清器。"/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="液压滤清器中度堵塞。所有液压功能都明显变慢。保养会更换滤清器。"/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="液压滤清器严重堵塞。液压响应变得很慢。保养会更换滤清器。"/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="液压滤清器完全堵塞。液压功能几乎没有响应。保养会更换滤清器。"/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="液压油冷却器效率略有下降。长时间进行液压作业时，油温略微升高。"/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="液压油冷却器性能不良。持续进行液压作业时，油温明显升高。"/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="液压油冷却器严重退化。重负荷液压作业会使油液迅速过热。"/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="液压油冷却器已故障。长时间进行液压作业会使油液严重过热，并加快液压泵磨损。"/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="一个液压控制阀开始卡滞。某项液压功能偶尔响应迟缓，并在负载下出力下降。"/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="一个液压控制阀间歇性卡滞。某项液压功能动作变慢，负载越大，出力下降越多。"/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="一个液压控制阀严重卡滞。某项液压功能动作不稳，在重负载下难以工作。"/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="一个液压控制阀严重损坏。某项液压功能反复停止，几乎无法移动重载。"/>
         <text name="rms_breakdown_at_progress_message" text="进行中"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="警告！发动机温度低，请降低负载。"/>
@@ -538,6 +243,9 @@
         <text name="rms_spec_months_ago_unit" text="个月"/>
         <text name="rms_spec_month_ago_one" text="个月"/>
         <text name="rms_spec_months_ago_format" text="%s%s前"/>
+        <text name="rms_shop_last_maintenance_months_ago" text="上次保养：%s%s前"/>
+        <text name="rms_shop_last_maintenance_this_month" text="上次保养：本月"/>
+        <text name="rms_shop_last_maintenance_never" text="从未保养"/>
         <text name="rms_spec_work_hours_ago_format" text="%s%s工作前"/>
         <text name="rms_spec_work_under_hour_ago" text="不到1h工作前"/>
         <text name="rms_spec_maintenance_complete_notification" text="作业完成：%s"/>
@@ -579,11 +287,9 @@
         <text name="rms_spec_part_types_used" text="二手"/>
         <text name="rms_spec_part_types_aftermarket" text="副厂"/>
         <text name="rms_spec_part_types_oem" text="原厂"/>
-        <text name="rms_spec_part_types_premium" text="高级"/>
         <text name="rms_spec_consumable_types_used" text="经济型"/>
         <text name="rms_spec_consumable_types_aftermarket" text="副厂"/>
         <text name="rms_spec_consumable_types_oem" text="原厂"/>
-        <text name="rms_spec_consumable_types_premium" text="高级"/>
         <text name="rms_spec_repair_type_fix" text="临时"/>
         <text name="rms_spec_repair_type_replacement" text="标准"/>
         <text name="rms_spec_repair_type_advanced" text="彻底"/>
@@ -609,9 +315,11 @@
         <text name="rms_service_months" text="%s个月"/>
         <text name="rms_service_month" text="%s 个月"/>
         <text name="rms_service_calendar_due" text="已到日历期限"/>
-        <text name="rms_service_program_estimated" text="估算保养计划"/>
+        <text name="rms_service_program_estimated" text="推算保养计划"/>
         <text name="rms_ws_levels_recommended_for" text="建议用于本机"/>
         <text name="rms_ws_levels_interval" text="每 %s"/>
+        <text name="rms_ws_levels_every_service" text="每次保养"/>
+        <text name="rms_ws_levels_one_service_in" text="每%d次保养一次"/>
         <text name="rms_ws_levels_duration" text="%s 小时 %s 分钟"/>
         <text name="rms_ws_levels_duration_hours" text="%s 小时"/>
         <text name="rms_ws_levels_duration_minutes" text="%s 分钟"/>
@@ -620,21 +328,33 @@
         <text name="rms_ws_levels_blown" text="吹扫"/>
         <text name="rms_ws_levels_new" text="新件"/>
         <text name="rms_ws_levels_new_plural" text="新件"/>
+        <text name="rms_ws_levels_new_adblue" text="新件 + AdBlue"/>
         <text name="rms_ws_levels_filters" text="滤清器"/>
         <text name="rms_ws_levels_filters_all" text="机油、燃油和液压"/>
         <text name="rms_ws_levels_filters_engine" text="机油和燃油"/>
+        <text name="rms_ws_levels_filters_all_transmission" text="机油、燃油、变速箱和液压"/>
+        <text name="rms_ws_levels_filters_engine_transmission" text="机油、燃油和变速箱"/>
         <text name="rms_ws_levels_filters_hydraulic" text="液压"/>
         <text name="rms_ws_levels_checks" text="调整与检查"/>
         <text name="rms_ws_levels_checks_detail" text="气门、喷油器、节温器"/>
         <text name="rms_ws_levels_checks_done" text="已完成"/>
         <text name="rms_ws_levels_fault_search" text="故障排查"/>
         <text name="rms_ws_levels_fault_search_detail" text="同标准检查"/>
-        <text name="rms_ws_levels_fault_search_mobile_detail" text="不读取故障码"/>
+        <text name="rms_ws_levels_fault_search_no_tool_detail" text="不读取故障码"/>
         <text name="rms_ws_levels_included" text="包含"/>
         <text name="rms_ws_levels_mechanical" text="机械类"/>
         <text name="rms_ws_levels_every_level" text="每个级别：清洁散热器并润滑。"/>
-        <text name="rms_ws_quality_risk" text="缺陷风险"/>
+        <text name="rms_ws_quality_risk" text="质量问题风险"/>
         <text name="rms_ws_quality_reference" text="参考价格"/>
+        <text name="rms_ws_quality_donor" text="原车工时：%d h"/>
+        <text name="rms_ws_quality_donors" text="原车工时：%d至%d h"/>
+        <text name="rms_ws_quality_new_part" text="全新零件"/>
+        <text name="rms_ws_quality_used_warranty" text="保修3个月"/>
+        <text name="rms_ws_quality_partial_warranty" text="部分保修"/>
+        <text name="rms_ws_quality_no_warranty" text="无保修"/>
+        <text name="rms_ws_quality_oem_warranty" text="保修12个月"/>
+        <text name="rms_ws_quality_factory_warranty" text="原厂保修"/>
+        <text name="rms_warranty_used" text="拆解商保修：仅限零件"/>
         <text name="rms_ws_quality_delta" text="较原厂%s"/>
         <text name="rms_ws_repair_row_faults" text="处理的故障"/>
         <text name="rms_ws_repair_row_faults_detail" text="在已勾选的故障中"/>
@@ -647,26 +367,34 @@
         <text name="rms_ws_repair_row_part" text="失效部件"/>
         <text name="rms_ws_repair_row_part_detail" text="故障原因"/>
         <text name="rms_ws_repair_part_replaced" text="更换"/>
-        <text name="rms_ws_repair_row_stress" text="机械应力"/>
-        <text name="rms_ws_repair_row_stress_detail" text="系统中积累"/>
-        <text name="rms_ws_repair_stress_cleared" text="消除"/>
+        <text name="rms_ws_repair_row_worn_parts" text="磨损部件"/>
+        <text name="rms_ws_repair_row_worn_parts_detail" text="同一系统内"/>
+        <text name="rms_ws_repair_worn_parts_replaced" text="更换"/>
         <text name="rms_ws_repair_row_quality" text="配件质量"/>
         <text name="rms_ws_repair_row_quality_detail" text="在下方卡片中选择"/>
         <text name="rms_ws_repair_quality_choice" text="可选"/>
-        <text name="rms_ws_warranty_title" text="经销商保修"/>
+        <text name="rms_ws_warranty_title" text="保修"/>
         <text name="rms_ws_warranty_covered" text="有效"/>
         <text name="rms_ws_warranty_not_covered" text="无效"/>
-        <text name="rms_ws_warranty_free_here" text="原厂配件标准维修免费"/>
-        <text name="rms_ws_warranty_free_dealer" text="在经销商免费维修"/>
-        <text name="rms_ws_warranty_terms" text="自有载具，未满12个月且未满20小时"/>
+        <text name="rms_ws_warranty_terms" text="原厂：%d个月或%s h"/>
         <text name="rms_ws_badge_warranty" text="保修"/>
+        <text name="rms_warranty_base" text="%d个月或%s h（已包含）"/>
+        <text name="rms_warranty_extension" text="%d个月或%s h"/>
+        <text name="rms_warranty_partial" text="部分保修"/>
+        <text name="rms_warranty_own" text="自有维修车间不予保修"/>
+        <text name="rms_warranty_factory" text="原厂配件和工时费均在保修范围内"/>
+        <text name="rms_warranty_part" text="配件保修至车龄%d个月"/>
+        <text name="rms_warranty_lease" text="租赁车辆的维修不予保修"/>
+        <text name="rms_warranty_expired" text="保修已到期"/>
+        <text name="rms_warranty_overdue" text="拒保：保养逾期"/>
+        <text name="rms_warranty_options" text="须更换原厂配件"/>
+        <text name="rms_warranty_mobile" text="需支付移动维修车间的额外工时费"/>
         <text name="rms_ws_overhaul_row_systems" text="处理的系统"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="恢复"/>
         <text name="rms_ws_overhaul_systems_one" text="任选一个"/>
         <text name="rms_ws_overhaul_systems_all" text="全部"/>
         <text name="rms_ws_overhaul_row_condition" text="大修后状况"/>
         <text name="rms_ws_overhaul_row_condition_detail" text="至少"/>
-        <text name="rms_ws_overhaul_row_treated_detail" text="处理系统中的"/>
         <text name="rms_ws_overhaul_row_faults" text="故障"/>
         <text name="rms_ws_overhaul_row_faults_detail" text="无论是否已确认"/>
         <text name="rms_ws_overhaul_faults_repaired" text="修复"/>
@@ -676,6 +404,8 @@
         <text name="rms_ws_overhaul_fluids_own" text="其回路"/>
         <text name="rms_ws_overhaul_filters_both" text="燃油和液压"/>
         <text name="rms_ws_overhaul_filters_fuel" text="燃油"/>
+        <text name="rms_ws_overhaul_filters_both_transmission" text="燃油、变速箱和液压"/>
+        <text name="rms_ws_overhaul_filters_fuel_transmission" text="燃油和变速箱"/>
         <text name="rms_ws_overhaul_worn" text="状况低于50%的系统"/>
         <text name="rms_ws_paint_row_extent" text="修复的漆面损伤"/>
         <text name="rms_ws_paint_row_extent_detail" text="受损漆面比例"/>
@@ -690,15 +420,15 @@
         <text name="rms_ws_inspection_mechanical" text="机械故障"/>
         <text name="rms_ws_inspection_mechanical_detail" text="目视检查与功能测试"/>
         <text name="rms_ws_inspection_electronic" text="电子故障"/>
-        <text name="rms_ws_inspection_electronic_detail" text="用诊断仪读取故障码"/>
-        <text name="rms_ws_inspection_dormant" text="潜在缺陷"/>
-        <text name="rms_ws_inspection_dormant_detail" text="缺陷部件、临时修理"/>
+        <text name="rms_ws_inspection_electronic_detail" text="用检测设备读取故障码"/>
+        <text name="rms_ws_inspection_dormant" text="潜在质量问题"/>
+        <text name="rms_ws_inspection_dormant_detail" text="有质量问题的部件、临时修理"/>
         <text name="rms_ws_inspection_report" text="报告"/>
         <text name="rms_ws_inspection_report_detail" text="机器及各系统的状况"/>
         <text name="rms_ws_inspection_risk_detail" text="依据测试与测量"/>
         <text name="rms_ws_inspection_ratings" text="评级"/>
         <text name="rms_ws_inspection_measures" text="测量值"/>
-        <text name="rms_ws_inspection_assessed" text="已评估"/>
+        <text name="rms_ws_inspection_assessed" text="已评定"/>
         <text name="rms_ws_inspection_maintenance_note" text="保养也会像标准检查一样进行这项故障排查。"/>
         <text name="rms_ws_quote_title" text="报价明细"/>
         <text name="rms_ws_quote_oil_filter" text="机油滤清器"/>
@@ -718,23 +448,28 @@
         <text name="rms_report_header_title" text="检查报告"/>
         <text name="rms_report_vehicle_specs_title" text="载具规格"/>
         <text name="rms_report_vehicle_spec_max_alternator_current" text="交流发电机最大输出电流"/>
-        <text name="rms_report_vehicle_spec_battery_charge" text="蓄电池电量"/>
-        <text name="rms_report_vehicle_spec_battery_capacity" text="蓄电池容量"/>
-        <text name="rms_report_vehicle_spec_auxiliary_battery_charge" text="辅助蓄电池电量"/>
-        <text name="rms_report_vehicle_spec_battery_24v_charge" text="24V蓄电池电量"/>
-        <text name="rms_report_vehicle_spec_auxiliary_battery_capacity" text="辅助蓄电池容量"/>
-        <text name="rms_report_vehicle_spec_battery_24v_capacity" text="24V蓄电池容量"/>
+        <text name="rms_report_vehicle_spec_battery_charge" text="电池电量"/>
+        <text name="rms_report_vehicle_spec_battery_capacity" text="电池容量"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_charge" text="辅助电池电量"/>
+        <text name="rms_report_vehicle_spec_battery_24v_charge" text="24V电池电量"/>
+        <text name="rms_report_vehicle_spec_auxiliary_battery_capacity" text="辅助电池容量"/>
+        <text name="rms_report_vehicle_spec_battery_24v_capacity" text="24V电池容量"/>
         <text name="rms_report_vehicle_spec_traction_battery_capacity" text="动力电池容量"/>
         <text name="rms_report_detected_breakdowns_title" text="检测到的故障"/>
-        <text name="rms_report_overall_assessment_title" text="总体状况评估"/>
+        <text name="rms_report_breakdowns_worn_title" text="故障与磨损部件"/>
+        <text name="rms_report_no_breakdowns_worn" text="未检测到故障或磨损部件"/>
+        <text name="rms_report_worn_part_risk" text="风险 ×%s"/>
+        <text name="rms_report_worn_part_adjust" text="%s · 调整：%s"/>
+        <text name="rms_report_worn_part_replace" text="%s · 更换：彻底修理或大修"/>
+        <text name="rms_report_overall_assessment_title" text="总体状况评定"/>
         <text name="rms_report_overall_assessment_condition" text="状况水平"/>
         <text name="rms_report_overall_assessment_service" text="保养水平"/>
         <text name="rms_report_recommendations_title" text="结论与建议"/>
         <text name="rms_report_recommendation_repair_active_breakdowns" text="检测到现有故障。建议对所有这些故障进行标准修理。"/>
-        <text name="rms_report_recommendation_repeat_maintenance" text="检测到有缺陷的消耗品。请重新进行保养以更换这些消耗品。"/>
-        <text name="rms_report_recommendation_defective_parts" text="检测到有缺陷的备件：%s。建议预防性更换，以避免突然失效。"/>
+        <text name="rms_report_recommendation_repeat_maintenance" text="检测到有质量问题的消耗品。请重新进行保养以更换这些消耗品。"/>
+        <text name="rms_report_recommendation_defective_parts" text="检测到有质量问题的备件：%s。建议预防性更换，以避免突然失效。"/>
         <text name="rms_report_recommendation_quick_fix" text="检测到临时修理：%s。建议尽快进行标准更换。"/>
-        <text name="rms_report_recommendation_service_due" text="已达到保养间隔阈值。请进行保养。"/>
+        <text name="rms_report_recommendation_service_due" text="已达到保养间隔限值。请进行保养。"/>
         <text name="rms_report_recommendation_service_urgent" text="保养间隔已超期。请立即进行保养。"/>
         <text name="rms_report_recommendation_system_overhaul" text="检测到严重退化的系统：%s。请进行部分大修。"/>
         <text name="rms_report_recommendation_system_preventive_maintenance" text="故障风险升高的系统：%s。%s保养会重新调整该系统并降低风险。"/>
@@ -746,10 +481,10 @@
         <text name="rms_report_state_not_available" text="不适用"/>
         <text name="rms_report_state_degraded" text="退化"/>
         <text name="rms_report_state_impaired" text="受损"/>
-        <text name="rms_report_state_critical" text="危急"/>
-        <text name="rms_report_stress_low" text="低"/>
-        <text name="rms_report_stress_moderate" text="中等"/>
-        <text name="rms_report_stress_high" text="很高"/>
+        <text name="rms_report_state_critical" text="极重度"/>
+        <text name="rms_report_risk_low" text="低"/>
+        <text name="rms_report_risk_moderate" text="中等"/>
+        <text name="rms_report_risk_high" text="高"/>
         <text name="rms_report_system_condition_title" text="系统状况"/>
         <text name="rms_report_breakdown_risk_title" text="故障风险"/>
         <text name="rms_report_wear_title" text="与正常相比的磨损"/>
@@ -762,8 +497,9 @@
         <text name="rms_report_wear_hydraulic_use" text="液压系统工作"/>
         <text name="rms_report_wear_cold_hydraulic_oil" text="液压油温低"/>
         <text name="rms_report_wear_hot_hydraulic_oil" text="液压油过热"/>
-        <text name="rms_report_wear_vibration" text="振动"/>
+        <text name="rms_report_wear_vibration" text="震动"/>
         <text name="rms_report_wear_hydraulic_filter_bypass" text="液压滤清器堵塞"/>
+        <text name="rms_report_wear_transmission_filter_bypass" text="变速箱滤清器堵塞"/>
         <text name="rms_report_wear_lights" text="灯光开启"/>
         <text name="rms_report_wear_braking" text="重载制动"/>
         <text name="rms_report_wear_terrain_impact" text="地面冲击"/>
@@ -784,17 +520,17 @@
         <text name="rms_report_system_condition_hydraulic" text="液压效率"/>
         <text name="rms_report_transmission_slipping" text="打滑"/>
         <text name="rms_report_transmission_shifting_impaired" text="换挡受阻"/>
-        <text name="rms_report_transmission_shift_delay" text="换挡延迟"/>
+        <text name="rms_report_transmission_shift_delay" text="换挡延时"/>
         <text name="rms_report_transmission_gear_rejection" text="跳挡"/>
-        <text name="rms_report_transmission_cvt_slipping" text="动力传递效率低"/>
+        <text name="rms_report_transmission_cvt_slipping" text="动力传送效率低"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="传动比受限"/>
-        <text name="rms_report_transmission_cvt_pressure_instability" text="动力传递不稳定"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="恒温阀性能下降"/>
+        <text name="rms_report_transmission_cvt_pressure_instability" text="动力传送不稳定"/>
+        <text name="rms_report_transmission_thermostat_degraded" text="节温器性能下降"/>
         <text name="rms_report_transmission_failed" text="失效"/>
         <!-- Tools and Inspection -->
-        <text name="rms_grease_gun_name" text="润滑脂枪"/>
+        <text name="rms_grease_gun_name" text="黄油加注器"/>
         <text name="rms_grease_gun_no_vehicle" text="润滑范围内没有载具"/>
-        <text name="rms_grease_gun_function" text="用于向机器的润滑点加注润滑脂"/>
+        <text name="rms_grease_gun_function" text="用于向机器的润滑点加注黄油"/>
         <text name="rms_grease_gun_action" text="打黄油"/>
         <text name="rms_grease_gun_already_lubricated" text="%s：已完成润滑"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s不需要润滑"/>
@@ -807,8 +543,10 @@
         <text name="rms_air_blower_filter_requires_maintenance" text="%s：散热器已清洁。空气滤清器已达到吹扫清洁的极限。维修车间从%s保养起更换滤清器"/>
         <text name="rms_air_blower_cleaning_not_require" text="%s不需要清洁"/>
         <text name="rms_jumper_cables_name" text="跨接电缆"/>
-        <text name="rms_jumper_cables_function" text="用于连接两块蓄电池，并启动蓄电池电量耗尽的载具"/>
+        <text name="rms_jumper_cables_function" text="用于连接两块电池，并启动电池电量耗尽的载具"/>
         <text name="rms_jumper_cables_action" text="跨接电缆"/>
+        <text name="rms_jumper_cables_connect" text="连接电缆"/>
+        <text name="rms_jumper_cables_disconnect" text="断开电缆"/>
         <text name="rms_jumper_cables_auto_disconnected" text="跨接电缆已断开：其中一辆载具发生移动"/>
         <text name="rms_jumper_cables_connected" text="跨接电缆已连接至%s"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="此载具不适合连接跨接电缆"/>
@@ -858,15 +596,15 @@
         <text name="rms_fluid_error_motor_running" text="输送油液前请停止发动机"/>
         <text name="rms_fluid_error_vehicle_moving" text="载具必须保持静止"/>
         <text name="rms_fluid_error_busy" text="另一个容器正在加注此回路"/>
-        <text name="rms_fluid_warranty_covered" text="保修涵盖的油液"/>
+        <text name="rms_fluid_warranty_covered" text="保修包括的油液"/>
         <text name="rms_fluid_lease_covered" text="油液已包含在租赁中"/>
         <text name="rms_fluid_stock_required" text="取自维修车间区域内的油液容器"/>
         <text name="rms_fluid_stock_missing" text="维修车间区域内还缺 %s"/>
         <text name="rms_fluid_refill_work_order" text="补足油液"/>
-        <text name="rms_fluid_refill_dealer_supply" text="估价中包含油液供应"/>
+        <text name="rms_fluid_refill_dealer_supply" text="报价中包含油液供应"/>
         <text name="rms_fluid_mode_top_up" text="补充"/>
         <text name="rms_fluid_mode_replace" text="更换"/>
-        <text name="rms_fluid_mode_repair" text="泄漏后补充"/>
+        <text name="rms_fluid_mode_repair" text="外流后补充"/>
         <text name="rms_fluid_service_workshop_not_found" text="载具已离开维修车间区域。"/>
         <text name="rms_fluid_service_stock_insufficient" text="维修车间区域内没有足够的兼容油液库存。"/>
         <text name="rms_fluid_service_price_unavailable" text="无法获取所需油液的价格。"/>
@@ -874,13 +612,13 @@
         <text name="rms_fluid_service_consumption_failed" text="油液预留失败。作业已取消。"/>
         <!-- Inspection Dialog -->
         <text name="rms_field_inspection_hold_to_start" text="检查（按住）"/>
-        <text name="rms_field_inspection_progress" text="正在进行班前检查"/>
-        <text name="rms_field_inspection_cancelled" text="班前检查已取消"/>
-        <text name="rms_field_inspection_engine_must_be_stopped" text="班前检查前请停止发动机"/>
-        <text name="rms_inspection_dialog_title" text="班前检查"/>
+        <text name="rms_field_inspection_progress" text="正在进行作业前检查"/>
+        <text name="rms_field_inspection_cancelled" text="作业前检查已取消"/>
+        <text name="rms_field_inspection_engine_must_be_stopped" text="作业前检查前请停止发动机"/>
+        <text name="rms_inspection_dialog_title" text="作业前检查"/>
         <text name="rms_inspection_section_fluids" text="技术油液"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s/%s%s"/>
-        <text name="rms_inspection_section_field_care" text="滤清器、散热器与润滑"/>
+        <text name="rms_inspection_section_field_care" text="清洁与润滑"/>
         <text name="rms_inspection_section_additional" text="其他观察结果"/>
         <text name="rms_inspection_verdict_ok_title" text="可以使用"/>
         <text name="rms_inspection_verdict_ok_message" text="没有异常，机器可以投入作业。"/>
@@ -894,18 +632,18 @@
         <text name="rms_inspection_status_slightly_low" text="略低"/>
         <text name="rms_inspection_status_slightly_dirty" text="轻微堵塞"/>
         <text name="rms_inspection_status_slightly_dry" text="略干"/>
-        <text name="rms_inspection_status_slight_moisture" text="轻微潮湿"/>
-        <text name="rms_inspection_status_seepage" text="渗漏"/>
-        <text name="rms_inspection_status_severe_leak" text="严重泄漏"/>
+        <text name="rms_inspection_status_slight_moisture" text="轻微湿润"/>
+        <text name="rms_inspection_status_seepage" text="慢速外流"/>
+        <text name="rms_inspection_status_severe_leak" text="严重外流"/>
         <text name="rms_inspection_status_low" text="低"/>
         <text name="rms_inspection_status_very_low" text="很低"/>
         <text name="rms_inspection_status_very_dry" text="很干"/>
         <text name="rms_inspection_status_critically_low" text="急需补充"/>
         <text name="rms_inspection_status_critically_clogged" text="完全堵塞"/>
-        <text name="rms_inspection_status_critically_dry" text="金属直接摩擦"/>
+        <text name="rms_inspection_status_critically_dry" text="金属直接接触"/>
         <text name="rms_inspection_status_dirty" text="堵塞"/>
         <text name="rms_inspection_status_dry" text="干燥"/>
-        <text name="rms_inspection_status_active_leak" text="正在泄漏"/>
+        <text name="rms_inspection_status_active_leak" text="正在外流"/>
         <text name="rms_inspection_status_heavily_clogged" text="严重堵塞"/>
         <text name="rms_inspection_status_not_required" text="不需要"/>
         <text name="rms_inspection_status_change_overdue" text="更换逾期"/>
@@ -916,42 +654,110 @@
         <text name="rms_inspection_hydraulic_fluid" text="液压油"/>
         <text name="rms_inspection_hint_coolant_leak_stage1" text="冷却系统连接处附近可见轻微冷却液痕迹。"/>
         <text name="rms_inspection_hint_coolant_leak_stage2" text="可见冷却液残留痕迹，液位低于正常值。"/>
-        <text name="rms_inspection_hint_coolant_leak_stage3" text="冷却系统周围可见明显的冷却液泄漏痕迹。"/>
-        <text name="rms_inspection_hint_coolant_leak_stage4" text="冷却系统已流失大量冷却液，并可见严重泄漏痕迹。"/>
-        <text name="rms_inspection_hint_corroded_wiring_stage2" text="部分电气连接处可见轻微氧化痕迹。"/>
-        <text name="rms_inspection_hint_corroded_wiring_stage3" text="线束和连接器上可见明显氧化和污垢。"/>
-        <text name="rms_inspection_hint_corroded_wiring_stage4" text="线束和连接器上可见严重腐蚀，部分绝缘层似乎已经损坏。"/>
+        <text name="rms_inspection_hint_coolant_leak_stage3" text="冷却系统周围可见明显的冷却液外流痕迹。"/>
+        <text name="rms_inspection_hint_coolant_leak_stage4" text="冷却系统已流失大量冷却液，并可见严重外流痕迹。"/>
+        <text name="rms_inspection_hint_cylinder_liners_stage2" text="冷却液通过有裂纹的气缸套进入燃烧室。液体流失，冷却能力下降。"/>
+        <text name="rms_inspection_hint_cylinder_liners_stage3" text="冷却液通过有裂纹的气缸套进入燃烧室。液体大量流失，冷却能力受到影响。"/>
+        <text name="rms_inspection_hint_cylinder_liners_stage4" text="冷却液通过有裂纹的气缸套进入燃烧室。液体严重流失，冷却能力严重下降。"/>
+        <text name="rms_inspection_hint_cylinder_head_stage2" text="冷却液通过有裂纹的气缸盖流向外部。液体流失，冷却能力下降。"/>
+        <text name="rms_inspection_hint_cylinder_head_stage3" text="冷却液通过有裂纹的气缸盖流向外部。液体大量流失，冷却能力受到影响。"/>
+        <text name="rms_inspection_hint_cylinder_head_stage4" text="冷却液通过有裂纹的气缸盖流向外部。液体严重流失，冷却能力严重下降。"/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage2" text="冷却液通过气缸盖垫片流向外部。液体流失，冷却能力下降。"/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage3" text="冷却液通过气缸盖垫片流向外部。液体大量流失，冷却能力受到影响。"/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage4" text="冷却液通过气缸盖垫片流向外部。液体严重流失，冷却能力严重下降。"/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage1" text="冷却液通过水泵密封件流向外部。液位开始下降。"/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage2" text="冷却液通过水泵密封件流向外部。液体流失，冷却能力下降。"/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage3" text="冷却液通过水泵密封件流向外部。液体大量流失，冷却能力受到影响。"/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage4" text="冷却液通过水泵密封件流向外部。液体严重流失，冷却能力严重下降。"/>
+        <text name="rms_inspection_hint_radiator_core_stage1" text="冷却液通过受损的散热器管道流向外部。液位开始下降。"/>
+        <text name="rms_inspection_hint_radiator_core_stage2" text="冷却液通过受损的散热器管道流向外部。液体流失，冷却能力下降。"/>
+        <text name="rms_inspection_hint_radiator_core_stage3" text="冷却液通过受损的散热器管道流向外部。液体大量流失，冷却能力受到影响。"/>
+        <text name="rms_inspection_hint_radiator_core_stage4" text="冷却液通过受损的散热器管道流向外部。液体严重流失，冷却能力严重下降。"/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage2" text="动力或搭铁连接处可见氧化。"/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage3" text="动力或搭铁连接处已氧化并有污物。"/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage4" text="动力或搭铁连接处严重腐蚀，绝缘层已损坏。"/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage1" text="液压软管或接头上可见一层很薄的油膜。"/>
-        <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage2" text="液压软管或接头上可见液压油渗漏。"/>
+        <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage2" text="液压软管或接头上可见液压油慢速外流。"/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage3" text="液压软管沿线可见清晰的液压油痕迹和新出现的湿润区域。"/>
-        <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage4" text="液压软管及周围区域被泄漏的液压油严重污染。"/>
+        <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage4" text="液压软管及周围区域被外流的液压油严重污染。"/>
         <text name="rms_inspection_hint_radiator_clogging_stage1" text="散热器表面轻微脏堵。"/>
         <text name="rms_inspection_hint_radiator_clogging_stage2" text="散热器明显脏堵。"/>
-        <text name="rms_inspection_hint_radiator_clogging_stage3" text="散热器被污垢和碎屑严重堵塞。"/>
-        <text name="rms_inspection_hint_radiator_clogging_stage4" text="散热器被污垢和碎屑完全堵塞。"/>
+        <text name="rms_inspection_hint_radiator_clogging_stage3" text="散热器被污物和碎屑严重堵塞。"/>
+        <text name="rms_inspection_hint_radiator_clogging_stage4" text="散热器被污物和碎屑完全堵塞。"/>
         <text name="rms_inspection_hint_air_filter_clogging_stage1" text="空气滤清器轻微堵塞。"/>
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="空气滤清器明显堵塞。"/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="空气滤清器被灰尘和碎屑严重堵塞。"/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="空气滤清器已达到吹扫清洁的极限。维修车间从%s保养起更换滤清器。"/>
-        <text name="rms_inspection_hint_fuel_filter_due" text="燃油滤清器需要更换：任何级别的保养或在维修车间维修都会更换它。"/>
-        <text name="rms_inspection_hint_hydraulic_filter_due" text="液压滤清器需要更换：任何级别的保养或在维修车间维修都会更换它。"/>
-        <text name="rms_inspection_hint_hydraulic_filter_bypass" text="液压滤清器已堵塞：液压油未经过滤直接流过，会磨损回路。任何级别的保养或在维修车间维修都会更换它。"/>
-        <text name="rms_inspection_hint_unidentified" text="未确认故障的症状：维修车间可通过检查或保养确认。"/>
-        <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="交流发电机周围可见过热痕迹，部分连接处已经变暗。"/>
-        <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="交流发电机及其线束周围可见明显过热痕迹，连接器已经变暗。"/>
+        <text name="rms_inspection_hint_unidentified" text="未确认故障的征象：维修车间可通过检查或保养确认。"/>
+        <text name="rms_inspection_hint_alternator_stage3" text="交流发电机周围可见过热痕迹，部分连接处已经变暗。"/>
+        <text name="rms_inspection_hint_alternator_stage4" text="交流发电机及其线束周围可见明显过热痕迹，连接器已经变暗。"/>
         <text name="rms_inspection_hint_lubrication_stage1" text="润滑点看起来略显干燥。"/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="润滑点看起来已经干燥，润滑脂不足。"/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="润滑点非常干燥，几乎看不到润滑脂。"/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="润滑点处于金属直接摩擦状态，几乎看不到润滑脂。"/>
+        <text name="rms_inspection_hint_lubrication_stage2" text="润滑点看起来已经干燥，黄油不足。"/>
+        <text name="rms_inspection_hint_lubrication_stage3" text="润滑点非常干燥，几乎看不到黄油。"/>
+        <text name="rms_inspection_hint_lubrication_stage4" text="润滑点处于金属直接接触状态，几乎看不到黄油。"/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="变速箱壳体周围可见轻微油迹。"/>
-        <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="变速箱下方可见油滴。"/>
-        <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="变速箱周围可见明显漏油痕迹。"/>
-        <text name="rms_inspection_hint_transmission_oil_leak_stage4" text="变速箱壳体正在漏油，并在机器下方形成油洼。"/>
+        <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="变速箱下方可见点状油迹。"/>
+        <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="变速箱周围可见明显流油痕迹。"/>
+        <text name="rms_inspection_hint_transmission_oil_leak_stage4" text="变速箱壳体正在流油，并在机器下方形成积油。"/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage1" text="前桥传动轴的一个万向节出现少量间隙。"/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage2" text="前桥传动轴的一个万向节间隙明显。"/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage3" text="前桥传动轴的一个万向节存在较大间隙。"/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage4" text="前桥传动轴的一个万向节已断裂。"/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage1" text="一个车桥的小齿轮轴承出现少量间隙。"/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage2" text="一个车桥的小齿轮轴承有间隙并发出低沉噪声。"/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage3" text="一个车桥的油中含有轴承脱落的碎片。"/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage4" text="一个车桥轴承已损坏，主减速齿轮组齿面有损伤。"/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage1" text="动力输出轴输出端油封表面轻微湿润。"/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage2" text="动力输出轴输出端油封有油慢速外流。"/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage3" text="动力输出轴输出端油封有油正在外流。"/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage4" text="动力输出轴输出端油封有油严重外流。"/>
+        <text name="rms_inspection_hint_pto_clutch_wear_branch2_stage1" text="动力输出轴离合器的离合片开始粘连。"/>
+        <text name="rms_inspection_hint_pto_clutch_wear_branch2_stage2" text="动力输出轴离合器的离合片粘连，关闭动力输出轴后，机具需要一段时间才会停止。"/>
+        <text name="rms_inspection_hint_brake_control_failure_stage1" text="制动测试发现略微向一侧跑偏。"/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage1" text="制动踏板比平时略微下沉更多。"/>
+        <text name="rms_inspection_hint_brake_control_failure_stage2" text="两侧制动仍明显不均。"/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage2" text="制动踏板变软，下沉更多。"/>
+        <text name="rms_inspection_hint_brake_control_failure_stage3" text="踩下制动踏板时，载具明显向一侧跑偏。"/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage3" text="踏板几乎踩到底，载具才开始减速。"/>
+        <text name="rms_inspection_hint_brake_control_failure_stage4" text="制动跑偏强烈且持续存在。"/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage4" text="踏板无阻力地下沉，制动压力几乎为零。"/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage1" text="制动时挂车减速弱于拖拉机。"/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage2" text="挂车制动明显减弱。"/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage3" text="拖拉机制动时，挂车几乎没有反应。"/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage4" text="拖拉机制动时，挂车不再制动。"/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage1" text="一个转向轮的转向节主销出现少量间隙。"/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage2" text="一个转向轮的转向节主销间隙明显。"/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage3" text="一个转向轮的转向节主销存在很大间隙。"/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage4" text="主销间隙影响车轮导向。"/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage1" text="转向时，车轮对方向盘的响应略有延后。"/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage2" text="方向盘转动，但车轮跟随有明显延后。"/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage3" text="转向时，车轮不能良好跟随方向盘。"/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage4" text="方向盘转动，但车轮不能正确跟随。"/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage1" text="油缸保持转向位置的能力略有下降。"/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage2" text="握住方向盘时，转向偏移更多。"/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage3" text="油缸使载具出现明显偏移。"/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage4" text="转向无法保持方向，偏移强烈。"/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage1" text="转向油缸活塞杆出现少量油迹。"/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage2" text="转向油缸活塞杆密封件缓慢流出油液。"/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage3" text="转向油缸活塞杆密封件有明显油液流出。"/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage4" text="液压油从转向油缸活塞杆密封件流出。"/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage1" text="一个支重轮或引导轮转动时有轻微噪声或异常阻力。"/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage2" text="一个支重轮或引导轮转动困难，噪声增大。"/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage3" text="一个支重轮或引导轮转动阻力很大。"/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage4" text="一个支重轮或引导轮卡死，阻碍履带运动。"/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage2" text="履带张力看起来略微不均。"/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage3" text="履带看起来较松，张力明显不均。"/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage4" text="履带明显下垂，张紧状态似乎已严重受损。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage1" text="检查发现装载机关节销轴和衬套开始磨损。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="检查发现装载机关节销轴和衬套存在明显间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="检查发现装载机关节销轴和衬套存在很大间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="检查发现装载机关节销轴和衬套存在极大间隙。"/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="一个驾驶室减震器表面轻微湿润。"/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="一个驾驶室减震器有油慢速外流。"/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="一个驾驶室减震器有油正在外流。"/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="一个驾驶室减震器有油严重外流，内部已无油。"/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="涡轮增压器周围可见油迹，连接处已经变暗。"/>
-        <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="涡轮增压器周围可见大量油迹、变暗的连接处和烟灰痕迹。"/>
+        <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="涡轮增压器周围可见大量油迹、变暗的连接处和炭灰痕迹。"/>
         <text name="rms_inspection_hint_fluid_level_low" text="一种油液的液位已降到标记以下。"/>
         <text name="rms_inspection_hint_fluid_levels_low" text="多种油液的液位已降到标记以下。"/>
         <text name="rms_inspection_hint_service_engine" text="发动机机油更换已逾期：老化的机油会加快发动机和喷射系统的磨损。每次保养都会连同滤清器一起更换。"/>
@@ -962,7 +768,7 @@
         <text name="rms_inspection_radiator" text="散热器"/>
         <text name="rms_inspection_air_filter" text="空气滤清器"/>
         <text name="rms_inspection_lubrication_level" text="润滑水平"/>
-        <text name="rms_inspection_no_suspicious_symptoms" text="未检测到可疑症状"/>
+        <text name="rms_inspection_no_suspicious_symptoms" text="未检测到异常征象"/>
         <text name="rms_inspection_ok" text="确定"/>
         <!-- In-Game Menu -->
         <text name="rms_ingame_menu_title" text="机械仪表板"/>
@@ -999,6 +805,11 @@
         <text name="rms_fleet_overdue_count" text="逾期：%d"/>
         <text name="rms_fleet_due_soon_label" text="即将到期"/>
         <text name="rms_fleet_due_soon_count" text="即将到期：%d"/>
+        <text name="rms_fleet_part_worn" text="明显磨损"/>
+        <text name="rms_fleet_part_failed" text="故障"/>
+        <text name="rms_fleet_part_unmeasured" text="无测量记录"/>
+        <text name="rms_fleet_parts_reading" text="部件测量：%s"/>
+        <text name="rms_fleet_parts_need_complete" text="部件测量：下次全面检查时"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="返还载具"/>
         <text name="rms_sell_dialog_section_vehicle" text="载具"/>
@@ -1010,17 +821,17 @@
         <text name="rms_sell_dialog_deposit_refund" text="押金退还"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="油液液位过低"/>
-        <text name="rms_tutorial_fluid_level_message" text="此机器的一种油液已经降到液位标记以下。&#10;&#10;发动机机油会随工作小时增加而消耗，磨损的发动机会消耗更多机油。冷却液、变速箱油和液压油只会因泄漏而减少。&#10;&#10;液位刚低于标记时，机器只需补充油液，仍可正常工作。液位真正过低时才会开始造成损坏：冷却液或变速箱油不足会使机器过热，发动机机油或液压油不足会大幅加快磨损。&#10;&#10;请在商店购买一桶兼容产品，带到机器旁并补足液位。适用于同一回路的产品作用相同；错误油液只会污染对应回路。在经销商处，所需油液会直接供应并收费。"/>
+        <text name="rms_tutorial_fluid_level_message" text="此机器的一种油液已经降到液位标记以下。&#10;&#10;发动机机油会随工作小时增加而消耗，磨损的发动机会消耗更多机油。冷却液、变速箱油和液压油只会因外流而减少。&#10;&#10;液位刚低于标记时，机器只需补充油液，仍可正常工作。液位真正过低时才会开始造成损坏：冷却液或变速箱油不足会使机器过热，发动机机油或液压油不足会大幅加快磨损。&#10;&#10;请在商店购买一桶兼容产品，带到机器旁并补足液位。适用于同一回路的产品作用相同；错误油液只会污染对应回路。在经销商处，所需油液会直接供应并收费。"/>
         <text name="rms_tutorial_welcome_dialog_title" text="欢迎使用Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="禁用提示"/>
         <text name="rms_tutorial_welcome_enable_button" text="启用提示"/>
         <text name="rms_tutorial_welcome_message" text="此模组彻底重制了游戏中的载具损坏与保养系统。改动很多，因此教程提示会不时出现，帮助更快理解新机制、避免常见错误并防止机器发生故障。&#10;&#10;如果需要，现在可以禁用教程提示。以后仍可在模组设置的Realistic Mechanical Systems部分重新启用。"/>
-        <text name="rms_tutorial_wet_weather_title" text="潮湿天气"/>
+        <text name="rms_tutorial_wet_weather_title" text="湿度高的天气"/>
         <text name="rms_tutorial_wet_weather_message" text="湿气会损坏线束和电气设备。机器停在室外并遭遇雨、雪或冰雹时，电气系统的磨损会略微增加。"/>
         <text name="rms_tutorial_wheel_slip_title" text="车轮打滑"/>
         <text name="rms_tutorial_wheel_slip_message" text="车轮正在严重打滑。打滑是对变速箱破坏最大的因素之一，会明显提前下次前往维修车间的时间。"/>
         <text name="rms_tutorial_service_due_soon_title" text="即将需要保养"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s即将需要保养。请在车间选择推荐套餐，它涵盖到期作业。运行小时数或日历期限先到者触发保养，即使车辆很少使用也一样。保养便利性表示作业的复杂程度；日常保养仍可在移动车间进行。"/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s即将需要保养。请在车间选择推荐套餐，它包括到期作业。运行小时数或日历期限先到者触发保养，即使车辆很少使用也一样。保养便利性表示作业的复杂程度；日常保养仍可在移动车间进行。"/>
         <text name="rms_tutorial_service_interval_expired_title" text="保养间隔已超期"/>
         <text name="rms_tutorial_service_interval_expired_message" text="%s的保养间隔已超期。&#10;&#10;请尽快前往维修车间并选择“保养”。继续使用保养逾期的载具会大幅增加同时发生多个故障的风险。"/>
         <text name="rms_tutorial_steering_title" text="原地转向"/>
@@ -1028,76 +839,215 @@
         <text name="rms_tutorial_cooling_air_check_title" text="冷却系统与空气滤清器"/>
         <text name="rms_tutorial_cooling_air_check_message" text="散热器或空气滤清器已堵塞。看向载具时按住%s键，确认是哪个部件。使用压缩空气吹风机清洁。如果滤清器无法继续吹扫清洁，维修车间从%s保养起将其更换。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="需要润滑"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s需要定期润滑。&#10;&#10;在RMS中，润滑水平会随工作小时增加而下降。长时间停用后，重新投入使用前也需要润滑。润滑不足会加快底盘磨损。&#10;&#10;请在商店购买润滑脂枪，并在检查要求时为机器加注润滑脂。&#10;&#10;可以检查润滑水平：看向载具时按住%s键。"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s需要定期润滑。&#10;&#10;在RMS中，润滑水平会随工作小时增加而下降。长时间停用后，重新投入使用前也需要润滑。润滑不足会加快底盘磨损。&#10;&#10;请在商店购买黄油加注器，并在检查要求时为机器加注黄油。&#10;&#10;可以检查润滑水平：看向载具时按住%s键。"/>
         <text name="rms_tutorial_needs_repair_title" text="检测到故障"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s出现了问题，其中一个部件可能已经失效。&#10;&#10;请前往维修车间：检查，或到期的保养，可以确认故障。不要拖延：故障可能继续恶化，修理费用也会随之增加。&#10;&#10;故障确认后，请在维修车间进行修理。"/>
+        <text name="rms_tutorial_needs_repair_message" text="%s出现了问题，其中一个部件可能已经失效。&#10;&#10;请前往维修车间：检查，或到期的保养，可以确认故障。不要拖延：故障可能继续加重，修理费用也会随之增加。&#10;&#10;故障确认后，请在维修车间进行修理。"/>
         <text name="rms_tutorial_needs_overhaul_title" text="需要大修"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s已经显现老化迹象。现在应考虑更换或大修。这项作业耗时长、费用高，但只有这样才能使机器恢复原有状况。&#10;&#10;载具使用寿命可在模组设置中调整：数值越高，载具磨损越慢。"/>
-        <text name="rms_tutorial_needs_preventive_title" text="故障即将发生"/>
+        <text name="rms_tutorial_needs_overhaul_message" text="%s已经显现老化迹象。现在应考虑更换或大修。这项作业耗时长、费用高，但只有这样才能使机器恢复原有状况。&#10;&#10;载具使用期限可在模组设置中调整：数值越高，载具磨损越慢。"/>
+        <text name="rms_tutorial_needs_preventive_title" text="故障风险升高"/>
         <text name="rms_tutorial_needs_preventive_message" text="%s 的发动机、燃油系统或冷却系统发生故障的风险升高。&#10;&#10;%s保养：调整气门，检查喷油器和节温器，从而降低该风险。"/>
         <text name="rms_tutorial_age_degradation_title" text="老化导致的退化"/>
-        <text name="rms_tutorial_age_degradation_message" text="在RMS中，载具会随使用年限增加而逐渐失去一部分原有性能。&#10;&#10;达到约三分之一使用寿命后，老化磨损会略微降低功率和制动等重要特性。此影响随后会不断加剧，并在寿命末期变得十分明显。&#10;&#10;可以在模组设置中禁用这种退化。"/>
+        <text name="rms_tutorial_age_degradation_message" text="在RMS中，载具会随使用年限增加而逐步失去一部分原有性能。&#10;&#10;达到约三分之一使用期限后，老化磨损会略微降低功率和制动等重要特性。此影响随后会不断加剧，并在使用期限末期变得十分明显。&#10;&#10;可以在模组设置中禁用这种退化。"/>
         <text name="rms_tutorial_poor_consumables_title" text="低质量消耗品"/>
         <text name="rms_tutorial_poor_consumables_message" text="%s在上次保养中使用了低质量消耗品。选择便宜等级时会出现这种情况。&#10;&#10;保养间隔已经缩短，部件磨损也略有增加。再次进行保养即可解决问题。目视检查或标准检查会报告缩短的间隔；只有全面检查才能确定相关消耗品。"/>
         <text name="rms_tutorial_poor_parts_title" text="低质量部件"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s在修理时使用了低质量部件。故障很可能会在不久后再次出现。&#10;&#10;可以等待故障复发，也可以进行全面检查，以可靠确定有缺陷的部件。"/>
-        <text name="rms_tutorial_park_brake_title" text="驻车制动"/>
-        <text name="rms_tutorial_park_brake_message" text="驻车制动已经启用。离开静止的机器时，它会自动启用；再次踩下油门时则会自动解除。关闭发动机时，或静止满45秒后，它也会自动启用。&#10;&#10;在坡道上，驻车制动可以防止机器自行滑动。"/>
-        <text name="rms_tutorial_park_brake_manual_message" text="驻车制动已经启用。需要使用专用按键自行启用和解除：制动启用时踩下油门，机器会顶着制动行驶，制动器会磨损。&#10;&#10;在坡道上，驻车制动可以防止机器自行滑动：未启用驻车制动就离开机器，机器可能会自行滑动。"/>
+        <text name="rms_tutorial_poor_parts_message" text="%s在修理时使用了低质量部件。故障很可能会在不久后再次出现。&#10;&#10;可以等待故障复发，也可以进行全面检查，以可靠确定有质量问题的部件。"/>
+        <text name="rms_tutorial_park_brake_title" text="停车制动"/>
+        <text name="rms_tutorial_park_brake_message" text="停车制动已经启用。离开静止的机器时，它会自动启用；再次踩下油门时则会自动解除。关闭发动机时，或静止满45秒后，它也会自动启用。&#10;&#10;在坡道上，停车制动可以防止机器自行滑动。"/>
+        <text name="rms_tutorial_park_brake_manual_message" text="停车制动已经启用。需要使用专用按键自行启用和解除：制动启用时踩下油门，机器会顶着制动行驶，制动器会磨损。&#10;&#10;在坡道上，停车制动可以防止机器自行滑动：未启用停车制动就离开机器，机器可能会自行滑动。"/>
         <text name="rms_tutorial_preheat_title" text="柴油机预热"/>
-        <text name="rms_tutorial_preheat_message" text="柴油发动机处于冷机状态时，按一次启动控制即可打开点火开关，并自动开始预热塞循环。仪表板指示灯会短暂亮起，随后预热灯保持点亮，直到发动机准备就绪。不要重复操作：预热灯熄灭后，启动机会自动接合。"/>
+        <text name="rms_tutorial_preheat_message" text="柴油发动机处于冷机状态时，按一次启动控制即可打开点火开关，并自动开始预热塞循环。仪表板指示灯会短暂亮起，随后预热灯保持点亮，直到发动机准备就绪。不要重复操作：预热灯关闭后，启动机会自动接合。"/>
         <text name="rms_tutorial_pto_engagement_title" text="动力输出轴接合"/>
-        <text name="rms_tutorial_pto_engagement_message" text="请在怠速时接合动力输出轴，然后再提高转速：高转速接合会冲击整个传动系统，机具越重冲击越大。每次接合也会磨损其离合器。"/>
+        <text name="rms_tutorial_pto_engagement_message" text="请在空转时接合动力输出轴，然后再提高转速：高转速接合会冲击整个传动系统，机具越重冲击越大。每次接合也会磨损其离合器。"/>
         <text name="rms_tutorial_pto_raised_title" text="动力输出轴与升起的机具"/>
         <text name="rms_tutorial_pto_raised_message" text="机具升起时运转动力输出轴，会让万向节以很大的角度工作并迅速磨损。在为运输升起机具之前，请先关闭动力输出轴。"/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="怠速与停用"/>
+        <text name="rms_tutorial_idle_and_downtime_title" text="空转与停用"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="机器运行但不作业时，磨损会低得多。发动机关闭后，磨损降至最低；存放在遮蔽物下时，磨损会完全停止。"/>
-        <text name="rms_tutorial_idle_deposit_title" text="长时间怠速"/>
-        <text name="rms_tutorial_idle_deposit_message" text="机器似乎已经怠速过久。长时间怠速不仅浪费燃油，久而久之还会促使燃油系统形成沉积物，并损害发动机的整体状况。&#10;&#10;如果目前不需要使用机器，最好关闭发动机。"/>
-        <text name="rms_tutorial_hot_weather_title" text="炎热天气"/>
-        <text name="rms_tutorial_hot_weather_message" text="今天非常炎热。在这种天气下，请留意散热器是否清洁，并避免发动机过载，否则过热只是时间问题。&#10;&#10;可以检查散热器状况：看向机器时按住%s键。请使用压缩空气吹尘器清洁。"/>
+        <text name="rms_tutorial_idle_deposit_title" text="长时间空转"/>
+        <text name="rms_tutorial_idle_deposit_message" text="机器似乎已经空转过久。长时间空转不仅浪费燃油，久而久之还会使燃油系统形成沉积物，并损害发动机的整体状况。&#10;&#10;如果目前不需要使用机器，最好关闭发动机。"/>
+        <text name="rms_tutorial_hot_weather_title" text="高温天气"/>
+        <text name="rms_tutorial_hot_weather_message" text="今天气温很高。在这种天气下，请留意散热器是否清洁，并避免发动机过载，否则过热只是时间问题。&#10;&#10;可以检查散热器状况：看向机器时按住%s键。请使用压缩空气吹尘器清洁。"/>
         <text name="rms_tutorial_heavy_trailer_title" text="挂车过重"/>
         <text name="rms_tutorial_heavy_trailer_message" text="牵引负载对这辆载具而言似乎过重。可以继续行驶，但变速箱和传动系统会承受更大应力。&#10;&#10;RMS采用两个参考值：拖拉机每吨牵引质量至少需要10马力，卡车每吨车组总质量至少需要6马力。低于适用数值并让发动机承受高负载时，变速箱磨损会增加。"/>
         <text name="rms_tutorial_hard_start_title" text="启动困难"/>
-        <text name="rms_tutorial_hard_start_message" text="%s的发动机难以启动。蓄电池电量低、严寒、机械故障或启动机磨损都可能是原因。请按住启动按钮，直到发动机启动。&#10;&#10;启动时的高启动电流会使电气系统承受很大负载。"/>
+        <text name="rms_tutorial_hard_start_message" text="%s的发动机难以启动。电池电量低、极低温、机械故障或启动机磨损都可能是原因。请按住启动按钮，直到发动机启动。&#10;&#10;启动时的高启动电流会使电气系统承受很大负载。"/>
         <text name="rms_tutorial_low_fuel_title" text="燃油余量低"/>
         <text name="rms_tutorial_low_fuel_message" text="油箱接近备用油量。剩余燃油越少，燃油泵吸取燃油时负担越重，油箱底部的水分和沉积物也会被送入滤清器，使其更快堵塞。&#10;&#10;最好在一天结束时加满油：加满的油箱产生的冷凝水更少。"/>
         <text name="rms_tutorial_lugging_title" text="发动机低转速重负荷"/>
         <text name="rms_tutorial_lugging_message" text="发动机，尤其是变速箱，在低转速重负荷下会受到损害。所连接的农具可能对机器而言过重；如果使用手动变速箱，也可能是当前挡位不合适。"/>
         <text name="rms_tutorial_engine_overheat_title" text="发动机过热"/>
-        <text name="rms_tutorial_engine_overheat_message" text="发动机开始过热。原因可能有一个或多个：发动机负载过大、散热器堵塞、天气炎热，或载具冷却系统存在缺陷。&#10;&#10;请保持警惕：过热是对机器破坏最大的因素之一。它不仅损害发动机，还会使冷却系统达到极限，而发动机舱内的热量会加快线束和电气部件退化。"/>
+        <text name="rms_tutorial_engine_overheat_message" text="发动机开始过热。原因可能有一个或多个：发动机负载过大、散热器堵塞、气温高，或载具冷却系统存在故障。&#10;&#10;请保持警觉：过热是对机器破坏最大的因素之一。它不仅损害发动机，还会使冷却系统达到极限，而发动机舱内的热量会加快线束和电气部件退化。"/>
         <text name="rms_tutorial_engine_overload_title" text="发动机过载"/>
         <text name="rms_tutorial_engine_overload_message" text="发动机正承受很大应力。当前任务可能对这台机器而言过重，需要功率更大的载具；也可能只需减速即可降低负载。&#10;&#10;无论是哪种情况，这种应力都会明显增加磨损。"/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="判断排气烟雾"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="这台机器排出的烟雾不是装饰，其颜色就是诊断信息。&#10;&#10;黑烟表示发动机获得的燃油多于空气，原因可能是涡轮增压器升速前突然加速、发动机低转速重负荷、过载、空气滤清器堵塞、涡轮增压器老化或喷油系统磨损。蓝烟表示磨损的发动机正在燃烧自身机油。白烟表示燃油未经燃烧便被排出。&#10;&#10;烟雾还会随发动机负荷增大。旧机器冒出的烟远多于新机器，这是正常现象。"/>
+        <text name="rms_tutorial_exhaust_smoke_title" text="判断可见尾气"/>
+        <text name="rms_tutorial_exhaust_smoke_message" text="这台机器排出的可见尾气不是装饰，其颜色就是检测信息。&#10;&#10;黑色尾气表示发动机获得的燃油多于空气，原因可能是涡轮增压器升速前突然加速、发动机低转速重负荷、过载、空气滤清器堵塞、涡轮增压器老化或喷油系统磨损。蓝色尾气表示磨损的发动机正在燃烧自身机油。白色尾气表示燃油未经燃烧便被排出。&#10;&#10;可见尾气量还会随发动机负荷增大。旧机器冒出的可见尾气远多于新机器，这是正常现象。"/>
         <text name="rms_tutorial_cvt_overheat_title" text="CVT过热"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="CVT变速箱开始过热。原因可能是负载过大、散热器堵塞、天气非常炎热，或变速箱冷却回路存在缺陷。犁过重或挂车超载也足以导致过热。&#10;&#10;请保持警惕：过热是对CVT变速箱破坏最大的因素之一。"/>
+        <text name="rms_tutorial_cvt_overheat_message" text="CVT变速箱开始过热。原因可能是负载过大、散热器堵塞、气温很高，或变速箱冷却回路存在故障。犁过重或挂车超载也足以导致过热。&#10;&#10;请保持警觉：过热是对CVT变速箱破坏最大的因素之一。"/>
         <text name="rms_tutorial_chassis_vibration_title" text="底盘承受应力"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="在崎岖地面高速行驶会迅速磨损%s的行走机构。这些冲击还会损坏线束及其连接器，并在升起重型机具时损坏液压系统。&#10;&#10;请在不平整地面上减速。"/>
+        <text name="rms_tutorial_chassis_vibration_message" text="在高低不平地面高速行驶会迅速磨损%s的行走机构。这些冲击还会损坏线束及其连接器，并在升起重型机具时损坏液压系统。&#10;&#10;请在不平整地面上减速。"/>
         <text name="rms_tutorial_terrain_impact_title" text="剧烈冲击"/>
         <text name="rms_tutorial_terrain_impact_message" text="行走机构刚刚受到剧烈冲击。撞上使机器突然停下或急速减速的障碍物，会当场损伤底盘，并使下一次故障提前到来，多数发生在转向或轴承上。&#10;&#10;请在障碍物前减速。"/>
         <text name="rms_tutorial_cranking_title" text="频繁启动"/>
         <text name="rms_tutorial_cranking_message" text="发动机启动过于频繁。每次启动都会让很大的电流通过电气系统，加快线束、启动机和其他电气部件磨损。&#10;&#10;短暂停工时请避免关闭发动机。"/>
-        <text name="rms_tutorial_critical_failure_title" text="危急故障"/>
+        <text name="rms_tutorial_critical_failure_title" text="极重度故障"/>
         <text name="rms_tutorial_critical_failure_message" text="%s已经无法依靠自身动力移动。&#10;&#10;移动维修车间可以进行临时修理，使机器足以自行前往维修车间。否则必须通过其他方式将机器拖回。"/>
         <text name="rms_tutorial_cold_engine_title" text="发动机温度低"/>
-        <text name="rms_tutorial_cold_engine_message" text="施加高负载前，请让发动机逐渐升温。在达到工作温度前，请使用适中的油门和发动机转速。"/>
+        <text name="rms_tutorial_cold_engine_message" text="施加高负载前，请让发动机逐步升温。在达到工作温度前，请使用适中的油门和发动机转速。"/>
         <text name="rms_tutorial_cold_oil_title" text="变速箱油温低"/>
-        <text name="rms_tutorial_cold_oil_message" text="变速箱与液压油的升温速度远慢于发动机。油温较低时请避免重负荷作业；通过缓慢行驶和轻度使用液压系统让油液逐渐升温。"/>
+        <text name="rms_tutorial_cold_oil_message" text="变速箱与液压油的升温速度远慢于发动机。油温较低时请避免重负荷作业；通过缓慢行驶和轻度使用液压系统让油液逐步升温。"/>
         <text name="rms_tutorial_transmission_overheat_title" text="变速箱过热"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="变速箱油开始过热。原因可能是负载过大、散热器堵塞、天气非常炎热，或变速箱冷却系统存在缺陷。&#10;&#10;所有机器的变速箱油都会升温，并非只有CVT如此。油温过高会磨损变速箱并损坏其密封件。"/>
+        <text name="rms_tutorial_transmission_overheat_message" text="变速箱油开始过热。原因可能是负载过大、散热器堵塞、气温很高，或变速箱冷却系统存在故障。&#10;&#10;所有机器的变速箱油都会升温，并非只有CVT如此。油温过高会磨损变速箱并损坏其密封件。"/>
         <text name="rms_tutorial_overload_indicator_title" text="过载警告"/>
         <text name="rms_tutorial_overload_indicator_message" text="%s正承受很大负载。仪表板上刚刚亮起的指示灯就是相关警告。&#10;&#10;机器的功率可能不足以完成当前任务。请尝试降低负载：使用巡航控制限制速度，或稍微松开油门，不要始终以全功率行驶。"/>
-        <text name="rms_tutorial_battery_low_title" text="蓄电池电量低"/>
-        <text name="rms_tutorial_battery_low_message" text="这台机器的蓄电池即将完全放电。长时间停放、严寒或电气系统故障都可能导致这种情况。&#10;&#10;电量较低时，启动会先变得困难，随后完全无法启动。此时可以使用跨接电缆，从另一辆载具启动发动机。长时间停放前，或蓄电池自行放电时，请步行到机器前，用电池总开关将其断开。"/>
+        <text name="rms_tutorial_battery_low_title" text="电池电量低"/>
+        <text name="rms_tutorial_battery_low_message" text="这台机器的电池即将完全放电。长时间停放、极低温或电气系统故障都可能导致这种情况。&#10;&#10;电量较低时，启动会先变得困难，随后完全无法启动。此时可以使用跨接电缆，从另一辆载具启动发动机。长时间停放前，或电池自行放电时，请步行到机器前，用电池总开关将其断开。"/>
         <text name="rms_tutorial_drivetrain_windup_title" text="传动系统应力"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="差速锁保持锁定时，正在高附着力地面转弯。转弯时，内外侧车轮行驶的距离不同，但差速锁迫使它们以相同速度旋转，因此传动系统承受应力，变速箱磨损加快。请在转弯前解除差速锁。"/>
+        <text name="rms_tutorial_drivetrain_windup_message" text="差速锁保持锁定时，正在高附着力地面转弯。转弯时，内外侧车轮行驶的距离不同，但差速锁强制它们以相同速度旋转，因此传动系统承受应力，变速箱磨损加快。请在转弯前解除差速锁。"/>
         <text name="rms_tutorial_drivetrain_modes_title" text="驱动模式与差速锁"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="这台机器可选择两轮驱动、四轮驱动或自动模式；自动模式会在车轮开始打滑时接合前桥。&#10;&#10;差速锁能在失去附着力时获得牵引力，但在高附着力地面转弯会付出很大代价：内外侧车轮无法以相同速度旋转，传动系统会承受全部应力。请在转弯前解除差速锁。"/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
-        <text name="rms_charger_function" text="推车式Telwin充电器，12 V时为150 A，24 V时为80 A。在载具旁连接，然后选择按电池调节的自动充电、快速充电或启动辅助 (START, 12 V时200 A)。充电速度随游戏时间倍速变化。"/>
+        <text name="rms_charger_function" text="推车式Telwin充电器，12 V时为150 A，24 V时为80 A。在载具附近连接，可按电池能接受的电流充电，或提供启动辅助（START，12 V时为200 A）。充电随游戏时间流速进行。"/>
+        <text name="rms_diagnostic_configuration" text="检测设备"/>
+        <text name="rms_configuration_reversibleFan" text="可逆风扇"/>
+        <text name="rms_diagnostic_open" text="使用检测设备"/>
+        <text name="rms_diagnostic_menu" text="检测菜单"/>
+        <text name="rms_diagnostic_menu_connection" text="连接"/>
+        <text name="rms_diagnostic_menu_scan" text="全系统扫描"/>
+        <text name="rms_diagnostic_connect" text="连接"/>
+        <text name="rms_diagnostic_disconnect" text="断开"/>
+        <text name="rms_diagnostic_licence_end" text="许可证到期：%s，第%d年"/>
+        <text name="rms_diagnostic_licence_expired" text="许可证已过期"/>
+        <text name="rms_diagnostic_licence_renew" text="续期许可证（%s）"/>
+        <text name="rms_diagnostic_note_no_licence" text="许可证已过期：此代码的技术信息已不可用。续期许可证即可恢复。"/>
+        <text name="rms_diagnostic_connection_hint" text="从列表中选择一台机器，然后点击“连接”"/>
+        <text name="rms_diagnostic_reach" text="连接范围：%s"/>
+        <text name="rms_diagnostic_no_machine" text="推车4 m范围内没有本农场的机器"/>
+        <text name="rms_diagnostic_state_ok" text="可以连接"/>
+        <text name="rms_diagnostic_state_plugged" text="检测设备已连接"/>
+        <text name="rms_diagnostic_state_moving" text="正在移动：停下机器后才能连接"/>
+        <text name="rms_diagnostic_state_electronics" text="无控制单元：这台机器没有可读取的内容"/>
+        <text name="rms_diagnostic_state_busy" text="已连接另一辆推车的检测设备"/>
+        <text name="rms_diagnostic_plug_title" text="连接：检测插座"/>
+        <text name="rms_diagnostic_plug_socket_label" text="插座："/>
+        <text name="rms_diagnostic_plug_socket" text="Deutsch 9针，J1939网络"/>
+        <text name="rms_diagnostic_plug_machine_label" text="机器："/>
+        <text name="rms_diagnostic_plug_machine" text="停止"/>
+        <text name="rms_diagnostic_plug_reading_label" text="读取："/>
+        <text name="rms_diagnostic_plug_reading" text="点火开关接通"/>
+        <text name="rms_diagnostic_plug_note_moving" text="请勿将检测设备连接到行驶中的机器。"/>
+        <text name="rms_diagnostic_plug_note_power" text="发动机可保持停止运转：只需机器的电池未断开。"/>
+        <text name="rms_diagnostic_scan_idle" text="开始扫描以读取机器的控制单元。"/>
+        <text name="rms_diagnostic_scan_running" text="正在扫描：%d / %d个系统"/>
+        <text name="rms_diagnostic_scan_done" text="系统扫描完成。"/>
+        <text name="rms_diagnostic_scan_interrupted" text="扫描中断：电池已断开。"/>
+        <text name="rms_diagnostic_detected" text="检测到的系统：(%d/%d)"/>
+        <text name="rms_diagnostic_voltage" text="电压：%s V"/>
+        <text name="rms_diagnostic_no_fault" text="无故障码"/>
+        <text name="rms_diagnostic_querying" text="正在读取"/>
+        <text name="rms_diagnostic_waiting" text="等待中"/>
+        <text name="rms_diagnostic_legend_active" text="当前故障码"/>
+        <text name="rms_diagnostic_no_scan" text="未扫描"/>
+        <text name="rms_diagnostic_scan_start" text="开始扫描"/>
+        <text name="rms_diagnostic_scan_again" text="重新扫描"/>
+        <text name="rms_diagnostic_help" text="故障码帮助与相关部件"/>
+        <text name="rms_diagnostic_ecu_label" text="控制单元："/>
+        <text name="rms_diagnostic_spn_label" text="SPN %d："/>
+        <text name="rms_diagnostic_fmi_label" text="FMI %d："/>
+        <text name="rms_diagnostic_system_label" text="系统："/>
+        <text name="rms_diagnostic_part_label" text="相关部件："/>
+        <text name="rms_diagnostic_repair_time_label" text="维修时间："/>
+        <text name="rms_diagnostic_where_label" text="维修地点："/>
+        <text name="rms_diagnostic_where_diagnostic" text="已连接检测设备的移动或自有维修车间，或经销商"/>
+        <text name="rms_diagnostic_where_high_voltage" text="自有维修车间或经销商"/>
+        <text name="rms_diagnostic_note_inspection" text="此故障码说明机器测得的内容，而不是哪个部件故障：检查才能找到它。"/>
+        <text name="rms_diagnostic_note_uncoded" text="检查机器即可找到相关部件。"/>
+        <text name="rms_diagnostic_uncoded" text="警告灯亮起但未记录故障码。没有传感器检测相关部件。"/>
+        <text name="rms_diagnostic_uncoded_title" text="无故障码的警告灯"/>
+        <text name="rms_diagnostic_error_distance" text="将推车移至机器4 m范围内。"/>
+        <text name="rms_diagnostic_error_electronics" text="这台机器没有可读取的控制单元。"/>
+        <text name="rms_diagnostic_error_busy" text="这台机器已连接另一辆推车的检测设备。"/>
+        <text name="rms_diagnostic_error_unplugged" text="请先将检测设备连接到机器上。"/>
+        <text name="rms_diagnostic_error_player_distance" text="下车并走近推车。"/>
+        <text name="rms_diagnostic_ecu_engine" text="发动机"/>
+        <text name="rms_diagnostic_ecu_inverter" text="逆变器"/>
+        <text name="rms_diagnostic_ecu_traction_battery" text="动力电池"/>
+        <text name="rms_diagnostic_ecu_converter" text="电压转换器"/>
+        <text name="rms_diagnostic_ecu_charger" text="车载充电机"/>
+        <text name="rms_diagnostic_ecu_transmission" text="变速箱"/>
+        <text name="rms_diagnostic_ecu_tractor" text="中央计算机"/>
+        <text name="rms_diagnostic_ecu_dashboard" text="仪表板"/>
+        <text name="rms_diagnostic_spn_523612" text="发动机ECU"/>
+        <text name="rms_diagnostic_spn_102" text="增压压力"/>
+        <text name="rms_diagnostic_spn_100" text="机油压力"/>
+        <text name="rms_diagnostic_spn_101" text="发动机曲轴箱压力"/>
+        <text name="rms_diagnostic_spn_1322" text="多缸失火"/>
+        <text name="rms_diagnostic_spn_cylinder" text="%d缸失火"/>
+        <text name="rms_diagnostic_spn_94" text="燃油供给压力"/>
+        <text name="rms_diagnostic_spn_110" text="冷却液温度"/>
+        <text name="rms_diagnostic_spn_111" text="冷却液液位"/>
+        <text name="rms_diagnostic_spn_1639" text="风扇转速"/>
+        <text name="rms_diagnostic_spn_168" text="电池电压"/>
+        <text name="rms_diagnostic_spn_677" text="启动机继电器"/>
+        <text name="rms_diagnostic_spn_167" text="充电电压"/>
+        <text name="rms_diagnostic_spn_157" text="共轨压力"/>
+        <text name="rms_diagnostic_spn_4375" text="车用尿素泵"/>
+        <text name="rms_diagnostic_spn_3361" text="车用尿素计量喷射器"/>
+        <text name="rms_diagnostic_spn_3216" text="上游NOx传感器"/>
+        <text name="rms_diagnostic_spn_3251" text="颗粒捕集器压差"/>
+        <text name="rms_diagnostic_spn_524135" text="颗粒捕集器碳粒负载"/>
+        <text name="rms_diagnostic_spn_127" text="变速箱油压"/>
+        <text name="rms_diagnostic_spn_191" text="变速箱输出轴速度"/>
+        <text name="rms_diagnostic_spn_526" text="实际传动比"/>
+        <text name="rms_diagnostic_spn_177" text="变速箱油温"/>
+        <text name="rms_diagnostic_spn_124" text="变速箱油位"/>
+        <text name="rms_diagnostic_spn_1762" text="液压压力"/>
+        <text name="rms_diagnostic_spn_2602" text="液压油油位"/>
+        <text name="rms_diagnostic_spn_1638" text="液压油温度"/>
+        <text name="rms_diagnostic_spn_2910" text="动力输出轴离合器活门执行器"/>
+        <text name="rms_diagnostic_spn_186" text="动力输出轴转速"/>
+        <text name="rms_diagnostic_spn_1883" text="后动力输出轴转速"/>
+        <text name="rms_diagnostic_spn_1882" text="前动力输出轴输出端速度"/>
+        <text name="rms_diagnostic_spn_2660" text="操纵杆X轴位置"/>
+        <text name="rms_diagnostic_spn_116" text="制动压力"/>
+        <text name="rms_diagnostic_spn_9109" text="驱动电机逆变器功率模块"/>
+        <text name="rms_diagnostic_spn_9115" text="逆变器相电流不平衡"/>
+        <text name="rms_diagnostic_spn_9059" text="驱动电机温度"/>
+        <text name="rms_diagnostic_spn_9067" text="驱动电机转速传感器"/>
+        <text name="rms_diagnostic_spn_8585" text="电压转换器输出电压"/>
+        <text name="rms_diagnostic_spn_4993" text="车载充电机输出电流"/>
+        <text name="rms_diagnostic_spn_8432" text="高压回路绝缘测试"/>
+        <text name="rms_diagnostic_spn_5923" text="最低单体电压"/>
+        <text name="rms_diagnostic_spn_8091" text="高压正极接触器状态"/>
+        <text name="rms_diagnostic_spn_1713" text="液压油滤清器堵塞开关"/>
+        <text name="rms_diagnostic_fmi_0" text="数据高于正常范围（最严重级别）"/>
+        <text name="rms_diagnostic_fmi_1" text="数据低于正常范围（最严重级别）"/>
+        <text name="rms_diagnostic_fmi_2" text="数据不稳定、间歇或错误"/>
+        <text name="rms_diagnostic_fmi_3" text="电压高于正常值或与高电位电源短路"/>
+        <text name="rms_diagnostic_fmi_4" text="电压低于正常值或与低电位电源短路"/>
+        <text name="rms_diagnostic_fmi_5" text="电流低于正常值或断路"/>
+        <text name="rms_diagnostic_fmi_7" text="机械系统无响应或失调"/>
+        <text name="rms_diagnostic_fmi_12" text="设备或部件故障"/>
+        <text name="rms_diagnostic_fmi_14" text="特殊说明"/>
+        <text name="rms_diagnostic_fmi_16" text="数据高于正常范围（中等严重级别）"/>
+        <text name="rms_diagnostic_fmi_18" text="数据低于正常范围（中等严重级别）"/>
+        <text name="rms_diagnostic_fmi_31" text="条件存在"/>
+        <text name="rms_dashboard_code_message" text="%s，%s"/>
+        <text name="rms_dashboard_fmi_0" text="数值过高"/>
+        <text name="rms_dashboard_fmi_1" text="数值过低"/>
+        <text name="rms_dashboard_fmi_2" text="数值不稳定"/>
+        <text name="rms_dashboard_fmi_3" text="电压过高"/>
+        <text name="rms_dashboard_fmi_4" text="电压过低"/>
+        <text name="rms_dashboard_fmi_5" text="断路"/>
+        <text name="rms_dashboard_fmi_7" text="无响应"/>
+        <text name="rms_dashboard_fmi_12" text="部件故障"/>
+        <text name="rms_dashboard_fmi_14" text="需要干预"/>
+        <text name="rms_dashboard_fmi_16" text="数值偏高"/>
+        <text name="rms_dashboard_fmi_18" text="数值偏低"/>
+        <text name="rms_dashboard_fmi_31" text="存在故障"/>
+        <text name="rms_diagnostic_log_title" text="读取故障码"/>
+        <text name="rms_diagnostic_log_codes" text="已读取的故障码"/>
         <text name="rms_charger_start" text="连接充电器"/>
         <text name="rms_charger_disconnect" text="断开充电器"/>
         <text name="rms_charger_select" text="选择要连接的车辆。"/>
@@ -1127,7 +1077,7 @@
         <text name="rms_charger_stopped_motor" text="充电停止：发动机启动"/>
         <text name="rms_charger_error_player_distance" text="下车并走近充电器。"/>
         <text name="rms_charger_mode_select" text="连接充电器"/>
-        <text name="rms_charger_mode_start" text="启动辅助 (START, 200 A, 12 V)"/>
+        <text name="rms_charger_mode_start" text="辅助启动"/>
         <text name="rms_charger_start_ready" text="START已就绪"/>
         <text name="rms_charger_start_active" text="正在辅助启动"/>
         <text name="rms_charger_start_running" text="发动机已启动：请断开"/>
@@ -1135,8 +1085,7 @@
         <text name="rms_charger_start_wait" text="两次启动之间请等待30秒。"/>
         <text name="rms_charger_unplug_before_start" text="启动前请断开充电器或选择START。"/>
         <text name="rms_charger_start_connected" text="启动辅助 (START, 200 A)."/>
-        <text name="rms_charger_mode_charge" text="自动充电"/>
-        <text name="rms_charger_mode_fast" text="快速充电 (150 A，24 V时80 A)"/>
+        <text name="rms_charger_mode_charge" text="为电池充电"/>
 
         <!-- Battery isolator -->
         <text name="rms_battery_isolator_cut" text="断开电池"/>
@@ -1144,5 +1093,10 @@
         <text name="rms_battery_isolator_open" text="电池已断开。请步行到载具前，用电池总开关重新接通。"/>
         <text name="rms_battery_isolator_engine_running" text="操作电池总开关前请关闭发动机。"/>
         <text name="rms_battery_isolator_info" text="电池已断开"/>
+        <text name="rms_diagnostic_spn_4217" text="变速箱换挡电磁分配器"/>
+        <text name="rms_diagnostic_spn_2612" text="前轮驱动执行器状态"/>
+        <text name="rms_diagnostic_spn_569" text="后桥差速锁状态"/>
+        <text name="rms_diagnostic_spn_4084" text="分配器滑动件"/>
+        <text name="rms_diagnostic_spn_1873" text="后提升机构位置"/>
     </texts>
 </l10n>

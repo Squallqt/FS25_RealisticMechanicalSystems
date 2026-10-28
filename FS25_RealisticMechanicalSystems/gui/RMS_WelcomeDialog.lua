@@ -42,7 +42,8 @@ function RMS_WelcomeDialog.show(text, callback, callbackTarget)
     dialog.disableTutorial = false
 
     dialog.dialogTitleElement:setText(g_i18n:getText("rms_tutorial_welcome_dialog_title"))
-    dialog.messageTextElement:setText(text or "")
+    dialog:setDialogType(DialogElement.TYPE_INFO)
+    dialog:setText(text)
 
     g_gui:showDialog("RMS_WelcomeDialog")
 end

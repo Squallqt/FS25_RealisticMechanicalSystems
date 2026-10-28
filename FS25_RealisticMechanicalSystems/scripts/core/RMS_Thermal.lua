@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Role-based engine, oil and traction-battery temperature model
+---Engine, oil and traction-battery temperatures.
 RMS_Thermal = RMS_Thermal or {}
 
 local sanitizeNumber = RealisticMechanicalSystems.sanitizeNumber
@@ -51,14 +51,14 @@ end
 function RMS_Thermal.getNativeThermalInputs(vehicle, isMotorStarted)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local motor = vehicle:getMotor()
-    -- the game rates load on the available torque, brought back once to the full capacity
     local load = sanitizeNumber(vehicle:getMotorLoadPercentage(), 0, 0, 1.5) * RMS_Thermal.getEngineTorqueFactor(vehicle)
     local maxRpm = sanitizeNumber(motor:getMaxRpm(), 0, 0)
     local rpm = maxRpm > 0 and sanitizeNumber(motor:getLastRealMotorRpm() / maxRpm, 0, 0, 1.5) or 0
+    local ratedRpm = sanitizeNumber(motor.peakMotorPowerRotSpeed, 0, 0) * 30 / math.pi
+    local fanSpeed = ratedRpm > 0 and sanitizeNumber(motor:getLastRealMotorRpm() / ratedRpm, 0, 0, 1) or 0
     local applied = sanitizeNumber(motor:getMotorAppliedTorque(), 0, 0)
     local peakPower = sanitizeNumber(motor.peakMotorPower, 0, 0)
     local rotation = motor.getMotorRotSpeed ~= nil and sanitizeNumber(motor:getMotorRotSpeed(), 0, 0) or nil
-    -- applied torque already holds external demand and torque limits
     local power = peakPower > 0 and rotation ~= nil and applied * rotation / peakPower or nil
     if not isFinite(power) then power = nil end
     local external = sanitizeNumber(motor:getMotorExternalTorque(), 0, 0)
@@ -66,7 +66,7 @@ function RMS_Thermal.getNativeThermalInputs(vehicle, isMotorStarted)
     local externalLoad = load * externalShare
     return {
         motorStarted = isMotorStarted == true,
-        load = load, rpm = rpm, power = power, external = externalLoad, drive = load - externalLoad,
+        load = load, rpm = rpm, fanSpeed = fanSpeed, power = power, external = externalLoad, drive = load - externalLoad,
         speed = math.clamp(math.abs(sanitizeNumber(vehicle:getLastSpeed(), 0)) / 50, 0, 1),
         hydraulic = spec.isHydraulicActive and getSystemEnabled(spec, "hydraulics") and 1 or 0
     }
@@ -140,7 +140,6 @@ function RMS_Thermal.setEngineTemperature(vehicle, temperature)
     return temperature
 end
 
----Restores the saved temperature, or starts a new machine at the air temperature
 function RMS_Thermal.initializeEngineTemperature(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return RMS_Thermal.setEngineTemperature(vehicle,
@@ -154,7 +153,6 @@ function RMS_Thermal.getEngineTemperature(vehicle)
     local native = getManagedMotorTemperature(vehicle)
     local fallback = getTemperature(spec.rawEngineTemperature, getTemperature(spec.engineTemperature, RMS_Utils.getAmbientTemperature()))
     local temperature = native ~= nil and getTemperature(native.value, fallback) or fallback
-    -- an external assignment starts a new cooling interval, never cooling it back in time
     if vehicle.isServer and native ~= nil and getTemperature(spec.rawEngineTemperature, nil) ~= nil
         and temperature ~= spec.rawEngineTemperature then
         spec._thermalEngineWorldTime = RMS_Thermal.getWorldTimeMS()
@@ -207,9 +205,7 @@ local function getRoleInterval(spec, trackerKey, ambientKey, dtOperating, isMoto
         end
         spec[trackerKey] = worldTime
     else
-        -- the update dt stands in for elapsed world time, never rebuilt
         spec[trackerKey] = nil
-        spec._thermalClockUnavailable = true
     end
     spec[ambientKey] = ambient
     return elapsed, previousAmbient
@@ -227,12 +223,9 @@ local function getBatteryInterval(spec, dtOperating, ambient, worldTime, isMotor
         spec._thermalBatteryWorldTime = worldTime
     else
         spec._thermalBatteryWorldTime = nil
-        spec._thermalClockUnavailable = true
     end
-    -- running follows operating time, a stopped pack world time, charging counted once
     local elapsed = math.max(isMotorStarted and dtOperating or elapsedWorld, chargingMS)
     if not isMotorStarted and worldTime ~= nil and isFinite(previousTime) and elapsedWorld == 0 then
-        -- a charge seen at an already processed boundary waits for the next interval
         elapsed = 0
     end
     spec._thermalBatteryAmbient = ambient
@@ -255,6 +248,16 @@ local function getExchangeFactor(spec, fluidKey, dirt)
     local radiator = getSystemEnabled(spec, "cooling") and sanitizeNumber(spec.radiatorHealth, 1, 0, 1) or 1
     local fluid = fluidKey ~= nil and sanitizeNumber(spec[fluidKey], 1, 0, 1) or 1
     return (1 - dirt * dirt) * radiator * fluid
+end
+
+local function getFanAirflow(spec, inputs)
+    if spec.isElectricVehicle then
+        return 1
+    end
+    if sanitizeNumber(spec.fanReversalTime, 0, 0) > 0 then
+        return 0
+    end
+    return inputs.fanSpeed ^ RMS_Config.THERMAL.FAN_AIRFLOW_EXPONENT
 end
 
 ---Interpolates the common warm-up fit, the nearest rates outside it
@@ -286,7 +289,6 @@ function RMS_Thermal.advanceRole(vehicle, role, temperature, dtMS, ambient0, amb
     local elapsed = sanitizeNumber(dtMS, 0, 0) / 1000
     local workShare = options.workShare ~= nil and sanitizeNumber(options.workShare, 0, 0, 1)
         or (inputs.motorStarted and 1 or 0)
-    -- the base profile scales only while running
     local responseRate = inputs.motorStarted and sanitizeNumber(profile.activeResponseRate, 1, 0.01) or 1
     local idleHeat = profile.heatIdle * workShare
     local ptoHeat = profile.heatExternal * inputs.external * workShare
@@ -299,7 +301,6 @@ function RMS_Thermal.advanceRole(vehicle, role, temperature, dtMS, ambient0, amb
         and temperature < profile.regulatedMax then
         local warmShare = math.clamp((temperature - profile.regulatedMin) / (profile.regulatedMax - profile.regulatedMin), 0, 1)
         local warmupHeat, warmupCooling = getDieselWarmupRates(profile.warmup, ambient0, inputs.power)
-        -- replace the base contribution, keeping fault heat and the hot balance
         heat = heat * warmShare + warmupHeat / responseRate * (1 - warmShare) * workShare
         idleHeat = idleHeat * warmShare
         passiveRate = passiveRate * warmShare + warmupCooling / responseRate * (1 - warmShare)
@@ -318,9 +319,8 @@ function RMS_Thermal.advanceRole(vehicle, role, temperature, dtMS, ambient0, amb
     local active = inputs.motorStarted
     if options.forcedActive ~= nil then active = options.forcedActive end
     local opening = active and getOpening(profile, temperature, options.thermostatHealth, options.stuckPosition) or 0
-    local fan = active and sanitizeNumber(spec.fanClutchHealth, 1, 0, 1) or 0
+    local fan = active and sanitizeNumber(spec.fanClutchHealth, 1, 0, 1) * getFanAirflow(spec, inputs) or 0
     local passive = passiveRate * responseRate
-    -- only the forced exchanger loses capacity to dirt and fluid faults
     local speed = profile.speedCooling * inputs.speed * responseRate
     local forced = profile.forcedCooling * opening * exchange * fan * responseRate
     local coolingRate = passive + speed + forced
@@ -336,29 +336,6 @@ function RMS_Thermal.advanceRole(vehicle, role, temperature, dtMS, ambient0, amb
     }
 end
 
-local THERMAL_DEBUG_FIELDS = {
-    engineTemp = {
-        "totalHeat", "totalCooling", "radiatorCooling", "speedCooling", "convectionCooling",
-        -- calibration probes check fan shutdown and the independent cooling paths
-        "fan", "forcedCoolingRate", "passiveCoolingRate", "speedCoolingRate"
-    },
-    transmissionTemp = {
-        "totalHeat", "totalCooling", "coolerCooling", "speedCooling", "convectionCooling",
-        "idleHeat", "loadFactor", "extraTransmissionHeat", "ptoHeat", "hydraulicHeat"
-    }
-}
-
----
-local function updateDebug(vehicle, spec, key, values)
-    local debugValues = RMS_Utils.getIsDebugDataWanted(vehicle) and spec.debugData ~= nil and spec.debugData[key] or nil
-    if debugValues ~= nil then
-        for _, name in ipairs(THERMAL_DEBUG_FIELDS[key]) do
-            debugValues[name] = values[name]
-        end
-    end
-    return debugValues
-end
-
 ---Runs each role on its own clock, the battery at the engine phase boundary
 function RMS_Thermal:updateThermalSystems(dt, updateEngine, updateTransmission)
     local spec = self.spec_RealisticMechanicalSystems
@@ -371,7 +348,6 @@ function RMS_Thermal:updateThermalSystems(dt, updateEngine, updateTransmission)
     local inputs = RMS_Thermal.getNativeThermalInputs(self, started)
     local ambient = RMS_Utils.getAmbientTemperature()
     local worldTime = RMS_Thermal.getWorldTimeMS()
-    spec._thermalClockUnavailable = worldTime == nil
     RMS_Thermal.getEngineTemperature(self)
     spec.rawTransmissionTemperature = getTemperature(spec.rawTransmissionTemperature, getTemperature(spec.transmissionTemperature, ambient))
     spec.transmissionTemperature = getTemperature(spec.transmissionTemperature, spec.rawTransmissionTemperature)
@@ -424,14 +400,13 @@ function RMS_Thermal:updateEngineThermalModel(dt, spec, isMotorStarted, motorLoa
     local temperature = RMS_Thermal.getEngineTemperature(self)
     local nextTemperature, values = RMS_Thermal.advanceRole(self, role, temperature, dt, ambientPrev or ambient, ambient, inputs, {
         fluidKey = "coolantLevel", thermostatHealth = spec.thermostatHealth, stuckPosition = spec.thermostatStuckedPosition,
-        -- keeps the relative severity of the legacy effects, not a measured heat rate
         extraHeatRate = (sanitizeNumber(spec.extraEngineHeat, 0) + sanitizeNumber(spec.fluidEngineHeat, 0))
             * RMS_Config.THERMAL.PROFILES[role].faultHeatScale
     })
     RMS_Thermal.setEngineTemperature(self, nextTemperature)
     spec.thermostatState = values.opening
+    spec.engineHeatBalance = values
     RMS_Thermal.syncEngineProtection(self)
-    return updateDebug(self, spec, "engineTemp", values)
 end
 
 ---Advances the oil sump, hydraulic work going to the circuit holding its oil
@@ -449,7 +424,6 @@ function RMS_Thermal:updateTransmissionThermalModel(dt, spec, isMotorStarted, mo
     local oilCapacity = sanitizeNumber(spec.fluidCapacities ~= nil and spec.fluidCapacities.transmissionOil or nil, 0, 0)
     local oilEnabled = oilCapacity > 0
         and (getSystemEnabled(spec, "transmission") or (common and getSystemEnabled(spec, "hydraulics")))
-    local debugValues
     if oilEnabled then
         local temperature = getTemperature(spec.rawTransmissionTemperature, getTemperature(spec.transmissionTemperature, ambient))
         local nextTemperature, values = RMS_Thermal.advanceRole(self, oilRole, temperature,
@@ -462,7 +436,7 @@ function RMS_Thermal:updateTransmissionThermalModel(dt, spec, isMotorStarted, mo
         spec.rawTransmissionTemperature = nextTemperature
         spec.transmissionThermostatState = values.opening
         values.extraTransmissionHeat = spec.extraTransmissionHeat or 0
-        debugValues = updateDebug(self, spec, "transmissionTemp", values)
+        spec.transmissionHeatBalance = values
     else
         spec.transmissionThermostatState = 0
     end
@@ -475,7 +449,6 @@ function RMS_Thermal:updateTransmissionThermalModel(dt, spec, isMotorStarted, mo
             })
         spec.rawHydraulicTemperature = nextTemperature
     end
-    return debugValues
 end
 
 ---Requires a finite number, without coercion or fallback
@@ -530,7 +503,7 @@ function RMS_Thermal.integrateTemperatureExact(temperature, heatRate, coolingRat
     local x = cooling * elapsed
     local rejectedFraction, ambientWeight, heating
     if x < 0.01 then
-        -- this series avoids cancellation without a Lua expm1
+        -- Series expansion avoids cancellation near zero.
         ambientWeight = x * (0.5 + x * (-1 / 6 + x * (1 / 24
             + x * (-1 / 120 + x * (1 / 720 - x / 5040)))))
         local phi = 1 - ambientWeight
@@ -539,7 +512,7 @@ function RMS_Thermal.integrateTemperatureExact(temperature, heatRate, coolingRat
     else
         rejectedFraction = 1 - math.exp(-x)
         ambientWeight = 1 - rejectedFraction / x
-        -- the ratio keeps h/k even when k*dt overflows
+        -- Preserve h/k when k*dt overflows.
         heating = heat * (rejectedFraction / cooling)
     end
 
@@ -552,7 +525,7 @@ function RMS_Thermal.integrateTemperatureExact(temperature, heatRate, coolingRat
             (endAmbient - startAmbient) * ambientWeight
         )
     else
-        -- keep the decaying initial state without subtracting it from itself
+        -- Avoid subtracting the decaying initial state from itself.
         result = sumExactThermalTerms(
             initial * math.exp(-x),
             startAmbient * rejectedFraction,
@@ -561,4 +534,101 @@ function RMS_Thermal.integrateTemperatureExact(temperature, heatRate, coolingRat
         )
     end
     return requireExactThermalInput("result", result, false)
+end
+
+RMS_Thermal.REVERSIBLE_FAN = "rmsReversibleFan"
+
+-- @param XMLFile xmlFile vehicle xml file
+-- @param table storeItem store item
+-- @return boolean takesFan true when the fan suits the machine
+function RMS_Thermal.getTakesReversibleFan(xmlFile, storeItem)
+    if not xmlFile:hasProperty("vehicle.enterable") then
+        return false
+    end
+    for _, categoryName in ipairs(storeItem.categoryNames) do
+        if RMS_Config.DRIVETRAIN.EXCLUDED_CATEGORIES[string.upper(categoryName)] then
+            return false
+        end
+    end
+    local configurationIndex = 0
+    while true do
+        local configurationKey = string.format("vehicle.motorized.consumerConfigurations.consumerConfiguration(%d)", configurationIndex)
+        if not xmlFile:hasProperty(configurationKey) then
+            return false
+        end
+        local consumerIndex = 0
+        while true do
+            local fillType = xmlFile:getString(string.format("%s.consumer(%d)#fillType", configurationKey, consumerIndex))
+            if fillType == nil then
+                break
+            end
+            if string.upper(fillType) == "DIESEL" or string.upper(fillType) == "METHANE" then
+                return true
+            end
+            consumerIndex = consumerIndex + 1
+        end
+        configurationIndex = configurationIndex + 1
+    end
+end
+
+function RMS_Thermal.registerReversibleFan()
+    g_vehicleConfigurationManager:addConfigurationType(RMS_Thermal.REVERSIBLE_FAN,
+        g_i18n:getText("rms_configuration_reversibleFan"), nil, VehicleConfigurationItem)
+
+    ConfigurationUtil.getConfigurationsFromXML = Utils.overwrittenFunction(ConfigurationUtil.getConfigurationsFromXML,
+        function(manager, superFunc, xmlFile, key, baseDir, customEnvironment, isMod, storeItem)
+            local configurations, defaultConfigurationIds = superFunc(manager, xmlFile, key, baseDir, customEnvironment, isMod, storeItem)
+            if manager ~= g_vehicleConfigurationManager or not RMS_Thermal.getTakesReversibleFan(xmlFile, storeItem) then
+                return configurations, defaultConfigurationIds
+            end
+
+            local items = {}
+            for index, text in ipairs({ "configuration_valueNo", "configuration_valueYes" }) do
+                local item = VehicleConfigurationItem.new(RMS_Thermal.REVERSIBLE_FAN)
+                item.name = g_i18n:getText(text)
+                item.index = index
+                item.saveId = tostring(index)
+                item.isYesNoOption = true
+                items[index] = item
+            end
+            items[1].isDefault = true
+            items[2].price = RMS_Config.THERMAL.REVERSIBLE_FAN.KIT_PRICE
+
+            configurations = configurations or {}
+            defaultConfigurationIds = defaultConfigurationIds or {}
+            defaultConfigurationIds[RMS_Thermal.REVERSIBLE_FAN] = ConfigurationUtil.getDefaultConfigIdFromItems(items)
+            configurations[RMS_Thermal.REVERSIBLE_FAN] = items
+            return configurations, defaultConfigurationIds
+        end)
+end
+
+-- @param table vehicle vehicle
+function RMS_Thermal.startFanReversal(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec.hasReversibleFan and vehicle:getIsMotorStarted() then
+        spec.fanReversalTime = RMS_Config.THERMAL.REVERSIBLE_FAN.REVERSAL_MS
+        spec.fanRunningSinceReversal = 0
+    end
+end
+
+-- @param float dt time since last call in ms
+function RMS_Thermal:updateFanReversal(dt)
+    local spec = self.spec_RealisticMechanicalSystems
+    if not spec.hasReversibleFan or not self:getIsMotorStarted() then
+        if spec.fanReversalTime > 0 then
+            spec.fanReversalTime = 0
+            RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
+        end
+        return
+    end
+    if spec.fanReversalTime <= 0 then
+        spec.fanRunningSinceReversal = spec.fanRunningSinceReversal + dt
+        if spec.fanRunningSinceReversal >= RMS_Config.THERMAL.REVERSIBLE_FAN.AUTO_INTERVAL_MS then
+            RMS_Thermal.startFanReversal(self)
+        end
+        return
+    end
+    spec.fanReversalTime = math.max(spec.fanReversalTime - dt, 0)
+    spec.radiatorClogging = math.max(spec.radiatorClogging - RMS_Config.FIELD_CARE.CLEANING_SPEED / 1000 * dt, 0)
+    RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
 end

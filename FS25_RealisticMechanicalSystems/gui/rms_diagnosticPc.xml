@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture>
+    <meta>
+        <filename>rms_diagnosticPc.png</filename>
+        <size width="2048" height="2048" />
+    </meta>
+    <slices>
+        <slice id="lid" uvs="0px 0px 2048px 1413px" />
+    </slices>
+</texture>

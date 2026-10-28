@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Physical fluid catalogue, vehicle capacities, mixture compatibility and leak-loss accounting
+---Fluid catalogue, capacities and mixtures.
 RMS_Fluids = RMS_Fluids or {}
 
 RMS_Fluids.CAPACITY_VERSION = 3
@@ -44,7 +44,6 @@ RMS_Fluids.SYSTEM_TO_CIRCUIT = {
     hydraulics = "hydraulicFluid"
 }
 
--- liters of a 100 hp machine of each family, from docs/RMS_FLUID_CAPACITY_REFERENCES.md
 RMS_Fluids.PROFILES = {
     ROAD_LIGHT =          { engineOil = 5.9,  coolant = 11.0, transmissionOil = 7.1,  hydraulicFluid = 0.0,   maxPower = 950,
                             exponents = { engineOil = 0.4, coolant = 0.55, transmissionOil = 0.3 } },
@@ -63,14 +62,11 @@ RMS_Fluids.PROFILES = {
     FORESTRY =            { engineOil = 15.6, coolant = 19.4, transmissionOil = 6.6,  hydraulicFluid = 123.2, maxPower = 584 }
 }
 
--- how the volumes follow the engine power, measured on the same real machines
 RMS_Fluids.PROFILE_REFERENCE_POWER = 100
 RMS_Fluids.POWER_EXPONENT = 0.75
--- a fifth wheel or this empty mass in tonnes makes a road vehicle a heavy truck
 RMS_Fluids.HEAVY_ROAD_VEHICLE_MASS = 5
 RMS_Fluids.KW_TO_HP = 1.35962
 
--- store category to profile family, the road ones split on the vehicle itself
 RMS_Fluids.CATEGORY_PROFILES = {
     TRACTORSS = "TRACTOR",
     TRACTORSM = "TRACTOR",
@@ -125,7 +121,6 @@ RMS_Fluids.CATEGORY_PROFILES = {
     TRUCKS = "ROAD"
 }
 
--- tractor brands keeping two separate oils, every other tractor sharing one sump
 RMS_Fluids.TRACTOR_CATEGORIES = { TRACTORSS = true, TRACTORSM = true, TRACTORSL = true }
 RMS_Fluids.SEPARATE_SUMP_TRACTOR_BRANDS = { FENDT = true, VALTRA = true, LINDNER = true }
 RMS_Fluids.COMMON_SUMP_TEXT_KEY = "rms_fluid_circuit_transmissionHydraulic"
@@ -135,7 +130,7 @@ RMS_Fluids.PRODUCTS = {
         brand = "MOTOREX", name = "Farmer Pro SAE 10W/40",
         assetDirectory = "objects/fluids/products/motorexFarmerPro",
         densityKgPerLiter = 0.868,
-        storePrices = { [5] = 45, [25] = 202, [200] = 1605 },
+        storePrices = { [5] = 47, [25] = 154, [200] = 1076 },
         isStoreItem = true,
         compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
     },
@@ -143,7 +138,7 @@ RMS_Fluids.PRODUCTS = {
         brand = "MOTOREX", name = "Farmer Poly 604",
         assetDirectory = "objects/fluids/products/motorexFarmerPoly",
         densityKgPerLiter = 0.868,
-        storePrices = { [5] = 45, [25] = 208, [200] = 1665 },
+        storePrices = { [5] = 50, [25] = 166, [200] = 902 },
         isStoreItem = true,
         compatibleCircuits = { transmissionOil = true, hydraulicFluid = true }, capacities = { 5, 25, 200 }
     },
@@ -151,7 +146,7 @@ RMS_Fluids.PRODUCTS = {
         brand = "MOTOREX", name = "Coolant M3.0 Ready To Use",
         assetDirectory = "objects/fluids/products/motorexCoolantM30",
         densityKgPerLiter = 1.070,
-        storePrices = { [5] = 105, [25] = 394, [200] = 2650 },
+        storePrices = { [5] = 29, [25] = 114, [200] = 794 },
         isStoreItem = true,
         compatibleCircuits = { coolant = true }, capacities = { 5, 25, 200 }
     },
@@ -159,7 +154,7 @@ RMS_Fluids.PRODUCTS = {
         brand = "MOTUL", name = "AGRI TEKNO 10W-40",
         assetDirectory = "objects/fluids/products/motulAgriTekno",
         densityKgPerLiter = 0.871,
-        storePrices = { [5] = 25, [25] = 104, [200] = 835 },
+        storePrices = { [5] = 31, [25] = 121, [200] = 992 },
         isStoreItem = true,
         compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
     },
@@ -167,7 +162,7 @@ RMS_Fluids.PRODUCTS = {
         brand = "MOTUL", name = "TRH 97",
         assetDirectory = "objects/fluids/products/motulTrh97",
         densityKgPerLiter = 0.886,
-        storePrices = { [5] = 50, [25] = 229, [200] = 1725 },
+        storePrices = { [5] = 31, [25] = 142, [200] = 854 },
         isStoreItem = true,
         compatibleCircuits = { transmissionOil = true, hydraulicFluid = true }, capacities = { 5, 25, 200 }
     },
@@ -175,7 +170,7 @@ RMS_Fluids.PRODUCTS = {
         brand = "MOTUL", name = "AUTO COOL EXPERT -37°C",
         assetDirectory = "objects/fluids/products/motulAutoCoolExpert",
         densityKgPerLiter = 1.076,
-        storePrices = { [5] = 30, [25] = 123, [200] = 970 },
+        storePrices = { [5] = 16, [25] = 93, [200] = 758 },
         isStoreItem = true,
         compatibleCircuits = { coolant = true }, capacities = { 5, 25, 200 }
     },
@@ -183,15 +178,15 @@ RMS_Fluids.PRODUCTS = {
         brand = "FUCHS", name = "Agrifarm MOT X-LA 10W40",
         assetDirectory = "objects/fluids/products/fuchsMotXla",
         densityKgPerLiter = 0.859,
-        storePrices = { [5] = 35, [25] = 171, [200] = 1435 },
+        storePrices = { [5] = 35, [25] = 136, [200] = 949 },
         isStoreItem = true,
         compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
     },
     FUCHS_AGRIFARM_UTTO_MP = {
         brand = "FUCHS", name = "Agrifarm UTTO MP",
         assetDirectory = "objects/fluids/products/fuchsUttoMp",
-        densityKgPerLiter = 0.870,
-        storePrices = { [5] = 25, [25] = 113, [200] = 910 },
+        densityKgPerLiter = 0.880,
+        storePrices = { [5] = 30, [25] = 119, [200] = 861 },
         isStoreItem = true,
         compatibleCircuits = { transmissionOil = true, hydraulicFluid = true }, capacities = { 5, 25, 200 }
     },
@@ -199,14 +194,15 @@ RMS_Fluids.PRODUCTS = {
         brand = "FUCHS", name = "Fricofin LD50",
         assetDirectory = "objects/fluids/products/fuchsFricofinLd50",
         densityKgPerLiter = 1.070,
-        storePrices = { [5] = 35, [25] = 110, [200] = 870 },
+        storePrices = { [5] = 22, [25] = 86, [200] = 586 },
         isStoreItem = true,
         compatibleCircuits = { coolant = true }, capacities = { 5, 25, 200 }
     }
 }
 
 RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS = {
-    COOLANT_LEAK = "coolant",
+    COOLANT_HOSE_FAILURE = "coolant",
+    EXPANSION_TANK_FAILURE = "coolant",
     TRANSMISSION_OIL_LEAK = "transmissionOil",
     HYDRAULIC_HOSE_EXTERNAL_LEAK = "hydraulicFluid"
 }
@@ -411,7 +407,6 @@ function RMS_Fluids.getProfileName(vehicle)
         profileName = "TRACTOR"
         local xmlKey = RMS_Fluids.getVehicleXMLKey(vehicle)
         local warningKey = xmlKey ~= "" and xmlKey or tostring(vehicle)
-        -- only a machine RMS manages is worth a missing profile warning
         if not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
             and not RMS_Fluids._warnedUnknownVehicles[warningKey] then
             RMS_Fluids._warnedUnknownVehicles[warningKey] = true
@@ -436,7 +431,6 @@ function RMS_Fluids.resolveCapacities(vehicle)
 
     local profileName = RMS_Fluids.getProfileName(vehicle)
     local capacities = RMS_Fluids.getProfileCapacities(RMS_Fluids.PROFILES[profileName], RMS_Fluids.getEnginePower(vehicle))
-    -- an electric motor holds no engine oil
     if vehicle.spec_RealisticMechanicalSystems.isElectricVehicle then
         capacities.engineOil = 0
     end
@@ -460,24 +454,10 @@ function RMS_Fluids.initializeVehicle(vehicle, forceResolve)
     local hasCurrentSavedCapacities = tonumber(spec.fluidCapacityVersion) == RMS_Fluids.CAPACITY_VERSION
     spec.hasCommonSump = RMS_Fluids.getHasCommonSump(vehicle)
     if spec.hasCommonSump then
-        -- the sump holds both oils, and a save from before pours both circuits into it
         if spec.systems.hydraulics.enabled then
             resolved.transmissionOil = resolved.transmissionOil + resolved.hydraulicFluid
         end
         resolved.hydraulicFluid = 0
-
-        local transmissionCapacity = math.max(tonumber(spec.fluidCapacities.transmissionOil) or 0, 0)
-        local hydraulicCapacity = math.max(tonumber(spec.fluidCapacities.hydraulicFluid) or 0, 0)
-        if not hasCurrentSavedCapacities and hydraulicCapacity > 0 then
-            local transmissionLiters = clamp(spec.transmissionOilLevel or 1, 0, 1) * transmissionCapacity
-            local hydraulicLiters = clamp(spec.hydraulicFluidLevel or 1, 0, 1) * hydraulicCapacity
-            local liters = transmissionLiters + hydraulicLiters
-            spec.transmissionOilLevel = liters / (transmissionCapacity + hydraulicCapacity)
-            if liters > 0 then
-                spec.fluidCompatibility.transmissionOil = (transmissionLiters * clamp(spec.fluidCompatibility.transmissionOil or 1, 0, 1)
-                    + hydraulicLiters * clamp(spec.fluidCompatibility.hydraulicFluid or 1, 0, 1)) / liters
-            end
-        end
     end
     for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
         local definition = RMS_Fluids.CIRCUITS[circuit]
@@ -487,7 +467,7 @@ function RMS_Fluids.initializeVehicle(vehicle, forceResolve)
         local oldLevel = clamp(spec[definition.levelKey] or 1, 0, 1)
         local newCapacity = enabled and math.max(tonumber(resolved[circuit]) or 0, 0) or 0
 
-        -- a capacity of zero is what says the circuit is absent, its level then survives untouched
+        -- Capacity zero marks an absent circuit; preserve its saved level.
         if forceResolve == true then
             local oldLiters = oldLevel * oldCapacity
             spec.fluidCapacities[circuit] = newCapacity
@@ -538,19 +518,19 @@ function RMS_Fluids.getLevel(vehicle, circuit)
     return clamp(spec[RMS_Fluids.CIRCUITS[getSpecSumpCircuit(spec, circuit)].levelKey] or 1, 0, 1)
 end
 
--- level gauge of every screen: the stretch a dipstick shows around its two marks
 RMS_Fluids.GAUGE_MIN_POSITION = 0.4
 RMS_Fluids.GAUGE_MAX_POSITION = 0.8
 
 ---Reads a level on the level gauge
 -- @param float level fill ratio of the circuit
+-- @param table green colour of the fill from the MIN mark up, the menus' or the HUD's
 -- @return float fill share of the bar the level fills, 0 when it does not reach the gauge
--- @return table color colour of the fill: the green of the game from the MIN mark up, the warning colour below
-function RMS_Fluids.getGaugeFill(level)
+-- @return table color green at or above MIN, warning below
+function RMS_Fluids.getGaugeFill(level, green)
     local minMark = RMS_Config.FLUIDS.LEVEL_MIN_MARK
     local stretch = (1 - minMark) / (RMS_Fluids.GAUGE_MAX_POSITION - RMS_Fluids.GAUGE_MIN_POSITION)
     local fill = RMS_Fluids.GAUGE_MAX_POSITION - (1 - level) / stretch
-    return math.max(fill, 0), level < minMark and RMS_Breakdowns.COLORS.WARNING or HUD.COLOR.ACTIVE
+    return math.max(fill, 0), level < minMark and RMS_Breakdowns.COLORS.WARNING or green
 end
 
 ---Returns the current circuit quantity in liters
@@ -631,7 +611,7 @@ end
 -- @param table vehicle vehicle
 -- @param string circuit circuit key
 -- @param float liters requested liters
--- @param string? productKey catalogue product, nil for guaranteed-compatible workshop fluid
+-- @param string? productKey nil for compatible workshop fluid
 -- @param boolean? skipDebtReduction true for repair compensation
 -- @return float accepted accepted liters
 function RMS_Fluids.addLiters(vehicle, circuit, liters, productKey, skipDebtReduction)
@@ -907,7 +887,6 @@ function RMS_Fluids.deserializeLeakDebt(serialized)
     return debts
 end
 
--- circuits each maintenance level changes the fluid of, the others being topped up
 local MAINTENANCE_CHANGES = {
     STANDARD = { engineOil = true },
     EXTENDED = { engineOil = true, transmissionOil = true, hydraulicFluid = true },

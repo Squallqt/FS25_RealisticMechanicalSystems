@@ -24,7 +24,7 @@ function RMS_BatteryIsolatorEvent.new(vehicle, isIsolated)
     return self
 end
 
----Called on client side
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_BatteryIsolatorEvent:writeStream(streamId, connection)
@@ -32,7 +32,7 @@ function RMS_BatteryIsolatorEvent:writeStream(streamId, connection)
     streamWriteBool(streamId, self.isIsolated)
 end
 
----Called on server side
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_BatteryIsolatorEvent:readStream(streamId, connection)

@@ -27,7 +27,7 @@ function RMS_LogEntrySyncEvent.new(vehicle, serializedEntry)
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_LogEntrySyncEvent:writeStream(streamId, connection)
@@ -36,7 +36,7 @@ function RMS_LogEntrySyncEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_LogEntrySyncEvent:readStream(streamId, connection)

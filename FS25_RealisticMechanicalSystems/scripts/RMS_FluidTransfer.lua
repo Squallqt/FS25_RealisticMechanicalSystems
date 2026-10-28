@@ -5,11 +5,8 @@
 RMS_FluidTransfer = {}
 
 RMS_FluidTransfer.MAX_DISTANCE = 4
--- km/h under which a machine stands still, as the game counts it
 RMS_FluidTransfer.STOPPED_SPEED = 0.5
--- liters a second a container delivers: 5 L can, 25 L can, drum through its pump
 RMS_FluidTransfer.LITERS_PER_SECOND = { [5] = 0.2, [25] = 0.3, [200] = 1 }
--- metres of hose between the pump of a drum and its nozzle, twice the 2 m its maker ships
 RMS_FluidTransfer.HOSE_LENGTH = 4
 
 RMS_FluidTransfer.RESULT = {
@@ -83,12 +80,10 @@ local function getRuntimeValidation(container, target, circuit, requester)
         return RMS_FluidTransfer.RESULT.NO_ACCESS
     end
 
-    -- the container pours from the hand that carries it, the can or the nozzle of a drum
     if container:getRMSFluidCarrier() ~= requester.player then
         return RMS_FluidTransfer.RESULT.INVALID
     end
 
-    -- a drum delivers no further than its hose
     if RMS_FluidTransfer.getDistanceToVehicle(target, requester.player.rootNode) > RMS_FluidTransfer.MAX_DISTANCE
         or (container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY
             and RMS_FluidTransfer.getDistanceToVehicle(target, container.rootNode) > RMS_FluidTransfer.HOSE_LENGTH) then
@@ -119,7 +114,6 @@ local function getRuntimeValidation(container, target, circuit, requester)
     return RMS_FluidTransfer.RESULT.OK
 end
 
--- what a player is told of a refused pour
 local REFUSAL_TEXT_KEYS = {
     [RMS_FluidTransfer.RESULT.MOTOR_RUNNING] = "rms_fluid_error_motor_running",
     [RMS_FluidTransfer.RESULT.VEHICLE_MOVING] = "rms_fluid_error_vehicle_moving",
@@ -131,7 +125,7 @@ local REFUSAL_TEXT_KEYS = {
 ---Returns the text telling a player why the server refused the pour
 -- @param table container container the player poured from
 -- @param string result result of the server
--- @return string? textKey text of the refusal, nil for a result no legitimate request meets
+-- @return string? textKey refusal, nil for an invalid request
 function RMS_FluidTransfer.getRefusalTextKey(container, result)
     local isDrum = container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY
     if result == RMS_FluidTransfer.RESULT.OUT_OF_RANGE then
@@ -181,11 +175,10 @@ function RMS_FluidTransfer.tryStart(container, target, circuit, requester, incom
         target = target,
         circuit = circuit,
         productKey = productKey,
-        requesterUserId = requester.userId,
-        requesterFarmId = requester.farmId
+        requesterUserId = requester.userId
     }
     container:raiseDirtyFlags(containerSpec.dirtyFlag)
-    -- a container at rest is not updated by the game, and its update pours the fluid
+    -- Idle containers need an update to transfer fluid.
     container:raiseActive()
     return true, RMS_FluidTransfer.RESULT.OK
 end
@@ -222,7 +215,6 @@ local function getActiveRequester(transfer)
     }
 end
 
----Advances the active server transfer and puts back any liters the target refused
 -- @param table container physical source container
 -- @param float dt elapsed milliseconds
 function RMS_FluidTransfer.update(container, dt)

@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Workshop dialog showing the vehicle condition, its breakdowns and the available services
+---Vehicle workshop dialog.
 RMS_WorkshopDialog = {}
 RMS_WorkshopDialog.INSTANCE = nil
 
@@ -14,7 +14,6 @@ RMS_WorkshopDialog.TAB = {
     TECHNICAL = 4
 }
 
--- order of the action buttons of the interventions tab, as the XML lists them
 RMS_WorkshopDialog.INTERVENTION_ACTION = {
     INSPECTION = 1,
     MAINTENANCE = 2,
@@ -45,7 +44,6 @@ local function stripTrailingColon(value)
     return (tostring(value or ""):gsub("%s*:%s*$", ""))
 end
 
--- the look of a cell of the repaint table by what a repaint does: all of it, part of it, nothing
 local BODYWORK_CELL_KINDS = { [2] = "Done", [1] = "Light", [0] = "None" }
 
 ---Tells whether a log entry belongs in the technical record
@@ -79,7 +77,6 @@ local function getServiceTypeText(serviceType)
     return RMS_Utils.formatServiceState(serviceType)
 end
 
----Counts the repaired breakdowns stored in completed repair and overhaul entries
 local function getResolvedBreakdownsCount(logEntries)
     local count = 0
     local STATUS = RealisticMechanicalSystems.STATUS
@@ -88,7 +85,7 @@ local function getResolvedBreakdownsCount(logEntries)
         if entry ~= nil and entry.isCompleted ~= false and (entry.type == STATUS.REPAIR or entry.type == STATUS.OVERHAUL) then
             local selectedBreakdowns = entry.conditionData ~= nil and entry.conditionData.selectedBreakdowns or nil
             for _, breakdownId in ipairs(selectedBreakdowns or {}) do
-                if breakdownId ~= "GENERAL_WEAR" then
+                if RMS_Breakdowns.BreakdownRegistry[breakdownId] ~= nil then
                     count = count + 1
                 end
             end
@@ -98,91 +95,17 @@ local function getResolvedBreakdownsCount(logEntries)
     return count
 end
 
--- currency glyphs of the menu atlas, one per money unit the game offers
 local CURRENCY_SLICES = {
     [GS_MONEY_EURO] = "ui_elements.currency_euro",
     [GS_MONEY_DOLLAR] = "ui_elements.currency_dollar",
     [GS_MONEY_POUND] = "ui_elements.currency_pound"
 }
--- rows the quote can print before it has to summarise the rest
 local MAX_LISTED_PARTS = 16
 
-local currencyOverlays = {}
-local MAINTENANCE_ICON_SLICE_ID = "rms_DashboardHud.maintenance"
-local OIL_ICON_SLICE_ID = "rms_WorkshopFluids.engineOil"
-local workshopIconOverlays = {}
-local IMAGE_COLOR_ATTRIBUTES = {
-    [GuiOverlay.STATE_DISABLED] = "imageDisabledColor",
-    [GuiOverlay.STATE_FOCUSED] = "imageFocusedColor",
-    [GuiOverlay.STATE_SELECTED] = "imageSelectedColor",
-    [GuiOverlay.STATE_HIGHLIGHTED] = "imageHighlightedColor",
-    [GuiOverlay.STATE_PRESSED] = "imagePressedColor"
-}
-
----Draws the currency glyph of the money unit the player set, over an element
--- @param table area element the glyph fills
-function RMS_WorkshopDialog.drawCurrencyIcon(area)
-    local unit = g_gameSettings:getValue("moneyUnit")
-    if CURRENCY_SLICES[unit] == nil then
-        unit = GS_MONEY_DOLLAR
-    end
-
-    local overlay = currencyOverlays[unit]
-    if overlay == nil then
-        overlay = g_overlayManager:createOverlay(CURRENCY_SLICES[unit], 0, 0, 0, 0)
-        currencyOverlays[unit] = overlay
-    end
-
-    local green = HUD.COLOR.ACTIVE
-    local height = area.absSize[2]
-    local width = height * (g_screenHeight / g_screenWidth)
-
-    overlay:setDimension(width, height)
-    overlay:setPosition(area.absPosition[1], area.absPosition[2])
-    overlay:setColor(green[1], green[2], green[3], green[4])
-    overlay:render()
-end
-
----Draws a verified atlas glyph without passing through a Bitmap overlay
-local function drawWorkshopIcon(area, sliceId, profileName)
-    if area == nil then
-        return
-    end
-
-    local overlay = workshopIconOverlays[sliceId]
-    if overlay == nil then
-        overlay = g_overlayManager:createOverlay(sliceId, 0, 0, 0, 0)
-        workshopIconOverlays[sliceId] = overlay
-    end
-
-    if overlay == nil then
-        return
-    end
-
-    local profile = g_gui:getProfile(profileName)
-    local colorAttribute = IMAGE_COLOR_ATTRIBUTES[area:getOverlayState()]
-    local colorValue = colorAttribute ~= nil and profile:getValue(colorAttribute) or nil
-    local color = GuiUtils.getColorGradientArray(colorValue)
-        or GuiUtils.getColorGradientArray(profile:getValue("imageColor"), HUD.COLOR.ACTIVE)
-
-    overlay:setPosition(area.absPosition[1], area.absPosition[2])
-    overlay:setDimension(area.absSize[1], area.absSize[2])
-    overlay:setColor(color[1], color[2], color[3], color[4])
-    overlay:render()
-end
-
----Draws the verified RMS maintenance glyph
--- @param table? area transparent GUI element defining the render bounds and state
--- @param string profileName profile providing the native RMS state colors
-function RMS_WorkshopDialog.drawMaintenanceIcon(area, profileName)
-    drawWorkshopIcon(area, MAINTENANCE_ICON_SLICE_ID, profileName)
-end
-
----Draws the RMS engine-oil glyph from the registered workshop fluid atlas
--- @param table? area transparent GUI element defining the render bounds and state
--- @param string profileName profile providing the native RMS state colors
-function RMS_WorkshopDialog.drawOilIcon(area, profileName)
-    drawWorkshopIcon(area, OIL_ICON_SLICE_ID, profileName)
+---Shows the currency glyph of the money unit the player set
+-- @param table element bitmap of the glyph
+function RMS_WorkshopDialog.setCurrencyIcon(element)
+    element:setImageSlice(nil, CURRENCY_SLICES[g_gameSettings:getValue("moneyUnit")] or CURRENCY_SLICES[GS_MONEY_DOLLAR])
 end
 
 ---Draws an RMS progress ring centered inside a GUI area
@@ -195,7 +118,8 @@ local function drawProgressRing(area, ratio, arcColor)
     local ringWidth = ringHeight * (g_screenHeight / g_screenWidth)
     local centerX = area.absPosition[1] + area.absSize[1] * 0.5
     local centerY = area.absPosition[2] + area.absSize[2] * 0.5
-    RMS_ProgressRing.render(centerX, centerY, ringWidth, ringHeight, clampRatio(ratio), false, RMS_ProgressRing.THIN_DOT, arcColor)
+    RMS_ProgressRing.render(centerX, centerY, ringWidth, ringHeight, clampRatio(ratio),
+        arcColor or RMS_Utils.COLOR.HIGHLIGHT, RMS_Utils.COLOR.RING_TRACK)
 end
 
 
@@ -257,7 +181,7 @@ function RMS_WorkshopDialog.new(target, customMt)
     dialog.technicalLogData = {}
     dialog.selectedTechnicalLogIndex = nil
     dialog.fluidGaugeWidths = {}
-    dialog.systemGaugeWidths = {}
+    dialog.stateRows = {}
     return dialog
 end
 
@@ -340,7 +264,6 @@ function RMS_WorkshopDialog:updateScreen()
     self.activeBreakdowns = vehicle:getActiveBreakdowns()
     self.lastObservedStatus = self.vehicle:getCurrentStatus()
 
-    -- vehicle info panel
     local balanceText = g_i18n:formatMoney(math.floor(g_currentMission:getMoney()), 2, true, false)
     self.balanceElement:setText(balanceText)
     RMS_Utils.updateMoneyBoxLayout(
@@ -397,7 +320,6 @@ function RMS_WorkshopDialog:updateScreen()
     self.relAndMainLabel:setText(RMS_Utils.formatServiceReason(self.vehicle, schedule))
     self.relAndMainValue:setText(RMS_Utils.formatServiceDeadline(schedule))
 
-    -- breakdown table, restricted to the breakdowns already discovered
     self.visibleBreakdowns = {}
     for id, breakdown in pairs(self.activeBreakdowns) do
         if breakdown.isVisible then
@@ -417,7 +339,6 @@ function RMS_WorkshopDialog:updateScreen()
     self.breakdownTable:setDelegate(self)
     self.breakdownTable:reloadData()
 
-    -- status line, closed workshop and running service both disable the buttons
     local buttonsDisabled = false
     local statusText = ""
     
@@ -450,7 +371,6 @@ function RMS_WorkshopDialog:updateScreen()
         statusText = statusText .. " · " .. workshopTypeText
     end
 
-    -- the three status bars carry the same sentence, so they carry the same colour
     local statusColor = isWorkshopTypeOpen and RMS_Utils.COLOR.TEXT or RMS_Utils.COLOR.TEXT_DIM
     self.statusText:setText(statusText)
     self.statusText:setTextColor(unpack(statusColor))
@@ -505,9 +425,7 @@ function RMS_WorkshopDialog:updateScreen()
         end
     end
 
-    -- the card and the bar of a repair stay open and say why nothing is to repair
     self.diagnosticConfigureButton:setDisabled(selectedRepairCount == 0 or isUnderService)
-    -- a closed workshop or a running service leaves nothing to configure: the whole list waits
     for _, button in ipairs(self.interventionActionButtons) do
         button:setDisabled(buttonsDisabled)
     end
@@ -523,7 +441,6 @@ function RMS_WorkshopDialog:updateScreen()
         (self.bodyworkSelected == true or self.unavailableIntervention == STATUS.BODYWORK) and not isUnderService)
     self:updateBodyworkQuote(isWorkshopTypeOpen, isUnderService)
     self:updateDiagnosticEstimate(selectedRepairCount, repairPrice)
-    -- the bar carries the shortcuts, not a price list: each figure is quoted by the dialog that starts the work
     self.inspectionButton:setText(g_i18n:getText("rms_ws_action_inspection"))
     self.maintenanceButton:setText(g_i18n:getText("rms_ws_action_maintenance"))
     self.repairButton:setText(g_i18n:getText("rms_ws_action_repair"))
@@ -538,11 +455,9 @@ function RMS_WorkshopDialog:updateScreen()
     self:updateTechnicalRecord()
     self:setCurrentTab(self.currentTab)
 
-    -- every value is written by now, so each pill can close on the one it wraps
     RMS_Utils.fitValuePills(self)
 end
 
----Shows the known faults, or a title and a sentence when the workshop has none to list
 function RMS_WorkshopDialog:updateFaultList()
     local isListEmpty = #self.visibleBreakdowns == 0
     local isFaultWarning = RealisticMechanicalSystems.getHasUnidentifiedWarning(self.vehicle)
@@ -559,7 +474,6 @@ function RMS_WorkshopDialog:updateInspectionReading()
     local reportHours, isReportOutdated = self.vehicle:getInspectionReportAge()
     local inspectedService, isCompleteServiceInspection = self.vehicle:getLastInspectedService()
     local inspectedCondition, isCompleteInspection = self.vehicle:getLastInspectedCondition()
-    -- a report that no longer describes the machine keeps its figures, greyed out
     local serviceColor = isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or {RMS_Utils.getServiceColor(inspectedService, isCompleteServiceInspection)}
     local conditionColor = isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or {RMS_Utils.getConditionColor(inspectedCondition, isCompleteInspection)}
     self.isReportOutdated = isReportOutdated
@@ -568,7 +482,6 @@ function RMS_WorkshopDialog:updateInspectionReading()
     self.serviceValue:setTextColor(unpack(serviceColor))
     self.conditionValue:setText(RMS_Utils.formatCondition(inspectedCondition, isCompleteInspection))
     self.conditionValue:setTextColor(unpack(conditionColor))
-    -- out of date, each ring shows its figure on one line over the mark asking for a new check
     self.serviceOutdatedValue:setText(RMS_Utils.formatService(inspectedService, isCompleteServiceInspection))
     self.conditionOutdatedValue:setText(RMS_Utils.formatCondition(inspectedCondition, isCompleteInspection))
     self.serviceValue:setVisible(not isReportOutdated)
@@ -587,52 +500,44 @@ function RMS_WorkshopDialog:updateInspectionReading()
     self.serviceRingRatio = RMS_Utils.getServiceRingRatio(inspectedService, isCompleteServiceInspection)
 end
 
----Fills the systems of the condition card from the report snapshot
 function RMS_WorkshopDialog:updateSummarySystems()
     local entry = RealisticMechanicalSystems.getReferenceReport(self.vehicle)
     local systems = entry ~= nil and entry.conditionData ~= nil and entry.conditionData.systems or nil
-    -- per system figures are a measurement: a report without them rates each system in a word
     local isMeasured = systems ~= nil and RealisticMechanicalSystems.getIsCompleteReport(entry)
 
     self.summarySystemsLayout:setVisible(systems ~= nil)
     self.summarySystemsEmptyText:setVisible(systems == nil)
 
-    if systems == nil then
+    if self.stateVehicle ~= self.vehicle then
+        self.stateVehicle, self.openSystem = self.vehicle, nil
+    end
+    local footText = ""
+    if systems ~= nil then
+        self.stateRows, footText = RMS_Utils.getConditionRows(self.vehicle, entry, systems, isMeasured, self.isReportOutdated, self.openSystem)
+    else
+        self.stateRows = {}
+    end
+    self.summaryStateFootText:setText(footText)
+    self.summaryStateFootRule:setVisible(footText ~= "")
+    RMS_Utils.reloadListTemplates(self.summaryStateList)
+end
+
+---Unfolds a system of the condition card on its parts, or folds it back
+-- @param table _list list element
+-- @param integer _section section index
+-- @param integer index row index
+function RMS_WorkshopDialog:onClickStateRow(_list, _section, index)
+    local row = self.stateRows[index]
+    if row == nil or row.kind ~= "system" or not row.canOpen then
         return
     end
-
-    for index, systemL10nKey in ipairs(RealisticMechanicalSystems.SYSTEMS_ORDER) do
-        local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemL10nKey)
-        local systemData
-        if type(systems) == "table" and systemKey ~= nil then
-            systemData = systems[systemKey]
-        end
-        local isEnabled = type(systemData) == "table" and systemData.enabled ~= false
-        local condition = isEnabled and clampRatio(systemData.condition or 1) or 0
-        local percent = condition * 100
-        local gaugeElement = self.summarySystemGauge[index]
-        local rowElement = self.summarySystemRow[index]
-
-        rowElement:setVisible(isEnabled)
-        self.summarySystemName[index]:setText(isEnabled and g_i18n:getText(RMS_Utils.getSystemLabel(self.vehicle, systemL10nKey)) or "")
-        self.summarySystemValue[index]:setText(isEnabled and string.format("%d", math.floor(percent + 0.5)) or "")
-        self.summarySystemValue[index]:setTextColor(unpack(self.isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or self.systemValueColor))
-        self.summarySystemValue[index]:setVisible(isMeasured)
-        self.summarySystemTrack[index]:setVisible(isMeasured)
-        self.summarySystemRating[index]:setVisible(not isMeasured)
-        self.summarySystemRating[index]:setText(RMS_Utils.formatCondition(condition, false))
-        gaugeElement:setVisible(isEnabled and isMeasured)
-        gaugeElement:setSize(self.systemGaugeWidths[index] * condition, nil)
-        if self.isReportOutdated then
-            gaugeElement:setImageColor(nil, unpack(RMS_Utils.COLOR.TEXT_DIM))
-            self.summarySystemRating[index]:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
-        else
-            gaugeElement:setImageColor(nil, RMS_Utils.getGaugeColor(percent, 95, 80, 60, 40, true))
-            self.summarySystemRating[index]:setTextColor(RMS_Utils.getConditionColor(condition, false))
+    self.openSystem = not row.isOpen and row.systemKey or nil
+    self:updateSummarySystems()
+    for rowIndex, stateRow in ipairs(self.stateRows) do
+        if stateRow.kind == "system" and stateRow.systemKey == row.systemKey then
+            self.summaryStateList:setSelectedItem(1, rowIndex, false, true)
         end
     end
-
-    self.summarySystemsLayout:invalidateLayout()
 end
 
 ---Fills the four figures of the service card that the ring does not carry
@@ -652,8 +557,6 @@ end
 function RMS_WorkshopDialog:updateSummaryPanels()
     self:updateSummarySystems()
     self:updateSummaryService()
-
-    local spec = self.vehicle.spec_RealisticMechanicalSystems
     local alertId = self.visibleBreakdowns[1]
     local alertData = alertId ~= nil and self.activeBreakdowns[alertId] or nil
     local alertDefinition = alertId ~= nil and self.breakdownRegistry[alertId] or nil
@@ -665,7 +568,6 @@ function RMS_WorkshopDialog:updateSummaryPanels()
     self.summaryNoAlertText:setText(faultStateText)
     self.summaryNoAlertText:setTextColor(unpack(isFaultWarning and RMS_Breakdowns.COLORS.WARNING or self.noAlertColor))
 
-    -- only the worst breakdown gets a row, so the count tells how many more wait in the diagnostic tab
     local alertCount = #self.visibleBreakdowns
     local alertsTitle = g_i18n:getText("rms_ws_section_alerts")
     if alertCount > 1 then
@@ -677,7 +579,7 @@ function RMS_WorkshopDialog:updateSummaryPanels()
         local stageDefinition = alertData.stage ~= nil and alertDefinition.stages ~= nil
             and alertDefinition.stages[alertData.stage] or nil
         local partKey = alertDefinition.part or alertDefinition.system
-        local descriptionKey = stageDefinition ~= nil and RMS_Breakdowns.getStageDescription(self.vehicle, stageDefinition) or nil
+        local descriptionKey = stageDefinition ~= nil and RMS_Breakdowns.getStageDescription(self.vehicle, stageDefinition, alertData) or nil
         local descriptionText = descriptionKey ~= nil and g_i18n:getText(descriptionKey) or "-"
 
         if alertData.isActive == false and alertData.source == RealisticMechanicalSystems.BREAKDOWN_SOURCES.QUICK_FIX then
@@ -686,20 +588,15 @@ function RMS_WorkshopDialog:updateSummaryPanels()
             descriptionText = g_i18n:getText("rms_breakdowns_defected_parts_detected_description")
         end
 
-        self.summaryAlertPart:setText(partKey ~= nil and g_i18n:getText(partKey) or tostring(alertId))
+        local price = self.vehicle:getBreakdownRepairPrice(alertId, alertData.stage, RealisticMechanicalSystems.PART_TYPES.OEM, self.workshopType)
+        RMS_Utils.fitRowValue(self.summaryAlertPart, self.summaryAlertPricePill, self.summaryAlertPrice,
+            partKey ~= nil and g_i18n:getText(partKey) or tostring(alertId), g_i18n:formatMoney(price, 0, true, false))
         self.summaryAlertDescription:setText(descriptionText)
-        self.summaryAlertPrice:setText(g_i18n:formatMoney(
-            self.vehicle:getBreakdownRepairPrice(alertId, alertData.stage, RealisticMechanicalSystems.PART_TYPES.OEM, self.workshopType),
-            0,
-            true,
-            false
-        ))
     end
 
     local fluidUnit = g_i18n:getText("unit_literShort")
     local quantityFormat = g_i18n:getText("rms_inspection_fluid_quantity_format")
     for _, fields in ipairs(FLUID_FIELDS) do
-        -- a row only for the oils the machine holds, one for a common sump
         local hasCircuit = RMS_Fluids.hasCircuit(self.vehicle, fields.circuit)
         self[fields.row]:setVisible(hasCircuit)
 
@@ -740,7 +637,6 @@ function RMS_WorkshopDialog:updateDiagnosticEstimate(selectedRepairCount, repair
         end
     end
 
-    -- the quote is an estimate taken before the repair is configured: it lists the parts and the total, nothing else
     if #selectedParts > MAX_LISTED_PARTS then
         local hidden = #selectedParts - (MAX_LISTED_PARTS - 1)
         for _ = MAX_LISTED_PARTS, #selectedParts do
@@ -910,7 +806,7 @@ function RMS_WorkshopDialog:updateTechnicalReportPreview(entry)
     self.technicalReportService:setText(RMS_Utils.formatService(conditionData.service, isCompleteReport))
     self.technicalReportService:setTextColor(RMS_Utils.getServiceColor(conditionData.service, isCompleteReport))
     self.technicalReportBreakdowns:setText(tostring(visibleBreakdownCount))
-    self.technicalReportBreakdowns:setTextColor(unpack(HUD.COLOR.ACTIVE))
+    self.technicalReportBreakdowns:setTextColor(unpack(RMS_Utils.COLOR.HIGHLIGHT))
     self:updateTechnicalReportBreakdownList(breakdownNames, g_i18n:getText("rms_log_inspection_desc_no_breakdowns"))
     self:updateTechnicalReportRecommendationList(recommendationItems)
     RMS_Utils.fitValuePills(self)
@@ -1004,29 +900,6 @@ end
 
 
 
----Draws the currency glyph on the vehicle value row
-function RMS_WorkshopDialog:onDrawValueIcon()
-    RMS_WorkshopDialog.drawCurrencyIcon(self.valueIconArea)
-end
-
----Draws a maintenance glyph in a standard workshop information row
--- @param table area transparent GUI element receiving the XML draw callback
-function RMS_WorkshopDialog:onDrawMaintenanceIcon(area)
-    RMS_WorkshopDialog.drawMaintenanceIcon(area, "rms_workshopMaintenanceIcon")
-end
-
----Draws a maintenance glyph in an intervention action button
--- @param table area transparent GUI element receiving the XML draw callback
-function RMS_WorkshopDialog:onDrawMaintenanceActionIcon(area)
-    RMS_WorkshopDialog.drawMaintenanceIcon(area, "rms_workshopMaintenanceActionIcon")
-end
-
----Draws the engine-oil glyph in an intervention action button
--- @param table area transparent GUI element receiving the XML draw callback
-function RMS_WorkshopDialog:onDrawOilActionIcon(area)
-    RMS_WorkshopDialog.drawOilIcon(area, "rms_workshopOilActionIcon")
-end
-
 ---Draws the last inspected condition ring
 function RMS_WorkshopDialog:onDrawConditionRing()
     drawProgressRing(self.conditionRingArea, self.conditionRingRatio, self.isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or nil)
@@ -1062,6 +935,10 @@ end
 -- @param integer section section index
 -- @return integer count number of rows
 function RMS_WorkshopDialog:getNumberOfItemsInSection(list, section)
+    if list == self.summaryStateList then
+        return #self.stateRows
+    end
+
     if list == self.diagnosticSelectedPartsTable then
         return #self.diagnosticEstimateParts
     end
@@ -1082,12 +959,27 @@ function RMS_WorkshopDialog:getNumberOfItemsInSection(list, section)
 end
 
 
+-- @param table _list list element
+-- @param integer _section section index
+-- @param integer index row index
+-- @return string name cell template name
+function RMS_WorkshopDialog:getCellTypeForItemInSection(_list, _section, index)
+    local row = self.stateRows[index]
+    return row ~= nil and row.kind or "system"
+end
+
+
 ---Fills one breakdown row
 -- @param table list list element
 -- @param integer section section index
 -- @param integer index row index
 -- @param table cell cell element
 function RMS_WorkshopDialog:populateCellForItemInSection(list, section, index, cell)
+    if list == self.summaryStateList then
+        RMS_Utils.populateConditionCell(cell, self.stateRows[index])
+        return
+    end
+
     if list == self.diagnosticSelectedPartsTable then
         cell:getAttribute("diagnosticEstimatePart"):setText(self.diagnosticEstimateParts[index] or "")
         return
@@ -1123,7 +1015,7 @@ function RMS_WorkshopDialog:populateCellForItemInSection(list, section, index, c
 
     local part_key = self.breakdownRegistry[breakdownId].part or self.breakdownRegistry[breakdownId].system
     local stage_key = self.breakdownRegistry[breakdownId].stages[data.stage].severity
-    local description_key = RMS_Breakdowns.getStageDescription(self.vehicle, self.breakdownRegistry[breakdownId].stages[data.stage])
+    local description_key = RMS_Breakdowns.getStageDescription(self.vehicle, self.breakdownRegistry[breakdownId].stages[data.stage], data)
     local price = self.vehicle:getBreakdownRepairPrice(breakdownId, data.stage, RealisticMechanicalSystems.PART_TYPES.OEM, self.workshopType)
     local selected = data.isSelectedForRepair
     local descriptionElement = cell:getAttribute("rms_tableBreakdownDisc")
@@ -1155,7 +1047,6 @@ function RMS_WorkshopDialog:populateCellForItemInSection(list, section, index, c
     local selectionToggle = cell:getAttribute("rms_tableBreakdownSelect")
     RMS_Utils.mirrorSelectionToChildren(selectionToggle)
     selectionToggle:setSelected(selected)
-    -- the row shows where the list stands, its tick box whether the breakdown is picked for repair
     cell:getAttribute("surface").getIsSelected = function()
         return cell:getIsSelected()
     end
@@ -1191,6 +1082,8 @@ function RMS_WorkshopDialog:populateTechnicalLogCell(index, cell)
 
     if entry.isCompleted == false then
         metaText = string.format("%s · %s", metaText, g_i18n:getText("rms_log_cancelled_desc"))
+    elseif entry.type == RealisticMechanicalSystems.LOG_DIAGNOSTIC_READING then
+        metaText = string.format("%s · %s", metaText, RMS_DiagnosticTool.formatReadingCodes(self.vehicle, entry))
     elseif entry.optionOne ~= nil and entry.optionOne ~= "NONE" then
         metaText = string.format("%s · %s", metaText, RMS_Utils.formatServiceOption(self.vehicle, entry.type, entry.optionOne))
     end
@@ -1271,9 +1164,14 @@ function RMS_WorkshopDialog:updateFocusLinks()
         }
     elseif self.currentTab == RMS_WorkshopDialog.TAB.TECHNICAL then
         columns = {{{self.technicalLogTable}, {self.technicalShowLogButton}}, {{self.technicalOpenReportButton}}}
+    else
+        columns = {{{self.summaryStateList}}}
     end
 
     self.focusEntry = RMS_Utils.linkFocusColumns(self.workshopTabPaging, columns)
+    if self.currentTab == RMS_WorkshopDialog.TAB.SUMMARY then
+        self.focusEntry = self.workshopTabPaging
+    end
     RMS_Utils.keepFocusShown(self.focusEntry)
 end
 
@@ -1326,7 +1224,6 @@ function RMS_WorkshopDialog:onClickShowReport()
         return
     end
 
-    -- the report the condition card reads its figures from
     local entry = RealisticMechanicalSystems.getReferenceReport(self.vehicle)
     if entry ~= nil then
         RMS_ReportDialog.show(self.vehicle, entry, self)
@@ -1354,7 +1251,6 @@ function RMS_WorkshopDialog:selectIntervention(serviceType, sourceDialog)
     end
 
     self.bodyworkSelected = false
-    -- a repair or an overhaul with nothing to do stays on the interventions, saying why
     self.unavailableIntervention = RMS_WorkshopDialog.getInterventionUnavailableText(self.vehicle, serviceType,
         self.workshopType) ~= nil and serviceType or nil
     self:setCurrentTab(RMS_WorkshopDialog.TAB.INTERVENTIONS)
@@ -1603,7 +1499,7 @@ end
 ---Returns what a repaint does on each row of its table
 -- @param table vehicle vehicle
 -- @param string mode repaint
--- @return table cells text and kind of each row, 2 for all of it, 1 for part of it, 0 for nothing
+-- @return table cells text and kind (2 full, 1 partial, 0 none)
 function RMS_WorkshopDialog.getBodyworkCells(vehicle, mode)
     local dealer = g_i18n:getText(RealisticMechanicalSystems.WORKSHOP.DEALER)
     if mode == RMS_Bodywork.TOUCHUP then
@@ -1730,7 +1626,6 @@ function RMS_WorkshopDialog:onClickBodywork()
     if self.vehicle == nil then
         return
     end
-    -- a workshop that does no repaint stays on the interventions, saying where it is done
     local bodywork = RealisticMechanicalSystems.STATUS.BODYWORK
     if RMS_WorkshopDialog.getInterventionUnavailableText(self.vehicle, bodywork, self.workshopType) ~= nil then
         self.bodyworkSelected = false
@@ -1820,7 +1715,7 @@ function RMS_WorkshopDialog:onBodyworkColorPicked(zone, choices, selectedIndex, 
         return
     end
 
-    -- the picker answers with the place of the color in the list it was given
+    -- The picker returns the index in the supplied color list.
     local choice = type(selectedIndex) == "number" and choices[selectedIndex] or nil
     if choice ~= nil then
         self:setBodyworkColor(zone, choice.index)
@@ -1917,7 +1812,7 @@ function RMS_WorkshopDialog:onClickStartBodywork()
         RMS_FluidWorkshop.showResult(RMS_FluidWorkshop.RESULT.PRICE_UNAVAILABLE)
         return
     end
-    if g_currentMission:getMoney() < price then
+    if price > 0 and g_currentMission:getMoney() < price then
         InfoDialog.show(g_i18n:getText("shop_messageNotEnoughMoneyToBuy"))
         return
     end
@@ -1976,11 +1871,8 @@ function RMS_WorkshopDialog:onCreate()
         end
     end
 
-    self.systemGaugeWidths = self.systemGaugeWidths or {}
-    for index, gaugeElement in ipairs(self.summarySystemGauge or {}) do
-        self.systemGaugeWidths[index] = gaugeElement.size[1]
-    end
-    self.systemValueColor = {unpack(self.summarySystemValue[1].textColor)}
+    self.summaryStateList:setDataSource(self)
+    self.summaryStateList:setDelegate(self)
     self.lastCheckColor = {unpack(self.diagnosticLastInspection.textColor)}
     self.noAlertColor = {unpack(self.summaryNoAlertText.textColor)}
     self.readyHintColor = {unpack(self.interventionReadyHint.textColor)}
@@ -2001,6 +1893,7 @@ function RMS_WorkshopDialog:onOpen()
 
     self.isDialogOpen = true
     RMS_Utils.resetScrollingTexts(self.workshopPages[self.currentTab])
+    RMS_WorkshopDialog.setCurrencyIcon(self.currencyIcon)
 
     local tabTexts = {}
     for index in ipairs(self.workshopTabs) do

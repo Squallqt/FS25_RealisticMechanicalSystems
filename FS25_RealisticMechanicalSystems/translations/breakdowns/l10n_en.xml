@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Power loss"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Out of service"/>
+        <text name="rms_breakdowns_severity_minor" text="Minor"/>
+        <text name="rms_breakdowns_severity_moderate" text="Moderate"/>
+        <text name="rms_breakdowns_severity_major" text="Major"/>
+        <text name="rms_breakdowns_severity_critical" text="Critical"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Light steering ball joint and rod wear. A little play appears and steering becomes less precise."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Moderate steering ball joint and rod wear. Play increases and the machine pulls slightly to one side."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Severe steering ball joint and rod wear. Play is large and the machine pulls to one side and holds its line poorly."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Critical steering ball joint and rod failure. The freed wheel no longer follows the steering wheel properly; driving is dangerous."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Light steering knuckle pivot wear. A little play appears in the steering."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Moderate steering knuckle pivot wear. Play in the steering becomes noticeable."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Severe steering knuckle pivot wear. Play in the steering is large."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Critical steering knuckle pivot wear. The steering has very large play."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Light steering orbitrol failure. The steering wheel turns with a little play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Moderate steering orbitrol failure. The steering wheel turns farther before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Severe steering orbitrol failure. The steering wheel turns a lot without the wheels following well."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Critical steering orbitrol failure. The steering wheel has very large play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Light internal steering cylinder leak. The machine starts to drift to one side."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Light steering cylinder rod seal leak. Hydraulic oil level drops slightly."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Moderate internal steering cylinder leak. The machine drifts farther to one side."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Moderate steering cylinder rod seal leak. Hydraulic oil level drops noticeably."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Severe internal steering cylinder leak. The machine drifts clearly to one side."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Severe steering cylinder rod seal leak. Hydraulic oil level drops quickly."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Critical internal steering cylinder leak. The machine drifts strongly to one side."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Critical steering cylinder rod seal leak. Hydraulic oil level drops very quickly."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Light front loader pivot pin and bushing wear. Slight play appears at the arm joints."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Moderate front loader pivot pin and bushing wear. Play at the arm joints becomes noticeable."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Severe front loader pivot pin and bushing wear. The arm has large play."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Critical front loader pivot pin and bushing wear. The arm play is very large."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Light cab damper leak. The cab is slightly less damped."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Moderate cab damper leak. The cab bounces over bumps."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Severe cab damper leak. The cab rocks with every jolt."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Critical cab damper leak. The damper is empty: the cab is hardly damped any more."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Shifted to neutral"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Early glow plug degradation. Cold starts are becoming slower; warm starts remain unaffected."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Several glow plugs are weak or inoperative. Cold starts are difficult and the engine may idle unevenly until it warms up."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Severe glow plug failure. Cold starting is highly unreliable and rough running persists during warm-up."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Complete glow plug failure. The engine cannot be started when the temperature is too low."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Preheat relay failure. The glow plugs no longer heat: the engine cannot be started when the temperature is too low."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Starter relay failure. The engine no longer cranks."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Failure of the low-beam bulbs. These lights stay off until the bulbs are replaced."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Failure of the high-beam bulbs. These lights stay off until the bulbs are replaced."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Failure of the front work-light bulbs. These lights stay off until the bulbs are replaced."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Failure of the rear work-light bulbs. These lights stay off until the bulbs are replaced."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Beacon bulb failure. It stays off until the bulb is replaced."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Failure of the turn-signal bulbs. Neither the turn signals nor the hazard lights come on until the bulbs are replaced."/>
+        <text name="rms_breakdowns_part_vehicle" text="Vehicle"/>
+        <text name="rms_breakdowns_part_pistons" text="Pistons"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Piston Rings"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Cylinder Liners"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Intake Valves"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Exhaust Valves"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Valve Guides and Stem Seals"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Cylinder Head"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Cylinder Head Gasket"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Crankshaft Bearings"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Connecting Rod Bearings"/>
+        <text name="rms_breakdowns_part_consumables" text="Consumables"/>
+        <text name="rms_breakdowns_part_clutch" text="Clutch"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Ratio Control"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Engine"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Power Cables and Grounds"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Starter Relay"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Preheat Relay"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Low-Beam Bulbs"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="High-Beam Bulbs"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Front Work-Light Bulbs"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Rear Work-Light Bulbs"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Beacon Bulb"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Turn-Signal Bulbs"/>
+        <text name="rms_breakdowns_part_battery" text="Battery"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Traction Battery"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="High-Voltage Contactor"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="High-Voltage Wiring"/>
+        <text name="rms_breakdowns_part_inverter" text="Inverter"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Voltage Converter"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="On-Board Charger"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Electric Motor Bearings"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Electric Motor Windings"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Motor Position Sensor"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Coolant Pump"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Water Pump"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Radiator Core"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Coolant Hoses and Fittings"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Expansion Tank"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Accessory Belt and Tensioner"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Fan Blade"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Electric Cooling Fan"/>
+        <text name="rms_breakdowns_part_reducer" text="Reduction Gear"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Brake Discs and Linings"/>
+        <text name="rms_breakdowns_part_brake_control" text="Brake Control"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Trailer Brake Valve"/>
+        <text name="rms_breakdowns_part_park_brake" text="Parking Brake"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Wheel Hub Bearing and Seal"/>
+        <text name="rms_breakdowns_part_alternator" text="Alternator"/>
+        <text name="rms_breakdowns_part_starter" text="Starter"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turbocharger"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Transmission Seal"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Track Tensioner"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Track Rollers and Idlers"/>
+        <text name="rms_breakdowns_part_thermostat" text="Thermostat"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Oil Pump"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Synchronizer"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Steering Ball Joints and Rods"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Front Loader Pins and Bushings"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Steering Knuckle Pivots"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Steering Control Unit"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Steering Cylinder"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Cab Suspension"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="PTO Clutch"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="PTO Output Bearings"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="PTO Output Seal"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="PTO Output Shaft"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="PTO Engagement Solenoid"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="PTO Control Switch"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="PTO Speed Sensor"/>
+        <text name="rms_breakdowns_part_pto_brake" text="PTO Brake"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Front PTO Clutch"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Hydraulic Pump"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hydraulic Cylinder"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Hydraulic Hose"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Hydraulic Filter"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Hydraulic Oil Cooler"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Hydraulic Control Valve"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Fan Clutch"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Fuel Feed Pump"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Fuel Injectors"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="High-Pressure Pump"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Fuel Filter"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Fuel Line"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Mechanical Injection Pump"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Fuel Metering Valve"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Rail Pressure Sensor"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Rail Pressure Limiting Valve"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Gas Pressure Regulator"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Gas Shutoff Solenoid"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Gas Filter"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Gas Lines"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Gas Injectors"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="AdBlue Pump"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="AdBlue Dosing Injector"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="AdBlue Filter"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="NOx Sensor"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Particulate Filter"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Glow Plugs"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="PTO dropped out"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="Front PTO dropped out"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="PTO will not disengage: switch the machine off to stop the implement"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Early PTO clutch wear. Drive occasionally drops out."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Moderate PTO clutch wear. Drive drops out more often."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Severe PTO clutch wear. The implement often loses drive."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Critical PTO clutch failure. The implement stops."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Early PTO clutch wear. Its plates are beginning to stick."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Moderate PTO clutch wear. Its plates stick more and more."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Severe PTO clutch wear. Its plates stick: the PTO sometimes refuses to disengage."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Critical PTO clutch failure. Its plates have welded: the PTO no longer disengages and the implement only stops with the machine."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Early wear of the PTO output bearings. A light rumble appears."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Moderate wear of the PTO output bearings. The rumble becomes clearly audible."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Severe wear of the PTO output bearings. The rumble grows louder."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Critical failure of the PTO output bearings. The rumble is at its loudest."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Light PTO output seal leak. The transmission oil level drops slowly during work."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Moderate PTO output seal leak. The transmission oil level drops during work."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Severe PTO output seal leak. Transmission oil runs out and its level drops quickly."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Critical PTO output seal leak. There is not enough oil left for safe operation of the transmission."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Early PTO engagement solenoid wear. Drive occasionally cuts out during work."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Early PTO engagement solenoid wear. The PTO occasionally refuses to engage."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Moderate PTO engagement solenoid wear. Cut-outs during work keep recurring."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Moderate PTO engagement solenoid wear. Refusals to engage keep recurring."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Severe PTO engagement solenoid wear. Drive often cuts out."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Severe PTO engagement solenoid wear. The PTO often refuses to engage."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Critical PTO engagement solenoid failure. Its coil is open and the PTO no longer stays engaged."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Critical PTO engagement solenoid failure. Its spool sticks and the PTO no longer engages."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Early PTO control switch wear. A loose contact occasionally cuts the drive."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Early PTO control switch wear. The PTO occasionally does not respond to the command."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Moderate PTO control switch wear. Loose contacts cut the drive more and more often."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Moderate PTO control switch wear. The PTO ignores the command more and more often."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Severe PTO control switch wear. The contact no longer holds and the drive often cuts out."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Severe PTO control switch wear. The command often has no effect."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Critical PTO control switch failure. Its contact stays open and the PTO cuts out."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Critical PTO control switch failure. Its contact no longer closes and the PTO no longer engages."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="PTO output shaft failure. Its splines are stripped and no longer transmit drive."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="PTO output shaft failure. It has broken and the implement is no longer driven."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="PTO speed sensor failure. It no longer sends a signal and the safety system cuts out the PTO."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="PTO brake failure. It stays applied and locks the output shaft."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Early front PTO clutch wear. The front output drive occasionally drops out."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Moderate front PTO clutch wear. The front output drops out more often."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Severe front PTO clutch wear. The front implement often loses drive."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Critical front PTO clutch failure. The front output no longer turns; the rear PTO is unaffected."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="PTO engagement refused"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Temporary repair"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Defect"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="The system is functioning normally, but the inspection has revealed a defective part. The part no longer offers any safety margin, so preventive replacement is recommended to avoid sudden failure."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Battery too weak"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Traction battery cold: range and power reduced"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="The system is functioning normally, but relies entirely on a temporary repair. To avoid a breakdown under load, a full replacement of the parts is recommended as soon as possible."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Worn turbocharger bearings. A faint whistling is audible and a slight loss of power appears at high engine speed."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Leaking turbocharger seals. Noticeable power loss and increased fuel consumption."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Damaged turbine blades. Severe power loss and a risk of engine stalls under heavy load."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Critical turbocharger failure. The engine has lost most of its power and risks severe internal damage."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Worn clutch plates. Occasional power loss due to clutch slip under load."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Significant clutch wear. Noticeable clutch slip during acceleration and under heavy load."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Heavily worn clutch. Severe clutch slip makes it difficult to transfer power to the wheels."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Clutch completely burned out. The vehicle is unable to move."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Worn synchronizers. Occasional grinding or difficulty when shifting gears."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Damaged synchronizers. Shifting gears is frequently difficult and may fail."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Broken synchronizer teeth. High chance of failed shifts or of jumping out of gear under load."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Synchronizers completely failed. It is impossible to shift gears."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Light transmission oil leak. The oil level drops slowly during work."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Moderate transmission oil leak. The oil level drops noticeably and the transmission runs hotter."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Severe transmission oil leak. The oil level drops quickly and the transmission overheats under load."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Critical transmission oil leak. There is not enough oil left for safe operation of the transmission."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Light track tensioner malfunction. Track tension is a little less stable, which slightly increases drag and wear."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Moderate track tensioner malfunction. Tension becomes unstable, running efficiency drops and the risk of misalignment increases."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Severe track tensioner malfunction. Tension is heavily disturbed, drive transfer becomes inefficient and the risk of throwing a track increases."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Critical track tensioner failure. The track can no longer be held correctly and the vehicle can no longer be operated safely."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Light thermostat failure. The engine warms slowly and stays too cool during work."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Light thermostat failure. Temperature regulation is less precise and the temperature rises under load."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Moderate thermostat failure. The engine warms slowly and stays too cool during work."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Moderate thermostat failure. Temperature rises sooner and the engine runs hot under load."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Severe thermostat failure. The engine warms slowly and stays too cool during work."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Severe thermostat failure. The engine gets very hot; sustained work risks overheating."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Critical thermostat failure. The engine warms slowly and stays too cool during work."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Critical thermostat failure. It stays closed and the engine overheats rapidly."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="The engine has entered protection mode. Power is limited until the temperature drops."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Overheat protection: power reduced"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Overheat protection is tightening. The engine delivers only half its power."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Overheat protection: power halved"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Overheat protection is at its maximum. Only a fraction of engine power remains."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Overheat protection: power heavily reduced"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="The engine has been shut down to prevent damage. Let it cool before restarting."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Overheat protection: engine shut down"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Light oil pump malfunction. Oil pressure is reduced, engine torque drops slightly, engine temperature rises and mechanical knocking may appear."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Moderate oil pump malfunction. Oil pressure is insufficient, engine torque is noticeably reduced, engine temperature is increased, and mechanical knocking is clearly audible."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Severe oil pump malfunction. Oil pressure is critically low, engine torque is heavily reduced, engine overheating is likely, mechanical knocking is severe, and engine stalls may occur."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Critical oil pump failure. Oil circulation is insufficient for safe engine operation and engine start or further operation is not possible."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="The engine has jammed and can no longer turn."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Engine stalled"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Light ECU malfunction. Slightly reduced engine power."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Moderate ECU malfunction. Noticeable power loss and increased fuel consumption."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Severe ECU malfunction. Major power loss, high fuel consumption and a risk of the engine stalling."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Complete ECU failure. The engine cannot be controlled and will not start."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Light failure of the power cables and grounds. Increased contact resistance causes occasional light flicker, unstable supply and hard starting. A current leak drains the battery while the machine is parked."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Moderate failure of the power cables and grounds. Contact losses cause frequent light flicker, difficult starting and possible engine stalls. A current leak drains the battery while the machine is parked."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Severe failure of the power cables and grounds. Supply to the circuits is unstable, lighting may fail completely, engine torque is reduced, stalls are frequent and starting is unreliable. A current leak drains the battery while the machine is parked."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Critical failure of the power cables and grounds. Lighting is inoperative and the engine no longer cranks. A current leak drains the battery while the machine is parked."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Light failure of the power cables and grounds. Increased contact resistance causes occasional light flicker and unstable supply. A current leak drains the auxiliary battery while the machine is parked."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Moderate failure of the power cables and grounds. Contact losses cause frequent light flicker, unstable supply and possible cut-outs. A current leak drains the auxiliary battery while the machine is parked."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Severe failure of the power cables and grounds. Supply to the circuits is unstable, lighting may fail completely, power is reduced and cut-outs are likely. A current leak drains the auxiliary battery while the machine is parked."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Critical failure of the power cables and grounds. Lighting is inoperative and the machine will not start. A current leak drains the auxiliary battery while the machine is parked."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Light failure of the coolant hoses and fittings. A slight seep barely lowers the coolant level."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Light failure of the coolant hoses and fittings. A slightly crushed hose reduces coolant flow a little."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Moderate failure of the coolant hoses and fittings. The leak becomes visible and the level drops further."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Moderate failure of the coolant hoses and fittings. Restricted flow makes the temperature rise sooner under load."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Severe failure of the coolant hoses and fittings. A large coolant loss puts the engine at risk of overheating under load."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Severe failure of the coolant hoses and fittings. Flow is low and the engine overheats during sustained work."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Critical failure of the coolant hoses and fittings. The level falls quickly and the cooling circuit may empty."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Critical failure of the coolant hoses and fittings. Flow is severely restricted and the engine overheats quickly."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Light expansion tank failure. A crack lets a little coolant seep out."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Light expansion tank failure. The connection seeps slightly."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Moderate expansion tank failure. The crack causes a clear leak and the level drops."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Moderate expansion tank failure. The connection visibly leaks and the level drops."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Severe expansion tank failure. The leak makes the coolant level fall quickly."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Severe expansion tank failure. Coolant is lost quickly at the connection."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Critical expansion tank failure. Coolant escapes quickly and the circuit empties."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Critical expansion tank failure. The connection leak quickly empties the circuit."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Light failure of the accessory belt and tensioner. It squeals and slips slightly; charging and coolant flow dip a little."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Moderate failure of the accessory belt and tensioner. It slips under load; charging drops and coolant flow slows."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Severe failure of the accessory belt and tensioner. It slips badly; charging and coolant flow are greatly reduced."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Critical failure of the accessory belt and tensioner. It breaks; charging and coolant circulation stop at once."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Light fan blade failure. Airflow drops slightly; cooling slows mainly at low speed."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Moderate fan blade failure. Airflow falls noticeably and the temperature rises further."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Severe fan blade failure. Airflow is noticeably reduced and the engine heats up under load."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Critical fan blade failure. Airflow drops by half and the engine overheats quickly under load."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Light electric cooling fan failure. It moves slightly less air when cooling is needed."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Moderate electric cooling fan failure. Air movement drops noticeably and the temperature rises sooner."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Severe electric cooling fan failure. Air movement is noticeably reduced and the temperature rises under load."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Critical electric cooling fan failure. Air movement drops by half and the temperature rises quickly under load."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Early signs of a CVT transmission malfunction have been detected. An inspection and a repair are required."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="The CVT transmission malfunction is getting worse. Continued operation may lead to emergency mode."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Critical CVT transmission damage. The transmission is in emergency mode and the maximum vehicle speed is reduced."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Complete CVT transmission failure. The vehicle cannot be used until it is repaired."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Light battery sulfation. Effective capacity is reduced, lowering the electrical reserve under load."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Moderate battery sulfation. Effective battery capacity is significantly reduced and engine starting is difficult."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Severe battery sulfation. Usable battery capacity is critically low and cranking performance is unstable."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Critical battery sulfation. Effective capacity is almost nil and cranking power is insufficient for a reliable start."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Light auxiliary battery sulfation. Effective capacity is reduced, lowering the electrical reserve under load."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Moderate auxiliary battery sulfation. Effective capacity is significantly reduced and the electrical reserve runs out sooner."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Severe auxiliary battery sulfation. Usable capacity is critically low and the electrical reserve runs out very quickly."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Critical auxiliary battery sulfation. Effective capacity is almost nil and no longer enough for a reliable start."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Light brake disc and lining wear. Braking effectiveness drops slightly."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Moderate brake disc and lining wear. Braking distance increases noticeably."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Severe brake disc and lining wear. Braking becomes very weak and unreliable."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Critical brake disc and lining failure. The machine brakes very poorly and driving becomes dangerous."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Light brake control failure. The machine pulls slightly to one side when braking."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Light brake control failure. The pedal feels slightly soft and braking is a little less effective."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Moderate brake control failure. Braking pulls noticeably to one side."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Moderate brake control failure. The pedal feels soft, pressure drops and braking is noticeably less effective."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Severe brake control failure. The machine pulls strongly to one side when braking."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Severe brake control failure. The pedal sinks unusually far, pressure drops and the machine brakes poorly."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Critical brake control failure. Braking pulls sharply to one side."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Critical brake control failure. The pedal offers almost no resistance and the machine barely brakes."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Light trailer brake valve failure. The trailer loses a small share of its braking."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Moderate trailer brake valve failure. The trailer brakes noticeably less."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Severe trailer brake valve failure. The trailer receives only a small share of the braking."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Critical trailer brake valve failure. The trailer no longer brakes."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Light parking brake failure. Once released, it still rubs a little and slightly slows the machine."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Moderate parking brake failure. Once released, it drags noticeably and holds the machine back."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Severe parking brake failure. Once released, it stays half engaged and strongly holds the machine back."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Complete parking brake failure. It no longer releases and holds the machine as if it were engaged."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Light wheel hub bearing and seal wear. Resistance rises slightly and an unusual noise may appear."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Moderate wheel hub bearing and seal wear. Friction and noise rise, reducing mechanical efficiency."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Severe wheel hub bearing and seal wear. Friction is high, noise is loud and seizure under load becomes likely."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Critical wheel hub bearing and seal failure. Complete seizure is imminent and the machine can no longer operate."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Light track roller and idler bearing wear. Resistance rises slightly and an unusual noise may appear."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Moderate track roller and idler bearing wear. Friction and noise rise, and rolling becomes harder."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Severe track roller and idler bearing wear. Friction and noise are high, with a risk of seizure under load."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Critical track roller and idler bearing failure. The track may stop if one seizes."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Light alternator regulator failure. Charging output is reduced, which lowers battery charging efficiency."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Moderate alternator regulator failure. Charging is reduced and unstable, causing poor battery charging and increased voltage losses."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Severe alternator regulator failure. Charging is heavily reduced, the supply is unstable and the electrical system operates with major losses."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Complete alternator regulator failure. Battery charging is absent and the electrical system is operating only from the remaining battery reserve."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Light failure of the alternator diodes. Charging output is reduced, which lowers battery charging efficiency. A current leak drains the battery while the machine is parked."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Moderate failure of the alternator diodes. Charging is reduced and unstable, causing poor battery charging and increased voltage losses. A current leak drains the battery while the machine is parked."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Severe failure of the alternator diodes. Charging is heavily reduced, the supply is unstable and the electrical system operates with major losses. A current leak drains the battery while the machine is parked."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Complete failure of the alternator diodes. Battery charging is absent and the electrical system is operating only from the remaining battery reserve. A current leak drains the battery while the machine is parked."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Light starter failure. The starter turns the engine over more slowly, and starting takes a little longer."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Moderate starter failure. The starter turns the engine over slowly: starting is difficult, and impossible in severe cold."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Severe starter failure. The starter barely turns the engine over: it only starts with a warm engine or in mild weather."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Complete starter failure. The starter no longer turns the engine over: a running engine keeps running, but once stopped it cannot be restarted."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Light wear of the electric motor bearings. A faint noise appears and energy consumption rises a little."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Moderate wear of the electric motor bearings. The noise is clearly audible, energy consumption rises and power drops slightly."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Severe wear of the electric motor bearings. The noise is loud, the motor runs hot and power drops noticeably."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Critical failure of the electric motor bearings. The motor is seized and the machine can no longer move."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Light degradation of the electric motor windings. Power drops slightly and the motor runs hotter."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Moderate degradation of the electric motor windings. Power drops noticeably, the motor runs hot and energy consumption rises."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Severe degradation of the electric motor windings. The power loss is major, the motor runs very hot and cut-outs may occur."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Critical failure of the electric motor windings. The motor is short-circuited and can no longer run."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Light malfunction of the motor position sensor. Brief jerks appear under load."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Moderate malfunction of the motor position sensor. The jerks are frequent and power drops."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Severe malfunction of the motor position sensor. The jerks are violent, power falls sharply and cut-outs occur."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Complete failure of the motor position sensor. The motor can no longer be controlled and the machine will not start."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Light inverter malfunction. Motor power is slightly reduced."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Moderate inverter malfunction. The power loss is noticeable and energy consumption rises."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Severe inverter malfunction. The power loss is major and cut-outs may occur."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Complete inverter failure. The motor is no longer powered and the machine will not start."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Light voltage converter failure. The auxiliary battery charges less well."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Moderate voltage converter failure. Charging of the auxiliary battery is reduced and unstable."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Severe voltage converter failure. The auxiliary battery is barely charged and drains while driving."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Complete voltage converter failure. The auxiliary battery is no longer charged and the machine runs on its remaining reserve only."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Light on-board charger failure. Charging at the station is a little slower."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Moderate on-board charger failure. Charging at the station is noticeably slower."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Severe on-board charger failure. Charging at the station is very slow."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Complete on-board charger failure. The traction battery can no longer be charged."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Light insulation loss in the high-voltage wiring. A warning is shown, with no other effect."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Moderate insulation loss in the high-voltage wiring. Power is reduced as a safety measure."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Severe insulation loss in the high-voltage wiring. Power is heavily reduced and cut-outs occur."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Critical insulation loss in the high-voltage wiring. The machine refuses to start as a safety measure."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Light failure of traction battery cells. Range drops slightly."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Moderate failure of traction battery cells. Range drops noticeably and power is reduced."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Severe failure of traction battery cells. Range and power fall sharply, and cut-outs may occur."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Critical traction battery failure. The machine can no longer be switched on."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Light wear of the high-voltage contactor. Rare power cut-outs occur."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Moderate wear of the high-voltage contactor. Power cut-outs become regular."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Severe wear of the high-voltage contactor. Power cut-outs are frequent."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Critical failure of the high-voltage contactor. The traction battery no longer powers the machine, which will not start."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Light coolant pump failure. The coolant circulates less well and the temperature rises a little more."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Moderate coolant pump failure. Cooling is noticeably reduced."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Severe coolant pump failure. Cooling is heavily reduced and overheating is likely under load."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Complete coolant pump failure. The coolant barely circulates and the machine overheats quickly."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Light water pump failure. The fault is still barely noticeable and needs inspection."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Moderate water pump failure. Circulation is reduced and cooling becomes less effective."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Severe water pump failure. Insufficient circulation puts the engine at risk of overheating."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Critical water pump failure. Circulation is severely impaired and cooling is greatly reduced."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Light water pump failure. Light traces of coolant appear around the water pump seal."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Moderate water pump failure. Coolant leaks through the water pump seal; the level falls and circulation becomes less effective."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Severe water pump failure. The water pump seal leak leaves heavy traces around the pump; the level falls and reduced circulation raises the risk of overheating."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Critical water pump failure. The water pump seal leaks heavily; the circuit loses coolant and circulation can no longer cool the engine properly."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Light water pump failure. The fault is still barely noticeable and needs inspection."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Moderate water pump failure. The pump bearing develops play and circulation is reduced."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Severe water pump failure. Insufficient circulation puts the engine at risk of overheating."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Critical water pump failure. Circulation is severely impaired and cooling is greatly reduced."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Light radiator core failure. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Moderate radiator core failure. It removes less heat from the coolant."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Severe radiator core failure. It removes heat poorly and the risk of overheating increases."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Critical radiator core failure. It removes very little heat and cooling is severely impaired."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Light radiator core failure. Coolant seepage appears on the core tubes."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Moderate radiator core failure. Damaged tubes leak coolant onto the radiator and the circuit level falls."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Severe radiator core failure. Coolant escapes through the damaged core tubes, leaving wet traces on the radiator; the circuit reserve shrinks quickly."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Critical radiator core failure. The damaged core loses substantial coolant. The level drops and the radiator can no longer remove enough engine heat."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Light wear of the gears and bearings of the reduction gear. A faint noise appears while driving."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Moderate wear of the gears and bearings of the reduction gear. The noise is clearly audible and energy consumption rises."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Severe wear of the gears and bearings of the reduction gear. The noise is loud, the reduction gear runs hot and power at the wheels drops."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Critical reduction gear failure. It is seized and the machine can no longer move."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Light failure of the pistons. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Moderate failure of the pistons. More oil reaches the combustion chamber and blue smoke appears."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Severe failure of the pistons. Oil consumption rises and blue smoke increases."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Critical failure of the pistons. A piston has seized and the engine is locked."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Light failure of the pistons. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Moderate failure of the pistons. More oil reaches the combustion chamber and blue smoke appears."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Severe failure of the pistons. Oil consumption rises and blue smoke increases."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Critical failure of the pistons. A piston has fractured and the engine has stopped."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Light failure of the piston rings. Deposits restrict the rings in their grooves."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Moderate failure of the piston rings. Sealing deteriorates and the engine loses power."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Severe failure of the piston rings. Loss of compression makes starting difficult and reduces power."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Critical failure of the piston rings. Compression is very low, starting is difficult and power is greatly reduced."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Light failure of the piston rings. Deposits restrict the rings in their grooves."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Moderate failure of the piston rings. More oil reaches the combustion chamber and blue smoke appears."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Severe failure of the piston rings. Oil consumption rises and blue smoke increases."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Critical failure of the piston rings. Oil entry is substantial and blue smoke persists."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Light failure of the piston rings. Deposits restrict the rings in their grooves."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Moderate failure of the piston rings. Sealing deteriorates and the engine loses power."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Severe failure of the piston rings. Loss of compression makes starting difficult and reduces power."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Critical failure of the piston rings. A piston ring has broken: compression drops and oil enters the combustion chamber."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Light failure of the cylinder liners. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Moderate failure of the cylinder liners. The surface is scored and sealing is reduced."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Severe failure of the cylinder liners. The surface is scored and sealing is reduced. Oil consumption rises and blue smoke increases."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Critical failure of the cylinder liners. A piston has seized in its cylinder liner and the engine is locked."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Light failure of the cylinder liners. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Moderate failure of the cylinder liners. Coolant leaks through a cracked liner into a cylinder, lowering the level."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Severe failure of the cylinder liners. A cracked liner lets coolant enter a cylinder; white smoke appears at the exhaust."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Critical failure of the cylinder liners. Coolant leaks heavily through a cracked liner into a cylinder, with persistent white smoke and insufficient cooling."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Light failure of the intake valves. The valve face is damaged and power is slightly reduced."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Moderate failure of the intake valves. The valve closes poorly, causing misfires and power loss."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Severe failure of the intake valves. The valve face is burnt, causing misfires, stalling and power loss."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Critical failure of the intake valves. The burnt valve face causes misfires, stalling and major power loss."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Light failure of the intake valves. The valve face is damaged and power is slightly reduced."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Moderate failure of the intake valves. The valve closes poorly, causing misfires and power loss."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Severe failure of the intake valves. The valve face is burnt, causing misfires, stalling and power loss."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Critical failure of the intake valves. An intake valve has broken and the engine has stopped."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Light failure of the exhaust valves. The valve face is damaged and power is slightly reduced."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Moderate failure of the exhaust valves. The valve closes poorly, causing misfires and power loss."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Severe failure of the exhaust valves. The valve face is burnt, causing misfires, stalling and power loss."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Critical failure of the exhaust valves. The burnt valve face causes misfires, stalling and major power loss."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Light failure of the exhaust valves. The valve face is damaged and power is slightly reduced."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Moderate failure of the exhaust valves. The valve closes poorly, causing misfires and power loss."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Severe failure of the exhaust valves. The valve face is burnt, causing misfires, stalling and power loss."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Critical failure of the exhaust valves. An exhaust valve has broken and the engine has stopped."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Light failure of the valve guides and stem seals. Inspection reveals faulty guidance and the valves become noisy."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Moderate failure of the valve guides and stem seals. Clearance increases and the valves become noisy."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Severe failure of the valve guides and stem seals. Excessive clearance causes noise, misfires and oil passage."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Critical failure of the valve guides and stem seals. Guide clearance is excessive, with noise, misfires and blue smoke."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Light failure of the valve guides and stem seals. The hardened seal lets oil through."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Moderate failure of the valve guides and stem seals. More oil reaches the combustion chamber and blue smoke appears."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Severe failure of the valve guides and stem seals. Oil consumption rises and blue smoke increases."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Critical failure of the valve guides and stem seals. Oil entry is substantial and blue smoke persists."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Light cylinder head failure. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Moderate cylinder head failure. A crack in the cylinder head lets coolant enter a combustion chamber; the engine loses power and is hard to start."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Severe cylinder head failure. Coolant passes through the cracked cylinder head into a combustion chamber, causing white smoke and power loss."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Critical cylinder head failure. A crack lets substantial coolant into a combustion chamber. The engine lacks power, is hard to start and emits white smoke."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Light cylinder head failure. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Moderate cylinder head failure. Coolant seeps from the cracked cylinder head and the circuit level falls."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Severe cylinder head failure. The coolant leak leaves visible traces on the cracked cylinder head and the level falls quickly."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Critical cylinder head failure. Coolant escapes heavily from the cracked cylinder head; the circuit drains and the engine is at risk of overheating."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Light cylinder head failure. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Moderate cylinder head failure. Coolant leaks through a crack in the cylinder head into the oil, lowering the circuit level."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Severe cylinder head failure. The cylinder head crack lets more coolant into the oil; the circuit level keeps falling."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Critical cylinder head failure. The cylinder head crack diverts substantial coolant into the oil; the circuit loses its reserve and the engine is at risk of overheating."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Light cylinder head gasket failure. The fault is still barely noticeable and needs inspection."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Moderate cylinder head gasket failure. It lets coolant enter a combustion chamber; cranking takes longer and power falls."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Severe cylinder head gasket failure. Coolant passes through it into a combustion chamber and produces white smoke at the exhaust."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Critical cylinder head gasket failure. It lets substantial coolant into a combustion chamber; white smoke increases and starting becomes very difficult."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Light cylinder head gasket failure. The fault is still barely noticeable and needs inspection."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Moderate cylinder head gasket failure. Coolant seeps at it and lowers the circuit level."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Severe cylinder head gasket failure. A coolant leak at it leaves traces on the engine and makes the level fall quickly."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Critical cylinder head gasket failure. It lets substantial coolant escape outside; the level drops and engine cooling deteriorates badly."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Light cylinder head gasket failure. The fault is still barely noticeable and needs inspection."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Moderate cylinder head gasket failure. Coolant passes through it into the oil; the circuit level falls."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Severe cylinder head gasket failure. It leaks increasing amounts of coolant into the oil; the circuit gradually loses its coolant."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Critical cylinder head gasket failure. A major leak through it sends coolant into the oil and deprives the circuit of the fluid needed for cooling."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Light failure of the crankshaft bearings. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Moderate failure of the crankshaft bearings. Bearing clearance increases."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Severe failure of the crankshaft bearings. The oil film is impaired, causing knocking and heat."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Critical failure of the crankshaft bearings. A crankshaft bearing has seized, locking the engine."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Light failure of the crankshaft bearings. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Moderate failure of the crankshaft bearings. Bearing clearance increases."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Severe failure of the crankshaft bearings. The oil film is impaired, causing knocking and heat."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Critical failure of the crankshaft bearings. A crankshaft bearing lining has melted and the engine has stopped."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Light failure of the connecting rod bearings. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Moderate failure of the connecting rod bearings. Bearing clearance increases."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Severe failure of the connecting rod bearings. The oil film is impaired, causing knocking and heat."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Critical failure of the connecting rod bearings. A connecting rod bearing has seized, locking the engine."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Light failure of the connecting rod bearings. Inspection reveals a damaged surface."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Moderate failure of the connecting rod bearings. Bearing clearance increases."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Severe failure of the connecting rod bearings. The oil film is impaired, causing knocking and heat."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Critical failure of the connecting rod bearings. A connecting rod bearing lining has melted and the engine has stopped."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Insufficient circuit voltage"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Early fuel feed pump wear. Slightly reduced engine power and increased fuel consumption."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Fuel pressure dropping. Noticeable power loss, higher fuel consumption, and occasional engine stalls."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Critical fuel pressure. Severe power loss, very high fuel consumption, and frequent engine stalls."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Complete fuel feed pump failure. Fuel is not supplied to the engine."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="One or more injectors have slightly clogged nozzles. The engine may run a bit rough, with a minor loss of power."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Poor fuel atomization. The engine hesitates under load, with noticeable power loss and jerking."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="A fuel injector is stuck. The engine runs very poorly, with significant power loss and unreliable starting."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="An injector has completely failed. The engine will not run correctly and may not start at all."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Light high-pressure pump failure. Injection pressure builds up more slowly, so starting takes longer and the engine responds less sharply."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Moderate high-pressure pump failure. Injection pressure falls short under load, with noticeable power loss and hesitation."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Severe high-pressure pump failure. Injection pressure is critically low, with major power loss, engine stalls and difficult starting."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Complete high-pressure pump failure. The pump no longer builds injection pressure: the engine turns over but does not start."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Light fuel filter clogging. Fuel flow drops slightly under heavy load."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Moderate fuel filter clogging. Flow becomes insufficient under load, power drops and the engine sometimes hesitates."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Severe fuel filter clogging. Fuel supply is heavily restricted, power drops noticeably and stalls are possible."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Fuel filter fully obstructed. The engine no longer receives enough fuel to run reliably."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Light air leak in the fuel line. Fuel supply becomes slightly irregular."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Moderate air leak in the fuel line. The supply becomes unstable, power drops and hesitation appears."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Severe air leak in the fuel line. The engine runs very unevenly and the risk of stalling is high."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Critical fuel line failure with a major air leak. The engine can no longer be supplied correctly."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Light pinching of the fuel line. Flow drops: the engine starts, then stalls now and then."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Moderate pinching of the fuel line. The engine starts, then stalls regularly."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Severe pinching of the fuel line. The engine stalls often."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Crushed fuel line. Fuel no longer gets through: the engine stops."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Light mechanical injection pump failure. Delivery weakens: starting takes longer and the engine lacks a little vigour."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Moderate mechanical injection pump failure. Delivery falls short under load: the engine loses power and hesitates."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Severe mechanical injection pump failure. The engine runs short of fuel, loses a lot of power, starts poorly and stalls."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Critical mechanical injection pump failure. Its drive has broken: the engine stops and will not restart."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Light fuel metering valve failure. The rail builds pressure more slowly and starting takes longer."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Moderate fuel metering valve failure. Rail pressure no longer keeps up under load: the engine loses power and hesitates."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Severe fuel metering valve failure. Rail pressure strays far from its target: the engine loses a lot of power and stalls."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Critical fuel metering valve failure. The rail is no longer pressurised: the starter turns the engine but it will not start."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Light rail pressure sensor failure. Its reading becomes unstable and starting takes a little longer."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Moderate rail pressure sensor failure. The ECU controls the pressure poorly: the engine loses power and hesitates."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Severe rail pressure sensor failure. The engine drops into limp mode, loses a lot of power and may stall."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Critical rail pressure sensor failure. Without a reading, the ECU keeps the engine in limp mode."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Light rail pressure limiting valve failure. It opens too early: the rail builds pressure more slowly and starting takes longer."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Moderate rail pressure limiting valve failure. Rail pressure no longer holds under load: the engine loses power and hesitates."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Severe rail pressure limiting valve failure. Rail pressure collapses: the engine loses a lot of power and stalls."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Critical rail pressure limiting valve failure. It stays open: the rail is no longer pressurised and the starter turns the engine but it will not start."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Light gas pressure regulator failure. Supply pressure fluctuates and starting takes longer."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Moderate gas pressure regulator failure. Pressure drops under load: the engine loses power and hesitates."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Severe gas pressure regulator failure. The supply becomes irregular: the engine loses a lot of power, starts poorly and stalls."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Critical gas pressure regulator failure. It no longer lets enough gas through: the engine stops."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Light gas shutoff solenoid failure. It opens late: starting takes longer and the engine falters at times."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Moderate gas shutoff solenoid failure. It sometimes cuts the gas: the engine falters and stalls."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Severe gas shutoff solenoid failure. The cuts multiply and the engine often stalls."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Critical gas shutoff solenoid failure. It stays closed: the engine stops and will not restart."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Light gas filter clogging. Gas flow drops slightly under heavy load."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Moderate gas filter clogging. The supply no longer keeps up under load: power drops and the engine may stall."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Severe gas filter clogging. Flow is heavily restricted: power drops noticeably and the engine stalls."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Gas filter fully obstructed. The engine no longer receives enough gas and stops."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Light gas line leak. Starting takes a little longer."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Moderate gas line leak. The supply becomes irregular: the engine falters and may stall."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Severe gas line leak. Pressure drops: the engine falters, starts poorly and often stalls."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Critical gas line leak. Pressure no longer holds: the engine stops."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Light failure of the gas injectors. Dosing becomes irregular: the engine runs less smoothly and uses a little more gas."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Moderate failure of the gas injectors. The engine falters, loses power, uses more gas and may stall."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Severe failure of the gas injectors. One injector doses very poorly: heavy power loss, high consumption and hard starting."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Critical failure of the gas injectors. Dosing no longer lets the engine run: it stops."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="AdBlue pump failure. It no longer feeds the dosing: the engine lamp comes on, then the ECU reduces power until the repair."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="AdBlue dosing injector failure. Clogged with crystals, it no longer sprays: the engine lamp comes on and power drops later until the repair."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="The AdBlue filter is due and beginning to clog. The most complete service replaces it."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="The AdBlue filter is clogged: AdBlue flow drops and the engine lamp comes on. The most complete service replaces it."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="The AdBlue filter is heavily clogged: dosing fails and the ECU reduces power until the repair."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="The AdBlue filter is fully obstructed: no dosing at all, the ECU reduces power until the repair."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="NOx sensor failure. The ECU no longer monitors emissions: the engine lamp comes on, and after several dozen hours power is reduced."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Light particulate filter failure. A crack lets a little soot through to the exhaust."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Moderate particulate filter failure. The crack widens: black smoke becomes visible."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Severe particulate filter failure. The substrate breaks up: the exhaust gives off heavy black smoke."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Critical particulate filter failure. The substrate has broken: soot passes through unfiltered."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Light particulate filter failure. Part of the substrate has melted and is plugging."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Moderate particulate filter failure. The melted area spreads: back pressure rises."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Severe particulate filter failure. Melted and plugged, it no longer regenerates: engine speed is limited."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Critical particulate filter failure. Fully blocked, it no longer lets the gases through: only a replacement gives the engine its power back."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Particulate filter overload. Regenerations have not completed: engine speed is limited until one succeeds."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Critical particulate filter overload. Too loaded to regenerate on its own, it needs a service regeneration at the workshop; engine speed stays limited."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Light fan clutch failure. The fan responds less effectively and cooling is slightly degraded."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Moderate fan clutch failure. Fan engagement is erratic and cooling efficiency drops noticeably."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Severe fan clutch failure. The fan no longer provides enough airflow and the engine overheats more easily."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Critical fan clutch failure. The fan can no longer provide the necessary cooling."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Ratio control responds more slowly and less precisely."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="The ratio varies irregularly and control responds poorly."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Ratio control is severely disrupted and transmitted drive effort drops."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Ratio control has failed and the transmission is almost unusable."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Light internal leakage in a hydraulic cylinder. A raised implement drifts slowly under load."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Moderate internal leakage in a hydraulic cylinder. Downward drift is noticeable and increases with the carried load."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Severe internal leakage in a hydraulic cylinder. Heavy implements can no longer reliably hold their position."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Critical internal leakage in a hydraulic cylinder. Any raised load drops rapidly on its own."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Minor internal leak in the hydraulic pump. Implements operate slightly more slowly."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Worn seals on the hydraulic pump. Noticeably slower hydraulic operation."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Damaged hydraulic pump. Implements are extremely slow and weak."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Hydraulic pump failure. Hydraulic system is inoperable."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="A hydraulic hose shows light moisture. A little oil escapes and hydraulic response is slightly reduced."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="A hydraulic hose is visibly seeping. Oil loss continues and hydraulic functions respond more slowly."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="A hydraulic hose is actively leaking. Oil loss is obvious and hydraulic functions are noticeably weakened."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="A hydraulic hose has a severe external leak. Oil is escaping quickly and hydraulic performance is strongly reduced."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="The hydraulic filter is slightly clogged and beginning to restrict flow. Hydraulic functions are slightly slower. Maintenance replaces the filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="The hydraulic filter is moderately clogged. All hydraulic functions are noticeably slower. Maintenance replaces the filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="The hydraulic filter is heavily clogged. Hydraulic response is very slow. Maintenance replaces the filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="The hydraulic filter is fully obstructed. Hydraulic functions barely respond. Maintenance replaces the filter."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="The hydraulic oil cooler has lost some efficiency. Oil temperature rises slightly during prolonged hydraulic work."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="The hydraulic oil cooler is underperforming. Oil temperature rises noticeably during sustained hydraulic work."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="The hydraulic oil cooler is badly degraded. Heavy hydraulic work quickly overheats the oil."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="The hydraulic oil cooler has failed. Prolonged hydraulic work causes severe oil overheating and accelerates pump wear."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="A hydraulic control valve is beginning to stick. One hydraulic function occasionally hesitates and weakens under load."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="A hydraulic control valve is sticking intermittently. One hydraulic function is slower and loses more force as load increases."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="A hydraulic control valve is sticking badly. One hydraulic function moves erratically and struggles under heavy load."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="A hydraulic control valve is critically damaged. One hydraulic function repeatedly stops and can barely move a heavy load."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Transmission Pump"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Hydrostatic Unit"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Transmission Oil Cooler"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Gearbox Bearings"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Powershift Gear Clutches"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Powershift Reverser Clutches"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Transmission Control"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Rear Axle Bevel Gear Set"/>
+        <text name="rms_breakdowns_part_final_drives" text="Final Drives"/>
+        <text name="rms_breakdowns_part_differential" text="Differential Gears"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="4WD Engagement"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Front Axle Drive Shaft and Universal Joints"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Axle Bearings"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Transmission Sensors"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Transmission Filter"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Lift Valve"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Lift Position Sensor"/>
+        <text name="rms_breakdowns_part_loader_control" text="Loader Control"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulic Quick Couplers"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Light clutch failure. It does not fully release. Some gear selections are difficult."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Moderate clutch failure. The mechanism releases the disc poorly. Gear selections are refused more often."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Severe clutch failure. The disc remains driven when the clutch is released. Gear selection is severely disrupted."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Critical clutch failure. The mechanism no longer releases the disc. No gear can be engaged normally."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Light failure of the gearbox bearings. The rolling surfaces are damaged. A faint rumble comes from the gearbox."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Moderate failure of the gearbox bearings. The bearing races are damaged. The gearbox rumble becomes clearly audible."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Severe failure of the gearbox bearings. The bearings turn with difficulty. The gearbox rumbles loudly and may seize."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Critical failure of the gearbox bearings. The bearings have seized. The gearbox is blocked and the machine cannot move."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Light failure of the powershift gear clutches. A clutch pack transmits drive poorly. A gear slips slightly under load."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Light failure of the powershift gear clutches. A clutch pack applies late. A gear engages with a slight jolt."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Moderate failure of the powershift gear clutches. A clutch pack no longer clamps firmly enough. The gear slips noticeably under load."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Moderate failure of the powershift gear clutches. A clutch pack fills poorly. The gear engages harshly."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Severe failure of the powershift gear clutches. A clutch pack can barely hold the load. Very little drive reaches the wheels."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Severe failure of the powershift gear clutches. A clutch pack engages very poorly. Gear changes cause strong jolts."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Critical failure of the powershift gear clutches. The clutch pack no longer transmits drive. The machine cannot move."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Critical failure of the powershift gear clutches. The clutch pack no longer engages correctly. The gear no longer drives the machine."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Light failure of the powershift reverser clutches. A forward or reverse clutch slips slightly as drive is taken up."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Light failure of the powershift reverser clutches. A reverser clutch takes up late. Drive resumes with a slight jolt."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Moderate failure of the powershift reverser clutches. A reverser clutch slips noticeably. Drive is poorly transmitted in the requested direction."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Moderate failure of the powershift reverser clutches. A reverser clutch applies abruptly. Changing direction jolts the machine."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Severe failure of the powershift reverser clutches. A reverser clutch can barely hold the load. Drive is severely reduced."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Severe failure of the powershift reverser clutches. A reverser clutch applies very unevenly. Drive take-up is very harsh."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Critical failure of the powershift reverser clutches. The reverser clutch no longer transmits drive. The machine cannot move."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Critical failure of the powershift reverser clutches. The reverser clutch no longer engages correctly. Drive is lost."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Light transmission control failure. Electrohydraulic control acts unevenly. A gear change hesitates."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Light transmission control failure. Control occasionally refuses a gear selection."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Moderate transmission control failure. Control disrupts clutch filling. Gear changes cause noticeable jolts."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Moderate transmission control failure. Control refuses several selections. Engaging gears becomes difficult."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Severe transmission control failure. Control applies the clutches poorly. Gear changes cause strong jolts."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Severe transmission control failure. Control no longer executes many selections. Gears are rarely available."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Critical transmission control failure. Control can no longer engage the clutches correctly. Gear changes are severely disrupted."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Critical transmission control failure. Control no longer allows a gear to be selected. The gearbox does not respond to the request."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Transmission speed sensor failure. Its signal turns erratic: the control sometimes refuses a gear change."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Transmission pressure sensor failure. The control misjudges clutch filling: gear changes come late and jolt."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Critical transmission speed sensor failure. Without its reading, the control often refuses gear changes."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Critical transmission pressure sensor failure. Without its reading, every gear change comes very late and takes up at once."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Transmission speed sensor failure. The control switches to its limp mode: travel speed is limited."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Transmission pressure sensor failure. The control switches to its limp mode: travel speed is limited."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Critical transmission speed sensor failure. The limp mode leaves only a low travel speed."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Critical transmission pressure sensor failure. The limp mode leaves only a low travel speed."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Light transmission pump failure. Control oil supply drops. Engagement hesitates and drive is briefly interrupted."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Moderate transmission pump failure. Control pressure is insufficient. Gears engage harshly and drive is interrupted."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Severe transmission pump failure. The pump can barely supply control oil. Engagement is very harsh and drive is often interrupted."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Critical transmission pump failure. The pump cannot supply the required pressure. The transmission no longer drives the machine."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Light hydrostatic unit failure. Internal leakage reduces drive. The variator loses some speed and the oil runs hotter."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Moderate hydrostatic unit failure. Internal leakage increases. Maximum speed drops, the oil runs hot and fuel consumption rises."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Severe hydrostatic unit failure. The rotating group can barely transmit drive. Speed drops sharply and the oil runs very hot under load."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Critical hydrostatic unit failure. The rotating group no longer transmits drive. The machine cannot move while the engine keeps running."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Light transmission oil cooler failure. It removes less heat. Transmission oil runs hotter under load."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Moderate transmission oil cooler failure. Heat exchange is noticeably reduced. Transmission oil stays hotter during work."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Severe transmission oil cooler failure. It removes very little heat. Transmission oil may overheat under load."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Critical transmission oil cooler failure. Transmission oil cooling has failed. Sustained work puts the transmission at risk of overheating."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="The transmission filter is due and beginning to clog. The display asks for its replacement. Maintenance replaces the filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="The transmission filter is clogged: its bypass valve opens and the gearbox oil passes unfiltered. The transmission wears faster. Maintenance replaces the filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="The transmission filter is heavily clogged. The gearbox oil circulates unfiltered and wears the transmission. Maintenance replaces the filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="The transmission filter is fully obstructed. All the gearbox oil passes unfiltered and wears the transmission. Maintenance replaces the filter."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Light rear axle bevel gear set failure. The bevel gear teeth are damaged. A faint whine appears under load."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Moderate rear axle bevel gear set failure. Tooth contact is disrupted. The rear axle whines noticeably under load."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Severe rear axle bevel gear set failure. The teeth are badly damaged. The rear axle whines loudly and may lose drive."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Critical rear axle bevel gear set failure. The bevel gear set no longer transmits drive. The rear axle is no longer driven and the machine cannot move."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Light failure of the final drives. The teeth of a final drive are damaged. A faint whine appears near a driven wheel."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Moderate failure of the final drives. The gears of a final drive turn poorly. The whine at the wheel is clearly audible."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Severe failure of the final drives. The gears of a final drive are badly damaged. Noise is loud and drive may fail."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Critical failure of the final drives. A final drive no longer transmits drive to its wheel. The machine cannot move normally."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="4WD engagement failure. Four-wheel drive no longer engages. The front axle stays disengaged."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="4WD engagement failure. The front axle stays engaged. Four-wheel drive cannot be disengaged."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Hydraulic pump failure. It is broken. Pressure is lost and the hydraulic functions no longer respond."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Hydraulic control valve failure. The spool is stuck. The affected hydraulic function no longer moves."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Lift valve failure. It no longer holds the load correctly. The raised implement sinks."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Lift valve failure. It is stuck. The lift no longer responds."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Lift position sensor failure. The position signal has failed. The lift no longer holds the requested height and a fault code is stored."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Light loader control failure. The arm and bucket respond more slowly."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Moderate loader control failure. The arm and bucket move at half speed only."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Severe loader control failure. The arm and bucket barely move."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Critical loader control failure. The arm and bucket no longer respond."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Light hydraulic cylinder failure. The rod seal lets some oil escape. Slight wetness appears around the rod."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Moderate hydraulic cylinder failure. The rod seal no longer seals correctly. The cylinder seeps and the oil level drops."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Severe hydraulic cylinder failure. The rod seal leaks actively. The cylinder loses a significant amount of oil."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Critical hydraulic cylinder failure. The rod seal lets a large amount of oil escape. The circuit level drops rapidly."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Light failure of the hydraulic quick couplers. A coupler seal has failed. Slight wetness appears at the connection."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Failure of the hydraulic quick couplers. A coupler's oil passage is blocked. The connected hydraulic function no longer moves."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Moderate failure of the hydraulic quick couplers. A coupler seeps. The circuit loses oil at the connection."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Severe failure of the hydraulic quick couplers. A coupler leaks actively. Oil loss at the connection becomes significant."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Critical failure of the hydraulic quick couplers. A coupler leaks heavily. The circuit oil level drops rapidly."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Light hydraulic oil cooler failure. The cooler core is no longer fully sealed. Slight wetness appears on the core."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Moderate hydraulic oil cooler failure. The cooler core seeps. The hydraulic oil level drops."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Severe hydraulic oil cooler failure. The cooler core leaks actively. The circuit loses a significant amount of oil."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Critical hydraulic oil cooler failure. The cooler core leaks heavily. The hydraulic oil level drops rapidly."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Differential Lock Control"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Light failure of the differential gears. The tooth surfaces are damaged. A faint noise appears when turning."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Moderate failure of the differential gears. Tooth contact is disrupted. Differential noise is clearly audible when turning."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Severe failure of the differential gears. The teeth are badly damaged. Noise is loud when turning and drive may fail."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Critical failure of the differential gears. The gears no longer transmit drive. The machine cannot move while the engine keeps running."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Light wear of the front axle drive shaft universal joints. Slight play appears in the front axle drive."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Moderate wear of the front axle drive shaft universal joints. Play in the joints becomes clear."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Severe wear of the front axle drive shaft universal joints. A joint is close to breaking."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Critical failure of the front axle drive shaft universal joints. A joint has broken and the front axle is no longer driven."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Light wear of the axle bearings. A slight rumble can be heard when driving."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Moderate wear of the axle bearings. The rumble rises with speed."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Severe wear of the axle bearings. A bearing is flaking and starting to damage the bevel gear."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Critical wear of the axle bearings. A bearing has collapsed, the bevel gear is damaged and the axle no longer transmits drive."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Differential lock control failure. The lock no longer engages. The differential remains unlocked."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Differential lock control failure. The lock remains engaged. The machine resists steering when turning."/>
+    </texts>
+</l10n>

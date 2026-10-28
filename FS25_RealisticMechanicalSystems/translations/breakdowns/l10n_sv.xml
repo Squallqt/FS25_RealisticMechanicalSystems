@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Effektförlust"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Ur drift"/>
+        <text name="rms_breakdowns_severity_minor" text="Mindre"/>
+        <text name="rms_breakdowns_severity_moderate" text="Måttlig"/>
+        <text name="rms_breakdowns_severity_major" text="Allvarlig"/>
+        <text name="rms_breakdowns_severity_critical" text="Kritisk"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Lätt slitage på styrlederna och styrstagen. Det uppstår lite glapp och styrningen blir mindre exakt."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Måttligt slitage på styrlederna och styrstagen. Glappet ökar och fordonet drar lätt åt ena sidan."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Allvarligt slitage på styrlederna och styrstagen. Glappet är stort och fordonet drar åt ena sidan och håller kursen sämre."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kritiskt haveri i styrlederna och styrstagen. Det frigjorda hjulet följer inte längre ratten korrekt; körningen är farlig."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Lätt slitage på spindeltapparna. Det uppstår lite glapp i styrningen."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Måttligt slitage på spindeltapparna. Glappet i styrningen blir märkbart."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Allvarligt slitage på spindeltapparna. Glappet i styrningen är stort."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritiskt slitage på spindeltapparna. Styrningen har mycket stort glapp."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lätt haveri i styrorbitrolen. Ratten vrids med lite glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Måttligt haveri i styrorbitrolen. Ratten vrids mer innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Allvarligt haveri i styrorbitrolen. Ratten vrids mycket utan att hjulen följer med ordentligt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritiskt haveri i styrorbitrolen. Ratten har mycket stort glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lätt inre läckage i styrcylindern. Fordonet börjar driva åt ena sidan."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lätt läckage vid styrcylinderns stångtätning. Hydrauloljenivån sjunker lite."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Måttligt inre läckage i styrcylindern. Fordonet driver mer åt ena sidan."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Måttligt läckage vid styrcylinderns stångtätning. Hydrauloljenivån sjunker tydligt."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Allvarligt inre läckage i styrcylindern. Fordonet driver tydligt åt ena sidan."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Allvarligt läckage vid styrcylinderns stångtätning. Hydrauloljenivån sjunker snabbt."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Kritiskt inre läckage i styrcylindern. Fordonet driver kraftigt åt ena sidan."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Kritiskt läckage vid styrcylinderns stångtätning. Hydrauloljenivån sjunker mycket snabbt."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Lätt slitage på tapparna och bussningarna i lastarens leder. Det uppstår lätt glapp i armens leder."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Måttligt slitage på tapparna och bussningarna i lastarens leder. Glappet i armens leder blir märkbart."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Allvarligt slitage på tapparna och bussningarna i lastarens leder. Armen har stort glapp."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kritiskt slitage på tapparna och bussningarna i lastarens leder. Glappet i armen är mycket stort."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Lätt läckage från en hyttstötdämpare. Hytten dämpas något mindre."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Måttligt läckage från en hyttstötdämpare. Hytten studsar över ojämnheter."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Allvarligt läckage från en hyttstötdämpare. Hytten gungar vid varje stöt."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Kritiskt läckage från en hyttstötdämpare. Stötdämparen är tom: Hytten dämpas nästan inte längre."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Växeln gick ur"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Begynnande nedbrytning av glödstiften. Kallstart tar längre tid, medan varmstart förblir normal."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Flera glödstift är svaga eller ur funktion. Kallstart är svår, och tomgången kan gå ojämnt tills motorn är varm."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Allvarligt haveri i glödstiften. Kallstart blir mycket osäker, och den ojämna gången fortsätter under uppvärmningen."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Fullständigt haveri i glödstiften. Motorn går inte att starta när temperaturen är för låg."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Haveri i glödreläet. Glödstiften värmer inte längre: Motorn kan inte startas när temperaturen är för låg."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Haveri i startreläet. Motorn dras inte längre runt vid start."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Haveri i halvljuslamporna. Dessa lampor lyser inte förrän de har bytts ut."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Haveri i helljuslamporna. Dessa lampor lyser inte förrän de har bytts ut."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Haveri i lamporna till de främre arbetsstrålkastarna. Dessa lampor lyser inte förrän de har bytts ut."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Haveri i lamporna till de bakre arbetsstrålkastarna. Dessa lampor lyser inte förrän de har bytts ut."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Haveri i det roterande varningsljusets lampa. Det roterande varningsljuset lyser inte förrän lampan har bytts ut."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Haveri i blinkerslamporna. Varken blinkers eller varningsblinkers lyser förrän lamporna har bytts ut."/>
+        <text name="rms_breakdowns_part_vehicle" text="Fordon"/>
+        <text name="rms_breakdowns_part_pistons" text="Kolvar"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Kolvringar"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Cylinderfoder"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Insugsventiler"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Avgasventiler"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Ventilstyrningar och ventiltätningar"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Topplock"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Topplockspackning"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Vevaxellager"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Vevstakslager"/>
+        <text name="rms_breakdowns_part_consumables" text="Förbrukningsmaterial"/>
+        <text name="rms_breakdowns_part_clutch" text="Koppling"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Utväxlingsstyrning"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Motor"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Strömkablar och jordanslutningar"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Startrelä"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Glödrelä"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Halvljuslampor"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="Helljuslampor"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Lampor till främre arbetsstrålkastare"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Lampor till bakre arbetsstrålkastare"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Lampa till roterande varningsljus"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Blinkerslampor"/>
+        <text name="rms_breakdowns_part_battery" text="Batteri"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Traktionsbatteri"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Högspänningskontaktor"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Högspänningskablage"/>
+        <text name="rms_breakdowns_part_inverter" text="Växelriktare"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Spänningsomvandlare"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Ombordladdare"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Elmotorns lager"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Elmotorns lindningar"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Motorns lägesgivare"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Kylvätskepump"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Vattenpump"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Kylarpaket"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Kylarslangar och kopplingar"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Expansionskärl"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Aggregatrem och spännare"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Fläktblad"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Elkylarfläkt"/>
+        <text name="rms_breakdowns_part_reducer" text="Reduktionsväxel"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Bromsskivor och bromsbelägg"/>
+        <text name="rms_breakdowns_part_brake_control" text="Bromsmanövrering"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Släpvagnsbromsventil"/>
+        <text name="rms_breakdowns_part_park_brake" text="Parkeringsbroms"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Navlager och navtätning"/>
+        <text name="rms_breakdowns_part_alternator" text="Generator"/>
+        <text name="rms_breakdowns_part_starter" text="Startmotor"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turboaggregat"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Transmissionstätning"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Bandspännare"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Löprullar och ledarhjul"/>
+        <text name="rms_breakdowns_part_thermostat" text="Termostat"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Oljepump"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Synkring"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Styrleder och styrstag"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Tappar och bussningar i lastarens leder"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Spindeltappar"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Styrorbitrol"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Styrcylinder"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Hyttfjädring"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="Kraftuttagets koppling"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="Kraftuttagets utgående axellager"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="Kraftuttagets utgående axeltätning"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="Kraftuttagets utgående axel"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="Magnetventil för kraftuttagets inkoppling"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="Manöverbrytare för kraftuttaget"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="Kraftuttagets varvtalsgivare"/>
+        <text name="rms_breakdowns_part_pto_brake" text="Kraftuttagets broms"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Främre kraftuttagskoppling"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Hydraulpump"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hydraulcylinder"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Hydraulslang"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Hydraulfilter"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Hydrauloljekylare"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Hydraulisk styrventil"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Fläktkoppling"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Matarpump"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Bränslespridare"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="Högtryckspump"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Bränslefilter"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Bränsleledning"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Mekanisk insprutningspump"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Bränsledoseringsventil"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Railtrycksgivare"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Railtrycksbegränsningsventil"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Gastryckregulator"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Magnetventil för gasavstängning"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Gasfilter"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Gasledningar"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Gasspridare"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-pump"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-doseringsspridare"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-filter"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="NOx-givare"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Partikelfilter"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Glödstift"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="Kraftuttaget kopplade ur"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="Det främre kraftuttaget har kopplat ur"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="Kraftuttaget kopplar inte ur: Stäng av maskinen för att stoppa redskapet"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Begynnande slitage på kraftuttagets koppling. Drivningen kopplar då och då ur."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Måttligt slitage på kraftuttagets koppling. Urkopplingarna blir vanligare."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Allvarligt slitage på kraftuttagets koppling. Redskapet förlorar ofta drivningen."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Kritiskt haveri i kraftuttagets koppling. Redskapet stannar."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Begynnande slitage på kraftuttagets koppling. Lamellerna börjar klibba fast."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Måttligt slitage på kraftuttagets koppling. Lamellerna klibbar fast allt mer."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Allvarligt slitage på kraftuttagets koppling. Lamellerna klibbar fast: Kraftuttaget kopplar ibland inte ur."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Kritiskt haveri i kraftuttagets koppling. Lamellerna har svetsats samman: Kraftuttaget kopplar inte längre ur och redskapet stannar först när maskinen stängs av."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Begynnande slitage på kraftuttagets utgående axellager. Ett svagt muller uppstår."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Måttligt slitage på kraftuttagets utgående axellager. Mullret blir tydligt hörbart."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Allvarligt slitage på kraftuttagets utgående axellager. Mullret blir starkare."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Kritiskt haveri i kraftuttagets utgående axellager. Mullret är som starkast."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Lätt läckage vid kraftuttagets utgående axeltätning. Transmissionsoljans nivå sjunker långsamt under arbetet."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Måttligt läckage vid kraftuttagets utgående axeltätning. Transmissionsoljans nivå sjunker under arbetet."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Allvarligt läckage vid kraftuttagets utgående axeltätning. Transmissionsolja rinner ut och nivån sjunker snabbt."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Kritiskt läckage vid kraftuttagets utgående axeltätning. Oljan som är kvar räcker inte för säker drift av transmissionen."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Begynnande slitage på magnetventilen för kraftuttagets inkoppling. Drivningen kopplar då och då ur under arbetet."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Begynnande slitage på magnetventilen för kraftuttagets inkoppling. Kraftuttaget går då och då inte att koppla in."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Måttligt slitage på magnetventilen för kraftuttagets inkoppling. Urkopplingarna under arbetet upprepas."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Måttligt slitage på magnetventilen för kraftuttagets inkoppling. Kraftuttaget går upprepade gånger inte att koppla in."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Allvarligt slitage på magnetventilen för kraftuttagets inkoppling. Drivningen kopplar ofta ur."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Allvarligt slitage på magnetventilen för kraftuttagets inkoppling. Kraftuttaget går ofta inte att koppla in."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Kritiskt haveri i magnetventilen för kraftuttagets inkoppling. Dess spole har avbrott och kraftuttaget förblir inte längre inkopplat."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Kritiskt haveri i magnetventilen för kraftuttagets inkoppling. Dess ventilslid fastnar och kraftuttaget kopplas inte längre in."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Begynnande slitage på manöverbrytaren för kraftuttaget. Glappkontakt bryter då och då drivningen."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Begynnande slitage på manöverbrytaren för kraftuttaget. Kraftuttaget reagerar då och då inte på manövreringen."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Måttligt slitage på manöverbrytaren för kraftuttaget. Glappkontakter bryter drivningen allt oftare."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Måttligt slitage på manöverbrytaren för kraftuttaget. Kraftuttaget reagerar allt oftare inte på manövreringen."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Allvarligt slitage på manöverbrytaren för kraftuttaget. Kontakten håller inte längre och drivningen kopplar ofta ur."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Allvarligt slitage på manöverbrytaren för kraftuttaget. Manövreringen har ofta ingen effekt."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Kritiskt haveri i manöverbrytaren för kraftuttaget. Dess kontakt förblir öppen och kraftuttaget kopplar ur."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Kritiskt haveri i manöverbrytaren för kraftuttaget. Dess kontakt sluter inte längre och kraftuttaget kopplas inte längre in."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="Haveri i kraftuttagets utgående axel. Dess splines är avslitna och överför inte längre rörelsen."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="Haveri i kraftuttagets utgående axel. Den har gått av och redskapet drivs inte längre."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="Haveri i kraftuttagets varvtalsgivare. Den ger inte längre någon signal och säkerhetssystemet kopplar ur kraftuttaget."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="Haveri i kraftuttagets broms. Den förblir ansatt och blockerar den utgående axeln."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Begynnande slitage på främre kraftuttagskopplingen. Drivningen av det främre uttaget kopplar ibland ur."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Måttligt slitage på främre kraftuttagskopplingen. Urkopplingarna av det främre uttaget upprepas."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Allvarligt slitage på främre kraftuttagskopplingen. Det främre redskapet förlorar ofta drivningen."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Kritiskt haveri i främre kraftuttagskopplingen. Det främre uttaget roterar inte längre; det bakre kraftuttaget påverkas inte."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Inkoppling av kraftuttaget avvisad"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Nödreparation"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Defekt"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Systemet fungerar normalt, men inspektionen har avslöjat en defekt del. Delen har ingen säkerhetsmarginal kvar, och ett förebyggande byte rekommenderas för att undvika ett plötsligt haveri."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Batteriet är för svagt"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Traktionsbatteri kallt: minskad räckvidd och effekt"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Systemet fungerar normalt, men vilar helt på en nödreparation. För att undvika ett haveri under belastning rekommenderas ett fullständigt byte av delarna så snart som möjligt."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Slitna turbolager. Ett svagt vinande hörs, och det finns en lätt effektförlust vid högt varvtal."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Otäta tätningar i turboaggregatet. Märkbar effektförlust och ökad bränsleförbrukning."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Skadade turbinblad. Stor effektförlust och risk för att motorn stannar under hög belastning."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Kritiskt haveri i turboaggregatet. Motorn har förlorat större delen av sin effekt och riskerar allvarliga inre skador."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Slitna kopplingslameller. Effektförlust då och då eftersom kopplingen slirar under belastning."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Betydande slitage på kopplingen. Märkbar slirning vid acceleration och under hög belastning."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Kraftigt sliten koppling. Stark slirning gör det svårt att överföra kraft till hjulen."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Kopplingen är helt utbränd. Fordonet kan inte längre köra."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Slitna synkringar. Skrapljud då och då eller trögt att lägga i växlar."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Skadade synkringar. Växlingen är ofta trög och kan misslyckas."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Avbrutna tänder på synkringen. Stor risk för misslyckad växling eller för att växeln går ur under belastning."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Synkringarna har havererat helt. Det går inte att växla."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Lätt läckage av transmissionsolja. Oljenivån sjunker långsamt under arbetet."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Måttligt läckage av transmissionsolja. Nivån sjunker tydligt, och transmissionen blir varmare."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Allvarligt läckage av transmissionsolja. Nivån sjunker snabbt, och transmissionen överhettas under belastning."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Kritiskt läckage av transmissionsolja. Det finns inte tillräckligt med olja kvar för säker drift av transmissionen."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Lätt funktionsfel i bandspännaren. Bandspänningen är något mindre stabil, vilket ökar motstånd och slitage något."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Måttligt funktionsfel i bandspännaren. Spänningen blir instabil, rulleffektiviteten faller, och risken för att bandet går snett stiger."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Allvarligt funktionsfel i bandspännaren. Spänningen är kraftigt störd, kraftöverföringen blir ineffektiv, och risken för att bandet går av stiger."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Kritiskt haveri i bandspännaren. Bandet går inte längre att hålla rätt spänt, och fordonet kan inte användas säkert."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Lätt haveri i termostaten. Motorn värms långsamt och förblir för kall under arbetet."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Lätt haveri i termostaten. Temperaturregleringen är svag och motorn blir varmare under belastning."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Måttligt haveri i termostaten. Motorn värms långsamt och förblir för kall under arbetet."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Måttligt haveri i termostaten. Temperaturen stiger tidigare och motorn blir varm under belastning."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Allvarligt haveri i termostaten. Motorn värms långsamt och förblir för kall under arbetet."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Allvarligt haveri i termostaten. Motorn blir mycket varm; långvarigt arbete kan ge överhettning."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Kritiskt haveri i termostaten. Motorn värms långsamt och förblir för kall under arbetet."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Kritiskt haveri i termostaten. Den förblir stängd och motorn överhettas snabbt."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Motorn har gått i skyddsläge. Effekten är begränsad tills temperaturen sjunker igen."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Överhettningsskydd: minskad effekt"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Överhettningsskyddet griper in hårdare. Motorn levererar bara halva sin effekt."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Överhettningsskydd: halverad effekt"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Överhettningsskyddet är på sin högsta nivå. Bara en bråkdel av motoreffekten återstår."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Överhettningsskydd: kraftigt minskad effekt"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motorn har stängts av för att undvika skador. Låt den svalna innan du startar igen."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Överhettningsskydd: motorn avstängd"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lätt funktionsfel i oljepumpen. Oljetrycket är lägre, motormomentet sjunker något, motortemperaturen stiger, och mekaniska knackningar kan uppstå."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Måttligt funktionsfel i oljepumpen. Oljetrycket är otillräckligt, motormomentet sjunker tydligt, motortemperaturen stiger, och de mekaniska knackningarna hörs klart."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Allvarligt funktionsfel i oljepumpen. Oljetrycket är kritiskt, motormomentet faller kraftigt, överhettning är sannolik, knackningarna är våldsamma, och motorn kan stanna."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritiskt haveri i oljepumpen. Oljecirkulationen räcker inte för säker drift av motorn, och varken start eller fortsatt drift är möjlig."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motorn har skurit och kan inte längre gå runt."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Motorn stannade"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lätt funktionsfel i ECU:n. Motoreffekten är något minskad."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Måttligt funktionsfel i ECU:n. Märkbar effektförlust och ökad bränsleförbrukning."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Allvarligt funktionsfel i ECU:n. Stor effektförlust, hög bränsleförbrukning och risk för att motorn stannar."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Fullständigt haveri i ECU:n. Motorn går inte att styra och startar inte."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Lätt haveri i strömkablar och jordanslutningar. Det ökade övergångsmotståndet ger flimrande lyktor då och då, instabil strömförsörjning och trög start. En läckström laddar ur batteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Måttligt haveri i strömkablar och jordanslutningar. Bruten kontakt ger ofta flimrande lyktor, instabil strömförsörjning, trög start och möjliga motorstopp. En läckström laddar ur batteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Allvarligt haveri i strömkablar och jordanslutningar. Försörjningen till kretsarna är instabil, belysningen kan falla bort helt, motormomentet är minskat, motorn stannar sannolikt, och starten är opålitlig. En läckström laddar ur batteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Kritiskt haveri i strömkablar och jordanslutningar. Belysningen fungerar inte, och motorn går inte att starta. En läckström laddar ur batteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Lätt haveri i strömkablar och jordanslutningar. Det ökade övergångsmotståndet ger flimrande lyktor då och då och instabil strömförsörjning. En läckström laddar ur hjälpbatteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Måttligt haveri i strömkablar och jordanslutningar. Bruten kontakt ger ofta flimrande lyktor, instabil strömförsörjning och möjliga avbrott. En läckström laddar ur hjälpbatteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Allvarligt haveri i strömkablar och jordanslutningar. Försörjningen till kretsarna är instabil, belysningen kan falla bort helt, effekten är minskad, och avbrott är sannolika. En läckström laddar ur hjälpbatteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Kritiskt haveri i strömkablar och jordanslutningar. Belysningen fungerar inte, och maskinen startar inte. En läckström laddar ur hjälpbatteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Lätt haveri i kylarslangarna och kopplingarna. En liten svettningsläcka sänker knappt kylvätskenivån."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Lätt haveri i kylarslangarna och kopplingarna. En lätt klämd slang minskar flödet något."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Måttligt haveri i kylarslangarna och kopplingarna. Läckan syns tydligt och nivån sjunker mer."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Måttligt haveri i kylarslangarna och kopplingarna. Det minskade flödet gör att temperaturen stiger snabbare under belastning."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Allvarligt haveri i kylarslangarna och kopplingarna. Mycket kylvätska läcker ut; motorn riskerar att överhettas under belastning."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Allvarligt haveri i kylarslangarna och kopplingarna. Flödet är svagt och motorn överhettas vid långvarigt arbete."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Kritiskt haveri i kylarslangarna och kopplingarna. Nivån sjunker snabbt och kylsystemet kan tömmas."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Kritiskt haveri i kylarslangarna och kopplingarna. Flödet är kraftigt hindrat och motorn överhettas snabbt."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Lätt haveri i expansionskärlet. En spricka släpper ut lite kylvätska."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Lätt haveri i expansionskärlet. Kopplingen svettas lite."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Måttligt haveri i expansionskärlet. Sprickan ger ett tydligt läckage och nivån sjunker."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Måttligt haveri i expansionskärlet. Kopplingen läcker tydligt och nivån sjunker."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Allvarligt haveri i expansionskärlet. Läckan får nivån att sjunka snabbt."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Allvarligt haveri i expansionskärlet. Mycket kylvätska försvinner snabbt vid kopplingen."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Kritiskt haveri i expansionskärlet. Kylvätskan rinner ut snabbt och systemet töms."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Kritiskt haveri i expansionskärlet. Läckan vid kopplingen tömmer systemet snabbt."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Lätt haveri i aggregatremmen och spännaren. Den gnisslar och slirar lite; laddning och cirkulation minskar något."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Måttligt haveri i aggregatremmen och spännaren. Den slirar under belastning; laddningen sjunker och kylvätskan cirkulerar sämre."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Allvarligt haveri i aggregatremmen och spännaren. Den slirar kraftigt; laddning och cirkulation är rejält minskade."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Kritiskt haveri i aggregatremmen och spännaren. Den går av; laddning och kylvätskecirkulation upphör plötsligt."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Lätt haveri i fläktbladet. Luftflödet minskar lite; kylningen försämras främst vid låg hastighet."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Måttligt haveri i fläktbladet. Luftflödet minskar märkbart och temperaturen stiger mer."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Allvarligt haveri i fläktbladet. Luftflödet är tydligt minskat och motorn blir varm under belastning."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Kritiskt haveri i fläktbladet. Luftflödet halveras och motorn överhettas snabbt under belastning."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Lätt haveri i elkylarfläkten. Den flyttar lite mindre luft när kylning behövs."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Måttligt haveri i elkylarfläkten. Märkbart mindre luft flyttas och temperaturen stiger snabbare."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Allvarligt haveri i elkylarfläkten. Luftcirkulationen är tydligt minskad och temperaturen stiger under belastning."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Kritiskt haveri i elkylarfläkten. Luftcirkulationen halveras och temperaturen stiger snabbt under belastning."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="De första tecknen på ett funktionsfel i CVT-transmissionen har upptäckts. En inspektion och en reparation behövs."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Funktionsfelet i CVT-transmissionen förvärras. Fortsatt användning kan sätta transmissionen i nöddrift."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Kritisk skada på CVT-transmissionen. Transmissionen är i nöddrift, och fordonets toppfart är sänkt."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Fullständigt haveri i CVT-transmissionen. Fordonet går inte att använda förrän det är reparerat."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Lätt sulfatering av batteriet. Den användbara kapaciteten är minskad, vilket krymper den elektriska reserven under belastning."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Måttlig sulfatering av batteriet. Den användbara kapaciteten är kraftigt minskad, och motorn blir svår att starta."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Allvarlig sulfatering av batteriet. Den användbara kapaciteten är kritiskt låg, och starteffekten blir instabil."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Kritisk sulfatering av batteriet. Den användbara kapaciteten är nästan noll, och starteffekten räcker inte för en pålitlig start."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Lätt sulfatering av hjälpbatteriet. Den användbara kapaciteten är minskad, vilket krymper den elektriska reserven under belastning."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Måttlig sulfatering av hjälpbatteriet. Den användbara kapaciteten är kraftigt minskad, och den elektriska reserven tar slut snabbare."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Allvarlig sulfatering av hjälpbatteriet. Den användbara kapaciteten är kritiskt låg, och den elektriska reserven tar slut mycket snabbt."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Kritisk sulfatering av hjälpbatteriet. Den användbara kapaciteten är nästan noll och räcker inte längre för en pålitlig start."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Lätt slitage på bromsskivorna och bromsbeläggen. Lätt minskad bromsverkan."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Måttligt slitage på bromsskivorna och bromsbeläggen. Bromssträckan är märkbart längre."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Allvarligt slitage på bromsskivorna och bromsbeläggen. Bromsarna är mycket svaga och opålitliga."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Kritiskt haveri i bromsskivorna och bromsbeläggen. Fordonet bromsar mycket dåligt och körningen blir farlig."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Lätt haveri i bromsmanövreringen. Fordonet drar lätt åt ena sidan vid bromsning."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Lätt haveri i bromsmanövreringen. Pedalen blir lite mjuk och bromsverkan minskar något."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Måttligt haveri i bromsmanövreringen. Bromsningen drar tydligt åt ena sidan."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Måttligt haveri i bromsmanövreringen. Pedalen blir mjuk, trycket sjunker och bromsverkan minskar tydligt."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Allvarligt haveri i bromsmanövreringen. Fordonet drar kraftigt åt ena sidan vid bromsning."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Allvarligt haveri i bromsmanövreringen. Pedalen sjunker onormalt långt, trycket faller och fordonet bromsar dåligt."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Kritiskt haveri i bromsmanövreringen. Bromsningen drar mycket kraftigt åt ena sidan."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Kritiskt haveri i bromsmanövreringen. Pedalen sjunker nästan utan motstånd och fordonet bromsar knappt längre."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Lätt haveri i släpvagnsbromsventilen. Släpvagnen förlorar en liten del av sin bromsverkan."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Måttligt haveri i släpvagnsbromsventilen. Släpvagnen bromsar tydligt mindre."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Allvarligt haveri i släpvagnsbromsventilen. Släpvagnen får bara en liten del av bromsverkan."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Kritiskt haveri i släpvagnsbromsventilen. Släpvagnen bromsar inte längre."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Lätt haveri i parkeringsbromsen. När den är släppt släpar den fortfarande lite och bromsar maskinen lätt."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Måttligt haveri i parkeringsbromsen. När den är släppt släpar den tydligt och håller emot maskinen."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Allvarligt haveri i parkeringsbromsen. När den är släppt förblir den halvt åtdragen och håller emot maskinen kraftigt."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Fullständigt haveri i parkeringsbromsen. Den släpper inte längre och håller fast maskinen som om den vore åtdragen."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Lätt slitage på navlagret och navtätningen. Det mekaniska motståndet stiger något, och ett ovanligt driftljud kan uppstå."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Måttligt slitage på navlagret och navtätningen. Friktionen stiger tydligt, ljudet blir mer markant, och den mekaniska verkningsgraden faller."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Allvarligt slitage på navlagret och navtätningen. Friktionen är hög, ljudet är kraftigt, och det finns en reell risk att de skär under belastning."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Kritiskt haveri i navlagret och navtätningen. Lagret är nära att skära helt, och drift blir omöjlig."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Lätt slitage på lagren i löprullarna och ledarhjulen. Det mekaniska motståndet stiger något, och ett ovanligt driftljud kan uppstå."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Måttligt slitage på lagren i löprullarna och ledarhjulen. Friktionen och ljudet ökar och rotationen blir trögare."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Allvarligt slitage på lagren i löprullarna och ledarhjulen. Friktionen och ljudet är kraftiga, med risk för skärning under belastning."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Kritiskt haveri i lagren i löprullarna och ledarhjulen. Bandet kan stanna om ett av lagren skär."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Lätt haveri i generatorregulatorn. Laddeffekten är minskad, vilket sänker uppladdningen av batteriet."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Måttligt haveri i generatorregulatorn. Laddningen är minskad och instabil, vilket ger dålig uppladdning av batteriet och större spänningsfall."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Allvarligt haveri i generatorregulatorn. Laddningen är kraftigt minskad, försörjningen är instabil, och elsystemet arbetar med stora förluster."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Fullständigt haveri i generatorregulatorn. Batteriet laddas inte längre, och elsystemet går bara på den återstående reserven."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Lätt haveri i generatordioderna. Laddeffekten är minskad, vilket sänker uppladdningen av batteriet. En läckström laddar ur batteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Måttligt haveri i generatordioderna. Laddningen är minskad och instabil, vilket ger dålig uppladdning av batteriet och större spänningsfall. En läckström laddar ur batteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Allvarligt haveri i generatordioderna. Laddningen är kraftigt minskad, försörjningen är instabil, och elsystemet arbetar med stora förluster. En läckström laddar ur batteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Fullständigt haveri i generatordioderna. Batteriet laddas inte längre, och elsystemet går bara på den återstående reserven. En läckström laddar ur batteriet när maskinen står stilla."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Lätt haveri i startmotorn. Den drar runt motorn långsammare, och starten tar lite längre tid."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Måttligt haveri i startmotorn. Den drar runt motorn långsamt: starten är svår och omöjlig i sträng kyla."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Allvarligt haveri i startmotorn. Den drar knappt runt motorn: motorn startar bara varm eller i milt väder."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Fullständigt haveri i startmotorn. Den drar inte längre runt motorn: en motor som går fortsätter att gå, men går inte att starta igen när den har stannat."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Lätt slitage på elmotorns lager. Ett svagt ljud uppstår, och förbrukningen stiger något."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Måttligt slitage på elmotorns lager. Ljudet hörs tydligt, förbrukningen stiger, och effekten sjunker något."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Allvarligt slitage på elmotorns lager. Ljudet är kraftigt, motorn blir varm, och effekten sjunker tydligt."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Kritiskt haveri i elmotorns lager. Motorn är blockerad, och maskinen kan inte längre köra."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Lätt nedbrytning av elmotorns lindningar. Effekten sjunker något, och motorn blir varmare."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Måttlig nedbrytning av elmotorns lindningar. Effekten sjunker tydligt, motorn blir varm, och förbrukningen stiger."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Allvarlig nedbrytning av elmotorns lindningar. Effektförlusten är stor, motorn blir mycket varm, och avbrott kan uppstå."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Kritiskt haveri i elmotorns lindningar. Motorn är kortsluten och kan inte längre gå."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Lätt funktionsfel i motorns lägesgivare. Korta ryck uppstår under belastning."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Måttligt funktionsfel i motorns lägesgivare. Rycken är täta, och effekten sjunker."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Allvarligt funktionsfel i motorns lägesgivare. Rycken är våldsamma, effekten rasar, och avbrott uppstår."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Fullständigt haveri i motorns lägesgivare. Motorn går inte längre att styra, och maskinen startar inte."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Lätt funktionsfel i växelriktaren. Motoreffekten är något minskad."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Måttligt funktionsfel i växelriktaren. Effektförlusten är märkbar, och förbrukningen stiger."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Allvarligt funktionsfel i växelriktaren. Effektförlusten är stor, och avbrott kan uppstå."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Fullständigt haveri i växelriktaren. Motorn får inte längre ström, och maskinen startar inte."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Lätt haveri i spänningsomvandlaren. Hjälpbatteriet laddas sämre."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Måttligt haveri i spänningsomvandlaren. Laddningen av hjälpbatteriet är minskad och instabil."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Allvarligt haveri i spänningsomvandlaren. Hjälpbatteriet laddas knappt längre och töms under körning."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Fullständigt haveri i spänningsomvandlaren. Hjälpbatteriet laddas inte längre, och maskinen går bara på den återstående reserven."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Lätt haveri i ombordladdaren. Laddningen vid laddstationen går något långsammare."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Måttligt haveri i ombordladdaren. Laddningen vid laddstationen går tydligt långsammare."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Allvarligt haveri i ombordladdaren. Laddningen vid laddstationen går mycket långsamt."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Fullständigt haveri i ombordladdaren. Traktionsbatteriet kan inte längre laddas."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Lätt isolationsförlust i högspänningskablaget. En varning visas, utan annan verkan."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Måttlig isolationsförlust i högspänningskablaget. Effekten minskas av säkerhetsskäl."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Allvarlig isolationsförlust i högspänningskablaget. Effekten minskas kraftigt, och avbrott uppstår."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Kritisk isolationsförlust i högspänningskablaget. Maskinen vägrar starta av säkerhetsskäl."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Lätt haveri i celler i traktionsbatteriet. Räckvidden sjunker något."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Måttligt haveri i celler i traktionsbatteriet. Räckvidden sjunker tydligt, och effekten är minskad."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Allvarligt haveri i celler i traktionsbatteriet. Räckvidd och effekt rasar, och avbrott kan uppstå."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Kritiskt haveri i traktionsbatteriet. Maskinen kan inte längre slås på."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Lätt slitage på högspänningskontaktorn. Sällsynta strömavbrott uppstår."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Måttligt slitage på högspänningskontaktorn. Strömavbrotten blir regelbundna."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Allvarligt slitage på högspänningskontaktorn. Strömavbrotten är täta."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Kritiskt haveri i högspänningskontaktorn. Traktionsbatteriet försörjer inte längre maskinen, som inte startar."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Lätt haveri i kylvätskepumpen. Kylvätskan cirkulerar sämre, och temperaturen stiger lite mer."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Måttligt haveri i kylvätskepumpen. Kylningen är tydligt minskad."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Allvarligt haveri i kylvätskepumpen. Kylningen är kraftigt minskad, och överhettning är trolig under belastning."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Fullständigt haveri i kylvätskepumpen. Kylvätskan cirkulerar knappt längre, och maskinen överhettas snabbt."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Lätt haveri i vattenpumpen. Felet märks ännu knappt och kräver kontroll."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Måttligt haveri i vattenpumpen. Cirkulationen minskar och kylningen blir mindre effektiv."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Allvarligt haveri i vattenpumpen. Otillräcklig cirkulation ger risk för överhettning."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Kritiskt haveri i vattenpumpen. Cirkulationen är kraftigt försämrad och kylningen är mycket nedsatt."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Lätt haveri i vattenpumpen. Lätta spår av kylvätska syns runt vattenpumpens tätning."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Måttligt haveri i vattenpumpen. Kylvätska läcker genom vattenpumpens tätning; nivån sjunker och cirkulationen blir mindre effektiv."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Allvarligt haveri i vattenpumpen. Läckaget vid vattenpumpens tätning lämnar tydliga spår runt pumpen; nivån sjunker och den svagare cirkulationen ökar risken för överhettning."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Kritiskt haveri i vattenpumpen. Vattenpumpens tätning läcker kraftigt; kretsen förlorar vätska och cirkulationen kan inte längre kyla motorn ordentligt."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Lätt haveri i vattenpumpen. Felet märks ännu knappt och kräver kontroll."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Måttligt haveri i vattenpumpen. Pumpens lager får glapp och cirkulationen minskar."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Allvarligt haveri i vattenpumpen. Otillräcklig cirkulation ger risk för överhettning."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Kritiskt haveri i vattenpumpen. Cirkulationen är kraftigt försämrad och kylningen är mycket nedsatt."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Lätt haveri i kylarpaketet. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Måttligt haveri i kylarpaketet. Det avger mindre värme."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Allvarligt haveri i kylarpaketet. Det avger värme dåligt och risken för överhettning ökar."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Kritiskt haveri i kylarpaketet. Det avger mycket lite värme och kylningen är allvarligt försämrad."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Lätt haveri i kylarpaketet. Kylvätska sipprar ut på kylarpaketets rör."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Måttligt haveri i kylarpaketet. Skadade rör släpper ut kylvätska på kylaren och nivån i kretsen sjunker."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Allvarligt haveri i kylarpaketet. Kylvätska strömmar ur kylarpaketets skadade rör och lämnar våta spår på kylaren; reserven minskar snabbt."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Kritiskt haveri i kylarpaketet. Det är otätt och förlorar mycket kylvätska. Nivån faller och kylaren kan inte längre leda bort tillräckligt med motorvärme."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Lätt slitage på reduktionsväxelns kugghjul och lager. Ett svagt ljud uppstår under körning."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Måttligt slitage på reduktionsväxelns kugghjul och lager. Ljudet hörs tydligt, och förbrukningen stiger."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Allvarligt slitage på reduktionsväxelns kugghjul och lager. Ljudet är kraftigt, reduktionsväxeln blir varm, och effekten vid hjulen sjunker."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Kritiskt haveri i reduktionsväxeln. Den är blockerad, och maskinen kan inte längre köra."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Lätt haveri i kolvarna. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Måttligt haveri i kolvarna. Mer olja kommer in i förbränningskammaren och blå rök syns."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Allvarligt haveri i kolvarna. Oljeförbrukningen och den blå röken ökar."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Kritiskt haveri i kolvarna. En kolv har skurit och motorn är blockerad."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Lätt haveri i kolvarna. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Måttligt haveri i kolvarna. Mer olja kommer in i förbränningskammaren och blå rök syns."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Allvarligt haveri i kolvarna. Oljeförbrukningen och den blå röken ökar."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Kritiskt haveri i kolvarna. En kolv har gått sönder och motorn har stannat."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Lätt haveri i kolvringarna. Avlagringar hindrar ringarna i deras spår."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Måttligt haveri i kolvringarna. Tätheten försämras och motorn tappar effekt."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Allvarligt haveri i kolvringarna. Kompressionsförlust gör starten svår och minskar effekten."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Kritiskt haveri i kolvringarna. Kompressionen är mycket låg, starten svår och effekten kraftigt nedsatt."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Lätt haveri i kolvringarna. Avlagringar hindrar ringarna i deras spår."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Måttligt haveri i kolvringarna. Mer olja kommer in i förbränningskammaren och blå rök syns."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Allvarligt haveri i kolvringarna. Oljeförbrukningen och den blå röken ökar."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Kritiskt haveri i kolvringarna. Mycket olja tränger in och den blå röken fortsätter."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Lätt haveri i kolvringarna. Avlagringar hindrar ringarna i deras spår."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Måttligt haveri i kolvringarna. Tätheten försämras och motorn tappar effekt."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Allvarligt haveri i kolvringarna. Kompressionsförlust gör starten svår och minskar effekten."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Kritiskt haveri i kolvringarna. En kolvring har gått av: kompressionen sjunker och olja kommer in i förbränningskammaren."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Lätt haveri i cylinderfodren. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Måttligt haveri i cylinderfodren. Ytan är repad och tätar sämre."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Allvarligt haveri i cylinderfodren. Ytan är repad och tätar sämre. Oljeförbrukningen och den blå röken ökar."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Kritiskt haveri i cylinderfodren. En kolv har skurit i sitt cylinderfoder och motorn är blockerad."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Lätt haveri i cylinderfodren. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Måttligt haveri i cylinderfodren. Kylvätska läcker genom ett sprucket cylinderfoder in i en cylinder, så att nivån sjunker."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Allvarligt haveri i cylinderfodren. Ett sprucket cylinderfoder släpper in kylvätska i en cylinder; vit rök kommer ur avgasröret."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Kritiskt haveri i cylinderfodren. Mycket kylvätska tränger genom ett sprucket cylinderfoder in i en cylinder, med ihållande vit rök och otillräcklig kylning."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Lätt haveri i insugsventilerna. Tätningsytan är skadad och effekten sjunker något."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Måttligt haveri i insugsventilerna. Ventilen stänger dåligt, med misständningar och effektförlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Allvarligt haveri i insugsventilerna. Sätet är bränt, med misständningar, motorstopp och effektförlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Kritiskt haveri i insugsventilerna. Det brända sätet ger misständningar, motorstopp och stor effektförlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Lätt haveri i insugsventilerna. Tätningsytan är skadad och effekten sjunker något."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Måttligt haveri i insugsventilerna. Ventilen stänger dåligt, med misständningar och effektförlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Allvarligt haveri i insugsventilerna. Sätet är bränt, med misständningar, motorstopp och effektförlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Kritiskt haveri i insugsventilerna. En insugsventil har gått av och motorn har stannat."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Lätt haveri i avgasventilerna. Tätningsytan är skadad och effekten sjunker något."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Måttligt haveri i avgasventilerna. Ventilen stänger dåligt, med misständningar och effektförlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Allvarligt haveri i avgasventilerna. Sätet är bränt, med misständningar, motorstopp och effektförlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Kritiskt haveri i avgasventilerna. Det brända sätet ger misständningar, motorstopp och stor effektförlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Lätt haveri i avgasventilerna. Tätningsytan är skadad och effekten sjunker något."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Måttligt haveri i avgasventilerna. Ventilen stänger dåligt, med misständningar och effektförlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Allvarligt haveri i avgasventilerna. Sätet är bränt, med misständningar, motorstopp och effektförlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Kritiskt haveri i avgasventilerna. En avgasventil har gått av och motorn har stannat."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Lätt haveri i ventilstyrningarna och ventiltätningarna. Kontrollen visar ett styrningsfel och ventilerna låter mer."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Måttligt haveri i ventilstyrningarna och ventiltätningarna. Glappet ökar och ventilerna låter mer."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Allvarligt haveri i ventilstyrningarna och ventiltätningarna. För stort glapp ger ljud, misständningar och oljepassage."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Kritiskt haveri i ventilstyrningarna och ventiltätningarna. Glappet i ventilstyrningarna är för stort, med ljud, misständningar och blå rök."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Lätt haveri i ventilstyrningarna och ventiltätningarna. Den hårdnade tätningen släpper igenom olja."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Måttligt haveri i ventilstyrningarna och ventiltätningarna. Mer olja kommer in i förbränningskammaren och blå rök syns."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Allvarligt haveri i ventilstyrningarna och ventiltätningarna. Oljeförbrukningen och den blå röken ökar."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Kritiskt haveri i ventilstyrningarna och ventiltätningarna. Mycket olja tränger in och den blå röken fortsätter."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Lätt haveri i topplocket. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Måttligt haveri i topplocket. En spricka i topplocket släpper in kylvätska i en förbränningskammare; motorn tappar effekt och är svårstartad."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Allvarligt haveri i topplocket. Kylvätska passerar genom det spruckna topplocket till en förbränningskammare och ger vit rök och effektförlust."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Kritiskt haveri i topplocket. En spricka släpper in mycket kylvätska i en förbränningskammare. Motorn har låg effekt, startar dåligt och avger vit rök."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Lätt haveri i topplocket. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Måttligt haveri i topplocket. Kylvätska sipprar ur det spruckna topplocket och nivån i kretsen sjunker."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Allvarligt haveri i topplocket. Kylvätskeläckaget lämnar synliga spår på det spruckna topplocket och nivån sjunker snabbt."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Kritiskt haveri i topplocket. Mycket kylvätska strömmar ur det spruckna topplocket; kretsen töms och motorn riskerar överhettning."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Lätt haveri i topplocket. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Måttligt haveri i topplocket. Kylvätska läcker genom en spricka i topplocket till oljan, så att nivån i kretsen sjunker."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Allvarligt haveri i topplocket. Sprickan i topplocket släpper in mer kylvätska i oljan; nivån i kretsen fortsätter att sjunka."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Kritiskt haveri i topplocket. Sprickan i topplocket leder mycket kylvätska till oljan; kretsen förlorar sin reserv och motorn riskerar överhettning."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Lätt haveri i topplockspackningen. Felet märks ännu knappt och kräver kontroll."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Måttligt haveri i topplockspackningen. Den släpper in kylvätska i en förbränningskammare; starten tar längre tid och effekten sjunker."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Allvarligt haveri i topplockspackningen. Kylvätska passerar genom den till en förbränningskammare och ger vit rök ur avgasröret."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Kritiskt haveri i topplockspackningen. Den släpper in mycket kylvätska i en förbränningskammare; den vita röken ökar och starten blir mycket svår."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Lätt haveri i topplockspackningen. Felet märks ännu knappt och kräver kontroll."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Måttligt haveri i topplockspackningen. Kylvätska sipprar ut vid den och sänker nivån i kretsen."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Allvarligt haveri i topplockspackningen. Ett kylvätskeläckage vid den lämnar spår på motorn och sänker nivån snabbt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Kritiskt haveri i topplockspackningen. Den släpper ut mycket kylvätska; nivån faller och motorkylningen försämras kraftigt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Lätt haveri i topplockspackningen. Felet märks ännu knappt och kräver kontroll."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Måttligt haveri i topplockspackningen. Kylvätska passerar genom den till oljan; nivån i kretsen sjunker."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Allvarligt haveri i topplockspackningen. Den släpper in allt mer kylvätska i oljan; kretsen förlorar gradvis vätska."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Kritiskt haveri i topplockspackningen. Ett stort läckage genom den leder kylvätska till oljan och berövar kretsen den vätska som behövs för kylningen."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Lätt haveri i vevaxellagren. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Måttligt haveri i vevaxellagren. Lagerglappet ökar."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Allvarligt haveri i vevaxellagren. Oljefilmen är försämrad, med knackningar och värme."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Kritiskt haveri i vevaxellagren. Ett vevaxellager har skurit och blockerat motorn."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Lätt haveri i vevaxellagren. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Måttligt haveri i vevaxellagren. Lagerglappet ökar."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Allvarligt haveri i vevaxellagren. Oljefilmen är försämrad, med knackningar och värme."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Kritiskt haveri i vevaxellagren. Beläggningen på ett vevaxellager har smält och motorn har stannat."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Lätt haveri i vevstakslagren. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Måttligt haveri i vevstakslagren. Lagerglappet ökar."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Allvarligt haveri i vevstakslagren. Oljefilmen är försämrad, med knackningar och värme."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Kritiskt haveri i vevstakslagren. Ett vevstakslager har skurit och blockerat motorn."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Lätt haveri i vevstakslagren. Kontrollen visar en skadad yta."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Måttligt haveri i vevstakslagren. Lagerglappet ökar."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Allvarligt haveri i vevstakslagren. Oljefilmen är försämrad, med knackningar och värme."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Kritiskt haveri i vevstakslagren. Beläggningen på ett vevstakslager har smält och motorn har stannat."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Otillräcklig spänning i kretsen"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="För tidigt slitage på matarpumpen. Lätt minskad motoreffekt och ökad bränsleförbrukning."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Sjunkande bränsletryck. Märkbar effektförlust, högre bränsleförbrukning och motorstopp då och då."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Kritiskt bränsletryck. Stor effektförlust, mycket hög bränsleförbrukning och täta motorstopp."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Fullständigt haveri i matarpumpen. Det förs inte längre bränsle till motorn."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Ett eller flera spridarmunstycken är lätt igensatta. Motorn kan gå lite ojämnt med en lätt effektförlust."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Dålig finfördelning av bränslet. Motorn tvekar under belastning med märkbar effektförlust och ryck."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="En bränslespridare sitter fast. Motorn går mycket dåligt med stor effektförlust och opålitlig start."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="En spridare är helt defekt. Motorn går inte längre rätt och startar kanske inte alls."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Lätt haveri i högtryckspumpen. Insprutningstrycket byggs upp långsammare: starten tar längre tid och motorn svarar mindre direkt."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Måttligt haveri i högtryckspumpen. Insprutningstrycket räcker inte till under belastning, med märkbar effektförlust och tvekan."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Allvarligt haveri i högtryckspumpen. Insprutningstrycket är kritiskt lågt, med stor effektförlust, motorstopp och svår start."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Fullständigt haveri i högtryckspumpen. Den bygger inte längre upp insprutningstryck: startmotorn drar runt motorn, men den startar inte."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Lätt igensättning av bränslefiltret. Bränsleflödet sjunker något under hög belastning."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Måttlig igensättning av bränslefiltret. Flödet blir otillräckligt under belastning, effekten faller, och motorn tvekar då och då."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Allvarlig igensättning av bränslefiltret. Bränsletillförseln är kraftigt begränsad, effekten faller tydligt, och motorn kan stanna."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Bränslefiltret är helt igensatt. Motorn får inte längre tillräckligt med bränsle för att gå pålitligt."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Lätt luftinträngning i bränsleledningen. Bränsletillförseln blir något ojämn."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Måttlig luftinträngning i bränsleledningen. Tillförseln blir instabil, effekten faller, och motorn börjar tveka."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Allvarlig luftinträngning i bränsleledningen. Motorn går mycket ojämnt, och risken för motorstopp är stor."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Kritiskt haveri i bränsleledningen med kraftig luftinträngning. Motorn går inte längre att förse med bränsle på rätt sätt."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Lätt klämning av bränsleledningen. Flödet sjunker: motorn startar och stannar sedan då och då."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Måttlig klämning av bränsleledningen. Motorn startar och stannar sedan regelbundet."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Allvarlig klämning av bränsleledningen. Motorn stannar ofta."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Bränsleledningen är klämd platt. Bränslet kommer inte längre fram: motorn stannar."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Lätt haveri i den mekaniska insprutningspumpen. Flödet sjunker: starten tar längre tid och motorn tappar lite dragkraft."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Måttligt haveri i den mekaniska insprutningspumpen. Flödet räcker inte under belastning: motorn tappar effekt och tvekar."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Allvarligt haveri i den mekaniska insprutningspumpen. Motorn får för lite bränsle, tappar mycket effekt, startar dåligt och stannar."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Kritiskt haveri i den mekaniska insprutningspumpen. Drivningen har gått av: motorn stannar och går inte att starta igen."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Lätt haveri i bränsledoseringsventilen. Trycket i railen byggs upp långsammare och starten tar längre tid."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Måttligt haveri i bränsledoseringsventilen. Railtrycket räcker inte under belastning: motorn tappar effekt och tvekar."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Allvarligt haveri i bränsledoseringsventilen. Railtrycket avviker kraftigt från börvärdet: motorn tappar mycket effekt och stannar."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Kritiskt haveri i bränsledoseringsventilen. Inget tryck byggs längre upp i railen: startmotorn drar runt motorn, men den startar inte."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Lätt haveri i railtrycksgivaren. Mätvärdet blir instabilt och starten tar lite längre tid."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Måttligt haveri i railtrycksgivaren. Styrenheten reglerar trycket dåligt: motorn tappar effekt och tvekar."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Allvarligt haveri i railtrycksgivaren. Motorn går i nödläge, tappar mycket effekt och kan stanna."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Kritiskt haveri i railtrycksgivaren. Utan mätvärde håller styrenheten motorn i nödläge."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Lätt haveri i railtrycksbegränsningsventilen. Den öppnar för tidigt: Railtrycket byggs upp långsammare och starten tar längre tid."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Måttligt haveri i railtrycksbegränsningsventilen. Railtrycket håller inte under belastning: Motorn tappar effekt och tvekar."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Allvarligt haveri i railtrycksbegränsningsventilen. Railtrycket faller kraftigt: Motorn tappar mycket effekt och stannar."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Kritiskt haveri i railtrycksbegränsningsventilen. Den förblir öppen: Inget railtryck byggs upp och startmotorn drar runt motorn utan att den startar."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Lätt haveri i gastryckregulatorn. Matningstrycket varierar och starten tar längre tid."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Måttligt haveri i gastryckregulatorn. Trycket sjunker under belastning: motorn tappar effekt och tvekar."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Allvarligt haveri i gastryckregulatorn. Tillförseln blir ojämn: motorn tappar mycket effekt, startar dåligt och stannar."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Kritiskt haveri i gastryckregulatorn. Den släpper inte längre igenom tillräckligt med gas: motorn stannar."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Lätt haveri i magnetventilen för gasavstängning. Den öppnar för sent: starten tar längre tid och motorn tvekar ibland."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Måttligt haveri i magnetventilen för gasavstängning. Den bryter ibland gastillförseln: motorn tvekar och stannar."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Allvarligt haveri i magnetventilen för gasavstängning. Avbrotten blir fler och motorn stannar ofta."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Kritiskt haveri i magnetventilen för gasavstängning. Den förblir stängd: motorn stannar och går inte att starta igen."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Lätt igensättning av gasfiltret. Gasflödet sjunker något under hög belastning."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Måttlig igensättning av gasfiltret. Tillförseln räcker inte under belastning: effekten faller och motorn kan stanna."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Allvarlig igensättning av gasfiltret. Flödet är kraftigt begränsat: effekten faller tydligt och motorn stannar."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Gasfiltret är helt igensatt. Motorn får inte längre tillräckligt med gas och stannar."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Lätt läckage i gasledningarna. Starten tar lite längre tid."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Måttligt läckage i gasledningarna. Tillförseln blir ojämn: motorn tvekar och kan stanna."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Allvarligt läckage i gasledningarna. Trycket sjunker: motorn tvekar, startar dåligt och stannar ofta."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Kritiskt läckage i gasledningarna. Trycket kan inte längre hållas: motorn stannar."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Lätt haveri i gasspridarna. Doseringen blir ojämn: motorn går mindre jämnt och förbrukar lite mer gas."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Måttligt haveri i gasspridarna. Motorn tvekar, tappar effekt, förbrukar mer gas och kan stanna."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Allvarligt haveri i gasspridarna. En spridare doserar mycket dåligt: stor effektförlust, hög förbrukning och svår start."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kritiskt haveri i gasspridarna. Doseringen tillåter inte längre motorgång: motorn stannar."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Haveri i AdBlue-pumpen. Den matar inte längre doseringen: motorlampan tänds och därefter begränsar styrenheten effekten fram till reparationen."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Haveri i AdBlue-doseringsspridaren. Igensatt av kristaller finfördelar den inte längre vätskan: motorlampan tänds och effekten sänks senare fram till reparationen."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlue-filtret har nått bytesintervallet och börjar sättas igen. Den mest omfattande servicen byter det."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="AdBlue-filtret är smutsigt: AdBlue-flödet minskar och motorlampan tänds. Den mest omfattande servicen byter det."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="AdBlue-filtret är kraftigt smutsigt: Doseringen fungerar inte och ECU sänker effekten fram till reparationen."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="AdBlue-filtret är helt igensatt: Doseringen upphör helt och ECU sänker effekten fram till reparationen."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="Haveri i NOx-givaren. Styrenheten övervakar inte längre utsläppen: motorlampan tänds och efter flera tiotals timmar begränsas effekten."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Lätt haveri i partikelfiltret. En spricka släpper igenom lite sot till avgaserna."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Måttligt haveri i partikelfiltret. Sprickan växer: svart rök blir synlig."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Allvarligt haveri i partikelfiltret. Filterkroppen faller sönder: avgasröret släpper ut mycket svart rök."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Kritiskt haveri i partikelfiltret. Filterkroppen är trasig: sot passerar utan att fångas upp."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Lätt haveri i partikelfiltret. En del av filterkroppen har smält och täpps igen."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Måttligt haveri i partikelfiltret. Det smälta området växer: mottrycket ökar."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Allvarligt haveri i partikelfiltret. Smält och igensatt kan det inte längre regenerera: motorvarvtalet begränsas."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritiskt haveri i partikelfiltret. Helt blockerat släpper det inte längre igenom avgaserna: bara ett byte ger motorn effekten tillbaka."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Partikelfiltret är mättat. Regenereringarna har inte slutförts: motorvarvtalet begränsas tills en regenerering lyckas."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritisk mättning av partikelfiltret. Det är för fullt för att regenerera självt och behöver en serviceregenerering på verkstaden; varvtalet förblir begränsat."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lätt haveri i fläktkopplingen. Fläkten svarar mindre effektivt, och kylförmågan är något försämrad."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Måttligt haveri i fläktkopplingen. Fläkten kopplar in ojämnt, och kylförmågan faller tydligt."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Allvarligt haveri i fläktkopplingen. Fläkten ger inte längre tillräckligt med luft, och motorn överhettas lättare."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Kritiskt haveri i fläktkopplingen. Fläkten kan inte längre ge den kylning som behövs."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Utväxlingsstyrningen reagerar långsammare och mindre exakt."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Utväxlingen varierar oregelbundet och styrningen reagerar dåligt."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Utväxlingsstyrningen är kraftigt störd och den överförda drivkraften minskar."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Utväxlingsstyrningen har slutat fungera; transmissionen är nästan oanvändbar."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Lätt inre läckage i en hydraulcylinder. Ett lyft redskap sjunker långsamt under belastning."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Måttligt inre läckage i en hydraulcylinder. Den oavsiktliga sänkningen blir synlig och växer ju tyngre lasten är."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Allvarligt inre läckage i en hydraulcylinder. Tunga redskap håller inte längre sitt läge tillförlitligt."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Kritiskt inre läckage i en hydraulcylinder. Varje lyft last sjunker snabbt av sig själv."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Mindre inre läckage i hydraulpumpen. Redskapen arbetar något långsammare."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Slitna tätningar i hydraulpumpen. Hydrauliken arbetar tydligt långsammare."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Skadad hydraulpump. Redskapen är mycket långsamma och svaga."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Haveri i hydraulpumpen. Hydraulsystemet är ur drift."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="En hydraulslang visar lätt fukt. Det slipper ut lite olja, och hydrauliken svarar något svagare."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="En hydraulslang svettas synligt. Oljeförlusten fortsätter, och hydraulfunktionerna svarar långsammare."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="En hydraulslang läcker aktivt. Oljeförlusten är tydlig, och hydraulfunktionerna är märkbart försvagade."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="En hydraulslang har ett kraftigt läckage. Oljan slipper ut snabbt, och hydraulikens prestanda faller kraftigt."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Hydraulfiltret är lätt nedsmutsat och börjar begränsa flödet. Hydraulfunktionerna blir något långsammare. Underhållet byter filtret."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Hydraulfiltret är måttligt nedsmutsat. Alla hydraulfunktioner är tydligt långsammare. Underhållet byter filtret."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Hydraulfiltret är kraftigt nedsmutsat. Hydrauliken svarar mycket långsamt. Underhållet byter filtret."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Hydraulfiltret är helt igensatt. Hydraulfunktionerna svarar knappt. Underhållet byter filtret."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Hydrauloljekylaren tappar lite av sin verkan. Oljetemperaturen stiger något under längre hydrauliskt arbete."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Hydrauloljekylaren arbetar dåligt. Oljetemperaturen stiger tydligt under ihållande hydrauliskt arbete."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Hydrauloljekylaren är kraftigt försämrad. Tungt hydrauliskt arbete överhettar oljan snabbt."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Hydrauloljekylaren har havererat. Längre arbete ger kraftig överhettning av oljan och snabbar på slitaget på pumpen."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="En hydraulisk styrventil börjar kärva. En hydraulfunktion tvekar då och då och tappar kraft under belastning."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="En hydraulisk styrventil kärvar tidvis. En hydraulfunktion blir långsammare och tappar mer kraft när belastningen stiger."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="En hydraulisk styrventil kärvar kraftigt. En hydraulfunktion rör sig ojämnt och kämpar med en tung last."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="En hydraulisk styrventil är allvarligt skadad. En hydraulfunktion stannar hela tiden och orkar knappt flytta en tung last."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Transmissionspump"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Hydrostatisk enhet"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Transmissionsoljekylare"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Växellådslager"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Powershift-växelkopplingar"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Powershift-vändkopplingar"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Transmissionsstyrning"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Bakaxelns kronhjul och pinjong"/>
+        <text name="rms_breakdowns_part_final_drives" text="Slutväxlar"/>
+        <text name="rms_breakdowns_part_differential" text="Differentialens kugghjul"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="Inkoppling av fyrhjulsdrift"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Framaxelns drivaxel och kardanknutar"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Axellager"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Växellådsgivare"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Transmissionsfilter"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Lyftventil"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Lyftlägesgivare"/>
+        <text name="rms_breakdowns_part_loader_control" text="Lastarstyrning"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydrauliska snabbkopplingar"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lätt haveri i kopplingen. Den frikopplar inte helt. Vissa växlar är svåra att lägga i."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Måttligt haveri i kopplingen. Mekanismen frigör lamellen dåligt. Växlar avvisas oftare."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Allvarligt haveri i kopplingen. Lamellen drivs fortfarande vid frikoppling. Växelvalet störs kraftigt."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Kritiskt haveri i kopplingen. Mekanismen frigör inte lamellen. Ingen växel kan läggas i normalt."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Lätt haveri i växellådslagren. Löpytorna är skadade. Ett svagt muller hörs från växellådan."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Måttligt haveri i växellådslagren. Lagerbanorna är skadade. Växellådans muller hörs tydligt."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Allvarligt haveri i växellådslagren. Lagren går trögt. Växellådan mullrar högt och kan skära."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Kritiskt haveri i växellådslagren. Lagren har skurit. Växellådan är blockerad och maskinen kan inte köra."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Lätt haveri i Powershift-växelkopplingarna. Ett lamellpaket överför kraften dåligt. En växel slirar lätt under belastning."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Lätt haveri i Powershift-växelkopplingarna. Ett lamellpaket griper sent. En växel går i med ett lätt ryck."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Måttligt haveri i Powershift-växelkopplingarna. Ett lamellpaket klämmer otillräckligt. Växeln slirar tydligt under belastning."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Måttligt haveri i Powershift-växelkopplingarna. Ett lamellpaket fylls dåligt. Växeln går i hårt."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Allvarligt haveri i Powershift-växelkopplingarna. Ett lamellpaket håller knappt belastningen. Mycket lite drivkraft når hjulen."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Allvarligt haveri i Powershift-växelkopplingarna. Ett lamellpaket griper mycket dåligt. Växlingar ger kraftiga ryck."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Kritiskt haveri i Powershift-växelkopplingarna. Lamellpaketet överför ingen kraft. Maskinen kan inte köra."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Kritiskt haveri i Powershift-växelkopplingarna. Lamellpaketet griper inte rätt. Växeln driver inte maskinen."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Lätt haveri i Powershift-vändkopplingarna. En fram- eller backkoppling slirar lätt vid igångkörning."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Lätt haveri i Powershift-vändkopplingarna. En vändkoppling griper sent. Drivningen återkommer med ett lätt ryck."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Måttligt haveri i Powershift-vändkopplingarna. En vändkoppling slirar tydligt. Kraften överförs dåligt i vald riktning."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Måttligt haveri i Powershift-vändkopplingarna. En vändkoppling griper plötsligt. Riktningsbytet rycker i maskinen."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Allvarligt haveri i Powershift-vändkopplingarna. En vändkoppling håller knappt belastningen. Drivkraften sjunker kraftigt."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Allvarligt haveri i Powershift-vändkopplingarna. En vändkoppling griper mycket ojämnt. Igångkörningen blir mycket hård."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Kritiskt haveri i Powershift-vändkopplingarna. Vändkopplingen överför ingen kraft. Maskinen kan inte köra."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Kritiskt haveri i Powershift-vändkopplingarna. Vändkopplingen griper inte rätt. Drivningen upphör."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Lätt haveri i transmissionsstyrningen. Den elektrohydrauliska styrningen arbetar ojämnt. En växling tvekar."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Lätt haveri i transmissionsstyrningen. Styrningen vägrar ibland ett växelval."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Måttligt haveri i transmissionsstyrningen. Styrningen stör kopplingarnas fyllning. Växlingar ger tydliga ryck."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Måttligt haveri i transmissionsstyrningen. Styrningen vägrar flera växelval. Växlar blir svåra att lägga i."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Allvarligt haveri i transmissionsstyrningen. Styrningen aktiverar kopplingarna dåligt. Växlingar ger kraftiga ryck."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Allvarligt haveri i transmissionsstyrningen. Styrningen utför inte många växelval. Växlar är sällan tillgängliga."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Kritiskt haveri i transmissionsstyrningen. Styrningen kan inte koppla in kopplingarna rätt. Växlingarna störs kraftigt."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Kritiskt haveri i transmissionsstyrningen. Styrningen tillåter inget växelval. Växellådan svarar inte på begäran."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Haveri i växellådans hastighetsgivare. Signalen blir oregelbunden: Styrningen vägrar ibland att växla."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Haveri i växellådans tryckgivare. Styrningen styr kopplingarnas fyllning fel: Växlingarna kommer sent och rycker."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Kritiskt haveri i växellådans hastighetsgivare. Utan mätvärdet vägrar styrningen ofta att växla."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Kritiskt haveri i växellådans tryckgivare. Utan mätvärdet kommer varje växling mycket sent och griper tvärt."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Haveri i transmissionens hastighetsgivare. Styrningen går över till nöddrift: Körhastigheten begränsas."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Haveri i transmissionens tryckgivare. Styrningen går över till nöddrift: Körhastigheten begränsas."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Kritiskt haveri i transmissionens hastighetsgivare. Nöddriften tillåter bara låg körhastighet."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Kritiskt haveri i transmissionens tryckgivare. Nöddriften tillåter bara låg körhastighet."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Lätt haveri i transmissionspumpen. Tillförseln av styrolja minskar. Inkopplingen tvekar och drivningen avbryts kort."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Måttligt haveri i transmissionspumpen. Styrtrycket räcker inte. Växlar griper hårt och drivningen avbryts."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Allvarligt haveri i transmissionspumpen. Pumpen levererar knappt styrolja. Inkopplingen är mycket hård och drivningen avbryts ofta."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Kritiskt haveri i transmissionspumpen. Pumpen ger inte nödvändigt tryck. Transmissionen driver inte maskinen."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Lätt haveri i den hydrostatiska enheten. Inre läckage minskar drivningen. Variatorn tappar lite fart och oljan blir varmare."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Måttligt haveri i den hydrostatiska enheten. Det inre läckaget ökar. Toppfarten sjunker, oljan blir het och förbrukningen ökar."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Allvarligt haveri i den hydrostatiska enheten. Den roterande gruppen överför knappt kraft. Farten sjunker mycket och oljan blir mycket het under belastning."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Kritiskt haveri i den hydrostatiska enheten. Den roterande gruppen överför ingen kraft. Maskinen står still med motorn igång."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Lätt haveri i transmissionsoljekylaren. Den avger mindre värme. Transmissionsoljan blir varmare under belastning."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Måttligt haveri i transmissionsoljekylaren. Värmeutbytet är tydligt nedsatt. Transmissionsoljan förblir varmare under arbete."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Allvarligt haveri i transmissionsoljekylaren. Den avger mycket lite värme. Transmissionsoljan kan överhettas under belastning."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Kritiskt haveri i transmissionsoljekylaren. Kylningen av transmissionsoljan har fallerat. Långvarigt arbete kan överhetta transmissionen."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="Transmissionsfiltret har nått bytesintervallet och börjar sättas igen. Displayen begär byte. Underhåll byter filtret."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="Transmissionsfiltret är smutsigt: Överströmningsventilen öppnar och växellådsoljan passerar ofiltrerad. Transmissionen slits snabbare. Underhåll byter filtret."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="Transmissionsfiltret är kraftigt smutsigt. Växellådsoljan cirkulerar ofiltrerad och sliter på transmissionen. Underhåll byter filtret."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="Transmissionsfiltret är helt igensatt. All växellådsolja passerar ofiltrerad och sliter på transmissionen. Underhåll byter filtret."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Lätt haveri i bakaxelns kronhjul och pinjong. Kuggarna i kronhjul och pinjong är skadade. Ett svagt vinande hörs under belastning."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Måttligt haveri i bakaxelns kronhjul och pinjong. Kuggkontakten är störd. Bakaxeln viner tydligt under belastning."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Allvarligt haveri i bakaxelns kronhjul och pinjong. Kuggarna är svårt skadade. Bakaxeln viner högt och kan förlora drivningen."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Kritiskt haveri i bakaxelns kronhjul och pinjong. Kronhjul och pinjong överför ingen kraft. Bakaxeln drivs inte och maskinen kan inte köra."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Lätt haveri i slutväxlarna. Kuggarna i en slutväxel är skadade. Ett svagt vinande hörs vid ett drivhjul."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Måttligt haveri i slutväxlarna. Kugghjulen i en slutväxel går dåligt. Vinandet vid hjulet hörs tydligt."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Allvarligt haveri i slutväxlarna. Kugghjulen i en slutväxel är svårt skadade. Ljudet är högt och drivningen kan upphöra."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Kritiskt haveri i slutväxlarna. En slutväxel överför ingen kraft till sitt hjul. Maskinen kan inte köra normalt."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="Haveri i inkopplingen av fyrhjulsdrift. Fyrhjulsdriften kopplas inte in. Framaxeln förblir urkopplad."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="Haveri i inkopplingen av fyrhjulsdrift. Framaxeln förblir inkopplad. Fyrhjulsdriften kan inte kopplas ur."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Haveri i hydraulpumpen. Den är trasig. Trycket försvinner och hydraulfunktionerna svarar inte."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Haveri i den hydrauliska styrventilen. Sliden sitter fast. Den berörda hydraulfunktionen rör sig inte."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Haveri i lyftventilen. Den håller inte lasten rätt. Det lyfta redskapet sjunker."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Haveri i lyftventilen. Den sitter fast. Lyften svarar inte."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Haveri i lyftlägesgivaren. Lägessignalen har fallerat. Lyften håller inte önskad höjd och en felkod lagras."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lätt haveri i lastarstyrningen. Armen och skopan reagerar långsammare."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Måttligt haveri i lastarstyrningen. Armen och skopan rör sig bara med halv hastighet."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Allvarligt haveri i lastarstyrningen. Armen och skopan rör sig knappt."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kritiskt haveri i lastarstyrningen. Armen och skopan reagerar inte längre."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Lätt haveri i hydraulcylindern. Stångtätningen släpper ut lite olja. Lätt fukt syns runt stången."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Måttligt haveri i hydraulcylindern. Stångtätningen är otät. Cylindern svettas och oljenivån sjunker."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Allvarligt haveri i hydraulcylindern. Stångtätningen läcker aktivt. Cylindern förlorar tydligt olja."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Kritiskt haveri i hydraulcylindern. Stångtätningen släpper ut mycket olja. Nivån i kretsen sjunker snabbt."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Lätt haveri i de hydrauliska snabbkopplingarna. En kopplingstätning är defekt. Lätt fukt syns vid anslutningen."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Haveri i de hydrauliska snabbkopplingarna. Oljepassagen i en koppling är blockerad. Den anslutna hydraulfunktionen rör sig inte."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Måttligt haveri i de hydrauliska snabbkopplingarna. En koppling svettas. Kretsen förlorar olja vid anslutningen."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Allvarligt haveri i de hydrauliska snabbkopplingarna. En koppling läcker aktivt. Oljeförlusten vid anslutningen är betydande."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Kritiskt haveri i de hydrauliska snabbkopplingarna. En koppling läcker kraftigt. Oljenivån i kretsen sjunker snabbt."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Lätt haveri i hydrauloljekylaren. Kylpaketet är inte helt tätt. Lätt fukt syns."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Måttligt haveri i hydrauloljekylaren. Kylpaketet svettas. Hydrauloljenivån sjunker."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Allvarligt haveri i hydrauloljekylaren. Kylpaketet läcker aktivt. Kretsen förlorar tydligt olja."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Kritiskt haveri i hydrauloljekylaren. Kylpaketet läcker kraftigt. Hydrauloljenivån sjunker snabbt."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Differentialspärrens manöver"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Lätt haveri i differentialens kugghjul. Kuggytorna är skadade. Ett svagt ljud hörs i svängar."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Måttligt haveri i differentialens kugghjul. Kuggkontakten är störd. Differentialens ljud hörs tydligt i svängar."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Allvarligt haveri i differentialens kugghjul. Kuggarna är svårt skadade. Ljudet är högt i svängar och drivningen kan upphöra."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Kritiskt haveri i differentialens kugghjul. Kugghjulen överför ingen kraft. Maskinen står still med motorn igång."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Lätt slitage på kardanknutarna i framaxelns drivaxel. Ett lätt glapp uppstår i framaxeldrivningen."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Måttligt slitage på kardanknutarna i framaxelns drivaxel. Glappet i kardanknutarna blir tydligt."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Allvarligt slitage på kardanknutarna i framaxelns drivaxel. En kardanknut är nära att gå sönder."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Brott i en kardanknut i framaxelns drivaxel. Framaxeln drivs inte längre."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Lätt slitage på axellagren. Ett svagt muller hörs vid körning."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Måttligt slitage på axellagren. Mullret ökar med hastigheten."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Allvarligt slitage på axellagren. Ett lager flagnar och börjar skada vinkelväxeln."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Kritiskt slitage på axellagren. Ett lager har havererat, vinkelväxeln är skadad och axeln överför inte längre drivkraft."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Haveri i differentialspärrens manöver. Spärren kopplar inte in. Differentialen förblir öppen."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Haveri i differentialspärrens manöver. Spärren förblir inkopplad. Maskinen motverkar styrningen i svängar."/>
+    </texts>
+</l10n>

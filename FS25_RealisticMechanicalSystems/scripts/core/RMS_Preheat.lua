@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Diesel preheating sequence: lamp test, glow plug heating, automatic crank
+---Diesel preheating and starting sequence.
 RMS_Preheat = RMS_Preheat or {}
 
 -- preheat sequence states
@@ -13,7 +13,6 @@ RMS_Preheat.STATE = {
     FAILED = 4
 }
 
--- readable name of each state, used by the debug output
 RMS_Preheat.STATE_NAME = {
     [RMS_Preheat.STATE.IDLE] = "IDLE",
     [RMS_Preheat.STATE.IGNITION] = "IGNITION",
@@ -86,6 +85,11 @@ function RMS_Preheat.isDieselVehicle(vehicle)
         return false
     end
 
+    local motor = motorizedSpec.motor
+    if motor ~= nil and motor.maxRpm > RMS_Config.CORE.PETROL_ABOVE_MAX_RPM then
+        return false
+    end
+
     return motorizedSpec.consumersByFillType ~= nil
         and motorizedSpec.consumersByFillType[FillType.DIESEL] ~= nil
 end
@@ -126,7 +130,6 @@ function RMS_Preheat.getRequiredDurationMs(vehicle)
     return 0
 end
 
----Tells whether failed glow plugs may affect the ability of a cold diesel to start
 -- @param table? vehicle vehicle
 -- @return boolean isRequired true below the configured start-assistance temperature
 function RMS_Preheat.isColdStartAssistanceRequired(vehicle)
@@ -193,7 +196,7 @@ end
 
 ---Starts the preheat sequence: ignition, then lamp test or preheating
 -- @param table? vehicle vehicle
--- @param function? canMotorRunFunc previous getCanMotorRun function when called from its overwrite
+-- @param function? canMotorRunFunc overwritten getCanMotorRun function
 -- @return boolean accepted true when the sequence runs or already runs
 function RMS_Preheat.requestStart(vehicle, canMotorRunFunc)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
@@ -301,7 +304,6 @@ function RMS_Preheat.shouldBlockMotorRun(vehicle, canMotorRunFunc)
         return false
     end
 
-    -- the key only turns the vehicle the local player drives, as the game reads it, while this runs for any vehicle
     local ignitionStartRequested = g_ignitionLockManager:getIsAvailable()
         and g_ignitionLockManager:getState() == IgnitionLockState.START
         and vehicle:getIsActiveForInput(true)
@@ -351,6 +353,9 @@ function RMS_Preheat.updateClientUx(vehicle)
     end
 
     spec._lastPreheatUxState = state
+    if state == RMS_Preheat.STATE.PREHEATING then
+        RMS_SoundManager.playSample(spec.samples.preheatRelay)
+    end
     if not vehicle:getIsActiveForInput(true)
         or RMS_Config.CORE.ENABLE_WARNING_MESSAGES == false then
         return

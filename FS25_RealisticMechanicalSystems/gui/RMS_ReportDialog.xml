@@ -42,7 +42,7 @@
             <GuiElement profile="fs25_subCategorySelectorTabbedContainer">
                 <BoxLayout profile="rms_workshopReportFlow">
 
-                    <!-- Identity band: who was inspected, when, and the three verdicts -->
+                    <!-- Inspection identity -->
                     <GuiElement profile="rms_workshopReportBand">
                         <RoundCorner profile="rms_workshopSurfaceBand" />
                         <Bitmap profile="rms_workshopVehiclePicture" id="reportVehicleImage" position="30px -10px" size="76px 64px" />
@@ -70,7 +70,7 @@
 
                     <BoxLayout profile="rms_workshopReportRowMain">
 
-                        <!-- Measured assessment: what the inspection could put a number on -->
+                        <!-- Assessment -->
                         <GuiElement profile="rms_workshopReportCardAssessment">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="417px 32px">
@@ -97,7 +97,7 @@
                                     <RoundCorner profile="rms_workshopValuePill" position="264px -9px" size="137px 28px" id="assessmentPill[3]" />
                                     <Text profile="rms_workshopReportPillValue" id="assessmentValue[3]" position="276px 0px" size="113px 46px" />
                                 </GuiElement>
-                                <!-- How much faster than normal the machine wore, and the three causes that weighed the most -->
+                                <!-- Wear causes -->
                                 <GuiElement profile="rms_workshopBlock" id="wearBlock" size="417px 97px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
                                     <Text profile="rms_workshopReportRowLabel" position="16px -2px" size="242px 34px" text="$l10n_rms_report_wear_title" />
@@ -114,7 +114,7 @@
                             </BoxLayout>
                         </GuiElement>
 
-                        <!-- One gauge per system, same reading as the summary tab -->
+                        <!-- Systems -->
                         <GuiElement profile="rms_workshopReportCardSystems">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="456px 32px">
@@ -179,7 +179,7 @@
                             </BoxLayout>
                         </GuiElement>
 
-                        <!-- What the machine can still deliver, measured against its nominal figures -->
+                        <!-- Performance -->
                         <GuiElement profile="rms_workshopReportCardSpecs">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="456px 32px">
@@ -243,7 +243,7 @@
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="690px 32px">
                                 <RoundCorner profile="rms_workshopSectionAccent" />
-                                <Text profile="rms_workshopSectionTitle" position="16px 0px" size="674px 32px" text="$l10n_rms_report_detected_breakdowns_title" />
+                                <Text profile="rms_workshopSectionTitle" id="breakdownsCardTitle" position="16px 0px" size="674px 32px" text="$l10n_rms_report_detected_breakdowns_title" />
                                 <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="674px 1px" />
                             </GuiElement>
                             <SmoothList profile="rms_workshopTableList" id="breakdownsTable" position="20px -56px" size="674px 154px">

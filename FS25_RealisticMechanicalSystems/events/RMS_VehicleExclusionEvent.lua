@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----User controlled exclusion flag of a vehicle, asked by a player to the server and broadcast by the server to the clients
+---Vehicle exclusion request and broadcast event.
 RMS_VehicleExclusionEvent = {}
 local RMS_VehicleExclusionEvent_mt = Class(RMS_VehicleExclusionEvent, Event)
 

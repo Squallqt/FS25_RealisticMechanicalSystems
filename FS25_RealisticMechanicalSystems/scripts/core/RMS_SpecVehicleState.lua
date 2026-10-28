@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Live vehicle state snapshot feeding the wear, thermal and breakdown models
+---Vehicle state measurements.
 
 ---Sums the draft demand of the working implements
 local function updateActiveDraftStats(vehicle)
@@ -163,7 +163,6 @@ local function updateStarterState(vehicle)
         return false
     end
 
-    -- an electric machine has no starter to crank
     if spec.isElectricVehicle then
         spec.isCranking = false
         return
@@ -284,12 +283,11 @@ local function updateWheelSlip(vehicle)
     local wheelSpeed = wheelSpeedSum / drivenWheelCount
     local groundSpeed = math.abs((tonumber(vehicle.lastSpeedReal) or 0) * 1000)
     local longitudinalSlipIntensity = 0
-    -- slip compares the wheel speed with the ground speed
     if wheelSpeed > 0.0001 then
         longitudinalSlipIntensity = math.clamp((wheelSpeed - groundSpeed) / wheelSpeed, 0, 1)
     end
 
-    -- isolated physics spikes are rejected, sustained slip kept
+    -- Reject isolated physics spikes; retain sustained slip.
     local previousSlip = spec._wheelSlipPreviousSample
     local olderSlip = spec._wheelSlipOlderSample
     spec._wheelSlipPreviousSample = longitudinalSlipIntensity
@@ -345,6 +343,7 @@ local function updateWheelGroundState(vehicle)
 end
 
 local HYDRAULIC_LIFT_RATIO_DEADBAND = 0.05
+local LOAD_RISE_DEADBAND = 0.01
 local HYDRAULIC_LIFT_RATIO_INTERPOLATION_RATE = 1 / 1000
 
 ---Sums the tire load of the wheels touching ground
@@ -403,8 +402,7 @@ local function getHydraulicMotionFlags(vehicle)
     end
 
     if vehicle ~= nil and vehicle.spec_attacherJointControl ~= nil then
-        local lastMoveTime = tonumber(vehicle.spec_attacherJointControl.lastMoveTime)
-        isAttacherJointControlMoving = lastMoveTime ~= nil and lastMoveTime + 100 > g_time
+        isAttacherJointControlMoving = vehicle.spec_attacherJointControl.nextHeightDampingUpdateTime > g_time
     end
 
     if vehicle ~= nil and vehicle.spec_hydraulicHammer ~= nil and vehicle.getIsTurnedOn ~= nil then
@@ -422,8 +420,8 @@ local function updateImplementChainState(vehicle, dt)
     end
 
     spec.liftedMass = 0
+    spec.raisingMass = 0
     spec.isImplementLifted = false
-    spec.isImplementOperating = false
     spec.isImplementLowered = false
     spec.isHydraulicActive = false
     spec.isHydraulicLiftMoving = false
@@ -433,8 +431,8 @@ local function updateImplementChainState(vehicle, dt)
     local nextMoveAlphaCache = {}
     local nextLiftRatioCache = {}
     local implements = {}
-    local implementNames = RMS_Utils.getIsDebugDataWanted(vehicle) and {} or nil
     local liftBranches = {}
+    local loads = {}
     local visited = {}
     local maxCutterArea = 0
 
@@ -487,10 +485,6 @@ local function updateImplementChainState(vehicle, dt)
         table.insert(implements, implementData)
 
         if not isHead then
-            if implementNames ~= nil then
-                table.insert(implementNames, vehicleObj.getFullName ~= nil and vehicleObj:getFullName()
-                    or tostring(vehicleObj.configFileName or vehicleObj.customEnvironment or "implement"))
-            end
             if parentObj == vehicle then
                 liftBranch = {
                     root = vehicleObj,
@@ -508,6 +502,19 @@ local function updateImplementChainState(vehicle, dt)
                 liftBranch.mass = liftBranch.mass + implementData.mass
             end
             liftBranch.supportLoad = liftBranch.supportLoad + supportWheelLoad
+        end
+
+        if isHead or not isTrailerJointType(liftBranch.jointTypeId) then
+            if not isHead then
+                loads[#loads + 1] = { node = vehicleObj.rootNode, mass = implementData.mass, branch = liftBranch }
+            end
+            local mountAttacher = vehicleObj.spec_dynamicMountAttacher
+            if mountAttacher ~= nil then
+                for object in pairs(mountAttacher.dynamicMountedObjects) do
+                    local node = object.nodeId or object.rootNode
+                    loads[#loads + 1] = { node = node, mass = getMass(node) }
+                end
+            end
         end
 
         local attachedImplements = vehicleObj.getAttachedImplements ~= nil and vehicleObj:getAttachedImplements() or nil
@@ -570,6 +577,9 @@ local function updateImplementChainState(vehicle, dt)
             if not branch.isLowered then
                 local liftedBranchMass = branch.mass * liftRatioState.applied
                 spec.liftedMass = spec.liftedMass + liftedBranchMass
+                if branch.isMoving then
+                    spec.raisingMass = spec.raisingMass + liftedBranchMass
+                end
                 spec.isImplementLifted = spec.isImplementLifted or liftRatioState.applied > 0
                 if branch.jointDesc ~= nil and RMS_Utils.getIsHydraulicLiftJoint(branch.jointDesc) then
                     spec.hydraulicLiftMassByJoint[branch.jointDesc] = liftedBranchMass
@@ -582,14 +592,21 @@ local function updateImplementChainState(vehicle, dt)
     local lastSpeed = vehicle.getLastSpeed ~= nil and vehicle:getLastSpeed() or 0
     local isTurnedOn = vehicle.getIsTurnedOn == nil or vehicle:getIsTurnedOn()
 
+    local nextLoadHeightCache = {}
+    for _, load in ipairs(loads) do
+        local _, height, _ = localToLocal(load.node, vehicle.rootNode, 0, 0, 0)
+        local previousHeight = spec.loadHeightCache[load.node]
+        nextLoadHeightCache[load.node] = height
+        local isWeighedByHitch = load.branch ~= nil and load.branch.isMoving
+        if spec.isHydraulicActive and not isWeighedByHitch and previousHeight ~= nil
+            and height - previousHeight > LOAD_RISE_DEADBAND then
+            spec.raisingMass = spec.raisingMass + load.mass
+        end
+    end
+    spec.loadHeightCache = nextLoadHeightCache
+
     spec.hydraulicsMoveAlphaCache = nextMoveAlphaCache
     spec.hydraulicsLiftRatioCache = nextLiftRatioCache
-    spec.isImplementOperating = spec.isHydraulicActive
-    if implementNames ~= nil then
-        spec.debugData = spec.debugData or {}
-        spec.debugData.implements = spec.debugData.implements or {}
-        spec.debugData.implements.names = implementNames
-    end
     spec.hasDebris = maxCutterArea > 0 and isOnField and lastSpeed >= 0.5 and isTurnedOn
 end
 
@@ -677,7 +694,6 @@ local function updateChassisSteeringState(vehicle, dt)
         angle = math.max(angle, math.abs(articulatedAxis.curRot))
     end
 
-    -- the steering as a share of its lock, whoever drives
     local lock = vehicle.rotatedTime >= 0 and vehicle.maxRotTime or -vehicle.minRotTime
     local position = lock > 0 and vehicle.rotatedTime / lock or 0
     steerState.travelRate = math.abs(position - steerState.position) / (dt * 0.001)
@@ -687,7 +703,6 @@ local function updateChassisSteeringState(vehicle, dt)
     steerState.angleMagnitude = angle
     steerState.inputMagnitude = drivable ~= nil and math.abs(drivable.axisSide) or 0
     steerState.groundContact = groundContact
-    -- past the load its relief valve is set for, a steering stalls instead of pushing harder
     steerState.axleLoadRatio = restLoad > 0 and math.min(tireLoad / restLoad, C.STEER_LOAD_AXLE_RATIO_MAX) or 1
     steerState.isMoving = steerState.travelRate > C.STEER_LOAD_RATE_DEADZONE
 end
@@ -701,7 +716,6 @@ local function updateChassisBrakingState(vehicle)
 
     local brakeState = spec.chassisBrakeState
     brakeState.pedal = 0
-    brakeState.massRatio = 0
     brakeState.trailerMass = 0
     brakeState.totalMass = 0
     brakeState.hpTrailerMassRatio = 1000
@@ -724,7 +738,7 @@ local function updateChassisBrakingState(vehicle)
         return
     end
 
-    -- only the brake pedal counts as braking, not the hold of a park brake
+    -- Exclude park-brake hold from the brake-pedal measurement.
     local brakePedalRaw = RMS_Drivetrain.getGameBrakePedal(vehicle)
     local axisForward = drivable.axisForward
     local movingDirection = tonumber(vehicle.movingDirection) or 0
@@ -741,12 +755,7 @@ local function updateChassisBrakingState(vehicle)
     local brakePedal = math.clamp(brakePedalRaw, 0, 1)
     local isBraking = isBrakingByAxis or brakePedal > brakePedalThreshold
 
-    local ownMass = vehicle:getTotalMass(true)
-    local totalMass = vehicle:getTotalMass()
-    local brakeMassRatio = ownMass > 0 and math.max(totalMass / ownMass, 0) or 0
-
     brakeState.pedal = brakePedal
-    brakeState.massRatio = brakeMassRatio
     brakeState.isBraking = isBraking
     brakeState.isBrakingByAxis = isBrakingByAxis
 end
@@ -862,7 +871,6 @@ local function updateFuelState(vehicle, dt)
     fuelState.level = resolveFuelLevel()
 
     if spec.isElectricVehicle then
-        -- a battery has no fuel temperature and leaves no deposits, only its draw is read
         fuelState.currentUsageRatio = vehicle:getIsMotorStarted() and resolveFuelUsageRatio() or 0
     elseif vehicle.getIsMotorStarted ~= nil and vehicle:getIsMotorStarted() then
         fuelState.currentUsageRatio = resolveFuelUsageRatio()
@@ -894,10 +902,23 @@ local function updateFuelState(vehicle, dt)
             isDiesel = spec.isDieselVehicle,
             isMotorStarted = true
         })
+        fuelState.particulateFilterLevel, fuelState.particulateFilterRegenerationMs, fuelState.isParticulateFilterRegenerating =
+            RMS_Exhaust.calculateParticulateFilterLoad({
+                currentLevel = fuelState.particulateFilterLevel,
+                regenerationMs = fuelState.particulateFilterRegenerationMs,
+                isStageV = spec.hasParticulateFilter == true,
+                isBlocked = spec.activeEffects.PARTICULATE_FILTER_BLOCKED ~= nil,
+                isMotorStarted = true,
+                load = motorLoad,
+                coolantTemperature = spec.rawEngineTemperature or spec.engineTemperature,
+                dt = dt
+            })
     else
         fuelState.currentUsageRatio = 0
         fuelState.temperature = 0
         fuelState.idleTimer = 0
+        fuelState.particulateFilterRegenerationMs = 0
+        fuelState.isParticulateFilterRegenerating = false
     end
 end
 
@@ -932,7 +953,8 @@ local function updatePtoState(vehicle, dt)
     if newEngagementCount > 0 then
         spec.ptoEngagementCount = (tonumber(spec.ptoEngagementCount) or 0) + newEngagementCount
         spec.ptoEngagementSequence = (tonumber(spec.ptoEngagementSequence) or 0) + newEngagementCount
-        local damage, isShock = RMS_Utils.getPtoEngagementDamage(vehicle, ptoData.engagementTorques, previousActiveLinks, spec.ptoLastRpmShare)
+        local rpmShare = vehicle:getIsAIActive() and 0 or spec.ptoLastRpmShare
+        local damage, isShock = RMS_Utils.getPtoEngagementDamage(vehicle, ptoData.engagementTorques, previousActiveLinks, rpmShare)
         spec.ptoEngagementDamage = (tonumber(spec.ptoEngagementDamage) or 0) + damage
         if isShock then
             spec.ptoShockSequence = (tonumber(spec.ptoShockSequence) or 0) + 1
@@ -941,7 +963,6 @@ local function updatePtoState(vehicle, dt)
     spec.ptoPreviousActiveLinks = ptoData.activeLinks
     spec.isPtoImplementRaised = ptoData.isRaised
 
-    -- an engagement is judged on the engine speed before the game revs up for it
     spec.ptoLastRpmShare = RMS_Utils.getMotorRpmShareAboveIdle(vehicle)
 end
 
@@ -985,6 +1006,8 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
         updateWheelGroundState(self)
         updateImplementChainState(self, delayThree)
         updateFuelState(self, delayThree)
+        RMS_Breakdowns.updateParticulateFilterOverload(self)
+        RMS_Breakdowns.updateEngineDerate(self, delayThree)
         spec.isUnderRoof = self:isUnderRoof()
     end
 end

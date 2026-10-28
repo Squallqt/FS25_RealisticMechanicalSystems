@@ -66,7 +66,7 @@
                                 </Button>
                                 <Button profile="rms_workshopActionChoice" id="configChoiceButtons[2]" size="310px 50px" text="$l10n_rms_ws_action_choice_maintenance" onClick="onClickConfigureMaintenance">
                                     <RoundCorner profile="rms_workshopActionBg" />
-                                    <GuiElement profile="rms_workshopMaintenanceActionIcon" onDraw="onDrawMaintenanceActionIcon" />
+                                    <Bitmap profile="rms_workshopMaintenanceActionIcon" />
                                 </Button>
                                 <Button profile="rms_workshopActionChoice" id="configChoiceButtons[3]" size="310px 50px" text="$l10n_rms_ws_action_choice_repair" onClick="onClickConfigureRepair">
                                     <RoundCorner profile="rms_workshopActionBg" />
@@ -78,7 +78,7 @@
                                 </Button>
                                 <Button profile="rms_workshopActionChoice" id="configChoiceButtons[5]" size="310px 50px" text="$l10n_rms_ws_action_choice_refill" onClick="onClickConfigureRefill">
                                     <RoundCorner profile="rms_workshopActionBg" />
-                                    <GuiElement profile="rms_workshopOilActionIcon" onDraw="onDrawOilActionIcon" />
+                                    <Bitmap profile="rms_workshopOilActionIcon" />
                                 </Button>
                                 <Button profile="rms_workshopActionChoice" id="configChoiceButtons[6]" size="310px 50px" text="$l10n_rms_ws_action_choice_bodywork" onClick="onClickConfigureBodywork">
                                     <RoundCorner profile="rms_workshopActionBg" />
@@ -139,6 +139,7 @@
                                         <RoundCorner profile="rms_workshopLevelBadge" id="levelBadge[1]" position="10px -8px" size="104px 18px" />
                                         <Text profile="rms_workshopLevelBadgeText" id="levelBadgeText[1]" position="10px -8px" size="104px 18px" text="$l10n_rms_spec_state_recommended" />
                                         <Text profile="rms_workshopLevelName" id="levelName[1]" position="4px -30px" size="117px 34px" />
+                                        <Text profile="rms_workshopLevelFrequency" id="levelFrequency[1]" position="4px -64px" size="117px 16px" />
                                         <Text profile="rms_workshopLevelPrice" id="levelPrice[1]" position="4px -66px" size="117px 24px" />
                                         <Text profile="rms_workshopLevelDuration" id="levelDuration[1]" position="4px -90px" size="117px 18px" />
                                         <RoundCorner profile="rms_workshopRule" id="levelCellRule1[1]" position="10px -112px" size="105px 1px" />
@@ -180,6 +181,7 @@
                                         <RoundCorner profile="rms_workshopLevelBadge" id="levelBadge[2]" position="10px -8px" size="104px 18px" />
                                         <Text profile="rms_workshopLevelBadgeText" id="levelBadgeText[2]" position="10px -8px" size="104px 18px" text="$l10n_rms_spec_state_recommended" />
                                         <Text profile="rms_workshopLevelName" id="levelName[2]" position="4px -30px" size="117px 34px" />
+                                        <Text profile="rms_workshopLevelFrequency" id="levelFrequency[2]" position="4px -64px" size="117px 16px" />
                                         <Text profile="rms_workshopLevelPrice" id="levelPrice[2]" position="4px -66px" size="117px 24px" />
                                         <Text profile="rms_workshopLevelDuration" id="levelDuration[2]" position="4px -90px" size="117px 18px" />
                                         <RoundCorner profile="rms_workshopRule" id="levelCellRule2[1]" position="10px -112px" size="105px 1px" />
@@ -221,6 +223,7 @@
                                         <RoundCorner profile="rms_workshopLevelBadge" id="levelBadge[3]" position="10px -8px" size="104px 18px" />
                                         <Text profile="rms_workshopLevelBadgeText" id="levelBadgeText[3]" position="10px -8px" size="104px 18px" text="$l10n_rms_spec_state_recommended" />
                                         <Text profile="rms_workshopLevelName" id="levelName[3]" position="4px -30px" size="117px 34px" />
+                                        <Text profile="rms_workshopLevelFrequency" id="levelFrequency[3]" position="4px -64px" size="117px 16px" />
                                         <Text profile="rms_workshopLevelPrice" id="levelPrice[3]" position="4px -66px" size="117px 24px" />
                                         <Text profile="rms_workshopLevelDuration" id="levelDuration[3]" position="4px -90px" size="117px 18px" />
                                         <RoundCorner profile="rms_workshopRule" id="levelCellRule3[1]" position="10px -112px" size="105px 1px" />
@@ -303,54 +306,48 @@
                                         <Text profile="rms_workshopSystemCardName" id="overhaulSystemName[8]" position="6px 0px" size="136px 48px" />
                                     </Button>
                                 </GuiElement>
-                                <GuiElement profile="rms_workshopBlock" id="qualityRow" size="619px 112px">
-                                    <Button profile="rms_workshopQualityCard" id="qualityCard[1]" position="0px 0px" size="148px 112px" onClick="onClickOptionTwoPreset1">
-                                        <RoundCorner profile="rms_workshopLevelColumnFrame" position="0px 0px" size="148px 112px" />
-                                        <RoundCorner profile="rms_workshopLevelColumnBg" position="2px -2px" size="144px 108px" />
-                                        <Text profile="rms_workshopQualityName" id="qualityName[1]" position="6px -10px" size="136px 20px" />
-                                        <Text profile="rms_workshopQualityPrice" id="qualityPrice[1]" position="6px -32px" size="136px 24px" />
-                                        <Text profile="rms_workshopQualityDelta" id="qualityDelta[1]" position="6px -56px" size="136px 16px" />
-                                        <RoundCorner profile="rms_workshopRule" position="12px -78px" size="124px 1px" />
-                                        <Text profile="rms_workshopQualityRiskLabel" position="12px -82px" size="94px 16px" text="$l10n_rms_ws_quality_risk" />
-                                        <Text profile="rms_workshopQualityRiskValue" id="qualityRisk[1]" position="106px -82px" size="30px 16px" />
-                                        <RoundCorner profile="rms_workshopQualityGaugeTrack" position="12px -100px" size="124px 5px" />
-                                        <RoundCorner profile="rms_workshopQualityGaugeFill" id="qualityGauge[1]" position="12px -100px" size="124px 5px" />
+                                <GuiElement profile="rms_workshopBlock" id="qualityRow" size="619px 146px">
+                                    <Button profile="rms_workshopQualityCard" id="qualityCard[1]" position="0px 0px" size="201px 146px" onClick="onClickOptionTwoPreset1">
+                                        <RoundCorner profile="rms_workshopLevelColumnFrame" position="0px 0px" size="201px 146px" />
+                                        <RoundCorner profile="rms_workshopLevelColumnBg" position="2px -2px" size="197px 142px" />
+                                        <Text profile="rms_workshopQualityName" id="qualityName[1]" position="6px -10px" size="189px 20px" />
+                                        <Text profile="rms_workshopQualityPrice" id="qualityPrice[1]" position="6px -32px" size="189px 24px" />
+                                        <Text profile="rms_workshopQualityDelta" id="qualityDelta[1]" position="6px -56px" size="189px 16px" />
+                                        <Text profile="rms_workshopQualityOrigin" id="qualityOrigin[1]" position="6px -76px" size="189px 16px" />
+                                        <Text profile="rms_workshopQualityWarranty" id="qualityWarranty[1]" position="6px -92px" size="189px 16px" />
+                                        <RoundCorner profile="rms_workshopRule" position="12px -112px" size="177px 1px" />
+                                        <Text profile="rms_workshopQualityRiskLabel" position="12px -116px" size="147px 16px" text="$l10n_rms_ws_quality_risk" />
+                                        <Text profile="rms_workshopQualityRiskValue" id="qualityRisk[1]" position="159px -116px" size="30px 16px" />
+                                        <RoundCorner profile="rms_workshopQualityGaugeTrack" position="12px -134px" size="177px 5px" />
+                                        <RoundCorner profile="rms_workshopQualityGaugeFill" id="qualityGauge[1]" position="12px -134px" size="177px 5px" />
                                     </Button>
-                                    <Button profile="rms_workshopQualityCard" id="qualityCard[2]" position="157px 0px" size="148px 112px" onClick="onClickOptionTwoPreset2">
-                                        <RoundCorner profile="rms_workshopLevelColumnFrame" position="0px 0px" size="148px 112px" />
-                                        <RoundCorner profile="rms_workshopLevelColumnBg" position="2px -2px" size="144px 108px" />
-                                        <Text profile="rms_workshopQualityName" id="qualityName[2]" position="6px -10px" size="136px 20px" />
-                                        <Text profile="rms_workshopQualityPrice" id="qualityPrice[2]" position="6px -32px" size="136px 24px" />
-                                        <Text profile="rms_workshopQualityDelta" id="qualityDelta[2]" position="6px -56px" size="136px 16px" />
-                                        <RoundCorner profile="rms_workshopRule" position="12px -78px" size="124px 1px" />
-                                        <Text profile="rms_workshopQualityRiskLabel" position="12px -82px" size="94px 16px" text="$l10n_rms_ws_quality_risk" />
-                                        <Text profile="rms_workshopQualityRiskValue" id="qualityRisk[2]" position="106px -82px" size="30px 16px" />
-                                        <RoundCorner profile="rms_workshopQualityGaugeTrack" position="12px -100px" size="124px 5px" />
-                                        <RoundCorner profile="rms_workshopQualityGaugeFill" id="qualityGauge[2]" position="12px -100px" size="124px 5px" />
+                                    <Button profile="rms_workshopQualityCard" id="qualityCard[2]" position="209px 0px" size="201px 146px" onClick="onClickOptionTwoPreset2">
+                                        <RoundCorner profile="rms_workshopLevelColumnFrame" position="0px 0px" size="201px 146px" />
+                                        <RoundCorner profile="rms_workshopLevelColumnBg" position="2px -2px" size="197px 142px" />
+                                        <Text profile="rms_workshopQualityName" id="qualityName[2]" position="6px -10px" size="189px 20px" />
+                                        <Text profile="rms_workshopQualityPrice" id="qualityPrice[2]" position="6px -32px" size="189px 24px" />
+                                        <Text profile="rms_workshopQualityDelta" id="qualityDelta[2]" position="6px -56px" size="189px 16px" />
+                                        <Text profile="rms_workshopQualityOrigin" id="qualityOrigin[2]" position="6px -76px" size="189px 16px" />
+                                        <Text profile="rms_workshopQualityWarranty" id="qualityWarranty[2]" position="6px -92px" size="189px 16px" />
+                                        <RoundCorner profile="rms_workshopRule" position="12px -112px" size="177px 1px" />
+                                        <Text profile="rms_workshopQualityRiskLabel" position="12px -116px" size="147px 16px" text="$l10n_rms_ws_quality_risk" />
+                                        <Text profile="rms_workshopQualityRiskValue" id="qualityRisk[2]" position="159px -116px" size="30px 16px" />
+                                        <RoundCorner profile="rms_workshopQualityGaugeTrack" position="12px -134px" size="177px 5px" />
+                                        <RoundCorner profile="rms_workshopQualityGaugeFill" id="qualityGauge[2]" position="12px -134px" size="177px 5px" />
                                     </Button>
-                                    <Button profile="rms_workshopQualityCard" id="qualityCard[3]" position="314px 0px" size="148px 112px" onClick="onClickOptionTwoPreset3">
-                                        <RoundCorner profile="rms_workshopLevelColumnFrame" position="0px 0px" size="148px 112px" />
-                                        <RoundCorner profile="rms_workshopLevelColumnBg" position="2px -2px" size="144px 108px" />
-                                        <Text profile="rms_workshopQualityName" id="qualityName[3]" position="6px -10px" size="136px 20px" />
-                                        <Text profile="rms_workshopQualityPrice" id="qualityPrice[3]" position="6px -32px" size="136px 24px" />
-                                        <Text profile="rms_workshopQualityDelta" id="qualityDelta[3]" position="6px -56px" size="136px 16px" />
-                                        <RoundCorner profile="rms_workshopRule" position="12px -78px" size="124px 1px" />
-                                        <Text profile="rms_workshopQualityRiskLabel" position="12px -82px" size="94px 16px" text="$l10n_rms_ws_quality_risk" />
-                                        <Text profile="rms_workshopQualityRiskValue" id="qualityRisk[3]" position="106px -82px" size="30px 16px" />
-                                        <RoundCorner profile="rms_workshopQualityGaugeTrack" position="12px -100px" size="124px 5px" />
-                                        <RoundCorner profile="rms_workshopQualityGaugeFill" id="qualityGauge[3]" position="12px -100px" size="124px 5px" />
-                                    </Button>
-                                    <Button profile="rms_workshopQualityCard" id="qualityCard[4]" position="471px 0px" size="148px 112px" onClick="onClickOptionTwoPreset4">
-                                        <RoundCorner profile="rms_workshopLevelColumnFrame" position="0px 0px" size="148px 112px" />
-                                        <RoundCorner profile="rms_workshopLevelColumnBg" position="2px -2px" size="144px 108px" />
-                                        <Text profile="rms_workshopQualityName" id="qualityName[4]" position="6px -10px" size="136px 20px" />
-                                        <Text profile="rms_workshopQualityPrice" id="qualityPrice[4]" position="6px -32px" size="136px 24px" />
-                                        <Text profile="rms_workshopQualityDelta" id="qualityDelta[4]" position="6px -56px" size="136px 16px" />
-                                        <RoundCorner profile="rms_workshopRule" position="12px -78px" size="124px 1px" />
-                                        <Text profile="rms_workshopQualityRiskLabel" position="12px -82px" size="94px 16px" text="$l10n_rms_ws_quality_risk" />
-                                        <Text profile="rms_workshopQualityRiskValue" id="qualityRisk[4]" position="106px -82px" size="30px 16px" />
-                                        <RoundCorner profile="rms_workshopQualityGaugeTrack" position="12px -100px" size="124px 5px" />
-                                        <RoundCorner profile="rms_workshopQualityGaugeFill" id="qualityGauge[4]" position="12px -100px" size="124px 5px" />
+                                    <Button profile="rms_workshopQualityCard" id="qualityCard[3]" position="418px 0px" size="201px 146px" onClick="onClickOptionTwoPreset3">
+                                        <RoundCorner profile="rms_workshopLevelColumnFrame" position="0px 0px" size="201px 146px" />
+                                        <RoundCorner profile="rms_workshopLevelColumnBg" position="2px -2px" size="197px 142px" />
+                                        <Text profile="rms_workshopQualityName" id="qualityName[3]" position="6px -10px" size="189px 20px" />
+                                        <Text profile="rms_workshopQualityPrice" id="qualityPrice[3]" position="6px -32px" size="189px 24px" />
+                                        <Text profile="rms_workshopQualityDelta" id="qualityDelta[3]" position="6px -56px" size="189px 16px" />
+                                        <Text profile="rms_workshopQualityOrigin" id="qualityOrigin[3]" position="6px -76px" size="189px 16px" />
+                                        <Text profile="rms_workshopQualityWarranty" id="qualityWarranty[3]" position="6px -92px" size="189px 16px" />
+                                        <RoundCorner profile="rms_workshopRule" position="12px -112px" size="177px 1px" />
+                                        <Text profile="rms_workshopQualityRiskLabel" position="12px -116px" size="147px 16px" text="$l10n_rms_ws_quality_risk" />
+                                        <Text profile="rms_workshopQualityRiskValue" id="qualityRisk[3]" position="159px -116px" size="30px 16px" />
+                                        <RoundCorner profile="rms_workshopQualityGaugeTrack" position="12px -134px" size="177px 5px" />
+                                        <RoundCorner profile="rms_workshopQualityGaugeFill" id="qualityGauge[3]" position="12px -134px" size="177px 5px" />
                                     </Button>
                                 </GuiElement>
 
@@ -373,13 +370,13 @@
 
                                 <GuiElement profile="rms_workshopBlock" id="refillGroup" size="647px 464px" visible="false">
                                     <GuiElement profile="rms_workshopBlock" id="refillEmptyGroup" size="647px 464px">
-                                        <GuiElement profile="rms_workshopBlock" position="287.5px -138px" size="72px 72px" onDraw="onDrawOilActionIcon" />
+                                        <Bitmap profile="rms_workshopOilIcon" position="287.5px -138px" size="72px 72px" />
                                         <Text profile="rms_workshopTitle" position="0px -234px" size="647px 36px" textAlignment="center" text="$l10n_rms_fluid_refill_work_order" />
                                         <Text profile="rms_workshopCenteredDetail" position="64px -278px" size="519px 48px" text="$l10n_rms_fluid_error_no_circuit" />
                                     </GuiElement>
 
                                     <GuiElement profile="rms_workshopBlock" id="refillRequirementsGroup" size="647px 464px" visible="false">
-                                        <GuiElement profile="rms_workshopBlock" position="299.5px 0px" size="48px 48px" onDraw="onDrawOilActionIcon" />
+                                        <Bitmap profile="rms_workshopOilIcon" position="299.5px 0px" size="48px 48px" />
                                         <Text profile="rms_workshopTitle" position="0px -56px" size="647px 30px" textAlignment="center" text="$l10n_rms_fluid_refill_work_order" />
                                         <Text profile="rms_workshopDetail" id="refillRequirementsLabel" position="0px -88px" size="647px 22px" textAlignment="center" />
                                         <RoundCorner profile="rms_workshopRule" position="0px -120px" size="647px 1px" />

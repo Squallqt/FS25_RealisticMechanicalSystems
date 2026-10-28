@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Client-to-server event marking a player as running a field inspection on a vehicle
 RMS_FieldInspectionEvent = {}
 local RMS_FieldInspectionEvent_mt = Class(RMS_FieldInspectionEvent, Event)
 
@@ -24,7 +23,7 @@ function RMS_FieldInspectionEvent.new(vehicle, isActive)
     return self
 end
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_FieldInspectionEvent:writeStream(streamId, connection)
@@ -32,7 +31,7 @@ function RMS_FieldInspectionEvent:writeStream(streamId, connection)
     streamWriteBool(streamId, self.isActive)
 end
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_FieldInspectionEvent:readStream(streamId, connection)

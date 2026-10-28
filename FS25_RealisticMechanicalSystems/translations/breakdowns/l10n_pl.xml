@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Trwały"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Utrata mocy"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Wyłączenie"/>
+        <text name="rms_breakdowns_severity_minor" text="Niewielki"/>
+        <text name="rms_breakdowns_severity_moderate" text="Umiarkowany"/>
+        <text name="rms_breakdowns_severity_major" text="Poważny"/>
+        <text name="rms_breakdowns_severity_critical" text="Krytyczny"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Lekkie zużycie przegubów kulowych i drążków kierowniczych. Pojawia się niewielki luz, a kierowanie staje się mniej precyzyjne."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Umiarkowane zużycie przegubów kulowych i drążków kierowniczych. Luz wzrasta, a pojazd lekko ściąga w jedną stronę."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Poważne zużycie przegubów kulowych i drążków kierowniczych. Luz jest duży, a pojazd ściąga w jedną stronę i gorzej trzyma kurs."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Krytyczna awaria przegubów kulowych i drążków kierowniczych. Uwolnione koło nie podąża już prawidłowo za kierownicą; jazda jest niebezpieczna."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Lekkie zużycie sworzni zwrotnic. W układzie kierowniczym pojawia się niewielki luz."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Umiarkowane zużycie sworzni zwrotnic. Luz w układzie kierowniczym staje się wyczuwalny."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Poważne zużycie sworzni zwrotnic. Luz w układzie kierowniczym jest duży."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Krytyczne zużycie sworzni zwrotnic. Układ kierowniczy wykazuje bardzo duży luz."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lekkie uszkodzenie orbitrola układu kierowniczego. Kierownica obraca się z niewielkim luzem, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Umiarkowane uszkodzenie orbitrola układu kierowniczego. Kierownica obraca się dalej, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Poważne uszkodzenie orbitrola układu kierowniczego. Kierownica obraca się znacznie, a koła nie podążają za nią prawidłowo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Krytyczna awaria orbitrola układu kierowniczego. Kierownica ma bardzo duży luz, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lekki wewnętrzny wyciek w siłowniku układu kierowniczego. Pojazd zaczyna zbaczać na jedną stronę."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lekki wyciek przez uszczelnienie tłoczyska siłownika układu kierowniczego. Poziom oleju hydraulicznego nieznacznie spada."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Umiarkowany wewnętrzny wyciek w siłowniku układu kierowniczego. Pojazd bardziej zbacza na jedną stronę."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Umiarkowany wyciek przez uszczelnienie tłoczyska siłownika układu kierowniczego. Poziom oleju hydraulicznego wyraźnie spada."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Poważny wewnętrzny wyciek w siłowniku układu kierowniczego. Pojazd wyraźnie zbacza na jedną stronę."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Poważny wyciek przez uszczelnienie tłoczyska siłownika układu kierowniczego. Poziom oleju hydraulicznego szybko spada."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Krytyczny wewnętrzny wyciek w siłowniku układu kierowniczego. Pojazd mocno zbacza na jedną stronę."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Krytyczny wyciek przez uszczelnienie tłoczyska siłownika układu kierowniczego. Poziom oleju hydraulicznego spada bardzo szybko."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Lekkie zużycie sworzni i tulei przegubów ładowacza. W przegubach ramienia pojawia się niewielki luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Umiarkowane zużycie sworzni i tulei przegubów ładowacza. Luz w przegubach ramienia staje się wyczuwalny."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Poważne zużycie sworzni i tulei przegubów ładowacza. Ramię wykazuje duży luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Krytyczne zużycie sworzni i tulei przegubów ładowacza. Luz ramienia jest bardzo duży."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Lekki wyciek z amortyzatora kabiny. Tłumienie kabiny jest nieco słabsze."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Umiarkowany wyciek z amortyzatora kabiny. Kabina podskakuje na nierównościach."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Poważny wyciek z amortyzatora kabiny. Kabina kołysze się przy każdym wstrząsie."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Krytyczny wyciek z amortyzatora kabiny. Amortyzator jest pusty: kabina prawie nie ma już tłumienia."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Rozłączenie biegu"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Początkowe zużycie świec żarowych. Rozruch na zimno trwa dłużej, a rozruch ciepłego silnika pozostaje bez zmian."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Kilka świec żarowych jest osłabionych lub niesprawnych. Rozruch na zimno jest utrudniony, a silnik może pracować nierówno do czasu rozgrzania."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Poważne uszkodzenie świec żarowych. Rozruch na zimno jest bardzo niepewny, a nierówna praca utrzymuje się podczas rozgrzewania."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Całkowita awaria układu świec żarowych. Silnika nie można uruchomić, gdy temperatura jest zbyt niska."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Uszkodzenie przekaźnika świec żarowych. Świece żarowe już nie grzeją: uruchomienie silnika jest niemożliwe przy zbyt niskiej temperaturze."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Uszkodzenie przekaźnika rozrusznika. Silnik nie obraca się podczas rozruchu."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Uszkodzenie żarówek świateł mijania. Te światła nie świecą do czasu wymiany żarówek."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Uszkodzenie żarówek świateł drogowych. Te światła nie świecą do czasu wymiany żarówek."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Uszkodzenie żarówek przednich reflektorów roboczych. Te światła nie świecą do czasu wymiany żarówek."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Uszkodzenie żarówek tylnych reflektorów roboczych. Te światła nie świecą do czasu wymiany żarówek."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Uszkodzenie żarówki lampy ostrzegawczej. Lampa ostrzegawcza nie świeci do czasu wymiany żarówki."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Uszkodzenie żarówek kierunkowskazów. Kierunkowskazy ani światła awaryjne nie świecą do czasu wymiany żarówek."/>
+        <text name="rms_breakdowns_part_vehicle" text="Pojazd"/>
+        <text name="rms_breakdowns_part_pistons" text="Tłoki"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Pierścienie tłokowe"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Tuleje cylindrowe"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Zawory dolotowe"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Zawory wydechowe"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Prowadnice i uszczelniacze zaworów"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Głowica"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Uszczelka głowicy"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Panewki wału korbowego"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Panewki korbowodowe"/>
+        <text name="rms_breakdowns_part_consumables" text="Materiały eksploatacyjne"/>
+        <text name="rms_breakdowns_part_clutch" text="Sprzęgło"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Sterowanie przełożeniem"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Silnik"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Przewody zasilające i połączenia masowe"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Przekaźnik rozrusznika"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Przekaźnik świec żarowych"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Żarówki świateł mijania"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="Żarówki świateł drogowych"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Żarówki przednich reflektorów roboczych"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Żarówki tylnych reflektorów roboczych"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Żarówka lampy ostrzegawczej"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Żarówki kierunkowskazów"/>
+        <text name="rms_breakdowns_part_battery" text="Akumulator"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Akumulator trakcyjny"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Stycznik wysokiego napięcia"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Okablowanie wysokiego napięcia"/>
+        <text name="rms_breakdowns_part_inverter" text="Falownik"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Przetwornica napięcia"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Ładowarka pokładowa"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Łożyska silnika elektrycznego"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Uzwojenia silnika elektrycznego"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Czujnik położenia silnika"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Pompa płynu chłodniczego"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Pompa wody"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Rdzeń chłodnicy"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Przewody i złącza płynu chłodzącego"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Zbiornik wyrównawczy"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Pasek osprzętu i napinacz"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Łopatka wentylatora"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Wentylator elektryczny"/>
+        <text name="rms_breakdowns_part_reducer" text="Reduktor"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Tarcze i okładziny hamulcowe"/>
+        <text name="rms_breakdowns_part_brake_control" text="Sterowanie hamulcami"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Zawór hamulcowy przyczepy"/>
+        <text name="rms_breakdowns_part_park_brake" text="Hamulec postojowy"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Łożysko i uszczelniacz piasty"/>
+        <text name="rms_breakdowns_part_alternator" text="Alternator"/>
+        <text name="rms_breakdowns_part_starter" text="Rozrusznik"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turbosprężarka"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Uszczelniacz skrzyni biegów"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Napinacz gąsienicy"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Rolki i koła napinające"/>
+        <text name="rms_breakdowns_part_thermostat" text="Termostat"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Pompa oleju"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Synchronizator"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Przeguby kulowe i drążki kierownicze"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Sworznie i tuleje przegubów ładowacza"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Sworznie zwrotnic"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol układu kierowniczego"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Siłownik układu kierowniczego"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Zawieszenie kabiny"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="Sprzęgło WOM"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="Łożyska wyjściowe WOM"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="Uszczelniacz wyjścia WOM"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="Wał wyjściowy WOM"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="Elektrozawór załączania WOM"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="Przełącznik sterowania WOM"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="Czujnik prędkości obrotowej WOM"/>
+        <text name="rms_breakdowns_part_pto_brake" text="Hamulec WOM"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Sprzęgło przedniego WOM"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Pompa hydrauliczna"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Siłownik hydrauliczny"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Przewód hydrauliczny"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Filtr hydrauliczny"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Chłodnica oleju hydraulicznego"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Zawór sterowania hydrauliką"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Sprzęgło wentylatora"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Pompa zasilająca"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Wtryskiwacze paliwa"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="Pompa wysokiego ciśnienia"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Filtr paliwa"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Przewód paliwowy"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Mechaniczna pompa wtryskowa"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Zawór dawkujący paliwo"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Czujnik ciśnienia w listwie wtryskowej"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Ogranicznik ciśnienia w listwie wtryskowej"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Reduktor ciśnienia gazu"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Elektrozawór odcinający gaz"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Filtr gazu"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Przewody gazowe"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Wtryskiwacze gazu"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="Pompa AdBlue"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="Wtryskiwacz dozujący AdBlue"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="Filtr AdBlue"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="Czujnik NOx"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Filtr cząstek stałych"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Świece żarowe"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="WOM rozłączył się"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="Przedni WOM się rozłączył"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="WOM się nie rozłącza: wyłącz maszynę, aby zatrzymać osprzęt"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Początkowe zużycie sprzęgła WOM. Napęd sporadycznie się rozłącza."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Umiarkowane zużycie sprzęgła WOM. Rozłączenia się powtarzają."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Poważne zużycie sprzęgła WOM. Osprzęt często traci napęd."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Krytyczna awaria sprzęgła WOM. Osprzęt zatrzymuje się."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Początkowe zużycie sprzęgła WOM. Tarcze zaczynają się sklejać."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Umiarkowane zużycie sprzęgła WOM. Tarcze coraz bardziej się sklejają."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Poważne zużycie sprzęgła WOM. Tarcze się sklejają: WOM czasem nie chce się rozłączyć."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Krytyczna awaria sprzęgła WOM. Tarcze się zespawały: WOM już się nie rozłącza, a osprzęt zatrzymuje się dopiero po wyłączeniu maszyny."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Początkowe zużycie łożysk wyjściowych WOM. Pojawia się lekkie dudnienie."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Umiarkowane zużycie łożysk wyjściowych WOM. Dudnienie staje się wyraźnie słyszalne."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Poważne zużycie łożysk wyjściowych WOM. Dudnienie narasta."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Krytyczna awaria łożysk wyjściowych WOM. Dudnienie osiąga największą głośność."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Lekki wyciek przy uszczelniaczu wyjścia WOM. Poziom oleju przekładniowego powoli spada podczas pracy."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Umiarkowany wyciek przy uszczelniaczu wyjścia WOM. Poziom oleju przekładniowego spada podczas pracy."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Poważny wyciek przy uszczelniaczu wyjścia WOM. Olej przekładniowy wypływa i jego poziom szybko spada."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Krytyczny wyciek przy uszczelniaczu wyjścia WOM. Pozostały olej nie wystarcza do bezpiecznej pracy przekładni."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Początkowe zużycie elektrozaworu załączania WOM. Napęd sporadycznie wyłącza się podczas pracy."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Początkowe zużycie elektrozaworu załączania WOM. WOM sporadycznie nie daje się załączyć."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Umiarkowane zużycie elektrozaworu załączania WOM. Wyłączenia podczas pracy się powtarzają."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Umiarkowane zużycie elektrozaworu załączania WOM. Nieudane próby załączenia się powtarzają."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Poważne zużycie elektrozaworu załączania WOM. Napęd często się wyłącza."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Poważne zużycie elektrozaworu załączania WOM. WOM często nie daje się załączyć."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Krytyczna awaria elektrozaworu załączania WOM. Jego cewka ma przerwę w obwodzie i WOM nie pozostaje już załączony."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Krytyczna awaria elektrozaworu załączania WOM. Jego suwak pozostaje zablokowany i WOM już się nie załącza."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Początkowe zużycie przełącznika sterowania WOM. Niepewny styk sporadycznie wyłącza napęd."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Początkowe zużycie przełącznika sterowania WOM. WOM sporadycznie nie reaguje na sterowanie."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Umiarkowane zużycie przełącznika sterowania WOM. Niepewne styki coraz częściej wyłączają napęd."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Umiarkowane zużycie przełącznika sterowania WOM. WOM coraz częściej nie reaguje na sterowanie."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Poważne zużycie przełącznika sterowania WOM. Styk przestaje przewodzić w sposób ciągły i napęd często się wyłącza."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Poważne zużycie przełącznika sterowania WOM. Sterowanie często pozostaje bez skutku."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Krytyczna awaria przełącznika sterowania WOM. Jego styk pozostaje rozwarty i WOM się wyłącza."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Krytyczna awaria przełącznika sterowania WOM. Jego styk już się nie zwiera i WOM już się nie załącza."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="Uszkodzenie wału wyjściowego WOM. Jego wielowypust jest zerwany i nie przenosi już ruchu."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="Uszkodzenie wału wyjściowego WOM. Jest pęknięty i osprzęt nie jest już napędzany."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="Uszkodzenie czujnika prędkości obrotowej WOM. Nie wysyła już sygnału i układ bezpieczeństwa wyłącza WOM."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="Uszkodzenie hamulca WOM. Pozostaje zaciśnięty i blokuje wał wyjściowy."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Początkowe zużycie sprzęgła przedniego WOM. Napęd przedniego wyjścia czasem się rozłącza."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Umiarkowane zużycie sprzęgła przedniego WOM. Rozłączenia przedniego wyjścia się powtarzają."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Poważne zużycie sprzęgła przedniego WOM. Przedni osprzęt często traci napęd."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Krytyczna awaria sprzęgła przedniego WOM. Przednie wyjście już się nie obraca; tylny WOM pozostaje sprawny."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Załączenie WOM odrzucone"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Naprawa tymczasowa"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Wada"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Układ działa normalnie, ale przegląd wykazał wadliwą część. Część nie zapewnia już żadnego marginesu bezpieczeństwa, dlatego zaleca się jej profilaktyczną wymianę, aby uniknąć nagłej awarii."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Akumulator zbyt słaby"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Zimny akumulator trakcyjny: zasięg i moc zmniejszone"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Układ działa normalnie, ale opiera się wyłącznie na naprawie tymczasowej. Aby uniknąć awarii pod obciążeniem, zaleca się jak najszybszą pełną wymianę części."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Zużyte łożyska turbosprężarki. Słychać lekki świst, a przy wysokich obrotach pojawia się niewielka utrata mocy."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Nieszczelne uszczelnienia turbosprężarki. Wyraźna utrata mocy i zwiększone zużycie paliwa."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Uszkodzone łopatki turbiny. Duża utrata mocy i ryzyko gaśnięcia silnika pod dużym obciążeniem."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Krytyczna awaria turbosprężarki. Silnik działa z minimalną mocą i jest zagrożony uszkodzeniem wewnętrznym."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Zużyte tarcze sprzęgła. Sporadyczna utrata mocy wskutek poślizgu sprzęgła pod obciążeniem."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Znaczne zużycie sprzęgła. Wyraźny poślizg sprzęgła podczas przyspieszania i pod dużym obciążeniem."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Silnie zużyte sprzęgło. Duży poślizg sprzęgła utrudnia przenoszenie mocy na koła."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Sprzęgło jest całkowicie spalone. Pojazd nie może się poruszać."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Wytarte synchronizatory. Okresowe zgrzyty i problemy ze zmianą biegów."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Uszkodzone synchronizatory. Zmiana biegów jest często trudna i może się nie udać."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Wyłamane zęby synchronizatorów. Duże ryzyko nieudanej zmiany biegu lub wyskoczenia biegu pod obciążeniem."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Synchronizatory niesprawne. Zmiana przełożeń jest niemożliwa."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Lekki wyciek oleju przekładniowego. Poziom oleju powoli spada podczas pracy."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Umiarkowany wyciek oleju przekładniowego. Poziom wyraźnie spada, a skrzynia mocniej się nagrzewa."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Poważny wyciek oleju przekładniowego. Poziom szybko spada, a skrzynia przegrzewa się pod obciążeniem."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Krytyczny wyciek oleju przekładniowego. Pozostała ilość oleju nie wystarcza do bezpiecznej pracy skrzyni."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Lekkie uszkodzenie napinacza gąsienicy. Napięcie gąsienicy jest nieco mniej stabilne, co lekko zwiększa opór i zużycie."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Umiarkowane uszkodzenie napinacza gąsienicy. Napięcie staje się niestabilne, spada wydajność jazdy, a ryzyko niewspółosiowości wzrasta."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Poważne uszkodzenie napinacza gąsienicy. Napięcie jest mocno zaburzone, przenoszenie napędu staje się nieefektywne, a ryzyko spadnięcia gąsienicy wzrasta."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Krytyczna awaria napinacza gąsienicy. Gąsienicy nie da się już prawidłowo utrzymać, a pojazd nie może być bezpiecznie używany."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Lekkie uszkodzenie termostatu. Silnik wolno się nagrzewa i podczas pracy pozostaje zbyt zimny."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Lekkie uszkodzenie termostatu. Regulacja temperatury jest słaba, silnik nagrzewa się pod obciążeniem."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Umiarkowane uszkodzenie termostatu. Silnik wolno się nagrzewa i podczas pracy pozostaje zbyt zimny."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Umiarkowane uszkodzenie termostatu. Temperatura rośnie wcześniej, a silnik pracuje goręcej pod obciążeniem."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Poważne uszkodzenie termostatu. Silnik wolno się nagrzewa i podczas pracy pozostaje zbyt zimny."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Poważne uszkodzenie termostatu. Silnik mocno się nagrzewa; dłuższa praca grozi przegrzaniem."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Krytyczna awaria termostatu. Silnik wolno się nagrzewa i podczas pracy pozostaje zbyt zimny."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Krytyczna awaria termostatu. Pozostaje zamknięty i silnik szybko się przegrzewa."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Silnik przeszedł w tryb ochronny. Moc jest ograniczona do czasu spadku temperatury."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Ochrona przed przegrzaniem: moc zmniejszona"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Ochrona przed przegrzaniem nasila się. Silnik dostarcza już tylko połowę mocy."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Ochrona przed przegrzaniem: moc zmniejszona o połowę"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Ochrona przed przegrzaniem osiągnęła maksimum. Pozostaje tylko ułamek mocy silnika."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Ochrona przed przegrzaniem: moc znacznie zmniejszona"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Silnik został wyłączony, aby zapobiec uszkodzeniom. Poczekaj, aż ostygnie, zanim go ponownie uruchomisz."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Ochrona przed przegrzaniem: silnik wyłączony"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lekkie uszkodzenie pompy oleju. Niższe ciśnienie, niewielki spadek momentu obrotowego silnika, wzrost temperatury i delikatne stuki mechaniczne."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Umiarkowane uszkodzenie pompy oleju. Ciśnienie oleju jest zbyt niskie, moment obrotowy silnika wyraźnie spada, temperatura rośnie, a stuki mechaniczne są dobrze słyszalne."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Poważne uszkodzenie pompy oleju. Ciśnienie oleju jest krytycznie niskie, moment obrotowy silnika mocno spada, przegrzanie jest prawdopodobne, stuki są silne i może dochodzić do gaśnięcia silnika."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Krytyczna awaria pompy oleju. Cyrkulacja oleju jest niewystarczająca do bezpiecznej pracy silnika, a uruchomienie lub dalsza eksploatacja silnika nie jest możliwa."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="Silnik zatarł się i nie może się obracać."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Silnik zgasł"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lekkie uszkodzenie ECU. Moc silnika jest nieznacznie obniżona."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Umiarkowane uszkodzenie ECU. Zauważalny spadek mocy i wyższe zużycie paliwa."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Poważne uszkodzenie ECU. Znaczne ograniczenie mocy, wysokie spalanie i możliwość gaśnięcia silnika."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Całkowita awaria ECU. Brak możliwości sterowania silnikiem, silnik nie uruchomi się."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Lekkie uszkodzenie przewodów zasilających i połączeń masowych. Zwiększona rezystancja styków powoduje sporadyczne migotanie świateł, niestabilne napięcie zasilania oraz trudności z uruchomieniem silnika. Upływ prądu rozładowuje akumulator, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Umiarkowane uszkodzenie przewodów zasilających i połączeń masowych. Straty na stykach powodują częste migotanie świateł, niestabilne napięcie zasilania, trudności z uruchomieniem silnika oraz możliwe gaśnięcie silnika. Upływ prądu rozładowuje akumulator, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Poważne uszkodzenie przewodów zasilających i połączeń masowych. Zasilanie obwodów jest niestabilne, oświetlenie może całkowicie przestać działać, moment obrotowy silnika jest obniżony, prawdopodobne są gaśnięcia silnika, a rozruch jest zawodny. Upływ prądu rozładowuje akumulator, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Krytyczna awaria przewodów zasilających i połączeń masowych. Oświetlenie jest niesprawne, a uruchomienie silnika jest niemożliwe. Upływ prądu rozładowuje akumulator, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Lekkie uszkodzenie przewodów zasilających i połączeń masowych. Zwiększona rezystancja styków powoduje sporadyczne migotanie świateł oraz niestabilne napięcie zasilania. Upływ prądu rozładowuje akumulator pomocniczy, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Umiarkowane uszkodzenie przewodów zasilających i połączeń masowych. Straty na stykach powodują częste migotanie świateł, niestabilne napięcie zasilania oraz możliwe przerwy w pracy. Upływ prądu rozładowuje akumulator pomocniczy, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Poważne uszkodzenie przewodów zasilających i połączeń masowych. Zasilanie obwodów jest niestabilne, oświetlenie może całkowicie przestać działać, moc jest obniżona, a przerwy w pracy są prawdopodobne. Upływ prądu rozładowuje akumulator pomocniczy, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Krytyczna awaria przewodów zasilających i połączeń masowych. Oświetlenie jest niesprawne, a maszyna się nie uruchomi. Upływ prądu rozładowuje akumulator pomocniczy, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Lekkie uszkodzenie przewodów i złączy płynu chłodzącego. Niewielkie sączenie prawie nie obniża poziomu płynu."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Lekkie uszkodzenie przewodów i złączy płynu chłodzącego. Lekko zgnieciony przewód nieco ogranicza przepływ."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Umiarkowane uszkodzenie przewodów i złączy płynu chłodzącego. Wyciek staje się widoczny, a poziom wyraźniej spada."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Umiarkowane uszkodzenie przewodów i złączy płynu chłodzącego. Ograniczony przepływ szybciej podnosi temperaturę pod obciążeniem."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Poważne uszkodzenie przewodów i złączy płynu chłodzącego. Ubywa dużo płynu; pod obciążeniem silnik może się przegrzać."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Poważne uszkodzenie przewodów i złączy płynu chłodzącego. Przepływ jest słaby; przy dłuższej pracy silnik się przegrzewa."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Krytyczna awaria przewodów i złączy płynu chłodzącego. Poziom szybko spada i układ może się opróżnić."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Krytyczna awaria przewodów i złączy płynu chłodzącego. Przepływ jest mocno ograniczony i silnik szybko się przegrzewa."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Lekkie uszkodzenie zbiornika wyrównawczego. Pęknięcie powoduje niewielkie sączenie płynu."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Lekkie uszkodzenie zbiornika wyrównawczego. Złącze lekko się poci."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Umiarkowane uszkodzenie zbiornika wyrównawczego. Pęknięcie wywołuje wyraźny wyciek i spadek poziomu."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Umiarkowane uszkodzenie zbiornika wyrównawczego. Złącze wyraźnie przecieka i poziom spada."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Poważne uszkodzenie zbiornika wyrównawczego. Wyciek szybko obniża poziom płynu."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Poważne uszkodzenie zbiornika wyrównawczego. Przy złączu szybko ubywa płynu."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Krytyczna awaria zbiornika wyrównawczego. Płyn szybko ucieka i układ się opróżnia."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Krytyczna awaria zbiornika wyrównawczego. Wyciek ze złącza szybko opróżnia układ."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Lekkie uszkodzenie paska osprzętu i napinacza. Piszczy i lekko się ślizga; ładowanie i obieg nieco słabną."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Umiarkowane uszkodzenie paska osprzętu i napinacza. Ślizga się pod obciążeniem; ładowanie spada, a płyn krąży wolniej."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Poważne uszkodzenie paska osprzętu i napinacza. Mocno się ślizga; ładowanie i obieg są znacznie słabsze."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Krytyczna awaria paska osprzętu i napinacza. Pęka; ładowanie i obieg płynu ustają nagle."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Lekkie uszkodzenie łopatki wentylatora. Przepływ powietrza nieco spada; chłodzenie słabnie głównie przy małej prędkości."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Umiarkowane uszkodzenie łopatki wentylatora. Przepływ wyraźnie maleje, a temperatura rośnie bardziej."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Poważne uszkodzenie łopatki wentylatora. Przepływ powietrza jest wyraźnie ograniczony i silnik nagrzewa się pod obciążeniem."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Krytyczna awaria łopatki wentylatora. Przepływ powietrza spada o połowę i silnik szybko się przegrzewa pod obciążeniem."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Lekkie uszkodzenie wentylatora elektrycznego. Przy zapotrzebowaniu na chłodzenie wentylator tłoczy nieco mniej powietrza."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Umiarkowane uszkodzenie wentylatora elektrycznego. Przepływ powietrza wyraźnie maleje, a temperatura rośnie szybciej."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Poważne uszkodzenie wentylatora elektrycznego. Obieg powietrza jest wyraźnie ograniczony i temperatura rośnie pod obciążeniem."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Krytyczna awaria wentylatora elektrycznego. Obieg powietrza spada o połowę i temperatura szybko rośnie pod obciążeniem."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Wykryto pierwsze oznaki uszkodzenia przekładni CVT. Wymagane są przegląd i naprawa."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Uszkodzenie przekładni CVT postępuje. Dalsza eksploatacja może doprowadzić do przejścia w tryb awaryjny."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Krytyczne uszkodzenie przekładni CVT. Skrzynia pracuje w trybie awaryjnym, a maksymalna prędkość pojazdu jest ograniczona."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Całkowita awaria przekładni CVT. Dalsza eksploatacja jest niemożliwa do czasu naprawy."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Lekkie zasiarczenie akumulatora. Obniżona pojemność użytkowa i mniejsza rezerwa prądowa pod obciążeniem."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Akumulator umiarkowanie zasiarczony. Spadek pojemności i problemy z uruchomieniem silnika."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Poważne zasiarczenie akumulatora. Pojemność użytkowa jest krytycznie niska, a rozruch niestabilny."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Krytyczne zasiarczenie akumulatora. Efektywna pojemność jest niemal zerowa, a wydajność rozruchowa niewystarczająca do niezawodnego uruchomienia silnika."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Lekkie zasiarczenie akumulatora pomocniczego. Obniżona pojemność użytkowa i mniejsza rezerwa prądowa pod obciążeniem."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Akumulator pomocniczy umiarkowanie zasiarczony. Spadek pojemności i szybsze wyczerpywanie rezerwy prądowej."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Poważne zasiarczenie akumulatora pomocniczego. Pojemność użytkowa jest krytycznie niska, a rezerwa prądowa wyczerpuje się bardzo szybko."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Krytyczne zasiarczenie akumulatora pomocniczego. Efektywna pojemność jest niemal zerowa i nie wystarcza już do niezawodnego uruchomienia."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Lekkie zużycie tarcz i okładzin hamulcowych. Nieznacznie słabsze hamowanie."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Umiarkowane zużycie tarcz i okładzin hamulcowych. Droga hamowania jest wyraźnie wydłużona."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Poważne zużycie tarcz i okładzin hamulcowych. Hamowanie jest bardzo słabe i niestabilne."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Krytyczna awaria tarcz i okładzin hamulcowych. Pojazd bardzo słabo hamuje, a jazda staje się niebezpieczna."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Lekkie uszkodzenie sterowania hamulcami. Pojazd lekko ściąga w jedną stronę podczas hamowania."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Lekkie uszkodzenie sterowania hamulcami. Pedał staje się nieco miękki, a hamowanie nieznacznie słabnie."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Umiarkowane uszkodzenie sterowania hamulcami. Hamowanie wyraźnie ściąga w jedną stronę."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Umiarkowane uszkodzenie sterowania hamulcami. Pedał staje się miękki, ciśnienie spada, a hamowanie wyraźnie słabnie."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Poważne uszkodzenie sterowania hamulcami. Pojazd mocno ściąga w jedną stronę podczas hamowania."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Poważne uszkodzenie sterowania hamulcami. Pedał zapada się nienormalnie głęboko, ciśnienie gwałtownie spada, a pojazd słabo hamuje."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Krytyczna awaria sterowania hamulcami. Hamowanie bardzo mocno ściąga w jedną stronę."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Krytyczna awaria sterowania hamulcami. Pedał zapada się niemal bez oporu, a pojazd prawie nie hamuje."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Lekkie uszkodzenie zaworu hamulcowego przyczepy. Przyczepa traci niewielką część skuteczności hamowania."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Umiarkowane uszkodzenie zaworu hamulcowego przyczepy. Przyczepa hamuje wyraźnie słabiej."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Poważne uszkodzenie zaworu hamulcowego przyczepy. Do przyczepy dociera już tylko niewielka część siły hamowania."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Krytyczna awaria zaworu hamulcowego przyczepy. Przyczepa przestaje hamować."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Lekkie uszkodzenie hamulca postojowego. Po zwolnieniu wciąż lekko ociera i nieznacznie hamuje maszynę."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Umiarkowane uszkodzenie hamulca postojowego. Po zwolnieniu wyraźnie ociera i przyhamowuje maszynę."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Poważne uszkodzenie hamulca postojowego. Po zwolnieniu pozostaje do połowy zaciągnięty i mocno hamuje maszynę."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Całkowita awaria hamulca postojowego. Nie daje się już zwolnić i trzyma maszynę, jakby był zaciągnięty."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Lekkie zużycie łożyska i uszczelniacza piasty. Opór mechaniczny nieznacznie wzrasta i może pojawić się nietypowy hałas pracy."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Umiarkowane zużycie łożyska i uszczelniacza piasty. Tarcie wyraźnie wzrasta, hałas staje się bardziej wyczuwalny, a sprawność mechaniczna spada."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Poważne zużycie łożyska i uszczelniacza piasty. Tarcie jest wysokie, hałas jest znaczny i istnieje realne ryzyko zatarcia pod obciążeniem."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Krytyczna awaria łożyska i uszczelniacza piasty. Element jest bliski całkowitego zatarcia, a dalsza praca staje się niemożliwa."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Lekkie zużycie łożysk rolek i kół napinających. Opór mechaniczny nieznacznie wzrasta i może pojawić się nietypowy hałas pracy."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Umiarkowane zużycie łożysk rolek i kół napinających. Tarcie i hałas rosną, a obrót staje się trudniejszy."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Poważne zużycie łożysk rolek i kół napinających. Tarcie i hałas są duże, z ryzykiem zatarcia pod obciążeniem."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Krytyczna awaria łożysk rolek i kół napinających. Gąsienica może się zatrzymać, jeśli jedno z łożysk się zablokuje."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Lekkie uszkodzenie regulatora alternatora. Moc ładowania jest ograniczona, co obniża skuteczność ładowania akumulatora."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Umiarkowane uszkodzenie regulatora alternatora. Wyjście ładowania jest niestabilne i obniżone, co powoduje słabe ładowanie akumulatora oraz zwiększone straty napięcia w układzie elektrycznym."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Poważne uszkodzenie regulatora alternatora. Ładowanie jest mocno ograniczone, zasilanie niestabilne, a układ elektryczny pracuje z dużymi stratami."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Całkowita awaria regulatora alternatora. Brak ładowania akumulatora, a układ elektryczny działa wyłącznie na pozostałej rezerwie energii akumulatora."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Lekkie uszkodzenie diod alternatora. Moc ładowania jest ograniczona, co obniża skuteczność ładowania akumulatora. Upływ prądu rozładowuje akumulator, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Umiarkowane uszkodzenie diod alternatora. Wyjście ładowania jest niestabilne i obniżone, co powoduje słabe ładowanie akumulatora oraz zwiększone straty napięcia w układzie elektrycznym. Upływ prądu rozładowuje akumulator, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Poważne uszkodzenie diod alternatora. Ładowanie jest mocno ograniczone, zasilanie niestabilne, a układ elektryczny pracuje z dużymi stratami. Upływ prądu rozładowuje akumulator, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Całkowita awaria diod alternatora. Brak ładowania akumulatora, a układ elektryczny działa wyłącznie na pozostałej rezerwie energii akumulatora. Upływ prądu rozładowuje akumulator, gdy maszyna stoi."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Lekkie uszkodzenie rozrusznika. Obraca silnik wolniej, a uruchamianie trwa nieco dłużej."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Umiarkowane uszkodzenie rozrusznika. Obraca silnik powoli: uruchomienie jest trudne, a przy silnym mrozie niemożliwe."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Poważne uszkodzenie rozrusznika. Ledwo obraca silnik: uruchamia się już tylko ciepły silnik lub przy łagodnej pogodzie."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Całkowita awaria rozrusznika. Nie obraca już silnika: pracujący silnik pracuje dalej, ale po wyłączeniu nie da się go ponownie uruchomić."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Lekkie zużycie łożysk silnika elektrycznego. Pojawia się cichy hałas, a zużycie energii nieznacznie rośnie."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Umiarkowane zużycie łożysk silnika elektrycznego. Hałas jest wyraźnie słyszalny, zużycie energii rośnie, a moc lekko spada."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Poważne zużycie łożysk silnika elektrycznego. Hałas jest głośny, silnik się nagrzewa, a moc wyraźnie spada."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Krytyczna awaria łożysk silnika elektrycznego. Silnik jest zablokowany i maszyna nie może już jechać."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Lekkie uszkodzenie uzwojeń silnika elektrycznego. Moc lekko spada, a silnik bardziej się nagrzewa."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Umiarkowane uszkodzenie uzwojeń silnika elektrycznego. Moc wyraźnie spada, silnik się nagrzewa, a zużycie energii rośnie."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Poważne uszkodzenie uzwojeń silnika elektrycznego. Utrata mocy jest znaczna, silnik mocno się nagrzewa i mogą wystąpić przerwy w pracy."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Krytyczna awaria uzwojeń silnika elektrycznego. W silniku doszło do zwarcia i nie może on dalej pracować."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Lekkie uszkodzenie czujnika położenia silnika. Pod obciążeniem pojawiają się krótkie szarpnięcia."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Umiarkowane uszkodzenie czujnika położenia silnika. Szarpnięcia są częste, a moc spada."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Poważne uszkodzenie czujnika położenia silnika. Szarpnięcia są gwałtowne, moc gwałtownie spada i występują przerwy w pracy."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Całkowita awaria czujnika położenia silnika. Brak możliwości sterowania silnikiem, maszyna nie uruchomi się."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Lekkie uszkodzenie falownika. Moc silnika jest nieznacznie obniżona."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Umiarkowane uszkodzenie falownika. Utrata mocy jest odczuwalna, a zużycie energii rośnie."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Poważne uszkodzenie falownika. Utrata mocy jest znaczna i mogą wystąpić przerwy w pracy."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Całkowita awaria falownika. Silnik nie jest już zasilany, maszyna nie uruchomi się."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Lekkie uszkodzenie przetwornicy napięcia. Akumulator pomocniczy ładuje się gorzej."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Umiarkowane uszkodzenie przetwornicy napięcia. Ładowanie akumulatora pomocniczego jest ograniczone i niestabilne."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Poważne uszkodzenie przetwornicy napięcia. Akumulator pomocniczy prawie się nie ładuje i rozładowuje się podczas jazdy."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Całkowita awaria przetwornicy napięcia. Brak ładowania akumulatora pomocniczego, a maszyna działa wyłącznie na pozostałej rezerwie energii."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Lekkie uszkodzenie ładowarki pokładowej. Ładowanie na stacji jest nieco wolniejsze."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Umiarkowane uszkodzenie ładowarki pokładowej. Ładowanie na stacji jest wyraźnie wolniejsze."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Poważne uszkodzenie ładowarki pokładowej. Ładowanie na stacji jest bardzo wolne."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Całkowita awaria ładowarki pokładowej. Akumulatora trakcyjnego nie można już ładować."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Lekka utrata izolacji okablowania wysokiego napięcia. Wyświetla się ostrzeżenie, bez innych skutków."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Umiarkowana utrata izolacji okablowania wysokiego napięcia. Moc jest ograniczona ze względów bezpieczeństwa."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Poważna utrata izolacji okablowania wysokiego napięcia. Moc jest mocno ograniczona i występują przerwy w pracy."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Krytyczna utrata izolacji okablowania wysokiego napięcia. Maszyna ze względów bezpieczeństwa odmawia uruchomienia."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Lekkie uszkodzenie ogniw akumulatora trakcyjnego. Zasięg lekko spada."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Umiarkowane uszkodzenie ogniw akumulatora trakcyjnego. Zasięg wyraźnie spada, a moc jest ograniczona."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Poważne uszkodzenie ogniw akumulatora trakcyjnego. Zasięg i moc gwałtownie spadają i mogą wystąpić przerwy w pracy."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Krytyczna awaria akumulatora trakcyjnego. Maszyny nie można już włączyć."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Lekkie zużycie stycznika wysokiego napięcia. Występują rzadkie przerwy w zasilaniu."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Umiarkowane zużycie stycznika wysokiego napięcia. Przerwy w zasilaniu stają się regularne."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Poważne zużycie stycznika wysokiego napięcia. Przerwy w zasilaniu są częste."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Krytyczna awaria stycznika wysokiego napięcia. Akumulator trakcyjny nie zasila już maszyny, która się nie uruchomi."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Lekkie uszkodzenie pompy płynu chłodniczego. Płyn krąży gorzej, a temperatura rośnie nieco bardziej."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Umiarkowane uszkodzenie pompy płynu chłodniczego. Chłodzenie jest wyraźnie osłabione."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Poważne uszkodzenie pompy płynu chłodniczego. Chłodzenie jest mocno osłabione, a pod obciążeniem prawdopodobne jest przegrzanie."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Całkowita awaria pompy płynu chłodniczego. Płyn prawie nie krąży i maszyna szybko się przegrzewa."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Lekkie uszkodzenie pompy wody. Usterka jest jeszcze ledwo zauważalna i wymaga kontroli."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Umiarkowane uszkodzenie pompy wody. Obieg słabnie i chłodzenie jest mniej wydajne."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Poważne uszkodzenie pompy wody. Niewystarczający obieg grozi przegrzaniem."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Krytyczna awaria pompy wody. Obieg jest poważnie zakłócony i chłodzenie znacznie osłabione."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Lekkie uszkodzenie pompy wody. Wokół uszczelnienia pompy wody pojawiają się lekkie ślady płynu chłodniczego."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Umiarkowane uszkodzenie pompy wody. Płyn chłodniczy przecieka przez uszczelnienie pompy wody; poziom spada i obieg słabnie."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Poważne uszkodzenie pompy wody. Wyciek przez uszczelnienie pompy wody pozostawia duże ślady wokół pompy; poziom spada i słabszy obieg zwiększa ryzyko przegrzania."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Krytyczna awaria pompy wody. Uszczelnienie pompy wody mocno przecieka; obieg traci płyn i nie może już prawidłowo chłodzić silnika."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Lekkie uszkodzenie pompy wody. Usterka jest jeszcze ledwo zauważalna i wymaga kontroli."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Umiarkowane uszkodzenie pompy wody. Łożysko pompy ma luz i obieg słabnie."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Poważne uszkodzenie pompy wody. Niewystarczający obieg grozi przegrzaniem."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Krytyczna awaria pompy wody. Obieg jest poważnie zakłócony i chłodzenie znacznie osłabione."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Lekkie uszkodzenie rdzenia chłodnicy. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Umiarkowane uszkodzenie rdzenia chłodnicy. Odprowadza mniej ciepła z płynu."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Poważne uszkodzenie rdzenia chłodnicy. Źle odprowadza ciepło i rośnie ryzyko przegrzania."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Krytyczna awaria rdzenia chłodnicy. Odprowadza bardzo mało ciepła i chłodzenie jest poważnie zakłócone."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Lekkie uszkodzenie rdzenia chłodnicy. Na rurkach rdzenia pojawia się sączący płyn chłodniczy."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Umiarkowane uszkodzenie rdzenia chłodnicy. Dziurawe rurki wypuszczają płyn chłodniczy na chłodnicę i poziom w obiegu spada."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Poważne uszkodzenie rdzenia chłodnicy. Płyn chłodniczy wypływa przez dziurawe rurki rdzenia, pozostawiając mokre ślady na chłodnicy; zapas w obiegu szybko maleje."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Krytyczna awaria rdzenia chłodnicy. Jest dziurawy i traci dużo płynu chłodniczego. Poziom spada i chłodnica nie może już odprowadzać wystarczająco dużo ciepła z silnika."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Lekkie zużycie kół zębatych i łożysk reduktora. Podczas jazdy pojawia się cichy hałas."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Umiarkowane zużycie kół zębatych i łożysk reduktora. Hałas jest wyraźnie słyszalny, a zużycie energii rośnie."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Poważne zużycie kół zębatych i łożysk reduktora. Hałas jest głośny, reduktor się nagrzewa, a moc na kołach spada."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Krytyczna awaria reduktora. Jest zablokowany i maszyna nie może już jechać."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Lekkie uszkodzenie tłoków. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Umiarkowane uszkodzenie tłoków. Do komory spalania dostaje się więcej oleju i pojawia się niebieski dym."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Poważne uszkodzenie tłoków. Wzrasta zużycie oleju i nasila się niebieski dym."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Krytyczna awaria tłoków. Tłok zatarł się i silnik jest zablokowany."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Lekkie uszkodzenie tłoków. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Umiarkowane uszkodzenie tłoków. Do komory spalania dostaje się więcej oleju i pojawia się niebieski dym."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Poważne uszkodzenie tłoków. Wzrasta zużycie oleju i nasila się niebieski dym."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Krytyczna awaria tłoków. Tłok pękł i silnik został zatrzymany."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Lekkie uszkodzenie pierścieni tłokowych. Osady utrudniają ruch pierścieni w rowkach."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Umiarkowane uszkodzenie pierścieni tłokowych. Szczelność spada i silnik traci moc."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Poważne uszkodzenie pierścieni tłokowych. Utrata kompresji utrudnia rozruch i zmniejsza moc."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Krytyczna awaria pierścieni tłokowych. Kompresja jest bardzo niska, rozruch trudny, a moc znacznie zmniejszona."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Lekkie uszkodzenie pierścieni tłokowych. Osady utrudniają ruch pierścieni w rowkach."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Umiarkowane uszkodzenie pierścieni tłokowych. Do komory spalania dostaje się więcej oleju i pojawia się niebieski dym."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Poważne uszkodzenie pierścieni tłokowych. Wzrasta zużycie oleju i nasila się niebieski dym."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Krytyczna awaria pierścieni tłokowych. Dostaje się dużo oleju, a niebieski dym utrzymuje się."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Lekkie uszkodzenie pierścieni tłokowych. Osady utrudniają ruch pierścieni w rowkach."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Umiarkowane uszkodzenie pierścieni tłokowych. Szczelność spada i silnik traci moc."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Poważne uszkodzenie pierścieni tłokowych. Utrata kompresji utrudnia rozruch i zmniejsza moc."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Krytyczna awaria pierścieni tłokowych. Pierścień pękł: kompresja spada, a olej dostaje się do komory spalania."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Lekkie uszkodzenie tulei cylindrowych. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Umiarkowane uszkodzenie tulei cylindrowych. Powierzchnia jest porysowana i gorzej uszczelnia."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Poważne uszkodzenie tulei cylindrowych. Powierzchnia jest porysowana i gorzej uszczelnia. Wzrasta zużycie oleju i nasila się niebieski dym."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Krytyczna awaria tulei cylindrowych. Tłok zatarł się w tulei cylindrowej i silnik jest zablokowany."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Lekkie uszkodzenie tulei cylindrowych. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Umiarkowane uszkodzenie tulei cylindrowych. Płyn chłodniczy przecieka przez pękniętą tuleję do cylindra, obniżając poziom."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Poważne uszkodzenie tulei cylindrowych. Pęknięta tuleja wpuszcza płyn chłodniczy do cylindra; z wydechu pojawia się biały dym."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Krytyczna awaria tulei cylindrowych. Dużo płynu chłodniczego przecieka przez pękniętą tuleję do cylindra, z ciągłym białym dymem i niedostatecznym chłodzeniem."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Lekkie uszkodzenie zaworów dolotowych. Przylgnia jest uszkodzona i moc nieznacznie spada."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Umiarkowane uszkodzenie zaworów dolotowych. Zawór źle się zamyka, powodując wypadanie zapłonów i spadek mocy."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Poważne uszkodzenie zaworów dolotowych. Gniazdo jest wypalone, z wypadaniem zapłonów, gaśnięciem i spadkiem mocy."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Krytyczna awaria zaworów dolotowych. Wypalone gniazdo powoduje wypadanie zapłonów, gaśnięcie i duży spadek mocy."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Lekkie uszkodzenie zaworów dolotowych. Przylgnia jest uszkodzona i moc nieznacznie spada."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Umiarkowane uszkodzenie zaworów dolotowych. Zawór źle się zamyka, powodując wypadanie zapłonów i spadek mocy."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Poważne uszkodzenie zaworów dolotowych. Gniazdo jest wypalone, z wypadaniem zapłonów, gaśnięciem i spadkiem mocy."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Krytyczna awaria zaworów dolotowych. Zawór dolotowy urwał się i silnik został zatrzymany."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Lekkie uszkodzenie zaworów wydechowych. Przylgnia jest uszkodzona i moc nieznacznie spada."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Umiarkowane uszkodzenie zaworów wydechowych. Zawór źle się zamyka, powodując wypadanie zapłonów i spadek mocy."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Poważne uszkodzenie zaworów wydechowych. Gniazdo jest wypalone, z wypadaniem zapłonów, gaśnięciem i spadkiem mocy."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Krytyczna awaria zaworów wydechowych. Wypalone gniazdo powoduje wypadanie zapłonów, gaśnięcie i duży spadek mocy."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Lekkie uszkodzenie zaworów wydechowych. Przylgnia jest uszkodzona i moc nieznacznie spada."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Umiarkowane uszkodzenie zaworów wydechowych. Zawór źle się zamyka, powodując wypadanie zapłonów i spadek mocy."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Poważne uszkodzenie zaworów wydechowych. Gniazdo jest wypalone, z wypadaniem zapłonów, gaśnięciem i spadkiem mocy."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Krytyczna awaria zaworów wydechowych. Zawór wydechowy urwał się i silnik został zatrzymany."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Lekkie uszkodzenie prowadnic i uszczelniaczy zaworów. Kontrola wykazuje wadę prowadzenia i zawory stają się głośniejsze."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Umiarkowane uszkodzenie prowadnic i uszczelniaczy zaworów. Luz rośnie i zawory stają się głośniejsze."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Poważne uszkodzenie prowadnic i uszczelniaczy zaworów. Nadmierny luz powoduje hałas, wypadanie zapłonów i przepływ oleju."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Krytyczna awaria prowadnic i uszczelniaczy zaworów. Luz prowadnic jest nadmierny, z hałasem, wypadaniem zapłonów i niebieskim dymem."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Lekkie uszkodzenie prowadnic i uszczelniaczy zaworów. Stwardniałe uszczelnienie przepuszcza olej."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Umiarkowane uszkodzenie prowadnic i uszczelniaczy zaworów. Do komory spalania dostaje się więcej oleju i pojawia się niebieski dym."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Poważne uszkodzenie prowadnic i uszczelniaczy zaworów. Wzrasta zużycie oleju i nasila się niebieski dym."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Krytyczna awaria prowadnic i uszczelniaczy zaworów. Dostaje się dużo oleju, a niebieski dym utrzymuje się."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Lekkie uszkodzenie głowicy. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Umiarkowane uszkodzenie głowicy. Pęknięcie głowicy wpuszcza płyn chłodniczy do komory spalania; silnik traci moc i trudno go uruchomić."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Poważne uszkodzenie głowicy. Płyn chłodniczy przechodzi przez pękniętą głowicę do komory spalania, powodując biały dym i spadek mocy."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Krytyczna awaria głowicy. Pęknięcie wpuszcza dużo płynu chłodniczego do komory spalania. Silnik ma mało mocy, trudno go uruchomić i emituje biały dym."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Lekkie uszkodzenie głowicy. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Umiarkowane uszkodzenie głowicy. Płyn chłodniczy sączy się z pękniętej głowicy i poziom w obiegu spada."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Poważne uszkodzenie głowicy. Wyciek płynu chłodniczego pozostawia widoczne ślady na pękniętej głowicy i poziom szybko spada."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Krytyczna awaria głowicy. Dużo płynu chłodniczego wypływa z pękniętej głowicy; obieg się opróżnia i silnikowi grozi przegrzanie."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Lekkie uszkodzenie głowicy. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Umiarkowane uszkodzenie głowicy. Płyn chłodniczy przecieka przez pęknięcie głowicy do oleju, obniżając poziom w obiegu."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Poważne uszkodzenie głowicy. Pęknięcie głowicy przepuszcza więcej płynu chłodniczego do oleju; poziom w obiegu nadal spada."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Krytyczna awaria głowicy. Pęknięcie głowicy kieruje dużo płynu chłodniczego do oleju; obieg traci zapas i silnikowi grozi przegrzanie."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Lekkie uszkodzenie uszczelki głowicy. Usterka jest jeszcze ledwo zauważalna i wymaga kontroli."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Umiarkowane uszkodzenie uszczelki głowicy. Wpuszcza płyn chłodniczy do komory spalania; rozruch trwa dłużej i moc spada."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Poważne uszkodzenie uszczelki głowicy. Płyn chłodniczy przechodzi przez nią do komory spalania i powoduje biały dym z wydechu."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Krytyczna awaria uszczelki głowicy. Wpuszcza dużo płynu chłodniczego do komory spalania; biały dym nasila się i rozruch staje się bardzo trudny."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Lekkie uszkodzenie uszczelki głowicy. Usterka jest jeszcze ledwo zauważalna i wymaga kontroli."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Umiarkowane uszkodzenie uszczelki głowicy. Płyn chłodniczy sączy się przy niej i obniża poziom w obiegu."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Poważne uszkodzenie uszczelki głowicy. Wyciek płynu chłodniczego przy niej pozostawia ślady na silniku i szybko obniża poziom."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Krytyczna awaria uszczelki głowicy. Wypuszcza dużo płynu chłodniczego na zewnątrz; poziom spada i chłodzenie silnika znacznie się pogarsza."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Lekkie uszkodzenie uszczelki głowicy. Usterka jest jeszcze ledwo zauważalna i wymaga kontroli."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Umiarkowane uszkodzenie uszczelki głowicy. Płyn chłodniczy przechodzi przez nią do oleju; poziom w obiegu spada."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Poważne uszkodzenie uszczelki głowicy. Przepuszcza coraz więcej płynu chłodniczego do oleju; obieg stopniowo traci płyn."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Krytyczna awaria uszczelki głowicy. Duży wyciek przez nią kieruje płyn chłodniczy do oleju i pozbawia obieg płynu potrzebnego do chłodzenia."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Lekkie uszkodzenie panewek wału korbowego. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Umiarkowane uszkodzenie panewek wału korbowego. Luz panewki rośnie."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Poważne uszkodzenie panewek wału korbowego. Film olejowy jest naruszony, ze stukaniem i nagrzewaniem."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Krytyczna awaria panewek wału korbowego. Panewka wału korbowego zatarła się i zablokowała silnik."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Lekkie uszkodzenie panewek wału korbowego. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Umiarkowane uszkodzenie panewek wału korbowego. Luz panewki rośnie."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Poważne uszkodzenie panewek wału korbowego. Film olejowy jest naruszony, ze stukaniem i nagrzewaniem."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Krytyczna awaria panewek wału korbowego. Powłoka panewki wału korbowego stopiła się i silnik został zatrzymany."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Lekkie uszkodzenie panewek korbowodowych. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Umiarkowane uszkodzenie panewek korbowodowych. Luz panewki rośnie."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Poważne uszkodzenie panewek korbowodowych. Film olejowy jest naruszony, ze stukaniem i nagrzewaniem."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Krytyczna awaria panewek korbowodowych. Panewka korbowodowa zatarła się i zablokowała silnik."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Lekkie uszkodzenie panewek korbowodowych. Kontrola wykazuje uszkodzenie powierzchni."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Umiarkowane uszkodzenie panewek korbowodowych. Luz panewki rośnie."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Poważne uszkodzenie panewek korbowodowych. Film olejowy jest naruszony, ze stukaniem i nagrzewaniem."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Krytyczna awaria panewek korbowodowych. Powłoka panewki korbowodowej stopiła się i silnik został zatrzymany."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Niedobór napięcia w układzie elektrycznym"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Niewielkie zużycie pompy zasilającej. Nieznaczne ograniczenie mocy i wzrost zużycia paliwa."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Spadek ciśnienia paliwa. Zauważalna utrata mocy, zwiększone zużycie paliwa oraz sporadyczne gaśnięcie silnika."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Krytyczne ciśnienie paliwa. Poważna utrata mocy, bardzo wysokie zużycie paliwa oraz częste gaśnięcie silnika."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Całkowite uszkodzenie pompy zasilającej. Silnik nie otrzymuje paliwa."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Jedna lub kilka dysz wtryskiwaczy jest lekko zatkana. Silnik może pracować nieco nierówno i lekko tracić moc."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Nieprawidłowe rozpylanie paliwa. Pod obciążeniem silnik przerywa i wyraźnie traci moc."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Zacinający się wtryskiwacz paliwa. Silnik pracuje bardzo nierówno, z dużą utratą mocy i problemami z uruchomieniem."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Uszkodzony wtryskiwacz. Niestabilna praca silnika i możliwość braku rozruchu."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Lekkie uszkodzenie pompy wysokiego ciśnienia. Ciśnienie wtrysku narasta wolniej: uruchamianie trwa dłużej, a silnik reaguje mniej żwawo."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Umiarkowane uszkodzenie pompy wysokiego ciśnienia. Pod obciążeniem ciśnienie wtrysku jest niewystarczające, silnik przerywa i wyraźnie traci moc."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Poważne uszkodzenie pompy wysokiego ciśnienia. Ciśnienie wtrysku jest krytycznie niskie, z poważną utratą mocy, gaśnięciem silnika i trudnym uruchamianiem."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Całkowita awaria pompy wysokiego ciśnienia. Nie wytwarza już ciśnienia wtrysku: rozrusznik obraca silnik, ale ten nie zapala."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Lekkie zatkanie filtra paliwa. Przepływ paliwa nieznacznie spada pod dużym obciążeniem."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Umiarkowane zatkanie filtra paliwa. Przepływ staje się niewystarczający pod obciążeniem, moc spada, a silnik czasami się krztusi."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Poważne zatkanie filtra paliwa. Dopływ paliwa jest mocno ograniczony, moc wyraźnie spada, a silnik może gasnąć."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Filtr paliwa niemal całkowicie zatkany. Silnik nie otrzymuje już wystarczającej ilości paliwa, aby działać niezawodnie."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Lekkie wnikanie powietrza do przewodu paliwowego. Zasilanie paliwem staje się lekko nierówne."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Umiarkowane wnikanie powietrza do przewodu paliwowego. Zasilanie staje się niestabilne, moc spada, a silnik zaczyna się szarpać."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Poważne wnikanie powietrza do przewodu paliwowego. Silnik pracuje bardzo nierówno, a ryzyko zgaśnięcia jest wysokie."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Krytyczna awaria przewodu paliwowego ze znacznym wnikaniem powietrza. Silnik nie może być już prawidłowo zasilany."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Lekkie zaciśnięcie przewodu paliwowego. Przepływ spada: silnik uruchamia się, a potem od czasu do czasu gaśnie."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Umiarkowane zaciśnięcie przewodu paliwowego. Silnik uruchamia się, a potem regularnie gaśnie."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Poważne zaciśnięcie przewodu paliwowego. Silnik często gaśnie."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Przewód paliwowy zgnieciony. Paliwo już nie przepływa: silnik się zatrzymuje."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Lekkie uszkodzenie mechanicznej pompy wtryskowej. Wydajność spada: rozruch trwa dłużej, a silnik jest nieco słabszy."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Umiarkowane uszkodzenie mechanicznej pompy wtryskowej. Wydajność pod obciążeniem jest niewystarczająca: silnik traci moc i się krztusi."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Poważne uszkodzenie mechanicznej pompy wtryskowej. Silnik otrzymuje za mało paliwa, traci dużo mocy, trudno się uruchamia i gaśnie."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Krytyczna awaria mechanicznej pompy wtryskowej. Napęd jest zerwany: silnik się zatrzymuje i nie daje się ponownie uruchomić."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Lekkie uszkodzenie zaworu dawkującego paliwo. Ciśnienie w listwie narasta wolniej i rozruch trwa dłużej."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Umiarkowane uszkodzenie zaworu dawkującego paliwo. Ciśnienie w listwie jest niewystarczające pod obciążeniem: silnik traci moc i się krztusi."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Poważne uszkodzenie zaworu dawkującego paliwo. Ciśnienie w listwie znacznie odbiega od wartości zadanej: silnik traci dużo mocy i gaśnie."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Krytyczna awaria zaworu dawkującego paliwo. W listwie nie powstaje już ciśnienie: rozrusznik obraca silnikiem, ale silnik się nie uruchamia."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Lekkie uszkodzenie czujnika ciśnienia w listwie wtryskowej. Pomiar staje się niestabilny i rozruch trwa nieco dłużej."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Umiarkowane uszkodzenie czujnika ciśnienia w listwie wtryskowej. Sterownik źle reguluje ciśnienie: silnik traci moc i się krztusi."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Poważne uszkodzenie czujnika ciśnienia w listwie wtryskowej. Silnik przechodzi w tryb awaryjny, traci dużo mocy i może zgasnąć."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Krytyczna awaria czujnika ciśnienia w listwie wtryskowej. Bez pomiaru sterownik utrzymuje silnik w trybie awaryjnym."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Lekkie uszkodzenie ogranicznika ciśnienia w listwie wtryskowej. Otwiera się za wcześnie: ciśnienie narasta wolniej i rozruch trwa dłużej."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Umiarkowane uszkodzenie ogranicznika ciśnienia w listwie wtryskowej. Ciśnienie nie utrzymuje się pod obciążeniem: silnik traci moc i przerywa."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Poważne uszkodzenie ogranicznika ciśnienia w listwie wtryskowej. Ciśnienie gwałtownie spada: silnik traci dużo mocy i gaśnie."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Krytyczne uszkodzenie ogranicznika ciśnienia w listwie wtryskowej. Pozostaje otwarty: listwa nie uzyskuje ciśnienia, a rozrusznik obraca silnikiem, który nie zapala."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Lekkie uszkodzenie reduktora ciśnienia gazu. Ciśnienie zasilania waha się i rozruch trwa dłużej."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Umiarkowane uszkodzenie reduktora ciśnienia gazu. Ciśnienie spada pod obciążeniem: silnik traci moc i się krztusi."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Poważne uszkodzenie reduktora ciśnienia gazu. Zasilanie staje się nierówne: silnik traci dużo mocy, trudno się uruchamia i gaśnie."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Krytyczna awaria reduktora ciśnienia gazu. Nie przepuszcza już wystarczającej ilości gazu: silnik się zatrzymuje."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Lekkie uszkodzenie elektrozaworu odcinającego gaz. Otwiera się z opóźnieniem: rozruch trwa dłużej, a silnik czasami się krztusi."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Umiarkowane uszkodzenie elektrozaworu odcinającego gaz. Czasami odcina gaz: silnik się krztusi i gaśnie."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Poważne uszkodzenie elektrozaworu odcinającego gaz. Przerwy stają się częstsze i silnik często gaśnie."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Krytyczna awaria elektrozaworu odcinającego gaz. Pozostaje zamknięty: silnik się zatrzymuje i nie daje się ponownie uruchomić."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Lekkie zatkanie filtra gazu. Przepływ gazu nieznacznie spada pod dużym obciążeniem."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Umiarkowane zatkanie filtra gazu. Zasilanie jest niewystarczające pod obciążeniem: moc spada i silnik może zgasnąć."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Poważne zatkanie filtra gazu. Przepływ jest mocno ograniczony: moc wyraźnie spada i silnik gaśnie."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Filtr gazu całkowicie zatkany. Silnik nie otrzymuje już wystarczającej ilości gazu i się zatrzymuje."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Lekki wyciek z przewodów gazowych. Rozruch trwa nieco dłużej."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Umiarkowany wyciek z przewodów gazowych. Zasilanie staje się nierówne: silnik się krztusi i może zgasnąć."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Poważny wyciek z przewodów gazowych. Ciśnienie spada: silnik się krztusi, trudno się uruchamia i często gaśnie."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Krytyczny wyciek z przewodów gazowych. Ciśnienie już się nie utrzymuje: silnik się zatrzymuje."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Lekkie uszkodzenie wtryskiwaczy gazu. Dawkowanie staje się nierówne: silnik pracuje mniej równo i zużywa nieco więcej gazu."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Umiarkowane uszkodzenie wtryskiwaczy gazu. Silnik się krztusi, traci moc, zużywa więcej gazu i może zgasnąć."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Poważne uszkodzenie wtryskiwaczy gazu. Jeden wtryskiwacz bardzo źle dawkuje: duża utrata mocy, nadmierne zużycie gazu i trudny rozruch."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Krytyczna awaria wtryskiwaczy gazu. Dawkowanie nie pozwala już silnikowi pracować: silnik się zatrzymuje."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Uszkodzenie pompy AdBlue. Nie zasila już dozowania: zapala się kontrolka silnika, a następnie sterownik ogranicza moc do czasu naprawy."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Uszkodzenie wtryskiwacza dozującego AdBlue. Zatkany kryształami już nie rozpyla: zapala się kontrolka silnika, a moc później spada do czasu naprawy."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Filtr AdBlue osiągnął termin wymiany i zaczyna się zatykać. Wymienia go najpełniejszy przegląd."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="Filtr AdBlue jest zabrudzony: przepływ AdBlue spada i zapala się kontrolka silnika. Wymienia go najpełniejszy przegląd."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="Filtr AdBlue jest mocno zabrudzony: dawkowanie nie działa, a ECU ogranicza moc do czasu naprawy."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="Filtr AdBlue jest całkowicie zatkany: dawkowanie całkowicie ustaje, a ECU ogranicza moc do czasu naprawy."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="Uszkodzenie czujnika NOx. Sterownik nie monitoruje już emisji: zapala się kontrolka silnika, a po kilkudziesięciu godzinach moc zostaje ograniczona."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Lekkie uszkodzenie filtra cząstek stałych. Pęknięcie przepuszcza nieco sadzy do wydechu."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Umiarkowane uszkodzenie filtra cząstek stałych. Pęknięcie się powiększa: pojawia się widoczny czarny dym."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Poważne uszkodzenie filtra cząstek stałych. Wkład się rozpada: z wydechu wydobywa się dużo czarnego dymu."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Krytyczna awaria filtra cząstek stałych. Wkład jest pęknięty: sadza przechodzi bez zatrzymania."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Lekkie uszkodzenie filtra cząstek stałych. Część wkładu stopiła się i zatyka."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Umiarkowane uszkodzenie filtra cząstek stałych. Stopiony obszar się powiększa: przeciwciśnienie rośnie."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Poważne uszkodzenie filtra cząstek stałych. Stopiony i zatkany filtr już się nie regeneruje: obroty silnika są ograniczone."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Krytyczna awaria filtra cząstek stałych. Całkowicie zatkany nie przepuszcza już spalin: tylko wymiana przywraca moc silnika."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Nasycenie filtra cząstek stałych. Regeneracje nie zostały zakończone: obroty silnika są ograniczone, aż jedna z nich się powiedzie."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Krytyczne nasycenie filtra cząstek stałych. Jest zbyt zapełniony, aby sam się zregenerować, i wymaga regeneracji serwisowej w warsztacie; obroty pozostają ograniczone."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lekkie uszkodzenie sprzęgła wentylatora. Wentylator reaguje mniej skutecznie, a chłodzenie jest nieznacznie osłabione."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Umiarkowane uszkodzenie sprzęgła wentylatora. Załączanie wentylatora jest nieregularne, a skuteczność chłodzenia wyraźnie spada."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Poważne uszkodzenie sprzęgła wentylatora. Wentylator nie zapewnia już wystarczającego przepływu powietrza, a silnik łatwiej się przegrzewa."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Krytyczna awaria sprzęgła wentylatora. Wentylator nie jest już w stanie zapewnić niezbędnego chłodzenia."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Sterowanie przełożeniem reaguje wolniej i mniej precyzyjnie."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Przełożenie zmienia się nieregularnie, a sterowanie reaguje słabo."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Sterowanie przełożeniem jest poważnie zakłócone, a przekazywana siła napędowa spada."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Sterowanie przełożeniem uległo awarii; przekładnia jest praktycznie niezdatna do użytku."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Lekki wewnętrzny wyciek w siłowniku hydraulicznym. Podniesiony osprzęt powoli opada pod obciążeniem."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Umiarkowany wewnętrzny wyciek w siłowniku hydraulicznym. Samoczynne opadanie jest wyraźne i przyspiesza wraz ze wzrostem obciążenia."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Poważny wewnętrzny wyciek w siłowniku hydraulicznym. Ciężki osprzęt nie utrzymuje już niezawodnie swojej pozycji."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Krytyczny wewnętrzny wyciek w siłowniku hydraulicznym. Każdy podniesiony ładunek szybko sam opada."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Niewielki wyciek wewnętrzny pompy hydraulicznej. Osprzęt działa nieco wolniej."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Zużyte uszczelnienia pompy hydraulicznej. Osprzęt działa wyraźnie wolniej."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Uszkodzona pompa hydrauliczna. Osprzęt działa bardzo wolno i z niską siłą."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Całkowita awaria pompy hydraulicznej. Układ hydrauliczny nie działa."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Przewód hydrauliczny ma lekki wyciek zewnętrzny. Wyciekła mała ilość oleju, a reakcja hydrauliki jest nieco słabsza."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Przewód hydrauliczny wyraźnie się poci. Ubytek oleju trwa, a funkcje hydrauliczne reagują wolniej."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Przewód hydrauliczny aktywnie przecieka. Ubytek oleju jest oczywisty, a funkcje hydrauliczne są wyraźnie osłabione."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Przewód hydrauliczny ma poważny wyciek zewnętrzny. Olej szybko ucieka, a wydajność hydrauliki jest mocno ograniczona."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Filtr hydrauliczny jest lekko zapchany i zaczyna ograniczać przepływ. Funkcje hydrauliczne działają nieco wolniej. Obsługa techniczna wymienia filtr."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Filtr hydrauliczny jest umiarkowanie zapchany. Wszystkie funkcje hydrauliczne działają wyraźnie wolniej. Obsługa techniczna wymienia filtr."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Filtr hydrauliczny jest mocno zapchany. Hydraulika reaguje bardzo wolno. Obsługa techniczna wymienia filtr."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Filtr hydrauliczny jest całkowicie zapchany. Funkcje hydrauliczne ledwo reagują. Obsługa techniczna wymienia filtr."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Chłodnica oleju hydraulicznego straciła część wydajności. Temperatura oleju lekko rośnie podczas długiej pracy hydrauliki."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Chłodnica oleju hydraulicznego działa zbyt słabo. Temperatura oleju wyraźnie rośnie podczas ciągłej pracy hydrauliki."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Chłodnica oleju hydraulicznego jest mocno zużyta. Ciężka praca hydrauliki szybko przegrzewa olej."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Chłodnica oleju hydraulicznego uległa awarii. Długa praca hydrauliki silnie przegrzewa olej i przyspiesza zużycie pompy."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Zawór sterowania hydrauliką zaczyna się zacinać. Jedna funkcja hydrauliczna czasem się waha i traci siłę pod obciążeniem."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Zawór sterowania hydrauliką zacina się okresowo. Jedna funkcja hydrauliczna jest wolniejsza i traci więcej siły przy większym obciążeniu."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Zawór sterowania hydrauliką mocno się zacina. Jedna funkcja hydrauliczna porusza się nieregularnie i słabnie pod dużym obciążeniem."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Zawór sterowania hydrauliką jest krytycznie uszkodzony. Jedna funkcja hydrauliczna wielokrotnie się zatrzymuje i ledwo porusza ciężki ładunek."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Pompa przekładni"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Zespół hydrostatyczny"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Chłodnica oleju przekładniowego"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Łożyska skrzyni biegów"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Sprzęgła biegów powershift"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Sprzęgła rewersu powershift"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Sterowanie skrzynią biegów"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Para stożkowa tylnego mostu"/>
+        <text name="rms_breakdowns_part_final_drives" text="Zwolnice"/>
+        <text name="rms_breakdowns_part_differential" text="Koła zębate mechanizmu różnicowego"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="Załączanie napędu 4WD"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Wał napędowy przedniego mostu i krzyżaki"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Łożyska mostu"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Czujniki skrzyni biegów"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Filtr przekładni"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Zawór podnośnika"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Czujnik położenia podnośnika"/>
+        <text name="rms_breakdowns_part_loader_control" text="Sterowanie ładowaczem"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Szybkozłącza hydrauliczne"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lekkie uszkodzenie sprzęgła. Nie rozłącza całkowicie. Niektóre biegi trudno włączyć."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Umiarkowane uszkodzenie sprzęgła. Mechanizm słabo zwalnia tarczę. Biegi są częściej odrzucane."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Poważne uszkodzenie sprzęgła. Tarcza jest nadal napędzana po wysprzęgleniu. Wybór biegów jest silnie zakłócony."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Krytyczna awaria sprzęgła. Mechanizm nie zwalnia tarczy. Żadnego biegu nie można normalnie włączyć."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Lekkie uszkodzenie łożysk skrzyni biegów. Powierzchnie toczne są uszkodzone. Ze skrzyni dochodzi ciche dudnienie."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Umiarkowane uszkodzenie łożysk skrzyni biegów. Bieżnie łożysk są uszkodzone. Dudnienie skrzyni jest wyraźnie słyszalne."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Poważne uszkodzenie łożysk skrzyni biegów. Łożyska obracają się z trudem. Skrzynia głośno dudni i może się zatrzeć."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Krytyczna awaria łożysk skrzyni biegów. Łożyska zatarły się. Skrzynia jest zablokowana i maszyna nie jedzie."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Lekkie uszkodzenie sprzęgieł biegów powershift. Pakiet tarcz słabo przenosi napęd. Bieg lekko ślizga się pod obciążeniem."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Lekkie uszkodzenie sprzęgieł biegów powershift. Pakiet tarcz załącza się z opóźnieniem. Bieg wchodzi z lekkim szarpnięciem."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Umiarkowane uszkodzenie sprzęgieł biegów powershift. Pakiet tarcz dociska zbyt słabo. Bieg wyraźnie ślizga się pod obciążeniem."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Umiarkowane uszkodzenie sprzęgieł biegów powershift. Napełnianie pakietu jest zakłócone. Bieg wchodzi gwałtownie."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Poważne uszkodzenie sprzęgieł biegów powershift. Pakiet tarcz ledwo utrzymuje obciążenie. Na koła trafia bardzo mała siła."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Poważne uszkodzenie sprzęgieł biegów powershift. Pakiet bardzo źle się załącza. Zmiany biegów powodują silne szarpnięcia."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Krytyczna awaria sprzęgieł biegów powershift. Pakiet tarcz nie przenosi napędu. Maszyna nie jedzie."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Krytyczna awaria sprzęgieł biegów powershift. Pakiet nie załącza się prawidłowo. Bieg nie napędza maszyny."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Lekkie uszkodzenie sprzęgieł rewersu powershift. Sprzęgło jazdy do przodu lub do tyłu lekko ślizga się przy ruszaniu."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Lekkie uszkodzenie sprzęgieł rewersu powershift. Sprzęgło rewersu załącza się późno. Napęd wraca z lekkim szarpnięciem."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Umiarkowane uszkodzenie sprzęgieł rewersu powershift. Sprzęgło rewersu wyraźnie się ślizga. Napęd jest słabo przekazywany w wybranym kierunku."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Umiarkowane uszkodzenie sprzęgieł rewersu powershift. Sprzęgło rewersu załącza się nagle. Zmiana kierunku szarpie maszyną."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Poważne uszkodzenie sprzęgieł rewersu powershift. Sprzęgło rewersu ledwo utrzymuje obciążenie. Siła napędowa mocno spada."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Poważne uszkodzenie sprzęgieł rewersu powershift. Sprzęgło rewersu załącza się bardzo nierówno. Ruszanie jest bardzo gwałtowne."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Krytyczna awaria sprzęgieł rewersu powershift. Sprzęgło rewersu nie przenosi napędu. Maszyna nie jedzie."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Krytyczna awaria sprzęgieł rewersu powershift. Sprzęgło rewersu nie załącza się prawidłowo. Napęd zanika."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Lekkie uszkodzenie sterowania skrzynią biegów. Sterowanie elektrohydrauliczne działa nierówno. Zmiana biegu jest opóźniona."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Lekkie uszkodzenie sterowania skrzynią biegów. Sterowanie czasem odmawia wyboru biegu."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Umiarkowane uszkodzenie sterowania skrzynią biegów. Sterowanie zakłóca napełnianie sprzęgieł. Zmiany powodują wyraźne szarpnięcia."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Umiarkowane uszkodzenie sterowania skrzynią biegów. Sterowanie odrzuca kilka wyborów. Włączanie biegów staje się trudne."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Poważne uszkodzenie sterowania skrzynią biegów. Sterowanie źle załącza sprzęgła. Zmiany powodują silne szarpnięcia."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Poważne uszkodzenie sterowania skrzynią biegów. Sterowanie nie wykonuje wielu wyborów. Biegi rzadko są dostępne."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Krytyczna awaria sterowania skrzynią biegów. Sterowanie nie potrafi prawidłowo załączyć sprzęgieł. Zmiany biegów są silnie zakłócone."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Krytyczna awaria sterowania skrzynią biegów. Sterowanie nie pozwala wybrać biegu. Skrzynia nie odpowiada na żądanie."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Uszkodzenie czujnika prędkości skrzyni biegów. Sygnał staje się nieregularny: sterowanie czasem odmawia zmiany biegu."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Uszkodzenie czujnika ciśnienia skrzyni biegów. Sterowanie źle reguluje napełnianie sprzęgieł: zmiany biegów są opóźnione i szarpią."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Krytyczne uszkodzenie czujnika prędkości skrzyni biegów. Bez pomiaru sterowanie często odmawia zmiany biegów."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Krytyczne uszkodzenie czujnika ciśnienia skrzyni biegów. Bez pomiaru każda zmiana biegu jest mocno opóźniona i następuje gwałtowne załączenie."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Uszkodzenie czujnika prędkości przekładni. Sterowanie przechodzi w tryb awaryjny: prędkość jazdy jest ograniczona."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Uszkodzenie czujnika ciśnienia przekładni. Sterowanie przechodzi w tryb awaryjny: prędkość jazdy jest ograniczona."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Krytyczne uszkodzenie czujnika prędkości przekładni. Tryb awaryjny pozwala już tylko na niską prędkość jazdy."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Krytyczne uszkodzenie czujnika ciśnienia przekładni. Tryb awaryjny pozwala już tylko na niską prędkość jazdy."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Lekkie uszkodzenie pompy przekładni. Dopływ oleju sterującego maleje. Załączanie jest opóźnione, a napęd chwilowo zanika."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Umiarkowane uszkodzenie pompy przekładni. Ciśnienie sterujące jest za niskie. Biegi wchodzą z szarpnięciami, a napęd zanika."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Poważne uszkodzenie pompy przekładni. Pompa ledwo zasila sterowanie. Załączanie jest bardzo gwałtowne, a napęd często zanika."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Krytyczna awaria pompy przekładni. Pompa nie zapewnia wymaganego ciśnienia. Przekładnia nie napędza maszyny."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Lekkie uszkodzenie zespołu hydrostatycznego. Przecieki wewnętrzne zmniejszają przenoszoną siłę. Wariator nieco zwalnia, a olej bardziej się nagrzewa."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Umiarkowane uszkodzenie zespołu hydrostatycznego. Przecieki wewnętrzne rosną. Prędkość maksymalna spada, olej się nagrzewa, a zużycie paliwa rośnie."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Poważne uszkodzenie zespołu hydrostatycznego. Zespół wirujący ledwo przenosi siłę. Prędkość mocno spada, a olej pod obciążeniem jest bardzo gorący."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Krytyczna awaria zespołu hydrostatycznego. Zespół wirujący nie przenosi napędu. Maszyna nie jedzie mimo pracującego silnika."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Lekkie uszkodzenie chłodnicy oleju przekładniowego. Odprowadza mniej ciepła. Olej przekładniowy bardziej nagrzewa się pod obciążeniem."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Umiarkowane uszkodzenie chłodnicy oleju przekładniowego. Wymiana ciepła wyraźnie maleje. Olej przekładniowy pozostaje gorętszy podczas pracy."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Poważne uszkodzenie chłodnicy oleju przekładniowego. Odprowadza bardzo mało ciepła. Olej przekładniowy może przegrzać się pod obciążeniem."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Krytyczna awaria chłodnicy oleju przekładniowego. Chłodzenie oleju przekładniowego zawiodło. Długotrwała praca grozi przegrzaniem przekładni."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="Filtr przekładni osiągnął termin wymiany i zaczyna się zatykać. Wyświetlacz żąda wymiany. Obsługa techniczna wymienia filtr."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="Filtr przekładni jest zabrudzony: otwiera się zawór obejściowy i olej skrzyni przepływa bez filtracji. Przekładnia zużywa się szybciej. Obsługa techniczna wymienia filtr."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="Filtr przekładni jest mocno zabrudzony. Olej skrzyni krąży bez filtracji i zużywa przekładnię. Obsługa techniczna wymienia filtr."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="Filtr przekładni jest całkowicie zatkany. Cały olej skrzyni przepływa bez filtracji i zużywa przekładnię. Obsługa techniczna wymienia filtr."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Lekkie uszkodzenie pary stożkowej tylnego mostu. Zęby pary stożkowej są uszkodzone. Pod obciążeniem słychać ciche wycie."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Umiarkowane uszkodzenie pary stożkowej tylnego mostu. Styk zębów jest zakłócony. Tylny most wyraźnie wyje pod obciążeniem."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Poważne uszkodzenie pary stożkowej tylnego mostu. Zęby są mocno uszkodzone. Tylny most głośno wyje i może stracić napęd."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Krytyczna awaria pary stożkowej tylnego mostu. Para stożkowa nie przenosi siły. Tylny most nie jest napędzany i maszyna nie jedzie."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Lekkie uszkodzenie zwolnic. Zęby zwolnicy są uszkodzone. Przy kole napędowym słychać ciche wycie."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Umiarkowane uszkodzenie zwolnic. Koła zębate zwolnicy obracają się źle. Wycie przy kole jest wyraźnie słyszalne."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Poważne uszkodzenie zwolnic. Koła zębate zwolnicy są mocno uszkodzone. Hałas jest silny i napęd może zawieść."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Krytyczna awaria zwolnic. Zwolnica nie przenosi siły na koło. Maszyna nie może normalnie jechać."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="Uszkodzenie załączania napędu 4WD. Napęd wszystkich kół nie załącza się. Przednia oś pozostaje odłączona."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="Uszkodzenie załączania napędu 4WD. Przednia oś pozostaje załączona. Nie można wyłączyć napędu wszystkich kół."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Uszkodzenie pompy hydraulicznej. Jest rozbita. Ciśnienie zanika, a funkcje hydrauliczne nie odpowiadają."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Uszkodzenie zaworu sterowania hydrauliką. Suwak jest zablokowany. Dana funkcja hydrauliczna nie porusza się."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Uszkodzenie zaworu podnośnika. Nie utrzymuje prawidłowo ciężaru. Podniesione narzędzie opada."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Uszkodzenie zaworu podnośnika. Jest zablokowany. Podnośnik nie odpowiada."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Uszkodzenie czujnika położenia podnośnika. Sygnał położenia zawiódł. Podnośnik nie utrzymuje zadanej wysokości i zapisywany jest kod usterki."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lekkie uszkodzenie sterowania ładowaczem. Ramię i łyżka reagują wolniej."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Umiarkowane uszkodzenie sterowania ładowaczem. Ramię i łyżka poruszają się tylko z połową prędkości."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Poważne uszkodzenie sterowania ładowaczem. Ramię i łyżka ledwo się poruszają."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Krytyczne uszkodzenie sterowania ładowaczem. Ramię i łyżka już nie reagują."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Lekkie uszkodzenie siłownika hydraulicznego. Uszczelnienie tłoczyska przepuszcza trochę oleju. Wokół tłoczyska widać lekką wilgoć."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Umiarkowane uszkodzenie siłownika hydraulicznego. Uszczelnienie tłoczyska jest nieszczelne. Siłownik poci się, a poziom oleju spada."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Poważne uszkodzenie siłownika hydraulicznego. Uszczelnienie tłoczyska aktywnie przecieka. Siłownik traci znaczną ilość oleju."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Krytyczna awaria siłownika hydraulicznego. Uszczelnienie tłoczyska przepuszcza dużo oleju. Poziom w obwodzie szybko spada."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Lekkie uszkodzenie szybkozłączy hydraulicznych. Uszczelnienie złącza jest uszkodzone. Przy połączeniu widać lekką wilgoć."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Uszkodzenie szybkozłączy hydraulicznych. Przepływ oleju przez złącze jest zablokowany. Podłączona funkcja hydrauliczna nie porusza się."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Umiarkowane uszkodzenie szybkozłączy hydraulicznych. Złącze poci się. Obwód traci olej przy połączeniu."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Poważne uszkodzenie szybkozłączy hydraulicznych. Złącze aktywnie przecieka. Ubytek oleju przy połączeniu jest znaczny."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Krytyczna awaria szybkozłączy hydraulicznych. Złącze mocno przecieka. Poziom oleju w obwodzie szybko spada."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Lekkie uszkodzenie chłodnicy oleju hydraulicznego. Rdzeń chłodnicy nie jest całkiem szczelny. Widać lekką wilgoć."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Umiarkowane uszkodzenie chłodnicy oleju hydraulicznego. Rdzeń chłodnicy poci się. Poziom oleju hydraulicznego spada."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Poważne uszkodzenie chłodnicy oleju hydraulicznego. Rdzeń chłodnicy aktywnie przecieka. Obwód traci znaczną ilość oleju."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Krytyczna awaria chłodnicy oleju hydraulicznego. Rdzeń chłodnicy mocno przecieka. Poziom oleju hydraulicznego szybko spada."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Sterowanie blokadą mechanizmu różnicowego"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Lekkie uszkodzenie kół zębatych mechanizmu różnicowego. Powierzchnie zębów są uszkodzone. Na zakrętach słychać cichy hałas."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Umiarkowane uszkodzenie kół zębatych mechanizmu różnicowego. Styk zębów jest zakłócony. Hałas mechanizmu różnicowego jest wyraźny na zakrętach."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Poważne uszkodzenie kół zębatych mechanizmu różnicowego. Zęby są mocno uszkodzone. Hałas jest silny na zakrętach i napęd może zawieść."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Krytyczna awaria kół zębatych mechanizmu różnicowego. Koła zębate nie przenoszą siły. Maszyna nie jedzie mimo pracującego silnika."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Lekkie zużycie krzyżaków wału napędowego przedniego mostu. W napędzie przedniego mostu pojawia się niewielki luz."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Umiarkowane zużycie krzyżaków wału napędowego przedniego mostu. Luz na krzyżakach jest wyraźny."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Poważne zużycie krzyżaków wału napędowego przedniego mostu. Jeden krzyżak jest bliski pęknięcia."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Pęknięcie krzyżaka wału napędowego przedniego mostu. Przedni most nie jest już napędzany."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Lekkie zużycie łożysk mostu. Podczas jazdy słychać ciche dudnienie."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Umiarkowane zużycie łożysk mostu. Dudnienie narasta wraz z prędkością."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Poważne zużycie łożysk mostu. Powierzchnia jednego łożyska łuszczy się i zaczyna uszkadzać przekładnię stożkową."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Krytyczne zużycie łożysk mostu. Jedno łożysko się rozpadło, przekładnia stożkowa jest uszkodzona i most nie przenosi już siły napędowej."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Uszkodzenie sterowania blokadą mechanizmu różnicowego. Blokada nie załącza się. Mechanizm różnicowy pozostaje swobodny."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Uszkodzenie sterowania blokadą mechanizmu różnicowego. Blokada pozostaje załączona. Maszyna opiera się skręcaniu na zakrętach."/>
+    </texts>
+</l10n>

@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="영구적"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="출력 저하"/>
+        <text name="rms_breakdowns_severity_shutdown" text="작동 중지"/>
+        <text name="rms_breakdowns_severity_minor" text="경미함"/>
+        <text name="rms_breakdowns_severity_moderate" text="보통"/>
+        <text name="rms_breakdowns_severity_major" text="심각함"/>
+        <text name="rms_breakdowns_severity_critical" text="치명적임"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="조향 볼 조인트와 로드가 약간 마모되었습니다. 유격이 조금 생기고 조향 정밀도가 떨어집니다."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="조향 볼 조인트와 로드가 중간 정도로 마모되었습니다. 유격이 커지고 차량이 한쪽으로 약간 치우칩니다."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="조향 볼 조인트와 로드가 심하게 마모되었습니다. 유격이 크고 차량이 한쪽으로 치우치며 진로 유지가 어려워집니다."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="조향 볼 조인트와 로드에 임계 고장이 발생했습니다. 풀려난 바퀴가 더 이상 핸들을 제대로 따라오지 않아 주행이 위험합니다."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="조향 너클 킹핀이 약간 마모되었습니다. 조향에 유격이 조금 생깁니다."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="조향 너클 킹핀이 중간 정도로 마모되었습니다. 조향 유격이 확연해집니다."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="조향 너클 킹핀이 심하게 마모되었습니다. 조향 유격이 큽니다."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="조향 너클 킹핀이 임계 수준으로 마모되었습니다. 조향 유격이 매우 큽니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="조향 오비트롤이 약간 오작동합니다. 핸들이 약간의 유격을 두고 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="조향 오비트롤이 중간 정도로 오작동합니다. 핸들이 더 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="조향 오비트롤이 심하게 오작동합니다. 핸들이 많이 돌아가도 바퀴가 잘 따라오지 않습니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="조향 오비트롤에 임계 고장이 발생했습니다. 핸들의 유격이 매우 커서 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="조향 실린더에서 내부 누설이 약간 발생합니다. 차량이 한쪽으로 흐르기 시작합니다."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="조향 실린더 로드 씰에서 누설이 약간 발생합니다. 유압 오일 수위가 조금 내려갑니다."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="조향 실린더에 중간 정도의 내부 누출이 있습니다. 차량이 한쪽으로 더 많이 흐릅니다."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="조향 실린더 로드 씰에 중간 정도의 누출이 있습니다. 유압 오일 수위가 확연히 내려갑니다."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="조향 실린더에서 내부 누출이 심하게 발생합니다. 차량이 한쪽으로 확연히 흐릅니다."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="조향 실린더 로드 씰에서 누출이 심하게 발생합니다. 유압 오일 수위가 빠르게 내려갑니다."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="조향 실린더에 임계 내부 누출이 있습니다. 차량이 한쪽으로 심하게 흐릅니다."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="조향 실린더 로드 씰에 임계 누출이 있습니다. 유압 오일 수위가 매우 빠르게 내려갑니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="로더 관절 핀과 부싱이 약간 마모되었습니다. 암 관절에 유격이 조금 생깁니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="로더 관절 핀과 부싱이 중간 정도로 마모되었습니다. 암 관절의 유격이 확연해집니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="로더 관절 핀과 부싱이 심하게 마모되었습니다. 암에 큰 유격이 있습니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="로더 관절 핀과 부싱이 임계 수준으로 마모되었습니다. 암의 유격이 매우 큽니다."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="운전실 충격 흡수기에서 약간의 누출이 발생했습니다. 운전실의 충격 흡수 성능이 조금 떨어집니다."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="운전실 충격 흡수기에서 중간 정도의 누출이 발생했습니다. 요철에서 운전실이 튀어 오릅니다."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="운전실 충격 흡수기에서 심한 누출이 발생했습니다. 충격이 있을 때마다 운전실이 흔들립니다."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="운전실 충격 흡수기에서 임계 누출이 발생했습니다. 충격 흡수기가 비어 운전실의 충격을 거의 흡수하지 못합니다."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="중립으로 전환됨"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="예열 플러그의 초기 열화입니다. 저온 시동이 느려지지만 온간 시동에는 영향이 없습니다."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="여러 예열 플러그가 약해졌거나 작동하지 않습니다. 저온 시동이 어렵고 엔진이 따뜻해질 때까지 공회전이 불규칙할 수 있습니다."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="예열 플러그가 심하게 오작동합니다. 저온 시동의 안정성이 매우 낮으며 예열 중에도 엔진이 불규칙하게 작동합니다."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="예열 플러그가 완전히 고장 났습니다. 온도가 너무 낮으면 엔진을 시동할 수 없습니다."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="예열 릴레이에 고장이 발생했습니다. 예열 플러그가 더 이상 가열되지 않아 온도가 너무 낮으면 엔진 시동이 불가능합니다."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="스타터 릴레이에 고장이 발생했습니다. 시동 시 엔진이 더 이상 회전하지 않습니다."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="하향등 전구에 고장이 발생했습니다. 전구를 교체할 때까지 이 조명은 켜지지 않습니다."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="상향등 전구에 고장이 발생했습니다. 전구를 교체할 때까지 이 조명은 켜지지 않습니다."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="전방 작업등 전구에 고장이 발생했습니다. 전구를 교체할 때까지 이 조명은 켜지지 않습니다."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="후방 작업등 전구에 고장이 발생했습니다. 전구를 교체할 때까지 이 조명은 켜지지 않습니다."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="회전 경고등 전구에 고장이 발생했습니다. 전구를 교체할 때까지 회전 경고등은 켜지지 않습니다."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="방향 지시등 전구에 고장이 발생했습니다. 전구를 교체할 때까지 방향 지시등과 비상등이 모두 켜지지 않습니다."/>
+        <text name="rms_breakdowns_part_vehicle" text="차량"/>
+        <text name="rms_breakdowns_part_pistons" text="피스톤"/>
+        <text name="rms_breakdowns_part_piston_rings" text="피스톤 링"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="실린더 라이너"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="흡기 밸브"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="배기 밸브"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="밸브 가이드와 스템 씰"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="실린더 헤드"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="헤드 개스킷"/>
+        <text name="rms_breakdowns_part_main_bearings" text="주 베어링"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="연결봉 베어링"/>
+        <text name="rms_breakdowns_part_consumables" text="소모품"/>
+        <text name="rms_breakdowns_part_clutch" text="클러치"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="변속비 제어"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="엔진"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="전원 케이블 및 접지선"/>
+        <text name="rms_breakdowns_part_starter_relay" text="스타터 릴레이"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="예열 릴레이"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="하향등 전구"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="상향등 전구"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="전방 작업등 전구"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="후방 작업등 전구"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="회전 경고등 전구"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="방향 지시등 전구"/>
+        <text name="rms_breakdowns_part_battery" text="배터리"/>
+        <text name="rms_breakdowns_part_traction_battery" text="구동 배터리"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="고전압 전자 개폐기"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="고전압 배선"/>
+        <text name="rms_breakdowns_part_inverter" text="인버터"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="전압 컨버터"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="온보드 충전기"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="전기 모터 베어링"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="전기 모터 권선"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="모터 위치 센서"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="열 교환액 펌프"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="워터 펌프"/>
+        <text name="rms_breakdowns_part_radiator_core" text="라디에이터 코어"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="열 교환액 호스 및 연결부"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="팽창 탱크"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="보조 벨트 및 텐셔너"/>
+        <text name="rms_breakdowns_part_fan_blade" text="팬 블레이드"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="전동 팬"/>
+        <text name="rms_breakdowns_part_reducer" text="감속기"/>
+        <text name="rms_breakdowns_part_brake_discs" text="브레이크 디스크와 라이닝"/>
+        <text name="rms_breakdowns_part_brake_control" text="브레이크 작동 장치"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="트레일러 브레이크 밸브"/>
+        <text name="rms_breakdowns_part_park_brake" text="주차 브레이크"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="허브 베어링과 오일 씰"/>
+        <text name="rms_breakdowns_part_alternator" text="발전기"/>
+        <text name="rms_breakdowns_part_starter" text="스타터"/>
+        <text name="rms_breakdowns_part_turbocharger" text="터보차저"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="변속기 오일 씰"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="트랙 텐셔너"/>
+        <text name="rms_breakdowns_part_track_rollers" text="트랙 롤러와 아이들러"/>
+        <text name="rms_breakdowns_part_thermostat" text="온도 조절 밸브"/>
+        <text name="rms_breakdowns_part_oil_pump" text="오일 펌프"/>
+        <text name="rms_breakdowns_part_synchronizer" text="싱크로나이저"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="조향 볼 조인트와 로드"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="로더 관절 핀과 부싱"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="조향 너클 킹핀"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="조향 오비트롤"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="조향 실린더"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="운전실 서스펜션"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="PTO 클러치"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="PTO 출력축 베어링"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="PTO 출력축 오일 씰"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="PTO 출력축"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="PTO 결합 전자 밸브"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="PTO 제어 스위치"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="PTO 회전 속도 센서"/>
+        <text name="rms_breakdowns_part_pto_brake" text="PTO 브레이크"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="전방 PTO 클러치"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="유압 펌프"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="유압 실린더"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="유압 호스"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="유압 필터"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="유압 오일 열 교환기"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="유압 제어 밸브"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="팬 클러치"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="연료 공급 펌프"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="연료 인젝터"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="고압 펌프"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="연료 필터"/>
+        <text name="rms_breakdowns_part_fuel_line" text="연료 라인"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="기계식 분사 펌프"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="연료 계량 밸브"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="커먼레일 압력 센서"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="커먼레일 압력 제한 밸브"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="가스 감압기"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="가스 차단 전자 밸브"/>
+        <text name="rms_breakdowns_part_gas_filter" text="가스 필터"/>
+        <text name="rms_breakdowns_part_gas_lines" text="가스 라인"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="가스 인젝터"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="요소수 펌프"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="요소수 정량 분사 인젝터"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="AdBlue 필터"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="NOx 센서"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="매연저감 필터"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="예열 플러그"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="PTO가 해제되었습니다"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="전방 PTO 구동이 해제되었습니다"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="PTO가 분리되지 않습니다: 작업기를 멈추려면 기계 전원을 끄십시오"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="PTO 클러치의 초기 마모입니다. 구동이 때때로 해제됩니다."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="PTO 클러치가 중간 정도로 마모되었습니다. 해제가 반복됩니다."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="PTO 클러치가 심하게 마모되었습니다. 작업기가 자주 구동력을 잃습니다."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="PTO 클러치에 임계 고장이 발생했습니다. 작업기가 정지합니다."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="PTO 클러치의 초기 마모입니다. 디스크가 달라붙기 시작합니다."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="PTO 클러치가 중간 정도로 마모되었습니다. 디스크가 점점 더 달라붙습니다."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="PTO 클러치가 심하게 마모되었습니다. 디스크가 달라붙어 PTO가 때때로 분리되지 않습니다."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="PTO 클러치에 임계 고장이 발생했습니다. 디스크가 용접되어 PTO가 분리되지 않고 기계 전원을 꺼야 작업기가 정지합니다."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="PTO 출력축 베어링의 초기 마모입니다. 약한 웅웅거림이 발생합니다."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="PTO 출력축 베어링이 중간 정도로 마모되었습니다. 웅웅거림이 분명하게 들립니다."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="PTO 출력축 베어링이 심하게 마모되었습니다. 웅웅거림이 커집니다."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="PTO 출력축 베어링에 임계 고장이 발생했습니다. 웅웅거림이 가장 커집니다."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="PTO 출력축 오일 씰에서 약간의 누출이 발생했습니다. 작업 중 변속기 오일 수준이 천천히 낮아집니다."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="PTO 출력축 오일 씰에서 중간 정도의 누출이 발생했습니다. 작업 중 변속기 오일 수준이 낮아집니다."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="PTO 출력축 오일 씰에서 심한 누출이 발생했습니다. 변속기 오일이 흘러나와 수준이 빠르게 낮아집니다."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="PTO 출력축 오일 씰에서 임계 누출이 발생했습니다. 남은 오일이 변속기를 안전하게 작동시키기에 부족합니다."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="PTO 결합 전자 밸브의 초기 마모입니다. 작업 중 구동이 때때로 끊깁니다."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="PTO 결합 전자 밸브의 초기 마모입니다. PTO가 때때로 결합되지 않습니다."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="PTO 결합 전자 밸브가 중간 정도로 마모되었습니다. 작업 중 구동 끊김이 반복됩니다."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="PTO 결합 전자 밸브가 중간 정도로 마모되었습니다. 결합되지 않는 현상이 반복됩니다."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="PTO 결합 전자 밸브가 심하게 마모되었습니다. 구동이 자주 끊깁니다."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="PTO 결합 전자 밸브가 심하게 마모되었습니다. PTO가 자주 결합되지 않습니다."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="PTO 결합 전자 밸브에 임계 고장이 발생했습니다. 코일이 단선되어 PTO가 더 이상 결합 상태를 유지하지 못합니다."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="PTO 결합 전자 밸브에 임계 고장이 발생했습니다. 스풀이 고착되어 PTO가 더 이상 결합되지 않습니다."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="PTO 제어 스위치의 초기 마모입니다. 접점 불량으로 구동이 때때로 끊깁니다."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="PTO 제어 스위치의 초기 마모입니다. PTO가 때때로 제어 명령에 반응하지 않습니다."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="PTO 제어 스위치가 중간 정도로 마모되었습니다. 접점 불량으로 구동이 끊기는 빈도가 점점 높아집니다."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="PTO 제어 스위치가 중간 정도로 마모되었습니다. PTO가 제어 명령을 무시하는 빈도가 점점 높아집니다."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="PTO 제어 스위치가 심하게 마모되었습니다. 접점이 더 이상 연결을 유지하지 못해 구동이 자주 끊깁니다."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="PTO 제어 스위치가 심하게 마모되었습니다. 제어 명령이 자주 효과가 없습니다."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="PTO 제어 스위치에 임계 고장이 발생했습니다. 접점이 열린 채로 남아 PTO가 해제됩니다."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="PTO 제어 스위치에 임계 고장이 발생했습니다. 접점이 더 이상 닫히지 않아 PTO가 더 이상 결합되지 않습니다."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="PTO 출력축에 고장이 발생했습니다. 스플라인이 떨어져 나가 더 이상 회전을 전달하지 못합니다."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="PTO 출력축에 고장이 발생했습니다. 축이 부러져 작업기가 더 이상 구동되지 않습니다."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="PTO 회전 속도 센서에 고장이 발생했습니다. 더 이상 신호를 보내지 않아 안전장치가 PTO를 해제합니다."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="PTO 브레이크에 고장이 발생했습니다. 계속 체결된 상태로 남아 출력축을 잠급니다."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="전방 PTO 클러치의 초기 마모입니다. 전방 출력축 구동이 때때로 해제됩니다."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="전방 PTO 클러치가 중간 정도로 마모되었습니다. 전방 출력축의 해제가 반복됩니다."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="전방 PTO 클러치가 심하게 마모되었습니다. 전방 작업기가 자주 구동력을 잃습니다."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="전방 PTO 클러치에 임계 고장이 발생했습니다. 전방 출력축이 더 이상 회전하지 않으며 후방 PTO에는 영향이 없습니다."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="PTO 결합 거부"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="임시 수리"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="결함"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="시스템은 정상 작동 중이지만 점검에서 결함 부품이 발견되었습니다. 이 부품에는 더 이상 안전 여유가 없으므로 갑작스러운 고장을 방지하기 위해 예방적 교체를 권장합니다."/>
+        <text name="rms_breakdowns_dead_battery_message" text="배터리 전력 부족"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="구동 배터리 저온: 주행 가능 거리 및 출력 감소"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="시스템은 정상 작동 중이지만 전적으로 임시 수리에 의존하고 있습니다. 부하 시 고장을 방지하려면 가능한 한 빨리 부품을 완전히 교체하는 것이 좋습니다."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="터보차저 베어링이 마모되었습니다. 희미한 휘파람 소리가 들리며 고회전 영역에서 출력이 약간 떨어집니다."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="터보차저 씰에서 누출이 발생합니다. 확연한 출력 손실과 연료 소비 증가가 나타납니다."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="터빈 블레이드가 손상되었습니다. 심각한 출력 손실과 고부하 시 엔진 정지 위험이 있습니다."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="터보차저에 임계 고장이 발생했습니다. 엔진 출력을 대부분 상실했으며 심각한 내부 손상 위험이 있습니다."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="클러치 플레이트가 마모되었습니다. 부하 시 클러치 슬립으로 인해 간헐적으로 출력이 손실됩니다."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="클러치가 상당히 마모되었습니다. 가속 시와 고부하에서 확연한 슬립이 발생합니다."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="클러치가 심하게 마모되었습니다. 심한 슬립으로 바퀴에 동력을 전달하기 어렵습니다."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="클러치가 완전히 타버렸습니다. 차량이 움직일 수 없습니다."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="싱크로나이저가 마모되었습니다. 기어 변속 시 간헐적으로 갈리는 소리가 나거나 변속이 어려워집니다."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="싱크로나이저가 손상되었습니다. 기어 변속이 자주 어렵거나 실패할 수 있습니다."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="싱크로나이저 치가 파손되었습니다. 부하 시 변속 실패나 기어가 빠질 가능성이 높습니다."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="싱크로나이저가 완전히 고장 났습니다. 기어 변속이 불가능합니다."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="변속기 오일이 약간 누유됩니다. 작업 중 오일 레벨이 서서히 내려갑니다."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="변속기 오일이 중간 정도로 누출됩니다. 오일 수준이 확연히 낮아지고 변속기가 더 뜨거워집니다."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="변속기 오일 누유가 심합니다. 오일 레벨이 빠르게 내려가고 부하 시 변속기가 과열됩니다."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="변속기 오일이 임계 수준으로 누출됩니다. 남은 오일로는 변속기를 안전하게 작동할 수 없습니다."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="트랙 텐셔너가 약간 오작동합니다. 트랙 장력이 약간 불안정해져 구름 저항과 마모가 소폭 증가합니다."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="트랙 텐셔너가 중간 정도로 오작동합니다. 장력이 불안정해지고 주행 효율이 떨어지며 정렬 불량 위험이 커집니다."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="트랙 텐셔너가 심하게 오작동합니다. 장력이 크게 흐트러지고 동력 전달이 비효율적이며 트랙 이탈 위험이 커집니다."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="트랙 텐셔너에 임계 고장이 발생했습니다. 트랙을 더 이상 제대로 유지할 수 없으며 차량을 안전하게 운행할 수 없습니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="온도 조절 밸브가 약간 오작동합니다. 엔진이 천천히 예열되고 작업 중에도 너무 차갑습니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="온도 조절 밸브가 약간 오작동합니다. 온도 조절이 약해 부하 시 엔진이 더 뜨거워집니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="온도 조절 밸브가 중간 정도로 오작동합니다. 엔진이 천천히 예열되고 작업 중에도 너무 차갑습니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="온도 조절 밸브가 중간 정도로 오작동합니다. 온도가 더 빨리 오르고 부하 시 엔진이 뜨겁게 작동합니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="온도 조절 밸브가 심하게 오작동합니다. 엔진이 천천히 예열되고 작업 중에도 너무 차갑습니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="온도 조절 밸브가 심하게 오작동합니다. 엔진이 매우 뜨거워져 장시간 작업하면 과열될 수 있습니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="온도 조절 밸브에 임계 고장이 발생했습니다. 엔진이 천천히 예열되고 작업 중에도 너무 차갑습니다."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="온도 조절 밸브에 임계 고장이 발생했습니다. 닫힌 채로 남아 엔진이 빠르게 과열됩니다."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="엔진이 보호 모드로 전환되었습니다. 온도가 내려갈 때까지 출력이 제한됩니다."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="과열 보호: 출력 제한"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="과열 보호가 강화됩니다. 엔진 출력이 절반으로 줄었습니다."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="과열 보호: 출력 절반으로 제한"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="과열 보호가 최대로 작동 중입니다. 엔진 출력의 극히 일부만 남았습니다."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="과열 보호: 출력 대폭 제한"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="손상을 막기 위해 엔진이 정지되었습니다. 다시 시동을 걸기 전에 식히십시오."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="과열 보호: 엔진 정지"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="오일 펌프가 약간 오작동합니다. 오일 압력이 낮아지고 토크가 약간 감소하며 엔진 온도가 올라가고 노킹이 발생할 수 있습니다."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="오일 펌프가 중간 정도로 오작동합니다. 오일 압력이 부족하고 엔진 토크가 확연히 감소하며 엔진 온도가 상승하고 기계적 노킹음이 명확히 들립니다."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="오일 펌프가 심하게 오작동합니다. 오일 압력이 임계 수준으로 낮고 엔진 토크가 크게 떨어지며 과열 가능성이 높고 심한 기계적 노킹과 엔진 정지가 발생할 수 있습니다."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="오일 펌프에 임계 고장이 발생했습니다. 엔진을 안전하게 작동하기에는 오일 순환이 부족하여 시동하거나 계속 운행할 수 없습니다."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="엔진이 고착되어 더 이상 회전할 수 없습니다."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="엔진 정지됨"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU가 약간 오작동합니다. 엔진 출력이 약간 감소합니다."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU가 중간 정도로 오작동합니다. 확연한 출력 손실과 연료 소비 증가가 발생합니다."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="ECU가 심하게 오작동합니다. 심각한 출력 손실, 높은 연료 소비 및 엔진 정지 위험이 있습니다."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="ECU가 완전히 고장 났습니다. 엔진을 제어할 수 없으며 시동이 걸리지 않습니다."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="전원 케이블과 접지선이 약간 오작동합니다. 접점 저항 증가로 조명이 간헐적으로 깜박이고 전원 공급이 불안정하며 시동이 어려워집니다. 주차 중에는 누설 전류가 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="전원 케이블과 접지선이 중간 정도로 오작동합니다. 접점 손실로 조명이 자주 깜박이고 전압 공급이 불안정하며 시동이 어렵고 엔진이 정지할 수 있습니다. 주차 중에는 누설 전류가 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="전원 케이블과 접지선이 심하게 오작동합니다. 회로의 전원 공급이 불안정하고 조명이 완전히 고장 날 수 있으며 엔진 토크가 감소하고 엔진 정지 가능성이 높으며 시동도 불안정합니다. 주차 중에는 누설 전류가 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="전원 케이블과 접지선에 임계 고장이 발생했습니다. 조명이 작동하지 않으며 엔진 시동이 불가능합니다. 주차 중에는 누설 전류가 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="전원 케이블과 접지선이 약간 오작동합니다. 접점 저항 증가로 조명이 간헐적으로 깜박이고 전원 공급이 불안정해집니다. 주차 중에는 누설 전류가 보조 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="전원 케이블과 접지선이 중간 정도로 오작동합니다. 접점 손실로 조명이 자주 깜박이고 전압 공급이 불안정하며 전원이 끊길 수 있습니다. 주차 중에는 누설 전류가 보조 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="전원 케이블과 접지선이 심하게 오작동합니다. 회로의 전원 공급이 불안정하고 조명이 완전히 고장 날 수 있으며 출력이 감소하고 전원이 끊길 가능성이 높습니다. 주차 중에는 누설 전류가 보조 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="전원 케이블과 접지선에 임계 고장이 발생했습니다. 조명이 작동하지 않으며 장비 시동이 걸리지 않습니다. 주차 중에는 누설 전류가 보조 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="열 교환액 호스 및 연결부가 약간 오작동합니다. 약간의 누수는 열 교환액 수위를 거의 낮추지 않습니다."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="열 교환액 호스 및 연결부가 약간 오작동합니다. 약간 눌린 호스가 열 교환액 흐름을 조금 줄입니다."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="열 교환액 호스 및 연결부가 중간 정도로 오작동합니다. 누수가 더 분명해지고 수위가 더 내려갑니다."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="열 교환액 호스 및 연결부가 중간 정도로 오작동합니다. 흐름이 제한되어 부하 시 온도가 더 빨리 올라갑니다."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="열 교환액 호스 및 연결부가 심하게 오작동합니다. 열 교환액이 많이 줄어 부하 시 엔진이 과열될 수 있습니다."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="열 교환액 호스 및 연결부가 심하게 오작동합니다. 흐름이 약해 장시간 작업하면 엔진이 과열됩니다."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="열 교환액 호스 및 연결부에 임계 고장이 발생했습니다. 수위가 빠르게 떨어져 열 교환 회로가 빌 수 있습니다."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="열 교환액 호스 및 연결부에 임계 고장이 발생했습니다. 순환이 크게 막혀 엔진이 빠르게 과열됩니다."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="팽창 탱크가 약간 오작동합니다. 균열로 열 교환액이 조금 스며 나옵니다."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="팽창 탱크가 약간 오작동합니다. 연결부에서 약간 스며 나옵니다."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="팽창 탱크가 중간 정도로 오작동합니다. 균열에서 열 교환액이 분명히 새고 수위가 내려갑니다."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="팽창 탱크가 중간 정도로 오작동합니다. 연결부에서 열 교환액이 새고 수위가 내려갑니다."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="팽창 탱크가 심하게 오작동합니다. 누수로 열 교환액 수위가 빠르게 떨어집니다."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="팽창 탱크가 심하게 오작동합니다. 연결부에서 열 교환액이 빠르게 줄어듭니다."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="팽창 탱크에 임계 고장이 발생했습니다. 열 교환액이 빠르게 빠져 회로가 비게 됩니다."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="팽창 탱크에 임계 고장이 발생했습니다. 연결부 누수로 회로가 빠르게 비게 됩니다."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="보조 벨트 및 텐셔너가 약간 오작동합니다. 소리를 내며 조금 미끄러져 충전과 순환이 약간 줄어듭니다."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="보조 벨트 및 텐셔너가 중간 정도로 오작동합니다. 부하 시 미끄러져 충전이 줄고 열 교환액 흐름도 약해집니다."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="보조 벨트 및 텐셔너가 심하게 오작동합니다. 심하게 미끄러져 충전과 순환이 크게 줄어듭니다."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="보조 벨트 및 텐셔너에 임계 고장이 발생했습니다. 끊어져 충전과 열 교환액 순환이 갑자기 정지합니다."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="팬 블레이드가 약간 오작동합니다. 공기 흐름이 조금 줄며, 특히 저속에서 열 교환이 약해집니다."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="팬 블레이드가 중간 정도로 오작동합니다. 공기 흐름이 크게 줄고 온도가 더 올라갑니다."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="팬 블레이드가 심하게 오작동합니다. 공기 흐름이 분명히 줄고 부하 시 엔진이 뜨거워집니다."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="팬 블레이드에 임계 고장이 발생했습니다. 공기 흐름이 절반으로 줄고 부하 시 엔진이 빠르게 과열됩니다."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="전동 팬이 약간 오작동합니다. 열 교환이 필요할 때 공기를 조금 덜 보냅니다."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="전동 팬이 중간 정도로 오작동합니다. 공기 흐름이 크게 줄고 온도가 더 빨리 오릅니다."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="전동 팬이 심하게 오작동합니다. 공기 순환이 분명히 줄고 부하 시 온도가 올라갑니다."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="전동 팬에 임계 고장이 발생했습니다. 공기 순환이 절반으로 줄고 부하 시 온도가 빠르게 올라갑니다."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="CVT 변속기 오작동의 조기 징후가 발견되었습니다. 점검 및 수리가 필요합니다."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="CVT 변속기 오작동이 악화되고 있습니다. 계속 운행 시 비상 모드로 전환될 수 있습니다."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="CVT 변속기에 임계 손상이 발생했습니다. 변속기가 비상 모드에 있으며 차량 최고 속도가 제한됩니다."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="CVT 변속기가 완전히 고장 났습니다. 수리 전까지 더 이상의 운행이 불가능합니다."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="배터리에 설페이션 현상이 약간 발생했습니다. 유효 배터리 용량이 감소하여 부하 시 전기 예비력이 낮아집니다."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="배터리 설페이션이 중간 정도로 진행되었습니다. 유효 용량이 크게 줄어 엔진 시동이 어려워집니다."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="배터리 설페이션이 심합니다. 유효 용량이 임계 수준으로 낮고 시동 모터 구동 성능이 불안정합니다."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="배터리 설페이션이 임계 수준입니다. 유효 용량이 거의 없으며 안정적인 시동에 필요한 시동 모터 구동 출력이 부족합니다."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="보조 배터리에 설페이션 현상이 약간 발생했습니다. 유효 배터리 용량이 감소하여 부하 시 전기 예비력이 낮아집니다."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="보조 배터리 설페이션이 중간 정도로 진행되었습니다. 유효 용량이 크게 줄어 전기 예비력이 더 빨리 소진됩니다."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="보조 배터리 설페이션이 심합니다. 유효 용량이 임계 수준으로 낮고 전기 예비력이 매우 빨리 소진됩니다."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="보조 배터리 설페이션이 임계 수준입니다. 유효 용량이 거의 없으며 안정적인 시동에 부족합니다."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="브레이크 디스크와 라이닝이 약간 마모되었습니다. 제동 성능이 약간 저하됩니다."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="브레이크 디스크와 라이닝이 중간 정도로 마모되었습니다. 제동 거리가 확연하게 길어집니다."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="브레이크 디스크와 라이닝이 심하게 마모되었습니다. 브레이크가 매우 약하고 안정적으로 작동하지 않습니다."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="브레이크 디스크와 라이닝에 임계 고장이 발생했습니다. 차량의 제동이 매우 약해지고 주행이 위험해집니다."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="브레이크 작동 장치가 약간 오작동합니다. 제동 시 차량이 한쪽으로 약간 치우칩니다."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="브레이크 작동 장치가 약간 오작동합니다. 페달이 약간 물러지고 제동 성능이 조금 떨어집니다."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="브레이크 작동 장치가 중간 정도로 오작동합니다. 제동 시 한쪽으로 확연히 치우칩니다."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="브레이크 작동 장치가 중간 정도로 오작동합니다. 페달이 물러지고 압력이 내려가며 제동 성능이 확연히 떨어집니다."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="브레이크 작동 장치가 심하게 오작동합니다. 제동 시 차량이 한쪽으로 심하게 치우칩니다."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="브레이크 작동 장치가 심하게 오작동합니다. 페달이 비정상적으로 깊이 들어가고 압력이 급격히 떨어져 차량의 제동이 약해집니다."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="브레이크 작동 장치에 임계 고장이 발생했습니다. 제동 시 한쪽으로 매우 심하게 치우칩니다."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="브레이크 작동 장치에 임계 고장이 발생했습니다. 페달이 거의 저항 없이 들어가고 차량이 거의 제동되지 않습니다."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="트레일러 브레이크 밸브가 약간 오작동합니다. 트레일러의 제동력이 조금 줄어듭니다."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="트레일러 브레이크 밸브가 중간 정도로 오작동합니다. 트레일러의 제동력이 확연히 줄어듭니다."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="트레일러 브레이크 밸브가 심하게 오작동합니다. 트레일러에 제동력이 조금만 전달됩니다."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="트레일러 브레이크 밸브에 임계 고장이 발생했습니다. 트레일러가 더 이상 제동되지 않습니다."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="주차 브레이크가 약간 오작동합니다. 해제한 뒤에도 약간 끌려 장비를 약하게 제동합니다."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="주차 브레이크가 중간 정도로 오작동합니다. 해제한 뒤에도 확연하게 끌려 장비를 붙잡습니다."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="주차 브레이크가 심하게 오작동합니다. 해제한 뒤에도 절반 정도 체결된 상태로 남아 장비를 강하게 붙잡습니다."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="주차 브레이크가 완전히 고장 났습니다. 더 이상 해제되지 않으며 체결된 것처럼 장비를 붙잡습니다."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="허브 베어링과 오일 씰이 약간 마모되었습니다. 기계적 저항이 조금 증가하고 비정상적인 작동 소음이 발생할 수 있습니다."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="허브 베어링과 오일 씰이 중간 정도로 마모되었습니다. 마찰이 확연히 증가하고 소음이 커지며 기계적 효율이 떨어집니다."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="허브 베어링과 오일 씰이 심하게 마모되었습니다. 마찰과 소음이 크며 부하 시 고착될 실제 위험이 있습니다."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="허브 베어링과 오일 씰에 임계 고장이 발생했습니다. 완전 고착에 가까워 작동이 불가능해집니다."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="트랙 롤러와 아이들러 베어링이 약간 마모되었습니다. 기계적 저항이 조금 증가하고 비정상적인 작동 소음이 발생할 수 있습니다."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="트랙 롤러와 아이들러 베어링이 중간 정도로 마모되었습니다. 마찰과 소음이 증가하고 회전이 어려워집니다."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="트랙 롤러와 아이들러 베어링이 심하게 마모되었습니다. 마찰과 소음이 크며 부하 시 고착될 위험이 있습니다."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="트랙 롤러와 아이들러 베어링에 임계 고장이 발생했습니다. 베어링 하나가 고착되면 트랙이 멈출 수 있습니다."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="발전기 조절기가 약간 오작동합니다. 충전 출력이 감소하여 배터리 충전 효율이 떨어집니다."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="발전기 조절기가 중간 정도로 오작동합니다. 충전이 약하고 불안정하여 배터리가 제대로 충전되지 않고 전압 손실이 증가합니다."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="발전기 조절기가 심하게 오작동합니다. 충전이 크게 줄고 전원 공급이 불안정하여 전기 시스템에 큰 손실이 발생합니다."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="발전기 조절기가 완전히 고장 났습니다. 배터리가 충전되지 않으며 전기 시스템은 남은 배터리 예비 전력으로만 작동합니다."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="발전기 다이오드가 약간 오작동합니다. 충전 출력이 감소하여 배터리 충전 효율이 떨어집니다. 주차 중에는 누설 전류가 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="발전기 다이오드가 중간 정도로 오작동합니다. 충전이 약하고 불안정하여 배터리가 제대로 충전되지 않고 전압 손실이 증가합니다. 주차 중에는 누설 전류가 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="발전기 다이오드가 심하게 오작동합니다. 충전이 크게 줄고 전원 공급이 불안정하여 전기 시스템에 큰 손실이 발생합니다. 주차 중에는 누설 전류가 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="발전기 다이오드가 완전히 고장 났습니다. 배터리가 충전되지 않으며 전기 시스템은 남은 배터리 예비 전력으로만 작동합니다. 주차 중에는 누설 전류가 배터리를 방전시킵니다."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="스타터가 약간 오작동합니다. 엔진을 더 느리게 돌려 시동에 시간이 조금 더 걸립니다."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="스타터가 중간 정도로 오작동합니다. 엔진을 느리게 돌려 시동이 어렵고, 혹한에서는 시동이 불가능합니다."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="스타터가 심하게 오작동합니다. 엔진을 거의 돌리지 못해 엔진이 따뜻하거나 날씨가 온화할 때만 시동이 걸립니다."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="스타터가 완전히 고장 났습니다. 엔진을 더 이상 돌리지 못하며, 작동 중인 엔진은 계속 돌지만 정지한 뒤에는 다시 시동을 걸 수 없습니다."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="전기 모터 베어링이 약간 마모되었습니다. 약한 소음이 발생하고 전력 소비가 조금 증가합니다."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="전기 모터 베어링이 중간 정도로 마모되었습니다. 소음이 확연히 들리고 전력 소비가 증가하며 출력이 약간 감소합니다."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="전기 모터 베어링이 심하게 마모되었습니다. 소음이 크고 모터가 가열되며 출력이 확연히 감소합니다."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="전기 모터 베어링에 임계 고장이 발생했습니다. 모터가 고착되어 장비가 더 이상 주행할 수 없습니다."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="전기 모터 권선이 약간 열화되었습니다. 출력이 약간 감소하고 모터가 더 가열됩니다."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="전기 모터 권선이 중간 정도로 열화되었습니다. 출력이 확연히 감소하고 모터가 가열되며 전력 소비가 증가합니다."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="전기 모터 권선이 심하게 열화되었습니다. 출력 손실이 크고 모터가 심하게 가열되며 전원이 끊길 수 있습니다."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="전기 모터 권선에 임계 고장이 발생했습니다. 모터가 단락되어 더 이상 작동할 수 없습니다."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="모터 위치 센서가 약간 오작동합니다. 부하 시 짧은 불규칙한 충격이 발생합니다."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="모터 위치 센서가 중간 정도로 오작동합니다. 불규칙한 충격이 빈번해지고 출력이 감소합니다."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="모터 위치 센서가 심하게 오작동합니다. 불규칙한 충격이 심하고 출력이 급감하며 전원이 끊깁니다."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="모터 위치 센서가 완전히 고장 났습니다. 모터를 제어할 수 없으며 장비의 시동이 걸리지 않습니다."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="인버터가 약간 오작동합니다. 모터 출력이 약간 감소합니다."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="인버터가 중간 정도로 오작동합니다. 출력 손실이 나타나고 전력 소비가 증가합니다."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="인버터가 심하게 오작동합니다. 출력 손실이 크고 전원이 끊길 수 있습니다."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="인버터가 완전히 고장 났습니다. 모터에 전원이 공급되지 않으며 장비의 시동이 걸리지 않습니다."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="전압 컨버터가 약간 오작동합니다. 보조 배터리의 충전이 약해집니다."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="전압 컨버터가 중간 정도로 오작동합니다. 보조 배터리의 충전이 감소하고 불안정합니다."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="전압 컨버터가 심하게 오작동합니다. 보조 배터리가 거의 충전되지 않으며 주행 중 방전됩니다."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="전압 컨버터가 완전히 고장 났습니다. 보조 배터리가 충전되지 않으며 장비는 남은 예비 전력으로만 작동합니다."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="온보드 충전기가 약간 오작동합니다. 충전소에서의 충전이 조금 느려집니다."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="온보드 충전기가 중간 정도로 오작동합니다. 충전소에서의 충전이 확연히 느려집니다."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="온보드 충전기가 심하게 오작동합니다. 충전소에서의 충전이 매우 느립니다."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="온보드 충전기가 완전히 고장 났습니다. 구동 배터리를 더 이상 충전할 수 없습니다."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="고전압 배선의 절연이 약간 저하되었습니다. 경고가 표시되며 다른 영향은 없습니다."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="고전압 배선의 절연이 중간 정도로 저하되었습니다. 안전을 위해 출력이 제한됩니다."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="고전압 배선의 절연이 심하게 저하되었습니다. 출력이 크게 제한되고 전원이 끊깁니다."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="고전압 배선의 절연에 임계 고장이 발생했습니다. 안전을 위해 장비가 시동을 거부합니다."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="구동 배터리 셀이 약간 오작동합니다. 주행 가능 거리가 약간 감소합니다."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="구동 배터리 셀이 중간 정도로 오작동합니다. 주행 가능 거리가 확연히 감소하고 출력이 제한됩니다."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="구동 배터리 셀이 심하게 오작동합니다. 주행 가능 거리와 출력이 급감하며 전원이 끊길 수 있습니다."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="구동 배터리에 임계 고장이 발생했습니다. 장비를 더 이상 작동시킬 수 없습니다."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="고전압 전자 개폐기가 약간 마모되었습니다. 드물게 전원 공급이 끊깁니다."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="고전압 전자 개폐기가 중간 정도로 마모되었습니다. 전원 공급이 주기적으로 끊깁니다."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="고전압 전자 개폐기가 심하게 마모되었습니다. 전원 공급이 자주 끊깁니다."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="고전압 전자 개폐기에 임계 고장이 발생했습니다. 구동 배터리가 장비에 전원을 공급하지 못하며 시동이 걸리지 않습니다."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="열 교환액 펌프가 약간 오작동합니다. 열 교환액 순환이 약해지고 온도가 조금 더 상승합니다."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="열 교환액 펌프가 중간 정도로 오작동합니다. 열 제거 성능이 확연히 저하됩니다."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="열 교환액 펌프가 심하게 오작동합니다. 열 제거 성능이 크게 저하되며 부하 시 과열될 가능성이 높습니다."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="열 교환액 펌프가 완전히 고장 났습니다. 열 교환액이 거의 순환하지 않으며 장비가 빠르게 과열됩니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="워터 펌프가 약간 오작동합니다. 고장이 아직 잘 드러나지 않아 점검이 필요합니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="워터 펌프가 중간 정도로 오작동합니다. 순환이 줄어 열 교환 성능이 저하됩니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="워터 펌프가 심하게 오작동합니다. 순환이 부족하여 과열 위험이 있습니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="워터 펌프에 임계 고장이 발생했습니다. 순환이 크게 손상되어 열 교환 성능이 크게 저하됩니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="워터 펌프가 약간 오작동합니다. 워터 펌프 씰 주변에 적은 양의 열 교환액 흔적이 나타납니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="워터 펌프가 중간 정도로 오작동합니다. 열 교환액이 워터 펌프 씰에서 누출되어 액체 수준이 낮아지고 순환 성능이 떨어집니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="워터 펌프가 심하게 오작동합니다. 워터 펌프 씰의 누출이 펌프 주변에 많은 흔적을 남기고 액체 수준이 낮아져 순환이 줄고 과열 위험이 증가합니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="워터 펌프에 임계 고장이 발생했습니다. 워터 펌프 씰에서 많은 액체가 누출되어 회로의 액체가 부족해지고 순환으로 엔진의 열을 충분히 낮출 수 없습니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="워터 펌프가 약간 오작동합니다. 고장이 아직 잘 드러나지 않아 점검이 필요합니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="워터 펌프가 중간 정도로 오작동합니다. 펌프 베어링 간격이 증가하여 순환이 줄어듭니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="워터 펌프가 심하게 오작동합니다. 순환이 부족하여 과열 위험이 있습니다."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="워터 펌프에 임계 고장이 발생했습니다. 순환이 크게 손상되어 열 교환 성능이 크게 저하됩니다."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="라디에이터 코어가 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="라디에이터 코어가 중간 정도로 오작동합니다. 액체에서 방출하는 열이 줄어듭니다."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="라디에이터 코어가 심하게 오작동합니다. 코어의 열 방출이 나빠져 과열 위험이 증가합니다."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="라디에이터 코어에 임계 고장이 발생했습니다. 열을 거의 방출하지 못하여 열 교환 성능이 크게 저하됩니다."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="라디에이터 코어가 약간 오작동합니다. 코어의 관에 소량의 열 교환액이 나타납니다."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="라디에이터 코어가 중간 정도로 오작동합니다. 손상된 관에서 열 교환액이 라디에이터로 나와 회로의 액체 수준이 낮아집니다."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="라디에이터 코어가 심하게 오작동합니다. 열 교환액이 코어의 손상된 관에서 나와 라디에이터에 젖은 흔적을 남기고 회로의 액체가 빠르게 줄어듭니다."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="라디에이터 코어에 임계 고장이 발생했습니다. 손상된 코어에서 많은 열 교환액이 손실됩니다. 액체 수준이 낮아지고 라디에이터가 엔진의 열을 충분히 방출할 수 없습니다."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="감속기의 기어와 베어링이 약간 마모되었습니다. 주행 중 약한 소음이 발생합니다."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="감속기의 기어와 베어링이 중간 정도로 마모되었습니다. 소음이 확연히 들리고 전력 소비가 증가합니다."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="감속기의 기어와 베어링이 심하게 마모되었습니다. 소음이 크고 감속기가 가열되며 바퀴에 전달되는 출력이 감소합니다."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="감속기에 임계 고장이 발생했습니다. 고착되어 장비가 더 이상 주행할 수 없습니다."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="피스톤이 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="피스톤이 중간 정도로 오작동합니다. 연소실로 들어가는 오일이 늘고 푸른 연기가 발생합니다."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="피스톤이 심하게 오작동합니다. 오일 소모와 푸른 연기가 증가합니다."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="피스톤에 임계 고장이 발생했습니다. 피스톤이 고착되어 엔진이 정지했습니다."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="피스톤이 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="피스톤이 중간 정도로 오작동합니다. 연소실로 들어가는 오일이 늘고 푸른 연기가 발생합니다."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="피스톤이 심하게 오작동합니다. 오일 소모와 푸른 연기가 증가합니다."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="피스톤에 임계 고장이 발생했습니다. 피스톤이 파손되어 엔진이 정지했습니다."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="피스톤 링이 약간 오작동합니다. 침전물이 홈에서 링의 움직임을 방해합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="피스톤 링이 중간 정도로 오작동합니다. 밀폐 성능이 저하되어 엔진 출력이 감소합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="피스톤 링이 심하게 오작동합니다. 압축이 저하되어 시동이 어렵고 출력이 감소합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="피스톤 링에 임계 고장이 발생했습니다. 압축이 매우 낮아 시동이 어렵고 출력이 크게 감소합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="피스톤 링이 약간 오작동합니다. 침전물이 홈에서 링의 움직임을 방해합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="피스톤 링이 중간 정도로 오작동합니다. 연소실로 들어가는 오일이 늘고 푸른 연기가 발생합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="피스톤 링이 심하게 오작동합니다. 오일 소모와 푸른 연기가 증가합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="피스톤 링에 임계 고장이 발생했습니다. 많은 오일이 들어가고 푸른 연기가 계속됩니다."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="피스톤 링이 약간 오작동합니다. 침전물이 홈에서 링의 움직임을 방해합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="피스톤 링이 중간 정도로 오작동합니다. 밀폐 성능이 저하되어 엔진 출력이 감소합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="피스톤 링이 심하게 오작동합니다. 압축이 저하되어 시동이 어렵고 출력이 감소합니다."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="피스톤 링에 임계 고장이 발생했습니다. 피스톤 링이 파손되어 압축이 저하되고 연소실로 오일이 들어갑니다."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="실린더 라이너가 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="실린더 라이너가 중간 정도로 오작동합니다. 표면에 흠이 있어 밀폐 성능이 저하됩니다."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="실린더 라이너가 심하게 오작동합니다. 표면에 흠이 있어 밀폐 성능이 저하됩니다. 오일 소모와 푸른 연기가 증가합니다."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="실린더 라이너에 임계 고장이 발생했습니다. 피스톤이 실린더 라이너 안에서 고착되어 엔진이 정지했습니다."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="실린더 라이너가 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="실린더 라이너가 중간 정도로 오작동합니다. 열 교환액이 균열이 있는 실린더 라이너를 통해 실린더로 들어가 액체 수준이 낮아집니다."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="실린더 라이너가 심하게 오작동합니다. 균열이 있는 실린더 라이너가 열 교환액을 실린더로 통과시켜 배기구에서 흰 연기가 발생합니다."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="실린더 라이너에 임계 고장이 발생했습니다. 많은 열 교환액이 균열이 있는 실린더 라이너를 통해 실린더로 들어가 흰 연기가 계속되고 열 교환이 부족합니다."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="흡기 밸브가 약간 오작동합니다. 맞물리는 면이 손상되어 출력이 조금 감소합니다."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="흡기 밸브가 중간 정도로 오작동합니다. 밸브가 잘 닫히지 않아 실화와 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="흡기 밸브가 심하게 오작동합니다. 시트가 타서 실화, 엔진 꺼짐과 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="흡기 밸브에 임계 고장이 발생했습니다. 시트가 타서 실화, 엔진 꺼짐과 큰 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="흡기 밸브가 약간 오작동합니다. 맞물리는 면이 손상되어 출력이 조금 감소합니다."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="흡기 밸브가 중간 정도로 오작동합니다. 밸브가 잘 닫히지 않아 실화와 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="흡기 밸브가 심하게 오작동합니다. 시트가 타서 실화, 엔진 꺼짐과 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="흡기 밸브에 임계 고장이 발생했습니다. 흡기 밸브가 부러져 엔진이 정지했습니다."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="배기 밸브가 약간 오작동합니다. 맞물리는 면이 손상되어 출력이 조금 감소합니다."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="배기 밸브가 중간 정도로 오작동합니다. 밸브가 잘 닫히지 않아 실화와 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="배기 밸브가 심하게 오작동합니다. 시트가 타서 실화, 엔진 꺼짐과 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="배기 밸브에 임계 고장이 발생했습니다. 시트가 타서 실화, 엔진 꺼짐과 큰 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="배기 밸브가 약간 오작동합니다. 맞물리는 면이 손상되어 출력이 조금 감소합니다."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="배기 밸브가 중간 정도로 오작동합니다. 밸브가 잘 닫히지 않아 실화와 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="배기 밸브가 심하게 오작동합니다. 시트가 타서 실화, 엔진 꺼짐과 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="배기 밸브에 임계 고장이 발생했습니다. 배기 밸브가 부러져 엔진이 정지했습니다."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="밸브 가이드와 스템 씰이 약간 오작동합니다. 점검으로 가이드 이상을 확인할 수 있고 밸브 소음이 증가합니다."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="밸브 가이드와 스템 씰이 중간 정도로 오작동합니다. 간격이 증가하여 밸브 소음이 커집니다."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="밸브 가이드와 스템 씰이 심하게 오작동합니다. 간격이 너무 커서 소음, 실화와 오일 통과가 발생합니다."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="밸브 가이드와 스템 씰에 임계 고장이 발생했습니다. 가이드 간격이 너무 커서 소음, 실화와 푸른 연기가 발생합니다."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="밸브 가이드와 스템 씰이 약간 오작동합니다. 경화된 씰이 오일을 통과시킵니다."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="밸브 가이드와 스템 씰이 중간 정도로 오작동합니다. 연소실로 들어가는 오일이 늘고 푸른 연기가 발생합니다."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="밸브 가이드와 스템 씰이 심하게 오작동합니다. 오일 소모와 푸른 연기가 증가합니다."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="밸브 가이드와 스템 씰에 임계 고장이 발생했습니다. 많은 오일이 들어가고 푸른 연기가 계속됩니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="실린더 헤드가 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="실린더 헤드가 중간 정도로 오작동합니다. 실린더 헤드의 균열로 열 교환액이 연소실에 들어가 출력이 낮아지고 시동이 어렵습니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="실린더 헤드가 심하게 오작동합니다. 열 교환액이 균열이 있는 실린더 헤드를 통해 연소실로 들어가 흰 연기와 출력 저하가 발생합니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="실린더 헤드에 임계 고장이 발생했습니다. 균열이 많은 열 교환액을 연소실로 통과시킵니다. 출력이 낮고 시동이 어려우며 흰 연기가 발생합니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="실린더 헤드가 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="실린더 헤드가 중간 정도로 오작동합니다. 균열이 있는 실린더 헤드에서 열 교환액이 조금씩 외부로 나와 회로의 액체 수준이 낮아집니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="실린더 헤드가 심하게 오작동합니다. 열 교환액 누출로 균열이 있는 실린더 헤드에 보이는 흔적이 남고 액체 수준이 빠르게 낮아집니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="실린더 헤드에 임계 고장이 발생했습니다. 균열이 있는 실린더 헤드에서 많은 열 교환액이 나와 회로의 액체가 줄고 엔진이 과열될 위험이 있습니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="실린더 헤드가 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="실린더 헤드가 중간 정도로 오작동합니다. 열 교환액이 실린더 헤드의 균열을 통해 오일로 들어가 회로의 액체 수준이 낮아집니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="실린더 헤드가 심하게 오작동합니다. 실린더 헤드의 균열로 오일에 들어가는 열 교환액이 늘어 회로의 액체 수준이 계속 낮아집니다."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="실린더 헤드에 임계 고장이 발생했습니다. 실린더 헤드의 균열로 많은 열 교환액이 오일에 들어가 회로의 액체가 부족해지고 엔진이 과열될 위험이 있습니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="헤드 개스킷이 약간 오작동합니다. 고장이 아직 잘 드러나지 않아 점검이 필요합니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="헤드 개스킷이 중간 정도로 오작동합니다. 이를 통해 열 교환액이 연소실로 들어가 시동 시간이 길어지고 출력이 낮아집니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="헤드 개스킷이 심하게 오작동합니다. 열 교환액이 이를 통해 연소실로 들어가 배기구에서 흰 연기가 발생합니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="헤드 개스킷에 임계 고장이 발생했습니다. 이 부품이 많은 열 교환액을 연소실로 통과시켜 흰 연기가 늘고 시동이 매우 어려워집니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="헤드 개스킷이 약간 오작동합니다. 고장이 아직 잘 드러나지 않아 점검이 필요합니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="헤드 개스킷이 중간 정도로 오작동합니다. 여기에서 열 교환액이 외부로 나와 회로의 액체 수준이 낮아집니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="헤드 개스킷이 심하게 오작동합니다. 여기에서 누출된 열 교환액이 엔진에 흔적을 남기고 액체 수준이 빠르게 낮아집니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="헤드 개스킷에 임계 고장이 발생했습니다. 여기에서 많은 열 교환액이 외부로 나와 액체 수준이 낮아지고 엔진의 열 교환 성능이 크게 저하됩니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="헤드 개스킷이 약간 오작동합니다. 고장이 아직 잘 드러나지 않아 점검이 필요합니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="헤드 개스킷이 중간 정도로 오작동합니다. 열 교환액이 이를 통해 오일로 들어가 회로의 액체 수준이 낮아집니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="헤드 개스킷이 심하게 오작동합니다. 이를 통해 오일에 들어가는 열 교환액이 늘어 회로의 액체가 점차 줄어듭니다."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="헤드 개스킷에 임계 고장이 발생했습니다. 이 부품의 큰 누출이 열 교환액을 오일로 보내 회로에 열 교환에 필요한 액체가 부족해집니다."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="주 베어링이 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="주 베어링이 중간 정도로 오작동합니다. 베어링 간격이 증가합니다."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="주 베어링이 심하게 오작동합니다. 유막이 손상되어 타격음과 열이 발생합니다."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="주 베어링에 임계 고장이 발생했습니다. 주 베어링이 고착되어 엔진이 정지했습니다."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="주 베어링이 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="주 베어링이 중간 정도로 오작동합니다. 베어링 간격이 증가합니다."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="주 베어링이 심하게 오작동합니다. 유막이 손상되어 타격음과 열이 발생합니다."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="주 베어링에 임계 고장이 발생했습니다. 주 베어링 표면이 녹아 엔진이 정지했습니다."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="연결봉 베어링이 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="연결봉 베어링이 중간 정도로 오작동합니다. 베어링 간격이 증가합니다."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="연결봉 베어링이 심하게 오작동합니다. 유막이 손상되어 타격음과 열이 발생합니다."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="연결봉 베어링에 임계 고장이 발생했습니다. 연결봉 베어링이 고착되어 엔진이 정지했습니다."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="연결봉 베어링이 약간 오작동합니다. 점검으로 표면 손상을 확인할 수 있습니다."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="연결봉 베어링이 중간 정도로 오작동합니다. 베어링 간격이 증가합니다."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="연결봉 베어링이 심하게 오작동합니다. 유막이 손상되어 타격음과 열이 발생합니다."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="연결봉 베어링에 임계 고장이 발생했습니다. 연결봉 베어링 표면이 녹아 엔진이 정지했습니다."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="시스템 전압 부족"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="연료 공급 펌프가 조기에 마모되었습니다. 엔진 출력이 약간 낮아지고 연료 소비가 늘어납니다."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="연료 압력이 낮아집니다. 확연한 출력 손실과 연료 소비 증가, 간헐적인 엔진 정지가 발생합니다."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="연료 압력이 임계 수준입니다. 심각한 출력 손실과 매우 높은 연료 소비, 빈번한 엔진 정지가 발생합니다."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="연료 공급 펌프가 완전히 고장 났습니다. 엔진에 연료가 공급되지 않습니다."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="하나 이상의 인젝터 노즐이 약간 막혔습니다. 엔진이 다소 불규칙하게 작동하며 출력이 조금 떨어질 수 있습니다."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="연료 분무 상태가 좋지 않습니다. 부하 시 엔진이 주저하며 확연한 출력 손실과 불규칙한 움직임이 발생합니다."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="연료 인젝터가 고착되었습니다. 엔진이 매우 불안정하게 작동하며 출력 손실이 크고 시동도 불안정합니다."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="인젝터가 완전히 고장 났습니다. 엔진이 정상 작동하지 않으며 시동이 전혀 걸리지 않을 수 있습니다."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="고압 펌프가 약간 오작동합니다. 분사 압력이 더 느리게 올라가 시동에 시간이 더 걸리고 엔진 반응이 느려집니다."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="고압 펌프가 중간 정도로 오작동합니다. 부하 시 분사 압력이 부족하여 엔진이 주저하며 확연한 출력 손실이 발생합니다."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="고압 펌프가 심하게 오작동합니다. 분사 압력이 임계 수준으로 낮아 심각한 출력 손실과 엔진 정지가 발생하고 시동이 어렵습니다."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="고압 펌프가 완전히 고장 났습니다. 더 이상 분사 압력을 만들지 못해 스타터가 엔진을 돌려도 시동이 걸리지 않습니다."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="연료 필터가 약간 막혔습니다. 고부하에서 연료 유량이 약간 줄어듭니다."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="연료 필터가 중간 정도로 막혔습니다. 부하 시 유량이 부족해지고 출력이 떨어지며 엔진이 이따금 주저합니다."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="연료 필터가 심하게 막혔습니다. 연료 공급이 크게 제한되어 출력이 확연히 떨어지고 엔진이 정지할 수 있습니다."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="연료 필터가 완전히 막혔습니다. 엔진이 안정적으로 작동하는 데 필요한 연료를 더 이상 공급받지 못합니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="연료 라인으로 공기가 약간 유입됩니다. 연료 공급이 조금 불안정해집니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="연료 라인으로 공기가 중간 정도 유입됩니다. 연료 공급이 불안정해지고 출력이 떨어지며 엔진이 주저합니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="연료 라인으로 공기가 심하게 유입됩니다. 엔진이 매우 불규칙하게 작동하며 정지 위험이 높습니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="연료 라인에 임계 고장이 발생하여 공기가 대량 유입됩니다. 엔진에 연료를 더 이상 제대로 공급할 수 없습니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="연료 라인이 약간 눌렸습니다. 유량이 줄어 엔진이 시동된 뒤 때때로 꺼집니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="연료 라인이 중간 정도로 눌렸습니다. 엔진이 시동된 뒤 주기적으로 꺼집니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="연료 라인이 심하게 눌렸습니다. 엔진이 자주 꺼집니다."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="연료 라인이 완전히 찌그러졌습니다. 연료가 더 이상 흐르지 않아 엔진이 정지합니다."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="기계식 분사 펌프가 약간 오작동합니다. 토출량이 줄어 시동 시간이 길어지고 엔진 힘이 조금 약해집니다."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="기계식 분사 펌프가 중간 정도로 오작동합니다. 부하 시 토출량이 부족해 엔진 출력이 떨어지고 엔진이 주저합니다."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="기계식 분사 펌프가 심하게 오작동합니다. 연료 부족으로 엔진 출력이 크게 떨어지고 시동이 잘 걸리지 않으며 엔진이 꺼집니다."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="기계식 분사 펌프에 임계 고장이 발생했습니다. 구동부가 파손되어 엔진이 멈추고 다시 시동되지 않습니다."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="연료 계량 밸브가 약간 오작동합니다. 커먼레일 압력이 더 천천히 올라가 시동 시간이 길어집니다."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="연료 계량 밸브가 중간 정도로 오작동합니다. 부하 시 커먼레일 압력이 부족해 엔진 출력이 떨어지고 엔진이 주저합니다."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="연료 계량 밸브가 심하게 오작동합니다. 커먼레일 압력이 목표값에서 크게 벗어나 엔진 출력이 크게 떨어지고 엔진이 꺼집니다."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="연료 계량 밸브에 임계 고장이 발생했습니다. 커먼레일에 압력이 형성되지 않아 스타터가 엔진을 돌려도 시동이 걸리지 않습니다."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="커먼레일 압력 센서가 약간 오작동합니다. 측정값이 불안정해지고 시동 시간이 조금 길어집니다."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="커먼레일 압력 센서가 중간 정도로 오작동합니다. 제어기가 압력을 제대로 조절하지 못해 엔진 출력이 떨어지고 엔진이 주저합니다."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="커먼레일 압력 센서가 심하게 오작동합니다. 엔진이 비상 운전 모드로 전환되어 출력이 크게 떨어지고 꺼질 수 있습니다."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="커먼레일 압력 센서에 임계 고장이 발생했습니다. 측정값이 없어 제어기가 엔진을 비상 운전 모드로 유지합니다."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="커먼레일 압력 제한 밸브가 약간 오작동합니다. 너무 이른 시점에 열려 레일 압력이 천천히 올라가고 시동 시간이 길어집니다."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="커먼레일 압력 제한 밸브가 중간 정도로 오작동합니다. 부하 시 레일 압력을 유지하지 못해 엔진 출력이 낮아지고 엔진이 주저합니다."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="커먼레일 압력 제한 밸브가 심하게 오작동합니다. 레일 압력이 급락하여 엔진 출력이 크게 떨어지고 엔진이 꺼집니다."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="커먼레일 압력 제한 밸브에 임계 고장이 발생했습니다. 열린 채로 고정되어 레일에 압력이 생기지 않고 스타터가 엔진을 돌려도 시동이 걸리지 않습니다."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="가스 감압기가 약간 오작동합니다. 공급 압력이 흔들리고 시동 시간이 길어집니다."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="가스 감압기가 중간 정도로 오작동합니다. 부하 시 압력이 떨어져 엔진 출력이 낮아지고 엔진이 주저합니다."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="가스 감압기가 심하게 오작동합니다. 공급이 불규칙해져 엔진 출력이 크게 떨어지고 시동이 잘 걸리지 않으며 엔진이 꺼집니다."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="가스 감압기에 임계 고장이 발생했습니다. 가스가 충분히 통과하지 못해 엔진이 정지합니다."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="가스 차단 전자 밸브가 약간 오작동합니다. 늦게 열려 시동 시간이 길어지고 엔진이 때때로 주저합니다."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="가스 차단 전자 밸브가 중간 정도로 오작동합니다. 때때로 가스를 차단해 엔진이 주저하고 꺼집니다."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="가스 차단 전자 밸브가 심하게 오작동합니다. 차단이 늘어나고 엔진이 자주 꺼집니다."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="가스 차단 전자 밸브에 임계 고장이 발생했습니다. 닫힌 상태로 유지되어 엔진이 멈추고 다시 시동되지 않습니다."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="가스 필터가 약간 막혔습니다. 고부하 시 가스 유량이 조금 줄어듭니다."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="가스 필터가 중간 정도로 막혔습니다. 부하 시 공급이 부족해 출력이 떨어지고 엔진이 꺼질 수 있습니다."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="가스 필터가 심하게 막혔습니다. 유량이 크게 제한되어 출력이 확연히 떨어지고 엔진이 꺼집니다."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="가스 필터가 완전히 막혔습니다. 엔진이 충분한 가스를 공급받지 못해 정지합니다."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="가스 라인에서 가스가 약간 누출됩니다. 시동 시간이 조금 길어집니다."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="가스 라인에서 가스가 중간 정도로 누출됩니다. 공급이 불규칙해져 엔진이 주저하고 꺼질 수 있습니다."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="가스 라인에서 가스가 심하게 누출됩니다. 압력이 떨어져 엔진이 주저하고 시동이 잘 걸리지 않으며 자주 꺼집니다."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="가스 라인에 임계 수준의 누출이 발생했습니다. 압력이 유지되지 않아 엔진이 정지합니다."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="가스 인젝터가 약간 오작동합니다. 분사량이 불규칙해져 엔진이 덜 고르게 작동하고 소비량이 조금 늘어납니다."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="가스 인젝터가 중간 정도로 오작동합니다. 엔진이 주저하고 출력이 떨어지며 소비량이 늘고 엔진이 꺼질 수 있습니다."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="가스 인젝터가 심하게 오작동합니다. 인젝터 하나의 분사량이 크게 달라져 출력이 크게 떨어지고 소비가 과도해지며 시동이 어려워집니다."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="가스 인젝터에 임계 고장이 발생했습니다. 분사량으로 엔진 작동을 유지할 수 없어 엔진이 정지합니다."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="요소수 펌프에 고장이 발생했습니다. 정량 분사 장치에 요소수를 공급하지 못해 엔진 경고등이 켜집니다. 이후 수리할 때까지 제어기가 출력을 줄입니다."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="요소수 정량 분사 인젝터에 고장이 발생했습니다. 결정으로 막혀 분사하지 못해 엔진 경고등이 켜집니다. 이후 수리할 때까지 출력이 낮아집니다."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlue 필터가 교체 시기에 도달하여 막히기 시작합니다. 가장 완전한 정비 시 교체합니다."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="AdBlue 필터가 오염되어 AdBlue 유량이 줄고 엔진 경고등이 켜집니다. 가장 완전한 정비 시 교체합니다."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="AdBlue 필터가 심하게 오염되어 정량 공급이 작동하지 않고 수리할 때까지 ECU가 출력을 제한합니다."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="AdBlue 필터가 완전히 막혀 정량 공급이 전혀 없고 수리할 때까지 ECU가 출력을 제한합니다."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="NOx 센서에 고장이 발생했습니다. 제어기가 배출가스를 감시하지 못해 엔진 경고등이 켜지고 수십 시간 후 출력이 제한됩니다."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="매연저감 필터가 약간 오작동합니다. 균열로 소량의 매연이 배기로 통과합니다."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="매연저감 필터가 중간 정도로 오작동합니다. 균열이 커져 검은 연기가 보이기 시작합니다."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="매연저감 필터가 심하게 오작동합니다. 필터 담체가 부서져 배기에서 검은 연기가 많이 나옵니다."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="매연저감 필터에 임계 고장이 발생했습니다. 필터 담체가 파손되어 매연이 걸러지지 않고 통과합니다."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="매연저감 필터가 약간 오작동합니다. 필터 담체의 일부가 녹아 막히고 있습니다."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="매연저감 필터가 중간 정도로 오작동합니다. 녹은 부분이 넓어져 배압이 올라갑니다."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="매연저감 필터가 심하게 오작동합니다. 녹고 막혀 더 이상 재생되지 않아 엔진 회전수가 제한됩니다."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="매연저감 필터에 임계 고장이 발생했습니다. 완전히 막혀 배기가 통과하지 못합니다. 필터를 교체해야 엔진 출력이 회복됩니다."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="매연저감 필터가 포화되었습니다. 재생이 완료되지 않아 한 번이라도 재생에 성공할 때까지 엔진 회전수가 제한됩니다."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="매연저감 필터가 임계 수준으로 포화되었습니다. 스스로 재생할 수 없을 만큼 쌓여 정비소에서 서비스 재생이 필요하며 회전수는 계속 제한됩니다."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="팬 클러치가 약간 오작동합니다. 팬의 반응 효율이 떨어지고 열 제거 성능이 조금 저하됩니다."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="팬 클러치가 중간 정도로 오작동합니다. 팬 결합이 불규칙해지고 열 제거 효율이 확연히 떨어집니다."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="팬 클러치가 심하게 오작동합니다. 팬이 충분한 공기 흐름을 만들지 못해 엔진이 더 쉽게 과열됩니다."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="팬 클러치에 임계 고장이 발생했습니다. 팬이 필요한 열 제거 성능을 더 이상 제공할 수 없습니다."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="변속비 제어의 반응이 느려지고 정확도가 떨어집니다."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="변속비가 불규칙하게 변하며 제어 반응이 나빠집니다."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="변속비 제어에 심각한 이상이 생겨 전달되는 구동력이 줄어듭니다."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="변속비 제어가 고장 나 변속기를 거의 사용할 수 없습니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="유압 실린더에서 내부 누설이 약간 발생합니다. 들어 올린 작업기가 부하를 받으면 천천히 내려갑니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="유압 실린더에 중간 정도의 내부 누출이 있습니다. 의도하지 않은 하강이 분명하며 지지하는 하중이 커질수록 심해집니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="유압 실린더에서 내부 누출이 심하게 발생합니다. 무거운 작업기가 더 이상 위치를 안정적으로 유지하지 못합니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="유압 실린더에 임계 내부 누출이 있습니다. 들어 올린 하중이 모두 빠르게 저절로 내려갑니다."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="유압 펌프에 경미한 내부 누출이 있습니다. 작업 기구가 약간 느리게 작동합니다."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="펌프 씰이 마모되었습니다. 유압 장치 작동 속도가 확연히 느려집니다."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="유압 펌프가 손상되었습니다. 작업 기구가 매우 느리고 힘이 없습니다."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="유압 펌프에 고장이 발생했습니다. 유압 시스템을 사용할 수 없습니다."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="유압 호스가 약간 젖어 있습니다. 소량의 오일이 빠져나가며 유압 반응이 조금 저하됩니다."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="유압 호스에서 확연히 오일이 스며 나옵니다. 오일 손실이 계속되고 유압 기능의 반응이 느려집니다."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="유압 호스에서 오일이 계속 새고 있습니다. 오일 손실이 분명하며 유압 기능이 확연히 약해집니다."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="유압 호스에 심각한 외부 누출이 있습니다. 오일이 빠르게 빠져나가며 유압 성능이 크게 저하됩니다."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="유압 필터가 약간 막혀 유량을 제한하기 시작합니다. 유압 기능이 조금 느려집니다. 정비 시 필터가 교체됩니다."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="유압 필터가 중간 정도로 막혔습니다. 모든 유압 기능이 확연히 느려집니다. 정비 시 필터가 교체됩니다."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="유압 필터가 심하게 막혔습니다. 유압 반응이 매우 느립니다. 정비 시 필터가 교체됩니다."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="유압 필터가 완전히 막혔습니다. 유압 기능이 거의 반응하지 않습니다. 정비 시 필터가 교체됩니다."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="유압 오일 열 교환기의 효율이 조금 떨어졌습니다. 유압 장치를 오래 사용하면 오일 온도가 약간 상승합니다."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="유압 오일 열 교환기의 성능이 부족합니다. 유압 장치를 계속 사용하면 오일 온도가 확연히 상승합니다."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="유압 오일 열 교환기가 심하게 손상되었습니다. 무거운 유압 작업은 오일을 빠르게 과열시킵니다."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="유압 오일 열 교환기가 고장 났습니다. 장시간 유압 작업을 하면 오일이 심하게 과열되고 펌프 마모가 빨라집니다."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="유압 제어 밸브가 걸리기 시작합니다. 한 유압 기능이 간헐적으로 주저하고 부하에서 힘을 잃습니다."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="유압 제어 밸브가 간헐적으로 걸립니다. 한 유압 기능이 느려지고 부하가 커질수록 더 많은 힘을 잃습니다."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="유압 제어 밸브가 심하게 걸립니다. 한 유압 기능이 불규칙하게 움직이고 고부하에서 힘을 내지 못합니다."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="유압 제어 밸브가 심각하게 손상되었습니다. 한 유압 기능이 반복해서 멈추며 무거운 하중을 거의 움직이지 못합니다."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="변속기 펌프"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="정유압 구동 장치"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="변속기 오일 열교환기"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="변속기 베어링"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="파워시프트 변속 클러치"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="파워시프트 전후진 클러치"/>
+        <text name="rms_breakdowns_part_transmission_control" text="변속기 제어 장치"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="후방 차축 베벨 기어 세트"/>
+        <text name="rms_breakdowns_part_final_drives" text="최종 감속기"/>
+        <text name="rms_breakdowns_part_differential" text="차동 기어"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="4WD 결합 장치"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="전방 차축 구동축 및 유니버설 조인트"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="차축 베어링"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="변속기 센서"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="변속기 필터"/>
+        <text name="rms_breakdowns_part_lift_valve" text="리프트 밸브"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="리프트 위치 센서"/>
+        <text name="rms_breakdowns_part_loader_control" text="로더 제어 장치"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="유압 신속 연결기"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="클러치가 약간 오작동합니다. 완전히 분리되지 않아 일부 기어를 넣기 어렵습니다."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="클러치가 중간 정도로 오작동합니다. 기구가 디스크를 충분히 풀지 못해 기어 선택이 더 자주 거부됩니다."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="클러치가 심하게 오작동합니다. 분리해도 디스크가 계속 구동되어 기어 선택이 크게 방해받습니다."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="클러치에 임계 고장이 발생했습니다. 기구가 디스크를 풀지 못해 어떤 기어도 정상적으로 넣을 수 없습니다."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="변속기 베어링이 약간 오작동합니다. 구름면이 손상되어 변속기에서 약한 웅웅거림이 납니다."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="변속기 베어링이 중간 정도로 오작동합니다. 베어링 구름면가 손상되어 변속기의 웅웅거림이 분명합니다."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="변속기 베어링이 심하게 오작동합니다. 베어링이 잘 돌지 않아 변속기가 크게 울리며 고착될 수 있습니다."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="변속기 베어링에 임계 고장이 발생했습니다. 베어링이 고착되어 변속기가 막히고 장비가 움직이지 못합니다."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="파워시프트 변속 클러치가 약간 오작동합니다. 클러치 팩이 동력을 제대로 전달하지 못해 부하에서 기어가 약간 미끄러집니다."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="파워시프트 변속 클러치가 약간 오작동합니다. 클러치 팩 작동이 늦어 기어가 약한 충격과 함께 들어갑니다."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="파워시프트 변속 클러치가 중간 정도로 오작동합니다. 클러치 팩의 압착력이 부족해 부하에서 기어가 분명하게 미끄러집니다."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="파워시프트 변속 클러치가 중간 정도로 오작동합니다. 클러치 팩의 오일 충전이 불안정해 기어가 거칠게 들어갑니다."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="파워시프트 변속 클러치가 심하게 오작동합니다. 클러치 팩이 부하를 거의 버티지 못해 바퀴에 전달되는 힘이 매우 적습니다."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="파워시프트 변속 클러치가 심하게 오작동합니다. 클러치 팩이 매우 불안정하게 결합되어 변속 때 강한 충격이 생깁니다."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="파워시프트 변속 클러치에 임계 고장이 발생했습니다. 클러치 팩이 동력을 전달하지 못해 장비가 움직이지 못합니다."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="파워시프트 변속 클러치에 임계 고장이 발생했습니다. 클러치 팩이 제대로 결합되지 않아 해당 기어가 장비를 구동하지 못합니다."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="파워시프트 전후진 클러치가 약간 오작동합니다. 전진 또는 후진 클러치가 출발할 때 약간 미끄러집니다."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="파워시프트 전후진 클러치가 약간 오작동합니다. 전후진 클러치 결합이 늦어 약한 충격과 함께 구동이 돌아옵니다."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="파워시프트 전후진 클러치가 중간 정도로 오작동합니다. 전후진 클러치가 분명하게 미끄러져 선택한 방향으로 힘을 잘 전달하지 못합니다."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="파워시프트 전후진 클러치가 중간 정도로 오작동합니다. 전후진 클러치가 갑자기 결합되어 방향 전환 때 장비에 충격이 생깁니다."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="파워시프트 전후진 클러치가 심하게 오작동합니다. 전후진 클러치가 부하를 거의 버티지 못해 구동력이 크게 줄어듭니다."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="파워시프트 전후진 클러치가 심하게 오작동합니다. 전후진 클러치가 매우 불규칙하게 작동하여 출발 충격이 심합니다."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="파워시프트 전후진 클러치에 임계 고장이 발생했습니다. 전후진 클러치가 동력을 전달하지 못해 장비가 움직이지 못합니다."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="파워시프트 전후진 클러치에 임계 고장이 발생했습니다. 전후진 클러치가 제대로 결합되지 않아 구동력이 사라집니다."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="변속기 제어 장치가 약간 오작동합니다. 전기 유압 제어가 불규칙하게 작동해 변속이 지연됩니다."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="변속기 제어 장치가 약간 오작동합니다. 제어 장치가 종종 기어 선택을 거부합니다."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="변속기 제어 장치가 중간 정도로 오작동합니다. 제어 장치가 클러치 오일 충전을 방해해 변속 때 분명한 충격이 생깁니다."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="변속기 제어 장치가 중간 정도로 오작동합니다. 제어 장치가 여러 선택을 거부해 기어를 넣기 어렵습니다."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="변속기 제어 장치가 심하게 오작동합니다. 제어 장치가 클러치를 제대로 작동시키지 못해 변속 충격이 강합니다."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="변속기 제어 장치가 심하게 오작동합니다. 제어 장치가 많은 선택을 실행하지 못해 사용할 수 있는 기어가 적습니다."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="변속기 제어 장치에 임계 고장이 발생했습니다. 제어 장치가 클러치를 정상적으로 결합하지 못해 변속이 크게 방해받습니다."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="변속기 제어 장치에 임계 고장이 발생했습니다. 제어 장치가 기어 선택을 허용하지 않아 변속기가 요청에 반응하지 않습니다."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="변속기 속도 센서가 오작동합니다. 신호가 불규칙해져 제어 장치가 때때로 변속을 거부합니다."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="변속기 압력 센서가 오작동합니다. 제어 장치가 클러치 오일 충전을 잘못 조절하여 변속이 늦고 충격이 납니다."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="변속기 속도 센서에 임계 고장이 발생했습니다. 측정값이 없어 제어 장치가 자주 변속을 거부합니다."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="변속기 압력 센서에 임계 고장이 발생했습니다. 측정값이 없어 모든 변속이 매우 늦고 갑자기 결합됩니다."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="변속기 속도 센서가 오작동합니다. 제어 장치가 비상 운전 모드로 전환하여 주행 속도가 제한됩니다."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="변속기 압력 센서가 오작동합니다. 제어 장치가 비상 운전 모드로 전환하여 주행 속도가 제한됩니다."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="변속기 속도 센서에 임계 고장이 발생했습니다. 비상 운전 모드에서는 낮은 속도로만 주행할 수 있습니다."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="변속기 압력 센서에 임계 고장이 발생했습니다. 비상 운전 모드에서는 낮은 속도로만 주행할 수 있습니다."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="변속기 펌프가 약간 오작동합니다. 제어 오일 공급이 줄어 결합이 지연되고 구동이 잠깐 끊깁니다."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="변속기 펌프가 중간 정도로 오작동합니다. 제어 압력이 부족해 기어가 충격과 함께 들어가고 구동이 끊깁니다."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="변속기 펌프가 심하게 오작동합니다. 펌프가 제어 오일을 거의 공급하지 못해 결합 충격이 심하고 구동이 자주 끊깁니다."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="변속기 펌프에 임계 고장이 발생했습니다. 펌프가 필요한 압력을 공급하지 못해 변속기가 장비를 구동하지 못합니다."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="정유압 구동 장치가 약간 오작동합니다. 내부 누출로 구동력이 줄어 가변 구동 속도가 조금 떨어지고 오일이 더 뜨거워집니다."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="정유압 구동 장치가 중간 정도로 오작동합니다. 내부 누출이 늘어 최고 속도가 떨어지고 오일 온도와 연료 소비가 증가합니다."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="정유압 구동 장치가 심하게 오작동합니다. 회전부가 동력을 거의 전달하지 못해 속도가 크게 떨어지고 부하에서 오일이 매우 뜨거워집니다."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="정유압 구동 장치에 임계 고장이 발생했습니다. 회전부가 동력을 전달하지 못해 엔진이 돌아도 장비가 움직이지 못합니다."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="변속기 오일 열교환기가 약간 오작동합니다. 방열이 줄어 부하에서 변속기 오일이 더 뜨거워집니다."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="변속기 오일 열교환기가 중간 정도로 오작동합니다. 열 교환이 분명하게 줄어 작업 중 변속기 오일 온도가 높게 유지됩니다."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="변속기 오일 열교환기가 심하게 오작동합니다. 열교환기가 열을 거의 배출하지 못해 부하에서 변속기 오일이 과열될 수 있습니다."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="변속기 오일 열교환기에 임계 고장이 발생했습니다. 변속기 오일 열 방출이 고장 나 지속 작업 시 변속기가 과열될 수 있습니다."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="변속기 필터가 교체 시기에 도달하여 막히기 시작합니다. 표시 장치가 교체를 요청합니다. 정비 시 필터를 교체합니다."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="변속기 필터가 오염되었습니다. 우회 밸브가 열려 변속기 오일이 여과되지 않고 통과하며 변속기가 더 빨리 마모됩니다. 정비 시 필터를 교체합니다."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="변속기 필터가 심하게 오염되었습니다. 변속기 오일이 여과되지 않고 순환하여 변속기를 마모시킵니다. 정비 시 필터를 교체합니다."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="변속기 필터가 완전히 막혔습니다. 모든 변속기 오일이 여과되지 않고 통과하여 변속기를 마모시킵니다. 정비 시 필터를 교체합니다."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="후방 차축 베벨 기어 세트가 약간 오작동합니다. 베벨 기어 이가 손상되어 부하에서 약한 기어 울림이 납니다."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="후방 차축 베벨 기어 세트가 중간 정도로 오작동합니다. 이의 맞물림이 불안정해 부하에서 후방 차축의 기어 울림이 분명합니다."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="후방 차축 베벨 기어 세트가 심하게 오작동합니다. 이가 심하게 손상되어 후방 차축이 크게 울리며 구동을 잃을 수 있습니다."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="후방 차축 베벨 기어 세트에 임계 고장이 발생했습니다. 베벨 기어가 동력을 전달하지 못해 후방 차축이 구동되지 않고 장비가 움직이지 못합니다."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="최종 감속기가 약간 오작동합니다. 이가 손상되어 구동륜 근처에서 약한 기어 울림이 납니다."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="최종 감속기가 중간 정도로 오작동합니다. 기어가 잘 돌지 않아 바퀴 쪽 기어 울림이 분명합니다."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="최종 감속기가 심하게 오작동합니다. 기어가 심하게 손상되어 소음이 크고 구동이 끊길 수 있습니다."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="최종 감속기에 임계 고장이 발생했습니다. 바퀴에 동력을 전달하지 못해 장비가 정상적으로 움직이지 못합니다."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="4WD 결합 장치에 고장이 발생했습니다. 사륜구동이 결합되지 않아 전방 차축이 분리된 채로 남습니다."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="4WD 결합 장치에 고장이 발생했습니다. 전방 차축이 결합된 채로 남아 사륜구동을 해제할 수 없습니다."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="유압 펌프에 고장이 발생했습니다. 파손되어 압력이 사라지고 유압 기능이 반응하지 않습니다."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="유압 제어 밸브에 고장이 발생했습니다. 스풀이 고착되어 해당 유압 기능이 움직이지 않습니다."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="리프트 밸브에 고장이 발생했습니다. 하중을 제대로 유지하지 못해 올린 작업기가 내려옵니다."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="리프트 밸브에 고장이 발생했습니다. 고착되어 리프트가 반응하지 않습니다."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="리프트 위치 센서에 고장이 발생했습니다. 위치 신호가 고장 나 리프트가 요청한 높이를 유지하지 못하며 고장 코드가 저장됩니다."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="로더 제어 장치가 약간 오작동합니다. 암과 버킷의 반응이 느려집니다."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="로더 제어 장치가 중간 정도로 오작동합니다. 암과 버킷이 절반 속도로만 움직입니다."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="로더 제어 장치가 심하게 오작동합니다. 암과 버킷이 거의 움직이지 않습니다."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="로더 제어 장치에 임계 고장이 발생했습니다. 암과 버킷이 더 이상 반응하지 않습니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="유압 실린더가 약간 오작동합니다. 로드 씰에서 오일이 조금 새어 로드 주변이 약간 젖습니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="유압 실린더가 중간 정도로 오작동합니다. 로드 씰의 밀폐가 불량해 실린더에 오일이 배어나오고 오일량이 줄어듭니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="유압 실린더가 심하게 오작동합니다. 로드 씰에서 계속 오일이 새어 실린더의 오일 손실이 분명합니다."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="유압 실린더에 임계 고장이 발생했습니다. 로드 씰에서 오일이 많이 새어 회로 오일량이 빠르게 줄어듭니다."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="유압 신속 연결기가 약간 오작동합니다. 커플러 씰이 고장 나 연결부가 약간 젖습니다."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="유압 신속 연결기에 고장이 발생했습니다. 커플러의 오일 통로가 막혀 연결된 유압 기능이 움직이지 않습니다."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="유압 신속 연결기가 중간 정도로 오작동합니다. 커플러에 오일이 배어나와 연결부에서 회로 오일이 줄어듭니다."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="유압 신속 연결기가 심하게 오작동합니다. 커플러에서 계속 오일이 새어 연결부의 오일 손실이 많아집니다."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="유압 신속 연결기에 임계 고장이 발생했습니다. 커플러에서 오일이 많이 새어 회로 오일량이 빠르게 줄어듭니다."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="유압 오일 열 교환기가 약간 오작동합니다. 열교환기 코어가 완전히 밀폐되지 않아 표면이 약간 젖습니다."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="유압 오일 열 교환기가 중간 정도로 오작동합니다. 열교환기 코어에 오일이 배어나와 유압 오일량이 줄어듭니다."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="유압 오일 열 교환기가 심하게 오작동합니다. 열교환기 코어에서 계속 오일이 새어 회로 오일 손실이 분명합니다."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="유압 오일 열 교환기에 임계 고장이 발생했습니다. 열교환기 코어에서 오일이 많이 새어 유압 오일량이 빠르게 줄어듭니다."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="차동 잠금 제어 장치"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="차동 기어가 약간 오작동합니다. 기어 이 표면이 손상되어 회전할 때 작은 소음이 납니다."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="차동 기어가 중간 정도로 오작동합니다. 기어 맞물림이 불안정해 회전할 때 차동 장치의 소음이 분명합니다."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="차동 기어가 심하게 오작동합니다. 기어 이가 심하게 손상되어 회전할 때 소음이 크고 구동을 잃을 수 있습니다."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="차동 기어에 임계 고장이 발생했습니다. 기어가 동력을 전달하지 못해 엔진이 돌아도 장비가 움직이지 못합니다."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="전방 차축 구동축의 유니버설 조인트가 약간 마모되었습니다. 전방 차축 구동부에 약간의 유격이 생깁니다."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="전방 차축 구동축의 유니버설 조인트가 중간 정도로 마모되었습니다. 조인트의 유격이 분명해집니다."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="전방 차축 구동축의 유니버설 조인트가 심하게 마모되었습니다. 조인트 하나가 곧 파손될 상태입니다."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="전방 차축 구동축의 유니버설 조인트 하나가 파손되었습니다. 전방 차축이 더 이상 구동되지 않습니다."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="차축 베어링이 약간 마모되었습니다. 주행 시 작은 울림이 들립니다."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="차축 베어링이 중간 정도로 마모되었습니다. 속도가 높아질수록 울림이 커집니다."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="차축 베어링이 심하게 마모되었습니다. 베어링 표면이 벗겨지며 베벨 기어를 손상시키기 시작합니다."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="차축 베어링의 임계 마모 상태입니다. 베어링 하나가 파손되고 베벨 기어도 손상되어 차축이 구동력을 전달하지 못합니다."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="차동 잠금 제어 장치에 고장이 발생했습니다. 잠금이 결합되지 않아 차동 장치가 열린 상태로 남습니다."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="차동 잠금 제어 장치에 고장이 발생했습니다. 잠금이 결합된 채로 남아 회전할 때 조향이 어려워집니다."/>
+    </texts>
+</l10n>

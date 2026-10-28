@@ -66,7 +66,7 @@
                                 </Button>
                                 <Button profile="rms_workshopActionChoice" id="configChoiceButtons[2]" size="310px 50px" text="$l10n_rms_ws_action_choice_maintenance" onClick="onClickConfigureMaintenance">
                                     <RoundCorner profile="rms_workshopActionBg" />
-                                    <GuiElement profile="rms_workshopMaintenanceActionIcon" onDraw="onDrawMaintenanceActionIcon" />
+                                    <Bitmap profile="rms_workshopMaintenanceActionIcon" />
                                 </Button>
                                 <Button profile="rms_workshopActionChoice" id="configChoiceButtons[3]" size="310px 50px" text="$l10n_rms_ws_action_choice_repair" onClick="onClickConfigureRepair">
                                     <RoundCorner profile="rms_workshopActionBg" />
@@ -78,7 +78,7 @@
                                 </Button>
                                 <Button profile="rms_workshopActionChoice" id="configChoiceButtons[5]" size="310px 50px" text="$l10n_rms_ws_action_choice_refill" onClick="onClickConfigureRefill">
                                     <RoundCorner profile="rms_workshopActionBg" />
-                                    <GuiElement profile="rms_workshopOilActionIcon" onDraw="onDrawOilActionIcon" />
+                                    <Bitmap profile="rms_workshopOilActionIcon" />
                                 </Button>
                                 <Button profile="rms_workshopActionChoice" id="configChoiceButtons[6]" size="310px 50px" text="$l10n_rms_ws_action_choice_bodywork" onClick="onClickConfigureBodywork">
                                     <RoundCorner profile="rms_workshopActionBg" />

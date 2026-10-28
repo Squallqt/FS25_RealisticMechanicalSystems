@@ -1,15 +1,16 @@
-<handTool type="jumperCables" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/handTool.xsd">
+<handTool type="jumperCables" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
+    <annotation>Projecta SB1000-60SP heavy-duty jumper leads, 70 mm2 pure copper, 6 m, for 12 and 24 V batteries.</annotation>
     <storeData>
         <name>$l10n_rms_jumper_cables_name</name>
         <functions>
             <function>$l10n_rms_jumper_cables_function</function>
         </functions>
-        <image>objects/jumperCables/store_jumperCables.dds</image>
+        <image>objects/jumperCables/store_jumperCables.png</image>
         <price>10</price>
         <lifetime>1000</lifetime>
         <dailyUpkeep>0</dailyUpkeep>
         <rotation>0</rotation>
-        <brand>LIZARD</brand>
+        <brand>NONE</brand>
         <species>HANDTOOL</species>
         <category>handtoolsMisc</category>
     </storeData>
@@ -28,6 +29,8 @@
 
     <i3dMappings>
         <i3dMapping id="graphics" node="0>0"/>
+        <i3dMapping id="heldGraphics" node="0>0"/>
+        <i3dMapping id="storedGraphics" node="0>3"/>
         <i3dMapping id="leftPair" node="0>0|0"/>
         <i3dMapping id="leftHandNode" node="0>0|0|2"/>
         <i3dMapping id="rightPair" node="0>0|1"/>

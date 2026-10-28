@@ -1,15 +1,16 @@
-<handTool type="airBlower" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/handTool.xsd">
+<handTool type="airBlower" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
+    <annotation>Radiator Genie RG1001 air nozzle (Lisle 88500), 571.5 mm, with its type M air coupler.</annotation>
     <storeData>
         <name>$l10n_rms_air_blower_name</name>
         <functions>
             <function>$l10n_rms_air_blower_function</function>
         </functions>
-        <image>objects/airBlower/store_airBlower.dds</image>
+        <image>objects/airBlower/store_airBlower.png</image>
         <price>50</price>
         <lifetime>1000</lifetime>
         <dailyUpkeep>0</dailyUpkeep>
         <rotation>0</rotation>
-        <brand>LIZARD</brand>
+        <brand>NONE</brand>
         <species>HANDTOOL</species>
         <category>handtoolsMisc</category>
     </storeData>

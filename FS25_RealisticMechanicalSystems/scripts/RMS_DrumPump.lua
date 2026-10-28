@@ -10,7 +10,6 @@ local modDirectory = g_currentModDirectory
 RMS_DrumPump.FILENAME = "objects/drumPump/drumPump.xml"
 RMS_DrumPump.TARGET_REFRESH_INTERVAL = 200
 
--- pumps set on a drum, taken out of the hand once the game has left the callback
 RMS_DrumPump.mounted = {}
 
 source(modDirectory .. "events/RMS_DrumPumpEvent.lua")
@@ -77,7 +76,7 @@ function RMS_DrumPump.unmount(player, container)
         return
     end
 
-    -- the hand tool loads over several frames, a second click must not take the pump twice
+    -- Guard against repeated requests during asynchronous loading.
     containerSpec.isBeingTaken = true
     local loadingData = HandToolLoadingData.new()
     loadingData:setFilename(modDirectory .. RMS_DrumPump.FILENAME)
@@ -98,7 +97,7 @@ function RMS_DrumPump.onUnmounted(_, handTool, loadingState, arguments)
         return
     end
 
-    -- held before it is registered: the creation stream then carries its holder to every client
+    -- Set the holder before the creation stream is sent.
     handTool:setHolder(player, true)
     player:setCurrentHandTool(handTool, true)
     handTool:register()
@@ -163,7 +162,6 @@ function RMS_DrumPump:onRegisterActionEvents()
         return
     end
 
-    -- the hand tool click, offered only on a drum and acting at its release
     local _, mountEventId = self:addActionEvent(InputAction.ACTIVATE_HANDTOOL, self, RMS_DrumPump.onMountAction, true, false, false, false, nil)
     g_inputBinding:setActionEventTextPriority(mountEventId, GS_PRIO_VERY_HIGH)
     g_inputBinding:setActionEventText(mountEventId, g_i18n:getText("rms_drum_pump_mount"))

@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Dauerhaft"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Leistungsreduzierung"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Außer Betrieb"/>
+        <text name="rms_breakdowns_severity_minor" text="Geringfügig"/>
+        <text name="rms_breakdowns_severity_moderate" text="Mäßig"/>
+        <text name="rms_breakdowns_severity_major" text="Schwerwiegend"/>
+        <text name="rms_breakdowns_severity_critical" text="Kritisch"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Leichter Verschleiß der Lenkkugelgelenke und Lenkstangen. Es entsteht etwas Spiel und die Lenkung wird unpräziser."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Mäßiger Verschleiß der Lenkkugelgelenke und Lenkstangen. Das Spiel nimmt zu und das Fahrzeug zieht leicht zu einer Seite."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Schwerer Verschleiß der Lenkkugelgelenke und Lenkstangen. Das Spiel ist groß, das Fahrzeug zieht zu einer Seite und hält den Kurs schlechter."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kritischer Ausfall der Lenkkugelgelenke und Lenkstangen. Das freigewordene Rad folgt dem Lenkrad nicht mehr richtig; die Fahrt ist gefährlich."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Leichter Verschleiß der Achsschenkelbolzen. Es entsteht etwas Spiel in der Lenkung."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Mäßiger Verschleiß der Achsschenkelbolzen. Das Spiel in der Lenkung wird spürbar."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Schwerer Verschleiß der Achsschenkelbolzen. Das Spiel in der Lenkung ist groß."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritischer Verschleiß der Achsschenkelbolzen. Die Lenkung weist sehr großes Spiel auf."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Leichte Fehlfunktion des Lenkorbitrols. Das Lenkrad hat etwas Spiel, bevor die Räder folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Mäßige Fehlfunktion des Lenkorbitrols. Das Lenkrad dreht sich weiter, bevor die Räder folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Schwere Fehlfunktion des Lenkorbitrols. Das Lenkrad dreht sich stark, ohne dass die Räder richtig folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritischer Ausfall des Lenkorbitrols. Das Lenkrad hat sehr großes Spiel, bevor die Räder folgen."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Leichte interne Leckage im Lenkzylinder. Das Fahrzeug beginnt zu einer Seite abzudriften."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Leichte Leckage an der Stangendichtung des Lenkzylinders. Der Hydraulikölstand sinkt leicht."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Mäßige interne Leckage im Lenkzylinder. Das Fahrzeug driftet stärker zu einer Seite ab."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Mäßige Leckage an der Stangendichtung des Lenkzylinders. Der Hydraulikölstand sinkt deutlich."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Schwere interne Leckage im Lenkzylinder. Das Fahrzeug driftet deutlich zu einer Seite ab."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Schwere Leckage an der Stangendichtung des Lenkzylinders. Der Hydraulikölstand sinkt schnell."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Kritische interne Leckage im Lenkzylinder. Das Fahrzeug driftet stark zu einer Seite ab."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Kritische Leckage an der Stangendichtung des Lenkzylinders. Der Hydraulikölstand sinkt sehr schnell."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Leichter Verschleiß der Bolzen und Buchsen der Frontladergelenke. An den Armgelenken entsteht leichtes Spiel."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Mäßiger Verschleiß der Bolzen und Buchsen der Frontladergelenke. Das Spiel an den Armgelenken wird spürbar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Schwerer Verschleiß der Bolzen und Buchsen der Frontladergelenke. Der Arm weist großes Spiel auf."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kritischer Verschleiß der Bolzen und Buchsen der Frontladergelenke. Das Spiel des Arms ist sehr groß."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Leichte Undichtigkeit eines Kabinenstoßdämpfers. Die Kabine wird etwas weniger gedämpft."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Mäßige Undichtigkeit eines Kabinenstoßdämpfers. Die Kabine springt auf Unebenheiten."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Schwere Undichtigkeit eines Kabinenstoßdämpfers. Die Kabine schaukelt bei jedem Stoß."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Kritische Undichtigkeit eines Kabinenstoßdämpfers. Der Stoßdämpfer ist leer: Die Kabine wird kaum noch gedämpft."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Gang ausgelegt"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Beginnende Alterung der Glühkerzen. Kaltstarts dauern länger, Warmstarts bleiben unbeeinträchtigt."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Mehrere Glühkerzen sind geschwächt oder ausgefallen. Kaltstarts sind schwierig und der Motor kann bis zum Warmlaufen unruhig laufen."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Schwere Fehlfunktion der Glühkerzen. Kaltstarts sind äußerst unzuverlässig und der Motor läuft während der Warmlaufphase unruhig."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Vollständiger Ausfall der Glühkerzen. Bei zu niedriger Temperatur kann der Motor nicht gestartet werden."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Ausfall des Vorglührelais. Die Glühkerzen heizen nicht mehr: Bei zu niedriger Temperatur ist kein Motorstart möglich."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Ausfall des Starterrelais. Der Motor wird nicht mehr durchgedreht."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Ausfall der Abblendlichtlampen. Diese Leuchten bleiben bis zum Lampenwechsel aus."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Ausfall der Fernlichtlampen. Diese Leuchten bleiben bis zum Lampenwechsel aus."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Ausfall der Lampen der vorderen Arbeitsscheinwerfer. Diese Leuchten bleiben bis zum Lampenwechsel aus."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Ausfall der Lampen der hinteren Arbeitsscheinwerfer. Diese Leuchten bleiben bis zum Lampenwechsel aus."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Ausfall der Rundumleuchtenlampe. Die Rundumleuchte bleibt bis zum Lampenwechsel aus."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Ausfall der Blinkerlampen. Blinker und Warnblinkanlage bleiben bis zum Lampenwechsel aus."/>
+        <text name="rms_breakdowns_part_vehicle" text="Fahrzeug"/>
+        <text name="rms_breakdowns_part_pistons" text="Kolben"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Kolbenringe"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Zylinderlaufbuchsen"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Einlassventile"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Auslassventile"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Ventilführungen und Schaftdichtungen"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Zylinderkopf"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Zylinderkopfdichtung"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Kurbelwellenlager"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Pleuellager"/>
+        <text name="rms_breakdowns_part_consumables" text="Verbrauchsmaterialien"/>
+        <text name="rms_breakdowns_part_clutch" text="Kupplung"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Übersetzungssteuerung"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Motor"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Leistungskabel und Masseverbindungen"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Starterrelais"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Vorglührelais"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Abblendlichtlampen"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="Fernlichtlampen"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Lampen der vorderen Arbeitsscheinwerfer"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Lampen der hinteren Arbeitsscheinwerfer"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Rundumleuchtenlampe"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Blinkerlampen"/>
+        <text name="rms_breakdowns_part_battery" text="Batterie"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Traktionsbatterie"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Hochvoltschütz"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Hochvoltverkabelung"/>
+        <text name="rms_breakdowns_part_inverter" text="Wechselrichter"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Spannungswandler"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Bordladegerät"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Lager des Elektromotors"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Wicklungen des Elektromotors"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Positionssensor des Motors"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Kühlmittelpumpe"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Wasserpumpe"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Kühlernetz"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Kühlmittelschläuche und Anschlüsse"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Ausgleichsbehälter"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Keilrippenriemen und Spanner"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Lüfterflügel"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Elektrischer Lüfter"/>
+        <text name="rms_breakdowns_part_reducer" text="Untersetzungsgetriebe"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Bremsscheiben und Bremsbeläge"/>
+        <text name="rms_breakdowns_part_brake_control" text="Bremsbetätigung"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Anhängerbremsventil"/>
+        <text name="rms_breakdowns_part_park_brake" text="Feststellbremse"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Radnabenlager und Wellendichtring"/>
+        <text name="rms_breakdowns_part_alternator" text="Lichtmaschine"/>
+        <text name="rms_breakdowns_part_starter" text="Starter"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turbolader"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Getriebedichtung"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Kettenspanner"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Laufrollen und Leiträder"/>
+        <text name="rms_breakdowns_part_thermostat" text="Thermostat"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Ölpumpe"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Synchronring"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Lenkkugelgelenke und Lenkstangen"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Bolzen und Buchsen der Frontladergelenke"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Achsschenkelbolzen"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Lenkorbitrol"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Lenkzylinder"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Kabinenfederung"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="Zapfwellenkupplung"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="Zapfwellenabtriebslager"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="Zapfwellenabtriebsdichtung"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="Zapfwellenabtriebswelle"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="Magnetventil der Zapfwellenzuschaltung"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="Schalter der Zapfwellensteuerung"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="Zapfwellendrehzahlsensor"/>
+        <text name="rms_breakdowns_part_pto_brake" text="Zapfwellenbremse"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Frontzapfwellenkupplung"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Hydraulikpumpe"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hydraulikzylinder"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Hydraulikschlauch"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Hydraulikfilter"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Hydraulikölkühler"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Hydrauliksteuerventil"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Lüfterkupplung"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Kraftstoffförderpumpe"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Einspritzdüsen"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="Hochdruckpumpe"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Kraftstofffilter"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Kraftstoffleitung"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Mechanische Einspritzpumpe"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Kraftstoffmengenregelventil"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Raildrucksensor"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Raildruckbegrenzungsventil"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Gasdruckregler"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Gasabsperrmagnetventil"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Gasfilter"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Gasleitungen"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Gaseinspritzdüsen"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-Pumpe"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-Dosierdüse"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-Filter"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="NOx-Sensor"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Partikelfilter"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Glühkerzen"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="Zapfwelle hat sich abgeschaltet"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="Die Frontzapfwelle hat ausgekuppelt"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="Die Zapfwelle kuppelt nicht aus: Schalte die Maschine ab, um das Arbeitsgerät anzuhalten"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Beginnender Verschleiß der Zapfwellenkupplung. Der Antrieb schaltet sich gelegentlich ab."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Mäßiger Verschleiß der Zapfwellenkupplung. Abschaltungen treten häufiger auf."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Schwerer Verschleiß der Zapfwellenkupplung. Das Arbeitsgerät verliert häufig seinen Antrieb."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Kritischer Ausfall der Zapfwellenkupplung. Das Arbeitsgerät kommt zum Stillstand."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Beginnender Verschleiß der Zapfwellenkupplung. Ihre Lamellen beginnen zu kleben."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Mäßiger Verschleiß der Zapfwellenkupplung. Ihre Lamellen kleben zunehmend."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Schwerer Verschleiß der Zapfwellenkupplung. Ihre Lamellen kleben: Die Zapfwelle kuppelt gelegentlich nicht aus."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Kritischer Ausfall der Zapfwellenkupplung. Ihre Lamellen sind verschweißt: Die Zapfwelle kuppelt nicht mehr aus und das Arbeitsgerät hält erst beim Abschalten der Maschine an."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Beginnender Verschleiß der Zapfwellenabtriebslager. Ein leichtes Rumpeln tritt auf."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Mäßiger Verschleiß der Zapfwellenabtriebslager. Das Rumpeln wird deutlich hörbar."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Schwerer Verschleiß der Zapfwellenabtriebslager. Das Rumpeln wird lauter."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Kritischer Ausfall der Zapfwellenabtriebslager. Das Rumpeln erreicht seine größte Lautstärke."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Leichte Undichtigkeit der Zapfwellenabtriebsdichtung. Der Getriebeölstand sinkt bei der Arbeit langsam."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Mäßige Undichtigkeit der Zapfwellenabtriebsdichtung. Der Getriebeölstand sinkt bei der Arbeit."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Schwere Undichtigkeit der Zapfwellenabtriebsdichtung. Getriebeöl läuft aus und der Ölstand sinkt schnell."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Kritische Undichtigkeit der Zapfwellenabtriebsdichtung. Das verbleibende Öl reicht für einen sicheren Getriebebetrieb nicht aus."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Beginnender Verschleiß des Magnetventils der Zapfwellenzuschaltung. Der Antrieb schaltet sich während der Arbeit gelegentlich ab."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Beginnender Verschleiß des Magnetventils der Zapfwellenzuschaltung. Die Zapfwelle lässt sich gelegentlich nicht zuschalten."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Mäßiger Verschleiß des Magnetventils der Zapfwellenzuschaltung. Abschaltungen während der Arbeit treten wiederholt auf."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Mäßiger Verschleiß des Magnetventils der Zapfwellenzuschaltung. Die Zapfwelle lässt sich wiederholt nicht zuschalten."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Schwerer Verschleiß des Magnetventils der Zapfwellenzuschaltung. Der Antrieb schaltet sich häufig ab."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Schwerer Verschleiß des Magnetventils der Zapfwellenzuschaltung. Die Zapfwelle lässt sich häufig nicht zuschalten."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Kritischer Ausfall des Magnetventils der Zapfwellenzuschaltung. Seine Spule ist unterbrochen und die Zapfwelle bleibt nicht mehr zugeschaltet."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Kritischer Ausfall des Magnetventils der Zapfwellenzuschaltung. Sein Schieber bleibt hängen und die Zapfwelle lässt sich nicht mehr zuschalten."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Beginnender Verschleiß des Schalters der Zapfwellensteuerung. Ein Wackelkontakt schaltet den Antrieb gelegentlich ab."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Beginnender Verschleiß des Schalters der Zapfwellensteuerung. Die Zapfwelle reagiert gelegentlich nicht auf die Betätigung."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Mäßiger Verschleiß des Schalters der Zapfwellensteuerung. Wackelkontakte schalten den Antrieb immer häufiger ab."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Mäßiger Verschleiß des Schalters der Zapfwellensteuerung. Die Zapfwelle reagiert immer häufiger nicht auf die Betätigung."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Schwerer Verschleiß des Schalters der Zapfwellensteuerung. Der Kontakt hält nicht mehr und der Antrieb schaltet sich häufig ab."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Schwerer Verschleiß des Schalters der Zapfwellensteuerung. Die Betätigung bleibt häufig wirkungslos."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Kritischer Ausfall des Schalters der Zapfwellensteuerung. Sein Kontakt bleibt offen und die Zapfwelle schaltet sich ab."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Kritischer Ausfall des Schalters der Zapfwellensteuerung. Sein Kontakt schließt nicht mehr und die Zapfwelle lässt sich nicht mehr zuschalten."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="Ausfall der Zapfwellenabtriebswelle. Ihre Verzahnung ist abgeschert und überträgt keine Drehbewegung mehr."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="Ausfall der Zapfwellenabtriebswelle. Sie ist gebrochen und das Arbeitsgerät wird nicht mehr angetrieben."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="Ausfall des Zapfwellendrehzahlsensors. Er liefert kein Signal mehr und das Sicherheitssystem schaltet die Zapfwelle ab."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="Ausfall der Zapfwellenbremse. Sie bleibt angezogen und blockiert die Abtriebswelle."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Beginnender Verschleiß der Frontzapfwellenkupplung. Der Antrieb des vorderen Abtriebs fällt gelegentlich aus."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Mäßiger Verschleiß der Frontzapfwellenkupplung. Die Aussetzer des vorderen Abtriebs wiederholen sich."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Schwerer Verschleiß der Frontzapfwellenkupplung. Das vordere Arbeitsgerät verliert häufig seinen Antrieb."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Kritischer Ausfall der Frontzapfwellenkupplung. Der vordere Abtrieb dreht sich nicht mehr; die Heckzapfwelle ist nicht betroffen."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Einschalten der Zapfwelle verweigert"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Behelfsreparatur"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Defekt"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Das System funktioniert derzeit normal, aber die Inspektion hat ein defektes Teil festgestellt. Das Teil bietet keine Sicherheitsreserve mehr; ein vorsorglicher Austausch wird empfohlen, um einen plötzlichen Schaden zu vermeiden."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Batterie zu schwach"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Traktionsbatterie kalt: Reichweite und Leistung reduziert"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Das System funktioniert derzeit normal, beruht aber vollständig auf einer Behelfsreparatur. Um einen Schaden unter Last zu vermeiden, wird so bald wie möglich ein vollständiger Austausch der Teile empfohlen."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Verschlissene Turboladerlager. Ein leises Pfeifen ist zu hören und bei hohen Drehzahlen tritt ein leichter Leistungsverlust auf."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Undichte Turboladerdichtungen. Spürbarer Leistungsverlust, erhöhter Kraftstoffverbrauch."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Beschädigte Turbinenschaufeln. Starker Leistungsverlust und Gefahr des Motorabwürgens unter hoher Last."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Kritischer Ausfall des Turboladers. Der Motor hat den größten Teil seiner Leistung verloren und läuft Gefahr, schwere innere Schäden zu erleiden."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Verschlissene Kupplungsscheiben. Gelegentlicher Leistungsverlust durch rutschende Kupplung unter Last."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Erheblicher Kupplungsverschleiß. Spürbares Rutschen der Kupplung, besonders beim Beschleunigen und unter hoher Last."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Stark verschlissene Kupplung. Starkes Rutschen erschwert die Kraftübertragung auf die Räder."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Kupplung komplett durchgebrannt. Das Fahrzeug kann sich nicht mehr bewegen."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Verschlissene Synchronringe. Gelegentliches Krachen oder Schwierigkeiten beim Schalten."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Beschädigte Synchronringe. Das Schalten ist häufig schwierig und kann fehlschlagen."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Gebrochene Zähne am Synchronring. Hohe Wahrscheinlichkeit von fehlgeschlagenen Schaltvorgängen oder Herausspringen des Gangs unter Last."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Synchronringe komplett ausgefallen. Das Schalten ist unmöglich."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Leichtes Leck im Getriebeölkreislauf. Der Ölstand sinkt während der Arbeit langsam."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Mäßiges Getriebeölleck. Der Ölstand sinkt deutlich und das Getriebe läuft heißer."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Schweres Getriebeölleck. Der Ölstand sinkt schnell und das Getriebe überhitzt unter Last."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Kritisches Getriebeölleck. Es steht nicht mehr genügend Öl für einen sicheren Getriebebetrieb zur Verfügung."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Leichte Fehlfunktion des Kettenspanners. Die Kettenspannung ist etwas instabiler, was Widerstand und Verschleiß geringfügig erhöht."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Mäßige Fehlfunktion des Kettenspanners. Die Kettenspannung wird instabil, die Laufeffizienz sinkt und das Risiko einer Fehlführung steigt."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Schwere Fehlfunktion des Kettenspanners. Die Kettenspannung ist stark gestört, die Kraftübertragung ineffizient und das Risiko des Abspringens steigt."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Kritischer Ausfall des Kettenspanners. Die Kette kann nicht mehr korrekt gespannt werden und das Fahrzeug ist nicht mehr sicher einsetzbar."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Leichte Fehlfunktion des Thermostats. Der Motor wird langsam warm und bleibt bei der Arbeit zu kühl."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Leichte Fehlfunktion des Thermostats. Die Temperaturregelung ist schwach; unter Last wird der Motor wärmer."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Mäßige Fehlfunktion des Thermostats. Der Motor wird langsam warm und bleibt bei der Arbeit zu kühl."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Mäßige Fehlfunktion des Thermostats. Die Temperatur steigt früher und der Motor läuft unter Last heiß."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Schwere Fehlfunktion des Thermostats. Der Motor wird langsam warm und bleibt bei der Arbeit zu kühl."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Schwere Fehlfunktion des Thermostats. Der Motor wird sehr heiß; bei längerer Arbeit droht Überhitzung."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Kritischer Ausfall des Thermostats. Der Motor wird langsam warm und bleibt bei der Arbeit zu kühl."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Kritischer Ausfall des Thermostats. Er bleibt geschlossen und der Motor überhitzt schnell."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Der Motor ist in den Schutzmodus gegangen. Die Leistung ist begrenzt, bis die Temperatur sinkt."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Überhitzungsschutz: Leistung reduziert"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Der Überhitzungsschutz verstärkt sich. Der Motor liefert nur noch die halbe Leistung."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Überhitzungsschutz: Leistung halbiert"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Der Überhitzungsschutz ist am Maximum. Es bleibt nur ein Bruchteil der Motorleistung."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Überhitzungsschutz: Leistung stark reduziert"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Der Motor wurde abgeschaltet, um Schäden zu vermeiden. Lass ihn abkühlen, bevor du neu startest."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Überhitzungsschutz: Motor abgestellt"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Leichte Fehlfunktion der Ölpumpe. Der Öldruck ist reduziert, das Motordrehmoment sinkt leicht, die Motortemperatur steigt und mechanisches Klopfen kann auftreten."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Mäßige Fehlfunktion der Ölpumpe. Der Öldruck ist unzureichend, das Motordrehmoment deutlich reduziert, die Motortemperatur erhöht und mechanisches Klopfen klar hörbar."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Schwere Fehlfunktion der Ölpumpe. Der Öldruck ist kritisch niedrig, das Motordrehmoment stark reduziert, Motorüberhitzung wahrscheinlich, mechanisches Klopfen stark ausgeprägt und der Motor kann absterben."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritischer Ausfall der Ölpumpe. Die Ölzirkulation reicht für einen sicheren Motorbetrieb nicht mehr aus und ein Start oder weiterer Betrieb ist nicht möglich."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="Der Motor hat sich festgefressen und kann sich nicht mehr drehen."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Motor abgewürgt"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Leichte ECU-Fehlfunktion. Die Motorleistung ist leicht reduziert."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Mäßige ECU-Fehlfunktion. Spürbarer Leistungsverlust und erhöhter Kraftstoffverbrauch."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Schwere ECU-Fehlfunktion. Erheblicher Leistungsverlust, hoher Kraftstoffverbrauch und Gefahr des Motorabwürgens."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Vollständiger ECU-Ausfall. Der Motor kann nicht gesteuert werden und startet nicht."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Leichte Fehlfunktion der Leistungskabel und Masseverbindungen. Erhöhter Übergangswiderstand führt zu gelegentlichem Flackern der Beleuchtung, unstabiler Versorgung und schwerem Anspringen. Ein Kriechstrom entlädt die Batterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Mäßige Fehlfunktion der Leistungskabel und Masseverbindungen. Kontaktverluste verursachen häufiges Flackern der Beleuchtung, instabile Spannungsversorgung, erschwerten Motorstart und der Motor kann absterben. Ein Kriechstrom entlädt die Batterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Schwere Fehlfunktion der Leistungskabel und Masseverbindungen. Die Versorgung der Stromkreise ist instabil, die Beleuchtung kann vollständig ausfallen, das Motordrehmoment ist reduziert, der Motor stirbt wahrscheinlich ab und der Start ist unzuverlässig. Ein Kriechstrom entlädt die Batterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Kritischer Ausfall der Leistungskabel und Masseverbindungen. Die Beleuchtung ist funktionslos und ein Motorstart ist unmöglich. Ein Kriechstrom entlädt die Batterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Leichte Fehlfunktion der Leistungskabel und Masseverbindungen. Erhöhter Übergangswiderstand führt zu gelegentlichem Flackern der Beleuchtung und unstabiler Versorgung. Ein Kriechstrom entlädt die Bordnetzbatterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Mäßige Fehlfunktion der Leistungskabel und Masseverbindungen. Kontaktverluste verursachen häufiges Flackern der Beleuchtung, instabile Spannungsversorgung und mögliche Aussetzer. Ein Kriechstrom entlädt die Bordnetzbatterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Schwere Fehlfunktion der Leistungskabel und Masseverbindungen. Die Versorgung der Stromkreise ist instabil, die Beleuchtung kann vollständig ausfallen, die Leistung ist reduziert und Aussetzer sind wahrscheinlich. Ein Kriechstrom entlädt die Bordnetzbatterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Kritischer Ausfall der Leistungskabel und Masseverbindungen. Die Beleuchtung ist funktionslos und die Maschine startet nicht. Ein Kriechstrom entlädt die Bordnetzbatterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Leichte Fehlfunktion der Kühlmittelschläuche und Anschlüsse. Eine leichte Undichtigkeit lässt den Kühlmittelstand kaum sinken."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Leichte Fehlfunktion der Kühlmittelschläuche und Anschlüsse. Ein leicht gequetschter Schlauch verringert den Durchfluss etwas."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Mäßige Fehlfunktion der Kühlmittelschläuche und Anschlüsse. Das Leck ist sichtbar und der Kühlmittelstand sinkt deutlicher."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Mäßige Fehlfunktion der Kühlmittelschläuche und Anschlüsse. Der geringere Durchfluss lässt die Temperatur unter Last schneller steigen."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Schwere Fehlfunktion der Kühlmittelschläuche und Anschlüsse. Viel Kühlmittel tritt aus; unter Last droht Überhitzung."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Schwere Fehlfunktion der Kühlmittelschläuche und Anschlüsse. Der Durchfluss ist schwach; bei längerer Arbeit überhitzt der Motor."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Kritischer Ausfall der Kühlmittelschläuche und Anschlüsse. Der Stand fällt schnell und der Kühlkreislauf kann leer laufen."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Kritischer Ausfall der Kühlmittelschläuche und Anschlüsse. Der Durchfluss ist stark behindert und der Motor überhitzt schnell."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Leichte Fehlfunktion des Ausgleichsbehälters. Ein Riss lässt etwas Kühlmittel austreten."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Leichte Fehlfunktion des Ausgleichsbehälters. Der Anschluss schwitzt leicht."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Mäßige Fehlfunktion des Ausgleichsbehälters. Der Riss verursacht ein deutliches Leck und der Stand sinkt."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Mäßige Fehlfunktion des Ausgleichsbehälters. Der Anschluss leckt deutlich und der Stand sinkt."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Schwere Fehlfunktion des Ausgleichsbehälters. Das Leck lässt den Kühlmittelstand rasch fallen."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Schwere Fehlfunktion des Ausgleichsbehälters. Am Anschluss geht rasch Kühlmittel verloren."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Kritischer Ausfall des Ausgleichsbehälters. Kühlmittel tritt schnell aus und der Kreislauf läuft leer."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Kritischer Ausfall des Ausgleichsbehälters. Das Leck am Anschluss leert den Kreislauf schnell."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Leichte Fehlfunktion des Keilrippenriemens und Spanners. Er quietscht und rutscht leicht; Ladung und Kühlmittelfluss sinken etwas."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Mäßige Fehlfunktion des Keilrippenriemens und Spanners. Unter Last rutscht er; die Ladung sinkt und das Kühlmittel zirkuliert langsamer."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Schwere Fehlfunktion des Keilrippenriemens und Spanners. Er rutscht stark; Ladung und Kühlmittelfluss sind deutlich verringert."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Kritischer Ausfall des Keilrippenriemens und Spanners. Er reißt; Generatorladung und Kühlmittelumlauf fallen schlagartig aus."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Leichte Fehlfunktion des Lüfterflügels. Der Luftstrom sinkt leicht; die Kühlung leidet vor allem bei langsamer Fahrt."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Mäßige Fehlfunktion des Lüfterflügels. Der Luftstrom nimmt merklich ab und der Motor wird wärmer."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Schwere Fehlfunktion des Lüfterflügels. Der Luftstrom ist deutlich reduziert und der Motor wird unter Last heiß."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Kritischer Ausfall des Lüfterflügels. Der Luftstrom sinkt auf die Hälfte und der Motor überhitzt unter Last schnell."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Leichte Fehlfunktion des elektrischen Lüfters. Die Luftförderung sinkt leicht, wenn die Kühlung gefordert ist."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Mäßige Fehlfunktion des elektrischen Lüfters. Die Luftförderung nimmt merklich ab und die Temperatur steigt schneller."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Schwere Fehlfunktion des elektrischen Lüfters. Die Luftförderung ist deutlich reduziert und die Temperatur steigt unter Last."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Kritischer Ausfall des elektrischen Lüfters. Die Luftförderung sinkt auf die Hälfte und die Temperatur steigt unter Last schnell."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Erste Anzeichen einer Störung des CVT-Getriebes wurden erkannt. Eine Inspektion und eine Reparatur sind erforderlich."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Die Störung des CVT-Getriebes schreitet fort. Weiterer Betrieb kann zum Notlauf führen."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Kritische Beschädigung des CVT-Getriebes. Das Getriebe arbeitet im Notlauf und die maximale Fahrgeschwindigkeit ist reduziert."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Vollständiger Ausfall des CVT-Getriebes. Ein weiterer Betrieb ist bis zur Reparatur nicht möglich."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Leichte Batteriesulfatierung. Die nutzbare Kapazität ist reduziert, was die elektrische Reserve unter Last verringert."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Mäßige Batteriesulfatierung. Die nutzbare Batteriekapazität ist deutlich reduziert und das Starten des Motors wird erschwert."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Schwere Batteriesulfatierung. Die nutzbare Batteriekapazität ist kritisch niedrig und die Startleistung instabil."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Kritische Batteriesulfatierung. Die nutzbare Kapazität ist nahezu verschwunden und die Startleistung reicht für einen zuverlässigen Motorstart nicht aus."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Leichte Sulfatierung der Bordnetzbatterie. Die nutzbare Kapazität ist reduziert, was die elektrische Reserve unter Last verringert."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Mäßige Sulfatierung der Bordnetzbatterie. Die nutzbare Kapazität ist deutlich reduziert und die elektrische Reserve ist schneller erschöpft."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Schwere Sulfatierung der Bordnetzbatterie. Die nutzbare Kapazität ist kritisch niedrig und die elektrische Reserve ist sehr schnell erschöpft."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Kritische Sulfatierung der Bordnetzbatterie. Die nutzbare Kapazität ist nahezu verschwunden und reicht für einen zuverlässigen Start nicht mehr aus."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Leichter Verschleiß der Bremsscheiben und Bremsbeläge. Leichte Verringerung der Bremswirkung."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Mäßiger Verschleiß der Bremsscheiben und Bremsbeläge. Der Bremsweg ist merklich verlängert."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Schwerer Verschleiß der Bremsscheiben und Bremsbeläge. Die Bremsen sind sehr schwach und unzuverlässig."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Kritischer Ausfall der Bremsscheiben und Bremsbeläge. Das Fahrzeug bremst sehr schlecht und die Fahrt wird gefährlich."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Leichte Fehlfunktion der Bremsbetätigung. Das Fahrzeug zieht beim Bremsen leicht zu einer Seite."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Leichte Fehlfunktion der Bremsbetätigung. Das Pedal wird etwas weich und die Bremswirkung nimmt leicht ab."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Mäßige Fehlfunktion der Bremsbetätigung. Die Bremse zieht deutlich zu einer Seite."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Mäßige Fehlfunktion der Bremsbetätigung. Das Pedal wird weich, der Druck sinkt und die Bremswirkung nimmt deutlich ab."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Schwere Fehlfunktion der Bremsbetätigung. Das Fahrzeug zieht beim Bremsen stark zu einer Seite."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Schwere Fehlfunktion der Bremsbetätigung. Das Pedal sinkt ungewöhnlich weit durch, der Druck fällt ab und das Fahrzeug bremst schlecht."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Kritischer Ausfall der Bremsbetätigung. Die Bremse zieht sehr stark zu einer Seite."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Kritischer Ausfall der Bremsbetätigung. Das Pedal sinkt fast widerstandslos durch und das Fahrzeug bremst kaum noch."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Leichte Fehlfunktion des Anhängerbremsventils. Der Anhänger verliert einen kleinen Teil seiner Bremswirkung."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Mäßige Fehlfunktion des Anhängerbremsventils. Der Anhänger bremst deutlich schwächer."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Schwere Fehlfunktion des Anhängerbremsventils. Der Anhänger erhält nur noch einen geringen Teil der Bremswirkung."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Kritischer Ausfall des Anhängerbremsventils. Der Anhänger bremst nicht mehr."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Leichte Fehlfunktion der Feststellbremse. Nach dem Lösen schleift sie noch etwas und bremst die Maschine leicht."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Mäßige Fehlfunktion der Feststellbremse. Nach dem Lösen schleift sie deutlich und hält die Maschine zurück."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Schwere Fehlfunktion der Feststellbremse. Nach dem Lösen bleibt sie halb angezogen und hält die Maschine stark zurück."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Vollständiger Ausfall der Feststellbremse. Sie lässt sich nicht mehr lösen und hält die Maschine wie angezogen fest."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Leichter Verschleiß des Radnabenlagers und Wellendichtrings. Der mechanische Widerstand steigt leicht an und ungewöhnliche Laufgeräusche können auftreten."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Mäßiger Verschleiß des Radnabenlagers und Wellendichtrings. Die Reibung steigt deutlich, das Geräusch wird stärker und die mechanische Effizienz sinkt."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Schwerer Verschleiß des Radnabenlagers und Wellendichtrings. Die Reibung ist hoch, die Geräuschentwicklung deutlich und unter Last besteht echte Fressgefahr."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Kritischer Ausfall des Radnabenlagers und Wellendichtrings. Das Lager steht kurz vor vollständigem Festfressen und ein Betrieb ist nicht mehr möglich."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Leichter Verschleiß der Lager der Laufrollen und Leiträder. Der mechanische Widerstand steigt leicht an und ungewöhnliche Laufgeräusche können auftreten."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Mäßiger Verschleiß der Lager der Laufrollen und Leiträder. Reibung und Geräuschentwicklung nehmen zu und die Drehung wird schwergängiger."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Schwerer Verschleiß der Lager der Laufrollen und Leiträder. Reibung und Geräuschentwicklung sind hoch, unter Last besteht Fressgefahr."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Kritischer Ausfall der Lager der Laufrollen und Leiträder. Die Raupenkette kann zum Stillstand kommen, wenn eines der Lager festfrisst."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Leichte Fehlfunktion des Lichtmaschinenreglers. Die Ladeleistung ist reduziert, wodurch die Batterie schlechter geladen wird."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Mäßige Fehlfunktion des Lichtmaschinenreglers. Die Ladeleistung ist instabil und reduziert, was zu schlechter Batterieladung und erhöhten Spannungsverlusten im Bordnetz führt."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Schwere Fehlfunktion des Lichtmaschinenreglers. Die Ladeleistung ist stark reduziert, die Spannungsversorgung instabil und das elektrische System arbeitet mit erheblichen Verlusten."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Vollständiger Ausfall des Lichtmaschinenreglers. Die Batterie wird nicht mehr geladen und das Bordnetz arbeitet nur noch aus der verbleibenden Batteriereserve."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Leichte Fehlfunktion der Lichtmaschinendioden. Die Ladeleistung ist reduziert, wodurch die Batterie schlechter geladen wird. Ein Kriechstrom entlädt die Batterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Mäßige Fehlfunktion der Lichtmaschinendioden. Die Ladeleistung ist instabil und reduziert, was zu schlechter Batterieladung und erhöhten Spannungsverlusten im Bordnetz führt. Ein Kriechstrom entlädt die Batterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Schwere Fehlfunktion der Lichtmaschinendioden. Die Ladeleistung ist stark reduziert, die Spannungsversorgung instabil und das elektrische System arbeitet mit erheblichen Verlusten. Ein Kriechstrom entlädt die Batterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Vollständiger Ausfall der Lichtmaschinendioden. Die Batterie wird nicht mehr geladen und das Bordnetz arbeitet nur noch aus der verbleibenden Batteriereserve. Ein Kriechstrom entlädt die Batterie, wenn die Maschine abgestellt ist."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Leichte Fehlfunktion des Starters. Er dreht den Motor langsamer durch, und der Start dauert etwas länger."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Mäßige Fehlfunktion des Starters. Er dreht den Motor nur langsam durch: Der Start ist schwierig und bei strengem Frost unmöglich."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Schwere Fehlfunktion des Starters. Er dreht den Motor kaum noch durch: Der Motor springt nur noch warm oder bei mildem Wetter an."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Vollständiger Ausfall des Starters. Er dreht den Motor nicht mehr durch: Ein laufender Motor läuft weiter, springt aber nach dem Abstellen nicht mehr an."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Leichter Verschleiß der Lager des Elektromotors. Ein leises Geräusch tritt auf und der Verbrauch steigt etwas."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Mäßiger Verschleiß der Lager des Elektromotors. Das Geräusch ist deutlich hörbar, der Verbrauch steigt und die Leistung sinkt leicht."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Schwerer Verschleiß der Lager des Elektromotors. Das Geräusch ist laut, der Motor wird heiß und die Leistung sinkt deutlich."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Kritischer Ausfall der Lager des Elektromotors. Der Motor ist blockiert und die Maschine kann nicht mehr fahren."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Leichte Schädigung der Wicklungen des Elektromotors. Die Leistung sinkt leicht und der Motor wird wärmer."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Mäßige Schädigung der Wicklungen des Elektromotors. Die Leistung sinkt deutlich, der Motor wird heiß und der Verbrauch steigt."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Schwere Schädigung der Wicklungen des Elektromotors. Der Leistungsverlust ist erheblich, der Motor wird sehr heiß und Aussetzer können auftreten."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Kritischer Ausfall der Wicklungen des Elektromotors. Der Motor hat einen Kurzschluss und kann nicht mehr laufen."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Leichte Fehlfunktion des Positionssensors des Motors. Unter Last tritt kurzes Ruckeln auf."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Mäßige Fehlfunktion des Positionssensors des Motors. Das Ruckeln ist häufig und die Leistung sinkt."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Schwere Fehlfunktion des Positionssensors des Motors. Das Ruckeln ist heftig, die Leistung bricht ein und Aussetzer treten auf."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Vollständiger Ausfall des Positionssensors des Motors. Der Motor kann nicht mehr angesteuert werden und die Maschine startet nicht."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Leichte Fehlfunktion des Wechselrichters. Die Motorleistung ist leicht reduziert."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Mäßige Fehlfunktion des Wechselrichters. Der Leistungsverlust ist spürbar und der Verbrauch steigt."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Schwere Fehlfunktion des Wechselrichters. Der Leistungsverlust ist erheblich und Aussetzer können auftreten."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Vollständiger Ausfall des Wechselrichters. Der Motor wird nicht mehr versorgt und die Maschine startet nicht."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Leichte Fehlfunktion des Spannungswandlers. Die Bordnetzbatterie wird schlechter geladen."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Mäßige Fehlfunktion des Spannungswandlers. Die Ladung der Bordnetzbatterie ist reduziert und instabil."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Schwere Fehlfunktion des Spannungswandlers. Die Bordnetzbatterie wird kaum noch geladen und entleert sich im Betrieb."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Vollständiger Ausfall des Spannungswandlers. Die Bordnetzbatterie wird nicht mehr geladen und die Maschine läuft nur noch aus ihrer Reserve."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Leichte Fehlfunktion des Bordladegeräts. Das Laden an der Ladestation ist etwas langsamer."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Mäßige Fehlfunktion des Bordladegeräts. Das Laden an der Ladestation ist deutlich langsamer."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Schwere Fehlfunktion des Bordladegeräts. Das Laden an der Ladestation ist sehr langsam."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Vollständiger Ausfall des Bordladegeräts. Die Traktionsbatterie kann nicht mehr geladen werden."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Leichter Isolationsverlust der Hochvoltverkabelung. Eine Warnung wird angezeigt, ohne weitere Auswirkung."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Mäßiger Isolationsverlust der Hochvoltverkabelung. Die Leistung wird zur Sicherheit reduziert."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Schwerer Isolationsverlust der Hochvoltverkabelung. Die Leistung wird stark reduziert und Aussetzer treten auf."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Kritischer Isolationsverlust der Hochvoltverkabelung. Die Maschine verweigert zur Sicherheit den Start."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Leichte Fehlfunktion von Zellen der Traktionsbatterie. Die Reichweite sinkt leicht."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Mäßige Fehlfunktion von Zellen der Traktionsbatterie. Die Reichweite sinkt deutlich und die Leistung ist reduziert."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Schwere Fehlfunktion von Zellen der Traktionsbatterie. Reichweite und Leistung brechen ein, und Aussetzer können auftreten."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Kritischer Ausfall der Traktionsbatterie. Die Maschine lässt sich nicht mehr einschalten."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Leichter Verschleiß des Hochvoltschützes. Seltene Unterbrechungen der Stromversorgung treten auf."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Mäßiger Verschleiß des Hochvoltschützes. Die Unterbrechungen der Stromversorgung treten regelmäßig auf."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Schwerer Verschleiß des Hochvoltschützes. Die Unterbrechungen der Stromversorgung sind häufig."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Kritischer Ausfall des Hochvoltschützes. Die Traktionsbatterie versorgt die Maschine nicht mehr, sie startet nicht."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Leichte Fehlfunktion der Kühlmittelpumpe. Das Kühlmittel zirkuliert schlechter und die Temperatur steigt etwas stärker."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Mäßige Fehlfunktion der Kühlmittelpumpe. Die Kühlung ist deutlich reduziert."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Schwere Fehlfunktion der Kühlmittelpumpe. Die Kühlung ist stark reduziert und unter Last ist eine Überhitzung wahrscheinlich."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Vollständiger Ausfall der Kühlmittelpumpe. Das Kühlmittel zirkuliert kaum noch und die Maschine überhitzt schnell."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Leichte Fehlfunktion der Wasserpumpe. Der Fehler ist noch kaum spürbar und erfordert eine Prüfung."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Mäßige Fehlfunktion der Wasserpumpe. Die Zirkulation nimmt ab und die Kühlung wird schwächer."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Schwere Fehlfunktion der Wasserpumpe. Die unzureichende Zirkulation birgt Überhitzungsgefahr."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Kritischer Ausfall der Wasserpumpe. Die Zirkulation ist stark gestört und die Kühlung stark vermindert."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Leichte Fehlfunktion der Wasserpumpe. Leichte Kühlmittelspuren erscheinen um die Wasserpumpendichtung."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Mäßige Fehlfunktion der Wasserpumpe. Kühlmittel tritt durch die Wasserpumpendichtung aus; der Pegel sinkt und die Zirkulation wird schwächer."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Schwere Fehlfunktion der Wasserpumpe. Das Leck der Wasserpumpendichtung hinterlässt starke Spuren um die Pumpe; der Pegel sinkt und die schwächere Zirkulation erhöht die Überhitzungsgefahr."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Kritischer Ausfall der Wasserpumpe. Die Wasserpumpendichtung verliert viel Kühlmittel; der Kreislauf leert sich und die Zirkulation kann den Motor nicht mehr ausreichend kühlen."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Leichte Fehlfunktion der Wasserpumpe. Der Fehler ist noch kaum spürbar und erfordert eine Prüfung."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Mäßige Fehlfunktion der Wasserpumpe. Das Pumpenlager bekommt Spiel und die Zirkulation nimmt ab."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Schwere Fehlfunktion der Wasserpumpe. Die unzureichende Zirkulation birgt Überhitzungsgefahr."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Kritischer Ausfall der Wasserpumpe. Die Zirkulation ist stark gestört und die Kühlung stark vermindert."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Leichte Fehlfunktion des Kühlernetzes. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Mäßige Fehlfunktion des Kühlernetzes. Es gibt weniger Wärme ab."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Schwere Fehlfunktion des Kühlernetzes. Es gibt Wärme schlecht ab und die Überhitzungsgefahr steigt."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Kritischer Ausfall des Kühlernetzes. Es gibt kaum Wärme ab und die Kühlung ist stark beeinträchtigt."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Leichte Fehlfunktion des Kühlernetzes. An den Rohren des Kühlernetzes sickert etwas Kühlmittel aus."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Mäßige Fehlfunktion des Kühlernetzes. Beschädigte Rohre lassen Kühlmittel auf den Kühler austreten und der Pegel im Kreislauf sinkt."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Schwere Fehlfunktion des Kühlernetzes. Kühlmittel tritt aus den beschädigten Rohren des Kühlernetzes aus und hinterlässt feuchte Spuren am Kühler; die Reserve schrumpft schnell."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Kritischer Ausfall des Kühlernetzes. Es ist undicht und verliert viel Kühlmittel. Der Pegel fällt und der Kühler kann nicht mehr genug Motorwärme abführen."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Leichter Verschleiß der Zahnräder und Lager des Untersetzungsgetriebes. Beim Fahren tritt ein leises Geräusch auf."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Mäßiger Verschleiß der Zahnräder und Lager des Untersetzungsgetriebes. Das Geräusch ist deutlich hörbar und der Verbrauch steigt."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Schwerer Verschleiß der Zahnräder und Lager des Untersetzungsgetriebes. Das Geräusch ist laut, das Getriebe wird heiß und die Leistung an den Rädern sinkt."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Kritischer Ausfall des Untersetzungsgetriebes. Es ist blockiert und die Maschine kann nicht mehr fahren."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Leichte Fehlfunktion der Kolben. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Mäßige Fehlfunktion der Kolben. Mehr Öl gelangt in den Brennraum und blauer Rauch tritt auf."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Schwere Fehlfunktion der Kolben. Ölverbrauch und blauer Rauch nehmen zu."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Kritischer Ausfall der Kolben. Ein Kolben hat sich festgefressen und der Motor ist blockiert."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Leichte Fehlfunktion der Kolben. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Mäßige Fehlfunktion der Kolben. Mehr Öl gelangt in den Brennraum und blauer Rauch tritt auf."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Schwere Fehlfunktion der Kolben. Ölverbrauch und blauer Rauch nehmen zu."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Kritischer Ausfall der Kolben. Ein Kolben ist gebrochen und der Motor ist stehen geblieben."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Leichte Fehlfunktion der Kolbenringe. Ablagerungen behindern die Ringe in ihren Nuten."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Mäßige Fehlfunktion der Kolbenringe. Die Dichtheit nimmt ab und der Motor verliert Leistung."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Schwere Fehlfunktion der Kolbenringe. Kompressionsverlust erschwert den Start und verringert die Leistung."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Kritischer Ausfall der Kolbenringe. Die Kompression ist sehr niedrig, der Start schwer und die Leistung stark vermindert."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Leichte Fehlfunktion der Kolbenringe. Ablagerungen behindern die Ringe in ihren Nuten."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Mäßige Fehlfunktion der Kolbenringe. Mehr Öl gelangt in den Brennraum und blauer Rauch tritt auf."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Schwere Fehlfunktion der Kolbenringe. Ölverbrauch und blauer Rauch nehmen zu."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Kritischer Ausfall der Kolbenringe. Viel Öl gelangt in den Brennraum und blauer Rauch bleibt sichtbar."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Leichte Fehlfunktion der Kolbenringe. Ablagerungen behindern die Ringe in ihren Nuten."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Mäßige Fehlfunktion der Kolbenringe. Die Dichtheit nimmt ab und der Motor verliert Leistung."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Schwere Fehlfunktion der Kolbenringe. Kompressionsverlust erschwert den Start und verringert die Leistung."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Kritischer Ausfall der Kolbenringe. Ein Kolbenring ist gebrochen: Die Kompression sinkt und Öl gelangt in den Brennraum."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Leichte Fehlfunktion der Zylinderlaufbuchsen. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Mäßige Fehlfunktion der Zylinderlaufbuchsen. Die Oberfläche hat Riefen und dichtet schlechter ab."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Schwere Fehlfunktion der Zylinderlaufbuchsen. Die Oberfläche hat Riefen und dichtet schlechter ab. Ölverbrauch und blauer Rauch nehmen zu."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Kritischer Ausfall der Zylinderlaufbuchsen. Ein Kolben hat sich in seiner Laufbuchse festgefressen und der Motor ist blockiert."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Leichte Fehlfunktion der Zylinderlaufbuchsen. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Mäßige Fehlfunktion der Zylinderlaufbuchsen. Kühlmittel tritt durch eine gerissene Laufbuchse in einen Zylinder ein und der Pegel sinkt."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Schwere Fehlfunktion der Zylinderlaufbuchsen. Eine gerissene Laufbuchse lässt Kühlmittel in einen Zylinder gelangen; am Auspuff erscheint weißer Rauch."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Kritischer Ausfall der Zylinderlaufbuchsen. Viel Kühlmittel dringt durch eine gerissene Laufbuchse in einen Zylinder ein, mit anhaltendem weißem Rauch und unzureichender Kühlung."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Leichte Fehlfunktion der Einlassventile. Die Ventildichtfläche ist beschädigt, die Leistung sinkt leicht."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Mäßige Fehlfunktion der Einlassventile. Das Ventil schließt schlecht, mit Aussetzern und Leistungsverlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Schwere Fehlfunktion der Einlassventile. Die Dichtfläche ist verbrannt, mit Aussetzern, Absterben und Leistungsverlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Kritischer Ausfall der Einlassventile. Die verbrannte Dichtfläche verursacht Aussetzer, Absterben und starken Leistungsverlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Leichte Fehlfunktion der Einlassventile. Die Ventildichtfläche ist beschädigt, die Leistung sinkt leicht."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Mäßige Fehlfunktion der Einlassventile. Das Ventil schließt schlecht, mit Aussetzern und Leistungsverlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Schwere Fehlfunktion der Einlassventile. Die Dichtfläche ist verbrannt, mit Aussetzern, Absterben und Leistungsverlust."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Kritischer Ausfall der Einlassventile. Ein Einlassventil ist gebrochen und der Motor ist stehen geblieben."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Leichte Fehlfunktion der Auslassventile. Die Ventildichtfläche ist beschädigt, die Leistung sinkt leicht."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Mäßige Fehlfunktion der Auslassventile. Das Ventil schließt schlecht, mit Aussetzern und Leistungsverlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Schwere Fehlfunktion der Auslassventile. Die Dichtfläche ist verbrannt, mit Aussetzern, Absterben und Leistungsverlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Kritischer Ausfall der Auslassventile. Die verbrannte Dichtfläche verursacht Aussetzer, Absterben und starken Leistungsverlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Leichte Fehlfunktion der Auslassventile. Die Ventildichtfläche ist beschädigt, die Leistung sinkt leicht."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Mäßige Fehlfunktion der Auslassventile. Das Ventil schließt schlecht, mit Aussetzern und Leistungsverlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Schwere Fehlfunktion der Auslassventile. Die Dichtfläche ist verbrannt, mit Aussetzern, Absterben und Leistungsverlust."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Kritischer Ausfall der Auslassventile. Ein Auslassventil ist gebrochen und der Motor ist stehen geblieben."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Leichte Fehlfunktion der Ventilführungen und Schaftdichtungen. Die Prüfung zeigt einen Führungsfehler und die Ventile werden lauter."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Mäßige Fehlfunktion der Ventilführungen und Schaftdichtungen. Das Spiel nimmt zu und die Ventile werden lauter."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Schwere Fehlfunktion der Ventilführungen und Schaftdichtungen. Zu großes Spiel verursacht Geräusche, Aussetzer und Öldurchtritt."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Kritischer Ausfall der Ventilführungen und Schaftdichtungen. Das Führungsspiel ist zu groß, mit Geräuschen, Aussetzern und blauem Rauch."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Leichte Fehlfunktion der Ventilführungen und Schaftdichtungen. Die verhärtete Dichtung lässt Öl durch."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Mäßige Fehlfunktion der Ventilführungen und Schaftdichtungen. Mehr Öl gelangt in den Brennraum und blauer Rauch tritt auf."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Schwere Fehlfunktion der Ventilführungen und Schaftdichtungen. Ölverbrauch und blauer Rauch nehmen zu."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Kritischer Ausfall der Ventilführungen und Schaftdichtungen. Viel Öl gelangt in den Brennraum und blauer Rauch bleibt sichtbar."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Leichte Fehlfunktion des Zylinderkopfs. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Mäßige Fehlfunktion des Zylinderkopfs. Ein Riss im Zylinderkopf lässt Kühlmittel in einen Brennraum gelangen; der Motor verliert Leistung und springt schwer an."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Schwere Fehlfunktion des Zylinderkopfs. Kühlmittel gelangt durch den gerissenen Zylinderkopf in einen Brennraum und verursacht weißen Rauch und Leistungsverlust."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Kritischer Ausfall des Zylinderkopfs. Ein Riss lässt viel Kühlmittel in einen Brennraum gelangen. Der Motor hat wenig Leistung, springt schlecht an und stößt weißen Rauch aus."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Leichte Fehlfunktion des Zylinderkopfs. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Mäßige Fehlfunktion des Zylinderkopfs. Kühlmittel sickert aus dem gerissenen Zylinderkopf und der Pegel im Kreislauf sinkt."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Schwere Fehlfunktion des Zylinderkopfs. Das Kühlmittelleck hinterlässt sichtbare Spuren am gerissenen Zylinderkopf und der Pegel fällt schnell."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Kritischer Ausfall des Zylinderkopfs. Viel Kühlmittel tritt aus dem gerissenen Zylinderkopf aus; der Kreislauf leert sich und der Motor droht zu überhitzen."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Leichte Fehlfunktion des Zylinderkopfs. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Mäßige Fehlfunktion des Zylinderkopfs. Kühlmittel gelangt durch einen Riss im Zylinderkopf ins Öl und der Pegel im Kreislauf sinkt."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Schwere Fehlfunktion des Zylinderkopfs. Der Riss im Zylinderkopf lässt mehr Kühlmittel ins Öl gelangen; der Pegel im Kreislauf fällt weiter."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Kritischer Ausfall des Zylinderkopfs. Der Riss im Zylinderkopf leitet viel Kühlmittel ins Öl; der Kreislauf verliert seine Reserve und der Motor droht zu überhitzen."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Leichte Fehlfunktion der Zylinderkopfdichtung. Der Fehler ist noch kaum spürbar und erfordert eine Prüfung."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Mäßige Fehlfunktion der Zylinderkopfdichtung. Sie lässt Kühlmittel in einen Brennraum gelangen; der Start dauert länger und die Leistung sinkt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Schwere Fehlfunktion der Zylinderkopfdichtung. Kühlmittel gelangt durch sie in einen Brennraum und erzeugt weißen Rauch am Auspuff."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Kritischer Ausfall der Zylinderkopfdichtung. Sie lässt viel Kühlmittel in einen Brennraum gelangen; der weiße Rauch nimmt zu und der Start wird sehr schwierig."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Leichte Fehlfunktion der Zylinderkopfdichtung. Der Fehler ist noch kaum spürbar und erfordert eine Prüfung."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Mäßige Fehlfunktion der Zylinderkopfdichtung. Kühlmittel sickert an ihr aus und der Pegel im Kreislauf sinkt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Schwere Fehlfunktion der Zylinderkopfdichtung. Ein Kühlmittelleck an ihr hinterlässt Spuren am Motor und lässt den Pegel schnell sinken."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Kritischer Ausfall der Zylinderkopfdichtung. Sie lässt viel Kühlmittel nach außen austreten; der Pegel fällt und die Motorkühlung verschlechtert sich stark."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Leichte Fehlfunktion der Zylinderkopfdichtung. Der Fehler ist noch kaum spürbar und erfordert eine Prüfung."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Mäßige Fehlfunktion der Zylinderkopfdichtung. Kühlmittel gelangt durch sie ins Öl; der Pegel im Kreislauf sinkt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Schwere Fehlfunktion der Zylinderkopfdichtung. Sie lässt immer mehr Kühlmittel ins Öl gelangen; der Kreislauf verliert nach und nach Flüssigkeit."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Kritischer Ausfall der Zylinderkopfdichtung. Ein starkes Leck durch sie führt Kühlmittel ins Öl und entzieht dem Kreislauf die zur Kühlung nötige Flüssigkeit."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Leichte Fehlfunktion der Kurbelwellenlager. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Mäßige Fehlfunktion der Kurbelwellenlager. Das Lagerspiel nimmt zu."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Schwere Fehlfunktion der Kurbelwellenlager. Der Ölfilm ist gestört, mit Klopfen und Erwärmung."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Kritischer Ausfall der Kurbelwellenlager. Ein Kurbelwellenlager hat sich festgefressen und den Motor blockiert."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Leichte Fehlfunktion der Kurbelwellenlager. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Mäßige Fehlfunktion der Kurbelwellenlager. Das Lagerspiel nimmt zu."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Schwere Fehlfunktion der Kurbelwellenlager. Der Ölfilm ist gestört, mit Klopfen und Erwärmung."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Kritischer Ausfall der Kurbelwellenlager. Die Lagerschicht eines Kurbelwellenlagers ist geschmolzen und der Motor ist stehen geblieben."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Leichte Fehlfunktion der Pleuellager. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Mäßige Fehlfunktion der Pleuellager. Das Lagerspiel nimmt zu."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Schwere Fehlfunktion der Pleuellager. Der Ölfilm ist gestört, mit Klopfen und Erwärmung."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Kritischer Ausfall der Pleuellager. Ein Pleuellager hat sich festgefressen und den Motor blockiert."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Leichte Fehlfunktion der Pleuellager. Die Oberfläche ist bei der Prüfung erkennbar beschädigt."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Mäßige Fehlfunktion der Pleuellager. Das Lagerspiel nimmt zu."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Schwere Fehlfunktion der Pleuellager. Der Ölfilm ist gestört, mit Klopfen und Erwärmung."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Kritischer Ausfall der Pleuellager. Die Lagerschicht eines Pleuellagers ist geschmolzen und der Motor ist stehen geblieben."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Unzureichende Spannung im Bordnetz"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Früher Verschleiß der Kraftstoffförderpumpe. Leicht reduzierte Motorleistung und erhöhter Kraftstoffverbrauch."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Kraftstoffdruck fällt ab. Spürbarer Leistungsverlust, höherer Kraftstoffverbrauch und gelegentliches Abwürgen des Motors."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Kritischer Kraftstoffdruck. Starker Leistungsverlust, sehr hoher Kraftstoffverbrauch und häufiges Abwürgen des Motors."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Vollständiger Ausfall der Kraftstoffförderpumpe. Es wird kein Kraftstoff zum Motor gefördert."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Eine oder mehrere Einspritzdüsen sind leicht verstopft. Der Motor läuft möglicherweise etwas unrund, mit einem geringen Leistungsverlust."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Schlechte Kraftstoffzerstäubung. Der Motor stockt unter Last, mit spürbarem Leistungsverlust und Ruckeln."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Eine Einspritzdüse klemmt. Der Motor läuft sehr schlecht, mit erheblichem Leistungsverlust und unzuverlässigem Startverhalten."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Eine Einspritzdüse ist komplett ausgefallen. Der Motor läuft nicht korrekt und startet möglicherweise gar nicht."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Leichte Fehlfunktion der Hochdruckpumpe. Der Einspritzdruck baut sich langsamer auf: Der Start dauert länger und der Motor spricht weniger direkt an."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Mäßige Fehlfunktion der Hochdruckpumpe. Der Einspritzdruck reicht unter Last nicht aus, mit spürbarem Leistungsverlust und Stocken."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Schwere Fehlfunktion der Hochdruckpumpe. Der Einspritzdruck ist kritisch, mit starkem Leistungsverlust, Abwürgen des Motors und schwierigem Start."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Vollständiger Ausfall der Hochdruckpumpe. Sie baut keinen Einspritzdruck mehr auf: Der Starter dreht den Motor durch, aber er springt nicht an."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Leichte Verstopfung des Kraftstofffilters. Der Kraftstoffdurchfluss sinkt unter hoher Last geringfügig."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Mäßige Verstopfung des Kraftstofffilters. Unter Last wird die Kraftstoffversorgung spürbar eingeschränkt, die Leistung sinkt und der Motor verschluckt sich gelegentlich."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Schwere Verstopfung des Kraftstofffilters. Die Kraftstoffversorgung ist stark eingeschränkt, die Leistung bricht deutlich ein und der Motor kann absterben."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Der Kraftstofffilter ist nahezu vollständig zugesetzt. Der Motor erhält nicht mehr genug Kraftstoff für einen zuverlässigen Betrieb."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Leichter Lufteintritt in der Kraftstoffleitung. Die Kraftstoffversorgung wird leicht ungleichmäßig."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Mäßiger Lufteintritt in der Kraftstoffleitung. Die Versorgung wird instabil, die Leistung sinkt und der Motor verschluckt sich."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Schwerer Lufteintritt in der Kraftstoffleitung. Der Motor läuft sehr unruhig und die Gefahr, dass er abstirbt, ist hoch."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Kritischer Ausfall der Kraftstoffleitung mit starkem Lufteintritt. Der Motor kann nicht mehr korrekt mit Kraftstoff versorgt werden."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Leichte Quetschung der Kraftstoffleitung. Der Durchfluss sinkt: Der Motor startet und stirbt dann gelegentlich ab."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Mäßige Quetschung der Kraftstoffleitung. Der Motor startet und stirbt dann regelmäßig ab."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Schwere Quetschung der Kraftstoffleitung. Der Motor stirbt häufig ab."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Kraftstoffleitung zerquetscht. Es fließt kein Kraftstoff mehr durch: Der Motor bleibt stehen."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Leichte Fehlfunktion der mechanischen Einspritzpumpe. Die Fördermenge sinkt: Der Start dauert länger und dem Motor fehlt etwas Durchzug."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Mäßige Fehlfunktion der mechanischen Einspritzpumpe. Unter Last reicht die Fördermenge nicht mehr aus: Der Motor verliert Leistung und verschluckt sich."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Schwere Fehlfunktion der mechanischen Einspritzpumpe. Der Motor bekommt zu wenig Kraftstoff, verliert viel Leistung, startet schlecht und stirbt ab."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Kritischer Ausfall der mechanischen Einspritzpumpe. Der Antrieb ist gebrochen: Der Motor bleibt stehen und lässt sich nicht mehr starten."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Leichte Fehlfunktion des Kraftstoffmengenregelventils. Der Raildruck baut sich langsamer auf und der Start dauert länger."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Mäßige Fehlfunktion des Kraftstoffmengenregelventils. Unter Last reicht der Raildruck nicht mehr aus: Der Motor verliert Leistung und verschluckt sich."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Schwere Fehlfunktion des Kraftstoffmengenregelventils. Der Raildruck weicht stark vom Sollwert ab: Der Motor verliert viel Leistung und stirbt ab."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Kritischer Ausfall des Kraftstoffmengenregelventils. Im Rail baut sich kein Druck mehr auf: Der Anlasser dreht den Motor, aber er springt nicht an."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Leichte Fehlfunktion des Raildrucksensors. Der Messwert wird instabil und der Start dauert etwas länger."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Mäßige Fehlfunktion des Raildrucksensors. Das Steuergerät regelt den Druck schlecht: Der Motor verliert Leistung und verschluckt sich."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Schwere Fehlfunktion des Raildrucksensors. Der Motor geht in den Notlauf, verliert viel Leistung und kann absterben."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Kritischer Ausfall des Raildrucksensors. Ohne Messwert hält das Steuergerät den Motor im Notlauf."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Leichte Fehlfunktion des Raildruckbegrenzungsventils. Es öffnet zu früh: Der Raildruck baut sich langsamer auf und der Start dauert länger."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Mäßige Fehlfunktion des Raildruckbegrenzungsventils. Der Raildruck hält unter Last nicht mehr: Der Motor verliert Leistung und setzt aus."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Schwere Fehlfunktion des Raildruckbegrenzungsventils. Der Raildruck bricht ein: Der Motor verliert viel Leistung und geht aus."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Kritische Fehlfunktion des Raildruckbegrenzungsventils. Es bleibt offen: Es baut sich kein Raildruck mehr auf und der Anlasser dreht den Motor, ohne dass er anspringt."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Leichte Fehlfunktion des Gasdruckreglers. Der Versorgungsdruck schwankt und der Start dauert länger."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Mäßige Fehlfunktion des Gasdruckreglers. Unter Last sinkt der Druck: Der Motor verliert Leistung und verschluckt sich."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Schwere Fehlfunktion des Gasdruckreglers. Die Versorgung wird unregelmäßig: Der Motor verliert viel Leistung, startet schlecht und stirbt ab."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Kritischer Ausfall des Gasdruckreglers. Er lässt nicht mehr genug Gas durch: Der Motor bleibt stehen."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Leichte Fehlfunktion des Gasabsperrmagnetventils. Es öffnet verzögert: Der Start dauert länger und der Motor verschluckt sich zeitweise."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Mäßige Fehlfunktion des Gasabsperrmagnetventils. Es unterbricht gelegentlich die Gaszufuhr: Der Motor verschluckt sich und stirbt ab."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Schwere Fehlfunktion des Gasabsperrmagnetventils. Die Unterbrechungen häufen sich und der Motor stirbt oft ab."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Kritischer Ausfall des Gasabsperrmagnetventils. Es bleibt geschlossen: Der Motor bleibt stehen und lässt sich nicht mehr starten."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Leichte Verstopfung des Gasfilters. Unter hoher Last sinkt der Gasdurchfluss geringfügig."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Mäßige Verstopfung des Gasfilters. Unter Last reicht die Versorgung nicht mehr aus: Die Leistung sinkt und der Motor kann absterben."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Schwere Verstopfung des Gasfilters. Der Durchfluss ist stark eingeschränkt: Die Leistung bricht deutlich ein und der Motor stirbt ab."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Gasfilter vollständig zugesetzt. Der Motor erhält nicht mehr genug Gas und bleibt stehen."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Leichte Undichtigkeit der Gasleitungen. Der Start dauert etwas länger."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Mäßige Undichtigkeit der Gasleitungen. Die Versorgung wird unregelmäßig: Der Motor verschluckt sich und kann absterben."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Schwere Undichtigkeit der Gasleitungen. Der Druck fällt ab: Der Motor verschluckt sich, startet schlecht und stirbt oft ab."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Kritische Undichtigkeit der Gasleitungen. Der Druck lässt sich nicht mehr halten: Der Motor bleibt stehen."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Leichte Fehlfunktion der Gaseinspritzdüsen. Die Dosierung wird unregelmäßig: Der Motor läuft unrunder und verbraucht etwas mehr."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Mäßige Fehlfunktion der Gaseinspritzdüsen. Der Motor verschluckt sich, verliert Leistung, verbraucht mehr und kann absterben."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Schwere Fehlfunktion der Gaseinspritzdüsen. Eine Einspritzdüse dosiert sehr schlecht: starker Leistungsverlust, Mehrverbrauch und schlechter Start."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kritischer Ausfall der Gaseinspritzdüsen. Die Dosierung ermöglicht keinen Motorlauf mehr: Der Motor bleibt stehen."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Fehlfunktion der AdBlue-Pumpe. Sie versorgt die Dosierung nicht mehr: Die Motorkontrollleuchte geht an, anschließend reduziert das Steuergerät die Leistung bis zur Reparatur."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Fehlfunktion der AdBlue-Dosierdüse. Durch Kristalle zugesetzt, sprüht sie nicht mehr ein: Die Motorkontrollleuchte geht an und die Leistung sinkt anschließend bis zur Reparatur."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Der AdBlue-Filter ist zum Wechsel fällig und beginnt zu verstopfen. Die umfassendste Wartung ersetzt ihn."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="Der AdBlue-Filter ist verschmutzt: Der AdBlue-Durchfluss sinkt und die Motorkontrollleuchte geht an. Die umfassendste Wartung ersetzt ihn."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="Der AdBlue-Filter ist stark verschmutzt: Die Dosierung fällt aus und das ECU reduziert die Leistung bis zur Reparatur."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="Der AdBlue-Filter ist vollständig verstopft: Es wird kein AdBlue mehr dosiert, das ECU reduziert die Leistung bis zur Reparatur."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="Fehlfunktion des NOx-Sensors. Das Steuergerät überwacht die Emissionen nicht mehr: Die Motorkontrollleuchte geht an und nach mehreren Dutzend Stunden wird die Leistung reduziert."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Leichte Fehlfunktion des Partikelfilters. Ein Riss lässt etwas Ruß in den Auspuff gelangen."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Mäßige Fehlfunktion des Partikelfilters. Der Riss wird größer: Schwarzer Rauch wird sichtbar."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Schwere Fehlfunktion des Partikelfilters. Der Filterkörper zerfällt: Aus dem Auspuff tritt viel schwarzer Rauch aus."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Kritischer Ausfall des Partikelfilters. Der Filterkörper ist gebrochen: Ruß gelangt ungefiltert hindurch."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Leichte Fehlfunktion des Partikelfilters. Ein Bereich des Filterkörpers ist geschmolzen und setzt sich zu."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Mäßige Fehlfunktion des Partikelfilters. Der geschmolzene Bereich breitet sich aus: Der Abgasgegendruck steigt."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Schwere Fehlfunktion des Partikelfilters. Geschmolzen und zugesetzt, kann er sich nicht mehr regenerieren: Die Motordrehzahl wird begrenzt."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritischer Ausfall des Partikelfilters. Vollständig verstopft, lässt er keine Abgase mehr durch: Nur ein Austausch gibt dem Motor seine Leistung zurück."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Partikelfilter gesättigt. Die Regenerationen wurden nicht abgeschlossen: Die Motordrehzahl bleibt begrenzt, bis eine Regeneration gelingt."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritische Sättigung des Partikelfilters. Für eine selbstständige Regeneration ist er zu stark beladen und benötigt eine Serviceregeneration in der Werkstatt; die Drehzahl bleibt begrenzt."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Leichte Fehlfunktion der Lüfterkupplung. Der Lüfter reagiert träger und die Kühlung ist leicht eingeschränkt."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Mäßige Fehlfunktion der Lüfterkupplung. Die Lüfterzuschaltung erfolgt unregelmäßig und die Kühlleistung sinkt deutlich."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Schwere Fehlfunktion der Lüfterkupplung. Der Lüfter liefert nicht mehr ausreichend Luftdurchsatz und der Motor überhitzt leichter."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Kritischer Ausfall der Lüfterkupplung. Der Lüfter kann die notwendige Kühlleistung nicht mehr bereitstellen."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Die Übersetzungssteuerung reagiert langsamer und ungenauer."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Die Übersetzung schwankt unregelmäßig und die Steuerung reagiert schlecht."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Die Übersetzungssteuerung ist stark gestört und die übertragene Antriebskraft sinkt."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Die Übersetzungssteuerung ist ausgefallen; das Getriebe ist nahezu unbrauchbar."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Leichte interne Leckage im Hydraulikzylinder. Ein angehobenes Gerät sinkt unter Last langsam ab."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Mäßige interne Leckage im Hydraulikzylinder. Das selbstständige Absinken ist deutlich und nimmt mit der getragenen Last zu."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Schwere interne Leckage im Hydraulikzylinder. Schwere Geräte können ihre Position nicht mehr zuverlässig halten."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Kritische interne Leckage im Hydraulikzylinder. Jede angehobene Last sinkt schnell von selbst ab."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Geringfügige interne Leckage in der Hydraulikpumpe. Hydraulische Anbaugeräte sind etwas langsamer."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Verschlissene Pumpendichtungen. Merklich langsamere Hydraulikfunktionen."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Beschädigte Hydraulikpumpe. Anbaugeräte sind extrem langsam und schwach."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Ausfall der Hydraulikpumpe. Das Hydrauliksystem ist außer Betrieb."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="An einem Hydraulikschlauch ist leichte Feuchtigkeit sichtbar. Etwas Öl tritt aus und die Hydraulik reagiert geringfügig schwächer."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Ein Hydraulikschlauch schwitzt sichtbar. Der Ölverlust hält an und die Hydraulikfunktionen reagieren langsamer."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Ein Hydraulikschlauch ist aktiv undicht. Der Ölverlust ist deutlich und die Hydraulikfunktionen sind merklich schwächer."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Ein Hydraulikschlauch hat eine schwere äußere Leckage. Öl tritt schnell aus und die Hydraulikleistung ist stark reduziert."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Der Hydraulikfilter ist leicht zugesetzt und beginnt, den Durchfluss zu begrenzen. Die Hydraulikfunktionen werden etwas langsamer. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Der Hydraulikfilter ist mäßig zugesetzt. Alle Hydraulikfunktionen sind merklich langsamer. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Der Hydraulikfilter ist stark zugesetzt. Die Hydraulik reagiert sehr langsam. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Der Hydraulikfilter ist vollständig zugesetzt. Die Hydraulikfunktionen reagieren kaum noch. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Der Hydraulikölkühler hat etwas Wirkung verloren. Bei längerem Hydraulikeinsatz steigt die Öltemperatur leicht an."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Der Hydraulikölkühler arbeitet unzureichend. Bei dauerhaftem Hydraulikeinsatz steigt die Öltemperatur deutlich an."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Der Hydraulikölkühler ist stark beeinträchtigt. Schwere Hydraulikarbeit lässt das Öl schnell überhitzen."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Der Hydraulikölkühler ist ausgefallen. Längerer Hydraulikeinsatz führt zu starker Ölüberhitzung und beschleunigt den Pumpenverschleiß."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Ein Hydrauliksteuerventil beginnt zu klemmen. Eine Hydraulikfunktion stockt gelegentlich und verliert unter Last Kraft."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Ein Hydrauliksteuerventil klemmt zeitweise. Eine Hydraulikfunktion wird langsamer und verliert mit steigender Last mehr Kraft."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Ein Hydrauliksteuerventil klemmt stark. Eine Hydraulikfunktion bewegt sich unregelmäßig und hat unter hoher Last Mühe."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Ein Hydrauliksteuerventil ist kritisch beschädigt. Eine Hydraulikfunktion stoppt wiederholt und kann eine schwere Last kaum bewegen."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Getriebepumpe"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Hydrostateinheit"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Getriebeölkühler"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Getriebelager"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Lastschaltkupplungen"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Wendeschaltkupplungen"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Getriebesteuerung"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Kegelradsatz der Hinterachse"/>
+        <text name="rms_breakdowns_part_final_drives" text="Endantriebe"/>
+        <text name="rms_breakdowns_part_differential" text="Differenzialräder"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="Allradzuschaltung"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Vorderachsantriebswelle und Kreuzgelenke"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Achslager"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Getriebesensoren"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Getriebefilter"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Hubwerksventil"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Hubwerkspositionssensor"/>
+        <text name="rms_breakdowns_part_loader_control" text="Ladersteuerung"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulikschnellkupplungen"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Leichte Fehlfunktion der Kupplung. Sie trennt nicht vollständig. Einige Gänge lassen sich schwer einlegen."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Mäßige Fehlfunktion der Kupplung. Der Mechanismus gibt die Scheibe schlecht frei. Gänge werden häufiger abgewiesen."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Schwere Fehlfunktion der Kupplung. Die Scheibe wird trotz Auskuppeln weiter angetrieben. Die Gangwahl ist stark gestört."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Kritischer Ausfall der Kupplung. Der Mechanismus gibt die Scheibe nicht mehr frei. Kein Gang lässt sich normal einlegen."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Leichte Fehlfunktion der Getriebelager. Die Laufbahnen sind beschädigt. Ein leises Getrieberumpeln tritt auf."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Mäßige Fehlfunktion der Getriebelager. Die Lagerlaufbahnen sind schadhaft. Das Getrieberumpeln ist deutlich hörbar."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Schwere Fehlfunktion der Getriebelager. Die Lager laufen schwer. Das Getriebe rumpelt laut und kann festgehen."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Kritischer Ausfall der Getriebelager. Die Lager sind festgegangen. Das Getriebe blockiert und die Maschine fährt nicht mehr."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Leichte Fehlfunktion der Lastschaltkupplungen. Ein Lamellenpaket überträgt die Kraft schlecht. Ein Gang rutscht unter Last leicht."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Leichte Fehlfunktion der Lastschaltkupplungen. Ein Lamellenpaket greift verspätet. Ein Gang schaltet mit leichtem Ruck."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Mäßige Fehlfunktion der Lastschaltkupplungen. Ein Lamellenpaket presst nicht mehr ausreichend. Der Gang rutscht unter Last deutlich."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Mäßige Fehlfunktion der Lastschaltkupplungen. Ein Lamellenpaket wird schlecht gefüllt. Der Gang schaltet hart."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Schwere Fehlfunktion der Lastschaltkupplungen. Ein Lamellenpaket hält die Last kaum noch. Nur wenig Antriebskraft erreicht die Räder."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Schwere Fehlfunktion der Lastschaltkupplungen. Ein Lamellenpaket greift sehr schlecht. Gangwechsel verursachen starke Rucke."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Kritischer Ausfall der Lastschaltkupplungen. Das Lamellenpaket überträgt keine Kraft mehr. Die Maschine fährt nicht mehr."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Kritischer Ausfall der Lastschaltkupplungen. Das Lamellenpaket greift nicht mehr richtig. Der Gang treibt die Maschine nicht mehr an."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Leichte Fehlfunktion der Wendeschaltkupplungen. Eine Vorwärts- oder Rückwärtskupplung rutscht beim Anfahren leicht."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Leichte Fehlfunktion der Wendeschaltkupplungen. Eine Wendekupplung greift verspätet. Der Antrieb setzt mit leichtem Ruck ein."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Mäßige Fehlfunktion der Wendeschaltkupplungen. Eine Wendekupplung rutscht deutlich. Die Kraft wird in der gewählten Richtung schlecht übertragen."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Mäßige Fehlfunktion der Wendeschaltkupplungen. Eine Wendekupplung greift schlagartig. Der Richtungswechsel ruckt die Maschine."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Schwere Fehlfunktion der Wendeschaltkupplungen. Eine Wendekupplung hält die Last kaum noch. Die Antriebskraft bricht ein."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Schwere Fehlfunktion der Wendeschaltkupplungen. Eine Wendekupplung greift sehr ungleichmäßig. Das Anfahren ist sehr hart."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Kritischer Ausfall der Wendeschaltkupplungen. Die Wendekupplung überträgt keine Kraft mehr. Die Maschine fährt nicht mehr."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Kritischer Ausfall der Wendeschaltkupplungen. Die Wendekupplung greift nicht mehr richtig. Der Antrieb fällt aus."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Leichte Fehlfunktion der Getriebesteuerung. Die elektrohydraulische Steuerung arbeitet ungleichmäßig. Ein Gangwechsel stockt."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Leichte Fehlfunktion der Getriebesteuerung. Die Steuerung verweigert gelegentlich eine Gangwahl."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Mäßige Fehlfunktion der Getriebesteuerung. Die Steuerung stört die Kupplungsfüllung. Gangwechsel verursachen deutliche Rucke."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Mäßige Fehlfunktion der Getriebesteuerung. Die Steuerung verweigert mehrere Gangwahlen. Das Einlegen wird schwierig."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Schwere Fehlfunktion der Getriebesteuerung. Die Steuerung betätigt die Kupplungen schlecht. Gangwechsel rucken stark."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Schwere Fehlfunktion der Getriebesteuerung. Die Steuerung führt viele Gangwahlen nicht mehr aus. Gänge stehen selten zur Verfügung."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Kritischer Ausfall der Getriebesteuerung. Die Steuerung kann die Kupplungen nicht mehr richtig einrücken. Gangwechsel sind stark gestört."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Kritischer Ausfall der Getriebesteuerung. Die Steuerung lässt keine Gangwahl mehr zu. Das Getriebe reagiert nicht auf die Anforderung."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Fehlfunktion des Getriebedrehzahlsensors. Sein Signal wird unregelmäßig: Die Steuerung verweigert gelegentlich einen Gangwechsel."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Fehlfunktion des Getriebedrucksensors. Die Steuerung regelt die Kupplungsfüllung falsch: Gangwechsel erfolgen verspätet und ruckartig."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Kritische Fehlfunktion des Getriebedrehzahlsensors. Ohne seinen Messwert verweigert die Steuerung häufig Gangwechsel."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Kritische Fehlfunktion des Getriebedrucksensors. Ohne seinen Messwert erfolgt jeder Gangwechsel stark verspätet und greift schlagartig."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Fehlfunktion des Getriebedrehzahlsensors. Die Steuerung wechselt in den Notbetrieb: Die Fahrgeschwindigkeit ist begrenzt."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Fehlfunktion des Getriebedrucksensors. Die Steuerung wechselt in den Notbetrieb: Die Fahrgeschwindigkeit ist begrenzt."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Kritische Fehlfunktion des Getriebedrehzahlsensors. Der Notbetrieb erlaubt nur noch eine geringe Fahrgeschwindigkeit."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Kritische Fehlfunktion des Getriebedrucksensors. Der Notbetrieb erlaubt nur noch eine geringe Fahrgeschwindigkeit."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Leichte Fehlfunktion der Getriebepumpe. Die Steuerölversorgung sinkt. Das Einrücken stockt und der Antrieb setzt kurz aus."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Mäßige Fehlfunktion der Getriebepumpe. Der Steuerdruck reicht nicht aus. Gänge greifen hart und der Antrieb setzt aus."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Schwere Fehlfunktion der Getriebepumpe. Die Pumpe liefert kaum noch Steueröl. Das Einrücken ist sehr hart und der Antrieb setzt oft aus."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Kritischer Ausfall der Getriebepumpe. Die Pumpe liefert den nötigen Druck nicht mehr. Das Getriebe treibt die Maschine nicht mehr an."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Leichte Fehlfunktion der Hydrostateinheit. Innere Leckagen mindern den Antrieb. Der Variator verliert etwas Geschwindigkeit und das Öl wird wärmer."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Mäßige Fehlfunktion der Hydrostateinheit. Innere Leckagen nehmen zu. Die Höchstgeschwindigkeit sinkt, das Öl wird heiß und der Verbrauch steigt."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Schwere Fehlfunktion der Hydrostateinheit. Die Triebgruppe überträgt kaum noch Kraft. Die Geschwindigkeit fällt stark und das Öl wird unter Last sehr heiß."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Kritischer Ausfall der Hydrostateinheit. Die Triebgruppe überträgt keine Kraft mehr. Die Maschine fährt bei laufendem Motor nicht mehr."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Leichte Fehlfunktion des Getriebeölkühlers. Er führt weniger Wärme ab. Das Getriebeöl wird unter Last wärmer."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Mäßige Fehlfunktion des Getriebeölkühlers. Der Wärmeaustausch ist deutlich vermindert. Das Getriebeöl bleibt bei der Arbeit heißer."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Schwere Fehlfunktion des Getriebeölkühlers. Er führt kaum Wärme ab. Das Getriebeöl kann unter Last überhitzen."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Kritischer Ausfall des Getriebeölkühlers. Die Getriebeölkühlung ist ausgefallen. Anhaltende Arbeit kann das Getriebe überhitzen."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="Der Getriebefilter ist zum Wechsel fällig und beginnt zu verstopfen. Die Anzeige fordert seinen Austausch an. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="Der Getriebefilter ist verschmutzt: Sein Bypassventil öffnet und das Getriebeöl fließt ungefiltert hindurch. Das Getriebe verschleißt schneller. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="Der Getriebefilter ist stark verschmutzt. Das Getriebeöl zirkuliert ungefiltert und verschleißt das Getriebe. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="Der Getriebefilter ist vollständig verstopft. Das gesamte Getriebeöl fließt ungefiltert hindurch und verschleißt das Getriebe. Die Wartung ersetzt den Filter."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Leichte Fehlfunktion des Kegelradsatzes der Hinterachse. Die Kegelradverzahnung ist beschädigt. Ein leises Heulen tritt unter Last auf."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Mäßige Fehlfunktion des Kegelradsatzes der Hinterachse. Der Zahnkontakt ist gestört. Die Hinterachse heult unter Last deutlich."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Schwere Fehlfunktion des Kegelradsatzes der Hinterachse. Die Verzahnung ist stark beschädigt. Die Hinterachse heult laut und kann den Antrieb verlieren."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Kritischer Ausfall des Kegelradsatzes der Hinterachse. Der Kegelradsatz überträgt keine Kraft mehr. Die Hinterachse wird nicht mehr angetrieben und die Maschine fährt nicht mehr."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Leichte Fehlfunktion der Endantriebe. Die Verzahnung eines Endantriebs ist beschädigt. Ein leises Heulen tritt an einem Antriebsrad auf."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Mäßige Fehlfunktion der Endantriebe. Die Zahnräder eines Endantriebs laufen schlecht. Das Heulen am Rad ist deutlich hörbar."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Schwere Fehlfunktion der Endantriebe. Die Zahnräder eines Endantriebs sind stark beschädigt. Das Geräusch ist laut und der Antrieb kann ausfallen."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Kritischer Ausfall der Endantriebe. Ein Endantrieb überträgt keine Kraft mehr auf sein Rad. Die Maschine kann nicht mehr normal fahren."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="Ausfall der Allradzuschaltung. Der Allradantrieb lässt sich nicht mehr zuschalten. Die Vorderachse bleibt ausgekuppelt."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="Ausfall der Allradzuschaltung. Die Vorderachse bleibt eingekuppelt. Der Allradantrieb lässt sich nicht mehr abschalten."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Ausfall der Hydraulikpumpe. Sie ist gebrochen. Der Druck fehlt und die Hydraulikfunktionen reagieren nicht mehr."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Ausfall des Hydrauliksteuerventils. Der Schieber sitzt fest. Die betroffene Hydraulikfunktion bewegt sich nicht mehr."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Ausfall des Hubwerksventils. Es hält die Last nicht mehr richtig. Das angehobene Gerät sinkt ab."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Ausfall des Hubwerksventils. Es sitzt fest. Das Hubwerk reagiert nicht mehr."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Ausfall des Hubwerkspositionssensors. Das Positionssignal ist ausgefallen. Das Hubwerk hält die gewählte Höhe nicht mehr und ein Fehlercode wird gespeichert."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Leichte Fehlfunktion der Ladersteuerung. Hubarm und Schaufel reagieren langsamer."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Mäßige Fehlfunktion der Ladersteuerung. Hubarm und Schaufel bewegen sich nur noch mit halber Geschwindigkeit."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Schwere Fehlfunktion der Ladersteuerung. Hubarm und Schaufel bewegen sich kaum noch."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kritische Fehlfunktion der Ladersteuerung. Hubarm und Schaufel reagieren nicht mehr."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Leichte Fehlfunktion des Hydraulikzylinders. Die Stangendichtung lässt etwas Öl austreten. An der Stange zeigt sich leichte Feuchtigkeit."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Mäßige Fehlfunktion des Hydraulikzylinders. Die Stangendichtung ist undicht. Der Zylinder schwitzt und der Ölstand sinkt."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Schwere Fehlfunktion des Hydraulikzylinders. Die Stangendichtung leckt aktiv. Der Zylinder verliert deutlich Öl."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Kritischer Ausfall des Hydraulikzylinders. Die Stangendichtung lässt viel Öl austreten. Der Ölstand im Kreis sinkt rasch."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Leichte Fehlfunktion der Hydraulikschnellkupplungen. Eine Kupplungsdichtung ist schadhaft. Am Anschluss zeigt sich leichte Feuchtigkeit."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Ausfall der Hydraulikschnellkupplungen. Der Öldurchgang einer Kupplung ist blockiert. Die angeschlossene Hydraulikfunktion bewegt sich nicht mehr."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Mäßige Fehlfunktion der Hydraulikschnellkupplungen. Eine Kupplung schwitzt. Der Kreis verliert am Anschluss Öl."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Schwere Fehlfunktion der Hydraulikschnellkupplungen. Eine Kupplung leckt aktiv. Am Anschluss geht deutlich Öl verloren."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Kritischer Ausfall der Hydraulikschnellkupplungen. Eine Kupplung leckt stark. Der Ölstand im Kreis sinkt rasch."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Leichte Fehlfunktion des Hydraulikölkühlers. Das Kühlernetz ist nicht mehr ganz dicht. Es zeigt sich leichte Feuchtigkeit."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Mäßige Fehlfunktion des Hydraulikölkühlers. Das Kühlernetz schwitzt. Der Hydraulikölstand sinkt."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Schwere Fehlfunktion des Hydraulikölkühlers. Das Kühlernetz leckt aktiv. Der Kreis verliert deutlich Öl."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Kritischer Ausfall des Hydraulikölkühlers. Das Kühlernetz leckt stark. Der Hydraulikölstand sinkt rasch."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Differenzialsperrenbetätigung"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Leichte Fehlfunktion der Differenzialräder. Die Zahnflächen sind beschädigt. Bei Kurvenfahrt tritt ein leises Geräusch auf."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Mäßige Fehlfunktion der Differenzialräder. Der Zahnkontakt ist gestört. Das Differenzialgeräusch ist bei Kurvenfahrt deutlich hörbar."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Schwere Fehlfunktion der Differenzialräder. Die Verzahnung ist stark beschädigt. Das Geräusch ist in Kurven laut und der Antrieb kann ausfallen."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Kritischer Ausfall der Differenzialräder. Die Zahnräder übertragen keine Kraft mehr. Die Maschine fährt bei laufendem Motor nicht mehr."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Leichter Verschleiß der Kreuzgelenke der Vorderachsantriebswelle. Im Vorderachsantrieb entsteht leichtes Spiel."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Mäßiger Verschleiß der Kreuzgelenke der Vorderachsantriebswelle. Das Spiel in den Kreuzgelenken wird deutlich."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Schwerer Verschleiß der Kreuzgelenke der Vorderachsantriebswelle. Ein Kreuzgelenk steht kurz vor dem Bruch."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Bruch eines Kreuzgelenks der Vorderachsantriebswelle. Die Vorderachse wird nicht mehr angetrieben."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Leichter Verschleiß der Achslager. Beim Fahren ist ein leichtes Rumpeln zu hören."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Mäßiger Verschleiß der Achslager. Das Rumpeln nimmt mit der Geschwindigkeit zu."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Schwerer Verschleiß der Achslager. Ein Lager zeigt Abplatzungen und beginnt, den Kegeltrieb zu beschädigen."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Kritischer Verschleiß der Achslager. Ein Lager ist ausgefallen, der Kegeltrieb ist beschädigt und die Achse überträgt keine Antriebskraft mehr."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Ausfall der Differenzialsperrenbetätigung. Die Sperre rückt nicht mehr ein. Das Differenzial bleibt ungesperrt."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Ausfall der Differenzialsperrenbetätigung. Die Sperre bleibt eingerückt. Die Maschine widersetzt sich dem Lenken in Kurven."/>
+    </texts>
+</l10n>

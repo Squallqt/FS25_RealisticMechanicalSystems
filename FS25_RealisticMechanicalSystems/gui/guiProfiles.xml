@@ -12,7 +12,7 @@
         <cornerSize value="0"/>
     </Profile>
     <Profile name="rms_welcomeDialogBg" extends="fs25_dialogBg">
-        <size value="680px 430px"/>
+        <size value="680px 215px"/>
     </Profile>
     <Profile name="rms_inspectionDialogBg" extends="fs25_dialogBg">
         <width value="1200px"/>
@@ -37,7 +37,6 @@
     </Profile>
     <Profile name="rms_welcomeDialogText" extends="fs25_dialogText">
         <textAlignment value="center"/>
-        <textVerticalAlignment value="middle"/>
     </Profile>
     <!-- Shared workshop, report and log tables -->
     <Profile name="rms_tableList" extends="emptyPanel" with="anchorStretchingYLeft pivotTopLeft"/>
@@ -228,14 +227,13 @@
         <imageSliceId value="gui.colorPreset"/>
         <imageColor value="$preset_fs25_colorMainLight"/>
     </Profile>
-    <!-- Level gauge: red end of a level below the gauge, hatched stretch between the two marks, mark -->
+    <!-- Fluid level gauge -->
     <Profile name="rms_fluidGaugeUnder" extends="rms_fluidGaugeFill">
         <imageColor value="0.8069 0.0097 0.0097 1"/>
     </Profile>
     <Profile name="rms_fluidGaugeZone" extends="baseReference" with="anchorTopLeft">
         <imageColor value="1 1 1 0.2"/>
     </Profile>
-    <!-- the hatching is cut from its own texture, which a screen only takes from a profile -->
     <Profile name="rms_inspectionGaugeZone" extends="rms_fluidGaugeZone">
         <imageSliceId value="rms_LevelGauge.inspectionZone"/>
     </Profile>
@@ -319,7 +317,7 @@
         <autoValidateLayout value="true"/>
     </Profile>
     <Profile name="rms_workshopRightStack" extends="emptyPanel" with="anchorTopLeft">
-        <size value="494px 566px"/>
+        <size value="447px 566px"/>
         <flowDirection value="vertical"/>
         <alignmentX value="left"/>
         <alignmentY value="top"/>
@@ -464,11 +462,15 @@
     <Profile name="rms_workshopCardGauge" extends="rms_workshopBlock">
         <size value="281px 566px"/>
     </Profile>
+    <!-- Fleet condition card -->
+    <Profile name="rms_workshopCardCondition" extends="rms_workshopBlock">
+        <size value="328px 566px"/>
+    </Profile>
     <Profile name="rms_workshopCardAlerts" extends="rms_workshopBlock">
-        <size value="494px 220px"/>
+        <size value="447px 220px"/>
     </Profile>
     <Profile name="rms_workshopCardFluids" extends="rms_workshopBlock">
-        <size value="494px 332px"/>
+        <size value="447px 332px"/>
     </Profile>
     <Profile name="rms_workshopCardNarrow" extends="rms_workshopBlock">
         <size value="312px 566px"/>
@@ -602,7 +604,7 @@
         <textMinSize value="11px"/>
         <textMaxNumLines value="2"/>
     </Profile>
-    <!-- the figure of a ring over the mark of a report out of date, centred together -->
+    <!-- Outdated report indicator -->
     <Profile name="rms_ringValueStack" extends="emptyPanel" with="anchorTopLeft">
         <flowDirection value="vertical"/>
         <fillDirectionY value="topToBottom"/>
@@ -660,8 +662,8 @@
         <textMinSize value="15px"/>
     </Profile>
     <Profile name="rms_workshopAlertText" extends="rms_workshopDetail">
-        <textMinSize value="13px"/>
-        <textMaxNumLines value="4"/>
+        <textMinSize value="11.5px"/>
+        <textMaxNumLines value="5"/>
     </Profile>
     <!-- Icons -->
     <Profile name="rms_workshopIcon" extends="baseReference" with="anchorTopLeft">
@@ -673,6 +675,13 @@
     </Profile>
     <Profile name="rms_workshopMaintenanceIcon" extends="rms_workshopIcon">
         <size value="31px 31px"/>
+        <imageSliceId value="rms_Hud.maintenance"/>
+    </Profile>
+    <Profile name="rms_workshopCurrencyIcon" extends="rms_workshopIcon">
+        <imageSliceId value="ui_elements.currency_euro"/>
+    </Profile>
+    <Profile name="rms_workshopOilIcon" extends="rms_workshopIcon">
+        <imageSliceId value="rms_WorkshopFluids.engineOil"/>
     </Profile>
     <Profile name="rms_workshopFluidIcon" extends="rms_workshopIcon">
         <size value="26px 26px"/>
@@ -698,24 +707,21 @@
     <Profile name="rms_workshopFluidIconAdjustments" extends="rms_workshopFluidIcon">
         <imageSliceId value="rms_WorkshopFluids.adjustments"/>
     </Profile>
-    <Profile name="rms_workshopFluidIconHydraulicFilter" extends="rms_workshopFluidIcon">
-        <imageSliceId value="rms_WorkshopFluids.hydraulicFilter"/>
-    </Profile>
     <Profile name="rms_workshopFluidIconRadiator" extends="rms_workshopFluidIcon">
         <imageSliceId value="rms_WorkshopFluids.radiator"/>
     </Profile>
     <Profile name="rms_workshopFluidIconLubrication" extends="rms_workshopFluidIcon">
         <imageSliceId value="rms_WorkshopFluids.lubrication"/>
     </Profile>
-    <!-- the magnifier of the inspection card, on the fault search every maintenance level runs -->
+    <!-- Inspection icon -->
     <Profile name="rms_workshopLevelIconFaultSearch" extends="rms_workshopFluidIcon">
         <imageSliceId value="gui.icon_vehicleDealer_search"/>
     </Profile>
-    <!-- an information mark in front of a note -->
+    <!-- Information icon -->
     <Profile name="rms_workshopNoteIcon" extends="rms_workshopIcon">
         <size value="18px 18px"/>
     </Profile>
-    <!-- one line under a table, saying what the table does not -->
+    <!-- Table note -->
     <Profile name="rms_workshopTableNote" extends="rms_workshopLevelRowName">
         <textColor value="$preset_fs25_colorGreyLight"/>
     </Profile>
@@ -739,10 +745,6 @@
         <textBold value="true"/>
         <textAlignment value="right"/>
         <textColor value="$preset_fs25_colorMainLight"/>
-    </Profile>
-    <Profile name="rms_workshopSystemRating" extends="rms_workshopSystemValue"/>
-    <Profile name="rms_workshopGaugeEdgeLabel" extends="rms_inspectionRowTitle">
-        <textSize value="11px"/>
     </Profile>
     <Profile name="rms_workshopHeroImage" extends="baseReference" with="anchorTopLeft">
         <imageSliceId value="noSlice"/>
@@ -830,11 +832,10 @@
         <size value="619px 486px"/>
         <elementSpacing value="10px"/>
     </Profile>
-    <!-- maintenance levels side by side, each a column the player picks -->
+    <!-- Maintenance levels -->
     <Profile name="rms_workshopLevelColumn" extends="emptyPanel" with="anchorTopLeft">
         <size value="125px 428px"/>
     </Profile>
-    <!-- opaque fills, so the green frame behind shows on its 2 px edge only -->
     <Profile name="rms_workshopLevelColumnFrame" extends="baseReference" with="anchorTopLeft">
         <color value="$preset_colorTransparent"/>
         <colorSelected value="$preset_fs25_colorMainHighlight"/>
@@ -895,7 +896,11 @@
         <textBold value="false"/>
         <textColor value="0.5028 0.5028 0.5028 1"/>
     </Profile>
-    <!-- a cell: a change or a new part, bold and green in the chosen column; a top up or a blow out; nothing -->
+    <!-- Maintenance interval -->
+    <Profile name="rms_workshopLevelFrequency" extends="rms_workshopLevelDuration">
+        <textSize value="12px"/>
+    </Profile>
+    <!-- Maintenance cells -->
     <Profile name="rms_workshopLevelCellDone" extends="rms_workshopLevelPrice">
         <textSize value="14px"/>
         <textMinSize value="10px"/>
@@ -952,7 +957,7 @@
         <textLineHeightScale value="1.1"/>
         <textColor value="0.5028 0.5028 0.5028 1"/>
     </Profile>
-    <!-- part qualities as cards: order price, gap with the original parts, chance of a later defect -->
+    <!-- Part quality cards -->
     <Profile name="rms_workshopQualityCard" extends="emptyPanel" with="anchorTopLeft">
         <size value="148px 112px"/>
     </Profile>
@@ -970,6 +975,16 @@
         <textBold value="false"/>
         <textColor value="0.5028 0.5028 0.5028 1"/>
     </Profile>
+    <Profile name="rms_workshopQualityOrigin" extends="rms_workshopQualityDelta">
+        <textColor value="$preset_fs25_colorMainLight"/>
+    </Profile>
+    <Profile name="rms_workshopQualityWarranty" extends="rms_workshopQualityDelta">
+        <textBold value="true"/>
+        <textColor value="$preset_fs25_colorGreyLight"/>
+    </Profile>
+    <Profile name="rms_workshopQualityWarrantyCovered" extends="rms_workshopQualityWarranty">
+        <textColor value="$preset_fs25_colorGreen"/>
+    </Profile>
     <Profile name="rms_workshopQualityRiskLabel" extends="rms_workshopLevelRowDetail">
         <textDisabledColor value="0.1094 0.1094 0.1094 1"/>
     </Profile>
@@ -977,7 +992,6 @@
         <textBold value="true"/>
         <textAlignment value="right"/>
     </Profile>
-    <!-- lighter than the three fills of a card, so the track shows on each -->
     <Profile name="rms_workshopQualityGaugeTrack" extends="baseReference" with="anchorTopLeft">
         <color value="0.1094 0.1094 0.1094 1"/>
         <cornerSize value="0.125"/>
@@ -985,11 +999,11 @@
     <Profile name="rms_workshopQualityGaugeFill" extends="rms_workshopQualityGaugeTrack">
         <colorDisabled value="0.1094 0.1094 0.1094 1"/>
     </Profile>
-    <!-- inspection types side by side, the age of the last report in the corner -->
+    <!-- Inspection types -->
     <Profile name="rms_workshopInspectionLastReport" extends="rms_workshopLevelCornerName">
         <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
-    <!-- quote of the recap: a line, its price, and a note in small under it; the lines scroll beside a slider -->
+    <!-- Estimate rows -->
     <Profile name="rms_workshopRecapQuoteList" extends="rms_workshopTableList">
         <listItemSpacing value="0px"/>
     </Profile>
@@ -1066,7 +1080,7 @@
         <textLayoutMode value="overflow"/>
         <textAutoHeight value="true"/>
     </Profile>
-    <!-- the yes and the no of a follow-up, framed as the columns of a table -->
+    <!-- Follow-up options -->
     <Profile name="rms_workshopBinaryCard" extends="emptyPanel" with="anchorTopLeft">
         <size value="112px 50px"/>
     </Profile>
@@ -1074,7 +1088,7 @@
         <textSize value="15px"/>
         <textMinSize value="11px"/>
     </Profile>
-    <!-- the systems a partial overhaul can take, one card each -->
+    <!-- Partial overhaul systems -->
     <Profile name="rms_workshopSystemCard" extends="emptyPanel" with="anchorTopLeft">
         <size value="148px 48px"/>
     </Profile>
@@ -1121,38 +1135,11 @@
         <textMinSize value="20px"/>
         <textAlignment value="center"/>
     </Profile>
-    <Profile name="rms_workshopRecapFluidIcon" extends="rms_workshopIcon" with="anchorMiddleLeft">
-        <size value="24px 24px"/>
-    </Profile>
-    <Profile name="rms_workshopRecapFluidIconEngineOil" extends="rms_workshopRecapFluidIcon">
-        <imageSliceId value="rms_WorkshopFluids.engineOil"/>
-    </Profile>
-    <Profile name="rms_workshopRecapFluidIconCoolant" extends="rms_workshopRecapFluidIcon">
-        <imageSliceId value="rms_WorkshopFluids.coolant"/>
-    </Profile>
-    <Profile name="rms_workshopRecapFluidIconTransmissionOil" extends="rms_workshopRecapFluidIcon">
-        <imageSliceId value="rms_WorkshopFluids.transmissionOil"/>
-    </Profile>
-    <Profile name="rms_workshopRecapFluidIconHydraulicFluid" extends="rms_workshopRecapFluidIcon">
-        <imageSliceId value="rms_WorkshopFluids.hydraulicFluid"/>
-    </Profile>
-    <Profile name="rms_workshopRecapFluidName" extends="rms_workshopDetail">
-        <textSize value="12px"/>
-        <textMaxNumLines value="1"/>
-        <textLayoutMode value="scrolling"/>
-        <textScrollOnFocusOnly value="false"/>
-    </Profile>
-    <Profile name="rms_workshopRecapFluidValue" extends="rms_workshopRecapFluidName">
-        <textBold value="true"/>
-        <textAlignment value="right"/>
-        <textColor value="$preset_fs25_colorMainLight"/>
-    </Profile>
     <Profile name="rms_workshopRecapOptions" extends="rms_workshopDetail">
         <textAlignment value="center"/>
         <textVerticalAlignment value="middle"/>
         <textMaxNumLines value="2"/>
     </Profile>
-    <!-- a corner is 20 px per unit and drawn whole: 1.25 asks for a 50 px button -->
     <Profile name="rms_workshopActionBg" extends="baseReference" with="anchorStretchingYStretchingX">
         <color value="$preset_fs25_colorGreyListItem"/>
         <colorSelected value="$preset_fs25_colorMainHighlight"/>
@@ -1168,10 +1155,12 @@
     <Profile name="rms_workshopOilActionIcon" extends="rms_workshopActionIcon">
         <position value="14px 0px"/>
         <size value="38px 38px"/>
+        <imageSliceId value="rms_WorkshopFluids.engineOil"/>
     </Profile>
     <Profile name="rms_workshopMaintenanceActionIcon" extends="rms_workshopActionIcon">
         <position value="18px 0px"/>
         <size value="30px 30px"/>
+        <imageSliceId value="rms_Hud.maintenance"/>
     </Profile>
     <Profile name="rms_workshopActionIconLarge" extends="rms_workshopActionIcon">
         <position value="11px 0px"/>
@@ -1257,16 +1246,16 @@
     </Profile>
 
     <Profile name="shopListAttributeIconReliability" extends="shopListAttributeIconLifeTime">
-        <imageSliceId value="rms_DashboardHud.reliability"/>
+        <imageSliceId value="rms_Hud.reliability"/>
     </Profile>
     <Profile name="shopConfigAttributeIconReliability" extends="shopConfigAttributeIconCapacity">
-        <imageSliceId value="rms_DashboardHud.reliability"/>
+        <imageSliceId value="rms_Hud.reliability"/>
     </Profile>
     <Profile name="shopListAttributeIconServiceAccess" extends="shopListAttributeIconLifeTime">
-        <imageSliceId value="rms_DashboardHud.maintenance"/>
+        <imageSliceId value="rms_Hud.maintenance"/>
     </Profile>
     <Profile name="shopConfigAttributeIconServiceAccess" extends="shopConfigAttributeIconCapacity">
-        <imageSliceId value="rms_DashboardHud.maintenance"/>
+        <imageSliceId value="rms_Hud.maintenance"/>
     </Profile>
 
     <!-- Maintenance log specific -->
@@ -1328,6 +1317,10 @@
     <Profile name="rms_logKpiMaintenanceIcon" extends="rms_logKpiIcon">
         <position value="0px -9px"/>
         <size value="28px 28px"/>
+        <imageSliceId value="rms_Hud.maintenance"/>
+    </Profile>
+    <Profile name="rms_logKpiCurrencyIcon" extends="rms_logKpiIcon">
+        <imageSliceId value="ui_elements.currency_euro"/>
     </Profile>
     <Profile name="rms_logKpiLabel" extends="rms_workshopLabel" with="anchorTopCenter">
         <position value="0px -42px"/>
@@ -1598,7 +1591,7 @@
         <endImagePressedColor value="$preset_fs25_colorMainHighlight"/>
     </Profile>
 
-    <!-- In-game menu: fleet page, built on the workshop surfaces, headings and rows -->
+    <!-- Fleet page -->
     <Profile name="rms_fleetMainTabs" extends="fs25_subCategorySelectorTabbedBox" with="anchorTopCenter">
         <size value="1473px 57px"/>
         <position value="0px 0px"/>
@@ -1630,7 +1623,7 @@
         <textMaxWidth value="80px"/>
     </Profile>
     <Profile name="rms_fleetPulseDivider" extends="rms_workshopRule" with="anchorMiddleCenter"/>
-    <!-- Value pills: never the grey of what they sit on -->
+    <!-- Value pills -->
     <Profile name="rms_fleetPillOnRow" extends="rms_workshopValuePill">
         <color value="$preset_fs25_colorGrey"/>
     </Profile>
@@ -1691,14 +1684,7 @@
         <textMaxNumLines value="1"/>
         <textSelectedColor value="$preset_fs25_colorMainDark"/>
     </Profile>
-    <!-- The native back chevron, as drawn: the mark of a row that opens -->
-    <Profile name="rms_fleetRowChevron" extends="rms_workshopIcon">
-        <size value="8px 12px"/>
-        <imageSliceId value="gui.arrowBold"/>
-        <imageColor value="$preset_fs25_colorGreyLight"/>
-        <imageSelectedColor value="$preset_fs25_colorMainDark"/>
-    </Profile>
-    <!-- The one button at the foot of a card: a workshop action 36 px tall, dark on its card -->
+    <!-- Card action -->
     <Profile name="rms_fleetCardButton" extends="rms_workshopAction">
         <textSize value="14px"/>
         <textMinSize value="11px"/>
@@ -1714,11 +1700,11 @@
     <Profile name="rms_fleetCardButtonIcon" extends="rms_workshopActionIcon">
         <size value="24px 24px"/>
     </Profile>
-    <!-- The same chevron turned to the way back, 12 px from its label as the other icon -->
+    <!-- Back action -->
     <Profile name="rms_fleetCardButtonBackIcon" extends="rms_fleetCardButtonIcon">
         <position value="28px 0px"/>
-        <size value="12px 18px"/>
-        <imageSliceId value="gui.arrowBold"/>
+        <size value="12px 12px"/>
+        <imageSliceId value="gui.arrow_round"/>
         <imageRotation value="180"/>
     </Profile>
     <!-- Identity card -->
@@ -1742,11 +1728,11 @@
     </Profile>
     <Profile name="rms_fleetIconReliability" extends="rms_workshopIcon">
         <size value="28px 28px"/>
-        <imageSliceId value="rms_DashboardHud.reliability"/>
+        <imageSliceId value="rms_Hud.reliability"/>
     </Profile>
     <Profile name="rms_fleetIconMaintenance" extends="rms_workshopIcon">
         <size value="28px 28px"/>
-        <imageSliceId value="rms_DashboardHud.maintenance"/>
+        <imageSliceId value="rms_Hud.maintenance"/>
     </Profile>
     <Profile name="rms_fleetTileLabel" extends="rms_workshopDetail">
         <textSize value="13px"/>
@@ -1778,11 +1764,462 @@
         <textMaxNumLines value="1"/>
         <textAlignment value="center"/>
     </Profile>
+    <!-- Resets the expanded profile's bold -->
     <Profile name="rms_fleetSystemName" extends="rms_workshopSystemName">
         <textSize value="13px"/>
+        <textMinSize value="12px"/>
+        <textBold value="false"/>
+        <textSelectedColor value="$preset_fs25_colorMainLight"/>
     </Profile>
     <Profile name="rms_fleetSystemValue" extends="rms_workshopSystemValue">
         <textSize value="13px"/>
     </Profile>
-    <Profile name="rms_fleetSystemRating" extends="rms_fleetSystemValue"/>
+    <Profile name="rms_fleetSystemRating" extends="rms_fleetSystemValue">
+        <textSize value="12px"/>
+        <textBold value="false"/>
+    </Profile>
+    <Profile name="rms_fleetSystemNameOpen" extends="rms_fleetSystemName">
+        <textColor value="$preset_fs25_colorMainLight"/>
+    </Profile>
+    <!-- Condition list -->
+    <Profile name="rms_fleetStateList" extends="rms_workshopTableList">
+        <listItemSpacing value="0px"/>
+    </Profile>
+    <Profile name="rms_fleetStateRow" extends="rms_inspectionRow">
+        <imageSelectedColor value="$preset_colorTransparent"/>
+        <imageHighlightedColor value="$preset_colorTransparent"/>
+    </Profile>
+    <Profile name="rms_fleetStateSelection" extends="baseReference" with="anchorTopLeft">
+        <color value="$preset_colorTransparent"/>
+        <colorSelected value="0.0307 0.0423 0.0130 1"/>
+        <colorHighlighted value="$preset_fs25_colorGreyListItem"/>
+        <cornerSize value="0.2"/>
+    </Profile>
+    <!-- Expanded system -->
+    <Profile name="rms_fleetStateBand" extends="baseReference" with="anchorTopLeft">
+        <imageColor value="0.0177 0.0177 0.0177 1"/>
+        <imageSelectedColor value="$preset_colorTransparent"/>
+        <imageHighlightedColor value="$preset_colorTransparent"/>
+    </Profile>
+    <!-- Row indicator -->
+    <Profile name="rms_fleetStateTriangle" extends="rms_workshopIcon">
+        <size value="8px 8px"/>
+        <imageSliceId value="gui.arrow_round"/>
+        <imageColor value="$preset_fs25_colorGrey"/>
+        <imageSelectedColor value="$preset_fs25_colorGreyLight"/>
+        <imageHighlightedColor value="$preset_fs25_colorGreyLight"/>
+    </Profile>
+    <Profile name="rms_fleetStateTriangleOpen" extends="rms_fleetStateTriangle">
+        <imageColor value="$preset_fs25_colorMainHighlight"/>
+        <imageSelectedColor value="$preset_fs25_colorMainHighlight"/>
+        <imageHighlightedColor value="$preset_fs25_colorMainHighlight"/>
+    </Profile>
+    <Profile name="rms_fleetStateDot" extends="baseReference" with="anchorTopLeft">
+        <color value="$preset_fs25_colorGrey"/>
+        <colorSelected value="$preset_fs25_colorGreyLight"/>
+        <colorHighlighted value="$preset_fs25_colorGreyLight"/>
+        <cornerSize value="0.1"/>
+    </Profile>
+    <Profile name="rms_fleetStateGuide" extends="baseReference" with="anchorTopLeft">
+        <imageColor value="$preset_fs25_colorGrey"/>
+    </Profile>
+    <Profile name="rms_fleetPartName" extends="rms_fleetSystemName">
+        <textColor value="$preset_fs25_colorGreyLight"/>
+        <textLayoutMode value="scrolling"/>
+    </Profile>
+    <Profile name="rms_fleetPartState" extends="rms_fleetSystemValue">
+        <textSize value="12px"/>
+        <textLayoutMode value="resize"/>
+    </Profile>
+    <Profile name="rms_fleetStateFoot" extends="rms_fleetSystemName">
+        <textSize value="11px"/>
+        <textMinSize value="11px"/>
+        <textLayoutMode value="resize"/>
+        <textAlignment value="center"/>
+    </Profile>
+    <Profile name="rms_fleetStateFootRule" extends="rms_workshopSectionLine" with="anchorTopLeft"/>
+    <!-- Diagnostic PC -->
+    <Profile name="rms_diagScreenBg" extends="baseReference" with="anchorStretchingYStretchingX">
+        <size value="100% 100%"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagPc" extends="emptyPanel" with="anchorBottomCenter">
+        <size value="1565.35px 1080px"/>
+    </Profile>
+    <Profile name="rms_diagPcFrame" extends="baseReference" with="anchorStretchingYStretchingX">
+        <imageSliceId value="rms_DiagnosticPc.lid"/>
+        <imageColor value="1 1 1 1"/>
+    </Profile>
+    <Profile name="rms_diagScreen" extends="emptyPanel" with="anchorTopLeft">
+        <position value="79.13px -140.05px"/>
+        <size value="1407.08px 791.48px"/>
+    </Profile>
+    <Profile name="rms_diagBar" extends="baseReference" with="anchorTopLeft">
+        <imageColor value="0.2159 0.4287 0.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagLine" extends="baseReference" with="anchorTopLeft">
+        <imageColor value="0.7682 0.7682 0.7682 1"/>
+    </Profile>
+    <Profile name="rms_diagDivider" extends="baseReference" with="anchorTopLeft">
+        <position value="861.84px -140.71px"/>
+        <size value="2.93px 615.6px"/>
+        <imageColor value="0.7605 0.8632 0.5210 1"/>
+    </Profile>
+    <Profile name="rms_diagLogo" extends="baseReference" with="anchorTopLeft">
+        <position value="11.73px -7.33px"/>
+        <size value="77.68px 32.25px"/>
+        <imageSliceId value="rms_Diagnostic.logo"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagCloseButton" extends="emptyPanel" with="anchorTopLeft">
+        <position value="1360.18px 0px"/>
+        <size value="46.9px 46.9px"/>
+    </Profile>
+    <Profile name="rms_diagCloseIcon" extends="baseReference" with="anchorMiddleCenter">
+        <size value="26.38px 26.38px"/>
+        <imageSliceId value="rms_Diagnostic.close"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+        <imageFocusedColor value="0.7605 0.8632 0.5210 1"/>
+        <imageHighlightedColor value="0.7605 0.8632 0.5210 1"/>
+    </Profile>
+    <Profile name="rms_diagText" extends="baseReference" with="anchorTopLeft">
+        <textSize value="12.46px"/>
+        <textMinSize value="8.79px"/>
+        <textAlignment value="left"/>
+        <textVerticalAlignment value="middle"/>
+        <textMaxNumLines value="1"/>
+        <textLayoutMode value="resize"/>
+        <textColor value="0.0452 0.0452 0.0452 1"/>
+    </Profile>
+    <Profile name="rms_diagPath" extends="rms_diagText">
+        <position value="17.59px -46.9px"/>
+        <size value="1169.64px 46.9px"/>
+        <textSize value="13.92px"/>
+        <textBold value="true"/>
+    </Profile>
+    <Profile name="rms_diagConnectButton" extends="emptyPanel" with="anchorTopLeft">
+        <position value="1201.88px -46.9px"/>
+        <size value="205.2px 46.9px"/>
+        <textSize value="14.66px"/>
+        <textMinSize value="9.53px"/>
+        <textBold value="true"/>
+        <textMaxNumLines value="1"/>
+        <textLayoutMode value="resize"/>
+        <textAlignment value="left"/>
+        <textVerticalAlignment value="middle"/>
+        <textOffset value="58.63px 0px"/>
+        <textMaxWidth value="136.31px"/>
+        <textColor value="1.0000 1.0000 1.0000 1"/>
+        <textFocusedColor value="1.0000 1.0000 1.0000 1"/>
+        <textHighlightedColor value="1.0000 1.0000 1.0000 1"/>
+        <textDisabledColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagConnectButtonBg" extends="baseReference" with="anchorStretchingYStretchingX">
+        <imageColor value="0.9131 0.2346 0.0021 1"/>
+        <imageFocusedColor value="0.6939 0.1714 0.0012 1"/>
+        <imageHighlightedColor value="0.6939 0.1714 0.0012 1"/>
+        <imageDisabledColor value="0.5776 0.5520 0.5149 1"/>
+    </Profile>
+    <Profile name="rms_diagConnectIcon" extends="baseReference" with="anchorMiddleLeft">
+        <position value="23.45px 0px"/>
+        <size value="26.38px 26.38px"/>
+        <imageSliceId value="rms_Diagnostic.connect"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagMenuIcon" extends="baseReference" with="anchorTopLeft">
+        <position value="13.19px -105.53px"/>
+        <size value="29.31px 29.31px"/>
+        <imageSliceId value="rms_Diagnostic.stethoscope"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagMenuTitle" extends="rms_diagText">
+        <position value="52.77px -93.81px"/>
+        <size value="172.95px 52.77px"/>
+        <textSize value="13.92px"/>
+        <textBold value="true"/>
+        <textColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagMenuButton" extends="emptyPanel" with="anchorTopLeft">
+        <size value="231.58px 52.77px"/>
+        <textSize value="13.19px"/>
+        <textMinSize value="8.79px"/>
+        <textBold value="true"/>
+        <textMaxNumLines value="2"/>
+        <textLayoutMode value="resize"/>
+        <textAlignment value="left"/>
+        <textVerticalAlignment value="middle"/>
+        <textOffset value="20.52px 0px"/>
+        <textMaxWidth value="202.27px"/>
+        <textColor value="0.0452 0.0452 0.0452 1"/>
+        <textFocusedColor value="0.0452 0.0452 0.0452 1"/>
+        <textHighlightedColor value="0.0452 0.0452 0.0452 1"/>
+        <textSelectedColor value="0.0452 0.0452 0.0452 1"/>
+        <textDisabledColor value="0.5776 0.5520 0.5149 1"/>
+    </Profile>
+    <Profile name="rms_diagMenuButtonBg" extends="baseReference" with="anchorStretchingYStretchingX">
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+        <imageFocusedColor value="0.7605 0.8632 0.5210 1"/>
+        <imageHighlightedColor value="0.7605 0.8632 0.5210 1"/>
+        <imageSelectedColor value="0.7605 0.8632 0.5210 1"/>
+        <imageDisabledColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagMenuButtonMark" extends="baseReference" with="anchorStretchingYLeft">
+        <size value="4.4px 52.77px"/>
+        <imageColor value="0.2159 0.4287 0.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagMenuButtonLine" extends="baseReference" with="anchorBottomStretchingX">
+        <size value="231.58px 1px"/>
+        <imageColor value="0.7682 0.7682 0.7682 1"/>
+    </Profile>
+    <Profile name="rms_diagHeaderText" extends="rms_diagText">
+        <position value="255.03px -93.81px"/>
+        <size value="732.85px 46.9px"/>
+        <textSize value="13.19px"/>
+        <textColor value="0.2346 0.2346 0.1981 1"/>
+    </Profile>
+    <Profile name="rms_diagHeaderValue" extends="rms_diagText">
+        <position value="996.68px -93.81px"/>
+        <size value="389.88px 46.9px"/>
+        <textSize value="13.19px"/>
+        <textAlignment value="right"/>
+    </Profile>
+    <Profile name="rms_diagPage" extends="emptyPanel" with="anchorTopLeft">
+        <position value="234.51px -140.71px"/>
+        <size value="1172.57px 615.6px"/>
+    </Profile>
+    <Profile name="rms_diagList" extends="emptyPanel" with="anchorTopLeft pivotTopLeft">
+        <listItemSpacing value="0px"/>
+    </Profile>
+    <Profile name="rms_diagSliderBox" extends="fs25_listSliderBox" with="anchorTopLeft"/>
+    <Profile name="rms_diagRow" extends="baseReference" with="anchorTopStretchingX">
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+        <imageFocusedColor value="0.7605 0.8632 0.5210 1"/>
+        <imageHighlightedColor value="0.7605 0.8632 0.5210 1"/>
+        <imageSelectedColor value="0.7605 0.8632 0.5210 1"/>
+        <updateChildrenState value="true"/>
+    </Profile>
+    <Profile name="rms_diagMachineRow" extends="rms_diagRow" with="alternating">
+        <height value="58.63px"/>
+        <alternateBackgroundColor value="0.9131 0.9560 0.7682 1"/>
+    </Profile>
+    <Profile name="rms_diagSystemRow" extends="rms_diagRow">
+        <height value="41.04px"/>
+        <imageColor value="0.9131 0.9560 0.7682 1"/>
+    </Profile>
+    <Profile name="rms_diagCodeRow" extends="rms_diagRow">
+        <height value="46.9px"/>
+    </Profile>
+    <!-- Selected row -->
+    <Profile name="rms_diagRowMark" extends="baseReference" with="anchorStretchingYLeft">
+        <size value="4.4px 46.9px"/>
+        <imageColor value="0 0 0 0"/>
+        <imageFocusedColor value="0.2159 0.4287 0.0000 1"/>
+        <imageHighlightedColor value="0.2159 0.4287 0.0000 1"/>
+        <imageSelectedColor value="0.2159 0.4287 0.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagRowLine" extends="baseReference" with="anchorBottomStretchingX">
+        <size value="606.8px 1px"/>
+        <imageColor value="0.7682 0.7682 0.7682 1"/>
+        <imageFocusedColor value="0.7682 0.7682 0.7682 1"/>
+        <imageHighlightedColor value="0.7682 0.7682 0.7682 1"/>
+        <imageSelectedColor value="0.7682 0.7682 0.7682 1"/>
+    </Profile>
+    <Profile name="rms_diagMachineName" extends="rms_diagText">
+        <position value="20.52px -8.79px"/>
+        <size value="454.37px 20.52px"/>
+        <textSize value="13.19px"/>
+        <textBold value="true"/>
+    </Profile>
+    <Profile name="rms_diagMachineDistance" extends="rms_diagText">
+        <position value="483.68px -8.79px"/>
+        <size value="102.6px 20.52px"/>
+        <textSize value="13.19px"/>
+        <textAlignment value="right"/>
+    </Profile>
+    <Profile name="rms_diagMachineState" extends="rms_diagText">
+        <position value="20.52px -30.78px"/>
+        <size value="565.76px 19.05px"/>
+        <textSize value="11.73px"/>
+    </Profile>
+    <Profile name="rms_diagSystemName" extends="rms_diagText">
+        <position value="20.52px 0px"/>
+        <size value="381.08px 41.04px"/>
+        <textSize value="13.19px"/>
+        <textBold value="true"/>
+    </Profile>
+    <Profile name="rms_diagSystemState" extends="rms_diagText">
+        <position value="410.4px 0px"/>
+        <size value="175.89px 41.04px"/>
+        <textSize value="11.73px"/>
+        <textAlignment value="right"/>
+    </Profile>
+    <Profile name="rms_diagSystemWarning" extends="baseReference" with="anchorTopLeft">
+        <position value="536.45px -9.53px"/>
+        <size value="21.99px 21.99px"/>
+        <imageSliceId value="rms_Diagnostic.warning"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagSystemCount" extends="rms_diagText">
+        <position value="564.3px 0px"/>
+        <size value="32.25px 41.04px"/>
+        <textSize value="13.19px"/>
+        <textBold value="true"/>
+    </Profile>
+    <Profile name="rms_diagCodeIcon" extends="baseReference" with="anchorMiddleLeft">
+        <position value="29.31px 0px"/>
+        <size value="21.99px 21.99px"/>
+        <imageSliceId value="rms_Diagnostic.faultActive"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagCodeSpn" extends="rms_diagText">
+        <position value="63.03px 0px"/>
+        <size value="70.35px 46.9px"/>
+        <textBold value="true"/>
+    </Profile>
+    <Profile name="rms_diagCodeFmi" extends="rms_diagText">
+        <position value="134.85px 0px"/>
+        <size value="46.9px 46.9px"/>
+        <textBold value="true"/>
+    </Profile>
+    <Profile name="rms_diagCodeText" extends="rms_diagText">
+        <position value="183.21px 0px"/>
+        <size value="403.07px 46.9px"/>
+        <textSize value="11.73px"/>
+        <textMinSize value="8.79px"/>
+        <textMaxNumLines value="2"/>
+    </Profile>
+    <Profile name="rms_diagLegendIcon" extends="rms_diagCodeIcon" with="anchorTopLeft">
+        <position value="29.31px -585.55px"/>
+    </Profile>
+    <Profile name="rms_diagLegendText" extends="rms_diagText">
+        <position value="63.03px -577.49px"/>
+        <size value="513px 38.11px"/>
+        <textSize value="11.73px"/>
+    </Profile>
+    <Profile name="rms_diagEmptyIcon" extends="baseReference" with="anchorTopLeft">
+        <position value="284.35px -190.54px"/>
+        <size value="58.63px 58.63px"/>
+        <imageSliceId value="rms_Diagnostic.stethoscope"/>
+        <imageColor value="0.5776 0.5520 0.5149 1"/>
+    </Profile>
+    <Profile name="rms_diagEmptyText" extends="rms_diagText">
+        <position value="0px -260.9px"/>
+        <size value="627.32px 29.31px"/>
+        <textSize value="14.66px"/>
+        <textBold value="true"/>
+        <textAlignment value="center"/>
+        <textColor value="0.2346 0.2346 0.1981 1"/>
+    </Profile>
+    <Profile name="rms_diagDetail" extends="emptyPanel" with="anchorTopLeft">
+        <position value="630.25px 0px"/>
+        <size value="542.31px 556.97px"/>
+    </Profile>
+    <Profile name="rms_diagDetailIcon" extends="baseReference" with="anchorTopLeft">
+        <position value="26.38px -22.72px"/>
+        <size value="26.38px 26.38px"/>
+        <imageSliceId value="rms_Diagnostic.faultActive"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagDetailCode" extends="rms_diagText">
+        <position value="63.03px -20.52px"/>
+        <size value="452.9px 30.78px"/>
+        <textSize value="19.05px"/>
+        <textBold value="true"/>
+    </Profile>
+    <Profile name="rms_diagDetailTitle" extends="rms_diagText">
+        <textSize value="16.12px"/>
+        <textBold value="true"/>
+    </Profile>
+    <Profile name="rms_diagDetailText" extends="rms_diagText">
+        <position value="26.38px -63.03px"/>
+        <size value="489.55px 57.16px"/>
+        <textSize value="13.92px"/>
+        <textMinSize value="10.26px"/>
+        <textBold value="true"/>
+        <textMaxNumLines value="3"/>
+        <textVerticalAlignment value="top"/>
+    </Profile>
+    <Profile name="rms_diagHelpBar" extends="baseReference" with="anchorTopLeft">
+        <position value="0px -131.91px"/>
+        <size value="542.31px 38.11px"/>
+        <imageColor value="0.9131 0.9560 0.7682 1"/>
+    </Profile>
+    <Profile name="rms_diagHelpIcon" extends="baseReference" with="anchorTopLeft">
+        <position value="26.38px -139.24px"/>
+        <size value="23.45px 23.45px"/>
+        <imageSliceId value="rms_Diagnostic.help"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagHelpText" extends="rms_diagText">
+        <position value="58.63px -131.91px"/>
+        <size value="457.3px 38.11px"/>
+        <textSize value="13.19px"/>
+        <textBold value="true"/>
+    </Profile>
+    <!-- Detail fields -->
+    <Profile name="rms_diagFieldLabel" extends="rms_diagText">
+        <size value="168.56px 17.59px"/>
+        <textBold value="true"/>
+        <textVerticalAlignment value="top"/>
+    </Profile>
+    <Profile name="rms_diagFieldValue" extends="rms_diagText">
+        <size value="313.66px 35.18px"/>
+        <textMaxNumLines value="2"/>
+        <textVerticalAlignment value="top"/>
+    </Profile>
+    <Profile name="rms_diagNote" extends="rms_diagText">
+        <size value="489.55px 52.77px"/>
+        <textMaxNumLines value="3"/>
+        <textVerticalAlignment value="top"/>
+        <textColor value="0.2346 0.2346 0.1981 1"/>
+    </Profile>
+    <Profile name="rms_diagScanButton" extends="emptyPanel" with="anchorTopLeft">
+        <position value="656.64px -556.97px"/>
+        <size value="234.51px 32.25px"/>
+        <textSize value="12.46px"/>
+        <textMinSize value="8.79px"/>
+        <textBold value="true"/>
+        <textMaxNumLines value="1"/>
+        <textLayoutMode value="resize"/>
+        <textAlignment value="left"/>
+        <textVerticalAlignment value="middle"/>
+        <textOffset value="38.11px 0px"/>
+        <textMaxWidth value="187.61px"/>
+        <textColor value="1.0000 1.0000 1.0000 1"/>
+        <textFocusedColor value="1.0000 1.0000 1.0000 1"/>
+        <textHighlightedColor value="1.0000 1.0000 1.0000 1"/>
+        <textDisabledColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagScanButtonBg" extends="baseReference" with="anchorStretchingYStretchingX">
+        <imageColor value="0.2159 0.4287 0.0000 1"/>
+        <imageFocusedColor value="0.1559 0.3050 0.0000 1"/>
+        <imageHighlightedColor value="0.1559 0.3050 0.0000 1"/>
+        <imageDisabledColor value="0.5776 0.5520 0.5149 1"/>
+    </Profile>
+    <Profile name="rms_diagScanButtonIcon" extends="baseReference" with="anchorMiddleLeft">
+        <position value="8.79px 0px"/>
+        <size value="23.45px 23.45px"/>
+        <imageSliceId value="rms_Diagnostic.stethoscope"/>
+        <imageColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagRenewButton" extends="emptyPanel" with="anchorTopLeft">
+        <position value="644.91px -759.24px"/>
+        <size value="337.11px 29.31px"/>
+        <textSize value="12.46px"/>
+        <textMinSize value="8.79px"/>
+        <textBold value="true"/>
+        <textMaxNumLines value="1"/>
+        <textLayoutMode value="resize"/>
+        <textAlignment value="center"/>
+        <textVerticalAlignment value="middle"/>
+        <textMaxWidth value="322.46px"/>
+        <textColor value="1.0000 1.0000 1.0000 1"/>
+        <textFocusedColor value="1.0000 1.0000 1.0000 1"/>
+        <textHighlightedColor value="1.0000 1.0000 1.0000 1"/>
+        <textDisabledColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
+    <Profile name="rms_diagStatusText" extends="rms_diagText">
+        <textAlignment value="right"/>
+        <textColor value="1.0000 1.0000 1.0000 1"/>
+    </Profile>
 </GUIProfiles>

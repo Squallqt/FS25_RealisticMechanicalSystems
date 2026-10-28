@@ -22,7 +22,6 @@ function RMS_SettingsSyncEvent.new()
 
     self.baseServiceWear           = RMS_Config.CORE.BASE_SERVICE_WEAR
     self.baseSystemsWear           = RMS_Config.CORE.BASE_SYSTEMS_WEAR
-    self.generalWearEnabled        = RMS_Config.CORE.GENERAL_WEAR_ENABLED
     self.enableWarningMessages     = RMS_Config.CORE.ENABLE_WARNING_MESSAGES
     self.instantInspection         = RMS_Config.MAINTENANCE.INSTANT_INSPECTION
     self.instantMaintenanceRepair  = RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR
@@ -44,13 +43,12 @@ function RMS_SettingsSyncEvent.new()
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param any connection connection
 function RMS_SettingsSyncEvent:writeStream(streamId, connection)
     streamWriteFloat32(streamId, self.baseServiceWear       or 0)
     streamWriteFloat32(streamId, self.baseSystemsWear       or 0)
-    streamWriteBool(streamId,    self.generalWearEnabled    or false)
     streamWriteBool(streamId,    self.enableWarningMessages or false)
     streamWriteBool(streamId,    self.instantInspection      or false)
     streamWriteBool(streamId,    self.instantMaintenanceRepair or false)
@@ -70,13 +68,12 @@ function RMS_SettingsSyncEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param any connection connection
 function RMS_SettingsSyncEvent:readStream(streamId, connection)
     self.baseServiceWear           = streamReadFloat32(streamId)
     self.baseSystemsWear           = streamReadFloat32(streamId)
-    self.generalWearEnabled        = streamReadBool(streamId)
     self.enableWarningMessages     = streamReadBool(streamId)
     self.instantInspection         = streamReadBool(streamId)
     self.instantMaintenanceRepair  = streamReadBool(streamId)
@@ -109,7 +106,6 @@ local function applyConfig(event)
 
     RMS_Config.CORE.BASE_SERVICE_WEAR                      = event.baseServiceWear
     RMS_Config.CORE.BASE_SYSTEMS_WEAR                      = event.baseSystemsWear
-    RMS_Config.CORE.GENERAL_WEAR_ENABLED                   = event.generalWearEnabled
     RMS_Config.CORE.ENABLE_WARNING_MESSAGES                = event.enableWarningMessages
     RMS_Config.MAINTENANCE.INSTANT_INSPECTION               = event.instantInspection
     RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR       = event.instantMaintenanceRepair
@@ -164,5 +160,18 @@ end
 function RMS_SettingsSyncEvent.send()
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_SettingsSyncEvent.new())
+    end
+end
+
+---Synchronizes the current configuration.
+function RMS_SettingsSyncEvent.share()
+    if g_currentMission:getIsServer() then
+        RMS_Config.saveToXMLFile()
+    end
+
+    if g_currentMission:getIsServer() and g_server ~= nil then
+        g_server:broadcastEvent(RMS_SettingsSyncEvent.new())
+    elseif g_client ~= nil then
+        RMS_SettingsSyncEvent.send()
     end
 end

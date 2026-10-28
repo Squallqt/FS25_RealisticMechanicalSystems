@@ -8,11 +8,10 @@ RMS_ReportDialog.INSTANCE = nil
 local RMS_ReportDialog_mt = Class(RMS_ReportDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
 
--- extra wear percent under which wear is normal, over which much faster, and to name a cause
 local WEAR_NORMAL_PERCENT = 10
 local WEAR_HIGH_PERCENT = 30
 local WEAR_CAUSE_MIN_PERCENT = 1
--- name of each wear cause by its statistics alias, as the mod's tips name it
+local WORN_PARTS_SHOWN = 3
 local WEAR_CAUSE_TEXTS = {
     sf = "rms_tutorial_service_interval_expired_title",
     mlf = "rms_tutorial_engine_overload_title",
@@ -36,11 +35,13 @@ local WEAR_CAUSE_TEXTS = {
     hof = "rms_report_wear_hot_hydraulic_oil",
     vf = "rms_report_wear_vibration",
     hfbf = "rms_report_wear_hydraulic_filter_bypass",
+    tfbf = "rms_report_wear_transmission_filter_bypass",
     wef = "rms_tutorial_wet_weather_title",
     ltf = "rms_report_wear_lights",
     crf = "rms_tutorial_cranking_title",
     slf = "rms_tutorial_steering_title",
     bmf = "rms_report_wear_braking",
+    pbf = "rms_tutorial_park_brake_title",
     tif = "rms_report_wear_terrain_impact",
     lff = "rms_tutorial_low_fuel_title",
     cff = "rms_report_wear_cold_fuel",
@@ -59,9 +60,7 @@ local getSystemDisplayName
 local formatRecommendationText
 local joinRecommendationParts
 
----Recommendation rules evaluated in order against the report entry and its metrics
 local RECOMMENDATION_RULES = {
-    -- service between 0.45 and 0.65
     {
         l10nKey = "rms_report_recommendation_service_due",
         check = function(vehicle, reportEntry, metrics)
@@ -72,7 +71,6 @@ local RECOMMENDATION_RULES = {
             return type(service) == "number" and service > 0.45 and service < 0.65
         end
     },
-    -- service below 0.45
     {
         l10nKey = "rms_report_recommendation_service_urgent",
         check = function(vehicle, reportEntry, metrics)
@@ -83,7 +81,6 @@ local RECOMMENDATION_RULES = {
             return type(service) == "number" and service < 0.45
         end
     },
-    -- at least one visible selectable active breakdown
     {
         l10nKey = "rms_report_recommendation_repair_active_breakdowns",
         check = function(vehicle, reportEntry, metrics)
@@ -93,7 +90,6 @@ local RECOMMENDATION_RULES = {
             return (metrics.visibleSelectableActiveBreakdownsCount or 0) > 0
         end
     },
-    -- poor condition parts that have not failed yet, listed by name
     {
         l10nKey = "rms_report_recommendation_defective_parts",
         check = function(vehicle, reportEntry, metrics)
@@ -111,7 +107,6 @@ local RECOMMENDATION_RULES = {
             return false
         end
     },
-    -- quick fix parts that have not failed yet, listed by name
     {
         l10nKey = "rms_report_recommendation_quick_fix",
         check = function(vehicle, reportEntry, metrics)
@@ -129,7 +124,6 @@ local RECOMMENDATION_RULES = {
             return false
         end
     },
-    -- overall condition below 0.4
     {
         l10nKey = "rms_report_recommendation_overhaul",
         check = function(vehicle, reportEntry, metrics)
@@ -140,7 +134,6 @@ local RECOMMENDATION_RULES = {
             return type(condition) == "number" and condition < 0.4
         end
     },
-    -- wear much faster than normal, as the wear block of the same report measures it, complete inspection only
     {
         l10nKey = "rms_report_recommendation_operating_conditions",
         check = function(vehicle, reportEntry, metrics)
@@ -150,7 +143,6 @@ local RECOMMENDATION_RULES = {
             return (reportEntry.conditionData.wearExcess or 0) * 100 > WEAR_HIGH_PERCENT
         end
     },
-    -- poor quality consumables breakdown present, complete inspection only
     {
         l10nKey = "rms_report_recommendation_repeat_maintenance",
         check = function(vehicle, reportEntry, metrics)
@@ -160,7 +152,6 @@ local RECOMMENDATION_RULES = {
             return metrics.hasPoorQualityConsumablesBreakdown == true
         end
     },
-    -- worst enabled system below 0.4 while overall condition stays above 0.4
     {
         l10nKey = "rms_report_recommendation_system_overhaul",
         check = function(vehicle, reportEntry, metrics)
@@ -196,7 +187,6 @@ local RECOMMENDATION_RULES = {
             return false
         end
     },
-    -- system the major service adjustments reach, failure risk high, complete inspection only
     {
         l10nKey = "rms_report_recommendation_system_preventive_maintenance",
         check = function(vehicle, reportEntry, metrics)
@@ -209,19 +199,19 @@ local RECOMMENDATION_RULES = {
                 return false
             end
 
-            local highestRisk = 0
+            local highestRatio = 0
             local targetSystemKey = nil
             local systems = reportEntry.conditionData.systems or {}
+            local partWear = reportEntry.conditionData.partWear or {}
 
-            for _, systemName in ipairs(RealisticMechanicalSystems.getMajorServiceSystems(vehicle)) do
+            for _, partId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
+                local systemName = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, RMS_Breakdowns.BreakdownRegistry[partId].system)
                 local systemData = systems[systemName]
-                if type(systemData) == "table" and systemData.enabled ~= false then
-                    local systemCondition = math.max(tonumber(systemData.condition) or 0, 0.001)
-                    local risk, severity = RMS_Utils.getSystemBreakdownRisk(vehicle, systemData, 3600000, systemName)
-                    local tier = RMS_Utils.getBreakdownRiskTier(risk, severity)
-
-                    if systemCondition >= 0.4 and tier ~= nil and tier >= 3 and risk > highestRisk then
-                        highestRisk = risk
+                if partWear[partId] ~= nil and type(systemData) == "table" and (tonumber(systemData.condition) or 0) >= 0.4
+                    and RMS_Utils.getIsPartWorn(partId, partWear[partId]) then
+                    local ratio = RMS_Utils.getPartRiskRatio(partId, partWear[partId])
+                    if ratio > highestRatio then
+                        highestRatio = ratio
                         targetSystemKey = systemName
                     end
                 end
@@ -433,7 +423,6 @@ function RMS_ReportDialog.buildVehicleSpecs(vehicle, conditionData)
         table.insert(rows, data)
     end
 
-    -- power
     local motor = vehicle:getMotor()
     local peakPowerHp = ((motor ~= nil and motor.peakMotorPower) or 0) * 1.36
     local currentPowerModifier = 1.0 + (getEffectValue(activeEffects, "ENGINE_TORQUE_MODIFIER") or 0)
@@ -448,7 +437,6 @@ function RMS_ReportDialog.buildVehicleSpecs(vehicle, conditionData)
         stdVisible = true
     })
 
-    -- brakes
     local brakesPowerModifier = 1.0 + (getEffectValue(activeEffects, "BRAKE_FORCE_MODIFIER") or 0)
     addVehicleSpec({
         key = "rms_report_system_condition_brakes",
@@ -468,7 +456,6 @@ function RMS_ReportDialog.buildVehicleSpecs(vehicle, conditionData)
         })
     end
 
-    -- an electric has two batteries and a 24 V machine two in series
     local isElectric = spec.isElectricVehicle
     local batteryChargeKey, batteryCapacityKey = "rms_report_vehicle_spec_battery_charge", "rms_report_vehicle_spec_battery_capacity"
     if isElectric then
@@ -486,7 +473,6 @@ function RMS_ReportDialog.buildVehicleSpecs(vehicle, conditionData)
         stdVisible = true
     })
 
-    -- transmission, first matching effect wins and the rest are skipped
     local hasTransmissionIssues = false
 
     local transmissionSlipValue = getTransmissionEffectValue(activeEffects, "TRANSMISSION_SLIP_EFFECT")
@@ -610,7 +596,6 @@ function RMS_ReportDialog.buildVehicleSpecs(vehicle, conditionData)
     end
 
     if isElectric then
-        -- what the traction battery still holds, from the wear and the failed cells the report recorded
         local capacityShare = RMS_ElectricDrive.getCapacityShare(clampUnitRatio(systems.fuel.condition),
             getEffectValue(activeEffects, "TRACTION_BATTERY_CAPACITY_MODIFIER") or 0)
         addVehicleSpec({
@@ -672,7 +657,6 @@ function RMS_ReportDialog:updateScreen()
         balanceText
     )
 
-    -- identity band: report number, then what dates the reading
     self.reportTitle:setText(g_i18n:getText("rms_report_header_title") .. " #" .. self.lastReport.id - 1, nil, nil, true)
     self.reportVehicleImage:setImageFilename(self.vehicle:getImageFilename())
 
@@ -693,7 +677,6 @@ function RMS_ReportDialog:updateScreen()
         "ODO " .. RMS_Utils.formatOdometerKilometers(self.lastReport.conditionData.odometerKilometers)
     }, " · "), nil, nil, true)
 
-    -- overall assessment: condition and service
     local condition = self.lastReport.conditionData.condition or 1.0
     local service = self.lastReport.conditionData.service or 1.0
     self.reportSummaryCondition:setText(RMS_Utils.formatCondition(condition, self.isCompleteInspection))
@@ -701,12 +684,10 @@ function RMS_ReportDialog:updateScreen()
     self.reportSummaryService:setText(RMS_Utils.formatService(service, self.isCompleteInspection))
     self.reportSummaryService:setTextColor(RMS_Utils.getServiceColor(service, self.isCompleteInspection))
 
-    -- the assessment comes from the measurements of this inspection
     local systems = self.lastReport.conditionData.systems or {}
     local overallRiskTier = nil
     for systemKey, systemData in pairs(systems) do
-        local probability, severity = RMS_Utils.getSystemBreakdownRisk(self.vehicle, systemData, 3600000, systemKey)
-        local tier = RMS_Utils.getBreakdownRiskTier(probability, severity)
+        local tier = RMS_Utils.getBreakdownRiskTier(RMS_Utils.getSystemRiskRatio(self.vehicle, systemKey, self.lastReport.conditionData.partWear))
         if tier ~= nil then overallRiskTier = math.max(overallRiskTier or 0, tier) end
     end
 
@@ -717,20 +698,18 @@ function RMS_ReportDialog:updateScreen()
     table.insert(self.overallAssessmentData, {'rms_report_breakdown_risk_title', RMS_Utils.formatBreakdownRisk(overallRiskTier),
         overallRiskTier ~= nil and {RMS_Utils.getValueColorInverted(overallRiskTier, 1, 1, 2, 2, false)} or RMS_Utils.COLOR.TEXT_DIM})
 
-    -- system condition, in declared system order
     for _, systemL10nKey in ipairs(RealisticMechanicalSystems.SYSTEMS_ORDER) do
         local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemL10nKey)
         local systemData = systems[systemKey]
         if type(systemData) == "table" and systemData.enabled ~= false then
             local systemCondition = math.max(math.min(systemData.condition or 1.0, 1.0), 0.0)
-            local probability, severity = RMS_Utils.getSystemBreakdownRisk(self.vehicle, systemData, 3600000, systemKey)
-            table.insert(self.systemConditionData, {systemL10nKey, systemCondition, RMS_Utils.getBreakdownRiskTier(probability, severity)})
+            local ratio = RMS_Utils.getSystemRiskRatio(self.vehicle, systemKey, self.lastReport.conditionData.partWear)
+            table.insert(self.systemConditionData, {systemL10nKey, systemCondition, RMS_Utils.getBreakdownRiskTier(ratio)})
         end
     end
 
     self.vehicleSpecData = RMS_ReportDialog.buildVehicleSpecs(self.vehicle, self.lastReport.conditionData)
 
-    -- breakdowns and recommendations
     local reportMetrics = {
         visibleSelectableBreakdownsCount = 0,
         visibleSelectableActiveBreakdownsCount = 0,
@@ -742,7 +721,6 @@ function RMS_ReportDialog:updateScreen()
     local inactivePoorPartsSeen = {}
     local inactiveQuickFixSeen = {}
 
-    -- breakdown ids listed from highest to lowest stage, ties kept deterministic
     local reportActiveBreakdowns = (self.lastReport.conditionData and self.lastReport.conditionData.activeBreakdowns) or {}
     local breakdownIds = {}
     for breakdownId, _ in pairs(reportActiveBreakdowns) do
@@ -782,7 +760,7 @@ function RMS_ReportDialog:updateScreen()
                 end
 
                 local severityText = g_i18n:getText(stageData.severity)
-                local descriptionText = g_i18n:getText(RMS_Breakdowns.getStageDescription(self.vehicle, stageData))
+                local descriptionText = g_i18n:getText(RMS_Breakdowns.getStageDescription(self.vehicle, stageData, breakdownData))
 
                 if breakdownData.isActive == false and breakdownData.source == RealisticMechanicalSystems.BREAKDOWN_SOURCES.QUICK_FIX then
                     severityText = g_i18n:getText("rms_breakdowns_quick_fix_stage")
@@ -804,8 +782,15 @@ function RMS_ReportDialog:updateScreen()
     end
     self.reportSummaryBreakdowns:setText(tostring(reportMetrics.visibleSelectableBreakdownsCount))
 
+    if self.isCompleteInspection then
+        self:addWornPartRows()
+    end
+    self.breakdownsCardTitle:setText(g_i18n:getText(self.isCompleteInspection and "rms_report_breakdowns_worn_title"
+        or "rms_report_detected_breakdowns_title"))
+
     if #self.breakdownsData == 0 then
-        table.insert(self.breakdownsData, {title = g_i18n:getText("rms_log_inspection_desc_no_breakdowns"), text = "", severity = ""})
+        table.insert(self.breakdownsData, {title = g_i18n:getText(self.isCompleteInspection and "rms_report_no_breakdowns_worn"
+            or "rms_log_inspection_desc_no_breakdowns"), text = "", severity = ""})
     end
 
     self.recommendationsData = buildRecommendationsData(self.vehicle, self.lastReport, reportMetrics)
@@ -820,7 +805,6 @@ function RMS_ReportDialog:updateScreen()
     self.breakdownsTable:reloadData()
     self.recommendationsTable:reloadData()
 
-    -- every value is written by now, so each pill can close on the one it wraps
     RMS_Utils.fitValuePills(self)
     self:updateFocusLinks()
 end
@@ -888,7 +872,6 @@ function RMS_ReportDialog:renderWear()
         return
     end
 
-    -- the causes the player knows under one name are summed
     local shares = {}
     for alias, share in pairs(data.wearCauses) do
         local key = WEAR_CAUSE_TEXTS[alias]
@@ -913,7 +896,7 @@ function RMS_ReportDialog:renderWear()
     if percent < WEAR_NORMAL_PERCENT then
         self.wearValue:setText(g_i18n:getText("rms_report_wear_normal"))
     else
-        -- the native formatter cuts whole numbers down: the pace is rounded first
+        -- Round before the native integer formatter truncates.
         self.wearValue:setText(string.format(g_i18n:getText("rms_report_wear_percent"), g_i18n:formatNumber(MathUtil.round(percent), 0)))
     end
     self.wearValue:setTextColor(getWearColor(percent))
@@ -982,7 +965,6 @@ function RMS_ReportDialog:renderSpecRows()
         if data ~= nil then
             local kind = data.kind or "ratio"
             local ratio = tonumber(data.ratio or data.value) or 0
-            -- a consumption reads worse as it rises and is not capped
             local percent = (data.inverted == true and math.max(ratio, 0) or clampUnitRatio(ratio)) * 100
             local cfg = {
                 inverted = data.inverted == true,
@@ -1033,13 +1015,59 @@ function RMS_ReportDialog:renderSpecRows()
     self.specLabel[1].parent.parent:invalidateLayout()
 end
 
----Fills one detected breakdown
+-- @return integer count worn parts listed
+function RMS_ReportDialog:addWornPartRows()
+    local conditionData = self.lastReport.conditionData
+    local systems = conditionData.systems or {}
+    local activeBreakdowns = conditionData.activeBreakdowns or {}
+    local adjusted = {}
+    for _, partId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
+        adjusted[partId] = true
+    end
+
+    local worn = {}
+    for partId, wear in pairs(conditionData.partWear or {}) do
+        local definition = RMS_Breakdowns.BreakdownRegistry[partId]
+        if definition ~= nil and activeBreakdowns[partId] == nil and RMS_Utils.getIsPartWorn(partId, wear) then
+            local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, definition.system)
+            if type(systems[systemKey]) == "table" and systems[systemKey].enabled ~= false then
+                table.insert(worn, { partId = partId, systemKey = systemKey, ratio = RMS_Utils.getPartRiskRatio(partId, wear) })
+            end
+        end
+    end
+    table.sort(worn, function(a, b)
+        if a.ratio ~= b.ratio then
+            return a.ratio > b.ratio
+        end
+        return a.partId < b.partId
+    end)
+
+    local count = math.min(#worn, WORN_PARTS_SHOWN)
+    local color = { RMS_Utils.getValueColorInverted(3, 1, 1, 2, 3, false) }
+    for index = 1, count do
+        local entry = worn[index]
+        local systemName = getSystemDisplayName(self.vehicle, entry.systemKey)
+        local text = adjusted[entry.partId]
+            and string.format(g_i18n:getText("rms_report_worn_part_adjust"), systemName,
+                RMS_Utils.formatMaintenanceLevel(self.vehicle, RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE))
+            or string.format(g_i18n:getText("rms_report_worn_part_replace"), systemName)
+        table.insert(self.breakdownsData, {
+            title = g_i18n:getText(RMS_Breakdowns.BreakdownRegistry[entry.partId].part),
+            severity = string.format(g_i18n:getText("rms_report_worn_part_risk"), g_i18n:formatNumber(entry.ratio, 1)),
+            text = text,
+            color = color
+        })
+    end
+    return count
+end
+
+---Fills one detected breakdown or worn part
 -- @param integer index row index
 -- @param table cell cell element
 function RMS_ReportDialog:populateBreakdownsCell(index, cell)
     RMS_Utils.applyScrollSpeed(cell)
     local data = self.breakdownsData[index] or {}
-    local stageColor = data.isActive == false and RMS_Utils.COLOR.TEXT_DIM or RMS_Utils.COLOR.STAGE[data.stage or 1]
+    local stageColor = data.color or (data.isActive == false and RMS_Utils.COLOR.TEXT_DIM or RMS_Utils.COLOR.STAGE[data.stage or 1])
     local severityElement = cell:getAttribute("reportBreakdownsSeverity")
     local hasSeverity = (data.severity or "") ~= ""
     local description = data.text or ""
@@ -1103,7 +1131,6 @@ end
 
 ---Selects the technical record tab
 function RMS_ReportDialog:onCreate()
-    -- the report details the technical record, whose tab stays lit
     RMS_Utils.mirrorSelectionToChildren(self.workshopNavTabs[4])
     self.workshopNavTabs[4]:setSelected(true)
     RMS_Utils.applyScrollSpeed(self.dialogElement)

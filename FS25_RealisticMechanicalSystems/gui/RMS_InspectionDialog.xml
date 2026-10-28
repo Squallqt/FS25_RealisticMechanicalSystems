@@ -61,21 +61,21 @@
                 </SmoothList>
             </GuiElement>
 
-            <!-- Filters, radiator and lubrication -->
+            <!-- Cleaning and lubrication -->
             <GuiElement profile="rms_inspectionBlock" position="740px -228px" size="411px 32px">
                 <RoundCorner profile="rms_inspectionSectionAccent" />
                 <Text profile="rms_inspectionSectionTitle" position="16px 0px" size="379px 32px" text="$l10n_rms_inspection_section_field_care" />
                 <RoundCorner profile="rms_inspectionSectionLine" position="16px 0px" size="395px 1px" />
             </GuiElement>
-            <GuiElement profile="rms_inspectionBlock" position="740px -270px" size="411px 274px">
-                <RoundCorner profile="rms_inspectionCardSurface" id="fieldCareCard" size="411px 274px" />
-                <SmoothList profile="rms_inspectionList" id="fieldCareList" position="14px -12px" size="383px 249px">
+            <GuiElement profile="rms_inspectionBlock" position="740px -270px" size="411px 171px">
+                <RoundCorner profile="rms_inspectionCardSurface" id="fieldCareCard" size="411px 171px" />
+                <SmoothList profile="rms_inspectionList" id="fieldCareList" position="14px -12px" size="383px 147px">
                     <ListItem profile="rms_inspectionRow" name="fieldCareRowTemplate" size="383px 45px">
                         <RoundCorner profile="rms_inspectionRowSurface" size="383px 45px" />
                         <Bitmap profile="rms_workshopFluidIconAirFilter" position="14px -9.5px" size="26px 26px" name="inspectionIcon" />
-                        <Text profile="rms_inspectionRowTitle" position="48px 0px" size="134px 45px" name="inspectionTitle" />
-                        <RoundCorner profile="rms_inspectionValuePill" position="195px -8px" size="170px 28px" name="inspectionValuePill" />
-                        <Text profile="rms_inspectionRowValue" position="207px -8px" size="146px 28px" name="inspectionValue" />
+                        <Text profile="rms_inspectionRowTitle" position="48px 0px" size="148px 45px" name="inspectionTitle" />
+                        <RoundCorner profile="rms_inspectionValuePill" position="209px -8px" size="156px 28px" name="inspectionValuePill" />
+                        <Text profile="rms_inspectionRowValue" position="221px -8px" size="132px 28px" name="inspectionValue" />
                     </ListItem>
                 </SmoothList>
             </GuiElement>

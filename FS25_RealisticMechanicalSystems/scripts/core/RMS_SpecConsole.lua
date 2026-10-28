@@ -5,7 +5,6 @@
 
 local ensureFactorStats = RealisticMechanicalSystems.ensureFactorStats
 local getVehicleOperatingHours = RealisticMechanicalSystems.getVehicleOperatingHours
-local initializeVehicleConditionFromVanillaPrice = RealisticMechanicalSystems.initializeVehicleConditionFromVanillaPrice
 
 RealisticMechanicalSystems.ConsoleCommands = {}
 
@@ -259,7 +258,6 @@ local function printSpecValueRecursive(prefix, value, visited, depth)
 
     local indent = string.rep("  ", depth + 1)
     for _, key in ipairs(keys) do
-        local childPrefix = string.format("%s[%s]", prefix, tostring(key))
         local childValue = value[key]
         if type(childValue) == "table" then
             print(string.format("%s[%s] = {", indent, tostring(key)))
@@ -299,7 +297,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setSpecVar(rawArgs, rawValue
 
     if path == nil or valueToken == nil then
         print("RMS Error: Usage: rms_setSpecVar <path> <value>")
-        print("Example: rms_setSpecVar systems.engine.condition 0.85")
+        print("Example: rms_setSpecVar batterySoc 0.5")
         return
     end
 
@@ -320,6 +318,12 @@ function RealisticMechanicalSystems.ConsoleCommands:setSpecVar(rawArgs, rawValue
     if parent == spec and (key == "conditionLevel" or key == "transmissionTemperature" or key == "hydraulicTemperature") then
         print("RMS Error: This value is calculated. Set system condition or the raw oil temperature instead.")
         return
+    end
+    for _, system in pairs(spec.systems) do
+        if parent == system and key == "condition" then
+            print("RMS Error: This value is calculated from the wear of its parts. Use rms_setSystemCondition or rms_setPartWear instead.")
+            return
+        end
     end
     if parent == spec.electricalRating or parent == spec and (key == "systemVoltageV" or key == "rawSystemVoltageV") then
         print("RMS Error: This value is calculated. Set batterySoc instead.")
@@ -356,13 +360,6 @@ function RealisticMechanicalSystems.ConsoleCommands:setSpecVar(rawArgs, rawValue
             spec._thermalOilAmbient = nil
         end
     end
-    for _, system in pairs(spec.systems or {}) do
-        if parent == system and key == "condition" then
-            vehicle:updateConditionLevel()
-            break
-        end
-    end
-
     local syncedCloggingState = syncConsoleCloggingState(vehicle, spec, parent, key)
 
     print(string.format("RMS: spec_RealisticMechanicalSystems.%s changed on '%s': %s -> %s", path, vehicle:getFullName(), tostring(oldValue), tostring(parent[key])))
@@ -431,7 +428,8 @@ function RealisticMechanicalSystems.ConsoleCommands:listBreakdowns()
     
     local breakdownIds = {}
     for id, data in pairs(RMS_Breakdowns.BreakdownRegistry) do
-        table.insert(breakdownIds, string.format(" - %s (%s)", id, data.part or data.system or "No name"))
+        table.insert(breakdownIds, string.format(" - %s (%s)%s", id, data.part or data.system or "No name",
+            data.branches ~= nil and string.format(", fails in %d ways", data.branches) or ""))
     end
 
     if #breakdownIds > 0 then
@@ -443,16 +441,18 @@ function RealisticMechanicalSystems.ConsoleCommands:listBreakdowns()
     print("----------------------------")
 end
 
----Adds a breakdown, usage rms_addBreakdown [id] [stage]
+---Adds a breakdown, usage rms_addBreakdown [id] [stage] [way]
 -- @param string? rawArgs console arguments
 -- @param string? rawArgTwo second console argument
-function RealisticMechanicalSystems.ConsoleCommands:addBreakdown(rawArgs, rawArgTwo)
+-- @param string? rawArgThree failure mode
+function RealisticMechanicalSystems.ConsoleCommands:addBreakdown(rawArgs, rawArgTwo, rawArgThree)
     if not g_currentMission:getIsServer() then
         local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("addBreakdown", rawArgs, rawArgTwo, vehicle) end
+        local stageAndWay = rawArgThree ~= nil and string.format("%s %s", tostring(rawArgTwo), rawArgThree) or rawArgTwo
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("addBreakdown", rawArgs, stageAndWay, vehicle) end
         return
     end
-    local args = parseArguments(rawArgs, rawArgTwo)
+    local args = parseArguments(rawArgs, rawArgTwo, rawArgThree)
     local vehicle = self:getTargetVehicle()
     if not vehicle then return end
 
@@ -485,16 +485,25 @@ function RealisticMechanicalSystems.ConsoleCommands:addBreakdown(rawArgs, rawArg
         print(string.format("RMS Error: Breakdown with ID '%s' not applicable to %s", breakdownId, vehicle:getFullName()))
         return
     end
+
+    local branch = tonumber(args[3])
+    if args[3] ~= nil and (registryEntry.branches == nil or branch == nil or branch ~= math.floor(branch)
+        or branch < 1 or branch > registryEntry.branches) then
+        print(string.format("RMS Error: Invalid way '%s' for breakdown '%s'. %s", tostring(args[3]), breakdownId,
+            registryEntry.branches ~= nil and string.format("Valid ways are 1 to %d.", registryEntry.branches) or "It fails in a single way."))
+        return
+    end
     
-    -- a filter breakdown follows the filter's clogging, which is set to the stage instead
     local filter = RMS_Consumables.getFilterOfBreakdown(breakdownId)
     if filter ~= nil then
         vehicle.spec_RealisticMechanicalSystems[filter.stateKey] = RMS_Config.FIELD_CARE.FILTER_STAGE_THRESHOLDS[stage]
         RMS_Consumables.syncFilterBreakdowns(vehicle)
     else
-        vehicle:addBreakdown(breakdownId, stage)
+        vehicle:addBreakdown(breakdownId, { stage = stage, branch = branch })
     end
-    print(string.format("RMS: Added breakdown '%s' at stage %d to '%s'.", breakdownId, stage, vehicle:getFullName()))
+    local added = vehicle:getActiveBreakdowns()[breakdownId]
+    local way = registryEntry.branches ~= nil and added ~= nil and string.format(", way %d of %d", added.branch, registryEntry.branches) or ""
+    print(string.format("RMS: Added breakdown '%s' at stage %d%s to '%s'.", breakdownId, stage, way, vehicle:getFullName()))
 end
 
 ---Removes a breakdown, usage rms_removeBreakdown [id]
@@ -509,7 +518,6 @@ function RealisticMechanicalSystems.ConsoleCommands:removeBreakdown(rawArgs)
     local vehicle = self:getTargetVehicle()
     if not vehicle then return end
 
-    -- a filter breakdown would come back from the clogging left behind, so the filter is renewed
     if args and args[1] then
         local breakdownId = string.upper(args[1])
         if RMS_Consumables.getFilterOfBreakdown(breakdownId) ~= nil then
@@ -644,12 +652,11 @@ function RealisticMechanicalSystems.ConsoleCommands:setSystemCondition(rawArgs, 
         return
     end
 
-    local systemData = spec.systems[systemKey]
-    if type(systemData) == "table" then
-        systemData.condition = value
-    else
-        spec.systems[systemKey] = value
+    for _, partId in ipairs(spec.systemParts[systemKey]) do
+        spec.partWear[partId] = 1 - value
+        spec.partDrawnWear[partId] = nil
     end
+    RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
     print(string.format("RMS: Set condition for system '%s' on '%s' to %.2f.", tostring(systemKey), vehicle:getFullName(), value))
 
     vehicle:updateConditionLevel()
@@ -679,9 +686,13 @@ function RealisticMechanicalSystems.ConsoleCommands:setCondition(rawArgs)
 
     local changedSystems = 0
 
-    for _, systemData in pairs(spec.systems or {}) do
-        if type(systemData) == "table" and systemData.enabled ~= false then
-            systemData.condition = targetCondition
+    for systemKey, systemData in pairs(spec.systems) do
+        if systemData.enabled ~= false then
+            for _, partId in ipairs(spec.systemParts[systemKey]) do
+                spec.partWear[partId] = 1 - targetCondition
+                spec.partDrawnWear[partId] = nil
+            end
+            RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
             changedSystems = changedSystems + 1
         end
     end
@@ -696,13 +707,12 @@ function RealisticMechanicalSystems.ConsoleCommands:setCondition(rawArgs)
         changedSystems, vehicle:getFullName(), targetCondition, vehicle.spec_RealisticMechanicalSystems.conditionLevel or 0))
 end
 
----Sets one system stress, usage rms_setSystemStress [system] [>=0]
 -- @param string? rawArgs console arguments
 -- @param string? rawArgTwo second console argument
-function RealisticMechanicalSystems.ConsoleCommands:setSystemStress(rawArgs, rawArgTwo)
+function RealisticMechanicalSystems.ConsoleCommands:setPartWear(rawArgs, rawArgTwo)
     if not g_currentMission:getIsServer() then
         local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setSystemStress", rawArgs, rawArgTwo, vehicle) end
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setPartWear", rawArgs, rawArgTwo, vehicle) end
         return
     end
     local args = parseArguments(rawArgs, rawArgTwo)
@@ -710,38 +720,39 @@ function RealisticMechanicalSystems.ConsoleCommands:setSystemStress(rawArgs, raw
     if not vehicle then return end
 
     local spec = vehicle.spec_RealisticMechanicalSystems
-
-    local requestedSystem = args and args[1] or nil
-    if requestedSystem == nil then
-        print("RMS Error: Missing system. Usage: rms_setSystemStress [system] [>=0.0]")
-        return
-    end
-
-    local systemKey = RMS_Utils.resolveConsoleSystemKey(spec, requestedSystem)
-
-    if systemKey == false then
-        local availableSystems = {}
-        for key, _ in pairs(spec.systems or {}) do
-            table.insert(availableSystems, tostring(key))
+    local partId = args and args[1] and string.upper(args[1]) or nil
+    local systemKey = nil
+    for key, parts in pairs(spec.systemParts) do
+        for _, id in ipairs(parts) do
+            if id == partId then
+                systemKey = key
+            end
         end
-        table.sort(availableSystems)
-        print(string.format("RMS Error: Unknown system '%s'. Available systems: %s", tostring(requestedSystem), table.concat(availableSystems, ", ")))
+    end
+    if systemKey == nil then
+        local partIds = {}
+        for _, parts in pairs(spec.systemParts) do
+            for _, id in ipairs(parts) do
+                table.insert(partIds, id)
+            end
+        end
+        table.sort(partIds)
+        print(string.format("RMS Error: Unknown part '%s'. Parts of this vehicle: %s", tostring(partId), table.concat(partIds, ", ")))
         return
     end
 
-    local value = tonumber(args and args[2] or nil)
+    local value = tonumber(args[2])
     if value == nil or value < 0 then
-        print("RMS Error: Invalid value. Please provide a number >= 0.0.")
+        print("RMS Error: Invalid value. Please provide a wear from 0.0, 1.0 being the life of the machine.")
         return
     end
 
-    local systemData = spec.systems[systemKey]
-    if type(systemData) == "table" then
-        systemData.stress = value
-    else
-        spec.systems[systemKey] = { condition = systemData or 1.0, stress = value }
-    end
-    print(string.format("RMS: Set stress for system '%s' on '%s' to %.4f.", tostring(systemKey), vehicle:getFullName(), value))
+    spec.partWear[partId] = value
+    spec.partDrawnWear[partId] = nil
+    RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
+    vehicle:updateConditionLevel()
+    print(string.format("RMS: Set wear of part '%s' on '%s' to %.2f, risk x%.2f that of a new part.", partId, vehicle:getFullName(),
+        value, RMS_Utils.getPartRiskRatio(partId, value)))
 end
 
 ---Sets the service clocks, usage rms_setService [0-1] [clock]
@@ -786,11 +797,11 @@ function RealisticMechanicalSystems.ConsoleCommands:setService(rawArgs, rawArgTw
     print(string.format("RMS: Set service clocks %s for '%s' to %.2f.", table.concat(setClockKeys, ", "), vehicle:getFullName(), value))
 end
 
----Reinitializes the vehicle from the vanilla resale price
-function RealisticMechanicalSystems.ConsoleCommands:reinitializeVehicle()
+-- @param string? care careful, regular or neglected
+function RealisticMechanicalSystems.ConsoleCommands:reinitializeVehicle(care)
     if not g_currentMission:getIsServer() then
         local vehicle = self:getTargetVehicle()
-        if vehicle then RMS_ConsoleCommandEvent.sendToServer("reinitializeVehicle", nil, nil, vehicle) end
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("reinitializeVehicle", care, nil, vehicle) end
         return
     end
 
@@ -803,18 +814,15 @@ function RealisticMechanicalSystems.ConsoleCommands:reinitializeVehicle()
         return
     end
 
-    local ok, targetCondition = initializeVehicleConditionFromVanillaPrice(vehicle, true)
-    if not ok then
-        print(string.format("RMS Error: Failed to reinitialize '%s'.", vehicle:getFullName()))
+    care = care or RMS_Utils.getOwnerCare(vehicle:getDamageAmount())
+    if RMS_Config.CORE.USED_VEHICLE_HISTORY.CARE_CAUSES[care] == nil then
+        print("Usage: rms_reinitializeVehicle [careful|regular|neglected]")
         return
     end
 
-    print(string.format(
-        "RMS: Reinitialized '%s' from vanilla resale price. Target condition: %.3f, final overall condition: %.3f.",
-        vehicle:getFullName(),
-        targetCondition or 0,
-        vehicle.spec_RealisticMechanicalSystems.conditionLevel or 0
-    ))
+    RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, true)
+    print(string.format("RMS: Reinitialized '%s' as a used machine of %.1f hours, previous owner %s. Overall condition: %.3f.",
+        vehicle:getFullName(), vehicle:getOperatingTime() / 3600000, care, spec.conditionLevel))
 end
 
 ---Re-resolves fluid capacities, keeping the liters
@@ -873,13 +881,13 @@ function RealisticMechanicalSystems.ConsoleCommands:getServiceState()
         spec.maintenanceTimer or 0, spec.pendingProgressElapsedTime or 0, spec.pendingProgressTotalTime or 0, progressPercent, spec.pendingProgressStepIndex or 0))
     print(string.format("Options: optionOne=%s optionTwo=%s optionThree=%s price=%s",
         tostring(spec.serviceOptionOne), tostring(spec.serviceOptionTwo), tostring(spec.serviceOptionThree), tostring(spec.pendingServicePrice)))
-    local pendingOverhaulSystemsCount = 0
-    for _, _ in pairs(spec.pendingOverhaulSystemTarget or {}) do
-        pendingOverhaulSystemsCount = pendingOverhaulSystemsCount + 1
+    local pendingOverhaulPartsCount = 0
+    for _, _ in pairs(spec.pendingOverhaulPartTarget or {}) do
+        pendingOverhaulPartsCount = pendingOverhaulPartsCount + 1
     end
 
-    print(string.format("Targets: serviceStart=%s serviceTarget=%s overhaulSystems=%d",
-        RMS_Utils.serializeNumericMap(spec.pendingServiceClockStart), RMS_Utils.serializeNumericMap(spec.pendingServiceClockTarget), pendingOverhaulSystemsCount))
+    print(string.format("Targets: serviceStart=%s serviceTarget=%s overhaulParts=%d",
+        RMS_Utils.serializeNumericMap(spec.pendingServiceClockStart), RMS_Utils.serializeNumericMap(spec.pendingServiceClockTarget), pendingOverhaulPartsCount))
     print(string.format("Levels: service engine=%.4f transmission=%.4f hydraulics=%.4f coolant=%.4f condition=%.4f",
         spec.serviceLevel, spec.transmissionServiceLevel, spec.hydraulicServiceLevel, spec.coolantServiceLevel, spec.conditionLevel or 0))
     print("Service calendar: " .. RMS_Utils.serializeNumericMap(spec.serviceCalendar))
@@ -925,7 +933,6 @@ function RealisticMechanicalSystems.ConsoleCommands:showServiceLog(rawArgs)
         return string.format("%02d/%02d/%04d", date.day or 0, date.month or 0, date.year or 0)
     end
 
-    ---Formats a value as a comma separated list, or as itself when it is not a table
     local function formatList(value)
         if value == nil or #value == 0 then
             return "-"
@@ -1195,11 +1202,9 @@ function RealisticMechanicalSystems.ConsoleCommands:resetFactorStats()
                 end
             end
             systemStats.total = 0
-            systemStats.stress = 0
             systemStats.operatingHours = getVehicleOperatingHours(vehicle)
         end
     end
-    -- the tallies the debug view shows beside the statistics belong to the same history
     spec.terrainImpacts.count = 0
     spec.terrainImpacts.lastSpeedLoss = 0
     spec.ptoEngagementCount = 0
@@ -1207,36 +1212,8 @@ function RealisticMechanicalSystems.ConsoleCommands:resetFactorStats()
     print(string.format("RMS: Factor stats reset for '%s'.", vehicle:getFullName()))
 end
 
----Switches the debug HUD view, usage rms_toggleHudDebugView [view]
--- @param string? rawArgs console arguments
-function RealisticMechanicalSystems.ConsoleCommands:toggleHudDebugView(rawArgs)
-    local args = parseArguments(rawArgs)
-    local requestedMode = args and args[1] and string.lower(tostring(args[1])) or nil
-    local currentMode = tostring(RMS_Hud.debugViewMode or "default")
-    local nextMode = "default"
-
-    if requestedMode == nil or requestedMode == "" or requestedMode == "toggle" then
-        if currentMode == "factorStats" then
-            nextMode = "default"
-        else
-            nextMode = "factorStats"
-        end
-    elseif requestedMode == "default" or requestedMode == "normal" then
-        nextMode = "default"
-    elseif requestedMode == "stats" or requestedMode == "stat" or requestedMode == "factorstats" or requestedMode == "factor_stats" then
-        nextMode = "factorStats"
-    else
-        print("RMS Error: Usage: rms_toggleHudDebugView [default|stats|toggle]")
-        return
-    end
-
-    RMS_Hud.debugViewMode = nextMode
-
-    print(string.format("RMS: HUD debug view mode = %s", nextMode))
-end
-
 ---Forces the exhaust smoke this computer draws on every vehicle
--- @param string? rawArgs "off", or an opacity, a gas flow and a vapour depth, a dash keeping the engine value
+-- @param string? rawArgs "off" or opacity, gas flow, vapour depth; "-" unchanged
 -- @param any ... further console arguments
 function RealisticMechanicalSystems.ConsoleCommands:exhaustOverride(rawArgs, ...)
     local args = parseArguments(rawArgs, ...)
@@ -1266,20 +1243,20 @@ function RealisticMechanicalSystems.ConsoleCommands:exhaustOverride(rawArgs, ...
         tostring(override.opacity or "engine"), tostring(override.flow or "engine"), tostring(override.vapour or "engine")))
 end
 
--- parsing helpers shared with the development console tools
 RealisticMechanicalSystems.ConsoleCommands.parseArguments = parseArguments
 RealisticMechanicalSystems.ConsoleCommands.resolvePathParent = resolvePathParent
 
 addConsoleCommand("rms_listBreakdowns", "Lists all available breakdown IDs.", "listBreakdowns", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_addBreakdown", "Adds a breakdown. Usage: rms_addBreakdown [id] [stage]", "addBreakdown", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_addBreakdown", "Adds a breakdown. Usage: rms_addBreakdown [id] [stage] [way]", "addBreakdown", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_removeBreakdown", "Removes a breakdown. Usage: rms_removeBreakdown [id]", "removeBreakdown", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_advanceBreakdown", "Changes breakdown stages. Usage: rms_advanceBreakdown [id] [stage|reverse]", "changeBreakdownStage", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setCondition", "Sets condition for all enabled systems. Usage: rms_setCondition [0.0-1.0]", "setCondition", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSystemCondition", "Sets system condition. Usage: rms_setSystemCondition [system] [0.0-1.0]", "setSystemCondition", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_setSystemStress", "Sets system stress. Usage: rms_setSystemStress [system] [>=0.0]", "setSystemStress", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_setPartWear", "Sets the wear of one part, 1.0 being the life of the machine. Usage: rms_setPartWear [breakdown id] [wear]", "setPartWear",
+    RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setService", "Sets vehicle service clocks. Usage: rms_setService [0.0-1.0] [engine|transmission|hydraulic|coolant]",
     "setService", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_reinitializeVehicle", "Reinitializes vehicle from vanilla resale price logic; unavailable during workshop service.",
+addConsoleCommand("rms_reinitializeVehicle", "Seeds the vehicle again as a used machine of its hours. Usage: rms_reinitializeVehicle [careful|regular|neglected]",
     "reinitializeVehicle", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_reinitializeFluidCapacities", "Re-resolves physical fluid capacities while preserving liters.", "reinitializeFluidCapacities", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_getServiceState", "Prints current service/workshop state variables.", "getServiceState", RealisticMechanicalSystems.ConsoleCommands)
@@ -1290,7 +1267,6 @@ addConsoleCommand("rms_setDirtAmount", "Sets vehicle dirt amount. Usage: rms_set
 addConsoleCommand("rms_setPaintWear", "Sets vehicle paint wear. Usage: rms_setPaintWear [0.0-1.0]", "setPaintWear", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setFuelLevel", "Sets fuel or traction charge. Usage: rms_setFuelLevel [fraction 0..1 or percentage >1..100]", "setFuelLevel", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_resetFactorStats", "Resets accumulated factor stats for current vehicle.", "resetFactorStats", RealisticMechanicalSystems.ConsoleCommands)
-addConsoleCommand("rms_toggleHudDebugView", "Switch debug HUD view. Usage: rms_toggleHudDebugView [default|stats|toggle]", "toggleHudDebugView", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSpecVar", "Sets physical RMS vehicle state, including raw oil temperatures. Usage: rms_setSpecVar <path> <value>", "setSpecVar", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_printSpecVar", "Prints RMS specialization variable on current vehicle. Usage: rms_printSpecVar <path>", "printSpecVar", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_exhaustOverride",

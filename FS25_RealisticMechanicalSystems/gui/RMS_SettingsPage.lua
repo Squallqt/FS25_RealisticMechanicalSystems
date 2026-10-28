@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Settings page embedded in the in-game menu, editing every adjustable RMS_Config value
+---RMS settings page.
 RMS_SettingsPage = {}
 RMS_SettingsPage.name = g_currentModName
 RMS_SettingsPage.modDirectory = g_currentModDirectory
@@ -24,7 +24,6 @@ local function buildPendingConfigFromRMSConfig()
 
         baseServiceWear = RMS_Config.CORE.BASE_SERVICE_WEAR,
         baseSystemsWear = RMS_Config.CORE.BASE_SYSTEMS_WEAR,
-        generalWearEnabled = RMS_Config.CORE.GENERAL_WEAR_ENABLED,
         exhaustSmokeEnabled = RMS_Config.EXHAUST.ENABLED,
         enableWarningMessages = RMS_Config.CORE.ENABLE_WARNING_MESSAGES,
 
@@ -44,7 +43,7 @@ local function buildPendingConfigFromRMSConfig()
         drivetrainAllowAutoMode = RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE,
         drivetrainParkBrakeEnabled = RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED,
 
-        debugMode = RMS_Config.DEBUG
+        debugMode = RMS_DebugWindow.getIsOpen()
     }
 end
 
@@ -268,7 +267,6 @@ function RMS_SettingsPage.commitPendingConfig(current, pending)
 
     RMS_Config.CORE.BASE_SERVICE_WEAR = pending.baseServiceWear
     RMS_Config.CORE.BASE_SYSTEMS_WEAR = pending.baseSystemsWear
-    RMS_Config.CORE.GENERAL_WEAR_ENABLED = pending.generalWearEnabled
     RMS_Config.CORE.ENABLE_WARNING_MESSAGES = pending.enableWarningMessages
 
     RMS_Config.EXHAUST.ENABLED = pending.exhaustSmokeEnabled
@@ -289,7 +287,10 @@ function RMS_SettingsPage.commitPendingConfig(current, pending)
     RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE = pending.drivetrainAllowAutoMode
     RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED = pending.drivetrainParkBrakeEnabled
 
-    RMS_Config.DEBUG = pending.debugMode
+    if valuesDiffer(pending.debugMode, current.debugMode) then
+        RMS_DebugWindow.isOpen = pending.debugMode
+        RMS_Config.DEBUG = pending.debugMode
+    end
 
     RMS_SettingsPage.applyPendingConfigSideEffects(current, pending)
     RMS_Drivetrain.refreshAllParkBrakePedals()
@@ -299,15 +300,7 @@ function RMS_SettingsPage.commitPendingConfig(current, pending)
         RMS_Main:forceWorkshopUpdate(true)
     end
 
-    if g_currentMission:getIsServer() then
-        RMS_Config.saveToXMLFile()
-    end
-
-    if g_currentMission:getIsServer() and g_server ~= nil then
-        g_server:broadcastEvent(RMS_SettingsSyncEvent.new())
-    elseif g_client ~= nil then
-        RMS_SettingsSyncEvent.send()
-    end
+    RMS_SettingsSyncEvent.share()
 end
 
 ---Starts an editing session on a fresh snapshot of the live configuration
@@ -360,7 +353,7 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         page,
         "onDebugModeChanged",
         g_i18n:getText("rms_debugMode_label"),
-        g_i18n:getText("rms_debugMode_tooltip")
+        string.format(g_i18n:getText("rms_debugMode_tooltip"), RMS_Utils.getPrimaryKeyboardInputText("RMS_TOGGLE_DEBUG_WINDOW", "Alt Gr + F5"))
     )
 
     RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_settings_section_service_wear"))
@@ -377,12 +370,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_vehicleLifespan_label"),
         g_i18n:getText("rms_vehicleLifespan_tooltip")
     )
-    page.rmsGeneralWearEnabled = RMS_SettingsPage:addBinaryOption(
-        page,
-        "onGeneralWearEnabledChanged",
-        g_i18n:getText("rms_generalWearEnabled_label"),
-        g_i18n:getText("rms_generalWearEnabled_tooltip")
-    )
     page.rmsExhaustSmokeEnabled = RMS_SettingsPage:addBinaryOption(
         page,
         "onExhaustSmokeEnabledChanged",
@@ -392,7 +379,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
 
     RMS_SettingsPage:addSectionHeader(page, g_i18n:getText("rms_ws_header_title"))
 
-    -- Instant Inspection (Binary)
     page.rmsInstantInspection = RMS_SettingsPage:addBinaryOption(
         page,
         "onInstantInspectionChanged",
@@ -400,7 +386,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_instantInspection_tooltip")
     )
 
-    -- Instant Maintenance and Repair (Binary)
     page.rmsInstantMaintenanceRepair = RMS_SettingsPage:addBinaryOption(
         page,
         "onInstantMaintenanceRepairChanged",
@@ -408,7 +393,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_instantMaintenanceRepair_tooltip")
     )
 
-    -- Instant Bodywork (Binary)
     page.rmsInstantBodywork = RMS_SettingsPage:addBinaryOption(
         page,
         "onInstantBodyworkChanged",
@@ -416,7 +400,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_instantBodywork_tooltip")
     )
 
-    -- Instant Overhaul (Binary)
     page.rmsInstantOverhaul = RMS_SettingsPage:addBinaryOption(
         page,
         "onInstantOverhaulChanged",
@@ -424,7 +407,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_instantOverhaul_tooltip")
     )
 
-    -- Mobile Workshop Restrictions (Binary)
     page.rmsMobileWorkshopRestrictions = RMS_SettingsPage:addBinaryOption(
         page,
         "onMobileWorkshopRestrictionsChanged",
@@ -432,7 +414,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_mobileWorkshopRestrictions_tooltip")
     )
 
-    -- Dealer Workshop Available (Binary)
     page.rmsDealerWorkshopAvailable = RMS_SettingsPage:addBinaryOption(
         page,
         "onDealerWorkshopAvailableChanged",
@@ -440,7 +421,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_dealerWorkshopAvailable_tooltip")
     )
 
-    -- Mobile Workshop Available (Binary)
     page.rmsMobileWorkshopAvailable = RMS_SettingsPage:addBinaryOption(
         page,
         "onMobileWorkshopAvailableChanged",
@@ -448,7 +428,6 @@ function RMS_SettingsPage:initializeSettingsPageControls(targetPage)
         g_i18n:getText("rms_mobileWorkshopAvailable_tooltip")
     )
 
-    -- Own Workshop Available (Binary)
     page.rmsOwnWorkshopAvailable = RMS_SettingsPage:addBinaryOption(
         page,
         "onOwnWorkshopAvailableChanged",
@@ -574,7 +553,6 @@ function RMS_SettingsPage:updateRMSPageVisibility(targetPage)
     end
 end
 
----Commits the pending configuration on closing, only when a value actually changed
 function RMS_SettingsPage:onFrameClose()
     if not RMS_SettingsPage.rmsHasPendingSettingsChange then
         RMS_SettingsPage.pendingConfig = nil
@@ -642,7 +620,6 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     currentPage.rmsInstantMaintenanceRepair:setIsChecked(pending.instantMaintenanceRepair, false, false)
     currentPage.rmsInstantBodywork:setIsChecked(pending.instantBodywork, false, false)
     currentPage.rmsInstantOverhaul:setIsChecked(pending.instantOverhaul, false, false)
-    currentPage.rmsGeneralWearEnabled:setIsChecked(pending.generalWearEnabled, false, false)
     currentPage.rmsExhaustSmokeEnabled:setIsChecked(pending.exhaustSmokeEnabled, false, false)
     currentPage.rmsWarningMessages:setIsChecked(pending.enableWarningMessages, false, false)
     currentPage.rmsDealerWorkshopAvailable:setIsChecked(pending.dealerAlwaysAvailable, false, false)
@@ -663,13 +640,11 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     currentPage.rmsWorkshopOpenHour:setDisabled(areAllWorkshopsAlwaysAvailable)
     currentPage.rmsWorkshopCloseHour:setDisabled(areAllWorkshopsAlwaysAvailable)
 
-    -- every control is locked without the rights to change the settings
     local canChangeSettings = canChangeRMSSettings()
     local disableAll = not canChangeSettings
 
     currentPage.rmsServiceWear:setDisabled(disableAll)
     currentPage.rmsConditionWear:setDisabled(disableAll)
-    currentPage.rmsGeneralWearEnabled:setDisabled(disableAll)
     currentPage.rmsExhaustSmokeEnabled:setDisabled(disableAll)
 
     currentPage.rmsInstantInspection:setDisabled(disableAll)
@@ -686,7 +661,6 @@ function RMS_SettingsPage:updateRMSSettings(currentPage)
     currentPage.rmsWarningMessages:setDisabled(disableAll)
     currentPage.rmsDebugMode:setDisabled(disableAll)
 
-    -- workshop hours are locked while every workshop type is always available
     if disableAll or areAllWorkshopsAlwaysAvailable then
         currentPage.rmsWorkshopOpenHour:setDisabled(true)
         currentPage.rmsWorkshopCloseHour:setDisabled(true)
@@ -748,14 +722,6 @@ end
 -- @param integer state selected step index
 function RMS_SettingsPage:onConditionWearChanged(state)
     getPendingConfig().baseSystemsWear = RMS_SettingsPage.steps.conditionWear.values[state]
-    RMS_SettingsPage.rmsHasPendingSettingsChange = true
-    refreshCurrentSettingsPage()
-end
-
----Stores whether general wear accumulates
--- @param integer state binary option state
-function RMS_SettingsPage:onGeneralWearEnabledChanged(state)
-    getPendingConfig().generalWearEnabled = (state == BinaryOptionElement.STATE_RIGHT)
     RMS_SettingsPage.rmsHasPendingSettingsChange = true
     refreshCurrentSettingsPage()
 end
@@ -824,14 +790,12 @@ function RMS_SettingsPage:onMobileWorkshopRestrictionsChanged(state)
     refreshCurrentSettingsPage()
 end
 
----Stores the workshop opening hour, pushing the closing hour when they would cross
 -- @param integer state selected step index
 function RMS_SettingsPage:onWorkshopOpenHourChanged(state)
     local pending = getPendingConfig()
     local newOpen = RMS_SettingsPage.steps.hours.values[state]
     local currentClose = pending.closeHour
 
-    -- opening and closing hours never cross
     if newOpen >= currentClose then
         currentClose = newOpen + 1
         if currentClose > 23 then
@@ -846,14 +810,12 @@ function RMS_SettingsPage:onWorkshopOpenHourChanged(state)
     refreshCurrentSettingsPage()
 end
 
----Stores the workshop closing hour, pushing the opening hour when they would cross
 -- @param integer state selected step index
 function RMS_SettingsPage:onWorkshopCloseHourChanged(state)
     local pending = getPendingConfig()
     local newClose = RMS_SettingsPage.steps.hours.values[state]
     local currentOpen = pending.openHour
 
-    -- opening and closing hours never cross
     if currentOpen >= newClose then
         currentOpen = newClose - 1
         if currentOpen < 0 then
@@ -902,7 +864,7 @@ function RMS_SettingsPage:onWarningMessagesChanged(state)
     refreshCurrentSettingsPage()
 end
 
----Stores whether debug logging is enabled
+---Stores whether the debug mode, its window and its logs, is on
 -- @param integer state binary option state
 function RMS_SettingsPage:onDebugModeChanged(state)
     getPendingConfig().debugMode = (state == BinaryOptionElement.STATE_RIGHT)
@@ -1116,7 +1078,6 @@ function RMS_SettingsPage:generateAllSteps()
         return data
     end
 
-    -- service interval, labelled in hours, stored as wear per hour
     do
         local data = { values = {}, texts = {} }
 
@@ -1138,7 +1099,6 @@ function RMS_SettingsPage:generateAllSteps()
         self.steps.serviceWear = data
     end
 
-    -- vehicle lifespan, labelled in hours, stored as wear per hour
     do
         local data = { values = {}, texts = {} }
 
@@ -1161,7 +1121,6 @@ function RMS_SettingsPage:generateAllSteps()
         self.steps.conditionWear = data
     end
 
-    -- Hours: 00:00 to 23:00
     self.steps.hours = createSteps(0, 24, 1, function(v)
         return string.format("%02d:00", v)
     end)

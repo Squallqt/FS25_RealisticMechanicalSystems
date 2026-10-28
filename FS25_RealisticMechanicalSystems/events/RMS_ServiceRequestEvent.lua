@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Client-to-server request starting an inspection, maintenance, repair or overhaul on a vehicle
 RMS_ServiceRequestEvent = {}
 local RMS_ServiceRequestEvent_mt = Class(RMS_ServiceRequestEvent, Event)
 
@@ -35,7 +34,7 @@ function RMS_ServiceRequestEvent.new(vehicle, serviceType, workshopType, optionO
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_ServiceRequestEvent:writeStream(streamId, connection)
@@ -48,7 +47,7 @@ function RMS_ServiceRequestEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_ServiceRequestEvent:readStream(streamId, connection)
@@ -59,7 +58,7 @@ function RMS_ServiceRequestEvent:readStream(streamId, connection)
     self.optionTwo = streamReadString(streamId)
     self.optionThree = streamReadBool(streamId)
 
-    -- empty strings map back to missing options
+    -- Empty strings represent absent options.
     if self.optionOne == "" then self.optionOne = nil end
     if self.optionTwo == "" then self.optionTwo = nil end
     if self.workshopType == "" then self.workshopType = nil end

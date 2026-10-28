@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Synchronises the pressed, held and released state of the start button of a vehicle
 RMS_StartButtonEvent = {}
 local RMS_StartButtonEvent_mt = Class(RMS_StartButtonEvent, Event)
 
@@ -31,7 +30,7 @@ function RMS_StartButtonEvent.new(vehicle, isDown, isHeld, isUp)
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_StartButtonEvent:writeStream(streamId, connection)
@@ -42,7 +41,7 @@ function RMS_StartButtonEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_StartButtonEvent:readStream(streamId, connection)
@@ -80,7 +79,6 @@ function RMS_StartButtonEvent:run(connection)
 end
 
 
----Broadcast the button state from the server, send it to the server from a client
 -- @param table vehicle vehicle
 -- @param boolean isDown true on the frame the button is pressed
 -- @param boolean isHeld true while the button stays pressed

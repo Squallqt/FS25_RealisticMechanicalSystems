@@ -73,19 +73,19 @@
                 <BoxLayout profile="rms_logKpiRow">
                     <GuiElement profile="rms_logKpiCard">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
-                        <GuiElement profile="rms_logKpiIcon" onDraw="onDrawCurrencyKpiIcon" />
+                        <Bitmap profile="rms_logKpiCurrencyIcon" id="currencyIcons[1]" />
                         <Text profile="rms_logKpiLabel" text="$l10n_rms_log_total_cost_title" />
                         <Text profile="rms_logKpiValue" id="totalCostValue" />
                     </GuiElement>
                     <GuiElement profile="rms_logKpiCard">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
-                        <GuiElement profile="rms_logKpiIcon" onDraw="onDrawCurrencyKpiIcon" />
+                        <Bitmap profile="rms_logKpiCurrencyIcon" id="currencyIcons[2]" />
                         <Text profile="rms_logKpiLabel" text="$l10n_rms_log_cost_per_month_title" />
                         <Text profile="rms_logKpiValue" id="costPerMonthValue" />
                     </GuiElement>
                     <GuiElement profile="rms_logKpiCard">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
-                        <GuiElement profile="rms_logKpiIcon" onDraw="onDrawCurrencyKpiIcon" />
+                        <Bitmap profile="rms_logKpiCurrencyIcon" id="currencyIcons[3]" />
                         <Text profile="rms_logKpiLabel" text="$l10n_rms_log_cost_per_hour_title" />
                         <Text profile="rms_logKpiValue" id="costPerHourValue" />
                     </GuiElement>
@@ -109,7 +109,7 @@
                     </GuiElement>
                     <GuiElement profile="rms_logKpiCardLast">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
-                        <GuiElement profile="rms_logKpiMaintenanceIcon" onDraw="onDrawMaintenanceKpiIcon" />
+                        <Bitmap profile="rms_logKpiMaintenanceIcon" />
                         <Text profile="rms_logKpiLabel" text="$l10n_rms_log_average_maintenance_interval_title" />
                         <Text profile="rms_logKpiValue" id="averageMaintenanceIntervalValue" />
                     </GuiElement>

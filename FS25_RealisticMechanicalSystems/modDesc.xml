@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="113">
+<modDesc descVersion="115">
     <author>Squallqt</author>
-    <version>0.12.0.0</version>
+    <version>0.13.0.0</version>
     <title>
         <en>Realistic Mechanical Systems</en>
         <de>Realistische Mechaniksysteme</de>
@@ -10,31 +10,31 @@
     <description>
         <en><![CDATA[Your machines finally wear out like real ones.
 
-Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO. Every one tracks its own condition, its own stress, and its own way of failing. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
+Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO. Every one is made of the real parts that fail in it, each wearing for its own reasons. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
 
-WEAR AND STRESS
+WEAR
 - Condition falls about 1% per operating hour under normal use, far faster under abuse, and each system has its own wear factors
-- Stress builds through overload, overheating, cold running under load, wheel slip and oversized implements
-- A breakdown becomes likely as stress approaches condition, and low condition makes it likely to strike at its worst stage straight away
+- Each part wears faster under what wears it on a real machine: driving against the parking brake wears the parking brake, an engine pushed cold its valve train
+- Each part fails as real parts of its kind do, by published failure data: about ten breakdowns over the life of a machine in normal use, more on the parts you strain
 - Overdue service accelerates wear in the systems covered by the overdue fluid, the engine most of all
 
 BREAKDOWNS
 - 47 breakdowns spread across the 8 systems, each in four stages from Minor to Critical
-- The breakdown is drawn at random, with better odds for the one your use has prepared: frequent braking with a heavy trailer favours a brake failure
+- The part that fails is the one your use has worn: frequent braking with a heavy trailer wears out the brakes first
 - Early faults show through RPM fluctuations, coloured exhaust smoke, knocking and whistling; dashboard warnings usually appear from stage 2, though some faults can warn from stage 1
 - Old machines also degrade permanently, losing engine power, transmission bite, battery performance, and cooling efficiency
 
 WORKSHOP
 - Inspection, Maintenance, Repair, and Overhaul each offer options that change price, duration, and quality
 - Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. Dealer colour changes use the RMS repaint price
-- Part quality from Used to Premium: cheap parts are more often defective and bring the same fault back
-- Dealer warranty covers standard repairs with original parts and required fluids for owned vehicles under 12 months and 20 operating hours
+- Part quality from Used to Original: cheaper parts are more often defective and bring the same fault back
+- Warranty covers replacement repairs with original parts and their fluids for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service excludes only the affected fault.
 - By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make maintenance and repair, repainting, or overhauls instant
 - A fault is identified before it is repaired: an inspection or any maintenance identifies it, a warning light only shows that one is there
 - A complete inspection can reveal hidden faults and defective repair parts, and shows exact condition values; some faults can remain undetected
 
 DAILY CARE
-- Telwin Doctor Charge 155 Connect on a trolley: connect it near a vehicle for an automatic charge matched to its battery, a fast charge or starting aid (START); charging follows the game's time speed and resumes when the save is loaded
+- Telwin Doctor Charge 155 Connect on a trolley: connect it near a vehicle to charge its battery at the current it accepts, or for starting aid (START); charging follows the game's time speed and resumes when the save is loaded
 - Hold R near a vehicle for a pre-shift check of fluids, radiator, and air filter
 - Air Blower clears the cooling pack and removes loose dust from the air filter; Grease Gun restores lubrication on machines that need it
 - An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
@@ -51,6 +51,37 @@ SIMULATION
 - Electric vehicles tracked with their own parts: an electric motor, a traction battery that loses capacity with age and range in the cold, power electronics, and maintenance limited to its present fluid circuits
 
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.13.0.0:
+- Reworked breakdowns to follow the wear of individual parts, with gradually worsening symptoms
+- Added particulate filter regeneration and AdBlue faults on modern diesel engines
+- Reworked cooling and added an optional reversible fan for radiator cleaning
+- Reworked hydraulic wear to account for the weight being lifted
+- Added previous maintenance history to used machines in the shop
+- Reworked resale values based on age, operating hours and mechanical condition
+- Reworked repair and fluid prices
+- Improved identification of fluid cans and drums by product in the game
+- Reworked the warranty: 24 months, extensions at purchase and 12-month cover for dealer-fitted parts
+- Removed Premium parts; original parts are no longer defective, and aftermarket and used parts are defective far less often
+- Added the origin of used parts: the repair card shows the hours of the machine they come from, which sets their wear, and a 3-month warranty on the part
+- Improved the RMS menus, dashboard and inspection reports
+- Added a diagnostic tool for reading fault codes, available as an option on the Telwin trolley
+- Reworked breakdown messages to suit the machine's onboard equipment
+- Removed fuel and hydraulic filters from the pre-shift check
+- Changed mobile and farm workshops to require the diagnostic tool for electronic work
+- Reworked Debug Mode
+- Reworked the models of the air blower, grease gun, jumper cables and charger trolley
+- Reworked battery charging to follow the current the battery accepts
+- Added tool storage on the charger trolley
+- Reworked breakdown sounds
+- Reduced engine oil consumption on healthy engines
+- Fixed RMS menus taking the colours of mods that recolour the HUD
+- Fixed machines sold in multiplayer returning to the used offers without their faults and wear
+- Fixed the player falling behind the charger trolley while pushing it
+- Fixed the hydraulics wearing and heating up while a header follows the ground on its own
+- Fixed faults remaining on a part a machine no longer has after changing its configuration
+- Fixed the PTO and steering wearing faster when an AI worker engages the PTO at high revs or steers at a crawl
+- Fixed petrol engines asking for preheating
 
 Changelog 0.12.0.0:
 - Simplified the reliability and ease of maintenance ratings
@@ -172,31 +203,31 @@ Changelog 0.10.0.0:
 
         <de><![CDATA[Ihre Maschinen verschleißen endlich wie echte.
 
-Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle. Jedes führt seinen eigenen Zustand, seine eigene Belastung und seine eigene Art auszufallen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
+Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle. Jedes besteht aus den echten Teilen, die darin ausfallen, und jedes Teil verschleißt aus eigenen Gründen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
 
-VERSCHLEISS UND BELASTUNG
+VERSCHLEISS
 - Der Zustand sinkt im Normalbetrieb um etwa 1 % je Betriebsstunde, bei Missbrauch deutlich schneller, und jedes System hat eigene Verschleißfaktoren
-- Belastung entsteht durch Überlast, Überhitzung, Arbeit mit kaltem Motor, Radschlupf und zu schwere Anbaugeräte
-- Ein Defekt wird wahrscheinlich, sobald die Belastung den Zustand erreicht; bei niedrigem Zustand tritt er häufig sofort in der schwersten Stufe auf
+- Jedes Teil verschleißt schneller unter dem, was es an einer echten Maschine verschleißt: Fahren gegen die angezogene Feststellbremse verschleißt die Feststellbremse, ein kalt geforderter Motor seinen Ventiltrieb
+- Jedes Teil fällt aus wie echte Teile seiner Art, nach veröffentlichten Ausfalldaten: etwa zehn Defekte im Leben einer normal genutzten Maschine, mehr an den Teilen, die Sie überlasten
 - Überfällige Wartung beschleunigt den Verschleiß der vom überfälligen Flüssigkeitswechsel betroffenen Systeme, allen voran des Motors
 
 DEFEKTE
 - 47 Defekte, verteilt auf die 8 Systeme, jeweils in vier Stufen von geringfügig bis kritisch
-- Der Defekt wird ausgelost, mit höheren Chancen für den, den Ihre Nutzung vorbereitet hat: Häufiges Bremsen mit schwerem Anhänger begünstigt einen Bremsdefekt
+- Es fällt das Teil aus, das Ihre Nutzung verschlissen hat: Häufiges Bremsen mit schwerem Anhänger verschleißt zuerst die Bremsen
 - Frühe Defekte zeigen sich durch schwankende Drehzahl, farbigen Abgasrauch, Klopfen und Pfeifen; Warnanzeigen leuchten meist ab Stufe 2, bei manchen Defekten schon ab Stufe 1
 - Alte Maschinen bauen zudem dauerhaft ab und verlieren Motorleistung, Kraftübertragung, Batterieleistung und Kühlwirkung
 
 WERKSTATT
 - Inspektion, Wartung, Reparatur und Grundüberholung bieten jeweils Optionen für Preis, Dauer und Qualität
 - Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Farbwechsel beim Händler kosten den RMS-Lackierpreis
-- Teilequalität von Gebraucht bis Premium: Billigteile sind häufiger defekt und holen denselben Fehler zurück
-- Die Händlergarantie deckt Standardreparaturen mit Originalteilen und die benötigten Flüssigkeiten für eigene Fahrzeuge unter 12 Monaten und 20 Betriebsstunden ab
+- Teilequalität von Gebraucht bis Original: billigere Teile sind häufiger defekt und holen denselben Fehler zurück
+- Die Garantie deckt den Austausch mit Originalteilen und die benötigten Flüssigkeiten für 24 Monate oder bis zur Stundengrenze ab. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung schließt nur den betroffenen Schaden aus.
 - Standardmäßig richtet sich die Arbeitsdauer nach der Spielzeit und pausiert beim Händler über Nacht; eigene und mobile Werkstätten bleiben geöffnet. Getrennte Einstellungen ermöglichen sofortige Wartung und Reparatur, Neulackierung oder Überholung
 - Ein Schaden wird vor der Reparatur festgestellt: Eine Inspektion oder jede Wartung stellt ihn fest, eine Warnleuchte zeigt nur, dass es einen gibt
 - Eine vollständige Inspektion kann verborgene Fehler und defekte Reparaturteile aufdecken und zeigt exakte Zustandswerte; manche Defekte können unentdeckt bleiben
 
 TÄGLICHE PFLEGE
-- Telwin Doctor Charge 155 Connect auf einem Wagen: neben einem Fahrzeug anschließen und die automatische, auf die Batterie abgestimmte Ladung, die Schnellladung oder die Starthilfe (START) wählen; das Laden folgt der Zeitgeschwindigkeit im Spiel und wird beim Laden des Spielstands fortgesetzt
+- Telwin Doctor Charge 155 Connect auf einem Wagen: neben einem Fahrzeug anschließen, um seine Batterie mit dem Strom zu laden, den sie aufnimmt, oder für die Starthilfe (START); das Laden folgt der Zeitgeschwindigkeit im Spiel und wird beim Laden des Spielstands fortgesetzt
 - R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler und Luftfilter vor Schichtbeginn
 - Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter; die Fettpresse stellt die Schmierung wieder her
 - Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
@@ -213,6 +244,37 @@ SIMULATION
 - Elektrofahrzeuge mit ihren eigenen Bauteilen: Elektromotor, Traktionsbatterie, die mit dem Alter Kapazität und bei Kälte Reichweite verliert, Leistungselektronik und Wartung nur für vorhandene Flüssigkeitskreisläufe
 
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.13.0.0:
+- Defekte anhand des Verschleißes einzelner Teile mit allmählich zunehmenden Symptomen überarbeitet
+- Regeneration des Partikelfilters und AdBlue-Defekte bei modernen Dieselmotoren hinzugefügt
+- Kühlung überarbeitet und optionalen Wendelüfter zur Kühlerreinigung hinzugefügt
+- Hydraulikverschleiß unter Berücksichtigung des angehobenen Gewichts überarbeitet
+- Wartungsvorgeschichte von Gebrauchtmaschinen im Shop hinzugefügt
+- Wiederverkaufswerte anhand von Alter, Betriebsstunden und technischem Zustand überarbeitet
+- Reparatur- und Flüssigkeitspreise überarbeitet
+- Erkennung von Flüssigkeitskanistern und Fässern nach Produkt im Spiel verbessert
+- Garantie überarbeitet: 24 Monate, Verlängerungen beim Kauf und 12 Monate Schutz für vom Händler eingebaute Teile
+- Premium-Teile entfernt; Originalteile sind nicht mehr defekt, Nachbau- und Gebrauchtteile viel seltener
+- Herkunft der Gebrauchtteile hinzugefügt: Die Reparaturkarte zeigt die Stunden der Herkunftsmaschine, die ihren Verschleiß bestimmen, und 3 Monate Garantie auf das Teil
+- RMS-Menüs, Armaturenbrett und Inspektionsberichte verbessert
+- Diagnosegerät zum Auslesen von Fehlercodes als Option des Telwin-Wagens hinzugefügt
+- Pannenmeldungen an die Bordausstattung der Maschine angepasst
+- Kraftstoff- und Hydraulikfilter aus der Kontrolle vor Schichtbeginn entfernt
+- Mobile und hofeigene Werkstätten geändert: Elektronikarbeiten erfordern das Diagnosegerät
+- Debug-Modus überarbeitet
+- Modelle von Druckluftgebläse, Fettpresse, Starthilfekabeln und Ladegerätwagen überarbeitet
+- Batterieladung an den von der Batterie aufgenommenen Strom angepasst
+- Werkzeugablagen am Ladegerätwagen hinzugefügt
+- Pannengeräusche überarbeitet
+- Motorölverbrauch bei intakten Motoren verringert
+- Übernahme der Farben von HUD-Mods in den RMS-Menüs behoben
+- Fehler behoben, durch den im Mehrspielermodus verkaufte Maschinen ohne ihre Defekte und ihren Verschleiß wieder bei den Gebrauchtangeboten erschienen
+- Fehler behoben, durch den der Spieler beim Schieben des Ladegerätwagens zurückblieb
+- Fehler behoben, durch den sich die Hydraulik abnutzte und erwärmte, während ein Schneidwerk selbständig dem Boden folgte
+- Fehler behoben, durch den Defekte an Teilen blieben, die die Maschine nach einer Konfigurationsänderung nicht mehr hat
+- Fehler behoben, durch den Zapfwelle und Lenkung schneller verschlissen, wenn ein KI-Helfer die Zapfwelle bei hoher Drehzahl einschaltete oder im Schritttempo lenkte
+- Vorglühen bei Benzinmotoren behoben
 
 Changelog 0.12.0.0:
 - Bewertungen der Zuverlässigkeit und Wartungsfreundlichkeit vereinfacht
@@ -334,31 +396,31 @@ Changelog 0.10.0.0:
         
         <fr><![CDATA[Vos machines s'usent enfin comme les vraies.
 
-Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force. Chacun suit son propre état, sa propre contrainte et sa propre façon de lâcher. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
+Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force. Chacun est fait des vraies pièces qui y lâchent, chacune s'usant pour ses propres raisons. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
 
-USURE ET CONTRAINTE
+USURE
 - L'état baisse d'environ 1 % par heure de fonctionnement en usage normal, bien plus vite en cas d'abus, et chaque système a ses propres facteurs d'usure
-- La contrainte s'accumule avec la surcharge, la surchauffe, le travail moteur froid, le patinage et les outils trop lourds
-- Une panne devient probable dès que la contrainte rejoint l'état, et un état faible la fait souvent survenir d'emblée à son stade le plus grave
+- Chaque pièce s'use plus vite sous ce qui l'use sur une vraie machine : rouler frein de parking serré use le frein de parking, un moteur poussé à froid ses soupapes
+- Chaque pièce lâche comme les vraies pièces de son type, d'après des données de pannes publiées : environ dix pannes sur la vie d'une machine menée normalement, davantage sur les pièces que vous malmenez
 - Un entretien en retard accélère l'usure des systèmes couverts par le fluide à remplacer, du moteur en premier
 
 PANNES
 - 47 pannes réparties sur les 8 systèmes, chacune en quatre stades, de mineur à critique
-- La panne est tirée au sort, avec plus de chances pour celle que votre usage a préparée : freiner souvent avec une lourde remorque favorise la panne de freins
+- La pièce qui lâche est celle que votre usage a usée : freiner souvent avec une lourde remorque use d'abord les freins
 - Les premiers stades se manifestent par un régime instable, une fumée colorée, des cognements ou des sifflements ; les témoins apparaissent généralement au stade 2, mais certaines pannes peuvent en afficher dès le stade 1
 - Les machines âgées se dégradent aussi durablement et perdent puissance moteur, transmission, performance de batterie et efficacité de refroidissement
 
 ATELIER
 - L'inspection, l'entretien, la réparation et la révision proposent chacune des options qui changent le prix, la durée et la qualité
 - L'appoint remplit les fluides manquants ; la peinture retouche les petits dégâts ou se refait en entier avec les couleurs proposées par le véhicule. Le changement de couleur chez le concessionnaire est facturé au prix RMS
-- Qualité des pièces de l'occasion au premium : les pièces bon marché sont plus souvent défectueuses et ramènent la même panne
-- Au concessionnaire, la garantie couvre la réparation standard avec pièces d'origine et ses fluides pour les véhicules possédés de moins de 12 mois et de 20 heures de fonctionnement
+- Qualité des pièces de l'occasion à l'origine : les pièces moins chères sont plus souvent défectueuses et ramènent la même panne
+- La garantie couvre le remplacement en pièces d'origine et ses fluides pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien en retard exclut seulement la panne concernée.
 - Par défaut, la durée des travaux suit le temps de la partie et les travaux s'interrompent la nuit chez le concessionnaire ; les ateliers personnels et mobiles restent ouverts. Des réglages distincts permettent de terminer instantanément l'entretien et les réparations, la peinture ou les révisions
 - Une panne s'identifie avant de se réparer : une inspection ou n'importe quel entretien l'identifie, un voyant montre seulement qu'il y en a une
 - Une inspection complète peut révéler les pannes cachées et les pièces de réparation défectueuses, et donne les valeurs exactes ; certaines pannes peuvent rester indétectées
 
 ENTRETIEN QUOTIDIEN
-- Telwin Doctor Charge 155 Connect sur chariot : branchez-le près d'un véhicule et choisissez la charge automatique, adaptée à sa batterie, la charge rapide ou l'aide au démarrage (START) ; la recharge suit la vitesse du temps de la partie et reprend au chargement de la sauvegarde
+- Telwin Doctor Charge 155 Connect sur chariot : branchez-le près d'un véhicule pour recharger sa batterie au courant qu'elle accepte, ou pour l'aide au démarrage (START) ; la recharge suit la vitesse du temps de la partie et reprend au chargement de la sauvegarde
 - Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air
 - La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air ; la pompe à graisse rétablit le graissage des machines qui en demandent
 - Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
@@ -375,6 +437,37 @@ SIMULATION
 - Véhicules électriques suivis avec leurs propres organes : moteur électrique, batterie de traction qui perd de la capacité en vieillissant et de l'autonomie au froid, électronique de puissance, et des entretiens limités aux circuits présents
 
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.13.0.0 :
+- Refonte des pannes selon l'usure de chaque pièce, avec des symptômes qui s'aggravent progressivement
+- Ajout de la régénération du filtre à particules et des pannes d'AdBlue sur les moteurs diesel récents
+- Refonte du refroidissement et ajout d'un ventilateur réversible en option pour nettoyer le radiateur
+- Refonte de l'usure hydraulique selon le poids soulevé
+- Ajout de l'historique d'entretien des machines d'occasion au magasin
+- Refonte des valeurs de revente selon l'âge, les heures et l'état mécanique
+- Refonte des prix des réparations et des fluides
+- Amélioration de l'identification des bidons et fûts par produit dans le jeu
+- Refonte de la garantie : 24 mois, extensions à l'achat et 12 mois de couverture des pièces posées par le concessionnaire
+- Suppression des pièces premium ; les pièces d'origine ne sont plus défectueuses, les pièces adaptables et d'occasion le sont bien moins souvent
+- Ajout de l'origine des pièces d'occasion : la carte de réparation indique les heures de la machine d'où elles viennent, qui fixent leur usure, et une garantie de 3 mois sur la pièce
+- Amélioration des menus RMS, du tableau de bord et des rapports d'inspection
+- Ajout d'une valise de diagnostic pour lire les codes défaut, disponible en option sur le chariot Telwin
+- Refonte des messages de panne selon l'équipement de bord de la machine
+- Suppression des filtres à carburant et hydraulique du contrôle avant prise de poste
+- Modification des ateliers mobile et de ferme : les travaux électroniques demandent la valise de diagnostic
+- Refonte du mode débogage
+- Refonte des modèles du souffleur d'air comprimé, du pistolet à graisse, des câbles de démarrage et du chariot du chargeur
+- Refonte de la recharge selon le courant accepté par la batterie
+- Ajout du rangement des outils sur le chariot du chargeur
+- Refonte des bruits de panne
+- Réduction de la consommation d'huile des moteurs en bon état
+- Correction des menus RMS qui prenaient les couleurs des mods modifiant le HUD
+- Correction des machines vendues en multijoueur qui revenaient dans les occasions sans leurs pannes ni leur usure
+- Correction du joueur qui restait en arrière en poussant le chariot du chargeur
+- Correction de l'usure et de l'échauffement de l'hydraulique pendant qu'une coupe suit seule le sol
+- Correction des pannes qui restaient sur une pièce que la machine n'a plus après un changement de configuration
+- Correction de l'usure accrue de la prise de force et de la direction quand un ouvrier IA embraye à haut régime ou braque au pas
+- Correction du préchauffage demandé par les moteurs à essence
 
 Changelog 0.12.0.0 :
 - Simplification des appréciations de fiabilité et de facilité d’entretien
@@ -498,6 +591,7 @@ Changelog 0.10.0.0 :
     <specializations>
         <specialization name="rmsFluidContainer" className="RMS_FluidContainer" filename="scripts/objects/RMS_FluidContainer.lua"/>
         <specialization name="rmsBatteryCharger" className="RMS_BatteryCharger" filename="scripts/objects/RMS_BatteryCharger.lua"/>
+        <specialization name="rmsDiagnosticTool" className="RMS_DiagnosticTool" filename="scripts/objects/RMS_DiagnosticTool.lua"/>
     </specializations>
     <vehicleTypes>
         <type name="rmsBatteryCharger" className="Vehicle" filename="$dataS/scripts/vehicles/Vehicle.lua">
@@ -515,18 +609,29 @@ Changelog 0.10.0.0 :
             <specialization name="motorized"/>
             <specialization name="drivable"/>
             <specialization name="pushHandTool"/>
+            <specialization name="handToolHolders"/>
             <specialization name="rmsBatteryCharger"/>
+            <specialization name="rmsDiagnosticTool"/>
         </type>
         <type name="rmsFluidContainer" parent="pallet" filename="$dataS/scripts/vehicles/Vehicle.lua">
             <specialization name="rmsFluidContainer"/>
         </type>
     </vehicleTypes>
+    <placeableSpecializations>
+        <specialization name="rmsTrolleyPlaceable" className="RMS_TrolleyPlaceable" filename="scripts/objects/RMS_TrolleyPlaceable.lua"/>
+    </placeableSpecializations>
+    <placeableTypes>
+        <type name="rmsTrolleyPlaceable" parent="placeableVehicle" filename="$dataS/scripts/placeables/Placeable.lua">
+            <specialization name="rmsTrolleyPlaceable"/>
+        </type>
+    </placeableTypes>
     <brands>
         <brand name="MOTOREX" title="Motorex" image="brands/brand_motorex.png"/>
         <brand name="FUCHS" title="FUCHS" image="brands/brand_fuchs.png"/>
         <brand name="MOTUL" title="Motul" image="brands/brand_motul.png"/>
         <brand name="TELWIN" title="Telwin" image="brands/brand_telwin.png"/>
         <brand name="MACNAUGHT" title="Macnaught" image="brands/brand_macnaught.png"/>
+        <brand name="SKF" title="SKF" image="brands/brand_skf.png"/>
     </brands>
     <storeItems>
         <storeItem xmlFilename="objects/batteryCharger/batteryCharger.xml"/>
@@ -561,6 +666,8 @@ Changelog 0.10.0.0 :
         <action name="RMS_TOGGLE_DIFFLOCK" displayCategory="VEHICLE"/>
         <action name="RMS_TOGGLE_PARKBRAKE" displayCategory="VEHICLE"/>
         <action name="RMS_TOGGLE_ODOMETER" displayCategory="VEHICLE"/>
+        <action name="RMS_REVERSE_FAN" displayCategory="VEHICLE"/>
+        <action name="RMS_TOGGLE_DEBUG_WINDOW" category="SYSTEM" displayCategory="GAME"/>
         <action name="RMS_TOGGLE_BATTERY_ISOLATOR" displayCategory="PLAYER_INTERACTIVE"/>
         <action name="RMS_TOGGLE_FLUID_CAN" displayCategory="PLAYER_INTERACTIVE"/>
     </actions>
@@ -583,6 +690,12 @@ Changelog 0.10.0.0 :
         </actionBinding>
         <actionBinding action="RMS_TOGGLE_ODOMETER">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_4"/>
+        </actionBinding>
+        <actionBinding action="RMS_REVERSE_FAN">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_6"/>
+        </actionBinding>
+        <actionBinding action="RMS_TOGGLE_DEBUG_WINDOW">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_ralt KEY_f5"/>
         </actionBinding>
         <actionBinding action="RMS_TOGGLE_BATTERY_ISOLATOR">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_5"/>

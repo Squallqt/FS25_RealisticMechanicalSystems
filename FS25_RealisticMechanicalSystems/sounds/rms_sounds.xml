@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <sounds>
     <!-- Engine start -->
-    <starterCranking file="sounds/starterCranking.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+    <!-- Failed start -->
+    <starterRelayClick file="sounds/starterRelayClick.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="2.0" outdoor="2.1" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </starterCranking>
-    <starterCrankingEnd file="sounds/starterCrankingEnd.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+    </starterRelayClick>
+    <batteryClicking file="sounds/batteryClicking.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="2.0" outdoor="2.1" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </starterCrankingEnd>
+    </batteryClicking>
+    <!-- Glow relay and contactors -->
+    <preheatRelay file="sounds/preheatRelay.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="4.0" outdoor="2.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </preheatRelay>
+    <hvContactor file="sounds/hvContactor.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.0" outdoor="0.5" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </hvContactor>
     <!-- Warnings -->
     <alarm file="sounds/alarm.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="1.0" outdoor="0.25" />
@@ -26,57 +42,32 @@
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="1.0" outdoor="0.5" />
     </warning>
-    <!-- Transmission faults -->
-    <transmissionShiftFailed1 file="sounds/transmissionShiftFailed_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+    <!-- Transmission -->
+    <transmissionShiftFailed file="sounds/transmissionShiftFailed.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="2.0" outdoor="2.1" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </transmissionShiftFailed1>
-    <transmissionShiftFailed2 file="sounds/transmissionShiftFailed_2.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
-        <volume indoor="2.2" outdoor="2.3" />
+    </transmissionShiftFailed>
+    <gearDisengage template="gearDisengaged" linkNode="0>" />
+    <powershiftClunk file="sounds/powershiftClunk.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="2.0" outdoor="2.1" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </transmissionShiftFailed2>
-    <transmissionShiftFailed3 file="sounds/transmissionShiftFailed_3.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
-        <volume indoor="2.1" outdoor="2.2" />
+    </powershiftClunk>
+    <!-- Dry brakes -->
+    <brakes file="sounds/brakes_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <sourceRandomization file="sounds/brakes_2.ogg" />
+        <sourceRandomization file="sounds/brakes_3.ogg" />
+        <volume indoor="0.09" outdoor="0.1" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </transmissionShiftFailed3>
-    <brakes1 file="sounds/brakes_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
-        <volume indoor="0.4" outdoor="0.45" />
-        <pitch indoor="1.0" outdoor="1.0" />
-        <lowpassGain indoor="0.5" outdoor="1.0" />
-        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
-        <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </brakes1>
-    <brakes2 file="sounds/brakes_2.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
-        <volume indoor="0.4" outdoor="0.45" />
-        <pitch indoor="1.0" outdoor="1.0" />
-        <lowpassGain indoor="0.5" outdoor="1.0" />
-        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
-        <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </brakes2>
-    <brakes3 file="sounds/brakes_3.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
-        <volume indoor="0.4" outdoor="0.45" />
-        <pitch indoor="1.0" outdoor="1.0" />
-        <lowpassGain indoor="0.5" outdoor="1.0" />
-        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
-        <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </brakes3>
-    <gearDisengage1 file="sounds/gearDisengage_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
-        <volume indoor="1.1" outdoor="1.0" />
-        <pitch indoor="1.0" outdoor="1.0" />
-        <lowpassGain indoor="0.5" outdoor="1.0" />
-        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
-        <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </gearDisengage1>
-    <!-- A cab wall leaves a quarter of the volume and muffles, as the game truck air release from its cab -->
+    </brakes>
     <!-- Park brake, hand lever -->
     <parkBrakeLeverApply file="sounds/parkBrakeLeverApply.ogg" linkNode="0>" innerRadius="3.0" outerRadius="30.0" >
         <volume indoor="1.0" outdoor="0.25" />
@@ -88,7 +79,7 @@
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="1.0" outdoor="0.5" />
     </parkBrakeLeverRelease>
-    <!-- Park brake, automatic on a machine with air brakes -->
+    <!-- Automatic air park brake -->
     <parkBrakeAutoApply file="sounds/parkBrakeAutoApply.ogg" linkNode="0>" innerRadius="5.0" outerRadius="40.0" >
         <volume indoor="0.25" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
@@ -99,7 +90,7 @@
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
     </parkBrakeAutoRelease>
-    <!-- Park brake, automatic on a machine without air brakes: its switch -->
+    <!-- Automatic park brake switch -->
     <parkBrakeSwitchOn file="$data/sounds/vehicles/switch/vehSwitchPress_01.ogg" linkNode="0>" innerRadius="3.0" outerRadius="30.0" >
         <volume indoor="1.0" outdoor="0" />
         <pitch indoor="1.0" outdoor="1.0" />
@@ -110,19 +101,24 @@
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="1.0" outdoor="0.5" />
     </parkBrakeSwitchOff>
+    <!-- Reversible fan -->
+    <fanReversalSwitch file="$data/sounds/vehicles/switch/vehSwitchPress_01.ogg" linkNode="0>" innerRadius="3.0" outerRadius="30.0" >
+        <volume indoor="1.0" outdoor="0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="1.0" outdoor="0.5" />
+    </fanReversalSwitch>
     <!-- Park brake, truck air valve -->
     <parkBrakeTruckApply file="$data/sounds/vehicles/brake/vehTruckBrakeAirRelease_BgMN01.ogg" linkNode="0>" innerRadius="5.0" outerRadius="40.0" >
         <volume indoor="0.25" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
     </parkBrakeTruckApply>
-    <!-- the same release as the automatic brake of a machine with air brakes -->
     <parkBrakeTruckRelease file="$data/sounds/vehicles/brake/vehBrakeSmallBrake_BgMN01.ogg" linkNode="0>" innerRadius="5.0" outerRadius="40.0" >
         <volume indoor="0.25" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
     </parkBrakeTruckRelease>
-    <!-- Mechanical noises -->
+    <!-- Mechanical loops -->
     <engineKnocking file="sounds/engineKnocking.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="0.8" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
@@ -130,6 +126,13 @@
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </engineKnocking>
+    <pistonSlap file="sounds/pistonSlap.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </pistonSlap>
     <valveTrainNoise file="sounds/valveTrainNoise.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="0.8" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
@@ -137,20 +140,129 @@
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </valveTrainNoise>
-    <turboWhistle file="sounds/turboWhistle.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+    <injectorKnock file="sounds/injectorKnock.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </injectorKnock>
+    <highPressurePump file="sounds/highPressurePump.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </highPressurePump>
+    <turboWhistle file="$data/sounds/vehicles/turbo/turbo_loop_2.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="0.8" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </turboWhistle>
-    <fanNoice file="sounds/fanNoice.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+    <fanNoice template="fanLoop" linkNode="0>" />
+    <fanBladeImbalance file="sounds/fanBladeImbalance.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="0.8" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </fanNoice>
+    </fanBladeImbalance>
+    <accessoryBelt file="sounds/accessoryBelt.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </accessoryBelt>
+    <waterPumpBearing file="sounds/waterPumpBearing.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </waterPumpBearing>
+    <gearWhineNoise file="sounds/gearWhineNoise.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </gearWhineNoise>
+    <gearboxBearingNoise file="sounds/gearboxBearingNoise.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </gearboxBearingNoise>
+    <transmissionPump file="sounds/transmissionPump.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </transmissionPump>
+    <hydrostaticWhine file="sounds/hydrostaticWhine.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </hydrostaticWhine>
+    <hydraulicPump file="sounds/hydraulicPump.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </hydraulicPump>
+    <coolantSteam file="sounds/coolantSteam.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </coolantSteam>
+    <gasLeak file="sounds/gasLeak.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </gasLeak>
+    <parkBrakeDrag file="sounds/parkBrakeDrag.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </parkBrakeDrag>
+    <steeringLinkage file="sounds/steeringLinkage_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <sourceRandomization file="sounds/steeringLinkage_2.ogg" />
+        <sourceRandomization file="sounds/steeringLinkage_3.ogg" />
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </steeringLinkage>
+    <steeringKnuckle file="sounds/steeringKnuckle_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <sourceRandomization file="sounds/steeringKnuckle_2.ogg" />
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </steeringKnuckle>
+    <steeringOrbitrol file="sounds/steeringOrbitrol.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </steeringOrbitrol>
     <wheelHubBearingNoise file="sounds/wheelHubBearingNoise.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="0.8" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
@@ -158,20 +270,6 @@
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </wheelHubBearingNoise>
-    <ptoBearingNoise file="sounds/wheelHubBearingNoise.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
-        <volume indoor="0.8" outdoor="1.0" />
-        <pitch indoor="1.1" outdoor="1.1" />
-        <lowpassGain indoor="0.5" outdoor="1.0" />
-        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
-        <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </ptoBearingNoise>
-    <vibrationNoice file="sounds/vibrationNoice.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
-        <volume indoor="0.8" outdoor="1.0" />
-        <pitch indoor="1.0" outdoor="1.0" />
-        <lowpassGain indoor="0.5" outdoor="1.0" />
-        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
-        <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </vibrationNoice>
     <wheelSeizureGrind file="sounds/wheelSeizureGrind.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="0.8" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
@@ -179,6 +277,83 @@
         <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </wheelSeizureGrind>
+    <trackRoller file="sounds/trackRoller.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </trackRoller>
+    <trackClatter file="sounds/trackClatter.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </trackClatter>
+    <loaderPins file="sounds/loaderPins_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <sourceRandomization file="sounds/loaderPins_2.ogg" />
+        <sourceRandomization file="sounds/loaderPins_3.ogg" />
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </loaderPins>
+    <frontAxleShaft file="sounds/frontAxleShaft_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <sourceRandomization file="sounds/frontAxleShaft_2.ogg" />
+        <sourceRandomization file="sounds/frontAxleShaft_3.ogg" />
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </frontAxleShaft>
+    <cabDamper file="sounds/cabDamper_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <sourceRandomization file="sounds/cabDamper_2.ogg" />
+        <sourceRandomization file="sounds/cabDamper_3.ogg" />
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </cabDamper>
+    <ptoBearingNoise file="sounds/ptoBearingNoise.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </ptoBearingNoise>
+    <ptoSplines file="sounds/ptoSplines.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </ptoSplines>
+    <electricMotorBearing file="sounds/electricMotorBearing.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </electricMotorBearing>
+    <!-- Hydraulic hose burst -->
+    <hoseBurst file="sounds/hoseBurst.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.0" outdoor="1.2" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </hoseBurst>
+    <ptoShaftBreak file="sounds/ptoShaftBreak.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="0.8" outdoor="1.0" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </ptoShaftBreak>
     <!-- Hand tools -->
     <airBlowerTool file="sounds/airBlower.ogg" linkNode="raycastNode" innerRadius="1.5" outerRadius="12.0" >
         <volume indoor="1.0" outdoor="1.0" />
@@ -194,7 +369,9 @@
         <lowpassCutoffFrequency indoor="20000.0" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </airBlowerAirResistanceTool>
-    <greaseGunTool file="sounds/greaseGun.ogg" linkNode="raycastNode" innerRadius="1.5" outerRadius="8.0" >
+    <greaseGunTool file="sounds/greaseGun_1.ogg" linkNode="raycastNode" innerRadius="1.5" outerRadius="8.0" >
+        <sourceRandomization file="sounds/greaseGun_2.ogg" />
+        <sourceRandomization file="sounds/greaseGun_3.ogg" />
         <volume indoor="1.0" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="1.0" outdoor="1.0" />
@@ -215,14 +392,7 @@
         <lowpassCutoffFrequency indoor="20000.0" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </jumperCablesDisconnectTool>
-    <jumperCablesSparksTool file="sounds/jumperCablesSparks.ogg" linkNode="raycastNode" innerRadius="1.5" outerRadius="8.0" >
-        <volume indoor="1.0" outdoor="1.0" />
-        <pitch indoor="1.0" outdoor="1.0" />
-        <lowpassGain indoor="1.0" outdoor="1.0" />
-        <lowpassCutoffFrequency indoor="20000.0" outdoor="20000.0" />
-        <lowpassResonance indoor="1.0" outdoor="1.0"/>
-    </jumperCablesSparksTool>
-    <!-- Fluid poured from a can in hand, oil or coolant; recordings some 9 dB under the air blower -->
+    <!-- Fluid pouring -->
     <fluidPourOil file="sounds/fluidPourOil.ogg" linkNode="0>" innerRadius="1.5" outerRadius="8.0" >
         <volume indoor="2.0" outdoor="2.0" />
         <pitch indoor="1.0" outdoor="1.0" />
@@ -237,7 +407,7 @@
         <lowpassCutoffFrequency indoor="20000.0" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </fluidPourCoolant>
-    <!-- Battery pump of a drum, heard for as long as it runs: an electric pump recorded in a studio -->
+    <!-- Drum pump -->
     <drumPump file="sounds/drumPump.ogg" linkNode="0>" innerRadius="1.5" outerRadius="8.0" >
         <volume indoor="3.0" outdoor="3.0" />
         <pitch indoor="1.0" outdoor="1.0" />
@@ -245,7 +415,7 @@
         <lowpassCutoffFrequency indoor="20000.0" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </drumPump>
-    <!-- Battery isolator, turned by hand on the machine -->
+    <!-- Battery isolator -->
     <batteryIsolator file="sounds/batteryIsolator.ogg" linkNode="0>" innerRadius="5.0" outerRadius="40.0" >
         <volume indoor="0.25" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
@@ -259,6 +429,6 @@
         <lowpassCutoffFrequency indoor="5000" outdoor="20000.0" />
         <lowpassResonance indoor="1.0" outdoor="1.0"/>
     </inspection>
-    <notification2D file="sounds/notification.ogg" volume="1.0" pitch="1.0" />
-    <maintenanceCompleted2D file="sounds/maintenanceCompleted.ogg" volume="1.0" pitch="1.0" />
+    <notification2D file="$data/sounds/ui/uiNotification.ogg" volume="1.0" pitch="1.0" />
+    <maintenanceCompleted2D file="$data/sounds/ui/uiConfigWrench.ogg" volume="1.0" pitch="1.0" />
 </sounds>

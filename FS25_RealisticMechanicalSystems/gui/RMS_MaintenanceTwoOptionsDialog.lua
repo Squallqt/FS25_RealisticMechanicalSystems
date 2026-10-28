@@ -1,16 +1,14 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Work order of an inspection: three types, then the repair it may chain to
+---Inspection configuration dialog.
 RMS_MaintenanceTwoOptionsDialog = {}
 RMS_MaintenanceTwoOptionsDialog.INSTANCE = nil
 
 local RMS_MaintenanceTwoOptionsDialog_mt = Class(RMS_MaintenanceTwoOptionsDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
 
--- the inspection types, in the order of their columns
 local INSPECTION_TYPE_KEYS = { "VISUAL", "STANDARD", "COMPLETE" }
--- the look of a cell by what a type does: all of it, part of it, nothing
 local CELL_KINDS = { [2] = "Done", [1] = "Light", [0] = "None" }
 
 ---Loads the dialog layout and stores the shared instance
@@ -43,7 +41,7 @@ end
 
 ---Returns what an inspection type does on each row of its table
 -- @param string inspectionType inspection type
--- @return table cells text and kind of each row, 2 for all of it, 1 for part of it, 0 for nothing
+-- @return table cells text and kind (2 full, 1 partial, 0 none)
 function RMS_MaintenanceTwoOptionsDialog.getInspectionCells(inspectionType)
     local rms = RealisticMechanicalSystems
 
@@ -139,7 +137,6 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
         g_i18n:getText("ui_balance"),
         balanceText
     )
-    -- the inspection is the first of the procedures
     for index, button in ipairs(self.configChoiceButtons) do
         button:setSelected(index == 1)
     end
@@ -149,7 +146,6 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
     self.shortcutButtons[5]:setVisible(isTopUpOffered)
     self.refillShortcutSeparator:setVisible(isTopUpOffered)
     self.shortcutButtons[5].parent:invalidateLayout()
-    -- the bottom bar carries the workshop shortcuts
     for index, button in ipairs(self.shortcutButtons) do
         button:setDisabled(self.configChoiceButtons[index]:getIsDisabled())
     end
@@ -157,11 +153,10 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
     RMS_MaintenanceTwoOptionsDialog.updateInspectionTable(self, workshopType)
 
     local inspection = RealisticMechanicalSystems.STATUS.INSPECTION
-    local isAllowedInMobileWorkshop = RMS_FluidWorkshop.getMobileWorkshopAvailability(self.vehicle, inspection, workshopType,
+    local isAllowedInWorkshop = RMS_FluidWorkshop.getWorkshopAvailability(self.vehicle, inspection, workshopType,
         self.selectedOptionOne)
     local isWorkshopOpen = RMS_WorkshopDialog.getIsWorkshopOpen()
 
-    -- price, duration, finish time
     local servicePrice = RMS_FluidWorkshop.getTransactionPrice(self.vehicle, inspection, workshopType, self.selectedOptionOne, nil, self.selectedOptionThree)
     local priceValue = servicePrice ~= nil
         and g_i18n:formatMoney(servicePrice, 0, true, false)
@@ -180,15 +175,13 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
     self.recapFinishLabel:setText(stripTrailingColon(g_i18n:getText("rms_option_menu_finish_time_text")))
     self.recapFinish:setText(RMS_Utils.formatFinishTime(finishTime, daysToAdd))
 
-    -- the refusal of the mobile workshop is written under the table
-    self.optionOneDisclaimer:setVisible(not isAllowedInMobileWorkshop)
-    if not isAllowedInMobileWorkshop then
-        self.optionOneDisclaimer:setText(RMS_FluidWorkshop.getMobileWorkshopRestrictionText(
+    self.optionOneDisclaimer:setVisible(not isAllowedInWorkshop)
+    if not isAllowedInWorkshop then
+        self.optionOneDisclaimer:setText(RMS_FluidWorkshop.getWorkshopRestrictionText(
             self.vehicle, inspection, workshopType, self.selectedOptionOne))
         self.optionOneDisclaimer:setTextColor(unpack(RMS_Utils.COLOR.ALERT))
     end
 
-    -- the repair the inspection may chain to
     local optionThreeText = g_i18n:getText("rms_option_menu_perform_repair")
     local optionThreeDisclaimerText = g_i18n:getText("rms_option_menu_option_three_disclaimer_repair_after_detection")
     if self.selectedOptionThree then
@@ -200,7 +193,7 @@ function RMS_MaintenanceTwoOptionsDialog:updateScreen()
     self.recapAddon:setText(g_i18n:getText(self.selectedOptionThree and BinaryOptionElement.STRING_YES or BinaryOptionElement.STRING_NO))
     RMS_WorkshopDialog.updateFollowUpCards(self)
 
-    self.startServiceButton:setDisabled(not isAllowedInMobileWorkshop or not isWorkshopOpen)
+    self.startServiceButton:setDisabled(not isAllowedInWorkshop or not isWorkshopOpen)
 
     local workshopTypeKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, workshopType)
     local workshopTypeText = workshopTypeKey ~= nil and g_i18n:getText(workshopType) or ""
@@ -305,17 +298,6 @@ function RMS_MaintenanceTwoOptionsDialog:onWorkshopTabPagingChanged()
     RMS_WorkshopDialog.onChildTabPagingChanged(self)
 end
 
----Draws the native maintenance glyph in the intervention action list
--- @param table area transparent GUI element receiving the XML draw callback
-function RMS_MaintenanceTwoOptionsDialog:onDrawMaintenanceActionIcon(area)
-    RMS_WorkshopDialog.drawMaintenanceIcon(area, "rms_workshopMaintenanceActionIcon")
-end
-
----Draws the RMS oil-level glyph in the intervention action list
--- @param table area transparent GUI element receiving the XML draw callback
-function RMS_MaintenanceTwoOptionsDialog:onDrawOilActionIcon(area)
-    RMS_WorkshopDialog.drawOilIcon(area, "rms_workshopOilActionIcon")
-end
 
 ---
 function RMS_MaintenanceTwoOptionsDialog:onClickOptionThreeNo()
@@ -334,7 +316,7 @@ function RMS_MaintenanceTwoOptionsDialog:onClickStartService()
     local vehicle = self.vehicle
     local workshopType = RMS_WorkshopDialog.INSTANCE.workshopType
     local inspection = RealisticMechanicalSystems.STATUS.INSPECTION
-    if not RMS_FluidWorkshop.getMobileWorkshopAvailability(vehicle, inspection, workshopType, self.selectedOptionOne)
+    if not RMS_FluidWorkshop.getWorkshopAvailability(vehicle, inspection, workshopType, self.selectedOptionOne)
         or not RMS_WorkshopDialog.getIsWorkshopOpen() then
         return
     end
@@ -384,7 +366,6 @@ function RMS_MaintenanceTwoOptionsDialog:onCreate()
     RMS_Utils.mirrorSelectionToChildren(self.workshopNavTabs[3])
     self.workshopNavTabs[3]:setSelected(true)
 
-    -- a column of the table draws its frame, fill, name and cells as chosen
     for _, buttons in ipairs({self.configChoiceButtons, self.inspectionColumns, self.optionThreeButtons}) do
         for _, button in ipairs(buttons) do
             RMS_Utils.mirrorSelectionToChildren(button)

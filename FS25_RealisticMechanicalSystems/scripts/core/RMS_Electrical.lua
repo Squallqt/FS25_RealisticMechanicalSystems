@@ -1,16 +1,15 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----12 and 24 V circuit: sizing, battery balance, cranking, isolator and cables
+---Low-voltage electrical system.
 RMS_Electrical = RMS_Electrical or {}
 
 local sanitizeNumber = RealisticMechanicalSystems.sanitizeNumber
 
 local DAY_MS = 24 * 60 * 60 * 1000
 local HOUR_MS = 60 * 60 * 1000
--- a ruined battery keeps a trace of capacity, so that no division meets zero
 local MIN_CAPACITY_AH = 0.01
--- two linked batteries balance as charge moves, so long intervals are cut into steps
+-- Substep linked batteries to limit charge-transfer overshoot.
 local PAIR_STEP_MS = 30000
 local PAIR_MAX_STEPS = 120
 
@@ -73,14 +72,12 @@ function RMS_Electrical.resolveRating(vehicle)
         rating.starterKw = law.ROAD_LIGHT.starterKw
     end
 
-    -- a 24 V circuit draws half the amps of a 12 V one for the same power
     local is24V = law.SYSTEM_24V_FAMILIES[family] == true or family == "WHEEL_LOADER" and power > law.WHEEL_LOADER_24V_ABOVE_HP
     local series = is24V and 2 or 1
     rating.seriesBatteries = series
     rating.alternatorA = toCatalogueStep(rating.alternatorA / series, law.ALTERNATOR_STEP_A)
     rating.batteryCapacityAh = is24V and law.BATTERY_24V_AH or toCatalogueStep(rating.batteryCapacityAh, law.BATTERY_STEP_AH)
 
-    -- calculators stay awake on a parked machine, hence the battery isolator
     rating.hasCalculators = spec.isElectricVehicle == true or RMS_Utils.getUsesEngineECUProfile(vehicle)
     rating.baseLoadA = (rating.hasCalculators and C.BASE_LOAD_ECU_A or C.BASE_LOAD_A) / series
 
@@ -97,11 +94,9 @@ function RMS_Electrical.resolveRating(vehicle)
     end
     local lampW = year < C.WORK_LAMP_LED_YEAR and C.WORK_LAMP_HALOGEN_W or C.WORK_LAMP_LED_W
     rating.workLamps = workLamps
-    -- half of the work lamps look forward, half backward
     rating.workLightsSideA = workLamps / 2 * lampW / (C.LAMP_VOLTAGE_V * series)
     rating.glowPlugsA = pickStep(C.GLOW_PLUGS_BY_POWER, power) * C.GLOW_PLUG_A / series
 
-    -- reference start: a full healthy battery in mild weather
     local curve, resistance, current = C.OCV_CURVE, C.INTERNAL_RESISTANCE_CURVE, C.STARTER_CURRENT_CURVE
     rating.starterRatedA = rating.starterKw * current[#current][2] / series
     rating.referenceCrankingV = (curve[#curve][2]
@@ -110,10 +105,10 @@ function RMS_Electrical.resolveRating(vehicle)
     return rating
 end
 
----Returns the resting voltage of the batteries of a machine at a state of charge
 local function getRestingVoltage(rating, soc)
     return interpolate(RMS_Config.ELECTRICAL.OCV_CURVE, soc) * rating.seriesBatteries
 end
+RMS_Electrical.getRestingVoltage = getRestingVoltage
 
 ---Sizes the circuit and settles the voltmeter on the resting voltage
 -- @param table vehicle vehicle
@@ -138,7 +133,6 @@ end
 local function getGeneratorOutput(vehicle, spec, isRunning)
     local ratedA = spec.electricalRating.alternatorA * spec.alternatorHealth
 
-    -- a converter gives its full output whatever the motor speed, on the road and on charge
     if spec.isElectricVehicle then
         return (isRunning or RMS_ElectricDrive.getIsCharging(vehicle)) and ratedA or 0
     end
@@ -165,7 +159,7 @@ local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
     end
 
     if vehicle.spec_lights ~= nil then
-        -- light types of the game: 0 road, 1 rear work, 2 front work; high beam is the same pair of lamps
+        -- Light types: 0 road, 1 rear work, 2 front work.
         local mask = vehicle:getLightsTypesMask()
         if mask % 2 == 1 then
             loads.lights = C.ROAD_LIGHTS_A / series
@@ -191,7 +185,7 @@ end
 
 ---Tells whether a machine is being started at this instant
 -- @param table vehicle vehicle
--- @return boolean isStarting true while the game starts its motor or a hard start turns its starter
+-- @return boolean isStarting native or RMS cranking active
 function RMS_Electrical.getIsStarting(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec.isCranking == true or vehicle:getMotorState() == MotorState.STARTING then
@@ -216,7 +210,6 @@ local function buildNode(vehicle, isStarting)
     local rating = spec.electricalRating
     local ambientC = RMS_Utils.getAmbientTemperature()
     local isRunning = vehicle:getIsMotorStarted()
-    -- an electric has no starter to turn
     local isCranking = not spec.isElectricVehicle and (isStarting == true or RMS_Electrical.getIsStarting(vehicle))
     local capacityAh = RMS_Electrical.getBatteryCapacityAh(vehicle)
 
@@ -229,9 +222,7 @@ local function buildNode(vehicle, isStarting)
         isCranking = isCranking,
         capacityAh = capacityAh,
         soc = sanitizeNumber(spec.batterySoc, 1, 0, 1),
-        -- the battery follows the air around it
         floorSoc = interpolate(C.INACCESSIBLE_CHARGE_CURVE, ambientC),
-        -- and weakens as it empties
         resistanceOhm = interpolate(C.INTERNAL_RESISTANCE_CURVE, ambientC) / capacityAh * rating.seriesBatteries
             * (1 + (C.EMPTY_RESISTANCE_FACTOR - 1) * (1 - sanitizeNumber(spec.batterySoc, 1, 0, 1))),
         circuitOhm = spec.circuitResistanceFactor * C.CIRCUIT_ADMISSIBLE_DROP_V * rating.seriesBatteries / rating.starterRatedA,
@@ -242,12 +233,10 @@ local function buildNode(vehicle, isStarting)
         loads = { base = 0, cab = 0, lights = 0, starter = 0, preheat = 0, total = 0 }
     }
 
-    -- an open isolator leaves the battery alone with what is clamped on its posts
     if not spec.batteryIsolated then
         node.loads = getLoads(vehicle, spec, isRunning, isCranking, ambientC)
         node.generatorA = getGeneratorOutput(vehicle, spec, isRunning)
         if isStarting and spec.isElectricVehicle and not isRunning then
-            -- waking an electric takes the load of its calculators
             node.loads.total = node.loads.total + rating.baseLoadA
         end
     end
@@ -273,7 +262,6 @@ end
 ---Balances one circuit, the battery carrying any shortfall
 local function solveNode(node)
     local restingV = getRestingVoltage(node.rating, node.soc)
-    -- the starting aid of a charger feeds the starter, it never charges
     local startAidA = math.min(node.startAidA, node.loads.total)
     local shortfallA = node.loads.total - startAidA - node.generatorA - node.chargerA
 
@@ -281,7 +269,6 @@ local function solveNode(node)
         node.batteryA = math.min(-shortfallA, getAcceptance(node))
         local isFed = node.generatorA + node.chargerA + startAidA > 0
         node.voltageV = isFed and RMS_Config.ELECTRICAL.REGULATED_VOLTAGE_V * node.rating.seriesBatteries or restingV
-        -- the alternator serves first, the charger gives what is left to give
         local drawnA = node.loads.total - startAidA + node.batteryA
         node.chargerOutA = startAidA + math.max(drawnA - node.generatorA, 0)
     elseif node.soc > node.floorSoc then
@@ -289,7 +276,6 @@ local function solveNode(node)
         node.voltageV = math.max(restingV - shortfallA * (node.resistanceOhm + node.circuitOhm), 0)
         node.chargerOutA = startAidA + node.chargerA
     else
-        -- nothing within reach of the battery: the circuit falls
         node.batteryA = 0
         node.voltageV = 0
         node.chargerOutA = startAidA + node.chargerA
@@ -300,7 +286,6 @@ end
 local function advanceNode(node, hours)
     local C = RMS_Config.ELECTRICAL
 
-    -- bulk charge, topping charge, full; or discharge down to what the cold keeps out of reach
     for _ = 1, 3 do
         solveNode(node)
         if hours <= 0 or node.batteryA == 0 then
@@ -340,7 +325,6 @@ local function solvePair(a, b)
 
     local totalA = demandA[1] + demandA[2]
     if totalA <= 0 and generatorA > 0 then
-        -- the alternators hold both circuits and share their surplus between the two batteries
         local acceptA = a.acceptA + b.acceptA
         local share = acceptA > 0 and math.min(-totalA / acceptA, 1) or 0
         for _, node in ipairs(nodes) do
@@ -352,7 +336,7 @@ local function solvePair(a, b)
 
     local conductance = { 1 / a.resistanceOhm, 1 / b.resistanceOhm }
     local cable = 1 / C.JUMPER_CABLE_RESISTANCE_OHM
-    -- a battery held at a limit leaves the network and becomes a fixed current
+    -- A clamped battery becomes a fixed-current node.
     local fixedA = { 0, 0 }
     local voltageV = { 0, 0 }
 
@@ -415,7 +399,6 @@ local function getElapsed(spec, dt, isWorking)
     local previousTime = spec._electricalWorldTime
     spec._electricalWorldTime = worldTime
 
-    -- without the clock of the game the update time stands for both
     local worldElapsedMs = dt
     if worldTime ~= nil then
         worldElapsedMs = previousTime ~= nil and math.max(worldTime - previousTime, 0) or 0
@@ -430,13 +413,13 @@ local function getRestingDraw(spec)
     local rating = spec.electricalRating
     return ((rating.hasCalculators and C.STANDBY_A or 0) + spec.circuitLeakageFactor * C.LEAKAGE_FAULT_A) / rating.seriesBatteries
 end
+RMS_Electrical.getRestingDraw = getRestingDraw
 
 ---Takes self-discharge and resting draw off the charge, on the game calendar
 local function applyCalendarLosses(node, worldElapsedMs)
     local C = RMS_Config.ELECTRICAL
     local months = worldElapsedMs / DAY_MS / g_currentMission.environment.daysPerPeriod
 
-    -- a battery that lost capacity empties that much sooner
     local warmth = (node.ambientC - C.SELF_DISCHARGE_REFERENCE_TEMP_C) / C.SELF_DISCHARGE_DOUBLING_C
     node.soc = math.max(node.soc - C.SELF_DISCHARGE_PER_MONTH * 2 ^ warmth * months / node.spec.batteryHealth, 0)
 
@@ -446,36 +429,14 @@ local function applyCalendarLosses(node, worldElapsedMs)
     end
 end
 
----Writes a solved node back onto its machine
-local function commitNode(node, dt, partner)
+local function commitNode(node, dt)
     local spec = node.spec
     spec.batterySoc = node.soc
     spec.rawSystemVoltageV = node.voltageV
 
     local alpha = dt / (RMS_Config.ELECTRICAL.SYSTEM_VOLTAGE_TAU_MS + dt)
     spec.systemVoltageV = spec.systemVoltageV + alpha * (node.voltageV - spec.systemVoltageV)
-
-    if RMS_Utils.getIsDebugDataWanted(node.vehicle) then
-        local dbg = spec.debugData.battery
-        dbg.capacityAh = node.capacityAh
-        dbg.floorSoc = node.floorSoc
-        dbg.ambientC = node.ambientC
-        dbg.restingV = getRestingVoltage(node.rating, node.soc)
-        dbg.generatorA = node.generatorA
-        dbg.chargerA = node.chargerOutA
-        dbg.batteryA = node.batteryA
-        dbg.baseA = node.loads.base
-        dbg.cabA = node.loads.cab
-        dbg.lightsA = node.loads.lights
-        dbg.starterA = node.loads.starter
-        dbg.preheatA = node.loads.preheat
-        dbg.resistanceOhm = node.resistanceOhm
-        dbg.circuitOhm = node.circuitOhm
-        dbg.restingA = getRestingDraw(spec)
-        dbg.startingV = RMS_Electrical.getStartingVoltage(node.vehicle)
-        dbg.crankingSpeed = RMS_Electrical.getCrankingSpeed(node.vehicle)
-        dbg.partnerName = partner ~= nil and partner.vehicle:getFullName() or "-"
-    end
+    spec.electricalBalance = node
 end
 
 ---Returns the machine at the other end of the jumper cables
@@ -502,7 +463,7 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
         return
     end
 
-    -- both ends of the cables run this update, the pair is solved once per frame
+    -- Solve a linked battery pair only once per frame.
     local solveStamp = g_currentMission.time
     if spec._electricalSolveStamp == solveStamp then
         return
@@ -521,8 +482,8 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
         applyCalendarLosses(node, worldElapsedMs)
         applyCalendarLosses(partnerNode, worldElapsedMs)
         advancePair(node, partnerNode, elapsedMs)
-        commitNode(node, dt, partnerNode)
-        commitNode(partnerNode, dt, node)
+        commitNode(node, dt)
+        commitNode(partnerNode, dt)
 
         spec._electricalSolveStamp = solveStamp
         partnerSpec._electricalSolveStamp = solveStamp
@@ -542,7 +503,7 @@ end
 
 ---Returns the voltage the circuit would hold if started now
 -- @param table vehicle vehicle
--- @return float voltage voltage under the starter of an engine, under the calculators of an electric
+-- @return float voltage circuit voltage under starting load
 function RMS_Electrical.getStartingVoltage(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec.batteryIsolated then
@@ -588,24 +549,24 @@ function RMS_Electrical.getCrankingSpeed(vehicle)
         return 0
     end
 
-    -- an engine at rest sits at the temperature of the air until it has been run
     local engineC = tonumber(spec.rawEngineTemperature)
     if engineC == nil or engineC <= -99 then
         engineC = RMS_Utils.getAmbientTemperature()
     end
     return math.min(voltageV / spec.electricalRating.referenceCrankingV, 1)
         * interpolate(RMS_Config.ELECTRICAL.CRANKING_DRAG_CURVE, engineC)
+        * spec.starterHealth
 end
 
 ---Tells whether the lights of a machine stay off whatever asks for them
 -- @param table vehicle root vehicle
--- @return boolean keepsOff true with an open isolator, or for a worker waiting with its engine stopped
+-- @return boolean keepsOff isolator open or waiting AI worker
 function RMS_Electrical.getKeepsLightsOff(vehicle)
     if vehicle.spec_RealisticMechanicalSystems.batteryIsolated then
         return true
     end
 
-    -- the game and driving mods ask a worker's lights back at every pass
+    -- Native and driving-mod updates reapply AI light requests.
     return vehicle:getIsAIActive() and not vehicle:getIsMotorStarted() and not vehicle:getIsControlled()
 end
 
@@ -669,7 +630,6 @@ function RMS_Electrical:syncDeadBatteryEffect()
     local breakdownId = "DEAD_BATTERY"
     local isDead = false
     if spec.batteryIsolated then
-        -- an open isolator says so itself when the machine is asked to start
         isDead = false
     elseif self:getIsMotorStarted() then
         isDead = spec.rawSystemVoltageV <= 0
@@ -705,7 +665,6 @@ function RMS_Electrical:syncVoltageSagEffect(dt)
     local breakdownId = "VOLTAGE_SAG"
     spec.syncVoltageSagEffectTimer = spec.syncVoltageSagEffectTimer or C.VOLTAGE_SAG_DELAY_MS
 
-    -- a flat battery and an open isolator report themselves
     if self:hasBreakdown("DEAD_BATTERY") or spec.batteryIsolated then
         spec.syncVoltageSagEffectTimer = C.VOLTAGE_SAG_DELAY_MS
         if self:hasBreakdown(breakdownId) then
@@ -714,7 +673,6 @@ function RMS_Electrical:syncVoltageSagEffect(dt)
         return
     end
 
-    -- the starter pulling the voltage down is its normal work
     if spec.isCranking then
         return
     end
@@ -795,14 +753,12 @@ function RMS_Electrical.isValidPowerPair(vehicleA, vehicleB)
         return false, 'TOO_FAR'
     end
 
-    -- a 24 V source ruins a 12 V circuit, a 12 V one cannot turn a 24 V starter
     local specA = vehicleA.spec_RealisticMechanicalSystems
     local specB = vehicleB.spec_RealisticMechanicalSystems
     if specA.electricalRating.seriesBatteries ~= specB.electricalRating.seriesBatteries then
         return false, 'VOLTAGE'
     end
 
-    -- an electric takes help from the battery of an engine, its own is not built to crank one
     local electricSpec, engineSpec = nil, nil
     if specA.isElectricVehicle and not specB.isElectricVehicle then
         electricSpec, engineSpec = specA, specB

@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Permanen"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Kehilangan daya"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Tidak dapat digunakan"/>
+        <text name="rms_breakdowns_severity_minor" text="Ringan"/>
+        <text name="rms_breakdowns_severity_moderate" text="Sedang"/>
+        <text name="rms_breakdowns_severity_major" text="Berat"/>
+        <text name="rms_breakdowns_severity_critical" text="Kritis"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Keausan ringan pada sendi bola dan batang kemudi. Muncul sedikit gerak bebas dan kemudi menjadi kurang presisi."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Keausan sedang pada sendi bola dan batang kemudi. Gerak bebas bertambah dan kendaraan sedikit menarik ke satu sisi."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Keausan berat pada sendi bola dan batang kemudi. Gerak bebas besar dan kendaraan menarik ke satu sisi serta lebih sulit menjaga arah."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kegagalan kritis sendi bola dan batang kemudi. Roda yang terlepas tidak lagi mengikuti roda kemudi dengan benar; berkendara menjadi berbahaya."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Keausan ringan pada pin buku roda kemudi. Muncul sedikit gerak bebas pada kemudi."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Keausan sedang pada pin buku roda kemudi. Gerak bebas pada kemudi mulai terasa."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Keausan berat pada pin buku roda kemudi. Gerak bebas pada kemudi besar."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Keausan kritis pada pin buku roda kemudi. Kemudi memiliki gerak bebas yang sangat besar."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Kegagalan ringan orbitrol kemudi. Roda kemudi berputar dengan sedikit gerak bebas sebelum roda mengikuti."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Kegagalan sedang orbitrol kemudi. Roda kemudi berputar lebih jauh sebelum roda mengikuti."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Kegagalan berat orbitrol kemudi. Roda kemudi berputar banyak tanpa diikuti roda dengan baik."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kegagalan kritis orbitrol kemudi. Roda kemudi memiliki gerak bebas yang sangat besar sebelum roda mengikuti."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Kebocoran internal ringan pada silinder kemudi. Kendaraan mulai menyimpang ke satu sisi."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Kebocoran ringan pada sil batang silinder kemudi. Level oli hidraulis sedikit turun."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Kebocoran internal sedang pada silinder kemudi. Kendaraan semakin menyimpang ke satu sisi."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Kebocoran sedang pada sil batang silinder kemudi. Level oli hidraulis jelas turun."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Kebocoran internal berat pada silinder kemudi. Kendaraan jelas menyimpang ke satu sisi."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Kebocoran berat pada sil batang silinder kemudi. Level oli hidraulis turun cepat."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Kebocoran internal kritis pada silinder kemudi. Kendaraan menyimpang kuat ke satu sisi."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Kebocoran kritis pada sil batang silinder kemudi. Level oli hidraulis turun sangat cepat."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Keausan ringan pada pin dan busing sendi pemuat depan. Muncul sedikit gerak bebas pada sendi lengan."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Keausan sedang pada pin dan busing sendi pemuat depan. Gerak bebas pada sendi lengan mulai terasa."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Keausan berat pada pin dan busing sendi pemuat depan. Lengan memiliki gerak bebas yang besar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Keausan kritis pada pin dan busing sendi pemuat depan. Gerak bebas pada lengan sangat besar."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Kebocoran ringan pada peredam kejut kabin. Peredaman kabin sedikit berkurang."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Kebocoran sedang pada peredam kejut kabin. Kabin memantul di permukaan tidak rata."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Kebocoran berat pada peredam kejut kabin. Kabin bergoyang pada setiap guncangan."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Kebocoran kritis pada peredam kejut kabin. Peredam kejut kosong: kabin hampir tidak lagi diredam."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Beralih ke netral"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Awal penurunan kondisi busi pijar. Penyalaan mesin dingin menjadi lebih lambat, sedangkan penyalaan mesin panas tetap normal."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Beberapa busi pijar melemah atau tidak berfungsi. Mesin sulit dinyalakan dalam kondisi dingin dan putaran langsam dapat tidak stabil hingga mesin memanas."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Kegagalan berat pada busi pijar. Penyalaan mesin dingin menjadi sangat tidak andal dan kerja mesin tetap tidak stabil selama pemanasan."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Kegagalan total busi pijar. Mesin tidak dapat dinyalakan ketika suhu terlalu rendah."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Kegagalan relai pemanas awal. Busi pijar tidak lagi memanas: mesin tidak dapat dinyalakan saat suhu terlalu rendah."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Kegagalan relai starter. Mesin tidak lagi berputar saat distarter."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Kegagalan bohlam lampu dekat. Lampu ini tidak menyala hingga bohlam diganti."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Kegagalan bohlam lampu jauh. Lampu ini tidak menyala hingga bohlam diganti."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Kegagalan bohlam lampu kerja depan. Lampu ini tidak menyala hingga bohlam diganti."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Kegagalan bohlam lampu kerja belakang. Lampu ini tidak menyala hingga bohlam diganti."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Kegagalan bohlam lampu rotator. Lampu rotator tidak menyala hingga bohlam diganti."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Kegagalan bohlam lampu sein. Lampu sein maupun lampu hazard tidak menyala hingga bohlam diganti."/>
+        <text name="rms_breakdowns_part_vehicle" text="Kendaraan"/>
+        <text name="rms_breakdowns_part_pistons" text="Piston"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Ring Piston"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Liner Silinder"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Katup Masuk"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Katup Buang"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Pemandu dan Seal Batang Katup"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Kepala Silinder"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Gasket Kepala Silinder"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Bantalan Poros Engkol"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Bantalan Batang Piston"/>
+        <text name="rms_breakdowns_part_consumables" text="Bahan Habis Pakai"/>
+        <text name="rms_breakdowns_part_clutch" text="Kopling"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Kontrol Rasio"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Mesin"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Kabel Daya dan Sambungan Massa"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Relai Starter"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Relai Pemanas Awal"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Bohlam Lampu Dekat"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="Bohlam Lampu Jauh"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Bohlam Lampu Kerja Depan"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Bohlam Lampu Kerja Belakang"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Bohlam Lampu Rotator"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Bohlam Lampu Sein"/>
+        <text name="rms_breakdowns_part_battery" text="Baterai"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Baterai Traksi"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Kontaktor Tegangan Tinggi"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Kabel Tegangan Tinggi"/>
+        <text name="rms_breakdowns_part_inverter" text="Inverter"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Konverter Tegangan"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Pengisi Daya Internal"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Bantalan Motor Listrik"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Lilitan Motor Listrik"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Sensor Posisi Motor"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Pompa Cairan Pendingin"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Pompa Air"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Inti Radiator"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Selang dan Sambungan Cairan Pendingin"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Tangki Ekspansi"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Sabuk Aksesori dan Penegang"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Bilah Kipas"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Kipas Pendingin Elektrik"/>
+        <text name="rms_breakdowns_part_reducer" text="Gigi Reduksi"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Cakram dan Kampas Rem"/>
+        <text name="rms_breakdowns_part_brake_control" text="Kontrol Rem"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Katup Rem Trailer"/>
+        <text name="rms_breakdowns_part_park_brake" text="Rem Parkir"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Bantalan dan Sil Hub Roda"/>
+        <text name="rms_breakdowns_part_alternator" text="Alternator"/>
+        <text name="rms_breakdowns_part_starter" text="Motor Starter"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turbocharger"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Seal Transmisi"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Penegang Trek"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Rol dan Roda Pemandu Trek"/>
+        <text name="rms_breakdowns_part_thermostat" text="Termostat"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Pompa Oli"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Sinkroniser"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Sendi Bola dan Batang Kemudi"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Pin dan Busing Sendi Pemuat Depan"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pin Buku Roda Kemudi"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol Kemudi"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Silinder Kemudi"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Suspensi Kabin"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="Kopling PTO"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="Bantalan Keluaran PTO"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="Seal Keluaran PTO"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="Poros Keluaran PTO"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="Katup Solenoid Pengaktifan PTO"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="Sakelar Kontrol PTO"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="Sensor Putaran PTO"/>
+        <text name="rms_breakdowns_part_pto_brake" text="Rem PTO"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Kopling PTO Depan"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Pompa Hidraulis"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Silinder Hidraulis"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Selang Hidraulis"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Filter Hidraulis"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Pendingin Oli Hidraulis"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Katup Kontrol Hidraulis"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Kopling Kipas"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Pompa Pengumpan Bahan Bakar"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Injektor Bahan Bakar"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="Pompa Tekanan Tinggi"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Filter Bahan Bakar"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Saluran Bahan Bakar"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Pompa Injeksi Mekanis"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Katup Penakar Bahan Bakar"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Sensor Tekanan Rel Bahan Bakar"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Pembatas Tekanan Rel Bahan Bakar"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Regulator Tekanan Gas"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Katup Solenoid Pemutus Gas"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Filter Gas"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Saluran Gas"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Injektor Gas"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="Pompa AdBlue"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="Injektor Penakar AdBlue"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="Filter AdBlue"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="Sensor NOx"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Filter Partikulat"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Busi Pijar"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="PTO terlepas"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="PTO depan terlepas"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="PTO tidak mau terlepas: matikan kendaraan untuk menghentikan implemen"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Awal keausan kopling PTO. Penggerak terkadang terlepas."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Keausan sedang pada kopling PTO. Pelepasan terjadi berulang kali."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Keausan berat pada kopling PTO. Implemen sering kehilangan penggeraknya."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Kegagalan kritis pada kopling PTO. Implemen berhenti."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Awal keausan kopling PTO. Pelat mulai lengket."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Keausan sedang pada kopling PTO. Pelat makin lengket."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Keausan berat pada kopling PTO. Pelat lengket: PTO terkadang tidak mau terlepas."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Kegagalan kritis pada kopling PTO. Pelat telah menyatu seperti dilas: PTO tidak lagi terlepas dan implemen hanya berhenti saat kendaraan dimatikan."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Awal keausan bantalan keluaran PTO. Mulai terdengar gemuruh ringan."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Keausan sedang pada bantalan keluaran PTO. Gemuruh menjadi terdengar jelas."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Keausan berat pada bantalan keluaran PTO. Gemuruh semakin keras."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Kegagalan kritis pada bantalan keluaran PTO. Gemuruh mencapai tingkat paling keras."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Kebocoran ringan pada seal keluaran PTO. Level oli transmisi turun perlahan saat bekerja."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Kebocoran sedang pada seal keluaran PTO. Level oli transmisi turun saat bekerja."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Kebocoran berat pada seal keluaran PTO. Oli transmisi mengalir keluar dan levelnya turun cepat."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Kebocoran kritis pada seal keluaran PTO. Sisa oli tidak cukup untuk pengoperasian transmisi yang aman."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Awal keausan katup solenoid pengaktifan PTO. Penggerak terkadang terputus selama bekerja."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Awal keausan katup solenoid pengaktifan PTO. PTO terkadang tidak dapat diaktifkan."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Keausan sedang pada katup solenoid pengaktifan PTO. Pemutusan selama bekerja terjadi berulang kali."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Keausan sedang pada katup solenoid pengaktifan PTO. Kegagalan pengaktifan terjadi berulang kali."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Keausan berat pada katup solenoid pengaktifan PTO. Penggerak sering terputus."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Keausan berat pada katup solenoid pengaktifan PTO. PTO sering tidak dapat diaktifkan."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Kegagalan kritis pada katup solenoid pengaktifan PTO. Kumparannya putus dan PTO tidak lagi tetap aktif."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Kegagalan kritis pada katup solenoid pengaktifan PTO. Spul katupnya macet dan PTO tidak dapat diaktifkan lagi."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Awal keausan sakelar kontrol PTO. Kontak yang buruk terkadang memutus penggerak."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Awal keausan sakelar kontrol PTO. PTO terkadang tidak merespons perintah kontrol."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Keausan sedang pada sakelar kontrol PTO. Kontak yang buruk semakin sering memutus penggerak."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Keausan sedang pada sakelar kontrol PTO. PTO semakin sering mengabaikan perintah kontrol."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Keausan berat pada sakelar kontrol PTO. Kontak tidak lagi tersambung dengan stabil dan penggerak sering terputus."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Keausan berat pada sakelar kontrol PTO. Perintah kontrol sering tidak berpengaruh."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Kegagalan kritis pada sakelar kontrol PTO. Kontaknya tetap terbuka dan PTO terlepas."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Kegagalan kritis pada sakelar kontrol PTO. Kontaknya tidak lagi menutup dan PTO tidak dapat diaktifkan lagi."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="Kegagalan poros keluaran PTO. Gigi spline poros terkelupas dan tidak lagi meneruskan gerakan."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="Kegagalan poros keluaran PTO. Poros patah dan implemen tidak lagi digerakkan."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="Kegagalan sensor putaran PTO. Sensor tidak lagi mengirim sinyal dan sistem pengaman melepaskan PTO."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="Kegagalan rem PTO. Rem tetap menjepit dan mengunci poros keluaran."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Awal keausan kopling PTO depan. Penggerak keluaran depan terkadang terlepas."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Keausan sedang pada kopling PTO depan. Pelepasan keluaran depan terjadi berulang kali."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Keausan berat pada kopling PTO depan. Implemen depan sering kehilangan penggeraknya."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Kegagalan kritis pada kopling PTO depan. Keluaran depan tidak lagi berputar; PTO belakang tidak terpengaruh."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Pengaktifan PTO ditolak"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Perbaikan sementara"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Cacat"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Sistem berfungsi normal, tetapi inspeksi mengungkap suku cadang yang cacat. Suku cadang tersebut tidak lagi memiliki margin keselamatan, sehingga penggantian pencegahan disarankan untuk menghindari kegagalan mendadak."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Baterai terlalu lemah"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Baterai traksi dingin: jarak tempuh dan daya berkurang"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Sistem berfungsi normal, tetapi sepenuhnya bergantung pada perbaikan sementara. Untuk menghindari kerusakan saat dibebani, penggantian lengkap suku cadang disarankan sesegera mungkin."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Bantalan turbocharger aus. Terdengar siulan halus dan terjadi sedikit kehilangan daya pada putaran mesin tinggi."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Seal turbocharger bocor. Kehilangan daya terasa jelas dan konsumsi bahan bakar meningkat."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Sudu turbin rusak. Kehilangan daya besar dan mesin berisiko mati saat dibebani berat."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Kegagalan kritis turbocharger. Mesin kehilangan sebagian besar dayanya dan berisiko mengalami kerusakan internal berat."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Pelat kopling aus. Sesekali terjadi kehilangan daya akibat kopling selip saat dibebani."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Keausan kopling yang nyata. Kopling selip dengan jelas saat akselerasi dan ketika dibebani berat."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Kopling sangat aus. Selip berat pada kopling membuat daya sulit disalurkan ke roda."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Kopling terbakar sepenuhnya. Kendaraan tidak dapat bergerak."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Sinkroniser aus. Sesekali terdengar gerusan atau gigi sulit dipindahkan."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Sinkroniser rusak. Perpindahan gigi sering sulit dan dapat gagal."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Gigi sinkroniser patah. Perpindahan gigi sangat mungkin gagal atau gigi dapat terlepas saat dibebani."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Sinkroniser mengalami kegagalan total. Gigi tidak dapat dipindahkan."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Kebocoran ringan oli transmisi. Ketinggian oli turun perlahan selama bekerja."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Kebocoran sedang oli transmisi. Ketinggian oli turun dengan jelas dan transmisi bekerja lebih panas."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Kebocoran berat oli transmisi. Ketinggian oli turun cepat dan transmisi mengalami panas berlebih saat dibebani."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Kebocoran kritis oli transmisi. Oli yang tersisa tidak cukup untuk mengoperasikan transmisi dengan aman."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Gangguan ringan pada penegang trek. Ketegangan trek sedikit kurang stabil sehingga hambatan dan keausan sedikit meningkat."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Gangguan sedang pada penegang trek. Ketegangan menjadi tidak stabil, efisiensi gerak menurun, dan risiko ketidakselarasan meningkat."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Gangguan berat pada penegang trek. Ketegangan sangat terganggu, penyaluran gerak menjadi tidak efisien, dan risiko trek terlepas meningkat."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Kegagalan kritis penegang trek. Trek tidak lagi dapat ditahan dengan benar dan kendaraan tidak lagi dapat dioperasikan dengan aman."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Kegagalan ringan termostat. Mesin lambat panas dan tetap terlalu dingin saat bekerja."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Kegagalan ringan termostat. Pengaturan suhu melemah dan mesin menjadi lebih panas saat terbebani."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Kegagalan sedang termostat. Mesin lambat panas dan tetap terlalu dingin saat bekerja."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Kegagalan sedang termostat. Suhu naik lebih cepat dan mesin bekerja lebih panas saat terbebani."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Kegagalan berat termostat. Mesin lambat panas dan tetap terlalu dingin saat bekerja."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Kegagalan berat termostat. Mesin menjadi sangat panas; kerja lama dapat menyebabkan panas berlebih."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Kegagalan kritis termostat. Mesin lambat panas dan tetap terlalu dingin saat bekerja."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Kegagalan kritis termostat. Komponen ini tetap tertutup dan mesin cepat terlalu panas."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Mesin memasuki mode perlindungan. Daya dibatasi hingga suhu turun."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Perlindungan panas berlebih: daya dikurangi"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Perlindungan panas berlebih diperketat. Mesin hanya menghasilkan separuh dayanya."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Perlindungan panas berlebih: daya dikurangi separuh"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Perlindungan panas berlebih berada pada tingkat maksimum. Hanya sebagian kecil daya mesin yang tersisa."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Perlindungan panas berlebih: daya sangat dikurangi"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Mesin dimatikan untuk mencegah kerusakan. Biarkan mesin mendingin sebelum dinyalakan kembali."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Perlindungan panas berlebih: mesin dimatikan"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Gangguan ringan pada pompa oli. Tekanan oli berkurang, torsi mesin sedikit menurun, suhu mesin meningkat, dan ketukan mekanis dapat muncul."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Gangguan sedang pada pompa oli. Tekanan oli tidak memadai, torsi mesin jelas menurun, suhu mesin meningkat, dan ketukan mekanis terdengar jelas."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Gangguan berat pada pompa oli. Tekanan oli sangat rendah, torsi mesin turun drastis, panas berlebih mungkin terjadi, ketukan mekanis sangat kuat, dan mesin dapat mati."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kegagalan kritis pompa oli. Sirkulasi oli tidak memadai untuk mengoperasikan mesin dengan aman sehingga mesin tidak dapat dinyalakan atau dioperasikan lebih lanjut."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="Mesin macet dan tidak dapat lagi berputar."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Mesin mati"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Gangguan ringan pada ECU. Daya mesin sedikit berkurang."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Gangguan sedang pada ECU. Kehilangan daya terasa jelas dan konsumsi bahan bakar meningkat."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Gangguan berat pada ECU. Kehilangan daya besar, konsumsi bahan bakar tinggi, dan mesin berisiko mati."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Kegagalan total ECU. Mesin tidak dapat dikendalikan dan tidak dapat dinyalakan."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Kegagalan ringan kabel daya dan sambungan massa. Peningkatan hambatan kontak menyebabkan lampu sesekali berkedip, suplai listrik tidak stabil, dan mesin sulit dinyalakan. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Kegagalan sedang kabel daya dan sambungan massa. Hilangnya kontak menyebabkan lampu sering berkedip, tegangan listrik tidak stabil, mesin sulit dinyalakan, dan mesin mungkin mati. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Kegagalan berat kabel daya dan sambungan massa. Suplai listrik ke sirkuit tidak stabil, lampu dapat mati total, torsi mesin berkurang, mesin kemungkinan mati, dan penyalaan tidak andal. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Kegagalan kritis kabel daya dan sambungan massa. Lampu tidak berfungsi dan mesin tidak dapat dinyalakan. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Kegagalan ringan kabel daya dan sambungan massa. Peningkatan hambatan kontak menyebabkan lampu sesekali berkedip dan suplai listrik tidak stabil. Arus bocor menguras baterai bantu saat mesin diparkir."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Kegagalan sedang kabel daya dan sambungan massa. Hilangnya kontak menyebabkan lampu sering berkedip, tegangan listrik tidak stabil, dan daya mungkin terputus. Arus bocor menguras baterai bantu saat mesin diparkir."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Kegagalan berat kabel daya dan sambungan massa. Suplai listrik ke sirkuit tidak stabil, lampu dapat mati total, daya berkurang, dan daya kemungkinan terputus. Arus bocor menguras baterai bantu saat mesin diparkir."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Kegagalan kritis kabel daya dan sambungan massa. Lampu tidak berfungsi dan mesin tidak dapat dinyalakan. Arus bocor menguras baterai bantu saat mesin diparkir."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Kegagalan ringan selang dan sambungan cairan pendingin. Rembesan kecil hampir tidak menurunkan level cairan pendingin."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Kegagalan ringan selang dan sambungan cairan pendingin. Selang yang sedikit terjepit agak mengurangi aliran."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Kegagalan sedang selang dan sambungan cairan pendingin. Kebocoran terlihat dan level turun lebih banyak."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Kegagalan sedang selang dan sambungan cairan pendingin. Aliran yang berkurang membuat suhu lebih cepat naik saat terbebani."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Kegagalan berat selang dan sambungan cairan pendingin. Banyak cairan hilang; mesin dapat terlalu panas saat bekerja berat."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Kegagalan berat selang dan sambungan cairan pendingin. Aliran lemah; mesin terlalu panas saat bekerja lama."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Kegagalan kritis selang dan sambungan cairan pendingin. Level turun cepat dan sirkuit dapat kosong."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Kegagalan kritis selang dan sambungan cairan pendingin. Sirkulasi sangat terhambat dan mesin cepat terlalu panas."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Kegagalan ringan tangki ekspansi. Retakan merembeskan sedikit cairan."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Kegagalan ringan tangki ekspansi. Sambungan sedikit merembes."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Kegagalan sedang tangki ekspansi. Retakan menyebabkan kebocoran nyata dan level turun."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Kegagalan sedang tangki ekspansi. Sambungan bocor jelas dan level turun."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Kegagalan berat tangki ekspansi. Kebocoran membuat level turun cepat."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Kegagalan berat tangki ekspansi. Cairan cepat hilang dari sambungan."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Kegagalan kritis tangki ekspansi. Cairan cepat habis dan sirkuit menjadi kosong."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Kegagalan kritis tangki ekspansi. Kebocoran sambungan cepat mengosongkan sirkuit."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Kegagalan ringan sabuk aksesori dan penegang. Komponen ini berdecit dan sedikit selip; pengisian dan sirkulasi sedikit turun."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Kegagalan sedang sabuk aksesori dan penegang. Komponen ini selip saat terbebani; pengisian turun dan cairan mengalir lebih lambat."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Kegagalan berat sabuk aksesori dan penegang. Komponen ini banyak selip; pengisian dan sirkulasi sangat berkurang."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Kegagalan kritis sabuk aksesori dan penegang. Komponen ini putus; pengisian dan sirkulasi cairan berhenti mendadak."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Kegagalan ringan bilah kipas. Aliran udara sedikit berkurang; pendinginan melemah terutama pada kecepatan rendah."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Kegagalan sedang bilah kipas. Aliran udara turun nyata dan suhu naik lebih tinggi."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Kegagalan berat bilah kipas. Aliran udara berkurang nyata dan mesin memanas saat terbebani."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Kegagalan kritis bilah kipas. Aliran udara turun menjadi separuh dan mesin cepat terlalu panas saat terbebani."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Kegagalan ringan kipas pendingin elektrik. Komponen ini mengalirkan sedikit lebih sedikit udara saat pendinginan diperlukan."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Kegagalan sedang kipas pendingin elektrik. Aliran udara turun nyata dan suhu lebih cepat naik."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Kegagalan berat kipas pendingin elektrik. Sirkulasi udara berkurang nyata dan suhu naik saat terbebani."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Kegagalan kritis kipas pendingin elektrik. Sirkulasi udara turun menjadi separuh dan suhu naik cepat saat terbebani."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Tanda awal gangguan transmisi CVT terdeteksi. Inspeksi dan perbaikan diperlukan."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Gangguan transmisi CVT memburuk. Pengoperasian berkelanjutan dapat mengaktifkan mode darurat."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Kerusakan kritis pada transmisi CVT. Transmisi berada dalam mode darurat dan kecepatan maksimum kendaraan berkurang."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Kegagalan total transmisi CVT. Kendaraan tidak dapat digunakan sebelum diperbaiki."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Sulfasi ringan pada baterai. Kapasitas efektif berkurang sehingga cadangan listrik saat dibebani menurun."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Sulfasi sedang pada baterai. Kapasitas efektif sangat berkurang dan mesin menjadi sulit dinyalakan."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Sulfasi berat pada baterai. Kapasitas yang dapat digunakan sangat rendah dan kinerja starter tidak stabil."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Sulfasi kritis pada baterai. Kapasitas efektif hampir nol dan daya starter tidak memadai untuk penyalaan yang andal."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Sulfasi ringan pada baterai bantu. Kapasitas efektif berkurang sehingga cadangan listrik saat dibebani menurun."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Sulfasi sedang pada baterai bantu. Kapasitas efektif sangat berkurang dan cadangan listrik lebih cepat habis."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Sulfasi berat pada baterai bantu. Kapasitas yang dapat digunakan sangat rendah dan cadangan listrik sangat cepat habis."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Sulfasi kritis pada baterai bantu. Kapasitas efektif hampir nol dan tidak lagi memadai untuk penyalaan yang andal."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Keausan ringan pada cakram dan kampas rem. Efektivitas pengereman sedikit menurun."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Keausan sedang pada cakram dan kampas rem. Jarak pengereman menjadi jauh lebih panjang."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Keausan berat pada cakram dan kampas rem. Rem sangat lemah dan tidak andal."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Kegagalan kritis cakram dan kampas rem. Kendaraan mengerem dengan sangat buruk dan berkendara menjadi berbahaya."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Kegagalan ringan kontrol rem. Kendaraan sedikit menarik ke satu sisi saat mengerem."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Kegagalan ringan kontrol rem. Pedal terasa sedikit lunak dan efektivitas pengereman sedikit menurun."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Kegagalan sedang kontrol rem. Pengereman jelas menarik ke satu sisi."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Kegagalan sedang kontrol rem. Pedal terasa lunak, tekanan turun dan efektivitas pengereman jelas menurun."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Kegagalan berat kontrol rem. Kendaraan menarik kuat ke satu sisi saat mengerem."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Kegagalan berat kontrol rem. Pedal turun terlalu jauh, tekanan merosot dan kendaraan mengerem dengan buruk."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Kegagalan kritis kontrol rem. Pengereman menarik sangat kuat ke satu sisi."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Kegagalan kritis kontrol rem. Pedal turun hampir tanpa hambatan dan kendaraan hampir tidak mengerem lagi."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Kegagalan ringan katup rem trailer. Trailer kehilangan sebagian kecil daya pengeremannya."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Kegagalan sedang katup rem trailer. Trailer mengerem jauh lebih lemah."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Kegagalan berat katup rem trailer. Trailer hanya menerima sebagian kecil daya pengereman."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Kegagalan kritis katup rem trailer. Trailer tidak lagi mengerem."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Kegagalan ringan rem parkir. Setelah dilepas, rem masih sedikit bergesekan dan sedikit menahan mesin."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Kegagalan sedang rem parkir. Setelah dilepas, rem bergesekan dengan jelas dan menahan mesin."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Kegagalan berat rem parkir. Setelah dilepas, rem tetap setengah aktif dan menahan mesin dengan kuat."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Kegagalan total rem parkir. Rem tidak lagi bisa dilepas dan menahan mesin seolah-olah diaktifkan."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Keausan ringan pada bantalan dan sil hub roda. Hambatan mekanis sedikit meningkat dan suara pengoperasian yang tidak biasa dapat muncul."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Keausan sedang pada bantalan dan sil hub roda. Gesekan jelas meningkat, suara menjadi lebih kuat, dan efisiensi mekanis menurun."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Keausan berat pada bantalan dan sil hub roda. Gesekan tinggi, suaranya keras, dan terdapat risiko nyata bantalan macet saat dibebani."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Kegagalan kritis bantalan dan sil hub roda. Bantalan hampir macet sepenuhnya dan pengoperasian menjadi mustahil."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Keausan ringan pada bantalan rol dan roda pemandu trek. Hambatan mekanis sedikit meningkat dan suara pengoperasian yang tidak biasa dapat muncul."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Keausan sedang pada bantalan rol dan roda pemandu trek. Gesekan dan suara meningkat, dan putaran menjadi lebih sulit."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Keausan berat pada bantalan rol dan roda pemandu trek. Gesekan dan suara tinggi, dengan risiko macet saat dibebani."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Kegagalan kritis bantalan rol dan roda pemandu trek. Trek dapat berhenti jika salah satu bantalan macet."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Kegagalan ringan regulator alternator. Daya pengisian berkurang sehingga efisiensi pengisian baterai menurun."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Kegagalan sedang regulator alternator. Pengisian berkurang dan tidak stabil sehingga baterai tidak terisi dengan baik dan kehilangan tegangan meningkat."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Kegagalan berat regulator alternator. Pengisian sangat berkurang, suplai listrik tidak stabil, dan sistem kelistrikan bekerja dengan kerugian daya yang besar."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Kegagalan total regulator alternator. Baterai tidak lagi diisi dan sistem kelistrikan hanya bekerja dari cadangan baterai yang tersisa."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Kegagalan ringan dioda alternator. Daya pengisian berkurang sehingga efisiensi pengisian baterai menurun. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Kegagalan sedang dioda alternator. Pengisian berkurang dan tidak stabil sehingga baterai tidak terisi dengan baik dan kehilangan tegangan meningkat. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Kegagalan berat dioda alternator. Pengisian sangat berkurang, suplai listrik tidak stabil, dan sistem kelistrikan bekerja dengan kerugian daya yang besar. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Kegagalan total dioda alternator. Baterai tidak lagi diisi dan sistem kelistrikan hanya bekerja dari cadangan baterai yang tersisa. Arus bocor menguras baterai saat mesin diparkir."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Kegagalan ringan motor starter. Starter memutar mesin lebih lambat dan penyalaan sedikit lebih lama."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Kegagalan sedang motor starter. Starter memutar mesin dengan lambat: penyalaan sulit, dan mustahil saat sangat dingin."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Kegagalan berat motor starter. Starter hampir tidak memutar mesin: mesin hanya menyala saat hangat atau saat cuaca tidak dingin."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Kegagalan total motor starter. Starter tidak lagi memutar mesin: mesin yang hidup tetap berjalan, tetapi setelah dimatikan tidak dapat dinyalakan lagi."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Keausan ringan pada bantalan motor listrik. Muncul suara halus dan konsumsi daya sedikit meningkat."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Keausan sedang pada bantalan motor listrik. Suara terdengar jelas, konsumsi daya meningkat, dan daya sedikit menurun."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Keausan berat pada bantalan motor listrik. Suaranya keras, motor memanas, dan daya jelas menurun."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Kegagalan kritis bantalan motor listrik. Motor macet dan mesin tidak dapat lagi bergerak."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Kerusakan ringan pada lilitan motor listrik. Daya sedikit menurun dan motor lebih panas."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Kerusakan sedang pada lilitan motor listrik. Daya jelas menurun, motor memanas, dan konsumsi daya meningkat."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Kerusakan berat pada lilitan motor listrik. Kehilangan daya besar, motor sangat panas, dan daya dapat terputus."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Kegagalan kritis lilitan motor listrik. Motor mengalami hubungan pendek dan tidak dapat lagi bekerja."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Gangguan ringan pada sensor posisi motor. Sentakan singkat muncul saat dibebani."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Gangguan sedang pada sensor posisi motor. Sentakan sering terjadi dan daya menurun."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Gangguan berat pada sensor posisi motor. Sentakan keras, daya anjlok, dan daya terputus."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Kegagalan total sensor posisi motor. Motor tidak dapat dikendalikan dan mesin tidak dapat dinyalakan."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Gangguan ringan pada inverter. Daya motor sedikit berkurang."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Gangguan sedang pada inverter. Kehilangan daya terasa dan konsumsi daya meningkat."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Gangguan berat pada inverter. Kehilangan daya besar dan daya dapat terputus."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Kegagalan total inverter. Motor tidak lagi mendapat daya dan mesin tidak dapat dinyalakan."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Kegagalan ringan konverter tegangan. Baterai bantu terisi kurang baik."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Kegagalan sedang konverter tegangan. Pengisian baterai bantu berkurang dan tidak stabil."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Kegagalan berat konverter tegangan. Baterai bantu hampir tidak terisi dan terkuras saat berjalan."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Kegagalan total konverter tegangan. Baterai bantu tidak lagi diisi dan mesin hanya bekerja dari cadangan yang tersisa."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Kegagalan ringan pengisi daya internal. Pengisian di stasiun sedikit lebih lambat."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Kegagalan sedang pengisi daya internal. Pengisian di stasiun jelas lebih lambat."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Kegagalan berat pengisi daya internal. Pengisian di stasiun sangat lambat."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Kegagalan total pengisi daya internal. Baterai traksi tidak dapat lagi diisi."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Kehilangan isolasi ringan pada kabel tegangan tinggi. Peringatan ditampilkan, tanpa dampak lain."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Kehilangan isolasi sedang pada kabel tegangan tinggi. Daya dikurangi demi keselamatan."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Kehilangan isolasi berat pada kabel tegangan tinggi. Daya sangat dikurangi dan daya terputus."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Kehilangan isolasi kritis pada kabel tegangan tinggi. Mesin menolak menyala demi keselamatan."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Kegagalan ringan sel baterai traksi. Jarak tempuh sedikit menurun."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Kegagalan sedang sel baterai traksi. Jarak tempuh jelas menurun dan daya dikurangi."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Kegagalan berat sel baterai traksi. Jarak tempuh dan daya anjlok, dan daya dapat terputus."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Kegagalan kritis baterai traksi. Mesin tidak dapat lagi dihidupkan."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Keausan ringan pada kontaktor tegangan tinggi. Sesekali pasokan daya terputus."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Keausan sedang pada kontaktor tegangan tinggi. Pasokan daya terputus secara berkala."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Keausan berat pada kontaktor tegangan tinggi. Pasokan daya sering terputus."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Kegagalan kritis kontaktor tegangan tinggi. Baterai traksi tidak lagi memasok daya ke mesin, yang tidak dapat dinyalakan."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Kegagalan ringan pompa cairan pendingin. Cairan bersirkulasi kurang baik dan suhu naik sedikit lebih tinggi."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Kegagalan sedang pompa cairan pendingin. Pendinginan jelas berkurang."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Kegagalan berat pompa cairan pendingin. Pendinginan sangat berkurang dan panas berlebih mungkin terjadi saat dibebani."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Kegagalan total pompa cairan pendingin. Cairan hampir tidak bersirkulasi dan mesin cepat mengalami panas berlebih."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Kegagalan ringan pompa air. Kerusakan masih sulit dirasakan dan perlu diperiksa."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Kegagalan sedang pompa air. Sirkulasi berkurang dan pendinginan melemah."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Kegagalan berat pompa air. Sirkulasi yang kurang menimbulkan risiko panas berlebih."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Kegagalan kritis pompa air. Sirkulasi sangat terganggu dan pendinginan sangat berkurang."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Kegagalan ringan pompa air. Bekas tipis cairan pendingin muncul di sekitar seal pompa air."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Kegagalan sedang pompa air. Cairan pendingin bocor melalui seal pompa air; permukaan cairan turun dan sirkulasi melemah."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Kegagalan berat pompa air. Kebocoran seal pompa air meninggalkan banyak bekas di sekitar pompa; permukaan cairan turun dan sirkulasi yang melemah meningkatkan risiko panas berlebih."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Kegagalan kritis pompa air. Seal pompa air bocor parah; sirkuit kehilangan cairan dan sirkulasi tidak lagi mampu mendinginkan mesin dengan baik."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Kegagalan ringan pompa air. Kerusakan masih sulit dirasakan dan perlu diperiksa."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Kegagalan sedang pompa air. Bantalan pompa longgar dan sirkulasi berkurang."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Kegagalan berat pompa air. Sirkulasi yang kurang menimbulkan risiko panas berlebih."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Kegagalan kritis pompa air. Sirkulasi sangat terganggu dan pendinginan sangat berkurang."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Kegagalan ringan inti radiator. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Kegagalan sedang inti radiator. Komponen ini membuang lebih sedikit panas dari cairan."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Kegagalan berat inti radiator. Komponen ini sulit membuang panas dan risiko panas berlebih meningkat."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Kegagalan kritis inti radiator. Komponen ini membuang sangat sedikit panas dan pendinginan sangat terganggu."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Kegagalan ringan inti radiator. Rembesan cairan pendingin muncul pada pipa inti radiator."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Kegagalan sedang inti radiator. Pipa yang berlubang membocorkan cairan pendingin ke radiator dan permukaan cairan di sirkuit turun."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Kegagalan berat inti radiator. Cairan pendingin keluar melalui pipa inti yang berlubang dan meninggalkan bekas basah pada radiator; cadangan sirkuit berkurang cepat."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Kegagalan kritis inti radiator. Komponen ini bocor dan kehilangan banyak cairan pendingin. Permukaan cairan turun dan radiator tidak lagi mampu membuang cukup panas mesin."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Keausan ringan pada roda gigi dan bantalan gigi reduksi. Muncul suara halus saat berjalan."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Keausan sedang pada roda gigi dan bantalan gigi reduksi. Suara terdengar jelas dan konsumsi daya meningkat."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Keausan berat pada roda gigi dan bantalan gigi reduksi. Suaranya keras, gigi reduksi memanas, dan daya di roda menurun."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Kegagalan kritis gigi reduksi. Gigi reduksi macet dan mesin tidak dapat lagi bergerak."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Kegagalan ringan piston. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Kegagalan sedang piston. Lebih banyak oli masuk ke ruang bakar dan asap biru muncul."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Kegagalan berat piston. Konsumsi oli dan asap biru meningkat."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Kegagalan kritis piston. Sebuah piston macet dan mesin terkunci."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Kegagalan ringan piston. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Kegagalan sedang piston. Lebih banyak oli masuk ke ruang bakar dan asap biru muncul."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Kegagalan berat piston. Konsumsi oli dan asap biru meningkat."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Kegagalan kritis piston. Sebuah piston patah dan mesin berhenti."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Kegagalan ringan ring piston. Endapan menghambat gerakan ring di alurnya."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Kegagalan sedang ring piston. Kerapatan berkurang dan mesin kehilangan tenaga."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Kegagalan berat ring piston. Kompresi yang menurun menyulitkan penyalaan dan mengurangi tenaga."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Kegagalan kritis ring piston. Kompresi sangat rendah, mesin sulit dinyalakan dan tenaga sangat berkurang."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Kegagalan ringan ring piston. Endapan menghambat gerakan ring di alurnya."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Kegagalan sedang ring piston. Lebih banyak oli masuk ke ruang bakar dan asap biru muncul."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Kegagalan berat ring piston. Konsumsi oli dan asap biru meningkat."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Kegagalan kritis ring piston. Banyak oli masuk dan asap biru terus keluar."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Kegagalan ringan ring piston. Endapan menghambat gerakan ring di alurnya."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Kegagalan sedang ring piston. Kerapatan berkurang dan mesin kehilangan tenaga."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Kegagalan berat ring piston. Kompresi yang menurun menyulitkan penyalaan dan mengurangi tenaga."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Kegagalan kritis ring piston. Ring piston patah: kompresi menurun dan oli masuk ke ruang bakar."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Kegagalan ringan liner silinder. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Kegagalan sedang liner silinder. Permukaan tergores dan kerapatan berkurang."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Kegagalan berat liner silinder. Permukaan tergores dan kerapatan berkurang. Konsumsi oli dan asap biru meningkat."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Kegagalan kritis liner silinder. Sebuah piston macet di liner silinder dan mesin terkunci."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Kegagalan ringan liner silinder. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Kegagalan sedang liner silinder. Cairan pendingin bocor melalui liner yang retak ke silinder sehingga permukaannya turun."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Kegagalan berat liner silinder. Liner yang retak meloloskan cairan pendingin ke silinder; asap putih muncul dari knalpot."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Kegagalan kritis liner silinder. Banyak cairan pendingin masuk ke silinder melalui liner yang retak, disertai asap putih terus-menerus dan pendinginan yang tidak cukup."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Kegagalan ringan katup masuk. Permukaan dudukan rusak dan tenaga sedikit berkurang."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Kegagalan sedang katup masuk. Katup menutup kurang rapat, menyebabkan pembakaran tersendat dan tenaga menurun."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Kegagalan berat katup masuk. Dudukan terbakar, disertai pembakaran tersendat, mesin mati dan tenaga menurun."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Kegagalan kritis katup masuk. Dudukan terbakar menyebabkan pembakaran tersendat, mesin mati dan kehilangan tenaga besar."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Kegagalan ringan katup masuk. Permukaan dudukan rusak dan tenaga sedikit berkurang."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Kegagalan sedang katup masuk. Katup menutup kurang rapat, menyebabkan pembakaran tersendat dan tenaga menurun."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Kegagalan berat katup masuk. Dudukan terbakar, disertai pembakaran tersendat, mesin mati dan tenaga menurun."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Kegagalan kritis katup masuk. Sebuah katup masuk patah dan mesin berhenti."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Kegagalan ringan katup buang. Permukaan dudukan rusak dan tenaga sedikit berkurang."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Kegagalan sedang katup buang. Katup menutup kurang rapat, menyebabkan pembakaran tersendat dan tenaga menurun."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Kegagalan berat katup buang. Dudukan terbakar, disertai pembakaran tersendat, mesin mati dan tenaga menurun."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Kegagalan kritis katup buang. Dudukan terbakar menyebabkan pembakaran tersendat, mesin mati dan kehilangan tenaga besar."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Kegagalan ringan katup buang. Permukaan dudukan rusak dan tenaga sedikit berkurang."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Kegagalan sedang katup buang. Katup menutup kurang rapat, menyebabkan pembakaran tersendat dan tenaga menurun."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Kegagalan berat katup buang. Dudukan terbakar, disertai pembakaran tersendat, mesin mati dan tenaga menurun."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Kegagalan kritis katup buang. Sebuah katup buang patah dan mesin berhenti."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Kegagalan ringan pemandu dan seal batang katup. Pemeriksaan menunjukkan cacat pemandu dan katup makin berisik."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Kegagalan sedang pemandu dan seal batang katup. Celah membesar dan katup makin berisik."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Kegagalan berat pemandu dan seal batang katup. Celah berlebihan menimbulkan bunyi, pembakaran tersendat dan oli lolos."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Kegagalan kritis pemandu dan seal batang katup. Celah pemandu berlebihan, disertai bunyi, pembakaran tersendat dan asap biru."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Kegagalan ringan pemandu dan seal batang katup. Seal yang mengeras meloloskan oli."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Kegagalan sedang pemandu dan seal batang katup. Lebih banyak oli masuk ke ruang bakar dan asap biru muncul."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Kegagalan berat pemandu dan seal batang katup. Konsumsi oli dan asap biru meningkat."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Kegagalan kritis pemandu dan seal batang katup. Banyak oli masuk dan asap biru terus keluar."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Kegagalan ringan kepala silinder. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Kegagalan sedang kepala silinder. Retakan kepala silinder meloloskan cairan pendingin ke ruang bakar; tenaga mesin berkurang dan mesin sulit dinyalakan."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Kegagalan berat kepala silinder. Cairan pendingin melewati kepala silinder yang retak ke ruang bakar, menyebabkan asap putih dan tenaga menurun."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Kegagalan kritis kepala silinder. Retakan meloloskan banyak cairan pendingin ke ruang bakar. Tenaga mesin lemah, sulit dinyalakan dan mengeluarkan asap putih."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Kegagalan ringan kepala silinder. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Kegagalan sedang kepala silinder. Cairan pendingin merembes dari kepala silinder yang retak dan permukaan cairan di sirkuit turun."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Kegagalan berat kepala silinder. Kebocoran cairan pendingin meninggalkan bekas yang terlihat pada kepala silinder yang retak dan permukaan cairan turun cepat."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Kegagalan kritis kepala silinder. Banyak cairan pendingin keluar dari kepala silinder yang retak; sirkuit terkuras dan mesin berisiko terlalu panas."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Kegagalan ringan kepala silinder. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Kegagalan sedang kepala silinder. Cairan pendingin bocor melalui retakan kepala silinder ke oli sehingga permukaan cairan di sirkuit turun."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Kegagalan berat kepala silinder. Retakan kepala silinder meloloskan lebih banyak cairan pendingin ke oli; permukaan cairan di sirkuit terus turun."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Kegagalan kritis kepala silinder. Retakan kepala silinder mengalihkan banyak cairan pendingin ke oli; cadangan sirkuit berkurang dan mesin berisiko terlalu panas."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Kegagalan ringan gasket kepala silinder. Kerusakan masih sulit dirasakan dan perlu diperiksa."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Kegagalan sedang gasket kepala silinder. Komponen ini meloloskan cairan pendingin ke ruang bakar; penyalaan lebih lama dan tenaga berkurang."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Kegagalan berat gasket kepala silinder. Cairan pendingin melewati komponen ini ke ruang bakar dan menghasilkan asap putih dari knalpot."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Kegagalan kritis gasket kepala silinder. Komponen ini meloloskan banyak cairan pendingin ke ruang bakar; asap putih bertambah dan mesin sangat sulit dinyalakan."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Kegagalan ringan gasket kepala silinder. Kerusakan masih sulit dirasakan dan perlu diperiksa."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Kegagalan sedang gasket kepala silinder. Cairan pendingin merembes di komponen ini dan menurunkan permukaan cairan di sirkuit."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Kegagalan berat gasket kepala silinder. Kebocoran cairan pendingin di komponen ini meninggalkan bekas pada mesin dan menurunkan permukaan cairan dengan cepat."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Kegagalan kritis gasket kepala silinder. Komponen ini meloloskan banyak cairan pendingin ke luar; permukaan cairan turun dan pendinginan mesin sangat melemah."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Kegagalan ringan gasket kepala silinder. Kerusakan masih sulit dirasakan dan perlu diperiksa."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Kegagalan sedang gasket kepala silinder. Cairan pendingin melewati komponen ini ke oli; permukaan cairan di sirkuit turun."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Kegagalan berat gasket kepala silinder. Komponen ini meloloskan semakin banyak cairan pendingin ke oli; sirkuit kehilangan cairan secara bertahap."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Kegagalan kritis gasket kepala silinder. Kebocoran besar melalui komponen ini mengalirkan cairan pendingin ke oli dan mengurangi cairan yang diperlukan sirkuit untuk mendinginkan mesin."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Kegagalan ringan bantalan poros engkol. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Kegagalan sedang bantalan poros engkol. Celah bantalan membesar."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Kegagalan berat bantalan poros engkol. Lapisan oli terganggu, disertai ketukan dan panas."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Kegagalan kritis bantalan poros engkol. Sebuah bantalan utama poros engkol macet dan mengunci mesin."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Kegagalan ringan bantalan poros engkol. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Kegagalan sedang bantalan poros engkol. Celah bantalan membesar."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Kegagalan berat bantalan poros engkol. Lapisan oli terganggu, disertai ketukan dan panas."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Kegagalan kritis bantalan poros engkol. Lapisan sebuah bantalan utama poros engkol meleleh dan mesin berhenti."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Kegagalan ringan bantalan batang piston. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Kegagalan sedang bantalan batang piston. Celah bantalan membesar."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Kegagalan berat bantalan batang piston. Lapisan oli terganggu, disertai ketukan dan panas."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Kegagalan kritis bantalan batang piston. Sebuah bantalan batang penghubung macet dan mengunci mesin."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Kegagalan ringan bantalan batang piston. Pemeriksaan menunjukkan kerusakan permukaan."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Kegagalan sedang bantalan batang piston. Celah bantalan membesar."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Kegagalan berat bantalan batang piston. Lapisan oli terganggu, disertai ketukan dan panas."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Kegagalan kritis bantalan batang piston. Lapisan sebuah bantalan batang penghubung meleleh dan mesin berhenti."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Tegangan sirkuit tidak memadai"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Awal keausan pompa pengumpan bahan bakar. Daya mesin sedikit berkurang dan konsumsi bahan bakar meningkat."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Tekanan bahan bakar menurun. Kehilangan daya terasa jelas, konsumsi bahan bakar meningkat, dan mesin sesekali mati."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Tekanan bahan bakar kritis. Kehilangan daya besar, konsumsi bahan bakar sangat tinggi, dan mesin sering mati."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Kegagalan total pompa pengumpan bahan bakar. Bahan bakar tidak lagi disalurkan ke mesin."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Satu atau beberapa nosel injektor sedikit tersumbat. Mesin dapat bekerja agak kasar dengan sedikit kehilangan daya."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Atomisasi bahan bakar buruk. Mesin tersendat saat dibebani, dengan kehilangan daya yang jelas dan hentakan."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Satu injektor bahan bakar macet. Mesin bekerja sangat buruk, kehilangan daya besar, dan penyalaannya tidak andal."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Satu injektor mengalami kegagalan total. Mesin tidak lagi bekerja dengan benar dan mungkin sama sekali tidak dapat dinyalakan."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Kegagalan ringan pompa tekanan tinggi. Tekanan injeksi naik lebih lambat: penyalaan lebih lama dan mesin merespons kurang cepat."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Kegagalan sedang pompa tekanan tinggi. Tekanan injeksi tidak cukup saat dibebani, dengan kehilangan daya yang jelas dan mesin tersendat."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Kegagalan berat pompa tekanan tinggi. Tekanan injeksi kritis, dengan kehilangan daya besar, mesin mati, dan penyalaan sulit."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Kegagalan total pompa tekanan tinggi. Pompa tidak lagi menghasilkan tekanan injeksi: starter memutar mesin, tetapi mesin tidak menyala."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Filter bahan bakar sedikit tersumbat. Aliran bahan bakar sedikit berkurang saat dibebani berat."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Penyumbatan sedang pada filter bahan bakar. Aliran tidak memadai saat dibebani, daya menurun, dan mesin terkadang tersendat."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Penyumbatan berat pada filter bahan bakar. Suplai bahan bakar sangat terbatas, daya jelas menurun, dan mesin dapat mati."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Filter bahan bakar tersumbat sepenuhnya. Mesin tidak lagi menerima cukup bahan bakar untuk bekerja dengan andal."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Sedikit udara masuk ke saluran bahan bakar. Suplai bahan bakar menjadi sedikit tidak teratur."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Udara dalam jumlah sedang masuk ke saluran bahan bakar. Suplai menjadi tidak stabil, daya menurun, dan mesin mulai tersendat."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Masuknya udara ke saluran bahan bakar tergolong berat. Mesin bekerja sangat tidak stabil dan risiko mesin mati tinggi."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Kegagalan kritis saluran bahan bakar disertai masuknya banyak udara. Mesin tidak lagi dapat menerima suplai bahan bakar dengan benar."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Jepitan ringan pada saluran bahan bakar. Aliran berkurang: mesin menyala, lalu sesekali mati."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Jepitan sedang pada saluran bahan bakar. Mesin menyala, lalu mati secara berkala."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Jepitan berat pada saluran bahan bakar. Mesin sering mati."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Saluran bahan bakar terhimpit rata. Bahan bakar tidak lagi mengalir: mesin berhenti."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Kegagalan ringan pompa injeksi mekanis. Debit melemah: penyalaan lebih lama dan mesin sedikit kehilangan tenaga."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Kegagalan sedang pompa injeksi mekanis. Debit tidak mencukupi saat dibebani: mesin kehilangan daya dan tersendat."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Kegagalan berat pompa injeksi mekanis. Mesin kekurangan bahan bakar, kehilangan banyak daya, sulit menyala dan mati."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Kegagalan kritis pompa injeksi mekanis. Penggeraknya patah: mesin berhenti dan tidak dapat dinyalakan lagi."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Kegagalan ringan katup penakar bahan bakar. Tekanan rel naik lebih lambat dan penyalaan lebih lama."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Kegagalan sedang katup penakar bahan bakar. Tekanan rel tidak mencukupi saat dibebani: mesin kehilangan daya dan tersendat."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Kegagalan berat katup penakar bahan bakar. Tekanan rel jauh menyimpang dari nilai yang diminta: mesin kehilangan banyak daya dan mati."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Kegagalan kritis katup penakar bahan bakar. Rel tidak lagi bertekanan: starter memutar mesin, tetapi mesin tidak menyala."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Kegagalan ringan sensor tekanan rel bahan bakar. Pengukurannya menjadi tidak stabil dan penyalaan sedikit lebih lama."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Kegagalan sedang sensor tekanan rel bahan bakar. Unit kontrol mengatur tekanan dengan buruk: mesin kehilangan daya dan tersendat."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Kegagalan berat sensor tekanan rel bahan bakar. Mesin masuk ke mode darurat, kehilangan banyak daya dan dapat mati."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Kegagalan kritis sensor tekanan rel bahan bakar. Tanpa hasil pengukuran, unit kontrol mempertahankan mesin dalam mode darurat."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Kegagalan ringan pembatas tekanan rel bahan bakar. Terbuka terlalu dini: tekanan rel naik lebih lambat dan penyalaan mesin lebih lama."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Kegagalan sedang pembatas tekanan rel bahan bakar. Tekanan rel tidak bertahan saat terbebani: mesin kehilangan tenaga dan tersendat."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Kegagalan berat pembatas tekanan rel bahan bakar. Tekanan rel anjlok: mesin kehilangan banyak tenaga dan mati."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Kegagalan kritis pembatas tekanan rel bahan bakar. Tetap terbuka: rel tidak lagi bertekanan dan starter memutar mesin tanpa membuatnya menyala."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Kegagalan ringan regulator tekanan gas. Tekanan pasokan berfluktuasi dan penyalaan lebih lama."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Kegagalan sedang regulator tekanan gas. Tekanan turun saat dibebani: mesin kehilangan daya dan tersendat."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Kegagalan berat regulator tekanan gas. Pasokan menjadi tidak teratur: mesin kehilangan banyak daya, sulit menyala dan mati."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Kegagalan kritis regulator tekanan gas. Gas yang lolos tidak lagi mencukupi: mesin berhenti."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Kegagalan ringan katup solenoid pemutus gas. Katup terlambat membuka: penyalaan lebih lama dan mesin sesekali tersendat."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Kegagalan sedang katup solenoid pemutus gas. Katup kadang memutus gas: mesin tersendat dan mati."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Kegagalan berat katup solenoid pemutus gas. Pemutusan makin sering dan mesin sering mati."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Kegagalan kritis katup solenoid pemutus gas. Katup tetap tertutup: mesin berhenti dan tidak dapat dinyalakan lagi."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Filter gas sedikit tersumbat. Aliran gas sedikit berkurang saat beban berat."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Penyumbatan sedang pada filter gas. Pasokan tidak mencukupi saat dibebani: daya menurun dan mesin dapat mati."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Penyumbatan berat pada filter gas. Aliran sangat terbatas: daya menurun jelas dan mesin mati."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Filter gas tersumbat sepenuhnya. Mesin tidak lagi menerima cukup gas dan berhenti."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Kebocoran ringan pada saluran gas. Penyalaan sedikit lebih lama."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Kebocoran sedang pada saluran gas. Pasokan menjadi tidak teratur: mesin tersendat dan dapat mati."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Kebocoran berat pada saluran gas. Tekanan turun: mesin tersendat, sulit menyala dan sering mati."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Kebocoran kritis pada saluran gas. Tekanan tidak dapat dipertahankan lagi: mesin berhenti."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Kegagalan ringan injektor gas. Penakaran menjadi tidak teratur: mesin bekerja kurang halus dan konsumsi sedikit meningkat."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Kegagalan sedang injektor gas. Mesin tersendat, kehilangan daya, konsumsi meningkat dan mesin dapat mati."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Kegagalan berat injektor gas. Satu injektor menakar dengan sangat buruk: kehilangan daya besar, konsumsi berlebih dan sulit menyala."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kegagalan kritis injektor gas. Penakaran tidak lagi memungkinkan mesin bekerja: mesin berhenti."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Kegagalan pompa AdBlue. Pompa tidak lagi memasok penakaran: lampu mesin menyala, lalu unit kontrol mengurangi daya sampai perbaikan dilakukan."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Kegagalan injektor penakar AdBlue. Tersumbat kristal, injektor tidak lagi menyemprot: lampu mesin menyala dan daya kemudian menurun sampai perbaikan dilakukan."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Filter AdBlue telah mencapai jadwal penggantian dan mulai tersumbat. Servis yang paling lengkap menggantinya."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="Filter AdBlue kotor: aliran AdBlue turun dan lampu mesin menyala. Servis yang paling lengkap menggantinya."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="Filter AdBlue sangat kotor: penakaran gagal dan ECU membatasi tenaga hingga perbaikan."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="Filter AdBlue tersumbat total: penakaran terhenti sepenuhnya dan ECU membatasi tenaga hingga perbaikan."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="Kegagalan sensor NOx. Unit kontrol tidak lagi memantau emisi: lampu mesin menyala, dan setelah beberapa puluh jam daya dikurangi."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Kegagalan ringan filter partikulat. Retakan meloloskan sedikit jelaga ke knalpot."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Kegagalan sedang filter partikulat. Retakan melebar: asap hitam mulai terlihat."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Kegagalan berat filter partikulat. Substrat hancur: knalpot mengeluarkan banyak asap hitam."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Kegagalan kritis filter partikulat. Substrat pecah: jelaga lolos tanpa tertahan."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Kegagalan ringan filter partikulat. Sebagian substrat meleleh dan mulai tersumbat."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Kegagalan sedang filter partikulat. Bagian yang meleleh meluas: tekanan balik meningkat."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Kegagalan berat filter partikulat. Meleleh dan tersumbat, filter tidak lagi beregenerasi: putaran mesin dibatasi."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kegagalan kritis filter partikulat. Tersumbat sepenuhnya, filter tidak lagi meloloskan gas buang: hanya penggantian yang mengembalikan daya mesin."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Filter partikulat jenuh. Regenerasi tidak selesai: putaran mesin dibatasi sampai salah satunya berhasil."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kejenuhan kritis filter partikulat. Terlalu penuh untuk beregenerasi sendiri, filter memerlukan regenerasi servis di bengkel; putaran tetap dibatasi."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Kegagalan ringan kopling kipas. Respons kipas menjadi kurang efektif dan pendinginan sedikit memburuk."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Kegagalan sedang kopling kipas. Pengaktifan kipas tidak teratur dan efisiensi pendinginan jelas menurun."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Kegagalan berat kopling kipas. Kipas tidak lagi menghasilkan aliran udara yang cukup dan mesin lebih mudah mengalami panas berlebih."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Kegagalan kritis kopling kipas. Kipas tidak lagi dapat menyediakan pendinginan yang diperlukan."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Kontrol rasio merespons lebih lambat dan kurang tepat."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Rasio berubah tidak teratur dan kontrol merespons buruk."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Kontrol rasio sangat terganggu dan gaya penggerak yang diteruskan menurun."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Kontrol rasio gagal; transmisi hampir tidak dapat digunakan."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Kebocoran internal ringan pada silinder hidraulis. Implemen yang diangkat turun perlahan saat dibebani."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Kebocoran internal sedang pada silinder hidraulis. Penurunan yang tidak disengaja terlihat jelas dan meningkat bersama beban yang ditopang."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Kebocoran internal berat pada silinder hidraulis. Implemen berat tidak lagi dapat mempertahankan posisinya dengan andal."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Kebocoran internal kritis pada silinder hidraulis. Setiap beban yang diangkat turun cepat dengan sendirinya."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Kebocoran internal ringan pada pompa hidraulis. Implemen bekerja sedikit lebih lambat."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Seal pada pompa hidraulis aus. Pengoperasian hidraulis jauh lebih lambat."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Pompa hidraulis rusak. Implemen bergerak sangat lambat dan lemah."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Pompa hidraulis mengalami kegagalan. Sistem hidraulis tidak dapat digunakan."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Selang hidraulis menunjukkan kelembapan ringan. Sedikit oli keluar dan respons hidraulis sedikit berkurang."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Selang hidraulis terlihat merembes. Oli terus berkurang dan fungsi hidraulis merespons lebih lambat."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Selang hidraulis bocor aktif. Kehilangan oli terlihat jelas dan fungsi hidraulis menjadi jauh lebih lemah."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Selang hidraulis mengalami kebocoran luar yang berat. Oli keluar dengan cepat dan kinerja hidraulis turun drastis."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Filter hidraulis sedikit tersumbat dan mulai membatasi aliran. Fungsi hidraulis sedikit lebih lambat. Perawatan mengganti filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Filter hidraulis mengalami penyumbatan sedang. Semua fungsi hidraulis jauh lebih lambat. Perawatan mengganti filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Filter hidraulis sangat tersumbat. Respons hidraulis menjadi sangat lambat. Perawatan mengganti filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Filter hidraulis tersumbat sepenuhnya. Fungsi hidraulis hampir tidak merespons. Perawatan mengganti filter."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Pendingin oli hidraulis sedikit kehilangan efisiensi. Suhu oli sedikit meningkat selama kerja hidraulis yang lama."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Kinerja pendingin oli hidraulis menurun. Suhu oli jelas meningkat selama kerja hidraulis berkelanjutan."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Pendingin oli hidraulis mengalami penurunan kondisi yang berat. Kerja hidraulis berat dengan cepat membuat oli mengalami panas berlebih."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Pendingin oli hidraulis rusak. Kerja hidraulis yang lama menyebabkan panas berlebih yang parah pada oli dan mempercepat keausan pompa."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Katup kontrol hidraulis mulai macet. Satu fungsi hidraulis sesekali tersendat dan melemah saat dibebani."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Katup kontrol hidraulis macet sesekali. Satu fungsi hidraulis melambat dan semakin kehilangan daya saat beban meningkat."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Katup kontrol hidraulis macet parah. Satu fungsi hidraulis bergerak tidak teratur dan kesulitan mengatasi beban berat."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Katup kontrol hidraulis rusak parah. Satu fungsi hidraulis berulang kali berhenti dan hampir tidak dapat menggerakkan beban berat."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Pompa Transmisi"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Unit Hidrostatis"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Pendingin Oli Transmisi"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Bantalan Kotak Transmisi"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Kopling Gigi Powershift"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Kopling Pembalik Powershift"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Kontrol Transmisi"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Pasangan Roda Gigi Kerucut Gandar Belakang"/>
+        <text name="rms_breakdowns_part_final_drives" text="Penggerak Akhir"/>
+        <text name="rms_breakdowns_part_differential" text="Roda Gigi Diferensial"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="Pengaktifan 4WD"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Poros Penggerak Gandar Depan dan Sambungan Universal"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Bantalan Gandar"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Sensor Transmisi"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Filter Transmisi"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Katup Pengangkat"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Sensor Posisi Pengangkat"/>
+        <text name="rms_breakdowns_part_loader_control" text="Kontrol Pemuat"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Kopling Cepat Hidraulis"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Kegagalan ringan kopling. Komponen ini tidak melepas sepenuhnya. Beberapa gigi sulit dipilih."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Kegagalan sedang kopling. Mekanisme kurang membebaskan cakram. Gigi lebih sering ditolak."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Kegagalan berat kopling. Cakram tetap digerakkan saat kopling dilepas. Pemilihan gigi sangat terganggu."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Kegagalan kritis kopling. Mekanisme tidak membebaskan cakram. Tidak ada gigi yang dapat masuk secara normal."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Kegagalan ringan bantalan kotak transmisi. Permukaan gelinding rusak. Terdengar gemuruh pelan dari kotak transmisi."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Kegagalan sedang bantalan kotak transmisi. Lintasan bantalan rusak. Gemuruh kotak transmisi terdengar jelas."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Kegagalan berat bantalan kotak transmisi. Bantalan sulit berputar. Kotak transmisi bergemuruh keras dan dapat macet."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Kegagalan kritis bantalan kotak transmisi. Bantalan macet. Kotak transmisi terkunci dan mesin tidak dapat berjalan."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Kegagalan ringan kopling gigi Powershift. Satu paket cakram kurang meneruskan tenaga. Gigi sedikit selip saat dibebani."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Kegagalan ringan kopling gigi Powershift. Satu paket cakram terlambat bekerja. Gigi masuk dengan sentakan ringan."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Kegagalan sedang kopling gigi Powershift. Satu paket cakram tidak menjepit cukup kuat. Gigi jelas selip saat dibebani."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Kegagalan sedang kopling gigi Powershift. Pengisian satu paket terganggu. Gigi masuk dengan kasar."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Kegagalan berat kopling gigi Powershift. Satu paket cakram hampir tidak mampu menahan beban. Sangat sedikit tenaga mencapai roda."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Kegagalan berat kopling gigi Powershift. Satu paket sulit terhubung. Perpindahan gigi menimbulkan sentakan kuat."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Kegagalan kritis kopling gigi Powershift. Paket cakram tidak meneruskan tenaga. Mesin tidak dapat berjalan."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Kegagalan kritis kopling gigi Powershift. Paket tidak terhubung dengan benar. Gigi tidak menggerakkan mesin."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Kegagalan ringan kopling pembalik Powershift. Kopling maju atau mundur sedikit selip saat mulai bergerak."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Kegagalan ringan kopling pembalik Powershift. Kopling pembalik terlambat terhubung. Tenaga kembali dengan sentakan ringan."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Kegagalan sedang kopling pembalik Powershift. Kopling pembalik jelas selip. Tenaga kurang tersalur ke arah yang dipilih."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Kegagalan sedang kopling pembalik Powershift. Kopling pembalik terhubung mendadak. Perubahan arah menyentak mesin."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Kegagalan berat kopling pembalik Powershift. Kopling pembalik hampir tidak menahan beban. Traksi turun tajam."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Kegagalan berat kopling pembalik Powershift. Kopling pembalik bekerja sangat tidak teratur. Awal gerakan terasa sangat kasar."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Kegagalan kritis kopling pembalik Powershift. Kopling pembalik tidak meneruskan tenaga. Mesin tidak dapat berjalan."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Kegagalan kritis kopling pembalik Powershift. Kopling pembalik tidak terhubung dengan benar. Tenaga penggerak hilang."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Kegagalan ringan kontrol transmisi. Kontrol elektrohidraulis bekerja tidak teratur. Perpindahan gigi tersendat."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Kegagalan ringan kontrol transmisi. Kontrol sesekali menolak pemilihan gigi."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Kegagalan sedang kontrol transmisi. Kontrol mengganggu pengisian kopling. Perpindahan menimbulkan sentakan jelas."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Kegagalan sedang kontrol transmisi. Kontrol menolak beberapa pilihan. Gigi sulit dimasukkan."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Kegagalan berat kontrol transmisi. Kontrol kurang tepat mengaktifkan kopling. Perpindahan menimbulkan sentakan kuat."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Kegagalan berat kontrol transmisi. Kontrol tidak menjalankan banyak pilihan. Gigi jarang tersedia."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Kegagalan kritis kontrol transmisi. Kontrol tidak dapat menghubungkan kopling dengan benar. Perpindahan gigi sangat terganggu."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Kegagalan kritis kontrol transmisi. Kontrol tidak mengizinkan pemilihan gigi. Kotak transmisi tidak merespons permintaan."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Kegagalan sensor kecepatan transmisi. Sinyalnya tidak teratur: kontrol terkadang menolak perpindahan gigi."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Kegagalan sensor tekanan transmisi. Kontrol salah mengatur pengisian kopling: perpindahan gigi terlambat dan menyentak."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Kegagalan kritis sensor kecepatan transmisi. Tanpa hasil ukur, kontrol sering menolak perpindahan gigi."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Kegagalan kritis sensor tekanan transmisi. Tanpa hasil ukur, setiap perpindahan gigi sangat terlambat dan langsung mencengkeram."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Kegagalan sensor kecepatan sistem transmisi. Kontrol beralih ke mode darurat: kecepatan gerak dibatasi."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Kegagalan sensor tekanan sistem transmisi. Kontrol beralih ke mode darurat: kecepatan gerak dibatasi."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Kegagalan kritis sensor kecepatan sistem transmisi. Mode darurat hanya mengizinkan kecepatan gerak rendah."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Kegagalan kritis sensor tekanan sistem transmisi. Mode darurat hanya mengizinkan kecepatan gerak rendah."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Kegagalan ringan pompa transmisi. Pasokan oli kontrol berkurang. Hubungan tersendat dan tenaga terputus sesaat."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Kegagalan sedang pompa transmisi. Tekanan kontrol kurang. Gigi masuk kasar dan tenaga terputus."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Kegagalan berat pompa transmisi. Pompa hampir tidak memasok oli kontrol. Hubungan sangat kasar dan tenaga sering terputus."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Kegagalan kritis pompa transmisi. Pompa tidak menyediakan tekanan yang diperlukan. Transmisi tidak menggerakkan mesin."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Kegagalan ringan unit hidrostatis. Kebocoran internal mengurangi tenaga. Variator sedikit kehilangan kecepatan dan oli lebih panas."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Kegagalan sedang unit hidrostatis. Kebocoran internal meningkat. Kecepatan maksimum turun, oli panas, dan konsumsi meningkat."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Kegagalan berat unit hidrostatis. Kelompok putar hampir tidak meneruskan tenaga. Kecepatan turun tajam dan oli sangat panas saat dibebani."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Kegagalan kritis unit hidrostatis. Kelompok putar tidak meneruskan tenaga. Mesin tidak bergerak meskipun motor tetap hidup."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Kegagalan ringan pendingin oli transmisi. Komponen ini membuang lebih sedikit panas. Oli transmisi lebih panas saat dibebani."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Kegagalan sedang pendingin oli transmisi. Pertukaran panas jelas berkurang. Oli transmisi tetap lebih panas saat bekerja."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Kegagalan berat pendingin oli transmisi. Komponen ini hampir tidak membuang panas. Oli transmisi dapat terlalu panas saat dibebani."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Kegagalan kritis pendingin oli transmisi. Pendinginan oli transmisi gagal. Pekerjaan terus-menerus berisiko membuat transmisi terlalu panas."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="Filter transmisi telah mencapai jadwal penggantian dan mulai tersumbat. Layar meminta penggantian. Perawatan mengganti filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="Filter transmisi kotor: katup pintasnya terbuka dan oli transmisi mengalir tanpa disaring. Transmisi lebih cepat aus. Perawatan mengganti filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="Filter transmisi sangat kotor. Oli transmisi bersirkulasi tanpa disaring dan mengauskan transmisi. Perawatan mengganti filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="Filter transmisi tersumbat total. Seluruh oli transmisi mengalir tanpa disaring dan mengauskan transmisi. Perawatan mengganti filter."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Kegagalan ringan pasangan roda gigi kerucut gandar belakang. Gigi roda kerucut rusak. Terdengar denging pelan saat dibebani."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Kegagalan sedang pasangan roda gigi kerucut gandar belakang. Kontak gigi terganggu. Gandar belakang berdenging jelas saat dibebani."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Kegagalan berat pasangan roda gigi kerucut gandar belakang. Gigi rusak berat. Gandar belakang berdenging keras dan dapat kehilangan penggerak."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Kegagalan kritis pasangan roda gigi kerucut gandar belakang. Pasangan roda kerucut tidak meneruskan tenaga. Gandar belakang tidak digerakkan dan mesin tidak dapat berjalan."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Kegagalan ringan penggerak akhir. Gigi satu penggerak akhir rusak. Terdengar denging pelan dekat roda penggerak."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Kegagalan sedang penggerak akhir. Roda gigi penggerak akhir sulit berputar. Denging dekat roda terdengar jelas."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Kegagalan berat penggerak akhir. Roda gigi penggerak akhir rusak berat. Suara keras dan penggerak dapat gagal."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Kegagalan kritis penggerak akhir. Satu penggerak akhir tidak meneruskan tenaga ke rodanya. Mesin tidak dapat berjalan normal."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="Kegagalan pengaktifan 4WD. Penggerak empat roda tidak aktif. Gandar depan tetap terlepas."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="Kegagalan pengaktifan 4WD. Gandar depan tetap terhubung. Penggerak empat roda tidak dapat dinonaktifkan."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Kegagalan pompa hidraulis. Komponen ini patah. Tekanan hilang dan fungsi hidraulis tidak merespons."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Kegagalan katup kontrol hidraulis. Spul macet. Fungsi hidraulis yang terkait tidak bergerak."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Kegagalan katup pengangkat. Komponen ini tidak menahan beban dengan benar. Alat yang terangkat turun."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Kegagalan katup pengangkat. Komponen ini macet. Pengangkat tidak merespons."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Kegagalan sensor posisi pengangkat. Sinyal posisi gagal. Pengangkat tidak menjaga ketinggian yang diminta dan kode kerusakan disimpan."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Kegagalan ringan kontrol pemuat. Lengan dan bucket merespons lebih lambat."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Kegagalan sedang kontrol pemuat. Lengan dan bucket hanya bergerak dengan separuh kecepatan."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Kegagalan berat kontrol pemuat. Lengan dan bucket nyaris tidak bergerak."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kegagalan kritis kontrol pemuat. Lengan dan bucket tidak lagi merespons."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Kegagalan ringan silinder hidraulis. Seal batang meloloskan sedikit oli. Tampak sedikit lembap di sekitar batang."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Kegagalan sedang silinder hidraulis. Seal batang tidak rapat. Silinder merembes dan level oli turun."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Kegagalan berat silinder hidraulis. Seal batang bocor aktif. Silinder kehilangan banyak oli."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Kegagalan kritis silinder hidraulis. Seal batang meloloskan sangat banyak oli. Level dalam sirkuit turun cepat."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Kegagalan ringan kopling cepat hidraulis. Seal kopling rusak. Tampak sedikit lembap pada sambungan."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Kegagalan kopling cepat hidraulis. Saluran oli kopling tersumbat. Fungsi hidraulis yang tersambung tidak bergerak."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Kegagalan sedang kopling cepat hidraulis. Kopling merembes. Sirkuit kehilangan oli pada sambungan."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Kegagalan berat kopling cepat hidraulis. Kopling bocor aktif. Kehilangan oli pada sambungan menjadi besar."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Kegagalan kritis kopling cepat hidraulis. Kopling bocor parah. Level oli dalam sirkuit turun cepat."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Kegagalan ringan pendingin oli hidraulis. Inti pendingin tidak sepenuhnya rapat. Tampak sedikit lembap."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Kegagalan sedang pendingin oli hidraulis. Inti pendingin merembes. Level oli hidraulis turun."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Kegagalan berat pendingin oli hidraulis. Inti pendingin bocor aktif. Sirkuit kehilangan banyak oli."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Kegagalan kritis pendingin oli hidraulis. Inti pendingin bocor parah. Level oli hidraulis turun cepat."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Kontrol Pengunci Diferensial"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Kegagalan ringan roda gigi diferensial. Permukaan gigi rusak. Terdengar suara pelan saat berbelok."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Kegagalan sedang roda gigi diferensial. Kontak gigi terganggu. Suara diferensial terdengar jelas saat berbelok."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Kegagalan berat roda gigi diferensial. Gigi rusak berat. Suara keras saat berbelok dan penggerak dapat gagal."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Kegagalan kritis roda gigi diferensial. Roda gigi tidak meneruskan tenaga. Mesin tidak bergerak meskipun motor tetap hidup."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Keausan ringan pada sambungan universal poros penggerak gandar depan. Sedikit gerak bebas muncul pada penggerak gandar depan."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Keausan sedang pada sambungan universal poros penggerak gandar depan. Gerak bebas sambungan universal menjadi jelas."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Keausan berat pada sambungan universal poros penggerak gandar depan. Satu sambungan universal hampir patah."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Sambungan universal poros penggerak gandar depan patah. Gandar depan tidak lagi digerakkan."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Keausan ringan pada bantalan gandar. Gemuruh pelan terdengar saat berjalan."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Keausan sedang pada bantalan gandar. Gemuruh meningkat seiring kecepatan."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Keausan berat pada bantalan gandar. Permukaan satu bantalan mengelupas dan mulai merusak pasangan roda gigi kerucut."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Keausan kritis pada bantalan gandar. Satu bantalan rusak, pasangan roda gigi kerucut rusak dan gandar tidak lagi meneruskan daya gerak."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Kegagalan kontrol pengunci diferensial. Pengunci tidak aktif. Diferensial tetap bebas."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Kegagalan kontrol pengunci diferensial. Pengunci tetap aktif. Mesin sulit diarahkan saat berbelok."/>
+    </texts>
+</l10n>

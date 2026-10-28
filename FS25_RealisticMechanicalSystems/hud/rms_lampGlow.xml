@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture>
+   <meta>
+      <filename>rms_lampGlow.png</filename>
+      <size width="128" height="128" />
+   </meta>
+   <slices>
+      <slice id="glow" uvs="0px 0px 128px 128px" />
+   </slices>
+</texture>

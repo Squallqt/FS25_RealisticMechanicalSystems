@@ -9,7 +9,6 @@ local RMS_InspectionDialog_mt = Class(RMS_InspectionDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
 local TEXT_COLOR = RMS_Utils.COLOR.TEXT
 
--- inspection target to the dialog section holding its row
 local TARGET_TO_SECTION = {
     engineOil = "technicalFluidsData",
     coolant = "technicalFluidsData",
@@ -20,7 +19,6 @@ local TARGET_TO_SECTION = {
     lubrication = "fieldCareData"
 }
 
--- fluid rows of the dialog, with the circuit they read and their pictogram
 local FLUID_ROWS = {
     { titleKey = "rms_inspection_engine_oil", circuit = "engineOil", icon = "rms_workshopFluidIconEngineOil" },
     { titleKey = "rms_inspection_coolant", circuit = "coolant", icon = "rms_workshopFluidIconCoolant" },
@@ -28,7 +26,6 @@ local FLUID_ROWS = {
     { titleKey = "rms_inspection_transmission_oil", circuit = "transmissionOil", icon = "rms_workshopFluidIconTransmissionOil" }
 }
 
--- severity rank of each status, 0 for fine up to 4 for critical, the highest wins on a row
 local STATUS_PRIORITY = {
     rms_inspection_ok = 0,
     rms_inspection_status_slightly_low = 1,
@@ -53,33 +50,14 @@ local STATUS_PRIORITY = {
     rms_inspection_status_not_required = 0
 }
 
--- status of the air filter row at each blow out stage
 local AIR_FILTER_STAGE_STATUS = {
     "rms_inspection_status_slightly_dirty",
     "rms_inspection_status_dirty",
     "rms_inspection_status_heavily_clogged"
 }
 
--- status of a fuel or hydraulic filter row at each stage of its breakdown
-local FILTER_STAGE_STATUS = {
-    "rms_inspection_status_slightly_dirty",
-    "rms_inspection_status_dirty",
-    "rms_inspection_status_heavily_clogged",
-    "rms_inspection_status_critically_clogged"
-}
-
--- row of each tracked filter by breakdown, with the finding its clogging adds
-local FILTER_ROWS = {
-    FUEL_FILTER_CLOGGING = { titleKey = "rms_breakdowns_part_fuel_filter", hintKey = "rms_inspection_hint_fuel_filter_due" },
-    HYDRAULIC_FILTER_CLOGGING = { titleKey = "rms_breakdowns_part_hydraulic_filter", hintKey = "rms_inspection_hint_hydraulic_filter_due",
-        bypassHintKey = "rms_inspection_hint_hydraulic_filter_bypass" }
-}
-
--- pictogram of each row of the filters, radiator and lubrication card
 local FIELD_CARE_ICONS = {
     rms_inspection_air_filter = "rms_workshopFluidIconAirFilter",
-    rms_breakdowns_part_fuel_filter = "rms_workshopFluidIconFilters",
-    rms_breakdowns_part_hydraulic_filter = "rms_workshopFluidIconHydraulicFilter",
     rms_inspection_radiator = "rms_workshopFluidIconRadiator",
     rms_inspection_lubrication_level = "rms_workshopFluidIconLubrication"
 }
@@ -105,7 +83,7 @@ local function getSeverityColor(priority)
         return RMS_Breakdowns.COLORS.WARNING
     end
 
-    return HUD.COLOR.ACTIVE
+    return RMS_Utils.COLOR.HIGHLIGHT
 end
 
 ---Returns the row colour from its status severity
@@ -117,7 +95,6 @@ local function getRowColor(row)
     return getSeverityColor(row ~= nil and STATUS_PRIORITY[row.statusKey or ""] or 0)
 end
 
--- parts of the level gauge every fluid row shows around its bar
 local GAUGE_PARTS = { "inspectionGaugeTrack", "inspectionGaugeZone", "inspectionGaugeMinMark", "inspectionGaugeMaxMark",
     "inspectionGaugeMinLabel", "inspectionGaugeMaxLabel" }
 
@@ -222,13 +199,12 @@ local function applyBreakdownInspectionFindings(dialog, additionalLines)
         lubrication = "rms_inspection_lubrication_level"
     }
 
-    -- a symptom of a fault the workshop has not identified
     local hasUnidentified = false
     for breakdownId, breakdown in pairs(activeBreakdowns) do
         local registryEntry = registry[breakdownId]
         if registryEntry ~= nil and registryEntry.stages ~= nil then
             local stageData = registryEntry.stages[breakdown.stage]
-            local findings = stageData ~= nil and stageData.inspection or nil
+            local findings = stageData ~= nil and stageData.inspection ~= nil and RMS_Utils.getBranchItems(stageData.inspection, breakdown) or nil
 
             if findings ~= nil and #findings > 0 and not breakdown.isVisible and registryEntry.isSelectable
                 and RMS_Consumables.getFilterOfBreakdown(breakdownId) == nil then
@@ -236,7 +212,6 @@ local function applyBreakdownInspectionFindings(dialog, additionalLines)
             end
             if findings ~= nil then
                 for _, finding in ipairs(findings) do
-                    -- a finding without target and status only contributes a findings line
                     if finding.target ~= nil and finding.status ~= nil then
                         local titleKey = targetMap[RMS_Fluids.getSumpCircuit(vehicle, finding.target)]
                         local sectionKey = TARGET_TO_SECTION[finding.target]
@@ -296,28 +271,11 @@ local function applyCloggingInspectionFindings(dialog, additionalLines)
         appendAdditionalLine(additionalLines, "rms_air_blower_action")
     end
 
-    -- the replacement is a finding of its own, whatever a blow out still removes
     if RMS_Consumables.getIsAirFilterWornOut(spec) then
         dialog.isAirFilterReplacementDue = true
         appendAdditionalLine(additionalLines, "rms_inspection_hint_air_filter_blowout_limit",
             RMS_Utils.formatAirFilterServiceHours(dialog.vehicle))
         setRowValue(dialog.fieldCareData, "rms_inspection_air_filter", "rms_inspection_status_replacement_due")
-    end
-end
-
----Rates each filter the machine carries by its breakdown stage
-local function applyFilterInspectionFindings(dialog, additionalLines)
-    local vehicle = dialog.vehicle
-    local spec = vehicle.spec_RealisticMechanicalSystems
-
-    for _, filter in ipairs(RMS_Consumables.FILTERS) do
-        local stage = RMS_Consumables.getFilterStage(spec[filter.stateKey])
-        if stage > 0 and RMS_Consumables.getHasFilter(vehicle, filter) then
-            local row = FILTER_ROWS[filter.breakdownId]
-            setRowValue(dialog.fieldCareData, row.titleKey, FILTER_STAGE_STATUS[stage])
-            local isBypassing = row.bypassHintKey ~= nil and stage >= RMS_Config.CORE.HYDRAULICS_FACTOR_DATA.FILTER_BYPASS_STAGE
-            appendAdditionalLine(additionalLines, isBypassing and row.bypassHintKey or row.hintKey)
-        end
     end
 end
 
@@ -400,7 +358,6 @@ local function applyServiceClockInspectionFindings(dialog, additionalLines)
     for _, clock in ipairs(vehicle:getServiceClocks()) do
         local level = spec[clock.levelKey]
         if level < threshold then
-            -- past half an interval late the worn oil is rated a step worse
             local statusKey = level < threshold / 2 and "rms_inspection_status_change_long_overdue"
                 or "rms_inspection_status_change_overdue"
             for _, row in ipairs(dialog.technicalFluidsData) do
@@ -507,19 +464,13 @@ function RMS_InspectionDialog.buildFluidRows(vehicle)
     return rows
 end
 
----Builds the rows of the filters, radiator and lubrication card
+---Builds the cleaning and lubrication rows.
 -- @param table vehicle vehicle
 -- @return table rows card rows, all fine
 function RMS_InspectionDialog.buildFieldCareRows(vehicle)
     local titleKeys = {}
-    -- an electric motor breathes no air
     if not vehicle.spec_RealisticMechanicalSystems.isElectricVehicle then
         table.insert(titleKeys, "rms_inspection_air_filter")
-    end
-    for _, filter in ipairs(RMS_Consumables.FILTERS) do
-        if RMS_Consumables.getHasFilter(vehicle, filter) then
-            table.insert(titleKeys, FILTER_ROWS[filter.breakdownId].titleKey)
-        end
     end
     table.insert(titleKeys, "rms_inspection_radiator")
     table.insert(titleKeys, "rms_inspection_lubrication_level")
@@ -559,7 +510,6 @@ function RMS_InspectionDialog:updateScreen()
     applyServiceClockInspectionFindings(self, additionalLines)
     applyBreakdownInspectionFindings(self, additionalLines)
     applyCloggingInspectionFindings(self, additionalLines)
-    applyFilterInspectionFindings(self, additionalLines)
     applyLubricationInspectionFindings(self, additionalLines)
 
     local hasAdditionalFindings = #additionalLines > 0
@@ -632,7 +582,6 @@ function RMS_InspectionDialog:populateCellForItemInSection(list, section, index,
         return
     end
 
-    -- gauge shown only on a row carrying a level
     local level = tonumber(row.level)
     for _, name in ipairs(GAUGE_PARTS) do
         cell:getAttribute(name):setVisible(level ~= nil)

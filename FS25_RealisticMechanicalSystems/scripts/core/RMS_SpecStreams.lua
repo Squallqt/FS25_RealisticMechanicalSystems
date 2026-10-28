@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Network serialisation of the vehicle spec, on join and on the dirty flag update stream
+---Vehicle network streams.
 
 local getSyncOperatingTime = RealisticMechanicalSystems.getSyncOperatingTime
 
@@ -51,10 +51,9 @@ local function readOptionalThermalState(spec, streamId, initializeDisplay)
     if streamReadBool(streamId) then
         local hydraulicTemp = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), spec.rawTransmissionTemperature or 20)
         spec.rawHydraulicTemperature = hydraulicTemp
-        spec._netTargetHydraulicTemp = hydraulicTemp
         if initializeDisplay or spec.hydraulicTemperature == nil then spec.hydraulicTemperature = hydraulicTemp end
     else
-        spec.rawHydraulicTemperature, spec.hydraulicTemperature, spec._netTargetHydraulicTemp = nil, nil, nil
+        spec.rawHydraulicTemperature, spec.hydraulicTemperature = nil, nil
     end
     if streamReadBool(streamId) then
         spec.tractionBatteryTempC = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 20)
@@ -62,6 +61,109 @@ local function readOptionalThermalState(spec, streamId, initializeDisplay)
         spec.tractionBatteryTempC = nil
     end
 end
+
+---Writes the field care group in its network order
+local function writeFieldcareState(spec, streamId)
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.radiatorClogging, 0, 0))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fanReversalTime, 0, 0, RMS_Config.THERMAL.REVERSIBLE_FAN.REVERSAL_MS))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.airFilterClogging, 0, 0))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.airFilterResidue, 0, 0))
+    for _, filter in ipairs(RMS_Consumables.FILTERS) do
+        streamWriteFloat32(streamId, spec[filter.stateKey])
+    end
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.lubricationLevel, 1.0, 0.0, 1.0))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.engineOilLevel, 1.0, 0.0, 1.0))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantLevel, 1.0, 0.0, 1.0))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionOilLevel, 1.0, 0.0, 1.0))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicFluidLevel, 1.0, 0.0, 1.0))
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCapacities[circuit], 0, 0))
+        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCompatibility[circuit], 1, 0, 1))
+    end
+    streamWriteString(streamId, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
+end
+
+---Reads the field care group and refreshes its fluid effects
+local function readFieldcareState(self, spec, streamId)
+    spec.radiatorClogging = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+    spec.fanReversalTime = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, RMS_Config.THERMAL.REVERSIBLE_FAN.REVERSAL_MS)
+    spec.airFilterClogging = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+    spec.airFilterResidue = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+    for _, filter in ipairs(RMS_Consumables.FILTERS) do
+        spec[filter.stateKey] = streamReadFloat32(streamId)
+    end
+    spec.lubricationLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
+    spec.engineOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
+    spec.coolantLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
+    spec.transmissionOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
+    spec.hydraulicFluidLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
+    spec.fluidCapacities = spec.fluidCapacities or {}
+    spec.fluidCompatibility = spec.fluidCompatibility or {}
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        spec.fluidCapacities[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+        spec.fluidCompatibility[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1, 0, 1)
+    end
+    spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(streamReadString(streamId))
+    spec.fluidCapacityVersion = RMS_Fluids.CAPACITY_VERSION
+    RMS_Fluids.updateEffects(self)
+end
+
+---Writes the wear group in its network order
+local function writeWearState(spec, streamId)
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.serviceLevel, 1.0, 0.001))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionServiceLevel, 1.0, 0.001))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantServiceLevel, 1.0, 0.001))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicServiceLevel, 1.0, 0.001))
+    streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.serviceCalendar))
+    streamWriteUInt8(streamId, spec.warrantyPlan)
+    streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.partWarranty))
+    streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.usedPartWarranty))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.conditionLevel, 1.0, 0.001, 1.0))
+    streamWriteString(streamId, RMS_Utils.serializeSystemsState(spec.systems))
+    streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.partWear))
+end
+
+---Reads the service clocks, system conditions and part wear
+local function readWearState(spec, streamId)
+    spec.serviceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
+    spec.transmissionServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
+    spec.coolantServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
+    spec.hydraulicServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
+    spec.serviceCalendar = RMS_Utils.deserializeNumericMap(streamReadString(streamId))
+    spec.warrantyPlan = streamReadUInt8(streamId)
+    spec.partWarranty = RMS_Utils.deserializeNumericMap(streamReadString(streamId))
+    spec.usedPartWarranty = RMS_Utils.deserializeNumericMap(streamReadString(streamId))
+    spec.conditionLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001, 1.0)
+    local loadedSystems = RMS_Utils.deserializeSystemsState(streamReadString(streamId))
+    for sysKey, sysData in pairs(loadedSystems) do
+        if spec.systems[sysKey] ~= nil then
+            spec.systems[sysKey].condition = sysData.condition
+            spec.systems[sysKey].enabled = sysData.enabled
+        end
+    end
+    spec.partWear = RMS_Utils.deserializeNumericMap(streamReadString(streamId))
+end
+
+---Writes the thermal group in its network order
+local function writeThermalState(self, spec, streamId)
+    streamWriteFloat32(streamId, RMS_Thermal.getEngineTemperature(self))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.rawTransmissionTemperature, 20))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.thermostatState, 0, 0, 1))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionThermostatState, 0, 0, 1))
+    writeOptionalThermalState(self, streamId)
+end
+
+---Writes the electrical group in its network order
+local function writeElectricalState(spec, streamId)
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.batterySoc, 1.0, 0, 1))
+    streamWriteBool(streamId, spec.batteryIsolated)
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.systemVoltageV, 12.6, 0, 30))
+    streamWriteUInt8(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.preheatState, RMS_Preheat.STATE.IDLE, RMS_Preheat.STATE.IDLE, RMS_Preheat.STATE.FAILED)))
+    streamWriteBool(streamId, spec.preheatLampTestActive == true)
+    streamWriteBool(streamId, spec.preheatWasRequired == true)
+    streamWriteUInt8(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.preheatColdStartFaultSeverity, 0, 0, 4)))
+end
+
 
 ---Called on server side on join
 -- @param integer streamId streamId
@@ -99,47 +201,17 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.dynamicMotorLoad, 0, 0, 1.5))
 
     -- [Group 4] Thermal
-    streamWriteFloat32(streamId, RMS_Thermal.getEngineTemperature(self))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.rawTransmissionTemperature, 20))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.thermostatState, 0, 0, 1))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionThermostatState, 0, 0, 1))
-    writeOptionalThermalState(self, streamId)
+    writeThermalState(self, spec, streamId)
 
     -- [Group 5] Electrical
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.batterySoc, 1.0, 0, 1))
-    streamWriteBool(streamId, spec.batteryIsolated)
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.systemVoltageV, 12.6, 0, 30))
-    streamWriteUInt8(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.preheatState, RMS_Preheat.STATE.IDLE, RMS_Preheat.STATE.IDLE, RMS_Preheat.STATE.FAILED)))
-    streamWriteBool(streamId, spec.preheatLampTestActive == true)
-    streamWriteBool(streamId, spec.preheatWasRequired == true)
-    streamWriteUInt8(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.preheatColdStartFaultSeverity, 0, 0, 4)))
+    writeElectricalState(spec, streamId)
 
     -- [Group 6] Field care
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.radiatorClogging, 0, 0))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.airFilterClogging, 0, 0))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.airFilterResidue, 0, 0))
-    streamWriteFloat32(streamId, spec.fuelFilterClogging)
-    streamWriteFloat32(streamId, spec.hydraulicFilterClogging)
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.lubricationLevel, 1.0, 0.0, 1.0))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.engineOilLevel, 1.0, 0.0, 1.0))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantLevel, 1.0, 0.0, 1.0))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionOilLevel, 1.0, 0.0, 1.0))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicFluidLevel, 1.0, 0.0, 1.0))
-    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCapacities[circuit], 0, 0))
-        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCompatibility[circuit], 1, 0, 1))
-    end
-    streamWriteString(streamId, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
+    writeFieldcareState(spec, streamId)
     streamWriteBool(streamId, spec.fieldInspectionSoundActive)
 
     -- [Group 7] Wear
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.serviceLevel, 1.0, 0.001))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionServiceLevel, 1.0, 0.001))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantServiceLevel, 1.0, 0.001))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicServiceLevel, 1.0, 0.001))
-    streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.serviceCalendar))
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.conditionLevel, 1.0, 0.001, 1.0))
-    streamWriteString(streamId, RMS_Utils.serializeSystemsState(spec.systems))
+    writeWearState(spec, streamId)
     writePtoWearState(spec, streamId)
 
     -- [Group 8] Breakdowns
@@ -163,6 +235,9 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
 
     -- [Group 12] Exhaust deposits
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
+    streamWriteBool(streamId, spec.fuelState.isParticulateFilterRegenerating == true)
+    streamWriteBool(streamId, spec.isEngineDerated == true)
 
     -- [Group 13] Authoritative resale quote
     writeResalePrice(self, streamId)
@@ -220,13 +295,8 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     local syncRawTransTemp = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), syncRawEngTemp)
     RMS_Thermal.setEngineTemperature(self, syncRawEngTemp)
     spec.rawTransmissionTemperature = syncRawTransTemp
-    spec._netTargetEngineTemp = syncRawEngTemp
-    spec._netTargetTransmissionTemp = syncRawTransTemp
     spec.transmissionTemperature = syncRawTransTemp
     spec.thermostatState = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
-    if spec.engTermPID ~= nil then
-        spec.engTermPID.mechPos = spec.thermostatState
-    end
     spec.transmissionThermostatState = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
     readOptionalThermalState(spec, streamId, true)
 
@@ -241,45 +311,14 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     spec.preheatColdStartFaultSeverity = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadUInt8(streamId), 0, 0, 4))
 
     -- [Group 6] Field care
-    spec.radiatorClogging = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-    spec.airFilterClogging = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-    spec.airFilterResidue = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-    spec.fuelFilterClogging = streamReadFloat32(streamId)
-    spec.hydraulicFilterClogging = streamReadFloat32(streamId)
-    spec.lubricationLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-    spec.engineOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-    spec.coolantLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-    spec.transmissionOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-    spec.hydraulicFluidLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-    spec.fluidCapacities = spec.fluidCapacities or {}
-    spec.fluidCompatibility = spec.fluidCompatibility or {}
-    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-        spec.fluidCapacities[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-        spec.fluidCompatibility[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1, 0, 1)
-    end
-    spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(streamReadString(streamId))
-    spec.fluidCapacityVersion = RMS_Fluids.CAPACITY_VERSION
-    RMS_Fluids.updateEffects(self)
+    readFieldcareState(self, spec, streamId)
     spec.fieldInspectionSoundActive = streamReadBool(streamId)
     if spec.fieldInspectionSoundActive then
         self:raiseActive()
     end
 
     -- [Group 7] Wear
-    spec.serviceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
-    spec.transmissionServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
-    spec.coolantServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
-    spec.hydraulicServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
-    spec.serviceCalendar = RMS_Utils.deserializeNumericMap(streamReadString(streamId))
-    spec.conditionLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001, 1.0)
-    local loadedSystems = RMS_Utils.deserializeSystemsState(streamReadString(streamId))
-    for sysKey, sysData in pairs(loadedSystems) do
-        if spec.systems[sysKey] ~= nil then
-            spec.systems[sysKey].condition = sysData.condition
-            spec.systems[sysKey].stress = sysData.stress
-            spec.systems[sysKey].enabled = sysData.enabled
-        end
-    end
+    readWearState(spec, streamId)
     readPtoWearState(spec, streamId, true)
 
     -- [Group 8] Breakdowns
@@ -305,6 +344,9 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
 
     -- [Group 12] Exhaust deposits
     spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
+    spec.fuelState.particulateFilterLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL)
+    spec.fuelState.isParticulateFilterRegenerating = streamReadBool(streamId)
+    spec.isEngineDerated = streamReadBool(streamId)
 
     -- [Group 13] Authoritative resale quote
     readResalePrice(self, streamId)
@@ -318,7 +360,7 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
         RMS_ElectricDrive.applyBatteryCapacity(self)
     end
 
-    -- a parked machine never updates on a joining client, so it joins the fleet here
+    -- Register here: parked vehicles do not update on join.
     RealisticMechanicalSystems.registerVehicle(self)
 end
 
@@ -357,58 +399,31 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.dynamicMotorLoad, 0, 0, 1.5))
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.wheelSlipIntensity, 0, 0, 1))
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
+            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
+            streamWriteBool(streamId, spec.fuelState.isParticulateFilterRegenerating == true)
+            streamWriteBool(streamId, spec.isEngineDerated == true)
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.liftedMass, 0, 0))
         end
 
         -- [4] Thermal
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.THERMAL) ~= 0) then
-            streamWriteFloat32(streamId, RMS_Thermal.getEngineTemperature(self))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.rawTransmissionTemperature, 20))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.thermostatState, 0, 0, 1))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionThermostatState, 0, 0, 1))
-            writeOptionalThermalState(self, streamId)
+            writeThermalState(self, spec, streamId)
         end
 
         -- [5] Electrical
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.ELECTRICAL) ~= 0) then
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.batterySoc, 1.0, 0, 1))
-            streamWriteBool(streamId, spec.batteryIsolated)
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.systemVoltageV, 12.6, 0, 30))
-            streamWriteUInt8(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.preheatState, RMS_Preheat.STATE.IDLE, RMS_Preheat.STATE.IDLE, RMS_Preheat.STATE.FAILED)))
-            streamWriteBool(streamId, spec.preheatLampTestActive == true)
-            streamWriteBool(streamId, spec.preheatWasRequired == true)
-            streamWriteUInt8(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.preheatColdStartFaultSeverity, 0, 0, 4)))
+            writeElectricalState(spec, streamId)
         end
 
         -- [6] Field care
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE) ~= 0) then
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.radiatorClogging, 0, 0))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.airFilterClogging, 0, 0))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.airFilterResidue, 0, 0))
-            streamWriteFloat32(streamId, spec.fuelFilterClogging)
-            streamWriteFloat32(streamId, spec.hydraulicFilterClogging)
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.lubricationLevel, 1.0, 0.0, 1.0))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.engineOilLevel, 1.0, 0.0, 1.0))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantLevel, 1.0, 0.0, 1.0))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionOilLevel, 1.0, 0.0, 1.0))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicFluidLevel, 1.0, 0.0, 1.0))
-            for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-                streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCapacities[circuit], 0, 0))
-                streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCompatibility[circuit], 1, 0, 1))
-            end
-            streamWriteString(streamId, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
+            writeFieldcareState(spec, streamId)
             streamWriteBool(streamId, spec.fieldInspectionSoundActive)
         end
 
         -- [7] Wear
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.WEAR) ~= 0) then
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.serviceLevel, 1.0, 0.001))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionServiceLevel, 1.0, 0.001))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantServiceLevel, 1.0, 0.001))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.hydraulicServiceLevel, 1.0, 0.001))
-            streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.serviceCalendar))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.conditionLevel, 1.0, 0.001, 1.0))
-            streamWriteString(streamId, RMS_Utils.serializeSystemsState(spec.systems))
+            writeWearState(spec, streamId)
             writePtoWearState(spec, streamId)
         end
 
@@ -499,6 +514,9 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             spec.dynamicMotorLoad = spec._netDynamicMotorLoad
             spec.wheelSlipIntensity = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
             spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
+            spec.fuelState.particulateFilterLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL)
+            spec.fuelState.isParticulateFilterRegenerating = streamReadBool(streamId)
+            spec.isEngineDerated = streamReadBool(streamId)
             spec.liftedMass = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
         end
 
@@ -508,12 +526,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             local syncRawTransTemp = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), syncRawEngTemp)
             RMS_Thermal.setEngineTemperature(self, syncRawEngTemp)
             spec.rawTransmissionTemperature = syncRawTransTemp
-            spec._netTargetEngineTemp = syncRawEngTemp
-            spec._netTargetTransmissionTemp = syncRawTransTemp
             spec.thermostatState = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
-            if spec.engTermPID ~= nil then
-                spec.engTermPID.mechPos = spec.thermostatState
-            end
             spec.transmissionThermostatState = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
             readOptionalThermalState(spec, streamId, false)
         end
@@ -536,25 +549,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
 
         -- [6] Field care
         if streamReadBool(streamId) then
-            spec.radiatorClogging = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-            spec.airFilterClogging = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-            spec.airFilterResidue = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-            spec.fuelFilterClogging = streamReadFloat32(streamId)
-            spec.hydraulicFilterClogging = streamReadFloat32(streamId)
-            spec.lubricationLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-            spec.engineOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-            spec.coolantLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-            spec.transmissionOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-            spec.hydraulicFluidLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-            spec.fluidCapacities = spec.fluidCapacities or {}
-            spec.fluidCompatibility = spec.fluidCompatibility or {}
-            for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-                spec.fluidCapacities[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-                spec.fluidCompatibility[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1, 0, 1)
-            end
-            spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(streamReadString(streamId))
-            spec.fluidCapacityVersion = RMS_Fluids.CAPACITY_VERSION
-            RMS_Fluids.updateEffects(self)
+            readFieldcareState(self, spec, streamId)
             local wasInspected = spec.fieldInspectionSoundActive
             spec.fieldInspectionSoundActive = streamReadBool(streamId)
             if spec.fieldInspectionSoundActive ~= wasInspected then
@@ -564,20 +559,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
 
         -- [7] Wear
         if streamReadBool(streamId) then
-            spec.serviceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
-            spec.transmissionServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
-            spec.coolantServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
-            spec.hydraulicServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
-            spec.serviceCalendar = RMS_Utils.deserializeNumericMap(streamReadString(streamId))
-            spec.conditionLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001, 1.0)
-            local loadedSystems = RMS_Utils.deserializeSystemsState(streamReadString(streamId))
-            for sysKey, sysData in pairs(loadedSystems) do
-                if spec.systems[sysKey] ~= nil then
-                    spec.systems[sysKey].condition = sysData.condition
-                    spec.systems[sysKey].stress = sysData.stress
-                    spec.systems[sysKey].enabled = sysData.enabled
-                end
-            end
+            readWearState(spec, streamId)
             readPtoWearState(spec, streamId, false)
         end
 

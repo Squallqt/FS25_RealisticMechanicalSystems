@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture>
+    <meta>
+        <filename>rms_diagnostic.png</filename>
+        <size width="512" height="256" />
+    </meta>
+    <slices>
+        <slice id="logo" uvs="8px 8px 212px 88px" />
+        <slice id="close" uvs="396px 8px 72px 72px" />
+        <slice id="connect" uvs="396px 88px 72px 72px" />
+        <slice id="stethoscope" uvs="228px 8px 160px 160px" />
+        <slice id="faultActive" uvs="8px 176px 72px 72px" />
+        <slice id="warning" uvs="88px 176px 60px 60px" />
+        <slice id="help" uvs="156px 176px 64px 64px" />
+    </slices>
+</texture>

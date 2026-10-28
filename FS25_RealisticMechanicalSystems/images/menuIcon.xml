@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <texture>
     <meta>
-        <filename>menuIcon.dds</filename>
+        <filename>menuIcon.png</filename>
         <size width="256" height="256" />
     </meta>
     <slices>

@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Generated table of vehicle production years, keyed by store item path
+---Vehicle production years by store item path.
 RMS_VehicleYearsData = {
     ["$data/handtools/brandless/horsebrush/horsebrush.xml"] = 1911,
     ["$data/handtools/husqvarna/xp550/xp550.xml"] = 1959,
@@ -2707,6 +2707,7 @@ RMS_VehicleYearsData = {
     ["fs25_john_deere_627c/john_deere_627c.xml"] = 2024,
     ["fs25_john_deere_6r_medium/series6rmedium.xml"] = 2022,
     ["fs25_john_deere_6r_series/xml/series6r.xml"] = 2020,
+    ["fs25_john_deere_8r540highhorsepower/johndeere_8r540.xml"] = 2026,
     ["fs25_john_deere_9000_series_slm/series9000.xml"] = 2018,
     ["fs25_john_deere_cs770/john_deere_cs770.xml"] = 2021,
     ["fs25_john_deere_pickers/7760.xml"] = 2014,

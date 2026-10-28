@@ -7,12 +7,11 @@ local RMS_ConsoleCommandEvent_mt = Class(RMS_ConsoleCommandEvent, Event)
 
 InitEventClass(RMS_ConsoleCommandEvent, "RMS_ConsoleCommandEvent")
 
--- console command names accepted from a client
 RMS_ConsoleCommandEvent.ALLOWED_COMMANDS = {
     setService = true,
     setCondition = true,
     setSystemCondition = true,
-    setSystemStress = true,
+    setPartWear = true,
     addBreakdown = true,
     removeBreakdown = true,
     changeBreakdownStage = true,
@@ -52,7 +51,7 @@ function RMS_ConsoleCommandEvent.new(commandName, argsOne, argsTwo, vehicle)
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_ConsoleCommandEvent:writeStream(streamId, connection)
@@ -67,7 +66,7 @@ function RMS_ConsoleCommandEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_ConsoleCommandEvent:readStream(streamId, connection)
@@ -79,7 +78,7 @@ function RMS_ConsoleCommandEvent:readStream(streamId, connection)
         self.vehicle = NetworkUtil.readNodeObject(streamId)
     end
 
-    -- empty strings map back to missing arguments
+    -- Empty strings represent absent arguments.
     if self.argsOne == "" then self.argsOne = nil end
     if self.argsTwo == "" then self.argsTwo = nil end
 
@@ -99,7 +98,6 @@ function RMS_ConsoleCommandEvent:run(connection)
         return
     end
 
-    -- only a master user may run a command
     local userId = g_currentMission.userManager:getUserIdByConnection(connection)
     local user = g_currentMission.userManager:getUserByUserId(userId)
     if user == nil or not user:getIsMasterUser() then
@@ -115,7 +113,6 @@ function RMS_ConsoleCommandEvent:run(connection)
         return
     end
 
-    -- the command runs against the carried vehicle and answers the requester
     local commands = RealisticMechanicalSystems.ConsoleCommands
     commands._overrideVehicle = self.vehicle
     commands._outputConnection = connection
@@ -126,9 +123,7 @@ function RMS_ConsoleCommandEvent:run(connection)
     local isReadOnly = self.commandName == "printSpecVar" or self.commandName == "getServiceState"
         or self.commandName == "showServiceLog" or self.commandName == "getDebugVehicleInfo"
 
-    -- replicate every sync group of the modified vehicle
     if not isReadOnly and self.vehicle ~= nil and self.vehicle.spec_RealisticMechanicalSystems ~= nil then
-        local spec = self.vehicle.spec_RealisticMechanicalSystems
         RealisticMechanicalSystems.raiseRMSDirty(self.vehicle, RealisticMechanicalSystems.SYNC_GROUP.STATE)
         RealisticMechanicalSystems.raiseRMSDirty(self.vehicle, RealisticMechanicalSystems.SYNC_GROUP.SERVICE_CONTEXT)
         RealisticMechanicalSystems.raiseRMSDirty(self.vehicle, RealisticMechanicalSystems.SYNC_GROUP.TELEMETRY)

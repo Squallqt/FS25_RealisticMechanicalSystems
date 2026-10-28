@@ -6,7 +6,7 @@
         <functions>
             <function>$l10n_rms_charger_function</function>
         </functions>
-        <image>objects/batteryCharger/store_batteryCharger.dds</image>
+        <image>objects/batteryCharger/store_batteryCharger.png</image>
         <price>800</price>
         <lifetime>600</lifetime>
         <rotation>0</rotation>
@@ -98,9 +98,9 @@
         </dashboards>
     </motorized>
     <pushHandTool>
-        <raycast node1="raycast01" node2="raycast02" playerNode="playerNode" positionSmoothnessFactor="0.4" positionSmoothnessFactorReverse="2" positionSmoothnessFactorSteering="0" />
+        <raycast node1="raycast01" node2="raycast02" playerNode="playerNode" positionSmoothnessFactor="3.3333333333333335" positionSmoothnessFactorReverse="2" positionSmoothnessFactorSteering="0" />
         <wheels front="3 4" back="1 2" />
-        <spine rotationForward="-55" rotationBackward="-55" rotationIdle="-56" ratio="0.6 0.2 0.2" speed="40" />
+        <spine rotationForward="-42" rotationBackward="-40" rotationIdle="-40" ratio="1 0 0" speed="40" />
         <ikChains>
             <target ikChain="rightArm" targetNode="playerRightHandTarget" poseId="narrowFingers" />
             <target ikChain="leftArm" targetNode="playerLeftHandTarget" poseId="narrowFingers" />
@@ -117,8 +117,8 @@
                 </conditions>
             </item>
             <item id="walk" entryTransitionDuration="0.25" exitTransitionDuration="0.25">
-                <clips speedScaleType="distance" speedScaleParameter="2.25">
-                    <clip clipName="walkFwd1Source" />
+                <clips speedScaleType="distance" speedScaleParameter="1.125">
+                    <clip clipName="chainsaw_walkSource" />
                 </clips>
                 <conditions>
                     <conditionGroup>
@@ -128,7 +128,7 @@
             </item>
             <item id="walkBack" entryTransitionDuration="0.5" exitTransitionDuration="0.25">
                 <clips speedScaleType="distance" speedScaleParameter="2.25">
-                    <clip clipName="walkBwdLoopSource" />
+                    <clip clipName="chainsaw_walkbackwardSource" />
                 </clips>
                 <conditions>
                     <conditionGroup>
@@ -137,15 +137,21 @@
                 </conditions>
             </item>
         </playerConditionalAnimation>
+        <customChainLimits>
+            <customChainLimit chainId="leftArm" nodeIndex="1" minRx="-50" maxRx="50" minRy="-80" maxRy="80" minRz="-75" maxRz="10" localLimits="true" />
+            <customChainLimit chainId="leftArm" nodeIndex="2" minRx="-25" maxRx="25" minRy="-144" maxRy="-1" minRz="-10" maxRz="10" localLimits="true" />
+            <customChainLimit chainId="rightArm" nodeIndex="1" minRx="-50" maxRx="50" minRy="-80" maxRy="80" minRz="-75" maxRz="10" localLimits="true" />
+            <customChainLimit chainId="rightArm" nodeIndex="2" minRx="-25" maxRx="25" minRy="-144" maxRy="-1" minRz="-10" maxRz="10" localLimits="true" />
+        </customChainLimits>
     </pushHandTool>
     <animations>
         <animation name="enterAnimation">
-            <part node="playerCollision01" startTime="0" endTime="0.001" startTrans="0 0.55 0.49" endTrans="0 0.55 -0.05" />
-            <part node="playerCollision02" startTime="0" endTime="0.001" startTrans="0 0 0" endTrans="0 0.8 0" />
+            <part node="playerCollision01" startTime="0" endTime="0.001" startTrans="0 0.55 0.4530497" endTrans="0 0.55 -0.05" />
+            <part node="playerCollision02" startTime="0" endTime="0.001" startTrans="0 0 0" endTrans="0 0.59 0.22" startRot="0 0 0" endRot="45 0 0" />
         </animation>
         <animation name="speedAnimation">
-            <part node="player" startTime="0.0" endTime="0.5" startTrans="0 0 -0.781000000" endTrans="0 0 -0.600000000" />
-            <part node="player" startTime="0.5" endTime="1.0" startTrans="0 0 -0.600000000" endTrans="0 0 -0.681000000" />
+            <part node="player" startTime="0.0" endTime="0.5" startTrans="0 0 -0.69" endTrans="0 0 -0.4530497" />
+            <part node="player" startTime="0.5" endTime="1.0" startTrans="0 0 -0.4530497" endTrans="0 0 -0.72" />
         </animation>
     </animations>
     <foliageBending>
@@ -153,36 +159,69 @@
     </foliageBending>
     <wearable wearDuration="480" workMultiplier="5" fieldMultiplier="2" />
     <washable dirtDuration="90" washDuration="1" workMultiplier="3" fieldMultiplier="2" />
+    <handToolHolders>
+        <handToolHolder>
+            <holder type="GREASEGUN" node="greaseGunHolder" dummyFilename="objects/batteryCharger/dummyGreaseGun.i3d" />
+            <trigger node="greaseGunPlayerTrigger" />
+        </handToolHolder>
+        <handToolHolder>
+            <holder type="AIRBLOWER" node="airBlowerHolder" dummyFilename="objects/batteryCharger/dummyAirBlower.i3d" />
+            <trigger node="airBlowerPlayerTrigger" />
+        </handToolHolder>
+        <handToolHolder>
+            <holder type="jumperCables" node="jumperCablesHolder" dummyFilename="objects/batteryCharger/dummyJumperCables.i3d" />
+            <trigger node="jumperCablesPlayerTrigger" />
+        </handToolHolder>
+    </handToolHolders>
     <i3dMappings>
         <i3dMapping id="charger_vis" node="0&gt;0" />
         <i3dMapping id="cameraRaycastNode1" node="0&gt;0|0" />
         <i3dMapping id="cameraRaycastNode2" node="0&gt;0|1" />
         <i3dMapping id="chargerDisplay" node="0&gt;0|2" />
         <i3dMapping id="case" node="0&gt;0|3|0|13" />
-        <i3dMapping id="exitPoint" node="0&gt;0|4" />
-        <i3dMapping id="indoorCamera1" node="0&gt;0|5" />
-        <i3dMapping id="outdoorCameraTarget" node="0&gt;0|6" />
-        <i3dMapping id="outdoorCamera1" node="0&gt;0|6|0" />
-        <i3dMapping id="player" node="0&gt;0|7" />
-        <i3dMapping id="playerCollision01" node="0&gt;0|7|0" />
-        <i3dMapping id="playerCollision02" node="0&gt;0|7|0|0" />
-        <i3dMapping id="playerNode" node="0&gt;0|7|1" />
-        <i3dMapping id="skeleton" node="0&gt;0|7|1|0" />
-        <i3dMapping id="raycast01" node="0&gt;0|7|2" />
-        <i3dMapping id="raycast02" node="0&gt;0|7|3" />
-        <i3dMapping id="playerLeftHandTarget" node="0&gt;0|8" />
-        <i3dMapping id="playerRightHandTarget" node="0&gt;0|9" />
-        <i3dMapping id="shadowFocusBox" node="0&gt;0|10" />
-        <i3dMapping id="wheelBackLeft" node="0&gt;0|11" />
-        <i3dMapping id="wheelBackRight" node="0&gt;0|12" />
-        <i3dMapping id="wheelFrontLeftRot" node="0&gt;0|13" />
-        <i3dMapping id="wheelFrontLeft" node="0&gt;0|13|0" />
-        <i3dMapping id="wheelFrontRightRot" node="0&gt;0|14" />
-        <i3dMapping id="wheelFrontRight" node="0&gt;0|14|0" />
+        <i3dMapping id="diagnosticPcRoot" node="0&gt;0|4" />
+        <i3dMapping id="diagnosticScreenOff" node="0&gt;0|4|1|1" />
+        <i3dMapping id="diagnosticScreenOn" node="0&gt;0|4|1|2" />
+        <i3dMapping id="exitPoint" node="0&gt;0|5" />
+        <i3dMapping id="indoorCamera1" node="0&gt;0|6" />
+        <i3dMapping id="outdoorCameraTarget" node="0&gt;0|7" />
+        <i3dMapping id="outdoorCamera1" node="0&gt;0|7|0" />
+        <i3dMapping id="player" node="0&gt;0|8" />
+        <i3dMapping id="playerCollision01" node="0&gt;0|8|0" />
+        <i3dMapping id="playerCollision02" node="0&gt;0|8|0|0" />
+        <i3dMapping id="playerNode" node="0&gt;0|8|1" />
+        <i3dMapping id="skeleton" node="0&gt;0|8|1|0" />
+        <i3dMapping id="raycast01" node="0&gt;0|8|2" />
+        <i3dMapping id="raycast02" node="0&gt;0|8|3" />
+        <i3dMapping id="playerLeftHandTarget" node="0&gt;0|9" />
+        <i3dMapping id="playerRightHandTarget" node="0&gt;0|10" />
+        <i3dMapping id="shadowFocusBox" node="0&gt;0|11" />
+        <i3dMapping id="wheelBackLeft" node="0&gt;0|12" />
+        <i3dMapping id="wheelBackRight" node="0&gt;0|13" />
+        <i3dMapping id="wheelFrontLeftRot" node="0&gt;0|14" />
+        <i3dMapping id="wheelFrontLeft" node="0&gt;0|14|0" />
+        <i3dMapping id="wheelFrontRightRot" node="0&gt;0|15" />
+        <i3dMapping id="wheelFrontRight" node="0&gt;0|15|0" />
+        <i3dMapping id="airBlowerHolder" node="0&gt;13" />
+        <i3dMapping id="airBlowerPlayerTrigger" node="0&gt;14" />
+        <i3dMapping id="greaseGunHolder" node="0&gt;11" />
+        <i3dMapping id="greaseGunPlayerTrigger" node="0&gt;12" />
+        <i3dMapping id="jumperCablesHolder" node="0&gt;15" />
+        <i3dMapping id="jumperCablesPlayerTrigger" node="0&gt;16" />
     </i3dMappings>
     <rmsBatteryCharger maxCurrent="150" display="chargerDisplay">
         <sounds>
             <work file="objects/batteryCharger/chargerHum.ogg" linkNode="0&gt;" loops="0" volumeScale="1" innerRadius="2" outerRadius="12" fadeIn="0.3" fadeOut="0.3" />
         </sounds>
     </rmsBatteryCharger>
+    <rmsDiagnosticTool>
+        <rmsDiagnosticPcConfigurations isYesNoOption="true">
+            <rmsDiagnosticPcConfiguration name="$l10n_configuration_valueNo" price="0" isDefault="true" saveId="WITHOUT_PC">
+                <objectChange node="diagnosticPcRoot" visibilityActive="false" visibilityInactive="true" />
+            </rmsDiagnosticPcConfiguration>
+            <rmsDiagnosticPcConfiguration name="$l10n_configuration_valueYes" price="4080" isDefault="false" saveId="WITH_PC">
+                <objectChange node="diagnosticPcRoot" visibilityActive="true" visibilityInactive="false" />
+            </rmsDiagnosticPcConfiguration>
+        </rmsDiagnosticPcConfigurations>
+    </rmsDiagnosticTool>
 </vehicle>

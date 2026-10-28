@@ -57,13 +57,11 @@ function RMS_SellItemDialog.new(target, customMt)
     return dialog
 end
 
----Opens the dialog on a vehicle, falling back to the store item of its config file
 -- @param table vehicle vehicle
--- @param table? storeItem store item
 -- @param function? callback called with the player answer
 -- @param table? target callback target
 -- @param table? args extra callback arguments
-function RMS_SellItemDialog.show(vehicle, storeItem, callback, target, args)
+function RMS_SellItemDialog.show(vehicle, callback, target, args)
     if RMS_SellItemDialog.INSTANCE == nil then
         RMS_SellItemDialog.register()
     end
@@ -74,7 +72,6 @@ function RMS_SellItemDialog.show(vehicle, storeItem, callback, target, args)
 
     local dialog = RMS_SellItemDialog.INSTANCE
     dialog.vehicle = vehicle
-    dialog.storeItem = storeItem or g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     dialog.callback = callback
     dialog.callbackTarget = target
     dialog.callbackArgs = args
@@ -89,36 +86,13 @@ function RMS_SellItemDialog:updateScreen()
         return
     end
 
-    local storeItem = self.storeItem
-    local imageFilename = "dataS/menu/blank.png"
-    local name = "unknown"
-
-    if storeItem ~= nil then
-        imageFilename = storeItem.imageFilename
-        name = storeItem.name
-    end
-
-    if self.vehicle.getFullName ~= nil then
-        name = self.vehicle:getFullName()
-    elseif self.vehicle.getName ~= nil then
-        name = self.vehicle:getName()
-    end
-
-    if self.vehicle.getImageFilename ~= nil then
-        local vehicleImageFilename = self.vehicle:getImageFilename()
-        if vehicleImageFilename ~= nil and vehicleImageFilename ~= "" then
-            imageFilename = vehicleImageFilename
-        end
-    end
-
     if self.vehicleImageElement ~= nil then
-        self.vehicleImageElement:setImageFilename(imageFilename)
+        self.vehicleImageElement:setImageFilename(self.vehicle:getImageFilename())
     end
 
     if self.vehicleNameElement ~= nil then
-        self.vehicleNameElement:setText(name)
+        self.vehicleNameElement:setText(self.vehicle:getFullName())
 
-        -- the header block hugs the longer of its two lines
         local textWidth = math.max(self.dialogTitleElement.size[1], self.vehicleNameElement.size[1])
         self.headerTextLayout:setSize(textWidth, nil)
         self.headerTextLayout:invalidateLayout()
@@ -220,7 +194,6 @@ end
 ---Clears the dialog state
 function RMS_SellItemDialog:onClose()
     self.vehicle = nil
-    self.storeItem = nil
     self.returnBreakdown = nil
     self.callback = nil
     self.callbackTarget = nil

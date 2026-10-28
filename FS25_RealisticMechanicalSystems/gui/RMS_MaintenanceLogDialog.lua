@@ -8,24 +8,11 @@ RMS_MaintenanceLogDialog.INSTANCE = nil
 local RMS_MaintenanceLogDialog_mt = Class(RMS_MaintenanceLogDialog, MessageDialog)
 local modDirectory = g_currentModDirectory
 
--- below one hour of use, the cost per hour is a division by almost nothing
+-- Avoid cost-per-hour division below one operating hour.
 local MIN_HOURS_FOR_COST_PER_HOUR = 1
 
----Draws the native maintenance glyph in the maintenance interval KPI
--- @param table area transparent GUI element receiving the XML draw callback
-function RMS_MaintenanceLogDialog:onDrawMaintenanceKpiIcon(area)
-    RMS_WorkshopDialog.drawMaintenanceIcon(area, "rms_logKpiMaintenanceIcon")
-end
-
----Draws the player's native currency glyph in a cost KPI
--- @param table area transparent GUI element receiving the XML draw callback
-function RMS_MaintenanceLogDialog:onDrawCurrencyKpiIcon(area)
-    RMS_WorkshopDialog.drawCurrencyIcon(area)
-end
-
----Tells whether a repaired breakdown is worth listing, general wear is not
 local function isLoggableRepairBreakdownId(breakdownId)
-    return breakdownId ~= nil and breakdownId ~= "GENERAL_WEAR"
+    return breakdownId ~= nil and RMS_Breakdowns.BreakdownRegistry[breakdownId] ~= nil
 end
 
 ---Tells whether a log entry is shown, a missing flag counting as visible
@@ -69,7 +56,7 @@ local function getResolvedBreakdownsCount(logEntries)
 
                 if type(selectedBreakdowns) == "table" then
                     for _, breakdownId in ipairs(selectedBreakdowns) do
-                        if breakdownId ~= nil and breakdownId ~= "GENERAL_WEAR" then
+                        if isLoggableRepairBreakdownId(breakdownId) then
                             total = total + 1
                         end
                     end
@@ -125,6 +112,8 @@ local function getLogDescription(vehicle, entry)
 
     if entry.isCompleted == false then
         description = g_i18n:getText("rms_log_cancelled_desc")
+    elseif entry.type == RealisticMechanicalSystems.LOG_DIAGNOSTIC_READING then
+        description = RMS_DiagnosticTool.formatReadingCodes(vehicle, entry)
     else
         local partTypeSuffix = ""
         if entry.type ~= status.BODYWORK and entry.optionTwo ~= nil and entry.optionTwo ~= "NONE" then
@@ -189,7 +178,12 @@ local function getLogDetailPresentation(vehicle, entry)
         partTypeSuffix = " (" .. g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, entry.optionTwo)) .. ")"
     end
 
-    if entry.type == status.REPAIR then
+    if entry.type == RealisticMechanicalSystems.LOG_DIAGNOSTIC_READING then
+        local codes = RMS_DiagnosticTool.getReadingCodes(vehicle, entry)
+        presentation.summary = g_i18n:getText("rms_diagnostic_log_title")
+        presentation.detailLabel = g_i18n:getText("rms_diagnostic_log_codes")
+        presentation.detailItems = #codes > 0 and codes or { g_i18n:getText("rms_diagnostic_no_fault") }
+    elseif entry.type == status.REPAIR then
         presentation.summary = g_i18n:getText("rms_log_repair_desc_generic") .. partTypeSuffix
         if #partNames > 0 then
             presentation.detailLabel = g_i18n:getText("rms_log_total_breakdowns_count_title")
@@ -226,7 +220,7 @@ local function getInvoiceRows(vehicle, entry)
     if entry.isCompleted == false or type(entry.invoice) ~= "table" then
         return {}
     end
-    return RMS_FluidWorkshop.getInvoiceRows(vehicle, entry.type, entry.optionOne, entry.invoice)
+    return RMS_FluidWorkshop.getInvoiceRows(vehicle, entry.type, entry.optionOne, entry.invoice, true)
 end
 
 ---Loads the dialog layout and stores the shared instance
@@ -410,7 +404,6 @@ function RMS_MaintenanceLogDialog:updateScreen()
 
     self.totalCostValue:setText(g_i18n:formatMoney(totalCost, 0, true, false))
 
-    -- ownership age in months, counted from the first log entry
     local currentYear = g_currentMission.environment.currentYear
     local currentMonth = g_currentMission.environment.currentPeriod
     
@@ -622,6 +615,9 @@ function RMS_MaintenanceLogDialog:onOpen()
     RMS_MaintenanceLogDialog:superClass().onOpen(self)
     RMS_WorkshopDialog.initializeChildTabPaging(self, RMS_WorkshopDialog.TAB.TECHNICAL)
     RMS_Utils.resetScrollingTexts(self.dialogElement)
+    for _, icon in ipairs(self.currencyIcons) do
+        RMS_WorkshopDialog.setCurrencyIcon(icon)
+    end
     g_messageCenter:subscribe(MessageType.MONEY_CHANGED, self.updateScreen, self)
 
     self:updateFocusLinks()

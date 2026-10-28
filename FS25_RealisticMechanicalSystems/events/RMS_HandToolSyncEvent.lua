@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Synchronises the air blower and grease gun hand tool actions between server and clients
 RMS_HandToolSyncEvent = {}
 local RMS_HandToolSyncEvent_mt = Class(RMS_HandToolSyncEvent, Event)
 
@@ -31,7 +30,7 @@ function RMS_HandToolSyncEvent.new(tool, state, targetVehicle, targetDistance)
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_HandToolSyncEvent:writeStream(streamId, connection)
@@ -42,7 +41,7 @@ function RMS_HandToolSyncEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_HandToolSyncEvent:readStream(streamId, connection)

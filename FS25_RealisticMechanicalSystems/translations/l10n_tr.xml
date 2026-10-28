@@ -4,6 +4,9 @@
         <text name="rms_hud_mass_tractor" text="Araç"/>
         <text name="rms_hud_mass_towed" text="Bağlı"/>
         <text name="rms_hud_mass_total" text="Toplam"/>
+        <text name="rms_hud_drive_2wd" text="2WD"/>
+        <text name="rms_hud_drive_4wd" text="4WD"/>
+        <text name="rms_hud_drive_auto" text="OTO"/>
         <text name="rms_drivetrain_mode_4x2" text="2WD (ön aks devre dışı)"/>
         <text name="rms_drivetrain_mode_4wd" text="4WD (ön aks devrede)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD OTO"/>
@@ -26,6 +29,8 @@
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Diferansiyel kilidi"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Park freni"/>
         <text name="input_RMS_TOGGLE_ODOMETER" text="ODO/TRIP (tut: TRIP=0)"/>
+        <text name="input_RMS_REVERSE_FAN" text="Fanı ters çevir"/>
+        <text name="input_RMS_TOGGLE_DEBUG_WINDOW" text="Hata ayıklama penceresi"/>
         <text name="input_RMS_TOGGLE_BATTERY_ISOLATOR" text="Akü şalteri"/>
         <text name="input_RMS_TOGGLE_FLUID_CAN" text="Bidonu taşı veya ekle"/>
         <!-- Settings -->
@@ -41,8 +46,8 @@
         <text name="rms_dealerWorkshopAvailable_tooltip" text="Bayi atölyesinin günün her saatinde hizmet verebilir durumda olmasını sağlar."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobil Atölye 7/24"/>
         <text name="rms_mobileWorkshopAvailable_tooltip" text="Mobil atölyenin günün her saatinde kullanıma hazır olmasını sağlar."/>
-        <text name="rms_mobileWorkshopRestrictions_label" text="Mobil Atölye Kısıtlamaları"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Mobil işlemleri iş ve gerekli ekipmana göre sınırlar. Bakım yapılabilir; teşhis, ağır söküm veya yüksek gerilim işleri donanımlı bir atölye gerektirebilir."/>
+        <text name="rms_mobileWorkshopRestrictions_label" text="Atölye Kısıtlamaları"/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Mobil atölyenin ve kendi atölyenin işlerini gereken ekipmana göre sınırlar. Bakım yapılabilir; elektronik işler makineye bağlı teşhis cihazı gerektirir, mobil atölyede ise ağır söküm veya yüksek gerilim işleri donanımlı bir atölye gerektirir."/>
         <text name="rms_ownWorkshopAvailable_label" text="Kendi Atölyen 7/24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Kendi atölyeni günün her saatinde kullanıma hazır tutar."/>
         <text name="rms_instantInspection_label" text="Anında Muayene"/>
@@ -54,15 +59,13 @@
         <text name="rms_instantOverhaul_label" text="Anında Mekanik Revizyon"/>
         <text name="rms_instantOverhaul_tooltip" text="Etkinleştirildiğinde atölyedeki mekanik revizyonlar anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
         <text name="rms_debugMode_label" text="Hata Ayıklama Modu"/>
-        <text name="rms_debugMode_tooltip" text="Konsoldaki hata ayıklama panelini ve ayrıntılı günlükleri etkinleştirir."/>
+        <text name="rms_debugMode_tooltip" text="Sürdüğün araçta hata ayıklama penceresini gösterir; %s tuşu da pencereyi açar ve kapatır. Çok oyunculu modda pencereyi yalnızca yöneticiler görür. Konsola ayrıntılı günlükler de yazar."/>
         <text name="rms_warningMessages_label" text="Uyarı Mesajları"/>
         <text name="rms_warningMessages_tooltip" text="Soğuk motor ve aşırı ısınma uyarıları gibi oyun içi uyarı mesajlarını etkinleştirir veya devre dışı bırakır. Sıcaklık nedeniyle güç sınırlaması bildirimleri etkin kalır."/>
         <text name="rms_serviceInterval_label" text="Bakımlar arası süre"/>
         <text name="rms_serviceInterval_tooltip" text="Referans saatlerini ayarlayın. 100 saatte, 500 saatlik talimat 100 saate, 600 saatlik talimat 120 saate dönüşür. Her sıvı araç programını izler; takvim sınırları bağımsızdır."/>
         <text name="rms_vehicleLifespan_label" text="Aracın Kullanım Ömrü"/>
         <text name="rms_vehicleLifespan_tooltip" text="Aracın temel ömrünü saat cinsinden belirler; bu sürenin sonunda aracın durumu %0’a ulaşır. Durum sıfıra ne kadar yaklaşırsa, araç o kadar güvenilmez hale gelir. Aracın değeri de bu saatler boyunca düşer. Değişiklik o andan itibaren geçerlidir: araçlar durumlarını korur, yalnızca değerleri yeniden hesaplanır."/>
-        <text name="rms_generalWearEnabled_label" text="Yaşla İlgili Aşınma"/>
-        <text name="rms_generalWearEnabled_tooltip" text="Araç aşındıkça her sistem motor gücü, hidrolik hızı veya fren verimliliği gibi ana özelliklerinde küçük kayıplar yaşar. Etki ömrün ilk üçte birinden sonra başlar ancak ancak üçte ikisinden sonra belirginleşir ve makinenin ömrü sona yaklaştıkça güçlenir."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Egzoz Dumanı"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Egzoz dumanını motorun gerçek durumuna göre belirler: yakıt havayı aştığında, sert kalkışta, düşük devirde zorlanan motorda, düşük yükte uzun süre rölantide, tıkalı hava filtresinde veya yıpranmış enjeksiyonda siyah, yorgun bir motor yağ yaktığında mavi, yakıt yanmadan çıktığında beyaz. Duman ayrıca motorun yaptığı işle birlikte büyür. Eski makineler modern olanlardan çok daha fazla duman atar; modern makineler ciddi bir arıza olmadıkça neredeyse hiç duman çıkarmaz. Soğuk havada yanmadan çıkan su da yoğuşarak kısa beyaz bir iz oluşturur ve bir iki metre içinde buharlaşır; bu, sağlam bir motorda bile görülür."/>
         <text name="rms_tutorialMode_label" text="Eğitim Modu"/>
@@ -122,6 +125,16 @@
         <text name="rms_service_access_easy" text="Kolay"/>
         <text name="rms_service_access_average" text="Ortalama"/>
         <text name="rms_service_access_demanding" text="Zorlu"/>
+        <text name="rms_shop_reliability_average" text="Ortalama güvenilirlik"/>
+        <text name="rms_shop_reliability_fair" text="Yeterli güvenilirlik"/>
+        <text name="rms_shop_reliability_good" text="İyi güvenilirlik"/>
+        <text name="rms_shop_reliability_very_good" text="Çok iyi güvenilirlik"/>
+        <text name="rms_shop_service_access_easy" text="Yüksek bakım kolaylığı"/>
+        <text name="rms_shop_service_access_average" text="Orta bakım kolaylığı"/>
+        <text name="rms_shop_service_access_demanding" text="Düşük bakım kolaylığı"/>
+        <text name="rms_owner_care_careful" text="Özenli bakım"/>
+        <text name="rms_owner_care_regular" text="Düzenli bakım"/>
+        <text name="rms_owner_care_neglected" text="İhmal edilmiş bakım"/>
         <text name="rms_ws_label_overhaul_count" text="Yapılan Revizyonlar"/>
         <text name="rms_ws_label_maintenance_log" text="Bakım Kaydı"/>
         <text name="rms_ws_label_last_report" text="Son Rapor"/>
@@ -139,6 +152,7 @@
         <text name="rms_ws_reason_overhaul_none" text="Mekanik revizyon, durumu %50'nin altındaki sistemleri yeniler. Bu makinede böyle bir sistem yok."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Mobil atölye boyama yapmaz. Boyama bayide yapılır."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Donanımlı bir atölye kullanın."/>
+        <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Bir arabanın teşhis cihazını makineye bağla."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronik teşhis gerekli"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Söküm veya özel aletler gerekli"/>
         <text name="rms_mobile_workshop_high_voltage_required" text="Yüksek gerilim ekipmanı gerekli"/>
@@ -160,8 +174,6 @@
         <text name="rms_ws_action_cancel_service" text="İşlemi iptal et"/>
         <text name="rms_ws_age_unit" text="ay"/>
         <text name="rms_ws_hours_unit" text="h"/>
-        <text name="rms_ws_option_yes" text="Evet"/>
-        <text name="rms_ws_option_no" text="Hayır"/>
         <text name="rms_ws_no_last_report_message" text="Henüz herhangi bir rapor bulunmamaktadır"/>
         <text name="rms_ws_no_log_empty_message" text="Henüz kayıt yok"/>
         <text name="rms_ws_no_report_message" text="Herhangi bir rapor bulunmamaktadır"/>
@@ -196,314 +208,7 @@
         <text name="rms_log_button_show_report" text="Raporu Göster"/>
         <text name="rms_log_empty" text="Henüz kayıt yok"/>
         <!-- Breakdowns -->
-        <text name="rms_breakdowns_severity_permanent" text="Kalıcı"/>
-        <text name="rms_breakdowns_severity_reduce_power" text="Güç Kaybı"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Hizmet Dışı"/>
-        <text name="rms_breakdowns_severity_minor" text="Hafif"/>
-        <text name="rms_breakdowns_severity_moderate" text="Orta"/>
-        <text name="rms_breakdowns_severity_major" text="Ciddi"/>
-        <text name="rms_breakdowns_severity_critical" text="Kritik"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Direksiyon bağlantı sisteminde hafif aşınma. Biraz boşluk oluşmuş ve direksiyon hassasiyeti biraz azalmış durumda."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Direksiyon bağlantı sisteminde orta derecede aşınma. Boşluk artıyor ve tekerlek ayarı bozuluyor: direksiyon gevşek hissettiriyor ve hafifçe bir yana çekiyor."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Direksiyon bağlantı sisteminde ciddi aşınma. Boşluk fazladır ve tekerlek ayarı belirgin şekilde bozuktur: araç bir yana çeker, çizgisini zor tutar ve bir mafsal kopabilir."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Direksiyon bağlantı sisteminde kritik arıza. Bir mafsal kopmuştur: direksiyon tekerlekleri artık doğru yönlendirmez ve sürüşe devam etmek tehlikelidir."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="Direksiyon bağlantı sisteminde arıza"/>
-        <text name="rms_breakdowns_general_wear_stage1_description" text="Yıllarca çalışmanın biriktirdiği zorlanma, ana bileşenlerde genel performansı biraz düşüren küçük ve geri döndürülemez aşınma bırakır."/>
-        <text name="rms_breakdowns_gear_disengage_message" text="Boşa geçiş"/>
-        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Kızdırma bujilerinde ilk aşama yıpranma. Soğuk çalıştırma yavaşlar, sıcak çalıştırma etkilenmez."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Birden fazla kızdırma bujisi zayıf veya arızalı. Soğuk çalıştırma zordur ve motor ısınana kadar düzensiz rölantide çalışabilir."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Ciddi kızdırma bujisi arızası. Soğuk çalıştırma son derece güvenilmezdir ve ısınma sırasında düzensiz çalışma devam eder."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Kızdırma bujileri tamamen arızalı. Sıcaklık çok düşük olduğunda motor çalıştırılamaz."/>
-        <text name="rms_breakdowns_part_vehicle" text="Araç"/>
-        <text name="rms_breakdowns_part_valve_train" text="Valf Mekanizması"/>
-        <text name="rms_breakdowns_part_consumables" text="Sarf Malzemeleri"/>
-        <text name="rms_breakdowns_part_cooling_system" text="Soğutma Sistemi"/>
-        <text name="rms_breakdowns_part_clutch" text="Debriyaj"/>
-        <text name="rms_breakdowns_part_cvt_chain" text="Sürekli Değişken Şanzıman"/>
-        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Oran Kumandası"/>
-        <text name="rms_breakdowns_part_cvt" text="CVT"/>
-        <text name="rms_breakdowns_part_engine" text="Motor"/>
-        <text name="rms_breakdowns_part_ecu" text="ECU"/>
-        <text name="rms_breakdowns_part_battery" text="Akü"/>
-        <text name="rms_breakdowns_part_traction_battery" text="Çekiş aküsü"/>
-        <text name="rms_breakdowns_part_hv_contactor" text="Yüksek Voltaj Kontaktörü"/>
-        <text name="rms_breakdowns_part_hv_wiring" text="Yüksek Voltaj Kablo Demeti"/>
-        <text name="rms_breakdowns_part_inverter" text="İnvertör"/>
-        <text name="rms_breakdowns_part_dcdc_converter" text="Gerilim Dönüştürücü"/>
-        <text name="rms_breakdowns_part_onboard_charger" text="Araç Üstü Şarj Cihazı"/>
-        <text name="rms_breakdowns_part_electric_motor_bearings" text="Elektrik Motoru Rulmanları"/>
-        <text name="rms_breakdowns_part_electric_motor_windings" text="Elektrik Motoru Sargıları"/>
-        <text name="rms_breakdowns_part_motor_position_sensor" text="Motor Konum Sensörü"/>
-        <text name="rms_breakdowns_part_coolant_pump" text="Soğutma Sıvısı Pompası"/>
-        <text name="rms_breakdowns_part_reducer" text="Redüktör"/>
-        <text name="rms_breakdowns_part_brake_system" text="Fren Sistemi"/>
-        <text name="rms_breakdowns_part_wiring" text="Kablolama ve Konektörler"/>
-        <text name="rms_breakdowns_part_wheel_bearing" text="Tekerlek Rulmanı"/>
-        <text name="rms_breakdowns_part_alternator_regulator" text="Alternatör Regülatörü"/>
-        <text name="rms_breakdowns_part_turbocharger" text="Turboşarj"/>
-        <text name="rms_breakdowns_part_transmission_thermostat" text="Şanzıman Termostatı"/>
-        <text name="rms_breakdowns_part_transmission_seal" text="Şanzıman Keçesi"/>
-        <text name="rms_breakdowns_part_track_tensioner" text="Palet Gergisi"/>
-        <text name="rms_breakdowns_part_thermostat" text="Termostat"/>
-        <text name="rms_breakdowns_part_oil_pump" text="Yağ Pompası"/>
-        <text name="rms_breakdowns_part_synchronizer" text="Senkronizör"/>
-        <text name="rms_breakdowns_part_steering_linkage" text="Direksiyon Bağlantı Sistemi"/>
-        <text name="rms_breakdowns_part_powershift_hydraulic_pump" text="Powershift Hidrolik Pompası"/>
-        <text name="rms_breakdowns_part_pto_drive_coupling" text="Kuyruk Mili Tahrik Kaplini"/>
-        <text name="rms_breakdowns_part_pto_engagement_control" text="Kuyruk Mili Devreye Alma Kumandası"/>
-        <text name="rms_breakdowns_part_pto_drive_output" text="Kuyruk Mili Çıkış Mili"/>
-        <text name="rms_breakdowns_part_hydraulic_pump" text="Hidrolik Pompa"/>
-        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hidrolik Silindir"/>
-        <text name="rms_breakdowns_part_hydraulic_hose" text="Hidrolik Hortum"/>
-        <text name="rms_breakdowns_part_hydraulic_filter" text="Hidrolik Filtre"/>
-        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Hidrolik Yağ Soğutucusu"/>
-        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Hidrolik Yön Valfi"/>
-        <text name="rms_breakdowns_part_fan_clutch" text="Fan Kavraması"/>
-        <text name="rms_breakdowns_part_fuel_pump" text="Yakıt Pompası"/>
-        <text name="rms_breakdowns_part_fuel_injectors" text="Yakıt Enjektörleri"/>
-        <text name="rms_breakdowns_part_fuel_filter" text="Yakıt Filtresi"/>
-        <text name="rms_breakdowns_part_fuel_line" text="Yakıt Hattı"/>
-        <text name="rms_breakdowns_part_glow_plugs" text="Kızdırma Bujileri"/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage1_description" text="Powershift hidrolik pompasında basınç düşüşü. Vites değişiminde hafif gecikme ve sarsıntı."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage2_description" text="Hidrolik pompa contaları aşınmış. Vites değiştirme sırasında belirgin gecikme ve sarsıntılar hissediliyor."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage3_description" text="Powershift hidrolik pompasında arıza. Vites değiştirirken ciddi gecikme ve şiddetli sarsıntılar."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage4_description" text="Powershift hidrolik pompası arızalandı. Şanzıman boş viteste takılı kaldı."/>
-        <text name="rms_breakdowns_pto_auto_disengage_message" text="Kuyruk mili devreden çıktı"/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage1_description" text="Kuyruk mili tahrik kaplininde başlangıç aşınması. Kuyruk mili ara sıra devreden çıkabilir."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage2_description" text="Kuyruk mili tahrik kaplininde orta düzey aşınma. Devreden çıkmalar sıklaşır."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage3_description" text="Kuyruk mili tahrik kaplininde ağır aşınma. Kuyruk mili sık sık devreden çıkar."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_description" text="Kuyruk mili tahrik kaplininde kritik arıza. Kuyruk mili artık güç aktaramaz."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_message" text="Kuyruk mili tahrik kaplini arızası"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage1_description" text="Kuyruk mili çıkış rulmanındaki başlangıç aşınması hafif çalışma sesi çıkarır."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage2_description" text="Kuyruk mili çıkış rulmanındaki orta düzey aşınma belirgin bir ses çıkarır."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage3_description" text="Kuyruk mili çıkış rulmanındaki ağır aşınma yüksek ses ve ara sıra devreden çıkma oluşturur."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_description" text="Kuyruk mili çıkış rulmanında kritik arıza. Kuyruk mili artık çalıştırılamaz."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_message" text="Kuyruk mili çıkış rulmanı arızası"/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage1_description" text="Kuyruk mili devreye alma kumandası düzensiz tepki verir ve bir komutu reddedebilir."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage2_description" text="Kuyruk mili devreye alma kumandası sık sık kuyruk milini devreye alamaz."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage3_description" text="Kuyruk mili devreye alma kumandası ağır arızalıdır ve çoğu devreye alma denemesini reddeder."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_description" text="Kuyruk mili devreye alma kumandası tamamen arızalandı. Kuyruk mili devreye alınamaz."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_message" text="Kuyruk mili devreye alma kumandası arızası"/>
-        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Kuyruk mili devreye alma reddedildi"/>
-        <text name="rms_breakdowns_quick_fix_stage" text="Geçici onarım"/>
-        <text name="rms_breakdowns_defected_parts_stage" text="Kusur"/>
-        <text name="rms_breakdowns_defected_parts_detected_description" text="Sistem normal çalışıyor ancak muayenede kusurlu bir parça bulundu. Parça artık güvenlik payı sağlamıyor; ani arızayı önlemek için önleyici değişim önerilir."/>
-        <text name="rms_breakdowns_dead_battery_message" text="Akü çok zayıf"/>
-        <text name="rms_breakdowns_cold_traction_battery_message" text="Çekiş aküsü soğuk: menzil ve güç azaldı"/>
-        <text name="rms_breakdowns_temporarily_repaired_description" text="Sistem normal çalışıyor ancak tamamen geçici onarıma dayanıyor. Yük altında arızayı önlemek için mümkün olan en kısa sürede parçaların tamamen değiştirilmesi önerilir."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Aşınmış turboşarj rulmanları. Hafif bir ıslık duyuluyor ve yüksek devirlerde hafif güç kaybı yaşanıyor."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Turboşarj contalarında sızıntı. Belirgin güç kaybı ve artan yakıt tüketimi."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Hasarlı türbin kanatları. Ağır yük altında ciddi güç kaybı ve motorun durma riski."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Turboşarjda kritik arıza. Motor gücünün büyük bölümü kayboldu ve ciddi iç hasar riski var."/>
-        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Aşınmış debriyaj diskleri. Yük altında şanzımanın kayması nedeniyle ara sıra güç kaybı yaşanmaktadır."/>
-        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Debriyajda ciddi aşınma. Özellikle hızlanma sırasında şanzımanda belirgin kayma."/>
-        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Debriyaj aşırı derecede aşınmış. Ciddi kayma sorunu, tekerleklere güç aktarımını zorlaştırıyor."/>
-        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Debriyaj tamamen yanmış. Araç hareket edemiyor."/>
-        <text name="rms_breakdowns_transmission_slip_stage4_message" text="Debriyaj arızası"/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Aşınmış senkronizörler. Vites değiştirirken ara sıra gıcırtı sesi veya zorluk yaşanması."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Hasarlı senkronizörler. Vites değiştirme genellikle zorlaşır ve bazen başarısız olabilir."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Senkronizör dişleri kırık. Vites geçişinin başarısız olma veya yük altında vitesten atma riski yüksek."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Senkronizörler tamamen arızalandı. Vites değiştirmek imkânsız."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_message" text="Senkronizör arızası"/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage1_description" text="Şanzıman termostatı arızalanmaya başlıyor. Yağ soğutucusunu çok geç açıyor ve şanzıman yağı normalden biraz daha sıcak çalışıyor."/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage2_description" text="Şanzıman termostatının tepkisi zayıf. Yağ soğutucusu çok geç açılıyor, şanzıman yağı normal sıcaklığının belirgin şekilde üzerinde kalıyor ve daha hızlı aşınıyor."/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage3_description" text="Şanzıman termostatı yağ soğutucusunu neredeyse hiç açmıyor. Yük arttığı anda şanzıman yağı aşırı ısınmaya yaklaşıyor."/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage4_description" text="Şanzıman termostatının tamamen arızalanması. Tek bir konumda kalır, bu yüzden şanzıman yağı takıldığı konuma göre ya aşırı ısınır ya da hiç ısınmaz."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Hafif şanzıman yağı sızıntısı. Yağ seviyesi çalışma sırasında yavaşça düşüyor."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Orta düzeyde şanzıman yağı sızıntısı. Yağ seviyesi belirgin şekilde düşüyor ve şanzıman daha çok ısınıyor."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Ciddi şanzıman yağı sızıntısı. Yağ seviyesi hızla düşüyor ve şanzıman yük altında aşırı ısınıyor."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Kritik şanzıman yağı sızıntısı. Şanzımanın güvenli çalışması için yeterli yağ kalmadı."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Palet gergisinde hafif arıza. Palet gerginliği biraz daha az stabil hale gelir, bu da yuvarlanma direncini ve aşınmayı hafifçe artırır."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Palet gergisinde orta derecede arıza. Gerginlik dengesiz hale gelir, yuvarlanma verimliliği düşer ve yanlış hizalanma riski artar."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Palet gergisinde ciddi arıza. Gerginlik ciddi şekilde bozulmuştur, hareket aktarımı verimsiz hale gelir ve palet çıkma riski artar."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Palet gergisinde kritik arıza. Palet artık düzgün şekilde tutulamıyor ve araç güvenli şekilde kullanılamıyor."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_message" text="Palet gergisinde arıza"/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage1_description" text="Motor termostatı arızalanmaya başlıyor. Motorun optimum sıcaklığa ulaşması daha uzun sürüyor ya da motor biraz fazla ısınarak çalışıyor."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage2_description" text="Termostatın tepki süresi uzundur. Motor sıcaklığının düzenlenmesi dengesizdir ve bu da aşınmayı artırmaktadır."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage3_description" text="Termostat neredeyse hiç açılmıyor. Yük arttığında motor aşırı ısınıyor."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage4_description" text="Termostatın tamamen arızalanması. Motor soğutma sıvısı düzgün bir şekilde dolaşamıyor ve bu da acil ve ciddi bir aşırı ısınmaya yol açıyor."/>
-        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Motor koruma moduna geçti. Sıcaklık düşene kadar güç sınırlandırılmıştır."/>
-        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Aşırı ısınma koruması: güç azaltıldı"/>
-        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Aşırı ısınma koruması güçleniyor. Motor artık gücünün yalnızca yarısını veriyor."/>
-        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Aşırı ısınma koruması: güç yarıya düşürüldü"/>
         <text name="rms_thermal_power_restored_message" text="Isıl koruma: güç sınırlaması kaldırıldı"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Aşırı ısınma koruması maksimum seviyede. Motor gücünün yalnızca küçük bir kısmı kalmıştır."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Aşırı ısınma koruması: güç ciddi ölçüde azaltıldı"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Hasarı önlemek için motor durduruldu. Yeniden çalıştırmadan önce soğumasını bekle."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Aşırı ısınma koruması: motor kapatıldı"/>
-        <text name="rms_breakdowns_overload_breakdown_stage2_message" text="Kritik aşırı yük! Aracın yükünü hemen azalt"/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Yağ pompasında hafif arıza. Yağ basıncı düşer, motor torku hafifçe azalır, motor sıcaklığı yükselir ve mekanik vuruntu hissedilebilir."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Orta derecede yağ pompası arızası. Yağ basıncı yetersiz, motor torkunda belirgin bir düşüş var, motor sıcaklığı yükselmiş ve mekanik vuruntu sesi açıkça duyuluyor."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Ciddi yağ pompası arızası. Yağ basıncı kritik derecede düşük, motor torku önemli ölçüde azalmış, motorun aşırı ısınması muhtemel, mekanik vuruntu şiddetli ve motorun durması söz konusu olabilir."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritik yağ pompası arızası. Yağ dolaşımı motorun güvenli çalışması için yetersiz; motoru çalıştırmak veya çalıştırmaya devam etmek mümkün değil."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_message" text="Yağ pompası arızası"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motor sıkıştı ve artık dönemiyor."/>
-        <text name="rms_breakdowns_engine_jam_stage1_message" text="Motor sıkıştı"/>
-        <text name="rms_breakdowns_engine_stalled_message" text="Motor durdu"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU’da hafif arıza. Motor gücü biraz azaldı."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU’da orta düzey arıza. Belirgin güç kaybı ve artan yakıt tüketimi."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="ECU’da ciddi arıza. Önemli güç kaybı, yüksek yakıt tüketimi ve motorun durma riski."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="ECU tamamen arızalı. Motor kontrol edilemiyor ve çalışmıyor."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="ECU arızası"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Kabloların ve elektrik konektörlerinin hafif korozyonu. Temas direncindeki artış, zaman zaman ışık titremesine, voltaj beslemesinde dengesizliğe ve motorun zor çalışmasına neden olur. Makine dururken bir kaçak akım aküyü boşaltır."/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Kablolarda ve elektrik konektörlerinde orta derecede korozyon. Temas kayıpları, ışıkların sık sık titremesine, voltaj beslemesinin dengesizleşmesine, motorun zor çalışmasına ve motorun durmasına neden olabilir. Makine dururken bir kaçak akım aküyü boşaltır."/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Kablolarda ve elektrik konektörlerinde ciddi korozyon. Kritik devrelere giden güç beslemesi dengesizdir; aydınlatma tamamen kesilebilir, motor torku azalır, motorun stop etme olasılığı yüksektir ve marş alma işlemi güvenilir değildir. Makine dururken bir kaçak akım aküyü boşaltır."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Kablolardaki ciddi korozyonun yol açtığı marş kontrol devresindeki arıza. Aydınlatma çalışmıyor ve motorun çalıştırılması mümkün değil. Makine dururken bir kaçak akım aküyü boşaltır."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_message" text="Marş devresi arızası"/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage1_description" text="Kabloların ve elektrik konektörlerinin hafif korozyonu. Temas direncindeki artış, zaman zaman ışık titremesine ve voltaj beslemesinde dengesizliğe neden olur. Makine dururken bir kaçak akım yardımcı aküyü boşaltır."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage2_description" text="Kablolarda ve elektrik konektörlerinde orta derecede korozyon. Temas kayıpları, ışıkların sık sık titremesine, voltaj beslemesinin dengesizleşmesine ve kesintilere neden olabilir. Makine dururken bir kaçak akım yardımcı aküyü boşaltır."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage3_description" text="Kablolarda ve elektrik konektörlerinde ciddi korozyon. Kritik devrelere giden güç beslemesi dengesizdir; aydınlatma tamamen kesilebilir, güç azalır ve kesinti olasılığı yüksektir. Makine dururken bir kaçak akım yardımcı aküyü boşaltır."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage4_description" text="Kablolarda ve elektrik konektörlerinde kritik korozyon. Aydınlatma çalışmıyor ve makine çalışmıyor. Makine dururken bir kaçak akım yardımcı aküyü boşaltır."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage4_message" text="Kablo ve konektör arızası"/>
-        <text name="rms_breakdowns_coolant_leak_stage1_description" text="Hafif soğutma sıvısı sızıntısı. Soğutma sisteminin verimliliği biraz azalmıştır."/>
-        <text name="rms_breakdowns_coolant_leak_stage2_description" text="Orta derecede soğutma sıvısı sızıntısı. Soğutma sisteminin verimliliği düşer ve yük altında motorun çalışma sıcaklığı daha hızlı yükselir."/>
-        <text name="rms_breakdowns_coolant_leak_stage3_description" text="Ciddi soğutma sıvısı sızıntısı. Soğutma kaybı yüksek ve aşırı ısınma riski artıyor."/>
-        <text name="rms_breakdowns_coolant_leak_stage4_description" text="Soğutma devresinde kritik arıza. Motorun güvenli çalışması için soğutma sıvısı yetersiz."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Şanzımanın verimi yük altında biraz düşer."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Verim yük altında belirgin biçimde düşer ve oran daha az kararlı olur."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Şanzıman, çekiş kuvvetini aktarmakta ve istenen oranı korumakta zorlanır."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Şanzıman çekiş kuvvetini artık güvenilir biçimde aktaramaz; hareket neredeyse imkânsızdır."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Şanzıman Arızası"/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="CVT şanzımanında bir arızanın ilk belirtileri tespit edildi. Muayene ve onarım gerekli."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="CVT şanzımanındaki arıza giderek kötüleşiyor. Aracı kullanmaya devam etmek, acil durum moduna geçilmesine neden olabilir."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="CVT şanzımanında ciddi hasar var. Şanzıman acil durum modundadır ve aracın azami hızı düşürülmüştür."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="CVT şanzımanı tamamen arızalandı. Şanzıman onarılana kadar araç kullanılamaz."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_message" text="CVT arızası"/>
-        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Hafif akü sülfatlanması. Akünün etkin kapasitesi azalır ve bu da yük altında elektriksel yedeğin düşmesine neden olur."/>
-        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Orta derecede akü sülfatlanması. Akünün etkin kapasitesi önemli ölçüde azalmıştır ve motorun çalıştırılması zordur."/>
-        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Aşırı akü sülfatlanması. Akünün kullanılabilir kapasitesi kritik derecede düşük ve marş performansı dengesiz."/>
-        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Kritik akü sülfatlanması. Kullanılabilir kapasite neredeyse sıfır ve marş gücü güvenilir çalıştırma için yetersiz."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Hafif yardımcı akü sülfatlanması. Akünün etkin kapasitesi azalır ve bu da yük altında elektriksel yedeğin düşmesine neden olur."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Orta derecede yardımcı akü sülfatlanması. Akünün etkin kapasitesi önemli ölçüde azalmıştır ve elektriksel yedek daha çabuk tükenir."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Aşırı yardımcı akü sülfatlanması. Akünün kullanılabilir kapasitesi kritik derecede düşük ve elektriksel yedek çok çabuk tükenir."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Kritik yardımcı akü sülfatlanması. Kullanılabilir kapasite neredeyse sıfır ve güvenilir çalıştırma için artık yetersiz."/>
-        <text name="rms_breakdowns_brake_malfunction_stage1_description" text="Aşınmış fren balataları. Frenleme etkinliğinde hafif bir azalma."/>
-        <text name="rms_breakdowns_brake_malfunction_stage2_description" text="Fren hidroliği sızıntısı veya aşınmış fren diskleri. Fren mesafesi belirgin şekilde uzamıştır."/>
-        <text name="rms_breakdowns_brake_malfunction_stage3_description" text="Fren basıncında ciddi düşüş. Frenler çok zayıf ve güvenilmez."/>
-        <text name="rms_breakdowns_brake_malfunction_stage4_description" text="Fren sisteminde tam arıza. Aracı kullanmaya devam etmek son derece tehlikelidir."/>
-        <text name="rms_breakdowns_brake_malfunction_stage4_message" text="Fren arızası"/>
-        <text name="rms_breakdowns_bearing_wear_stage1_description" text="Rulmanlarda hafif aşınma. Mekanik direnç biraz artar ve alışılmadık bir çalışma sesi ortaya çıkabilir."/>
-        <text name="rms_breakdowns_bearing_wear_stage2_description" text="Rulmanlarda orta düzey aşınma. Sürtünme belirgin biçimde artar, ses güçlenir ve mekanik verim düşer."/>
-        <text name="rms_breakdowns_bearing_wear_stage3_description" text="Rulmanlarda ciddi aşınma. Sürtünme ve ses yüksek; yük altında gerçek bir sıkışma riski var."/>
-        <text name="rms_breakdowns_bearing_wear_stage4_description" text="Rulmanlarda kritik arıza. Tamamen sıkışmak üzereler ve çalışma imkânsız hale geliyor."/>
-        <text name="rms_breakdowns_bearing_wear_stage4_message" text="Tekerlek yatağı sıkışmış"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Alternatör regülatöründe hafif arıza. Şarj çıkışı azalmış olup, bu da akü şarj verimliliğinin düşmesine neden olmaktadır. Makine dururken bir kaçak akım aküyü boşaltır."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Alternatör regülatöründe orta derecede arıza. Şarj çıkışı dengesiz ve düşüktür; bu durum, akünün yetersiz şarj olmasına ve elektrik sisteminde voltaj kayıplarının artmasına neden olmaktadır. Makine dururken bir kaçak akım aküyü boşaltır."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Alternatör regülatöründe ciddi bir arıza. Şarj çıkışı ciddi ölçüde azalmış, voltaj beslemesi dengesiz ve elektrik sistemi büyük kayıplarla çalışıyor. Makine dururken bir kaçak akım aküyü boşaltır."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Alternatör regülatöründe tam arıza. Akü şarjı gerçekleşmiyor ve elektrik sistemi yalnızca akünün kalan rezerviyle çalışıyor. Makine dururken bir kaçak akım aküyü boşaltır."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Elektrik motoru rulmanlarında hafif aşınma. Hafif bir ses ortaya çıkar ve tüketim biraz artar."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Elektrik motoru rulmanlarında orta düzey aşınma. Ses açıkça duyulur, tüketim artar ve güç biraz düşer."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Elektrik motoru rulmanlarında ciddi aşınma. Ses yüksek, motor ısınıyor ve güç belirgin biçimde düşüyor."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Elektrik motoru rulmanlarında kritik arıza. Motor kilitlendi ve makine artık hareket edemiyor."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_message" text="Elektrik motoru rulmanları arızalı"/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Elektrik motoru sargılarında hafif bozulma. Güç biraz düşer ve motor daha fazla ısınır."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Elektrik motoru sargılarında orta düzey bozulma. Güç belirgin biçimde düşer, motor ısınır ve tüketim artar."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Elektrik motoru sargılarında ciddi bozulma. Güç kaybı büyük, motor çok ısınıyor ve kesintiler olabilir."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Elektrik motoru sargılarında kritik arıza. Motor kısa devre yaptı ve artık çalışamıyor."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_message" text="Elektrik motoru sargıları arızalı"/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Motor konum sensöründe hafif arıza. Yük altında kısa sarsıntılar ortaya çıkar."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Motor konum sensöründe orta düzey arıza. Sarsıntılar sıklaşır ve güç düşer."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Motor konum sensöründe ciddi arıza. Sarsıntılar şiddetli, güç hızla düşüyor ve kesintiler oluyor."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Motor konum sensörü tamamen arızalı. Motor kontrol edilemiyor ve makine çalışmıyor."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_message" text="Motor konum sensörü arızalı"/>
-        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="İnvertörde hafif arıza. Motor gücü biraz azaldı."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="İnvertörde orta düzey arıza. Güç kaybı belirgin ve tüketim artıyor."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="İnvertörde ciddi arıza. Güç kaybı büyük ve kesintiler olabilir."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="İnvertör tamamen arızalı. Motora güç gitmiyor ve makine çalışmıyor."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage4_message" text="İnvertör arızalı"/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Gerilim dönüştürücüde hafif arıza. Yardımcı akü daha zayıf şarj oluyor."/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Gerilim dönüştürücüde orta düzey arıza. Yardımcı akünün şarjı azalmış ve dengesiz."/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Gerilim dönüştürücüde ciddi arıza. Yardımcı akü neredeyse hiç şarj olmuyor ve seyir halinde boşalıyor."/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Gerilim dönüştürücüde tam arıza. Yardımcı akü artık şarj olmuyor ve makine yalnızca kalan rezerviyle çalışıyor."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Araç üstü şarj cihazında hafif arıza. İstasyonda şarj biraz daha yavaş."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Araç üstü şarj cihazında orta düzey arıza. İstasyonda şarj belirgin biçimde daha yavaş."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Araç üstü şarj cihazında ciddi arıza. İstasyonda şarj çok yavaş."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Araç üstü şarj cihazında tam arıza. Çekiş aküsü artık şarj edilemiyor."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage4_message" text="Araç üstü şarj cihazı devre dışı: şarj mümkün değil"/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Yüksek voltaj kablo demetinde hafif yalıtım kaybı. Bir uyarı gösterilir, başka bir etkisi olmaz."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Yüksek voltaj kablo demetinde orta düzey yalıtım kaybı. Güç, güvenlik için azaltılır."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Yüksek voltaj kablo demetinde ciddi yalıtım kaybı. Güç büyük ölçüde azaltılır ve kesintiler olur."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Yüksek voltaj kablo demetinde kritik yalıtım kaybı. Makine güvenlik için çalışmayı reddediyor."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage4_message" text="Yüksek voltaj kablo demetinde yalıtım kaybı"/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Çekiş aküsü hücrelerinde hafif arıza. Menzil biraz düşer."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Çekiş aküsü hücrelerinde orta düzey arıza. Menzil belirgin biçimde düşer ve güç azalır."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Çekiş aküsü hücrelerinde ciddi arıza. Menzil ve güç hızla düşüyor, kesintiler olabilir."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Çekiş aküsünde kritik arıza. Makine artık çalıştırılamıyor."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_message" text="Çekiş aküsü arızalı"/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Yüksek voltaj kontaktöründe hafif aşınma. Seyrek güç kesintileri olur."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Yüksek voltaj kontaktöründe orta düzey aşınma. Güç kesintileri düzenli hale gelir."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Yüksek voltaj kontaktöründe ciddi aşınma. Güç kesintileri sık."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Yüksek voltaj kontaktöründe kritik arıza. Çekiş aküsü artık makineyi beslemiyor ve makine çalışmıyor."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage4_message" text="Yüksek voltaj kontaktörü arızalı"/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Soğutma sıvısı pompasında hafif arıza. Sıvı daha zayıf dolaşır ve sıcaklık biraz daha fazla yükselir."/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Soğutma sıvısı pompasında orta düzey arıza. Soğutma belirgin biçimde azalmış."/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Soğutma sıvısı pompasında ciddi arıza. Soğutma büyük ölçüde azalmış ve yük altında aşırı ısınma olası."/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Soğutma sıvısı pompasında tam arıza. Sıvı neredeyse hiç dolaşmıyor ve makine hızla aşırı ısınıyor."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Redüktör dişlilerinde ve rulmanlarında hafif aşınma. Seyir halinde hafif bir ses ortaya çıkar."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Redüktör dişlilerinde ve rulmanlarında orta düzey aşınma. Ses açıkça duyulur ve tüketim artar."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Redüktör dişlilerinde ve rulmanlarında ciddi aşınma. Ses yüksek, redüktör ısınıyor ve tekerleklerdeki güç düşüyor."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Redüktörde kritik arıza. Kilitlendi ve makine artık hareket edemiyor."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage4_message" text="Redüktör arızalı"/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="Valf mekanizmasında hafif arıza. Motor torkunda hafif bir azalma, yakıt tüketiminde artış ve valf mekanizmasından gelen anormal sesler mevcuttur."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="Valf mekanizmasında orta derecede arıza. Motor torkunda belirgin bir azalma görülür, yakıt tüketimi artar, valf mekanizmasından gelen ses belirgindir ve yük altında motorda tekleme meydana gelebilir."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="Ciddi valf mekanizması arızası. Motor torku büyük ölçüde azalır, yakıt tüketimi önemli ölçüde artar, valf mekanizmasından gelen gürültü çok şiddetlidir, motorda sık sık takılma görülür ve motorun durması söz konusu olabilir."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage4_description" text="Valf mekanizmasında ciddi arıza. Valflerin düzgün çalışması artık garanti edilememektedir ve motorun çalıştırılması veya çalışmaya devam etmesi mümkün değildir."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage4_message" text="Valf mekanizması arızası"/>
-        <text name="rms_breakdowns_voltage_sag_message" text="Sistem gerilimi yetersiz"/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Yakıt pompasının erken aşınması. Motor gücünde hafif bir azalma ve yakıt tüketiminde artış."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Yakıt basıncı düşüyor. Belirgin güç kaybı, daha yüksek yakıt tüketimi ve ara sıra motorun durması."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Kritik yakıt basıncı. Ciddi güç kaybı, çok yüksek yakıt tüketimi ve sık sık motorun durması."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Yakıt pompasında tam arıza. Motora yakıt beslenmiyor."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_message" text="Yakıt pompası arızası"/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Bir veya daha fazla enjektörün püskürtme uçları hafifçe tıkanmış. Motor biraz düzensiz çalışabilir ve güçte hafif bir düşüş görülebilir."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Yetersiz yakıt püskürtme. Motor yük altında tekler; belirgin güç kaybı ve sarsıntı oluşur."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Bir yakıt enjektörü sıkışmış durumda. Motor çok kötü çalışıyor; önemli ölçüde güç kaybı var ve çalıştırma güvenilir değil."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Bir enjektör tamamen arızalı. Motor artık düzgün çalışmıyor ve çalışmayabilir."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_message" text="Enjektör arızası"/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Yakıt filtresinde hafif tıkanma. Ağır yük altında yakıt akışı hafifçe azalır."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Yakıt filtresinde orta derecede tıkanma. Yük altında akış yetersiz hale gelir, güç düşer ve motor zaman zaman tekleme yapar."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Yakıt filtresinde ciddi tıkanma. Yakıt beslemesi büyük ölçüde kısıtlanmıştır, güç belirgin şekilde düşer ve motor durabilir."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Yakıt filtresinde kritik tıkanma. Motor artık güvenilir şekilde çalışmak için yeterli yakıt alamıyor."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_message" text="Yakıt filtresi tıkanmış"/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage1_description" text="Yakıt hattında hafif hava sızıntısı. Yakıt beslemesi hafifçe düzensizleşir."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage2_description" text="Yakıt hattında orta derecede hava kaçağı. Besleme dengesizleşir, güç düşer ve teklemeler görülür."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage3_description" text="Yakıt hattında ciddi hava kaçağı. Motor çok düzensiz çalışıyor ve durma riski yüksek."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_description" text="Yakıt hattında kritik hava kaçağı, önemli miktarda hava girişiyle birlikte. Motora artık düzgün şekilde yakıt beslenemiyor."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_message" text="Yakıt hattında hava"/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Fan kavramasında hafif arıza. Fan daha az etkili tepki verir ve soğutma hafifçe zayıflar."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Fan kavramasında orta derecede arıza. Fanın devreye girmesi düzensizdir ve soğutma verimliliği belirgin şekilde düşer."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Fan kavramasında ciddi arıza. Fan artık yeterli hava akışı sağlamıyor ve motor daha kolay aşırı ısınıyor."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Fan kavramasında kritik arıza. Fan artık gerekli soğutmayı sağlayamıyor."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Oran kumandası daha yavaş ve daha az hassas tepki verir."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Oran düzensiz değişir ve kumanda kötü tepki verir."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Oran kumandası ciddi biçimde bozulur ve aktarılan çekiş kuvveti düşer."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Oran kumandası arızalanmıştır; şanzıman neredeyse kullanılamaz."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Oran Kumandası Arızası"/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Hidrolik silindirde hafif bir iç sızıntı var. Kaldırılmış ekipman yük altında yavaşça iner."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Hidrolik silindirde orta düzeyde iç sızıntı var. İstenmeyen alçalma belirgindir ve taşınan yük arttıkça hızlanır."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Hidrolik silindirde ciddi iç sızıntı var. Ağır ekipmanlar artık konumlarını güvenilir biçimde koruyamaz."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Hidrolik silindirde kritik iç sızıntı var. Kaldırılmış her yük hızla kendiliğinden iner."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Pompada hafif bir iç sızıntı var. Hidrolik ekipmanların çalışma hızı biraz daha yavaş."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Pompa contaları aşınmış. Hidrolik işlemlerde belirgin bir yavaşlama."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Hidrolik pompa arızalı. Ek ekipmanların çalışması son derece yavaş ve güçsüz."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Hidrolik pompa arızası. Hidrolik sistem çalışmıyor."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_message" text="Hidrolik pompa arızası"/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Bir hidrolik hortumda küçük bir dış sızıntı var. Bir miktar yağ kaçar ve hidrolik tepki biraz azalır."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Bir hidrolik hortum gözle görülür biçimde sızdırıyor. Yağ kaybı sürer ve hidrolik işlevler daha yavaş tepki verir."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Bir hidrolik hortum aktif olarak sızdırıyor. Yağ kaybı açıktır ve hidrolik işlevler belirgin biçimde zayıflamıştır."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Bir hidrolik hortumda ciddi dış sızıntı var. Yağ hızla kaçar ve hidrolik performans büyük ölçüde düşer."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Hidrolik filtre hafifçe kirli ve akışı kısıtlamaya başlıyor. Hidrolik işlevler biraz yavaşlıyor. Bakım filtreyi değiştirir."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Hidrolik filtre orta düzeyde tıkalı. Tüm hidrolik işlevler belirgin biçimde daha yavaş. Bakım filtreyi değiştirir."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Hidrolik filtre ciddi biçimde tıkalı. Hidrolik tepki çok yavaş. Bakım filtreyi değiştirir."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Hidrolik filtre tamamen tıkalı. Hidrolik işlevler güçlükle tepki veriyor. Bakım filtreyi değiştirir."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Hidrolik yağ soğutucusu veriminin bir kısmını kaybetti. Uzun hidrolik çalışma sırasında yağ sıcaklığı biraz yükselir."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Hidrolik yağ soğutucusu yetersiz çalışıyor. Sürekli hidrolik çalışma sırasında yağ sıcaklığı belirgin biçimde yükselir."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Hidrolik yağ soğutucusu ciddi biçimde yıpranmış. Ağır hidrolik çalışma yağı hızla aşırı ısıtır."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Hidrolik yağ soğutucusu arızalandı. Uzun hidrolik çalışma yağı ciddi biçimde aşırı ısıtır ve pompa aşınmasını hızlandırır."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Bir hidrolik yön valfi sıkışmaya başlıyor. Bir hidrolik işlev ara sıra takılır ve yük altında güç kaybeder."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Bir hidrolik yön valfi aralıklı olarak sıkışıyor. Bir hidrolik işlev yavaşlar ve yük arttıkça daha fazla güç kaybeder."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Bir hidrolik yön valfi ciddi biçimde sıkışıyor. Bir hidrolik işlev düzensiz hareket eder ve ağır yük altında zorlanır."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Bir hidrolik yön valfi ciddi biçimde hasarlı. Bir hidrolik işlev sürekli durur ve ağır bir yükü güçlükle hareket ettirir."/>
         <text name="rms_breakdown_at_progress_message" text="devam ediyor"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Dikkat! Motor soğuk, yükü azalt."/>
@@ -538,6 +243,9 @@
         <text name="rms_spec_months_ago_unit" text="ay önce"/>
         <text name="rms_spec_month_ago_one" text="ay önce"/>
         <text name="rms_spec_months_ago_format" text="%s %s"/>
+        <text name="rms_shop_last_maintenance_months_ago" text="Son bakım %s %s"/>
+        <text name="rms_shop_last_maintenance_this_month" text="Son bakım bu ay"/>
+        <text name="rms_shop_last_maintenance_never" text="Bakım yapılmadı"/>
         <text name="rms_spec_work_hours_ago_format" text="%s %s çalışma önce"/>
         <text name="rms_spec_work_under_hour_ago" text="en fazla 1 h çalışma önce"/>
         <text name="rms_spec_maintenance_complete_notification" text="İşlem tamamlandı: %s"/>
@@ -579,11 +287,9 @@
         <text name="rms_spec_part_types_used" text="Kullanılmış"/>
         <text name="rms_spec_part_types_aftermarket" text="Yan Sanayi"/>
         <text name="rms_spec_part_types_oem" text="Orijinal"/>
-        <text name="rms_spec_part_types_premium" text="Premium"/>
         <text name="rms_spec_consumable_types_used" text="Ekonomik"/>
         <text name="rms_spec_consumable_types_aftermarket" text="Yan Sanayi"/>
         <text name="rms_spec_consumable_types_oem" text="Orijinal"/>
-        <text name="rms_spec_consumable_types_premium" text="Premium"/>
         <text name="rms_spec_repair_type_fix" text="Geçici"/>
         <text name="rms_spec_repair_type_replacement" text="Standart"/>
         <text name="rms_spec_repair_type_advanced" text="Gelişmiş"/>
@@ -612,6 +318,8 @@
         <text name="rms_service_program_estimated" text="Tahmini bakım programı"/>
         <text name="rms_ws_levels_recommended_for" text="Bu makine için önerilen"/>
         <text name="rms_ws_levels_interval" text="Her %s"/>
+        <text name="rms_ws_levels_every_service" text="Her bakımda"/>
+        <text name="rms_ws_levels_one_service_in" text="Her %d bakımda bir"/>
         <text name="rms_ws_levels_duration" text="%s sa %s dk"/>
         <text name="rms_ws_levels_duration_hours" text="%s sa"/>
         <text name="rms_ws_levels_duration_minutes" text="%s dk"/>
@@ -620,21 +328,33 @@
         <text name="rms_ws_levels_blown" text="Üflendi"/>
         <text name="rms_ws_levels_new" text="Yeni"/>
         <text name="rms_ws_levels_new_plural" text="Yeni"/>
+        <text name="rms_ws_levels_new_adblue" text="Yeni + AdBlue"/>
         <text name="rms_ws_levels_filters" text="Filtreler"/>
         <text name="rms_ws_levels_filters_all" text="Yağ, yakıt ve hidrolik"/>
         <text name="rms_ws_levels_filters_engine" text="Yağ ve yakıt"/>
+        <text name="rms_ws_levels_filters_all_transmission" text="Yağ, yakıt, şanzıman ve hidrolik"/>
+        <text name="rms_ws_levels_filters_engine_transmission" text="Yağ, yakıt ve şanzıman"/>
         <text name="rms_ws_levels_filters_hydraulic" text="Hidrolik"/>
         <text name="rms_ws_levels_checks" text="Ayarlar ve kontroller"/>
         <text name="rms_ws_levels_checks_detail" text="Valfler, enjektörler, termostat"/>
         <text name="rms_ws_levels_checks_done" text="Yapıldı"/>
         <text name="rms_ws_levels_fault_search" text="Arıza arama"/>
         <text name="rms_ws_levels_fault_search_detail" text="Standart muayene gibi"/>
-        <text name="rms_ws_levels_fault_search_mobile_detail" text="Arıza kodları okunmadan"/>
+        <text name="rms_ws_levels_fault_search_no_tool_detail" text="Arıza kodları okunmadan"/>
         <text name="rms_ws_levels_included" text="Dahil"/>
         <text name="rms_ws_levels_mechanical" text="Mekanik"/>
         <text name="rms_ws_levels_every_level" text="Her seviyede: radyatör temizliği ve gresleme."/>
         <text name="rms_ws_quality_risk" text="Kusur riski"/>
         <text name="rms_ws_quality_reference" text="Referans fiyat"/>
+        <text name="rms_ws_quality_donor" text="Kaynak Makine: %d h"/>
+        <text name="rms_ws_quality_donors" text="Kaynak Makineler: %d ile %d h"/>
+        <text name="rms_ws_quality_new_part" text="Yeni Parça"/>
+        <text name="rms_ws_quality_used_warranty" text="3 Ay Garanti"/>
+        <text name="rms_ws_quality_partial_warranty" text="Kısmi Garanti"/>
+        <text name="rms_ws_quality_no_warranty" text="Garanti Yok"/>
+        <text name="rms_ws_quality_oem_warranty" text="12 Ay Garanti"/>
+        <text name="rms_ws_quality_factory_warranty" text="Fabrika Garantisi"/>
+        <text name="rms_warranty_used" text="Hurdacı Garantisi: Yalnızca Parça"/>
         <text name="rms_ws_quality_delta" text="Orijinale göre %s"/>
         <text name="rms_ws_repair_row_faults" text="Ele Alınan Arızalar"/>
         <text name="rms_ws_repair_row_faults_detail" text="İşaretlenenler arasından"/>
@@ -647,26 +367,34 @@
         <text name="rms_ws_repair_row_part" text="Arızalı Parça"/>
         <text name="rms_ws_repair_row_part_detail" text="Arızanın kaynağı"/>
         <text name="rms_ws_repair_part_replaced" text="Değiştirildi"/>
-        <text name="rms_ws_repair_row_stress" text="Mekanik Zorlanma"/>
-        <text name="rms_ws_repair_row_stress_detail" text="Sistemde birikmiş"/>
-        <text name="rms_ws_repair_stress_cleared" text="Sıfırlandı"/>
+        <text name="rms_ws_repair_row_worn_parts" text="Aşınmış Parçalar"/>
+        <text name="rms_ws_repair_row_worn_parts_detail" text="Aynı sistemde"/>
+        <text name="rms_ws_repair_worn_parts_replaced" text="Değiştirildi"/>
         <text name="rms_ws_repair_row_quality" text="Parça Kalitesi"/>
         <text name="rms_ws_repair_row_quality_detail" text="Aşağıdaki kartlardan seçilir"/>
         <text name="rms_ws_repair_quality_choice" text="Seçime Bağlı"/>
-        <text name="rms_ws_warranty_title" text="Bayi Garantisi"/>
+        <text name="rms_ws_warranty_title" text="Garanti"/>
         <text name="rms_ws_warranty_covered" text="Geçerli"/>
         <text name="rms_ws_warranty_not_covered" text="Geçerli Değil"/>
-        <text name="rms_ws_warranty_free_here" text="Orijinal parçalarla ücretsiz standart onarım"/>
-        <text name="rms_ws_warranty_free_dealer" text="Bayide ücretsiz onarım"/>
-        <text name="rms_ws_warranty_terms" text="Sahip olunan araç, 12 aydan ve 20 saatten az"/>
+        <text name="rms_ws_warranty_terms" text="Fabrika: %d ay veya %s h"/>
         <text name="rms_ws_badge_warranty" text="Garanti"/>
+        <text name="rms_warranty_base" text="%d Ay veya %s h (Dahil)"/>
+        <text name="rms_warranty_extension" text="%d Ay veya %s h"/>
+        <text name="rms_warranty_partial" text="Kısmen Kapsamda"/>
+        <text name="rms_warranty_own" text="Kendi atölyende kapsam dışı"/>
+        <text name="rms_warranty_factory" text="Orijinal parçalar ve işçilik kapsamda"/>
+        <text name="rms_warranty_part" text="Parça, makine %d aylık olana kadar kapsamda"/>
+        <text name="rms_warranty_lease" text="Kiralamada onarım kapsam dışı"/>
+        <text name="rms_warranty_expired" text="Garanti sona erdi"/>
+        <text name="rms_warranty_overdue" text="Ret: bakım gecikmiş"/>
+        <text name="rms_warranty_options" text="Orijinal parçalarla değişim gerekli"/>
+        <text name="rms_warranty_mobile" text="Mobil atölyenin ek işçilik bedelini ödersin"/>
         <text name="rms_ws_overhaul_row_systems" text="Ele Alınan Sistemler"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Yenilenir"/>
         <text name="rms_ws_overhaul_systems_one" text="Seçilen Biri"/>
         <text name="rms_ws_overhaul_systems_all" text="Tümü"/>
         <text name="rms_ws_overhaul_row_condition" text="Revizyon Sonrası Durum"/>
         <text name="rms_ws_overhaul_row_condition_detail" text="En az"/>
-        <text name="rms_ws_overhaul_row_treated_detail" text="Ele alınan sistemlerin"/>
         <text name="rms_ws_overhaul_row_faults" text="Arızalar"/>
         <text name="rms_ws_overhaul_row_faults_detail" text="Tespit edilmiş veya edilmemiş"/>
         <text name="rms_ws_overhaul_faults_repaired" text="Onarıldı"/>
@@ -676,6 +404,8 @@
         <text name="rms_ws_overhaul_fluids_own" text="Kendi Devresi"/>
         <text name="rms_ws_overhaul_filters_both" text="Yakıt ve hidrolik"/>
         <text name="rms_ws_overhaul_filters_fuel" text="Yakıt"/>
+        <text name="rms_ws_overhaul_filters_both_transmission" text="Yakıt, şanzıman ve hidrolik"/>
+        <text name="rms_ws_overhaul_filters_fuel_transmission" text="Yakıt ve şanzıman"/>
         <text name="rms_ws_overhaul_worn" text="Durumu %50'nin Altındaki Sistemler"/>
         <text name="rms_ws_paint_row_extent" text="Onarılan Boya Hasarı"/>
         <text name="rms_ws_paint_row_extent_detail" text="Boyanın hasarlı kısmı"/>
@@ -726,6 +456,11 @@
         <text name="rms_report_vehicle_spec_battery_24v_capacity" text="24 V Akü Kapasitesi"/>
         <text name="rms_report_vehicle_spec_traction_battery_capacity" text="Çekiş Aküsü Kapasitesi"/>
         <text name="rms_report_detected_breakdowns_title" text="Tespit Edilen Arızalar"/>
+        <text name="rms_report_breakdowns_worn_title" text="Arızalar ve Aşınmış Parçalar"/>
+        <text name="rms_report_no_breakdowns_worn" text="Arıza veya aşınmış parça yok"/>
+        <text name="rms_report_worn_part_risk" text="Risk ×%s"/>
+        <text name="rms_report_worn_part_adjust" text="%s · Ayar: %s"/>
+        <text name="rms_report_worn_part_replace" text="%s · Değişim: gelişmiş onarım veya revizyon"/>
         <text name="rms_report_overall_assessment_title" text="Genel Durum Değerlendirmesi"/>
         <text name="rms_report_overall_assessment_condition" text="Durum Seviyesi"/>
         <text name="rms_report_overall_assessment_service" text="Bakım seviyesi"/>
@@ -747,9 +482,9 @@
         <text name="rms_report_state_degraded" text="Aşınmış"/>
         <text name="rms_report_state_impaired" text="Bozuk"/>
         <text name="rms_report_state_critical" text="Kritik"/>
-        <text name="rms_report_stress_low" text="Düşük"/>
-        <text name="rms_report_stress_moderate" text="Orta"/>
-        <text name="rms_report_stress_high" text="Çok Yüksek"/>
+        <text name="rms_report_risk_low" text="Düşük"/>
+        <text name="rms_report_risk_moderate" text="Orta"/>
+        <text name="rms_report_risk_high" text="Yüksek"/>
         <text name="rms_report_system_condition_title" text="Sistem Durumu"/>
         <text name="rms_report_breakdown_risk_title" text="Arıza Riski"/>
         <text name="rms_report_wear_title" text="Normale Göre Aşınma"/>
@@ -764,6 +499,7 @@
         <text name="rms_report_wear_hot_hydraulic_oil" text="Hidrolik Yağının Aşırı Isınması"/>
         <text name="rms_report_wear_vibration" text="Titreşimler"/>
         <text name="rms_report_wear_hydraulic_filter_bypass" text="Tıkalı Hidrolik Filtre"/>
+        <text name="rms_report_wear_transmission_filter_bypass" text="Tıkalı Şanzıman Filtresi"/>
         <text name="rms_report_wear_lights" text="Açık Işıklar"/>
         <text name="rms_report_wear_braking" text="Ağır Yükle Frenleme"/>
         <text name="rms_report_wear_terrain_impact" text="Arazi Darbeleri"/>
@@ -809,6 +545,8 @@
         <text name="rms_jumper_cables_name" text="Akü Takviye Kabloları"/>
         <text name="rms_jumper_cables_function" text="İki aküyü bağlayıp aküsü boş bir aracı çalıştırmak için kullanılır"/>
         <text name="rms_jumper_cables_action" text="Akü takviye kabloları"/>
+        <text name="rms_jumper_cables_connect" text="Kabloları bağla"/>
+        <text name="rms_jumper_cables_disconnect" text="Kabloları çıkar"/>
         <text name="rms_jumper_cables_auto_disconnected" text="Takviye kabloları çıkarıldı: araçlardan biri hareket etti"/>
         <text name="rms_jumper_cables_connected" text="Takviye kabloları %s aracına bağlandı"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="Araç, takviye kablosu bağlamaya uygun değil"/>
@@ -880,7 +618,7 @@
         <text name="rms_inspection_dialog_title" text="Vardiya Öncesi Kontrol"/>
         <text name="rms_inspection_section_fluids" text="Teknik Sıvılar"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
-        <text name="rms_inspection_section_field_care" text="Filtreler, Radyatör ve Gresleme"/>
+        <text name="rms_inspection_section_field_care" text="Temizlik ve Gresleme"/>
         <text name="rms_inspection_section_additional" text="Ek Notlar"/>
         <text name="rms_inspection_verdict_ok_title" text="Çalışmaya Hazır"/>
         <text name="rms_inspection_verdict_ok_message" text="Bildirilecek bir şey yok, makine çıkabilir."/>
@@ -918,9 +656,26 @@
         <text name="rms_inspection_hint_coolant_leak_stage2" text="Soğutma sıvısı kalıntıları görülüyor ve soğutma sıvısı seviyesi normalin altında."/>
         <text name="rms_inspection_hint_coolant_leak_stage3" text="Soğutma sistemi çevresinde gözle görülür bir soğutma sıvısı kaybı mevcuttur."/>
         <text name="rms_inspection_hint_coolant_leak_stage4" text="Soğutma sistemi sıvısının büyük bölümünü kaybetmiş; belirgin izler görülüyor."/>
-        <text name="rms_inspection_hint_corroded_wiring_stage2" text="Bazı elektrik bağlantılarında hafif oksidasyon izleri görülmektedir."/>
-        <text name="rms_inspection_hint_corroded_wiring_stage3" text="Kablolarda ve konektörlerde belirgin oksidasyon ve kirlenme görülmektedir."/>
-        <text name="rms_inspection_hint_corroded_wiring_stage4" text="Kablolarda ve konektörlerde ciddi korozyon görülmekte olup, bazı yalıtımların hasar gördüğü anlaşılmaktadır."/>
+        <text name="rms_inspection_hint_cylinder_liners_stage2" text="Soğutma sıvısı çatlak silindir gömleğinden yanma odasına sızar. Sıvı kaybı soğutmayı azaltır."/>
+        <text name="rms_inspection_hint_cylinder_liners_stage3" text="Soğutma sıvısı çatlak silindir gömleğinden yanma odasına sızar. Sıvı kaybı fazladır ve soğutmayı tehdit eder."/>
+        <text name="rms_inspection_hint_cylinder_liners_stage4" text="Soğutma sıvısı çatlak silindir gömleğinden yanma odasına sızar. Sıvı kaybı soğutmayı ciddi ölçüde bozar."/>
+        <text name="rms_inspection_hint_cylinder_head_stage2" text="Soğutma sıvısı çatlak silindir kapağından dışarıya sızar. Sıvı kaybı soğutmayı azaltır."/>
+        <text name="rms_inspection_hint_cylinder_head_stage3" text="Soğutma sıvısı çatlak silindir kapağından dışarıya sızar. Sıvı kaybı fazladır ve soğutmayı tehdit eder."/>
+        <text name="rms_inspection_hint_cylinder_head_stage4" text="Soğutma sıvısı çatlak silindir kapağından dışarıya sızar. Sıvı kaybı soğutmayı ciddi ölçüde bozar."/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage2" text="Soğutma sıvısı silindir kapak contasından dışarıya sızar. Sıvı kaybı soğutmayı azaltır."/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage3" text="Soğutma sıvısı silindir kapak contasından dışarıya sızar. Sıvı kaybı fazladır ve soğutmayı tehdit eder."/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage4" text="Soğutma sıvısı silindir kapak contasından dışarıya sızar. Sıvı kaybı soğutmayı ciddi ölçüde bozar."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage1" text="Soğutma sıvısı su pompası keçesinden dışarıya sızar. Seviye düşmeye başlar."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage2" text="Soğutma sıvısı su pompası keçesinden dışarıya sızar. Sıvı kaybı soğutmayı azaltır."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage3" text="Soğutma sıvısı su pompası keçesinden dışarıya sızar. Sıvı kaybı fazladır ve soğutmayı tehdit eder."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage4" text="Soğutma sıvısı su pompası keçesinden dışarıya sızar. Sıvı kaybı soğutmayı ciddi ölçüde bozar."/>
+        <text name="rms_inspection_hint_radiator_core_stage1" text="Soğutma sıvısı hasarlı radyatör borularından dışarıya sızar. Seviye düşmeye başlar."/>
+        <text name="rms_inspection_hint_radiator_core_stage2" text="Soğutma sıvısı hasarlı radyatör borularından dışarıya sızar. Sıvı kaybı soğutmayı azaltır."/>
+        <text name="rms_inspection_hint_radiator_core_stage3" text="Soğutma sıvısı hasarlı radyatör borularından dışarıya sızar. Sıvı kaybı fazladır ve soğutmayı tehdit eder."/>
+        <text name="rms_inspection_hint_radiator_core_stage4" text="Soğutma sıvısı hasarlı radyatör borularından dışarıya sızar. Sıvı kaybı soğutmayı ciddi ölçüde bozar."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage2" text="Güç veya şase bağlantılarında oksidasyon görülmektedir."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage3" text="Güç veya şase bağlantıları oksitlenmiş ve kirlenmiştir."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage4" text="Güç veya şase bağlantıları ciddi korozyona uğramıştır; yalıtımları hasarlıdır."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage1" text="Bir hidrolik hortumda veya bağlantıda ince bir yağ tabakası görülüyor."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage2" text="Bir hidrolik hortumdan veya bağlantıdan gözle görülür biçimde yağ sızıyor."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage3" text="Bir hidrolik hortum boyunca belirgin yağ izleri ve taze ıslaklık görülüyor."/>
@@ -933,12 +688,9 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Hava filtresi gözle görülür şekilde tıkalı."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Hava filtresi toz ve kirle ağır şekilde tıkanmış durumda."/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="Hava filtresi üfleyerek temizleme sınırına ulaştı. Atölye onu %s bakımından itibaren değiştirir."/>
-        <text name="rms_inspection_hint_fuel_filter_due" text="Yakıt filtresinin değiştirilmesi gerekiyor: Hangi seviyede olursa olsun her bakım veya atölyede yapılan bir onarım onu değiştirir."/>
-        <text name="rms_inspection_hint_hydraulic_filter_due" text="Hidrolik filtrenin değiştirilmesi gerekiyor: Hangi seviyede olursa olsun her bakım veya atölyede yapılan bir onarım onu değiştirir."/>
-        <text name="rms_inspection_hint_hydraulic_filter_bypass" text="Hidrolik filtre tıkalı: Yağ filtrelenmeden geçiyor ve devreyi aşındırıyor. Hangi seviyede olursa olsun her bakım veya atölyede yapılan bir onarım onu değiştirir."/>
         <text name="rms_inspection_hint_unidentified" text="Tespit edilmemiş bir arızanın belirtisi: atölye onu muayene ya da bakımla tespit eder."/>
-        <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Alternatörün çevresinde ve bazı bağlantı noktalarında aşırı ısınma ve koyulaşma belirtileri görülmektedir."/>
-        <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Alternatörün çevresinde ve kablolarında belirgin aşırı ısınma belirtileri ve koyulaşmış konektörler görülmektedir."/>
+        <text name="rms_inspection_hint_alternator_stage3" text="Alternatörün çevresinde ve bazı bağlantı noktalarında aşırı ısınma ve koyulaşma belirtileri görülmektedir."/>
+        <text name="rms_inspection_hint_alternator_stage4" text="Alternatörün çevresinde ve kablolarında belirgin aşırı ısınma belirtileri ve koyulaşmış konektörler görülmektedir."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Gresleme noktaları hafifçe kuru görünüyor."/>
         <text name="rms_inspection_hint_lubrication_stage2" text="Gresleme noktaları kuru görünüyor; gres yetersiz."/>
         <text name="rms_inspection_hint_lubrication_stage3" text="Gresleme noktaları çok kuru; çok az gres görünüyor."/>
@@ -947,9 +699,63 @@
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Şanzımanın altında yağ damlaları görülüyor."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Şanzımanın çevresinde belirgin bir yağ kaybı görülüyor."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage4" text="Yağ, şanzıman gövdesinden akıyor ve makinenin altında birikiyor."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage1" text="Ön aks tahrik milinin bir istavrozunda hafif boşluk oluşur."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage2" text="Ön aks tahrik milinin bir istavrozunda belirgin boşluk vardır."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage3" text="Ön aks tahrik milinin bir istavrozunda büyük boşluk vardır."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage4" text="Ön aks tahrik milinin bir istavrozu kırılmıştır."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage1" text="Bir aksın pinyon rulmanında hafif boşluk oluşur."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage2" text="Bir aksın pinyon rulmanında boşluk vardır ve uğultu yapar."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage3" text="Bir aksın yağında rulmandan kopmuş pullar vardır."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage4" text="Bir aks rulmanı dağılmıştır ve ayna mahruti dişlilerinde hasar izleri vardır."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage1" text="Kuyruk mili çıkış keçesinde hafif nemlenme vardır."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage2" text="Kuyruk mili çıkış keçesinde yağ terlemesi vardır."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage3" text="Kuyruk mili çıkış keçesinde aktif kaçak vardır."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage4" text="Kuyruk mili çıkış keçesinde büyük kaçak vardır."/>
+        <text name="rms_inspection_hint_pto_clutch_wear_branch2_stage1" text="Kuyruk mili kavramasının diskleri yapışmaya başlar."/>
+        <text name="rms_inspection_hint_pto_clutch_wear_branch2_stage2" text="Kuyruk mili kavramasının diskleri yapışır: kuyruk mili kapatıldığında ekipmanın durması zaman alır."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage1" text="Fren denemesinde hafif bir yana çekme görülür."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage1" text="Fren pedalı normalden biraz daha fazla çöker."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage2" text="Frenleme iki taraf arasında belirgin şekilde dengesiz kalır."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage2" text="Fren pedalı yumuşar ve daha fazla çöker."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage3" text="Frenler kullanıldığında araç belirgin şekilde bir yana çeker."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage3" text="Araç yavaşlamadan önce pedal neredeyse tabana ulaşır."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage4" text="Frenlemede yana çekme güçlüdür ve devam eder."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage4" text="Pedal dirençsiz çöker ve fren basıncı neredeyse sıfırdır."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage1" text="Frenlemede römork traktörden daha az yavaşlar."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage2" text="Römorkun frenlemesi belirgin şekilde azalmıştır."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage3" text="Traktör frenlediğinde römork neredeyse hiç tepki vermez."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage4" text="Traktör frenlediğinde römork artık frenlemez."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage1" text="Yönlendirilen bir tekerleğin aks başlığı piminde hafif boşluk oluşur."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage2" text="Yönlendirilen bir tekerleğin aks başlığı pimindeki boşluk fark edilir."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage3" text="Yönlendirilen bir tekerleğin aks başlığı piminde fazla boşluk vardır."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage4" text="Pimdeki boşluk tekerleğin yönlendirilmesini tehlikeye atar."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage1" text="Dönüşte tekerlekler direksiyon simidine hafif gecikmeyle tepki verir."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage2" text="Direksiyon simidi döner, ancak tekerlekler fark edilir gecikmeyle takip eder."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage3" text="Dönüşte tekerlekler direksiyon simidini düzgün takip etmez."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage4" text="Direksiyon simidi döner, ancak tekerlekler düzgün takip etmez."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage1" text="Silindir direksiyonu biraz daha zayıf tutar."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage2" text="Direksiyon simidi sabit tutulduğunda yön daha fazla sapar."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage3" text="Silindir aracın belirgin şekilde kaymasına izin verir."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage4" text="Direksiyon artık yönünü korumaz: sapma güçlüdür."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage1" text="Direksiyon silindirinin kolunda hafif yağ izi oluşur."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage2" text="Direksiyon silindirinin kol keçesi terler."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage3" text="Direksiyon silindiri kol keçesinden belirgin miktarda yağ kaybeder."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage4" text="Direksiyon silindirinin kol keçesinden hidrolik yağı akar."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage1" text="Bir palet makarası veya avare tekerlek hafif sesle ya da alışılmadık dirençle döner."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage2" text="Bir palet makarası veya avare tekerlek zor döner ve ses yapar."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage3" text="Bir palet makarası veya avare tekerleğin dönüşünde yüksek direnç vardır."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage4" text="Bir palet makarası veya avare tekerlek sıkışmıştır ve paletin hareketini yavaşlatır."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage2" text="Palet gerginliği biraz dengesiz görünüyor."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage3" text="Palet gevşek görünüyor ve gerginlikte belirgin bir dengesizlik var."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage4" text="Palet gözle görülür şekilde sarkmış durumda ve gerginliği ciddi şekilde bozulmuş görünüyor."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage1" text="Muayenede yükleyici mafsal pimleri ve burçlarında başlangıç aşınması görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Muayenede yükleyici mafsal pimleri ve burçlarında fark edilir boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Muayenede yükleyici mafsal pimleri ve burçlarında fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Muayenede yükleyici mafsal pimleri ve burçlarında çok fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Bir kabin amortisöründe hafif nemlenme vardır."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Bir kabin amortisöründe yağ terlemesi vardır."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Bir kabin amortisöründe aktif kaçak vardır."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Bir kabin amortisöründe büyük kaçak vardır ve amortisör boşalmıştır."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Turboşarjın çevresinde yağ izleri ve kararmış bağlantı noktaları görülüyor."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Turboşarj çevresinde yoğun yağ izleri, kararmış bağlantı noktaları ve kurum lekeleri görülmektedir."/>
         <text name="rms_inspection_hint_fluid_level_low" text="Bir sıvı seviyesi işaretinin altına düştü."/>
@@ -999,6 +805,11 @@
         <text name="rms_fleet_overdue_count" text="Gecikmiş: %d"/>
         <text name="rms_fleet_due_soon_label" text="Yakında"/>
         <text name="rms_fleet_due_soon_count" text="Yakında: %d"/>
+        <text name="rms_fleet_part_worn" text="İleri aşınma"/>
+        <text name="rms_fleet_part_failed" text="Arızalı"/>
+        <text name="rms_fleet_part_unmeasured" text="Ölçüm yok"/>
+        <text name="rms_fleet_parts_reading" text="Parçaların ölçümü: %s"/>
+        <text name="rms_fleet_parts_need_complete" text="Parçaların ölçümü: bir sonraki kapsamlı muayenede"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Araç İadesi"/>
         <text name="rms_sell_dialog_section_vehicle" text="Araç"/>
@@ -1033,7 +844,7 @@
         <text name="rms_tutorial_needs_repair_message" text="Bu %s üzerinde bir sorun var. Parçalarından biri arızalanmış olabilir.&#10;&#10;Atölyeye git: muayene ya da zamanı geldiyse bakım arızayı tespit eder. Geciktirme: arıza kötüleşmeye devam edebilir ve onarım maliyeti artar.&#10;&#10;Arıza tespit edildiğinde atölyede onart."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revizyon Gerekli"/>
         <text name="rms_tutorial_needs_overhaul_message" text="Bu %s yaşını belli ediyor. Değiştirmeyi veya revizyonu düşünme zamanı geldi. Bu uzun ve pahalı bir işlemdir ancak makineyi orijinal durumuna döndürmenin tek yoludur.&#10;&#10;Kullanım ömrü mod ayarlarından değiştirilebilir: değer yükseldikçe araçlar daha yavaş aşınır."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Arıza Yaklaşıyor"/>
+        <text name="rms_tutorial_needs_preventive_title" text="Artan Arıza Riski"/>
         <text name="rms_tutorial_needs_preventive_message" text="%s üzerinde motorun, yakıt sisteminin veya soğutma sisteminin arıza riski artmış.&#10;&#10;%s bakımı: valfleri ayarlar, enjektörleri ve termostatı kontrol eder; bu da riski azaltır."/>
         <text name="rms_tutorial_age_degradation_title" text="Yaşlanmaya Bağlı Bozulma"/>
         <text name="rms_tutorial_age_degradation_message" text="RMS’de araçlar yaşlandıkça orijinal performanslarının bir kısmını kademeli olarak kaybeder.&#10;&#10;Ömrün yaklaşık üçte birinden sonra yaşa bağlı aşınma, güç veya frenleme gibi bazı önemli özellikleri biraz azaltır. Etki daha sonra güçlenir ve ömrün sonunda açıkça görülür.&#10;&#10;Bu aşınma mod ayarlarından devre dışı bırakılabilir."/>
@@ -1097,7 +908,146 @@
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
-        <text name="rms_charger_function" text="Arabalı Telwin şarj cihazı, 12 V’ta 150 A, 24 V’ta 80 A. Aracın yanına bağla ve aküye göre ayarlanan otomatik şarjı, hızlı şarjı veya marş desteğini (START, 12 V’ta 200 A) seç. Şarj, oyundaki zaman hızına göre ilerler."/>
+        <text name="rms_charger_function" text="Tekerlekli Telwin şarj cihazı, 12 V’ta 150 A, 24 V’ta 80 A. Aküyü kabul ettiği akımla şarj etmek veya marş desteği sağlamak için aracın yakınına bağla (START, 12 V’ta 200 A). Şarj, oyunun zaman hızını izler."/>
+        <text name="rms_diagnostic_configuration" text="Teşhis Cihazı"/>
+        <text name="rms_configuration_reversibleFan" text="Ters Dönebilen Fan"/>
+        <text name="rms_diagnostic_open" text="Teşhis cihazını kullan"/>
+        <text name="rms_diagnostic_menu" text="Teşhis Menüsü"/>
+        <text name="rms_diagnostic_menu_connection" text="Bağlantı"/>
+        <text name="rms_diagnostic_menu_scan" text="Tüm Sistemlerin Taranması"/>
+        <text name="rms_diagnostic_connect" text="Bağla"/>
+        <text name="rms_diagnostic_disconnect" text="Bağlantıyı Kes"/>
+        <text name="rms_diagnostic_licence_end" text="Lisans bitişi: %s, %d. yıl"/>
+        <text name="rms_diagnostic_licence_expired" text="Lisans süresi doldu"/>
+        <text name="rms_diagnostic_licence_renew" text="Lisansı yenile (%s)"/>
+        <text name="rms_diagnostic_note_no_licence" text="Lisans süresi doldu: bu koda ait teknik bilgiler artık kullanılamıyor. Geri almak için lisansı yenile."/>
+        <text name="rms_diagnostic_connection_hint" text="Listeden bir makine seç ve Bağla’ya tıkla"/>
+        <text name="rms_diagnostic_reach" text="Erişim: %s"/>
+        <text name="rms_diagnostic_no_machine" text="Arabanın 4 m yakınında çiftliğe ait makine yok"/>
+        <text name="rms_diagnostic_state_ok" text="Bağlanmaya Hazır"/>
+        <text name="rms_diagnostic_state_plugged" text="Cihaz Bağlı"/>
+        <text name="rms_diagnostic_state_moving" text="Hareket ediyor: bağlamak için makineyi durdur"/>
+        <text name="rms_diagnostic_state_electronics" text="Kontrol ünitesi yok: bu makinede okunacak bir şey yok"/>
+        <text name="rms_diagnostic_state_busy" text="Başka bir arabanın cihazı bağlı"/>
+        <text name="rms_diagnostic_plug_title" text="Bağlantı: Teşhis Soketi"/>
+        <text name="rms_diagnostic_plug_socket_label" text="Soket:"/>
+        <text name="rms_diagnostic_plug_socket" text="9 Pinli Deutsch, J1939 Ağı"/>
+        <text name="rms_diagnostic_plug_machine_label" text="Makine:"/>
+        <text name="rms_diagnostic_plug_machine" text="Duruyor"/>
+        <text name="rms_diagnostic_plug_reading_label" text="Okuma:"/>
+        <text name="rms_diagnostic_plug_reading" text="Kontak Açıkken"/>
+        <text name="rms_diagnostic_plug_note_moving" text="Cihazı hareket hâlindeki bir makineye bağlama."/>
+        <text name="rms_diagnostic_plug_note_power" text="Motor kapalı kalabilir: yalnızca makinenin aküsü devre dışı olmamalı."/>
+        <text name="rms_diagnostic_scan_idle" text="Makinenin kontrol ünitelerini okumak için taramayı başlat."/>
+        <text name="rms_diagnostic_scan_running" text="Tarama sürüyor: %d / %d sistem"/>
+        <text name="rms_diagnostic_scan_done" text="Sistem taraması tamamlandı."/>
+        <text name="rms_diagnostic_scan_interrupted" text="Tarama kesildi: akü devre dışı bırakıldı."/>
+        <text name="rms_diagnostic_detected" text="Algılanan Sistemler: (%d/%d)"/>
+        <text name="rms_diagnostic_voltage" text="Gerilim: %s V"/>
+        <text name="rms_diagnostic_no_fault" text="Arıza Kodu Yok"/>
+        <text name="rms_diagnostic_querying" text="Sorgulanıyor"/>
+        <text name="rms_diagnostic_waiting" text="Bekliyor"/>
+        <text name="rms_diagnostic_legend_active" text="Etkin Arıza Kodu"/>
+        <text name="rms_diagnostic_no_scan" text="Tarama Yok"/>
+        <text name="rms_diagnostic_scan_start" text="Taramayı başlat"/>
+        <text name="rms_diagnostic_scan_again" text="Yeniden tara"/>
+        <text name="rms_diagnostic_help" text="Kodun Yardımı ve Bileşenleri"/>
+        <text name="rms_diagnostic_ecu_label" text="Kontrol Ünitesi:"/>
+        <text name="rms_diagnostic_spn_label" text="SPN %d:"/>
+        <text name="rms_diagnostic_fmi_label" text="FMI %d:"/>
+        <text name="rms_diagnostic_system_label" text="Sistem:"/>
+        <text name="rms_diagnostic_part_label" text="Etkilenen Parça:"/>
+        <text name="rms_diagnostic_repair_time_label" text="Onarım Süresi:"/>
+        <text name="rms_diagnostic_where_label" text="Onarım Yeri:"/>
+        <text name="rms_diagnostic_where_diagnostic" text="Cihaz bağlıyken mobil atölye veya kendi atölyen ya da bayi"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Kendi atölyen veya bayi"/>
+        <text name="rms_diagnostic_note_inspection" text="Bu kod, makinenin neyi ölçtüğünü söyler, hangi parçanın arızalı olduğunu değil: bir muayene onu bulur."/>
+        <text name="rms_diagnostic_note_uncoded" text="Makinenin muayenesi etkilenen parçayı bulur."/>
+        <text name="rms_diagnostic_uncoded" text="Uyarı lambası kayıtlı kod olmadan yanıyor. Hiçbir sensör etkilenen parçayı izlemiyor."/>
+        <text name="rms_diagnostic_uncoded_title" text="Kodsuz Lamba"/>
+        <text name="rms_diagnostic_error_distance" text="Arabayı makineye 4 m’den daha yakına getir."/>
+        <text name="rms_diagnostic_error_electronics" text="Bu makinede okunacak kontrol ünitesi yok."/>
+        <text name="rms_diagnostic_error_busy" text="Bu makineye zaten başka bir arabanın cihazı bağlı."/>
+        <text name="rms_diagnostic_error_unplugged" text="Önce cihazı bir makineye bağla."/>
+        <text name="rms_diagnostic_error_player_distance" text="Arabaya yürüyerek yaklaş."/>
+        <text name="rms_diagnostic_ecu_engine" text="Motor"/>
+        <text name="rms_diagnostic_ecu_inverter" text="İnvertör"/>
+        <text name="rms_diagnostic_ecu_traction_battery" text="Çekiş Aküsü"/>
+        <text name="rms_diagnostic_ecu_converter" text="Gerilim Dönüştürücü"/>
+        <text name="rms_diagnostic_ecu_charger" text="Araç Üstü Şarj Cihazı"/>
+        <text name="rms_diagnostic_ecu_transmission" text="Şanzıman"/>
+        <text name="rms_diagnostic_ecu_tractor" text="Merkezi Bilgisayar"/>
+        <text name="rms_diagnostic_ecu_dashboard" text="Gösterge Paneli"/>
+        <text name="rms_diagnostic_spn_523612" text="Motor ECU’su"/>
+        <text name="rms_diagnostic_spn_102" text="Turbo Basıncı"/>
+        <text name="rms_diagnostic_spn_100" text="Motor Yağı Basıncı"/>
+        <text name="rms_diagnostic_spn_101" text="Motor Karter Basıncı"/>
+        <text name="rms_diagnostic_spn_1322" text="Birden Fazla Silindirde Ateşleme Kaçırma"/>
+        <text name="rms_diagnostic_spn_cylinder" text="%d. Silindirde Ateşleme Kaçırma"/>
+        <text name="rms_diagnostic_spn_94" text="Yakıt Besleme Basıncı"/>
+        <text name="rms_diagnostic_spn_110" text="Soğutma Sıvısı Sıcaklığı"/>
+        <text name="rms_diagnostic_spn_111" text="Soğutma Sıvısı Seviyesi"/>
+        <text name="rms_diagnostic_spn_1639" text="Fan Devri"/>
+        <text name="rms_diagnostic_spn_168" text="Akü Gerilimi"/>
+        <text name="rms_diagnostic_spn_677" text="Marş Rölesi"/>
+        <text name="rms_diagnostic_spn_167" text="Şarj Gerilimi"/>
+        <text name="rms_diagnostic_spn_157" text="Enjeksiyon Rampası Basıncı"/>
+        <text name="rms_diagnostic_spn_4375" text="AdBlue Pompası"/>
+        <text name="rms_diagnostic_spn_3361" text="AdBlue Dozaj Enjektörü"/>
+        <text name="rms_diagnostic_spn_3216" text="Katalizör Öncesi NOx Sensörü"/>
+        <text name="rms_diagnostic_spn_3251" text="Partikül Filtresi Fark Basıncı"/>
+        <text name="rms_diagnostic_spn_524135" text="Partikül Filtresi Kurum Yükü"/>
+        <text name="rms_diagnostic_spn_127" text="Şanzıman Yağı Basıncı"/>
+        <text name="rms_diagnostic_spn_191" text="Güç Aktarma Çıkış Milinin Hızı"/>
+        <text name="rms_diagnostic_spn_526" text="Gerçek Dişli Oranı"/>
+        <text name="rms_diagnostic_spn_177" text="Şanzıman Yağı Sıcaklığı"/>
+        <text name="rms_diagnostic_spn_124" text="Şanzıman Yağı Seviyesi"/>
+        <text name="rms_diagnostic_spn_1762" text="Hidrolik Basınç"/>
+        <text name="rms_diagnostic_spn_2602" text="Hidrolik Yağı Seviyesi"/>
+        <text name="rms_diagnostic_spn_1638" text="Hidrolik Yağı Sıcaklığı"/>
+        <text name="rms_diagnostic_spn_2910" text="Kuyruk Mili Kavrama Valfi Aktüatörü"/>
+        <text name="rms_diagnostic_spn_186" text="Kuyruk Mili Devri"/>
+        <text name="rms_diagnostic_spn_1883" text="Arka Kuyruk Mili Devri"/>
+        <text name="rms_diagnostic_spn_1882" text="Ön Kuyruk Mili Çıkış Milinin Hızı"/>
+        <text name="rms_diagnostic_spn_2660" text="Kumanda Kolunun X Ekseni Konumu"/>
+        <text name="rms_diagnostic_spn_116" text="Fren Basıncı"/>
+        <text name="rms_diagnostic_spn_9109" text="Çekiş Motoru İnvertörünün Güç Modülü"/>
+        <text name="rms_diagnostic_spn_9115" text="İnvertör Faz Akımlarında Dengesizlik"/>
+        <text name="rms_diagnostic_spn_9059" text="Çekiş Motoru Sıcaklığı"/>
+        <text name="rms_diagnostic_spn_9067" text="Çekiş Motoru Devir Sensörleri"/>
+        <text name="rms_diagnostic_spn_8585" text="Gerilim Dönüştürücünün Çıkış Gerilimi"/>
+        <text name="rms_diagnostic_spn_4993" text="Araç Üstü Şarj Cihazının Çıkış Akımı"/>
+        <text name="rms_diagnostic_spn_8432" text="Yüksek Gerilim Devresi Yalıtım Testi"/>
+        <text name="rms_diagnostic_spn_5923" text="En Düşük Hücre Gerilimi"/>
+        <text name="rms_diagnostic_spn_8091" text="Pozitif Yüksek Gerilim Kontaktörünün Durumu"/>
+        <text name="rms_diagnostic_spn_1713" text="Hidrolik Yağ Filtresi Tıkanma Anahtarı"/>
+        <text name="rms_diagnostic_fmi_0" text="Veri normal aralığın üzerinde (en ciddi seviye)"/>
+        <text name="rms_diagnostic_fmi_1" text="Veri normal aralığın altında (en ciddi seviye)"/>
+        <text name="rms_diagnostic_fmi_2" text="Veri düzensiz, kesintili veya hatalı"/>
+        <text name="rms_diagnostic_fmi_3" text="Gerilim normalin üzerinde veya yüksek gerilimli kaynağa kısa devre"/>
+        <text name="rms_diagnostic_fmi_4" text="Gerilim normalin altında veya düşük gerilimli kaynağa kısa devre"/>
+        <text name="rms_diagnostic_fmi_5" text="Akım normalin altında veya devre açık"/>
+        <text name="rms_diagnostic_fmi_7" text="Mekanik sistem yanıt vermiyor veya ayarı bozuk"/>
+        <text name="rms_diagnostic_fmi_12" text="Arızalı cihaz veya bileşen"/>
+        <text name="rms_diagnostic_fmi_14" text="Özel talimatlar"/>
+        <text name="rms_diagnostic_fmi_16" text="Veri normal aralığın üzerinde (orta derecede ciddi seviye)"/>
+        <text name="rms_diagnostic_fmi_18" text="Veri normal aralığın altında (orta derecede ciddi seviye)"/>
+        <text name="rms_diagnostic_fmi_31" text="Durum mevcut"/>
+        <text name="rms_dashboard_code_message" text="%s, %s"/>
+        <text name="rms_dashboard_fmi_0" text="değer çok yüksek"/>
+        <text name="rms_dashboard_fmi_1" text="değer çok düşük"/>
+        <text name="rms_dashboard_fmi_2" text="değer düzensiz"/>
+        <text name="rms_dashboard_fmi_3" text="gerilim çok yüksek"/>
+        <text name="rms_dashboard_fmi_4" text="gerilim çok düşük"/>
+        <text name="rms_dashboard_fmi_5" text="devre açık"/>
+        <text name="rms_dashboard_fmi_7" text="yanıt vermiyor"/>
+        <text name="rms_dashboard_fmi_12" text="arızalı bileşen"/>
+        <text name="rms_dashboard_fmi_14" text="müdahale gerekli"/>
+        <text name="rms_dashboard_fmi_16" text="değer yüksek"/>
+        <text name="rms_dashboard_fmi_18" text="değer düşük"/>
+        <text name="rms_dashboard_fmi_31" text="arıza mevcut"/>
+        <text name="rms_diagnostic_log_title" text="Kod Okuma"/>
+        <text name="rms_diagnostic_log_codes" text="Okunan Kodlar"/>
         <text name="rms_charger_start" text="Şarj cihazını bağla"/>
         <text name="rms_charger_disconnect" text="Şarj cihazını ayır"/>
         <text name="rms_charger_select" text="Bağlanacak aracı seçin."/>
@@ -1127,7 +1077,7 @@
         <text name="rms_charger_stopped_motor" text="Şarj durdu: motor çalıştırma"/>
         <text name="rms_charger_error_player_distance" text="Şarj cihazına yürüyerek yaklaş."/>
         <text name="rms_charger_mode_select" text="Şarj cihazını bağla"/>
-        <text name="rms_charger_mode_start" text="Marş desteği (START, 200 A, 12 V)"/>
+        <text name="rms_charger_mode_start" text="Marş desteği sağla"/>
         <text name="rms_charger_start_ready" text="START hazır"/>
         <text name="rms_charger_start_active" text="Marş desteği etkin"/>
         <text name="rms_charger_start_running" text="Motor çalıştı: bağlantıyı kes"/>
@@ -1135,8 +1085,7 @@
         <text name="rms_charger_start_wait" text="İki çalıştırma arasında 30 saniye bekleyin."/>
         <text name="rms_charger_unplug_before_start" text="Çalıştırmadan önce şarj cihazını ayırın veya START seçin."/>
         <text name="rms_charger_start_connected" text="Marş desteği (START, 200 A)."/>
-        <text name="rms_charger_mode_charge" text="Otomatik şarj"/>
-        <text name="rms_charger_mode_fast" text="Hızlı şarj (150 A, 24 V’ta 80 A)"/>
+        <text name="rms_charger_mode_charge" text="Aküyü şarj et"/>
 
         <!-- Battery isolator -->
         <text name="rms_battery_isolator_cut" text="Aküyü devreden çıkar"/>
@@ -1144,5 +1093,10 @@
         <text name="rms_battery_isolator_open" text="Akü devre dışı. Aracın önünde, yaya olarak akü şalterinden yeniden devreye al."/>
         <text name="rms_battery_isolator_engine_running" text="Akü şalterini kullanmadan önce motoru durdur."/>
         <text name="rms_battery_isolator_info" text="Akü devre dışı"/>
+        <text name="rms_diagnostic_spn_4217" text="Şanzıman Vites Solenoid Valfi"/>
+        <text name="rms_diagnostic_spn_2612" text="Ön Çekiş Aktüatör Durumu"/>
+        <text name="rms_diagnostic_spn_569" text="Arka Diferansiyel Kilit Durumu"/>
+        <text name="rms_diagnostic_spn_4084" text="Valf Sürgüsü"/>
+        <text name="rms_diagnostic_spn_1873" text="Arka Kaldırıcı Konumu"/>
     </texts>
 </l10n>

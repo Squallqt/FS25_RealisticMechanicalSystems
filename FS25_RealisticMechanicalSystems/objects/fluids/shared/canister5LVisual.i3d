@@ -6,8 +6,8 @@
   </Asset>
 
   <Files>
-    <File fileId="1" filename="../products/motorexFarmerPro/medium_body_diffuse.dds"/>
-    <File fileId="2" filename="../products/motorexFarmerPro/medium_cap_diffuse.dds"/>
+    <File fileId="1" filename="../products/motorexCoolantM30/medium_cap_diffuse.dds"/>
+    <File fileId="2" filename="../products/motorexFarmerPoly/medium_cap_diffuse.dds"/>
     <File fileId="3" filename="../products/motorexFarmerPro/medium_label_diffuse.dds"/>
     <File fileId="4" filename="canister5L_specular.dds"/>
   </Files>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <texture>
     <meta>
-        <filename>rms_workshopFluids.dds</filename>
+        <filename>rms_workshopFluids.png</filename>
         <size width="512" height="512" />
     </meta>
     <slices>
@@ -12,7 +12,6 @@
         <slice id="airFilter" uvs="256px 0px 128px 128px" />
         <slice id="filters" uvs="384px 0px 128px 128px" />
         <slice id="adjustments" uvs="256px 128px 128px 128px" />
-        <slice id="hydraulicFilter" uvs="384px 128px 128px 128px" />
         <slice id="radiator" uvs="0px 256px 128px 128px" />
         <slice id="lubrication" uvs="128px 256px 128px 128px" />
     </slices>

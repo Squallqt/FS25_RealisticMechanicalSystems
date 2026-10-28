@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Vermogensverlies"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Buiten dienst"/>
+        <text name="rms_breakdowns_severity_minor" text="Licht"/>
+        <text name="rms_breakdowns_severity_moderate" text="Matig"/>
+        <text name="rms_breakdowns_severity_major" text="Ernstig"/>
+        <text name="rms_breakdowns_severity_critical" text="Kritiek"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Lichte slijtage van de stuurkogels en stuurstangen. Er ontstaat wat speling en de besturing wordt minder nauwkeurig."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Matige slijtage van de stuurkogels en stuurstangen. De speling neemt toe en het voertuig trekt licht naar één kant."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Ernstige slijtage van de stuurkogels en stuurstangen. De speling is groot en het voertuig trekt naar één kant en houdt zijn koers slechter."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kritieke uitval van de stuurkogels en stuurstangen. Het losgeraakte wiel volgt het stuur niet meer goed; rijden is gevaarlijk."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Lichte slijtage van de fuseepennen. Er ontstaat wat speling in de besturing."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Matige slijtage van de fuseepennen. De speling in de besturing wordt merkbaar."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Ernstige slijtage van de fuseepennen. De speling in de besturing is groot."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritieke slijtage van de fuseepennen. De besturing heeft zeer grote speling."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lichte storing van de stuurorbitrol. Het stuur heeft wat speling voordat de wielen volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Matige storing van de stuurorbitrol. Het stuur draait verder voordat de wielen volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Ernstige storing van de stuurorbitrol. Het stuur draait veel zonder dat de wielen goed volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritieke uitval van de stuurorbitrol. Het stuur heeft zeer grote speling voordat de wielen volgen."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lichte interne lekkage in de stuurcilinder. Het voertuig begint naar één kant af te wijken."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lichte lekkage bij de stangafdichting van de stuurcilinder. Het hydrauliekoliepeil daalt licht."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Matige interne lekkage in de stuurcilinder. Het voertuig wijkt meer naar één kant af."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Matige lekkage bij de stangafdichting van de stuurcilinder. Het hydrauliekoliepeil daalt duidelijk."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Ernstige interne lekkage in de stuurcilinder. Het voertuig wijkt duidelijk naar één kant af."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Ernstige lekkage bij de stangafdichting van de stuurcilinder. Het hydrauliekoliepeil daalt snel."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Kritieke interne lekkage in de stuurcilinder. Het voertuig wijkt sterk naar één kant af."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Kritieke lekkage bij de stangafdichting van de stuurcilinder. Het hydrauliekoliepeil daalt zeer snel."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Lichte slijtage van de pennen en bussen van de voorladergewrichten. Er ontstaat lichte speling in de armgewrichten."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Matige slijtage van de pennen en bussen van de voorladergewrichten. De speling in de armgewrichten wordt merkbaar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Ernstige slijtage van de pennen en bussen van de voorladergewrichten. De arm heeft grote speling."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kritieke slijtage van de pennen en bussen van de voorladergewrichten. De speling in de arm is zeer groot."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Lichte lekkage van een cabineschokdemper. De cabine wordt iets minder gedempt."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Matige lekkage van een cabineschokdemper. De cabine stuitert over oneffenheden."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Ernstige lekkage van een cabineschokdemper. De cabine schommelt bij elke schok."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Kritieke lekkage van een cabineschokdemper. De schokdemper is leeg: de cabine wordt nauwelijks nog gedempt."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Naar neutraal geschakeld"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Beginnende slijtage van de gloeibougies. Koude starts duren langer, terwijl warme starts normaal blijven."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Meerdere gloeibougies zijn zwak of werken niet. Koude starts zijn moeilijk en de motor kan onregelmatig stationair draaien totdat hij warm is."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Ernstige storing van de gloeibougies. Koud starten wordt zeer onzeker en de motor blijft tijdens het opwarmen onregelmatig lopen."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Volledige uitval van de gloeibougies. Bij een te lage temperatuur kan de motor niet worden gestart."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Storing van het gloeirelais. De gloeibougies worden niet meer warm: Bij een te lage temperatuur kan de motor niet worden gestart."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Storing van het startrelais. De motor wordt niet meer rondgedraaid bij het starten."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Storing van de dimlichtlampen. Deze lampen branden niet meer totdat ze zijn vervangen."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Storing van de grootlichtlampen. Deze lampen branden niet meer totdat ze zijn vervangen."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Storing van de lampen van de voorste werklampen. Deze lampen branden niet meer totdat ze zijn vervangen."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Storing van de lampen van de achterste werklampen. Deze lampen branden niet meer totdat ze zijn vervangen."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Storing van de zwaailichtlamp. Het zwaailicht brandt niet meer totdat de lamp is vervangen."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Storing van de richtingaanwijzerlampen. Zowel de richtingaanwijzers als de alarmlichten blijven uit totdat de lampen zijn vervangen."/>
+        <text name="rms_breakdowns_part_vehicle" text="Voertuig"/>
+        <text name="rms_breakdowns_part_pistons" text="Zuigers"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Zuigerveren"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Cilinderbussen"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Inlaatkleppen"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Uitlaatkleppen"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Klepgeleiders en klepsteelafdichtingen"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Cilinderkop"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Cilinderkoppakking"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Krukaslagers"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Drijfstanglagers"/>
+        <text name="rms_breakdowns_part_consumables" text="Verbruiksmaterialen"/>
+        <text name="rms_breakdowns_part_clutch" text="Koppeling"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Overbrengingsregeling"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Motor"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Stroomkabels en massaverbindingen"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Startrelais"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Gloeirelais"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Dimlichtlampen"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="Grootlichtlampen"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Lampen van de voorste werklampen"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Lampen van de achterste werklampen"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Zwaailichtlamp"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Richtingaanwijzerlampen"/>
+        <text name="rms_breakdowns_part_battery" text="Accu"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Tractieaccu"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Hoogspanningscontactor"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Hoogspanningsbekabeling"/>
+        <text name="rms_breakdowns_part_inverter" text="Omvormer"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Spanningsomzetter"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Boordlader"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Lagers van de elektromotor"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Wikkelingen van de elektromotor"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Positiesensor van de motor"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Koelvloeistofpomp"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Waterpomp"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Radiateurblok"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Koelslangen en aansluitingen"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Expansievat"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Multiriem en spanrol"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Ventilatorblad"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Elektrische koelventilator"/>
+        <text name="rms_breakdowns_part_reducer" text="Reductiekast"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Remschijven en remvoeringen"/>
+        <text name="rms_breakdowns_part_brake_control" text="Rembediening"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Aanhangerremventiel"/>
+        <text name="rms_breakdowns_part_park_brake" text="Parkeerrem"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Naaflager en keerring"/>
+        <text name="rms_breakdowns_part_alternator" text="Dynamo"/>
+        <text name="rms_breakdowns_part_starter" text="Startmotor"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turbolader"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Transmissieafdichting"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Rupsbandspanner"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Looprollen en geleidewielen"/>
+        <text name="rms_breakdowns_part_thermostat" text="Thermostaat"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Oliepomp"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Synchronisator"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Stuurkogels en stuurstangen"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Pennen en bussen van de voorladergewrichten"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Fuseepennen"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Stuurorbitrol"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Stuurcilinder"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Cabinevering"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="Aftakaskoppeling"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="Lagers van de uitgaande aftakasas"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="Keerring van de uitgaande aftakasas"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="Uitgaande aftakasas"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="Magneetventiel van de aftakasinschakeling"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="Bedieningsschakelaar van de aftakas"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="Toerentalsensor van de aftakas"/>
+        <text name="rms_breakdowns_part_pto_brake" text="Aftakasrem"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Frontaftakaskoppeling"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Hydrauliekpomp"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hydraulische cilinder"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Hydrauliekslang"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Hydrauliekfilter"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Hydrauliekoliekoeler"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Hydraulisch regelventiel"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Ventilatorkoppeling"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Opvoerpomp"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Brandstofinjectoren"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="Hogedrukpomp"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Brandstoffilter"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Brandstofleiding"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Mechanische inspuitpomp"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Brandstofdoseerventiel"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Raildruksensor"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Raildrukbegrenzingsventiel"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Gasdrukregelaar"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Gasafsluitmagneetventiel"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Gasfilter"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Gasleidingen"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Gasinjectoren"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-pomp"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-doseerinjector"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-filter"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="NOx-sensor"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Roetfilter"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Gloeibougies"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="Aftakas uitgeschakeld"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="De frontaftakas is uitgevallen"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="De aftakas ontkoppelt niet: schakel de machine uit om het werktuig te stoppen"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Beginnende slijtage van de aftakaskoppeling. De aandrijving schakelt soms uit."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Matige slijtage van de aftakaskoppeling. De aandrijving schakelt steeds vaker uit."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Ernstige slijtage van de aftakaskoppeling. Het werktuig verliest vaak zijn aandrijving."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Kritieke uitval van de aftakaskoppeling. Het werktuig valt stil."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Beginnende slijtage van de aftakaskoppeling. De platen beginnen te kleven."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Matige slijtage van de aftakaskoppeling. De platen kleven steeds meer."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Ernstige slijtage van de aftakaskoppeling. De platen kleven: de aftakas ontkoppelt soms niet."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Kritieke uitval van de aftakaskoppeling. De platen zijn aan elkaar gelast: de aftakas ontkoppelt niet meer en het werktuig stopt pas bij het uitschakelen van de machine."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Beginnende slijtage van de lagers van de uitgaande aftakasas. Er ontstaat een licht gerommel."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Matige slijtage van de lagers van de uitgaande aftakasas. Het gerommel wordt duidelijk hoorbaar."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Ernstige slijtage van de lagers van de uitgaande aftakasas. Het gerommel wordt luider."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Kritieke uitval van de lagers van de uitgaande aftakasas. Het gerommel is op zijn luidst."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Lichte lekkage van de keerring van de uitgaande aftakasas. Het transmissieoliepeil daalt langzaam tijdens het werk."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Matige lekkage van de keerring van de uitgaande aftakasas. Het transmissieoliepeil daalt tijdens het werk."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Ernstige lekkage van de keerring van de uitgaande aftakasas. Transmissieolie loopt weg en het peil daalt snel."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Kritieke lekkage van de keerring van de uitgaande aftakasas. Er is onvoldoende olie over voor een veilige werking van de transmissie."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Beginnende slijtage van het magneetventiel van de aftakasinschakeling. De aandrijving schakelt tijdens het werk soms uit."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Beginnende slijtage van het magneetventiel van de aftakasinschakeling. De aftakas schakelt soms niet in."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Matige slijtage van het magneetventiel van de aftakasinschakeling. De aandrijving schakelt tijdens het werk herhaaldelijk uit."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Matige slijtage van het magneetventiel van de aftakasinschakeling. De aftakas schakelt herhaaldelijk niet in."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Ernstige slijtage van het magneetventiel van de aftakasinschakeling. De aandrijving schakelt vaak uit."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Ernstige slijtage van het magneetventiel van de aftakasinschakeling. De aftakas schakelt vaak niet in."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Kritieke uitval van het magneetventiel van de aftakasinschakeling. De spoel ervan is onderbroken en de aftakas blijft niet meer ingeschakeld."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Kritieke uitval van het magneetventiel van de aftakasinschakeling. De schuif ervan blijft vastzitten en de aftakas schakelt niet meer in."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Beginnende slijtage van de bedieningsschakelaar van de aftakas. Een slecht contact schakelt de aandrijving soms uit."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Beginnende slijtage van de bedieningsschakelaar van de aftakas. De aftakas reageert soms niet op de bediening."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Matige slijtage van de bedieningsschakelaar van de aftakas. Slechte contacten schakelen de aandrijving steeds vaker uit."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Matige slijtage van de bedieningsschakelaar van de aftakas. De aftakas reageert steeds vaker niet op de bediening."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Ernstige slijtage van de bedieningsschakelaar van de aftakas. Het contact houdt niet meer en de aandrijving schakelt vaak uit."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Ernstige slijtage van de bedieningsschakelaar van de aftakas. De bediening heeft vaak geen effect."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Kritieke uitval van de bedieningsschakelaar van de aftakas. Het contact ervan blijft open en de aftakas schakelt uit."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Kritieke uitval van de bedieningsschakelaar van de aftakas. Het contact ervan sluit niet meer en de aftakas schakelt niet meer in."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="Storing van de uitgaande aftakasas. De tanden van de spievertanding zijn afgeschoven en brengen geen beweging meer over."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="Storing van de uitgaande aftakasas. De as is gebroken en het werktuig wordt niet meer aangedreven."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="Storing van de toerentalsensor van de aftakas. De sensor geeft geen signaal meer en de beveiliging schakelt de aftakas uit."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="Storing van de aftakasrem. De rem blijft aangetrokken en blokkeert de uitgaande as."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Beginnende slijtage van de frontaftakaskoppeling. De aandrijving van de voorste uitgang valt soms weg."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Matige slijtage van de frontaftakaskoppeling. De aandrijving van de voorste uitgang valt herhaaldelijk weg."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Ernstige slijtage van de frontaftakaskoppeling. Het voorste werktuig verliest vaak zijn aandrijving."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Kritieke uitval van de frontaftakaskoppeling. De voorste uitgang draait niet meer; de achterste aftakas blijft werken."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Inschakelen aftakas geweigerd"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Noodreparatie"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Defect"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Het systeem werkt normaal, maar de inspectie heeft een defect onderdeel aangetoond. Het onderdeel biedt geen veiligheidsmarge meer; preventieve vervanging wordt aanbevolen om een plotselinge storing te voorkomen."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Accu te zwak"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Tractieaccu koud: actieradius en vermogen verlaagd"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Het systeem werkt normaal, maar is volledig afhankelijk van een noodreparatie. Om een storing onder belasting te voorkomen, wordt zo snel mogelijk volledige vervanging van de onderdelen aanbevolen."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Versleten turboladerlagers. Een zacht fluitgeluid is hoorbaar en bij hoog toerental treedt licht vermogensverlies op."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Lekkende afdichtingen van de turbolader. Duidelijk vermogensverlies en hoger brandstofverbruik."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Beschadigde turbinebladen. Ernstig vermogensverlies en risico dat de motor afslaat onder zware belasting."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Kritieke uitval van de turbolader. De motor heeft het grootste deel van zijn vermogen verloren en riskeert ernstige interne schade."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Versleten koppelingsplaten. Incidenteel vermogensverlies door slippende koppeling onder belasting."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Aanzienlijke koppelingsslijtage. Duidelijke slip bij accelereren en onder zware belasting."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Sterk versleten koppeling. Ernstige slip bemoeilijkt de vermogensoverdracht naar de wielen."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="De koppeling is volledig verbrand. Het voertuig kan niet meer rijden."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Versleten synchronisatoren. Soms gekraak of moeilijk schakelen."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Beschadigde synchronisatoren. Schakelen gaat vaak moeilijk en kan mislukken."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Afgebroken tanden van de synchronisator. Grote kans op mislukte schakelingen of uit de versnelling springen onder belasting."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="De synchronisatoren zijn volledig uitgevallen. Schakelen is niet meer mogelijk."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Lichte transmissieolielekkage. Het oliepeil daalt langzaam tijdens het werk."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Matige transmissieolielekkage. Het peil daalt duidelijk en de transmissie wordt warmer."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Ernstige transmissieolielekkage. Het peil daalt snel en de transmissie raakt onder belasting oververhit."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Kritieke transmissieolielekkage. Er is onvoldoende olie over voor veilig gebruik van de transmissie."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Lichte storing van de rupsbandspanner. De rupsbandspanning is iets minder stabiel, waardoor weerstand en slijtage licht toenemen."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Matige storing van de rupsbandspanner. De spanning wordt instabiel, de rolefficiëntie daalt en het risico op verkeerde uitlijning neemt toe."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Ernstige storing van de rupsbandspanner. De spanning is sterk verstoord, de krachtoverbrenging wordt inefficiënt en het risico dat de rupsband afloopt neemt toe."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Kritieke uitval van de rupsbandspanner. De rupsband kan niet meer correct op spanning worden gehouden en het voertuig kan niet meer veilig worden gebruikt."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Lichte storing van de thermostaat. De motor warmt langzaam op en blijft tijdens het werk te koud."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Lichte storing van de thermostaat. De temperatuurregeling is zwak en de motor wordt warmer onder belasting."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Matige storing van de thermostaat. De motor warmt langzaam op en blijft tijdens het werk te koud."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Matige storing van de thermostaat. De temperatuur stijgt eerder en de motor wordt heet onder belasting."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Ernstige storing van de thermostaat. De motor warmt langzaam op en blijft tijdens het werk te koud."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Ernstige storing van de thermostaat. De motor wordt erg heet; langdurig werk kan oververhitting veroorzaken."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Kritieke uitval van de thermostaat. De motor warmt langzaam op en blijft tijdens het werk te koud."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Kritieke uitval van de thermostaat. Deze blijft dicht en de motor raakt snel oververhit."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="De motor staat in de beveiligingsmodus. Het vermogen blijft begrensd totdat de temperatuur daalt."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Oververhittingsbeveiliging: vermogen verlaagd"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="De oververhittingsbeveiliging grijpt sterker in. De motor levert nog maar de helft van zijn vermogen."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Oververhittingsbeveiliging: vermogen gehalveerd"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="De oververhittingsbeveiliging grijpt maximaal in. Slechts een fractie van het motorvermogen blijft over."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Oververhittingsbeveiliging: vermogen sterk verlaagd"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="De motor is uitgeschakeld om schade te voorkomen. Laat hem afkoelen voordat je opnieuw start."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Oververhittingsbeveiliging: motor uitgeschakeld"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lichte storing van de oliepomp. De oliedruk is verminderd, het motorkoppel daalt licht, de motortemperatuur stijgt en er kunnen mechanische klopgeluiden ontstaan."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Matige storing van de oliepomp. De oliedruk is onvoldoende, het motorkoppel daalt duidelijk, de motortemperatuur stijgt en mechanisch kloppen is goed hoorbaar."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Ernstige storing van de oliepomp. De oliedruk is kritiek laag, het motorkoppel daalt sterk, oververhitting is waarschijnlijk, het mechanische kloppen is ernstig en de motor kan afslaan."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritieke uitval van de oliepomp. De oliecirculatie is onvoldoende voor veilig gebruik van de motor en starten of verder gebruik is onmogelijk."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="De motor is vastgelopen en kan niet meer draaien."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Motor afgeslagen"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lichte ECU-storing. Het motorvermogen is licht verminderd."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Matige ECU-storing. Duidelijk vermogensverlies en hoger brandstofverbruik."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Ernstige ECU-storing. Groot vermogensverlies, hoog brandstofverbruik en risico dat de motor afslaat."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Volledige uitval van de ECU. De motor kan niet worden aangestuurd en start niet."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Lichte storing van de stroomkabels en massaverbindingen. De hogere contactweerstand veroorzaakt soms flikkerende verlichting, instabiele voeding en moeilijk starten. Een lekstroom ontlaadt de accu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Matige storing van de stroomkabels en massaverbindingen. Contactverlies veroorzaakt vaak flikkerende verlichting, instabiele voeding, moeilijk starten en mogelijk afslaan. Een lekstroom ontlaadt de accu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Ernstige storing van de stroomkabels en massaverbindingen. De voeding van de circuits is instabiel, de verlichting kan volledig uitvallen, het motorkoppel is verminderd, de motor slaat waarschijnlijk af en starten is onbetrouwbaar. Een lekstroom ontlaadt de accu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Kritieke uitval van de stroomkabels en massaverbindingen. De verlichting werkt niet en de motor kan niet worden gestart. Een lekstroom ontlaadt de accu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Lichte storing van de stroomkabels en massaverbindingen. De hogere contactweerstand veroorzaakt soms flikkerende verlichting en instabiele voeding. Een lekstroom ontlaadt de hulpaccu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Matige storing van de stroomkabels en massaverbindingen. Contactverlies veroorzaakt vaak flikkerende verlichting, instabiele voeding en mogelijk onderbrekingen. Een lekstroom ontlaadt de hulpaccu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Ernstige storing van de stroomkabels en massaverbindingen. De voeding van de circuits is instabiel, de verlichting kan volledig uitvallen, het vermogen is verminderd en onderbrekingen zijn waarschijnlijk. Een lekstroom ontlaadt de hulpaccu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Kritieke uitval van de stroomkabels en massaverbindingen. De verlichting werkt niet en de machine start niet. Een lekstroom ontlaadt de hulpaccu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Lichte storing van de koelslangen en aansluitingen. Een klein zweetlek laat het koelvloeistofpeil nauwelijks dalen."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Lichte storing van de koelslangen en aansluitingen. Een licht geknepen slang beperkt de doorstroming iets."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Matige storing van de koelslangen en aansluitingen. Het lek wordt zichtbaar en het peil daalt merkbaar."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Matige storing van de koelslangen en aansluitingen. Door de lagere doorstroming stijgt de temperatuur sneller onder belasting."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Ernstige storing van de koelslangen en aansluitingen. Er lekt veel koelvloeistof; onder belasting dreigt oververhitting."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Ernstige storing van de koelslangen en aansluitingen. De doorstroming is gering; bij langdurig werk raakt de motor oververhit."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Kritieke uitval van de koelslangen en aansluitingen. Het peil daalt snel en het koelsysteem kan leeglopen."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Kritieke uitval van de koelslangen en aansluitingen. De doorstroming is sterk belemmerd en de motor raakt snel oververhit."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Lichte storing van het expansievat. Een scheur laat wat koelvloeistof lekken."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Lichte storing van het expansievat. De aansluiting zweet een beetje."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Matige storing van het expansievat. De scheur veroorzaakt een duidelijke lekkage en het peil daalt."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Matige storing van het expansievat. De aansluiting lekt duidelijk en het peil daalt."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Ernstige storing van het expansievat. Door het lek daalt het peil snel."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Ernstige storing van het expansievat. Bij de aansluiting gaat snel koelvloeistof verloren."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Kritieke uitval van het expansievat. De koelvloeistof lekt snel weg en het systeem loopt leeg."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Kritieke uitval van het expansievat. De lekkage bij de aansluiting leegt het systeem snel."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Lichte storing van de accessoireriem en spanrol. Deze piept en slipt licht; laadstroom en doorstroming nemen iets af."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Matige storing van de accessoireriem en spanrol. Onder belasting slipt hij; de laadstroom daalt en koelvloeistof stroomt minder."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Ernstige storing van de accessoireriem en spanrol. Hij slipt sterk; laadstroom en doorstroming zijn flink verminderd."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Kritieke uitval van de accessoireriem en spanrol. Hij breekt; laden en koelvloeistofcirculatie vallen plotseling weg."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Lichte storing van het ventilatorblad. De luchtstroom neemt iets af; de koeling vertraagt vooral bij lage snelheid."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Matige storing van het ventilatorblad. De luchtstroom daalt merkbaar en de temperatuur loopt verder op."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Ernstige storing van het ventilatorblad. De luchtstroom is duidelijk verminderd en de motor wordt heet onder belasting."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Kritieke uitval van het ventilatorblad. De luchtstroom halveert en de motor raakt onder belasting snel oververhit."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Lichte storing van de elektrische koelventilator. Deze verplaatst iets minder lucht wanneer koeling nodig is."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Matige storing van de elektrische koelventilator. Er wordt merkbaar minder lucht verplaatst en de temperatuur stijgt sneller."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Ernstige storing van de elektrische koelventilator. De luchtverplaatsing is duidelijk verminderd en de temperatuur stijgt onder belasting."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Kritieke uitval van de elektrische koelventilator. De luchtverplaatsing halveert en de temperatuur stijgt snel onder belasting."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="De eerste tekenen van een storing in de CVT-transmissie zijn gedetecteerd. Inspectie en reparatie zijn vereist."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="De storing van de CVT-transmissie verergert. Verder gebruik kan de noodloop activeren."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Kritieke schade aan de CVT-transmissie. De transmissie staat in de noodloop en de maximumsnelheid van het voertuig is verlaagd."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Volledige uitval van de CVT-transmissie. Het voertuig kan niet worden gebruikt voordat het is gerepareerd."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Lichte accusulfatering. De bruikbare capaciteit is verminderd, waardoor de elektrische reserve onder belasting afneemt."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Matige accusulfatering. De bruikbare capaciteit is sterk verminderd en de motor start moeilijk."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Ernstige accusulfatering. De werkelijk bruikbare capaciteit is kritiek laag en de startprestatie is instabiel."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Kritieke accusulfatering. De bruikbare capaciteit is bijna nul en het startvermogen is onvoldoende voor betrouwbaar starten."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Lichte sulfatering van de hulpaccu. De bruikbare capaciteit is verminderd, waardoor de elektrische reserve onder belasting afneemt."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Matige sulfatering van de hulpaccu. De bruikbare capaciteit is sterk verminderd en de elektrische reserve raakt sneller op."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Ernstige sulfatering van de hulpaccu. De bruikbare capaciteit is kritiek laag en de elektrische reserve raakt zeer snel op."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Kritieke sulfatering van de hulpaccu. De bruikbare capaciteit is bijna nul en is niet meer voldoende voor betrouwbaar starten."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Lichte slijtage van de remschijven en remvoeringen. De remwerking is licht verminderd."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Matige slijtage van de remschijven en remvoeringen. De remweg is duidelijk langer."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Ernstige slijtage van de remschijven en remvoeringen. De remmen zijn zeer zwak en onbetrouwbaar."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Kritieke uitval van de remschijven en remvoeringen. Het voertuig remt zeer slecht en rijden wordt gevaarlijk."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Lichte storing van de rembediening. Het voertuig trekt bij het remmen licht naar één kant."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Lichte storing van de rembediening. Het pedaal wordt wat sponzig en de remwerking neemt iets af."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Matige storing van de rembediening. De remmen trekken duidelijk naar één kant."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Matige storing van de rembediening. Het pedaal wordt sponzig, de druk daalt en de remwerking neemt duidelijk af."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Ernstige storing van de rembediening. Het voertuig trekt bij het remmen sterk naar één kant."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Ernstige storing van de rembediening. Het pedaal zakt abnormaal ver weg, de druk valt terug en het voertuig remt slecht."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Kritieke uitval van de rembediening. De remmen trekken zeer sterk naar één kant."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Kritieke uitval van de rembediening. Het pedaal zakt vrijwel zonder weerstand weg en het voertuig remt nauwelijks meer."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Lichte storing van het aanhangerremventiel. De aanhanger verliest een klein deel van zijn remwerking."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Matige storing van het aanhangerremventiel. De aanhanger remt duidelijk minder."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Ernstige storing van het aanhangerremventiel. De aanhanger krijgt nog maar een klein deel van de remwerking."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Kritieke uitval van het aanhangerremventiel. De aanhanger remt niet meer."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Lichte storing van de parkeerrem. Eenmaal losgezet sleept hij nog wat en remt de machine licht af."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Matige storing van de parkeerrem. Eenmaal losgezet sleept hij duidelijk en houdt de machine tegen."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Ernstige storing van de parkeerrem. Eenmaal losgezet blijft hij half aangetrokken en houdt de machine sterk tegen."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Volledige uitval van de parkeerrem. Hij laat niet meer los en houdt de machine vast alsof hij aangetrokken is."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Lichte slijtage van het naaflager en de keerring. De mechanische weerstand neemt licht toe en er kan ongewoon loopgeluid ontstaan."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Matige slijtage van het naaflager en de keerring. De wrijving neemt duidelijk toe, het geluid wordt sterker en de mechanische efficiëntie daalt."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Ernstige slijtage van het naaflager en de keerring. De wrijving en het geluid zijn groot en onder belasting bestaat een reëel risico op vastlopen."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Kritieke uitval van het naaflager en de keerring. Het lager loopt bijna volledig vast en gebruik wordt onmogelijk."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Lichte slijtage van de lagers van looprollen en geleidewielen. De mechanische weerstand neemt licht toe en er kan ongewoon loopgeluid ontstaan."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Matige slijtage van de lagers van looprollen en geleidewielen. De wrijving en het geluid nemen toe en draaien wordt moeilijker."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Ernstige slijtage van de lagers van looprollen en geleidewielen. De wrijving en het geluid zijn groot, met kans op vastlopen onder belasting."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Kritieke uitval van de lagers van looprollen en geleidewielen. De rupsband kan stilstaan als een van de lagers vastloopt."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Lichte storing van de dynamoregelaar. Het laadvermogen is verminderd, waardoor de accu minder efficiënt wordt opgeladen."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Matige storing van de dynamoregelaar. Het laadvermogen is verminderd en instabiel, waardoor de accu slecht wordt opgeladen en de spanningsverliezen toenemen."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Ernstige storing van de dynamoregelaar. Het laadvermogen is sterk verminderd, de voeding is instabiel en het elektrische systeem werkt met grote verliezen."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Volledige uitval van de dynamoregelaar. De accu wordt niet meer opgeladen en het elektrische systeem werkt alleen op de resterende accureserve."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Lichte storing van de dynamodiodes. Het laadvermogen is verminderd, waardoor de accu minder efficiënt wordt opgeladen. Een lekstroom ontlaadt de accu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Matige storing van de dynamodiodes. Het laadvermogen is verminderd en instabiel, waardoor de accu slecht wordt opgeladen en de spanningsverliezen toenemen. Een lekstroom ontlaadt de accu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Ernstige storing van de dynamodiodes. Het laadvermogen is sterk verminderd, de voeding is instabiel en het elektrische systeem werkt met grote verliezen. Een lekstroom ontlaadt de accu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Volledige uitval van de dynamodiodes. De accu wordt niet meer opgeladen en het elektrische systeem werkt alleen op de resterende accureserve. Een lekstroom ontlaadt de accu wanneer de machine stilstaat."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Lichte storing van de startmotor. Hij draait de motor langzamer rond en het starten duurt iets langer."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Matige storing van de startmotor. Hij draait de motor traag rond: starten is moeilijk, en bij strenge kou onmogelijk."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Ernstige storing van de startmotor. Hij draait de motor nauwelijks nog rond: de motor start alleen nog warm of bij zacht weer."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Volledige uitval van de startmotor. Hij draait de motor niet meer rond: een draaiende motor blijft lopen, maar start na het afzetten niet meer."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Lichte slijtage van de lagers van de elektromotor. Er ontstaat een licht geluid en het verbruik neemt iets toe."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Matige slijtage van de lagers van de elektromotor. Het geluid is duidelijk hoorbaar, het verbruik neemt toe en het vermogen daalt licht."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Ernstige slijtage van de lagers van de elektromotor. Het geluid is sterk, de motor wordt heet en het vermogen daalt duidelijk."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Kritieke uitval van de lagers van de elektromotor. De motor is geblokkeerd en de machine kan niet meer rijden."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Lichte aantasting van de wikkelingen van de elektromotor. Het vermogen daalt licht en de motor wordt warmer."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Matige aantasting van de wikkelingen van de elektromotor. Het vermogen daalt duidelijk, de motor wordt heet en het verbruik neemt toe."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Ernstige aantasting van de wikkelingen van de elektromotor. Het vermogensverlies is groot, de motor wordt zeer heet en er kunnen onderbrekingen optreden."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Kritieke uitval van de wikkelingen van de elektromotor. De motor heeft kortsluiting en kan niet meer draaien."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Lichte storing van de positiesensor van de motor. Onder belasting treden korte schokken op."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Matige storing van de positiesensor van de motor. De schokken komen vaak voor en het vermogen daalt."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Ernstige storing van de positiesensor van de motor. De schokken zijn hevig, het vermogen zakt in en er treden onderbrekingen op."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Volledige uitval van de positiesensor van de motor. De motor kan niet meer worden aangestuurd en de machine start niet."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Lichte storing van de omvormer. Het motorvermogen is licht verminderd."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Matige storing van de omvormer. Het vermogensverlies is merkbaar en het verbruik neemt toe."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Ernstige storing van de omvormer. Het vermogensverlies is groot en er kunnen onderbrekingen optreden."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Volledige uitval van de omvormer. De motor krijgt geen stroom meer en de machine start niet."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Lichte storing van de spanningsomzetter. De hulpaccu wordt minder goed opgeladen."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Matige storing van de spanningsomzetter. Het opladen van de hulpaccu is verminderd en instabiel."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Ernstige storing van de spanningsomzetter. De hulpaccu wordt nauwelijks nog opgeladen en loopt tijdens het rijden leeg."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Volledige uitval van de spanningsomzetter. De hulpaccu wordt niet meer opgeladen en de machine werkt alleen op de resterende reserve."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Lichte storing van de boordlader. Het opladen bij het laadstation gaat iets langzamer."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Matige storing van de boordlader. Het opladen bij het laadstation gaat duidelijk langzamer."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Ernstige storing van de boordlader. Het opladen bij het laadstation gaat zeer langzaam."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Volledige uitval van de boordlader. De tractieaccu kan niet meer worden opgeladen."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Licht isolatieverlies van de hoogspanningsbekabeling. Er verschijnt een waarschuwing, zonder verder gevolg."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Matig isolatieverlies van de hoogspanningsbekabeling. Het vermogen wordt uit veiligheid verlaagd."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Ernstig isolatieverlies van de hoogspanningsbekabeling. Het vermogen wordt sterk verlaagd en er treden onderbrekingen op."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Kritiek isolatieverlies van de hoogspanningsbekabeling. De machine weigert uit veiligheid te starten."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Lichte storing van cellen van de tractieaccu. De actieradius daalt licht."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Matige storing van cellen van de tractieaccu. De actieradius daalt duidelijk en het vermogen is verminderd."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Ernstige storing van cellen van de tractieaccu. De actieradius en het vermogen zakken in, en er kunnen onderbrekingen optreden."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Kritieke uitval van de tractieaccu. De machine kan niet meer worden ingeschakeld."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Lichte slijtage van de hoogspanningscontactor. Er treden zelden stroomonderbrekingen op."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Matige slijtage van de hoogspanningscontactor. De stroomonderbrekingen treden regelmatig op."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Ernstige slijtage van de hoogspanningscontactor. De stroomonderbrekingen komen vaak voor."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Kritieke uitval van de hoogspanningscontactor. De tractieaccu voedt de machine niet meer en ze start niet."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Lichte storing van de koelvloeistofpomp. De koelvloeistof circuleert minder goed en de temperatuur loopt iets verder op."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Matige storing van de koelvloeistofpomp. De koeling is duidelijk verminderd."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Ernstige storing van de koelvloeistofpomp. De koeling is sterk verminderd en onder belasting is oververhitting waarschijnlijk."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Volledige uitval van de koelvloeistofpomp. De koelvloeistof circuleert nauwelijks nog en de machine raakt snel oververhit."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Lichte storing van de waterpomp. De storing is nog nauwelijks merkbaar en vereist inspectie."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Matige storing van de waterpomp. De circulatie neemt af en de koeling wordt minder effectief."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Ernstige storing van de waterpomp. Onvoldoende circulatie verhoogt het risico op oververhitting."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Kritieke uitval van de waterpomp. De circulatie is ernstig verstoord en de koeling sterk verminderd."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Lichte storing van de waterpomp. Er verschijnen lichte koelvloeistofsporen rond de waterpompafdichting."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Matige storing van de waterpomp. Koelvloeistof lekt door de waterpompafdichting; het peil daalt en de circulatie wordt minder effectief."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Ernstige storing van de waterpomp. De lekkende waterpompafdichting laat duidelijke sporen rond de pomp achter; het peil daalt en de verminderde circulatie vergroot het risico op oververhitting."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Kritieke uitval van de waterpomp. De waterpompafdichting lekt sterk; het circuit verliest koelvloeistof en de circulatie kan de motor niet meer goed koelen."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Lichte storing van de waterpomp. De storing is nog nauwelijks merkbaar en vereist inspectie."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Matige storing van de waterpomp. Het pomplager krijgt speling en de circulatie neemt af."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Ernstige storing van de waterpomp. Onvoldoende circulatie verhoogt het risico op oververhitting."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Kritieke uitval van de waterpomp. De circulatie is ernstig verstoord en de koeling sterk verminderd."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Lichte storing van het radiateurblok. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Matige storing van het radiateurblok. Het voert minder warmte af."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Ernstige storing van het radiateurblok. Het voert warmte slecht af en het risico op oververhitting neemt toe."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Kritieke uitval van het radiateurblok. Het voert nauwelijks warmte af en de koeling is ernstig verstoord."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Lichte storing van het radiateurblok. Er sijpelt koelvloeistof uit de buizen van het radiateurblok."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Matige storing van het radiateurblok. Beschadigde buizen lekken koelvloeistof op de radiateur en het peil in het circuit daalt."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Ernstige storing van het radiateurblok. Koelvloeistof stroomt uit de beschadigde buizen van het radiateurblok en laat natte sporen op de radiateur achter; de reserve neemt snel af."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Kritieke uitval van het radiateurblok. Het lekt en verliest veel koelvloeistof. Het peil daalt en de radiateur kan niet meer genoeg motorwarmte afvoeren."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Lichte slijtage van de tandwielen en lagers van de reductiekast. Tijdens het rijden ontstaat een licht geluid."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Matige slijtage van de tandwielen en lagers van de reductiekast. Het geluid is duidelijk hoorbaar en het verbruik neemt toe."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Ernstige slijtage van de tandwielen en lagers van de reductiekast. Het geluid is sterk, de reductiekast wordt heet en het vermogen aan de wielen daalt."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Kritieke uitval van de reductiekast. Ze is geblokkeerd en de machine kan niet meer rijden."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Lichte storing van de zuigers. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Matige storing van de zuigers. Er komt meer olie in de verbrandingskamer en er verschijnt blauwe rook."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Ernstige storing van de zuigers. Het olieverbruik en de blauwe rook nemen toe."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Kritieke uitval van de zuigers. Een zuiger is vastgelopen en de motor is geblokkeerd."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Lichte storing van de zuigers. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Matige storing van de zuigers. Er komt meer olie in de verbrandingskamer en er verschijnt blauwe rook."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Ernstige storing van de zuigers. Het olieverbruik en de blauwe rook nemen toe."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Kritieke uitval van de zuigers. Een zuiger is gebroken en de motor is gestopt."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Lichte storing van de zuigerveren. Afzettingen belemmeren de veren in hun groeven."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Matige storing van de zuigerveren. De afdichting verslechtert en de motor verliest vermogen."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Ernstige storing van de zuigerveren. Compressieverlies bemoeilijkt het starten en vermindert het vermogen."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Kritieke uitval van de zuigerveren. De compressie is zeer laag, starten gaat moeilijk en het vermogen is sterk verminderd."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Lichte storing van de zuigerveren. Afzettingen belemmeren de veren in hun groeven."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Matige storing van de zuigerveren. Er komt meer olie in de verbrandingskamer en er verschijnt blauwe rook."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Ernstige storing van de zuigerveren. Het olieverbruik en de blauwe rook nemen toe."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Kritieke uitval van de zuigerveren. Er komt veel olie binnen en de blauwe rook blijft zichtbaar."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Lichte storing van de zuigerveren. Afzettingen belemmeren de veren in hun groeven."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Matige storing van de zuigerveren. De afdichting verslechtert en de motor verliest vermogen."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Ernstige storing van de zuigerveren. Compressieverlies bemoeilijkt het starten en vermindert het vermogen."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Kritieke uitval van de zuigerveren. Een zuigerveer is gebroken: de compressie daalt en olie komt in de verbrandingskamer."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Lichte storing van de cilinderbussen. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Matige storing van de cilinderbussen. Het oppervlak is gegroefd en dicht slechter af."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Ernstige storing van de cilinderbussen. Het oppervlak is gegroefd en dicht slechter af. Het olieverbruik en de blauwe rook nemen toe."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Kritieke uitval van de cilinderbussen. Een zuiger is in zijn cilinderbus vastgelopen en de motor is geblokkeerd."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Lichte storing van de cilinderbussen. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Matige storing van de cilinderbussen. Koelvloeistof lekt door een gescheurde cilinderbus in een cilinder, waardoor het peil daalt."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Ernstige storing van de cilinderbussen. Een gescheurde cilinderbus laat koelvloeistof in een cilinder komen; uit de uitlaat verschijnt witte rook."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Kritieke uitval van de cilinderbussen. Veel koelvloeistof lekt door een gescheurde cilinderbus in een cilinder, met aanhoudende witte rook en onvoldoende koeling."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Lichte storing van de inlaatkleppen. Het afdichtingsvlak is beschadigd en het vermogen daalt licht."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Matige storing van de inlaatkleppen. De klep sluit slecht, met ontstekingsuitval en vermogensverlies."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Ernstige storing van de inlaatkleppen. De zitting is verbrand, met uitval, afslaan en vermogensverlies."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Kritieke uitval van de inlaatkleppen. De verbrande zitting veroorzaakt uitval, afslaan en groot vermogensverlies."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Lichte storing van de inlaatkleppen. Het afdichtingsvlak is beschadigd en het vermogen daalt licht."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Matige storing van de inlaatkleppen. De klep sluit slecht, met ontstekingsuitval en vermogensverlies."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Ernstige storing van de inlaatkleppen. De zitting is verbrand, met uitval, afslaan en vermogensverlies."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Kritieke uitval van de inlaatkleppen. Een inlaatklep is gebroken en de motor is gestopt."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Lichte storing van de uitlaatkleppen. Het afdichtingsvlak is beschadigd en het vermogen daalt licht."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Matige storing van de uitlaatkleppen. De klep sluit slecht, met ontstekingsuitval en vermogensverlies."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Ernstige storing van de uitlaatkleppen. De zitting is verbrand, met uitval, afslaan en vermogensverlies."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Kritieke uitval van de uitlaatkleppen. De verbrande zitting veroorzaakt uitval, afslaan en groot vermogensverlies."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Lichte storing van de uitlaatkleppen. Het afdichtingsvlak is beschadigd en het vermogen daalt licht."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Matige storing van de uitlaatkleppen. De klep sluit slecht, met ontstekingsuitval en vermogensverlies."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Ernstige storing van de uitlaatkleppen. De zitting is verbrand, met uitval, afslaan en vermogensverlies."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Kritieke uitval van de uitlaatkleppen. Een uitlaatklep is gebroken en de motor is gestopt."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Lichte storing van de klepgeleiders en klepsteelafdichtingen. Inspectie toont een geleidingsfout en de kleppen worden luidruchtig."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Matige storing van de klepgeleiders en klepsteelafdichtingen. De speling neemt toe en de kleppen worden luidruchtig."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Ernstige storing van de klepgeleiders en klepsteelafdichtingen. Te veel speling veroorzaakt geluid, uitval en oliedoorgang."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Kritieke uitval van de klepgeleiders en klepsteelafdichtingen. De geleidingsspeling is te groot, met geluid, ontstekingsuitval en blauwe rook."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Lichte storing van de klepgeleiders en klepsteelafdichtingen. De verharde afdichting laat olie door."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Matige storing van de klepgeleiders en klepsteelafdichtingen. Er komt meer olie in de verbrandingskamer en er verschijnt blauwe rook."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Ernstige storing van de klepgeleiders en klepsteelafdichtingen. Het olieverbruik en de blauwe rook nemen toe."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Kritieke uitval van de klepgeleiders en klepsteelafdichtingen. Er komt veel olie binnen en de blauwe rook blijft zichtbaar."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Lichte storing van de cilinderkop. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Matige storing van de cilinderkop. Een scheur in de cilinderkop laat koelvloeistof in een verbrandingskamer komen; de motor verliest vermogen en start moeilijk."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Ernstige storing van de cilinderkop. Koelvloeistof komt door de gescheurde cilinderkop in een verbrandingskamer, met witte rook en vermogensverlies."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Kritieke uitval van de cilinderkop. De gescheurde cilinderkop laat veel koelvloeistof in een verbrandingskamer komen. De motor heeft weinig vermogen, start slecht en stoot witte rook uit."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Lichte storing van de cilinderkop. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Matige storing van de cilinderkop. Koelvloeistof sijpelt uit de gescheurde cilinderkop en het peil in het circuit daalt."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Ernstige storing van de cilinderkop. De koelvloeistoflekkage laat zichtbare sporen op de gescheurde cilinderkop achter en het peil daalt snel."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Kritieke uitval van de cilinderkop. Veel koelvloeistof stroomt uit de gescheurde cilinderkop; het circuit loopt leeg en de motor dreigt oververhit te raken."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Lichte storing van de cilinderkop. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Matige storing van de cilinderkop. Koelvloeistof lekt door een scheur in de cilinderkop naar de olie, waardoor het peil in het circuit daalt."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Ernstige storing van de cilinderkop. De scheur in de cilinderkop laat meer koelvloeistof in de olie komen; het peil in het circuit blijft dalen."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Kritieke uitval van de cilinderkop. De scheur in de cilinderkop leidt veel koelvloeistof naar de olie; het circuit verliest zijn reserve en de motor dreigt oververhit te raken."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Lichte storing van de cilinderkoppakking. De storing is nog nauwelijks merkbaar en vereist inspectie."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Matige storing van de cilinderkoppakking. Deze laat koelvloeistof in een verbrandingskamer komen; starten duurt langer en het vermogen daalt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Ernstige storing van de cilinderkoppakking. Koelvloeistof komt erdoor in een verbrandingskamer en veroorzaakt witte rook uit de uitlaat."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Kritieke uitval van de cilinderkoppakking. Deze laat veel koelvloeistof in een verbrandingskamer komen; de witte rook neemt toe en starten wordt zeer moeilijk."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Lichte storing van de cilinderkoppakking. De storing is nog nauwelijks merkbaar en vereist inspectie."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Matige storing van de cilinderkoppakking. Koelvloeistof sijpelt erbij naar buiten en het peil in het circuit daalt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Ernstige storing van de cilinderkoppakking. Een koelvloeistoflek erbij laat sporen op de motor achter en doet het peil snel dalen."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Kritieke uitval van de cilinderkoppakking. Deze laat veel koelvloeistof naar buiten stromen; het peil daalt en de motorkoeling gaat sterk achteruit."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Lichte storing van de cilinderkoppakking. De storing is nog nauwelijks merkbaar en vereist inspectie."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Matige storing van de cilinderkoppakking. Koelvloeistof komt erdoor in de olie; het peil in het circuit daalt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Ernstige storing van de cilinderkoppakking. Deze laat steeds meer koelvloeistof in de olie komen; het circuit verliest geleidelijk vloeistof."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Kritieke uitval van de cilinderkoppakking. Een groot lek erdoor voert koelvloeistof naar de olie en berooft het circuit van de vloeistof voor de koeling."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Lichte storing van de krukaslagers. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Matige storing van de krukaslagers. De lagerspeling neemt toe."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Ernstige storing van de krukaslagers. De oliefilm is verstoord, met kloppen en warmte."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Kritieke uitval van de krukaslagers. Een krukaslager is vastgelopen en heeft de motor geblokkeerd."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Lichte storing van de krukaslagers. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Matige storing van de krukaslagers. De lagerspeling neemt toe."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Ernstige storing van de krukaslagers. De oliefilm is verstoord, met kloppen en warmte."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Kritieke uitval van de krukaslagers. De lagerlaag van een krukaslager is gesmolten en de motor is gestopt."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Lichte storing van de drijfstanglagers. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Matige storing van de drijfstanglagers. De lagerspeling neemt toe."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Ernstige storing van de drijfstanglagers. De oliefilm is verstoord, met kloppen en warmte."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Kritieke uitval van de drijfstanglagers. Een drijfstanglager is vastgelopen en heeft de motor geblokkeerd."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Lichte storing van de drijfstanglagers. Bij inspectie is oppervlakteschade zichtbaar."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Matige storing van de drijfstanglagers. De lagerspeling neemt toe."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Ernstige storing van de drijfstanglagers. De oliefilm is verstoord, met kloppen en warmte."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Kritieke uitval van de drijfstanglagers. De lagerlaag van een drijfstanglager is gesmolten en de motor is gestopt."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Onvoldoende boordnetspanning"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Beginnende slijtage van de opvoerpomp. Licht verminderd motorvermogen en hoger brandstofverbruik."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Dalende brandstofdruk. Duidelijk vermogensverlies, hoger brandstofverbruik en de motor slaat soms af."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Kritiek lage brandstofdruk. Groot vermogensverlies, zeer hoog brandstofverbruik en de motor slaat vaak af."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Volledige uitval van de opvoerpomp. Er wordt geen brandstof meer naar de motor gevoerd."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Een of meer injectorsproeiers zijn licht verstopt. De motor kan wat onregelmatig lopen, met licht vermogensverlies."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Slechte brandstofverstuiving. De motor hapert onder belasting, met duidelijk vermogensverlies en schokken."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Een brandstofinjector zit vast. De motor loopt zeer slecht, met groot vermogensverlies en onbetrouwbaar starten."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Een brandstofinjector is volledig defect. De motor loopt niet meer goed en start mogelijk helemaal niet."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Lichte storing van de hogedrukpomp. De inspuitdruk bouwt zich langzamer op: het starten duurt langer en de motor reageert minder direct."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Matige storing van de hogedrukpomp. De inspuitdruk schiet onder belasting tekort, met duidelijk vermogensverlies en haperingen."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Ernstige storing van de hogedrukpomp. De inspuitdruk is kritiek laag, met groot vermogensverlies, een motor die afslaat en moeilijk starten."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Volledige uitval van de hogedrukpomp. Hij bouwt geen inspuitdruk meer op: de startmotor draait de motor rond, maar die slaat niet aan."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Lichte vervuiling van het brandstoffilter. De brandstofstroom neemt onder zware belasting licht af."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Matige vervuiling van het brandstoffilter. De doorstroming wordt onder belasting onvoldoende, het vermogen daalt en de motor hapert soms."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Ernstige vervuiling van het brandstoffilter. De brandstoftoevoer wordt sterk beperkt, het vermogen daalt duidelijk en de motor kan afslaan."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Het brandstoffilter is volledig verstopt. De motor krijgt niet meer genoeg brandstof om betrouwbaar te werken."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Lichte luchtinlaat in de brandstofleiding. De brandstoftoevoer wordt licht onregelmatig."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Matige luchtinlaat in de brandstofleiding. De toevoer wordt instabiel, het vermogen daalt en de motor begint te haperen."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Ernstige luchtinlaat in de brandstofleiding. De motor loopt zeer onregelmatig en het risico op afslaan is groot."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Kritieke uitval van de brandstofleiding met veel luchtinlaat. De motor kan niet meer correct van brandstof worden voorzien."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Lichte afknelling van de brandstofleiding. De doorstroming daalt: de motor start en slaat daarna af en toe af."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Matige afknelling van de brandstofleiding. De motor start en slaat daarna regelmatig af."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Ernstige afknelling van de brandstofleiding. De motor slaat vaak af."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Brandstofleiding platgedrukt. Er stroomt geen brandstof meer door: de motor stopt."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Lichte storing van de mechanische inspuitpomp. De opbrengst daalt: het starten duurt langer en de motor mist wat trekkracht."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Matige storing van de mechanische inspuitpomp. Onder belasting is de opbrengst onvoldoende: de motor verliest vermogen en hapert."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Ernstige storing van de mechanische inspuitpomp. De motor krijgt te weinig brandstof, verliest veel vermogen, start slecht en slaat af."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Kritieke uitval van de mechanische inspuitpomp. De aandrijving is gebroken: de motor stopt en start niet meer."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Lichte storing van het brandstofdoseerventiel. De raildruk bouwt langzamer op en het starten duurt langer."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Matige storing van het brandstofdoseerventiel. Onder belasting is de raildruk onvoldoende: de motor verliest vermogen en hapert."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Ernstige storing van het brandstofdoseerventiel. De raildruk wijkt sterk af van de gevraagde waarde: de motor verliest veel vermogen en slaat af."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Kritieke uitval van het brandstofdoseerventiel. De rail wordt niet meer op druk gebracht: de startmotor draait de motor rond, maar deze slaat niet aan."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Lichte storing van de raildruksensor. De meting wordt instabiel en het starten duurt iets langer."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Matige storing van de raildruksensor. De regeleenheid regelt de druk slecht: de motor verliest vermogen en hapert."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Ernstige storing van de raildruksensor. De motor gaat in noodloop, verliest veel vermogen en kan afslaan."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Kritieke uitval van de raildruksensor. Zonder meting houdt de regeleenheid de motor in noodloop."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Lichte storing van het raildrukbegrenzingsventiel. Het opent te vroeg: de raildruk bouwt langzamer op en starten duurt langer."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Matige storing van het raildrukbegrenzingsventiel. De raildruk blijft onder belasting niet op peil: de motor verliest vermogen en hapert."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Ernstige storing van het raildrukbegrenzingsventiel. De raildruk valt weg: de motor verliest veel vermogen en slaat af."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Kritieke storing van het raildrukbegrenzingsventiel. Het blijft open: er wordt geen raildruk opgebouwd en de startmotor draait de motor rond zonder dat deze aanslaat."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Lichte storing van de gasdrukregelaar. De toevoerdruk schommelt en het starten duurt langer."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Matige storing van de gasdrukregelaar. Onder belasting daalt de druk: de motor verliest vermogen en hapert."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Ernstige storing van de gasdrukregelaar. De toevoer wordt onregelmatig: de motor verliest veel vermogen, start slecht en slaat af."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Kritieke uitval van de gasdrukregelaar. Er stroomt niet meer genoeg gas door: de motor stopt."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Lichte storing van het gasafsluitmagneetventiel. Het opent te laat: het starten duurt langer en de motor hapert soms."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Matige storing van het gasafsluitmagneetventiel. Het onderbreekt soms de gastoevoer: de motor hapert en slaat af."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Ernstige storing van het gasafsluitmagneetventiel. De onderbrekingen nemen toe en de motor slaat vaak af."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Kritieke uitval van het gasafsluitmagneetventiel. Het blijft gesloten: de motor stopt en start niet meer."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Lichte vervuiling van het gasfilter. De gasstroom neemt onder zware belasting licht af."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Matige vervuiling van het gasfilter. De toevoer is onder belasting onvoldoende: het vermogen daalt en de motor kan afslaan."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Ernstige vervuiling van het gasfilter. De doorstroming is sterk beperkt: het vermogen daalt duidelijk en de motor slaat af."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Het gasfilter is volledig verstopt. De motor krijgt niet meer genoeg gas en stopt."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Lichte lekkage van de gasleidingen. Het starten duurt iets langer."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Matige lekkage van de gasleidingen. De toevoer wordt onregelmatig: de motor hapert en kan afslaan."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Ernstige lekkage van de gasleidingen. De druk daalt: de motor hapert, start slecht en slaat vaak af."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Kritieke lekkage van de gasleidingen. De druk blijft niet meer behouden: de motor stopt."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Lichte storing van de gasinjectoren. De dosering wordt onregelmatig: de motor loopt minder gelijkmatig en verbruikt iets meer."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Matige storing van de gasinjectoren. De motor hapert, verliest vermogen, verbruikt meer en kan afslaan."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Ernstige storing van de gasinjectoren. Een injector doseert zeer slecht: groot vermogensverlies, hoog verbruik en moeilijk starten."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kritieke uitval van de gasinjectoren. Door de dosering kan de motor niet meer draaien: hij stopt."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Storing van de AdBlue-pomp. De dosering krijgt geen toevoer meer: het motorlampje gaat branden en daarna beperkt de regeleenheid het vermogen tot de reparatie."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Storing van de AdBlue-doseerinjector. Door kristallen verstopt, vernevelt hij niet meer: het motorlampje gaat branden en daarna daalt het vermogen tot de reparatie."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Het AdBlue-filter is aan vervanging toe en begint te verstoppen. Het meest uitgebreide onderhoud vervangt het."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="Het AdBlue-filter is vervuild: de AdBlue-stroom neemt af en het motorlampje gaat aan. Het meest uitgebreide onderhoud vervangt het."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="Het AdBlue-filter is sterk vervuild: de dosering valt uit en de ECU beperkt het vermogen tot de reparatie."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="Het AdBlue-filter is volledig verstopt: er is geen dosering meer en de ECU beperkt het vermogen tot de reparatie."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="Storing van de NOx-sensor. De regeleenheid bewaakt de uitstoot niet meer: het motorlampje gaat branden en na enkele tientallen uren wordt het vermogen beperkt."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Lichte storing van het roetfilter. Een scheur laat wat roet door naar de uitlaat."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Matige storing van het roetfilter. De scheur wordt groter: zwarte rook wordt zichtbaar."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Ernstige storing van het roetfilter. Het filtermateriaal valt uiteen: er komt veel zwarte rook uit de uitlaat."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Kritieke uitval van het roetfilter. Het filtermateriaal is gebroken: roet stroomt ongefilterd door."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Lichte storing van het roetfilter. Een deel van het filtermateriaal is gesmolten en raakt verstopt."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Matige storing van het roetfilter. Het gesmolten deel breidt zich uit: de tegendruk stijgt."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Ernstige storing van het roetfilter. Gesmolten en verstopt, kan het niet meer regenereren: het motortoerental wordt begrensd."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritieke uitval van het roetfilter. Volledig verstopt, laat het geen uitlaatgas meer door: alleen vervanging herstelt het motorvermogen."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Roetfilter verzadigd. De regeneraties zijn niet voltooid: het motortoerental blijft begrensd tot een regeneratie slaagt."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritieke verzadiging van het roetfilter. Het is te vol om zelf te regenereren en heeft een serviceregeneratie in de werkplaats nodig; het toerental blijft begrensd."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lichte storing van de ventilatorkoppeling. De ventilator reageert minder doeltreffend en de koeling is licht verminderd."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Matige storing van de ventilatorkoppeling. De ventilator schakelt onregelmatig in en de koelefficiëntie neemt duidelijk af."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Ernstige storing van de ventilatorkoppeling. De ventilator levert niet meer genoeg lucht en de motor raakt gemakkelijker oververhit."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Kritieke uitval van de ventilatorkoppeling. De ventilator kan niet meer voor de vereiste koeling zorgen."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="De overbrengingsregeling reageert trager en minder nauwkeurig."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="De verhouding verandert onregelmatig en de regeling reageert slecht."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="De overbrengingsregeling is ernstig verstoord en de overgebrachte aandrijfkracht daalt."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="De overbrengingsregeling is uitgevallen; de transmissie is vrijwel onbruikbaar."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Lichte interne lekkage in de hydraulische cilinder. Een geheven werktuig zakt onder belasting langzaam."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Matige interne lekkage in de hydraulische cilinder. Het onbedoeld zakken is zichtbaar en neemt toe met de gedragen last."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Ernstige interne lekkage in de hydraulische cilinder. Zware werktuigen blijven niet meer betrouwbaar op hun plaats."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Kritieke interne lekkage in de hydraulische cilinder. Elke geheven last zakt vanzelf snel."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Lichte interne lekkage in de hydrauliekpomp. Hydraulische werktuigen werken iets langzamer."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Versleten afdichtingen van de hydrauliekpomp. De hydrauliek werkt duidelijk langzamer."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Beschadigde hydrauliekpomp. Werktuigen werken uiterst langzaam en zwak."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Uitval van de hydrauliekpomp. Het hydraulische systeem werkt niet meer."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Een hydrauliekslang vertoont lichte vochtigheid. Er lekt wat olie en de hydrauliek reageert iets zwakker."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Een hydrauliekslang sijpelt zichtbaar. Het olieverlies gaat door en de hydraulische functies reageren langzamer."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Een hydrauliekslang lekt actief. Het olieverlies is duidelijk en de hydraulische functies zijn merkbaar verzwakt."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Een hydrauliekslang heeft een ernstige uitwendige lekkage. De olie stroomt snel weg en de hydraulische prestaties nemen sterk af."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Het hydrauliekfilter is licht vervuild en begint de doorstroming te beperken. De hydraulische functies worden iets trager. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Het hydrauliekfilter is matig vervuild. Alle hydraulische functies werken duidelijk langzamer. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Het hydrauliekfilter is sterk vervuild. De hydrauliek reageert zeer langzaam. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Het hydrauliekfilter is volledig verstopt. De hydraulische functies reageren nauwelijks. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="De hydrauliekoliekoeler verliest wat efficiëntie. De olietemperatuur stijgt licht tijdens langdurig hydraulisch werk."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="De hydrauliekoliekoeler werkt onvoldoende. De olietemperatuur stijgt duidelijk bij langdurig hydraulisch werk."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="De hydrauliekoliekoeler is sterk verslechterd. Zwaar hydraulisch werk laat de olie snel oververhit raken."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="De hydrauliekoliekoeler is uitgevallen. Langdurig hydraulisch werk veroorzaakt ernstige oververhitting van de olie en versnelt de pompslijtage."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Een hydraulisch regelventiel begint vast te lopen. Een hydraulische functie hapert soms en verliest kracht onder belasting."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Een hydraulisch regelventiel loopt soms vast. Een hydraulische functie wordt trager en verliest meer kracht naarmate de belasting stijgt."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Een hydraulisch regelventiel loopt sterk vast. Een hydraulische functie beweegt onregelmatig en heeft moeite met een zware last."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Een hydraulisch regelventiel is ernstig beschadigd. Een hydraulische functie stopt steeds en kan een zware last nauwelijks bewegen."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Transmissiepomp"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Hydrostatische eenheid"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Transmissieoliekoeler"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Versnellingsbaklagers"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Powershift-versnellingskoppelingen"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Powershift-omkeerkoppelingen"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Transmissiebediening"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Kegelwielset van de achteras"/>
+        <text name="rms_breakdowns_part_final_drives" text="Eindaandrijvingen"/>
+        <text name="rms_breakdowns_part_differential" text="Differentieeltandwielen"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="Vierwielaandrijvingskoppeling"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Aandrijfas van de vooras en kruiskoppelingen"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Aslagers"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Versnellingsbaksensoren"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Transmissiefilter"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Hefventiel"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Hefpositiesensor"/>
+        <text name="rms_breakdowns_part_loader_control" text="Laderbediening"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulische snelkoppelingen"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lichte storing van de koppeling. Deze komt niet volledig vrij. Sommige versnellingen schakelen moeilijk."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Matige storing van de koppeling. Het mechanisme laat de plaat slecht los. Versnellingen worden vaker geweigerd."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Ernstige storing van de koppeling. De plaat blijft bij ontkoppelen aangedreven. De versnellingskeuze is ernstig verstoord."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Kritieke uitval van de koppeling. Het mechanisme laat de plaat niet meer los. Geen versnelling kan normaal worden ingeschakeld."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Lichte storing van de versnellingsbaklagers. De loopvlakken zijn beschadigd. Er klinkt een zacht gerommel uit de bak."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Matige storing van de versnellingsbaklagers. De lagerbanen zijn beschadigd. Het gerommel is duidelijk hoorbaar."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Ernstige storing van de versnellingsbaklagers. De lagers draaien zwaar. De bak rommelt luid en kan vastlopen."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Kritieke uitval van de versnellingsbaklagers. De lagers zijn vastgelopen. De bak blokkeert en de machine rijdt niet meer."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Lichte storing van de Powershift-versnellingskoppelingen. Een platenpakket draagt de kracht slecht over. Een versnelling slipt licht onder belasting."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Lichte storing van de Powershift-versnellingskoppelingen. Een platenpakket grijpt laat aan. Een versnelling schakelt met een lichte schok."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Matige storing van de Powershift-versnellingskoppelingen. Een platenpakket klemt onvoldoende. De versnelling slipt duidelijk onder belasting."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Matige storing van de Powershift-versnellingskoppelingen. Een platenpakket vult slecht. De versnelling schakelt hard in."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Ernstige storing van de Powershift-versnellingskoppelingen. Een platenpakket houdt de belasting nauwelijks. Er bereikt weinig kracht de wielen."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Ernstige storing van de Powershift-versnellingskoppelingen. Een platenpakket grijpt zeer slecht aan. Schakelen veroorzaakt sterke schokken."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Kritieke uitval van de Powershift-versnellingskoppelingen. Het platenpakket draagt geen kracht meer over. De machine rijdt niet meer."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Kritieke uitval van de Powershift-versnellingskoppelingen. Het platenpakket grijpt niet meer goed aan. De versnelling drijft de machine niet meer aan."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Lichte storing van de Powershift-omkeerkoppelingen. Een vooruit- of achteruitkoppeling slipt licht bij het wegrijden."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Lichte storing van de Powershift-omkeerkoppelingen. Een omkeerkoppeling grijpt laat aan. De aandrijving hervat met een lichte schok."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Matige storing van de Powershift-omkeerkoppelingen. Een omkeerkoppeling slipt duidelijk. De kracht wordt slecht in de gekozen richting overgedragen."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Matige storing van de Powershift-omkeerkoppelingen. Een omkeerkoppeling grijpt abrupt aan. Omschakelen van richting schokt de machine."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Ernstige storing van de Powershift-omkeerkoppelingen. Een omkeerkoppeling houdt de belasting nauwelijks. De aandrijving valt sterk terug."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Ernstige storing van de Powershift-omkeerkoppelingen. Een omkeerkoppeling grijpt zeer onregelmatig aan. Het wegrijden is zeer schokkerig."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Kritieke uitval van de Powershift-omkeerkoppelingen. De omkeerkoppeling draagt geen kracht meer over. De machine rijdt niet meer."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Kritieke uitval van de Powershift-omkeerkoppelingen. De omkeerkoppeling grijpt niet meer goed aan. De aandrijving valt weg."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Lichte storing van de transmissiebediening. De elektrohydraulische bediening werkt onregelmatig. Een schakelgang hapert."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Lichte storing van de transmissiebediening. De bediening weigert af en toe een versnellingskeuze."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Matige storing van de transmissiebediening. De bediening verstoort het vullen van de koppelingen. Schakelen geeft duidelijke schokken."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Matige storing van de transmissiebediening. De bediening weigert meerdere keuzes. Versnellingen inschakelen wordt moeilijk."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Ernstige storing van de transmissiebediening. De bediening laat de koppelingen slecht aangrijpen. Schakelen geeft sterke schokken."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Ernstige storing van de transmissiebediening. De bediening voert veel keuzes niet meer uit. Versnellingen zijn zelden beschikbaar."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Kritieke uitval van de transmissiebediening. De bediening kan de koppelingen niet meer goed inschakelen. Het schakelen is ernstig verstoord."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Kritieke uitval van de transmissiebediening. De bediening laat geen versnellingskeuze meer toe. De bak reageert niet op het verzoek."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Storing van de snelheidssensor van de versnellingsbak. Het signaal wordt onregelmatig: de bediening weigert soms een schakeling."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Storing van de druksensor van de versnellingsbak. De bediening regelt de koppelingsvulling verkeerd: schakelingen komen te laat en schokken."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Kritieke storing van de snelheidssensor van de versnellingsbak. Zonder meetwaarde weigert de bediening vaak te schakelen."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Kritieke storing van de druksensor van de versnellingsbak. Zonder meetwaarde komt elke schakeling veel te laat en grijpt plotseling aan."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Storing van de snelheidssensor van de transmissie. De bediening schakelt over op noodbedrijf: de rijsnelheid is begrensd."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Storing van de druksensor van de transmissie. De bediening schakelt over op noodbedrijf: de rijsnelheid is begrensd."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Kritieke storing van de snelheidssensor van de transmissie. Het noodbedrijf laat slechts een lage rijsnelheid toe."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Kritieke storing van de druksensor van de transmissie. Het noodbedrijf laat slechts een lage rijsnelheid toe."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Lichte storing van de transmissiepomp. De toevoer van stuurolie neemt af. Inschakelen hapert en de aandrijving valt kort weg."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Matige storing van de transmissiepomp. De stuurdruk is te laag. Versnellingen grijpen hard aan en de aandrijving valt weg."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Ernstige storing van de transmissiepomp. De pomp levert nauwelijks stuurolie. Inschakelen is zeer hard en de aandrijving valt vaak weg."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Kritieke uitval van de transmissiepomp. De pomp levert de vereiste druk niet meer. De transmissie drijft de machine niet meer aan."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Lichte storing van de hydrostatische eenheid. Interne lekkage vermindert de aandrijving. De variator verliest wat snelheid en de olie wordt warmer."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Matige storing van de hydrostatische eenheid. De interne lekkage neemt toe. De topsnelheid daalt, de olie wordt heet en het verbruik stijgt."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Ernstige storing van de hydrostatische eenheid. De roterende groep draagt nauwelijks kracht over. De snelheid daalt sterk en de olie wordt zeer heet onder belasting."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Kritieke uitval van de hydrostatische eenheid. De roterende groep draagt geen kracht meer over. De machine rijdt niet meer terwijl de motor draait."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Lichte storing van de transmissieoliekoeler. Deze voert minder warmte af. De transmissieolie wordt warmer onder belasting."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Matige storing van de transmissieoliekoeler. De warmtewisseling neemt duidelijk af. De transmissieolie blijft warmer tijdens het werk."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Ernstige storing van de transmissieoliekoeler. Deze voert nauwelijks warmte af. De transmissieolie kan onder belasting oververhit raken."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Kritieke uitval van de transmissieoliekoeler. De koeling van de transmissieolie is uitgevallen. Langdurig werk kan de transmissie oververhitten."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="Het transmissiefilter is aan vervanging toe en begint te verstoppen. Het scherm vraagt om vervanging. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="Het transmissiefilter is vervuild: de omloopklep gaat open en de versnellingsbakolie stroomt ongefilterd door. De transmissie slijt sneller. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="Het transmissiefilter is sterk vervuild. De versnellingsbakolie circuleert ongefilterd en veroorzaakt slijtage aan de transmissie. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="Het transmissiefilter is volledig verstopt. Alle versnellingsbakolie stroomt ongefilterd door en veroorzaakt slijtage aan de transmissie. Onderhoud vervangt het filter."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Lichte storing van de kegelwielset van de achteras. De kegelwieltanden zijn beschadigd. Er klinkt een zacht gejank onder belasting."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Matige storing van de kegelwielset van de achteras. Het tandcontact is verstoord. De achteras jankt duidelijk onder belasting."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Ernstige storing van de kegelwielset van de achteras. De tanden zijn zwaar beschadigd. De achteras jankt luid en kan de aandrijving verliezen."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Kritieke uitval van de kegelwielset van de achteras. De kegelwielset draagt geen kracht meer over. De achteras wordt niet aangedreven en de machine rijdt niet meer."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Lichte storing van de eindaandrijvingen. De tanden van een eindaandrijving zijn beschadigd. Er klinkt zacht gejank bij een aangedreven wiel."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Matige storing van de eindaandrijvingen. De tandwielen van een eindaandrijving draaien slecht. Het gejank bij het wiel is duidelijk hoorbaar."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Ernstige storing van de eindaandrijvingen. De tandwielen van een eindaandrijving zijn zwaar beschadigd. Het geluid is luid en de aandrijving kan uitvallen."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Kritieke uitval van de eindaandrijvingen. Een eindaandrijving draagt geen kracht meer over op het wiel. De machine kan niet meer normaal rijden."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="Storing van de vierwielaandrijvingskoppeling. De vierwielaandrijving schakelt niet meer in. De vooras blijft ontkoppeld."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="Storing van de vierwielaandrijvingskoppeling. De vooras blijft gekoppeld. De vierwielaandrijving kan niet meer worden uitgeschakeld."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Storing van de hydrauliekpomp. Deze is gebroken. De druk valt weg en de hydraulische functies reageren niet meer."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Storing van het hydraulische regelventiel. De schuif zit vast. De betreffende hydraulische functie beweegt niet meer."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Storing van het hefventiel. Het houdt de last niet meer goed vast. Het geheven werktuig zakt."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Storing van het hefventiel. Het zit vast. De hefinrichting reageert niet meer."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Storing van de hefpositiesensor. Het positiesignaal is uitgevallen. De hefinrichting houdt de gevraagde hoogte niet vast en er wordt een foutcode opgeslagen."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lichte storing van de laderbediening. Arm en bak reageren langzamer."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Matige storing van de laderbediening. Arm en bak bewegen nog maar op halve snelheid."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Ernstige storing van de laderbediening. Arm en bak bewegen nauwelijks."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kritieke storing van de laderbediening. Arm en bak reageren niet meer."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Lichte storing van de hydraulische cilinder. De stangafdichting laat wat olie door. Er verschijnt lichte vochtigheid rond de stang."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Matige storing van de hydraulische cilinder. De stangafdichting sluit niet meer goed af. De cilinder zweet en het oliepeil daalt."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Ernstige storing van de hydraulische cilinder. De stangafdichting lekt actief. De cilinder verliest duidelijk olie."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Kritieke uitval van de hydraulische cilinder. De stangafdichting laat veel olie ontsnappen. Het oliepeil in het circuit daalt snel."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Lichte storing van de hydraulische snelkoppelingen. Een koppelingsafdichting is defect. De aansluiting wordt licht vochtig."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Storing van de hydraulische snelkoppelingen. De oliedoorgang van een koppeling is geblokkeerd. De aangesloten hydraulische functie beweegt niet meer."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Matige storing van de hydraulische snelkoppelingen. Een koppeling zweet. Het circuit verliest olie bij de aansluiting."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Ernstige storing van de hydraulische snelkoppelingen. Een koppeling lekt actief. Het olieverlies bij de aansluiting wordt aanzienlijk."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Kritieke uitval van de hydraulische snelkoppelingen. Een koppeling lekt sterk. Het oliepeil in het circuit daalt snel."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Lichte storing van de hydrauliekoliekoeler. Het koelerblok is niet meer geheel dicht. Er verschijnt lichte vochtigheid."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Matige storing van de hydrauliekoliekoeler. Het koelerblok zweet. Het hydrauliekoliepeil daalt."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Ernstige storing van de hydrauliekoliekoeler. Het koelerblok lekt actief. Het circuit verliest duidelijk olie."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Kritieke uitval van de hydrauliekoliekoeler. Het koelerblok lekt sterk. Het hydrauliekoliepeil daalt snel."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Differentieelsperbediening"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Lichte storing van de differentieeltandwielen. De tandvlakken zijn beschadigd. Er klinkt een zacht geluid in bochten."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Matige storing van de differentieeltandwielen. Het tandcontact is verstoord. Het differentieelgeluid is duidelijk hoorbaar in bochten."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Ernstige storing van de differentieeltandwielen. De tanden zijn zwaar beschadigd. Het geluid is luid in bochten en de aandrijving kan uitvallen."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Kritieke uitval van de differentieeltandwielen. De tandwielen dragen geen kracht meer over. De machine rijdt niet meer terwijl de motor draait."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Lichte slijtage van de kruiskoppelingen van de aandrijfas van de vooras. Er ontstaat lichte speling in de voorasaandrijving."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Matige slijtage van de kruiskoppelingen van de aandrijfas van de vooras. De speling in de kruiskoppelingen wordt duidelijk."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Ernstige slijtage van de kruiskoppelingen van de aandrijfas van de vooras. Een kruiskoppeling staat op het punt te breken."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Breuk van een kruiskoppeling van de aandrijfas van de vooras. De vooras wordt niet meer aangedreven."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Lichte slijtage van de aslagers. Tijdens het rijden klinkt een licht gerommel."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Matige slijtage van de aslagers. Het gerommel neemt toe met de snelheid."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Ernstige slijtage van de aslagers. Een lager vertoont afschilfering en begint het kegelwielstel te beschadigen."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Kritieke slijtage van de aslagers. Een lager is bezweken, het kegelwielstel is beschadigd en de as brengt geen aandrijfkracht meer over."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Storing van de differentieelsperbediening. De sper schakelt niet meer in. Het differentieel blijft vrij."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Storing van de differentieelsperbediening. De sper blijft ingeschakeld. De machine verzet zich tegen sturen in bochten."/>
+    </texts>
+</l10n>

@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Carries jumper cable requests to the server and the resulting state back to the clients
 RMS_JumperCablesEvent = {}
 local RMS_JumperCablesEvent_mt = Class(RMS_JumperCablesEvent, Event)
 
@@ -33,7 +32,7 @@ function RMS_JumperCablesEvent.new(tool, state, targetVehicle, connectedVehicleA
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_JumperCablesEvent:writeStream(streamId, connection)
@@ -45,7 +44,7 @@ function RMS_JumperCablesEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_JumperCablesEvent:readStream(streamId, connection)
@@ -96,7 +95,6 @@ function RMS_JumperCablesEvent.sendRequest(tool, state, targetVehicle)
 end
 
 
----Broadcast the resulting cable state from the server to the clients of the tool
 -- @param table tool jumper cables hand tool
 -- @param string state resulting cable state
 -- @param table? targetVehicle vehicle aimed at by the request

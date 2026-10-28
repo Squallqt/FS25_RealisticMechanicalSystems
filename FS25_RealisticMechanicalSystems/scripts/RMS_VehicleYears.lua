@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Production year of a vehicle, from its xml or the generated table
+---Vehicle production-year lookup.
 RMS_VehicleYears = {}
 
 RMS_VehicleYears.DEFAULT_YEAR = 2000
@@ -53,7 +53,7 @@ end
 -- @param table? vehicle vehicle
 -- @param table storeItem store item
 -- @return integer year production year
--- @return boolean isKnown true when XML or the generated table supplies the underlying year
+-- @return boolean isKnown year supplied by XML or lookup table
 function RMS_VehicleYears.getVehicleYear(vehicle, storeItem)
     local year, isKnown = RMS_VehicleYears.getYear(storeItem)
     if year >= RMS_VehicleYears.SCR_MIN_YEAR then
