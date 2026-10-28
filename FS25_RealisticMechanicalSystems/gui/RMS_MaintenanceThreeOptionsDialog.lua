@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Shared configuration dialog for maintenance, repair, overhaul and refill services
 RMS_MaintenanceThreeOptionsDialog = {}
 RMS_MaintenanceThreeOptionsDialog.INSTANCE = nil
 
@@ -113,14 +112,11 @@ local function updateRefillPresentation(dialog, requirements, requirementsLabel)
     dialog.refillRowsLayout:invalidateLayout()
 end
 
--- quote of the recap in reference pixels, as the dialog XML lays it out
 local QUOTE_WIDTH, QUOTE_HEIGHT, QUOTE_TOP, QUOTE_BOTTOM, QUOTE_LIST = 372, 168, 28, 8, 132
 local QUOTE_HEAD, QUOTE_HEAD_GAP, QUOTE_LINE, QUOTE_NOTE = 20, 7, 17, 16
 local QUOTE_ROW_WIDTH, QUOTE_SLIDER_ROOM, QUOTE_AMOUNT, QUOTE_GAP = 348, 12, 62, 6
 local QUOTE_INDENT, QUOTE_BULLET_X, QUOTE_BULLET_TEXT = 12, 2, 13
--- groups that gather the lines of their kind under one name and their sum
 local QUOTE_GROUP_KEYS = { repair = "rms_ws_action_repair", fluid = "rms_ws_section_fluids" }
--- what the quote says of a job paid for the farm, by the warranty or the lease
 local COVER_TEXTS = {
     warranty = { price = "rms_option_menu_warranty_repair_text", fluids = "rms_fluid_warranty_covered" },
     lease = { price = "rms_option_menu_lease_service_text", fluids = "rms_fluid_lease_covered" }
@@ -142,7 +138,6 @@ function RMS_MaintenanceThreeOptionsDialog.show(vehicle, maintenanceType)
     dialog.resetConfigScroll = true
 
     if dialog.maintenanceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
-        -- the level the schedule calls for comes selected
         dialog.selectedOptionOne = vehicle:getDueMaintenanceType()
     elseif dialog.maintenanceType == RealisticMechanicalSystems.STATUS.REPAIR then
         dialog.selectedOptionOne = RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM
@@ -165,19 +160,16 @@ function RMS_MaintenanceThreeOptionsDialog.show(vehicle, maintenanceType)
     g_gui:showDialog("RMS_MaintenanceThreeOptionsDialog")
 end
 
--- table of the order in reference pixels, as the dialog XML lays it out
 local LEVEL_TABLE_WIDTH, LEVEL_TABLE_HEIGHT = 619, 472
 local LEVEL_LABEL_WIDTH, LEVEL_GAP, LEVEL_HEADER, LEVEL_ROW, LEVEL_BOTTOM = 220, 8, 112, 44, 8
--- oils the table lists, in its order, with their short name and their icon
+local LEVEL_FREQUENCY_HEIGHT = 16
 local LEVEL_FLUIDS = {
     { circuit = "engineOil", nameKey = "rms_fluid_hud_engineOil", icon = "rms_workshopFluidIconEngineOil" },
     { circuit = "transmissionOil", nameKey = "rms_inspection_transmission_oil", icon = "rms_workshopFluidIconTransmissionOil" },
     { circuit = "hydraulicFluid", nameKey = "rms_inspection_hydraulic_fluid", icon = "rms_workshopFluidIconHydraulicFluid" },
     { circuit = "coolant", nameKey = "rms_fluid_hud_coolant", icon = "rms_workshopFluidIconCoolant" }
 }
--- the look of a cell by what a column does: all of it, part of it, nothing
 local LEVEL_CELL_KINDS = { [2] = "Done", [1] = "Light", [0] = "None" }
--- the cards of the systems a partial overhaul can take: their height, the gap between two rows, how many to a row
 local SYSTEM_CARD_HEIGHT, SYSTEM_CARD_GAP, SYSTEM_CARDS_PER_ROW = 48, 9, 4
 
 ---Names the oil a circuit holds, a common sump as one
@@ -204,16 +196,46 @@ local function getLevelIntervalText(vehicle, circuit)
     return ""
 end
 
+local function getLevelFrequencyText(vehicle, level, lightest)
+    local interval = vehicle:getMaintenanceLevelInterval(level)
+    local ratio = interval / vehicle:getMaintenanceLevelInterval(lightest)
+    local count = math.floor(ratio + 0.5)
+    if math.abs(ratio - count) > 0.01 then
+        return string.format(g_i18n:getText("rms_ws_levels_interval"), RMS_Utils.formatHours(interval))
+    end
+    if count <= 1 then
+        return g_i18n:getText("rms_ws_levels_every_service")
+    end
+    return string.format(g_i18n:getText("rms_ws_levels_one_service_in"), count)
+end
+
 ---Names the filters every level fits the machine
 local function getFiltersKeys(vehicle)
     local hasEngine = not vehicle.spec_RealisticMechanicalSystems.isElectricVehicle
     local hasHydraulic = RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("HYDRAULIC_FILTER_CLOGGING"))
+    local hasTransmission = RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("TRANSMISSION_FILTER_CLOGGING"))
     if not hasEngine and not hasHydraulic then
         return nil, nil
     end
-    local detailKey = not hasEngine and "rms_ws_levels_filters_hydraulic"
-        or (hasHydraulic and "rms_ws_levels_filters_all" or "rms_ws_levels_filters_engine")
+    local detailKey
+    if not hasEngine then
+        detailKey = "rms_ws_levels_filters_hydraulic"
+    elseif hasHydraulic then
+        detailKey = hasTransmission and "rms_ws_levels_filters_all_transmission" or "rms_ws_levels_filters_all"
+    else
+        detailKey = hasTransmission and "rms_ws_levels_filters_engine_transmission" or "rms_ws_levels_filters_engine"
+    end
     return detailKey, hasEngine and "rms_ws_levels_new_plural" or "rms_ws_levels_new"
+end
+
+-- @param table vehicle vehicle
+-- @return integer? level maintenance level, nil on a machine burning no AdBlue
+local function getAdBlueFilterLevel(vehicle)
+    local filter = RMS_Consumables.getFilterOfBreakdown("ADBLUE_FILTER_CLOGGING")
+    if RMS_Consumables.getHasFilter(vehicle, filter) then
+        return RealisticMechanicalSystems.MAINTENANCE_TYPES[filter.maintenanceType]
+    end
+    return nil
 end
 
 ---Names each filter a maintenance level fits the machine
@@ -227,6 +249,12 @@ local function getFittedFilters(vehicle, level)
     if RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("HYDRAULIC_FILTER_CLOGGING")) then
         table.insert(names, g_i18n:getText("rms_breakdowns_part_hydraulic_filter"))
     end
+    if RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("TRANSMISSION_FILTER_CLOGGING")) then
+        table.insert(names, g_i18n:getText("rms_breakdowns_part_transmission_filter"))
+    end
+    if getAdBlueFilterLevel(vehicle) == level then
+        table.insert(names, g_i18n:getText("rms_breakdowns_part_adblue_filter"))
+    end
     if not spec.isElectricVehicle and spec.isVehicleNeedBlowOut and RealisticMechanicalSystems.getMaintenanceRenewsAirFilter(level) then
         table.insert(names, g_i18n:getText("rms_inspection_air_filter"))
     end
@@ -236,7 +264,7 @@ end
 ---Lists the rows of the level table, with what each level does
 -- @param table vehicle vehicle
 -- @param string workshopType workshop the order is opened in
--- @return table rows name, detail, icon and getCell(level) giving the text of a cell and its kind, 2 to 0
+-- @return table rows name, detail and getCell(level)
 function RMS_MaintenanceThreeOptionsDialog.getLevelRows(vehicle, workshopType)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local rows = {}
@@ -257,7 +285,6 @@ function RMS_MaintenanceThreeOptionsDialog.getLevelRows(vehicle, workshopType)
         end
     end
 
-    -- an electric motor breathes no air
     if not spec.isElectricVehicle and spec.isVehicleNeedBlowOut then
         table.insert(rows, { name = g_i18n:getText("rms_inspection_air_filter"), detail = "", icon = "rms_workshopFluidIconAirFilter",
             getCell = function(level)
@@ -268,17 +295,16 @@ function RMS_MaintenanceThreeOptionsDialog.getLevelRows(vehicle, workshopType)
             end })
     end
 
-    -- every level changes the oil filter with the engine oil, and the fuel and hydraulic filters
     local detailKey, newKey = getFiltersKeys(vehicle)
     if detailKey ~= nil then
+        local adBlueLevel = getAdBlueFilterLevel(vehicle)
         table.insert(rows, { name = g_i18n:getText("rms_ws_levels_filters"), detail = g_i18n:getText(detailKey),
             icon = "rms_workshopFluidIconFilters",
-            getCell = function()
-                return g_i18n:getText(newKey), 2
+            getCell = function(level)
+                return g_i18n:getText(level == adBlueLevel and "rms_ws_levels_new_adblue" or newKey), 2
             end })
     end
 
-    -- valve clearance, injectors and thermostat, on the machines carrying them
     if #RealisticMechanicalSystems.getMajorServiceSystems(vehicle) > 0 then
         table.insert(rows, { name = g_i18n:getText("rms_ws_levels_checks"), detail = g_i18n:getText("rms_ws_levels_checks_detail"),
             icon = "rms_workshopFluidIconAdjustments",
@@ -290,10 +316,9 @@ function RMS_MaintenanceThreeOptionsDialog.getLevelRows(vehicle, workshopType)
             end })
     end
 
-    -- every level looks for faults as the standard inspection its workshop can run
     local readsFaultCodes = RealisticMechanicalSystems.getMaintenanceReadsFaultCodes(vehicle, workshopType)
     table.insert(rows, { name = g_i18n:getText("rms_ws_levels_fault_search"), icon = "rms_workshopLevelIconFaultSearch",
-        detail = g_i18n:getText(readsFaultCodes and "rms_ws_levels_fault_search_detail" or "rms_ws_levels_fault_search_mobile_detail"),
+        detail = g_i18n:getText(readsFaultCodes and "rms_ws_levels_fault_search_detail" or "rms_ws_levels_fault_search_no_tool_detail"),
         getCell = function()
             if readsFaultCodes then
                 return g_i18n:getText("rms_ws_levels_included"), 2
@@ -306,7 +331,7 @@ end
 
 ---Lists the rows of the repair table, with what each method does
 -- @param table vehicle vehicle
--- @return table rows name, detail and getCell(method) giving the text of a cell and its kind, 2 to 0
+-- @return table rows name, detail and getCell(method)
 function RMS_MaintenanceThreeOptionsDialog.getRepairRows(vehicle)
     local REPAIR = RealisticMechanicalSystems.REPAIR_TYPES
     local ticked, running = 0, 0
@@ -329,7 +354,6 @@ function RMS_MaintenanceThreeOptionsDialog.getRepairRows(vehicle)
     end
 
     local rows = {}
-    -- a quick fix leaves the breakdowns that are not running, a dormant defect or one already quick fixed
     if running < ticked then
         table.insert(rows, { name = g_i18n:getText("rms_ws_repair_row_faults"), detail = g_i18n:getText("rms_ws_repair_row_faults_detail"),
             getCell = function(method)
@@ -348,16 +372,12 @@ function RMS_MaintenanceThreeOptionsDialog.getRepairRows(vehicle)
         end })
     table.insert(rows, { name = g_i18n:getText("rms_ws_repair_row_part"), detail = g_i18n:getText("rms_ws_repair_row_part_detail"),
         getCell = replaces("rms_ws_repair_part_replaced") })
-    local remaining = RMS_Config.MAINTENANCE.REPAIR_REMAINING_STRESS_RATIO
-    table.insert(rows, { name = g_i18n:getText("rms_ws_repair_row_stress"), detail = g_i18n:getText("rms_ws_repair_row_stress_detail"),
+    table.insert(rows, { name = g_i18n:getText("rms_ws_repair_row_worn_parts"), detail = g_i18n:getText("rms_ws_repair_row_worn_parts_detail"),
         getCell = function(method)
-            local ratio = remaining[RMS_Utils.getKeyByValue(REPAIR, method)]
-            if ratio == nil then
-                return "-", 0
-            elseif ratio <= 0 then
-                return g_i18n:getText("rms_ws_repair_stress_cleared"), 2
+            if method == REPAIR.HIGH then
+                return g_i18n:getText("rms_ws_repair_worn_parts_replaced"), 2
             end
-            return string.format("-%d%%", math.floor((1 - ratio) * 100 + 0.5)), 1
+            return "-", 0
         end })
     table.insert(rows, { name = g_i18n:getText("rms_ws_repair_row_quality"), detail = g_i18n:getText("rms_ws_repair_row_quality_detail"),
         getCell = replaces("rms_ws_repair_quality_choice") })
@@ -367,7 +387,7 @@ end
 ---Lists the rows of the overhaul table, with what each extent does
 -- @param table vehicle vehicle
 -- @param string? system system a partial overhaul takes
--- @return table rows name, detail and getCell(extent) giving the text of a cell and its kind, 2 to 0
+-- @return table rows name, detail and getCell(extent)
 function RMS_MaintenanceThreeOptionsDialog.getOverhaulRows(vehicle, system)
     local OVERHAUL = RealisticMechanicalSystems.OVERHAUL_TYPES
     local targets = RMS_Config.MAINTENANCE.OVERHAUL_CONDITION_TARGETS
@@ -377,7 +397,6 @@ function RMS_MaintenanceThreeOptionsDialog.getOverhaulRows(vehicle, system)
             return g_i18n:getText(key), 2
         end
     end
-    -- a partial overhaul changes the oil of its system, when the system holds one
     local circuit = system ~= nil and RMS_Fluids.SYSTEM_TO_CIRCUIT[RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, system)] or nil
     local hasPartialOil = circuit ~= nil and RMS_Fluids.getCapacity(vehicle, circuit) > 0
 
@@ -394,8 +413,6 @@ function RMS_MaintenanceThreeOptionsDialog.getOverhaulRows(vehicle, system)
                 local target = targets[RMS_Utils.getKeyByValue(OVERHAUL, extent)]
                 return string.format("%d%%", math.floor(target * 100 + 0.5)), target >= 1 and 2 or 1
             end },
-        { name = g_i18n:getText("rms_ws_repair_row_stress"), detail = g_i18n:getText("rms_ws_overhaul_row_treated_detail"),
-            getCell = every("rms_ws_repair_stress_cleared") },
         { name = g_i18n:getText("rms_ws_overhaul_row_faults"), detail = g_i18n:getText("rms_ws_overhaul_row_faults_detail"),
             getCell = every("rms_ws_overhaul_faults_repaired") },
         { name = g_i18n:getText("rms_ws_overhaul_row_fluids"), detail = g_i18n:getText("rms_ws_overhaul_row_fluids_detail"),
@@ -409,14 +426,26 @@ function RMS_MaintenanceThreeOptionsDialog.getOverhaulRows(vehicle, system)
             end }
     }
 
-    -- every extent renews the fuel and hydraulic filters the machine carries
     local hasFuel = RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("FUEL_FILTER_CLOGGING"))
     local hasHydraulic = RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("HYDRAULIC_FILTER_CLOGGING"))
+    local hasTransmission = RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("TRANSMISSION_FILTER_CLOGGING"))
     if hasFuel or hasHydraulic then
-        local detailKey = not hasFuel and "rms_ws_levels_filters_hydraulic"
-            or (hasHydraulic and "rms_ws_overhaul_filters_both" or "rms_ws_overhaul_filters_fuel")
+        local detailKey
+        if not hasFuel then
+            detailKey = "rms_ws_levels_filters_hydraulic"
+        elseif hasHydraulic then
+            detailKey = hasTransmission and "rms_ws_overhaul_filters_both_transmission" or "rms_ws_overhaul_filters_both"
+        else
+            detailKey = hasTransmission and "rms_ws_overhaul_filters_fuel_transmission" or "rms_ws_overhaul_filters_fuel"
+        end
+        local cellKey = "rms_ws_levels_new"
+        if getAdBlueFilterLevel(vehicle) ~= nil then
+            cellKey = "rms_ws_levels_new_adblue"
+        elseif hasFuel and (hasHydraulic or hasTransmission) then
+            cellKey = "rms_ws_levels_new_plural"
+        end
         table.insert(rows, { name = g_i18n:getText("rms_ws_levels_filters"), detail = g_i18n:getText(detailKey),
-            getCell = every(hasFuel and hasHydraulic and "rms_ws_levels_new_plural" or "rms_ws_levels_new") })
+            getCell = every(cellKey) })
     end
     table.insert(rows, { name = g_i18n:getText("rms_ws_inspection_report"), detail = g_i18n:getText("rms_ws_inspection_report_detail"),
         getCell = every("rms_ws_inspection_measures") })
@@ -432,13 +461,25 @@ local function updateTableCorner(dialog, workshopType)
         name = RMS_Utils.formatMaintenanceLevel(vehicle, vehicle:getDueMaintenanceType())
         reason = RMS_Utils.formatServiceDue(vehicle, vehicle:getServiceSchedule(), true)
     elseif dialog.maintenanceType == STATUS.REPAIR then
-        local DEALER = RealisticMechanicalSystems.WORKSHOP.DEALER
-        local isCovered = vehicle:isWarrantyRepairCovered(RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM,
-            RealisticMechanicalSystems.PART_TYPES.OEM, DEALER)
+        local isCovered, status = vehicle:isWarrantyRepairCovered(RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM,
+            RealisticMechanicalSystems.PART_TYPES.OEM, workshopType)
         label = "rms_ws_warranty_title"
-        name = g_i18n:getText(isCovered and "rms_ws_warranty_covered" or "rms_ws_warranty_not_covered")
-        reason = g_i18n:getText(not isCovered and "rms_ws_warranty_terms"
-            or (workshopType == DEALER and "rms_ws_warranty_free_here" or "rms_ws_warranty_free_dealer"))
+        name = g_i18n:getText(isCovered and "rms_ws_warranty_covered"
+            or status == "partial" and "rms_warranty_partial" or "rms_ws_warranty_not_covered")
+        local months, hours = vehicle:getWarrantyLimits()
+        reason = string.format(g_i18n:getText("rms_ws_warranty_terms"), months, g_i18n:formatNumber(hours, 0))
+        if status == "part" then
+            local expiry = math.huge
+            for _, line in ipairs(vehicle:getRepairPriceLines(RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM,
+                RealisticMechanicalSystems.PART_TYPES.OEM, workshopType)) do
+                expiry = math.min(expiry, vehicle.spec_RealisticMechanicalSystems.partWarranty[line.breakdownId])
+            end
+            reason = string.format(g_i18n:getText("rms_warranty_part"), expiry)
+        elseif status == "lease" then
+            reason = g_i18n:getText("rms_warranty_lease")
+        elseif workshopType == RealisticMechanicalSystems.WORKSHOP.OWN then
+            reason = g_i18n:getText("rms_warranty_own")
+        end
         color = isCovered and color or RMS_Utils.COLOR.TEXT
     else
         label = "rms_ws_overhaul_worn"
@@ -455,7 +496,7 @@ end
 ---Lays the table of the order out and writes each column
 -- @param table dialog dialog instance
 -- @param string workshopType workshop type
--- @param string? optionTwo consumables or part quality sent with a maintenance or a repair
+-- @param string? optionTwo consumables or part quality
 function RMS_MaintenanceThreeOptionsDialog.updateChoiceTable(dialog, workshopType, optionTwo)
     local vehicle = dialog.vehicle
     local STATUS = RealisticMechanicalSystems.STATUS
@@ -474,16 +515,20 @@ function RMS_MaintenanceThreeOptionsDialog.updateChoiceTable(dialog, workshopTyp
         or serviceType ~= STATUS.OVERHAUL and RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR
     local unitX, unitY = dialog.levelTablePixel[1], dialog.levelTablePixel[2]
     local columnWidth = (LEVEL_TABLE_WIDTH - LEVEL_LABEL_WIDTH - LEVEL_GAP * #choices) / #choices
-    local height = LEVEL_HEADER + #rows * LEVEL_ROW + LEVEL_BOTTOM
+    local hasFrequency = serviceType == STATUS.MAINTENANCE
+    local header = LEVEL_HEADER + (hasFrequency and LEVEL_FREQUENCY_HEIGHT or 0)
+    local height = header + #rows * LEVEL_ROW + LEVEL_BOTTOM
     dialog.levelTable:setSize(nil, height * unitY)
     updateTableCorner(dialog, workshopType)
 
     for index, name in ipairs(dialog.levelRowName) do
         local row = rows[index]
-        local y = LEVEL_HEADER + (index - 1) * LEVEL_ROW
+        local y = header + (index - 1) * LEVEL_ROW
         local hasIcon = row ~= nil and row.icon ~= nil
         local hasDetail = row ~= nil and row.detail ~= ""
         local x = hasIcon and 34 or 0
+        dialog.levelRowRule[index]:setPosition(nil, -y * unitY)
+        dialog.levelRowIcon[index]:setPosition(nil, -(y + 9) * unitY)
         dialog.levelRowRule[index]:setVisible(row ~= nil)
         dialog.levelRowIcon[index]:setVisible(hasIcon)
         name:setVisible(row ~= nil)
@@ -511,7 +556,6 @@ function RMS_MaintenanceThreeOptionsDialog.updateChoiceTable(dialog, workshopTyp
             dialog.levelColumnFrame[column]:setSize(columnWidth * unitX, height * unitY)
             dialog.levelColumnBg[column]:setSize((columnWidth - 4) * unitX, (height - 4) * unitY)
 
-            -- a partial overhaul is priced on the system chosen, the others on every system
             local choiceOptionTwo = optionTwo
             if serviceType == STATUS.OVERHAUL then
                 choiceOptionTwo = choice == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL and dialog.selectedOptionTwo or "NONE"
@@ -519,12 +563,12 @@ function RMS_MaintenanceThreeOptionsDialog.updateChoiceTable(dialog, workshopTyp
             local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, choice, choiceOptionTwo, dialog.selectedOptionThree)
             local duration = vehicle:getServiceDuration(serviceType, choice, choiceOptionTwo, dialog.selectedOptionThree, workshopType)
 
-            -- the schedule marks the level due, the warranty the repair it covers
             local badgeKey = nil
             if choice == due then
                 badgeKey = "rms_spec_state_recommended"
-            elseif serviceType == STATUS.REPAIR and vehicle:isWarrantyRepairCovered(choice, optionTwo, workshopType) then
-                badgeKey = "rms_ws_badge_warranty"
+            elseif serviceType == STATUS.REPAIR then
+                local covered, reason = vehicle:isWarrantyRepairCovered(choice, optionTwo, workshopType)
+                if covered or reason == "partial" then badgeKey = "rms_ws_badge_warranty" end
             end
             dialog.levelBadge[column]:setPosition((columnWidth / 2 - 52) * unitX, nil)
             dialog.levelBadgeText[column]:setPosition((columnWidth / 2 - 52) * unitX, nil)
@@ -532,9 +576,13 @@ function RMS_MaintenanceThreeOptionsDialog.updateChoiceTable(dialog, workshopTyp
             dialog.levelBadgeText[column]:setVisible(badgeKey ~= nil)
             dialog.levelBadgeText[column]:setText(badgeKey ~= nil and g_i18n:getText(badgeKey) or "")
 
+            dialog.levelFrequency[column]:setVisible(hasFrequency)
+            dialog.levelPrice[column]:setPosition(nil, -(header - 46) * unitY)
+            dialog.levelDuration[column]:setPosition(nil, -(header - 22) * unitY)
             local texts = {
                 [dialog.levelName[column]] = serviceType == STATUS.MAINTENANCE and RMS_Utils.formatMaintenanceLevel(vehicle, choice)
                     or g_i18n:getText(choice),
+                [dialog.levelFrequency[column]] = hasFrequency and getLevelFrequencyText(vehicle, choice, choices[1]) or "",
                 [dialog.levelPrice[column]] = price ~= nil and g_i18n:formatMoney(price, 0, true, false) or "-",
                 [dialog.levelDuration[column]] = (isInstant and duration > 0) and g_i18n:getText("rms_option_menu_duration_instant")
                     or RMS_Utils.formatShortDuration(duration)
@@ -546,6 +594,8 @@ function RMS_MaintenanceThreeOptionsDialog.updateChoiceTable(dialog, workshopTyp
 
             for index, rule in ipairs(dialog["levelCellRule" .. column]) do
                 local row = rows[index]
+                local y = header + (index - 1) * LEVEL_ROW
+                rule:setPosition(nil, -y * unitY)
                 rule:setVisible(row ~= nil)
                 rule:setSize((columnWidth - 20) * unitX, nil)
                 local text, kind = "", nil
@@ -554,6 +604,7 @@ function RMS_MaintenanceThreeOptionsDialog.updateChoiceTable(dialog, workshopTyp
                 end
                 for cellKind, suffix in pairs(LEVEL_CELL_KINDS) do
                     local cell = dialog["levelCell" .. suffix .. column][index]
+                    cell:setPosition(nil, -(y + 12) * unitY)
                     cell:setVisible(cellKind == kind)
                     cell:setSize((columnWidth - 8) * unitX, nil)
                     cell:setText(text)
@@ -562,16 +613,8 @@ function RMS_MaintenanceThreeOptionsDialog.updateChoiceTable(dialog, workshopTyp
         end
     end
 
-    -- under the levels, what every one of them does besides
     if serviceType == STATUS.MAINTENANCE then
-        local footer = g_i18n:getText("rms_ws_levels_every_level")
-        for _, clock in ipairs(vehicle:getServiceClocks()) do
-            if clock.estimated then
-                footer = footer .. " " .. g_i18n:getText("rms_service_program_estimated")
-                break
-            end
-        end
-        dialog.levelFooter:setText(footer)
+        dialog.levelFooter:setText(g_i18n:getText("rms_ws_levels_every_level") .. " " .. g_i18n:getText("rms_service_program_estimated"))
     end
 end
 
@@ -589,9 +632,40 @@ function RMS_MaintenanceThreeOptionsDialog.updateSystemCards(dialog, labels)
     dialog.overhaulSystemRow:setSize(nil, (rowCount * SYSTEM_CARD_HEIGHT + (rowCount - 1) * SYSTEM_CARD_GAP) * dialog.levelTablePixel[2])
 end
 
--- chance of a later defect a quality card colours yellow up to, then orange up to, then red
+local function getQualityPartInfo(dialog, quality, workshopType, disabled)
+    local R, vehicle = RealisticMechanicalSystems, dialog.vehicle
+    if dialog.maintenanceType ~= R.STATUS.REPAIR or disabled then return nil end
+    local minimum, maximum, count, guaranteed = R.getUsedPartOfferSummary(vehicle, dialog.selectedOptionOne)
+    if count == 0 then return nil end
+    local warranty, covered = "rms_ws_quality_no_warranty", false
+    local origin = g_i18n:getText("rms_ws_quality_new_part")
+    if quality == R.PART_TYPES.USED then
+        if count == 1 then
+            origin = string.format(g_i18n:getText("rms_ws_quality_donor"), minimum)
+        else
+            origin = string.format(g_i18n:getText("rms_ws_quality_donors"), minimum, maximum)
+        end
+        if guaranteed == count then
+            warranty, covered = "rms_ws_quality_used_warranty", true
+        elseif guaranteed > 0 then
+            warranty = "rms_ws_quality_partial_warranty"
+        end
+    elseif quality == R.PART_TYPES.OEM and workshopType == R.WORKSHOP.DEALER and dialog.selectedOptionOne == R.REPAIR_TYPES.MEDIUM then
+        for _, line in ipairs(vehicle:getRepairPriceLines(dialog.selectedOptionOne, quality, workshopType)) do
+            if RMS_Consumables.getFilterOfBreakdown(line.breakdownId) == nil then
+                if not line.warranty or line.warrantyReason == "part" then
+                    warranty, covered = "rms_ws_quality_oem_warranty", true
+                    break
+                end
+                -- replaced free, it keeps the machine's cover
+                warranty, covered = "rms_ws_quality_factory_warranty", true
+            end
+        end
+    end
+    return origin, g_i18n:getText(warranty), covered
+end
+
 local QUALITY_RISK_LOW, QUALITY_RISK_HIGH = 0.2, 0.4
--- shortest fill of the gauge of a quality, as a share of its track
 local QUALITY_GAUGE_MIN = 0.04
 
 ---Writes the quality cards of a maintenance or a repair
@@ -632,6 +706,12 @@ function RMS_MaintenanceThreeOptionsDialog.updateQualityCards(dialog, workshopTy
         dialog.qualityName[index]:setText(labels[index])
         dialog.qualityPrice[index]:setText(priceText)
         dialog.qualityDelta[index]:setText(delta)
+        local origin, warranty, covered = getQualityPartInfo(dialog, quality, workshopType, disabled)
+        dialog.qualityOrigin[index]:setVisible(origin ~= nil)
+        dialog.qualityWarranty[index]:setVisible(origin ~= nil)
+        dialog.qualityOrigin[index]:setText(origin or "")
+        dialog.qualityWarranty[index]:applyProfile(covered and "rms_workshopQualityWarrantyCovered" or "rms_workshopQualityWarranty", true)
+        dialog.qualityWarranty[index]:setText(warranty or "")
         dialog.qualityRisk[index]:setText(string.format("%d%%", math.floor(chance * 100 + 0.5)))
         dialog.qualityRisk[index]:setTextColor(r, g, b, a)
         dialog.qualityGauge[index].color = { r, g, b, a }
@@ -661,14 +741,14 @@ end
 -- @param table dialog dialog instance
 -- @param string workshopType workshop type
 -- @param string? optionTwo second option sent
--- @param string? coverKey "warranty" for a repair the warranty pays, "lease" for a maintenance the lease pays
+-- @param string? coverKey "warranty" or "lease"
 function RMS_MaintenanceThreeOptionsDialog.updateQuote(dialog, workshopType, optionTwo, coverKey)
     local vehicle = dialog.vehicle
     local invoice = RMS_FluidWorkshop.getTransactionInvoice(vehicle, dialog.maintenanceType, workshopType,
         dialog.selectedOptionOne, optionTwo, dialog.selectedOptionThree)
     local groups, gathered = {}, {}
     local shortages = RMS_FluidWorkshop.getStockShortages(vehicle, g_workshopScreen.sellingPoint, dialog.maintenanceType, workshopType,
-        RMS_FluidWorkshop.getTransactionRequirements(vehicle, dialog.maintenanceType, dialog.selectedOptionOne, optionTwo))
+        RMS_FluidWorkshop.getTransactionRequirements(vehicle, dialog.maintenanceType, dialog.selectedOptionOne, optionTwo), dialog.selectedOptionOne, optionTwo)
     dialog.hasStockShortage = next(shortages) ~= nil
     for _, row in ipairs(invoice ~= nil and RMS_FluidWorkshop.getInvoiceRows(vehicle, dialog.maintenanceType, dialog.selectedOptionOne, invoice) or {}) do
         if QUOTE_GROUP_KEYS[row.kind] ~= nil then
@@ -679,6 +759,13 @@ function RMS_MaintenanceThreeOptionsDialog.updateQuote(dialog, workshopType, opt
                 table.insert(groups, group)
             end
             table.insert(group.lines, { label = row.label, price = row.price })
+            if row.warrantyReason ~= nil then
+                local note = g_i18n:getText("rms_warranty_" .. row.warrantyReason)
+                if row.warrantyReason == "part" then
+                    note = string.format(note, vehicle.spec_RealisticMechanicalSystems.partWarranty[row.breakdownId])
+                end
+                table.insert(group.lines, { note = note })
+            end
             if row.price ~= nil then
                 group.price = (group.price or 0) + row.price
             end
@@ -697,7 +784,12 @@ function RMS_MaintenanceThreeOptionsDialog.updateQuote(dialog, workshopType, opt
             end
         end
     end
-    -- an unpriced fluid comes from the farm's drums or is covered
+    if gathered.repair ~= nil and workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE then
+        local covered, reason = vehicle:isWarrantyRepairCovered(dialog.selectedOptionOne, optionTwo, workshopType)
+        if covered or reason == "partial" then
+            table.insert(gathered.repair.lines, { note = g_i18n:getText("rms_warranty_mobile") })
+        end
+    end
     if gathered.fluid ~= nil and not dialog.hasStockShortage
         and (coverKey ~= nil or workshopType ~= RealisticMechanicalSystems.WORKSHOP.DEALER) then
         table.insert(gathered.fluid.lines, { note = g_i18n:getText(coverKey ~= nil and COVER_TEXTS[coverKey].fluids or "rms_fluid_stock_required") })
@@ -721,7 +813,7 @@ function RMS_MaintenanceThreeOptionsDialog.updateQuote(dialog, workshopType, opt
     dialog.recapQuoteBlock:setSize(nil, blockHeight)
     dialog.recapQuoteSurface:setSize(nil, blockHeight)
     dialog.recapQuoteSliderBox:setVisible(isScrolling)
-    dialog.recapQuoteList:reloadData(true)
+    RMS_Utils.reloadListTemplates(dialog.recapQuoteList)
 end
 
 ---Returns the number of rows of the quote
@@ -821,15 +913,12 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
     self.shortcutButtons[5]:setVisible(isTopUpOffered)
     self.refillShortcutSeparator:setVisible(isTopUpOffered)
     self.shortcutButtons[5].parent:invalidateLayout()
-    -- the bottom bar carries the workshop shortcuts and closes with the list beside it
     for index, button in ipairs(self.shortcutButtons) do
         button:setDisabled(self.configChoiceButtons[index]:getIsDisabled())
     end
 
-    -- title
     self.recapType:setText(g_i18n:getText(isRefill and "rms_fluid_refill_work_order" or self.maintenanceType))
 
-    -- the levels, methods or extents of the order, side by side in its table
     local STATUS = RealisticMechanicalSystems.STATUS
     local optionOneText = ""
     local optionOneValues = {}
@@ -838,7 +927,6 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
         optionOneValues = self.vehicle:getMaintenanceTypes()
     elseif self.maintenanceType == STATUS.REPAIR then
         optionOneText = g_i18n:getText("rms_option_menu_option_one_title_repair")
-        -- a running breakdown can be quick fixed, a dormant or quick fixed one only replaced
         local hasTicked, hasRunning = false, false
         for _, breakdown in pairs(self.vehicle:getActiveBreakdowns()) do
             if breakdown.isSelectedForRepair and breakdown.isVisible then
@@ -869,7 +957,6 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
     end
     self.optionOneText:setText(optionOneText)
 
-    -- the consumables or the part quality on their cards, the system of a partial overhaul on its own
     local optionTwoText = ""
     local optionTwoValues = {}
     if self.maintenanceType == STATUS.MAINTENANCE then
@@ -887,8 +974,7 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
     local maintenanceConsumableTextKeys = {
         [RealisticMechanicalSystems.PART_TYPES.USED] = "rms_spec_consumable_types_used",
         [RealisticMechanicalSystems.PART_TYPES.AFTERMARKET] = "rms_spec_consumable_types_aftermarket",
-        [RealisticMechanicalSystems.PART_TYPES.OEM] = "rms_spec_consumable_types_oem",
-        [RealisticMechanicalSystems.PART_TYPES.PREMIUM] = "rms_spec_consumable_types_premium"
+        [RealisticMechanicalSystems.PART_TYPES.OEM] = "rms_spec_consumable_types_oem"
     }
     local optionTwoLabels = {}
     for _, optionValue in ipairs(optionTwoValues) do
@@ -919,7 +1005,6 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
     self.optionThreeGroup:setVisible(hasFollowUp)
     self.refillGroup:setVisible(isRefill)
     if showQualities then
-        -- a quick fix fits no part
         RMS_MaintenanceThreeOptionsDialog.updateQualityCards(self, workshopType, optionTwoLabels,
             self.selectedOptionOne == RealisticMechanicalSystems.REPAIR_TYPES.LOW)
     end
@@ -927,7 +1012,7 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
         RMS_MaintenanceThreeOptionsDialog.updateSystemCards(self, optionTwoLabels)
     end
 
-    local isAllowedInMobileWorkshop = RMS_FluidWorkshop.getMobileWorkshopAvailability(
+    local isAllowedInWorkshop = RMS_FluidWorkshop.getWorkshopAvailability(
         self.vehicle,
         self.maintenanceType,
         workshopType,
@@ -935,7 +1020,6 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
     )
     local isWorkshopOpen = RMS_WorkshopDialog.getIsWorkshopOpen()
 
-    -- price, duration, finishtime
     local coverKey = RMS_MaintenanceThreeOptionsDialog.getCoverKey(self.vehicle, self.maintenanceType, self.selectedOptionOne,
         self.selectedOptionTwo, workshopType)
     local effectiveOptionTwo = getEffectiveOptionTwo(self)
@@ -982,15 +1066,13 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
         RMS_MaintenanceThreeOptionsDialog.updateChoiceTable(self, workshopType, effectiveOptionTwo)
     end
 
-    -- the refusal of the mobile workshop is written under the table
-    self.optionOneDisclaimer:setVisible(not isAllowedInMobileWorkshop)
-    if not isAllowedInMobileWorkshop then
-        self.optionOneDisclaimer:setText(RMS_FluidWorkshop.getMobileWorkshopRestrictionText(
+    self.optionOneDisclaimer:setVisible(not isAllowedInWorkshop)
+    if not isAllowedInWorkshop then
+        self.optionOneDisclaimer:setText(RMS_FluidWorkshop.getWorkshopRestrictionText(
             self.vehicle, self.maintenanceType, workshopType, self.selectedOptionOne))
         self.optionOneDisclaimer:setTextColor(unpack(RMS_Utils.COLOR.ALERT))
     end
 
-    -- option three
     local optionThreeText = ""
     local optionThreeDisclaimerText = ""
     if self.maintenanceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
@@ -1026,11 +1108,10 @@ function RMS_MaintenanceThreeOptionsDialog:updateScreen()
                 and (self.selectedOptionOne ~= RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
                     or self.selectedOptionTwo ~= nil)
         end
-        self.startServiceButton:setDisabled(not hasValidSelection or not isAllowedInMobileWorkshop or not isWorkshopOpen
+        self.startServiceButton:setDisabled(not hasValidSelection or not isAllowedInWorkshop or not isWorkshopOpen
             or self.hasStockShortage)
     end
 
-    -- the recap names the two settings, the parts themselves are listed in the work order
     local optionTexts = {}
     if self.selectedOptionOne ~= nil then
         table.insert(optionTexts, RMS_Utils.formatServiceOption(self.vehicle, self.maintenanceType, self.selectedOptionOne))
@@ -1068,7 +1149,6 @@ function RMS_MaintenanceThreeOptionsDialog:updateFocusLinks()
         table.insert(procedures, {button})
     end
 
-    -- the columns, the system or quality cards, then the follow-up
     local systemRows = { {}, {} }
     for index, card in ipairs(self.overhaulSystemCard) do
         table.insert(systemRows[math.ceil(index / SYSTEM_CARDS_PER_ROW)], card)
@@ -1113,11 +1193,6 @@ end
 ---
 function RMS_MaintenanceThreeOptionsDialog:onClickOptionTwoPreset3()
     self:onClickOptionTwo(3)
-end
-
----
-function RMS_MaintenanceThreeOptionsDialog:onClickOptionTwoPreset4()
-    self:onClickOptionTwo(4)
 end
 
 ---Chooses the system of a card for a partial overhaul
@@ -1215,17 +1290,6 @@ function RMS_MaintenanceThreeOptionsDialog:onWorkshopTabPagingChanged()
     RMS_WorkshopDialog.onChildTabPagingChanged(self)
 end
 
----Draws the native maintenance glyph in the intervention action list
--- @param table area transparent GUI element receiving the XML draw callback
-function RMS_MaintenanceThreeOptionsDialog:onDrawMaintenanceActionIcon(area)
-    RMS_WorkshopDialog.drawMaintenanceIcon(area, "rms_workshopMaintenanceActionIcon")
-end
-
----Draws the RMS oil-level glyph in the intervention action list
--- @param table area transparent GUI element receiving the XML draw callback
-function RMS_MaintenanceThreeOptionsDialog:onDrawOilActionIcon(area)
-    RMS_WorkshopDialog.drawOilIcon(area, "rms_workshopOilActionIcon")
-end
 
 ---Selects the service type option and refreshes the screen
 -- @param integer index selected option index
@@ -1259,7 +1323,7 @@ end
 function RMS_MaintenanceThreeOptionsDialog:onClickStartService()
     local vehicle = self.vehicle
     local workshopType = RMS_WorkshopDialog.INSTANCE.workshopType
-    if not RMS_FluidWorkshop.getMobileWorkshopAvailability(
+    if not RMS_FluidWorkshop.getWorkshopAvailability(
         vehicle,
         self.maintenanceType,
         workshopType,
@@ -1311,7 +1375,6 @@ end
 
 ---Selects the interventions tab and binds the button backgrounds
 function RMS_MaintenanceThreeOptionsDialog:onCreate()
-    -- the quote lists its lines through the dialog; its sizes in reference pixels come from its layout
     self.quotePixel = { self.recapQuoteBlock.size[1] / QUOTE_WIDTH, self.recapQuoteBlock.size[2] / QUOTE_HEIGHT }
     self.quoteLines = {}
     self.recapQuoteList:setDataSource(self)
@@ -1332,7 +1395,6 @@ function RMS_MaintenanceThreeOptionsDialog:onCreate()
         RMS_Utils.mirrorSelectionToChildren(button)
     end
 
-    -- a quality or system card draws its frame, fill and name as chosen; a quality gauge fills the track laid out for it
     for _, cards in ipairs({ self.qualityCard, self.overhaulSystemCard }) do
         for _, card in ipairs(cards) do
             RMS_Utils.mirrorSelectionToChildren(card)
@@ -1344,7 +1406,6 @@ function RMS_MaintenanceThreeOptionsDialog:onCreate()
         RMS_Utils.mirrorSelectionToChildren(button)
     end
 
-    -- a level column draws its frame, fill, name and cells as chosen; its sizes in reference pixels come from its layout
     for _, column in ipairs(self.levelColumns) do
         RMS_Utils.mirrorSelectionToChildren(column)
     end

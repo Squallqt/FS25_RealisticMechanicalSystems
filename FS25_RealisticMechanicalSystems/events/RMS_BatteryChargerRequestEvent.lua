@@ -28,7 +28,7 @@ function RMS_BatteryChargerRequestEvent:writeStream(streamId)
     NetworkUtil.writeNodeObject(streamId, self.target)
     streamWriteBool(streamId, self.disconnect)
     streamWriteString(streamId, self.result)
-    streamWriteUIntN(streamId, self.mode, 2)
+    streamWriteUIntN(streamId, self.mode, 1)
 end
 
 ---
@@ -37,7 +37,7 @@ function RMS_BatteryChargerRequestEvent:readStream(streamId, connection)
     self.target = NetworkUtil.readNodeObject(streamId)
     self.disconnect = streamReadBool(streamId)
     self.result = streamReadString(streamId)
-    self.mode = streamReadUIntN(streamId, 2)
+    self.mode = streamReadUIntN(streamId, 1)
     self:run(connection)
 end
 

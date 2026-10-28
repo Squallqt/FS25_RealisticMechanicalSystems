@@ -4,6 +4,9 @@
         <text name="rms_hud_mass_tractor" text="Vehicul"/>
         <text name="rms_hud_mass_towed" text="Remorcat"/>
         <text name="rms_hud_mass_total" text="Total"/>
+        <text name="rms_hud_drive_2wd" text="4x2"/>
+        <text name="rms_hud_drive_4wd" text="4x4"/>
+        <text name="rms_hud_drive_auto" text="AUTO"/>
         <text name="rms_drivetrain_mode_4x2" text="4x2 (punte față decuplată)"/>
         <text name="rms_drivetrain_mode_4wd" text="4x4 (punte față cuplată)"/>
         <text name="rms_drivetrain_mode_auto" text="4x4 AUTO"/>
@@ -26,6 +29,8 @@
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Blocare diferențial"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Frână de parcare"/>
         <text name="input_RMS_TOGGLE_ODOMETER" text="ODO/TRIP (ține: TRIP=0)"/>
+        <text name="input_RMS_REVERSE_FAN" text="Inversare ventilator"/>
+        <text name="input_RMS_TOGGLE_DEBUG_WINDOW" text="Fereastră de depanare"/>
         <text name="input_RMS_TOGGLE_BATTERY_ISOLATOR" text="Întrerupător general al bateriei"/>
         <text name="input_RMS_TOGGLE_FLUID_CAN" text="Cară canistra sau toarnă"/>
         <!-- Settings -->
@@ -41,8 +46,8 @@
         <text name="rms_dealerWorkshopAvailable_tooltip" text="Menține atelierul reprezentanței disponibil la orice oră din zi și din noapte."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Atelier mobil 24 h/24"/>
         <text name="rms_mobileWorkshopAvailable_tooltip" text="Menține atelierul mobil disponibil la orice oră din zi și din noapte."/>
-        <text name="rms_mobileWorkshopRestrictions_label" text="Restricțiile atelierului mobil"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Limitează lucrările mobile după intervenție și mijloacele necesare. Întreținerea rămâne disponibilă; diagnosticul, demontarea grea sau înalta tensiune pot necesita un atelier echipat."/>
+        <text name="rms_mobileWorkshopRestrictions_label" text="Restricțiile atelierelor"/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Limitează lucrările atelierului mobil și ale celui propriu după mijloacele necesare. Întreținerea rămâne disponibilă; electronica necesită echipamentul de diagnoză conectat la utilaj, iar la atelierul mobil demontarea grea sau înalta tensiune necesită un atelier echipat."/>
         <text name="rms_ownWorkshopAvailable_label" text="Atelier propriu 24 h/24"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Menține atelierul tău disponibil la orice oră din zi și din noapte."/>
         <text name="rms_instantInspection_label" text="Inspecție instantanee"/>
@@ -54,15 +59,13 @@
         <text name="rms_instantOverhaul_label" text="Recondiționare mecanică instantanee"/>
         <text name="rms_instantOverhaul_tooltip" text="Când opțiunea este activată, recondiționarea mecanică din atelier se încheie instantaneu. Intervențiile de acest tip deja în curs se încheie și ele imediat."/>
         <text name="rms_debugMode_label" text="Mod de depanare"/>
-        <text name="rms_debugMode_tooltip" text="Activează panoul de depanare și jurnalele detaliate din consolă."/>
+        <text name="rms_debugMode_tooltip" text="Afișează fereastra de depanare în vehiculul pe care îl conduci; și tasta %s o deschide și o închide. În modul multiplayer, doar administratorii o văd. Scrie și jurnale detaliate în consolă."/>
         <text name="rms_warningMessages_label" text="Mesaje de avertizare"/>
         <text name="rms_warningMessages_tooltip" text="Activează sau dezactivează avertizările din joc, precum motor rece sau supraîncălzire. Mesajele de limitare a puterii din cauza temperaturii rămân active."/>
         <text name="rms_serviceInterval_label" text="Distanța dintre întrețineri"/>
         <text name="rms_serviceInterval_tooltip" text="Setați orele de referință. La 100 h, o cerință de 500 h devine 100 h, iar 600 h devine 120 h. Fiecare fluid urmează programul vehiculului; termenele calendaristice sunt independente."/>
         <text name="rms_vehicleLifespan_label" text="Durata de viață a vehiculului"/>
         <text name="rms_vehicleLifespan_tooltip" text="Stabilește durata de viață de bază a vehiculului în ore, după care starea sa ajunge la 0%. Cu cât starea se apropie de zero, cu atât vehiculul devine mai puțin fiabil. Și valoarea vehiculului scade pe parcursul acestor ore. O modificare se aplică din acel moment: vehiculele își păstrează starea, doar valoarea lor este recalculată."/>
-        <text name="rms_generalWearEnabled_label" text="Uzură cauzată de vechime"/>
-        <text name="rms_generalWearEnabled_tooltip" text="Pe măsură ce vehiculul se uzează, fiecare sistem primește mici penalizări ale caracteristicilor principale, precum puterea motorului, viteza hidraulică sau eficiența frânării. Efectul se activează după prima treime a duratei de viață, dar devine cu adevărat vizibil abia după a doua treime și se intensifică spre sfârșitul vieții utilajului."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fum de eșapament"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Controlează fumul de eșapament după starea reală a motorului. Este negru când combustibilul depășește aerul disponibil: accelerare bruscă, motor forțat la turație joasă, ralanti prelungit la sarcină mică, filtru de aer colmatat sau injecție uzată. Este albastru când un motor uzat arde ulei și alb când combustibilul iese nears. Norul de fum crește și odată cu efortul motorului. Utilajele vechi scot mult mai mult fum decât cele moderne, care aproape nu scot fum cât timp nimic nu este grav defect. În aer rece, apa rezultată din ardere se condensează și ea într-o dâră albă scurtă, care se evaporă în unul sau doi metri, chiar și la un motor sănătos."/>
         <text name="rms_tutorialMode_label" text="Mod tutorial"/>
@@ -122,6 +125,16 @@
         <text name="rms_service_access_easy" text="Ușoară"/>
         <text name="rms_service_access_average" text="Medie"/>
         <text name="rms_service_access_demanding" text="Exigentă"/>
+        <text name="rms_shop_reliability_average" text="Fiabilitate medie"/>
+        <text name="rms_shop_reliability_fair" text="Fiabilitate acceptabilă"/>
+        <text name="rms_shop_reliability_good" text="Fiabilitate bună"/>
+        <text name="rms_shop_reliability_very_good" text="Fiabilitate foarte bună"/>
+        <text name="rms_shop_service_access_easy" text="Ușurință ridicată a întreținerii"/>
+        <text name="rms_shop_service_access_average" text="Ușurință medie a întreținerii"/>
+        <text name="rms_shop_service_access_demanding" text="Ușurință redusă a întreținerii"/>
+        <text name="rms_owner_care_careful" text="Întreținere atentă"/>
+        <text name="rms_owner_care_regular" text="Întreținere regulată"/>
+        <text name="rms_owner_care_neglected" text="Întreținere neglijată"/>
         <text name="rms_ws_label_overhaul_count" text="Recondiționări efectuate"/>
         <text name="rms_ws_label_maintenance_log" text="Jurnal de întreținere"/>
         <text name="rms_ws_label_last_report" text="Ultimul raport"/>
@@ -139,6 +152,7 @@
         <text name="rms_ws_reason_overhaul_none" text="O recondiționare mecanică repune în stare sistemele sub 50% stare. Acest utilaj nu are niciunul."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Un atelier mobil nu face vopsire. Aceasta se face la reprezentanță."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Folosește un atelier echipat."/>
+        <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Conectează la utilaj echipamentul de diagnoză al unui cărucior."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Este necesar un diagnostic electronic"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Este necesară demontarea sau o unealtă specializată"/>
         <text name="rms_mobile_workshop_high_voltage_required" text="Este necesar echipament de înaltă tensiune"/>
@@ -160,8 +174,6 @@
         <text name="rms_ws_action_cancel_service" text="Anulează intervenția"/>
         <text name="rms_ws_age_unit" text="luni"/>
         <text name="rms_ws_hours_unit" text="h"/>
-        <text name="rms_ws_option_yes" text="Da"/>
-        <text name="rms_ws_option_no" text="Nu"/>
         <text name="rms_ws_no_last_report_message" text="Niciun raport deocamdată"/>
         <text name="rms_ws_no_log_empty_message" text="Jurnalul este încă gol"/>
         <text name="rms_ws_no_report_message" text="Niciun raport deocamdată"/>
@@ -196,314 +208,7 @@
         <text name="rms_log_button_show_report" text="Afișează raportul"/>
         <text name="rms_log_empty" text="Jurnalul este încă gol"/>
         <!-- Breakdowns -->
-        <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
-        <text name="rms_breakdowns_severity_reduce_power" text="Pierdere de putere"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Scos din funcțiune"/>
-        <text name="rms_breakdowns_severity_minor" text="Minor"/>
-        <text name="rms_breakdowns_severity_moderate" text="Moderat"/>
-        <text name="rms_breakdowns_severity_major" text="Major"/>
-        <text name="rms_breakdowns_severity_critical" text="Critic"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Uzură ușoară a mecanismului de direcție. Apare puțin joc, iar direcția devine puțin mai imprecisă."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Uzură moderată a mecanismului de direcție. Jocul crește, iar roțile nu mai sunt bine aliniate: direcția plutește și trage ușor într-o parte."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Uzură gravă a mecanismului de direcție. Jocul este mare, iar roțile sunt vizibil dezaliniate: vehiculul trage într-o parte, își ține greu traiectoria și o articulație riscă să cedeze."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Defecțiune critică a mecanismului de direcție. O articulație a cedat: direcția nu mai comandă corect roțile, iar continuarea deplasării este periculoasă."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="Defecțiune a direcției"/>
-        <text name="rms_breakdowns_general_wear_stage1_description" text="Solicitarea acumulată după ani de funcționare lasă o uzură minoră și ireversibilă asupra componentelor principale, reducând ușor performanța generală."/>
-        <text name="rms_breakdowns_gear_disengage_message" text="Trecere în punctul mort"/>
-        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Început de degradare a bujiilor incandescente. Pornirile la rece devin mai lente, iar pornirile la cald rămân normale."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Mai multe bujii incandescente sunt slabe sau nefuncționale. Pornirile la rece sunt dificile, iar ralantiul poate fi neregulat până la încălzirea motorului."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Defecțiune gravă a bujiilor incandescente. Pornirea la rece devine foarte nesigură, iar funcționarea neregulată continuă în timpul încălzirii."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Defecțiune totală a bujiilor incandescente. Motorul nu poate porni când temperatura este prea scăzută."/>
-        <text name="rms_breakdowns_part_vehicle" text="Vehicul"/>
-        <text name="rms_breakdowns_part_valve_train" text="Mecanism de distribuție"/>
-        <text name="rms_breakdowns_part_consumables" text="Consumabile"/>
-        <text name="rms_breakdowns_part_cooling_system" text="Sistem de răcire"/>
-        <text name="rms_breakdowns_part_clutch" text="Ambreiaj"/>
-        <text name="rms_breakdowns_part_cvt_chain" text="Transmisie cu variație continuă"/>
-        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Comanda raportului"/>
-        <text name="rms_breakdowns_part_cvt" text="CVT"/>
-        <text name="rms_breakdowns_part_engine" text="Motor"/>
-        <text name="rms_breakdowns_part_ecu" text="ECU"/>
-        <text name="rms_breakdowns_part_battery" text="Baterie"/>
-        <text name="rms_breakdowns_part_traction_battery" text="Baterie de tracțiune"/>
-        <text name="rms_breakdowns_part_hv_contactor" text="Contactor de înaltă tensiune"/>
-        <text name="rms_breakdowns_part_hv_wiring" text="Cablaj de înaltă tensiune"/>
-        <text name="rms_breakdowns_part_inverter" text="Invertor"/>
-        <text name="rms_breakdowns_part_dcdc_converter" text="Convertor de tensiune"/>
-        <text name="rms_breakdowns_part_onboard_charger" text="Încărcător de bord"/>
-        <text name="rms_breakdowns_part_electric_motor_bearings" text="Rulmenții motorului electric"/>
-        <text name="rms_breakdowns_part_electric_motor_windings" text="Înfășurările motorului electric"/>
-        <text name="rms_breakdowns_part_motor_position_sensor" text="Senzor de poziție al motorului"/>
-        <text name="rms_breakdowns_part_coolant_pump" text="Pompă de lichid de răcire"/>
-        <text name="rms_breakdowns_part_reducer" text="Reductor"/>
-        <text name="rms_breakdowns_part_brake_system" text="Sistem de frânare"/>
-        <text name="rms_breakdowns_part_wiring" text="Cablaj și conectori"/>
-        <text name="rms_breakdowns_part_wheel_bearing" text="Rulment de roată"/>
-        <text name="rms_breakdowns_part_alternator_regulator" text="Regulator de alternator"/>
-        <text name="rms_breakdowns_part_turbocharger" text="Turbocompresor"/>
-        <text name="rms_breakdowns_part_transmission_thermostat" text="Termostat de transmisie"/>
-        <text name="rms_breakdowns_part_transmission_seal" text="Garnitură de transmisie"/>
-        <text name="rms_breakdowns_part_track_tensioner" text="Întinzător de șenilă"/>
-        <text name="rms_breakdowns_part_thermostat" text="Termostat"/>
-        <text name="rms_breakdowns_part_oil_pump" text="Pompă de ulei"/>
-        <text name="rms_breakdowns_part_synchronizer" text="Sincronizator"/>
-        <text name="rms_breakdowns_part_steering_linkage" text="Mecanism de direcție"/>
-        <text name="rms_breakdowns_part_powershift_hydraulic_pump" text="Pompă hidraulică Powershift"/>
-        <text name="rms_breakdowns_part_pto_drive_coupling" text="Cuplaj de antrenare a prizei de putere"/>
-        <text name="rms_breakdowns_part_pto_engagement_control" text="Comanda de cuplare a prizei de putere"/>
-        <text name="rms_breakdowns_part_pto_drive_output" text="Arbore de ieșire al prizei de putere"/>
-        <text name="rms_breakdowns_part_hydraulic_pump" text="Pompă hidraulică"/>
-        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Cilindru hidraulic"/>
-        <text name="rms_breakdowns_part_hydraulic_hose" text="Furtun hidraulic"/>
-        <text name="rms_breakdowns_part_hydraulic_filter" text="Filtru hidraulic"/>
-        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Răcitor de ulei hidraulic"/>
-        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Distribuitor hidraulic"/>
-        <text name="rms_breakdowns_part_fan_clutch" text="Ambreiaj de ventilator"/>
-        <text name="rms_breakdowns_part_fuel_pump" text="Pompă de combustibil"/>
-        <text name="rms_breakdowns_part_fuel_injectors" text="Injectoare de combustibil"/>
-        <text name="rms_breakdowns_part_fuel_filter" text="Filtru de combustibil"/>
-        <text name="rms_breakdowns_part_fuel_line" text="Conductă de combustibil"/>
-        <text name="rms_breakdowns_part_glow_plugs" text="Bujii incandescente"/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage1_description" text="Scădere de presiune la pompa hidraulică Powershift. Mică întârziere și schimbare mai dură a treptelor."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage2_description" text="Garnituri uzate la pompa hidraulică Powershift. Întârzieri și șocuri perceptibile la schimbarea treptelor."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage3_description" text="Defecțiune a pompei hidraulice Powershift. Întârziere mare și șocuri violente la schimbarea treptelor."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage4_description" text="Pompa hidraulică Powershift este defectă. Transmisia rămâne blocată în punctul mort."/>
-        <text name="rms_breakdowns_pto_auto_disengage_message" text="Priza de putere s-a decuplat"/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage1_description" text="Uzură incipientă a cuplajului de antrenare a prizei de putere. Priza de putere se poate decupla ocazional."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage2_description" text="Uzură moderată a cuplajului de antrenare a prizei de putere. Decuplările devin mai frecvente."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage3_description" text="Uzură gravă a cuplajului de antrenare a prizei de putere. Priza de putere se decuplează frecvent."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_description" text="Defecțiune critică a cuplajului de antrenare a prizei de putere. Priza de putere nu mai poate transmite putere."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_message" text="Defecțiune a cuplajului de antrenare a prizei de putere"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage1_description" text="Uzura incipientă a rulmentului arborelui de ieșire al prizei de putere produce un zgomot ușor în funcționare."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage2_description" text="Uzura moderată a rulmentului arborelui de ieșire al prizei de putere produce un zgomot clar perceptibil."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage3_description" text="Uzura gravă a rulmentului arborelui de ieșire al prizei de putere produce zgomot puternic și decuplări ocazionale."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_description" text="Defecțiune critică a arborelui de ieșire al prizei de putere. Priza de putere nu mai poate funcționa."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_message" text="Defecțiune a arborelui de ieșire al prizei de putere"/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage1_description" text="Comanda de cuplare a prizei de putere răspunde intermitent și poate refuza o comandă."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage2_description" text="Comanda de cuplare a prizei de putere nu reușește frecvent să cupleze priza de putere."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage3_description" text="Comanda de cuplare a prizei de putere este grav defectă și refuză majoritatea încercărilor."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_description" text="Comanda de cuplare a prizei de putere este complet nefuncțională. Priza de putere nu mai poate fi cuplată."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_message" text="Defecțiune a comenzii de cuplare a prizei de putere"/>
-        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Cuplarea prizei de putere a fost refuzată"/>
-        <text name="rms_breakdowns_quick_fix_stage" text="Reparație provizorie"/>
-        <text name="rms_breakdowns_defected_parts_stage" text="Defect"/>
-        <text name="rms_breakdowns_defected_parts_detected_description" text="Sistemul funcționează normal, dar inspecția a descoperit o piesă defectă. Piesa nu mai oferă nicio marjă de siguranță, așadar se recomandă înlocuirea preventivă pentru a evita o avarie bruscă."/>
-        <text name="rms_breakdowns_dead_battery_message" text="Baterie prea slabă"/>
-        <text name="rms_breakdowns_cold_traction_battery_message" text="Baterie de tracțiune rece: autonomie și putere reduse"/>
-        <text name="rms_breakdowns_temporarily_repaired_description" text="Sistemul funcționează normal, dar depinde în întregime de o reparație provizorie. Pentru a evita o avarie sub sarcină, se recomandă înlocuirea completă a pieselor cât mai curând posibil."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Rulmenți uzați ai turbocompresorului. Se aude un șuierat slab și apare o ușoară pierdere de putere la turație ridicată."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Garnituri neetanșe ale turbocompresorului. Pierdere vizibilă de putere și consum crescut de combustibil."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Palete de turbină deteriorate. Pierdere mare de putere și risc de oprire a motorului sub sarcină ridicată."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Defecțiune critică a turbocompresorului. Motorul și-a pierdut cea mai mare parte din putere și riscă avarii interne grave."/>
-        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Discuri de ambreiaj uzate. Pierdere ocazională de putere din cauza patinării ambreiajului sub sarcină."/>
-        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Uzură importantă a ambreiajului. Patinare vizibilă la accelerare și sub sarcină ridicată."/>
-        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Ambreiaj foarte uzat. Patinarea puternică îngreunează transmiterea puterii la roți."/>
-        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Ambreiaj complet ars. Vehiculul nu se mai poate deplasa."/>
-        <text name="rms_breakdowns_transmission_slip_stage4_message" text="Defecțiune a ambreiajului"/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Sincronizatoare uzate. Scrâșnete ocazionale sau dificultăți la schimbarea treptelor."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Sincronizatoare deteriorate. Schimbarea treptelor este adesea dificilă și poate eșua."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Dinți rupți ai sincronizatorului. Risc ridicat de eșec la schimbarea treptelor sau de ieșire din treaptă sub sarcină."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Sincronizatoarele sunt complet defecte. Schimbarea treptelor este imposibilă."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_message" text="Defecțiune a sincronizatoarelor"/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage1_description" text="Termostatul transmisiei începe să cedeze. Deschide răcitorul de ulei prea târziu, iar uleiul transmisiei se încălzește puțin peste normal."/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage2_description" text="Răspuns slab al termostatului transmisiei. Răcitorul de ulei se deschide mult prea târziu, uleiul transmisiei rămâne mult peste temperatura normală și se uzează mai repede."/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage3_description" text="Termostatul transmisiei aproape că nu mai deschide răcitorul de ulei. Uleiul transmisiei ajunge aproape de supraîncălzire imediat ce sarcina crește."/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage4_description" text="Defecțiune totală a termostatului transmisiei. Rămâne blocat la o anumită deschidere, iar uleiul transmisiei fie se supraîncălzește, fie nu se mai încălzește, în funcție de poziția în care s-a blocat."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Scurgere ușoară de ulei de transmisie. Nivelul uleiului scade lent în timpul lucrului."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Scurgere moderată de ulei de transmisie. Nivelul scade vizibil, iar transmisia se încălzește mai mult."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Scurgere gravă de ulei de transmisie. Nivelul scade rapid, iar transmisia se supraîncălzește sub sarcină."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Scurgere critică de ulei de transmisie. Uleiul rămas nu este suficient pentru funcționarea sigură a transmisiei."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Defecțiune ușoară a întinzătorului de șenilă. Tensiunea șenilei este puțin mai instabilă, ceea ce mărește ușor rezistența și uzura."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Defecțiune moderată a întinzătorului de șenilă. Tensiunea devine instabilă, eficiența rulării scade și crește riscul de aliniere incorectă."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Defecțiune gravă a întinzătorului de șenilă. Tensiunea este puternic perturbată, transmiterea mișcării devine ineficientă și crește riscul desprinderii șenilei."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Defecțiune critică a întinzătorului de șenilă. Șenila nu mai poate fi menținută corect, iar vehiculul nu mai poate fi utilizat în siguranță."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_message" text="Defecțiune a întinzătorului de șenilă"/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage1_description" text="Termostatul motorului începe să cedeze. Motorului îi ia mai mult timp să atingă temperatura optimă sau funcționează la o temperatură ușor ridicată."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage2_description" text="Răspunsul termostatului este slab. Reglarea temperaturii motorului este instabilă, ceea ce mărește uzura."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage3_description" text="Termostatul aproape că nu se mai deschide. Motorul se supraîncălzește imediat ce sarcina crește."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage4_description" text="Defecțiune totală a termostatului. Lichidul de răcire al motorului nu poate circula corect, ceea ce provoacă o supraîncălzire gravă și rapidă."/>
-        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Motorul a intrat în modul de protecție. Puterea este limitată până când temperatura scade."/>
-        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Protecție la supraîncălzire: putere redusă"/>
-        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Protecția la supraîncălzire se intensifică. Motorul mai furnizează doar jumătate din putere."/>
-        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Protecție la supraîncălzire: putere redusă la jumătate"/>
         <text name="rms_thermal_power_restored_message" text="Protecție termică: limitarea puterii dezactivată"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Protecția la supraîncălzire este la nivel maxim. A mai rămas doar o fracțiune din puterea motorului."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Protecție la supraîncălzire: putere mult redusă"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motorul a fost oprit pentru a preveni deteriorarea. Lasă-l să se răcească înainte de a-l reporni."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Protecție la supraîncălzire: motor oprit"/>
-        <text name="rms_breakdowns_overload_breakdown_stage2_message" text="Suprasarcină critică! Redu imediat sarcina vehiculului."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Defecțiune ușoară a pompei de ulei. Presiunea uleiului este redusă, cuplul motor scade ușor, temperatura motorului crește și pot apărea bătăi mecanice."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Defecțiune moderată a pompei de ulei. Presiunea uleiului este insuficientă, cuplul motor scade vizibil, temperatura motorului crește, iar bătăile mecanice sunt clar audibile."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Defecțiune gravă a pompei de ulei. Presiunea uleiului este critică, cuplul motor scade puternic, supraîncălzirea este probabilă, bătăile mecanice sunt puternice și motorul se poate opri."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Defecțiune critică a pompei de ulei. Circulația uleiului este insuficientă pentru funcționarea motorului în siguranță, iar pornirea sau continuarea funcționării este imposibilă."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_message" text="Defecțiune a pompei de ulei"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motorul s-a gripat și nu se mai poate roti."/>
-        <text name="rms_breakdowns_engine_jam_stage1_message" text="Motor gripat"/>
-        <text name="rms_breakdowns_engine_stalled_message" text="Motor oprit"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Defecțiune ușoară a ECU. Puterea motorului este ușor redusă."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Defecțiune moderată a ECU. Pierdere vizibilă de putere și consum crescut de combustibil."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Defecțiune gravă a ECU. Pierdere mare de putere, consum ridicat de combustibil și risc de oprire a motorului."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Defecțiune totală a ECU. Motorul nu poate fi controlat și nu pornește."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="Defecțiune a ECU"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Coroziune ușoară a cablajului și a conectorilor electrici. Rezistența de contact crescută provoacă pâlpâirea ocazională a luminilor, alimentare instabilă și porniri dificile. O scurgere de curent descarcă bateria când utilajul stă oprit."/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Coroziune moderată a cablajului și a conectorilor electrici. Pierderile de contact provoacă pâlpâirea frecventă a luminilor, alimentare instabilă, porniri dificile și posibile opriri ale motorului. O scurgere de curent descarcă bateria când utilajul stă oprit."/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Coroziune gravă a cablajului și a conectorilor electrici. Alimentarea circuitelor critice este instabilă, luminile pot înceta complet să funcționeze, cuplul motor este redus, opririle sunt probabile, iar pornirea nu este fiabilă. O scurgere de curent descarcă bateria când utilajul stă oprit."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Defecțiune a circuitului de comandă al demarorului, cauzată de coroziunea gravă a cablajului. Luminile nu funcționează, iar pornirea motorului este imposibilă. O scurgere de curent descarcă bateria când utilajul stă oprit."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_message" text="Defecțiune a circuitului demarorului"/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage1_description" text="Coroziune ușoară a cablajului și a conectorilor electrici. Rezistența de contact crescută provoacă pâlpâirea ocazională a luminilor și alimentare instabilă. O scurgere de curent descarcă bateria auxiliară când utilajul stă oprit."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage2_description" text="Coroziune moderată a cablajului și a conectorilor electrici. Pierderile de contact provoacă pâlpâirea frecventă a luminilor, alimentare instabilă și posibile întreruperi. O scurgere de curent descarcă bateria auxiliară când utilajul stă oprit."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage3_description" text="Coroziune gravă a cablajului și a conectorilor electrici. Alimentarea circuitelor critice este instabilă, luminile pot înceta complet să funcționeze, puterea este redusă, iar întreruperile sunt probabile. O scurgere de curent descarcă bateria auxiliară când utilajul stă oprit."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage4_description" text="Coroziune critică a cablajului și a conectorilor electrici. Luminile nu funcționează, iar mașina nu pornește. O scurgere de curent descarcă bateria auxiliară când utilajul stă oprit."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage4_message" text="Defecțiune a cablajului și a conectorilor"/>
-        <text name="rms_breakdowns_coolant_leak_stage1_description" text="Scurgere ușoară de lichid de răcire. Eficiența răcirii este ușor redusă."/>
-        <text name="rms_breakdowns_coolant_leak_stage2_description" text="Scurgere moderată de lichid de răcire. Capacitatea de răcire scade vizibil, iar temperatura motorului crește mai repede."/>
-        <text name="rms_breakdowns_coolant_leak_stage3_description" text="Scurgere gravă de lichid de răcire. Pierderea capacității de răcire este importantă, iar riscul de supraîncălzire devine ridicat."/>
-        <text name="rms_breakdowns_coolant_leak_stage4_description" text="Defecțiune critică a sistemului de răcire. Lichidul de răcire este insuficient pentru funcționarea motorului în siguranță."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Eficiența transmisiei scade ușor sub sarcină."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Eficiența scade vizibil sub sarcină, iar raportul devine mai puțin stabil."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="Transmisia transmite greu forța de tracțiune și menține greu raportul cerut."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="Transmisia nu mai transmite sigur forța de tracțiune; deplasarea este aproape imposibilă."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Defecțiune a transmisiei"/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Au fost detectate primele semne ale unei defecțiuni a transmisiei CVT. Sunt necesare o inspecție și o reparație."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Defecțiunea transmisiei CVT se agravează. Utilizarea în continuare poate determina activarea modului de avarie."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Deteriorare critică a transmisiei CVT. Transmisia funcționează în modul de avarie, iar viteza maximă a vehiculului este redusă."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Defecțiune totală a transmisiei CVT. Vehiculul nu mai poate fi utilizat înainte de reparare."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_message" text="Defecțiune a transmisiei CVT"/>
-        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Sulfatare ușoară a bateriei. Capacitatea utilă este redusă, ceea ce diminuează rezerva electrică sub sarcină."/>
-        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Sulfatare moderată a bateriei. Capacitatea utilă este mult redusă, iar pornirea motorului devine dificilă."/>
-        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Sulfatare gravă a bateriei. Capacitatea utilă este critică, iar antrenarea motorului la pornire devine instabilă."/>
-        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Sulfatare critică a bateriei. Capacitatea utilă este aproape nulă, iar puterea de pornire este insuficientă pentru o pornire fiabilă."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Sulfatare ușoară a bateriei auxiliare. Capacitatea utilă este redusă, ceea ce diminuează rezerva electrică sub sarcină."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Sulfatare moderată a bateriei auxiliare. Capacitatea utilă este mult redusă, iar rezerva electrică se epuizează mai repede."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Sulfatare gravă a bateriei auxiliare. Capacitatea utilă este critică, iar rezerva electrică se epuizează foarte repede."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Sulfatare critică a bateriei auxiliare. Capacitatea utilă este aproape nulă și nu mai ajunge pentru o pornire fiabilă."/>
-        <text name="rms_breakdowns_brake_malfunction_stage1_description" text="Plăcuțe de frână uzate. Eficiența frânării scade ușor."/>
-        <text name="rms_breakdowns_brake_malfunction_stage2_description" text="Scurgere de lichid de frână sau discuri uzate. Distanța de frânare crește vizibil."/>
-        <text name="rms_breakdowns_brake_malfunction_stage3_description" text="Pierdere importantă a presiunii de frânare. Frânele sunt foarte slabe și nesigure."/>
-        <text name="rms_breakdowns_brake_malfunction_stage4_description" text="Defecțiune totală a sistemului de frânare. Continuarea deplasării este extrem de periculoasă."/>
-        <text name="rms_breakdowns_brake_malfunction_stage4_message" text="Defecțiune a frânelor"/>
-        <text name="rms_breakdowns_bearing_wear_stage1_description" text="Uzură ușoară a rulmenților. Rezistența mecanică crește ușor și poate apărea un zgomot neobișnuit în timpul funcționării."/>
-        <text name="rms_breakdowns_bearing_wear_stage2_description" text="Uzură moderată a rulmenților. Frecarea crește vizibil, zgomotul devine mai pronunțat, iar eficiența mecanică scade."/>
-        <text name="rms_breakdowns_bearing_wear_stage3_description" text="Uzură gravă a rulmenților. Frecarea este ridicată, zgomotul este puternic și există un risc real de gripare sub sarcină."/>
-        <text name="rms_breakdowns_bearing_wear_stage4_description" text="Defecțiune critică a rulmenților. Aceștia sunt aproape complet gripați, iar funcționarea devine imposibilă."/>
-        <text name="rms_breakdowns_bearing_wear_stage4_message" text="Defecțiune a rulmenților"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Defecțiune ușoară a regulatorului alternatorului. Puterea de încărcare este redusă, ceea ce scade eficiența încărcării bateriei. O scurgere de curent descarcă bateria când utilajul stă oprit."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Defecțiune moderată a regulatorului alternatorului. Încărcarea este redusă și instabilă, ceea ce determină încărcarea necorespunzătoare a bateriei și pierderi de tensiune mai mari. O scurgere de curent descarcă bateria când utilajul stă oprit."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Defecțiune gravă a regulatorului alternatorului. Încărcarea este mult redusă, alimentarea este instabilă, iar sistemul electric funcționează cu pierderi mari. O scurgere de curent descarcă bateria când utilajul stă oprit."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Defecțiune totală a regulatorului alternatorului. Bateria nu mai este încărcată, iar sistemul electric funcționează numai din rezerva rămasă. O scurgere de curent descarcă bateria când utilajul stă oprit."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Uzură ușoară a rulmenților motorului electric. Apare un zgomot slab, iar consumul crește puțin."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Uzură moderată a rulmenților motorului electric. Zgomotul se aude clar, consumul crește, iar puterea scade ușor."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Uzură gravă a rulmenților motorului electric. Zgomotul este puternic, motorul se încălzește, iar puterea scade vizibil."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Defecțiune critică a rulmenților motorului electric. Motorul este blocat, iar mașina nu se mai poate deplasa."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_message" text="Defecțiune a rulmenților motorului electric"/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Degradare ușoară a înfășurărilor motorului electric. Puterea scade ușor, iar motorul se încălzește mai mult."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Degradare moderată a înfășurărilor motorului electric. Puterea scade vizibil, motorul se încălzește, iar consumul crește."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Degradare gravă a înfășurărilor motorului electric. Pierderea de putere este mare, motorul se încălzește puternic și pot apărea întreruperi."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Defecțiune critică a înfășurărilor motorului electric. Motorul este în scurtcircuit și nu mai poate funcționa."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_message" text="Defecțiune a înfășurărilor motorului electric"/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Defecțiune ușoară a senzorului de poziție al motorului. Sub sarcină apar smucituri scurte."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Defecțiune moderată a senzorului de poziție al motorului. Smuciturile sunt frecvente, iar puterea scade."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Defecțiune gravă a senzorului de poziție al motorului. Smuciturile sunt violente, puterea se prăbușește și apar întreruperi."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Defecțiune totală a senzorului de poziție al motorului. Motorul nu mai poate fi controlat, iar mașina nu pornește."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_message" text="Defecțiune a senzorului de poziție al motorului"/>
-        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Defecțiune ușoară a invertorului. Puterea motorului este ușor redusă."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Defecțiune moderată a invertorului. Pierderea de putere este vizibilă, iar consumul crește."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Defecțiune gravă a invertorului. Pierderea de putere este mare și pot apărea întreruperi."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Defecțiune totală a invertorului. Motorul nu mai este alimentat, iar mașina nu pornește."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage4_message" text="Defecțiune a invertorului"/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Defecțiune ușoară a convertorului de tensiune. Bateria auxiliară se încarcă mai slab."/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Defecțiune moderată a convertorului de tensiune. Încărcarea bateriei auxiliare este redusă și instabilă."/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Defecțiune gravă a convertorului de tensiune. Bateria auxiliară aproape că nu mai este încărcată și se descarcă în mers."/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Defecțiune totală a convertorului de tensiune. Bateria auxiliară nu mai este încărcată, iar mașina funcționează numai din rezerva rămasă."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Defecțiune ușoară a încărcătorului de bord. Încărcarea la stație este puțin mai lentă."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Defecțiune moderată a încărcătorului de bord. Încărcarea la stație este vizibil mai lentă."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Defecțiune gravă a încărcătorului de bord. Încărcarea la stație este foarte lentă."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Defecțiune totală a încărcătorului de bord. Bateria de tracțiune nu mai poate fi încărcată."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage4_message" text="Încărcător de bord scos din funcțiune: încărcare imposibilă"/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Pierdere ușoară a izolației cablajului de înaltă tensiune. Se afișează o avertizare, fără alt efect."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Pierdere moderată a izolației cablajului de înaltă tensiune. Puterea este redusă din motive de siguranță."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Pierdere gravă a izolației cablajului de înaltă tensiune. Puterea este redusă puternic și apar întreruperi."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Pierdere critică a izolației cablajului de înaltă tensiune. Mașina refuză să pornească din motive de siguranță."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage4_message" text="Pierdere a izolației cablajului de înaltă tensiune"/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Defecțiune ușoară a unor celule ale bateriei de tracțiune. Autonomia scade ușor."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Defecțiune moderată a unor celule ale bateriei de tracțiune. Autonomia scade vizibil, iar puterea este redusă."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Defecțiune gravă a unor celule ale bateriei de tracțiune. Autonomia și puterea se prăbușesc și pot apărea întreruperi."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Defecțiune critică a bateriei de tracțiune. Mașina nu mai poate fi pusă în funcțiune."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_message" text="Defecțiune a bateriei de tracțiune"/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Uzură ușoară a contactorului de înaltă tensiune. Apar rare întreruperi ale alimentării."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Uzură moderată a contactorului de înaltă tensiune. Întreruperile alimentării devin regulate."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Uzură gravă a contactorului de înaltă tensiune. Întreruperile alimentării sunt frecvente."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Defecțiune critică a contactorului de înaltă tensiune. Bateria de tracțiune nu mai alimentează mașina, care nu pornește."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage4_message" text="Defecțiune a contactorului de înaltă tensiune"/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Defecțiune ușoară a pompei de lichid de răcire. Lichidul circulă mai slab, iar temperatura crește puțin mai mult."/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Defecțiune moderată a pompei de lichid de răcire. Răcirea este vizibil redusă."/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Defecțiune gravă a pompei de lichid de răcire. Răcirea este redusă puternic, iar supraîncălzirea este probabilă sub sarcină."/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Defecțiune totală a pompei de lichid de răcire. Lichidul aproape că nu mai circulă, iar mașina se supraîncălzește rapid."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Uzură ușoară a angrenajelor și rulmenților reductorului. În mers apare un zgomot slab."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Uzură moderată a angrenajelor și rulmenților reductorului. Zgomotul se aude clar, iar consumul crește."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Uzură gravă a angrenajelor și rulmenților reductorului. Zgomotul este puternic, reductorul se încălzește, iar puterea la roți scade."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Defecțiune critică a reductorului. Este blocat, iar mașina nu se mai poate deplasa."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage4_message" text="Defecțiune a reductorului"/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="Defecțiune ușoară a mecanismului de distribuție. Cuplul motor este ușor redus, consumul crește și apare un zgomot anormal în mecanism."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="Defecțiune moderată a mecanismului de distribuție. Cuplul motor scade vizibil, consumul crește, zgomotul este pronunțat și pot apărea ezitări sub sarcină."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="Defecțiune gravă a mecanismului de distribuție. Cuplul motor este mult redus, consumul de combustibil este ridicat, zgomotul mecanic este puternic și sunt posibile rateuri sau opriri ale motorului."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage4_description" text="Defecțiune critică a mecanismului de distribuție. Motorul nu mai poate funcționa fiabil, iar pornirea sau continuarea utilizării nu mai sunt posibile."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage4_message" text="Defecțiune a mecanismului de distribuție"/>
-        <text name="rms_breakdowns_voltage_sag_message" text="Tensiune insuficientă în circuit"/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Uzură prematură a pompei de combustibil. Puterea motorului scade ușor, iar consumul de combustibil crește."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Presiunea combustibilului scade. Pierdere vizibilă de putere, consum de combustibil mai mare și opriri ocazionale ale motorului."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Presiune critică a combustibilului. Pierdere mare de putere, consum foarte ridicat de combustibil și opriri frecvente ale motorului."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Defecțiune totală a pompei de combustibil. Combustibilul nu mai ajunge la motor."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_message" text="Defecțiune a pompei de combustibil"/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Duzele unuia sau mai multor injectoare sunt ușor colmatate. Motorul poate funcționa puțin neregulat, cu o ușoară pierdere de putere."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Atomizare necorespunzătoare a combustibilului. Motorul ezită sub sarcină, cu o pierdere vizibilă de putere și smucituri."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Un injector de combustibil este blocat. Motorul funcționează foarte prost, cu o pierdere mare de putere și o pornire nesigură."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Un injector este complet defect. Motorul nu mai funcționează corect și este posibil să nu pornească deloc."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_message" text="Defecțiune a unui injector"/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Colmatare ușoară a filtrului de combustibil. Debitul de combustibil scade puțin sub sarcină mare."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Colmatare moderată a filtrului de combustibil. Debitul devine insuficient sub sarcină, puterea scade, iar motorul ezită uneori."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Colmatare gravă a filtrului de combustibil. Alimentarea cu combustibil este puternic restricționată, puterea scade vizibil și motorul se poate opri."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Filtru de combustibil complet colmatat. Motorul nu mai primește suficient combustibil pentru a funcționa fiabil."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_message" text="Filtru de combustibil colmatat"/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage1_description" text="Pătrundere ușoară de aer în conducta de combustibil. Alimentarea cu combustibil devine ușor neregulată."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage2_description" text="Pătrundere moderată de aer în conducta de combustibil. Alimentarea devine instabilă, puterea scade și apar ezitări."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage3_description" text="Pătrundere gravă de aer în conducta de combustibil. Motorul funcționează foarte neregulat, iar riscul de oprire este ridicat."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_description" text="Defecțiune critică a conductei de combustibil, cu pătrundere masivă de aer. Motorul nu mai poate fi alimentat corect."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_message" text="Aer în conducta de combustibil"/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Defecțiune ușoară a ambreiajului ventilatorului. Ventilatorul răspunde mai puțin eficient, iar răcirea este ușor afectată."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Defecțiune moderată a ambreiajului ventilatorului. Cuplarea ventilatorului este neregulată, iar eficiența răcirii scade vizibil."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Defecțiune gravă a ambreiajului ventilatorului. Ventilatorul nu mai asigură un debit de aer suficient, iar motorul se supraîncălzește mai ușor."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Defecțiune critică a ambreiajului ventilatorului. Ventilatorul nu mai poate asigura răcirea necesară."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Comanda raportului răspunde mai lent și mai puțin precis."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Raportul variază neregulat, iar comanda răspunde slab."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Comanda raportului este grav perturbată, iar forța transmisă scade."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Comanda raportului a cedat; transmisia este aproape inutilizabilă."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Defecțiune a comenzii raportului"/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Scurgere internă ușoară a unui cilindru hidraulic. Un utilaj ridicat coboară lent sub sarcină."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Scurgere internă moderată a unui cilindru hidraulic. Coborârea involuntară devine vizibilă și crește odată cu sarcina purtată."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Scurgere internă gravă a unui cilindru hidraulic. Utilajele grele nu își mai mențin poziția în mod fiabil."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Scurgere internă critică a unui cilindru hidraulic. Orice sarcină ridicată coboară rapid de la sine."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Scurgere internă minoră a pompei hidraulice. Utilajele funcționează puțin mai lent."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Garnituri uzate la pompa hidraulică. Funcționare hidraulică vizibil mai lentă."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Pompă hidraulică deteriorată. Utilajele sunt extrem de lente și au foarte puțină forță."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Defecțiune a pompei hidraulice. Sistemul hidraulic nu mai funcționează."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_message" text="Defecțiune a pompei hidraulice"/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Un furtun hidraulic prezintă o ușoară umezeală. Se pierde puțin ulei, iar răspunsul sistemului hidraulic scade ușor."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Un furtun hidraulic prezintă infiltrații vizibile. Pierderea de ulei continuă, iar funcțiile hidraulice răspund mai lent."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Un furtun hidraulic prezintă o scurgere activă. Pierderea de ulei este evidentă, iar funcțiile hidraulice sunt vizibil slăbite."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Un furtun hidraulic prezintă o scurgere importantă. Uleiul se pierde rapid, iar performanțele hidraulice scad puternic."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Filtrul hidraulic este ușor colmatat și începe să limiteze debitul. Funcțiile hidraulice sunt puțin mai lente. Întreținerea înlocuiește filtrul."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Filtrul hidraulic este moderat colmatat. Toate funcțiile hidraulice sunt vizibil mai lente. Întreținerea înlocuiește filtrul."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Filtrul hidraulic este puternic colmatat. Răspunsul sistemului hidraulic devine foarte lent. Întreținerea înlocuiește filtrul."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Filtrul hidraulic este complet colmatat. Funcțiile hidraulice abia mai răspund. Întreținerea înlocuiește filtrul."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Răcitorul uleiului hidraulic a pierdut puțin din eficiență. Temperatura uleiului crește ușor în timpul lucrărilor hidraulice prelungite."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Răcitorul uleiului hidraulic funcționează necorespunzător. Temperatura uleiului crește vizibil în timpul lucrărilor hidraulice continue."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Răcitorul uleiului hidraulic este foarte deteriorat. Lucrările hidraulice grele supraîncălzesc rapid uleiul."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Răcitorul uleiului hidraulic este defect. Lucrările prelungite provoacă supraîncălzirea puternică a uleiului și accelerează uzura pompei."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Un distribuitor hidraulic începe să se blocheze. O funcție hidraulică ezită uneori și pierde din forță sub sarcină."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Un distribuitor hidraulic se blochează intermitent. O funcție hidraulică este mai lentă și pierde mai multă forță pe măsură ce sarcina crește."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Un distribuitor hidraulic se blochează grav. O funcție hidraulică se mișcă neregulat și funcționează cu dificultate sub sarcină mare."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Un distribuitor hidraulic este grav deteriorat. O funcție hidraulică se oprește repetat și abia poate deplasa o sarcină mare."/>
         <text name="rms_breakdown_at_progress_message" text="în curs"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Atenție! Motor rece, redu sarcina."/>
@@ -538,6 +243,9 @@
         <text name="rms_spec_months_ago_unit" text="luni"/>
         <text name="rms_spec_month_ago_one" text="lună"/>
         <text name="rms_spec_months_ago_format" text="acum %s %s"/>
+        <text name="rms_shop_last_maintenance_months_ago" text="Ultima întreținere acum %s %s"/>
+        <text name="rms_shop_last_maintenance_this_month" text="Ultima întreținere luna aceasta"/>
+        <text name="rms_shop_last_maintenance_never" text="Nicio întreținere"/>
         <text name="rms_spec_work_hours_ago_format" text="acum %s %s de lucru"/>
         <text name="rms_spec_work_under_hour_ago" text="acum mai puțin de 1 h de lucru"/>
         <text name="rms_spec_maintenance_complete_notification" text="Intervenție încheiată: %s"/>
@@ -579,11 +287,9 @@
         <text name="rms_spec_part_types_used" text="Folosită"/>
         <text name="rms_spec_part_types_aftermarket" text="Compatibilă"/>
         <text name="rms_spec_part_types_oem" text="Originală"/>
-        <text name="rms_spec_part_types_premium" text="Premium"/>
         <text name="rms_spec_consumable_types_used" text="Economice"/>
         <text name="rms_spec_consumable_types_aftermarket" text="Compatibile"/>
         <text name="rms_spec_consumable_types_oem" text="Originale"/>
-        <text name="rms_spec_consumable_types_premium" text="Premium"/>
         <text name="rms_spec_repair_type_fix" text="Provizorie"/>
         <text name="rms_spec_repair_type_replacement" text="Standard"/>
         <text name="rms_spec_repair_type_advanced" text="Avansată"/>
@@ -612,6 +318,8 @@
         <text name="rms_service_program_estimated" text="Program estimat"/>
         <text name="rms_ws_levels_recommended_for" text="Recomandat pentru acest utilaj"/>
         <text name="rms_ws_levels_interval" text="La fiecare %s"/>
+        <text name="rms_ws_levels_every_service" text="La fiecare revizie"/>
+        <text name="rms_ws_levels_one_service_in" text="1 revizie din %d"/>
         <text name="rms_ws_levels_duration" text="%s h %s min"/>
         <text name="rms_ws_levels_duration_hours" text="%s h"/>
         <text name="rms_ws_levels_duration_minutes" text="%s min"/>
@@ -620,21 +328,33 @@
         <text name="rms_ws_levels_blown" text="Suflat"/>
         <text name="rms_ws_levels_new" text="Nou"/>
         <text name="rms_ws_levels_new_plural" text="Noi"/>
+        <text name="rms_ws_levels_new_adblue" text="Noi + AdBlue"/>
         <text name="rms_ws_levels_filters" text="Filtre"/>
         <text name="rms_ws_levels_filters_all" text="Ulei, combustibil și hidraulic"/>
         <text name="rms_ws_levels_filters_engine" text="Ulei și combustibil"/>
+        <text name="rms_ws_levels_filters_all_transmission" text="Ulei, combustibil, transmisie și hidraulic"/>
+        <text name="rms_ws_levels_filters_engine_transmission" text="Ulei, combustibil și transmisie"/>
         <text name="rms_ws_levels_filters_hydraulic" text="Hidraulic"/>
         <text name="rms_ws_levels_checks" text="Reglaje și verificări"/>
         <text name="rms_ws_levels_checks_detail" text="Supape, injectoare, termostat"/>
         <text name="rms_ws_levels_checks_done" text="Efectuate"/>
         <text name="rms_ws_levels_fault_search" text="Căutarea avariilor"/>
         <text name="rms_ws_levels_fault_search_detail" text="Ca o inspecție standard"/>
-        <text name="rms_ws_levels_fault_search_mobile_detail" text="Fără citirea codurilor de eroare"/>
+        <text name="rms_ws_levels_fault_search_no_tool_detail" text="Fără citirea codurilor de eroare"/>
         <text name="rms_ws_levels_included" text="Inclusă"/>
         <text name="rms_ws_levels_mechanical" text="Mecanice"/>
         <text name="rms_ws_levels_every_level" text="La fiecare nivel: radiator curățat și lubrifiere."/>
         <text name="rms_ws_quality_risk" text="Risc de defect"/>
         <text name="rms_ws_quality_reference" text="Preț de referință"/>
+        <text name="rms_ws_quality_donor" text="Utilaj cu %d h"/>
+        <text name="rms_ws_quality_donors" text="Utilaje cu %d până la %d h"/>
+        <text name="rms_ws_quality_new_part" text="Piesă nouă"/>
+        <text name="rms_ws_quality_used_warranty" text="Garanție de 3 luni"/>
+        <text name="rms_ws_quality_partial_warranty" text="Garanție parțială"/>
+        <text name="rms_ws_quality_no_warranty" text="Fără garanție"/>
+        <text name="rms_ws_quality_oem_warranty" text="Garanție de 12 luni"/>
+        <text name="rms_ws_quality_factory_warranty" text="Garanție de fabrică"/>
+        <text name="rms_warranty_used" text="Garanție din dezmembrări: doar piesa"/>
         <text name="rms_ws_quality_delta" text="%s față de original"/>
         <text name="rms_ws_repair_row_faults" text="Avarii tratate"/>
         <text name="rms_ws_repair_row_faults_detail" text="Dintre cele bifate"/>
@@ -647,26 +367,34 @@
         <text name="rms_ws_repair_row_part" text="Piesă defectă"/>
         <text name="rms_ws_repair_row_part_detail" text="Cauza avariei"/>
         <text name="rms_ws_repair_part_replaced" text="Înlocuită"/>
-        <text name="rms_ws_repair_row_stress" text="Solicitare mecanică"/>
-        <text name="rms_ws_repair_row_stress_detail" text="Acumulată în sistem"/>
-        <text name="rms_ws_repair_stress_cleared" text="Eliminată"/>
+        <text name="rms_ws_repair_row_worn_parts" text="Piese uzate"/>
+        <text name="rms_ws_repair_row_worn_parts_detail" text="În același sistem"/>
+        <text name="rms_ws_repair_worn_parts_replaced" text="Înlocuite"/>
         <text name="rms_ws_repair_row_quality" text="Calitatea pieselor"/>
         <text name="rms_ws_repair_row_quality_detail" text="Aleasă pe cardurile de mai jos"/>
         <text name="rms_ws_repair_quality_choice" text="La alegere"/>
-        <text name="rms_ws_warranty_title" text="Garanție la reprezentanță"/>
+        <text name="rms_ws_warranty_title" text="Garanție"/>
         <text name="rms_ws_warranty_covered" text="Valabilă"/>
         <text name="rms_ws_warranty_not_covered" text="Nevalabilă"/>
-        <text name="rms_ws_warranty_free_here" text="Reparație standard gratuită cu piese originale"/>
-        <text name="rms_ws_warranty_free_dealer" text="Reparație gratuită la reprezentanță"/>
-        <text name="rms_ws_warranty_terms" text="Vehicul deținut, sub 12 luni și 20 h"/>
+        <text name="rms_ws_warranty_terms" text="Fabrică: %d luni sau %s h"/>
         <text name="rms_ws_badge_warranty" text="Garanție"/>
+        <text name="rms_warranty_base" text="%d luni sau %s h (inclusă)"/>
+        <text name="rms_warranty_extension" text="%d luni sau %s h"/>
+        <text name="rms_warranty_partial" text="Parțial acoperită"/>
+        <text name="rms_warranty_own" text="Neacoperită în atelierul propriu"/>
+        <text name="rms_warranty_factory" text="Piese originale și manoperă acoperite"/>
+        <text name="rms_warranty_part" text="Piesă acoperită până la vârsta de %d luni"/>
+        <text name="rms_warranty_lease" text="Reparație neacoperită la închiriere"/>
+        <text name="rms_warranty_expired" text="Garanție expirată"/>
+        <text name="rms_warranty_overdue" text="Refuz: întreținere întârziată"/>
+        <text name="rms_warranty_options" text="Înlocuire cu piese originale necesară"/>
+        <text name="rms_warranty_mobile" text="Plătești manopera suplimentară a atelierului mobil"/>
         <text name="rms_ws_overhaul_row_systems" text="Sisteme tratate"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Repuse în stare"/>
         <text name="rms_ws_overhaul_systems_one" text="Unul la alegere"/>
         <text name="rms_ws_overhaul_systems_all" text="Toate"/>
         <text name="rms_ws_overhaul_row_condition" text="Starea după recondiționare"/>
         <text name="rms_ws_overhaul_row_condition_detail" text="Cel puțin"/>
-        <text name="rms_ws_overhaul_row_treated_detail" text="Ale sistemelor tratate"/>
         <text name="rms_ws_overhaul_row_faults" text="Avarii"/>
         <text name="rms_ws_overhaul_row_faults_detail" text="Identificate sau nu"/>
         <text name="rms_ws_overhaul_faults_repaired" text="Reparate"/>
@@ -676,6 +404,8 @@
         <text name="rms_ws_overhaul_fluids_own" text="Circuitul său"/>
         <text name="rms_ws_overhaul_filters_both" text="Combustibil și hidraulic"/>
         <text name="rms_ws_overhaul_filters_fuel" text="Combustibil"/>
+        <text name="rms_ws_overhaul_filters_both_transmission" text="Combustibil, transmisie și hidraulic"/>
+        <text name="rms_ws_overhaul_filters_fuel_transmission" text="Combustibil și transmisie"/>
         <text name="rms_ws_overhaul_worn" text="Sisteme sub 50% stare"/>
         <text name="rms_ws_paint_row_extent" text="Deteriorări reparate"/>
         <text name="rms_ws_paint_row_extent_detail" text="Partea de vopsea deteriorată"/>
@@ -726,6 +456,11 @@
         <text name="rms_report_vehicle_spec_battery_24v_capacity" text="Capacitatea bateriei de 24 V"/>
         <text name="rms_report_vehicle_spec_traction_battery_capacity" text="Capacitatea bateriei de tracțiune"/>
         <text name="rms_report_detected_breakdowns_title" text="Avarii detectate"/>
+        <text name="rms_report_breakdowns_worn_title" text="Avarii și piese uzate"/>
+        <text name="rms_report_no_breakdowns_worn" text="Nicio avarie și nicio piesă uzată"/>
+        <text name="rms_report_worn_part_risk" text="Risc ×%s"/>
+        <text name="rms_report_worn_part_adjust" text="%s · Reglaj: %s"/>
+        <text name="rms_report_worn_part_replace" text="%s · Înlocuire: reparație avansată sau recondiționare"/>
         <text name="rms_report_overall_assessment_title" text="Evaluarea generală a stării"/>
         <text name="rms_report_overall_assessment_condition" text="Nivelul stării"/>
         <text name="rms_report_overall_assessment_service" text="Nivel de întreținere"/>
@@ -747,9 +482,9 @@
         <text name="rms_report_state_degraded" text="Degradată"/>
         <text name="rms_report_state_impaired" text="Afectată"/>
         <text name="rms_report_state_critical" text="Critică"/>
-        <text name="rms_report_stress_low" text="Scăzută"/>
-        <text name="rms_report_stress_moderate" text="Moderată"/>
-        <text name="rms_report_stress_high" text="Foarte ridicată"/>
+        <text name="rms_report_risk_low" text="Scăzută"/>
+        <text name="rms_report_risk_moderate" text="Moderată"/>
+        <text name="rms_report_risk_high" text="Ridicată"/>
         <text name="rms_report_system_condition_title" text="Starea sistemului"/>
         <text name="rms_report_breakdown_risk_title" text="Risc de avarie"/>
         <text name="rms_report_wear_title" text="Uzura față de normal"/>
@@ -764,6 +499,7 @@
         <text name="rms_report_wear_hot_hydraulic_oil" text="Supraîncălzirea uleiului hidraulic"/>
         <text name="rms_report_wear_vibration" text="Vibrații"/>
         <text name="rms_report_wear_hydraulic_filter_bypass" text="Filtru hidraulic înfundat"/>
+        <text name="rms_report_wear_transmission_filter_bypass" text="Filtrul transmisiei înfundat"/>
         <text name="rms_report_wear_lights" text="Lumini aprinse"/>
         <text name="rms_report_wear_braking" text="Frânare sub sarcină mare"/>
         <text name="rms_report_wear_terrain_impact" text="Șocuri de teren"/>
@@ -809,6 +545,8 @@
         <text name="rms_jumper_cables_name" text="Cabluri de pornire"/>
         <text name="rms_jumper_cables_function" text="Folosite pentru conectarea a două baterii și pornirea unui vehicul cu bateria descărcată"/>
         <text name="rms_jumper_cables_action" text="Cabluri de pornire"/>
+        <text name="rms_jumper_cables_connect" text="Conectează cablurile"/>
+        <text name="rms_jumper_cables_disconnect" text="Deconectează cablurile"/>
         <text name="rms_jumper_cables_auto_disconnected" text="Cabluri de pornire deconectate: unul dintre vehicule s-a deplasat"/>
         <text name="rms_jumper_cables_connected" text="Cabluri de pornire conectate la %s"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="Vehiculul nu permite conectarea cablurilor de pornire"/>
@@ -880,7 +618,7 @@
         <text name="rms_inspection_dialog_title" text="Verificare înainte de începerea lucrului"/>
         <text name="rms_inspection_section_fluids" text="Fluide tehnice"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
-        <text name="rms_inspection_section_field_care" text="Filtre, radiator și lubrifiere"/>
+        <text name="rms_inspection_section_field_care" text="Curățare și lubrifiere"/>
         <text name="rms_inspection_section_additional" text="Observații suplimentare"/>
         <text name="rms_inspection_verdict_ok_title" text="Apt de lucru"/>
         <text name="rms_inspection_verdict_ok_message" text="Nimic de semnalat, utilajul poate fi pus în funcțiune."/>
@@ -918,9 +656,26 @@
         <text name="rms_inspection_hint_coolant_leak_stage2" text="Sunt vizibile reziduuri de lichid de răcire, iar nivelul acestuia este sub valoarea normală."/>
         <text name="rms_inspection_hint_coolant_leak_stage3" text="În zona sistemului de răcire este vizibilă o pierdere importantă de lichid de răcire."/>
         <text name="rms_inspection_hint_coolant_leak_stage4" text="Sistemul de răcire a pierdut o mare parte din lichid, iar urmele sunt foarte pronunțate."/>
-        <text name="rms_inspection_hint_corroded_wiring_stage2" text="Pe unele conexiuni electrice sunt vizibile urme ușoare de oxidare."/>
-        <text name="rms_inspection_hint_corroded_wiring_stage3" text="Pe cablaj și conectori sunt vizibile urme pronunțate de oxidare și murdărie."/>
-        <text name="rms_inspection_hint_corroded_wiring_stage4" text="Pe cablaj și conectori sunt vizibile urme grave de coroziune, iar unele porțiuni ale izolației par deteriorate."/>
+        <text name="rms_inspection_hint_cylinder_liners_stage2" text="Lichidul de răcire trece prin cămașa fisurată spre o cameră de ardere. Pierderea de lichid reduce răcirea."/>
+        <text name="rms_inspection_hint_cylinder_liners_stage3" text="Lichidul de răcire trece prin cămașa fisurată spre o cameră de ardere. Pierderea de lichid este mare și amenință răcirea."/>
+        <text name="rms_inspection_hint_cylinder_liners_stage4" text="Lichidul de răcire trece prin cămașa fisurată spre o cameră de ardere. Pierderea de lichid afectează grav răcirea."/>
+        <text name="rms_inspection_hint_cylinder_head_stage2" text="Lichidul de răcire trece prin chiulasa fisurată spre exterior. Pierderea de lichid reduce răcirea."/>
+        <text name="rms_inspection_hint_cylinder_head_stage3" text="Lichidul de răcire trece prin chiulasa fisurată spre exterior. Pierderea de lichid este mare și amenință răcirea."/>
+        <text name="rms_inspection_hint_cylinder_head_stage4" text="Lichidul de răcire trece prin chiulasa fisurată spre exterior. Pierderea de lichid afectează grav răcirea."/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage2" text="Lichidul de răcire trece prin garnitura de chiulasă spre exterior. Pierderea de lichid reduce răcirea."/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage3" text="Lichidul de răcire trece prin garnitura de chiulasă spre exterior. Pierderea de lichid este mare și amenință răcirea."/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage4" text="Lichidul de răcire trece prin garnitura de chiulasă spre exterior. Pierderea de lichid afectează grav răcirea."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage1" text="Lichidul de răcire trece prin etanșarea pompei de apă spre exterior. Nivelul începe să scadă."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage2" text="Lichidul de răcire trece prin etanșarea pompei de apă spre exterior. Pierderea de lichid reduce răcirea."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage3" text="Lichidul de răcire trece prin etanșarea pompei de apă spre exterior. Pierderea de lichid este mare și amenință răcirea."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage4" text="Lichidul de răcire trece prin etanșarea pompei de apă spre exterior. Pierderea de lichid afectează grav răcirea."/>
+        <text name="rms_inspection_hint_radiator_core_stage1" text="Lichidul de răcire trece prin tuburile deteriorate ale radiatorului spre exterior. Nivelul începe să scadă."/>
+        <text name="rms_inspection_hint_radiator_core_stage2" text="Lichidul de răcire trece prin tuburile deteriorate ale radiatorului spre exterior. Pierderea de lichid reduce răcirea."/>
+        <text name="rms_inspection_hint_radiator_core_stage3" text="Lichidul de răcire trece prin tuburile deteriorate ale radiatorului spre exterior. Pierderea de lichid este mare și amenință răcirea."/>
+        <text name="rms_inspection_hint_radiator_core_stage4" text="Lichidul de răcire trece prin tuburile deteriorate ale radiatorului spre exterior. Pierderea de lichid afectează grav răcirea."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage2" text="Este vizibilă oxidare pe conexiunile de putere sau de masă."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage3" text="Conexiunile de putere sau de masă sunt oxidate și murdare."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage4" text="Conexiunile de putere sau de masă sunt puternic corodate; izolația lor este deteriorată."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage1" text="Pe un furtun hidraulic sau pe un racord este vizibilă o peliculă fină de ulei."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage2" text="Pe un furtun sau pe un racord este vizibilă o infiltrație de ulei hidraulic."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage3" text="De-a lungul unui furtun sunt vizibile urme clare de ulei hidraulic și o zonă recent umezită."/>
@@ -933,12 +688,9 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="Filtrul de aer este vizibil colmatat."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="Filtrul de aer este puternic colmatat cu praf și resturi."/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="Filtrul de aer a atins limita curățării prin suflare. Atelierul îl înlocuiește începând cu revizia %s."/>
-        <text name="rms_inspection_hint_fuel_filter_due" text="Filtrul de combustibil trebuie înlocuit: orice întreținere, indiferent de nivel, sau o reparație la atelier îl schimbă."/>
-        <text name="rms_inspection_hint_hydraulic_filter_due" text="Filtrul hidraulic trebuie înlocuit: orice întreținere, indiferent de nivel, sau o reparație la atelier îl schimbă."/>
-        <text name="rms_inspection_hint_hydraulic_filter_bypass" text="Filtrul hidraulic este înfundat: uleiul trece nefiltrat și uzează circuitul. Orice întreținere, indiferent de nivel, sau o reparație la atelier îl schimbă."/>
         <text name="rms_inspection_hint_unidentified" text="Simptom al unei avarii neidentificate: atelierul o identifică printr-o inspecție sau o întreținere."/>
-        <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="În apropierea alternatorului sunt vizibile urme de supraîncălzire și înnegrirea unor conexiuni."/>
-        <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="În apropierea alternatorului și a cablajului său sunt vizibile urme pronunțate de supraîncălzire și conectori înnegriți."/>
+        <text name="rms_inspection_hint_alternator_stage3" text="În apropierea alternatorului sunt vizibile urme de supraîncălzire și înnegrirea unor conexiuni."/>
+        <text name="rms_inspection_hint_alternator_stage4" text="În apropierea alternatorului și a cablajului său sunt vizibile urme pronunțate de supraîncălzire și conectori înnegriți."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Punctele de lubrifiere par ușor uscate."/>
         <text name="rms_inspection_hint_lubrication_stage2" text="Punctele de lubrifiere par uscate și nu au suficientă unsoare."/>
         <text name="rms_inspection_hint_lubrication_stage3" text="Punctele de lubrifiere sunt foarte uscate, cu puțină unsoare vizibilă."/>
@@ -947,9 +699,63 @@
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Sub transmisie sunt vizibile picături de ulei."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="În jurul transmisiei este vizibilă o pierdere importantă de ulei."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage4" text="Uleiul se scurge din carcasa transmisiei și formează o baltă sub utilaj."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage1" text="Apare un mic joc la o cruce cardanică a arborelui de antrenare al punții față."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage2" text="O cruce cardanică a arborelui de antrenare al punții față are un joc evident."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage3" text="O cruce cardanică a arborelui de antrenare al punții față are un joc mare."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage4" text="O cruce cardanică a arborelui de antrenare al punții față este ruptă."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage1" text="Apare un mic joc la rulmentul pinionului unei punți."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage2" text="Rulmentul pinionului unei punți are joc și huruie."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage3" text="Uleiul unei punți conține particule exfoliate dintr-un rulment."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage4" text="Un rulment al punții a cedat și dinții angrenajului conic au urme de deteriorare."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage1" text="Simeringul de ieșire al prizei de putere prezintă o ușoară umezeală."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage2" text="Simeringul de ieșire al prizei de putere prezintă o infiltrație de ulei."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage3" text="Simeringul de ieșire al prizei de putere prezintă o scurgere activă."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage4" text="Simeringul de ieșire al prizei de putere prezintă o scurgere importantă."/>
+        <text name="rms_inspection_hint_pto_clutch_wear_branch2_stage1" text="Discurile ambreiajului prizei de putere încep să se lipească."/>
+        <text name="rms_inspection_hint_pto_clutch_wear_branch2_stage2" text="Discurile ambreiajului prizei de putere se lipesc: utilajul se oprește cu întârziere după decuplarea prizei de putere."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage1" text="Proba de frânare arată o ușoară tragere într-o parte."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage1" text="Pedala de frână se afundă puțin mai mult decât de obicei."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage2" text="Frânarea rămâne clar inegală între cele două părți."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage2" text="Pedala de frână devine moale și se afundă mai mult."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage3" text="Vehiculul trage vizibil într-o parte la acționarea frânelor."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage3" text="Pedala ajunge aproape la podea înainte ca vehiculul să încetinească."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage4" text="Tragerea într-o parte la frânare este puternică și persistă."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage4" text="Pedala se afundă fără rezistență, iar presiunea de frânare este aproape nulă."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage1" text="Remorca încetinește mai puțin decât tractorul la frânare."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage2" text="Frânarea remorcii este vizibil redusă."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage3" text="Remorca abia reacționează când tractorul frânează."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage4" text="Remorca nu mai frânează când tractorul frânează."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage1" text="Apare un joc ușor la pivotul unei roți directoare."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage2" text="Jocul la pivotul unei roți directoare este perceptibil."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage3" text="Pivotul unei roți directoare prezintă un joc mare."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage4" text="Jocul la pivot compromite ghidarea roții."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage1" text="La virare, roțile răspund la volan cu o ușoară întârziere."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage2" text="Volanul se rotește, dar roțile urmează mișcarea cu o întârziere perceptibilă."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage3" text="Roțile urmează slab mișcarea volanului în viraj."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage4" text="Volanul se rotește fără ca roțile să urmeze corect mișcarea."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage1" text="Cilindrul menține direcția puțin mai slab."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage2" text="Direcția deviază mai mult când volanul este ținut fix."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage3" text="Cilindrul lasă vehiculul să devieze vizibil."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage4" text="Direcția nu mai menține traiectoria: devierea este puternică."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage1" text="Apare o urmă ușoară de ulei pe tija cilindrului de direcție."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage2" text="Simeringul tijei cilindrului de direcție prezintă prelingeri de ulei."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage3" text="Cilindrul de direcție pierde vizibil ulei pe la simeringul tijei."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage4" text="Uleiul hidraulic curge pe la simeringul tijei cilindrului de direcție."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage1" text="O rolă sau o roată de ghidare se rotește cu un zgomot ușor sau o rezistență neobișnuită."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage2" text="O rolă sau o roată de ghidare se rotește greu și devine zgomotoasă."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage3" text="Rotirea unei role sau a unei roți de ghidare întâmpină o rezistență puternică."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage4" text="O rolă sau o roată de ghidare este gripată și frânează deplasarea șenilei."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage2" text="Tensiunea șenilei pare ușor neuniformă."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage3" text="Șenila pare slăbită, cu o tensiune vizibil neuniformă."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage4" text="Șenila este vizibil lăsată, iar tensionarea pare grav afectată."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage1" text="Inspecția arată început de uzură la bolțurile și bucșele articulațiilor încărcătorului."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Inspecția arată joc perceptibil la bolțurile și bucșele articulațiilor încărcătorului."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Inspecția arată joc mare la bolțurile și bucșele articulațiilor încărcătorului."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Inspecția arată joc foarte mare la bolțurile și bucșele articulațiilor încărcătorului."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Un amortizor al cabinei prezintă o ușoară umezeală."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Un amortizor al cabinei prezintă o infiltrație de ulei."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Un amortizor al cabinei prezintă o scurgere activă."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Un amortizor al cabinei prezintă o scurgere importantă și s-a golit."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="În jurul turbocompresorului sunt vizibile urme de ulei și conexiuni înnegrite."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="În jurul turbocompresorului sunt vizibile urme importante de ulei, conexiuni înnegrite și depuneri de funingine."/>
         <text name="rms_inspection_hint_fluid_level_low" text="Nivelul unui fluid a scăzut sub reper."/>
@@ -999,6 +805,11 @@
         <text name="rms_fleet_overdue_count" text="Întârziate: %d"/>
         <text name="rms_fleet_due_soon_label" text="În curând"/>
         <text name="rms_fleet_due_soon_count" text="În curând: %d"/>
+        <text name="rms_fleet_part_worn" text="Uzură avansată"/>
+        <text name="rms_fleet_part_failed" text="În avarie"/>
+        <text name="rms_fleet_part_unmeasured" text="Fără măsurare"/>
+        <text name="rms_fleet_parts_reading" text="Piese măsurate %s"/>
+        <text name="rms_fleet_parts_need_complete" text="Piese măsurate la următoarea inspecție completă"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Returnarea vehiculului"/>
         <text name="rms_sell_dialog_section_vehicle" text="Vehicul"/>
@@ -1033,7 +844,7 @@
         <text name="rms_tutorial_needs_repair_message" text="%s are o problemă. Este posibil ca una dintre piese să se fi defectat.&#10;&#10;Mergi la atelier: o inspecție, sau întreținerea dacă este scadentă, identifică avaria. Nu amâna: avaria poate continua să se agraveze, iar costul reparației crește odată cu aceasta.&#10;&#10;După ce avaria este identificată, repar-o la atelier."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Recondiționare necesară"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%s prezintă semnele vârstei. Este momentul să iei în calcul înlocuirea sau recondiționarea. Operația este lungă și costisitoare, dar reprezintă singura modalitate de a readuce utilajul la starea inițială.&#10;&#10;Durata de viață se reglează din setările modului: cu cât este mai mare, cu atât vehiculele se uzează mai lent."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Avarie iminentă"/>
+        <text name="rms_tutorial_needs_preventive_title" text="Risc crescut de avarie"/>
         <text name="rms_tutorial_needs_preventive_message" text="Motorul, sistemul de alimentare sau sistemul de răcire al vehiculului %s prezintă un risc crescut de defecțiune.&#10;&#10;Revizia %s: reglează supapele și verifică injectoarele și termostatul, ceea ce reduce acest risc."/>
         <text name="rms_tutorial_age_degradation_title" text="Degradare cauzată de vechime"/>
         <text name="rms_tutorial_age_degradation_message" text="În RMS, vehiculele pierd treptat o parte din performanțele inițiale pe măsură ce îmbătrânesc.&#10;&#10;După aproximativ o treime din durata lor de viață, uzura cauzată de vechime reduce ușor unele caracteristici importante, precum puterea sau frânarea. Efectul se accentuează apoi și devine clar vizibil spre sfârșitul duratei de viață.&#10;&#10;Această degradare poate fi dezactivată din setările modului."/>
@@ -1097,7 +908,146 @@
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
-        <text name="rms_charger_function" text="Încărcător Telwin pe cărucior, 150 A la 12 V, 80 A la 24 V. Conectează-l lângă vehicul și alege încărcarea automată, adaptată bateriei, încărcarea rapidă sau asistența la pornire (START, 200 A la 12 V). Încărcarea urmează viteza timpului din joc."/>
+        <text name="rms_charger_function" text="Încărcător Telwin pe cărucior, 150 A la 12 V, 80 A la 24 V. Conectează-l lângă vehicul pentru a-i reîncărca bateria la curentul acceptat sau pentru asistență la pornire (START, 200 A la 12 V). Încărcarea urmează viteza timpului din joc."/>
+        <text name="rms_diagnostic_configuration" text="Echipament de diagnoză"/>
+        <text name="rms_configuration_reversibleFan" text="Ventilator reversibil"/>
+        <text name="rms_diagnostic_open" text="Folosește echipamentul de diagnoză"/>
+        <text name="rms_diagnostic_menu" text="Meniu de diagnoză"/>
+        <text name="rms_diagnostic_menu_connection" text="Conectare"/>
+        <text name="rms_diagnostic_menu_scan" text="Scanarea tuturor sistemelor"/>
+        <text name="rms_diagnostic_connect" text="Conectează"/>
+        <text name="rms_diagnostic_disconnect" text="Deconectează"/>
+        <text name="rms_diagnostic_licence_end" text="Sfârșitul licenței: %s, anul %d"/>
+        <text name="rms_diagnostic_licence_expired" text="Licență expirată"/>
+        <text name="rms_diagnostic_licence_renew" text="Reînnoiește licența (%s)"/>
+        <text name="rms_diagnostic_note_no_licence" text="Licență expirată: informațiile tehnice ale acestui cod nu mai sunt disponibile. Reînnoiește licența pentru a le recupera."/>
+        <text name="rms_diagnostic_connection_hint" text="Alege un utilaj din listă și apasă pe Conectează"/>
+        <text name="rms_diagnostic_reach" text="Rază: %s"/>
+        <text name="rms_diagnostic_no_machine" text="Niciun utilaj al fermei la mai puțin de 4 m de cărucior"/>
+        <text name="rms_diagnostic_state_ok" text="Gata de conectare"/>
+        <text name="rms_diagnostic_state_plugged" text="Echipament conectat"/>
+        <text name="rms_diagnostic_state_moving" text="În mișcare: oprește utilajul pentru a-l conecta"/>
+        <text name="rms_diagnostic_state_electronics" text="Fără unitate de comandă: nimic de citit pe acest utilaj"/>
+        <text name="rms_diagnostic_state_busy" text="Echipamentul altui cărucior este conectat la el"/>
+        <text name="rms_diagnostic_plug_title" text="Conectare: priză de diagnoză"/>
+        <text name="rms_diagnostic_plug_socket_label" text="Priză:"/>
+        <text name="rms_diagnostic_plug_socket" text="Deutsch cu 9 pini, rețea J1939"/>
+        <text name="rms_diagnostic_plug_machine_label" text="Utilaj:"/>
+        <text name="rms_diagnostic_plug_machine" text="Oprit"/>
+        <text name="rms_diagnostic_plug_reading_label" text="Citire:"/>
+        <text name="rms_diagnostic_plug_reading" text="Contact pus"/>
+        <text name="rms_diagnostic_plug_note_moving" text="Nu conecta echipamentul la un utilaj în mișcare."/>
+        <text name="rms_diagnostic_plug_note_power" text="Motorul poate rămâne oprit: doar bateria utilajului nu trebuie să fie decuplată."/>
+        <text name="rms_diagnostic_scan_idle" text="Pornește scanarea pentru a citi unitățile de comandă ale utilajului."/>
+        <text name="rms_diagnostic_scan_running" text="Scanare în curs: %d sisteme din %d"/>
+        <text name="rms_diagnostic_scan_done" text="Scanare încheiată."/>
+        <text name="rms_diagnostic_scan_interrupted" text="Scanare întreruptă: bateria a fost decuplată."/>
+        <text name="rms_diagnostic_detected" text="Sisteme detectate: (%d/%d)"/>
+        <text name="rms_diagnostic_voltage" text="Tensiune: %s V"/>
+        <text name="rms_diagnostic_no_fault" text="Niciun cod de eroare"/>
+        <text name="rms_diagnostic_querying" text="Interogare în curs"/>
+        <text name="rms_diagnostic_waiting" text="În așteptare"/>
+        <text name="rms_diagnostic_legend_active" text="Cod de eroare activ"/>
+        <text name="rms_diagnostic_no_scan" text="Nicio scanare"/>
+        <text name="rms_diagnostic_scan_start" text="Pornește scanarea"/>
+        <text name="rms_diagnostic_scan_again" text="Reia scanarea"/>
+        <text name="rms_diagnostic_help" text="Ajutor și componente ale codului"/>
+        <text name="rms_diagnostic_ecu_label" text="Unitate de comandă:"/>
+        <text name="rms_diagnostic_spn_label" text="SPN %d:"/>
+        <text name="rms_diagnostic_fmi_label" text="FMI %d:"/>
+        <text name="rms_diagnostic_system_label" text="Sistem:"/>
+        <text name="rms_diagnostic_part_label" text="Piesa în cauză:"/>
+        <text name="rms_diagnostic_repair_time_label" text="Timp de reparație:"/>
+        <text name="rms_diagnostic_where_label" text="Unde se repară:"/>
+        <text name="rms_diagnostic_where_diagnostic" text="Atelier mobil sau propriu cu echipamentul conectat, ori reprezentanță"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Atelier propriu sau reprezentanță"/>
+        <text name="rms_diagnostic_note_inspection" text="Acest cod arată ce măsoară utilajul, nu piesa în cauză: o inspecție o găsește."/>
+        <text name="rms_diagnostic_note_uncoded" text="O inspecție a utilajului găsește piesa în cauză."/>
+        <text name="rms_diagnostic_uncoded" text="Martor aprins fără cod înregistrat. Niciun senzor nu supraveghează piesa în cauză."/>
+        <text name="rms_diagnostic_uncoded_title" text="Martor fără cod"/>
+        <text name="rms_diagnostic_error_distance" text="Apropie căruciorul la mai puțin de 4 m de utilaj."/>
+        <text name="rms_diagnostic_error_electronics" text="Acest utilaj nu are unitate de comandă de citit."/>
+        <text name="rms_diagnostic_error_busy" text="Echipamentul altui cărucior este deja conectat la acest utilaj."/>
+        <text name="rms_diagnostic_error_unplugged" text="Conectează mai întâi echipamentul la un utilaj."/>
+        <text name="rms_diagnostic_error_player_distance" text="Apropie-te de cărucior pe jos."/>
+        <text name="rms_diagnostic_ecu_engine" text="Motor"/>
+        <text name="rms_diagnostic_ecu_inverter" text="Invertor"/>
+        <text name="rms_diagnostic_ecu_traction_battery" text="Baterie de tracțiune"/>
+        <text name="rms_diagnostic_ecu_converter" text="Convertor de tensiune"/>
+        <text name="rms_diagnostic_ecu_charger" text="Încărcător de bord"/>
+        <text name="rms_diagnostic_ecu_transmission" text="Transmisie"/>
+        <text name="rms_diagnostic_ecu_tractor" text="Calculator central"/>
+        <text name="rms_diagnostic_ecu_dashboard" text="Tablou de bord"/>
+        <text name="rms_diagnostic_spn_523612" text="ECU a motorului"/>
+        <text name="rms_diagnostic_spn_102" text="Presiune de supraalimentare"/>
+        <text name="rms_diagnostic_spn_100" text="Presiunea uleiului de motor"/>
+        <text name="rms_diagnostic_spn_101" text="Presiunea carterului motorului"/>
+        <text name="rms_diagnostic_spn_1322" text="Rateuri la mai mulți cilindri"/>
+        <text name="rms_diagnostic_spn_cylinder" text="Rateu la cilindrul %d"/>
+        <text name="rms_diagnostic_spn_94" text="Presiunea de alimentare cu combustibil"/>
+        <text name="rms_diagnostic_spn_110" text="Temperatura lichidului de răcire"/>
+        <text name="rms_diagnostic_spn_111" text="Nivelul lichidului de răcire"/>
+        <text name="rms_diagnostic_spn_1639" text="Turația ventilatorului"/>
+        <text name="rms_diagnostic_spn_168" text="Tensiunea bateriei"/>
+        <text name="rms_diagnostic_spn_677" text="Releul demarorului"/>
+        <text name="rms_diagnostic_spn_167" text="Tensiunea circuitului de încărcare"/>
+        <text name="rms_diagnostic_spn_157" text="Presiunea din rampa de injecție"/>
+        <text name="rms_diagnostic_spn_4375" text="Pompă de AdBlue"/>
+        <text name="rms_diagnostic_spn_3361" text="Injector de dozare AdBlue"/>
+        <text name="rms_diagnostic_spn_3216" text="Senzor NOx în amonte"/>
+        <text name="rms_diagnostic_spn_3251" text="Presiune diferențială a filtrului de particule"/>
+        <text name="rms_diagnostic_spn_524135" text="Încărcare cu funingine a filtrului de particule"/>
+        <text name="rms_diagnostic_spn_127" text="Presiunea uleiului de transmisie"/>
+        <text name="rms_diagnostic_spn_191" text="Turația arborelui de ieșire al transmisiei"/>
+        <text name="rms_diagnostic_spn_526" text="Raportul de transmisie real"/>
+        <text name="rms_diagnostic_spn_177" text="Temperatura uleiului de transmisie"/>
+        <text name="rms_diagnostic_spn_124" text="Nivelul uleiului de transmisie"/>
+        <text name="rms_diagnostic_spn_1762" text="Presiune hidraulică"/>
+        <text name="rms_diagnostic_spn_2602" text="Nivelul uleiului hidraulic"/>
+        <text name="rms_diagnostic_spn_1638" text="Temperatura uleiului hidraulic"/>
+        <text name="rms_diagnostic_spn_2910" text="Actuatorul supapei ambreiajului prizei de putere"/>
+        <text name="rms_diagnostic_spn_186" text="Turația prizei de putere"/>
+        <text name="rms_diagnostic_spn_1883" text="Turația arborelui prizei de putere spate"/>
+        <text name="rms_diagnostic_spn_1882" text="Turația arborelui de ieșire al prizei de putere față"/>
+        <text name="rms_diagnostic_spn_2660" text="Poziția axei X a joystickului"/>
+        <text name="rms_diagnostic_spn_116" text="Presiunea de frânare"/>
+        <text name="rms_diagnostic_spn_9109" text="Modulul de putere al invertorului motorului de tracțiune"/>
+        <text name="rms_diagnostic_spn_9115" text="Dezechilibrul curenților de fază ai invertorului"/>
+        <text name="rms_diagnostic_spn_9059" text="Temperatura motorului de tracțiune"/>
+        <text name="rms_diagnostic_spn_9067" text="Senzorii de turație ai motorului de tracțiune"/>
+        <text name="rms_diagnostic_spn_8585" text="Tensiunea de ieșire a convertorului de tensiune"/>
+        <text name="rms_diagnostic_spn_4993" text="Curentul de ieșire al încărcătorului de bord"/>
+        <text name="rms_diagnostic_spn_8432" text="Testul de izolație al circuitului de înaltă tensiune"/>
+        <text name="rms_diagnostic_spn_5923" text="Tensiunea celei mai slabe celule"/>
+        <text name="rms_diagnostic_spn_8091" text="Starea contactorului pozitiv de înaltă tensiune"/>
+        <text name="rms_diagnostic_spn_1713" text="Comutatorul de colmatare al filtrului de ulei hidraulic"/>
+        <text name="rms_diagnostic_fmi_0" text="Date peste domeniul normal (nivelul cel mai grav)"/>
+        <text name="rms_diagnostic_fmi_1" text="Date sub domeniul normal (nivelul cel mai grav)"/>
+        <text name="rms_diagnostic_fmi_2" text="Date neregulate, intermitente sau incorecte"/>
+        <text name="rms_diagnostic_fmi_3" text="Tensiune peste normal sau scurtcircuit la o sursă cu tensiune ridicată"/>
+        <text name="rms_diagnostic_fmi_4" text="Tensiune sub normal sau scurtcircuit la o sursă cu tensiune scăzută"/>
+        <text name="rms_diagnostic_fmi_5" text="Curent sub normal sau circuit deschis"/>
+        <text name="rms_diagnostic_fmi_7" text="Sistem mecanic care nu răspunde sau dereglat"/>
+        <text name="rms_diagnostic_fmi_12" text="Dispozitiv sau componentă defectă"/>
+        <text name="rms_diagnostic_fmi_14" text="Instrucțiuni speciale"/>
+        <text name="rms_diagnostic_fmi_16" text="Date peste domeniul normal (nivel moderat de gravitate)"/>
+        <text name="rms_diagnostic_fmi_18" text="Date sub domeniul normal (nivel moderat de gravitate)"/>
+        <text name="rms_diagnostic_fmi_31" text="Condiție prezentă"/>
+        <text name="rms_dashboard_code_message" text="%s, %s"/>
+        <text name="rms_dashboard_fmi_0" text="valoare foarte ridicată"/>
+        <text name="rms_dashboard_fmi_1" text="valoare foarte scăzută"/>
+        <text name="rms_dashboard_fmi_2" text="valoare neregulată"/>
+        <text name="rms_dashboard_fmi_3" text="tensiune prea ridicată"/>
+        <text name="rms_dashboard_fmi_4" text="tensiune prea scăzută"/>
+        <text name="rms_dashboard_fmi_5" text="circuit deschis"/>
+        <text name="rms_dashboard_fmi_7" text="fără răspuns"/>
+        <text name="rms_dashboard_fmi_12" text="componentă defectă"/>
+        <text name="rms_dashboard_fmi_14" text="intervenție necesară"/>
+        <text name="rms_dashboard_fmi_16" text="valoare ridicată"/>
+        <text name="rms_dashboard_fmi_18" text="valoare scăzută"/>
+        <text name="rms_dashboard_fmi_31" text="defecțiune prezentă"/>
+        <text name="rms_diagnostic_log_title" text="Citirea codurilor"/>
+        <text name="rms_diagnostic_log_codes" text="Coduri citite"/>
         <text name="rms_charger_start" text="Conectează încărcătorul"/>
         <text name="rms_charger_disconnect" text="Deconectează încărcătorul"/>
         <text name="rms_charger_select" text="Alege vehiculul de conectat."/>
@@ -1127,7 +1077,7 @@
         <text name="rms_charger_stopped_motor" text="Încărcare oprită: pornire"/>
         <text name="rms_charger_error_player_distance" text="Apropie-te de încărcător pe jos."/>
         <text name="rms_charger_mode_select" text="Conectează încărcătorul"/>
-        <text name="rms_charger_mode_start" text="Asistență la pornire (START, 200 A, 12 V)"/>
+        <text name="rms_charger_mode_start" text="Asistă pornirea"/>
         <text name="rms_charger_start_ready" text="START pregătit"/>
         <text name="rms_charger_start_active" text="Asistență la pornire activă"/>
         <text name="rms_charger_start_running" text="Motor pornit: deconectează"/>
@@ -1135,8 +1085,7 @@
         <text name="rms_charger_start_wait" text="Așteaptă 30 de secunde între două porniri."/>
         <text name="rms_charger_unplug_before_start" text="Deconectează încărcătorul sau alege START înainte de pornire."/>
         <text name="rms_charger_start_connected" text="Asistență la pornire (START, 200 A)."/>
-        <text name="rms_charger_mode_charge" text="Încărcare automată"/>
-        <text name="rms_charger_mode_fast" text="Încărcare rapidă (150 A, 80 A la 24 V)"/>
+        <text name="rms_charger_mode_charge" text="Reîncarcă bateria"/>
 
         <!-- Battery isolator -->
         <text name="rms_battery_isolator_cut" text="Decuplează bateria"/>
@@ -1144,5 +1093,10 @@
         <text name="rms_battery_isolator_open" text="Baterie decuplată. Recupleaz-o de la întrerupătorul general, pe jos, în fața vehiculului."/>
         <text name="rms_battery_isolator_engine_running" text="Oprește motorul înainte de a acționa întrerupătorul general."/>
         <text name="rms_battery_isolator_info" text="Baterie decuplată"/>
+        <text name="rms_diagnostic_spn_4217" text="Electrovalva de schimbare a transmisiei"/>
+        <text name="rms_diagnostic_spn_2612" text="Starea actuatorului tracțiunii față"/>
+        <text name="rms_diagnostic_spn_569" text="Starea blocării diferențialului spate"/>
+        <text name="rms_diagnostic_spn_4084" text="Sertarul supapei"/>
+        <text name="rms_diagnostic_spn_1873" text="Poziția ridicătorului spate"/>
     </texts>
 </l10n>

@@ -21,18 +21,20 @@
     <File fileId="19" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubberBlack_diffuse.png"/>
     <File fileId="18" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_normal.png"/>
     <File fileId="17" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_specular.png"/>
+    <File fileId="20" filename="$data/shared/white_diffuse.dds" />
   </Files>
 
 
   <Materials>
     <Material name="pumpBlack" materialId="3" customShaderId="4">
-      <Texture fileId="15"/>
+      <Texture fileId="20" />
       <Normalmap fileId="2"/>
       <Glossmap fileId="16"/>
-      <Custommap name="detailSpecular" fileId="17"/>
-      <Custommap name="detailNormal" fileId="18"/>
-      <Custommap name="detailDiffuse" fileId="19"/>
-      <CustomParameter name="porosity" value="0.5"/>
+      <Custommap name="detailSpecular" fileId="17" />
+      <Custommap name="detailNormal" fileId="18" />
+      <Custommap name="detailDiffuse" fileId="19" />
+      <CustomParameter name="porosity" value="0.5" />
+      <CustomParameter name="ssrParameters" value="0.25 1 -0.19" />
     </Material>
     <Material name="pumpBlue" materialId="2" customShaderId="4">
       <Texture fileId="12"/>

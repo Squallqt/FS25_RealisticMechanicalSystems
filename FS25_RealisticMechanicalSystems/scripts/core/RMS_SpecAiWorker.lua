@@ -24,7 +24,6 @@ function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
         return
     end
 
-    -- a worker closes the battery isolator of the machine it takes, like any driver
     if spec.batteryIsolated then
         RMS_Electrical.setBatteryIsolated(self, false)
     end
@@ -34,7 +33,6 @@ function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
     spec.aiWorkerOverload = spec.aiWorkerOverload
         + (spec.overloadLevel - spec.aiWorkerOverload) * math.min(seconds / C.OVERLOAD_SMOOTHING, 1)
 
-    -- easing off answers the load of the moment, picking up again waits for it to stay calm
     if spec.overloadLevel > C.SLOW_DOWN_LEVEL then
         local speed = spec.aiWorkerSpeedLimit or self:getLastSpeed()
         spec.aiWorkerSpeedLimit = math.max(speed - C.SLOW_DOWN_RATE * seconds, C.MIN_SPEED)
@@ -43,11 +41,6 @@ function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
         if spec.aiWorkerSpeedLimit > self:getLastSpeed() + C.RELEASE_MARGIN then
             spec.aiWorkerSpeedLimit = nil
         end
-    end
-
-    if RMS_Utils.getIsDebugDataWanted(self) then
-        spec.debugData.aiWorker.overload = spec.aiWorkerOverload
-        spec.debugData.aiWorker.speedLimit = spec.aiWorkerSpeedLimit or 0
     end
 end
 
@@ -63,7 +56,7 @@ function RealisticMechanicalSystems:getCruiseControlSpeed(superFunc)
     return speed
 end
 
--- the game's navigation drive and AutoDrive limit the motor without reading the cruise speed
+-- Native navigation and AutoDrive also limit the motor directly.
 VehicleMotor.setSpeedLimit = Utils.overwrittenFunction(VehicleMotor.setSpeedLimit, function(self, superFunc, limit)
     local speedLimit = getAiWorkerSpeedLimit(self.vehicle)
     if speedLimit ~= nil then

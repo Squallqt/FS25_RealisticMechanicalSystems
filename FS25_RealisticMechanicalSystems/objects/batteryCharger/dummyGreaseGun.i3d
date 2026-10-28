@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<i3D xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="dummyGreaseGun" version="1.6" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="RMS private dummy generator" version="1" />
+  </Asset>
+  <Files>
+    <File fileId="2" filename="$data/shaders/ghostShader.xml" />
+    <File fileId="3" filename="dummyGreaseGun_mask.dds" />
+    <File fileId="1" filename="$data/shared/window_diffuse.png" />
+  </Files>
+  <Materials>
+    <Material name="ghost_mat" materialId="1" specularColor="0 0 0" alphaBlending="true" customShaderId="2" customShaderVariation="wireframeMask">
+      <CustomParameter name="ghostColorScaleEnd" value="0.3 0.3 0.3 0.1" />
+      <CustomParameter name="ghostColorScaleStart" value="0.1 0.1 0.1 0.1" />
+      <Custommap name="mMaskMap" fileId="3" />
+      <Emissivemap fileId="1" />
+    </Material>
+  </Materials>
+  <Shapes externalShapesFile="dummyGreaseGun.i3d.shapes" />
+  <Scene>
+    <Shape name="dummyGreaseGun" shapeId="1" castsShadows="false" receiveShadows="true" materialIds="1" clipDistance="10" nodeId="1" />
+  </Scene>
+  <UserAttributes>
+  </UserAttributes>
+</i3D>

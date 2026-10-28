@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Electric vehicles: temperature of the traction battery and what the cold does to it
+---Traction battery temperature and charge limits.
 RMS_ElectricDrive = RMS_ElectricDrive or {}
 
 local COLD_BATTERY_ID = "COLD_TRACTION_BATTERY"
@@ -46,7 +46,6 @@ function RMS_ElectricDrive.applyBatteryCapacity(vehicle)
     local fillUnitIndex = vehicle:getConsumerFillUnitIndex(FillType.ELECTRICCHARGE)
     local capacity = spec.tractionBatteryNominalCapacity * RMS_ElectricDrive.getCapacityFactor(vehicle)
 
-    -- the server tells the clients in game, a joining one works it out from the wear
     vehicle:setFillUnitCapacity(fillUnitIndex, capacity, not vehicle.isServer)
 
     if vehicle.isServer then
@@ -83,7 +82,7 @@ end
 ---Returns the share of a station's power a fill unit takes
 -- @param table object object a load trigger is filling
 -- @param integer fillUnitIndex fill unit the trigger fills
--- @return float acceptance share between 0 and 1, 1 for anything but the traction battery of an electric
+-- @return float acceptance 0 to 1; 1 outside electric traction batteries
 function RMS_ElectricDrive.getChargeAcceptance(object, fillUnitIndex)
     local spec = object.spec_RealisticMechanicalSystems
     if spec == nil or spec.isExcludedVehicle or not spec.isElectricVehicle
@@ -93,7 +92,6 @@ function RMS_ElectricDrive.getChargeAcceptance(object, fillUnitIndex)
 
     spec.tractionBatteryChargeTime = g_currentMission.time
 
-    -- a failing on-board charger passes on only part of what the cells would take
     local chargerFault = spec.activeEffects.CHARGE_ACCEPTANCE_MODIFIER
     local chargerShare = chargerFault ~= nil and math.max(1 + chargerFault.value, 0) or 1
     return getColdChargeAcceptance(spec.tractionBatteryTempC) * chargerShare
@@ -152,8 +150,8 @@ end
 ---Consumes the transient charging observations
 -- @param table vehicle vehicle
 -- @return float energy positive amount accepted in native ELECTRICCHARGE fill units
--- @return float capacityShare sum of accepted amount divided by each interval's effective capacity
--- @return float elapsedMS charging interval duration, following the load trigger's time scale
+-- @return float capacityShare sum of amount/effective capacity per interval
+-- @return float elapsedMS charging duration in load-trigger time
 function RMS_ElectricDrive.consumeChargeObservation(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local observation = spec ~= nil and spec.tractionBatteryChargeObservation or nil
@@ -223,7 +221,7 @@ end
 -- @param table vehicle vehicle
 -- @param float dtOperatingMS running time represented by this interval, in milliseconds
 -- @param float ambientC current ambient temperature in degrees Celsius
--- @param float? dtBatteryMS total elapsed battery interval, in milliseconds; operating dt is the compatibility fallback
+-- @param float? dtBatteryMS battery interval (ms), defaults to operating dt
 -- @param float? ambientPrev previous ambient sample
 -- @param table? inputs native thermal input snapshot
 function RMS_ElectricDrive.updateBatteryTemperature(vehicle, dtOperatingMS, ambientC, dtBatteryMS, ambientPrev, inputs)
@@ -245,13 +243,10 @@ function RMS_ElectricDrive.updateBatteryTemperature(vehicle, dtOperatingMS, ambi
             fluidKey = "coolantLevel"
         })
     spec.tractionBatteryTempC = nextTemperature
-    local batteryDebug = RMS_Utils.getIsDebugDataWanted(vehicle) and spec.debugData ~= nil and spec.debugData.batteryTemp or nil
-    if batteryDebug ~= nil then
-        for key, value in pairs(values) do batteryDebug[key] = value end
-        batteryDebug.acceptedChargeCapacityShare = chargedShare
-        batteryDebug.chargingElapsedMS = chargingMS
-        batteryDebug.workShare = workShare
-    end
+    values.acceptedChargeCapacityShare = chargedShare
+    values.chargingElapsedMS = chargingMS
+    values.workShare = workShare
+    spec.tractionBatteryHeatBalance = values
 end
 
 ---Keeps the cold battery state in step with its temperature

@@ -1,19 +1,17 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Fleet menu: equipment by store category, the dossier of the highlighted machine, running interventions and settings
+---Fleet and settings menu frame.
 RMS_InGameMenuFrame = {}
 RMS_InGameMenuFrame.MOD_DIR = g_currentModDirectory
 RMS_InGameMenuFrame.PAGE_NAME = "pageRMSFleet"
-RMS_InGameMenuFrame.REFRESH_INTERVAL_MS = 1000
--- The native vehicle preview starts at 7; fitToBoundary uses 1 as its overview reference.
+RMS_InGameMenuFrame.REFRESH_INTERVAL_MS = 5000
+-- fitToBoundary uses 1 as its overview reference.
 RMS_InGameMenuFrame.MAP_ZOOM_DEFAULT = 7
 RMS_InGameMenuFrame.MAP_ZOOM_MIN = 1
--- Preview zoom has no native upper bound: cap this small viewer at four times its initial magnification.
 RMS_InGameMenuFrame.MAP_ZOOM_MAX = RMS_InGameMenuFrame.MAP_ZOOM_DEFAULT * 4
 RMS_InGameMenuFrame.MAP_ZOOM_STEP = 1.25
 RMS_InGameMenuFrame.SCREEN_EDGE_SLIDER_MARGIN_X = 0
--- the page shows up to seven menu buttons, the exclusion one included
 RMS_InGameMenuFrame.MENU_BUTTON_COUNT = 7
 RMS_InGameMenuFrame.SUB_CATEGORY = {
     ACTIVE = 1,
@@ -30,7 +28,6 @@ RMS_InGameMenuFrame.URGENCY = {
     SOON = 1,
     OVERDUE = 2
 }
--- share of the maintenance interval past which a machine counts as due soon
 RMS_InGameMenuFrame.DUE_SOON_RATIO = 0.8
 
 local SUB_CATEGORY = RMS_InGameMenuFrame.SUB_CATEGORY
@@ -50,7 +47,7 @@ local function getUrgencyColor(urgency)
     elseif urgency == URGENCY.SOON then
         return COLOR_SOON
     end
-    return HUD.COLOR.ACTIVE
+    return RMS_Utils.COLOR.HIGHLIGHT
 end
 
 ---Formats a number of hours with its unit, in the number format of the language
@@ -111,7 +108,6 @@ local function buildRow(vehicle, isTracked)
         categoryTitle = category.title,
         categoryImage = category.image,
         categoryOrder = category.orderId,
-        -- the game shows operating hours rounded down to the tenth
         hours = math.floor(vehicle:getOperatingTime() / 360000) / 10,
         remaining = math.huge,
         urgency = URGENCY.NONE
@@ -125,7 +121,6 @@ local function buildRow(vehicle, isTracked)
     local condition, isCompleteInspection = vehicle:getLastInspectedCondition()
     row.reportHours, row.isReportOutdated = vehicle:getInspectionReportAge()
     row.condition = RMS_Utils.formatCondition(condition, isCompleteInspection)
-    -- a report that no longer describes the machine keeps its figures, greyed out
     row.conditionColor = row.isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or {RMS_Utils.getConditionColor(condition, isCompleteInspection)}
     row.isServicing = vehicle:isUnderService()
     row.used, row.interval = vehicle:getServiceCountdown()
@@ -185,6 +180,7 @@ function RMS_InGameMenuFrame.new(target, customMt)
     self.untrackedRows = {}
     self.categories = {}
     self.machineRows = {}
+    self.stateRows = {}
     self.refreshTimerMs = 0
     self.subCategoryState = SUB_CATEGORY.ACTIVE
     self.isUntrackedView = false
@@ -240,7 +236,7 @@ function RMS_InGameMenuFrame:initialize()
             self:onPagePrevious()
         end
     }
-    -- MENU_ACCEPT already confirms the highlighted element of the page
+    -- MENU_ACCEPT already confirms the focused element.
     self.enterVehicleButtonInfo = {
         inputAction = InputAction.MENU_EXTRA_2,
         text = g_i18n:getText("button_enterVehicle"),
@@ -279,7 +275,7 @@ function RMS_InGameMenuFrame:initialize()
     self.subCategoryPaging:setState(self.subCategoryState, false)
     self.subCategoryBox:invalidateLayout()
 
-    for _, list in ipairs({self.categoryList, self.machineList}) do
+    for _, list in ipairs({self.categoryList, self.machineList, self.stateList}) do
         list:setDataSource(self)
         list:setDelegate(self)
     end
@@ -290,10 +286,7 @@ function RMS_InGameMenuFrame:initialize()
     RMS_Utils.mirrorSelectionToChildren(self.locationButton)
     RMS_Utils.centerActionContent(self.locationButton)
 
-    self.systemGaugeWidth = self.systemGauges[1].size[1]
-    self.systemValueColor = {unpack(self.systemValues[1].textColor)}
     self.pillValueColor = {unpack(self.serviceValues[1].textColor)}
-    -- the two dates closing the cards are read, not weighed
     self.lastCheckValue:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
     self.serviceFootValue:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
 
@@ -362,6 +355,7 @@ function RMS_InGameMenuFrame:onFrameOpen()
     RMS_InGameMenuFrame:superClass().onFrameOpen(self)
 
     self.isFrameOpen = true
+    RMS_WorkshopDialog.setCurrencyIcon(self.currencyIcon)
     self.refreshTimerMs = RMS_InGameMenuFrame.REFRESH_INTERVAL_MS
     self:updateSubCategoryPages(self.subCategoryState)
     self:updateScreenEdgeSliders()
@@ -435,7 +429,7 @@ end
 -- @param integer servicing machines in a workshop
 function RMS_InGameMenuFrame:updatePulse(overdue, soon, servicing)
     local counts = {overdue, soon, servicing}
-    local colors = {RMS_Utils.COLOR.ALERT, COLOR_SOON, HUD.COLOR.ACTIVE}
+    local colors = {RMS_Utils.COLOR.ALERT, COLOR_SOON, RMS_Utils.COLOR.HIGHLIGHT}
 
     for index, element in ipairs(self.pulseValues) do
         element:setText(tostring(counts[index]))
@@ -506,7 +500,6 @@ function RMS_InGameMenuFrame:refreshNavigator()
         end
     end
 
-    -- a category emptied by a sale or an exclusion sends the player back to the categories
     local category = self:getCategory(self.categoryName)
     if self.categoryName ~= nil and category == nil then
         self.categoryName = nil
@@ -551,7 +544,6 @@ function RMS_InGameMenuFrame:refreshNavigator()
     self.machineBlock:setVisible(not isCategoryView and count > 0)
     self.navEmptyText:setVisible(count == 0)
     self.navEmptyText:setText(g_i18n:getText(self:getEmptyTextKey()))
-    -- one slot at the foot of the card: the door to untracked equipment, or the way back
     local isNested = self:getIsNestedView()
     self.viewButton:setVisible(isFleet and not isNested and #self.untrackedRows > 0)
     self.viewButton:setText(string.format("%s · %d", g_i18n:getText("rms_ingame_menu_section_other"), #self.untrackedRows))
@@ -565,7 +557,7 @@ function RMS_InGameMenuFrame:refreshNavigator()
         return
     end
 
-    -- the reload must not answer as if the player had moved the highlight
+    -- Suppress selection callbacks during reload.
     local list = isCategoryView and self.categoryList or self.machineList
     self.isRefreshing = true
     list:setSoundSuppressed(true)
@@ -645,13 +637,12 @@ function RMS_InGameMenuFrame:updateFocusLinks()
             table.insert(column, element)
         end
     end
-    for _, element in ipairs({self.locationButton, self.logButton}) do
+    for _, element in ipairs({self.locationButton, self.stateList, self.logButton}) do
         if element:getIsVisible() then
             table.insert(side, element)
         end
     end
 
-    -- the list when the section holds rows, else what is left of the navigator, else the tabs
     local list = self.categoryList:getIsVisible() and self.categoryList or self.machineList
     self.navigatorFocus = list:getIsVisible() and list or column[1] or self.subCategoryPaging
 
@@ -668,6 +659,11 @@ function RMS_InGameMenuFrame:updateFocusLinks()
         FocusManager:linkElements(element, FocusManager.RIGHT, side[index + 1])
     end
 
+    if self.stateList:getIsVisible() then
+        FocusManager:linkElements(self.stateList, FocusManager.TOP, self.logButton:getIsVisible() and self.logButton or nil)
+        FocusManager:linkElements(self.stateList, FocusManager.BOTTOM, nil)
+    end
+
     if self.vehicleMap:getIsVisible() then
         FocusManager:linkElements(self.mapZoomInButton, FocusManager.TOP, self.navigatorFocus)
         FocusManager:linkElements(self.mapZoomInButton, FocusManager.BOTTOM, self.mapZoomOutButton)
@@ -680,7 +676,6 @@ function RMS_InGameMenuFrame:updateFocusLinks()
         FocusManager:linkElements(self.locationButton, FocusManager.TOP, self.mapZoomOutButton)
     end
 
-    -- a sale or an exclusion can take away what held the focus, and the tabs only keep it over an empty section
     local focused = FocusManager:getFocusedElement()
     if focused == nil or focused == self.subCategoryPaging or not focused:getIsVisible() then
         self:focusNavigator()
@@ -701,6 +696,8 @@ end
 function RMS_InGameMenuFrame:getNumberOfItemsInSection(list, _section)
     if list == self.categoryList then
         return #self.categories + 1
+    elseif list == self.stateList then
+        return #self.stateRows
     end
     return #self.machineRows
 end
@@ -713,6 +710,9 @@ end
 function RMS_InGameMenuFrame:getCellTypeForItemInSection(list, _section, index)
     if list == self.categoryList then
         return index == 1 and "all" or "category"
+    elseif list == self.stateList then
+        local row = self.stateRows[index]
+        return row ~= nil and row.kind or "system"
     end
     return "machine"
 end
@@ -731,6 +731,11 @@ end
 -- @param integer index row index
 -- @param table cell cell element
 function RMS_InGameMenuFrame:populateCellForItemInSection(list, _section, index, cell)
+    if list == self.stateList then
+        RMS_Utils.populateConditionCell(cell, self.stateRows[index])
+        return
+    end
+
     if list == self.machineList then
         local row = self.machineRows[index]
         local conditionElement = cell:getAttribute("condition")
@@ -758,7 +763,6 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(list, _section, index,
     setCellImage(cell:getAttribute("picture"), category.image)
     cell:getAttribute("title"):setText(category.title)
     cell:getAttribute("count"):setText(tostring(category.count))
-    -- a category speaks up only when a machine waits for the player
     noteElement:setVisible(category.overdue > 0 or category.soon > 0)
     if category.overdue > 0 then
         noteElement:setText(string.format(g_i18n:getText("rms_fleet_overdue_count"), category.overdue))
@@ -775,7 +779,7 @@ end
 -- @param integer _section section index
 -- @param integer index row index
 function RMS_InGameMenuFrame:onListSelectionChanged(list, _section, index)
-    if self.isRefreshing then
+    if self.isRefreshing or list == self.stateList then
         return
     end
 
@@ -824,7 +828,6 @@ function RMS_InGameMenuFrame:onClickBack()
     self:focusNavigator()
 end
 
----Opens the untracked equipment on its categories, from the entrance of the fleet
 function RMS_InGameMenuFrame:onClickView()
     self.isUntrackedView = true
     self.focusedCategory = nil
@@ -915,7 +918,6 @@ function RMS_InGameMenuFrame:updateIdentity(row)
     local vehicle = row.vehicle
     local isLeased = vehicle.propertyState == VehiclePropertyState.LEASED
 
-    -- what never changes while the machine stays on screen
     if self.identityVehicle ~= vehicle then
         local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
         local brand = g_brandManager:getBrandByIndex(vehicle:getBrand())
@@ -953,7 +955,6 @@ function RMS_InGameMenuFrame:updateIdentity(row)
 
     local thirdLabel, thirdValue = "rms_odometer_label", RMS_Utils.formatOdometerKilometers(RMS_Utils.getOdometerKilometers(vehicle))
     if not row.isTracked then
-        -- an untracked machine only has the condition the game keeps
         local damage = vehicle.getDamageAmount ~= nil and vehicle:getDamageAmount() or 0
         thirdLabel, thirdValue = "rms_ws_label_condition", string.format("%.0f%%", math.clamp(1 - damage, 0, 1) * 100)
         self.reasonValue:setText(row.status)
@@ -985,7 +986,6 @@ function RMS_InGameMenuFrame:updateCondition(row)
     local condition, isCompleteInspection = vehicle:getLastInspectedCondition()
     local report = RealisticMechanicalSystems.getReferenceReport(vehicle)
     local systems = report ~= nil and report.conditionData ~= nil and report.conditionData.systems or nil
-    -- per system figures are a measurement: a report without them rates each system in a word
     local isMeasured = systems ~= nil and RealisticMechanicalSystems.getIsCompleteReport(report)
 
     self.conditionValue:setText(row.condition)
@@ -998,37 +998,39 @@ function RMS_InGameMenuFrame:updateCondition(row)
     self.systemsLayout:setVisible(systems ~= nil)
     self.systemsEmptyText:setVisible(systems == nil)
 
-    if systems ~= nil then
-        for index, systemL10nKey in ipairs(RealisticMechanicalSystems.SYSTEMS_ORDER) do
-            local systemData = systems[RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemL10nKey)]
-            local isEnabled = type(systemData) == "table" and systemData.enabled ~= false
-            local systemCondition = isEnabled and math.clamp(systemData.condition or 1, 0, 1) or 0
-
-            self.systemRows[index]:setVisible(isEnabled)
-            if isEnabled then
-                self.systemNames[index]:setText(g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, systemL10nKey)))
-                self.systemTracks[index]:setVisible(isMeasured)
-                self.systemGauges[index]:setVisible(isMeasured)
-                self.systemValues[index]:setVisible(isMeasured)
-                self.systemRatings[index]:setVisible(not isMeasured)
-                self.systemValues[index]:setText(string.format("%d", math.floor(systemCondition * 100 + 0.5)))
-                self.systemValues[index]:setTextColor(unpack(row.isReportOutdated and RMS_Utils.COLOR.TEXT_DIM or self.systemValueColor))
-                self.systemGauges[index]:setSize(self.systemGaugeWidth * systemCondition, nil)
-                self.systemRatings[index]:setText(RMS_Utils.formatCondition(systemCondition, false))
-                if row.isReportOutdated then
-                    self.systemGauges[index]:setImageColor(nil, unpack(RMS_Utils.COLOR.TEXT_DIM))
-                    self.systemRatings[index]:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
-                else
-                    self.systemGauges[index]:setImageColor(nil, RMS_Utils.getGaugeColor(systemCondition * 100, 95, 80, 60, 40, true))
-                    self.systemRatings[index]:setTextColor(RMS_Utils.getConditionColor(systemCondition, false))
-                end
-            end
-        end
-        self.systemsLayout:invalidateLayout()
+    if self.stateVehicle ~= vehicle then
+        self.stateVehicle, self.openSystem = vehicle, nil
     end
+    local footText = ""
+    if systems ~= nil then
+        self.stateRows, footText = RMS_Utils.getConditionRows(vehicle, report, systems, isMeasured, row.isReportOutdated, self.openSystem)
+    else
+        self.stateRows = {}
+    end
+    self.stateFootText:setText(footText)
+    self.stateFootRule:setVisible(footText ~= "")
+    RMS_Utils.reloadListTemplates(self.stateList)
 
     RMS_Utils.fitValuePill(self.lastCheckPill, self.lastCheckValue, "center", RMS_Utils.formatReportAge(row.reportHours))
     self.lastCheckValue:setTextColor(unpack(row.isReportOutdated and RMS_Breakdowns.COLORS.WARNING or RMS_Utils.COLOR.TEXT_DIM))
+end
+
+---Unfolds a system of the condition card on its parts, or folds it back
+-- @param table _list list element
+-- @param integer _section section index
+-- @param integer index row index
+function RMS_InGameMenuFrame:onClickStateRow(_list, _section, index)
+    local row = self.stateRows[index]
+    if row == nil or row.kind ~= "system" or not row.canOpen then
+        return
+    end
+    self.openSystem = not row.isOpen and row.systemKey or nil
+    self:refreshDossier()
+    for rowIndex, stateRow in ipairs(self.stateRows) do
+        if stateRow.kind == "system" and stateRow.systemKey == row.systemKey then
+            self.stateList:setSelectedItem(1, rowIndex, false, true)
+        end
+    end
 end
 
 ---Fills the banner and the second card: next maintenance or running work
@@ -1066,7 +1068,6 @@ function RMS_InGameMenuFrame:updateService(row)
         self.serviceCardTitle:setText(g_i18n:getText("rms_ingame_menu_header_procedure"))
         self.serviceValue:setText(string.format("%d%%", math.floor(progress * 100)))
         self.serviceRingRatio = progress
-        -- the banner already names the intervention, its workshop and the time left
         rows = {
             {"rms_ws_label_committed_cost", g_i18n:formatMoney(getCommittedCost(vehicle), 0, true, false)},
             breakdowns,
@@ -1083,7 +1084,6 @@ function RMS_InGameMenuFrame:updateService(row)
             and RMS_Utils.formatMonths(row.schedule.remainingMonths)
             or formatHours(math.max(row.remaining, 0)))
         self.serviceRingRatio = math.clamp(1 - (row.schedule ~= nil and row.schedule.progress or 0), 0, 1)
-        -- an overdue machine has nothing left to fill the ring with: the whole track takes the alert
         self.serviceTrackColor = row.urgency == URGENCY.OVERDUE and color or nil
         rows = {
             breakdowns,
@@ -1110,11 +1110,10 @@ function RMS_InGameMenuFrame:updateService(row)
     RMS_Utils.fitValuePill(self.serviceFootPill, self.serviceFootValue, "center", foot[2])
 end
 
----Draws a progress ring centered in its area, in the colour of the state it shows
 local function drawRing(area, ratio, arcColor, trackColor)
     local height = area.absSize[2]
     RMS_ProgressRing.render(area.absPosition[1] + area.absSize[1] * 0.5, area.absPosition[2] + height * 0.5,
-        height * (g_screenHeight / g_screenWidth), height, ratio, false, RMS_ProgressRing.THIN_DOT, arcColor, trackColor)
+        height * (g_screenHeight / g_screenWidth), height, ratio, arcColor or RMS_Utils.COLOR.HIGHLIGHT, trackColor or RMS_Utils.COLOR.RING_TRACK)
 end
 
 ---
@@ -1127,15 +1126,10 @@ function RMS_InGameMenuFrame:onDrawServiceRing()
     drawRing(self.serviceRingArea, self.serviceRingRatio, self.serviceRingColor, self.serviceTrackColor)
 end
 
----Draws the currency glyph on the value row, as the workshop does
-function RMS_InGameMenuFrame:onDrawValueIcon()
-    RMS_WorkshopDialog.drawCurrencyIcon(self.valueIconArea)
-end
 
 ---Swaps the picture of the machine for the map centered on it, and back
 function RMS_InGameMenuFrame:onClickLocation()
     self.showMap = not self.showMap
-    -- every other path closes the map: opening it here always starts from the same zoom
     self.vehicleMapZoom = RMS_InGameMenuFrame.MAP_ZOOM_DEFAULT
     self:refreshDossier()
     self:updateFocusLinks()
@@ -1194,9 +1188,7 @@ function RMS_InGameMenuFrame:getSelectedVehicle()
     return row ~= nil and row.vehicle or nil
 end
 
----Rebuilds the footer: the machine actions show once a machine row is highlighted
 function RMS_InGameMenuFrame:updateActionButtons()
-    -- the back action climbs one level inside a nested view, the menu closing itself from a top one
     local buttons = {self:getIsNestedView() and self.levelUpButtonInfo or self.backButtonInfo,
         self.prevPageButtonInfo, self.nextPageButtonInfo}
     local vehicle = self:getSelectedVehicle()
@@ -1215,7 +1207,6 @@ function RMS_InGameMenuFrame:updateActionButtons()
         if isTracked then
             table.insert(buttons, self.maintenanceLogButtonInfo)
         end
-        -- a machine RMS can track gets the button, whichever side of the choice it is on
         if spec ~= nil then
             local isExcluding = not spec.isExcludedVehicle
             self.exclusionButtonInfo.text = g_i18n:getText(isExcluding and "rms_ingame_menu_exclude" or "rms_ingame_menu_include")
@@ -1264,7 +1255,7 @@ function RMS_InGameMenuFrame:onSellSelectedVehicle()
     end
 
     if isTracked and vehicle.propertyState == VehiclePropertyState.LEASED then
-        RMS_SellItemDialog.show(vehicle, storeItem, self.onRMSSellDialogCallback, self, {vehicle})
+        RMS_SellItemDialog.show(vehicle, self.onRMSSellDialogCallback, self, {vehicle})
         return
     end
 

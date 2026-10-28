@@ -1,22 +1,68 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-
-<i3D name="airBlower.i3d" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+<?xml version='1.0' encoding='utf-8'?>
+<i3D xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="airBlower_source" version="1.6" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
   <Asset>
-    <Export program="GIANTS Editor 64bit" version="10.0.11"/>
+    <Export program="i3dConverter" version="1.0" />
   </Asset>
 
   <Files>
-    <File fileId="1" filename="texture.dds"/>
-    <File fileId="2" filename="texture_normal.dds"/>
+    <File fileId="1" filename="textures/wandAluminium_diffuse.dds" />
+    <File fileId="3" filename="textures/wandAluminium_vmask.dds" />
+    <File fileId="12" filename="textures/wandBlack_diffuse.dds" />
+    <File fileId="13" filename="textures/wandBlack_vmask.dds" />
+    <File fileId="17" filename="textures/wandCoupling_diffuse.dds" />
+    <File fileId="18" filename="textures/wandCoupling_vmask.dds" />
+    <File fileId="21" filename="textures/wandRed_diffuse.dds" />
+    <File fileId="22" filename="textures/wandRed_vmask.dds" />
+    <File fileId="4" filename="$data/shaders/vehicleShader.xml" />
+    <File fileId="2" filename="$data/shared/default_normal.dds" />
+    <File fileId="6" filename="$data/shared/detailLibrary/flat_normal.dds" />
+    <File fileId="20" filename="$data/shared/detailLibrary/metallic/clear_diffuse.dds" />
+    <File fileId="19" filename="$data/shared/detailLibrary/metallic/clear_specular.dds" />
+    <File fileId="7" filename="$data/shared/detailLibrary/metallic/silverScratched_diffuse.dds" />
+    <File fileId="5" filename="$data/shared/detailLibrary/metallic/silverScratched_specular.dds" />
+    <File fileId="24" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_diffuse.dds" />
+    <File fileId="23" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_specular.dds" />
+    <File fileId="16" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubberBlack_diffuse.dds" />
+    <File fileId="15" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_normal.dds" />
+    <File fileId="14" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_specular.dds" />
+    <File fileId="25" filename="$data/shared/white_diffuse.dds" />
   </Files>
 
 
   <Materials>
-    <Material name="Material.001" materialId="5" specularColor="0.8 1 0.8">
-      <Texture fileId="1"/>
-      <Normalmap fileId="2" bumpDepth="0"/>
+    <Material name="wandAluminium" materialId="2" customShaderId="4">
+      <Texture fileId="1" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="3" />
+      <Custommap name="detailSpecular" fileId="5" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="7" />
     </Material>
-    <Material name="UnnamedMaterial" materialId="18" diffuseColor="1 1 1 1">
+    <Material name="wandBlack" materialId="1" customShaderId="4">
+      <Texture fileId="25" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="13" />
+      <Custommap name="detailSpecular" fileId="14" />
+      <Custommap name="detailNormal" fileId="15" />
+      <Custommap name="detailDiffuse" fileId="16" />
+      <CustomParameter name="porosity" value="0.5" />
+      <CustomParameter name="ssrParameters" value="0.25 1 -0.19" />
+    </Material>
+    <Material name="wandCoupling" materialId="3" customShaderId="4">
+      <Texture fileId="17" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="18" />
+      <Custommap name="detailSpecular" fileId="19" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="20" />
+    </Material>
+    <Material name="wandRed" materialId="4" customShaderId="4">
+      <Texture fileId="21" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="22" />
+      <Custommap name="detailSpecular" fileId="23" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="24" />
     </Material>
   </Materials>
 
@@ -25,16 +71,33 @@
   </Shapes>
 
   <Scene>
-    <TransformGroup name="airBlower" lockedgroup="true" nodeId="8">
-      <TransformGroup name="graphics" nodeId="9">
-        <Shape name="body" translation="3.90336e-08 -0.129256 1.58323e-10" rotation="-180 -89.5352 -180" shapeId="1" clipDistance="300" nodeId="10" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="5"/>
+    <TransformGroup name="airBlower" nodeId="19">
+      <TransformGroup name="graphics" lodDistance="0 4 12" nodeId="20">
+        <TransformGroup name="LOD0" nodeId="21">
+          <Shape name="LOD0_wandAluminium" shapeId="1" clipDistance="60" nodeId="22" castsShadows="true" receiveShadows="true" materialIds="2" />
+          <Shape name="LOD0_wandBlack" shapeId="2" clipDistance="60" nodeId="23" castsShadows="true" receiveShadows="true" materialIds="1" />
+          <Shape name="LOD0_wandCoupling" shapeId="3" clipDistance="60" nodeId="24" castsShadows="true" receiveShadows="true" materialIds="3" />
+          <Shape name="LOD0_wandRed" shapeId="4" clipDistance="60" nodeId="25" castsShadows="true" receiveShadows="true" materialIds="4" />
+        </TransformGroup>
+        <TransformGroup name="LOD1" nodeId="26">
+          <Shape name="LOD1_wandAluminium" shapeId="5" clipDistance="60" nodeId="27" castsShadows="true" receiveShadows="true" materialIds="2" />
+          <Shape name="LOD1_wandBlack" shapeId="6" clipDistance="60" nodeId="28" castsShadows="true" receiveShadows="true" materialIds="1" />
+          <Shape name="LOD1_wandCoupling" shapeId="7" clipDistance="60" nodeId="29" castsShadows="true" receiveShadows="true" materialIds="3" />
+          <Shape name="LOD1_wandRed" shapeId="8" clipDistance="60" nodeId="30" castsShadows="true" receiveShadows="true" materialIds="4" />
+        </TransformGroup>
+        <TransformGroup name="LOD2" nodeId="31">
+          <Shape name="LOD2_wandAluminium" shapeId="9" clipDistance="60" nodeId="32" castsShadows="true" receiveShadows="true" materialIds="2" />
+          <Shape name="LOD2_wandBlack" shapeId="10" clipDistance="60" nodeId="33" castsShadows="true" receiveShadows="true" materialIds="1" />
+          <Shape name="LOD2_wandCoupling" shapeId="11" clipDistance="60" nodeId="34" castsShadows="true" receiveShadows="true" materialIds="3" />
+          <Shape name="LOD2_wandRed" shapeId="12" clipDistance="60" nodeId="35" castsShadows="true" receiveShadows="true" materialIds="4" />
+        </TransformGroup>
       </TransformGroup>
-      <TransformGroup name="handNode" translation="0.032000005 0.072488844 0.311902136" rotation="0.000000000 -55.101885186 90.000002504" nodeId="11">
-        <TransformGroup name="raycastNode" translation="-0.322227091 0.027441125 -0.696383893" rotation="3.022776416 55.298396558 3.938763054" scale="1.01395 1.0149 1.0149" nodeId="12"/>
+      <TransformGroup name="handNode" translation="0.03903173438 0.09409870775 0.007138658275" rotation="27.69799807 -10.17780381 85.3444162" nodeId="36">
+        <TransformGroup name="raycastNode" translation="-0.1858991155 -0.1794588423 -0.4078026968" rotation="-12.52905554 -26.78081566 -84.8658892" nodeId="37" />
       </TransformGroup>
-      <TransformGroup name="firstPersonNode" translation="-0.211465 0.367123 0.743932" rotation="-180 5.17004 -180" nodeId="13"/>
-      <TransformGroup name="dustEmitterNode" translation="0 0.5 -1" scale="1 1.16163 1" nodeId="14">
-        <Shape name="dustEmitterShape" scale="0.001 0.001 0.001" shapeId="2" nodeId="24" castsShadows="false" receiveShadows="false" distanceBlending="false" materialIds="18"/>
+      <TransformGroup name="firstPersonNode" translation="-0.2582277162 0.1831998946 0.4033066392" rotation="-178.1363688 2.517717107 -179.918105" nodeId="38" />
+      <TransformGroup name="dustEmitterRoot" translation="0 -0.0075 -0.463203" rotation="0 -0 0" nodeId="39">
+        <Shape name="dustEmitterNode" scale="0.001 0.012 1" shapeId="13" clipDistance="60" nodeId="40" castsShadows="false" receiveShadows="false" nonRenderable="true" materialIds="1" translation="0 0 0" rotation="-65 -0 0" />
       </TransformGroup>
     </TransformGroup>
   </Scene>

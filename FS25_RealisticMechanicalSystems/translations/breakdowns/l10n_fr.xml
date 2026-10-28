@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Perte de puissance"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Mise hors service"/>
+        <text name="rms_breakdowns_severity_minor" text="Mineur"/>
+        <text name="rms_breakdowns_severity_moderate" text="Modéré"/>
+        <text name="rms_breakdowns_severity_major" text="Majeur"/>
+        <text name="rms_breakdowns_severity_critical" text="Critique"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Usure légère des rotules et barres de direction. Un peu de jeu apparaît et la direction devient moins précise."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Usure modérée des rotules et barres de direction. Le jeu augmente et la machine tire légèrement d'un côté."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Usure sévère des rotules et barres de direction. Le jeu est important et la machine tire d'un côté, avec une tenue de cap moins bonne."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Défaillance critique des rotules et barres de direction. La roue libérée ne suit plus correctement le volant ; la conduite est dangereuse."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Usure légère des pivots de fusée. Un peu de jeu apparaît dans la direction."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Usure modérée des pivots de fusée. Le jeu dans la direction devient perceptible."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Usure sévère des pivots de fusée. Le jeu dans la direction est important."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Usure critique des pivots de fusée. La direction présente un jeu très important."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Défaillance légère de l'orbitrol de direction. Le volant tourne avec un peu de jeu avant que les roues suivent."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Défaillance modérée de l'orbitrol de direction. Le volant tourne davantage avant que les roues suivent."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Défaillance sévère de l'orbitrol de direction. Le volant tourne beaucoup sans que les roues suivent bien."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Défaillance critique de l'orbitrol de direction. Le volant tourne avec un jeu très important avant que les roues suivent."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Fuite interne légère du vérin de direction. La machine commence à dériver d'un côté."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Fuite légère au joint de tige du vérin de direction. Le niveau d'huile hydraulique baisse un peu."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Fuite interne modérée du vérin de direction. La machine dérive davantage d'un côté."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Fuite modérée au joint de tige du vérin de direction. Le niveau d'huile hydraulique baisse nettement."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Fuite interne sévère du vérin de direction. La machine dérive nettement d'un côté."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Fuite sévère au joint de tige du vérin de direction. Le niveau d'huile hydraulique baisse rapidement."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Fuite interne critique du vérin de direction. La machine dérive fortement d'un côté."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Fuite critique au joint de tige du vérin de direction. L'huile hydraulique baisse très vite."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Usure légère des axes et bagues des articulations du chargeur. Un léger jeu apparaît aux articulations du bras."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Usure modérée des axes et bagues des articulations du chargeur. Le jeu aux articulations du bras devient perceptible."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Usure sévère des axes et bagues des articulations du chargeur. Le bras présente un jeu important."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Usure critique des axes et bagues des articulations du chargeur. Le jeu du bras est très important."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Fuite légère d'un amortisseur de cabine. La cabine est un peu moins amortie."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Fuite modérée d'un amortisseur de cabine. La cabine rebondit sur les bosses."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Fuite sévère d'un amortisseur de cabine. La cabine ballotte à chaque cahot."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Fuite critique d'un amortisseur de cabine. L'amortisseur est vide : la cabine n'est presque plus amortie."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Passage au point mort"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Début de dégradation des bougies de préchauffage. Les démarrages à froid deviennent plus lents, tandis que les démarrages à chaud restent normaux."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Plusieurs bougies de préchauffage sont faibles ou hors service. Les démarrages à froid sont difficiles et le ralenti peut être irrégulier jusqu'à la montée en température."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Défaillance sévère des bougies de préchauffage. Le démarrage à froid devient très incertain et le fonctionnement irrégulier persiste pendant la chauffe."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Panne complète des bougies de préchauffage. Le démarrage du moteur est impossible lorsque la température est trop basse."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Défaillance du relais de préchauffage. Les bougies ne chauffent plus : le démarrage est impossible lorsque la température est trop basse."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Défaillance du relais de démarreur. Le moteur ne se lance plus."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Défaillance des ampoules des feux de croisement. Ces feux ne s'allument plus jusqu'au remplacement."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Défaillance des ampoules des feux de route. Ces feux ne s'allument plus jusqu'au remplacement."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Défaillance des ampoules des phares de travail avant. Ces phares ne s'allument plus jusqu'au remplacement."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Défaillance des ampoules des phares de travail arrière. Ces phares ne s'allument plus jusqu'au remplacement."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Défaillance de l'ampoule du gyrophare. Il ne s'allume plus jusqu'au remplacement."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Défaillance des ampoules des clignotants. Les clignotants comme les feux de détresse ne s'allument plus jusqu'au remplacement."/>
+        <text name="rms_breakdowns_part_vehicle" text="Véhicule"/>
+        <text name="rms_breakdowns_part_pistons" text="Pistons"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Segments de piston"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Chemises de cylindre"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Soupapes d'admission"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Soupapes d'échappement"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Guides et joints de soupape"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Culasse"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Joint de culasse"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Coussinets de vilebrequin"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Coussinets de bielle"/>
+        <text name="rms_breakdowns_part_consumables" text="Consommables"/>
+        <text name="rms_breakdowns_part_clutch" text="Embrayage"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Commande de variation de rapport"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Moteur"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Câbles de puissance et masses"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Relais de démarreur"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Relais de préchauffage"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Ampoules des feux de croisement"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="Ampoules des feux de route"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Ampoules des phares de travail avant"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Ampoules des phares de travail arrière"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Ampoule du gyrophare"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Ampoules des clignotants"/>
+        <text name="rms_breakdowns_part_battery" text="Batterie"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Batterie de traction"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Contacteur haute tension"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Câblage haute tension"/>
+        <text name="rms_breakdowns_part_inverter" text="Onduleur"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Convertisseur de tension"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Chargeur embarqué"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Roulements du moteur électrique"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Enroulements du moteur électrique"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Capteur de position du moteur"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Pompe de refroidissement"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Pompe à eau"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Faisceau du radiateur"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Durites et raccords"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Vase d'expansion"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Courroie d'accessoires et tendeur"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Hélice du ventilateur"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Électroventilateur"/>
+        <text name="rms_breakdowns_part_reducer" text="Réducteur"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Disques et garnitures de frein"/>
+        <text name="rms_breakdowns_part_brake_control" text="Commande de frein"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Valve de frein de remorque"/>
+        <text name="rms_breakdowns_part_park_brake" text="Frein de parking"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Roulement et joint de moyeu"/>
+        <text name="rms_breakdowns_part_alternator" text="Alternateur"/>
+        <text name="rms_breakdowns_part_starter" text="Démarreur"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turbocompresseur"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Joint de transmission"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Tendeur de chenille"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Galets et roues folles"/>
+        <text name="rms_breakdowns_part_thermostat" text="Thermostat"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Pompe à huile"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Synchroniseur"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Rotules et barres de direction"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Axes et bagues des articulations du chargeur"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pivots de fusée"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol de direction"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Vérin de direction"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Suspension de cabine"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="Embrayage de PDF"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="Roulements de sortie de PDF"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="Joint de sortie de PDF"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="Arbre de sortie de PDF"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="Électrovanne d'enclenchement de PDF"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="Interrupteur de commande de PDF"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="Capteur de régime de PDF"/>
+        <text name="rms_breakdowns_part_pto_brake" text="Frein de PDF"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Embrayage de PDF avant"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Pompe hydraulique"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Vérin hydraulique"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Flexible hydraulique"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Filtre hydraulique"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Refroidisseur d'huile hydraulique"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Distributeur hydraulique"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Embrayage de ventilateur"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Pompe d'alimentation"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Injecteurs de carburant"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="Pompe haute pression"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Filtre à carburant"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Conduite de carburant"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Pompe d'injection mécanique"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Vanne de dosage"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Capteur de pression de rampe"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Limiteur de pression de rampe"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Détendeur de gaz"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Électrovanne d'arrêt de gaz"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Filtre à gaz"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Conduites de gaz"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Injecteurs de gaz"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="Pompe d'AdBlue"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="Injecteur doseur d'AdBlue"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="Filtre d'AdBlue"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="Capteur NOx"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Filtre à particules"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Bougies de préchauffage"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="La PDF a décroché"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="La PDF avant a décroché"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="La PDF ne débraye plus : arrêtez la machine pour arrêter l'outil"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Usure naissante de l'embrayage de PDF. L'entraînement décroche parfois."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Usure modérée de l'embrayage de PDF. Les décrochages se répètent."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Usure sévère de l'embrayage de PDF. L'outil perd souvent son entraînement."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Défaillance critique de l'embrayage de PDF. L'outil s'arrête."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Usure naissante de l'embrayage de PDF. Ses disques commencent à coller."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Usure modérée de l'embrayage de PDF. Ses disques collent de plus en plus."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Usure sévère de l'embrayage de PDF. Ses disques collent : la PDF refuse parfois de débrayer."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Défaillance critique de l'embrayage de PDF. Ses disques sont soudés : la PDF ne débraye plus et l'outil ne s'arrête qu'avec la machine."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Usure naissante des roulements de sortie de PDF. Un léger grondement apparaît."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Usure modérée des roulements de sortie de PDF. Le grondement devient nettement audible."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Usure sévère des roulements de sortie de PDF. Le grondement s'amplifie."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Défaillance critique des roulements de sortie de PDF. Le grondement est à son plus fort."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Fuite légère au joint de sortie de PDF. Le niveau d'huile de transmission baisse lentement au travail."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Fuite modérée au joint de sortie de PDF. Le niveau d'huile de transmission baisse au travail."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Fuite sévère au joint de sortie de PDF. L'huile de transmission s'écoule et son niveau baisse vite."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Fuite critique au joint de sortie de PDF. L'huile restante est insuffisante pour un fonctionnement sûr de la transmission."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Usure naissante de l'électrovanne d'enclenchement de PDF. L'entraînement se coupe parfois en cours de travail."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Usure naissante de l'électrovanne d'enclenchement de PDF. La PDF refuse parfois de s'enclencher."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Usure modérée de l'électrovanne d'enclenchement de PDF. Les coupures en cours de travail se répètent."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Usure modérée de l'électrovanne d'enclenchement de PDF. Les refus d'enclenchement se répètent."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Usure sévère de l'électrovanne d'enclenchement de PDF. L'entraînement se coupe souvent."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Usure sévère de l'électrovanne d'enclenchement de PDF. La PDF refuse souvent de s'enclencher."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Défaillance critique de l'électrovanne d'enclenchement de PDF. Sa bobine est coupée et la PDF ne reste plus enclenchée."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Défaillance critique de l'électrovanne d'enclenchement de PDF. Son tiroir reste bloqué et la PDF ne s'enclenche plus."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Usure naissante de l'interrupteur de commande de PDF. Un faux contact coupe parfois l'entraînement."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Usure naissante de l'interrupteur de commande de PDF. La PDF ne répond parfois pas à la commande."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Usure modérée de l'interrupteur de commande de PDF. Les faux contacts coupent l'entraînement de plus en plus souvent."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Usure modérée de l'interrupteur de commande de PDF. La PDF ignore de plus en plus souvent la commande."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Usure sévère de l'interrupteur de commande de PDF. Le contact ne tient plus et l'entraînement se coupe souvent."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Usure sévère de l'interrupteur de commande de PDF. La commande reste souvent sans effet."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Défaillance critique de l'interrupteur de commande de PDF. Son contact reste ouvert et la PDF se coupe."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Défaillance critique de l'interrupteur de commande de PDF. Son contact ne se ferme plus et la PDF ne s'enclenche plus."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="Défaillance de l'arbre de sortie de PDF. Ses cannelures sont arrachées et ne transmettent plus le mouvement."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="Défaillance de l'arbre de sortie de PDF. Il est rompu et l'outil n'est plus entraîné."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="Défaillance du capteur de régime de PDF. Il ne renvoie plus de signal et la sécurité coupe la PDF."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="Défaillance du frein de PDF. Il reste serré et bloque l'arbre de sortie."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Usure naissante de l'embrayage de PDF avant. L'entraînement de la sortie avant décroche parfois."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Usure modérée de l'embrayage de PDF avant. Les décrochages de la sortie avant se répètent."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Usure sévère de l'embrayage de PDF avant. L'outil avant perd souvent son entraînement."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Défaillance critique de l'embrayage de PDF avant. La sortie avant ne tourne plus ; la PDF arrière n'est pas touchée."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Engagement de la PDF refusé"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Réparation de fortune"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Défaut"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Le système fonctionne normalement, mais l'inspection a révélé une pièce défectueuse. La pièce n'offre plus de marge de sécurité, un remplacement préventif est recommandé pour éviter une panne soudaine."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Batterie trop faible"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Batterie de traction froide : autonomie et puissance réduites"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Le système fonctionne normalement, mais repose entièrement sur une réparation de fortune. Pour éviter une panne sous charge, un remplacement complet des pièces est recommandé dès que possible."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Roulements de turbocompresseur usés. Un léger sifflement est audible et une légère perte de puissance est constatée à haut régime."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Fuites au niveau des joints du turbocompresseur. Perte de puissance notable, augmentation de la consommation de carburant."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Aubes de turbine endommagées. Perte de puissance importante et risque de calage du moteur sous forte charge."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Défaillance critique du turbocompresseur. Le moteur a perdu la majeure partie de sa puissance et risque de subir de graves dommages internes."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Disques d'embrayage usés. Perte de puissance occasionnelle due au patinage de l'embrayage sous charge."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Usure importante de l'embrayage. Patinage notable à l'accélération et sous forte charge."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Embrayage très usé. Un patinage important rend difficile le transfert de puissance aux roues."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="L'embrayage est complètement grillé. Le véhicule ne peut plus rouler."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Synchroniseurs usés. Grincements occasionnels ou difficultés de changement de vitesse."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Synchroniseurs endommagés. Le passage des vitesses est souvent difficile et peut échouer."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Dents du synchroniseur cassées. Risque élevé d'échec du passage des vitesses ou de saut de rapport sous charge."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Les synchroniseurs sont complètement défaillants. Il est impossible de changer de vitesse."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Fuite légère d'huile de transmission. Le niveau d'huile baisse lentement au travail."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Fuite modérée d'huile de transmission. Le niveau baisse nettement et la transmission chauffe davantage."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Fuite sévère d'huile de transmission. Le niveau baisse rapidement et la transmission surchauffe en charge."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Fuite critique d'huile de transmission. L'huile restante est insuffisante pour un fonctionnement sûr de la transmission."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Dysfonctionnement léger du tendeur de chenille. La tension de chenille est un peu moins stable, ce qui augmente légèrement la résistance et l'usure."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Dysfonctionnement modéré du tendeur de chenille. La tension devient instable, l'efficacité de roulement baisse et le risque de mauvais alignement augmente."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Dysfonctionnement sévère du tendeur de chenille. La tension est fortement perturbée, la transmission de mouvement devient inefficace et le risque de déchenillage augmente."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Défaillance critique du tendeur de chenille. La chenille ne peut plus être maintenue correctement et le véhicule ne peut plus être utilisé en sécurité."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Défaillance légère du thermostat. Le moteur met longtemps à chauffer et reste trop froid au travail."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Défaillance légère du thermostat. La régulation est moins précise et la température monte sous charge."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Défaillance modérée du thermostat. Le moteur met longtemps à chauffer et reste trop froid au travail."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Défaillance modérée du thermostat. La température grimpe plus tôt et le moteur tourne trop chaud sous charge."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Défaillance sévère du thermostat. Le moteur met longtemps à chauffer et reste trop froid au travail."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Défaillance sévère du thermostat. Le moteur chauffe fortement ; un travail soutenu risque de le faire surchauffer."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Défaillance critique du thermostat. Le moteur met longtemps à chauffer et reste trop froid au travail."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Défaillance critique du thermostat. Le thermostat reste fermé et le moteur surchauffe rapidement."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Le moteur est passé en mode de protection. La puissance est bridée le temps que la température redescende."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Protection anti-surchauffe : puissance réduite"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="La protection anti-surchauffe se renforce. Le moteur ne délivre plus que la moitié de sa puissance."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Protection anti-surchauffe : puissance réduite de moitié"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="La protection anti-surchauffe est à son maximum. Il ne reste qu'une fraction de la puissance moteur."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Protection anti-surchauffe : puissance fortement réduite"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Le moteur a été coupé pour éviter des dommages. Laissez-le refroidir avant de redémarrer."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Protection anti-surchauffe : moteur coupé"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Dysfonctionnement léger de la pompe à huile. La pression d'huile est réduite, le couple moteur baisse légèrement, la température moteur augmente et des cognements mécaniques peuvent apparaître."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Dysfonctionnement modéré de la pompe à huile. La pression d'huile est insuffisante, le couple moteur diminue nettement, la température moteur augmente et les cognements mécaniques sont clairement audibles."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Dysfonctionnement sévère de la pompe à huile. La pression d'huile est critique, le couple moteur chute fortement, une surchauffe est probable, les cognements mécaniques sont sévères et des calages peuvent se produire."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Défaillance critique de la pompe à huile. La circulation d'huile est insuffisante pour un fonctionnement sûr du moteur et tout démarrage ou fonctionnement supplémentaire est impossible."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="Le moteur s'est bloqué et ne peut plus tourner."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Moteur calé"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Dysfonctionnement léger de l'ECU. Puissance moteur légèrement réduite."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Dysfonctionnement modéré de l'ECU. Perte de puissance notable et augmentation de la consommation de carburant."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Dysfonctionnement sévère de l'ECU. Perte de puissance importante, consommation de carburant élevée et risque de calage du moteur."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Panne totale de l'ECU. Le moteur ne peut pas être contrôlé et ne démarre pas."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Défaillance légère des câbles de puissance et des masses. Une résistance de contact accrue fait scintiller les feux par moments, rend l'alimentation instable et le démarrage difficile. Une fuite de courant décharge la batterie quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Défaillance modérée des câbles de puissance et des masses. Les pertes de contact font souvent scintiller les feux ; le démarrage devient difficile et le moteur peut caler. Une fuite de courant décharge la batterie quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Défaillance sévère des câbles de puissance et des masses. L'alimentation des circuits est instable, l'éclairage peut s'éteindre complètement, le couple moteur baisse, le moteur cale souvent et démarre mal. Une fuite de courant décharge la batterie quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Défaillance critique des câbles de puissance et des masses. L'éclairage ne fonctionne plus et le moteur ne se lance plus. Une fuite de courant décharge la batterie quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Défaillance légère des câbles de puissance et des masses. Une résistance de contact accrue fait scintiller les feux par moments et rend l'alimentation instable. Une fuite de courant décharge la batterie de servitude quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Défaillance modérée des câbles de puissance et des masses. Les pertes de contact font souvent scintiller les feux, l'alimentation est instable et des coupures sont possibles. Une fuite de courant décharge la batterie de servitude quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Défaillance sévère des câbles de puissance et des masses. L'alimentation des circuits est instable, l'éclairage peut s'éteindre complètement, la puissance baisse et les coupures sont probables. Une fuite de courant décharge la batterie de servitude quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Défaillance critique des câbles de puissance et des masses. L'éclairage ne fonctionne plus et la machine ne démarre pas. Une fuite de courant décharge la batterie de servitude quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Défaillance légère des durites et raccords. Un léger suintement fait à peine baisser le niveau de liquide."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Défaillance légère des durites et raccords. Une durite un peu écrasée réduit légèrement la circulation."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Défaillance modérée des durites et raccords. La fuite devient visible et le niveau baisse plus nettement."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Défaillance modérée des durites et raccords. La circulation réduite fait monter la température plus vite sous charge."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Défaillance sévère des durites et raccords. Le liquide s'échappe en quantité et le moteur risque de surchauffer sous charge."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Défaillance sévère des durites et raccords. Le débit devient faible et le moteur surchauffe lors d'un travail soutenu."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Défaillance critique des durites et raccords. Le niveau chute rapidement et le circuit peut se vider."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Défaillance critique des durites et raccords. La circulation est fortement entravée et le moteur surchauffe rapidement."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Défaillance légère du vase d'expansion. Une fissure laisse suinter un peu de liquide."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Défaillance légère du vase d'expansion. Le raccord suinte et perd un peu de liquide."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Défaillance modérée du vase d'expansion. La fissure provoque une fuite franche et le niveau baisse."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Défaillance modérée du vase d'expansion. Le raccord fuit franchement et le niveau baisse."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Défaillance sévère du vase d'expansion. La fuite fait chuter rapidement le niveau de liquide."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Défaillance sévère du vase d'expansion. La fuite au raccord fait chuter rapidement le niveau."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Défaillance critique du vase d'expansion. Le liquide s'échappe rapidement et le circuit se vide."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Défaillance critique du vase d'expansion. La fuite au raccord vide rapidement le circuit."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Défaillance légère de la courroie d'accessoires et de son tendeur. Elle siffle et patine légèrement ; la charge et la circulation diminuent un peu."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Défaillance modérée de la courroie d'accessoires et de son tendeur. Elle patine sous charge ; la charge baisse et le liquide circule moins bien."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Défaillance sévère de la courroie d'accessoires et de son tendeur. Elle patine fortement ; la charge et la circulation sont très réduites."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Défaillance critique de la courroie d'accessoires et de son tendeur. Elle casse ; la charge et la circulation du liquide sont perdues d'un coup."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Défaillance légère de l'hélice du ventilateur. Le débit d'air baisse légèrement ; le refroidissement ralentit surtout à faible vitesse."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Défaillance modérée de l'hélice du ventilateur. Le débit d'air diminue nettement et la température monte davantage."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Défaillance sévère de l'hélice du ventilateur. Le débit d'air est nettement réduit et le moteur chauffe sous charge."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Défaillance critique de l'hélice du ventilateur. Le débit d'air tombe de moitié et le moteur surchauffe vite sous charge."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Défaillance légère de l'électroventilateur. Le brassage d'air baisse légèrement lorsque le refroidissement est sollicité."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Défaillance modérée de l'électroventilateur. Le brassage d'air diminue nettement et la température monte plus vite."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Défaillance sévère de l'électroventilateur. Le brassage d'air est nettement réduit et la température grimpe sous charge."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Défaillance critique de l'électroventilateur. Le brassage d'air tombe de moitié et la température monte vite sous charge."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Les premiers signes d'un dysfonctionnement de la transmission CVT ont été détectés. Une inspection et une réparation sont nécessaires."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Le dysfonctionnement de la transmission CVT s'aggrave. Une utilisation prolongée peut entraîner le passage en mode d'urgence."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Endommagement critique de la transmission CVT. La transmission est en mode d'urgence et la vitesse maximale du véhicule est réduite."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Défaillance complète de la transmission CVT. Le véhicule ne peut plus être utilisé avant réparation."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Sulfatation légère de la batterie. La capacité utile est réduite, ce qui diminue la réserve électrique sous charge."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Sulfatation modérée de la batterie. La capacité utile est fortement réduite et le démarrage du moteur devient difficile."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Sulfatation sévère de la batterie. La capacité utile est critique et le lancement du moteur devient instable."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Sulfatation critique de la batterie. La capacité utile est presque nulle et la puissance de lancement est insuffisante pour un démarrage fiable."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Sulfatation légère de la batterie de servitude. La capacité utile est réduite, ce qui diminue la réserve électrique sous charge."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Sulfatation modérée de la batterie de servitude. La capacité utile est fortement réduite et la réserve électrique s'épuise plus vite."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Sulfatation sévère de la batterie de servitude. La capacité utile est critique et la réserve électrique s'épuise très vite."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Sulfatation critique de la batterie de servitude. La capacité utile est presque nulle et ne suffit plus pour un démarrage fiable."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Usure légère des disques et garnitures de frein. Le freinage perd un peu d'efficacité."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Usure modérée des disques et garnitures de frein. La distance de freinage augmente nettement."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Usure sévère des disques et garnitures de frein. Le freinage devient très faible et peu fiable."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Défaillance critique des disques et garnitures de frein. La machine freine très mal et la conduite devient dangereuse."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Défaillance légère de la commande de frein. Au freinage, la machine tire légèrement d'un côté."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Défaillance légère de la commande de frein. La pédale devient un peu molle et le freinage perd un peu d'efficacité."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Défaillance modérée de la commande de frein. Le freinage tire nettement d'un côté."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Défaillance modérée de la commande de frein. La pédale devient molle, la pression baisse et le freinage perd nettement en efficacité."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Défaillance sévère de la commande de frein. La machine tire fortement d'un côté au freinage."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Défaillance sévère de la commande de frein. La pédale s'enfonce anormalement, la pression chute et la machine freine mal."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Défaillance critique de la commande de frein. Le freinage tire très fortement d'un côté."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Défaillance critique de la commande de frein. La pédale s'enfonce presque sans résistance et la machine ne freine presque plus."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Défaillance légère de la valve de frein de remorque. La remorque perd une petite part de son freinage."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Défaillance modérée de la valve de frein de remorque. La remorque freine nettement moins."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Défaillance sévère de la valve de frein de remorque. La remorque ne reçoit plus qu'une faible part du freinage."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Défaillance critique de la valve de frein de remorque. La remorque ne freine plus."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Défaillance légère du frein de parking. Une fois desserré, il frotte encore un peu et freine légèrement la machine."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Défaillance modérée du frein de parking. Une fois desserré, il frotte nettement et retient la machine."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Défaillance sévère du frein de parking. Une fois desserré, il reste à moitié serré et retient fortement la machine."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Défaillance totale du frein de parking. Il ne se desserre plus et retient la machine comme s'il était serré."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Usure légère du roulement et du joint de moyeu. La résistance augmente légèrement et un bruit inhabituel peut apparaître."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Usure modérée du roulement et du joint de moyeu. La friction et le bruit augmentent et l'efficacité mécanique diminue."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Usure sévère du roulement et du joint de moyeu. La friction est élevée, le bruit est important et le grippage menace sous charge."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Défaillance critique du roulement et du joint de moyeu. Le grippage complet menace et la machine ne peut plus fonctionner."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Usure légère des roulements de galets et roues folles. La résistance augmente un peu et un bruit inhabituel peut apparaître."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Usure modérée des roulements de galets et roues folles. La friction et le bruit augmentent, et la rotation devient plus difficile."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Usure sévère des roulements de galets et roues folles. La friction et le bruit sont importants, avec un risque de grippage sous charge."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Défaillance critique des roulements de galets et roues folles. La chenille peut s'immobiliser si l'un d'eux se bloque."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Défaillance légère du régulateur d'alternateur. La puissance de charge est réduite, ce qui diminue l'efficacité de recharge de la batterie."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Défaillance modérée du régulateur d'alternateur. La charge est réduite et instable, ce qui entraîne une mauvaise recharge de la batterie et des pertes de tension accrues."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Défaillance sévère du régulateur d'alternateur. La charge est fortement réduite, l'alimentation est instable et le système électrique fonctionne avec de lourdes pertes."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Défaillance totale du régulateur d'alternateur. La batterie n'est plus rechargée et le système électrique fonctionne uniquement sur la réserve restante."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Défaillance légère des diodes d'alternateur. La puissance de charge est réduite, ce qui diminue l'efficacité de recharge de la batterie. Une fuite de courant décharge la batterie quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Défaillance modérée des diodes d'alternateur. La charge est réduite et instable, ce qui entraîne une mauvaise recharge de la batterie et des pertes de tension accrues. Une fuite de courant décharge la batterie quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Défaillance sévère des diodes d'alternateur. La charge est fortement réduite, l'alimentation est instable et le système électrique fonctionne avec de lourdes pertes. Une fuite de courant décharge la batterie quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Défaillance totale des diodes d'alternateur. La batterie n'est plus rechargée et le système électrique fonctionne uniquement sur la réserve restante. Une fuite de courant décharge la batterie quand la machine est à l'arrêt."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Défaillance légère du démarreur. Il entraîne le moteur moins vite et le démarrage est un peu plus long."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Défaillance modérée du démarreur. Il entraîne le moteur lentement : le démarrage est difficile, et impossible par grand froid."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Défaillance sévère du démarreur. Il entraîne à peine le moteur : il ne démarre plus que moteur chaud ou par temps doux."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Défaillance totale du démarreur. Il n'entraîne plus le moteur : un moteur en marche continue de tourner, mais une fois arrêté il ne redémarre plus."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Usure légère des roulements du moteur électrique. Un léger bruit apparaît et la consommation augmente un peu."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Usure modérée des roulements du moteur électrique. Le bruit est nettement audible, la consommation augmente et la puissance baisse légèrement."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Usure sévère des roulements du moteur électrique. Le bruit est fort, le moteur chauffe et la puissance baisse nettement."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Défaillance critique des roulements du moteur électrique. Le moteur est bloqué et la machine ne peut plus rouler."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Dégradation légère des enroulements du moteur électrique. La puissance baisse légèrement et le moteur chauffe davantage."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Dégradation modérée des enroulements du moteur électrique. La puissance baisse nettement, le moteur chauffe et la consommation augmente."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Dégradation sévère des enroulements du moteur électrique. La perte de puissance est importante, le moteur chauffe fortement et des coupures peuvent se produire."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Défaillance critique des enroulements du moteur électrique. Le moteur est en court-circuit et ne peut plus fonctionner."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Dysfonctionnement léger du capteur de position du moteur. De brefs à-coups apparaissent sous charge."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Dysfonctionnement modéré du capteur de position du moteur. Les à-coups sont fréquents et la puissance baisse."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Dysfonctionnement sévère du capteur de position du moteur. Les à-coups sont violents, la puissance chute et des coupures se produisent."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Panne totale du capteur de position du moteur. Le moteur ne peut plus être piloté et la machine ne démarre pas."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Dysfonctionnement léger de l'onduleur. La puissance du moteur est légèrement réduite."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Dysfonctionnement modéré de l'onduleur. La perte de puissance est notable et la consommation augmente."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Dysfonctionnement sévère de l'onduleur. La perte de puissance est importante et des coupures peuvent se produire."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Panne totale de l'onduleur. Le moteur n'est plus alimenté et la machine ne démarre pas."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Défaillance légère du convertisseur de tension. La batterie de servitude se recharge moins bien."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Défaillance modérée du convertisseur de tension. La recharge de la batterie de servitude est réduite et instable."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Défaillance sévère du convertisseur de tension. La batterie de servitude n'est presque plus rechargée et se vide en roulant."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Défaillance totale du convertisseur de tension. La batterie de servitude n'est plus rechargée et la machine fonctionne sur sa seule réserve."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Défaillance légère du chargeur embarqué. La recharge à la borne est un peu plus lente."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Défaillance modérée du chargeur embarqué. La recharge à la borne est nettement plus lente."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Défaillance sévère du chargeur embarqué. La recharge à la borne est très lente."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Défaillance totale du chargeur embarqué. La batterie de traction ne peut plus être rechargée."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Perte d'isolement légère du câblage haute tension. Une alerte s'affiche, sans autre effet."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Perte d'isolement modérée du câblage haute tension. La puissance est réduite par sécurité."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Perte d'isolement sévère du câblage haute tension. La puissance est fortement réduite et des coupures se produisent."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Perte d'isolement critique du câblage haute tension. La machine refuse de démarrer par sécurité."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Défaillance légère de cellules de la batterie de traction. L'autonomie baisse légèrement."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Défaillance modérée de cellules de la batterie de traction. L'autonomie baisse nettement et la puissance est réduite."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Défaillance sévère de cellules de la batterie de traction. L'autonomie et la puissance chutent, et des coupures peuvent se produire."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Défaillance critique de la batterie de traction. La machine ne peut plus être mise en route."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Usure légère du contacteur haute tension. De rares coupures d'alimentation se produisent."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Usure modérée du contacteur haute tension. Les coupures d'alimentation deviennent régulières."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Usure sévère du contacteur haute tension. Les coupures d'alimentation sont fréquentes."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Défaillance critique du contacteur haute tension. La batterie de traction n'alimente plus la machine, qui ne démarre pas."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Défaillance légère de la pompe de refroidissement. Le liquide circule moins bien et la température monte un peu plus."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Défaillance modérée de la pompe de refroidissement. Le refroidissement est nettement réduit."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Défaillance sévère de la pompe de refroidissement. Le refroidissement est fortement réduit et la surchauffe est probable sous charge."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Défaillance totale de la pompe de refroidissement. Le liquide ne circule presque plus et la machine surchauffe rapidement."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Défaillance légère de la pompe à eau. Le défaut est encore peu perceptible et nécessite un contrôle."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Défaillance modérée de la pompe à eau. La circulation diminue et le refroidissement devient moins efficace."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Défaillance sévère de la pompe à eau. La circulation insuffisante expose le moteur à la surchauffe."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Défaillance critique de la pompe à eau. La circulation est gravement compromise et le refroidissement très réduit."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Défaillance légère de la pompe à eau. De légères traces de liquide de refroidissement apparaissent autour du joint de la pompe à eau."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Défaillance modérée de la pompe à eau. Le liquide de refroidissement fuit par le joint de la pompe à eau ; le niveau baisse et la circulation devient moins efficace."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Défaillance sévère de la pompe à eau. La fuite par le joint de la pompe à eau laisse des traces importantes autour de la pompe ; le niveau baisse et la circulation réduite accentue le risque de surchauffe."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Défaillance critique de la pompe à eau. Le joint de la pompe à eau fuit abondamment ; le circuit perd son liquide et la circulation ne permet plus de refroidir correctement le moteur."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Défaillance légère de la pompe à eau. Le défaut est encore peu perceptible et nécessite un contrôle."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Défaillance modérée de la pompe à eau. Le roulement de la pompe prend du jeu et la circulation diminue."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Défaillance sévère de la pompe à eau. La circulation insuffisante expose le moteur à la surchauffe."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Défaillance critique de la pompe à eau. La circulation est gravement compromise et le refroidissement très réduit."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Défaillance légère du faisceau du radiateur. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Défaillance modérée du faisceau du radiateur. Le faisceau évacue moins bien la chaleur du liquide."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Défaillance sévère du faisceau du radiateur. Le faisceau évacue mal la chaleur et le risque de surchauffe augmente."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Défaillance critique du faisceau du radiateur. Le faisceau évacue très peu de chaleur et le refroidissement est gravement compromis."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Défaillance légère du faisceau du radiateur. Un suintement de liquide de refroidissement apparaît sur les tubes du faisceau."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Défaillance modérée du faisceau du radiateur. Des tubes percés laissent fuir du liquide de refroidissement sur le radiateur et le niveau du circuit baisse."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Défaillance sévère du faisceau du radiateur. Le liquide de refroidissement s'échappe par les tubes percés du faisceau, laissant des traces humides sur le radiateur ; la réserve du circuit diminue rapidement."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Défaillance critique du faisceau du radiateur. Le faisceau percé perd beaucoup de liquide de refroidissement. Le niveau chute et le radiateur ne peut plus évacuer suffisamment la chaleur du moteur."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Usure légère des pignons et roulements du réducteur. Un léger bruit apparaît en roulant."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Usure modérée des pignons et roulements du réducteur. Le bruit est nettement audible et la consommation augmente."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Usure sévère des pignons et roulements du réducteur. Le bruit est fort, le réducteur chauffe et la puissance aux roues baisse."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Défaillance critique du réducteur. Il est bloqué et la machine ne peut plus rouler."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Défaillance légère des pistons. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Défaillance modérée des pistons. L'huile passe davantage dans la chambre de combustion et une fumée bleue apparaît."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Défaillance sévère des pistons. La consommation d'huile augmente et la fumée bleue s'accentue."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Défaillance critique des pistons. Un piston a grippé et le moteur est bloqué."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Défaillance légère des pistons. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Défaillance modérée des pistons. L'huile passe davantage dans la chambre de combustion et une fumée bleue apparaît."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Défaillance sévère des pistons. La consommation d'huile augmente et la fumée bleue s'accentue."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Défaillance critique des pistons. Un piston s'est rompu et le moteur est arrêté."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Défaillance légère des segments de piston. Des dépôts gênent le mouvement des segments dans leurs gorges."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Défaillance modérée des segments de piston. L'étanchéité diminue et le moteur perd de la puissance."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Défaillance sévère des segments de piston. La perte de compression rend le démarrage difficile et réduit la puissance."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Défaillance critique des segments de piston. La compression est très faible, le démarrage difficile et la puissance fortement réduite."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Défaillance légère des segments de piston. Des dépôts gênent le mouvement des segments dans leurs gorges."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Défaillance modérée des segments de piston. L'huile passe davantage dans la chambre de combustion et une fumée bleue apparaît."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Défaillance sévère des segments de piston. La consommation d'huile augmente et la fumée bleue s'accentue."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Défaillance critique des segments de piston. Le passage d'huile est important et la fumée bleue persiste."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Défaillance légère des segments de piston. Des dépôts gênent le mouvement des segments dans leurs gorges."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Défaillance modérée des segments de piston. L'étanchéité diminue et le moteur perd de la puissance."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Défaillance sévère des segments de piston. La perte de compression rend le démarrage difficile et réduit la puissance."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Défaillance critique des segments de piston. Un segment est cassé : la compression chute et l'huile passe dans la chambre de combustion."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Défaillance légère des chemises de cylindre. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Défaillance modérée des chemises de cylindre. La surface est rayée et son étanchéité diminue."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Défaillance sévère des chemises de cylindre. La surface est rayée et son étanchéité diminue. La consommation d'huile augmente et la fumée bleue s'accentue."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Défaillance critique des chemises de cylindre. Un piston a grippé dans sa chemise et le moteur est bloqué."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Défaillance légère des chemises de cylindre. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Défaillance modérée des chemises de cylindre. Du liquide de refroidissement fuit par une chemise fissurée dans un cylindre, faisant baisser le niveau."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Défaillance sévère des chemises de cylindre. Une chemise fissurée laisse entrer du liquide de refroidissement dans un cylindre ; une fumée blanche apparaît à l'échappement."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Défaillance critique des chemises de cylindre. Le liquide de refroidissement fuit abondamment par une chemise fissurée dans un cylindre, avec une fumée blanche persistante et un refroidissement insuffisant."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Défaillance légère des soupapes d'admission. La portée de soupape est altérée et la puissance diminue légèrement."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Défaillance modérée des soupapes d'admission. La soupape ferme mal, provoquant des ratés et une perte de puissance."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Défaillance sévère des soupapes d'admission. La portée est brûlée, avec des ratés, des calages et une perte de puissance."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Défaillance critique des soupapes d'admission. La portée brûlée cause des ratés, des calages et une forte perte de puissance."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Défaillance légère des soupapes d'admission. La portée de soupape est altérée et la puissance diminue légèrement."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Défaillance modérée des soupapes d'admission. La soupape ferme mal, provoquant des ratés et une perte de puissance."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Défaillance sévère des soupapes d'admission. La portée est brûlée, avec des ratés, des calages et une perte de puissance."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Défaillance critique des soupapes d'admission. Une soupape d'admission s'est rompue et le moteur est arrêté."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Défaillance légère des soupapes d'échappement. La portée de soupape est altérée et la puissance diminue légèrement."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Défaillance modérée des soupapes d'échappement. La soupape ferme mal, provoquant des ratés et une perte de puissance."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Défaillance sévère des soupapes d'échappement. La portée est brûlée, avec des ratés, des calages et une perte de puissance."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Défaillance critique des soupapes d'échappement. La portée brûlée cause des ratés, des calages et une forte perte de puissance."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Défaillance légère des soupapes d'échappement. La portée de soupape est altérée et la puissance diminue légèrement."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Défaillance modérée des soupapes d'échappement. La soupape ferme mal, provoquant des ratés et une perte de puissance."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Défaillance sévère des soupapes d'échappement. La portée est brûlée, avec des ratés, des calages et une perte de puissance."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Défaillance critique des soupapes d'échappement. Une soupape d'échappement s'est rompue et le moteur est arrêté."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Défaillance légère des guides et joints de soupape. Le contrôle révèle un défaut de guidage et les soupapes deviennent bruyantes."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Défaillance modérée des guides et joints de soupape. Le jeu augmente et les soupapes deviennent bruyantes."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Défaillance sévère des guides et joints de soupape. Le jeu excessif provoque du bruit, des ratés et un passage d'huile."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Défaillance critique des guides et joints de soupape. Le jeu de guidage est excessif, avec bruit, ratés et fumée bleue."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Défaillance légère des guides et joints de soupape. Le joint est durci et laisse passer de l'huile."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Défaillance modérée des guides et joints de soupape. L'huile passe davantage dans la chambre de combustion et une fumée bleue apparaît."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Défaillance sévère des guides et joints de soupape. La consommation d'huile augmente et la fumée bleue s'accentue."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Défaillance critique des guides et joints de soupape. Le passage d'huile est important et la fumée bleue persiste."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Défaillance légère de la culasse. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Défaillance modérée de la culasse. Une fissure de la culasse laisse entrer du liquide de refroidissement dans une chambre de combustion ; le moteur perd de la puissance et démarre difficilement."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Défaillance sévère de la culasse. Du liquide de refroidissement traverse la culasse fissurée vers une chambre de combustion, provoquant une fumée blanche et une perte de puissance."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Défaillance critique de la culasse. La culasse fissurée laisse entrer beaucoup de liquide de refroidissement dans une chambre de combustion. Le moteur manque de puissance, démarre mal et rejette une fumée blanche."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Défaillance légère de la culasse. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Défaillance modérée de la culasse. Du liquide de refroidissement suinte de la culasse fissurée et le niveau du circuit baisse."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Défaillance sévère de la culasse. La fuite de liquide de refroidissement laisse des traces visibles sur la culasse fissurée et le niveau baisse rapidement."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Défaillance critique de la culasse. Le liquide de refroidissement s'échappe abondamment de la culasse fissurée ; le circuit se vide et le moteur risque de surchauffer."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Défaillance légère de la culasse. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Défaillance modérée de la culasse. Du liquide de refroidissement fuit par une fissure de la culasse vers l'huile, faisant baisser le niveau du circuit."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Défaillance sévère de la culasse. La fissure de la culasse laisse passer davantage de liquide de refroidissement dans l'huile ; le niveau du circuit continue de chuter."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Défaillance critique de la culasse. La fissure de la culasse détourne beaucoup de liquide de refroidissement vers l'huile ; le circuit perd sa réserve et le moteur risque de surchauffer."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Défaillance légère du joint de culasse. Le défaut est encore peu perceptible et nécessite un contrôle."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Défaillance modérée du joint de culasse. Le joint de culasse laisse entrer du liquide de refroidissement dans une chambre de combustion ; le démarrage s'allonge et la puissance baisse."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Défaillance sévère du joint de culasse. Du liquide de refroidissement franchit le joint de culasse vers une chambre de combustion et produit une fumée blanche à l'échappement."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Défaillance critique du joint de culasse. Le joint de culasse laisse passer beaucoup de liquide de refroidissement dans une chambre de combustion ; la fumée blanche s'accentue et le démarrage devient très difficile."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Défaillance légère du joint de culasse. Le défaut est encore peu perceptible et nécessite un contrôle."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Défaillance modérée du joint de culasse. Du liquide de refroidissement suinte au niveau du joint de culasse et fait baisser le niveau du circuit."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Défaillance sévère du joint de culasse. Une fuite de liquide de refroidissement au niveau du joint de culasse laisse des traces sur le moteur et fait baisser rapidement le niveau."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Défaillance critique du joint de culasse. Le joint de culasse laisse échapper beaucoup de liquide de refroidissement à l'extérieur ; le niveau chute et le refroidissement du moteur se dégrade fortement."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Défaillance légère du joint de culasse. Le défaut est encore peu perceptible et nécessite un contrôle."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Défaillance modérée du joint de culasse. Du liquide de refroidissement passe par le joint de culasse vers l'huile ; le niveau baisse dans le circuit."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Défaillance sévère du joint de culasse. Le joint de culasse laisse fuir une quantité croissante de liquide de refroidissement dans l'huile ; le circuit perd progressivement son liquide."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Défaillance critique du joint de culasse. Une fuite importante par le joint de culasse envoie du liquide de refroidissement dans l'huile et prive le circuit du liquide nécessaire au refroidissement."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Défaillance légère des coussinets de vilebrequin. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Défaillance modérée des coussinets de vilebrequin. Le jeu du coussinet augmente."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Défaillance sévère des coussinets de vilebrequin. Le film d'huile est dégradé, avec cognement et échauffement."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Défaillance critique des coussinets de vilebrequin. Un coussinet de vilebrequin a grippé, bloquant le moteur."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Défaillance légère des coussinets de vilebrequin. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Défaillance modérée des coussinets de vilebrequin. Le jeu du coussinet augmente."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Défaillance sévère des coussinets de vilebrequin. Le film d'huile est dégradé, avec cognement et échauffement."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Défaillance critique des coussinets de vilebrequin. Le revêtement d'un coussinet de vilebrequin a fondu et le moteur est arrêté."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Défaillance légère des coussinets de bielle. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Défaillance modérée des coussinets de bielle. Le jeu du coussinet augmente."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Défaillance sévère des coussinets de bielle. Le film d'huile est dégradé, avec cognement et échauffement."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Défaillance critique des coussinets de bielle. Un coussinet de bielle a grippé, bloquant le moteur."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Défaillance légère des coussinets de bielle. La surface présente une altération visible au contrôle."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Défaillance modérée des coussinets de bielle. Le jeu du coussinet augmente."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Défaillance sévère des coussinets de bielle. Le film d'huile est dégradé, avec cognement et échauffement."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Défaillance critique des coussinets de bielle. Le revêtement d'un coussinet de bielle a fondu et le moteur est arrêté."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Tension du circuit insuffisante"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Usure prématurée de la pompe d'alimentation. Légère diminution de la puissance du moteur et augmentation de la consommation de carburant."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Baisse de la pression de carburant. Perte de puissance notable, consommation de carburant plus élevée et calages occasionnels du moteur."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Pression de carburant critique. Perte de puissance importante, consommation de carburant très élevée et calages fréquents du moteur."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Panne totale de la pompe d'alimentation. Le carburant n'est plus acheminé vers le moteur."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Une ou plusieurs buses d'injecteurs sont légèrement obstruées. Le moteur peut fonctionner de manière un peu irrégulière, avec une légère perte de puissance."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Mauvaise atomisation du carburant. Le moteur hésite sous charge, avec une perte de puissance notable et des à-coups."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Un injecteur de carburant est bloqué. Le moteur fonctionne très mal, avec une perte de puissance importante et un démarrage peu fiable."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Un injecteur est complètement défectueux. Le moteur ne fonctionne plus correctement et risque de ne pas démarrer."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Défaillance légère de la pompe haute pression. La pression d'injection monte plus lentement : le démarrage est plus long et le moteur répond moins franchement."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Défaillance modérée de la pompe haute pression. La pression d'injection est insuffisante sous charge, avec une perte de puissance notable et des hésitations."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Défaillance sévère de la pompe haute pression. La pression d'injection est critique, avec une perte de puissance importante, des calages du moteur et un démarrage difficile."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Défaillance totale de la pompe haute pression. Elle ne produit plus de pression d'injection : le démarreur entraîne le moteur, qui ne démarre pas."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Léger encrassement du filtre à carburant. Le débit de carburant diminue légèrement sous forte charge."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Encrassement modéré du filtre à carburant. Le débit devient insuffisant sous charge, la puissance baisse et le moteur hésite parfois."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Encrassement sévère du filtre à carburant. L'alimentation en carburant est fortement restreinte, la puissance chute nettement et des calages sont possibles."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Filtre à carburant totalement colmaté. Le moteur ne reçoit plus suffisamment de carburant pour fonctionner de manière fiable."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Légère prise d'air dans la conduite de carburant. L'alimentation en carburant devient légèrement irrégulière."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Prise d'air modérée dans la conduite de carburant. L'alimentation devient instable, la puissance baisse et des hésitations apparaissent."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Prise d'air sévère dans la conduite de carburant. Le moteur tourne très irrégulièrement et le risque de calage est élevé."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Défaillance critique de la conduite de carburant avec entrée d'air importante. Le moteur ne peut plus être alimenté correctement."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Léger pincement de la conduite de carburant. Le débit baisse : le moteur démarre puis cale de temps à autre."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Pincement modéré de la conduite de carburant. Le moteur démarre puis cale régulièrement."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Pincement sévère de la conduite de carburant. Le moteur cale souvent."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Conduite de carburant écrasée. Le carburant ne passe plus : le moteur s'arrête."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Défaillance légère de la pompe d'injection mécanique. Le débit faiblit : le démarrage est plus long et le moteur manque un peu de vigueur."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Défaillance modérée de la pompe d'injection mécanique. Le débit ne suit plus sous charge : le moteur perd de la puissance et hésite."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Défaillance sévère de la pompe d'injection mécanique. Le moteur manque de carburant, perd beaucoup de puissance, démarre mal et cale."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Défaillance critique de la pompe d'injection mécanique. Son entraînement est rompu : le moteur s'arrête et ne redémarre plus."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Défaillance légère de la vanne de dosage. La rampe monte moins vite en pression et le démarrage est plus long."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Défaillance modérée de la vanne de dosage. La pression de rampe ne suit plus sous charge : le moteur perd de la puissance et hésite."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Défaillance sévère de la vanne de dosage. La pression de rampe s'écarte fortement de sa consigne : le moteur perd beaucoup de puissance et cale."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Défaillance critique de la vanne de dosage. La rampe n'est plus mise en pression : le démarreur entraîne le moteur sans qu'il démarre."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Défaillance légère du capteur de pression de rampe. Sa mesure devient instable et le démarrage est un peu plus long."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Défaillance modérée du capteur de pression de rampe. Le calculateur règle mal la pression : le moteur perd de la puissance et hésite."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Défaillance sévère du capteur de pression de rampe. Le moteur passe en mode dégradé, perd beaucoup de puissance et peut caler."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Défaillance critique du capteur de pression de rampe. Sans mesure, le calculateur maintient le moteur en mode dégradé."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Défaillance légère du limiteur de pression de rampe. Il s'ouvre trop tôt : la rampe monte moins vite en pression et le démarrage est plus long."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Défaillance modérée du limiteur de pression de rampe. La pression de rampe ne tient plus sous charge : le moteur perd de la puissance et hésite."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Défaillance sévère du limiteur de pression de rampe. La pression de rampe s'effondre : le moteur perd beaucoup de puissance et cale."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Défaillance critique du limiteur de pression de rampe. Il reste ouvert : la rampe n'est plus mise en pression et le démarreur entraîne le moteur sans qu'il démarre."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Défaillance légère du détendeur de gaz. La pression d'alimentation fluctue et le démarrage est plus long."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Défaillance modérée du détendeur de gaz. La pression baisse sous charge : le moteur perd de la puissance et hésite."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Défaillance sévère du détendeur de gaz. L'alimentation devient irrégulière : le moteur perd beaucoup de puissance, démarre mal et cale."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Défaillance critique du détendeur de gaz. Il ne laisse plus passer assez de gaz : le moteur s'arrête."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Défaillance légère de l'électrovanne d'arrêt de gaz. Elle s'ouvre avec retard : le démarrage est plus long et le moteur hésite par moments."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Défaillance modérée de l'électrovanne d'arrêt de gaz. Elle coupe parfois le gaz : le moteur hésite et cale."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Défaillance sévère de l'électrovanne d'arrêt de gaz. Les coupures se multiplient et le moteur cale souvent."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Défaillance critique de l'électrovanne d'arrêt de gaz. Elle reste fermée : le moteur s'arrête et ne redémarre plus."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Léger encrassement du filtre à gaz. Le débit de gaz diminue légèrement sous forte charge."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Encrassement modéré du filtre à gaz. L'alimentation ne suit plus sous charge : la puissance baisse et le moteur peut caler."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Encrassement sévère du filtre à gaz. Le débit est fortement restreint : la puissance chute nettement et le moteur cale."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Filtre à gaz totalement colmaté. Le moteur ne reçoit plus assez de gaz et s'arrête."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Fuite légère des conduites de gaz. Le démarrage est un peu plus long."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Fuite modérée des conduites de gaz. L'alimentation devient irrégulière : le moteur hésite et peut caler."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Fuite sévère des conduites de gaz. La pression chute : le moteur hésite, démarre mal et cale souvent."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Fuite critique des conduites de gaz. La pression ne tient plus : le moteur s'arrête."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Défaillance légère des injecteurs de gaz. Le dosage devient irrégulier : le moteur tourne moins rond et consomme un peu plus."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Défaillance modérée des injecteurs de gaz. Le moteur hésite, perd de la puissance, consomme davantage et peut caler."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Défaillance sévère des injecteurs de gaz. Un injecteur dose très mal : forte perte de puissance, surconsommation et démarrage difficile."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Défaillance critique des injecteurs de gaz. Le dosage ne permet plus au moteur de tourner : il s'arrête."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Défaillance de la pompe d'AdBlue. Elle n'alimente plus le dosage : le voyant moteur s'allume, puis le calculateur réduit la puissance jusqu'à la réparation."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Défaillance de l'injecteur doseur d'AdBlue. Encrassé de cristaux, il ne pulvérise plus : le voyant moteur s'allume et la puissance baisse ensuite jusqu'à la réparation."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Le filtre d'AdBlue arrive à son échéance et commence à se colmater. La révision la plus complète le remplace."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="Le filtre d'AdBlue est encrassé : le débit d'AdBlue baisse et le voyant moteur s'allume. La révision la plus complète le remplace."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="Le filtre d'AdBlue est fortement encrassé : le dosage est en défaut et le calculateur réduit la puissance jusqu'à la réparation."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="Le filtre d'AdBlue est totalement colmaté : plus aucun dosage, le calculateur réduit la puissance jusqu'à la réparation."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="Défaillance du capteur NOx. Le calculateur ne surveille plus les émissions : le voyant moteur s'allume, et après plusieurs dizaines d'heures la puissance est réduite."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Défaillance légère du filtre à particules. Une fissure laisse passer un peu de suie à l'échappement."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Défaillance modérée du filtre à particules. La fissure s'élargit : la fumée noire devient visible."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Défaillance sévère du filtre à particules. Le substrat se désagrège : l'échappement rejette beaucoup de fumée noire."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Défaillance critique du filtre à particules. Le substrat est rompu : la suie passe sans être retenue."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Défaillance légère du filtre à particules. Une zone du substrat a fondu et se colmate."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Défaillance modérée du filtre à particules. La zone fondue s'étend : la contre-pression augmente."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Défaillance sévère du filtre à particules. Fondu et colmaté, il ne se régénère plus : le régime moteur est bridé."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Défaillance critique du filtre à particules. Entièrement bouché, il ne laisse plus passer les gaz : seul son remplacement rend la puissance au moteur."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Saturation du filtre à particules. Les régénérations n'ont pas abouti : le régime moteur est bridé jusqu'à ce que l'une d'elles réussisse."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Saturation critique du filtre à particules. Trop chargé pour se régénérer seul, il demande une régénération de service à l'atelier ; le régime reste bridé."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Défaillance légère de l'embrayage de ventilateur. Le ventilateur réagit moins efficacement et le refroidissement est légèrement dégradé."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Défaillance modérée de l'embrayage de ventilateur. L'engagement du ventilateur est irrégulier et l'efficacité du refroidissement baisse nettement."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Défaillance sévère de l'embrayage de ventilateur. Le ventilateur ne fournit plus un débit d'air suffisant et le moteur surchauffe plus facilement."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Défaillance critique de l'embrayage de ventilateur. Le ventilateur ne peut plus assurer le refroidissement nécessaire."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="La commande du rapport répond plus lentement et moins précisément."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Le rapport varie irrégulièrement et sa commande répond mal."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="La commande du rapport est fortement perturbée et l'effort transmis diminue."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="La commande du rapport est défaillante et la transmission devient pratiquement inutilisable."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Fuite interne légère du vérin hydraulique. Un outil relevé dérive lentement sous la charge."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Fuite interne modérée du vérin hydraulique. La descente involontaire devient visible et augmente avec la charge portée."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Fuite interne sévère du vérin hydraulique. Les outils lourds ne tiennent plus leur position de manière fiable."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Fuite interne critique du vérin hydraulique. Toute charge relevée redescend rapidement d'elle-même."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Fuite interne mineure de la pompe hydraulique. Les outils fonctionnent légèrement plus lentement."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Joints usés sur la pompe hydraulique. Fonctionnement hydraulique nettement plus lent."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Pompe hydraulique endommagée. Les outils sont extrêmement lents et peu puissants."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Défaillance de la pompe hydraulique. Le système hydraulique est hors service."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Un flexible hydraulique présente une légère humidité. Un peu d'huile s'échappe et la réponse hydraulique diminue légèrement."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Un flexible hydraulique suinte visiblement. La perte d'huile continue et les fonctions hydrauliques répondent plus lentement."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Un flexible hydraulique fuit activement. La perte d'huile est évidente et les fonctions hydrauliques sont nettement affaiblies."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Un flexible hydraulique présente une fuite importante. L'huile s'échappe rapidement et les performances hydrauliques chutent fortement."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Le filtre hydraulique est légèrement encrassé et commence à limiter le débit. Les fonctions hydrauliques ralentissent légèrement. L'entretien remplace le filtre."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Le filtre hydraulique est modérément encrassé. Toutes les fonctions hydrauliques sont nettement plus lentes. L'entretien remplace le filtre."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Le filtre hydraulique est fortement encrassé. La réponse hydraulique devient très lente. L'entretien remplace le filtre."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Le filtre hydraulique est totalement colmaté. Les fonctions hydrauliques répondent à peine. L'entretien remplace le filtre."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Le refroidisseur d'huile hydraulique perd un peu d'efficacité. La température d'huile augmente légèrement pendant un travail hydraulique prolongé."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Le refroidisseur d'huile hydraulique fonctionne mal. La température d'huile augmente nettement pendant un travail hydraulique continu."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Le refroidisseur d'huile hydraulique est très dégradé. Un travail hydraulique lourd surchauffe rapidement l'huile."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Le refroidisseur d'huile hydraulique est en panne. Un travail prolongé provoque une forte surchauffe de l'huile et accélère l'usure de la pompe."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Un distributeur hydraulique commence à gripper. Une fonction hydraulique hésite parfois et perd de la force sous charge."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Un distributeur hydraulique grippe par intermittence. Une fonction hydraulique ralentit et perd davantage de force quand la charge augmente."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Un distributeur hydraulique grippe fortement. Une fonction hydraulique se déplace de façon erratique et peine sous une charge lourde."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Un distributeur hydraulique est gravement endommagé. Une fonction hydraulique s'arrête sans cesse et déplace à peine une charge lourde."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Pompe de transmission"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Unité hydrostatique"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Refroidisseur d'huile de transmission"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Roulements de boîte"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Embrayages de rapports powershift"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Embrayages d'inverseur powershift"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Commande de boîte"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Couple conique du pont arrière"/>
+        <text name="rms_breakdowns_part_final_drives" text="Réductions finales"/>
+        <text name="rms_breakdowns_part_differential" text="Pignons du différentiel"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="Enclenchement des 4RM"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Arbre de pont avant et croisillons"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Roulements de pont"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Capteurs de boîte"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Filtre de transmission"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Valve de relevage"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Capteur de position du relevage"/>
+        <text name="rms_breakdowns_part_loader_control" text="Commande du chargeur"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Coupleurs hydrauliques"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Défaillance légère de l'embrayage. Le débrayage est incomplet. Certains passages de vitesses sont difficiles."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Défaillance modérée de l'embrayage. Le mécanisme libère mal le disque. Les rapports sont refusés plus souvent."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Défaillance sévère de l'embrayage. Le disque reste entraîné au débrayage. La sélection des rapports est fortement perturbée."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Défaillance critique de l'embrayage. Le mécanisme ne libère plus le disque. Aucun rapport ne peut être engagé normalement."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Défaillance légère des roulements de boîte. Les surfaces de roulement sont endommagées. Un grondement léger apparaît dans la boîte."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Défaillance modérée des roulements de boîte. Les pistes de roulement sont détériorées. Le grondement de la boîte devient net."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Défaillance sévère des roulements de boîte. Les roulements tournent avec difficulté. La boîte gronde fortement et risque de se bloquer."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Défaillance critique des roulements de boîte. Les roulements ont grippé. La boîte est bloquée et la machine n'avance plus."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Défaillance légère des embrayages de rapports powershift. Un paquet de disques transmet mal l'effort. Le rapport patine légèrement sous charge."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Défaillance légère des embrayages de rapports powershift. Un paquet de disques s'applique avec retard. Un rapport passe avec un léger à-coup."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Défaillance modérée des embrayages de rapports powershift. Le serrage d'un paquet ne suffit plus. Le rapport patine nettement à l'effort."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Défaillance modérée des embrayages de rapports powershift. Le remplissage d'un paquet est perturbé. Le passage du rapport devient brusque."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Défaillance sévère des embrayages de rapports powershift. Un paquet de disques ne tient presque plus la charge. La traction devient très faible."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Défaillance sévère des embrayages de rapports powershift. Un paquet s'engage très mal. Les changements de rapport provoquent de forts à-coups."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Défaillance critique des embrayages de rapports powershift. Le paquet de disques ne transmet plus l'effort. La machine n'avance plus."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Défaillance critique des embrayages de rapports powershift. Le paquet ne s'engage plus correctement. Le rapport n'entraîne plus la machine."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Défaillance légère des embrayages d'inverseur powershift. Un embrayage de marche avant ou arrière patine légèrement à la reprise."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Défaillance légère des embrayages d'inverseur powershift. Un embrayage de l'inverseur prend avec retard. La reprise se fait avec un léger à-coup."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Défaillance modérée des embrayages d'inverseur powershift. Un embrayage de l'inverseur patine nettement. L'effort passe mal dans le sens demandé."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Défaillance modérée des embrayages d'inverseur powershift. Un embrayage de l'inverseur s'applique brutalement. Le changement de sens secoue la machine."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Défaillance sévère des embrayages d'inverseur powershift. Un embrayage de l'inverseur ne tient presque plus la charge. La traction s'effondre."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Défaillance sévère des embrayages d'inverseur powershift. L'application d'un embrayage de l'inverseur est très irrégulière. Les reprises sont très brusques."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Défaillance critique des embrayages d'inverseur powershift. L'embrayage de l'inverseur ne transmet plus l'effort. La machine n'avance plus."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Défaillance critique des embrayages d'inverseur powershift. L'embrayage de l'inverseur ne prend plus correctement. La traction est perdue."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Défaillance légère de la commande de boîte. La commande électro-hydraulique agit irrégulièrement. Un passage de rapport hésite."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Défaillance légère de la commande de boîte. La commande refuse occasionnellement une sélection de rapport."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Défaillance modérée de la commande de boîte. La commande perturbe le remplissage des embrayages. Les passages donnent des à-coups nets."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Défaillance modérée de la commande de boîte. La commande refuse plusieurs sélections. L'engagement des vitesses devient difficile."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Défaillance sévère de la commande de boîte. La commande applique mal les embrayages. Les passages sont fortement secoués."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Défaillance sévère de la commande de boîte. La commande n'exécute plus de nombreuses sélections. Les rapports sont rarement disponibles."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Défaillance critique de la commande de boîte. La commande n'engage plus correctement les embrayages. Les rapports passent très mal."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Défaillance critique de la commande de boîte. La commande ne permet plus la sélection d'un rapport. La boîte ne répond plus à la demande."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Défaillance du capteur de vitesse de boîte. Son signal devient irrégulier : la commande refuse parfois un passage des vitesses."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Défaillance du capteur de pression de boîte. La commande règle mal le remplissage des embrayages : les passages arrivent en retard et donnent des à-coups."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Défaillance critique du capteur de vitesse de boîte. Sans sa mesure, la commande refuse souvent les passages des vitesses."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Défaillance critique du capteur de pression de boîte. Sans sa mesure, chaque passage arrive très en retard et prend d'un coup."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Défaillance du capteur de vitesse de la transmission. La commande passe en mode de secours : la vitesse d'avancement est limitée."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Défaillance du capteur de pression de la transmission. La commande passe en mode de secours : la vitesse d'avancement est limitée."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Défaillance critique du capteur de vitesse de la transmission. Le mode de secours ne laisse plus qu'une faible vitesse d'avancement."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Défaillance critique du capteur de pression de la transmission. Le mode de secours ne laisse plus qu'une faible vitesse d'avancement."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Défaillance légère de la pompe de transmission. L'alimentation en huile de commande baisse. L'engagement hésite et de brèves pertes de traction apparaissent."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Défaillance modérée de la pompe de transmission. La pression de commande manque. Les rapports prennent avec des à-coups et la traction s'interrompt."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Défaillance sévère de la pompe de transmission. La pompe n'alimente presque plus la commande. L'engagement est très brusque et les pertes de traction sont fréquentes."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Défaillance critique de la pompe de transmission. La pompe ne fournit plus la pression nécessaire. La transmission n'entraîne plus la machine."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Défaillance légère de l'unité hydrostatique. Des fuites internes réduisent l'effort transmis. La variation perd un peu de vitesse et l'huile chauffe davantage."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Défaillance modérée de l'unité hydrostatique. Les fuites internes augmentent. La vitesse maximale baisse, l'huile chauffe et la consommation augmente."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Défaillance sévère de l'unité hydrostatique. Le groupe tournant ne transmet presque plus l'effort. La vitesse chute et l'huile chauffe fortement sous charge."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Défaillance critique de l'unité hydrostatique. Le groupe tournant ne transmet plus l'effort. La machine n'avance plus, moteur tournant."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Défaillance légère du refroidisseur d'huile de transmission. Le refroidisseur évacue moins de chaleur. L'huile de boîte chauffe davantage sous charge."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Défaillance modérée du refroidisseur d'huile de transmission. L'échange de chaleur est nettement réduit. L'huile de boîte reste plus chaude au travail."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Défaillance sévère du refroidisseur d'huile de transmission. Le refroidisseur évacue très mal la chaleur. L'huile de boîte risque de surchauffer à l'effort."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Défaillance critique du refroidisseur d'huile de transmission. Le refroidissement de l'huile de boîte est défaillant. Un travail soutenu expose la transmission à la surchauffe."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="Le filtre de transmission arrive à son échéance et commence à se colmater. L'afficheur demande son remplacement. L'entretien remplace le filtre."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="Le filtre de transmission est encrassé : son clapet s'ouvre et l'huile de la boîte passe sans être filtrée. La transmission s'use plus vite. L'entretien remplace le filtre."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="Le filtre de transmission est fortement encrassé. L'huile de la boîte circule sans être filtrée et use la transmission. L'entretien remplace le filtre."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="Le filtre de transmission est totalement colmaté. Toute l'huile de la boîte passe sans être filtrée et use la transmission. L'entretien remplace le filtre."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Défaillance légère du couple conique du pont arrière. La denture du couple conique est détériorée. Un léger sifflement apparaît en charge."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Défaillance modérée du couple conique du pont arrière. Le contact de la denture est perturbé. Le pont arrière siffle nettement sous charge."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Défaillance sévère du couple conique du pont arrière. La denture est fortement endommagée. Le pont arrière siffle fort et risque de perdre son entraînement."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Défaillance critique du couple conique du pont arrière. Le couple conique ne transmet plus l'effort. Le pont arrière n'est plus entraîné et la machine n'avance plus."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Défaillance légère des réductions finales. La denture d'une réduction finale est détériorée. Un léger sifflement apparaît près d'une roue motrice."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Défaillance modérée des réductions finales. Les pignons d'une réduction finale tournent mal. Le sifflement devient net à la roue."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Défaillance sévère des réductions finales. Les pignons d'une réduction finale sont fortement endommagés. Le bruit est fort et l'entraînement risque de céder."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Défaillance critique des réductions finales. Une réduction finale ne transmet plus l'effort à sa roue. La machine ne peut plus avancer normalement."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="Défaillance de l'enclenchement des 4RM. L'enclenchement des quatre roues motrices ne répond plus. Le pont avant reste débrayé."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="Défaillance de l'enclenchement des 4RM. Le pont avant reste embrayé. Les quatre roues motrices ne peuvent plus être désenclenchées."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Défaillance de la pompe hydraulique. La pompe est cassée. La pression est perdue et les fonctions hydrauliques ne répondent plus."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Défaillance du distributeur hydraulique. Le tiroir reste bloqué. La fonction hydraulique concernée ne bouge plus."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Défaillance de la valve de relevage. La valve du relevage ne tient plus correctement la charge. L'outil levé redescend."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Défaillance de la valve de relevage. La valve du relevage reste bloquée. Le relevage ne répond plus."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Défaillance du capteur de position du relevage. Le signal de position est défaillant. Le relevage ne tient plus la hauteur demandée et un code défaut est enregistré."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Défaillance légère de la commande du chargeur. Le bras et le godet répondent plus lentement."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Défaillance modérée de la commande du chargeur. Le bras et le godet ne se déplacent plus qu'à mi-vitesse."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Défaillance sévère de la commande du chargeur. Le bras et le godet bougent à peine."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Défaillance critique de la commande du chargeur. Le bras et le godet ne répondent plus."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Défaillance légère du vérin hydraulique. Le joint de tige laisse passer un peu d'huile. Une légère humidité apparaît autour de la tige."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Défaillance modérée du vérin hydraulique. Le joint de tige n'est plus étanche. Le vérin suinte et le niveau d'huile baisse."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Défaillance sévère du vérin hydraulique. Le joint de tige fuit activement. La perte d'huile du vérin devient importante."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Défaillance critique du vérin hydraulique. Le joint de tige laisse échapper beaucoup d'huile. Le niveau du circuit baisse rapidement."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Défaillance légère des coupleurs hydrauliques. L'étanchéité d'un coupleur est défaillante. Une légère humidité apparaît au raccord."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Défaillance des coupleurs hydrauliques. Le passage d'huile d'un coupleur est bloqué. La fonction hydraulique raccordée ne bouge plus."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Défaillance modérée des coupleurs hydrauliques. Un coupleur suinte. Le circuit perd de l'huile à la connexion."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Défaillance sévère des coupleurs hydrauliques. Un coupleur fuit activement. La perte d'huile au raccord devient importante."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Défaillance critique des coupleurs hydrauliques. Un coupleur fuit fortement. Le niveau d'huile du circuit baisse rapidement."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Défaillance légère du refroidisseur d'huile hydraulique. Le faisceau du refroidisseur n'est plus parfaitement étanche. Une légère humidité apparaît sur celui-ci."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Défaillance modérée du refroidisseur d'huile hydraulique. Le faisceau du refroidisseur suinte. Le niveau d'huile hydraulique baisse."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Défaillance sévère du refroidisseur d'huile hydraulique. Le faisceau du refroidisseur fuit activement. Le circuit perd nettement de l'huile."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Défaillance critique du refroidisseur d'huile hydraulique. Le faisceau du refroidisseur fuit fortement. Le niveau d'huile hydraulique baisse rapidement."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Commande du blocage de différentiel"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Défaillance légère des pignons du différentiel. Les surfaces des dents sont endommagées. Un léger bruit apparaît en virage."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Défaillance modérée des pignons du différentiel. Le contact des dents est perturbé. Le bruit du différentiel devient nettement audible en virage."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Défaillance sévère des pignons du différentiel. La denture est fortement endommagée. Le bruit est fort en virage et l'entraînement risque de céder."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Défaillance critique des pignons du différentiel. Les pignons ne transmettent plus l'effort. La machine n'est plus entraînée, moteur tournant."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Usure légère des croisillons de l'arbre de pont avant. Un léger jeu apparaît dans l'entraînement du pont avant."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Usure modérée des croisillons de l'arbre de pont avant. Le jeu aux croisillons devient net."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Usure sévère des croisillons de l'arbre de pont avant. Un croisillon est près de céder."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Rupture d'un croisillon de l'arbre de pont avant. Le pont avant n'est plus entraîné."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Usure légère des roulements de pont. Un léger grondement s'entend en roulant."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Usure modérée des roulements de pont. Le grondement augmente avec la vitesse."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Usure sévère des roulements de pont. Un roulement s'écaille et commence à abîmer le couple conique."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Usure critique des roulements de pont. Un roulement a lâché, le couple conique est abîmé et le pont ne transmet plus la traction."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Défaillance de la commande du blocage de différentiel. Le blocage ne s'enclenche plus. Le différentiel reste libre."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Défaillance de la commande du blocage de différentiel. Le blocage reste enclenché. La machine résiste au braquage en virage."/>
+    </texts>
+</l10n>

@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Pysyvä"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Tehon alennus"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Pois käytöstä"/>
+        <text name="rms_breakdowns_severity_minor" text="Lievä"/>
+        <text name="rms_breakdowns_severity_moderate" text="Kohtalainen"/>
+        <text name="rms_breakdowns_severity_major" text="Vakava"/>
+        <text name="rms_breakdowns_severity_critical" text="Kriittinen"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Lievä ohjauksen pallonivelten ja raidetankojen kuluminen. Syntyy hieman välystä ja ohjaus muuttuu epätarkemmaksi."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Kohtalainen ohjauksen pallonivelten ja raidetankojen kuluminen. Välys kasvaa ja ajoneuvo puoltaa hieman toiselle sivulle."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Vakava ohjauksen pallonivelten ja raidetankojen kuluminen. Välys on suuri ja ajoneuvo puoltaa toiselle sivulle sekä pitää suunnan heikommin."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Ohjauksen pallonivelissä ja raidetangoissa on kriittinen vika. Vapautunut pyörä ei enää seuraa ohjauspyörää kunnolla; ajaminen on vaarallista."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Lievä olkatappien kuluminen. Ohjaukseen syntyy hieman välystä."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Kohtalainen olkatappien kuluminen. Ohjauksen välys muuttuu havaittavaksi."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Vakava olkatappien kuluminen. Ohjauksen välys on suuri."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kriittinen olkatappien kuluminen. Ohjauksessa on erittäin suuri välys."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lievä ohjauksen orbitrolin toimintahäiriö. Ohjauspyörässä on hieman välystä ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Kohtalainen ohjauksen orbitrolin toimintahäiriö. Ohjauspyörä kääntyy enemmän ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Vakava ohjauksen orbitrolin toimintahäiriö. Ohjauspyörä kääntyy paljon ilman että pyörät seuraavat kunnolla mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Ohjauksen orbitrolissa on kriittinen vika. Ohjauspyörässä on erittäin suuri välys ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Ohjaussylinterissä on lievä sisäinen vuoto. Ajoneuvo alkaa ajautua sivulle."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Ohjaussylinterin varren tiivisteessä on lievä vuoto. Hydrauliöljyn pinta laskee hieman."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Ohjaussylinterissä on kohtalainen sisäinen vuoto. Ajoneuvo ajautuu enemmän sivulle."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Ohjaussylinterin varren tiivisteessä on kohtalainen vuoto. Hydrauliöljyn pinta laskee selvästi."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Ohjaussylinterissä on vakava sisäinen vuoto. Ajoneuvo ajautuu selvästi sivulle."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Ohjaussylinterin varren tiivisteessä on vakava vuoto. Hydrauliöljyn pinta laskee nopeasti."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Ohjaussylinterissä on kriittinen sisäinen vuoto. Ajoneuvo ajautuu voimakkaasti sivulle."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Ohjaussylinterin varren tiivisteessä on kriittinen vuoto. Hydrauliöljyn pinta laskee erittäin nopeasti."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Lievä kuormaimen nivelten tappien ja holkkien kuluminen. Puomin niveliin syntyy hieman välystä."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Kohtalainen kuormaimen nivelten tappien ja holkkien kuluminen. Puomin nivelten välys muuttuu havaittavaksi."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Vakava kuormaimen nivelten tappien ja holkkien kuluminen. Puomissa on suuri välys."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kriittinen kuormaimen nivelten tappien ja holkkien kuluminen. Puomin välys on erittäin suuri."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Ohjaamon iskunvaimentimen lievä vuoto. Ohjaamon vaimennus on hieman heikentynyt."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Ohjaamon iskunvaimentimen kohtalainen vuoto. Ohjaamo pomppii töyssyissä."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Ohjaamon iskunvaimentimen vakava vuoto. Ohjaamo heiluu jokaisessa tärähdyksessä."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Ohjaamon iskunvaimentimen kriittinen vuoto. Iskunvaimennin on tyhjä: ohjaamon vaimennus on lähes olematon."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Vaihde irrotettu"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Hehkutulppien kuluminen on alkanut. Kylmäkäynnistys hidastuu, mutta lämpimän moottorin käynnistys ei muutu."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Useita hehkutulppia on heikentynyt tai rikkoutunut. Kylmäkäynnistys on vaikeaa ja moottori voi käydä epätasaisesti lämpenemiseen asti."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Vakava hehkutulppien toimintahäiriö. Kylmäkäynnistys on erittäin epävarmaa ja epätasainen käynti jatkuu lämpenemisen aikana."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Hehkutulpat ovat rikkoutuneet kokonaan. Moottori ei käynnisty, kun lämpötila on liian alhainen."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Hehkureleessä on vika. Hehkutulpat eivät enää lämpene: Moottorin käynnistys on mahdotonta liian alhaisessa lämpötilassa."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Käynnistysreleessä on vika. Moottori ei enää pyöri käynnistettäessä."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Lähivalopolttimoissa on vika. Nämä valot eivät syty ennen polttimoiden vaihtamista."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Kaukovalopolttimoissa on vika. Nämä valot eivät syty ennen polttimoiden vaihtamista."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Etutyövalojen polttimoissa on vika. Nämä valot eivät syty ennen polttimoiden vaihtamista."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Takatyövalojen polttimoissa on vika. Nämä valot eivät syty ennen polttimoiden vaihtamista."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Majakan polttimossa on vika. Majakka ei syty ennen polttimon vaihtamista."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Suuntavilkkujen polttimoissa on vika. Suuntavilkut ja hätävilkut eivät syty ennen polttimoiden vaihtamista."/>
+        <text name="rms_breakdowns_part_vehicle" text="Ajoneuvo"/>
+        <text name="rms_breakdowns_part_pistons" text="Männät"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Männänrenkaat"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Sylinteriputket"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Imuventtiilit"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Pakoventtiilit"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Venttiiliohjurit ja varsitiivisteet"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Sylinterikansi"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Sylinterikannen tiiviste"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Kampiakselin laakerit"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Kiertokangen laakerit"/>
+        <text name="rms_breakdowns_part_consumables" text="Kulutustarvikkeet"/>
+        <text name="rms_breakdowns_part_clutch" text="Kytkin"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Välityssuhteen ohjaus"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Moottori"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Virtakaapelit ja maadoitukset"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Käynnistysrele"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Hehkurele"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Lähivalopolttimot"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="Kaukovalopolttimot"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Etutyövalojen polttimot"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Takatyövalojen polttimot"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Majakan polttimo"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Suuntavilkkujen polttimot"/>
+        <text name="rms_breakdowns_part_battery" text="Akku"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Ajoakku"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Suurjännitekontaktori"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Suurjännitejohdotus"/>
+        <text name="rms_breakdowns_part_inverter" text="Invertteri"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Jännitemuunnin"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Sisäinen laturi"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Sähkömoottorin laakerit"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Sähkömoottorin käämit"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Moottorin asentoanturi"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Jäähdytysnestepumppu"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Vesipumppu"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Jäähdyttimen kenno"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Jäähdytysnesteletkut ja liittimet"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Paisuntasäiliö"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Apulaitehihna ja kiristin"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Tuulettimen siipi"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Sähköinen jäähdytyspuhallin"/>
+        <text name="rms_breakdowns_part_reducer" text="Alennusvaihde"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Jarrulevyt ja jarrupäällysteet"/>
+        <text name="rms_breakdowns_part_brake_control" text="Jarrujen käyttölaite"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Perävaunun jarruventtiili"/>
+        <text name="rms_breakdowns_part_park_brake" text="Seisontajarru"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Navan laakeri ja tiiviste"/>
+        <text name="rms_breakdowns_part_alternator" text="Laturi"/>
+        <text name="rms_breakdowns_part_starter" text="Käynnistin"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turboahdin"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Vaihteiston tiiviste"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Telakiristin"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Tukirullat ja johtopyörät"/>
+        <text name="rms_breakdowns_part_thermostat" text="Termostaatti"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Öljypumppu"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Synkronointirengas"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Ohjauksen pallonivelet ja raidetangot"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Kuormaimen nivelten tapit ja holkit"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Olkatapit"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Ohjauksen orbitrol"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Ohjaussylinteri"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Ohjaamon jousitus"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="Voimanottokytkin"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="Voimanoton ulostuloakselin laakerit"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="Voimanoton ulostuloakselin tiiviste"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="Voimanoton ulostuloakseli"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="Voimanoton kytkentämagneettiventtiili"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="Voimanoton ohjauskytkin"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="Voimanoton kierroslukuanturi"/>
+        <text name="rms_breakdowns_part_pto_brake" text="Voimanoton jarru"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Etuvoimanottokytkin"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Hydraulipumppu"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hydraulisylinteri"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Hydrauliletku"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Hydraulisuodatin"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Hydrauliöljyn jäähdytin"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Hydraulinen ohjausventtiili"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Tuuletinkytkin"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Syöttöpumppu"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Polttoaineruiskut"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="Korkeapainepumppu"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Polttoainesuodatin"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Polttoaineputki"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Mekaaninen ruiskutuspumppu"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Polttoaineen annosteluventtiili"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Yhteispaineruiskutuksen paineanturi"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Yhteispaineruiskutuksen paineenrajoitusventtiili"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Kaasun paineenalennin"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Kaasun sulkumagneettiventtiili"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Kaasusuodatin"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Kaasuputket"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Kaasusuuttimet"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-pumppu"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-annostelusuutin"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-suodatin"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="NOx-anturi"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Hiukkassuodatin"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Hehkutulpat"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="Voimanotto irtosi"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="Etuvoimanoton veto katkesi"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="Voimanotto ei irrota: sammuta kone pysäyttääksesi työkoneen"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Voimanottokytkimen alkava kuluminen. Voimansiirto irtoaa ajoittain."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Voimanottokytkimen kohtalainen kuluminen. Irtoamiset toistuvat."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Voimanottokytkimen vakava kuluminen. Työkone menettää usein vetonsa."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Voimanottokytkimessä on kriittinen vika. Työkone pysähtyy."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Voimanottokytkimen alkava kuluminen. Levyt alkavat tarttua kiinni."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Voimanottokytkimen kohtalainen kuluminen. Levyt tarttuvat yhä enemmän kiinni."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Voimanottokytkimen vakava kuluminen. Levyt tarttuvat kiinni: voimanotto ei välillä irrota."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Voimanottokytkimessä on kriittinen vika. Levyt ovat hitsautuneet yhteen: voimanotto ei enää irrota ja työkone pysähtyy vasta, kun kone sammutetaan."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Voimanoton ulostuloakselin laakerien alkava kuluminen. Alkaa kuulua vaimeaa jyrinää."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Voimanoton ulostuloakselin laakerien kohtalainen kuluminen. Jyrinä kuuluu selvästi."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Voimanoton ulostuloakselin laakerien vakava kuluminen. Jyrinä voimistuu."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Voimanoton ulostuloakselin laakereissa on kriittinen vika. Jyrinä on voimakkaimmillaan."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Voimanoton ulostuloakselin tiivisteen lievä vuoto. Vaihteistoöljyn pinta laskee hitaasti työn aikana."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Voimanoton ulostuloakselin tiivisteen kohtalainen vuoto. Vaihteistoöljyn pinta laskee työn aikana."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Voimanoton ulostuloakselin tiivisteen vakava vuoto. Vaihteistoöljyä valuu ulos ja pinta laskee nopeasti."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Voimanoton ulostuloakselin tiivisteen kriittinen vuoto. Jäljellä oleva öljy ei riitä voimansiirron turvalliseen toimintaan."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Voimanoton kytkentämagneettiventtiilin alkava kuluminen. Voimansiirto katkeaa ajoittain työn aikana."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Voimanoton kytkentämagneettiventtiilin alkava kuluminen. Voimanotto ei ajoittain kytkeydy."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Voimanoton kytkentämagneettiventtiilin kohtalainen kuluminen. Katkokset työn aikana toistuvat."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Voimanoton kytkentämagneettiventtiilin kohtalainen kuluminen. Kytkeytymättä jääminen toistuu."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Voimanoton kytkentämagneettiventtiilin vakava kuluminen. Voimansiirto katkeaa usein."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Voimanoton kytkentämagneettiventtiilin vakava kuluminen. Voimanotto ei usein kytkeydy."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Voimanoton kytkentämagneettiventtiilissä on kriittinen vika. Sen käämi on poikki eikä voimanotto enää pysy kytkettynä."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Voimanoton kytkentämagneettiventtiilissä on kriittinen vika. Sen kara juuttuu eikä voimanotto enää kytkeydy."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Voimanoton ohjauskytkimen alkava kuluminen. Kosketushäiriö katkaisee voimansiirron ajoittain."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Voimanoton ohjauskytkimen alkava kuluminen. Voimanotto ei ajoittain reagoi ohjaukseen."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Voimanoton ohjauskytkimen kohtalainen kuluminen. Kosketushäiriöt katkaisevat voimansiirron yhä useammin."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Voimanoton ohjauskytkimen kohtalainen kuluminen. Voimanotto jättää ohjauksen huomiotta yhä useammin."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Voimanoton ohjauskytkimen vakava kuluminen. Kosketin ei enää pysy kiinni ja voimansiirto katkeaa usein."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Voimanoton ohjauskytkimen vakava kuluminen. Ohjaus jää usein vaikutuksettomaksi."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Voimanoton ohjauskytkimessä on kriittinen vika. Sen kosketin pysyy auki ja voimanotto irtoaa."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Voimanoton ohjauskytkimessä on kriittinen vika. Sen kosketin ei enää sulkeudu eikä voimanotto enää kytkeydy."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="Voimanoton ulostuloakselissa on vika. Sen uritus on repeytynyt eikä enää välitä liikettä."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="Voimanoton ulostuloakselissa on vika. Se on katkennut eikä työkone enää saa vetoa."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="Voimanoton kierroslukuanturissa on vika. Se ei enää lähetä signaalia ja turvajärjestelmä katkaisee voimanoton."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="Voimanoton jarrussa on vika. Se jää päälle ja lukitsee ulostuloakselin."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Etuvoimanottokytkimen alkava kuluminen. Etu-ulostulon veto katkeaa välillä."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Etuvoimanottokytkimen kohtalainen kuluminen. Etu-ulostulon vedon katkeamiset toistuvat."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Etuvoimanottokytkimen vakava kuluminen. Edessä oleva työkone menettää usein vetonsa."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Etuvoimanottokytkimessä on kriittinen vika. Etu-ulostulo ei enää pyöri; takavoimanottoon ei ole vaikutusta."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Voimanoton kytkentä estyi"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Tilapäiskorjaus"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Vika"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Järjestelmä toimii normaalisti, mutta tarkastuksessa havaittiin viallinen osa. Osa ei enää tarjoa turvamarginaalia, joten ennaltaehkäisevää vaihtoa suositellaan äkillisen vian välttämiseksi."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Akku liian heikko"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Ajoakku kylmä: toimintamatka ja teho alentuneet"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Järjestelmä toimii normaalisti, mutta on täysin tilapäiskorjauksen varassa. Osat kannattaa vaihtaa kokonaan mahdollisimman pian, jotta vältetään vika kuormituksessa."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Turboahdinlaakerien kuluminen. Kuuluu heikko vinkuna ja pienehkö tehonlasku suurilla kierroksilla."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Turboahtimen tiivisteet vuotavat. Teho laskee selvästi ja polttoaineen kulutus kasvaa."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Turbiinin siipien vaurio. Vakava tehonlasku ja moottorin sammumisriski raskaassa kuormituksessa."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Turboahtimessa on kriittinen vika. Moottori on menettänyt suurimman osan tehostaan ja voi vaurioitua vakavasti sisältä."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Kuluneet kytkinkiekot. Satunnainen tehonlasku vaihteiston luistuessa kuormituksessa."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Merkittävä kytkimen kuluminen. Havaittava vaihteiston luistaminen erityisesti kiihdytyksessä."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Pahoin kulunut kytkin. Vakava luistaminen vaikeuttaa tehon siirtoa pyörille."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Kytkin on täysin palanut. Ajoneuvo ei pysty liikkumaan."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Kuluneet synkronointirenkaat. Satunnaista narskumista tai vaikeuksia vaihteita vaihdettaessa."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Vaurioituneet synkronointirenkaat. Vaihteenvaihto on usein vaikeaa ja saattaa epäonnistua."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Synkronointirenkaan hampaita on murtunut. Vaihteen vaihto voi epäonnistua tai vaihde voi irrota kuormituksessa."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Synkronointirenkaat ovat täysin vikaantuneet. Vaihteenvaihto on mahdotonta."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Lievä vaihteistoöljyvuoto. Öljytaso laskee hitaasti työn aikana."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Kohtalainen vaihteistoöljyvuoto. Öljytaso laskee selvästi ja vaihteisto käy kuumempana."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Vakava vaihteistoöljyvuoto. Öljytaso laskee nopeasti ja vaihteisto ylikuumenee kuormituksessa."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Kriittinen vaihteistoöljyvuoto. Öljyä ei ole enää riittävästi vaihteiston turvalliseen käyttöön."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Lievä telakiristimen toimintahäiriö. Telan kireys on hieman epävakaampi, mikä lisää lievästi vierintävastusta ja kulumista."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Kohtalainen telakiristimen toimintahäiriö. Kireys muuttuu epävakaaksi, vierintätehokkuus heikkenee ja väärän linjauksen riski kasvaa."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Vakava telakiristimen toimintahäiriö. Kireys on voimakkaasti häiriintynyt, liikkeensiirto muuttuu tehottomaksi ja telan irtoamisriski kasvaa."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Telakiristimessä on kriittinen vika. Telaa ei voida enää pitää oikein paikallaan eikä ajoneuvoa voida käyttää turvallisesti."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Lievä termostaatin toimintahäiriö. Moottori lämpenee hitaasti ja jää työssä liian kylmäksi."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Lievä termostaatin toimintahäiriö. Lämpötilan säätö on heikko ja moottori lämpenee kuormituksessa."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Kohtalainen termostaatin toimintahäiriö. Moottori lämpenee hitaasti ja jää työssä liian kylmäksi."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Kohtalainen termostaatin toimintahäiriö. Lämpötila nousee aiemmin ja moottori käy kuumana kuormituksessa."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Vakava termostaatin toimintahäiriö. Moottori lämpenee hitaasti ja jää työssä liian kylmäksi."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Vakava termostaatin toimintahäiriö. Moottori kuumenee paljon; pitkä työ voi aiheuttaa ylikuumenemisen."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Kriittinen termostaatin vika. Moottori lämpenee hitaasti ja jää työssä liian kylmäksi."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Kriittinen termostaatin vika. Se pysyy kiinni ja moottori ylikuumenee nopeasti."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Moottori on siirtynyt suojaustilaan. Teho on rajoitettu, kunnes lämpötila laskee."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Ylikuumenemissuoja: teho alennettu"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Ylikuumenemissuoja tehostuu. Moottori tuottaa enää puolet tehostaan."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Ylikuumenemissuoja: teho alennettu puoleen"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Ylikuumenemissuoja on maksimissaan. Moottorin tehosta on jäljellä enää murto-osa."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Ylikuumenemissuoja: teho voimakkaasti alennettu"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Moottori on sammutettu vaurioiden estämiseksi. Anna sen jäähtyä ennen uudelleenkäynnistystä."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Ylikuumenemissuoja: moottori sammutettu"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lievä öljypumpun toimintahäiriö. Öljynpaine on alentunut, moottorin vääntömomentti on hieman alentunut, moottorin lämpötila on kohonnut ja mekaaninen kopina saattaa esiintyä."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Kohtalainen öljypumpun toimintahäiriö. Öljynpaine on riittämätön, moottorin vääntömomentti on havaittavasti alentunut, moottorin lämpötila on noussut ja mekaaninen kopina on selvästi kuultavissa."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Vakava öljypumpun toimintahäiriö. Öljynpaine on kriittisen alhainen, moottorin vääntömomentti on voimakkaasti alentunut, moottorin ylikuumeneminen on todennäköistä, mekaaninen kopina on voimakasta ja moottorin sammuminen on mahdollista."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Öljypumpussa on kriittinen vika. Öljyn kierto ei riitä moottorin turvalliseen käyttöön, eikä moottoria voi enää käynnistää tai käyttää."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="Moottori on juuttunut eikä voi enää pyöriä."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Moottori sammunut"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU:n lievä toimintahäiriö. Moottorin teho on hieman alentunut."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Kohtalainen ECU:n toimintahäiriö. Teho laskee selvästi ja polttoaineen kulutus kasvaa."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Vakava ECU:n toimintahäiriö. Teho laskee voimakkaasti, polttoaineen kulutus kasvaa ja moottori voi sammua."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Täydellinen ECU-vika. Moottoria ei voida ohjata eikä se käynnisty."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Lievä virtakaapelien ja maadoitusten toimintahäiriö. Lisääntynyt kosketusresistanssi aiheuttaa satunnaista valojen välkkymistä, epävakaata jännitesyöttöä ja vaikeutunutta moottorin käynnistystä. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Kohtalainen virtakaapelien ja maadoitusten toimintahäiriö. Kontaktiongelmat aiheuttavat tiheää valojen välkkymistä, epävakaata jännitesyöttöä, vaikeutunutta moottorin käynnistystä ja mahdollisia moottorin sammumisia. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Vakava virtakaapelien ja maadoitusten toimintahäiriö. Piirien jännitesyöttö on epävakaa, valaistus voi lakata kokonaan, moottorin vääntömomentti on alentunut, moottorin sammuminen on todennäköistä ja käynnistys on epäluotettavaa. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Virtakaapeleissa ja maadoituksissa on kriittinen vika. Valaistus ei toimi eikä moottoria voi käynnistää. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Lievä virtakaapelien ja maadoitusten toimintahäiriö. Lisääntynyt kosketusresistanssi aiheuttaa satunnaista valojen välkkymistä ja epävakaata jännitesyöttöä. Vuotovirta tyhjentää apuakun, kun kone seisoo."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Kohtalainen virtakaapelien ja maadoitusten toimintahäiriö. Kontaktiongelmat aiheuttavat tiheää valojen välkkymistä, epävakaata jännitesyöttöä ja mahdollisia katkoja. Vuotovirta tyhjentää apuakun, kun kone seisoo."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Vakava virtakaapelien ja maadoitusten toimintahäiriö. Piirien jännitesyöttö on epävakaa, valaistus voi lakata kokonaan, teho on alentunut ja katkot ovat todennäköisiä. Vuotovirta tyhjentää apuakun, kun kone seisoo."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Virtakaapeleissa ja maadoituksissa on kriittinen vika. Valaistus ei toimi eikä kone käynnisty. Vuotovirta tyhjentää apuakun, kun kone seisoo."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Lievä jäähdytysnesteletkujen ja liittimien toimintahäiriö. Pieni tihku laskee jäähdytysnesteen pintaa vain vähän."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Lievä jäähdytysnesteletkujen ja liittimien toimintahäiriö. Hieman litistynyt letku vähentää virtausta vähän."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Kohtalainen jäähdytysnesteletkujen ja liittimien toimintahäiriö. Vuoto näkyy selvästi ja nestepinta laskee enemmän."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Kohtalainen jäähdytysnesteletkujen ja liittimien toimintahäiriö. Pienempi virtaus nostaa lämpötilaa nopeammin kuormituksessa."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Vakava jäähdytysnesteletkujen ja liittimien toimintahäiriö. Nestettä vuotaa paljon; moottori voi ylikuumentua kuormituksessa."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Vakava jäähdytysnesteletkujen ja liittimien toimintahäiriö. Virtaus on heikko ja moottori ylikuumenee pitkässä työssä."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Kriittinen jäähdytysnesteletkujen ja liittimien vika. Nestepinta laskee nopeasti ja jäähdytyspiiri voi tyhjentyä."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Kriittinen jäähdytysnesteletkujen ja liittimien vika. Virtaus on voimakkaasti estynyt ja moottori ylikuumenee nopeasti."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Lievä paisuntasäiliön toimintahäiriö. Halkeama tihkuu hieman jäähdytysnestettä."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Lievä paisuntasäiliön toimintahäiriö. Liitos tihkuu hieman."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Kohtalainen paisuntasäiliön toimintahäiriö. Halkeama vuotaa selvästi ja nestepinta laskee."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Kohtalainen paisuntasäiliön toimintahäiriö. Liitos vuotaa selvästi ja nestepinta laskee."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Vakava paisuntasäiliön toimintahäiriö. Vuoto laskee nestepintaa nopeasti."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Vakava paisuntasäiliön toimintahäiriö. Liitoksesta häviää jäähdytysnestettä nopeasti."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Kriittinen paisuntasäiliön vika. Jäähdytysnestettä karkaa nopeasti ja piiri tyhjenee."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Kriittinen paisuntasäiliön vika. Liitoksen vuoto tyhjentää piirin nopeasti."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Lievä apulaitehihnan ja kiristimen toimintahäiriö. Se vinkuu ja luistaa hieman; lataus ja kierto heikkenevät vähän."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Kohtalainen apulaitehihnan ja kiristimen toimintahäiriö. Se luistaa kuormituksessa; lataus laskee ja neste kiertää heikommin."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Vakava apulaitehihnan ja kiristimen toimintahäiriö. Se luistaa voimakkaasti; lataus ja kierto ovat selvästi heikentyneet."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Kriittinen apulaitehihnan ja kiristimen vika. Se katkeaa; lataus ja jäähdytysnesteen kierto lakkaavat äkillisesti."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Lievä tuulettimen siiven toimintahäiriö. Ilmavirta heikkenee hieman; jäähdytys hidastuu etenkin hitaassa ajossa."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Kohtalainen tuulettimen siiven toimintahäiriö. Ilmavirta heikkenee selvästi ja lämpötila nousee enemmän."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Vakava tuulettimen siiven toimintahäiriö. Ilmavirta on selvästi vähentynyt ja moottori kuumenee kuormituksessa."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Kriittinen tuulettimen siiven vika. Ilmavirta puolittuu ja moottori ylikuumenee nopeasti kuormituksessa."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Lievä sähköisen jäähdytyspuhaltimen toimintahäiriö. Se siirtää hieman vähemmän ilmaa jäähdytystarpeessa."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Kohtalainen sähköisen jäähdytyspuhaltimen toimintahäiriö. Ilmaa siirtyy selvästi vähemmän ja lämpötila nousee nopeammin."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Vakava sähköisen jäähdytyspuhaltimen toimintahäiriö. Ilmankierto on selvästi vähentynyt ja lämpötila nousee kuormituksessa."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Kriittinen sähköisen jäähdytyspuhaltimen vika. Ilmankierto puolittuu ja lämpötila nousee nopeasti kuormituksessa."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="CVT-vaihteistossa on havaittu varhaismerkkejä toimintahäiriöstä. Tarkastus ja korjaus vaaditaan."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="CVT-vaihteiston toimintahäiriö pahenee. Jatkokäyttö voi johtaa hätätilaan."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="CVT-vaihteistossa on kriittinen vaurio. Vaihteisto on hätätilassa ja ajoneuvon enimmäisnopeus on alentunut."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="CVT-vaihteiston täydellinen vika. Ajoneuvoa ei voi käyttää ennen korjausta."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Lievä akun sulfatoituminen. Todellinen akun kapasiteetti on alentunut, mikä vähentää sähköistä varausta kuormituksessa."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Kohtalainen akun sulfatoituminen. Todellinen akun kapasiteetti on merkittävästi alentunut ja moottorin käynnistys on vaikeutunut."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Vakava akun sulfatoituminen. Käyttökelpoinen kapasiteetti on kriittisen alhainen ja käynnistysteho epävakaa."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Kriittinen akun sulfatoituminen. Todellinen akun kapasiteetti on lähes nolla eikä käynnistysteho riitä luotettavaan moottorin käynnistykseen."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Lievä apuakun sulfatoituminen. Todellinen akun kapasiteetti on alentunut, mikä vähentää sähköistä varausta kuormituksessa."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Kohtalainen apuakun sulfatoituminen. Todellinen akun kapasiteetti on merkittävästi alentunut ja sähköinen varaus ehtyy nopeammin."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Vakava apuakun sulfatoituminen. Käyttökelpoinen kapasiteetti on kriittisen alhainen ja sähköinen varaus ehtyy hyvin nopeasti."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Kriittinen apuakun sulfatoituminen. Todellinen akun kapasiteetti on lähes nolla eikä riitä enää luotettavaan käynnistykseen."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Lievä jarrulevyjen ja jarrupäällysteiden kuluminen. Jarruteho on hieman heikentynyt."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Kohtalainen jarrulevyjen ja jarrupäällysteiden kuluminen. Jarrutusmatka on havaittavasti pidentynyt."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Vakava jarrulevyjen ja jarrupäällysteiden kuluminen. Jarrut ovat erittäin heikot ja epäluotettavat."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Jarrulevyissä ja jarrupäällysteissä on kriittinen vika. Ajoneuvo jarruttaa erittäin huonosti ja ajaminen muuttuu vaaralliseksi."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Lievä jarrujen käyttölaitteen toimintahäiriö. Ajoneuvo puoltaa hieman toiselle sivulle jarrutettaessa."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Lievä jarrujen käyttölaitteen toimintahäiriö. Poljin muuttuu hieman pehmeäksi ja jarruteho heikkenee hieman."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Kohtalainen jarrujen käyttölaitteen toimintahäiriö. Jarrutus puoltaa selvästi toiselle sivulle."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Kohtalainen jarrujen käyttölaitteen toimintahäiriö. Poljin muuttuu pehmeäksi, paine laskee ja jarruteho heikkenee selvästi."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Vakava jarrujen käyttölaitteen toimintahäiriö. Ajoneuvo puoltaa voimakkaasti toiselle sivulle jarrutettaessa."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Vakava jarrujen käyttölaitteen toimintahäiriö. Poljin painuu poikkeavan syvälle, paine romahtaa ja ajoneuvo jarruttaa huonosti."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Jarrujen käyttölaitteessa on kriittinen vika. Jarrutus puoltaa erittäin voimakkaasti toiselle sivulle."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Jarrujen käyttölaitteessa on kriittinen vika. Poljin painuu lähes vastuksetta ja ajoneuvo tuskin enää jarruttaa."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Lievä perävaunun jarruventtiilin toimintahäiriö. Perävaunu menettää pienen osan jarrutehostaan."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Kohtalainen perävaunun jarruventtiilin toimintahäiriö. Perävaunu jarruttaa selvästi heikommin."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Vakava perävaunun jarruventtiilin toimintahäiriö. Perävaunu saa enää pienen osan jarrutusvoimasta."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Perävaunun jarruventtiilissä on kriittinen vika. Perävaunu ei enää jarruta."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Lievä seisontajarrun toimintahäiriö. Vapautettuna se laahaa vielä hieman ja jarruttaa konetta lievästi."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Kohtalainen seisontajarrun toimintahäiriö. Vapautettuna se laahaa selvästi ja jarruttaa konetta."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Vakava seisontajarrun toimintahäiriö. Vapautettuna se jää puoliksi kytketyksi ja jarruttaa konetta voimakkaasti."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Täydellinen seisontajarrun vika. Se ei enää vapaudu ja pitää konetta paikallaan kuin olisi kytketty."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Lievä navan laakerin ja tiivisteen kuluminen. Mekaaninen vastus kasvaa hieman ja epätavallista käyntiääntä saattaa esiintyä."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Kohtalainen navan laakerin ja tiivisteen kuluminen. Kitka kasvaa selvästi, ääni voimistuu ja mekaaninen hyötysuhde heikkenee."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Vakava navan laakerin ja tiivisteen kuluminen. Kitka on suuri, ääni on voimakas ja kuormituksessa on todellinen jumiutumisriski."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Navan laakerissa ja tiivisteessä on kriittinen vika. Laakeri on lähellä täydellistä jumiutumista, eikä käyttö ole enää mahdollista."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Lievä tukirullien ja johtopyörien laakerien kuluminen. Mekaaninen vastus kasvaa hieman ja epätavallista käyntiääntä saattaa esiintyä."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Kohtalainen tukirullien ja johtopyörien laakerien kuluminen. Kitka ja ääni lisääntyvät ja pyöriminen vaikeutuu."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Vakava tukirullien ja johtopyörien laakerien kuluminen. Kitka ja ääni ovat voimakkaita, ja kuormituksessa on jumiutumisriski."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Tukirullien ja johtopyörien laakereissa on kriittinen vika. Tela voi pysähtyä, jos jokin laakereista jumittuu."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Lievä laturin säätimen toimintahäiriö. Latausvirta on alentunut, mikä vähentää akun lataustehokkuutta."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Kohtalainen laturin säätimen toimintahäiriö. Lataus on alentunut ja epävakaa, mikä heikentää akun latausta ja lisää sähköjärjestelmän jännitehäviöitä."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Vakava laturin säätimen toimintahäiriö. Lataus on voimakkaasti alentunut, virransyöttö epävakaa ja sähköjärjestelmä toimii suurilla häviöillä."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Täydellinen laturin säätimen vika. Akku ei enää lataudu ja sähköjärjestelmä toimii vain jäljellä olevalla akkuvarauksella."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Lievä laturin diodien toimintahäiriö. Latausvirta on alentunut, mikä vähentää akun lataustehokkuutta. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Kohtalainen laturin diodien toimintahäiriö. Lataus on alentunut ja epävakaa, mikä heikentää akun latausta ja lisää sähköjärjestelmän jännitehäviöitä. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Vakava laturin diodien toimintahäiriö. Lataus on voimakkaasti alentunut, virransyöttö epävakaa ja sähköjärjestelmä toimii suurilla häviöillä. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Täydellinen laturin diodien vika. Akku ei enää lataudu ja sähköjärjestelmä toimii vain jäljellä olevalla akkuvarauksella. Vuotovirta tyhjentää akun, kun kone seisoo."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Lievä käynnistimen toimintahäiriö. Käynnistin pyörittää moottoria hitaammin, ja käynnistys kestää hieman kauemmin."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Kohtalainen käynnistimen toimintahäiriö. Se pyörittää moottoria hitaasti: käynnistys on vaikeaa ja kovalla pakkasella mahdotonta."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Vakava käynnistimen toimintahäiriö. Se tuskin pyörittää moottoria: moottori käynnistyy enää vain lämpimänä tai leudolla säällä."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Täydellinen käynnistimen vika. Se ei enää pyöritä moottoria: käyvä moottori jatkaa käyntiä, mutta sammutuksen jälkeen sitä ei voi käynnistää uudelleen."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Lievä sähkömoottorin laakerien kuluminen. Kuuluu heikkoa ääntä ja kulutus kasvaa hieman."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Kohtalainen sähkömoottorin laakerien kuluminen. Ääni kuuluu selvästi, kulutus kasvaa ja teho laskee hieman."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Vakava sähkömoottorin laakerien kuluminen. Ääni on voimakas, moottori kuumenee ja teho laskee selvästi."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Kriittinen sähkömoottorin laakerivika. Moottori on jumissa, eikä kone voi enää liikkua."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Lievä sähkömoottorin käämien heikkeneminen. Teho laskee hieman ja moottori lämpenee enemmän."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Kohtalainen sähkömoottorin käämien heikkeneminen. Teho laskee selvästi, moottori kuumenee ja kulutus kasvaa."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Vakava sähkömoottorin käämien heikkeneminen. Tehohäviö on suuri, moottori kuumenee voimakkaasti ja katkoja voi esiintyä."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Kriittinen sähkömoottorin käämivika. Moottorissa on oikosulku, eikä se voi enää toimia."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Lievä moottorin asentoanturin toimintahäiriö. Kuormituksessa esiintyy lyhyttä nykimistä."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Kohtalainen moottorin asentoanturin toimintahäiriö. Nykimistä esiintyy usein ja teho laskee."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Vakava moottorin asentoanturin toimintahäiriö. Nykiminen on rajua, teho romahtaa ja katkoja esiintyy."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Täydellinen moottorin asentoanturin vika. Moottoria ei voida enää ohjata, eikä kone käynnisty."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Lievä invertterin toimintahäiriö. Moottorin teho on hieman alentunut."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Kohtalainen invertterin toimintahäiriö. Tehohäviö on huomattava ja kulutus kasvaa."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Vakava invertterin toimintahäiriö. Tehohäviö on suuri ja katkoja voi esiintyä."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Täydellinen invertterivika. Moottori ei saa enää virtaa, eikä kone käynnisty."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Lievä jännitemuuntimen toimintahäiriö. Apuakku latautuu heikommin."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Kohtalainen jännitemuuntimen toimintahäiriö. Apuakun lataus on alentunut ja epävakaa."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Vakava jännitemuuntimen toimintahäiriö. Apuakku ei juuri enää lataudu ja tyhjenee ajon aikana."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Täydellinen jännitemuuntimen vika. Apuakku ei enää lataudu ja kone toimii vain jäljellä olevalla varauksella."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Lievä sisäisen laturin toimintahäiriö. Lataus latausasemalla on hieman hitaampaa."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Kohtalainen sisäisen laturin toimintahäiriö. Lataus latausasemalla on selvästi hitaampaa."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Vakava sisäisen laturin toimintahäiriö. Lataus latausasemalla on erittäin hidasta."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Täydellinen sisäisen laturin vika. Ajoakkua ei voida enää ladata."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Lievä suurjännitejohdotuksen eristysvika. Näkyviin tulee varoitus ilman muuta vaikutusta."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Kohtalainen suurjännitejohdotuksen eristysvika. Tehoa alennetaan turvallisuussyistä."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Vakava suurjännitejohdotuksen eristysvika. Tehoa alennetaan voimakkaasti ja katkoja esiintyy."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Kriittinen suurjännitejohdotuksen eristysvika. Kone ei käynnisty turvallisuussyistä."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Lievä ajoakun kennojen toimintahäiriö. Toimintamatka lyhenee hieman."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Kohtalainen ajoakun kennojen toimintahäiriö. Toimintamatka lyhenee selvästi ja teho on alentunut."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Vakava ajoakun kennojen toimintahäiriö. Toimintamatka ja teho romahtavat, ja katkoja voi esiintyä."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Kriittinen ajoakkuvika. Konetta ei voida enää kytkeä päälle."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Lievä suurjännitekontaktorin kuluminen. Virransyötössä esiintyy harvoin katkoja."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Kohtalainen suurjännitekontaktorin kuluminen. Virransyötön katkoista tulee säännöllisiä."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Vakava suurjännitekontaktorin kuluminen. Virransyötössä esiintyy usein katkoja."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Kriittinen suurjännitekontaktorin vika. Ajoakku ei enää syötä virtaa koneelle, eikä kone käynnisty."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Lievä jäähdytysnestepumpun toimintahäiriö. Neste kiertää heikommin ja lämpötila nousee hieman enemmän."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Kohtalainen jäähdytysnestepumpun toimintahäiriö. Jäähdytys on selvästi heikentynyt."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Vakava jäähdytysnestepumpun toimintahäiriö. Jäähdytys on voimakkaasti heikentynyt ja ylikuumeneminen on todennäköistä kuormituksessa."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Täydellinen jäähdytysnestepumpun vika. Neste ei juuri enää kierrä ja kone ylikuumenee nopeasti."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Lievä vesipumpun toimintahäiriö. Vika on vielä tuskin havaittava ja vaatii tarkastuksen."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Kohtalainen vesipumpun toimintahäiriö. Kierto heikkenee ja jäähdytys vähenee."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Vakava vesipumpun toimintahäiriö. Riittämätön kierto aiheuttaa ylikuumenemisriskin."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Kriittinen vesipumpun vika. Kierto on pahasti heikentynyt ja jäähdytysteho hyvin alhainen."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Lievä vesipumpun toimintahäiriö. Vesipumpun tiivisteen ympärille ilmaantuu pieniä jäähdytysnestejälkiä."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Kohtalainen vesipumpun toimintahäiriö. Jäähdytysnestettä vuotaa vesipumpun tiivisteen läpi; nestetaso laskee ja kierto heikkenee."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Vakava vesipumpun toimintahäiriö. Vuoto vesipumpun tiivisteessä jättää runsaasti jälkiä pumpun ympärille; nestetaso laskee ja heikentynyt kierto lisää ylikuumenemisriskiä."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Kriittinen vesipumpun vika. Vesipumpun tiiviste vuotaa runsaasti; piiri menettää nestettä eikä kierto enää jäähdytä moottoria kunnolla."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Lievä vesipumpun toimintahäiriö. Vika on vielä tuskin havaittava ja vaatii tarkastuksen."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Kohtalainen vesipumpun toimintahäiriö. Pumpun laakerivälys kasvaa ja kierto heikkenee."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Vakava vesipumpun toimintahäiriö. Riittämätön kierto aiheuttaa ylikuumenemisriskin."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Kriittinen vesipumpun vika. Kierto on pahasti heikentynyt ja jäähdytysteho hyvin alhainen."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Lievä jäähdyttimen kennon toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Kohtalainen jäähdyttimen kennon toimintahäiriö. Se poistaa nesteestä vähemmän lämpöä."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Vakava jäähdyttimen kennon toimintahäiriö. Se poistaa lämpöä huonosti ja ylikuumenemisriski kasvaa."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Kriittinen jäähdyttimen kennon vika. Se poistaa hyvin vähän lämpöä ja jäähdytys on vakavasti heikentynyt."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Lievä jäähdyttimen kennon toimintahäiriö. Jäähdyttimen kennon putkista tihkuu jäähdytysnestettä."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Kohtalainen jäähdyttimen kennon toimintahäiriö. Vaurioituneet putket vuotavat jäähdytysnestettä jäähdyttimelle, ja nestetaso laskee."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Vakava jäähdyttimen kennon toimintahäiriö. Kennon vaurioituneista putkista vuotaa jäähdytysnestettä, joka jättää märkiä jälkiä jäähdyttimeen; piirin varanto hupenee nopeasti."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Kriittinen jäähdyttimen kennon vika. Se vuotaa ja menettää paljon jäähdytysnestettä. Nestetaso putoaa eikä jäähdytin enää poista moottorista riittävästi lämpöä."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Lievä alennusvaihteen hammaspyörien ja laakerien kuluminen. Ajon aikana kuuluu heikkoa ääntä."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Kohtalainen alennusvaihteen hammaspyörien ja laakerien kuluminen. Ääni kuuluu selvästi ja kulutus kasvaa."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Vakava alennusvaihteen hammaspyörien ja laakerien kuluminen. Ääni on voimakas, alennusvaihde kuumenee ja teho pyörillä laskee."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Kriittinen alennusvaihteen vika. Se on jumissa, eikä kone voi enää liikkua."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Lievä mäntien toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Kohtalainen mäntien toimintahäiriö. Palotilaan pääsee enemmän öljyä ja sinistä savua ilmaantuu."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Vakava mäntien toimintahäiriö. Öljynkulutus ja sininen savu lisääntyvät."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Kriittinen mäntien vika. Mäntä on leikannut kiinni ja moottori on jumissa."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Lievä mäntien toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Kohtalainen mäntien toimintahäiriö. Palotilaan pääsee enemmän öljyä ja sinistä savua ilmaantuu."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Vakava mäntien toimintahäiriö. Öljynkulutus ja sininen savu lisääntyvät."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Kriittinen mäntien vika. Mäntä on murtunut ja moottori on pysähtynyt."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Lievä männänrenkaiden toimintahäiriö. Kerrostumat estävät renkaiden liikettä urissa."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Kohtalainen männänrenkaiden toimintahäiriö. Tiiviys heikkenee ja moottorin teho laskee."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Vakava männänrenkaiden toimintahäiriö. Puristuspaineen lasku vaikeuttaa käynnistystä ja vähentää tehoa."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Kriittinen männänrenkaiden vika. Puristuspaine on hyvin alhainen, käynnistys vaikeaa ja teho laskenut paljon."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Lievä männänrenkaiden toimintahäiriö. Kerrostumat estävät renkaiden liikettä urissa."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Kohtalainen männänrenkaiden toimintahäiriö. Palotilaan pääsee enemmän öljyä ja sinistä savua ilmaantuu."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Vakava männänrenkaiden toimintahäiriö. Öljynkulutus ja sininen savu lisääntyvät."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Kriittinen männänrenkaiden vika. Palotilaan pääsee paljon öljyä ja sininen savu jatkuu."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Lievä männänrenkaiden toimintahäiriö. Kerrostumat estävät renkaiden liikettä urissa."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Kohtalainen männänrenkaiden toimintahäiriö. Tiiviys heikkenee ja moottorin teho laskee."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Vakava männänrenkaiden toimintahäiriö. Puristuspaineen lasku vaikeuttaa käynnistystä ja vähentää tehoa."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Kriittinen männänrenkaiden vika. Männänrengas on katkennut: puristuspaine laskee ja öljyä pääsee palotilaan."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Lievä sylinteriputkien toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Kohtalainen sylinteriputkien toimintahäiriö. Pinta on naarmuuntunut ja tiivistää huonommin."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Vakava sylinteriputkien toimintahäiriö. Pinta on naarmuuntunut ja tiivistää huonommin. Öljynkulutus ja sininen savu lisääntyvät."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Kriittinen sylinteriputkien vika. Mäntä on leikannut kiinni sylinteriputkeen ja moottori on jumissa."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Lievä sylinteriputkien toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Kohtalainen sylinteriputkien toimintahäiriö. Jäähdytysnestettä vuotaa haljenneen sylinteriputken kautta sylinteriin, ja nestetaso laskee."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Vakava sylinteriputkien toimintahäiriö. Haljennut sylinteriputki päästää jäähdytysnestettä sylinteriin; pakoputkesta tulee valkoista savua."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Kriittinen sylinteriputkien vika. Haljenneen sylinteriputken kautta vuotaa paljon jäähdytysnestettä sylinteriin, valkoinen savu jatkuu ja jäähdytys on riittämätön."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Lievä imuventtiilien toimintahäiriö. Tiivistyspinta on vaurioitunut ja teho laskee hieman."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Kohtalainen imuventtiilien toimintahäiriö. Venttiili sulkeutuu huonosti, mikä aiheuttaa katkoksia ja tehon laskua."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Vakava imuventtiilien toimintahäiriö. Istukka on palanut, mikä aiheuttaa katkoksia, sammumista ja tehon laskua."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Kriittinen imuventtiilien vika. Palanut istukka aiheuttaa katkoksia, sammumista ja suuren tehonmenetyksen."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Lievä imuventtiilien toimintahäiriö. Tiivistyspinta on vaurioitunut ja teho laskee hieman."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Kohtalainen imuventtiilien toimintahäiriö. Venttiili sulkeutuu huonosti, mikä aiheuttaa katkoksia ja tehon laskua."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Vakava imuventtiilien toimintahäiriö. Istukka on palanut, mikä aiheuttaa katkoksia, sammumista ja tehon laskua."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Kriittinen imuventtiilien vika. Imuventtiili on katkennut ja moottori on pysähtynyt."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Lievä pakoventtiilien toimintahäiriö. Tiivistyspinta on vaurioitunut ja teho laskee hieman."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Kohtalainen pakoventtiilien toimintahäiriö. Venttiili sulkeutuu huonosti, mikä aiheuttaa katkoksia ja tehon laskua."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Vakava pakoventtiilien toimintahäiriö. Istukka on palanut, mikä aiheuttaa katkoksia, sammumista ja tehon laskua."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Kriittinen pakoventtiilien vika. Palanut istukka aiheuttaa katkoksia, sammumista ja suuren tehonmenetyksen."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Lievä pakoventtiilien toimintahäiriö. Tiivistyspinta on vaurioitunut ja teho laskee hieman."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Kohtalainen pakoventtiilien toimintahäiriö. Venttiili sulkeutuu huonosti, mikä aiheuttaa katkoksia ja tehon laskua."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Vakava pakoventtiilien toimintahäiriö. Istukka on palanut, mikä aiheuttaa katkoksia, sammumista ja tehon laskua."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Kriittinen pakoventtiilien vika. Pakoventtiili on katkennut ja moottori on pysähtynyt."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Lievä venttiiliohjurien ja varsitiivisteiden toimintahäiriö. Tarkastus osoittaa ohjausvian ja venttiilit alkavat pitää ääntä."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Kohtalainen venttiiliohjurien ja varsitiivisteiden toimintahäiriö. Välys kasvaa ja venttiilien ääni voimistuu."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Vakava venttiiliohjurien ja varsitiivisteiden toimintahäiriö. Liiallinen välys aiheuttaa melua, katkoksia ja öljyn läpivirtausta."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Kriittinen venttiiliohjurien ja varsitiivisteiden vika. Ohjausvälys on liian suuri, ja esiintyy melua, sytytyskatkoksia ja sinistä savua."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Lievä venttiiliohjurien ja varsitiivisteiden toimintahäiriö. Kovettunut tiiviste päästää öljyä läpi."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Kohtalainen venttiiliohjurien ja varsitiivisteiden toimintahäiriö. Palotilaan pääsee enemmän öljyä ja sinistä savua ilmaantuu."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Vakava venttiiliohjurien ja varsitiivisteiden toimintahäiriö. Öljynkulutus ja sininen savu lisääntyvät."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Kriittinen venttiiliohjurien ja varsitiivisteiden vika. Palotilaan pääsee paljon öljyä ja sininen savu jatkuu."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Lievä sylinterikannen toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Kohtalainen sylinterikannen toimintahäiriö. Sylinterikannen halkeama päästää jäähdytysnestettä palotilaan; moottorin teho laskee ja käynnistys vaikeutuu."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Vakava sylinterikannen toimintahäiriö. Jäähdytysnestettä pääsee haljenneen sylinterikannen läpi palotilaan, mikä aiheuttaa valkoista savua ja tehon laskua."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Kriittinen sylinterikannen vika. Halkeama päästää paljon jäähdytysnestettä palotilaan. Moottorissa on vähän tehoa, käynnistys on vaikeaa ja pakokaasu on valkoista."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Lievä sylinterikannen toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Kohtalainen sylinterikannen toimintahäiriö. Haljenneesta sylinterikannesta tihkuu jäähdytysnestettä, ja nestetaso laskee."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Vakava sylinterikannen toimintahäiriö. Jäähdytysnestevuoto jättää näkyviä jälkiä haljenneeseen sylinterikanteen, ja nestetaso laskee nopeasti."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Kriittinen sylinterikannen vika. Haljenneesta sylinterikannesta vuotaa paljon jäähdytysnestettä; piiri tyhjenee ja moottori voi ylikuumentua."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Lievä sylinterikannen toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Kohtalainen sylinterikannen toimintahäiriö. Jäähdytysnestettä vuotaa sylinterikannen halkeaman kautta öljyyn, ja nestetaso laskee."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Vakava sylinterikannen toimintahäiriö. Sylinterikannen halkeama päästää enemmän jäähdytysnestettä öljyyn; nestetaso jatkaa laskuaan."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Kriittinen sylinterikannen vika. Sylinterikannen halkeama johtaa paljon jäähdytysnestettä öljyyn; piirin varanto hupenee ja moottori voi ylikuumentua."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Lievä sylinterikannen tiivisteen toimintahäiriö. Vika on vielä tuskin havaittava ja vaatii tarkastuksen."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Kohtalainen sylinterikannen tiivisteen toimintahäiriö. Se päästää jäähdytysnestettä palotilaan; käynnistys pitkittyy ja teho laskee."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Vakava sylinterikannen tiivisteen toimintahäiriö. Jäähdytysnestettä pääsee sen läpi palotilaan, ja pakoputkesta tulee valkoista savua."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Kriittinen sylinterikannen tiivisteen vika. Se päästää paljon jäähdytysnestettä palotilaan; valkoinen savu lisääntyy ja käynnistys on hyvin vaikeaa."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Lievä sylinterikannen tiivisteen toimintahäiriö. Vika on vielä tuskin havaittava ja vaatii tarkastuksen."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Kohtalainen sylinterikannen tiivisteen toimintahäiriö. Sylinterikannen tiivisteen kohdalta tihkuu jäähdytysnestettä, ja nestetaso laskee."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Vakava sylinterikannen tiivisteen toimintahäiriö. Vuoto siinä jättää jälkiä moottoriin ja laskee jäähdytysnesteen tasoa nopeasti."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Kriittinen sylinterikannen tiivisteen vika. Se päästää paljon jäähdytysnestettä ulos; nestetaso putoaa ja moottorin jäähdytys heikkenee pahasti."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Lievä sylinterikannen tiivisteen toimintahäiriö. Vika on vielä tuskin havaittava ja vaatii tarkastuksen."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Kohtalainen sylinterikannen tiivisteen toimintahäiriö. Jäähdytysnestettä pääsee sen kautta öljyyn; nestetaso laskee."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Vakava sylinterikannen tiivisteen toimintahäiriö. Se päästää yhä enemmän jäähdytysnestettä öljyyn; piiri menettää nestettä vähitellen."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Kriittinen sylinterikannen tiivisteen vika. Suuri vuoto siinä johtaa jäähdytysnestettä öljyyn ja vie piiriltä jäähdytykseen tarvittavan nesteen."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Lievä kampiakselin laakerien toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Kohtalainen kampiakselin laakerien toimintahäiriö. Laakerivälys kasvaa."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Vakava kampiakselin laakerien toimintahäiriö. Öljykalvo on heikentynyt, ja esiintyy nakutusta sekä lämpenemistä."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Kriittinen kampiakselin laakerien vika. Kampiakselin laakeri on leikannut kiinni ja jumittanut moottorin."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Lievä kampiakselin laakerien toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Kohtalainen kampiakselin laakerien toimintahäiriö. Laakerivälys kasvaa."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Vakava kampiakselin laakerien toimintahäiriö. Öljykalvo on heikentynyt, ja esiintyy nakutusta sekä lämpenemistä."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Kriittinen kampiakselin laakerien vika. Kampiakselin laakerin pinnoite on sulanut ja moottori on pysähtynyt."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Lievä kiertokangen laakerien toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Kohtalainen kiertokangen laakerien toimintahäiriö. Laakerivälys kasvaa."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Vakava kiertokangen laakerien toimintahäiriö. Öljykalvo on heikentynyt, ja esiintyy nakutusta sekä lämpenemistä."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Kriittinen kiertokangen laakerien vika. Kiertokangen laakeri on leikannut kiinni ja jumittanut moottorin."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Lievä kiertokangen laakerien toimintahäiriö. Tarkastus osoittaa pinnan vaurioituneen."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Kohtalainen kiertokangen laakerien toimintahäiriö. Laakerivälys kasvaa."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Vakava kiertokangen laakerien toimintahäiriö. Öljykalvo on heikentynyt, ja esiintyy nakutusta sekä lämpenemistä."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Kriittinen kiertokangen laakerien vika. Kiertokangen laakerin pinnoite on sulanut ja moottori on pysähtynyt."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Järjestelmän jännite riittämätön"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Syöttöpumpun varhainen kuluminen. Moottorin teho on hieman alentunut ja polttoaineen kulutus on lisääntynyt."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Polttoaineen paine laskee. Havaittava tehonlasku, suurempi polttoaineen kulutus ja satunnainen moottorin sammuminen."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Polttoaineen paine on kriittisen alhainen. Teho laskee voimakkaasti, polttoaineen kulutus kasvaa erittäin suureksi ja moottori sammuu usein."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Syöttöpumpun täydellinen vika. Polttoainetta ei enää syötetä moottoriin."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Yhden tai useamman polttoainesuuttimen suutinaukot ovat hieman tukossa. Moottori voi käydä hieman epätasaisesti ja menettää vähän tehoa."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Polttoaine sumuttuu huonosti. Moottori epäröi kuormituksessa, teho laskee selvästi ja käynti nykii."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Polttoainesuutin on juuttunut. Moottori käy erittäin huonosti, teho laskee voimakkaasti ja käynnistys on epäluotettavaa."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Polttoainesuutin on täysin viallinen. Moottori ei käy oikein eikä välttämättä käynnisty lainkaan."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Lievä korkeapainepumpun toimintahäiriö. Ruiskutuspaine nousee hitaammin: käynnistys kestää kauemmin ja moottori reagoi vähemmän terävästi."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Kohtalainen korkeapainepumpun toimintahäiriö. Ruiskutuspaine ei riitä kuormituksessa, teho laskee selvästi ja moottori epäröi."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Vakava korkeapainepumpun toimintahäiriö. Ruiskutuspaine on kriittisen alhainen, teho laskee voimakkaasti, moottori sammuu ja käynnistys on vaikeaa."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Täydellinen korkeapainepumpun vika. Se ei enää tuota ruiskutuspainetta: käynnistin pyörittää moottoria, mutta se ei käynnisty."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Lievä polttoainesuodattimen tukkeutuminen. Polttoaineen virtaus vähenee hieman raskaassa kuormituksessa."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Kohtalainen polttoainesuodattimen tukkeutuminen. Virtaus käy riittämättömäksi kuormituksessa, teho laskee ja moottori epäröi ajoittain."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Vakava polttoainesuodattimen tukkeutuminen. Polttoaineen syöttö on voimakkaasti rajoittunut, teho laskee selvästi ja moottori voi sammua."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Kriittinen polttoainesuodattimen tukkeutuminen. Moottori ei enää saa riittävästi polttoainetta toimiakseen luotettavasti."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Lievä ilmavuoto polttoaineputkessa. Polttoaineen syöttö muuttuu hieman epäsäännölliseksi."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Kohtalainen ilmavuoto polttoaineputkessa. Syöttö muuttuu epävakaaksi, teho laskee ja epäröintiä esiintyy."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Vakava ilmavuoto polttoaineputkessa. Moottori käy hyvin epäsäännöllisesti ja sammumisriski on suuri."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Polttoaineputkessa on kriittinen vika ja suuri ilmavuoto. Moottori ei enää saa polttoainetta oikein."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Lievä polttoaineputken puristuminen. Virtaus vähenee: moottori käynnistyy ja sammuu sitten ajoittain."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Kohtalainen polttoaineputken puristuminen. Moottori käynnistyy ja sammuu sitten säännöllisesti."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Vakava polttoaineputken puristuminen. Moottori sammuu usein."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Polttoaineputki on litistynyt. Polttoaine ei enää kulje: moottori pysähtyy."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Lievä mekaanisen ruiskutuspumpun toimintahäiriö. Virtaus heikkenee: käynnistys kestää kauemmin ja moottorista puuttuu hieman voimaa."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Kohtalainen mekaanisen ruiskutuspumpun toimintahäiriö. Virtaus ei riitä kuormituksessa: moottori menettää tehoa ja epäröi."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Vakava mekaanisen ruiskutuspumpun toimintahäiriö. Moottori saa liian vähän polttoainetta, menettää paljon tehoa, käynnistyy huonosti ja sammuu."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Mekaanisessa ruiskutuspumpussa on kriittinen vika. Pumpun käyttömekanismi on katkennut: moottori pysähtyy eikä käynnisty uudelleen."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Lievä polttoaineen annosteluventtiilin toimintahäiriö. Yhteispaineruiskutuksen paine nousee hitaammin ja käynnistys kestää kauemmin."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Kohtalainen polttoaineen annosteluventtiilin toimintahäiriö. Yhteispaineruiskutuksen paine ei riitä kuormituksessa: moottori menettää tehoa ja epäröi."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Vakava polttoaineen annosteluventtiilin toimintahäiriö. Yhteispaineruiskutuksen paine poikkeaa voimakkaasti tavoitearvosta: moottori menettää paljon tehoa ja sammuu."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Polttoaineen annosteluventtiilissä on kriittinen vika. Yhteispaineruiskutukseen ei enää muodostu painetta: käynnistin pyörittää moottoria, mutta se ei käynnisty."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Lievä yhteispaineruiskutuksen paineanturin toimintahäiriö. Mittaus muuttuu epävakaaksi ja käynnistys kestää hieman kauemmin."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Kohtalainen yhteispaineruiskutuksen paineanturin toimintahäiriö. Ohjainlaite säätää painetta huonosti: moottori menettää tehoa ja epäröi."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Vakava yhteispaineruiskutuksen paineanturin toimintahäiriö. Moottori siirtyy vikatilaan, menettää paljon tehoa ja voi sammua."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Yhteispaineruiskutuksen paineanturissa on kriittinen vika. Ilman mittaustietoa ohjainlaite pitää moottorin vikatilassa."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Yhteispaineruiskutuksen paineenrajoitusventtiilin lievä toimintahäiriö. Se avautuu liian aikaisin: paine nousee hitaammin ja käynnistyminen kestää pidempään."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Yhteispaineruiskutuksen paineenrajoitusventtiilin kohtalainen toimintahäiriö. Paine ei pysy kuormituksessa: moottorin teho laskee ja käynti takeltelee."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Yhteispaineruiskutuksen paineenrajoitusventtiilin vakava toimintahäiriö. Paine romahtaa: moottori menettää paljon tehoa ja sammuu."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Yhteispaineruiskutuksen paineenrajoitusventtiilissä on kriittinen vika. Se jää auki: paine ei enää nouse ja käynnistin pyörittää moottoria sen käynnistymättä."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Lievä kaasun paineenalentimen toimintahäiriö. Syöttöpaine vaihtelee ja käynnistys kestää kauemmin."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Kohtalainen kaasun paineenalentimen toimintahäiriö. Paine laskee kuormituksessa: moottori menettää tehoa ja epäröi."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Vakava kaasun paineenalentimen toimintahäiriö. Syöttö muuttuu epätasaiseksi: moottori menettää paljon tehoa, käynnistyy huonosti ja sammuu."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Kaasun paineenalentimessa on kriittinen vika. Se ei enää päästä riittävästi kaasua läpi: moottori pysähtyy."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Lievä kaasun sulkumagneettiventtiilin toimintahäiriö. Se avautuu viiveellä: käynnistys kestää kauemmin ja moottori epäröi ajoittain."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Kohtalainen kaasun sulkumagneettiventtiilin toimintahäiriö. Se katkaisee kaasun ajoittain: moottori epäröi ja sammuu."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Vakava kaasun sulkumagneettiventtiilin toimintahäiriö. Katkokset lisääntyvät ja moottori sammuu usein."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Kaasun sulkumagneettiventtiilissä on kriittinen vika. Se jää kiinni: moottori pysähtyy eikä käynnisty uudelleen."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Lievä kaasusuodattimen tukkeutuminen. Kaasun virtaus vähenee hieman raskaassa kuormituksessa."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Kohtalainen kaasusuodattimen tukkeutuminen. Syöttö ei riitä kuormituksessa: teho laskee ja moottori voi sammua."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Vakava kaasusuodattimen tukkeutuminen. Virtaus on voimakkaasti rajoittunut: teho laskee selvästi ja moottori sammuu."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Kaasusuodatin on täysin tukossa. Moottori ei enää saa riittävästi kaasua ja pysähtyy."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Lievä vuoto kaasuputkissa. Käynnistys kestää hieman kauemmin."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Kohtalainen vuoto kaasuputkissa. Syöttö muuttuu epätasaiseksi: moottori epäröi ja voi sammua."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Vakava vuoto kaasuputkissa. Paine laskee: moottori epäröi, käynnistyy huonosti ja sammuu usein."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Kriittinen vuoto kaasuputkissa. Paine ei enää pysy: moottori pysähtyy."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Lievä kaasusuuttimien toimintahäiriö. Annostelu muuttuu epätasaiseksi: moottori käy epätasaisemmin ja kuluttaa hieman enemmän."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Kohtalainen kaasusuuttimien toimintahäiriö. Moottori epäröi, menettää tehoa, kuluttaa enemmän ja voi sammua."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Vakava kaasusuuttimien toimintahäiriö. Yksi suutin annostelee erittäin huonosti: suuri tehonlasku, liiallinen kulutus ja vaikea käynnistys."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kaasusuuttimissa on kriittinen vika. Annostelu ei enää mahdollista moottorin käyntiä: moottori pysähtyy."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="AdBlue-pumpussa on vika. Se ei enää syötä nestettä annosteluun: moottorin merkkivalo syttyy, ja sitten ohjainlaite rajoittaa tehoa korjaukseen asti."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="AdBlue-annostelusuuttimessa on vika. Kiteiden tukkimana se ei enää sumuta: moottorin merkkivalo syttyy ja teho laskee myöhemmin korjaukseen asti."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlue-suodatin on vaihtovälinsä lopussa ja alkaa tukkeutua. Laajin huolto vaihtaa sen."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="AdBlue-suodatin on likainen: AdBlue-virtaus laskee ja moottorin merkkivalo syttyy. Laajin huolto vaihtaa sen."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="AdBlue-suodatin on erittäin likainen: annostelu ei toimi ja ECU rajoittaa tehoa korjaukseen asti."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="AdBlue-suodatin on täysin tukossa: annostelu lakkaa kokonaan ja ECU rajoittaa tehoa korjaukseen asti."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="NOx-anturissa on vika. Ohjainlaite ei enää valvo päästöjä: moottorin merkkivalo syttyy ja useiden kymmenien tuntien jälkeen tehoa rajoitetaan."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Lievä hiukkassuodattimen toimintahäiriö. Halkeama päästää hieman nokea pakokaasuihin."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Kohtalainen hiukkassuodattimen toimintahäiriö. Halkeama laajenee: musta savu tulee näkyviin."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Vakava hiukkassuodattimen toimintahäiriö. Suodattimen kennosto murenee: pakoputkesta tulee runsaasti mustaa savua."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Hiukkassuodattimessa on kriittinen vika. Kennosto on rikkoutunut: noki pääsee läpi suodattumatta."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Lievä hiukkassuodattimen toimintahäiriö. Osa kennostosta on sulanut ja tukkeutuu."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Kohtalainen hiukkassuodattimen toimintahäiriö. Sulanut alue laajenee: vastapaine kasvaa."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Vakava hiukkassuodattimen toimintahäiriö. Sulaneena ja tukkeutuneena se ei enää regeneroidu: moottorin kierroslukua rajoitetaan."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Hiukkassuodattimessa on kriittinen vika. Täysin tukossa se ei enää päästä pakokaasuja läpi: vain vaihto palauttaa moottorin tehon."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Hiukkassuodatin on täynnä nokea. Regeneroinnit eivät ole valmistuneet: moottorin kierroslukua rajoitetaan, kunnes jokin regenerointi onnistuu."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Hiukkassuodattimen kriittinen nokikuormitus. Se on liian täynnä regeneroituakseen itse ja vaatii huoltoregeneroinnin korjaamolla; kierrosluku pysyy rajoitettuna."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lievä tuuletinkytkimen toimintahäiriö. Tuuletin reagoi tehottomammin ja jäähdytys heikkenee hieman."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Kohtalainen tuuletinkytkimen toimintahäiriö. Tuulettimen kytkeytyminen on epäsäännöllistä ja jäähdytystehokkuus laskee selvästi."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Vakava tuuletinkytkimen toimintahäiriö. Tuuletin ei enää tuota riittävää ilmavirtaa ja moottori ylikuumenee helpommin."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Tuuletinkytkimessä on kriittinen vika. Tuuletin ei enää pysty tuottamaan tarvittavaa jäähdytystä."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Välityssuhteen ohjaus reagoi hitaammin ja epätarkemmin."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Välityssuhde vaihtelee epäsäännöllisesti ja ohjaus reagoi huonosti."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Välityssuhteen ohjauksessa on vakavia häiriöitä ja välitetty vetovoima vähenee."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Välityssuhteen ohjaus on rikkoutunut; vaihteisto on lähes käyttökelvoton."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Hydraulisylinterissä on lievä sisäinen vuoto. Nostettu työkone laskeutuu hitaasti kuormitettuna."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Hydraulisylinterissä on kohtalainen sisäinen vuoto. Tahaton laskeutuminen on selvästi havaittavaa ja nopeutuu kuorman kasvaessa."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Hydraulisylinterissä on vakava sisäinen vuoto. Raskaat työkoneet eivät enää pysy luotettavasti asennossaan."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Hydraulisylinterissä on kriittinen sisäinen vuoto. Kaikki nostetut kuormat laskeutuvat nopeasti itsestään."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Pieni sisäinen pumpun vuoto. Hydrauliikkalaitteet toimivat hieman hitaammin."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Kuluneet pumpun tiivisteet. Havaittavasti hitaampi hydrauliikkatoiminta."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Vaurioitunut hydraulipumppu. Laitteet ovat erittäin hitaita ja heikkoja."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Hydraulipumpun vika. Hydraulijärjestelmä ei toimi."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Hydrauliletkussa on lievä ulkoinen vuoto. Hieman öljyä valuu ulos ja hydrauliikan vaste heikkenee lievästi."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Hydrauliletku tihkuu näkyvästi. Öljyä valuu edelleen ja hydraulitoiminnot reagoivat hitaammin."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Hydrauliletku vuotaa aktiivisesti. Öljyn menetys on selvää ja hydraulitoiminnot ovat huomattavasti heikompia."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Hydrauliletkussa on vakava ulkoinen vuoto. Öljy valuu nopeasti ja hydrauliikan teho on voimakkaasti alentunut."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Hydraulisuodatin on hieman tukossa ja alkaa rajoittaa virtausta. Hydraulitoiminnot hidastuvat hieman. Huolto vaihtaa suodattimen."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Hydraulisuodatin on kohtalaisesti tukossa. Kaikki hydraulitoiminnot ovat selvästi hitaampia. Huolto vaihtaa suodattimen."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Hydraulisuodatin on pahasti tukossa. Hydrauliikan vaste on hyvin hidas. Huolto vaihtaa suodattimen."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Hydraulisuodatin on täysin tukossa. Hydraulitoiminnot tuskin reagoivat. Huolto vaihtaa suodattimen."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Hydrauliöljyn jäähdyttimen teho on hieman heikentynyt. Öljyn lämpötila nousee lievästi pitkän hydraulityön aikana."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Hydrauliöljyn jäähdytin toimii puutteellisesti. Öljyn lämpötila nousee selvästi jatkuvan hydraulityön aikana."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Hydrauliöljyn jäähdytin on pahasti heikentynyt. Raskas hydraulityö ylikuumentaa öljyn nopeasti."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Hydrauliöljyn jäähdytin on rikkoutunut. Pitkä hydraulityö ylikuumentaa öljyn voimakkaasti ja nopeuttaa pumpun kulumista."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Hydraulinen ohjausventtiili alkaa takerrella. Yksi hydraulitoiminto epäröi ajoittain ja menettää voimaa kuormitettuna."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Hydraulinen ohjausventtiili takertelee ajoittain. Yksi hydraulitoiminto hidastuu ja menettää enemmän voimaa kuorman kasvaessa."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Hydraulinen ohjausventtiili takertuu pahasti. Yksi hydraulitoiminto liikkuu epätasaisesti ja toimii heikosti raskaalla kuormalla."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Hydraulinen ohjausventtiili on kriittisesti vaurioitunut. Yksi hydraulitoiminto pysähtelee toistuvasti eikä juuri liikuta raskasta kuormaa."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Vaihteistopumppu"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Hydrostaattinen yksikkö"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Vaihteistoöljyn jäähdytin"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Vaihteiston laakerit"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Powershift-vaihdekytkimet"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Powershift-suunnanvaihtokytkimet"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Vaihteiston ohjaus"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Taka-akselin kartiohammaspyöräpari"/>
+        <text name="rms_breakdowns_part_final_drives" text="Napavälitykset"/>
+        <text name="rms_breakdowns_part_differential" text="Tasauspyörästön hammaspyörät"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="Nelivedon kytkentä"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Etuakselin vetoakseli ja ristinivelet"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Akselilaakerit"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Vaihteiston anturit"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Vaihteistosuodatin"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Nostolaitteen venttiili"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Nostolaitteen asentotunnistin"/>
+        <text name="rms_breakdowns_part_loader_control" text="Kuormaimen ohjaus"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydrauliikan pikaliittimet"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lievä kytkimen toimintahäiriö. Se ei irrota täysin. Joitakin vaihteita on vaikea kytkeä."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Kohtalainen kytkimen toimintahäiriö. Mekanismi vapauttaa levyn huonosti. Vaihteita jää useammin kytkeytymättä."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Vakava kytkimen toimintahäiriö. Levy pyörii vedettynä irrotettaessa. Vaihteiden valinta häiriintyy pahasti."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Kriittinen kytkimen vika. Mekanismi ei vapauta levyä. Mitään vaihdetta ei voi kytkeä normaalisti."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Lievä vaihteiston laakerien toimintahäiriö. Vierintäpinnat ovat vaurioituneet. Vaihteistosta kuuluu hiljaista jyrinää."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Kohtalainen vaihteiston laakerien toimintahäiriö. Laakerien vierintäradat ovat vaurioituneet. Vaihteiston jyrinä kuuluu selvästi."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Vakava vaihteiston laakerien toimintahäiriö. Laakerit pyörivät raskaasti. Vaihteisto jyrisee kovaa ja voi leikata kiinni."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Kriittinen vaihteiston laakerien vika. Laakerit ovat leikanneet kiinni. Vaihteisto on jumissa eikä kone liiku."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Lievä Powershift-vaihdekytkimien toimintahäiriö. Lamellipakka välittää voimaa huonosti. Vaihde luistaa hieman kuormitettuna."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Lievä Powershift-vaihdekytkimien toimintahäiriö. Lamellipakka tarttuu viiveellä. Vaihde kytkeytyy pienellä nykäyksellä."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Kohtalainen Powershift-vaihdekytkimien toimintahäiriö. Lamellipakka ei purista riittävästi. Vaihde luistaa selvästi kuormitettuna."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Kohtalainen Powershift-vaihdekytkimien toimintahäiriö. Lamellipakan täyttö häiriintyy. Vaihde kytkeytyy rajusti."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Vakava Powershift-vaihdekytkimien toimintahäiriö. Lamellipakka kestää kuormaa tuskin lainkaan. Pyörille välittyy hyvin vähän voimaa."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Vakava Powershift-vaihdekytkimien toimintahäiriö. Lamellipakka tarttuu erittäin huonosti. Vaihdot aiheuttavat voimakkaita nykäyksiä."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Kriittinen Powershift-vaihdekytkimien vika. Lamellipakka ei välitä voimaa. Kone ei liiku."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Kriittinen Powershift-vaihdekytkimien vika. Lamellipakka ei kytkeydy oikein. Vaihde ei vedä konetta."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Lievä Powershift-suunnanvaihtokytkimien toimintahäiriö. Eteen- tai taakseajon kytkin luistaa hieman liikkeelle lähdettäessä."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Lievä Powershift-suunnanvaihtokytkimien toimintahäiriö. Suunnanvaihtokytkin tarttuu myöhään. Veto palautuu pienellä nykäyksellä."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Kohtalainen Powershift-suunnanvaihtokytkimien toimintahäiriö. Suunnanvaihtokytkin luistaa selvästi. Voima välittyy huonosti valittuun suuntaan."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Kohtalainen Powershift-suunnanvaihtokytkimien toimintahäiriö. Suunnanvaihtokytkin tarttuu äkisti. Suunnanvaihto nykäisee konetta."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Vakava Powershift-suunnanvaihtokytkimien toimintahäiriö. Suunnanvaihtokytkin kestää kuormaa tuskin lainkaan. Vetovoima romahtaa."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Vakava Powershift-suunnanvaihtokytkimien toimintahäiriö. Suunnanvaihtokytkin tarttuu hyvin epätasaisesti. Liikkeellelähtö on erittäin raju."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Kriittinen Powershift-suunnanvaihtokytkimien vika. Suunnanvaihtokytkin ei välitä voimaa. Kone ei liiku."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Kriittinen Powershift-suunnanvaihtokytkimien vika. Suunnanvaihtokytkin ei kytkeydy oikein. Veto katoaa."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Lievä vaihteiston ohjauksen toimintahäiriö. Sähköhydraulinen ohjaus toimii epätasaisesti. Vaihto viivyttelee."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Lievä vaihteiston ohjauksen toimintahäiriö. Ohjaus hylkää ajoittain vaihteen valinnan."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Kohtalainen vaihteiston ohjauksen toimintahäiriö. Ohjaus häiritsee kytkinten täyttöä. Vaihdot aiheuttavat selviä nykäyksiä."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Kohtalainen vaihteiston ohjauksen toimintahäiriö. Ohjaus hylkää useita valintoja. Vaihteiden kytkeminen vaikeutuu."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Vakava vaihteiston ohjauksen toimintahäiriö. Ohjaus kytkee kytkimiä huonosti. Vaihdot aiheuttavat voimakkaita nykäyksiä."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Vakava vaihteiston ohjauksen toimintahäiriö. Ohjaus ei toteuta monia valintoja. Vaihteita on harvoin käytettävissä."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Kriittinen vaihteiston ohjauksen vika. Ohjaus ei pysty kytkemään kytkimiä oikein. Vaihdot häiriintyvät pahasti."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Kriittinen vaihteiston ohjauksen vika. Ohjaus ei salli vaihteen valintaa. Vaihteisto ei vastaa pyyntöön."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Vaihteiston nopeusanturin toimintahäiriö. Signaali muuttuu epäsäännölliseksi: ohjaus estää välillä vaihteenvaihdon."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Vaihteiston paineanturin toimintahäiriö. Ohjaus säätää kytkinten täyttöä väärin: vaihteenvaihdot viivästyvät ja nykivät."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Vaihteiston nopeusanturin kriittinen toimintahäiriö. Ilman mittaustietoa ohjaus estää usein vaihteenvaihdot."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Vaihteiston paineanturin kriittinen toimintahäiriö. Ilman mittaustietoa jokainen vaihteenvaihto viivästyy paljon ja kytkeytyy äkisti."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Voimansiirron nopeusanturin toimintahäiriö. Ohjaus siirtyy varatilaan: ajonopeutta rajoitetaan."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Voimansiirron paineanturin toimintahäiriö. Ohjaus siirtyy varatilaan: ajonopeutta rajoitetaan."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Voimansiirron nopeusanturin kriittinen toimintahäiriö. Varatila sallii vain alhaisen ajonopeuden."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Voimansiirron paineanturin kriittinen toimintahäiriö. Varatila sallii vain alhaisen ajonopeuden."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Lievä vaihteistopumpun toimintahäiriö. Ohjausöljyn syöttö vähenee. Kytkeytyminen viivyttelee ja veto katkeaa hetkeksi."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Kohtalainen vaihteistopumpun toimintahäiriö. Ohjauspaine ei riitä. Vaihteet kytkeytyvät nykäisten ja veto katkeilee."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Vakava vaihteistopumpun toimintahäiriö. Pumppu syöttää tuskin lainkaan ohjausöljyä. Kytkeytyminen on rajua ja veto katkeilee usein."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Kriittinen vaihteistopumpun vika. Pumppu ei tuota tarvittavaa painetta. Vaihteisto ei vedä konetta."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Lievä hydrostaattisen yksikön toimintahäiriö. Sisäiset vuodot vähentävät vetoa. Variaattorin nopeus laskee hieman ja öljy kuumenee enemmän."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Kohtalainen hydrostaattisen yksikön toimintahäiriö. Sisäiset vuodot kasvavat. Huippunopeus laskee, öljy kuumenee ja kulutus kasvaa."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Vakava hydrostaattisen yksikön toimintahäiriö. Pyörivä ryhmä välittää tuskin voimaa. Nopeus laskee rajusti ja öljy kuumenee voimakkaasti kuormitettuna."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Kriittinen hydrostaattisen yksikön vika. Pyörivä ryhmä ei välitä voimaa. Kone ei liiku moottorin käydessä."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Lievä vaihteistoöljyn jäähdyttimen toimintahäiriö. Se poistaa vähemmän lämpöä. Vaihteistoöljy kuumenee enemmän kuormitettuna."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Kohtalainen vaihteistoöljyn jäähdyttimen toimintahäiriö. Lämmönvaihto heikkenee selvästi. Vaihteistoöljy pysyy kuumempana työssä."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Vakava vaihteistoöljyn jäähdyttimen toimintahäiriö. Se poistaa hyvin vähän lämpöä. Vaihteistoöljy voi ylikuumentua kuormitettuna."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Kriittinen vaihteistoöljyn jäähdyttimen vika. Vaihteistoöljyn jäähdytys on pettänyt. Pitkä työ altistaa vaihteiston ylikuumenemiselle."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="Vaihteistosuodatin on vaihtovälinsä lopussa ja alkaa tukkeutua. Näyttö pyytää sen vaihtamista. Huolto vaihtaa suodattimen."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="Vaihteistosuodatin on likainen: ohitusventtiili avautuu ja vaihteistoöljy kulkee suodattamattomana. Voimansiirto kuluu nopeammin. Huolto vaihtaa suodattimen."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="Vaihteistosuodatin on erittäin likainen. Vaihteistoöljy kiertää suodattamattomana ja kuluttaa voimansiirtoa. Huolto vaihtaa suodattimen."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="Vaihteistosuodatin on täysin tukossa. Kaikki vaihteistoöljy kulkee suodattamattomana ja kuluttaa voimansiirtoa. Huolto vaihtaa suodattimen."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Lievä taka-akselin kartiohammaspyöräparin toimintahäiriö. Kartiohammaspyörien hampaat ovat vaurioituneet. Kuormitettuna kuuluu hiljaista ulinaa."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Kohtalainen taka-akselin kartiohammaspyöräparin toimintahäiriö. Hammaskosketus häiriintyy. Taka-akseli ulisee selvästi kuormitettuna."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Vakava taka-akselin kartiohammaspyöräparin toimintahäiriö. Hampaat ovat pahasti vaurioituneet. Taka-akseli ulisee kovaa ja voi menettää vedon."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Kriittinen taka-akselin kartiohammaspyöräparin vika. Kartiohammaspyöräpari ei välitä voimaa. Taka-akseli ei saa vetoa eikä kone liiku."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Lievä napavälitysten toimintahäiriö. Napavälityksen hampaat ovat vaurioituneet. Vetopyörän luota kuuluu hiljaista ulinaa."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Kohtalainen napavälitysten toimintahäiriö. Napavälityksen hammaspyörät pyörivät huonosti. Ulina pyörällä kuuluu selvästi."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Vakava napavälitysten toimintahäiriö. Napavälityksen hammaspyörät ovat pahasti vaurioituneet. Melu on voimakas ja veto voi pettää."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Kriittinen napavälitysten vika. Napavälitys ei välitä voimaa pyörälleen. Kone ei voi liikkua normaalisti."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="Nelivedon kytkennässä on vika. Neliveto ei kytkeydy. Etuakseli pysyy irtikytkettynä."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="Nelivedon kytkennässä on vika. Etuakseli pysyy kytkettynä. Nelivetoa ei voi kytkeä pois."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Hydraulipumpussa on vika. Se on rikkoutunut. Paine katoaa eivätkä hydrauliikkatoiminnot vastaa."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Hydraulisessa ohjausventtiilissä on vika. Kara on jumissa. Kyseinen hydrauliikkatoiminto ei liiku."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Nostolaitteen venttiilissä on vika. Se ei pidä kuormaa oikein. Nostettu työkone laskee."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Nostolaitteen venttiilissä on vika. Se on jumissa. Nostolaite ei vastaa."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Nostolaitteen asentotunnistimessa on vika. Asentosignaali on viallinen. Nostolaite ei pidä pyydettyä korkeutta ja vikakoodi tallentuu."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Kuormaimen ohjauksen lievä toimintahäiriö. Puomi ja kauha reagoivat hitaammin."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Kuormaimen ohjauksen kohtalainen toimintahäiriö. Puomi ja kauha liikkuvat vain puolella nopeudella."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Kuormaimen ohjauksen vakava toimintahäiriö. Puomi ja kauha liikkuvat tuskin lainkaan."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kuormaimen ohjauksessa on kriittinen vika. Puomi ja kauha eivät enää reagoi."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Lievä hydraulisylinterin toimintahäiriö. Varren tiiviste päästää hieman öljyä. Varren ympärille tulee lievää kosteutta."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Kohtalainen hydraulisylinterin toimintahäiriö. Varren tiiviste ei pidä. Sylinteri tihkuu ja öljytaso laskee."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Vakava hydraulisylinterin toimintahäiriö. Varren tiiviste vuotaa jatkuvasti. Sylinteristä häviää selvästi öljyä."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Kriittinen hydraulisylinterin vika. Varren tiiviste päästää paljon öljyä. Piirin öljytaso laskee nopeasti."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Lievä hydrauliikan pikaliittimien toimintahäiriö. Liittimen tiiviste on viallinen. Liitokseen tulee lievää kosteutta."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Hydrauliikan pikaliittimissä on vika. Liittimen öljykanava on tukossa. Kytketty hydrauliikkatoiminto ei liiku."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Kohtalainen hydrauliikan pikaliittimien toimintahäiriö. Liitin tihkuu. Piiristä häviää öljyä liitoksesta."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Vakava hydrauliikan pikaliittimien toimintahäiriö. Liitin vuotaa jatkuvasti. Öljyä häviää liitoksesta huomattavasti."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Kriittinen hydrauliikan pikaliittimien vika. Liitin vuotaa runsaasti. Piirin öljytaso laskee nopeasti."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Lievä hydrauliöljyn jäähdyttimen toimintahäiriö. Jäähdyttimen kenno ei ole täysin tiivis. Pintaan tulee lievää kosteutta."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Kohtalainen hydrauliöljyn jäähdyttimen toimintahäiriö. Jäähdyttimen kenno tihkuu. Hydrauliöljyn taso laskee."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Vakava hydrauliöljyn jäähdyttimen toimintahäiriö. Jäähdyttimen kenno vuotaa jatkuvasti. Piiristä häviää selvästi öljyä."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Kriittinen hydrauliöljyn jäähdyttimen vika. Jäähdyttimen kenno vuotaa runsaasti. Hydrauliöljyn taso laskee nopeasti."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Tasauspyörästön lukon ohjaus"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Lievä tasauspyörästön hammaspyörien toimintahäiriö. Hammaspinnat ovat vaurioituneet. Käännyttäessä kuuluu hiljaista ääntä."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Kohtalainen tasauspyörästön hammaspyörien toimintahäiriö. Hammaskosketus häiriintyy. Tasauspyörästön ääni kuuluu selvästi käännyttäessä."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Vakava tasauspyörästön hammaspyörien toimintahäiriö. Hampaat ovat pahasti vaurioituneet. Ääni on voimakas käännöksissä ja veto voi pettää."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Kriittinen tasauspyörästön hammaspyörien vika. Hammaspyörät eivät välitä voimaa. Kone ei liiku moottorin käydessä."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Etuakselin vetoakselin ristinivelten lievä kuluminen. Etuakselin voimansiirtoon ilmestyy pientä välystä."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Etuakselin vetoakselin ristinivelten kohtalainen kuluminen. Ristinivelten välys on selvä."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Etuakselin vetoakselin ristinivelten vakava kuluminen. Yksi ristinivel on lähellä rikkoutumista."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Etuakselin vetoakselin ristinivel on rikkoutunut. Etuakseli ei enää saa vetoa."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Akselilaakerien lievä kuluminen. Ajettaessa kuuluu hiljaista jyrinää."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Akselilaakerien kohtalainen kuluminen. Jyrinä voimistuu nopeuden kasvaessa."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Akselilaakerien vakava kuluminen. Yhden laakerin pinta lohkeilee ja alkaa vaurioittaa kartiohammaspyöräparia."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Akselilaakerien kriittinen kuluminen. Yksi laakeri on rikkoutunut, kartiohammaspyöräpari on vaurioitunut eikä akseli enää välitä vetovoimaa."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Tasauspyörästön lukon ohjauksessa on vika. Lukko ei kytkeydy. Tasauspyörästö pysyy avoimena."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Tasauspyörästön lukon ohjauksessa on vika. Lukko jää kytketyksi. Kone vastustaa ohjausta käännöksissä."/>
+    </texts>
+</l10n>

@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Fluid container in hand: a can, or the nozzle of a drum at the end of its hose
 RMS_FluidHandTool = {}
 
 local specName = "spec_" .. g_currentModName .. ".rmsFluidHandTool"
@@ -14,7 +13,6 @@ RMS_FluidHandTool.FILENAMES = {
 }
 RMS_FluidHandTool.TARGET_REFRESH_INTERVAL = 200
 RMS_FluidHandTool.FOLLOW_INTERVAL = 500
--- where the hands of the game get the can back, on the look of the player: short of what he faces, its middle on the look
 RMS_FluidHandTool.CARRY_DISTANCE = 1.2
 RMS_FluidHandTool.CARRY_MIN_DISTANCE = 0.3
 RMS_FluidHandTool.CARRY_CLEARANCE = 0.35
@@ -26,7 +24,6 @@ RMS_FluidHandTool.TILT_DURATION = 350
 RMS_FluidHandTool.LEVEL_TOLERANCE = 0.01
 RMS_FluidHandTool.STATUS_DURATION = 2500
 RMS_FluidHandTool.LOGO_SLICE_PREFIX = "rms_Brand"
--- the logo sheet of each brand of fluid
 RMS_FluidHandTool.LOGO_SHEETS = {
     MOTOREX = "brands/hud_brand_motorex.xml",
     MOTUL = "brands/hud_brand_motul.xml",
@@ -34,11 +31,9 @@ RMS_FluidHandTool.LOGO_SHEETS = {
 }
 RMS_FluidHandTool.LOGO_COLOR = { 1, 1, 1, 1 }
 RMS_FluidHandTool.GAUGE_ZONE_ALPHA = 0.2
--- hose share the nozzle warns from, as the game's pressure washer at 7.5 m of 10
 RMS_FluidHandTool.HOSE_WARNING_SHARE = 0.75
 RMS_FluidHandTool.HOSE_WARNING_ID = "rmsDrumPumpHose"
 
--- carried cans the server sets down once the game has left the callback that asked for it
 RMS_FluidHandTool.setDowns = {}
 
 source(modDirectory .. "events/RMS_FluidCanisterEvent.lua")
@@ -155,7 +150,6 @@ HandToolHands.onPickUpAction = Utils.overwrittenFunction(HandToolHands.onPickUpA
 ---Gives the hands of the player the key of the cans
 local function onHandsRegisterActionEvents(hands)
     if hands:getIsActiveForInput(true) then
-        -- registered idle then switched on: the game then never refuses the key over one it shares
         local _, eventId = hands:addActionEvent(InputAction.RMS_TOGGLE_FLUID_CAN, hands, onTakeAction, true, false, false, false, nil)
         g_inputBinding:setActionEventTextPriority(eventId, GS_PRIO_VERY_HIGH)
         g_inputBinding:setActionEventText(eventId, g_i18n:getText("rms_fluid_hand_take"))
@@ -175,7 +169,6 @@ local function onHandsUpdate(hands)
     if carried ~= nil and (carried.isDeleted or not carried[RMS_FluidContainer.SPEC_TABLE_NAME].isCarried) then
         RMS_FluidHandTool.carryAsked = nil
         if not carried.isDeleted then
-            -- back in the world: grabbed as the game grabs any object, within the reach of the hands
             local x, y, z = player.targeter:getLastLookRay()
             local cx, cy, cz = getWorldTranslation(carried.rootNode)
             local distance = MathUtil.vector3Length(cx - x, cy - y, cz - z)
@@ -189,7 +182,6 @@ local function onHandsUpdate(hands)
     g_inputBinding:setActionEventActive(RMS_FluidHandTool.takeEventId, drum ~= nil or getHandsCan(hands) ~= nil)
     g_inputBinding:setActionEventText(RMS_FluidHandTool.takeEventId, g_i18n:getText(drum ~= nil and "rms_drum_pump_nozzle_take" or "rms_fluid_hand_take"))
     if drum ~= nil then
-        -- the hands switch their click off on what they cannot pick up, and name it again on every frame
         local pickUpEventId = hands.spec_hands.pickUpActionEventId
         g_inputBinding:setActionEventActive(pickUpEventId, true)
         g_inputBinding:setActionEventText(pickUpEventId, g_i18n:getText("rms_drum_pump_take"))
@@ -259,7 +251,7 @@ function RMS_FluidHandTool.take(player, container)
         end
     end
 
-    -- the hand tool loads over several frames, a second click must not take the can twice
+    -- Guard against repeated requests during asynchronous loading.
     containerSpec.isBeingTaken = true
     local loadingData = HandToolLoadingData.new()
     loadingData:setFilename(modDirectory .. RMS_FluidHandTool.FILENAMES[container:getRMSFluidCapacity()])
@@ -281,7 +273,6 @@ function RMS_FluidHandTool.onTaken(_, handTool, loadingState, arguments)
         return
     end
 
-    -- hands of the game still carrying the can let go of it before it leaves the world
     for _, carrier in ipairs(g_currentMission.playerSystem.players) do
         if carrier.hands ~= nil and carrier.hands:getHeldItem() == container.rootNode then
             carrier.hands:dropHeldItem()
@@ -291,7 +282,7 @@ function RMS_FluidHandTool.onTaken(_, handTool, loadingState, arguments)
     local spec = handTool[specName]
     spec.followX, spec.followY, spec.followZ = getWorldTranslation(player.rootNode)
     handTool:setRMSFluidContainer(container)
-    -- held before it is registered: the creation stream then carries its holder to every client
+    -- Set the holder before the creation stream is sent.
     handTool:setHolder(player, true)
     player:setCurrentHandTool(handTool, true)
     if spec.isNozzle then
@@ -304,7 +295,7 @@ end
 
 ---Queues a carried can to be set down on the next frame of the server
 -- @param table handTool carried can
--- @param table? pose world position and heading asked by its player, where it was last carried otherwise
+-- @param table? pose world position and heading, defaults to last carried pose
 function RMS_FluidHandTool.queueSetDown(handTool, pose)
     if next(RMS_FluidHandTool.setDowns) == nil then
         g_currentMission:addUpdateable(RMS_FluidHandTool)
@@ -341,7 +332,6 @@ function RMS_FluidHandTool:onLoad(xmlFile, baseDirectory)
         spec = {}
         self[specName] = spec
     end
-    -- a can has the link its container dresses, the nozzle of a drum none
     if self.i3dMappings.visualLink ~= nil then
         spec.visualLink = I3DUtil.indexToObject(self.components, "visualLink", self.i3dMappings)
     end
@@ -372,11 +362,9 @@ function RMS_FluidHandTool:setRMSFluidContainer(container)
     if self.isClient then
         local product = RMS_Fluids.PRODUCTS[container:getRMSFluidProductKey()]
         spec.contextIcon = RMS_FluidHandTool.LOGO_SLICE_PREFIX .. product.brand
-        -- a client gets the container after the keys of the tool
         g_inputBinding:setActionEventText(spec.pourEventId, spec.pourText)
         g_inputBinding:setActionEventText(spec.carryEventId, spec.carryText)
 
-        -- a can is heard by its fluid running, a drum by its pump
         local sampleName = spec.isNozzle and "drumPump" or (product.compatibleCircuits.coolant and "fluidPourCoolant" or "fluidPourOil")
         local soundsFile = loadXMLFile("rmsFluidHandToolSounds", modDirectory .. "sounds/rms_sounds.xml")
         spec.samples.pour = g_soundManager:loadSampleFromXML(soundsFile, "sounds", sampleName, modDirectory, self.components, 0,
@@ -392,7 +380,7 @@ end
 
 ---
 function RMS_FluidHandTool:onReadStream(streamId, connection)
-    -- the container may reach a joining client after its hand tool
+    -- The container may arrive after its hand tool on join.
     self[specName].containerId = NetworkUtil.readNodeObjectId(streamId)
     self:raiseActive()
 end
@@ -431,7 +419,6 @@ local function updateTarget(handTool, player)
                 g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, spec.targetCircuit, "rms_fluid_circuit_" .. spec.targetCircuit)))
         end
     end
-    -- a can pours where it is held; the pump of a drum runs on wherever its player looks, the key held
     if spec.pourVehicle ~= nil and spec.pourVehicle ~= vehicle and not spec.isNozzle then
         stopPour(handTool)
     end
@@ -466,7 +453,7 @@ function RMS_FluidHandTool:onUpdate(dt)
     if self.isServer and player ~= nil and not spec.isNozzle then
         spec.followTimer = spec.followTimer - dt
         if spec.followTimer <= 0 then
-            -- the hidden container follows its carrier: a save or a lost carrier leaves it where the player stood
+            -- Keep the hidden container at its carrier for save and disconnect.
             spec.followTimer = RMS_FluidHandTool.FOLLOW_INTERVAL
             spec.followX, spec.followY, spec.followZ = getWorldTranslation(player.rootNode)
             setWorldTranslation(container.rootNode, spec.followX, spec.followY, spec.followZ)
@@ -491,7 +478,6 @@ function RMS_FluidHandTool:onUpdate(dt)
     end
 
     if spec.isNozzle and player ~= nil and player.isOwner and not spec.isSetDown then
-        -- the player is told the hose left, as for the pressure washer, then the nozzle is hung up
         local length, span = RMS_FluidTransfer.HOSE_LENGTH, container:getRMSFluidHoseSpan(player)
         if span > length then
             RMS_FluidHandTool.onCarryAction(self)
@@ -532,14 +518,12 @@ function RMS_FluidHandTool:onRegisterActionEvents()
         return
     end
 
-    -- the pour takes the hand tool key of the game, read every frame so it is released with the can
     local spec = self[specName]
     local _, pourEventId = self:addActionEvent(InputAction.ACTIVATE_HANDTOOL, self, RMS_FluidHandTool.onPourAction, true, true, true, true, nil)
     g_inputBinding:setActionEventTextPriority(pourEventId, GS_PRIO_VERY_HIGH)
     g_inputBinding:setActionEventText(pourEventId, spec.pourText)
     spec.pourEventId = pourEventId
 
-    -- the key of the cans hands it back at its release, registered idle then switched on
     local _, carryEventId = self:addActionEvent(InputAction.RMS_TOGGLE_FLUID_CAN, self, RMS_FluidHandTool.onCarryAction, true, false, false, false, nil)
     g_inputBinding:setActionEventActive(carryEventId, true)
     g_inputBinding:setActionEventTextPriority(carryEventId, GS_PRIO_VERY_HIGH)
@@ -556,7 +540,6 @@ local function carry(handTool)
         handTool, RMS_FluidHandTool.CARRY_MASK)
 
     RMS_FluidHandTool.carryAsked = spec.container
-    -- the server sets down every can its carrier asks for: the hand emptied next has nothing more to ask
     spec.isSetDown = true
     RMS_FluidCanisterEvent.send(handTool, { x + dx * spec.carryDistance, y + dy * spec.carryDistance - RMS_FluidHandTool.CARRY_DROP,
         z + dz * spec.carryDistance, MathUtil.getYRotationFromDirection(dx, dz) })
@@ -570,7 +553,6 @@ local function startPour(handTool)
         return
     end
     if spec.targetRefusal ~= nil then
-        -- a level just made is already said by the display still on screen for this machine
         local display = RMS_FluidHandTool.display
         if circuit ~= nil or display == nil or display.vehicle ~= target then
             g_currentMission:showBlinkingWarning(g_i18n:getText(spec.targetRefusal), 2000)
@@ -579,7 +561,6 @@ local function startPour(handTool)
     end
 
     if not spec.targetIsCompatible and (spec.confirmedVehicle ~= target or spec.confirmedCircuit ~= circuit) then
-        -- a fluid the circuit is not made for is poured only by a player told what it does to the machine
         YesNoDialog.show(
             function(confirmed)
                 if confirmed then
@@ -603,7 +584,7 @@ end
 function RMS_FluidHandTool:onPourAction(actionName, inputValue)
     local spec = self[specName]
     local isDown = inputValue ~= 0
-    -- called on every frame the key is held: only its press and its release count
+    -- Process only press and release edges of the held action.
     if isDown == spec.isPourKeyDown or spec.container == nil then
         return
     end
@@ -714,7 +695,6 @@ function RMS_FluidHandTool.showPour(container, vehicle, circuit, isCompatible)
         containerLiters = container:getRMSFluidLiters(),
         containerCapacity = container:getRMSFluidCapacity()
     }
-    -- the action line leaves at once where the display comes
     g_currentMission.hud.contextActionDisplay:resetContext()
 end
 
@@ -744,7 +724,6 @@ function RMS_FluidHandTool.draw()
         return
     end
 
-    -- an emptied container is gone with its last liters
     display.containerLiters = display.container.isDeleted and 0 or display.container:getRMSFluidLiters()
     if not g_currentMission.hud.isVisible then
         return
@@ -755,7 +734,7 @@ function RMS_FluidHandTool.draw()
     local capacity = RMS_Fluids.getCapacity(display.vehicle, display.circuit)
     local isLevelDone = not display.isPouring and capacity - liters <= RMS_FluidHandTool.LEVEL_TOLERANCE
     local isEmptied = not display.isPouring and not isLevelDone and display.containerLiters <= RMS_FluidHandTool.LEVEL_TOLERANCE
-    local fill, fillColor = RMS_Fluids.getGaugeFill(RMS_Fluids.getLevel(display.vehicle, display.circuit))
+    local fill, fillColor = RMS_Fluids.getGaugeFill(RMS_Fluids.getLevel(display.vehicle, display.circuit), HUD.COLOR.ACTIVE)
     local active, warning, critical = HUD.COLOR.ACTIVE, RMS_Breakdowns.COLORS.WARNING, RMS_Breakdowns.COLORS.CRITICAL
     local unit = g_i18n:getText("unit_literShort")
 
@@ -781,12 +760,10 @@ function RMS_FluidHandTool.draw()
     display.logo:setPosition(x + padding, rowY(82))
     display.logo:render()
 
-    -- the right first: liters of the circuit over its capacity, then the state of the pour
     local litersText = RMS_FluidWorkshop.formatLiters(liters)
     local capacityText = string.format(" / %s %s", RMS_FluidWorkshop.formatLiters(capacity), unit)
     local statusKey, statusColor = nil, active
     if not display.isCompatible then
-        -- said for as long as the wrong fluid runs, and after
         statusKey, statusColor = "rms_fluid_incompatible_title", warning
     elseif isLevelDone then
         statusKey = "rms_fluid_level_done"
@@ -818,7 +795,6 @@ function RMS_FluidHandTool.draw()
         renderText(right, rowY(90), size(13), statusText)
     end
 
-    -- then the left, in the room the right leaves: the circuit, and the machine under it
     local textX, gap = x + padding + hud:scalePixelToScreenWidth(58), hud:scalePixelToScreenWidth(12)
     setTextAlignment(RenderText.ALIGN_LEFT)
     setTextColor(1, 1, 1, 1)
@@ -828,7 +804,6 @@ function RMS_FluidHandTool.draw()
     renderText(textX, rowY(92), fitTextSize(display.machineText, size(14), right - statusWidth - gap - textX), display.machineText)
     renderText(x + padding, rowY(16), size(13), display.productText)
 
-    -- level gauge: the stretch around its two marks, hatched, and a red end under it
     local trackX, trackWidth = x + padding, width - padding * 2
     local minX = trackX + trackWidth * RMS_Fluids.GAUGE_MIN_POSITION
     local maxX = trackX + trackWidth * RMS_Fluids.GAUGE_MAX_POSITION
@@ -854,7 +829,6 @@ function RMS_FluidHandTool.draw()
     renderText(minX, rowY(46), size(11), "MIN")
     renderText(maxX, rowY(46), size(11), "MAX")
 
-    -- what the container still holds, read right to left
     local canText = string.format(" / %s %s", RMS_FluidWorkshop.formatLiters(display.containerCapacity), unit)
     local canLitersText = RMS_FluidWorkshop.formatLiters(display.containerLiters)
     setTextAlignment(RenderText.ALIGN_RIGHT)

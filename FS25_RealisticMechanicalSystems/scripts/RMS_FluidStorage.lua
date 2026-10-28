@@ -4,7 +4,6 @@
 ---Fluid containers in the game's object storage: liters, pump and format kept
 RMS_FluidStorage = {}
 
--- record the game keeps of a stored pallet
 local PalletRecord = PlaceableObjectStorage.ABSTRACT_OBJECTS_BY_CLASS_NAME.Vehicle
 
 ---Tells whether two records hold the same fluid
@@ -27,9 +26,8 @@ PalletRecord.registerXMLPaths = Utils.appendedFunction(PalletRecord.registerXMLP
 end)
 
 PalletRecord.addToStorage = Utils.overwrittenFunction(PalletRecord.addToStorage, function(record, superFunc, storage, object, loadedFromSavegame)
-    -- read before the game deletes the container
     local spec = object[RMS_FluidContainer.SPEC_TABLE_NAME]
-    local fluid = spec ~= nil and { liters = spec.liters, capacity = spec.capacity, hasPump = spec.hasPump } or nil
+    local fluid = spec ~= nil and { liters = object:getRMSFluidLiters(), capacity = object:getRMSFluidCapacity(), hasPump = spec.hasPump } or nil
     superFunc(record, storage, object, loadedFromSavegame)
     record.palletAttributes.rmsFluid = fluid
 end)
@@ -43,8 +41,8 @@ end)
 
 PalletRecord.visualPalletVehicleLoaded = Utils.prependedFunction(PalletRecord.visualPalletVehicleLoaded, function(record, vehicles, vehicleLoadState)
     local fluid = record.palletAttributes.rmsFluid
-    if fluid ~= nil and fluid.hasPump and getIsLoaded(vehicles, vehicleLoadState) then
-        vehicles[1]:setRMSFluidPump(true)
+    if fluid ~= nil and getIsLoaded(vehicles, vehicleLoadState) then
+        vehicles[1]:setRMSFluidStored(fluid.liters, fluid.hasPump)
     end
 end)
 
@@ -72,7 +70,6 @@ PalletRecord.writeStream = Utils.appendedFunction(PalletRecord.writeStream, func
         streamWriteFloat32(streamId, fluid.liters)
         streamWriteFloat32(streamId, fluid.capacity)
         streamWriteBool(streamId, fluid.hasPump)
-        -- a configuration id as the game sends one
         streamWriteUInt16(streamId, record.palletAttributes.configurations.fillUnit - 1)
     end
 end)
@@ -101,7 +98,6 @@ PalletRecord.loadFromXMLFile = Utils.overwrittenFunction(PalletRecord.loadFromXM
     local numStored = #storedObjects
     superFunc(storage, xmlFile, key)
 
-    -- the game stores nothing when the file of the pallet is gone
     local liters = xmlFile:getValue(key .. "#rmsFluidLiters")
     if liters ~= nil and #storedObjects > numStored then
         storedObjects[#storedObjects].palletAttributes.rmsFluid = { liters = liters, capacity = xmlFile:getValue(key .. "#rmsFluidCapacity"),

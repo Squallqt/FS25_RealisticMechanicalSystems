@@ -1,21 +1,94 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-
-<i3D name="jumperCables.i3d" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+<?xml version='1.0' encoding='utf-8'?>
+<i3D xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="jumperCables_source" version="1.6" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
   <Asset>
-    <Export program="GIANTS Editor 64bit" version="10.0.4"/>
+    <Export program="i3dConverter" version="1.0" />
   </Asset>
 
   <Files>
-    <File fileId="1" filename="texture.dds"/>
+    <File fileId="1" filename="textures/brassTeeth_diffuse.dds" />
+    <File fileId="3" filename="textures/brassTeeth_vmask.dds" />
+    <File fileId="12" filename="textures/cableBlack_diffuse.dds" />
+    <File fileId="13" filename="textures/cableBlack_vmask.dds" />
+    <File fileId="17" filename="textures/cableRed_diffuse.dds" />
+    <File fileId="18" filename="textures/cableBlack_vmask.dds" />
+    <File fileId="20" filename="textures/clampSteel_diffuse.dds" />
+    <File fileId="21" filename="textures/brassTeeth_vmask.dds" />
+    <File fileId="22" filename="textures/pivotSteel_diffuse.dds" />
+    <File fileId="23" filename="textures/brassTeeth_vmask.dds" />
+    <File fileId="26" filename="textures/surgeCase_diffuse.dds" />
+    <File fileId="27" filename="textures/cableBlack_vmask.dds" />
+    <File fileId="4" filename="$data/shaders/vehicleShader.xml" />
+    <File fileId="2" filename="$data/shared/default_normal.dds" />
+    <File fileId="6" filename="$data/shared/detailLibrary/flat_normal.dds" />
+    <File fileId="25" filename="$data/shared/detailLibrary/metallic/clear_diffuse.dds" />
+    <File fileId="24" filename="$data/shared/detailLibrary/metallic/clear_specular.dds" />
+    <File fileId="7" filename="$data/shared/detailLibrary/metallic/scratched_diffuse.dds" />
+    <File fileId="5" filename="$data/shared/detailLibrary/metallic/scratched_specular.dds" />
+    <File fileId="19" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_diffuse.dds" />
+    <File fileId="28" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_specular.dds" />
+    <File fileId="16" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubberBlack_diffuse.dds" />
+    <File fileId="15" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_normal.dds" />
+    <File fileId="14" filename="$data/shared/detailLibrary/nonMetallic/rubber/rubber_specular.dds" />
+    <File fileId="29" filename="$data/shared/white_diffuse.dds" />
   </Files>
 
 
   <Materials>
-    <Material name="Material.001" materialId="41">
-      <Texture fileId="1"/>
+    <Material name="brassTeeth" materialId="3" customShaderId="4">
+      <Texture fileId="1" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="3" />
+      <Custommap name="detailSpecular" fileId="5" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="7" />
+      <CustomParameter name="smoothnessScale" value="0.774533" />
     </Material>
-    <Material name="Material.001" materialId="31">
-      <Texture fileId="1"/>
+    <Material name="cableBlack" materialId="1" customShaderId="4">
+      <Texture fileId="29" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="13" />
+      <Custommap name="detailSpecular" fileId="14" />
+      <Custommap name="detailNormal" fileId="15" />
+      <Custommap name="detailDiffuse" fileId="16" />
+      <CustomParameter name="porosity" value="0.5" />
+      <CustomParameter name="colorScale" value="0.01 0.01 0.01" />
+      <CustomParameter name="ssrParameters" value="0.25 1 -0.19" />
+    </Material>
+    <Material name="cableRed" materialId="2" customShaderId="4">
+      <Texture fileId="17" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="18" />
+      <Custommap name="detailSpecular" fileId="14" />
+      <Custommap name="detailNormal" fileId="15" />
+      <Custommap name="detailDiffuse" fileId="19" />
+      <CustomParameter name="porosity" value="0.5" />
+    </Material>
+    <Material name="clampSteel" materialId="4" customShaderId="4">
+      <Texture fileId="20" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="21" />
+      <Custommap name="detailSpecular" fileId="5" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="7" />
+      <CustomParameter name="smoothnessScale" value="0.774533" />
+    </Material>
+    <Material name="pivotSteel" materialId="5" customShaderId="4">
+      <Texture fileId="22" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="23" />
+      <Custommap name="detailSpecular" fileId="24" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="25" />
+    </Material>
+    <Material name="surgeCase" materialId="6" customShaderId="4">
+      <Texture fileId="29" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="27" />
+      <Custommap name="detailSpecular" fileId="28" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="19" />
+      <CustomParameter name="colorScale" value="0.012 0.012 0.012" />
+      <CustomParameter name="ssrParameters" value="0.25 1 -0.19" />
     </Material>
   </Materials>
 
@@ -24,23 +97,124 @@
   </Shapes>
 
   <Scene>
-    <TransformGroup name="jumperCables" lockedgroup="true" nodeId="10">
-      <TransformGroup name="graphics" translation="0 0 0.0513875" nodeId="11">
-        <TransformGroup name="leftPair" nodeId="255">
-          <Shape name="aRedLeft" clipDistance="300" translation="-0.214000002 0.028343856 -0.021612098" rotation="-70.007103068 -0.000000000 -0.000000000" shapeId="1" nodeId="52" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="31"/>
-          <Shape name="aBlackLeft" clipDistance="300" translation="-0.214000002 0.060303856 -0.009984099" rotation="-109.992895111 0.000000000 180.000005009" shapeId="2" nodeId="53" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="41"/>
-          <TransformGroup name="leftHandNode" translation="-0.171000004 0.026888773 0.020423688" rotation="0.000000000 70.007109898 90.000002504" nodeId="257"/>
+    <TransformGroup name="jumperCables" nodeId="55">
+      <TransformGroup name="graphics" nodeId="56">
+        <TransformGroup name="leftPair" translation="-0.14 0 0" nodeId="57">
+          <TransformGroup name="leftClampAssembly" lodDistance="0 4 12" nodeId="58">
+            <TransformGroup name="leftPairClampsLOD0" nodeId="59">
+              <Shape name="leftPairClampsLOD0_brassTeeth" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="1" clipDistance="60" nodeId="60" castsShadows="true" receiveShadows="true" materialIds="3" />
+              <Shape name="leftPairClampsLOD0_cableBlack" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="2" clipDistance="60" nodeId="61" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="leftPairClampsLOD0_cableRed" translation="-0.013 0.015 -0.1" rotation="0 -3 0" shapeId="3" clipDistance="60" nodeId="62" castsShadows="true" receiveShadows="true" materialIds="2" />
+              <Shape name="leftPairClampsLOD0_clampSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="4" clipDistance="60" nodeId="63" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="leftPairClampsLOD0_pivotSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="5" clipDistance="60" nodeId="64" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="leftPairClampsLOD1" nodeId="65">
+              <Shape name="leftPairClampsLOD1_brassTeeth" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="6" clipDistance="60" nodeId="66" castsShadows="true" receiveShadows="true" materialIds="3" />
+              <Shape name="leftPairClampsLOD1_cableBlack" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="7" clipDistance="60" nodeId="67" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="leftPairClampsLOD1_cableRed" translation="-0.013 0.015 -0.1" rotation="0 -3 0" shapeId="8" clipDistance="60" nodeId="68" castsShadows="true" receiveShadows="true" materialIds="2" />
+              <Shape name="leftPairClampsLOD1_clampSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="9" clipDistance="60" nodeId="69" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="leftPairClampsLOD1_pivotSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="10" clipDistance="60" nodeId="70" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="leftPairClampsLOD2" nodeId="71">
+              <Shape name="leftPairClampsLOD2_brassTeeth" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="11" clipDistance="60" nodeId="72" castsShadows="true" receiveShadows="true" materialIds="3" />
+              <Shape name="leftPairClampsLOD2_cableBlack" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="12" clipDistance="60" nodeId="73" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="leftPairClampsLOD2_cableRed" translation="-0.013 0.015 -0.1" rotation="0 -3 0" shapeId="13" clipDistance="60" nodeId="74" castsShadows="true" receiveShadows="true" materialIds="2" />
+              <Shape name="leftPairClampsLOD2_clampSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="14" clipDistance="60" nodeId="75" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="leftPairClampsLOD2_pivotSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="15" clipDistance="60" nodeId="76" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="leftCableAssembly" lodDistance="0 4 12" nodeId="77">
+            <TransformGroup name="leftPairCablesLOD0" nodeId="78">
+              <Shape name="leftPairCablesLOD0_cableBlack" shapeId="16" clipDistance="60" nodeId="79" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="leftPairCablesLOD0_cableRed" shapeId="17" clipDistance="60" nodeId="80" castsShadows="true" receiveShadows="true" materialIds="2" />
+            </TransformGroup>
+            <TransformGroup name="leftPairCablesLOD1" nodeId="81">
+              <Shape name="leftPairCablesLOD1_cableBlack" shapeId="18" clipDistance="60" nodeId="82" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="leftPairCablesLOD1_cableRed" shapeId="19" clipDistance="60" nodeId="83" castsShadows="true" receiveShadows="true" materialIds="2" />
+            </TransformGroup>
+            <TransformGroup name="leftPairCablesLOD2" nodeId="84">
+              <Shape name="leftPairCablesLOD2_cableBlack" shapeId="20" clipDistance="60" nodeId="85" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="leftPairCablesLOD2_cableRed" shapeId="21" clipDistance="60" nodeId="86" castsShadows="true" receiveShadows="true" materialIds="2" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="leftHandNode" translation="-0.0500433 0.113 -0.0350295" rotation="22.201004 4.761 -85.330002" nodeId="87" />
         </TransformGroup>
-        <TransformGroup name="rightPair" nodeId="256">
-          <Shape name="aRedRight" clipDistance="300" translation="0.063999996 0.028343856 -0.021612098" rotation="-70.007103068 -0.000000000 -0.000000000" shapeId="1" nodeId="15" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="31"/>
-          <Shape name="aBlackRight" clipDistance="300" translation="0.063999996 0.060303856 -0.009984099" rotation="-109.992895111 0.000000000 180.000005009" shapeId="2" nodeId="16" castsShadows="true" receiveShadows="true" distanceBlending="false" materialIds="41"/>
+        <TransformGroup name="rightPair" translation="0.14 0 0" nodeId="88">
+          <TransformGroup name="rightClampAssembly" lodDistance="0 4 12" nodeId="89">
+            <TransformGroup name="rightPairClampsLOD0" nodeId="90">
+              <Shape name="rightPairClampsLOD0_brassTeeth" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="22" clipDistance="60" nodeId="91" castsShadows="true" receiveShadows="true" materialIds="3" />
+              <Shape name="rightPairClampsLOD0_cableBlack" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="23" clipDistance="60" nodeId="92" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="rightPairClampsLOD0_cableRed" translation="-0.013 0.015 -0.1" rotation="0 -3 0" shapeId="3" clipDistance="60" nodeId="93" castsShadows="true" receiveShadows="true" materialIds="2" />
+              <Shape name="rightPairClampsLOD0_clampSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="24" clipDistance="60" nodeId="94" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="rightPairClampsLOD0_pivotSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="25" clipDistance="60" nodeId="95" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="rightPairClampsLOD1" nodeId="96">
+              <Shape name="rightPairClampsLOD1_brassTeeth" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="26" clipDistance="60" nodeId="97" castsShadows="true" receiveShadows="true" materialIds="3" />
+              <Shape name="rightPairClampsLOD1_cableBlack" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="27" clipDistance="60" nodeId="98" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="rightPairClampsLOD1_cableRed" translation="-0.013 0.015 -0.1" rotation="0 -3 0" shapeId="8" clipDistance="60" nodeId="99" castsShadows="true" receiveShadows="true" materialIds="2" />
+              <Shape name="rightPairClampsLOD1_clampSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="28" clipDistance="60" nodeId="100" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="rightPairClampsLOD1_pivotSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="29" clipDistance="60" nodeId="101" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="rightPairClampsLOD2" nodeId="102">
+              <Shape name="rightPairClampsLOD2_brassTeeth" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="30" clipDistance="60" nodeId="103" castsShadows="true" receiveShadows="true" materialIds="3" />
+              <Shape name="rightPairClampsLOD2_cableBlack" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="31" clipDistance="60" nodeId="104" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="rightPairClampsLOD2_cableRed" translation="-0.013 0.015 -0.1" rotation="0 -3 0" shapeId="13" clipDistance="60" nodeId="105" castsShadows="true" receiveShadows="true" materialIds="2" />
+              <Shape name="rightPairClampsLOD2_clampSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="32" clipDistance="60" nodeId="106" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="rightPairClampsLOD2_pivotSteel" translation="0.013 -0.015 -0.108" rotation="0 4 0" shapeId="33" clipDistance="60" nodeId="107" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="rightCableAssembly" lodDistance="0 4 12" nodeId="108">
+            <TransformGroup name="rightPairCablesLOD0" nodeId="109">
+              <Shape name="rightPairCablesLOD0_cableBlack" shapeId="34" clipDistance="60" nodeId="110" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="rightPairCablesLOD0_cableRed" shapeId="35" clipDistance="60" nodeId="111" castsShadows="true" receiveShadows="true" materialIds="2" />
+              <Shape name="rightPairCablesLOD0_pivotSteel" translation="0 -0.167318 0.164" shapeId="36" clipDistance="60" nodeId="112" castsShadows="true" receiveShadows="true" materialIds="5" />
+              <Shape name="rightPairCablesLOD0_surgeCase" translation="0 -0.167318 0.164" shapeId="37" clipDistance="60" nodeId="113" castsShadows="true" receiveShadows="true" materialIds="6" />
+            </TransformGroup>
+            <TransformGroup name="rightPairCablesLOD1" nodeId="114">
+              <Shape name="rightPairCablesLOD1_cableBlack" shapeId="38" clipDistance="60" nodeId="115" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="rightPairCablesLOD1_cableRed" shapeId="39" clipDistance="60" nodeId="116" castsShadows="true" receiveShadows="true" materialIds="2" />
+              <Shape name="rightPairCablesLOD1_pivotSteel" translation="0 -0.16721 0.164" shapeId="40" clipDistance="60" nodeId="117" castsShadows="true" receiveShadows="true" materialIds="5" />
+              <Shape name="rightPairCablesLOD1_surgeCase" translation="0 -0.16721 0.164" shapeId="37" clipDistance="60" nodeId="118" castsShadows="true" receiveShadows="true" materialIds="6" />
+            </TransformGroup>
+            <TransformGroup name="rightPairCablesLOD2" nodeId="119">
+              <Shape name="rightPairCablesLOD2_cableBlack" shapeId="41" clipDistance="60" nodeId="120" castsShadows="true" receiveShadows="true" materialIds="1" />
+              <Shape name="rightPairCablesLOD2_cableRed" shapeId="42" clipDistance="60" nodeId="121" castsShadows="true" receiveShadows="true" materialIds="2" />
+              <Shape name="rightPairCablesLOD2_surgeCase" translation="0 -0.166535 0.164" shapeId="43" clipDistance="60" nodeId="122" castsShadows="true" receiveShadows="true" materialIds="6" />
+            </TransformGroup>
+          </TransformGroup>
         </TransformGroup>
       </TransformGroup>
-      <TransformGroup name="handNode" translation="0.106999993 0.034406655 0.074546419" rotation="-0.000000000 -70.007109898 -90.000002504" nodeId="12">
-        <TransformGroup name="raycastNode" translation="-0.236665487 -0.107446171 0.296919674" rotation="-6.266943170 -69.628765229 -173.549779262" scale="1.01395 1.0149 1.0149" nodeId="13"/>
+      <TransformGroup name="handNode" translation="0.159957 0.113 -0.0350295" rotation="22.201004 -4.761 85.330002" nodeId="123">
+        <TransformGroup name="raycastNode" translation="-0.126778939 -0.025692867 -0.130927374" rotation="-6.63667278 -21.7369588 -84.9890239" nodeId="124" />
       </TransformGroup>
-      <TransformGroup name="firstPersonNode" translation="0 0.431383 0.764936" rotation="-180 0 -180" nodeId="14"/>
+      <TransformGroup name="firstPersonNode" translation="0 0.224 0.5999705" rotation="180 -0 180" nodeId="125" />
+    <TransformGroup name="storedGraphics" lodDistance="0 4 12" nodeId="126" visibility="false">
+      <TransformGroup name="storedLOD0" nodeId="127">
+        <Shape name="storedLOD0_brassTeeth" shapeId="44" clipDistance="60" nodeId="128" castsShadows="false" receiveShadows="false" materialIds="3" />
+        <Shape name="storedLOD0_cableBlack" shapeId="45" clipDistance="60" nodeId="129" castsShadows="false" receiveShadows="false" materialIds="1" />
+        <Shape name="storedLOD0_cableRed" shapeId="46" clipDistance="60" nodeId="130" castsShadows="false" receiveShadows="false" materialIds="2" />
+        <Shape name="storedLOD0_clampSteel" shapeId="47" clipDistance="60" nodeId="131" castsShadows="false" receiveShadows="false" materialIds="4" />
+        <Shape name="storedLOD0_pivotSteel" shapeId="48" clipDistance="60" nodeId="132" castsShadows="false" receiveShadows="false" materialIds="5" />
+        <Shape name="storedLOD0_surgeCase" shapeId="49" clipDistance="60" nodeId="133" castsShadows="false" receiveShadows="false" materialIds="6" />
+      </TransformGroup>
+      <TransformGroup name="storedLOD1" nodeId="134">
+        <Shape name="storedLOD1_brassTeeth" shapeId="50" clipDistance="60" nodeId="135" castsShadows="false" receiveShadows="false" materialIds="3" />
+        <Shape name="storedLOD1_cableBlack" shapeId="51" clipDistance="60" nodeId="136" castsShadows="false" receiveShadows="false" materialIds="1" />
+        <Shape name="storedLOD1_cableRed" shapeId="52" clipDistance="60" nodeId="137" castsShadows="false" receiveShadows="false" materialIds="2" />
+        <Shape name="storedLOD1_clampSteel" shapeId="53" clipDistance="60" nodeId="138" castsShadows="false" receiveShadows="false" materialIds="4" />
+        <Shape name="storedLOD1_pivotSteel" shapeId="54" clipDistance="60" nodeId="139" castsShadows="false" receiveShadows="false" materialIds="5" />
+        <Shape name="storedLOD1_surgeCase" shapeId="49" clipDistance="60" nodeId="140" castsShadows="false" receiveShadows="false" materialIds="6" />
+      </TransformGroup>
+      <TransformGroup name="storedLOD2" nodeId="141">
+        <Shape name="storedLOD2_brassTeeth" shapeId="55" clipDistance="60" nodeId="142" castsShadows="false" receiveShadows="false" materialIds="3" />
+        <Shape name="storedLOD2_cableBlack" shapeId="56" clipDistance="60" nodeId="143" castsShadows="false" receiveShadows="false" materialIds="1" />
+        <Shape name="storedLOD2_cableRed" shapeId="57" clipDistance="60" nodeId="144" castsShadows="false" receiveShadows="false" materialIds="2" />
+        <Shape name="storedLOD2_clampSteel" shapeId="58" clipDistance="60" nodeId="145" castsShadows="false" receiveShadows="false" materialIds="4" />
+        <Shape name="storedLOD2_pivotSteel" shapeId="59" clipDistance="60" nodeId="146" castsShadows="false" receiveShadows="false" materialIds="5" />
+        <Shape name="storedLOD2_surgeCase" shapeId="60" clipDistance="60" nodeId="147" castsShadows="false" receiveShadows="false" materialIds="6" />
+      </TransformGroup>
     </TransformGroup>
+  </TransformGroup>
   </Scene>
 
 </i3D>

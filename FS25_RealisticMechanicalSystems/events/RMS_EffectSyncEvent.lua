@@ -35,7 +35,7 @@ function RMS_EffectSyncEvent.new(vehicle, effectId, status, timer, extraInt, ext
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_EffectSyncEvent:writeStream(streamId, connection)
@@ -48,7 +48,7 @@ function RMS_EffectSyncEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_EffectSyncEvent:readStream(streamId, connection)
@@ -110,7 +110,7 @@ function RMS_EffectSyncEvent:run(connection)
             g_server:broadcastEvent(RMS_EffectSyncEvent.new(vehicle, self.effectId, self.status, self.timer, self.extraInt, self.extraFloat), nil, connection, vehicle)
         end
 
-    elseif self.effectId == "PTO_AUTO_DISENGAGE_CHANCE" then
+    elseif self.effectId == "PTO_AUTO_DISENGAGE_CHANCE" or self.effectId == "FRONT_PTO_AUTO_DISENGAGE_CHANCE" then
         if effect ~= nil then
             effect.extraData = effect.extraData or {}
             effect.extraData.status = self.status
@@ -118,12 +118,12 @@ function RMS_EffectSyncEvent:run(connection)
 
     elseif self.effectId == "BRAKE_FORCE_MODIFIER" then
         if self.status == "SOUND" then
-            RMS_SoundManager.playSample(spec.samples["brakes" .. self.extraInt])
+            RMS_SoundManager.playSample(spec.samples.brakes)
         end
 
-    elseif self.effectId == "OVERHEAT_PROTECTION" then
-        if self.status == "ALARM" then
-            RMS_SoundManager.playSample(spec.samples.alarm)
+    elseif self.effectId == "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT" then
+        if self.status == "CLUNK" then
+            RMS_SoundManager.playSample(spec.samples.powershiftClunk)
         end
 
     elseif self.effectId == "GEAR_SHIFT_FAILURE_CHANCE" then
@@ -137,7 +137,7 @@ function RMS_EffectSyncEvent:run(connection)
             end
         end
         if self.status == "FAILED" then
-            RMS_SoundManager.playSample(spec.samples["transmissionShiftFailed" .. self.extraInt])
+            RMS_SoundManager.playSample(spec.samples.transmissionShiftFailed)
         end
 
     elseif self.effectId == "GEAR_REJECTION_CHANCE" then
@@ -153,9 +153,9 @@ function RMS_EffectSyncEvent:run(connection)
             end
         end
         if self.status == "REJECTED" then
-            RMS_SoundManager.playSample(spec.samples.gearDisengage1)
+            RMS_SoundManager.playSample(spec.samples.gearDisengage)
         elseif self.status == "IDLE" and self.extraInt > 0 then
-            RMS_SoundManager.playSample(spec.samples["transmissionShiftFailed" .. self.extraInt])
+            RMS_SoundManager.playSample(spec.samples.transmissionShiftFailed)
         end
 
     elseif self.effectId == "LIGHTS_FLICKER_CHANCE" then

@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<placeable type="placeableVehicle">
+<placeable type="rmsTrolleyPlaceable">
     <storeData>
         <name>$l10n_rms_charger_name</name>
         <functions>
             <function>$l10n_rms_charger_function</function>
         </functions>
-        <image>objects/batteryCharger/store_batteryCharger.dds</image>
+        <image>objects/batteryCharger/store_batteryCharger.png</image>
         <price>800</price>
         <lifetime>600</lifetime>
         <rotation>0</rotation>
@@ -45,6 +45,12 @@
     <placeableVehicle>
         <vehicle xmlFilename="objects/batteryCharger/batteryCharger.xml" linkNode="linkNode" />
     </placeableVehicle>
+    <rmsDiagnosticTool>
+        <rmsDiagnosticPcConfigurations>
+            <rmsDiagnosticPcConfiguration name="$l10n_configuration_valueNo" price="0" isDefault="true" saveId="WITHOUT_PC" />
+            <rmsDiagnosticPcConfiguration name="$l10n_configuration_valueYes" price="4080" saveId="WITH_PC" />
+        </rmsDiagnosticPcConfigurations>
+    </rmsDiagnosticTool>
     <i3dMappings>
         <i3dMapping id="linkNode" node="0&gt;0" />
         <i3dMapping id="testAreaStart01" node="0&gt;1" />

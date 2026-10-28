@@ -1,10 +1,11 @@
-<handTool type="rmsDrumPump" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/handTool.xsd">
+<handTool type="rmsDrumPump" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
+    <annotation>Macnaught BOP 60 battery pump for 205 L drums (BP205S-UNA).</annotation>
     <storeData>
         <name>$l10n_rms_drum_pump_name</name>
         <functions>
             <function>$l10n_rms_drum_pump_function</function>
         </functions>
-        <image>objects/drumPump/store_drumPump.dds</image>
+        <image>objects/drumPump/store_drumPump.png</image>
         <price>350</price>
         <lifetime>1000</lifetime>
         <dailyUpkeep>0</dailyUpkeep>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<GUI onOpen="onOpen" onClose="onClose">
+<GUI onOpen="onOpen" onClose="onClose" onCreate="onCreate">
     <GuiElement profile="newLayer" />
     <Bitmap profile="dialogFullscreenBg" id="dialogBg" />
 
@@ -10,7 +10,7 @@
 
         <GuiElement profile="fs25_dialogContentContainer">
             <Text profile="rms_welcomeDialogTitle" id="dialogTitleElement" position="0px -40px" text="WELCOME TO RMS"/>
-            <Text profile="rms_welcomeDialogText" id="messageTextElement" position="0px -90px" size="560px 210px" text=""/>
+            <Text profile="rms_welcomeDialogText" id="dialogTextElement" position="0px -90px" size="560px 24px" text=""/>
         </GuiElement>
 
         <BoxLayout profile="fs25_dialogButtonBox">

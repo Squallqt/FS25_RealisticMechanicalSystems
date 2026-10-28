@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <texture>
    <meta>
-      <filename>hud_brand_fuchs.dds</filename>
+      <filename>hud_brand_fuchs.png</filename>
       <size width="256" height="256" />
    </meta>
    <slices>

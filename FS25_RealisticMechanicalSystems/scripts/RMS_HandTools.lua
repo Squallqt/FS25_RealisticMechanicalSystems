@@ -112,7 +112,6 @@ function rmsHandTools:attachToolToCamera(superFunc)
     return superFunc(self)
 end
 
----Returns the additional pair before the native tool root is hidden or unlinked.
 function rmsHandTools:detachTool(superFunc)
     restoreLeftCablePair(self)
     return superFunc(self)
@@ -123,12 +122,6 @@ local function getRaycastVehicle(handTool, maxDistance)
     local spec = ensureSpec(handTool)
     spec.raycastVehicle = nil
     spec.raycastVehicleDistance = math.huge
-    spec.raycastHitX = nil
-    spec.raycastHitY = nil
-    spec.raycastHitZ = nil
-    spec.raycastHitNX = nil
-    spec.raycastHitNY = nil
-    spec.raycastHitNZ = nil
 
     if spec.raycastNode == nil or spec.raycastNode == 0 then
         log_dbg("Raycast aborted: raycastNode is missing")
@@ -189,7 +182,6 @@ local function resetDustEmitterPosition(handTool)
     end
 end
 
----Moves the dust emitter of the blower to the distance being blown at
 local function setDustEmitterDistance(handTool, distance)
     local spec = ensureSpec(handTool)
     if spec.dustEmitterRootNode == nil or spec.dustEmitterRootNode == 0 then
@@ -200,9 +192,9 @@ local function setDustEmitterDistance(handTool, distance)
 
     setTranslation(
         spec.dustEmitterRootNode,
-        spec.dustEmitterBaseX or 0,
-        spec.dustEmitterBaseY or 0,
-        -clampedDistance
+        spec.dustEmitterBaseX + spec.dustEmitterDirX * clampedDistance,
+        spec.dustEmitterBaseY + spec.dustEmitterDirY * clampedDistance,
+        spec.dustEmitterBaseZ + spec.dustEmitterDirZ * clampedDistance
     )
 end
 
@@ -347,6 +339,7 @@ function rmsHandTools.registerEventListeners(handTool)
     SpecializationUtil.registerEventListener(handTool, "onReadStream", rmsHandTools)
     SpecializationUtil.registerEventListener(handTool, "onHeldStart", rmsHandTools)
     SpecializationUtil.registerEventListener(handTool, "onHeldEnd", rmsHandTools)
+    SpecializationUtil.registerEventListener(handTool, "onHandToolHolderChanged", rmsHandTools)
     SpecializationUtil.registerEventListener(handTool, "onRegisterActionEvents", rmsHandTools)
 end
 
@@ -366,12 +359,6 @@ function rmsHandTools:onPostLoad(savegame)
     spec.activatePressed = false
     spec.raycastVehicle = nil
     spec.raycastVehicleDistance = math.huge
-    spec.raycastHitX = nil
-    spec.raycastHitY = nil
-    spec.raycastHitZ = nil
-    spec.raycastHitNX = nil
-    spec.raycastHitNY = nil
-    spec.raycastHitNZ = nil
     spec.raycastNode = resolveMappedNode(self, "raycastNode")
     spec.leftPairNode = nil
     spec.rightPairNode = nil
@@ -410,10 +397,6 @@ function rmsHandTools:onPostLoad(savegame)
                     xmlSoundFile, "sounds", "jumperCablesDisconnectTool", self.baseDirectory,
                     self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self
                 )
-                spec.samples.jumperCablesSparks = g_soundManager:loadSampleFromXML(
-                    xmlSoundFile, "sounds", "jumperCablesSparksTool", self.baseDirectory,
-                    self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self
-                )
             end
 
             delete(xmlSoundFile)
@@ -434,6 +417,8 @@ function rmsHandTools:onPostLoad(savegame)
 
         if spec.dustEmitterRootNode ~= nil and spec.dustEmitterRootNode ~= 0 then
             spec.dustEmitterBaseX, spec.dustEmitterBaseY, spec.dustEmitterBaseZ = getTranslation(spec.dustEmitterRootNode)
+            spec.dustEmitterDirX, spec.dustEmitterDirY, spec.dustEmitterDirZ = localDirectionToLocal(spec.dustEmitterRootNode,
+                getParent(spec.dustEmitterRootNode), 0, 0, -1)
         end
 
         local sourceParticleSystem = g_particleSystemManager:getParticleSystem("wheel_dust")
@@ -448,6 +433,8 @@ function rmsHandTools:onPostLoad(savegame)
     end
 
     if spec.toolKind == "jumperCables" then
+        spec.heldGraphicsNode = resolveMappedNode(self, "heldGraphics")
+        spec.storedGraphicsNode = resolveMappedNode(self, "storedGraphics")
         spec.leftPairNode = resolveMappedNode(self, "leftPair")
         spec.rightPairNode = resolveMappedNode(self, "rightPair")
         spec.leftHandNode = resolveMappedNode(self, "leftHandNode")
@@ -537,10 +524,6 @@ function rmsHandTools:onDelete()
         if spec.samples.jumperCablesDisconnect ~= nil then
             g_soundManager:deleteSample(spec.samples.jumperCablesDisconnect)
         end
-
-        if spec.samples.jumperCablesSparks ~= nil then
-            g_soundManager:deleteSample(spec.samples.jumperCablesSparks)
-        end
     end
 
     if spec.dustParticleSystem ~= nil then
@@ -601,6 +584,28 @@ function rmsHandTools:onHeldEnd()
     setBlowerSoundState(self, "airBlowerAirResistance", false)
     resetDustEmitterPosition(self)
 
+end
+
+-- @param table? holder new holder of the tool
+-- @param table? lastHolder holder it leaves
+function rmsHandTools:onHandToolHolderChanged(holder, lastHolder)
+    local spec = ensureSpec(self)
+    if spec.toolKind ~= "jumperCables" then
+        return
+    end
+
+    local isStored = holder ~= nil and holder:isa(HandToolHolder)
+    setVisibility(spec.heldGraphicsNode, not isStored)
+    setVisibility(spec.storedGraphicsNode, isStored)
+
+    if isStored and self.isServer and (spec.connectedVehicleA ~= nil or spec.connectedVehicleB ~= nil) then
+        if areVehiclesExternallyConnected(spec.connectedVehicleA, spec.connectedVehicleB) then
+            normalizeConnectedVehicle(spec.connectedVehicleA):clearExternalPowerConnection(spec.connectedVehicleB)
+        end
+        spec.connectedVehicleA = nil
+        spec.connectedVehicleB = nil
+        broadcastJumperCablesState(self, "jumperDisconnected", nil)
+    end
 end
 
 ---Applies the blower state, aiming its dust emitter and cleaning the target
@@ -778,8 +783,6 @@ end
 -- @param table? connectedVehicleB vehicle on the second clamp
 function rmsHandTools:applyJumperCablesState(state, targetVehicle, connectedVehicleA, connectedVehicleB)
     local spec = ensureSpec(self)
-    spec.pendingConnectedVehicleAId = nil
-    spec.pendingConnectedVehicleBId = nil
     spec.connectedVehicleA = connectedVehicleA
     spec.connectedVehicleB = connectedVehicleB
     updateJumperCablesVisibility(self)
@@ -789,9 +792,6 @@ function rmsHandTools:applyJumperCablesState(state, targetVehicle, connectedVehi
             RMS_SoundManager.playSample(spec.samples.jumperCablesConnect)
         elseif state == "jumperDisconnected" or state == "jumperAutoDisconnected" then
             RMS_SoundManager.playSample(spec.samples.jumperCablesDisconnect)
-        end
-        if state == "jumperConnected" then
-            RMS_SoundManager.playSample(spec.samples.jumperCablesSparks)
         end
     end
 
@@ -981,12 +981,6 @@ function rmsHandTools:handToolRaycastCallback(hitActorId, x, y, z, distance, nx,
     if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil then
         spec.raycastVehicle = vehicle
         spec.raycastVehicleDistance = distance
-        spec.raycastHitX = x
-        spec.raycastHitY = y
-        spec.raycastHitZ = z
-        spec.raycastHitNX = nx
-        spec.raycastHitNY = ny
-        spec.raycastHitNZ = nz
         return false
     end
 
@@ -1018,6 +1012,16 @@ function rmsHandTools:onUpdate(dt)
     local isLocalOwner = carryingPlayer ~= nil and carryingPlayer.isOwner
     local isUsing = (isLocalOwner and spec.activatePressed) or spec.networkUseActive
     local isOperational = (isLocalOwner and spec.isActive) or spec.networkUseActive
+
+    if spec.toolKind == "jumperCables" and isLocalOwner and spec.isActive then
+        local aimed = getRaycastVehicle(self, getRaycastDistance())
+        local textKey = "rms_jumper_cables_action"
+        if aimed ~= nil then
+            textKey = (aimed == spec.connectedVehicleA or aimed == spec.connectedVehicleB) and "rms_jumper_cables_disconnect"
+                or "rms_jumper_cables_connect"
+        end
+        setActionText(self, g_i18n:getText(textKey))
+    end
 
     if spec.toolKind == "jumperCables"
         and self.isServer
@@ -1087,7 +1091,6 @@ function rmsHandTools:onUpdate(dt)
         local textKey = getAirBlowerAnswerKey(vehicleSpec)
         local hintKey = textKey ~= nil and (vehicleId .. ":" .. textKey) or nil
 
-        -- the answer shows once per vehicle and state, not at every frame of blowing
         if hintKey ~= nil and spec.lastAirBlowerHintKey ~= hintKey and isLocalOwner then
             g_currentMission:showBlinkingWarning(formatAirBlowerAnswer(vehicle, textKey), 2200)
         end

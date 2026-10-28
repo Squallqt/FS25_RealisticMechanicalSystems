@@ -48,7 +48,6 @@ end
 ---
 function RMS_FluidTransferRequestEvent:run(connection)
     if connection:getIsServer() then
-        -- tell the player why nothing runs, unless the container is gone
         local textKey = self.container ~= nil and RMS_FluidTransfer.getRefusalTextKey(self.container, self.result) or nil
         if textKey ~= nil then
             g_currentMission:showBlinkingWarning(g_i18n:getText(textKey), 2000)

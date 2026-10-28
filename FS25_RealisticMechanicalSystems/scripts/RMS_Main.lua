@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Mod entry point: specialization registration, workshop hours, shop pages and the main update
+---RMS mission integration.
 RMS_Main = {}
 
 RMS_SoundManager = {}
@@ -73,8 +73,75 @@ function RMS_SoundManager.setSampleVolumeOffset(sample, volumeOffset)
     end
 end
 
+-- @param table? sample audio sample
+-- @param float offset point of the recording in ms
+function RMS_SoundManager.playSampleFrom(sample, offset)
+    if sample ~= nil and sample.soundSample ~= nil then
+        local volume = g_soundManager:getModifierFactor(sample, "volume") * g_soundManager:getCurrentSampleVolume(sample)
+        playSample(sample.soundSample, sample.loops, volume, offset, 0, 0)
+    end
+end
+
+---Returns the pitch a sample plays at, the speed its recording runs at
+-- @param table? sample audio sample
+-- @return float pitch pitch
+function RMS_SoundManager.getSamplePitch(sample)
+    return sample ~= nil and sample.soundSample ~= nil and getSamplePitch(sample.soundSample) or 1
+end
+
+-- @param table sample audio sample
+-- @param string filename file of the copy
+-- @return table copy audio sample
+function RMS_SoundManager.cloneSample(sample, filename)
+    local copy = g_soundManager:cloneSample(sample, sample.linkNode, sample.modifierTargetObject)
+    g_soundManager:createAudioSource(copy, filename)
+    return copy
+end
+
 local modDirectory = g_currentModDirectory
 local modName = g_currentModName
+
+RMS_Main.BREAKDOWN_TEXTS = {
+    br = "translations/breakdowns/l10n_br.xml",
+    cs = "translations/breakdowns/l10n_cs.xml",
+    ct = "translations/breakdowns/l10n_ct.xml",
+    cz = "translations/breakdowns/l10n_cz.xml",
+    da = "translations/breakdowns/l10n_da.xml",
+    de = "translations/breakdowns/l10n_de.xml",
+    ea = "translations/breakdowns/l10n_ea.xml",
+    en = "translations/breakdowns/l10n_en.xml",
+    es = "translations/breakdowns/l10n_es.xml",
+    fc = "translations/breakdowns/l10n_fc.xml",
+    fi = "translations/breakdowns/l10n_fi.xml",
+    fr = "translations/breakdowns/l10n_fr.xml",
+    hu = "translations/breakdowns/l10n_hu.xml",
+    id = "translations/breakdowns/l10n_id.xml",
+    it = "translations/breakdowns/l10n_it.xml",
+    jp = "translations/breakdowns/l10n_jp.xml",
+    kr = "translations/breakdowns/l10n_kr.xml",
+    nl = "translations/breakdowns/l10n_nl.xml",
+    no = "translations/breakdowns/l10n_no.xml",
+    pl = "translations/breakdowns/l10n_pl.xml",
+    pt = "translations/breakdowns/l10n_pt.xml",
+    ro = "translations/breakdowns/l10n_ro.xml",
+    ru = "translations/breakdowns/l10n_ru.xml",
+    sv = "translations/breakdowns/l10n_sv.xml",
+    tr = "translations/breakdowns/l10n_tr.xml",
+    uk = "translations/breakdowns/l10n_uk.xml",
+    vi = "translations/breakdowns/l10n_vi.xml"
+}
+
+---Adds the breakdown texts of the game language
+function RMS_Main.loadBreakdownTexts()
+    local filename = RMS_Main.BREAKDOWN_TEXTS[g_languageShort] or RMS_Main.BREAKDOWN_TEXTS.en
+    local xmlFile = XMLFile.load("rmsBreakdownTexts", modDirectory .. filename)
+    xmlFile:iterate("l10n.texts.text", function(_, key)
+        g_i18n:setText(xmlFile:getString(key .. "#name"), xmlFile:getString(key .. "#text"))
+    end)
+    xmlFile:delete()
+end
+
+RMS_Main.loadBreakdownTexts()
 
 source(g_currentModDirectory .. "scripts/RMS_Config.lua")
 source(g_currentModDirectory .. "scripts/RMS_Utils.lua")
@@ -86,7 +153,10 @@ source(g_currentModDirectory .. "scripts/RMS_FluidWorkshop.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProgressRing.lua")
 source(g_currentModDirectory .. "scripts/RMS_VehicleYearsData.lua")
 source(g_currentModDirectory .. "scripts/RMS_VehicleYears.lua")
-source(g_currentModDirectory .. "scripts/RMS_DebugSnapshot.lua")
+source(g_currentModDirectory .. "scripts/RMS_StarterSoundsData.lua")
+source(g_currentModDirectory .. "scripts/objects/RMS_BatteryChargerAimData.lua")
+source(g_currentModDirectory .. "scripts/RMS_DebugReading.lua")
+source(g_currentModDirectory .. "scripts/RMS_DebugWindow.lua")
 source(g_currentModDirectory .. "scripts/RMS_Leasing.lua")
 source(g_currentModDirectory .. "scripts/RMS_Tutorial.lua")
 source(g_currentModDirectory .. "gui/RMS_WorkshopDialog.lua")
@@ -98,6 +168,7 @@ source(g_currentModDirectory .. "gui/RMS_InGameMenuFrame.lua")
 source(g_currentModDirectory .. "gui/RMS_MaintenanceTwoOptionsDialog.lua")
 source(g_currentModDirectory .. "gui/RMS_MaintenanceThreeOptionsDialog.lua")
 source(g_currentModDirectory .. "gui/RMS_WelcomeDialog.lua")
+source(g_currentModDirectory .. "gui/RMS_DiagnosticScreen.lua")
 source(g_currentModDirectory .. "gui/RMS_SettingsPage.lua")
 source(g_currentModDirectory .. "scripts/RMS_Hud.lua")
 source(g_currentModDirectory .. "scripts/RMS_PlayerInput.lua")
@@ -108,6 +179,7 @@ source(g_currentModDirectory .. "events/RMS_BodyworkColorEvent.lua")
 source(g_currentModDirectory .. "events/RMS_ServiceResultEvent.lua")
 source(g_currentModDirectory .. "events/RMS_FluidTransferRequestEvent.lua")
 source(g_currentModDirectory .. "events/RMS_BatteryChargerRequestEvent.lua")
+source(g_currentModDirectory .. "events/RMS_DiagnosticRequestEvent.lua")
 source(g_currentModDirectory .. "events/RMS_CancelServiceEvent.lua")
 source(g_currentModDirectory .. "events/RMS_SettingsSyncEvent.lua")
 source(g_currentModDirectory .. "events/RMS_TutorialStateEvent.lua")
@@ -122,8 +194,8 @@ source(g_currentModDirectory .. "events/RMS_HandToolSyncEvent.lua")
 source(g_currentModDirectory .. "events/RMS_JumperCablesEvent.lua")
 source(g_currentModDirectory .. "events/RMS_DrivetrainEvent.lua")
 source(g_currentModDirectory .. "events/RMS_TripResetEvent.lua")
-source(g_currentModDirectory .. "events/RMS_DebugSnapshotResponseEvent.lua")
-source(g_currentModDirectory .. "events/RMS_DebugSnapshotRequestEvent.lua")
+source(g_currentModDirectory .. "events/RMS_FanReversalEvent.lua")
+source(g_currentModDirectory .. "events/RMS_DebugReadingEvent.lua")
 
 ---Loads the GUI profiles of the mod
 function RMS_Main.loadGuiProfiles()
@@ -145,9 +217,18 @@ function RMS_Main.loadGuiProfiles()
         g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_levelGauge.xml", "rms_LevelGauge")
     end
 
-    -- the fleet page is built before the HUD and names glyphs of its atlas
-    if g_overlayManager.textureConfigs.rms_DashboardHud == nil then
-        g_overlayManager:addTextureConfigFile(modDirectory .. "hud/rms_dashboardHud.xml", "rms_DashboardHud")
+    if g_overlayManager.textureConfigs.rms_Diagnostic == nil then
+        g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_diagnostic.xml", "rms_Diagnostic")
+    end
+
+    if g_overlayManager.textureConfigs.rms_DiagnosticPc == nil then
+        g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_diagnosticPc.xml", "rms_DiagnosticPc")
+    end
+
+    -- Load the shared atlas before building the fleet page.
+    if g_overlayManager.textureConfigs.rms_Hud == nil then
+        g_overlayManager:addTextureConfigFile(modDirectory .. "hud/rms_hud.xml", "rms_Hud")
+        g_overlayManager:addTextureConfigFile(modDirectory .. "hud/rms_lampGlow.xml", "rms_LampGlow")
     end
 
     RMS_Main.guiProfilesLoaded = true
@@ -229,7 +310,6 @@ if xmlFile ~= nil then
 end
 
 
---             HUD, GUI and Workshop Screen Reg
 
 ---Builds the mod state once the mission is running
 function RMS_Main:onStartMission()
@@ -244,6 +324,7 @@ function RMS_Main:onStartMission()
     RMS_MaintenanceTwoOptionsDialog.register()
     RMS_MaintenanceThreeOptionsDialog.register()
     RMS_WelcomeDialog.register()
+    RMS_DiagnosticScreen.register()
 
     RMS_ProgressRing.register()
 
@@ -256,23 +337,17 @@ function RMS_Main:onStartMission()
 
 	mission.hud.setControlledVehicle = Utils.appendedFunction(mission.hud.setControlledVehicle, function(self, vehicle)
 		RMS_Main.hud:setVehicle(vehicle)
-		RMS_Main.hud:setVisible(vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle)
 	end)
 
 	mission.hud.drawControlledEntityHUD = Utils.appendedFunction(mission.hud.drawControlledEntityHUD, function(self)
 		RMS_Main.hud:draw()
 	end)
 
-    -- spec list damage fix (store and garage overwiev)
     for _, spec in ipairs(g_storeManager.specTypes) do
         if spec.name == 'wearable' then
             local origFunc = spec.getValueFunc
-            spec.getValueFunc = function(s, v)
-                if v ~= nil and v.spec_RealisticMechanicalSystems ~= nil and not v.spec_RealisticMechanicalSystems.isExcludedVehicle then
-                    return RMS_Utils.formatTimeAgo(v:getLastMaintenanceDate())
-                else
-                    return origFunc(s, v)
-                end
+            spec.getValueFunc = function(storeItem, realItem, configurations, saleItem)
+                return RMS_Main.getShopCondition(storeItem, realItem, saleItem) or origFunc(storeItem, realItem, configurations, saleItem)
             end
         end
     end
@@ -518,7 +593,6 @@ local function loadIsTracked(xmlFile, customEnvironment)
     return RealisticMechanicalSystems.getIsStoreItemTracked(xmlFile, customEnvironment)
 end
 
----Tells whether a store item gets the RMS rating, a vehicle answering for itself
 local function getIsRated(storeItem, vehicle)
     if vehicle ~= nil then
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -536,18 +610,106 @@ end
 local function getReliability(storeItem, vehicle)
     if getIsRated(storeItem, vehicle) then
         local reliability = RealisticMechanicalSystems.getBrandReliability(vehicle, storeItem)
-        return RMS_Utils.formatReliability(reliability)
+        return RMS_Utils.formatReliability(reliability, true)
     end
 end
 
 ---
 local function getServiceAccess(storeItem, vehicle, configurations)
     if getIsRated(storeItem, vehicle) then
-        return RMS_Utils.formatServiceAccess(vehicle, storeItem, configurations)
+        return RMS_Utils.formatServiceAccess(vehicle, storeItem, configurations, true)
     end
 end
 
--- adds spec while browsing
+-- @param table storeItem store item
+-- @param table? realItem owned vehicle
+-- @param table? saleItem used offer
+-- @return string? text attribute, nil for an item RMS leaves to the game
+function RMS_Main.getShopCondition(storeItem, realItem, saleItem)
+    if realItem ~= nil then
+        local spec = realItem.spec_RealisticMechanicalSystems
+        if spec ~= nil and not spec.isExcludedVehicle then
+            return RMS_Utils.formatShopLastMaintenance(realItem:getLastMaintenanceDate())
+        end
+    elseif saleItem ~= nil and getIsRated(storeItem, nil) then
+        return RMS_Utils.formatOwnerCare(saleItem.damage)
+    end
+end
+
+---Keeps a sold machine's RMS state on the used offer it becomes
+-- @param table saleSystem vehicle sale system
+-- @param function superFunc super function
+-- @param table vehicle vehicle sold
+function RMS_Main.onVehicleWillSell(saleSystem, superFunc, vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil or spec.isExcludedVehicle or spec.isNewToRMS then
+        return superFunc(saleSystem, vehicle)
+    end
+    local items = saleSystem:getItems()
+    local count = #items
+    if vehicle.setDamageAmount ~= nil then
+        vehicle:setDamageAmount(RMS_Utils.getOwnerCareDamage(RMS_Utils.getSellerCare(vehicle)), true)
+    end
+    superFunc(saleSystem, vehicle)
+    if #items > count then
+        items[#items].rmsState = RealisticMechanicalSystems.saveStateToMemory(vehicle)
+    end
+end
+
+---Returns the used offer an entry of the sales file describes
+local function getSaleItem(saleSystem, xmlFile, key)
+    local xmlFilename = xmlFile:getString(key .. "#xmlFilename")
+    local age = xmlFile:getInt(key .. "#age")
+    local operatingTime = xmlFile:getFloat(key .. "#operatingTime") * 1000
+    for _, item in ipairs(saleSystem:getItems()) do
+        if item.xmlFilename == xmlFilename and item.age == age and math.abs(item.operatingTime - operatingTime) < 1 then
+            return item
+        end
+    end
+end
+
+---Writes in the sales file the RMS state each used offer carries
+-- @param table saleSystem vehicle sale system
+-- @param function superFunc super function
+-- @param string xmlFilename sales file
+-- @return boolean? isSaved
+function RMS_Main.saveVehicleSales(saleSystem, superFunc, xmlFilename)
+    local isSaved = superFunc(saleSystem, xmlFilename)
+    local xmlFile = XMLFile.loadIfExists("rmsVehicleSales", xmlFilename)
+    if xmlFile ~= nil then
+        xmlFile:iterate("sales.item", function(_, key)
+            local item = getSaleItem(saleSystem, xmlFile, key)
+            if item ~= nil and item.rmsState ~= nil then
+                xmlFile:setString(key .. "#rmsState", item.rmsState)
+            end
+        end)
+        xmlFile:save()
+        xmlFile:delete()
+    end
+    return isSaved
+end
+
+---Reads from the sales file the RMS state each used offer carries
+-- @param table saleSystem vehicle sale system
+-- @param function superFunc super function
+-- @param string xmlFilename sales file
+-- @return boolean isLoaded
+function RMS_Main.loadVehicleSales(saleSystem, superFunc, xmlFilename)
+    local isLoaded = superFunc(saleSystem, xmlFilename)
+    local xmlFile = XMLFile.loadIfExists("rmsVehicleSales", xmlFilename)
+    if xmlFile ~= nil then
+        xmlFile:iterate("sales.item", function(_, key)
+            local state = xmlFile:getString(key .. "#rmsState")
+            local item = state ~= nil and getSaleItem(saleSystem, xmlFile, key) or nil
+            if item ~= nil then
+                item.rmsState = state
+            end
+        end)
+        xmlFile:delete()
+    end
+    return isLoaded
+end
+
 if not g_modIsLoaded["FS25_AdvancedDamageSystem"] then
     g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", loadIsTracked, getReliability, StoreSpecies.VEHICLE)
     g_storeManager:addSpecType("serviceAccess", "shopListAttributeIconServiceAccess", RMS_Utils.loadServiceAccess, getServiceAccess, StoreSpecies.VEHICLE)
@@ -601,7 +763,7 @@ function RMS_Main.addShopMenuPage(frame, pageName, uvs, predicateFunc, insertAft
     g_shopMenu.pagingElement:updateAbsolutePosition()
     g_shopMenu.pagingElement:updatePageMapping()
     g_shopMenu:registerPage(g_shopMenu[pageName], nil, predicateFunc)
-    g_shopMenu:addPageTab(g_shopMenu[pageName], Utils.getFilename("images/menuIcon.dds", modDirectory), GuiUtils.getUVs(uvs))
+    g_shopMenu:addPageTab(g_shopMenu[pageName], Utils.getFilename("images/menuIcon.png", modDirectory), GuiUtils.getUVs(uvs))
 
     for i = 1, #g_shopMenu.pageFrames do
         local child = g_shopMenu.pageFrames[i]
@@ -677,10 +839,10 @@ function RMS_Main.processAttributeData(self, storeItem, vehicle, saleItem)
 
         local rel = RealisticMechanicalSystems.getBrandReliability(vehicle, nil)
         reliabilityIconElement:applyProfile("shopConfigAttributeIconReliability")
-        reliabilityTextElement:setText(RMS_Utils.formatReliability(rel))
+        reliabilityTextElement:setText(RMS_Utils.formatReliability(rel, true))
         local accessItemElement = self.attributeItem:clone(self.attributesLayout)
         accessItemElement:getDescendantByName("icon"):applyProfile("shopConfigAttributeIconServiceAccess")
-        accessItemElement:getDescendantByName("text"):setText(RMS_Utils.formatServiceAccess(vehicle, storeItem, self.configurations))
+        accessItemElement:getDescendantByName("text"):setText(RMS_Utils.formatServiceAccess(vehicle, storeItem, self.configurations, true))
         self.attributesLayout:invalidateLayout()
 
     end
@@ -701,7 +863,6 @@ function RMS_Main.populateCellForItemInSection(self, superFunc, list, section, i
             local condition, isCompleteInspection = vehicle:getLastInspectedCondition()
             local _, isReportOutdated = vehicle:getInspectionReportAge()
             cell:getAttribute("damage"):setText(RMS_Utils.formatCondition(condition, isCompleteInspection))
-            -- a report that no longer describes the machine keeps its figure, greyed out
             if isReportOutdated then
                 cell:getAttribute("damage"):setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
             else
@@ -716,7 +877,7 @@ function RMS_Main.populateCellForItemInSection(self, superFunc, list, section, i
 end
 
 
--- 511 fill types instead of 255, set before the map registers its first one
+-- Increase the fill-type limit before map registration.
 FillTypeManager.SEND_NUM_BITS = math.max(FillTypeManager.SEND_NUM_BITS, 9)
 
 FSBaseMission.onStartMission = Utils.prependedFunction(FSBaseMission.onStartMission, RMS_Main.onStartMission)
@@ -750,6 +911,9 @@ ChangeVehicleConfigEvent.run = Utils.overwrittenFunction(
     ChangeVehicleConfigEvent.run, RMS_Main.runChangeVehicleConfigEvent)
 BuyVehicleData.writeStream = Utils.overwrittenFunction(BuyVehicleData.writeStream, RMS_Main.writeBuyVehicleDataPrice)
 BuyVehicleData.readStream = Utils.overwrittenFunction(BuyVehicleData.readStream, RMS_Main.readBuyVehicleDataPrice)
+VehicleSaleSystem.onVehicleWillSell = Utils.overwrittenFunction(VehicleSaleSystem.onVehicleWillSell, RMS_Main.onVehicleWillSell)
+VehicleSaleSystem.saveToXMLFile = Utils.overwrittenFunction(VehicleSaleSystem.saveToXMLFile, RMS_Main.saveVehicleSales)
+VehicleSaleSystem.loadFromXMLFile = Utils.overwrittenFunction(VehicleSaleSystem.loadFromXMLFile, RMS_Main.loadVehicleSales)
 
 
 RMS_Main.initSpec()
@@ -818,6 +982,7 @@ function RMS_Main:onPeriodChanged()
     for _, vehicle in pairs(self.vehicles) do
         RMS_Consumables.onLubricationPeriodChanged(vehicle)
     end
+    RMS_DiagnosticTool.advanceLicences()
 end
 
 ---Refreshes the open workshop when its vehicle status or resale payment changes
@@ -855,7 +1020,6 @@ function RMS_Main:update(dt)
         end
     end
 
-    -- a running engine keeps its machine updating on every game, for its breakdown noises, smoke and gauges
     for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
         local spec = vehicle.spec_RealisticMechanicalSystems
         if spec ~= nil and not spec.isExcludedVehicle and vehicle.isActive ~= true and vehicle:getMotorState() == MotorState.ON then

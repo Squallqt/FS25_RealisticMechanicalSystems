@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture>
+   <meta>
+      <filename>rms_hud.png</filename>
+      <size width="1024" height="2048" />
+   </meta>
+   <slices>
+      <slice id="background" uvs="8px 8px 180px 232px" />
+      <slice id="backgroundBubbles" uvs="572px 8px 180px 232px" />
+      <slice id="backgroundHigh" uvs="196px 8px 180px 232px" />
+      <slice id="backgroundLow" uvs="384px 8px 180px 232px" />
+      <slice id="band" uvs="330px 1656px 38px 38px" />
+      <slice id="bar" uvs="449px 1564px 50px 50px" />
+      <slice id="battery" uvs="885px 1564px 38px 38px" />
+      <slice id="brakes" uvs="839px 1564px 38px 38px" />
+      <slice id="cell030" uvs="760px 8px 180px 180px" />
+      <slice id="cell032" uvs="8px 248px 180px 180px" />
+      <slice id="cell034" uvs="196px 248px 180px 180px" />
+      <slice id="cell036" uvs="384px 248px 180px 180px" />
+      <slice id="cell038" uvs="572px 248px 180px 180px" />
+      <slice id="cell040" uvs="760px 248px 180px 180px" />
+      <slice id="cell042" uvs="8px 436px 180px 180px" />
+      <slice id="cell044" uvs="196px 436px 180px 180px" />
+      <slice id="cell046" uvs="384px 436px 180px 180px" />
+      <slice id="cell048" uvs="572px 436px 180px 180px" />
+      <slice id="cell050" uvs="760px 436px 180px 180px" />
+      <slice id="cell052" uvs="8px 624px 180px 180px" />
+      <slice id="cell054" uvs="196px 624px 180px 180px" />
+      <slice id="cell056" uvs="384px 624px 180px 180px" />
+      <slice id="cell058" uvs="572px 624px 180px 180px" />
+      <slice id="cell060" uvs="760px 624px 180px 180px" />
+      <slice id="cell062" uvs="8px 812px 180px 180px" />
+      <slice id="cell064" uvs="196px 812px 180px 180px" />
+      <slice id="cell066" uvs="384px 812px 180px 180px" />
+      <slice id="cell068" uvs="572px 812px 180px 180px" />
+      <slice id="cell070" uvs="760px 812px 180px 180px" />
+      <slice id="cell072" uvs="8px 1000px 180px 180px" />
+      <slice id="cell074" uvs="196px 1000px 180px 180px" />
+      <slice id="cell076" uvs="384px 1000px 180px 180px" />
+      <slice id="cell078" uvs="572px 1000px 180px 180px" />
+      <slice id="cell080" uvs="760px 1000px 180px 180px" />
+      <slice id="cell082" uvs="8px 1188px 180px 180px" />
+      <slice id="cell084" uvs="196px 1188px 180px 180px" />
+      <slice id="cell086" uvs="384px 1188px 180px 180px" />
+      <slice id="cell088" uvs="572px 1188px 180px 180px" />
+      <slice id="cell090" uvs="760px 1188px 180px 180px" />
+      <slice id="cell092" uvs="8px 1376px 180px 180px" />
+      <slice id="cell094" uvs="196px 1376px 180px 180px" />
+      <slice id="cell096" uvs="384px 1376px 180px 180px" />
+      <slice id="cell098" uvs="572px 1376px 180px 180px" />
+      <slice id="cell100" uvs="760px 1376px 180px 180px" />
+      <slice id="coolant" uvs="146px 1656px 38px 38px" />
+      <slice id="coolantRoad" uvs="284px 1656px 38px 38px" />
+      <slice id="diffLock" uvs="680px 1564px 46px 46px" />
+      <slice id="engine" uvs="8px 1656px 38px 38px" />
+      <slice id="engineClassic" uvs="54px 1656px 38px 38px" />
+      <slice id="fanReversal" uvs="238px 1656px 38px 38px" />
+      <slice id="frontWheelDrive" uvs="618px 1564px 54px 46px" />
+      <slice id="limitedPower" uvs="391px 1564px 50px 50px" />
+      <slice id="maintenance" uvs="180px 1564px 72px 72px" />
+      <slice id="oilCan" uvs="260px 1564px 60px 60px" />
+      <slice id="oilPressure" uvs="100px 1656px 38px 38px" />
+      <slice id="parkBrake" uvs="328px 1564px 55px 55px" />
+      <slice id="particulateFilter" uvs="192px 1656px 38px 38px" />
+      <slice id="pod" uvs="8px 1564px 84px 84px" />
+      <slice id="preheat" uvs="507px 1564px 48px 48px" />
+      <slice id="reliability" uvs="100px 1564px 72px 72px" />
+      <slice id="service" uvs="563px 1564px 47px 47px" />
+      <slice id="tractionBattery" uvs="788px 1564px 43px 43px" />
+      <slice id="transmissionTemperature" uvs="977px 1564px 38px 38px" />
+      <slice id="warning" uvs="931px 1564px 38px 38px" />
+      <slice id="wheelSlip" uvs="734px 1564px 46px 46px" />
+      <slice id="wrench" uvs="376px 1656px 37px 37px" />
+   </slices>
+</texture>

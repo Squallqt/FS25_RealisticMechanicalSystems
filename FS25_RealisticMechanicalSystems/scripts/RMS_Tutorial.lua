@@ -68,8 +68,6 @@ end
 ---Checks the trigger of every unseen tip and shows the first one that fires
 -- @param float dt time since last call in ms
 function RMS_Tutorial:update(dt)
-    local mission = g_currentMission
-
     if g_localPlayer == nil or not RMS_Config.ensureLocalTutorialState() or not RMS_Config.TUTORIAL_MODE then
         self.vehicle = nil
         self.timer = 0
@@ -152,17 +150,14 @@ function RMS_Tutorial:update(dt)
             local parkBrakeTip = spec.drivetrain.parkKind == RMS_Drivetrain.PARK_KIND.AUTOMATIC
                 and "PARK_BRAKE"
                 or "PARK_BRAKE_MANUAL"
-            local preventiveRiskSystem = nil
+            local hasPreventiveRisk = false
             local hasPoorPartsBreakdown = false
             local localWeatherType = g_currentMission.environment.weather:getCurrentWeatherType()
 
-            -- only a system the adjustments of the major service reach
             if not messagedData.NEEDS_PREVENTIVE then
-                for _, systemKey in ipairs(RealisticMechanicalSystems.getMajorServiceSystems(vehicle)) do
-                    local systemData = spec.systems[systemKey]
-                    if systemData.stress / math.max(systemData.condition, 0.001) > 0.7 then
-                        preventiveRiskSystem = systemData
-                        break
+                for _, partId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
+                    if spec.partWear[partId] ~= nil and RMS_Utils.getIsPartWorn(partId, spec.partWear[partId]) then
+                        hasPreventiveRisk = true
                     end
                 end
             end
@@ -182,7 +177,6 @@ function RMS_Tutorial:update(dt)
                 end
             end
 
-            -- share of its interval the service clock the machine is most behind on has run
             local serviceInterval = (spec.baseServiceLevel - vehicle:getServiceLevel())
                 / (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
 
@@ -451,7 +445,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.WHEEL_SLIP = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- driveline windup
             elseif not messagedData.DRIVETRAIN_WINDUP
                 and transmissionSystemEnabled
                 and isMotorStarted
@@ -478,7 +471,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.TERRAIN_IMPACT = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- chassis vibration, once it has lasted
             elseif not messagedData.CHASSIS_VIBRATION
                 and chassisSystemEnabled
                 and isMotorStarted
@@ -613,7 +605,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.IDLE_DEPOSIT = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- the first engagement above idle, the moment the advice applies
             elseif not messagedData.PTO_ENGAGEMENT
                 and ptoSystemEnabled
                 and hasNewPtoShock then
@@ -698,7 +689,7 @@ function RMS_Tutorial:update(dt)
 
             elseif not messagedData.NEEDS_PREVENTIVE
                 and isMotorStarted
-                and preventiveRiskSystem ~= nil then
+                and hasPreventiveRisk then
                 RMS_Hud.showNotification(
                     string.format(g_i18n:getText("rms_tutorial_needs_preventive_message"), vehicle:getFullName(),
                         RMS_Utils.formatHours(vehicle:getMaintenanceLevelInterval(RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE))),

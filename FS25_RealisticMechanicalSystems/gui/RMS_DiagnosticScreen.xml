@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI onOpen="onOpen" onClose="onClose" onCreate="onCreate">
+    <GuiElement profile="newLayer" />
+
+    <!-- PC -->
+    <GuiElement profile="rms_diagPc">
+        <Bitmap profile="rms_diagPcFrame" />
+
+        <!-- Diagnostic screen -->
+        <GuiElement profile="rms_diagScreen" id="dialogElement">
+            <Bitmap profile="rms_diagScreenBg" />
+            <Bitmap profile="rms_diagBar" position="0px 0px" size="1407.08px 46.9px" />
+            <Bitmap profile="rms_diagLogo" />
+            <Button profile="rms_diagCloseButton" id="closeButton" onClick="onClickBack">
+                <Bitmap profile="rms_diagCloseIcon" />
+            </Button>
+
+            <Bitmap profile="rms_diagLine" position="0px -93.07px" size="1407.08px 1px" />
+            <Text profile="rms_diagPath" id="pathText" />
+            <Button profile="rms_diagConnectButton" id="connectButton" onClick="onClickConnect">
+                <Bitmap profile="rms_diagConnectButtonBg" />
+                <Bitmap profile="rms_diagConnectIcon" />
+            </Button>
+
+            <Bitmap profile="rms_diagBar" position="231.58px -93.81px" size="2.93px 662.5px" />
+            <Bitmap profile="rms_diagBar" position="0px -93.81px" size="231.58px 52.77px" />
+            <Bitmap profile="rms_diagMenuIcon" />
+            <Text profile="rms_diagMenuTitle" text="$l10n_rms_diagnostic_menu" />
+            <Button profile="rms_diagMenuButton" id="menuConnectionButton" position="0px -146.57px" onClick="onClickConnectionPage" text="$l10n_rms_diagnostic_menu_connection">
+                <Bitmap profile="rms_diagMenuButtonBg" />
+                <Bitmap profile="rms_diagMenuButtonMark" id="menuConnectionMark" />
+                <Bitmap profile="rms_diagMenuButtonLine" />
+            </Button>
+            <Button profile="rms_diagMenuButton" id="menuScanButton" position="0px -199.34px" onClick="onClickScanPage" text="$l10n_rms_diagnostic_menu_scan">
+                <Bitmap profile="rms_diagMenuButtonBg" />
+                <Bitmap profile="rms_diagMenuButtonMark" id="menuScanMark" />
+                <Bitmap profile="rms_diagMenuButtonLine" />
+            </Button>
+
+            <Text profile="rms_diagHeaderText" id="headerText" />
+            <Text profile="rms_diagHeaderValue" id="headerValue" />
+            <Bitmap profile="rms_diagLine" position="234.51px -139.98px" size="1172.57px 1px" />
+            <Bitmap profile="rms_diagDivider" />
+
+            <!-- Connection page -->
+            <GuiElement profile="rms_diagPage" id="connectionPage">
+                <SmoothList profile="rms_diagList" id="machineList" size="606.8px 615.6px" onClick="onClickMachine">
+                    <ListItem profile="rms_diagMachineRow" name="machineRow">
+                        <Bitmap profile="rms_diagRowMark" />
+                        <Bitmap profile="rms_diagRowLine" />
+                        <Text profile="rms_diagMachineName" name="machineName" />
+                        <Text profile="rms_diagMachineDistance" name="machineDistance" />
+                        <Text profile="rms_diagMachineState" name="machineState" />
+                    </ListItem>
+                </SmoothList>
+                <ThreePartBitmap profile="rms_diagSliderBox" position="612.67px -5.86px" size="4.4px 603.87px">
+                    <Slider profile="fs25_listSlider" dataElementId="machineList" />
+                </ThreePartBitmap>
+                <Text profile="rms_diagEmptyText" id="machineEmptyText" text="$l10n_rms_diagnostic_no_machine" />
+
+                <Text profile="rms_diagDetailTitle" position="656.64px -20.52px" size="489.55px 26.38px" text="$l10n_rms_diagnostic_plug_title" />
+                <Text profile="rms_diagFieldLabel" position="656.64px -64.49px" text="$l10n_rms_diagnostic_plug_socket_label" />
+                <Text profile="rms_diagFieldValue" position="832.52px -64.49px" size="313.66px 17.59px" text="$l10n_rms_diagnostic_plug_socket" />
+                <Text profile="rms_diagFieldLabel" position="656.64px -92.34px" text="$l10n_rms_diagnostic_plug_machine_label" />
+                <Text profile="rms_diagFieldValue" position="832.52px -92.34px" size="313.66px 17.59px" text="$l10n_rms_diagnostic_plug_machine" />
+                <Text profile="rms_diagFieldLabel" position="656.64px -120.19px" text="$l10n_rms_diagnostic_plug_reading_label" />
+                <Text profile="rms_diagFieldValue" position="832.52px -120.19px" size="313.66px 17.59px" text="$l10n_rms_diagnostic_plug_reading" />
+                <Bitmap profile="rms_diagLine" position="656.64px -156.83px" size="489.55px 1px" />
+                <Text profile="rms_diagNote" position="656.64px -172.95px" text="$l10n_rms_diagnostic_plug_note_moving" />
+                <Text profile="rms_diagNote" position="656.64px -218.39px" text="$l10n_rms_diagnostic_plug_note_power" />
+            </GuiElement>
+
+            <!-- Scan page -->
+            <GuiElement profile="rms_diagPage" id="scanPage">
+                <SmoothList profile="rms_diagList" id="codeList" size="606.8px 577.49px">
+                    <ListItem profile="rms_diagSystemRow" name="systemRow">
+                        <Bitmap profile="rms_diagRowLine" />
+                        <Text profile="rms_diagSystemName" name="systemName" />
+                        <Text profile="rms_diagSystemState" name="systemState" />
+                        <Bitmap profile="rms_diagSystemWarning" name="systemWarning" />
+                        <Text profile="rms_diagSystemCount" name="systemCount" />
+                    </ListItem>
+                    <ListItem profile="rms_diagCodeRow" name="codeRow">
+                        <Bitmap profile="rms_diagRowMark" />
+                        <Bitmap profile="rms_diagRowLine" />
+                        <Bitmap profile="rms_diagCodeIcon" />
+                        <Text profile="rms_diagCodeSpn" name="codeSpn" />
+                        <Text profile="rms_diagCodeFmi" name="codeFmi" />
+                        <Text profile="rms_diagCodeText" name="codeText" />
+                    </ListItem>
+                </SmoothList>
+                <ThreePartBitmap profile="rms_diagSliderBox" position="612.67px -5.86px" size="4.4px 565.76px">
+                    <Slider profile="fs25_listSlider" dataElementId="codeList" />
+                </ThreePartBitmap>
+                <Bitmap profile="rms_diagLine" position="0px -577.49px" size="627.32px 1px" id="legendLine" />
+                <Bitmap profile="rms_diagLegendIcon" id="legendIcon" />
+                <Text profile="rms_diagLegendText" id="legendText" text="$l10n_rms_diagnostic_legend_active" />
+                <Bitmap profile="rms_diagEmptyIcon" id="emptyIcon" />
+                <Text profile="rms_diagEmptyText" id="emptyText" text="$l10n_rms_diagnostic_no_scan" />
+
+                <GuiElement profile="rms_diagDetail" id="detailPanel">
+                    <Bitmap profile="rms_diagDetailIcon" id="detailIcon" />
+                    <Text profile="rms_diagDetailCode" id="detailCode" />
+                    <Text profile="rms_diagDetailText" id="detailText" />
+                    <Bitmap profile="rms_diagHelpBar" />
+                    <Bitmap profile="rms_diagHelpIcon" />
+                    <Text profile="rms_diagHelpText" text="$l10n_rms_diagnostic_help" />
+                    <Text profile="rms_diagFieldLabel" id="detailLabel[1]" position="26.38px -184.68px" />
+                    <Text profile="rms_diagFieldValue" id="detailValue[1]" position="202.27px -184.68px" />
+                    <Text profile="rms_diagFieldLabel" id="detailLabel[2]" position="26.38px -227.18px" />
+                    <Text profile="rms_diagFieldValue" id="detailValue[2]" position="202.27px -227.18px" />
+                    <Text profile="rms_diagFieldLabel" id="detailLabel[3]" position="26.38px -269.69px" />
+                    <Text profile="rms_diagFieldValue" id="detailValue[3]" position="202.27px -269.69px" />
+                    <Text profile="rms_diagFieldLabel" id="detailLabel[4]" position="26.38px -312.2px" />
+                    <Text profile="rms_diagFieldValue" id="detailValue[4]" position="202.27px -312.2px" />
+                    <Text profile="rms_diagFieldLabel" id="detailLabel[5]" position="26.38px -354.7px" />
+                    <Text profile="rms_diagFieldValue" id="detailValue[5]" position="202.27px -354.7px" />
+                    <Text profile="rms_diagFieldLabel" id="detailLabel[6]" position="26.38px -397.21px" />
+                    <Text profile="rms_diagFieldValue" id="detailValue[6]" position="202.27px -397.21px" />
+                    <Bitmap profile="rms_diagLine" id="detailNoteLine" position="26.38px -445.58px" size="489.55px 1px" />
+                    <Text profile="rms_diagNote" id="detailNote" position="26.38px -460.23px" />
+                </GuiElement>
+
+                <Button profile="rms_diagScanButton" id="scanButton" onClick="onClickScan">
+                    <Bitmap profile="rms_diagScanButtonBg" />
+                    <Bitmap profile="rms_diagScanButtonIcon" />
+                </Button>
+            </GuiElement>
+
+            <Bitmap profile="rms_diagBar" position="0px -756.31px" size="1407.08px 35.18px" />
+            <Button profile="rms_diagRenewButton" id="renewButton" onClick="onClickRenew">
+                <Bitmap profile="rms_diagConnectButtonBg" />
+            </Button>
+            <Text profile="rms_diagStatusText" id="licenceText" position="996.68px -756.31px" size="293.14px 35.18px" />
+            <Text profile="rms_diagStatusText" id="timeText" position="1311.81px -756.31px" size="80.61px 35.18px" />
+        </GuiElement>
+    </GuiElement>
+</GUI>

@@ -1,25 +1,26 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Steering faults applied to the angles the game sends to the physics
+---Wheel and articulation steering faults.
 RMS_Steering = {}
 
 local DEG = math.pi / 180
 local FULL_TURN = 2 * math.pi
--- km/h a free fall gains each second
 local GRAVITY = 9.81 * 3.6
+local STANDSTILL_KMH = 0.5
 
--- breakdowns owning the wheel a pull or a broken rod end acts on
-local TARGET_BREAKDOWNS = { "STEERING_LINKAGE_WEAR", "TRACK_TENSIONER_MALFUNCTION" }
+local TARGET_EFFECTS = { "STEERING_STATIC_BIAS_EFFECT", "STEERING_WHEEL_FREE_EFFECT", "BRAKE_PULL_EFFECT" }
 
----Returns the steering faults in force on a vehicle
-local function getFaults(spec)
+local function getFaults(vehicle, spec)
     local effects = spec.activeEffects
     local play = effects.STEERING_PLAY_EFFECT
     local pull = effects.STEERING_STATIC_BIAS_EFFECT
-    return (play ~= nil and play.value or 0) * DEG,
-        (pull ~= nil and pull.value or 0) * DEG,
-        effects.STEERING_WHEEL_FREE_EFFECT ~= nil
+    local pullAngle = pull ~= nil and pull.value or 0
+    if effects.BRAKE_PULL_EFFECT ~= nil and vehicle.spec_wheels.brakePedal > 0
+        and vehicle:getLastSpeed() > STANDSTILL_KMH then
+        pullAngle = pullAngle + effects.BRAKE_PULL_EFFECT.value
+    end
+    return (play ~= nil and play.value or 0) * DEG, pullAngle * DEG, effects.STEERING_WHEEL_FREE_EFFECT ~= nil
 end
 
 ---Returns the side a wheel sits on
@@ -42,8 +43,8 @@ end
 local function resolveTarget(vehicle, state)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local breakdown = nil
-    for _, id in ipairs(TARGET_BREAKDOWNS) do
-        breakdown = breakdown or spec.activeBreakdowns[id]
+    for _, effectId in ipairs(TARGET_EFFECTS) do
+        breakdown = breakdown or RMS_Breakdowns.getBreakdownCarryingEffect(spec, effectId)
     end
 
     state.isTargetResolved = true
@@ -53,7 +54,6 @@ local function resolveTarget(vehicle, state)
         return
     end
 
-    -- an articulated machine has no steered wheel: the draw only picks a side
     local steered = getSteeredWheels(vehicle)
     local count = math.max(#steered, 2)
     if vehicle.isServer and (breakdown.effectTargetIndex < 1 or breakdown.effectTargetIndex > count) then
@@ -76,6 +76,7 @@ function RMS_Steering.refreshFaults(vehicle)
     local isActive = effects.STEERING_PLAY_EFFECT ~= nil
         or effects.STEERING_STATIC_BIAS_EFFECT ~= nil
         or effects.STEERING_WHEEL_FREE_EFFECT ~= nil
+        or effects.BRAKE_PULL_EFFECT ~= nil
 
     if isActive then
         if spec.steeringFault == nil then
@@ -86,7 +87,6 @@ function RMS_Steering.refreshFaults(vehicle)
             }
             vehicle.customSteeringAngleFunction = true
         end
-        -- the wheel is looked up on the next steering call, when a vehicle still loading has its wheels set up
         spec.steeringFault.isTargetResolved = false
     elseif spec.steeringFault ~= nil then
         vehicle.customSteeringAngleFunction = spec.steeringFault.nativeSteeringCall
@@ -153,7 +153,7 @@ local function getFreeWheelAngle(vehicle, wheel, partState, command, speed, dt)
     local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
     local physics = wheel.physics
 
-    -- only the server runs the caster routine, a client shows the commanded angle
+    -- Caster physics runs only on the server.
     if vehicle.isServer then
         partState.caster = Utils.getVersatileRotation(wheel.repr, wheel.node, dt, physics.positionX, physics.positionY, physics.positionZ, partState.caster, physics.rotMin, physics.rotMax)
     else
@@ -185,7 +185,7 @@ function RMS_Steering.updateSteeringAngle(vehicle, superFunc, wheel, dt, steerin
         resolveTarget(vehicle, state)
     end
 
-    local play, pull, isFree = getFaults(spec)
+    local play, pull, isFree = getFaults(vehicle, spec)
     local physics = wheel.physics
     local speed = vehicle:getLastSpeed()
     local partState = getPartState(state, wheel, steeringAngle)
@@ -234,12 +234,11 @@ function RMS_Steering.updateArticulatedAxisRotation(vehicle, superFunc, steering
         resolveTarget(vehicle, state)
     end
 
-    local play, pull, isFree = getFaults(spec)
+    local play, pull, isFree = getFaults(vehicle, spec)
     if isFree then
         play = RMS_Config.CORE.CHASSIS_FACTOR_DATA.STEER_FREE_ARTICULATION_PLAY * DEG
     end
 
-    -- the wheels of both sides push the joint against each other
     local wheels = vehicle.spec_wheels.wheels
     local kick = 0
     for _, wheel in ipairs(wheels) do
@@ -262,11 +261,9 @@ local function getGripLimit(vehicle)
     for _, wheel in ipairs(vehicle.spec_wheels.wheels) do
         grip = math.max(grip, wheel.physics.frictionScale * wheel.physics.tireGroundFrictionCoeff)
     end
-    -- a tyre holds its grip times the weight it carries, and a slope adds its own pull
     return GRAVITY * math.sqrt(1 + grip * grip)
 end
 
----Tells whether a player carries the machine, or a machine coupled to it, in the hands
 -- @param table vehicle vehicle
 -- @return boolean isHeld true while a player holds it
 local function getIsHeldByPlayer(vehicle)
@@ -321,10 +318,8 @@ function RMS_Steering.updateTerrainImpacts(vehicle, dt)
     local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
     local impacts = spec.terrainImpacts
 
-    -- the speed of the body along the ground, bounces left out
     local velocityX, _, velocityZ = getLocalLinearVelocity(vehicle.components[1].node)
     local speed = MathUtil.vector2Length(velocityX, velocityZ) * 3.6
-    -- a speed loss beyond what the tyres can take is an impact
     local heldSpeed = speed
     if speed < impacts.heldSpeed and impacts.heldSpeed >= C.TERRAIN_IMPACT_MIN_SPEED_LOSS then
         heldSpeed = math.max(impacts.heldSpeed - getGripLimit(vehicle) * dt * 0.001, speed)
@@ -334,7 +329,6 @@ function RMS_Steering.updateTerrainImpacts(vehicle, dt)
     if speedLoss >= C.TERRAIN_IMPACT_MIN_SPEED_LOSS and speedLoss >= impacts.speedLoss then
         impacts.speedLoss = speedLoss
     elseif impacts.speedLoss > 0 then
-        -- the hands of a player swinging the machine about are no obstacle
         if not getIsHeldByPlayer(vehicle) then
             applyImpact(vehicle, impacts.speedLoss)
         end

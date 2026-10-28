@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Vĩnh viễn"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Mất công suất"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Ngừng hoạt động"/>
+        <text name="rms_breakdowns_severity_minor" text="Nhẹ"/>
+        <text name="rms_breakdowns_severity_moderate" text="Trung bình"/>
+        <text name="rms_breakdowns_severity_major" text="Nặng"/>
+        <text name="rms_breakdowns_severity_critical" text="Nghiêm trọng"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Rô-tuyn và thanh kéo lái bị mòn nhẹ. Xuất hiện một chút độ rơ và hệ thống lái trở nên kém chính xác hơn."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Rô-tuyn và thanh kéo lái bị mòn ở mức trung bình. Độ rơ tăng và xe hơi kéo lệch sang một bên."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Rô-tuyn và thanh kéo lái bị mòn nặng. Độ rơ lớn, xe kéo lệch sang một bên và giữ hướng kém hơn."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Rô-tuyn và thanh kéo lái hư hỏng nghiêm trọng. Bánh xe đã bung không còn quay theo vô lăng đúng cách; việc lái xe nguy hiểm."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Chốt trụ đứng bị mòn nhẹ. Xuất hiện một chút độ rơ trong hệ thống lái."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Chốt trụ đứng bị mòn ở mức trung bình. Độ rơ trong hệ thống lái trở nên rõ rệt."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Chốt trụ đứng bị mòn nặng. Độ rơ trong hệ thống lái lớn."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Chốt trụ đứng bị mòn nghiêm trọng. Hệ thống lái có độ rơ rất lớn."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Van lái orbitrol hư hỏng nhẹ. Vô lăng quay với một chút độ rơ trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Van lái orbitrol hư hỏng ở mức trung bình. Vô lăng quay nhiều hơn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Van lái orbitrol hư hỏng nặng. Vô lăng quay nhiều nhưng bánh xe không quay theo tốt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Van lái orbitrol hư hỏng nghiêm trọng. Vô lăng có độ rơ rất lớn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Xi lanh lái bị rò rỉ nhẹ bên trong. Xe bắt đầu trôi lệch sang một bên."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Phớt cần xi lanh lái bị rò rỉ nhẹ. Mức dầu thủy lực giảm một chút."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Xi lanh lái bị rò rỉ bên trong ở mức trung bình. Xe trôi lệch sang một bên nhiều hơn."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Phớt cần xi lanh lái bị rò rỉ ở mức trung bình. Mức dầu thủy lực giảm rõ rệt."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Xi lanh lái bị rò rỉ nặng bên trong. Xe trôi lệch rõ rệt sang một bên."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Phớt cần xi lanh lái bị rò rỉ nặng. Mức dầu thủy lực giảm nhanh."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Xi lanh lái bị rò rỉ nghiêm trọng bên trong. Xe trôi lệch mạnh sang một bên."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Phớt cần xi lanh lái bị rò rỉ nghiêm trọng. Mức dầu thủy lực giảm rất nhanh."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Chốt và bạc lót khớp bộ nạp trước bị mòn nhẹ. Xuất hiện độ rơ nhẹ ở các khớp tay nâng."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Chốt và bạc lót khớp bộ nạp trước bị mòn ở mức trung bình. Độ rơ ở các khớp tay nâng trở nên rõ rệt."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Chốt và bạc lót khớp bộ nạp trước bị mòn nặng. Tay nâng có độ rơ lớn."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Chốt và bạc lót khớp bộ nạp trước bị mòn nghiêm trọng. Độ rơ của tay nâng rất lớn."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Giảm chấn ca bin rò rỉ nhẹ. Khả năng giảm chấn của ca bin giảm nhẹ."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Giảm chấn ca bin rò rỉ ở mức trung bình. Ca bin nảy lên khi qua chỗ xóc."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Giảm chấn ca bin rò rỉ nặng. Ca bin lắc lư mỗi khi bị xóc."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Giảm chấn ca bin rò rỉ tới hạn. Giảm chấn đã cạn: ca bin gần như không còn được giảm chấn."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Đã chuyển về số mo"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Bugi sấy bắt đầu xuống cấp. Khởi động nguội trở nên chậm hơn trong khi khởi động nóng vẫn bình thường."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Một số bugi sấy đã yếu hoặc ngừng hoạt động. Khởi động nguội khó khăn và động cơ có thể chạy không tải không đều cho đến khi nóng lên."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Bugi sấy hư hỏng nặng. Khởi động nguội rất thiếu ổn định và động cơ tiếp tục chạy không đều trong lúc nóng lên."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Bugi sấy hỏng hoàn toàn. Không thể khởi động động cơ khi nhiệt độ quá thấp."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Rơ le sấy hư hỏng. Bugi sấy không còn làm nóng: không thể khởi động động cơ khi nhiệt độ quá thấp."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Rơ le bộ đề hư hỏng. Động cơ không còn quay khi đề."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Bóng đèn chiếu gần hư hỏng. Các đèn này không sáng cho đến khi thay bóng."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Bóng đèn chiếu xa hư hỏng. Các đèn này không sáng cho đến khi thay bóng."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Bóng đèn làm việc phía trước hư hỏng. Các đèn này không sáng cho đến khi thay bóng."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Bóng đèn làm việc phía sau hư hỏng. Các đèn này không sáng cho đến khi thay bóng."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Bóng đèn xoay cảnh báo hư hỏng. Đèn xoay cảnh báo không sáng cho đến khi thay bóng."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Bóng đèn báo rẽ hư hỏng. Cả đèn báo rẽ lẫn đèn cảnh báo nguy hiểm đều không sáng cho đến khi thay bóng."/>
+        <text name="rms_breakdowns_part_vehicle" text="Xe"/>
+        <text name="rms_breakdowns_part_pistons" text="Pít-tông"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Xéc-măng"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Ống lót xi-lanh"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Van nạp"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Van xả"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Ống dẫn hướng và phớt thân van"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Nắp máy"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Gioăng nắp máy"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Bạc trục khuỷu"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Bạc thanh truyền"/>
+        <text name="rms_breakdowns_part_consumables" text="Vật tư tiêu hao"/>
+        <text name="rms_breakdowns_part_clutch" text="Ly hợp"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Điều khiển tỷ số truyền"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Động cơ"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Cáp nguồn và dây mát"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Rơ le bộ đề"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Rơ le sấy"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Bóng đèn chiếu gần"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="Bóng đèn chiếu xa"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Bóng đèn làm việc phía trước"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Bóng đèn làm việc phía sau"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Bóng đèn xoay cảnh báo"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Bóng đèn báo rẽ"/>
+        <text name="rms_breakdowns_part_battery" text="Ắc quy"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Pin cao áp"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Công tắc tơ cao áp"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Dây dẫn cao áp"/>
+        <text name="rms_breakdowns_part_inverter" text="Bộ biến tần"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Bộ chuyển đổi điện áp"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Bộ sạc trên xe"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Vòng bi động cơ điện"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Cuộn dây động cơ điện"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Cảm biến vị trí động cơ"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Bơm nước làm mát"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Bơm nước"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Lõi két nước"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Ống và khớp nối nước làm mát"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Bình giãn nở"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Dây đai phụ trợ và bộ căng"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Cánh quạt"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Quạt làm mát điện"/>
+        <text name="rms_breakdowns_part_reducer" text="Bộ giảm tốc"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Đĩa phanh và má phanh"/>
+        <text name="rms_breakdowns_part_brake_control" text="Cơ cấu điều khiển phanh"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Van phanh rơ moóc"/>
+        <text name="rms_breakdowns_part_park_brake" text="Phanh đỗ"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Vòng bi và phớt moay-ơ"/>
+        <text name="rms_breakdowns_part_alternator" text="Máy phát điện"/>
+        <text name="rms_breakdowns_part_starter" text="Bộ đề"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Bộ tăng áp"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Phớt hộp số"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Bộ căng xích"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Con lăn và bánh dẫn hướng xích"/>
+        <text name="rms_breakdowns_part_thermostat" text="Van hằng nhiệt"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Bơm dầu"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Bộ đồng tốc"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Rô-tuyn và thanh kéo lái"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Chốt và bạc lót khớp bộ nạp trước"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Chốt trụ đứng"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Van lái orbitrol"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Xi lanh lái"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Hệ thống treo ca bin"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="Ly hợp PTO"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="Vòng bi đầu ra PTO"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="Phớt đầu ra PTO"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="Trục đầu ra PTO"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="Van điện từ gài PTO"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="Công tắc điều khiển PTO"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="Cảm biến tốc độ PTO"/>
+        <text name="rms_breakdowns_part_pto_brake" text="Phanh PTO"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Ly hợp PTO trước"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Bơm thủy lực"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Xi lanh thủy lực"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Ống mềm thủy lực"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Bộ lọc thủy lực"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Bộ làm mát dầu thủy lực"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Van điều khiển thủy lực"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Ly hợp quạt"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Bơm cấp nhiên liệu"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Kim phun nhiên liệu"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="Bơm cao áp"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Bộ lọc nhiên liệu"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Đường ống nhiên liệu"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Bơm cao áp cơ khí"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Van định lượng nhiên liệu"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Cảm biến áp suất ống phân phối nhiên liệu"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Bộ giới hạn áp suất ống phân phối nhiên liệu"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Bộ giảm áp khí"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Van điện từ ngắt khí"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Bộ lọc khí nhiên liệu"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Đường ống khí nhiên liệu"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Kim phun khí"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="Bơm AdBlue"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="Kim phun định lượng AdBlue"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="Bộ lọc AdBlue"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="Cảm biến NOx"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Bộ lọc hạt"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Bugi sấy"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="PTO đã tự ngắt"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="PTO trước đã ngắt"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="PTO không chịu ngắt: tắt máy để dừng nông cụ"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Ly hợp PTO bắt đầu mòn. Truyền động đôi khi tự ngắt."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Ly hợp PTO bị mòn ở mức trung bình. Hiện tượng tự ngắt lặp lại."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Ly hợp PTO bị mòn nặng. Nông cụ thường xuyên mất truyền động."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Ly hợp PTO hư hỏng nghiêm trọng. Nông cụ dừng lại."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Ly hợp PTO bắt đầu mòn. Các đĩa bắt đầu dính."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Ly hợp PTO bị mòn ở mức trung bình. Các đĩa ngày càng dính."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Ly hợp PTO bị mòn nặng. Các đĩa dính khiến PTO đôi khi không chịu ngắt."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Ly hợp PTO hư hỏng tới hạn. Các đĩa đã hàn dính: PTO không còn ngắt và nông cụ chỉ dừng khi tắt máy."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Vòng bi đầu ra PTO bắt đầu mòn. Xuất hiện tiếng ù nhẹ."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Vòng bi đầu ra PTO bị mòn ở mức trung bình. Tiếng ù trở nên rõ rệt."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Vòng bi đầu ra PTO bị mòn nặng. Tiếng ù tăng lên."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Vòng bi đầu ra PTO hư hỏng nghiêm trọng. Tiếng ù đạt mức lớn nhất."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Phớt đầu ra PTO rò rỉ nhẹ. Mức dầu truyền động giảm chậm khi làm việc."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Phớt đầu ra PTO rò rỉ ở mức trung bình. Mức dầu truyền động giảm khi làm việc."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Phớt đầu ra PTO rò rỉ nặng. Dầu truyền động chảy ra và mức dầu giảm nhanh."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Phớt đầu ra PTO rò rỉ tới hạn. Dầu còn lại không đủ để hệ thống truyền động hoạt động an toàn."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Van điện từ gài PTO bắt đầu mòn. Truyền động đôi khi bị ngắt trong khi làm việc."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Van điện từ gài PTO bắt đầu mòn. PTO đôi khi không gài được."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Van điện từ gài PTO bị mòn ở mức trung bình. Hiện tượng ngắt trong khi làm việc lặp lại."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Van điện từ gài PTO bị mòn ở mức trung bình. Hiện tượng không gài được lặp lại."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Van điện từ gài PTO bị mòn nặng. Truyền động thường xuyên bị ngắt."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Van điện từ gài PTO bị mòn nặng. PTO thường xuyên không gài được."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Van điện từ gài PTO hư hỏng nghiêm trọng. Cuộn dây của van bị đứt và PTO không còn duy trì trạng thái gài."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Van điện từ gài PTO hư hỏng nghiêm trọng. Con trượt của van bị kẹt và PTO không còn gài được."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Công tắc điều khiển PTO bắt đầu mòn. Tiếp xúc kém đôi khi làm ngắt truyền động."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Công tắc điều khiển PTO bắt đầu mòn. PTO đôi khi không phản hồi lệnh điều khiển."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Công tắc điều khiển PTO bị mòn ở mức trung bình. Tiếp xúc kém làm ngắt truyền động ngày càng thường xuyên."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Công tắc điều khiển PTO bị mòn ở mức trung bình. PTO bỏ qua lệnh điều khiển ngày càng thường xuyên."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Công tắc điều khiển PTO bị mòn nặng. Tiếp điểm không còn duy trì tiếp xúc và truyền động thường xuyên bị ngắt."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Công tắc điều khiển PTO bị mòn nặng. Lệnh điều khiển thường xuyên không có tác dụng."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Công tắc điều khiển PTO hư hỏng nghiêm trọng. Tiếp điểm của công tắc luôn hở và PTO tự ngắt."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Công tắc điều khiển PTO hư hỏng nghiêm trọng. Tiếp điểm của công tắc không còn đóng và PTO không còn gài được."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="Trục đầu ra PTO hư hỏng. Các then hoa của trục bị trờn và không còn truyền chuyển động."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="Trục đầu ra PTO hư hỏng. Trục bị gãy và nông cụ không còn được dẫn động."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="Cảm biến tốc độ PTO hư hỏng. Cảm biến không còn gửi tín hiệu và hệ thống an toàn ngắt PTO."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="Phanh PTO hư hỏng. Phanh vẫn siết và khóa trục đầu ra."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Ly hợp PTO trước bắt đầu mòn. Truyền động đầu ra phía trước đôi khi tự ngắt."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Ly hợp PTO trước bị mòn ở mức trung bình. Đầu ra phía trước tự ngắt lặp lại."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Ly hợp PTO trước bị mòn nặng. Nông cụ phía trước thường xuyên mất truyền động."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Ly hợp PTO trước hư hỏng tới hạn. Đầu ra phía trước không còn quay; PTO sau không bị ảnh hưởng."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Lệnh gài PTO bị từ chối"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Sửa chữa tạm thời"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Lỗi"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Hệ thống hoạt động bình thường, nhưng đã phát hiện một linh kiện bị lỗi trong quá trình kiểm tra. Linh kiện này không còn biên độ an toàn, vì vậy nên thay thế phòng ngừa để tránh hỏng hóc đột ngột."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Ắc quy quá yếu"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Pin cao áp lạnh: tầm hoạt động và công suất giảm"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Hệ thống hoạt động bình thường nhưng phụ thuộc hoàn toàn vào một sửa chữa tạm thời. Để tránh hỏng hóc khi có tải, nên thay thế toàn bộ linh kiện càng sớm càng tốt."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Vòng bi bộ tăng áp bị mòn. Có thể nghe thấy tiếng rít nhẹ và công suất giảm nhẹ ở vòng tua động cơ cao."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Phớt bộ tăng áp bị rò rỉ. Công suất giảm rõ rệt và mức tiêu thụ nhiên liệu tăng."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Cánh tua-bin bị hư hại. Công suất giảm nhiều và động cơ có nguy cơ chết máy khi chịu tải nặng."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Bộ tăng áp hư hỏng nghiêm trọng. Động cơ đã mất phần lớn công suất và có nguy cơ chịu hư hại nghiêm trọng bên trong."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Các lá ly hợp bị mòn. Đôi khi công suất bị mất do ly hợp trượt khi có tải."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Ly hợp bị mòn đáng kể. Hiện tượng trượt ly hợp xuất hiện rõ khi tăng tốc và chịu tải nặng."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Ly hợp bị mòn nặng. Ly hợp trượt nhiều khiến công suất khó truyền đến các bánh xe."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Ly hợp đã cháy hoàn toàn. Xe không thể di chuyển."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Bộ đồng tốc bị mòn. Đôi khi có tiếng nghiến hoặc khó chuyển số."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Bộ đồng tốc bị hư hại. Việc chuyển số thường khó khăn và có thể thất bại."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Răng bộ đồng tốc bị gãy. Nguy cơ cao không chuyển được số hoặc bị nhảy số khi có tải."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Bộ đồng tốc đã hỏng hoàn toàn. Không thể chuyển số."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Dầu hộp số rò rỉ nhẹ. Mức dầu giảm chậm trong khi làm việc."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Dầu hộp số rò rỉ ở mức trung bình. Mức dầu giảm rõ rệt và hộp số nóng hơn."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Dầu hộp số rò rỉ nặng. Mức dầu giảm nhanh và hộp số quá nhiệt khi có tải."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Dầu hộp số rò rỉ nghiêm trọng. Lượng dầu còn lại không đủ để hộp số hoạt động an toàn."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Bộ căng xích gặp trục trặc nhẹ. Độ căng của xích kém ổn định hơn một chút, làm tăng nhẹ lực cản và hao mòn."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Bộ căng xích gặp trục trặc ở mức trung bình. Độ căng trở nên không ổn định, hiệu suất chuyển động giảm và nguy cơ lệch xích tăng."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Bộ căng xích gặp trục trặc nặng. Độ căng bị rối loạn nghiêm trọng, việc truyền chuyển động trở nên kém hiệu quả và nguy cơ tuột xích tăng."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Bộ căng xích hư hỏng nghiêm trọng. Xích không còn được giữ đúng cách và xe không thể vận hành an toàn."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Van hằng nhiệt hư hỏng nhẹ. Động cơ nóng lên chậm và vẫn quá nguội khi làm việc."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Van hằng nhiệt hư hỏng nhẹ. Điều chỉnh nhiệt độ yếu, động cơ nóng hơn khi chịu tải."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Van hằng nhiệt hư hỏng ở mức trung bình. Động cơ nóng lên chậm và vẫn quá nguội khi làm việc."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Van hằng nhiệt hư hỏng ở mức trung bình. Nhiệt độ tăng sớm hơn và động cơ nóng hơn khi chịu tải."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Van hằng nhiệt hư hỏng nặng. Động cơ nóng lên chậm và vẫn quá nguội khi làm việc."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Van hằng nhiệt hư hỏng nặng. Động cơ rất nóng; làm việc lâu có nguy cơ quá nhiệt."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Van hằng nhiệt hư hỏng nghiêm trọng. Động cơ nóng lên chậm và vẫn quá nguội khi làm việc."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Van hằng nhiệt hư hỏng nghiêm trọng. Bộ phận này vẫn đóng, động cơ nhanh chóng quá nhiệt."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Động cơ đã chuyển sang chế độ bảo vệ. Công suất bị giới hạn cho đến khi nhiệt độ giảm."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Bảo vệ quá nhiệt: công suất giảm"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Mức bảo vệ quá nhiệt tăng lên. Động cơ chỉ còn cung cấp một nửa công suất."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Bảo vệ quá nhiệt: công suất giảm một nửa"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Bảo vệ quá nhiệt đã đạt mức tối đa. Chỉ còn lại một phần công suất động cơ."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Bảo vệ quá nhiệt: công suất giảm mạnh"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Động cơ đã tắt để tránh hư hại. Hãy để động cơ nguội trước khi khởi động lại."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Bảo vệ quá nhiệt: động cơ đã tắt"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Bơm dầu gặp trục trặc nhẹ. Áp suất dầu giảm, mô-men xoắn động cơ giảm nhẹ, nhiệt độ động cơ tăng và có thể xuất hiện tiếng gõ cơ khí."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Bơm dầu gặp trục trặc ở mức trung bình. Áp suất dầu không đủ, mô-men xoắn động cơ giảm rõ rệt, nhiệt độ động cơ tăng và có thể nghe rõ tiếng gõ cơ khí."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Bơm dầu gặp trục trặc nặng. Áp suất dầu thấp nghiêm trọng, mô-men xoắn động cơ giảm mạnh, động cơ có thể quá nhiệt, tiếng gõ cơ khí rất lớn và có thể chết máy."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Bơm dầu hư hỏng nghiêm trọng. Dầu không đủ lưu thông để động cơ hoạt động an toàn, nên không thể khởi động hoặc tiếp tục vận hành."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="Động cơ đã bó kẹt và không thể quay nữa."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Động cơ chết máy"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU gặp trục trặc nhẹ. Công suất động cơ giảm nhẹ."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU gặp trục trặc ở mức trung bình. Công suất giảm rõ rệt và mức tiêu thụ nhiên liệu tăng."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="ECU gặp trục trặc nặng. Công suất giảm nhiều, mức tiêu thụ nhiên liệu cao và động cơ có nguy cơ chết máy."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="ECU hỏng hoàn toàn. Không thể điều khiển và khởi động động cơ."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Cáp nguồn và dây mát hư hỏng nhẹ. Điện trở tiếp xúc tăng làm đèn đôi khi chập chờn, nguồn điện không ổn định và khó khởi động. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Cáp nguồn và dây mát hư hỏng ở mức trung bình. Mất tiếp xúc làm đèn thường xuyên chập chờn, nguồn điện không ổn định, khó khởi động và động cơ có thể chết máy. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Cáp nguồn và dây mát hư hỏng nặng. Nguồn điện cho các mạch không ổn định, đèn có thể hỏng hoàn toàn, mô-men xoắn động cơ giảm, động cơ dễ chết máy và việc khởi động không ổn định. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Cáp nguồn và dây mát hư hỏng nghiêm trọng. Đèn không hoạt động và không thể khởi động động cơ. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Cáp nguồn và dây mát hư hỏng nhẹ. Điện trở tiếp xúc tăng làm đèn đôi khi chập chờn và nguồn điện không ổn định. Dòng điện rò làm cạn ắc quy phụ khi máy đỗ."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Cáp nguồn và dây mát hư hỏng ở mức trung bình. Mất tiếp xúc làm đèn thường xuyên chập chờn, nguồn điện không ổn định và có thể xảy ra ngắt điện. Dòng điện rò làm cạn ắc quy phụ khi máy đỗ."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Cáp nguồn và dây mát hư hỏng nặng. Nguồn điện cho các mạch không ổn định, đèn có thể hỏng hoàn toàn, công suất giảm và dễ xảy ra ngắt điện. Dòng điện rò làm cạn ắc quy phụ khi máy đỗ."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Cáp nguồn và dây mát hư hỏng nghiêm trọng. Đèn không hoạt động và máy không khởi động. Dòng điện rò làm cạn ắc quy phụ khi máy đỗ."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Ống và khớp nối nước làm mát hư hỏng nhẹ. Rò rỉ nhẹ hầu như không làm giảm mức nước làm mát."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Ống và khớp nối nước làm mát hư hỏng nhẹ. Ống bị bóp nhẹ làm giảm lưu lượng một chút."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Ống và khớp nối nước làm mát hư hỏng ở mức trung bình. Rò rỉ thấy rõ hơn và mức nước giảm nhiều hơn."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Ống và khớp nối nước làm mát hư hỏng ở mức trung bình. Lưu lượng giảm khiến nhiệt độ tăng sớm hơn khi chịu tải."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Ống và khớp nối nước làm mát hư hỏng nặng. Mất nhiều nước làm mát; động cơ có thể quá nhiệt khi chịu tải."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Ống và khớp nối nước làm mát hư hỏng nặng. Lưu lượng yếu; động cơ quá nhiệt khi làm việc lâu."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Ống và khớp nối nước làm mát hư hỏng nghiêm trọng. Mức nước giảm nhanh và mạch làm mát có thể cạn."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Ống và khớp nối nước làm mát hư hỏng nghiêm trọng. Dòng tuần hoàn bị cản nhiều và động cơ nhanh quá nhiệt."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Bình giãn nở hư hỏng nhẹ. Vết nứt làm rỉ một ít nước làm mát."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Bình giãn nở hư hỏng nhẹ. Khớp nối rỉ nhẹ."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Bình giãn nở hư hỏng ở mức trung bình. Vết nứt gây rò rỉ rõ và mức nước giảm."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Bình giãn nở hư hỏng ở mức trung bình. Khớp nối rò rõ và mức nước giảm."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Bình giãn nở hư hỏng nặng. Rò rỉ làm mức nước giảm nhanh."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Bình giãn nở hư hỏng nặng. Nước làm mát mất nhanh tại khớp nối."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Bình giãn nở hư hỏng nghiêm trọng. Nước làm mát thoát nhanh và mạch bị cạn."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Bình giãn nở hư hỏng nghiêm trọng. Rò rỉ ở khớp nối nhanh chóng làm cạn mạch."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Dây đai phụ trợ và bộ căng hư hỏng nhẹ. Bộ phận này rít và trượt nhẹ; sạc và tuần hoàn giảm một chút."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Dây đai phụ trợ và bộ căng hư hỏng ở mức trung bình. Dây trượt khi chịu tải; sạc giảm và nước làm mát tuần hoàn chậm hơn."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Dây đai phụ trợ và bộ căng hư hỏng nặng. Dây trượt mạnh; sạc và tuần hoàn giảm nhiều."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Dây đai phụ trợ và bộ căng hư hỏng nghiêm trọng. Dây đứt; sạc và tuần hoàn nước làm mát dừng đột ngột."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Cánh quạt hư hỏng nhẹ. Lưu lượng khí giảm nhẹ; khả năng làm mát giảm, nhất là khi chạy chậm."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Cánh quạt hư hỏng ở mức trung bình. Luồng khí giảm rõ và nhiệt độ tăng cao hơn."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Cánh quạt hư hỏng nặng. Lưu lượng khí giảm rõ rệt và động cơ nóng lên khi chịu tải."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Cánh quạt hư hỏng nghiêm trọng. Lưu lượng khí giảm còn một nửa và động cơ nhanh chóng quá nhiệt khi chịu tải."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Quạt làm mát điện hư hỏng nhẹ. Bộ phận này đẩy ít khí hơn một chút khi cần làm mát."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Quạt làm mát điện hư hỏng ở mức trung bình. Luồng khí giảm rõ và nhiệt độ tăng nhanh hơn."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Quạt làm mát điện hư hỏng nặng. Lượng khí lưu thông giảm rõ rệt và nhiệt độ tăng khi chịu tải."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Quạt làm mát điện hư hỏng nghiêm trọng. Lượng khí lưu thông giảm còn một nửa và nhiệt độ tăng nhanh khi chịu tải."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Đã phát hiện dấu hiệu ban đầu của trục trặc hộp số CVT. Cần kiểm tra và sửa chữa."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Trục trặc hộp số CVT đang trở nên nghiêm trọng hơn. Tiếp tục vận hành có thể khiến hộp số chuyển sang chế độ khẩn cấp."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Hộp số CVT bị hư hại nghiêm trọng. Hộp số đang ở chế độ khẩn cấp và tốc độ tối đa của xe bị giảm."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Hộp số CVT hỏng hoàn toàn. Không thể sử dụng xe trước khi sửa chữa."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Ắc quy bị sunfat hóa nhẹ. Dung lượng hữu dụng giảm, làm giảm lượng điện dự trữ khi có tải."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Ắc quy bị sunfat hóa ở mức trung bình. Dung lượng hữu dụng giảm nhiều và việc khởi động động cơ trở nên khó khăn."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Ắc quy bị sunfat hóa nặng. Dung lượng hữu dụng xuống mức nghiêm trọng và khả năng quay khởi động không ổn định."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Ắc quy bị sunfat hóa nghiêm trọng. Dung lượng hữu dụng gần bằng không và công suất đề không đủ để khởi động ổn định."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Ắc quy phụ bị sunfat hóa nhẹ. Dung lượng hữu dụng giảm, làm giảm lượng điện dự trữ khi có tải."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Ắc quy phụ bị sunfat hóa ở mức trung bình. Dung lượng hữu dụng giảm nhiều và lượng điện dự trữ cạn nhanh hơn."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Ắc quy phụ bị sunfat hóa nặng. Dung lượng hữu dụng xuống mức nghiêm trọng và lượng điện dự trữ cạn rất nhanh."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Ắc quy phụ bị sunfat hóa nghiêm trọng. Dung lượng hữu dụng gần bằng không và không còn đủ để khởi động ổn định."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Đĩa phanh và má phanh bị mòn nhẹ. Hiệu quả phanh giảm nhẹ."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Đĩa phanh và má phanh bị mòn ở mức trung bình. Quãng đường phanh tăng rõ rệt."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Đĩa phanh và má phanh bị mòn nặng. Phanh rất yếu và không đáng tin cậy."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Đĩa phanh và má phanh hư hỏng nghiêm trọng. Xe phanh rất kém và việc lái xe trở nên nguy hiểm."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Cơ cấu điều khiển phanh hư hỏng nhẹ. Xe hơi kéo lệch sang một bên khi phanh."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Cơ cấu điều khiển phanh hư hỏng nhẹ. Bàn đạp hơi mềm và hiệu quả phanh giảm một chút."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Cơ cấu điều khiển phanh hư hỏng ở mức trung bình. Phanh kéo lệch rõ rệt sang một bên."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Cơ cấu điều khiển phanh hư hỏng ở mức trung bình. Bàn đạp mềm, áp suất giảm và hiệu quả phanh giảm rõ rệt."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Cơ cấu điều khiển phanh hư hỏng nặng. Xe kéo lệch mạnh sang một bên khi phanh."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Cơ cấu điều khiển phanh hư hỏng nặng. Bàn đạp lún sâu bất thường, áp suất tụt và xe phanh kém."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Cơ cấu điều khiển phanh hư hỏng nghiêm trọng. Phanh kéo lệch rất mạnh sang một bên."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Cơ cấu điều khiển phanh hư hỏng nghiêm trọng. Bàn đạp lún xuống gần như không có lực cản và xe gần như không còn phanh."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Van phanh rơ moóc hư hỏng nhẹ. Rơ moóc mất một phần nhỏ lực phanh."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Van phanh rơ moóc hư hỏng ở mức trung bình. Rơ moóc phanh yếu đi rõ rệt."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Van phanh rơ moóc hư hỏng nặng. Rơ moóc chỉ còn nhận một phần nhỏ lực phanh."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Van phanh rơ moóc hư hỏng nghiêm trọng. Rơ moóc không còn phanh."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Phanh đỗ hư hỏng nhẹ. Sau khi nhả, phanh vẫn còn cọ nhẹ và hãm máy một chút."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Phanh đỗ hư hỏng ở mức trung bình. Sau khi nhả, phanh cọ rõ rệt và giữ máy lại."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Phanh đỗ hư hỏng nặng. Sau khi nhả, phanh vẫn kéo một nửa và giữ máy lại mạnh."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Phanh đỗ hỏng hoàn toàn. Phanh không còn nhả ra và giữ máy như đang được kéo."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Vòng bi và phớt moay-ơ bị mòn nhẹ. Lực cản cơ học tăng nhẹ và có thể xuất hiện tiếng động bất thường khi hoạt động."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Vòng bi và phớt moay-ơ bị mòn ở mức trung bình. Ma sát tăng rõ rệt, tiếng ồn lớn hơn và hiệu suất cơ học giảm."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Vòng bi và phớt moay-ơ bị mòn nặng. Ma sát cao, tiếng ồn lớn và có nguy cơ thực sự bị bó kẹt khi có tải."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Vòng bi và phớt moay-ơ hư hỏng nghiêm trọng. Vòng bi sắp bó kẹt hoàn toàn và không thể tiếp tục vận hành."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Vòng bi con lăn và bánh dẫn hướng xích bị mòn nhẹ. Lực cản cơ học tăng nhẹ và có thể xuất hiện tiếng động bất thường khi hoạt động."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Vòng bi con lăn và bánh dẫn hướng xích bị mòn ở mức trung bình. Ma sát và tiếng ồn tăng, việc quay trở nên khó hơn."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Vòng bi con lăn và bánh dẫn hướng xích bị mòn nặng. Ma sát và tiếng ồn lớn, có nguy cơ bó kẹt khi có tải."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Vòng bi con lăn và bánh dẫn hướng xích hư hỏng nghiêm trọng. Xích có thể dừng nếu một vòng bi bị kẹt."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Bộ điều chỉnh máy phát điện hư hỏng nhẹ. Công suất sạc giảm, làm giảm hiệu quả sạc ắc quy."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Bộ điều chỉnh máy phát điện hư hỏng ở mức trung bình. Quá trình sạc giảm và không ổn định, khiến ắc quy sạc kém và tổn thất điện áp tăng."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Bộ điều chỉnh máy phát điện hư hỏng nặng. Khả năng sạc giảm mạnh, nguồn điện không ổn định và hệ thống điện hoạt động với tổn thất lớn."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Bộ điều chỉnh máy phát điện hỏng hoàn toàn. Ắc quy không còn được sạc và hệ thống điện chỉ hoạt động bằng lượng điện dự trữ còn lại."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Điốt máy phát điện hư hỏng nhẹ. Công suất sạc giảm, làm giảm hiệu quả sạc ắc quy. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Điốt máy phát điện hư hỏng ở mức trung bình. Quá trình sạc giảm và không ổn định, khiến ắc quy sạc kém và tổn thất điện áp tăng. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Điốt máy phát điện hư hỏng nặng. Khả năng sạc giảm mạnh, nguồn điện không ổn định và hệ thống điện hoạt động với tổn thất lớn. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Điốt máy phát điện hỏng hoàn toàn. Ắc quy không còn được sạc và hệ thống điện chỉ hoạt động bằng lượng điện dự trữ còn lại. Dòng điện rò làm cạn ắc quy khi máy đỗ."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Bộ đề hư hỏng nhẹ. Bộ đề quay động cơ chậm hơn và việc khởi động lâu hơn một chút."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Bộ đề hư hỏng ở mức trung bình. Bộ đề quay động cơ chậm: khởi động khó khăn, và không thể khởi động khi trời rất lạnh."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Bộ đề hư hỏng nặng. Bộ đề hầu như không quay nổi động cơ: động cơ chỉ khởi động được khi còn ấm hoặc khi thời tiết ấm áp."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Bộ đề hỏng hoàn toàn. Bộ đề không còn quay động cơ: động cơ đang chạy vẫn tiếp tục chạy, nhưng sau khi tắt thì không thể khởi động lại."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Vòng bi động cơ điện bị mòn nhẹ. Xuất hiện tiếng động nhỏ và mức tiêu thụ điện tăng nhẹ."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Vòng bi động cơ điện bị mòn ở mức trung bình. Tiếng ồn nghe rõ, mức tiêu thụ điện tăng và công suất giảm nhẹ."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Vòng bi động cơ điện bị mòn nặng. Tiếng ồn lớn, động cơ nóng lên và công suất giảm rõ rệt."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Vòng bi động cơ điện hư hỏng nghiêm trọng. Động cơ bị bó kẹt và máy không thể di chuyển nữa."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Cuộn dây động cơ điện bị xuống cấp nhẹ. Công suất giảm nhẹ và động cơ nóng hơn."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Cuộn dây động cơ điện bị xuống cấp ở mức trung bình. Công suất giảm rõ rệt, động cơ nóng lên và mức tiêu thụ điện tăng."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Cuộn dây động cơ điện bị xuống cấp nặng. Công suất giảm nhiều, động cơ rất nóng và có thể bị ngắt điện."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Cuộn dây động cơ điện hư hỏng nghiêm trọng. Động cơ bị chập mạch và không thể hoạt động nữa."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Cảm biến vị trí động cơ gặp trục trặc nhẹ. Xuất hiện những cú giật ngắn khi có tải."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Cảm biến vị trí động cơ gặp trục trặc ở mức trung bình. Hiện tượng giật xảy ra thường xuyên và công suất giảm."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Cảm biến vị trí động cơ gặp trục trặc nặng. Hiện tượng giật rất mạnh, công suất tụt hẳn và xảy ra ngắt điện."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Cảm biến vị trí động cơ hỏng hoàn toàn. Không thể điều khiển động cơ và máy không khởi động."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Bộ biến tần gặp trục trặc nhẹ. Công suất động cơ giảm nhẹ."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Bộ biến tần gặp trục trặc ở mức trung bình. Công suất giảm thấy rõ và mức tiêu thụ điện tăng."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Bộ biến tần gặp trục trặc nặng. Công suất giảm nhiều và có thể bị ngắt điện."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Bộ biến tần hỏng hoàn toàn. Động cơ không còn được cấp điện và máy không khởi động."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Bộ chuyển đổi điện áp hư hỏng nhẹ. Ắc quy phụ sạc kém hơn."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Bộ chuyển đổi điện áp hư hỏng ở mức trung bình. Việc sạc ắc quy phụ giảm và không ổn định."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Bộ chuyển đổi điện áp hư hỏng nặng. Ắc quy phụ gần như không còn được sạc và cạn dần khi chạy."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Bộ chuyển đổi điện áp hỏng hoàn toàn. Ắc quy phụ không còn được sạc và máy chỉ hoạt động bằng lượng điện dự trữ còn lại."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Bộ sạc trên xe hư hỏng nhẹ. Việc sạc tại trạm chậm hơn một chút."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Bộ sạc trên xe hư hỏng ở mức trung bình. Việc sạc tại trạm chậm hơn rõ rệt."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Bộ sạc trên xe hư hỏng nặng. Việc sạc tại trạm rất chậm."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Bộ sạc trên xe hỏng hoàn toàn. Không thể sạc pin cao áp nữa."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Dây dẫn cao áp bị mất cách điện nhẹ. Một cảnh báo hiển thị, không có ảnh hưởng nào khác."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Dây dẫn cao áp bị mất cách điện ở mức trung bình. Công suất bị giảm để bảo đảm an toàn."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Dây dẫn cao áp bị mất cách điện nặng. Công suất bị giảm mạnh và xảy ra ngắt điện."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Dây dẫn cao áp bị mất cách điện nghiêm trọng. Máy từ chối khởi động để bảo đảm an toàn."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Các cell của pin cao áp hư hỏng nhẹ. Tầm hoạt động giảm nhẹ."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Các cell của pin cao áp hư hỏng ở mức trung bình. Tầm hoạt động giảm rõ rệt và công suất bị giảm."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Các cell của pin cao áp hư hỏng nặng. Tầm hoạt động và công suất tụt hẳn, và có thể bị ngắt điện."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Pin cao áp hư hỏng nghiêm trọng. Không thể bật máy nữa."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Công tắc tơ cao áp bị mòn nhẹ. Thỉnh thoảng xảy ra ngắt nguồn."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Công tắc tơ cao áp bị mòn ở mức trung bình. Việc ngắt nguồn xảy ra đều đặn."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Công tắc tơ cao áp bị mòn nặng. Việc ngắt nguồn xảy ra thường xuyên."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Công tắc tơ cao áp hư hỏng nghiêm trọng. Pin cao áp không còn cấp điện cho máy và máy không khởi động."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Bơm nước làm mát hư hỏng nhẹ. Nước làm mát lưu thông kém hơn và nhiệt độ tăng thêm một chút."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Bơm nước làm mát hư hỏng ở mức trung bình. Khả năng làm mát giảm rõ rệt."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Bơm nước làm mát hư hỏng nặng. Khả năng làm mát giảm mạnh và dễ xảy ra quá nhiệt khi có tải."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Bơm nước làm mát hỏng hoàn toàn. Nước làm mát gần như không lưu thông và máy nhanh chóng quá nhiệt."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Bơm nước hư hỏng nhẹ. Lỗi còn khó nhận biết và cần kiểm tra."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Bơm nước hư hỏng ở mức trung bình. Tuần hoàn giảm và khả năng làm mát kém đi."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Bơm nước hư hỏng nặng. Tuần hoàn không đủ gây nguy cơ quá nhiệt."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Bơm nước hư hỏng nghiêm trọng. Tuần hoàn suy giảm nghiêm trọng và khả năng làm mát giảm nhiều."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Bơm nước hư hỏng nhẹ. Xuất hiện vết nước làm mát nhẹ quanh phớt bơm nước."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Bơm nước hư hỏng ở mức trung bình. Nước làm mát rò qua phớt bơm nước; mức nước giảm và tuần hoàn kém hiệu quả."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Bơm nước hư hỏng nặng. Rò rỉ qua phớt bơm nước để lại nhiều vết quanh bơm; mức nước giảm và tuần hoàn suy yếu làm tăng nguy cơ quá nhiệt."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Bơm nước hư hỏng nghiêm trọng. Phớt bơm nước rò nhiều; mạch mất nước và tuần hoàn không còn làm mát động cơ đúng mức."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Bơm nước hư hỏng nhẹ. Lỗi còn khó nhận biết và cần kiểm tra."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Bơm nước hư hỏng ở mức trung bình. Ổ bi bơm bị rơ và tuần hoàn giảm."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Bơm nước hư hỏng nặng. Tuần hoàn không đủ gây nguy cơ quá nhiệt."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Bơm nước hư hỏng nghiêm trọng. Tuần hoàn suy giảm nghiêm trọng và khả năng làm mát giảm nhiều."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Lõi két nước hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Lõi két nước hư hỏng ở mức trung bình. Bộ phận này tản ít nhiệt hơn từ nước làm mát."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Lõi két nước hư hỏng nặng. Bộ phận này tản nhiệt kém và nguy cơ quá nhiệt tăng."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Lõi két nước hư hỏng nghiêm trọng. Bộ phận này tản rất ít nhiệt và khả năng làm mát suy giảm nghiêm trọng."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Lõi két nước hư hỏng nhẹ. Nước làm mát rỉ ra trên các ống của lõi két nước."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Lõi két nước hư hỏng ở mức trung bình. Các ống thủng làm nước làm mát rò ra két nước và mức nước trong mạch giảm."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Lõi két nước hư hỏng nặng. Nước làm mát thoát qua các ống thủng của lõi, để lại vết ướt trên két nước; lượng nước dự trữ trong mạch giảm nhanh."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Lõi két nước hư hỏng nghiêm trọng. Bộ phận này bị thủng và mất nhiều nước làm mát. Mức nước giảm và két nước không còn tản đủ nhiệt của động cơ."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Bánh răng và vòng bi của bộ giảm tốc bị mòn nhẹ. Xuất hiện tiếng động nhỏ khi di chuyển."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Bánh răng và vòng bi của bộ giảm tốc bị mòn ở mức trung bình. Tiếng ồn nghe rõ và mức tiêu thụ điện tăng."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Bánh răng và vòng bi của bộ giảm tốc bị mòn nặng. Tiếng ồn lớn, bộ giảm tốc nóng lên và công suất ở bánh xe giảm."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Bộ giảm tốc hư hỏng nghiêm trọng. Bộ giảm tốc bị bó kẹt và máy không thể di chuyển nữa."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Pít-tông hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Pít-tông hư hỏng ở mức trung bình. Dầu lọt vào buồng đốt nhiều hơn và xuất hiện khói xanh."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Pít-tông hư hỏng nặng. Tiêu hao dầu và khói xanh tăng lên."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Pít-tông hư hỏng nghiêm trọng. Một pít-tông bị bó kẹt, làm động cơ kẹt cứng."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Pít-tông hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Pít-tông hư hỏng ở mức trung bình. Dầu lọt vào buồng đốt nhiều hơn và xuất hiện khói xanh."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Pít-tông hư hỏng nặng. Tiêu hao dầu và khói xanh tăng lên."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Pít-tông hư hỏng nghiêm trọng. Một pít-tông bị gãy vỡ và động cơ đã dừng."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Xéc-măng hư hỏng nhẹ. Cặn cản trở xéc-măng chuyển động trong rãnh."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Xéc-măng hư hỏng ở mức trung bình. Độ kín giảm và động cơ mất công suất."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Xéc-măng hư hỏng nặng. Mất độ nén gây khó khởi động và giảm công suất."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Xéc-măng hư hỏng nghiêm trọng. Độ nén rất thấp, khó khởi động và công suất giảm nhiều."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Xéc-măng hư hỏng nhẹ. Cặn cản trở xéc-măng chuyển động trong rãnh."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Xéc-măng hư hỏng ở mức trung bình. Dầu lọt vào buồng đốt nhiều hơn và xuất hiện khói xanh."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Xéc-măng hư hỏng nặng. Tiêu hao dầu và khói xanh tăng lên."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Xéc-măng hư hỏng nghiêm trọng. Dầu lọt vào nhiều và khói xanh kéo dài."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Xéc-măng hư hỏng nhẹ. Cặn cản trở xéc-măng chuyển động trong rãnh."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Xéc-măng hư hỏng ở mức trung bình. Độ kín giảm và động cơ mất công suất."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Xéc-măng hư hỏng nặng. Mất độ nén gây khó khởi động và giảm công suất."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Xéc-măng hư hỏng nghiêm trọng. Xéc-măng bị gãy: độ nén giảm và dầu lọt vào buồng đốt."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Ống lót xi-lanh hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Ống lót xi-lanh hư hỏng ở mức trung bình. Bề mặt bị trầy xước và độ kín giảm."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Ống lót xi-lanh hư hỏng nặng. Bề mặt bị trầy xước và độ kín giảm. Tiêu hao dầu và khói xanh tăng lên."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Ống lót xi-lanh hư hỏng nghiêm trọng. Một pít-tông bị bó kẹt trong ống lót xi-lanh, làm động cơ kẹt cứng."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Ống lót xi-lanh hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Ống lót xi-lanh hư hỏng ở mức trung bình. Nước làm mát rò qua ống lót bị nứt vào xi-lanh khiến mức nước giảm."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Ống lót xi-lanh hư hỏng nặng. Ống lót bị nứt để nước làm mát lọt vào xi-lanh; xuất hiện khói trắng ở ống xả."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Ống lót xi-lanh hư hỏng nghiêm trọng. Nhiều nước làm mát lọt qua ống lót bị nứt vào xi-lanh, gây khói trắng kéo dài và làm mát không đủ."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Van nạp hư hỏng nhẹ. Bề mặt tiếp xúc hư hại và công suất giảm nhẹ."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Van nạp hư hỏng ở mức trung bình. Van đóng không kín, gây bỏ máy và giảm công suất."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Van nạp hư hỏng nặng. Đế van bị cháy, gây bỏ máy, chết máy và giảm công suất."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Van nạp hư hỏng nghiêm trọng. Đế van cháy gây bỏ máy, chết máy và giảm công suất nhiều."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Van nạp hư hỏng nhẹ. Bề mặt tiếp xúc hư hại và công suất giảm nhẹ."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Van nạp hư hỏng ở mức trung bình. Van đóng không kín, gây bỏ máy và giảm công suất."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Van nạp hư hỏng nặng. Đế van bị cháy, gây bỏ máy, chết máy và giảm công suất."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Van nạp hư hỏng nghiêm trọng. Một van nạp bị gãy và động cơ đã dừng."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Van xả hư hỏng nhẹ. Bề mặt tiếp xúc hư hại và công suất giảm nhẹ."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Van xả hư hỏng ở mức trung bình. Van đóng không kín, gây bỏ máy và giảm công suất."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Van xả hư hỏng nặng. Đế van bị cháy, gây bỏ máy, chết máy và giảm công suất."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Van xả hư hỏng nghiêm trọng. Đế van cháy gây bỏ máy, chết máy và giảm công suất nhiều."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Van xả hư hỏng nhẹ. Bề mặt tiếp xúc hư hại và công suất giảm nhẹ."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Van xả hư hỏng ở mức trung bình. Van đóng không kín, gây bỏ máy và giảm công suất."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Van xả hư hỏng nặng. Đế van bị cháy, gây bỏ máy, chết máy và giảm công suất."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Van xả hư hỏng nghiêm trọng. Một van xả bị gãy và động cơ đã dừng."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Ống dẫn hướng và phớt thân van hư hỏng nhẹ. Kiểm tra cho thấy lỗi dẫn hướng và van phát ra tiếng ồn."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Ống dẫn hướng và phớt thân van hư hỏng ở mức trung bình. Khe hở tăng và van phát ra tiếng ồn."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Ống dẫn hướng và phớt thân van hư hỏng nặng. Khe hở quá lớn gây tiếng ồn, bỏ máy và dầu lọt qua."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Ống dẫn hướng và phớt thân van hư hỏng nghiêm trọng. Khe hở dẫn hướng quá lớn, có tiếng ồn, bỏ máy và khói xanh."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Ống dẫn hướng và phớt thân van hư hỏng nhẹ. Phớt chai cứng để dầu lọt qua."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Ống dẫn hướng và phớt thân van hư hỏng ở mức trung bình. Dầu lọt vào buồng đốt nhiều hơn và xuất hiện khói xanh."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Ống dẫn hướng và phớt thân van hư hỏng nặng. Tiêu hao dầu và khói xanh tăng lên."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Ống dẫn hướng và phớt thân van hư hỏng nghiêm trọng. Dầu lọt vào nhiều và khói xanh kéo dài."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Nắp máy hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Nắp máy hư hỏng ở mức trung bình. Vết nứt ở nắp máy để nước làm mát lọt vào buồng đốt; động cơ giảm công suất và khó khởi động."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Nắp máy hư hỏng nặng. Nước làm mát đi qua nắp máy bị nứt vào buồng đốt, gây khói trắng và giảm công suất."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Nắp máy hư hỏng nghiêm trọng. Vết nứt để nhiều nước làm mát lọt vào buồng đốt. Động cơ yếu, khó khởi động và thải khói trắng."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Nắp máy hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Nắp máy hư hỏng ở mức trung bình. Nước làm mát rỉ ra từ nắp máy bị nứt và mức nước trong mạch giảm."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Nắp máy hư hỏng nặng. Nước làm mát rò rỉ để lại vết rõ trên nắp máy bị nứt và mức nước giảm nhanh."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Nắp máy hư hỏng nghiêm trọng. Nhiều nước làm mát thoát ra từ nắp máy bị nứt; mạch cạn dần và động cơ có nguy cơ quá nhiệt."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Nắp máy hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Nắp máy hư hỏng ở mức trung bình. Nước làm mát rò qua vết nứt ở nắp máy vào dầu khiến mức nước trong mạch giảm."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Nắp máy hư hỏng nặng. Vết nứt ở nắp máy để nhiều nước làm mát hơn lọt vào dầu; mức nước trong mạch tiếp tục giảm."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Nắp máy hư hỏng nghiêm trọng. Vết nứt ở nắp máy đưa nhiều nước làm mát vào dầu; mạch mất lượng nước dự trữ và động cơ có nguy cơ quá nhiệt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Gioăng nắp máy hư hỏng nhẹ. Lỗi còn khó nhận biết và cần kiểm tra."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Gioăng nắp máy hư hỏng ở mức trung bình. Bộ phận này để nước làm mát lọt vào buồng đốt; khởi động lâu hơn và công suất giảm."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Gioăng nắp máy hư hỏng nặng. Nước làm mát đi qua bộ phận này vào buồng đốt và tạo khói trắng ở ống xả."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Gioăng nắp máy hư hỏng nghiêm trọng. Bộ phận này để nhiều nước làm mát lọt vào buồng đốt; khói trắng tăng và khởi động rất khó."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Gioăng nắp máy hư hỏng nhẹ. Lỗi còn khó nhận biết và cần kiểm tra."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Gioăng nắp máy hư hỏng ở mức trung bình. Nước làm mát rỉ ra ở bộ phận này khiến mức nước trong mạch giảm."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Gioăng nắp máy hư hỏng nặng. Nước làm mát rò ở bộ phận này để lại vết trên động cơ và khiến mức nước giảm nhanh."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Gioăng nắp máy hư hỏng nghiêm trọng. Bộ phận này để nhiều nước làm mát thoát ra ngoài; mức nước giảm và khả năng làm mát động cơ suy giảm nhiều."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Gioăng nắp máy hư hỏng nhẹ. Lỗi còn khó nhận biết và cần kiểm tra."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Gioăng nắp máy hư hỏng ở mức trung bình. Nước làm mát đi qua bộ phận này vào dầu; mức nước trong mạch giảm."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Gioăng nắp máy hư hỏng nặng. Bộ phận này để lượng nước làm mát ngày càng nhiều lọt vào dầu; mạch mất dần nước."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Gioăng nắp máy hư hỏng nghiêm trọng. Rò rỉ lớn qua bộ phận này đưa nước làm mát vào dầu và khiến mạch thiếu nước cần thiết để làm mát."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Bạc trục khuỷu hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Bạc trục khuỷu hư hỏng ở mức trung bình. Khe hở bạc tăng lên."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Bạc trục khuỷu hư hỏng nặng. Màng dầu suy giảm, có tiếng gõ và nóng lên."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Bạc trục khuỷu hư hỏng nghiêm trọng. Một bạc trục khuỷu bị bó kẹt, làm động cơ kẹt cứng."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Bạc trục khuỷu hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Bạc trục khuỷu hư hỏng ở mức trung bình. Khe hở bạc tăng lên."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Bạc trục khuỷu hư hỏng nặng. Màng dầu suy giảm, có tiếng gõ và nóng lên."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Bạc trục khuỷu hư hỏng nghiêm trọng. Lớp bề mặt của một bạc trục khuỷu nóng chảy và động cơ đã dừng."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Bạc thanh truyền hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Bạc thanh truyền hư hỏng ở mức trung bình. Khe hở bạc tăng lên."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Bạc thanh truyền hư hỏng nặng. Màng dầu suy giảm, có tiếng gõ và nóng lên."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Bạc thanh truyền hư hỏng nghiêm trọng. Một bạc thanh truyền bị bó kẹt, làm động cơ kẹt cứng."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Bạc thanh truyền hư hỏng nhẹ. Kiểm tra cho thấy bề mặt hư hại."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Bạc thanh truyền hư hỏng ở mức trung bình. Khe hở bạc tăng lên."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Bạc thanh truyền hư hỏng nặng. Màng dầu suy giảm, có tiếng gõ và nóng lên."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Bạc thanh truyền hư hỏng nghiêm trọng. Lớp bề mặt của một bạc thanh truyền nóng chảy và động cơ đã dừng."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Điện áp mạch không đủ"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Bơm cấp nhiên liệu bắt đầu mòn. Công suất động cơ giảm nhẹ và mức tiêu thụ nhiên liệu tăng."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Áp suất nhiên liệu giảm. Công suất giảm rõ rệt, mức tiêu thụ nhiên liệu tăng và động cơ đôi khi chết máy."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Áp suất nhiên liệu xuống mức nghiêm trọng. Công suất giảm nhiều, mức tiêu thụ nhiên liệu rất cao và động cơ thường xuyên chết máy."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Bơm cấp nhiên liệu hỏng hoàn toàn. Nhiên liệu không còn được cấp đến động cơ."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="Một hoặc nhiều đầu phun của kim phun bị tắc nhẹ. Động cơ có thể chạy hơi không đều và giảm nhẹ công suất."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Nhiên liệu được phun sương kém. Động cơ hụt khi có tải, công suất giảm rõ rệt và xuất hiện các cú giật."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="Một kim phun nhiên liệu bị kẹt. Động cơ chạy rất kém, công suất giảm nhiều và việc khởi động không ổn định."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="Một kim phun đã hỏng hoàn toàn. Động cơ không còn chạy đúng cách và có thể không khởi động được."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Bơm cao áp hư hỏng nhẹ. Áp suất phun tăng chậm hơn: khởi động lâu hơn và động cơ phản ứng kém nhạy hơn."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Bơm cao áp hư hỏng ở mức trung bình. Áp suất phun không đủ khi có tải, công suất giảm rõ rệt và động cơ bị hụt."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Bơm cao áp hư hỏng nặng. Áp suất phun xuống mức nghiêm trọng, công suất giảm nhiều, động cơ chết máy và khó khởi động."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Bơm cao áp hỏng hoàn toàn. Bơm không còn tạo áp suất phun: bộ đề vẫn quay động cơ nhưng động cơ không nổ."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Bộ lọc nhiên liệu bị tắc nhẹ. Lưu lượng nhiên liệu giảm nhẹ khi tải nặng."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Bộ lọc nhiên liệu bị tắc ở mức trung bình. Lưu lượng trở nên không đủ khi có tải, công suất giảm và động cơ đôi khi bị hụt."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Bộ lọc nhiên liệu bị tắc nặng. Nguồn cung nhiên liệu bị hạn chế nghiêm trọng, công suất giảm rõ rệt và động cơ có thể chết máy."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Bộ lọc nhiên liệu bị nghẹt hoàn toàn. Động cơ không còn nhận đủ nhiên liệu để vận hành ổn định."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Không khí lọt nhẹ vào đường ống nhiên liệu. Nguồn cung nhiên liệu trở nên hơi không đều."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Không khí lọt vào đường ống nhiên liệu ở mức trung bình. Nguồn cung trở nên không ổn định, công suất giảm và động cơ bị hụt."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Không khí lọt vào đường ống nhiên liệu ở mức nặng. Động cơ chạy rất không đều và có nguy cơ cao bị chết máy."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Đường ống nhiên liệu hư hỏng nghiêm trọng và lọt nhiều không khí. Động cơ không còn được cấp nhiên liệu đúng cách."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Đường ống nhiên liệu bị kẹp nhẹ. Lưu lượng giảm: động cơ khởi động rồi thỉnh thoảng chết máy."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Đường ống nhiên liệu bị kẹp ở mức trung bình. Động cơ khởi động rồi thường xuyên chết máy."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Đường ống nhiên liệu bị kẹp ở mức nặng. Động cơ hay chết máy."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Đường ống nhiên liệu bị ép bẹp. Nhiên liệu không còn đi qua: động cơ dừng."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Bơm cao áp cơ khí hư hỏng nhẹ. Lưu lượng suy giảm: thời gian khởi động dài hơn và động cơ yếu đi một chút."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Bơm cao áp cơ khí hư hỏng ở mức trung bình. Lưu lượng không đủ khi có tải: động cơ mất công suất và bị hụt."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Bơm cao áp cơ khí hư hỏng nặng. Động cơ thiếu nhiên liệu, mất nhiều công suất, khó khởi động và chết máy."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Bơm cao áp cơ khí hư hỏng nghiêm trọng. Bộ truyền động của bơm đã gãy: động cơ dừng và không thể khởi động lại."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Van định lượng nhiên liệu hư hỏng nhẹ. Áp suất ống phân phối tăng chậm hơn và thời gian khởi động dài hơn."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Van định lượng nhiên liệu hư hỏng ở mức trung bình. Áp suất ống phân phối không đủ khi có tải: động cơ mất công suất và bị hụt."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Van định lượng nhiên liệu hư hỏng nặng. Áp suất ống phân phối lệch xa giá trị yêu cầu: động cơ mất nhiều công suất và chết máy."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Van định lượng nhiên liệu hư hỏng nghiêm trọng. Ống phân phối không còn được tạo áp: mô tơ khởi động quay động cơ nhưng động cơ không nổ."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Cảm biến áp suất ống phân phối nhiên liệu hư hỏng nhẹ. Giá trị đo trở nên không ổn định và thời gian khởi động dài hơn một chút."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Cảm biến áp suất ống phân phối nhiên liệu hư hỏng ở mức trung bình. Bộ điều khiển điều chỉnh áp suất kém: động cơ mất công suất và bị hụt."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Cảm biến áp suất ống phân phối nhiên liệu hư hỏng nặng. Động cơ chuyển sang chế độ khẩn cấp, mất nhiều công suất và có thể chết máy."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Cảm biến áp suất ống phân phối nhiên liệu hư hỏng nghiêm trọng. Không có giá trị đo, bộ điều khiển duy trì động cơ ở chế độ khẩn cấp."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Bộ giới hạn áp suất ống phân phối nhiên liệu hư hỏng nhẹ. Mở quá sớm khiến áp suất tăng chậm hơn và thời gian khởi động kéo dài."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Bộ giới hạn áp suất ống phân phối nhiên liệu hư hỏng ở mức trung bình. Áp suất không giữ được khi chịu tải: động cơ mất công suất và ngập ngừng."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Bộ giới hạn áp suất ống phân phối nhiên liệu hư hỏng nặng. Áp suất sụt mạnh: động cơ mất nhiều công suất và chết máy."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Bộ giới hạn áp suất ống phân phối nhiên liệu hư hỏng tới hạn. Luôn mở khiến ống phân phối không còn lên áp suất; bộ đề quay động cơ nhưng động cơ không khởi động."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Bộ giảm áp khí hư hỏng nhẹ. Áp suất cấp dao động và thời gian khởi động dài hơn."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Bộ giảm áp khí hư hỏng ở mức trung bình. Áp suất giảm khi có tải: động cơ mất công suất và bị hụt."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Bộ giảm áp khí hư hỏng nặng. Nguồn cấp trở nên không đều: động cơ mất nhiều công suất, khó khởi động và chết máy."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Bộ giảm áp khí hư hỏng nghiêm trọng. Bộ giảm áp không còn cho đủ khí đi qua: động cơ dừng."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Van điện từ ngắt khí hư hỏng nhẹ. Van mở chậm: thời gian khởi động dài hơn và động cơ đôi lúc bị hụt."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Van điện từ ngắt khí hư hỏng ở mức trung bình. Van thỉnh thoảng ngắt khí: động cơ bị hụt và chết máy."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Van điện từ ngắt khí hư hỏng nặng. Các lần ngắt tăng lên và động cơ hay chết máy."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Van điện từ ngắt khí hư hỏng nghiêm trọng. Van luôn đóng: động cơ dừng và không thể khởi động lại."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Bộ lọc khí nhiên liệu bị tắc nhẹ. Lưu lượng khí giảm nhẹ khi tải nặng."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Bộ lọc khí nhiên liệu bị tắc ở mức trung bình. Nguồn cấp không đủ khi có tải: công suất giảm và động cơ có thể chết máy."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Bộ lọc khí nhiên liệu bị tắc nặng. Lưu lượng bị hạn chế nhiều: công suất giảm rõ rệt và động cơ chết máy."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Bộ lọc khí nhiên liệu bị nghẹt hoàn toàn. Động cơ không còn nhận đủ khí và dừng."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Đường ống khí nhiên liệu rò rỉ nhẹ. Thời gian khởi động dài hơn một chút."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Đường ống khí nhiên liệu rò rỉ ở mức trung bình. Nguồn cấp trở nên không đều: động cơ bị hụt và có thể chết máy."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Đường ống khí nhiên liệu rò rỉ nặng. Áp suất giảm: động cơ bị hụt, khó khởi động và hay chết máy."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Đường ống khí nhiên liệu rò rỉ nghiêm trọng. Áp suất không còn được duy trì: động cơ dừng."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Kim phun khí hư hỏng nhẹ. Việc định lượng trở nên không đều: động cơ chạy kém êm và tiêu thụ nhiều hơn một chút."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Kim phun khí hư hỏng ở mức trung bình. Động cơ bị hụt, mất công suất, tiêu thụ nhiều hơn và có thể chết máy."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Kim phun khí hư hỏng nặng. Một kim phun định lượng rất kém: mất nhiều công suất, tiêu thụ quá mức và khó khởi động."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kim phun khí hư hỏng nghiêm trọng. Việc định lượng không còn cho phép động cơ hoạt động: động cơ dừng."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Bơm AdBlue hư hỏng. Bơm không còn cấp dung dịch cho bộ định lượng: đèn báo động cơ sáng, sau đó bộ điều khiển giảm công suất cho đến khi sửa chữa."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Kim phun định lượng AdBlue hư hỏng. Bị tinh thể làm tắc, kim phun không còn phun được: đèn báo động cơ sáng và công suất sau đó giảm cho đến khi sửa chữa."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Bộ lọc AdBlue đã đến hạn và bắt đầu tắc. Mức bảo dưỡng đầy đủ nhất thay bộ lọc."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="Bộ lọc AdBlue bị bẩn: lưu lượng AdBlue giảm và đèn động cơ sáng. Mức bảo dưỡng đầy đủ nhất thay bộ lọc."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="Bộ lọc AdBlue rất bẩn: định lượng bị lỗi và ECU giảm công suất cho đến khi sửa chữa."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="Bộ lọc AdBlue tắc hoàn toàn: không còn định lượng và ECU giảm công suất cho đến khi sửa chữa."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="Cảm biến NOx hư hỏng. Bộ điều khiển không còn giám sát khí thải: đèn báo động cơ sáng và sau vài chục giờ, công suất bị giảm."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Bộ lọc hạt hư hỏng nhẹ. Một vết nứt cho một ít muội than lọt ra ống xả."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Bộ lọc hạt hư hỏng ở mức trung bình. Vết nứt rộng ra: khói đen trở nên rõ ràng."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Bộ lọc hạt hư hỏng nặng. Lõi lọc vỡ vụn: ống xả thải nhiều khói đen."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Bộ lọc hạt hư hỏng nghiêm trọng. Lõi lọc đã vỡ: muội than đi qua mà không bị giữ lại."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Bộ lọc hạt hư hỏng nhẹ. Một vùng lõi lọc đã nóng chảy và bị tắc."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Bộ lọc hạt hư hỏng ở mức trung bình. Vùng nóng chảy lan rộng: áp suất ngược tăng."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Bộ lọc hạt hư hỏng nặng. Bị nóng chảy và tắc, bộ lọc không còn tái sinh được: vòng tua động cơ bị giới hạn."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Bộ lọc hạt hư hỏng nghiêm trọng. Bị bít hoàn toàn, bộ lọc không còn cho khí thải đi qua: chỉ việc thay thế mới khôi phục công suất động cơ."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Bộ lọc hạt bão hòa. Các lần tái sinh không hoàn tất: vòng tua động cơ bị giới hạn cho đến khi một lần tái sinh thành công."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Bộ lọc hạt bão hòa nghiêm trọng. Quá đầy để tự tái sinh, bộ lọc cần được tái sinh bảo dưỡng tại xưởng; vòng tua vẫn bị giới hạn."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Ly hợp quạt hư hỏng nhẹ. Quạt phản ứng kém hiệu quả hơn và khả năng làm mát giảm nhẹ."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Ly hợp quạt hư hỏng ở mức trung bình. Quạt gài không đều và hiệu quả làm mát giảm rõ rệt."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Ly hợp quạt hư hỏng nặng. Quạt không còn tạo đủ lưu lượng khí và động cơ dễ quá nhiệt hơn."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Ly hợp quạt hư hỏng nghiêm trọng. Quạt không còn đảm bảo khả năng làm mát cần thiết."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Điều khiển tỷ số truyền phản hồi chậm hơn và kém chính xác hơn."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Tỷ số truyền thay đổi thất thường và bộ điều khiển phản hồi kém."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Điều khiển tỷ số truyền bị rối loạn nghiêm trọng và lực kéo truyền đi giảm."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Điều khiển tỷ số truyền đã hỏng; hộp số gần như không dùng được."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Xi lanh thủy lực bị rò rỉ nhẹ bên trong. Nông cụ đang nâng từ từ hạ xuống khi có tải."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Xi lanh thủy lực bị rò rỉ bên trong ở mức trung bình. Hiện tượng tự hạ xuống trở nên rõ rệt và tăng theo tải được nâng."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Xi lanh thủy lực bị rò rỉ nặng bên trong. Nông cụ nặng không còn giữ vị trí một cách tin cậy."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Xi lanh thủy lực bị rò rỉ nghiêm trọng bên trong. Mọi tải được nâng đều nhanh chóng tự hạ xuống."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Bơm thủy lực bị rò rỉ nhẹ bên trong. Nông cụ hoạt động chậm hơn một chút."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Các phớt trên bơm thủy lực bị mòn. Hệ thống thủy lực hoạt động chậm hơn rõ rệt."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Bơm thủy lực bị hư hại. Nông cụ hoạt động cực kỳ chậm và yếu."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Bơm thủy lực hư hỏng. Hệ thống thủy lực ngừng hoạt động."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="Ống mềm thủy lực có độ ẩm nhẹ. Một ít dầu thoát ra và phản hồi thủy lực giảm nhẹ."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="Ống mềm thủy lực rịn dầu rõ rệt. Dầu tiếp tục hao hụt và các chức năng thủy lực phản hồi chậm hơn."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="Ống mềm thủy lực đang rò rỉ. Dầu hao hụt rõ ràng và các chức năng thủy lực suy yếu đáng kể."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="Ống mềm thủy lực bị rò rỉ nghiêm trọng. Dầu thoát ra nhanh và hiệu suất thủy lực giảm mạnh."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Bộ lọc thủy lực bị tắc nhẹ và bắt đầu hạn chế lưu lượng. Các chức năng thủy lực chậm hơn một chút. Bảo dưỡng sẽ thay bộ lọc."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Bộ lọc thủy lực bị tắc ở mức trung bình. Mọi chức năng thủy lực đều chậm hơn rõ rệt. Bảo dưỡng sẽ thay bộ lọc."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Bộ lọc thủy lực bị tắc nặng. Phản hồi thủy lực trở nên rất chậm. Bảo dưỡng sẽ thay bộ lọc."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Bộ lọc thủy lực bị nghẹt hoàn toàn. Các chức năng thủy lực gần như không phản hồi. Bảo dưỡng sẽ thay bộ lọc."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Bộ làm mát dầu thủy lực giảm nhẹ hiệu suất. Nhiệt độ dầu tăng nhẹ khi hệ thống thủy lực làm việc kéo dài."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Bộ làm mát dầu thủy lực hoạt động kém. Nhiệt độ dầu tăng rõ rệt khi hệ thống thủy lực làm việc liên tục."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Bộ làm mát dầu thủy lực xuống cấp nặng. Công việc thủy lực nặng nhanh chóng làm dầu quá nhiệt."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Bộ làm mát dầu thủy lực đã hỏng. Công việc thủy lực kéo dài khiến dầu quá nhiệt nghiêm trọng và làm bơm mòn nhanh hơn."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="Một van điều khiển thủy lực bắt đầu bị kẹt. Một chức năng thủy lực đôi khi hoạt động chập chờn và yếu đi khi có tải."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="Một van điều khiển thủy lực thỉnh thoảng bị kẹt. Một chức năng thủy lực chậm lại và càng yếu hơn khi tải tăng."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="Một van điều khiển thủy lực bị kẹt nặng. Một chức năng thủy lực chuyển động thất thường và hoạt động khó khăn khi tải nặng."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="Một van điều khiển thủy lực bị hư hại nghiêm trọng. Một chức năng thủy lực liên tục dừng lại và gần như không thể di chuyển tải nặng."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Bơm hộp số"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Cụm truyền động thủy tĩnh"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Bộ làm mát dầu hộp số"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Ổ bi hộp số"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Ly hợp cấp số powershift"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Ly hợp đảo chiều powershift"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Bộ điều khiển hộp số"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Cặp bánh răng côn cầu sau"/>
+        <text name="rms_breakdowns_part_final_drives" text="Bộ truyền động cuối"/>
+        <text name="rms_breakdowns_part_differential" text="Bánh răng vi sai"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="Bộ gài dẫn động 4WD"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Trục dẫn động cầu trước và khớp chữ thập"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Vòng bi cầu"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Cảm biến hộp số"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Bộ lọc truyền động"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Van nâng"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Cảm biến vị trí cơ cấu nâng"/>
+        <text name="rms_breakdowns_part_loader_control" text="Bộ điều khiển bộ nạp"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Khớp nối nhanh thủy lực"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Ly hợp hư hỏng nhẹ. Bộ phận này không ngắt hoàn toàn. Một số cấp số khó gài."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Ly hợp hư hỏng ở mức trung bình. Cơ cấu nhả đĩa không hết. Việc chọn số bị từ chối thường xuyên hơn."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Ly hợp hư hỏng nặng. Đĩa vẫn bị dẫn động khi ngắt ly hợp. Việc chọn số bị ảnh hưởng nặng."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Ly hợp hư hỏng nghiêm trọng. Cơ cấu không nhả đĩa. Không thể gài bình thường bất kỳ cấp số nào."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Ổ bi hộp số hư hỏng nhẹ. Bề mặt lăn bị hỏng. Hộp số phát tiếng ù nhẹ."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Ổ bi hộp số hư hỏng ở mức trung bình. Rãnh lăn ổ bi bị hỏng. Tiếng ù hộp số nghe rõ."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Ổ bi hộp số hư hỏng nặng. Ổ bi quay khó. Hộp số ù lớn và có nguy cơ bó kẹt."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Ổ bi hộp số hư hỏng nghiêm trọng. Ổ bi đã bó kẹt. Hộp số bị khóa và máy không di chuyển được."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Ly hợp cấp số powershift hư hỏng nhẹ. Một bộ đĩa truyền lực kém. Một cấp số trượt nhẹ khi chịu tải."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Ly hợp cấp số powershift hư hỏng nhẹ. Một bộ đĩa đóng chậm. Cấp số gài với một cú giật nhẹ."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Ly hợp cấp số powershift hư hỏng ở mức trung bình. Một bộ đĩa không ép đủ chặt. Cấp số trượt rõ khi chịu tải."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Ly hợp cấp số powershift hư hỏng ở mức trung bình. Việc nạp dầu cho một bộ đĩa bị rối loạn. Cấp số gài đột ngột."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Ly hợp cấp số powershift hư hỏng nặng. Một bộ đĩa gần như không giữ được tải. Rất ít lực truyền tới bánh xe."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Ly hợp cấp số powershift hư hỏng nặng. Một bộ đĩa gài rất kém. Chuyển số gây giật mạnh."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Ly hợp cấp số powershift hư hỏng nghiêm trọng. Bộ đĩa không truyền lực. Máy không di chuyển được."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Ly hợp cấp số powershift hư hỏng nghiêm trọng. Bộ đĩa không gài đúng. Cấp số không dẫn động máy."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Ly hợp đảo chiều powershift hư hỏng nhẹ. Ly hợp tiến hoặc lùi trượt nhẹ khi bắt đầu chạy."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Ly hợp đảo chiều powershift hư hỏng nhẹ. Ly hợp đảo chiều gài chậm. Lực kéo trở lại với một cú giật nhẹ."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Ly hợp đảo chiều powershift hư hỏng ở mức trung bình. Ly hợp đảo chiều trượt rõ. Lực truyền kém theo hướng đã chọn."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Ly hợp đảo chiều powershift hư hỏng ở mức trung bình. Ly hợp đảo chiều đóng đột ngột. Đổi hướng làm máy giật."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Ly hợp đảo chiều powershift hư hỏng nặng. Ly hợp đảo chiều gần như không giữ được tải. Lực kéo giảm mạnh."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Ly hợp đảo chiều powershift hư hỏng nặng. Ly hợp đảo chiều đóng rất thất thường. Khởi hành giật rất mạnh."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Ly hợp đảo chiều powershift hư hỏng nghiêm trọng. Ly hợp đảo chiều không truyền lực. Máy không di chuyển được."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Ly hợp đảo chiều powershift hư hỏng nghiêm trọng. Ly hợp đảo chiều không gài đúng. Lực kéo bị mất."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Bộ điều khiển hộp số hư hỏng nhẹ. Bộ điều khiển điện thủy lực hoạt động thất thường. Chuyển số chập chờn."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Bộ điều khiển hộp số hư hỏng nhẹ. Điều khiển đôi lúc từ chối chọn số."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Bộ điều khiển hộp số hư hỏng ở mức trung bình. Điều khiển làm rối loạn việc nạp dầu ly hợp. Chuyển số gây giật rõ."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Bộ điều khiển hộp số hư hỏng ở mức trung bình. Điều khiển từ chối nhiều lần chọn. Việc gài số trở nên khó khăn."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Bộ điều khiển hộp số hư hỏng nặng. Điều khiển đóng ly hợp kém. Chuyển số gây giật mạnh."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Bộ điều khiển hộp số hư hỏng nặng. Điều khiển không thực hiện nhiều yêu cầu chọn. Các cấp số hiếm khi khả dụng."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Bộ điều khiển hộp số hư hỏng nghiêm trọng. Điều khiển không gài đúng ly hợp. Chuyển số bị ảnh hưởng nặng."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Bộ điều khiển hộp số hư hỏng nghiêm trọng. Điều khiển không cho chọn số. Hộp số không đáp ứng yêu cầu."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Cảm biến tốc độ hộp số hư hỏng. Tín hiệu thất thường khiến bộ điều khiển đôi khi từ chối chuyển số."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Cảm biến áp suất hộp số hư hỏng. Bộ điều khiển điều chỉnh sai việc nạp dầu cho ly hợp: chuyển số bị trễ và giật."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Cảm biến tốc độ hộp số hư hỏng tới hạn. Thiếu số đo khiến bộ điều khiển thường từ chối chuyển số."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Cảm biến áp suất hộp số hư hỏng tới hạn. Thiếu số đo khiến mỗi lần chuyển số đều rất trễ và bắt đột ngột."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Cảm biến tốc độ hệ thống truyền động hư hỏng. Bộ điều khiển chuyển sang chế độ khẩn cấp: tốc độ di chuyển bị giới hạn."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Cảm biến áp suất hệ thống truyền động hư hỏng. Bộ điều khiển chuyển sang chế độ khẩn cấp: tốc độ di chuyển bị giới hạn."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Cảm biến tốc độ hệ thống truyền động hư hỏng tới hạn. Chế độ khẩn cấp chỉ cho phép di chuyển ở tốc độ thấp."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Cảm biến áp suất hệ thống truyền động hư hỏng tới hạn. Chế độ khẩn cấp chỉ cho phép di chuyển ở tốc độ thấp."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Bơm hộp số hư hỏng nhẹ. Nguồn dầu điều khiển giảm. Việc gài chậm và lực kéo ngắt ngắn hạn."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Bơm hộp số hư hỏng ở mức trung bình. Áp suất điều khiển không đủ. Gài số gây giật và lực kéo bị ngắt."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Bơm hộp số hư hỏng nặng. Bơm gần như không cấp được dầu điều khiển. Việc gài rất gắt và lực kéo thường xuyên bị ngắt."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Bơm hộp số hư hỏng nghiêm trọng. Bơm không cấp được áp suất cần thiết. Hộp số không dẫn động máy."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Cụm truyền động thủy tĩnh hư hỏng nhẹ. Rò rỉ bên trong làm giảm lực truyền. Bộ biến tốc giảm nhẹ tốc độ và dầu nóng hơn."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Cụm truyền động thủy tĩnh hư hỏng ở mức trung bình. Rò rỉ bên trong tăng. Tốc độ tối đa giảm, dầu nóng và mức tiêu thụ tăng."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Cụm truyền động thủy tĩnh hư hỏng nặng. Cụm quay gần như không truyền được lực. Tốc độ giảm mạnh và dầu rất nóng khi chịu tải."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Cụm truyền động thủy tĩnh hư hỏng nghiêm trọng. Cụm quay không truyền lực. Máy không di chuyển dù động cơ vẫn chạy."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Bộ làm mát dầu hộp số hư hỏng nhẹ. Bộ phận này tỏa ít nhiệt hơn. Dầu hộp số nóng hơn khi chịu tải."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Bộ làm mát dầu hộp số hư hỏng ở mức trung bình. Trao đổi nhiệt giảm rõ. Dầu hộp số duy trì nhiệt độ cao hơn khi làm việc."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Bộ làm mát dầu hộp số hư hỏng nặng. Bộ phận này tỏa rất ít nhiệt. Dầu hộp số có thể quá nóng khi chịu tải."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Bộ làm mát dầu hộp số hư hỏng nghiêm trọng. Làm mát dầu hộp số bị hỏng. Làm việc liên tục có nguy cơ làm hộp số quá nóng."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="Bộ lọc truyền động đã đến hạn và bắt đầu tắc. Màn hình yêu cầu thay thế. Bảo dưỡng thay bộ lọc."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="Bộ lọc truyền động bị bẩn: van đi tắt mở và dầu hộp số đi qua mà không được lọc. Hệ thống truyền động mòn nhanh hơn. Bảo dưỡng thay bộ lọc."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="Bộ lọc truyền động rất bẩn. Dầu hộp số tuần hoàn mà không được lọc và làm mòn hệ thống truyền động. Bảo dưỡng thay bộ lọc."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="Bộ lọc truyền động tắc hoàn toàn. Toàn bộ dầu hộp số đi qua mà không được lọc và làm mòn hệ thống truyền động. Bảo dưỡng thay bộ lọc."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Cặp bánh răng côn cầu sau hư hỏng nhẹ. Răng của cặp bánh răng côn bị hỏng. Có tiếng hú nhẹ khi chịu tải."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Cặp bánh răng côn cầu sau hư hỏng ở mức trung bình. Tiếp xúc răng bị rối loạn. Cầu sau hú rõ khi chịu tải."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Cặp bánh răng côn cầu sau hư hỏng nặng. Răng hỏng nặng. Cầu sau hú lớn và có thể mất dẫn động."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Cặp bánh răng côn cầu sau hư hỏng nghiêm trọng. Cặp bánh răng côn không truyền lực. Cầu sau không được dẫn động và máy không di chuyển được."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Bộ truyền động cuối hư hỏng nhẹ. Răng của một bộ truyền động cuối bị hỏng. Có tiếng hú nhẹ gần bánh chủ động."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Bộ truyền động cuối hư hỏng ở mức trung bình. Bánh răng của bộ truyền động cuối quay kém. Tiếng hú gần bánh xe nghe rõ."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Bộ truyền động cuối hư hỏng nặng. Bánh răng của bộ truyền động cuối hỏng nặng. Tiếng ồn lớn và dẫn động có thể hỏng."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Bộ truyền động cuối hư hỏng nghiêm trọng. Một bộ truyền động cuối không truyền lực tới bánh xe. Máy không thể di chuyển bình thường."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="Bộ gài dẫn động 4WD hư hỏng. Dẫn động bốn bánh không gài được. Cầu trước vẫn ngắt."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="Bộ gài dẫn động 4WD hư hỏng. Cầu trước vẫn gài. Không thể ngắt dẫn động bốn bánh."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Bơm thủy lực hư hỏng. Bộ phận này bị vỡ. Áp suất mất và các chức năng thủy lực không đáp ứng."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Van điều khiển thủy lực hư hỏng. Con trượt bị kẹt. Chức năng thủy lực bị ảnh hưởng không chuyển động."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Van nâng hư hỏng. Bộ phận này không giữ tải đúng. Nông cụ đã nâng bị hạ xuống."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Van nâng hư hỏng. Bộ phận này bị kẹt. Cơ cấu nâng không đáp ứng."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Cảm biến vị trí cơ cấu nâng hư hỏng. Tín hiệu vị trí bị hỏng. Cơ cấu nâng không giữ được độ cao yêu cầu và mã lỗi được lưu."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Bộ điều khiển bộ nạp hư hỏng nhẹ. Tay nâng và gầu phản ứng chậm hơn."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Bộ điều khiển bộ nạp hư hỏng ở mức trung bình. Tay nâng và gầu chỉ di chuyển với nửa tốc độ."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Bộ điều khiển bộ nạp hư hỏng nặng. Tay nâng và gầu hầu như không di chuyển."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Bộ điều khiển bộ nạp hư hỏng tới hạn. Tay nâng và gầu không còn phản ứng."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Xi lanh thủy lực hư hỏng nhẹ. Phớt cần để lọt một ít dầu. Có hơi ẩm nhẹ quanh cần."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Xi lanh thủy lực hư hỏng ở mức trung bình. Phớt cần không còn kín. Xi lanh rỉ dầu và mức dầu giảm."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Xi lanh thủy lực hư hỏng nặng. Phớt cần rò rỉ liên tục. Xi lanh mất lượng dầu đáng kể."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Xi lanh thủy lực hư hỏng nghiêm trọng. Phớt cần để thoát nhiều dầu. Mức dầu trong mạch giảm nhanh."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Khớp nối nhanh thủy lực hư hỏng nhẹ. Phớt khớp nối bị hỏng. Có hơi ẩm nhẹ tại đầu nối."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Khớp nối nhanh thủy lực hư hỏng. Đường dầu của khớp nối bị tắc. Chức năng thủy lực được nối không chuyển động."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Khớp nối nhanh thủy lực hư hỏng ở mức trung bình. Khớp nối rỉ dầu. Mạch mất dầu tại đầu nối."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Khớp nối nhanh thủy lực hư hỏng nặng. Khớp nối rò rỉ liên tục. Lượng dầu mất tại đầu nối tăng rõ."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Khớp nối nhanh thủy lực hư hỏng nghiêm trọng. Khớp nối rò rỉ nặng. Mức dầu trong mạch giảm nhanh."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Bộ làm mát dầu thủy lực hư hỏng nhẹ. Lõi làm mát không còn kín hoàn toàn. Xuất hiện hơi ẩm nhẹ."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Bộ làm mát dầu thủy lực hư hỏng ở mức trung bình. Lõi làm mát rỉ dầu. Mức dầu thủy lực giảm."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Bộ làm mát dầu thủy lực hư hỏng nặng. Lõi làm mát rò rỉ liên tục. Mạch mất lượng dầu đáng kể."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Bộ làm mát dầu thủy lực hư hỏng nghiêm trọng. Lõi làm mát rò rỉ nặng. Mức dầu thủy lực giảm nhanh."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Bộ điều khiển khóa vi sai"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Bánh răng vi sai hư hỏng nhẹ. Bề mặt răng bị hỏng. Có tiếng ồn nhẹ khi vào cua."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Bánh răng vi sai hư hỏng ở mức trung bình. Tiếp xúc răng bị rối loạn. Tiếng ồn vi sai nghe rõ khi vào cua."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Bánh răng vi sai hư hỏng nặng. Răng hỏng nặng. Tiếng ồn lớn khi vào cua và dẫn động có thể hỏng."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Bánh răng vi sai hư hỏng nghiêm trọng. Bánh răng không truyền lực. Máy không di chuyển dù động cơ vẫn chạy."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Khớp chữ thập của trục dẫn động cầu trước bị mòn nhẹ. Truyền động cầu trước bắt đầu có độ rơ nhỏ."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Khớp chữ thập của trục dẫn động cầu trước bị mòn ở mức trung bình. Độ rơ ở khớp chữ thập trở nên rõ rệt."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Khớp chữ thập của trục dẫn động cầu trước bị mòn nặng. Một khớp chữ thập sắp gãy."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Một khớp chữ thập của trục dẫn động cầu trước đã gãy. Cầu trước không còn được dẫn động."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Vòng bi cầu bị mòn nhẹ. Có tiếng ù nhỏ khi di chuyển."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Vòng bi cầu bị mòn ở mức trung bình. Tiếng ù tăng theo tốc độ."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Vòng bi cầu bị mòn nặng. Bề mặt một vòng bi bong tróc và bắt đầu làm hỏng cặp bánh răng côn."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Vòng bi cầu bị mòn tới hạn. Một vòng bi đã hỏng, cặp bánh răng côn bị hư hại và cầu không còn truyền lực kéo."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Bộ điều khiển khóa vi sai hư hỏng. Khóa không gài được. Vi sai vẫn ở trạng thái tự do."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Bộ điều khiển khóa vi sai hư hỏng. Khóa vẫn gài. Máy cản trở đánh lái khi vào cua."/>
+    </texts>
+</l10n>

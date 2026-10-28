@@ -1,15 +1,16 @@
-<handTool type="greaseGun" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/handTool.xsd">
+<handTool type="greaseGun" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
+    <annotation>SKF LAGH 400 one-hand grease gun, 370 mm, 1.28 kg, with its 300 mm flexible hose.</annotation>
     <storeData>
         <name>$l10n_rms_grease_gun_name</name>
         <functions>
             <function>$l10n_rms_grease_gun_function</function>
         </functions>
-        <image>objects/greaseGun/store_greaseGun.dds</image>
+        <image>objects/greaseGun/store_greaseGun.png</image>
         <price>50</price>
         <lifetime>1000</lifetime>
         <dailyUpkeep>0</dailyUpkeep>
         <rotation>0</rotation>
-        <brand>LIZARD</brand>
+        <brand>SKF</brand>
         <species>HANDTOOL</species>
         <category>handtoolsMisc</category>
     </storeData>

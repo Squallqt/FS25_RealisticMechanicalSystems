@@ -25,7 +25,7 @@ function RMS_CancelServiceEvent.new(vehicle)
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_CancelServiceEvent:writeStream(streamId, connection)
@@ -33,7 +33,7 @@ function RMS_CancelServiceEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_CancelServiceEvent:readStream(streamId, connection)

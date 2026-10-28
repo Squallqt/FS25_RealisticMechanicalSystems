@@ -1,8 +1,9 @@
-<handTool type="rmsFluidCanister" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/handTool.xsd">
-    <!-- The 5 liter can while a player carries it, standing for the container. Never sold nor saved. -->
+<handTool type="rmsFluidCanister" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
+    <annotation>Copyright (C) 2026 Squallqt. Licensed under the GNU General Public License v3.0 or later.</annotation>
+    <!-- Carried 5 L can -->
     <storeData>
         <name>$l10n_rms_fluid_container_typedesc</name>
-        <image>objects/fluids/products/motorexFarmerPro/store_motorexFarmerPro.dds</image>
+        <image>objects/fluids/products/motorexFarmerPro/store_motorexFarmerPro.png</image>
         <price>0</price>
         <lifetime>1000</lifetime>
         <dailyUpkeep>0</dailyUpkeep>

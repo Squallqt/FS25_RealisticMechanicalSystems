@@ -9,7 +9,7 @@
         <File fileId="1" filename="$data/shaders/decalShader.xml"/>
         <File fileId="2" filename="canister25L_normal.dds"/>
         <File fileId="3" filename="canister25L_specular.dds"/>
-        <File fileId="4" filename="../products/motorexFarmerPro/large_body_diffuse.dds"/>
+        <File fileId="4" filename="../products/motorexFarmerPoly/large_body_diffuse.dds"/>
         <File fileId="5" filename="../products/motorexFarmerPro/large_label_diffuse.dds"/>
     </Files>
 

@@ -4,14 +4,17 @@
         <text name="rms_hud_mass_tractor" text="Vehicle"/>
         <text name="rms_hud_mass_towed" text="Attached"/>
         <text name="rms_hud_mass_total" text="Total"/>
+        <text name="rms_hud_drive_2wd" text="2WD"/>
+        <text name="rms_hud_drive_4wd" text="4WD"/>
+        <text name="rms_hud_drive_auto" text="AUTO"/>
         <text name="rms_drivetrain_mode_4x2" text="2WD (front axle disengaged)"/>
         <text name="rms_drivetrain_mode_4wd" text="4WD (front axle engaged)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD AUTO"/>
         <text name="rms_drivetrain_notify_mode" text="Drive mode: %s"/>
         <text name="rms_drivetrain_notify_lock_on" text="Differential lock engaged"/>
         <text name="rms_drivetrain_notify_lock_off" text="Differential lock released"/>
-        <text name="rms_drivetrain_warning_4wd_windup" text="Drivetrain under stress! Disengage the front axle to turn on a high-grip surface."/>
-        <text name="rms_drivetrain_warning_difflock_windup" text="Differential lock under stress! Release it or reduce the steering angle."/>
+        <text name="rms_drivetrain_warning_4wd_windup" text="Drivetrain wind-up! Disengage the front axle to turn on a high-grip surface."/>
+        <text name="rms_drivetrain_warning_difflock_windup" text="Drivetrain wind-up! Release the differential lock or reduce the steering angle."/>
         <text name="rms_drivetrain_warning_parkbrake" text="Parking brake engaged!"/>
         <text name="rms_drivetrain_warning_parkbrake_released" text="Parking brake not engaged!"/>
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Start the engine to release the parking brake"/>
@@ -26,6 +29,8 @@
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Differential lock"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Parking brake"/>
         <text name="input_RMS_TOGGLE_ODOMETER" text="ODO/TRIP (hold: TRIP=0)"/>
+        <text name="input_RMS_REVERSE_FAN" text="Reverse fan"/>
+        <text name="input_RMS_TOGGLE_DEBUG_WINDOW" text="Debug window"/>
         <text name="input_RMS_TOGGLE_BATTERY_ISOLATOR" text="Battery disconnect switch"/>
         <text name="input_RMS_TOGGLE_FLUID_CAN" text="Carry or pour container"/>
         <!-- Settings -->
@@ -41,8 +46,8 @@
         <text name="rms_dealerWorkshopAvailable_tooltip" text="Keeps the dealer workshop available at any hour of the day or night."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobile Workshop 24/7"/>
         <text name="rms_mobileWorkshopAvailable_tooltip" text="Keeps the mobile workshop available at any hour of the day or night."/>
-        <text name="rms_mobileWorkshopRestrictions_label" text="Mobile Workshop Restrictions"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Limits mobile interventions by the work and equipment required. Maintenance remains available; diagnostics, heavy dismantling or high-voltage work may require an equipped workshop."/>
+        <text name="rms_mobileWorkshopRestrictions_label" text="Workshop Restrictions"/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Limits the interventions of the mobile and personal workshops by the equipment required. Maintenance remains available; electronics need the diagnostic tool connected to the machine, and at a mobile workshop, heavy dismantling or high-voltage work needs an equipped workshop."/>
         <text name="rms_ownWorkshopAvailable_label" text="Personal Workshop 24/7"/>
         <text name="rms_ownWorkshopAvailable_tooltip" text="Keeps your personal workshop available at any hour of the day or night."/>
         <text name="rms_instantInspection_label" text="Instant Inspection"/>
@@ -54,15 +59,13 @@
         <text name="rms_instantOverhaul_label" text="Instant Mechanical Overhaul"/>
         <text name="rms_instantOverhaul_tooltip" text="When enabled, workshop mechanical overhauls finish instantly. Procedures of this type already in progress also finish immediately."/>
         <text name="rms_debugMode_label" text="Debug Mode"/>
-        <text name="rms_debugMode_tooltip" text="Enables the debug panel and detailed logs in the console."/>
+        <text name="rms_debugMode_tooltip" text="Shows the debug window in the vehicle you drive; the %s key opens and closes it too. In multiplayer, only administrators see it. Also writes detailed logs to the console."/>
         <text name="rms_warningMessages_label" text="Warning Messages"/>
         <text name="rms_warningMessages_tooltip" text="Enables or disables gameplay warning messages such as cold engine and overheating alerts. Thermal power-limit notices remain enabled."/>
         <text name="rms_serviceInterval_label" text="Maintenance spacing"/>
         <text name="rms_serviceInterval_tooltip" text="Set the reference hours. At 100 h, a 500 h prescription becomes 100 h, and 600 h becomes 120 h. Each fluid follows the vehicle schedule; calendar limits stay independent."/>
         <text name="rms_vehicleLifespan_label" text="Vehicle Lifespan"/>
         <text name="rms_vehicleLifespan_tooltip" text="Sets the base vehicle lifespan in hours, after which its condition reaches 0%. The closer the condition is to zero, the more unreliable the vehicle becomes. The vehicle value also falls over these hours. A change applies from then on: vehicles keep their condition, only their value is recalculated."/>
-        <text name="rms_generalWearEnabled_label" text="Age-Related Wear"/>
-        <text name="rms_generalWearEnabled_tooltip" text="As the vehicle wears out, each system receives small penalties to its core characteristics, such as engine power, hydraulic speed, or brake efficiency. The effect becomes active after the first third of the vehicle lifespan, but only becomes truly noticeable after the second third and grows stronger toward the end of the machine's life."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Exhaust Smoke"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Drives the exhaust plume from the real state of the engine. It is black when fuel outruns the available air: a hard pickup, an engine lugging at low speed, prolonged low-load idling, a clogged air filter or worn injection. It is blue when a tired engine burns oil, white when fuel leaves unburnt. The plume also grows with the work the engine is doing. Older machines smoke far more than modern ones, which barely smoke at all unless something is seriously wrong. In cold air, the water from combustion also condenses into a short white trail that evaporates within a meter or two, even on a healthy engine."/>
         <text name="rms_tutorialMode_label" text="Tutorial Mode"/>
@@ -122,6 +125,16 @@
         <text name="rms_service_access_easy" text="Easy"/>
         <text name="rms_service_access_average" text="Average"/>
         <text name="rms_service_access_demanding" text="Demanding"/>
+        <text name="rms_shop_reliability_average" text="Average reliability"/>
+        <text name="rms_shop_reliability_fair" text="Fair reliability"/>
+        <text name="rms_shop_reliability_good" text="Good reliability"/>
+        <text name="rms_shop_reliability_very_good" text="Very good reliability"/>
+        <text name="rms_shop_service_access_easy" text="High ease of maintenance"/>
+        <text name="rms_shop_service_access_average" text="Average ease of maintenance"/>
+        <text name="rms_shop_service_access_demanding" text="Low ease of maintenance"/>
+        <text name="rms_owner_care_careful" text="Careful maintenance"/>
+        <text name="rms_owner_care_regular" text="Regular maintenance"/>
+        <text name="rms_owner_care_neglected" text="Neglected maintenance"/>
         <text name="rms_ws_label_overhaul_count" text="Overhauls Done"/>
         <text name="rms_ws_label_maintenance_log" text="Maintenance Log"/>
         <text name="rms_ws_label_last_report" text="Last Report"/>
@@ -139,6 +152,7 @@
         <text name="rms_ws_reason_overhaul_none" text="A mechanical overhaul restores the systems below 50% condition. None is on this machine."/>
         <text name="rms_ws_reason_bodywork_mobile" text="A mobile workshop does no repainting. It is done at the dealer."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Use an equipped workshop."/>
+        <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Connect a trolley's diagnostic tool to the machine."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Electronic diagnostics required"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Dismantling or specialist equipment required"/>
         <text name="rms_mobile_workshop_high_voltage_required" text="High-voltage equipment required"/>
@@ -160,8 +174,6 @@
         <text name="rms_ws_action_cancel_service" text="Cancel the procedure"/>
         <text name="rms_ws_age_unit" text="months"/>
         <text name="rms_ws_hours_unit" text="h"/>
-        <text name="rms_ws_option_yes" text="Yes"/>
-        <text name="rms_ws_option_no" text="No"/>
         <text name="rms_ws_no_last_report_message" text="No reports yet"/>
         <text name="rms_ws_no_log_empty_message" text="Log is still empty"/>
         <text name="rms_ws_no_report_message" text="No reports yet"/>
@@ -196,314 +208,7 @@
         <text name="rms_log_button_show_report" text="Show report"/>
         <text name="rms_log_empty" text="Log is still empty"/>
         <!-- Breakdowns -->
-        <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
-        <text name="rms_breakdowns_severity_reduce_power" text="Power loss"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Out of service"/>
-        <text name="rms_breakdowns_severity_minor" text="Minor"/>
-        <text name="rms_breakdowns_severity_moderate" text="Moderate"/>
-        <text name="rms_breakdowns_severity_major" text="Major"/>
-        <text name="rms_breakdowns_severity_critical" text="Critical"/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Light steering linkage wear. A little free play appears and the steering becomes a little less precise."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Moderate steering linkage wear. Free play increases and the wheels are no longer well aligned: the steering floats and pulls slightly to one side."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Severe steering linkage wear. Free play is large and the wheels are clearly out of alignment: the vehicle pulls to one side, holds its line poorly, and a rod end may let go."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Critical steering linkage failure. A rod end has let go: the steering no longer controls the wheels properly and driving on is dangerous."/>
-        <text name="rms_breakdowns_steering_linkage_wear_stage4_message" text="Steering linkage failure"/>
-        <text name="rms_breakdowns_general_wear_stage1_description" text="The stress accumulated over years of service leaves minor, irreversible wear on the core components, which slightly reduces overall performance."/>
-        <text name="rms_breakdowns_gear_disengage_message" text="Shifted to neutral"/>
-        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Early glow plug degradation. Cold starts are becoming slower; warm starts remain unaffected."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Several glow plugs are weak or inoperative. Cold starts are difficult and the engine may idle unevenly until it warms up."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Severe glow plug failure. Cold starting is highly unreliable and rough running persists during warm-up."/>
-        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Complete glow plug failure. The engine cannot be started when the temperature is too low."/>
-        <text name="rms_breakdowns_part_vehicle" text="Vehicle"/>
-        <text name="rms_breakdowns_part_valve_train" text="Valve Train"/>
-        <text name="rms_breakdowns_part_consumables" text="Consumables"/>
-        <text name="rms_breakdowns_part_cooling_system" text="Cooling System"/>
-        <text name="rms_breakdowns_part_clutch" text="Clutch"/>
-        <text name="rms_breakdowns_part_cvt_chain" text="Variable Transmission"/>
-        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Ratio Control"/>
-        <text name="rms_breakdowns_part_cvt" text="CVT"/>
-        <text name="rms_breakdowns_part_engine" text="Engine"/>
-        <text name="rms_breakdowns_part_ecu" text="ECU"/>
-        <text name="rms_breakdowns_part_battery" text="Battery"/>
-        <text name="rms_breakdowns_part_traction_battery" text="Traction battery"/>
-        <text name="rms_breakdowns_part_hv_contactor" text="High-voltage contactor"/>
-        <text name="rms_breakdowns_part_hv_wiring" text="High-voltage wiring"/>
-        <text name="rms_breakdowns_part_inverter" text="Inverter"/>
-        <text name="rms_breakdowns_part_dcdc_converter" text="Voltage converter"/>
-        <text name="rms_breakdowns_part_onboard_charger" text="On-board charger"/>
-        <text name="rms_breakdowns_part_electric_motor_bearings" text="Electric motor bearings"/>
-        <text name="rms_breakdowns_part_electric_motor_windings" text="Electric motor windings"/>
-        <text name="rms_breakdowns_part_motor_position_sensor" text="Motor position sensor"/>
-        <text name="rms_breakdowns_part_coolant_pump" text="Coolant pump"/>
-        <text name="rms_breakdowns_part_reducer" text="Reduction gear"/>
-        <text name="rms_breakdowns_part_brake_system" text="Brake System"/>
-        <text name="rms_breakdowns_part_wiring" text="Wiring and Connectors"/>
-        <text name="rms_breakdowns_part_wheel_bearing" text="Wheel Bearing"/>
-        <text name="rms_breakdowns_part_alternator_regulator" text="Alternator Regulator"/>
-        <text name="rms_breakdowns_part_turbocharger" text="Turbocharger"/>
-        <text name="rms_breakdowns_part_transmission_thermostat" text="Transmission Thermostat"/>
-        <text name="rms_breakdowns_part_transmission_seal" text="Transmission Seal"/>
-        <text name="rms_breakdowns_part_track_tensioner" text="Track Tensioner"/>
-        <text name="rms_breakdowns_part_thermostat" text="Thermostat"/>
-        <text name="rms_breakdowns_part_oil_pump" text="Oil Pump"/>
-        <text name="rms_breakdowns_part_synchronizer" text="Synchronizer"/>
-        <text name="rms_breakdowns_part_steering_linkage" text="Steering Linkage"/>
-        <text name="rms_breakdowns_part_powershift_hydraulic_pump" text="Powershift Hydraulic Pump"/>
-        <text name="rms_breakdowns_part_pto_drive_coupling" text="PTO Drive Coupling"/>
-        <text name="rms_breakdowns_part_pto_engagement_control" text="PTO Engagement Control"/>
-        <text name="rms_breakdowns_part_pto_drive_output" text="PTO Output Shaft"/>
-        <text name="rms_breakdowns_part_hydraulic_pump" text="Hydraulic Pump"/>
-        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hydraulic Cylinder"/>
-        <text name="rms_breakdowns_part_hydraulic_hose" text="Hydraulic Hose"/>
-        <text name="rms_breakdowns_part_hydraulic_filter" text="Hydraulic Filter"/>
-        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Hydraulic Oil Cooler"/>
-        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Hydraulic Control Valve"/>
-        <text name="rms_breakdowns_part_fan_clutch" text="Fan Clutch"/>
-        <text name="rms_breakdowns_part_fuel_pump" text="Fuel Pump"/>
-        <text name="rms_breakdowns_part_fuel_injectors" text="Fuel Injectors"/>
-        <text name="rms_breakdowns_part_fuel_filter" text="Fuel Filter"/>
-        <text name="rms_breakdowns_part_fuel_line" text="Fuel Line"/>
-        <text name="rms_breakdowns_part_glow_plugs" text="Glow Plugs"/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage1_description" text="Pressure loss at the Powershift hydraulic pump. Slight delay and harshness when shifting gears."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage2_description" text="Worn seals on the Powershift hydraulic pump. Noticeable lag and jolts when shifting gears."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage3_description" text="Powershift hydraulic pump failure. Severe delay and violent shocks when shifting gears."/>
-        <text name="rms_breakdowns_powershift_hydraulic_pump_malfunction_stage4_description" text="Powershift hydraulic pump failed. Transmission is stuck in neutral."/>
-        <text name="rms_breakdowns_pto_auto_disengage_message" text="PTO dropped out"/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage1_description" text="Early PTO drive coupling wear. The PTO may occasionally disengage."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage2_description" text="Moderate PTO drive coupling wear. Disengagement becomes more frequent."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage3_description" text="Severe PTO drive coupling wear. The PTO disengages repeatedly."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_description" text="Critical PTO drive coupling failure. The PTO can no longer transmit power."/>
-        <text name="rms_breakdowns_pto_drive_coupling_wear_stage4_message" text="PTO drive coupling failure"/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage1_description" text="Early wear of the PTO output shaft bearing causes a slight running noise."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage2_description" text="Moderate wear of the PTO output shaft bearing causes a clearly audible noise."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage3_description" text="Severe wear of the PTO output shaft bearing causes loud noise and occasional disengagement."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_description" text="Critical PTO output shaft failure. PTO operation is no longer possible."/>
-        <text name="rms_breakdowns_pto_drive_output_bearing_wear_stage4_message" text="PTO output shaft failure"/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage1_description" text="The PTO engagement control responds intermittently and may refuse an engagement command."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage2_description" text="The PTO engagement control frequently fails to engage the PTO."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage3_description" text="The PTO engagement control is severely faulty and rejects most engagement attempts."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_description" text="The PTO engagement control has failed completely. The PTO cannot be engaged."/>
-        <text name="rms_breakdowns_pto_engagement_control_malfunction_stage4_message" text="PTO engagement control failure"/>
-        <text name="rms_breakdowns_pto_engagement_blocked_message" text="PTO engagement refused"/>
-        <text name="rms_breakdowns_quick_fix_stage" text="Temporary repair"/>
-        <text name="rms_breakdowns_defected_parts_stage" text="Defect"/>
-        <text name="rms_breakdowns_defected_parts_detected_description" text="The system is functioning normally, but the inspection has revealed a defective part. The part no longer offers any safety margin, so preventive replacement is recommended to avoid sudden failure."/>
-        <text name="rms_breakdowns_dead_battery_message" text="Battery too weak"/>
-        <text name="rms_breakdowns_cold_traction_battery_message" text="Traction battery cold: range and power reduced"/>
-        <text name="rms_breakdowns_temporarily_repaired_description" text="The system is functioning normally, but relies entirely on a temporary repair. To avoid a breakdown under load, a full replacement of the parts is recommended as soon as possible."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Worn turbocharger bearings. A faint whistling is audible and a slight loss of power appears at high engine speed."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Leaking turbocharger seals. Noticeable power loss and increased fuel consumption."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Damaged turbine blades. Severe power loss and a risk of engine stalls under heavy load."/>
-        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Critical turbocharger failure. The engine has lost most of its power and risks severe internal damage."/>
-        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Worn clutch plates. Occasional power loss due to clutch slip under load."/>
-        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Significant clutch wear. Noticeable clutch slip during acceleration and under heavy load."/>
-        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Heavily worn clutch. Severe clutch slip makes it difficult to transfer power to the wheels."/>
-        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Clutch completely burned out. The vehicle is unable to move."/>
-        <text name="rms_breakdowns_transmission_slip_stage4_message" text="Clutch failure"/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Worn synchronizers. Occasional grinding or difficulty when shifting gears."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Damaged synchronizers. Shifting gears is frequently difficult and may fail."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Broken synchronizer teeth. High chance of failed shifts or of jumping out of gear under load."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Synchronizers completely failed. It is impossible to shift gears."/>
-        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_message" text="Synchronizer failure"/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage1_description" text="The transmission thermostat is beginning to fail. It opens the oil cooler too late and the transmission oil runs a little hotter than normal."/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage2_description" text="Poor transmission thermostat response. The oil cooler opens far too late, the transmission oil runs well above its normal temperature and wears faster."/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage3_description" text="The transmission thermostat barely opens the oil cooler. The transmission oil comes close to overheating as soon as the load rises."/>
-        <text name="rms_breakdowns_transmission_thermostat_malfunction_stage4_description" text="Complete transmission thermostat failure. It is frozen at one opening, so the transmission oil either overheats or never warms up, depending on where it stuck."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Light transmission oil leak. The oil level drops slowly during work."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Moderate transmission oil leak. The oil level drops noticeably and the transmission runs hotter."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Severe transmission oil leak. The oil level drops quickly and the transmission overheats under load."/>
-        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Critical transmission oil leak. There is not enough oil left for safe operation of the transmission."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Light track tensioner malfunction. Track tension is a little less stable, which slightly increases drag and wear."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Moderate track tensioner malfunction. Tension becomes unstable, running efficiency drops and the risk of misalignment increases."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Severe track tensioner malfunction. Tension is heavily disturbed, drive transfer becomes inefficient and the risk of throwing a track increases."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Critical track tensioner failure. The track can no longer be held correctly and the vehicle can no longer be operated safely."/>
-        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_message" text="Track tensioner failure"/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage1_description" text="The engine thermostat is beginning to fail. The engine takes longer to reach optimal temperature or runs slightly hot."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage2_description" text="Thermostat response is poor. Engine temperature regulation is unstable, increasing wear."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage3_description" text="The thermostat barely opens any more. The engine overheats as soon as the load rises."/>
-        <text name="rms_breakdowns_thermostat_malfunction_stage4_description" text="Complete thermostat failure. The engine coolant cannot circulate correctly, leading to severe and rapid overheating."/>
-        <text name="rms_breakdowns_overheat_protection_stage1_description" text="The engine has entered protection mode. Power is limited until the temperature drops."/>
-        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Overheat protection: power reduced"/>
-        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Overheat protection is tightening. The engine delivers only half its power."/>
-        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Overheat protection: power halved"/>
         <text name="rms_thermal_power_restored_message" text="Thermal protection: power limit cleared"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Overheat protection is at its maximum. Only a fraction of engine power remains."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Overheat protection: power heavily reduced"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="The engine has been shut down to prevent damage. Let it cool before restarting."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Overheat protection: engine shut down"/>
-        <text name="rms_breakdowns_overload_breakdown_stage2_message" text="Critical overload! Reduce the load on the vehicle immediately."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Light oil pump malfunction. Oil pressure is reduced, engine torque drops slightly, engine temperature rises and mechanical knocking may appear."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Moderate oil pump malfunction. Oil pressure is insufficient, engine torque is noticeably reduced, engine temperature is increased, and mechanical knocking is clearly audible."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Severe oil pump malfunction. Oil pressure is critically low, engine torque is heavily reduced, engine overheating is likely, mechanical knocking is severe, and engine stalls may occur."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Critical oil pump failure. Oil circulation is insufficient for safe engine operation and engine start or further operation is not possible."/>
-        <text name="rms_breakdowns_oil_pump_malfunction_stage4_message" text="Oil pump failure"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="The engine has jammed and can no longer turn."/>
-        <text name="rms_breakdowns_engine_jam_stage1_message" text="Engine jammed"/>
-        <text name="rms_breakdowns_engine_stalled_message" text="Engine stalled"/>
-        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Light ECU malfunction. Slightly reduced engine power."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Moderate ECU malfunction. Noticeable power loss and increased fuel consumption."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Severe ECU malfunction. Major power loss, high fuel consumption and a risk of the engine stalling."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Complete ECU failure. The engine cannot be controlled and will not start."/>
-        <text name="rms_breakdowns_ecu_malfunction_stage4_message" text="ECU failure"/>
-        <text name="rms_breakdowns_corroded_wiring_stage1_description" text="Light corrosion of wiring and electrical connectors. Increased contact resistance causes occasional light flicker, unstable supply and hard starting. A current leak drains the battery while the machine is parked."/>
-        <text name="rms_breakdowns_corroded_wiring_stage2_description" text="Moderate corrosion of wiring and electrical connectors. Contact losses cause frequent light flicker, unstable voltage supply, difficult engine starting, and possible engine stalls. A current leak drains the battery while the machine is parked."/>
-        <text name="rms_breakdowns_corroded_wiring_stage3_description" text="Severe corrosion of wiring and electrical connectors. Power supply to critical circuits is unstable, lighting may fail completely, engine torque is reduced, engine stalls are likely, and starting is unreliable. A current leak drains the battery while the machine is parked."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_description" text="Failure of the starter control circuit caused by severe wiring corrosion. Lighting is inoperative and engine start is impossible. A current leak drains the battery while the machine is parked."/>
-        <text name="rms_breakdowns_corroded_wiring_stage4_message" text="Starter circuit failure"/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage1_description" text="Light corrosion of wiring and electrical connectors. Increased contact resistance causes occasional light flicker and unstable supply. A current leak drains the auxiliary battery while the machine is parked."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage2_description" text="Moderate corrosion of wiring and electrical connectors. Contact losses cause frequent light flicker, unstable voltage supply and possible cut-outs. A current leak drains the auxiliary battery while the machine is parked."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage3_description" text="Severe corrosion of wiring and electrical connectors. Power supply to critical circuits is unstable, lighting may fail completely, power is reduced and cut-outs are likely. A current leak drains the auxiliary battery while the machine is parked."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage4_description" text="Critical corrosion of wiring and electrical connectors. Lighting is inoperative and the machine will not start. A current leak drains the auxiliary battery while the machine is parked."/>
-        <text name="rms_breakdowns_corroded_wiring_electric_stage4_message" text="Wiring and connector failure"/>
-        <text name="rms_breakdowns_coolant_leak_stage1_description" text="Light coolant leak. Cooling efficiency is slightly reduced."/>
-        <text name="rms_breakdowns_coolant_leak_stage2_description" text="Moderate coolant leak. Cooling capacity drops noticeably and engine temperature climbs more quickly."/>
-        <text name="rms_breakdowns_coolant_leak_stage3_description" text="Severe coolant leak. Cooling loss is significant and the risk of overheating becomes high."/>
-        <text name="rms_breakdowns_coolant_leak_stage4_description" text="Critical cooling system failure. There is not enough coolant for safe engine operation."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage1_description" text="Transmission efficiency is slightly reduced under load."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage2_description" text="Efficiency drops noticeably under load and the ratio becomes less stable."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage3_description" text="The transmission struggles to transmit drive effort and maintain the requested ratio."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_description" text="The transmission can no longer transmit drive effort reliably and movement is almost impossible."/>
-        <text name="rms_breakdowns_cvt_chain_wear_stage4_message" text="Transmission Failure"/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="Early signs of a CVT transmission malfunction have been detected. An inspection and a repair are required."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="The CVT transmission malfunction is getting worse. Continued operation may lead to emergency mode."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Critical CVT transmission damage. The transmission is in emergency mode and the maximum vehicle speed is reduced."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Complete CVT transmission failure. The vehicle cannot be used until it is repaired."/>
-        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_message" text="CVT transmission failure"/>
-        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Light battery sulfation. Effective capacity is reduced, lowering the electrical reserve under load."/>
-        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Moderate battery sulfation. Effective battery capacity is significantly reduced and engine starting is difficult."/>
-        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Severe battery sulfation. Usable battery capacity is critically low and cranking performance is unstable."/>
-        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Critical battery sulfation. Effective capacity is almost nil and cranking power is insufficient for a reliable start."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Light auxiliary battery sulfation. Effective capacity is reduced, lowering the electrical reserve under load."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Moderate auxiliary battery sulfation. Effective capacity is significantly reduced and the electrical reserve runs out sooner."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Severe auxiliary battery sulfation. Usable capacity is critically low and the electrical reserve runs out very quickly."/>
-        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Critical auxiliary battery sulfation. Effective capacity is almost nil and no longer enough for a reliable start."/>
-        <text name="rms_breakdowns_brake_malfunction_stage1_description" text="Worn brake pads. A slight decrease in braking effectiveness."/>
-        <text name="rms_breakdowns_brake_malfunction_stage2_description" text="Leaking brake fluid or worn discs. Braking distance is noticeably increased."/>
-        <text name="rms_breakdowns_brake_malfunction_stage3_description" text="Severe loss of brake pressure. Brakes are very weak and unreliable."/>
-        <text name="rms_breakdowns_brake_malfunction_stage4_description" text="Complete brake system failure. Further operation is extremely dangerous."/>
-        <text name="rms_breakdowns_brake_malfunction_stage4_message" text="Brake failure"/>
-        <text name="rms_breakdowns_bearing_wear_stage1_description" text="Light bearing wear. Mechanical resistance rises slightly and an unusual running noise may appear."/>
-        <text name="rms_breakdowns_bearing_wear_stage2_description" text="Moderate bearing wear. Friction rises noticeably, the noise becomes more pronounced and mechanical efficiency drops."/>
-        <text name="rms_breakdowns_bearing_wear_stage3_description" text="Severe bearing wear. Friction is high, the noise is loud and there is a real risk of seizure under load."/>
-        <text name="rms_breakdowns_bearing_wear_stage4_description" text="Critical bearing failure. They are close to complete seizure and operation becomes impossible."/>
-        <text name="rms_breakdowns_bearing_wear_stage4_message" text="Bearing failure"/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage1_description" text="Light alternator regulator failure. Charging output is reduced, which lowers battery charging efficiency. A current leak drains the battery while the machine is parked."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage2_description" text="Moderate alternator regulator failure. Charging is reduced and unstable, causing poor battery charging and increased voltage losses. A current leak drains the battery while the machine is parked."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage3_description" text="Severe alternator regulator failure. Charging is heavily reduced, the supply is unstable and the electrical system operates with major losses. A current leak drains the battery while the machine is parked."/>
-        <text name="rms_breakdowns_alternator_regulator_failure_stage4_description" text="Complete alternator regulator failure. Battery charging is absent and the electrical system is operating only from the remaining battery reserve. A current leak drains the battery while the machine is parked."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Light wear of the electric motor bearings. A faint noise appears and energy consumption rises a little."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Moderate wear of the electric motor bearings. The noise is clearly audible, energy consumption rises and power drops slightly."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Severe wear of the electric motor bearings. The noise is loud, the motor runs hot and power drops noticeably."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Critical failure of the electric motor bearings. The motor is seized and the machine can no longer move."/>
-        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_message" text="Electric motor bearing failure"/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Light degradation of the electric motor windings. Power drops slightly and the motor runs hotter."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Moderate degradation of the electric motor windings. Power drops noticeably, the motor runs hot and energy consumption rises."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Severe degradation of the electric motor windings. The power loss is major, the motor runs very hot and cut-outs may occur."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Critical failure of the electric motor windings. The motor is short-circuited and can no longer run."/>
-        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_message" text="Electric motor winding failure"/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Light malfunction of the motor position sensor. Brief jerks appear under load."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Moderate malfunction of the motor position sensor. The jerks are frequent and power drops."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Severe malfunction of the motor position sensor. The jerks are violent, power falls sharply and cut-outs occur."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Complete failure of the motor position sensor. The motor can no longer be controlled and the machine will not start."/>
-        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_message" text="Motor position sensor failure"/>
-        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Light inverter malfunction. Motor power is slightly reduced."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Moderate inverter malfunction. The power loss is noticeable and energy consumption rises."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Severe inverter malfunction. The power loss is major and cut-outs may occur."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Complete inverter failure. The motor is no longer powered and the machine will not start."/>
-        <text name="rms_breakdowns_inverter_malfunction_stage4_message" text="Inverter failure"/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Light voltage converter failure. The auxiliary battery charges less well."/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Moderate voltage converter failure. Charging of the auxiliary battery is reduced and unstable."/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Severe voltage converter failure. The auxiliary battery is barely charged and drains while driving."/>
-        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Complete voltage converter failure. The auxiliary battery is no longer charged and the machine runs on its remaining reserve only."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Light on-board charger failure. Charging at the station is a little slower."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Moderate on-board charger failure. Charging at the station is noticeably slower."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Severe on-board charger failure. Charging at the station is very slow."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Complete on-board charger failure. The traction battery can no longer be charged."/>
-        <text name="rms_breakdowns_onboard_charger_failure_stage4_message" text="On-board charger out of order: charging impossible"/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Light insulation loss in the high-voltage wiring. A warning is shown, with no other effect."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Moderate insulation loss in the high-voltage wiring. Power is reduced as a safety measure."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Severe insulation loss in the high-voltage wiring. Power is heavily reduced and cut-outs occur."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Critical insulation loss in the high-voltage wiring. The machine refuses to start as a safety measure."/>
-        <text name="rms_breakdowns_hv_insulation_loss_stage4_message" text="Insulation loss in the high-voltage wiring"/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Light failure of traction battery cells. Range drops slightly."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Moderate failure of traction battery cells. Range drops noticeably and power is reduced."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Severe failure of traction battery cells. Range and power fall sharply, and cut-outs may occur."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Critical traction battery failure. The machine can no longer be switched on."/>
-        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_message" text="Traction battery failure"/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Light wear of the high-voltage contactor. Rare power cut-outs occur."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Moderate wear of the high-voltage contactor. Power cut-outs become regular."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Severe wear of the high-voltage contactor. Power cut-outs are frequent."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Critical failure of the high-voltage contactor. The traction battery no longer powers the machine, which will not start."/>
-        <text name="rms_breakdowns_hv_contactor_failure_stage4_message" text="High-voltage contactor failure"/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Light coolant pump failure. The coolant circulates less well and the temperature rises a little more."/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Moderate coolant pump failure. Cooling is noticeably reduced."/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Severe coolant pump failure. Cooling is heavily reduced and overheating is likely under load."/>
-        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Complete coolant pump failure. The coolant barely circulates and the machine overheats quickly."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Light wear of the gears and bearings of the reduction gear. A faint noise appears while driving."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Moderate wear of the gears and bearings of the reduction gear. The noise is clearly audible and energy consumption rises."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Severe wear of the gears and bearings of the reduction gear. The noise is loud, the reduction gear runs hot and power at the wheels drops."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Critical reduction gear failure. It is seized and the machine can no longer move."/>
-        <text name="rms_breakdowns_reducer_gear_wear_stage4_message" text="Reduction gear failure"/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage1_description" text="Light valve train malfunction. Engine torque is slightly reduced, fuel consumption rises and abnormal noise appears in the mechanism."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage2_description" text="Moderate valve train malfunction. Engine torque is noticeably reduced, fuel consumption is increased, valve train noise is pronounced, and engine hesitation may occur under load."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage3_description" text="Severe valve train malfunction. Engine torque is heavily reduced, fuel consumption is significantly increased, valve train noise is severe, engine hesitation is frequent, and engine stalls may occur."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage4_description" text="Critical valve train failure. The engine can no longer run reliably, and starting or continued operation is no longer possible."/>
-        <text name="rms_breakdowns_valve_train_malfunction_stage4_message" text="Valve train failure"/>
-        <text name="rms_breakdowns_voltage_sag_message" text="Insufficient circuit voltage"/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="Early fuel pump wear. Slightly reduced engine power and increased fuel consumption."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Fuel pressure dropping. Noticeable power loss, higher fuel consumption, and occasional engine stalls."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Critical fuel pressure. Severe power loss, very high fuel consumption, and frequent engine stalls."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Complete fuel pump failure. Fuel is not supplied to the engine."/>
-        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_message" text="Fuel pump failure"/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="One or more injectors have slightly clogged nozzles. The engine may run a bit rough, with a minor loss of power."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Poor fuel atomization. The engine hesitates under load, with noticeable power loss and jerking."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="A fuel injector is stuck. The engine runs very poorly, with significant power loss and unreliable starting."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="An injector has completely failed. The engine will not run correctly and may not start at all."/>
-        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_message" text="Fuel injector failure"/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Light fuel filter clogging. Fuel flow drops slightly under heavy load."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Moderate fuel filter clogging. Flow becomes insufficient under load, power drops and the engine sometimes hesitates."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Severe fuel filter clogging. Fuel supply is heavily restricted, power drops noticeably and stalls are possible."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Fuel filter fully obstructed. The engine no longer receives enough fuel to run reliably."/>
-        <text name="rms_breakdowns_fuel_filter_clogging_stage4_message" text="Fuel filter obstructed"/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage1_description" text="Light air leak in the fuel line. Fuel supply becomes slightly irregular."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage2_description" text="Moderate air leak in the fuel line. The supply becomes unstable, power drops and hesitation appears."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage3_description" text="Severe air leak in the fuel line. The engine runs very unevenly and the risk of stalling is high."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_description" text="Critical fuel line failure with a major air leak. The engine can no longer be supplied correctly."/>
-        <text name="rms_breakdowns_fuel_line_air_leak_stage4_message" text="Air in fuel line"/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Light fan clutch failure. The fan responds less effectively and cooling is slightly degraded."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Moderate fan clutch failure. Fan engagement is erratic and cooling efficiency drops noticeably."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Severe fan clutch failure. The fan no longer provides enough airflow and the engine overheats more easily."/>
-        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Critical fan clutch failure. The fan can no longer provide the necessary cooling."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Ratio control responds more slowly and less precisely."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="The ratio varies irregularly and control responds poorly."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Ratio control is severely disrupted and transmitted drive effort drops."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Ratio control has failed and the transmission is almost unusable."/>
-        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_message" text="Ratio Control Failure"/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Minor internal leakage in a hydraulic cylinder. A raised implement drifts slowly under load."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Moderate internal leakage in a hydraulic cylinder. Downward drift is noticeable and increases with the carried load."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Severe internal leakage in a hydraulic cylinder. Heavy implements can no longer reliably hold their position."/>
-        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Critical internal leakage in a hydraulic cylinder. Any raised load drops rapidly on its own."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Minor internal leak in the hydraulic pump. Implements operate slightly more slowly."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Worn seals on the hydraulic pump. Noticeably slower hydraulic operation."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Damaged hydraulic pump. Implements are extremely slow and weak."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Hydraulic pump failure. Hydraulic system is inoperable."/>
-        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_message" text="Hydraulic pump failure"/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="A hydraulic hose shows light moisture. A little oil escapes and hydraulic response is slightly reduced."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="A hydraulic hose is visibly seeping. Oil loss continues and hydraulic functions respond more slowly."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="A hydraulic hose is actively leaking. Oil loss is obvious and hydraulic functions are noticeably weakened."/>
-        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="A hydraulic hose has a severe external leak. Oil is escaping quickly and hydraulic performance is strongly reduced."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="The hydraulic filter is slightly clogged and beginning to restrict flow. Hydraulic functions are slightly slower. Maintenance replaces the filter."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="The hydraulic filter is moderately clogged. All hydraulic functions are noticeably slower. Maintenance replaces the filter."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="The hydraulic filter is heavily clogged. Hydraulic response is very slow. Maintenance replaces the filter."/>
-        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="The hydraulic filter is fully obstructed. Hydraulic functions barely respond. Maintenance replaces the filter."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="The hydraulic oil cooler has lost some efficiency. Oil temperature rises slightly during prolonged hydraulic work."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="The hydraulic oil cooler is underperforming. Oil temperature rises noticeably during sustained hydraulic work."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="The hydraulic oil cooler is badly degraded. Heavy hydraulic work quickly overheats the oil."/>
-        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="The hydraulic oil cooler has failed. Prolonged hydraulic work causes severe oil overheating and accelerates pump wear."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="A hydraulic control valve is beginning to stick. One hydraulic function occasionally hesitates and weakens under load."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="A hydraulic control valve is sticking intermittently. One hydraulic function is slower and loses more force as load increases."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="A hydraulic control valve is sticking badly. One hydraulic function moves erratically and struggles under heavy load."/>
-        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="A hydraulic control valve is critically damaged. One hydraulic function repeatedly stops and can barely move a heavy load."/>
         <text name="rms_breakdown_at_progress_message" text="in progress"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Warning! Engine cold, reduce the load."/>
@@ -538,6 +243,9 @@
         <text name="rms_spec_months_ago_unit" text="months ago"/>
         <text name="rms_spec_month_ago_one" text="month ago"/>
         <text name="rms_spec_months_ago_format" text="%s %s"/>
+        <text name="rms_shop_last_maintenance_months_ago" text="Last maintenance %s %s"/>
+        <text name="rms_shop_last_maintenance_this_month" text="Last maintenance this month"/>
+        <text name="rms_shop_last_maintenance_never" text="No maintenance"/>
         <text name="rms_spec_work_hours_ago_format" text="%s %s of work ago"/>
         <text name="rms_spec_work_under_hour_ago" text="less than 1 h of work ago"/>
         <text name="rms_spec_maintenance_complete_notification" text="Procedure completed: %s"/>
@@ -579,11 +287,9 @@
         <text name="rms_spec_part_types_used" text="Used"/>
         <text name="rms_spec_part_types_aftermarket" text="Aftermarket"/>
         <text name="rms_spec_part_types_oem" text="Original"/>
-        <text name="rms_spec_part_types_premium" text="Premium"/>
         <text name="rms_spec_consumable_types_used" text="Economy"/>
         <text name="rms_spec_consumable_types_aftermarket" text="Aftermarket"/>
         <text name="rms_spec_consumable_types_oem" text="Original"/>
-        <text name="rms_spec_consumable_types_premium" text="Premium"/>
         <text name="rms_spec_repair_type_fix" text="Temporary"/>
         <text name="rms_spec_repair_type_replacement" text="Standard"/>
         <text name="rms_spec_repair_type_advanced" text="Advanced"/>
@@ -612,6 +318,8 @@
         <text name="rms_service_program_estimated" text="Estimated schedule"/>
         <text name="rms_ws_levels_recommended_for" text="Recommended for this machine"/>
         <text name="rms_ws_levels_interval" text="Every %s"/>
+        <text name="rms_ws_levels_every_service" text="Every service"/>
+        <text name="rms_ws_levels_one_service_in" text="1 service in %d"/>
         <text name="rms_ws_levels_duration" text="%s h %s min"/>
         <text name="rms_ws_levels_duration_hours" text="%s h"/>
         <text name="rms_ws_levels_duration_minutes" text="%s min"/>
@@ -620,21 +328,33 @@
         <text name="rms_ws_levels_blown" text="Blown out"/>
         <text name="rms_ws_levels_new" text="New"/>
         <text name="rms_ws_levels_new_plural" text="New"/>
+        <text name="rms_ws_levels_new_adblue" text="New + AdBlue"/>
         <text name="rms_ws_levels_filters" text="Filters"/>
         <text name="rms_ws_levels_filters_all" text="Oil, fuel and hydraulic"/>
         <text name="rms_ws_levels_filters_engine" text="Oil and fuel"/>
+        <text name="rms_ws_levels_filters_all_transmission" text="Oil, fuel, transmission and hydraulic"/>
+        <text name="rms_ws_levels_filters_engine_transmission" text="Oil, fuel and transmission"/>
         <text name="rms_ws_levels_filters_hydraulic" text="Hydraulic"/>
         <text name="rms_ws_levels_checks" text="Adjustments and checks"/>
         <text name="rms_ws_levels_checks_detail" text="Valves, injectors, thermostat"/>
         <text name="rms_ws_levels_checks_done" text="Done"/>
         <text name="rms_ws_levels_fault_search" text="Fault search"/>
         <text name="rms_ws_levels_fault_search_detail" text="As a standard inspection"/>
-        <text name="rms_ws_levels_fault_search_mobile_detail" text="Without reading fault codes"/>
+        <text name="rms_ws_levels_fault_search_no_tool_detail" text="Without reading fault codes"/>
         <text name="rms_ws_levels_included" text="Included"/>
         <text name="rms_ws_levels_mechanical" text="Mechanical"/>
         <text name="rms_ws_levels_every_level" text="At every level: radiator cleaned and machine greased."/>
         <text name="rms_ws_quality_risk" text="Defect risk"/>
         <text name="rms_ws_quality_reference" text="Reference price"/>
+        <text name="rms_ws_quality_donor" text="Donor Machine: %d h"/>
+        <text name="rms_ws_quality_donors" text="Donor Machines: %d to %d h"/>
+        <text name="rms_ws_quality_new_part" text="New Part"/>
+        <text name="rms_ws_quality_used_warranty" text="3-Month Warranty"/>
+        <text name="rms_ws_quality_partial_warranty" text="Partial Warranty"/>
+        <text name="rms_ws_quality_no_warranty" text="No Warranty"/>
+        <text name="rms_ws_quality_oem_warranty" text="12-Month Warranty"/>
+        <text name="rms_ws_quality_factory_warranty" text="Factory Warranty"/>
+        <text name="rms_warranty_used" text="Salvage Warranty: Part Only"/>
         <text name="rms_ws_quality_delta" text="%s vs original"/>
         <text name="rms_ws_repair_row_faults" text="Breakdowns Treated"/>
         <text name="rms_ws_repair_row_faults_detail" text="Among those ticked"/>
@@ -647,26 +367,34 @@
         <text name="rms_ws_repair_row_part" text="Failed Part"/>
         <text name="rms_ws_repair_row_part_detail" text="Cause of the breakdown"/>
         <text name="rms_ws_repair_part_replaced" text="Replaced"/>
-        <text name="rms_ws_repair_row_stress" text="Mechanical Stress"/>
-        <text name="rms_ws_repair_row_stress_detail" text="Built up in the system"/>
-        <text name="rms_ws_repair_stress_cleared" text="Cleared"/>
+        <text name="rms_ws_repair_row_worn_parts" text="Worn Parts"/>
+        <text name="rms_ws_repair_row_worn_parts_detail" text="In the same system"/>
+        <text name="rms_ws_repair_worn_parts_replaced" text="Replaced"/>
         <text name="rms_ws_repair_row_quality" text="Part Quality"/>
         <text name="rms_ws_repair_row_quality_detail" text="Picked on the cards below"/>
         <text name="rms_ws_repair_quality_choice" text="Your choice"/>
-        <text name="rms_ws_warranty_title" text="Dealer Warranty"/>
+        <text name="rms_ws_warranty_title" text="Warranty"/>
         <text name="rms_ws_warranty_covered" text="Covered"/>
         <text name="rms_ws_warranty_not_covered" text="Not Covered"/>
-        <text name="rms_ws_warranty_free_here" text="Free standard repair with original parts"/>
-        <text name="rms_ws_warranty_free_dealer" text="Free repair at the dealer"/>
-        <text name="rms_ws_warranty_terms" text="Owned, under 12 months and 20 h"/>
+        <text name="rms_ws_warranty_terms" text="Factory: %d months or %s h"/>
         <text name="rms_ws_badge_warranty" text="Warranty"/>
+        <text name="rms_warranty_base" text="%d Months or %s h (Included)"/>
+        <text name="rms_warranty_extension" text="%d Months or %s h"/>
+        <text name="rms_warranty_partial" text="Partially Covered"/>
+        <text name="rms_warranty_own" text="Not covered at the farm workshop"/>
+        <text name="rms_warranty_factory" text="Original parts and labor covered"/>
+        <text name="rms_warranty_part" text="Part covered until age %d months"/>
+        <text name="rms_warranty_lease" text="Repair not covered on a lease"/>
+        <text name="rms_warranty_expired" text="Warranty expired"/>
+        <text name="rms_warranty_overdue" text="Declined: overdue service"/>
+        <text name="rms_warranty_options" text="Replacement with original parts required"/>
+        <text name="rms_warranty_mobile" text="You pay the extra mobile labor cost"/>
         <text name="rms_ws_overhaul_row_systems" text="Systems Treated"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Restored"/>
         <text name="rms_ws_overhaul_systems_one" text="One you pick"/>
         <text name="rms_ws_overhaul_systems_all" text="All"/>
         <text name="rms_ws_overhaul_row_condition" text="Resulting Condition"/>
         <text name="rms_ws_overhaul_row_condition_detail" text="At least"/>
-        <text name="rms_ws_overhaul_row_treated_detail" text="Of the systems treated"/>
         <text name="rms_ws_overhaul_row_faults" text="Breakdowns"/>
         <text name="rms_ws_overhaul_row_faults_detail" text="Identified or not"/>
         <text name="rms_ws_overhaul_faults_repaired" text="Repaired"/>
@@ -676,6 +404,8 @@
         <text name="rms_ws_overhaul_fluids_own" text="Its circuit"/>
         <text name="rms_ws_overhaul_filters_both" text="Fuel and hydraulic"/>
         <text name="rms_ws_overhaul_filters_fuel" text="Fuel"/>
+        <text name="rms_ws_overhaul_filters_both_transmission" text="Fuel, transmission and hydraulic"/>
+        <text name="rms_ws_overhaul_filters_fuel_transmission" text="Fuel and transmission"/>
         <text name="rms_ws_overhaul_worn" text="Systems Below 50% Condition"/>
         <text name="rms_ws_paint_row_extent" text="Damage Repaired"/>
         <text name="rms_ws_paint_row_extent_detail" text="Share of the paint damaged"/>
@@ -726,6 +456,11 @@
         <text name="rms_report_vehicle_spec_battery_24v_capacity" text="24 V Battery Capacity"/>
         <text name="rms_report_vehicle_spec_traction_battery_capacity" text="Traction Battery Capacity"/>
         <text name="rms_report_detected_breakdowns_title" text="Detected Breakdowns"/>
+        <text name="rms_report_breakdowns_worn_title" text="Breakdowns and Worn Parts"/>
+        <text name="rms_report_no_breakdowns_worn" text="No breakdowns or worn parts"/>
+        <text name="rms_report_worn_part_risk" text="Risk ×%s"/>
+        <text name="rms_report_worn_part_adjust" text="%s · Adjustment: %s"/>
+        <text name="rms_report_worn_part_replace" text="%s · Replacement: advanced repair or overhaul"/>
         <text name="rms_report_overall_assessment_title" text="Overall Condition Assessment"/>
         <text name="rms_report_overall_assessment_condition" text="Condition Level"/>
         <text name="rms_report_overall_assessment_service" text="Maintenance Level"/>
@@ -747,9 +482,9 @@
         <text name="rms_report_state_degraded" text="Degraded"/>
         <text name="rms_report_state_impaired" text="Impaired"/>
         <text name="rms_report_state_critical" text="Critical"/>
-        <text name="rms_report_stress_low" text="Low"/>
-        <text name="rms_report_stress_moderate" text="Moderate"/>
-        <text name="rms_report_stress_high" text="Very High"/>
+        <text name="rms_report_risk_low" text="Low"/>
+        <text name="rms_report_risk_moderate" text="Moderate"/>
+        <text name="rms_report_risk_high" text="High"/>
         <text name="rms_report_system_condition_title" text="System Condition"/>
         <text name="rms_report_breakdown_risk_title" text="Failure Risk"/>
         <text name="rms_report_wear_title" text="Wear vs. Normal"/>
@@ -764,6 +499,7 @@
         <text name="rms_report_wear_hot_hydraulic_oil" text="Hydraulic Oil Overheating"/>
         <text name="rms_report_wear_vibration" text="Vibrations"/>
         <text name="rms_report_wear_hydraulic_filter_bypass" text="Clogged Hydraulic Filter"/>
+        <text name="rms_report_wear_transmission_filter_bypass" text="Clogged Transmission Filter"/>
         <text name="rms_report_wear_lights" text="Lights On"/>
         <text name="rms_report_wear_braking" text="Heavy-Load Braking"/>
         <text name="rms_report_wear_terrain_impact" text="Terrain Impacts"/>
@@ -809,6 +545,8 @@
         <text name="rms_jumper_cables_name" text="Jumper Cables"/>
         <text name="rms_jumper_cables_function" text="Used to connect two batteries and start a vehicle whose battery is discharged"/>
         <text name="rms_jumper_cables_action" text="Jumper cables"/>
+        <text name="rms_jumper_cables_connect" text="Connect jumper cables"/>
+        <text name="rms_jumper_cables_disconnect" text="Disconnect jumper cables"/>
         <text name="rms_jumper_cables_auto_disconnected" text="Jumper cables disconnected: one of the vehicles moved"/>
         <text name="rms_jumper_cables_connected" text="Jumper cables connected to %s"/>
         <text name="rms_jumper_cables_impossible_to_connect" text="The vehicle is not suitable for connecting jumper cables"/>
@@ -880,7 +618,7 @@
         <text name="rms_inspection_dialog_title" text="Pre-Shift Check"/>
         <text name="rms_inspection_section_fluids" text="Technical Fluids"/>
         <text name="rms_inspection_fluid_quantity_format" text="%s / %s %s"/>
-        <text name="rms_inspection_section_field_care" text="Filters, Radiator and Lubrication"/>
+        <text name="rms_inspection_section_field_care" text="Cleaning and Lubrication"/>
         <text name="rms_inspection_section_additional" text="Additional Notes"/>
         <text name="rms_inspection_verdict_ok_title" text="Fit for service"/>
         <text name="rms_inspection_verdict_ok_message" text="Nothing to report, the machine can go out."/>
@@ -918,9 +656,26 @@
         <text name="rms_inspection_hint_coolant_leak_stage2" text="Coolant residue is visible, and the coolant level is below normal."/>
         <text name="rms_inspection_hint_coolant_leak_stage3" text="Noticeable coolant loss is visible around the cooling system area."/>
         <text name="rms_inspection_hint_coolant_leak_stage4" text="The cooling system has lost a large part of its coolant, with heavy traces visible."/>
-        <text name="rms_inspection_hint_corroded_wiring_stage2" text="Light traces of oxidation are visible on some electrical connections."/>
-        <text name="rms_inspection_hint_corroded_wiring_stage3" text="Pronounced oxidation and contamination are visible on the wiring and connectors."/>
-        <text name="rms_inspection_hint_corroded_wiring_stage4" text="Severe corrosion is visible on the wiring and connectors, and some insulation appears damaged."/>
+        <text name="rms_inspection_hint_cylinder_liners_stage2" text="Coolant escapes through the cracked liner into a combustion chamber. Coolant loss reduces cooling."/>
+        <text name="rms_inspection_hint_cylinder_liners_stage3" text="Coolant escapes through the cracked liner into a combustion chamber. Coolant loss is substantial and threatens cooling."/>
+        <text name="rms_inspection_hint_cylinder_liners_stage4" text="Coolant escapes through the cracked liner into a combustion chamber. Coolant loss severely impairs cooling."/>
+        <text name="rms_inspection_hint_cylinder_head_stage2" text="Coolant escapes through the cracked cylinder head to the outside. Coolant loss reduces cooling."/>
+        <text name="rms_inspection_hint_cylinder_head_stage3" text="Coolant escapes through the cracked cylinder head to the outside. Coolant loss is substantial and threatens cooling."/>
+        <text name="rms_inspection_hint_cylinder_head_stage4" text="Coolant escapes through the cracked cylinder head to the outside. Coolant loss severely impairs cooling."/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage2" text="Coolant escapes through the cylinder head gasket to the outside. Coolant loss reduces cooling."/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage3" text="Coolant escapes through the cylinder head gasket to the outside. Coolant loss is substantial and threatens cooling."/>
+        <text name="rms_inspection_hint_cylinder_head_gasket_stage4" text="Coolant escapes through the cylinder head gasket to the outside. Coolant loss severely impairs cooling."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage1" text="Coolant escapes through the water pump seal to the outside. The level starts to fall."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage2" text="Coolant escapes through the water pump seal to the outside. Coolant loss reduces cooling."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage3" text="Coolant escapes through the water pump seal to the outside. Coolant loss is substantial and threatens cooling."/>
+        <text name="rms_inspection_hint_thermal_water_pump_stage4" text="Coolant escapes through the water pump seal to the outside. Coolant loss severely impairs cooling."/>
+        <text name="rms_inspection_hint_radiator_core_stage1" text="Coolant escapes through the damaged radiator tubes to the outside. The level starts to fall."/>
+        <text name="rms_inspection_hint_radiator_core_stage2" text="Coolant escapes through the damaged radiator tubes to the outside. Coolant loss reduces cooling."/>
+        <text name="rms_inspection_hint_radiator_core_stage3" text="Coolant escapes through the damaged radiator tubes to the outside. Coolant loss is substantial and threatens cooling."/>
+        <text name="rms_inspection_hint_radiator_core_stage4" text="Coolant escapes through the damaged radiator tubes to the outside. Coolant loss severely impairs cooling."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage2" text="Oxidation is visible on a power or ground connection."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage3" text="Power or ground connections show oxidation and contamination."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage4" text="Power or ground connections are heavily corroded, with damaged insulation."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage1" text="A faint oily film is visible on a hydraulic hose or fitting."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage2" text="Hydraulic oil is visibly seeping from a hose or fitting."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage3" text="Clear hydraulic oil traces and fresh wetting are visible along a hose."/>
@@ -933,12 +688,9 @@
         <text name="rms_inspection_hint_air_filter_clogging_stage2" text="The air filter is noticeably clogged."/>
         <text name="rms_inspection_hint_air_filter_clogging_stage3" text="The air filter is heavily clogged with dust and debris."/>
         <text name="rms_inspection_hint_air_filter_blowout_limit" text="Blowing out the air filter cannot clean it any further. The workshop replaces it from the %s service up."/>
-        <text name="rms_inspection_hint_fuel_filter_due" text="The fuel filter needs replacing: any service, whatever its level, or a repair at the workshop changes it."/>
-        <text name="rms_inspection_hint_hydraulic_filter_due" text="The hydraulic filter needs replacing: any service, whatever its level, or a repair at the workshop changes it."/>
-        <text name="rms_inspection_hint_hydraulic_filter_bypass" text="The hydraulic filter is clogged: the oil flows through unfiltered and wears the circuit. Any service, whatever its level, or a repair at the workshop changes it."/>
         <text name="rms_inspection_hint_unidentified" text="Symptom of an unidentified breakdown: the workshop identifies it with an inspection or a service."/>
-        <text name="rms_inspection_hint_alternator_regulator_failure_stage3" text="Signs of overheating and darkening are visible around the alternator and some connections."/>
-        <text name="rms_inspection_hint_alternator_regulator_failure_stage4" text="Pronounced signs of overheating and darkened connectors are visible around the alternator and its wiring."/>
+        <text name="rms_inspection_hint_alternator_stage3" text="Signs of overheating and darkening are visible around the alternator and some connections."/>
+        <text name="rms_inspection_hint_alternator_stage4" text="Pronounced signs of overheating and darkened connectors are visible around the alternator and its wiring."/>
         <text name="rms_inspection_hint_lubrication_stage1" text="Lubrication points look slightly dry."/>
         <text name="rms_inspection_hint_lubrication_stage2" text="Lubrication points look dry and insufficiently greased."/>
         <text name="rms_inspection_hint_lubrication_stage3" text="Lubrication points are very dry, with little visible grease remaining."/>
@@ -947,9 +699,63 @@
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Oil drips are visible under the transmission."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="A noticeable oil loss is visible around the transmission."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage4" text="Oil is running from the transmission housing and pooling under the machine."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage1" text="Slight play is present at a front axle drive shaft universal joint."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage2" text="A front axle drive shaft universal joint has clear play."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage3" text="A front axle drive shaft universal joint has considerable play."/>
+        <text name="rms_inspection_hint_front_axle_shaft_wear_stage4" text="A front axle drive shaft universal joint is broken."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage1" text="Slight play is present at an axle pinion bearing."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage2" text="An axle pinion bearing has play and rumbles."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage3" text="An axle's oil holds flakes from a bearing."/>
+        <text name="rms_inspection_hint_axle_bearing_wear_stage4" text="An axle bearing has collapsed and the bevel gear teeth are marked."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage1" text="The PTO output seal shows slight moisture."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage2" text="The PTO output seal is seeping."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage3" text="The PTO output seal has an active leak."/>
+        <text name="rms_inspection_hint_pto_output_seal_leak_stage4" text="The PTO output seal has a major leak."/>
+        <text name="rms_inspection_hint_pto_clutch_wear_branch2_stage1" text="The PTO clutch plates are beginning to stick."/>
+        <text name="rms_inspection_hint_pto_clutch_wear_branch2_stage2" text="The PTO clutch plates stick: the implement takes a while to stop when the PTO is switched off."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage1" text="A brake test reveals a slight pull to one side."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage1" text="The brake pedal travels slightly farther than usual."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage2" text="Braking is clearly uneven from one side to the other."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage2" text="The brake pedal feels soft and travels farther."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage3" text="The machine pulls noticeably to one side when the brakes are applied."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage3" text="The pedal nearly reaches the floor before the machine slows."/>
+        <text name="rms_inspection_hint_brake_control_failure_stage4" text="The pull under braking is strong and persistent."/>
+        <text name="rms_inspection_hint_brake_control_failure_soft_pedal_stage4" text="The pedal offers almost no resistance and brake pressure is nearly gone."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage1" text="The trailer slows less than the tractor when braking."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage2" text="The trailer's braking is clearly reduced."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage3" text="The trailer barely responds when the tractor brakes."/>
+        <text name="rms_inspection_hint_trailer_brake_valve_failure_stage4" text="The trailer no longer brakes when the tractor brakes."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage1" text="Slight play is present at a steering wheel knuckle pivot."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage2" text="Play at a steering wheel knuckle pivot is noticeable."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage3" text="A steering wheel knuckle pivot has considerable play."/>
+        <text name="rms_inspection_hint_steering_knuckle_pivot_wear_stage4" text="Play at the pivot compromises wheel guidance."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage1" text="The wheels respond slightly late to the steering wheel."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage2" text="The steering wheel turns, but the wheels follow with a noticeable delay."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage3" text="The wheels do not follow the steering wheel properly while turning."/>
+        <text name="rms_inspection_hint_steering_orbitrol_malfunction_stage4" text="The steering wheel turns without the wheels following properly."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage1" text="The cylinder holds the steering slightly less well."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage2" text="The steering drifts more while the wheel is held."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage3" text="The cylinder lets the machine drift clearly."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_stage4" text="The steering no longer holds its course: the drift is strong."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage1" text="A slight oil trace appears on the steering cylinder rod."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage2" text="The steering cylinder rod seal seeps."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage3" text="The steering cylinder loses noticeable oil at the rod seal."/>
+        <text name="rms_inspection_hint_steering_cylinder_leak_rod_seal_stage4" text="Hydraulic oil runs from the steering cylinder rod seal."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage1" text="A track roller or idler turns with slight noise or unusual resistance."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage2" text="A track roller or idler turns with difficulty and makes noticeable noise."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage3" text="A track roller or idler has substantial resistance to rotation."/>
+        <text name="rms_inspection_hint_track_roller_bearing_wear_stage4" text="A track roller or idler is seized and impedes track movement."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage2" text="The track tension appears slightly uneven."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage3" text="The track appears loose, with noticeable uneven tension."/>
         <text name="rms_inspection_hint_track_tensioner_malfunction_stage4" text="The track is visibly sagging, and the tension appears severely compromised."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage1" text="Inspection finds early wear in the front loader pivot pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Inspection finds noticeable play in the front loader pivot pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Inspection finds large play in the front loader pivot pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Inspection finds very large play in the front loader pivot pins and bushings."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="A cab damper shows slight moisture."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="A cab damper is seeping."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="A cab damper has an active leak."/>
+        <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="A cab damper has a major leak and has emptied."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Oily traces and darkened connections are visible around the turbocharger."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Heavy oily traces, darkened connections, and soot marks are visible around the turbocharger."/>
         <text name="rms_inspection_hint_fluid_level_low" text="A fluid level has dropped below its mark."/>
@@ -999,6 +805,11 @@
         <text name="rms_fleet_overdue_count" text="Overdue: %d"/>
         <text name="rms_fleet_due_soon_label" text="Due soon"/>
         <text name="rms_fleet_due_soon_count" text="Due soon: %d"/>
+        <text name="rms_fleet_part_worn" text="Worn"/>
+        <text name="rms_fleet_part_failed" text="Failed"/>
+        <text name="rms_fleet_part_unmeasured" text="Not measured"/>
+        <text name="rms_fleet_parts_reading" text="Parts measured %s"/>
+        <text name="rms_fleet_parts_need_complete" text="Parts measured at the next complete inspection"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Vehicle Return"/>
         <text name="rms_sell_dialog_section_vehicle" text="Vehicle"/>
@@ -1033,7 +844,7 @@
         <text name="rms_tutorial_needs_repair_message" text="Your %s has a problem. One of its parts may have failed.&#10;&#10;Take it to the workshop: an inspection, or a service if one is due, identifies the breakdown. Do not wait: the breakdown can keep worsening, and the repair cost rises with it.&#10;&#10;Once the breakdown is identified, have it repaired at the workshop."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Overhaul Required"/>
         <text name="rms_tutorial_needs_overhaul_message" text="Your %s is showing its age. It is time to consider a replacement or an overhaul. It is a long and expensive operation, but it is the only way to return the machine to its original condition.&#10;&#10;Vehicle lifespan is set in the mod settings: the higher it is, the slower your vehicles wear."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Breakdown Imminent"/>
+        <text name="rms_tutorial_needs_preventive_title" text="Elevated Breakdown Risk"/>
         <text name="rms_tutorial_needs_preventive_message" text="The engine, fuel system or cooling system of %s has an increased risk of failure.&#10;&#10;%s service: adjusts the valves and checks the injectors and the thermostat, which lowers that risk."/>
         <text name="rms_tutorial_age_degradation_title" text="Age Degradation"/>
         <text name="rms_tutorial_age_degradation_message" text="In RMS, vehicles gradually lose part of their original performance as they age.&#10;&#10;After about a third of their lifespan, age wear slightly reduces important characteristics such as power or braking. The effect then strengthens and becomes clearly visible near the end of life.&#10;&#10;This degradation can be disabled in the mod settings."/>
@@ -1072,7 +883,7 @@
         <text name="rms_tutorial_exhaust_smoke_message" text="The smoke coming out of this machine is not decoration: its color is a diagnosis.&#10;&#10;Black smoke means the engine is getting more fuel than air: a hard pickup before the turbocharger has come up to speed, an engine lugging at low speed, overload, a clogged air filter, a tired turbocharger or worn injection. Blue smoke means a tired engine burning its own oil. White smoke means fuel leaving unburnt.&#10;&#10;The plume also grows with the work the engine is doing. Older machines smoke far more than recent ones, and that is normal."/>
         <text name="rms_tutorial_cvt_overheat_title" text="CVT Overheating"/>
         <text name="rms_tutorial_cvt_overheat_message" text="The CVT transmission is starting to overheat. It can come from excessive load, a clogged radiator, very hot weather, or a fault in the transmission cooling circuit. A plow that is too heavy or an overloaded trailer is enough to cause it.&#10;&#10;Stay alert: overheating is one of the most destructive factors for a CVT transmission."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Chassis Under Stress"/>
+        <text name="rms_tutorial_chassis_vibration_title" text="Rough Ground"/>
         <text name="rms_tutorial_chassis_vibration_message" text="Driving fast over rough terrain quickly wears out the running gear of your %s. These jolts also damage the wiring and its connectors, and the hydraulics when a heavy implement is raised.&#10;&#10;Slow down on uneven ground."/>
         <text name="rms_tutorial_terrain_impact_title" text="Hard Impact"/>
         <text name="rms_tutorial_terrain_impact_message" text="The running gear has just taken a hard impact. Hitting an obstacle that stops the machine dead or slows it sharply wears the chassis on the spot and brings its next breakdown closer, most often in the steering or the wheel bearings.&#10;&#10;Slow down before obstacles."/>
@@ -1090,14 +901,153 @@
         <text name="rms_tutorial_overload_indicator_message" text="%s is under heavy load. The warning indicator that just lit up on the dashboard is letting you know.&#10;&#10;The machine may not have enough power for the current task. Try reducing the load: limit your speed with cruise control, or ease off the throttle instead of running at full power."/>
         <text name="rms_tutorial_battery_low_title" text="Weak Battery"/>
         <text name="rms_tutorial_battery_low_message" text="The battery of this machine is about to go flat. This happens after a long period of standing, in severe cold, or because of an electrical system fault.&#10;&#10;At low charge, starting becomes difficult and then impossible. You can then start the engine from another vehicle using the jumper cables. Before a long stop, or if the battery goes flat on its own, disconnect it at the battery disconnect switch, on foot in front of the machine."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Drivetrain Stress"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="You are turning on a high-grip surface with the differential lock engaged. Inside and outside wheels travel different distances in a curve, but the differential lock forces them to rotate at the same speed: the drivetrain comes under stress and transmission wear increases. Release the differential lock before turning."/>
+        <text name="rms_tutorial_drivetrain_windup_title" text="Drivetrain Wind-Up"/>
+        <text name="rms_tutorial_drivetrain_windup_message" text="You are turning on a high-grip surface with the differential lock engaged. Inside and outside wheels travel different distances in a curve, but the differential lock forces them to rotate at the same speed: the drivetrain winds up and transmission wear increases. Release the differential lock before turning."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Drivetrain Modes and Differential Lock"/>
         <text name="rms_tutorial_drivetrain_modes_message" text="This machine lets you choose its drivetrain: 2WD, 4WD or AUTO, which engages the front axle as soon as the wheels slip.&#10;&#10;The differential lock finds grip where there is none left, but it costs dearly when turning on a high-grip surface: inner and outer wheels cannot turn at the same speed, and the drivetrain takes the strain. Release it before you turn."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
-        <text name="rms_charger_function" text="Telwin charger on a trolley, 150 A at 12 V, 80 A at 24 V. Connect it near the vehicle and select an automatic charge matched to the battery, a fast charge or the starting aid (START, 200 A at 12 V). Charging follows the game's time speed."/>
+        <text name="rms_charger_function" text="Telwin charger on a trolley, 150 A at 12 V, 80 A at 24 V. Connect it near the vehicle to charge its battery at the current it accepts, or for starting aid (START, 200 A at 12 V). Charging follows the game's time speed."/>
+        <text name="rms_diagnostic_configuration" text="Diagnostic Tool"/>
+        <text name="rms_configuration_reversibleFan" text="Reversible Fan"/>
+        <text name="rms_diagnostic_open" text="Use diagnostic tool"/>
+        <text name="rms_diagnostic_menu" text="Diagnostics Menu"/>
+        <text name="rms_diagnostic_menu_connection" text="Connection"/>
+        <text name="rms_diagnostic_menu_scan" text="All Systems Scan"/>
+        <text name="rms_diagnostic_connect" text="Connect"/>
+        <text name="rms_diagnostic_disconnect" text="Disconnect"/>
+        <text name="rms_diagnostic_licence_end" text="License ends: %s, year %d"/>
+        <text name="rms_diagnostic_licence_expired" text="License expired"/>
+        <text name="rms_diagnostic_licence_renew" text="Renew license (%s)"/>
+        <text name="rms_diagnostic_note_no_licence" text="License expired: the technical information for this code is no longer available. Renew the license to get it back."/>
+        <text name="rms_diagnostic_connection_hint" text="Select a machine from the list and click Connect"/>
+        <text name="rms_diagnostic_reach" text="Reach: %s"/>
+        <text name="rms_diagnostic_no_machine" text="No farm machine within 4 m of the trolley"/>
+        <text name="rms_diagnostic_state_ok" text="Ready to connect"/>
+        <text name="rms_diagnostic_state_plugged" text="Tool connected"/>
+        <text name="rms_diagnostic_state_moving" text="Moving: stop the machine to connect it"/>
+        <text name="rms_diagnostic_state_electronics" text="No controller: nothing to read on this machine"/>
+        <text name="rms_diagnostic_state_busy" text="Another trolley's tool is connected to it"/>
+        <text name="rms_diagnostic_plug_title" text="Connection: Diagnostic Socket"/>
+        <text name="rms_diagnostic_plug_socket_label" text="Socket:"/>
+        <text name="rms_diagnostic_plug_socket" text="9-pin Deutsch, J1939 network"/>
+        <text name="rms_diagnostic_plug_machine_label" text="Machine:"/>
+        <text name="rms_diagnostic_plug_machine" text="Stopped"/>
+        <text name="rms_diagnostic_plug_reading_label" text="Reading:"/>
+        <text name="rms_diagnostic_plug_reading" text="Ignition on"/>
+        <text name="rms_diagnostic_plug_note_moving" text="Do not connect the tool to a moving machine."/>
+        <text name="rms_diagnostic_plug_note_power" text="The engine can stay off: only the machine's battery must not be disconnected."/>
+        <text name="rms_diagnostic_scan_idle" text="Start the scan to read the machine's controllers."/>
+        <text name="rms_diagnostic_scan_running" text="Scan in progress: %d of %d systems"/>
+        <text name="rms_diagnostic_scan_done" text="System scan completed."/>
+        <text name="rms_diagnostic_scan_interrupted" text="Scan interrupted: the battery was disconnected."/>
+        <text name="rms_diagnostic_detected" text="Detected systems: (%d/%d)"/>
+        <text name="rms_diagnostic_voltage" text="Voltage: %s V"/>
+        <text name="rms_diagnostic_no_fault" text="No Fault Codes"/>
+        <text name="rms_diagnostic_querying" text="Querying"/>
+        <text name="rms_diagnostic_waiting" text="Waiting"/>
+        <text name="rms_diagnostic_legend_active" text="Active Fault Code"/>
+        <text name="rms_diagnostic_no_scan" text="No Scan"/>
+        <text name="rms_diagnostic_scan_start" text="Start scan"/>
+        <text name="rms_diagnostic_scan_again" text="Scan again"/>
+        <text name="rms_diagnostic_help" text="Help and Components of the Fault Code"/>
+        <text name="rms_diagnostic_ecu_label" text="Controller:"/>
+        <text name="rms_diagnostic_spn_label" text="SPN %d:"/>
+        <text name="rms_diagnostic_fmi_label" text="FMI %d:"/>
+        <text name="rms_diagnostic_system_label" text="System:"/>
+        <text name="rms_diagnostic_part_label" text="Faulty part:"/>
+        <text name="rms_diagnostic_repair_time_label" text="Repair time:"/>
+        <text name="rms_diagnostic_where_label" text="Where to repair:"/>
+        <text name="rms_diagnostic_where_diagnostic" text="Mobile or personal workshop with the tool connected, or dealer"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Personal workshop or dealer"/>
+        <text name="rms_diagnostic_note_inspection" text="This code tells what the machine measures, not which part is at fault: an inspection finds it."/>
+        <text name="rms_diagnostic_note_uncoded" text="An inspection of the machine finds the part at fault."/>
+        <text name="rms_diagnostic_uncoded" text="Warning light on with no stored code. No sensor monitors the part at fault."/>
+        <text name="rms_diagnostic_uncoded_title" text="Light Without Code"/>
+        <text name="rms_diagnostic_error_distance" text="Move the trolley within 4 m of the machine."/>
+        <text name="rms_diagnostic_error_electronics" text="This machine has no controller to read."/>
+        <text name="rms_diagnostic_error_busy" text="Another trolley's tool is already connected to this machine."/>
+        <text name="rms_diagnostic_error_unplugged" text="Connect the tool to a machine first."/>
+        <text name="rms_diagnostic_error_player_distance" text="Approach the trolley on foot."/>
+        <text name="rms_diagnostic_ecu_engine" text="Engine"/>
+        <text name="rms_diagnostic_ecu_inverter" text="Inverter"/>
+        <text name="rms_diagnostic_ecu_traction_battery" text="Traction Battery"/>
+        <text name="rms_diagnostic_ecu_converter" text="Voltage Converter"/>
+        <text name="rms_diagnostic_ecu_charger" text="On-board Charger"/>
+        <text name="rms_diagnostic_ecu_transmission" text="Transmission"/>
+        <text name="rms_diagnostic_ecu_tractor" text="Central Computer"/>
+        <text name="rms_diagnostic_ecu_dashboard" text="Dashboard"/>
+        <text name="rms_diagnostic_spn_523612" text="Engine ECU"/>
+        <text name="rms_diagnostic_spn_102" text="Engine intake manifold pressure"/>
+        <text name="rms_diagnostic_spn_100" text="Engine oil pressure"/>
+        <text name="rms_diagnostic_spn_101" text="Engine crankcase pressure"/>
+        <text name="rms_diagnostic_spn_1322" text="Engine misfire for multiple cylinders"/>
+        <text name="rms_diagnostic_spn_cylinder" text="Engine misfire cylinder %d"/>
+        <text name="rms_diagnostic_spn_94" text="Engine fuel delivery pressure"/>
+        <text name="rms_diagnostic_spn_110" text="Engine coolant temperature"/>
+        <text name="rms_diagnostic_spn_111" text="Engine coolant level"/>
+        <text name="rms_diagnostic_spn_1639" text="Fan speed"/>
+        <text name="rms_diagnostic_spn_168" text="Battery voltage"/>
+        <text name="rms_diagnostic_spn_677" text="Starter relay"/>
+        <text name="rms_diagnostic_spn_167" text="Charging system voltage"/>
+        <text name="rms_diagnostic_spn_157" text="Injection rail pressure"/>
+        <text name="rms_diagnostic_spn_4375" text="AdBlue pump"/>
+        <text name="rms_diagnostic_spn_3361" text="AdBlue dosing injector"/>
+        <text name="rms_diagnostic_spn_3216" text="Upstream NOx sensor"/>
+        <text name="rms_diagnostic_spn_3251" text="Particulate filter differential pressure"/>
+        <text name="rms_diagnostic_spn_524135" text="Particulate filter soot load"/>
+        <text name="rms_diagnostic_spn_127" text="Transmission oil pressure"/>
+        <text name="rms_diagnostic_spn_191" text="Transmission output shaft speed"/>
+        <text name="rms_diagnostic_spn_526" text="Transmission actual gear ratio"/>
+        <text name="rms_diagnostic_spn_177" text="Transmission oil temperature"/>
+        <text name="rms_diagnostic_spn_124" text="Transmission oil level"/>
+        <text name="rms_diagnostic_spn_1762" text="Hydraulic pressure"/>
+        <text name="rms_diagnostic_spn_2602" text="Hydraulic oil level"/>
+        <text name="rms_diagnostic_spn_1638" text="Hydraulic oil temperature"/>
+        <text name="rms_diagnostic_spn_2910" text="PTO clutch valve actuator"/>
+        <text name="rms_diagnostic_spn_186" text="Power Takeoff Speed"/>
+        <text name="rms_diagnostic_spn_1883" text="Rear PTO output shaft speed"/>
+        <text name="rms_diagnostic_spn_1882" text="Front PTO output shaft speed"/>
+        <text name="rms_diagnostic_spn_2660" text="Joystick X-axis position"/>
+        <text name="rms_diagnostic_spn_116" text="Brake application pressure"/>
+        <text name="rms_diagnostic_spn_9109" text="Propulsion motor inverter power module"/>
+        <text name="rms_diagnostic_spn_9115" text="Inverter phase current imbalance"/>
+        <text name="rms_diagnostic_spn_9059" text="Propulsion motor temperature"/>
+        <text name="rms_diagnostic_spn_9067" text="Propulsion motor speed sensors"/>
+        <text name="rms_diagnostic_spn_8585" text="Voltage converter output voltage"/>
+        <text name="rms_diagnostic_spn_4993" text="On-board charger output current"/>
+        <text name="rms_diagnostic_spn_8432" text="High-voltage circuit isolation test"/>
+        <text name="rms_diagnostic_spn_5923" text="Lowest cell voltage"/>
+        <text name="rms_diagnostic_spn_8091" text="High-voltage positive contactor state"/>
+        <text name="rms_diagnostic_spn_1713" text="Hydraulic oil filter restriction switch"/>
+        <text name="rms_diagnostic_fmi_0" text="Data above normal operational range (most severe level)"/>
+        <text name="rms_diagnostic_fmi_1" text="Data below normal operational range (most severe level)"/>
+        <text name="rms_diagnostic_fmi_2" text="Data erratic, intermittent or incorrect"/>
+        <text name="rms_diagnostic_fmi_3" text="Voltage above normal or shorted to high source"/>
+        <text name="rms_diagnostic_fmi_4" text="Voltage below normal or shorted to low source"/>
+        <text name="rms_diagnostic_fmi_5" text="Current below normal or open circuit"/>
+        <text name="rms_diagnostic_fmi_7" text="Mechanical system not responding or out of adjustment"/>
+        <text name="rms_diagnostic_fmi_12" text="Bad intelligent device or component"/>
+        <text name="rms_diagnostic_fmi_14" text="Special instructions"/>
+        <text name="rms_diagnostic_fmi_16" text="Data above normal operational range (moderately severe level)"/>
+        <text name="rms_diagnostic_fmi_18" text="Data below normal operational range (moderately severe level)"/>
+        <text name="rms_diagnostic_fmi_31" text="Condition exists"/>
+        <text name="rms_dashboard_code_message" text="%s, %s"/>
+        <text name="rms_dashboard_fmi_0" text="very high"/>
+        <text name="rms_dashboard_fmi_1" text="very low"/>
+        <text name="rms_dashboard_fmi_2" text="erratic"/>
+        <text name="rms_dashboard_fmi_3" text="voltage too high"/>
+        <text name="rms_dashboard_fmi_4" text="voltage too low"/>
+        <text name="rms_dashboard_fmi_5" text="open circuit"/>
+        <text name="rms_dashboard_fmi_7" text="not responding"/>
+        <text name="rms_dashboard_fmi_12" text="faulty component"/>
+        <text name="rms_dashboard_fmi_14" text="service required"/>
+        <text name="rms_dashboard_fmi_16" text="high"/>
+        <text name="rms_dashboard_fmi_18" text="low"/>
+        <text name="rms_dashboard_fmi_31" text="fault present"/>
+        <text name="rms_diagnostic_log_title" text="Code Reading"/>
+        <text name="rms_diagnostic_log_codes" text="Codes Read"/>
         <text name="rms_charger_start" text="Connect charger"/>
         <text name="rms_charger_disconnect" text="Disconnect charger"/>
         <text name="rms_charger_select" text="Choose the vehicle to connect."/>
@@ -1127,7 +1077,7 @@
         <text name="rms_charger_stopped_motor" text="Charging stopped: engine start"/>
         <text name="rms_charger_error_player_distance" text="Approach the charger on foot."/>
         <text name="rms_charger_mode_select" text="Connect charger"/>
-        <text name="rms_charger_mode_start" text="Starting aid (START, 200 A, 12 V)"/>
+        <text name="rms_charger_mode_start" text="Starting aid"/>
         <text name="rms_charger_start_ready" text="START ready"/>
         <text name="rms_charger_start_active" text="Starting aid active"/>
         <text name="rms_charger_start_running" text="Engine started: disconnect"/>
@@ -1135,8 +1085,7 @@
         <text name="rms_charger_start_wait" text="Wait for the 30 seconds between starts to end."/>
         <text name="rms_charger_unplug_before_start" text="Disconnect the charger or select START before starting."/>
         <text name="rms_charger_start_connected" text="Starting aid (START, 200 A)."/>
-        <text name="rms_charger_mode_charge" text="Automatic charge"/>
-        <text name="rms_charger_mode_fast" text="Fast charge (150 A, 80 A at 24 V)"/>
+        <text name="rms_charger_mode_charge" text="Charge the battery"/>
 
         <!-- Battery isolator -->
         <text name="rms_battery_isolator_cut" text="Disconnect the battery"/>
@@ -1144,5 +1093,10 @@
         <text name="rms_battery_isolator_open" text="Battery disconnected. Reconnect it at the battery disconnect switch, on foot in front of the vehicle."/>
         <text name="rms_battery_isolator_engine_running" text="Stop the engine before operating the battery disconnect switch."/>
         <text name="rms_battery_isolator_info" text="Battery disconnected"/>
+        <text name="rms_diagnostic_spn_4217" text="Transmission Shift Solenoid Valve"/>
+        <text name="rms_diagnostic_spn_2612" text="Front Wheel Drive Actuator Status"/>
+        <text name="rms_diagnostic_spn_569" text="Rear Axle Differential Lock State"/>
+        <text name="rms_diagnostic_spn_4084" text="Valve Spool"/>
+        <text name="rms_diagnostic_spn_1873" text="Rear Hitch Position"/>
     </texts>
 </l10n>

@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Charges of a leased vehicle returned: overdue maintenance, repairs and washing
 RMS_Leasing = {}
 
 ---Converts a value to a number, falling back when it cannot
@@ -113,7 +112,6 @@ function RMS_Leasing.getReturnBreakdown(vehicle)
     local serviceLevel = getNumber(vehicle.getServiceLevel ~= nil and vehicle:getServiceLevel(), RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
     local serviceExpiredThreshold = math.max(getNumber(RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD, 0), 0.0001)
     local overdueMaintenanceRatio = math.max(serviceExpiredThreshold - serviceLevel, 0) * (1 / serviceExpiredThreshold)
-    -- an overdue service is billed at the dealer's price
     local overdueMaintenanceCost = overdueMaintenanceRatio * getNumber(
         vehicle.getMaintenancePriceLines ~= nil and getDealerMaintenancePrice(vehicle, vehicle:getMaintenanceTypes()[1]),
         0
@@ -158,7 +156,6 @@ function RMS_Leasing.getReturnBreakdown(vehicle)
     emptyResult.rows[2].value = emptyResult.display.repair
     emptyResult.rows[3].value = emptyResult.display.washing
 
-    -- the deposit Extended Leasing refunds counts in the total
     if hasExtendedLeasing then
         emptyResult.display.deposit = deposit
         emptyResult.display.total = emptyResult.display.total + deposit
@@ -187,7 +184,7 @@ function RMS_Leasing.onShopControllerSell(self, overwrittenFunc, storeItem, conc
     self.currentSellStoreItem = storeItem
     self.currentSellItem = concreteItem
 
-    RMS_SellItemDialog.show(vehicle, storeItem, RMS_Leasing.onShopControllerSellDialogCallback, self, {isDirectSell})
+    RMS_SellItemDialog.show(vehicle, RMS_Leasing.onShopControllerSellDialogCallback, self, {isDirectSell})
 end
 
 ---Forwards the player answer to the shop controller
@@ -216,7 +213,7 @@ function RMS_Leasing.onSellVehicleEventRun(self, overwrittenFunc, connection)
         and hasPermission
         and not isVehicleInUse
 
-    -- the native constant again after its Float32 transport, before rounding the payment
+    -- Restore the native constant after Float32 transport.
     if not connection:getIsServer() and RMS_Leasing.isRMSVehicle(vehicle)
         and vehicle.propertyState == VehiclePropertyState.OWNED then
         self.multiplier = self.isDirectSell and EconomyManager.DIRECT_SELL_MULTIPLIER or 1

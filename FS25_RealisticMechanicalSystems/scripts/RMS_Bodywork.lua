@@ -8,7 +8,6 @@ RMS_Bodywork.TOUCHUP = "rms_bodywork_touchup"
 RMS_Bodywork.FULL = "rms_bodywork_full"
 RMS_Bodywork.MIN_TOUCHUP_WEAR = 0.01
 RMS_Bodywork.MAX_TOUCHUP_WEAR = 0.30
--- real price of a full repaint by body size tier, a touch-up costing a share of it that grows with the wear
 RMS_Bodywork.FULL_PRICES = { 3000, 6000, 14000 }
 RMS_Bodywork.TOUCHUP_SHARE = 0.4
 RMS_Bodywork.COLOR_ZONES = {"baseColor", "designColor", "rimColor"}
@@ -50,7 +49,6 @@ local function getPaintDetailDiffuse(node, materialIndex)
     return detailDiffuse:lower()
 end
 
----Walks painted component materials; a mixed shape is handled one slot at a time.
 local function visitPaintMaterials(node, callback, colorSlots)
     if getHasClassId(node, ClassIds.SHAPE) then
         for materialIndex = 0, getNumOfMaterials(node) - 1 do
@@ -673,7 +671,6 @@ local function refreshWheelColor(vehicle, zone, previousMaterial, material)
     end
 end
 
----Applies a selected native configuration and lets the vehicle save its new index.
 function RMS_Bodywork.applyColors(vehicle, encoded)
     local indices = RMS_Bodywork.decodeColors(encoded)
     if indices == nil or not RMS_Bodywork.validateColors(vehicle, encoded) then

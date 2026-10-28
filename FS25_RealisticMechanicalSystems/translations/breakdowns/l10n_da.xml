@@ -1,0 +1,726 @@
+﻿<l10n>
+    <texts>
+        <!-- Breakdowns -->
+        <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
+        <text name="rms_breakdowns_severity_reduce_power" text="Effekttab"/>
+        <text name="rms_breakdowns_severity_shutdown" text="Ude af drift"/>
+        <text name="rms_breakdowns_severity_minor" text="Mindre"/>
+        <text name="rms_breakdowns_severity_moderate" text="Moderat"/>
+        <text name="rms_breakdowns_severity_major" text="Alvorlig"/>
+        <text name="rms_breakdowns_severity_critical" text="Kritisk"/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage1_description" text="Let slid på styrekuglerne og styrestængerne. Der opstår lidt slør, og styringen bliver mindre præcis."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage2_description" text="Moderat slid på styrekuglerne og styrestængerne. Slørret vokser, og køretøjet trækker let til den ene side."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage3_description" text="Alvorligt slid på styrekuglerne og styrestængerne. Slørret er stort, og køretøjet trækker til den ene side og holder kursen dårligere."/>
+        <text name="rms_breakdowns_steering_linkage_wear_stage4_description" text="Kritisk svigt i styrekuglerne og styrestængerne. Det frigjorte hjul følger ikke længere rattet korrekt; kørslen er farlig."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage1_description" text="Let slid på styrespindelboltene. Der opstår lidt slør i styringen."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage2_description" text="Moderat slid på styrespindelboltene. Slørret i styringen bliver mærkbart."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Alvorligt slid på styrespindelboltene. Slørret i styringen er stort."/>
+        <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritisk slid på styrespindelboltene. Styringen har meget stort slør."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Let svigt i styreorbitrolen. Rattet drejer med lidt slør, før hjulene følger med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Moderat svigt i styreorbitrolen. Rattet drejer længere, før hjulene følger med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Alvorligt svigt i styreorbitrolen. Rattet drejer meget, uden at hjulene følger ordentligt med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritisk svigt i styreorbitrolen. Rattet har meget stort slør, før hjulene følger med."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Let indvendig lækage i styrecylinderen. Køretøjet begynder at drive til den ene side."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Let lækage ved styrecylinderens stangtætning. Hydraulikoliestanden falder lidt."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Moderat indvendig lækage i styrecylinderen. Køretøjet driver mere til den ene side."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage2_description" text="Moderat lækage ved styrecylinderens stangtætning. Hydraulikoliestanden falder tydeligt."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage3_description" text="Alvorlig indvendig lækage i styrecylinderen. Køretøjet driver tydeligt til den ene side."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage3_description" text="Alvorlig lækage ved styrecylinderens stangtætning. Hydraulikoliestanden falder hurtigt."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage4_description" text="Kritisk indvendig lækage i styrecylinderen. Køretøjet driver kraftigt til den ene side."/>
+        <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage4_description" text="Kritisk lækage ved styrecylinderens stangtætning. Hydraulikoliestanden falder meget hurtigt."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage1_description" text="Let slid på boltene og bøsningerne i læsserens led. Der opstår let slør i armens led."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Moderat slid på boltene og bøsningerne i læsserens led. Slørret i armens led bliver mærkbart."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Alvorligt slid på boltene og bøsningerne i læsserens led. Armen har stort slør."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kritisk slid på boltene og bøsningerne i læsserens led. Armens slør er meget stort."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Let lækage fra en kabinestøddæmper. Kabinen dæmpes lidt mindre."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Moderat lækage fra en kabinestøddæmper. Kabinen hopper over ujævnheder."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Alvorlig lækage fra en kabinestøddæmper. Kabinen gynger ved hvert stød."/>
+        <text name="rms_breakdowns_cab_suspension_damper_leak_stage4_description" text="Kritisk lækage fra en kabinestøddæmper. Støddæmperen er tom: Kabinen dæmpes næsten ikke længere."/>
+        <text name="rms_breakdowns_gear_disengage_message" text="Skift til frigear"/>
+        <text name="rms_breakdowns_glow_plug_failure_stage1_description" text="Begyndende nedbrydning af gløderørene. Koldstart tager længere tid, mens varmstart forbliver normal."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage2_description" text="Flere gløderør er svage eller ude af drift. Koldstart er vanskelig, og tomgangen kan være ujævn, indtil motoren er varm."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage3_description" text="Alvorligt svigt i gløderørene. Koldstart bliver meget usikker, og den ujævne gang fortsætter under opvarmningen."/>
+        <text name="rms_breakdowns_glow_plug_failure_stage4_description" text="Fuldstændigt svigt i gløderørene. Motoren kan ikke startes, når temperaturen er for lav."/>
+        <text name="rms_breakdowns_preheat_relay_failure_stage1_description" text="Svigt i gløderelæet. Gløderørene varmer ikke længere: Motoren kan ikke startes, når temperaturen er for lav."/>
+        <text name="rms_breakdowns_starter_relay_failure_stage1_description" text="Svigt i startrelæet. Motoren tørner ikke længere."/>
+        <text name="rms_breakdowns_low_beam_failure_stage1_description" text="Svigt i nærlyspærerne. Disse lygter lyser ikke, før pærerne er udskiftet."/>
+        <text name="rms_breakdowns_high_beam_failure_stage1_description" text="Svigt i fjernlyspærerne. Disse lygter lyser ikke, før pærerne er udskiftet."/>
+        <text name="rms_breakdowns_front_work_lights_failure_stage1_description" text="Svigt i pærerne til de forreste arbejdslygter. Disse lygter lyser ikke, før pærerne er udskiftet."/>
+        <text name="rms_breakdowns_rear_work_lights_failure_stage1_description" text="Svigt i pærerne til de bageste arbejdslygter. Disse lygter lyser ikke, før pærerne er udskiftet."/>
+        <text name="rms_breakdowns_beacon_lights_failure_stage1_description" text="Svigt i rotorblinkpæren. Rotorblinket lyser ikke, før pæren er udskiftet."/>
+        <text name="rms_breakdowns_turn_lights_failure_stage1_description" text="Svigt i blinklyspærerne. Hverken blinklys eller havariblink lyser, før pærerne er udskiftet."/>
+        <text name="rms_breakdowns_part_vehicle" text="Køretøj"/>
+        <text name="rms_breakdowns_part_pistons" text="Stempler"/>
+        <text name="rms_breakdowns_part_piston_rings" text="Stempelringe"/>
+        <text name="rms_breakdowns_part_cylinder_liners" text="Cylinderforinger"/>
+        <text name="rms_breakdowns_part_inlet_valves" text="Indsugningsventiler"/>
+        <text name="rms_breakdowns_part_exhaust_valves" text="Udstødningsventiler"/>
+        <text name="rms_breakdowns_part_valve_guides_seals" text="Ventilstyr og ventiltætninger"/>
+        <text name="rms_breakdowns_part_cylinder_head" text="Topstykke"/>
+        <text name="rms_breakdowns_part_cylinder_head_gasket" text="Toppakning"/>
+        <text name="rms_breakdowns_part_main_bearings" text="Krumtapslejer"/>
+        <text name="rms_breakdowns_part_conrod_bearings" text="Plejlstangslejer"/>
+        <text name="rms_breakdowns_part_consumables" text="Forbrugsmaterialer"/>
+        <text name="rms_breakdowns_part_clutch" text="Kobling"/>
+        <text name="rms_breakdowns_part_cvt_hydraulic_control_valve" text="Styring af udveksling"/>
+        <text name="rms_breakdowns_part_cvt" text="CVT"/>
+        <text name="rms_breakdowns_part_engine" text="Motor"/>
+        <text name="rms_breakdowns_part_ecu" text="ECU"/>
+        <text name="rms_breakdowns_part_power_cables_and_grounds" text="Strømkabler og stelforbindelser"/>
+        <text name="rms_breakdowns_part_starter_relay" text="Startrelæ"/>
+        <text name="rms_breakdowns_part_preheat_relay" text="Gløderelæ"/>
+        <text name="rms_breakdowns_part_low_beam_bulbs" text="Nærlyspærer"/>
+        <text name="rms_breakdowns_part_high_beam_bulbs" text="Fjernlyspærer"/>
+        <text name="rms_breakdowns_part_front_work_light_bulbs" text="Pærer til forreste arbejdslygter"/>
+        <text name="rms_breakdowns_part_rear_work_light_bulbs" text="Pærer til bageste arbejdslygter"/>
+        <text name="rms_breakdowns_part_beacon_bulb" text="Rotorblinkpære"/>
+        <text name="rms_breakdowns_part_turn_signal_bulbs" text="Blinklyspærer"/>
+        <text name="rms_breakdowns_part_battery" text="Batteri"/>
+        <text name="rms_breakdowns_part_traction_battery" text="Traktionsbatteri"/>
+        <text name="rms_breakdowns_part_hv_contactor" text="Højspændingskontaktor"/>
+        <text name="rms_breakdowns_part_hv_wiring" text="Højspændingsledninger"/>
+        <text name="rms_breakdowns_part_inverter" text="Vekselretter"/>
+        <text name="rms_breakdowns_part_dcdc_converter" text="Spændingsomformer"/>
+        <text name="rms_breakdowns_part_onboard_charger" text="Ombordlader"/>
+        <text name="rms_breakdowns_part_electric_motor_bearings" text="Elmotorens lejer"/>
+        <text name="rms_breakdowns_part_electric_motor_windings" text="Elmotorens viklinger"/>
+        <text name="rms_breakdowns_part_motor_position_sensor" text="Motorens positionssensor"/>
+        <text name="rms_breakdowns_part_coolant_pump" text="Kølevæskepumpe"/>
+        <text name="rms_breakdowns_part_thermal_water_pump" text="Vandpumpe"/>
+        <text name="rms_breakdowns_part_radiator_core" text="Kølerkerne"/>
+        <text name="rms_breakdowns_part_coolant_hoses" text="Kølerslanger og forbindelser"/>
+        <text name="rms_breakdowns_part_expansion_tank" text="Ekspansionsbeholder"/>
+        <text name="rms_breakdowns_part_accessory_belt_kit" text="Multirem og strammer"/>
+        <text name="rms_breakdowns_part_fan_blade" text="Ventilatorvinge"/>
+        <text name="rms_breakdowns_part_electric_cooling_fan" text="Elektrisk køleblæser"/>
+        <text name="rms_breakdowns_part_reducer" text="Reduktionsgear"/>
+        <text name="rms_breakdowns_part_brake_discs" text="Bremseskiver og bremsebelægninger"/>
+        <text name="rms_breakdowns_part_brake_control" text="Bremsebetjening"/>
+        <text name="rms_breakdowns_part_trailer_brake_valve" text="Anhængerbremseventil"/>
+        <text name="rms_breakdowns_part_park_brake" text="Parkeringsbremse"/>
+        <text name="rms_breakdowns_part_wheel_hub_bearing" text="Navleje og navtætning"/>
+        <text name="rms_breakdowns_part_alternator" text="Generator"/>
+        <text name="rms_breakdowns_part_starter" text="Startmotor"/>
+        <text name="rms_breakdowns_part_turbocharger" text="Turbolader"/>
+        <text name="rms_breakdowns_part_transmission_seal" text="Transmissionspakning"/>
+        <text name="rms_breakdowns_part_track_tensioner" text="Bæltestrammer"/>
+        <text name="rms_breakdowns_part_track_rollers" text="Løberuller og ledehjul"/>
+        <text name="rms_breakdowns_part_thermostat" text="Termostat"/>
+        <text name="rms_breakdowns_part_oil_pump" text="Oliepumpe"/>
+        <text name="rms_breakdowns_part_synchronizer" text="Synkronring"/>
+        <text name="rms_breakdowns_part_steering_linkage" text="Styrekugler og styrestænger"/>
+        <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Bolte og bøsninger i læsserens led"/>
+        <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Styrespindelbolte"/>
+        <text name="rms_breakdowns_part_steering_orbitrol" text="Styreorbitrol"/>
+        <text name="rms_breakdowns_part_steering_cylinder" text="Styrecylinder"/>
+        <text name="rms_breakdowns_part_cab_suspension" text="Kabineaffjedring"/>
+        <text name="rms_breakdowns_part_pto_clutch" text="Kraftudtagets kobling"/>
+        <text name="rms_breakdowns_part_pto_output_bearing" text="Kraftudtagets udgangslejer"/>
+        <text name="rms_breakdowns_part_pto_output_seal" text="Kraftudtagets udgangstætning"/>
+        <text name="rms_breakdowns_part_pto_output_shaft" text="Kraftudtagets udgangsaksel"/>
+        <text name="rms_breakdowns_part_pto_engagement_solenoid" text="Magnetventil til kraftudtagets tilkobling"/>
+        <text name="rms_breakdowns_part_pto_engagement_switch" text="Betjeningskontakt til kraftudtaget"/>
+        <text name="rms_breakdowns_part_pto_speed_sensor" text="Kraftudtagets omdrejningssensor"/>
+        <text name="rms_breakdowns_part_pto_brake" text="Kraftudtagets bremse"/>
+        <text name="rms_breakdowns_part_front_pto_clutch" text="Forreste kraftudtagskobling"/>
+        <text name="rms_breakdowns_part_hydraulic_pump" text="Hydraulikpumpe"/>
+        <text name="rms_breakdowns_part_hydraulic_cylinder" text="Hydraulikcylinder"/>
+        <text name="rms_breakdowns_part_hydraulic_hose" text="Hydraulikslange"/>
+        <text name="rms_breakdowns_part_hydraulic_filter" text="Hydraulikfilter"/>
+        <text name="rms_breakdowns_part_hydraulic_oil_cooler" text="Hydraulikoliekøler"/>
+        <text name="rms_breakdowns_part_hydraulic_spool_valve" text="Hydraulisk styreventil"/>
+        <text name="rms_breakdowns_part_fan_clutch" text="Ventilatorkobling"/>
+        <text name="rms_breakdowns_part_fuel_pump" text="Fødepumpe"/>
+        <text name="rms_breakdowns_part_fuel_injectors" text="Brændstofdyser"/>
+        <text name="rms_breakdowns_part_high_pressure_pump" text="Højtrykspumpe"/>
+        <text name="rms_breakdowns_part_fuel_filter" text="Brændstoffilter"/>
+        <text name="rms_breakdowns_part_fuel_line" text="Brændstofledning"/>
+        <text name="rms_breakdowns_part_mechanical_injection_pump" text="Mekanisk indsprøjtningspumpe"/>
+        <text name="rms_breakdowns_part_fuel_metering_valve" text="Brændstofdoseringsventil"/>
+        <text name="rms_breakdowns_part_rail_pressure_sensor" text="Railtryksensor"/>
+        <text name="rms_breakdowns_part_rail_pressure_limiter" text="Railtrykbegrænsningsventil"/>
+        <text name="rms_breakdowns_part_gas_pressure_regulator" text="Gastrykregulator"/>
+        <text name="rms_breakdowns_part_gas_shutoff_solenoid" text="Magnetventil til gasafspærring"/>
+        <text name="rms_breakdowns_part_gas_filter" text="Gasfilter"/>
+        <text name="rms_breakdowns_part_gas_lines" text="Gasledninger"/>
+        <text name="rms_breakdowns_part_gas_injectors" text="Gasdyser"/>
+        <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-pumpe"/>
+        <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-doseringsdyse"/>
+        <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-filter"/>
+        <text name="rms_breakdowns_part_nox_sensor" text="NOx-sensor"/>
+        <text name="rms_breakdowns_part_particulate_filter" text="Partikelfilter"/>
+        <text name="rms_breakdowns_part_glow_plugs" text="Gløderør"/>
+        <text name="rms_breakdowns_pto_auto_disengage_message" text="Kraftudtaget koblede fra"/>
+        <text name="rms_breakdowns_front_pto_auto_disengage_message" text="Det forreste kraftudtag er koblet fra"/>
+        <text name="rms_breakdowns_pto_stuck_engaged_message" text="Kraftudtaget kobler ikke fra: Sluk maskinen for at standse redskabet"/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage1_description" text="Begyndende slid på kraftudtagets kobling. Trækket kobler af og til fra."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage2_description" text="Moderat slid på kraftudtagets kobling. Frakoblingerne bliver hyppigere."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage3_description" text="Alvorligt slid på kraftudtagets kobling. Redskabet mister ofte trækket."/>
+        <text name="rms_breakdowns_pto_clutch_wear_stage4_description" text="Kritisk svigt i kraftudtagets kobling. Redskabet standser."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage1_description" text="Begyndende slid på kraftudtagets kobling. Lamellerne begynder at klæbe."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage2_description" text="Moderat slid på kraftudtagets kobling. Lamellerne klæber mere og mere."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage3_description" text="Alvorligt slid på kraftudtagets kobling. Lamellerne klæber: Kraftudtaget vil af og til ikke koble fra."/>
+        <text name="rms_breakdowns_pto_clutch_wear_branch2_stage4_description" text="Kritisk svigt i kraftudtagets kobling. Lamellerne er svejset sammen: Kraftudtaget kobler ikke længere fra, og redskabet standser først, når maskinen slukkes."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage1_description" text="Begyndende slid på kraftudtagets udgangslejer. En svag rumlen opstår."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage2_description" text="Moderat slid på kraftudtagets udgangslejer. Rumlen bliver tydeligt hørbar."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage3_description" text="Alvorligt slid på kraftudtagets udgangslejer. Rumlen bliver kraftigere."/>
+        <text name="rms_breakdowns_pto_output_bearing_wear_stage4_description" text="Kritisk svigt i kraftudtagets udgangslejer. Rumlen er på sit højeste."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage1_description" text="Let lækage ved kraftudtagets udgangstætning. Transmissionsoliestanden falder langsomt under arbejdet."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage2_description" text="Moderat lækage ved kraftudtagets udgangstætning. Transmissionsoliestanden falder under arbejdet."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage3_description" text="Alvorlig lækage ved kraftudtagets udgangstætning. Transmissionsolie løber ud, og niveauet falder hurtigt."/>
+        <text name="rms_breakdowns_pto_output_seal_leak_stage4_description" text="Kritisk lækage ved kraftudtagets udgangstætning. Der er ikke nok olie tilbage til sikker drift af transmissionen."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage1_description" text="Begyndende slid på magnetventilen til kraftudtagets tilkobling. Trækket kobler af og til fra under arbejdet."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage1_description" text="Begyndende slid på magnetventilen til kraftudtagets tilkobling. Kraftudtaget vil af og til ikke koble til."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage2_description" text="Moderat slid på magnetventilen til kraftudtagets tilkobling. Frakoblingerne under arbejdet gentager sig."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage2_description" text="Moderat slid på magnetventilen til kraftudtagets tilkobling. Kraftudtaget vil gentagne gange ikke koble til."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage3_description" text="Alvorligt slid på magnetventilen til kraftudtagets tilkobling. Trækket kobler ofte fra."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage3_description" text="Alvorligt slid på magnetventilen til kraftudtagets tilkobling. Kraftudtaget vil ofte ikke koble til."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch1_stage4_description" text="Kritisk svigt i magnetventilen til kraftudtagets tilkobling. Dens spole er afbrudt, og kraftudtaget forbliver ikke længere tilkoblet."/>
+        <text name="rms_breakdowns_pto_engagement_solenoid_failure_branch2_stage4_description" text="Kritisk svigt i magnetventilen til kraftudtagets tilkobling. Dens ventilspole sidder fast, og kraftudtaget kobler ikke længere til."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage1_description" text="Begyndende slid på betjeningskontakten til kraftudtaget. En løs forbindelse afbryder af og til trækket."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage1_description" text="Begyndende slid på betjeningskontakten til kraftudtaget. Kraftudtaget reagerer af og til ikke på betjeningen."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage2_description" text="Moderat slid på betjeningskontakten til kraftudtaget. Løse forbindelser afbryder trækket oftere og oftere."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage2_description" text="Moderat slid på betjeningskontakten til kraftudtaget. Kraftudtaget reagerer stadig oftere ikke på betjeningen."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage3_description" text="Alvorligt slid på betjeningskontakten til kraftudtaget. Kontakten holder ikke længere forbindelsen, og trækket kobler ofte fra."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage3_description" text="Alvorligt slid på betjeningskontakten til kraftudtaget. Betjeningen har ofte ingen virkning."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch1_stage4_description" text="Kritisk svigt i betjeningskontakten til kraftudtaget. Dens kontakt forbliver åben, og kraftudtaget kobler fra."/>
+        <text name="rms_breakdowns_pto_engagement_switch_failure_branch2_stage4_description" text="Kritisk svigt i betjeningskontakten til kraftudtaget. Dens kontakt lukker ikke længere, og kraftudtaget kobler ikke længere til."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch1_stage1_description" text="Svigt i kraftudtagets udgangsaksel. Dens splines er revet af og overfører ikke længere bevægelsen."/>
+        <text name="rms_breakdowns_pto_output_shaft_failure_branch2_stage1_description" text="Svigt i kraftudtagets udgangsaksel. Den er knækket, og redskabet drives ikke længere."/>
+        <text name="rms_breakdowns_pto_speed_sensor_failure_stage1_description" text="Svigt i kraftudtagets omdrejningssensor. Den afgiver ikke længere et signal, og sikkerhedssystemet kobler kraftudtaget fra."/>
+        <text name="rms_breakdowns_pto_brake_failure_stage1_description" text="Svigt i kraftudtagets bremse. Den forbliver aktiveret og blokerer udgangsakslen."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage1_description" text="Begyndende slid på forreste kraftudtagskobling. Trækket til den forreste udgang kobler af og til fra."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage2_description" text="Moderat slid på forreste kraftudtagskobling. Frakoblingerne af den forreste udgang gentager sig."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage3_description" text="Alvorligt slid på forreste kraftudtagskobling. Det forreste redskab mister ofte trækket."/>
+        <text name="rms_breakdowns_front_pto_clutch_failure_stage4_description" text="Kritisk svigt i forreste kraftudtagskobling. Den forreste udgang drejer ikke længere; det bageste kraftudtag er ikke berørt."/>
+        <text name="rms_breakdowns_pto_engagement_blocked_message" text="Tilkobling af kraftudtaget afvist"/>
+        <text name="rms_breakdowns_quick_fix_stage" text="Nødreparation"/>
+        <text name="rms_breakdowns_defected_parts_stage" text="Defekt"/>
+        <text name="rms_breakdowns_defected_parts_detected_description" text="Systemet fungerer normalt, men inspektionen har afsløret en defekt del. Delen har ingen sikkerhedsmargen tilbage, og en forebyggende udskiftning anbefales for at undgå et pludseligt svigt."/>
+        <text name="rms_breakdowns_dead_battery_message" text="Batteriet er for svagt"/>
+        <text name="rms_breakdowns_cold_traction_battery_message" text="Traktionsbatteri koldt: rækkevidde og effekt reduceret"/>
+        <text name="rms_breakdowns_temporarily_repaired_description" text="Systemet fungerer normalt, men hviler helt på en nødreparation. For at undgå et svigt under belastning anbefales en fuld udskiftning af delene hurtigst muligt."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage1_description" text="Slidte turboladerlejer. En svag hvinen kan høres, og der er et let effekttab ved højt omdrejningstal."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage2_description" text="Utætte pakninger i turboladeren. Mærkbart effekttab og øget brændstofforbrug."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage3_description" text="Beskadigede turbineskovle. Stort effekttab og risiko for, at motoren går i stå under høj belastning."/>
+        <text name="rms_breakdowns_turbocharger_wear_stage4_description" text="Kritisk svigt i turboladeren. Motoren har mistet størstedelen af sin effekt og risikerer alvorlige indre skader."/>
+        <text name="rms_breakdowns_transmission_slip_stage1_description" text="Slidte koblingsplader. Lejlighedsvist effekttab på grund af koblingsslip under belastning."/>
+        <text name="rms_breakdowns_transmission_slip_stage2_description" text="Betydeligt slid på koblingen. Mærkbart slip ved acceleration og under høj belastning."/>
+        <text name="rms_breakdowns_transmission_slip_stage3_description" text="Stærkt slidt kobling. Kraftigt slip gør det svært at overføre kraft til hjulene."/>
+        <text name="rms_breakdowns_transmission_slip_stage4_description" text="Koblingen er helt brændt af. Køretøjet kan ikke længere køre."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage1_description" text="Slidte synkronringe. Lejlighedsvis skuren eller besvær ved gearskift."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage2_description" text="Beskadigede synkronringe. Gearskift er ofte besværligt og kan mislykkes."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage3_description" text="Afbrækkede tænder på synkronringen. Stor risiko for mislykkede gearskift eller for at gearet springer ud under belastning."/>
+        <text name="rms_breakdowns_transmission_synchronizer_malfunction_stage4_description" text="Synkronringene er helt svigtet. Det er umuligt at skifte gear."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage1_description" text="Let lækage af transmissionsolie. Olieniveauet falder langsomt under arbejdet."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage2_description" text="Moderat lækage af transmissionsolie. Niveauet falder tydeligt, og transmissionen bliver varmere."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage3_description" text="Alvorlig lækage af transmissionsolie. Niveauet falder hurtigt, og transmissionen overopheder under belastning."/>
+        <text name="rms_breakdowns_transmission_oil_leak_stage4_description" text="Kritisk lækage af transmissionsolie. Der er ikke olie nok tilbage til sikker drift af transmissionen."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage1_description" text="Let fejlfunktion i bæltestrammeren. Bæltespændingen er lidt mindre stabil, hvilket øger modstand og slid en smule."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage2_description" text="Moderat fejlfunktion i bæltestrammeren. Spændingen bliver ustabil, rulleeffektiviteten falder, og risikoen for at bæltet løber skævt stiger."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage3_description" text="Alvorlig fejlfunktion i bæltestrammeren. Spændingen er stærkt forstyrret, kraftoverførslen bliver ineffektiv, og risikoen for at bæltet løber af stiger."/>
+        <text name="rms_breakdowns_track_tensioner_malfunction_stage4_description" text="Kritisk svigt i bæltestrammeren. Bæltet kan ikke længere holdes korrekt spændt, og køretøjet kan ikke bruges sikkert."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage1_description" text="Let svigt i termostaten. Motoren varmer langsomt op og forbliver for kold under arbejdet."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage1_description" text="Let svigt i termostaten. Temperaturreguleringen er svag, og motoren bliver varmere under belastning."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage2_description" text="Moderat svigt i termostaten. Motoren varmer langsomt op og forbliver for kold under arbejdet."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage2_description" text="Moderat svigt i termostaten. Temperaturen stiger tidligere, og motoren bliver varm under belastning."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage3_description" text="Alvorligt svigt i termostaten. Motoren varmer langsomt op og forbliver for kold under arbejdet."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage3_description" text="Alvorligt svigt i termostaten. Motoren bliver meget varm; længere tids arbejde kan give overophedning."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch1_stage4_description" text="Kritisk svigt i termostaten. Motoren varmer langsomt op og forbliver for kold under arbejdet."/>
+        <text name="rms_breakdowns_thermostat_malfunction_branch2_stage4_description" text="Kritisk svigt i termostaten. Den forbliver lukket, og motoren overopheder hurtigt."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_description" text="Motoren er gået i beskyttelsestilstand. Effekten er begrænset, indtil temperaturen falder igen."/>
+        <text name="rms_breakdowns_overheat_protection_stage1_message" text="Overophedningsbeskyttelse: effekt reduceret"/>
+        <text name="rms_breakdowns_overheat_protection_stage2_description" text="Overophedningsbeskyttelsen griber hårdere ind. Motoren leverer kun halvdelen af sin effekt."/>
+        <text name="rms_breakdowns_overheat_protection_stage2_message" text="Overophedningsbeskyttelse: effekt halveret"/>
+        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Overophedningsbeskyttelsen er på sit højeste. Der er kun en brøkdel af motoreffekten tilbage."/>
+        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Overophedningsbeskyttelse: effekt stærkt reduceret"/>
+        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motoren er blevet standset for at undgå skader. Lad den køle af, før du starter igen."/>
+        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Overophedningsbeskyttelse: motoren standset"/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Let fejlfunktion i oliepumpen. Olietrykket er lavere, motormomentet falder en smule, motortemperaturen stiger, og der kan opstå mekaniske bankelyde."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Moderat fejlfunktion i oliepumpen. Olietrykket er utilstrækkeligt, motormomentet falder tydeligt, motortemperaturen stiger, og de mekaniske bankelyde er klart hørbare."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Alvorlig fejlfunktion i oliepumpen. Olietrykket er kritisk, motormomentet falder kraftigt, overophedning er sandsynlig, bankelydene er voldsomme, og motoren kan gå i stå."/>
+        <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritisk svigt i oliepumpen. Oliecirkulationen er utilstrækkelig til sikker drift af motoren, og hverken start eller videre drift er mulig."/>
+        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motoren har sat sig fast og kan ikke længere dreje rundt."/>
+        <text name="rms_breakdowns_engine_stalled_message" text="Motoren gik i stå"/>
+        <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Let fejlfunktion i ECU'en. Motoreffekten er en smule reduceret."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Moderat fejlfunktion i ECU'en. Mærkbart effekttab og øget brændstofforbrug."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage3_description" text="Alvorlig fejlfunktion i ECU'en. Stort effekttab, højt brændstofforbrug og risiko for, at motoren går i stå."/>
+        <text name="rms_breakdowns_ecu_malfunction_stage4_description" text="Fuldstændigt svigt i ECU'en. Motoren kan ikke styres og starter ikke."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage1_description" text="Let svigt i strømkabler og stelforbindelser. Den øgede overgangsmodstand giver lejlighedsvis flimren i lygterne, ustabil strømforsyning og træg start. En lækstrøm aflader batteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage2_description" text="Moderat svigt i strømkabler og stelforbindelser. Afbrudt kontakt giver hyppig flimren i lygterne, ustabil strømforsyning, træg start og mulige motorstop. En lækstrøm aflader batteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage3_description" text="Alvorligt svigt i strømkabler og stelforbindelser. Forsyningen til kredsene er ustabil, lyset kan svigte helt, motormomentet er reduceret, motoren går sandsynligvis i stå, og start er upålidelig. En lækstrøm aflader batteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_stage4_description" text="Kritisk svigt i strømkabler og stelforbindelser. Lyset virker ikke, og motoren kan ikke startes. En lækstrøm aflader batteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage1_description" text="Let svigt i strømkabler og stelforbindelser. Den øgede overgangsmodstand giver lejlighedsvis flimren i lygterne og ustabil strømforsyning. En lækstrøm aflader hjælpebatteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage2_description" text="Moderat svigt i strømkabler og stelforbindelser. Afbrudt kontakt giver hyppig flimren i lygterne, ustabil strømforsyning og mulige udfald. En lækstrøm aflader hjælpebatteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage3_description" text="Alvorligt svigt i strømkabler og stelforbindelser. Forsyningen til kredsene er ustabil, lyset kan svigte helt, effekten er reduceret, og udfald er sandsynlige. En lækstrøm aflader hjælpebatteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_power_cable_connection_failure_electric_stage4_description" text="Kritisk svigt i strømkabler og stelforbindelser. Lyset virker ikke, og maskinen starter ikke. En lækstrøm aflader hjælpebatteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage1_description" text="Let svigt i kølerslangerne og forbindelserne. En lille siven sænker næsten ikke kølervæskestanden."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage1_description" text="Let svigt i kølerslangerne og forbindelserne. En let klemt slange reducerer gennemstrømningen lidt."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage2_description" text="Moderat svigt i kølerslangerne og forbindelserne. Lækagen bliver synlig, og niveauet falder tydeligere."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage2_description" text="Moderat svigt i kølerslangerne og forbindelserne. Den lavere gennemstrømning får temperaturen til at stige hurtigere under belastning."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage3_description" text="Alvorligt svigt i kølerslangerne og forbindelserne. Der løber meget kølervæske ud; motoren kan blive for varm under belastning."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage3_description" text="Alvorligt svigt i kølerslangerne og forbindelserne. Gennemstrømningen er lav, og motoren overopheder ved længere tids arbejde."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch1_stage4_description" text="Kritisk svigt i kølerslangerne og forbindelserne. Niveauet falder hurtigt, og kølekredsløbet kan tømmes."/>
+        <text name="rms_breakdowns_coolant_hose_failure_branch2_stage4_description" text="Kritisk svigt i kølerslangerne og forbindelserne. Gennemstrømningen er stærkt hæmmet, og motoren bliver hurtigt overophedet."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage1_description" text="Let svigt i ekspansionsbeholderen. Lidt kølervæske siver ud gennem en revne."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage1_description" text="Let svigt i ekspansionsbeholderen. Samlingen siver lidt."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage2_description" text="Moderat svigt i ekspansionsbeholderen. Revnen giver en tydelig lækage, og niveauet falder."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage2_description" text="Moderat svigt i ekspansionsbeholderen. Samlingen lækker tydeligt, og niveauet falder."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage3_description" text="Alvorligt svigt i ekspansionsbeholderen. Lækagen får niveauet til at falde hurtigt."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage3_description" text="Alvorligt svigt i ekspansionsbeholderen. Der mistes hurtigt kølervæske ved samlingen."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch1_stage4_description" text="Kritisk svigt i ekspansionsbeholderen. Kølervæsken løber hurtigt ud, og kredsløbet tømmes."/>
+        <text name="rms_breakdowns_expansion_tank_failure_branch2_stage4_description" text="Kritisk svigt i ekspansionsbeholderen. Lækagen ved samlingen tømmer hurtigt kredsløbet."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage1_description" text="Let svigt i tilbehørsremmen og strammeren. Den piber og glider lidt; opladning og cirkulation falder lidt."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage2_description" text="Moderat svigt i tilbehørsremmen og strammeren. Den glider under belastning; opladningen falder, og kølervæsken cirkulerer mindre."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage3_description" text="Alvorligt svigt i tilbehørsremmen og strammeren. Den glider kraftigt; opladning og cirkulation er stærkt reduceret."/>
+        <text name="rms_breakdowns_accessory_belt_failure_stage4_description" text="Kritisk svigt i tilbehørsremmen og strammeren. Den knækker; opladning og kølevæskecirkulation ophører pludseligt."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage1_description" text="Let svigt i ventilatorvingen. Luftstrømmen falder lidt; kølingen aftager især ved lav hastighed."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage2_description" text="Moderat svigt i ventilatorvingen. Luftstrømmen falder tydeligt, og temperaturen stiger mere."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage3_description" text="Alvorligt svigt i ventilatorvingen. Luftstrømmen er tydeligt reduceret, og motoren bliver varm under belastning."/>
+        <text name="rms_breakdowns_fan_blade_failure_stage4_description" text="Kritisk svigt i ventilatorvingen. Luftstrømmen halveres, og motoren overopheder hurtigt under belastning."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage1_description" text="Let svigt i den elektriske køleblæser. Den flytter lidt mindre luft, når køling er nødvendig."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage2_description" text="Moderat svigt i den elektriske køleblæser. Der flyttes mærkbart mindre luft, og temperaturen stiger hurtigere."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage3_description" text="Alvorligt svigt i den elektriske køleblæser. Luftmængden er tydeligt reduceret, og temperaturen stiger under belastning."/>
+        <text name="rms_breakdowns_electric_cooling_fan_failure_stage4_description" text="Kritisk svigt i den elektriske køleblæser. Luftmængden halveres, og temperaturen stiger hurtigt under belastning."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage1_description" text="De første tegn på en fejlfunktion i CVT-transmissionen er registreret. En inspektion og en reparation er nødvendige."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage2_description" text="Fejlfunktionen i CVT-transmissionen forværres. Fortsat brug kan sætte transmissionen i nøddrift."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage3_description" text="Kritisk skade på CVT-transmissionen. Transmissionen er i nøddrift, og køretøjets tophastighed er sænket."/>
+        <text name="rms_breakdowns_cvt_addon_malfunction_stage4_description" text="Fuldstændigt svigt i CVT-transmissionen. Køretøjet kan ikke bruges, før det er repareret."/>
+        <text name="rms_breakdowns_battery_sulfation_stage1_description" text="Let sulfatering af batteriet. Den brugbare kapacitet er reduceret, hvilket mindsker den elektriske reserve under belastning."/>
+        <text name="rms_breakdowns_battery_sulfation_stage2_description" text="Moderat sulfatering af batteriet. Den brugbare kapacitet er kraftigt reduceret, og motoren bliver svær at starte."/>
+        <text name="rms_breakdowns_battery_sulfation_stage3_description" text="Alvorlig sulfatering af batteriet. Den brugbare kapacitet er kritisk lav, og starteffekten bliver ustabil."/>
+        <text name="rms_breakdowns_battery_sulfation_stage4_description" text="Kritisk sulfatering af batteriet. Den brugbare kapacitet er næsten nul, og starteffekten er utilstrækkelig til en pålidelig start."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage1_description" text="Let sulfatering af hjælpebatteriet. Den brugbare kapacitet er reduceret, hvilket mindsker den elektriske reserve under belastning."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage2_description" text="Moderat sulfatering af hjælpebatteriet. Den brugbare kapacitet er kraftigt reduceret, og den elektriske reserve slipper hurtigere op."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage3_description" text="Alvorlig sulfatering af hjælpebatteriet. Den brugbare kapacitet er kritisk lav, og den elektriske reserve slipper meget hurtigt op."/>
+        <text name="rms_breakdowns_battery_sulfation_electric_stage4_description" text="Kritisk sulfatering af hjælpebatteriet. Den brugbare kapacitet er næsten nul og rækker ikke længere til en pålidelig start."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage1_description" text="Let slid på bremseskiverne og bremsebelægningerne. Let nedsat bremseevne."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage2_description" text="Moderat slid på bremseskiverne og bremsebelægningerne. Bremselængden er mærkbart længere."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage3_description" text="Alvorligt slid på bremseskiverne og bremsebelægningerne. Bremserne er meget svage og upålidelige."/>
+        <text name="rms_breakdowns_brake_disc_wear_stage4_description" text="Kritisk svigt i bremseskiverne og bremsebelægningerne. Køretøjet bremser meget dårligt, og kørslen bliver farlig."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage1_description" text="Let svigt i bremsebetjeningen. Køretøjet trækker let til den ene side ved bremsning."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage1_description" text="Let svigt i bremsebetjeningen. Pedalen bliver lidt blød, og bremseevnen falder lidt."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage2_description" text="Moderat svigt i bremsebetjeningen. Bremsningen trækker tydeligt til den ene side."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage2_description" text="Moderat svigt i bremsebetjeningen. Pedalen bliver blød, trykket falder, og bremseevnen falder tydeligt."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage3_description" text="Alvorligt svigt i bremsebetjeningen. Køretøjet trækker kraftigt til den ene side ved bremsning."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage3_description" text="Alvorligt svigt i bremsebetjeningen. Pedalen synker unormalt langt ned, trykket falder kraftigt, og køretøjet bremser dårligt."/>
+        <text name="rms_breakdowns_brake_control_failure_branch1_stage4_description" text="Kritisk svigt i bremsebetjeningen. Bremsningen trækker meget kraftigt til den ene side."/>
+        <text name="rms_breakdowns_brake_control_failure_branch2_stage4_description" text="Kritisk svigt i bremsebetjeningen. Pedalen synker næsten uden modstand, og køretøjet bremser næsten ikke længere."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage1_description" text="Let svigt i anhængerbremseventilen. Anhængerens bremseevne falder lidt."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage2_description" text="Moderat svigt i anhængerbremseventilen. Anhængerens bremseevne falder tydeligt."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage3_description" text="Alvorligt svigt i anhængerbremseventilen. Anhængerens bremser modtager kun en lille del af bremsevirkningen."/>
+        <text name="rms_breakdowns_trailer_brake_valve_failure_stage4_description" text="Kritisk svigt i anhængerbremseventilen. Anhængerens bremser virker ikke længere."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage1_description" text="Let svigt i parkeringsbremsen. Når den er udløst, slæber den stadig lidt og bremser maskinen let."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage2_description" text="Moderat svigt i parkeringsbremsen. Når den er udløst, slæber den tydeligt og holder maskinen tilbage."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage3_description" text="Alvorligt svigt i parkeringsbremsen. Når den er udløst, forbliver den halvt trukket og holder maskinen kraftigt tilbage."/>
+        <text name="rms_breakdowns_park_brake_malfunction_stage4_description" text="Fuldstændigt svigt i parkeringsbremsen. Den kan ikke længere udløses og holder maskinen, som om den var trukket."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage1_description" text="Let slid på navlejet og navtætningen. Den mekaniske modstand stiger en smule, og der kan opstå en usædvanlig driftsstøj."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage2_description" text="Moderat slid på navlejet og navtætningen. Friktionen stiger tydeligt, støjen bliver mere markant, og den mekaniske virkningsgrad falder."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage3_description" text="Alvorligt slid på navlejet og navtætningen. Friktionen er høj, støjen er kraftig, og der er reel risiko for, at de sætter sig fast under belastning."/>
+        <text name="rms_breakdowns_wheel_hub_bearing_wear_stage4_description" text="Kritisk svigt i navlejet og navtætningen. Lejet er tæt på at sætte sig helt fast, og drift bliver umulig."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage1_description" text="Let slid på lejerne i løberullerne og ledehjulene. Den mekaniske modstand stiger en smule, og der kan opstå en usædvanlig driftsstøj."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage2_description" text="Moderat slid på lejerne i løberullerne og ledehjulene. Friktionen og støjen stiger, og det bliver sværere at dreje rundt."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage3_description" text="Alvorligt slid på lejerne i løberullerne og ledehjulene. Friktionen og støjen er kraftige, og der er risiko for fastklemning under belastning."/>
+        <text name="rms_breakdowns_track_roller_bearing_wear_stage4_description" text="Kritisk svigt i lejerne i løberullerne og ledehjulene. Bæltet kan gå i stå, hvis et af lejerne sætter sig fast."/>
+        <text name="rms_breakdowns_alternator_branch1_stage1_description" text="Let svigt i generatorregulatoren. Ladeeffekten er reduceret, hvilket sænker opladningen af batteriet."/>
+        <text name="rms_breakdowns_alternator_branch1_stage2_description" text="Moderat svigt i generatorregulatoren. Ladningen er reduceret og ustabil, hvilket giver dårlig opladning af batteriet og større spændingstab."/>
+        <text name="rms_breakdowns_alternator_branch1_stage3_description" text="Alvorligt svigt i generatorregulatoren. Ladningen er kraftigt reduceret, forsyningen er ustabil, og det elektriske system arbejder med store tab."/>
+        <text name="rms_breakdowns_alternator_branch1_stage4_description" text="Fuldstændigt svigt i generatorregulatoren. Batteriet oplades ikke længere, og det elektriske system kører kun på den resterende reserve."/>
+        <text name="rms_breakdowns_alternator_branch2_stage1_description" text="Let svigt i generatordioderne. Ladeeffekten er reduceret, hvilket sænker opladningen af batteriet. En lækstrøm aflader batteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_alternator_branch2_stage2_description" text="Moderat svigt i generatordioderne. Ladningen er reduceret og ustabil, hvilket giver dårlig opladning af batteriet og større spændingstab. En lækstrøm aflader batteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_alternator_branch2_stage3_description" text="Alvorligt svigt i generatordioderne. Ladningen er kraftigt reduceret, forsyningen er ustabil, og det elektriske system arbejder med store tab. En lækstrøm aflader batteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_alternator_branch2_stage4_description" text="Fuldstændigt svigt i generatordioderne. Batteriet oplades ikke længere, og det elektriske system kører kun på den resterende reserve. En lækstrøm aflader batteriet, når maskinen står stille."/>
+        <text name="rms_breakdowns_starter_failure_stage1_description" text="Let svigt i startmotoren. Den trækker motoren langsommere rundt, og starten tager lidt længere tid."/>
+        <text name="rms_breakdowns_starter_failure_stage2_description" text="Moderat svigt i startmotoren. Den trækker motoren langsomt rundt: starten er svær og umulig i streng frost."/>
+        <text name="rms_breakdowns_starter_failure_stage3_description" text="Alvorligt svigt i startmotoren. Den trækker næsten ikke motoren rundt: motoren starter kun varm eller i mildt vejr."/>
+        <text name="rms_breakdowns_starter_failure_stage4_description" text="Fuldstændigt svigt i startmotoren. Den trækker ikke længere motoren rundt: en kørende motor bliver ved med at køre, men kan ikke startes igen, når den er stoppet."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage1_description" text="Let slid på elmotorens lejer. Der opstår en svag støj, og forbruget stiger en smule."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage2_description" text="Moderat slid på elmotorens lejer. Støjen er tydeligt hørbar, forbruget stiger, og effekten falder en smule."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage3_description" text="Alvorligt slid på elmotorens lejer. Støjen er kraftig, motoren bliver varm, og effekten falder tydeligt."/>
+        <text name="rms_breakdowns_electric_motor_bearing_wear_stage4_description" text="Kritisk svigt i elmotorens lejer. Motoren er blokeret, og maskinen kan ikke længere køre."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage1_description" text="Let nedbrydning af elmotorens viklinger. Effekten falder en smule, og motoren bliver varmere."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage2_description" text="Moderat nedbrydning af elmotorens viklinger. Effekten falder tydeligt, motoren bliver varm, og forbruget stiger."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage3_description" text="Alvorlig nedbrydning af elmotorens viklinger. Effekttabet er stort, motoren bliver meget varm, og der kan opstå udfald."/>
+        <text name="rms_breakdowns_electric_motor_winding_fault_stage4_description" text="Kritisk svigt i elmotorens viklinger. Motoren er kortsluttet og kan ikke længere køre."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage1_description" text="Let fejlfunktion i motorens positionssensor. Der opstår korte ryk under belastning."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage2_description" text="Moderat fejlfunktion i motorens positionssensor. Rykkene er hyppige, og effekten falder."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage3_description" text="Alvorlig fejlfunktion i motorens positionssensor. Rykkene er voldsomme, effekten styrtdykker, og der opstår udfald."/>
+        <text name="rms_breakdowns_motor_position_sensor_fault_stage4_description" text="Fuldstændigt svigt i motorens positionssensor. Motoren kan ikke længere styres, og maskinen starter ikke."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage1_description" text="Let fejlfunktion i vekselretteren. Motoreffekten er en smule reduceret."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage2_description" text="Moderat fejlfunktion i vekselretteren. Effekttabet er mærkbart, og forbruget stiger."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage3_description" text="Alvorlig fejlfunktion i vekselretteren. Effekttabet er stort, og der kan opstå udfald."/>
+        <text name="rms_breakdowns_inverter_malfunction_stage4_description" text="Fuldstændigt svigt i vekselretteren. Motoren får ikke længere strøm, og maskinen starter ikke."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage1_description" text="Let svigt i spændingsomformeren. Hjælpebatteriet oplades dårligere."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage2_description" text="Moderat svigt i spændingsomformeren. Opladningen af hjælpebatteriet er reduceret og ustabil."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage3_description" text="Alvorligt svigt i spændingsomformeren. Hjælpebatteriet oplades næsten ikke længere og aflades under kørsel."/>
+        <text name="rms_breakdowns_dcdc_converter_failure_stage4_description" text="Fuldstændigt svigt i spændingsomformeren. Hjælpebatteriet oplades ikke længere, og maskinen kører kun på den resterende reserve."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage1_description" text="Let svigt i ombordladeren. Opladningen ved ladestationen går en smule langsommere."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage2_description" text="Moderat svigt i ombordladeren. Opladningen ved ladestationen går tydeligt langsommere."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage3_description" text="Alvorligt svigt i ombordladeren. Opladningen ved ladestationen går meget langsomt."/>
+        <text name="rms_breakdowns_onboard_charger_failure_stage4_description" text="Fuldstændigt svigt i ombordladeren. Traktionsbatteriet kan ikke længere oplades."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage1_description" text="Let isolationstab i højspændingsledningerne. Der vises en advarsel uden anden virkning."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage2_description" text="Moderat isolationstab i højspændingsledningerne. Effekten reduceres af sikkerhedshensyn."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage3_description" text="Alvorligt isolationstab i højspændingsledningerne. Effekten reduceres kraftigt, og der opstår udfald."/>
+        <text name="rms_breakdowns_hv_insulation_loss_stage4_description" text="Kritisk isolationstab i højspændingsledningerne. Maskinen nægter at starte af sikkerhedshensyn."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage1_description" text="Let svigt i celler i traktionsbatteriet. Rækkevidden falder en smule."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage2_description" text="Moderat svigt i celler i traktionsbatteriet. Rækkevidden falder tydeligt, og effekten er reduceret."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage3_description" text="Alvorligt svigt i celler i traktionsbatteriet. Rækkevidde og effekt styrtdykker, og der kan opstå udfald."/>
+        <text name="rms_breakdowns_traction_battery_cell_fault_stage4_description" text="Kritisk svigt i traktionsbatteriet. Maskinen kan ikke længere tændes."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage1_description" text="Let slid på højspændingskontaktoren. Der opstår sjældne strømafbrydelser."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage2_description" text="Moderat slid på højspændingskontaktoren. Strømafbrydelserne bliver regelmæssige."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage3_description" text="Alvorligt slid på højspændingskontaktoren. Strømafbrydelserne er hyppige."/>
+        <text name="rms_breakdowns_hv_contactor_failure_stage4_description" text="Kritisk svigt i højspændingskontaktoren. Traktionsbatteriet forsyner ikke længere maskinen, som ikke starter."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage1_description" text="Let svigt i kølevæskepumpen. Kølevæsken cirkulerer dårligere, og temperaturen stiger lidt mere."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage2_description" text="Moderat svigt i kølevæskepumpen. Kølingen er tydeligt reduceret."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage3_description" text="Alvorligt svigt i kølevæskepumpen. Kølingen er kraftigt reduceret, og overophedning er sandsynlig under belastning."/>
+        <text name="rms_breakdowns_coolant_pump_failure_stage4_description" text="Fuldstændigt svigt i kølevæskepumpen. Kølevæsken cirkulerer næsten ikke længere, og maskinen overopheder hurtigt."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage1_description" text="Let svigt i vandpumpen. Fejlen mærkes endnu næsten ikke og kræver kontrol."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage2_description" text="Moderat svigt i vandpumpen. Cirkulationen falder, og kølingen bliver mindre effektiv."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage3_description" text="Alvorligt svigt i vandpumpen. Utilstrækkelig cirkulation giver risiko for overophedning."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch1_stage4_description" text="Kritisk svigt i vandpumpen. Cirkulationen er stærkt forringet, og kølingen er meget nedsat."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage1_description" text="Let svigt i vandpumpen. Der ses lette spor af kølervæske omkring vandpumpens tætning."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage2_description" text="Moderat svigt i vandpumpen. Kølervæske lækker gennem vandpumpens tætning; niveauet falder, og cirkulationen bliver mindre effektiv."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage3_description" text="Alvorligt svigt i vandpumpen. Lækagen ved vandpumpens tætning efterlader tydelige spor omkring pumpen; niveauet falder, og den svagere cirkulation øger risikoen for overophedning."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch2_stage4_description" text="Kritisk svigt i vandpumpen. Vandpumpens tætning lækker kraftigt; kredsløbet mister væske, og cirkulationen kan ikke længere køle motoren ordentligt."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage1_description" text="Let svigt i vandpumpen. Fejlen mærkes endnu næsten ikke og kræver kontrol."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage2_description" text="Moderat svigt i vandpumpen. Pumpens leje får slør, og cirkulationen falder."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage3_description" text="Alvorligt svigt i vandpumpen. Utilstrækkelig cirkulation giver risiko for overophedning."/>
+        <text name="rms_breakdowns_thermal_water_pump_branch3_stage4_description" text="Kritisk svigt i vandpumpen. Cirkulationen er stærkt forringet, og kølingen er meget nedsat."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage1_description" text="Let svigt i kølerkernen. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage2_description" text="Moderat svigt i kølerkernen. Den afgiver mindre varme."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage3_description" text="Alvorligt svigt i kølerkernen. Den afgiver varme dårligt, og risikoen for overophedning stiger."/>
+        <text name="rms_breakdowns_radiator_core_branch1_stage4_description" text="Kritisk svigt i kølerkernen. Den afgiver meget lidt varme, og kølingen er alvorligt forringet."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage1_description" text="Let svigt i kølerkernen. Der siver kølervæske ud på kølerkernens rør."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage2_description" text="Moderat svigt i kølerkernen. Utætte rør lader kølervæske løbe ud på køleren, og niveauet i kredsløbet falder."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage3_description" text="Alvorligt svigt i kølerkernen. Kølervæske strømmer ud af kølerkernens utætte rør og efterlader våde spor på køleren; reserven falder hurtigt."/>
+        <text name="rms_breakdowns_radiator_core_branch2_stage4_description" text="Kritisk svigt i kølerkernen. Den er utæt og mister meget kølervæske. Niveauet falder, og køleren kan ikke længere bortlede nok varme fra motoren."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage1_description" text="Let slid på reduktionsgearets tandhjul og lejer. Der opstår en svag støj under kørsel."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage2_description" text="Moderat slid på reduktionsgearets tandhjul og lejer. Støjen er tydeligt hørbar, og forbruget stiger."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage3_description" text="Alvorligt slid på reduktionsgearets tandhjul og lejer. Støjen er kraftig, reduktionsgearet bliver varmt, og effekten ved hjulene falder."/>
+        <text name="rms_breakdowns_reducer_gear_wear_stage4_description" text="Kritisk svigt i reduktionsgearet. Det er blokeret, og maskinen kan ikke længere køre."/>
+        <text name="rms_breakdowns_pistons_branch1_stage1_description" text="Let svigt i stemplerne. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_pistons_branch1_stage2_description" text="Moderat svigt i stemplerne. Mere olie kommer ind i forbrændingskammeret, og der ses blå røg."/>
+        <text name="rms_breakdowns_pistons_branch1_stage3_description" text="Alvorligt svigt i stemplerne. Olieforbruget og den blå røg tiltager."/>
+        <text name="rms_breakdowns_pistons_branch1_stage4_description" text="Kritisk svigt i stemplerne. Et stempel er løbet fast, og motoren er blokeret."/>
+        <text name="rms_breakdowns_pistons_branch2_stage1_description" text="Let svigt i stemplerne. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_pistons_branch2_stage2_description" text="Moderat svigt i stemplerne. Mere olie kommer ind i forbrændingskammeret, og der ses blå røg."/>
+        <text name="rms_breakdowns_pistons_branch2_stage3_description" text="Alvorligt svigt i stemplerne. Olieforbruget og den blå røg tiltager."/>
+        <text name="rms_breakdowns_pistons_branch2_stage4_description" text="Kritisk svigt i stemplerne. Et stempel er knækket, og motoren er standset."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage1_description" text="Let svigt i stempelringene. Aflejringer hæmmer ringene i deres riller."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage2_description" text="Moderat svigt i stempelringene. Tætheden forringes, og motoren mister effekt."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage3_description" text="Alvorligt svigt i stempelringene. Kompressionstab gør start vanskelig og reducerer effekten."/>
+        <text name="rms_breakdowns_piston_rings_branch1_stage4_description" text="Kritisk svigt i stempelringene. Kompressionen er meget lav, start er vanskelig, og effekten er stærkt nedsat."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage1_description" text="Let svigt i stempelringene. Aflejringer hæmmer ringene i deres riller."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage2_description" text="Moderat svigt i stempelringene. Mere olie kommer ind i forbrændingskammeret, og der ses blå røg."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage3_description" text="Alvorligt svigt i stempelringene. Olieforbruget og den blå røg tiltager."/>
+        <text name="rms_breakdowns_piston_rings_branch2_stage4_description" text="Kritisk svigt i stempelringene. Meget olie trænger ind, og den blå røg fortsætter."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage1_description" text="Let svigt i stempelringene. Aflejringer hæmmer ringene i deres riller."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage2_description" text="Moderat svigt i stempelringene. Tætheden forringes, og motoren mister effekt."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage3_description" text="Alvorligt svigt i stempelringene. Kompressionstab gør start vanskelig og reducerer effekten."/>
+        <text name="rms_breakdowns_piston_rings_branch3_stage4_description" text="Kritisk svigt i stempelringene. En stempelring er knækket: kompressionen falder, og olie kommer ind i forbrændingskammeret."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage1_description" text="Let svigt i cylinderforingerne. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage2_description" text="Moderat svigt i cylinderforingerne. Overfladen er ridset og tætner dårligere."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage3_description" text="Alvorligt svigt i cylinderforingerne. Overfladen er ridset og tætner dårligere. Olieforbruget og den blå røg tiltager."/>
+        <text name="rms_breakdowns_cylinder_liners_branch1_stage4_description" text="Kritisk svigt i cylinderforingerne. Et stempel er løbet fast i cylinderforingen, og motoren er blokeret."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage1_description" text="Let svigt i cylinderforingerne. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage2_description" text="Moderat svigt i cylinderforingerne. Kølervæske lækker gennem en revnet cylinderforing ind i en cylinder, så niveauet falder."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage3_description" text="Alvorligt svigt i cylinderforingerne. En revnet cylinderforing lader kølervæske komme ind i en cylinder; der kommer hvid røg fra udstødningen."/>
+        <text name="rms_breakdowns_cylinder_liners_branch2_stage4_description" text="Kritisk svigt i cylinderforingerne. Meget kølervæske trænger gennem en revnet cylinderforing ind i en cylinder med vedvarende hvid røg og utilstrækkelig køling."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage1_description" text="Let svigt i indsugningsventilerne. Tætningsfladen er beskadiget, og effekten falder lidt."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage2_description" text="Moderat svigt i indsugningsventilerne. Ventilen lukker dårligt med fejltænding og effekttab."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage3_description" text="Alvorligt svigt i indsugningsventilerne. Sædet er brændt med fejltænding, motorstop og effekttab."/>
+        <text name="rms_breakdowns_inlet_valves_branch1_stage4_description" text="Kritisk svigt i indsugningsventilerne. Det brændte sæde giver fejltænding, motorstop og stort effekttab."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage1_description" text="Let svigt i indsugningsventilerne. Tætningsfladen er beskadiget, og effekten falder lidt."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage2_description" text="Moderat svigt i indsugningsventilerne. Ventilen lukker dårligt med fejltænding og effekttab."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage3_description" text="Alvorligt svigt i indsugningsventilerne. Sædet er brændt med fejltænding, motorstop og effekttab."/>
+        <text name="rms_breakdowns_inlet_valves_branch2_stage4_description" text="Kritisk svigt i indsugningsventilerne. En indsugningsventil er knækket, og motoren er standset."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage1_description" text="Let svigt i udstødningsventilerne. Tætningsfladen er beskadiget, og effekten falder lidt."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage2_description" text="Moderat svigt i udstødningsventilerne. Ventilen lukker dårligt med fejltænding og effekttab."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage3_description" text="Alvorligt svigt i udstødningsventilerne. Sædet er brændt med fejltænding, motorstop og effekttab."/>
+        <text name="rms_breakdowns_exhaust_valves_branch1_stage4_description" text="Kritisk svigt i udstødningsventilerne. Det brændte sæde giver fejltænding, motorstop og stort effekttab."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage1_description" text="Let svigt i udstødningsventilerne. Tætningsfladen er beskadiget, og effekten falder lidt."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage2_description" text="Moderat svigt i udstødningsventilerne. Ventilen lukker dårligt med fejltænding og effekttab."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage3_description" text="Alvorligt svigt i udstødningsventilerne. Sædet er brændt med fejltænding, motorstop og effekttab."/>
+        <text name="rms_breakdowns_exhaust_valves_branch2_stage4_description" text="Kritisk svigt i udstødningsventilerne. En udstødningsventil er knækket, og motoren er standset."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage1_description" text="Let svigt i ventilstyrene og ventiltætningerne. Kontrollen viser en styringsfejl, og ventilerne støjer."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage2_description" text="Moderat svigt i ventilstyrene og ventiltætningerne. Sløret øges, og ventilerne støjer mere."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage3_description" text="Alvorligt svigt i ventilstyrene og ventiltætningerne. For stort slør giver støj, fejltænding og oliepassage."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch1_stage4_description" text="Kritisk svigt i ventilstyrene og ventiltætningerne. Sløret i ventilstyrene er for stort med støj, fejltænding og blå røg."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage1_description" text="Let svigt i ventilstyrene og ventiltætningerne. Den hærdede tætning lader olie passere."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage2_description" text="Moderat svigt i ventilstyrene og ventiltætningerne. Mere olie kommer ind i forbrændingskammeret, og der ses blå røg."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage3_description" text="Alvorligt svigt i ventilstyrene og ventiltætningerne. Olieforbruget og den blå røg tiltager."/>
+        <text name="rms_breakdowns_valve_guides_seals_branch2_stage4_description" text="Kritisk svigt i ventilstyrene og ventiltætningerne. Meget olie trænger ind, og den blå røg fortsætter."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage1_description" text="Let svigt i topstykket. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage2_description" text="Moderat svigt i topstykket. En revne i topstykket lader kølervæske komme ind i et forbrændingskammer; motoren mister effekt og starter dårligt."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage3_description" text="Alvorligt svigt i topstykket. Kølervæske passerer gennem det revnede topstykke ind i et forbrændingskammer med hvid røg og effekttab."/>
+        <text name="rms_breakdowns_cylinder_head_branch1_stage4_description" text="Kritisk svigt i topstykket. En revne lader meget kølervæske komme ind i et forbrændingskammer. Motoren har lav effekt, starter dårligt og udleder hvid røg."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage1_description" text="Let svigt i topstykket. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage2_description" text="Moderat svigt i topstykket. Kølervæske siver ud af det revnede topstykke, og niveauet i kredsløbet falder."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage3_description" text="Alvorligt svigt i topstykket. Kølervæskelækagen efterlader synlige spor på det revnede topstykke, og niveauet falder hurtigt."/>
+        <text name="rms_breakdowns_cylinder_head_branch2_stage4_description" text="Kritisk svigt i topstykket. Meget kølervæske strømmer ud af det revnede topstykke; kredsløbet tømmes, og motoren risikerer overophedning."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage1_description" text="Let svigt i topstykket. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage2_description" text="Moderat svigt i topstykket. Kølervæske lækker gennem en revne i topstykket ind i olien, så niveauet i kredsløbet falder."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage3_description" text="Alvorligt svigt i topstykket. Revnen i topstykket lader mere kølervæske komme ind i olien; niveauet i kredsløbet falder fortsat."/>
+        <text name="rms_breakdowns_cylinder_head_branch3_stage4_description" text="Kritisk svigt i topstykket. Revnen i topstykket leder meget kølervæske ind i olien; kredsløbet mister sin reserve, og motoren risikerer overophedning."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage1_description" text="Let svigt i toppakningen. Fejlen mærkes endnu næsten ikke og kræver kontrol."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage2_description" text="Moderat svigt i toppakningen. Den lader kølervæske komme ind i et forbrændingskammer; starten tager længere tid, og effekten falder."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage3_description" text="Alvorligt svigt i toppakningen. Kølervæske passerer gennem den ind i et forbrændingskammer og giver hvid røg fra udstødningen."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch1_stage4_description" text="Kritisk svigt i toppakningen. Den lader meget kølervæske komme ind i et forbrændingskammer; den hvide røg tiltager, og starten bliver meget vanskelig."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage1_description" text="Let svigt i toppakningen. Fejlen mærkes endnu næsten ikke og kræver kontrol."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage2_description" text="Moderat svigt i toppakningen. Kølervæske siver ud ved den og sænker niveauet i kredsløbet."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage3_description" text="Alvorligt svigt i toppakningen. En kølervæskelækage ved den efterlader spor på motoren og sænker niveauet hurtigt."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch2_stage4_description" text="Kritisk svigt i toppakningen. Den lader meget kølervæske løbe ud; niveauet falder, og motorens køling bliver meget dårligere."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage1_description" text="Let svigt i toppakningen. Fejlen mærkes endnu næsten ikke og kræver kontrol."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage2_description" text="Moderat svigt i toppakningen. Kølervæske passerer gennem den ind i olien; niveauet i kredsløbet falder."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage3_description" text="Alvorligt svigt i toppakningen. Den lader stadig mere kølervæske komme ind i olien; kredsløbet mister gradvist væske."/>
+        <text name="rms_breakdowns_cylinder_head_gasket_branch3_stage4_description" text="Kritisk svigt i toppakningen. En stor lækage gennem den sender kølervæske ind i olien og fratager kredsløbet den væske, kølingen kræver."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage1_description" text="Let svigt i krumtapslejerne. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage2_description" text="Moderat svigt i krumtapslejerne. Lejesløret øges."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage3_description" text="Alvorligt svigt i krumtapslejerne. Oliefilmen er forringet med banken og varme."/>
+        <text name="rms_breakdowns_main_bearings_branch1_stage4_description" text="Kritisk svigt i krumtapslejerne. Et krumtapsleje er løbet fast og har blokeret motoren."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage1_description" text="Let svigt i krumtapslejerne. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage2_description" text="Moderat svigt i krumtapslejerne. Lejesløret øges."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage3_description" text="Alvorligt svigt i krumtapslejerne. Oliefilmen er forringet med banken og varme."/>
+        <text name="rms_breakdowns_main_bearings_branch2_stage4_description" text="Kritisk svigt i krumtapslejerne. Belægningen på et krumtapsleje er smeltet, og motoren er standset."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage1_description" text="Let svigt i plejlstangslejerne. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage2_description" text="Moderat svigt i plejlstangslejerne. Lejesløret øges."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage3_description" text="Alvorligt svigt i plejlstangslejerne. Oliefilmen er forringet med banken og varme."/>
+        <text name="rms_breakdowns_conrod_bearings_branch1_stage4_description" text="Kritisk svigt i plejlstangslejerne. Et plejlstangsleje er løbet fast og har blokeret motoren."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage1_description" text="Let svigt i plejlstangslejerne. Kontrollen viser en beskadiget overflade."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage2_description" text="Moderat svigt i plejlstangslejerne. Lejesløret øges."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage3_description" text="Alvorligt svigt i plejlstangslejerne. Oliefilmen er forringet med banken og varme."/>
+        <text name="rms_breakdowns_conrod_bearings_branch2_stage4_description" text="Kritisk svigt i plejlstangslejerne. Belægningen på et plejlstangsleje er smeltet, og motoren er standset."/>
+        <text name="rms_breakdowns_voltage_sag_message" text="Utilstrækkelig spænding i kredsen"/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage1_description" text="For tidligt slid på fødepumpen. Let nedsat motoreffekt og øget brændstofforbrug."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage2_description" text="Faldende brændstoftryk. Mærkbart effekttab, højere brændstofforbrug og lejlighedsvise motorstop."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage3_description" text="Kritisk brændstoftryk. Stort effekttab, meget højt brændstofforbrug og hyppige motorstop."/>
+        <text name="rms_breakdowns_fuel_pump_malfunction_stage4_description" text="Fuldstændigt svigt i fødepumpen. Der føres ikke længere brændstof til motoren."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage1_description" text="En eller flere dysemundinger er let tilstoppede. Motoren kan køre lidt ujævnt med et let effekttab."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage2_description" text="Dårlig forstøvning af brændstoffet. Motoren tøver under belastning med mærkbart effekttab og ryk."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage3_description" text="En brændstofdyse sidder fast. Motoren kører meget dårligt med stort effekttab og upålidelig start."/>
+        <text name="rms_breakdowns_fuel_injector_malfunction_stage4_description" text="En dyse er helt defekt. Motoren kører ikke længere korrekt og starter måske slet ikke."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage1_description" text="Let svigt i højtrykspumpen. Indsprøjtningstrykket bygges langsommere op: starten tager længere tid, og motoren reagerer mindre skarpt."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage2_description" text="Moderat svigt i højtrykspumpen. Indsprøjtningstrykket slår ikke til under belastning, med mærkbart effekttab og tøven."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage3_description" text="Alvorligt svigt i højtrykspumpen. Indsprøjtningstrykket er kritisk lavt, med stort effekttab, motorstop og vanskelig start."/>
+        <text name="rms_breakdowns_high_pressure_pump_malfunction_stage4_description" text="Fuldstændigt svigt i højtrykspumpen. Den opbygger ikke længere indsprøjtningstryk: startmotoren trækker motoren rundt, men den starter ikke."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage1_description" text="Let tilstopning af brændstoffilteret. Brændstofgennemstrømningen falder en smule under høj belastning."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage2_description" text="Moderat tilstopning af brændstoffilteret. Gennemstrømningen bliver utilstrækkelig under belastning, effekten falder, og motoren tøver af og til."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage3_description" text="Alvorlig tilstopning af brændstoffilteret. Brændstoftilførslen er stærkt begrænset, effekten falder tydeligt, og motoren kan gå i stå."/>
+        <text name="rms_breakdowns_fuel_filter_clogging_stage4_description" text="Brændstoffilteret er helt tilstoppet. Motoren får ikke længere brændstof nok til at køre pålideligt."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage1_description" text="Let luftindtrængning i brændstofledningen. Brændstoftilførslen bliver en smule ujævn."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage2_description" text="Moderat luftindtrængning i brændstofledningen. Tilførslen bliver ustabil, effekten falder, og motoren begynder at tøve."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage3_description" text="Alvorlig luftindtrængning i brændstofledningen. Motoren kører meget ujævnt, og risikoen for motorstop er stor."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch1_stage4_description" text="Kritisk svigt i brændstofledningen med kraftig luftindtrængning. Motoren kan ikke længere forsynes korrekt."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage1_description" text="Let klemning af brændstofledningen. Gennemstrømningen falder: motoren starter og går derefter i stå af og til."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage2_description" text="Moderat klemning af brændstofledningen. Motoren starter og går derefter regelmæssigt i stå."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage3_description" text="Alvorlig klemning af brændstofledningen. Motoren går ofte i stå."/>
+        <text name="rms_breakdowns_fuel_line_air_leak_branch2_stage4_description" text="Brændstofledningen er klemt flad. Brændstoffet kan ikke længere passere: motoren stopper."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage1_description" text="Let svigt i den mekaniske indsprøjtningspumpe. Gennemstrømningen falder: starten tager længere tid, og motoren mangler lidt trækkraft."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage2_description" text="Moderat svigt i den mekaniske indsprøjtningspumpe. Gennemstrømningen er utilstrækkelig under belastning: motoren mister effekt og tøver."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage3_description" text="Alvorligt svigt i den mekaniske indsprøjtningspumpe. Motoren får for lidt brændstof, mister meget effekt, starter dårligt og går i stå."/>
+        <text name="rms_breakdowns_mechanical_injection_pump_malfunction_stage4_description" text="Kritisk svigt i den mekaniske indsprøjtningspumpe. Drevet er knækket: motoren stopper og kan ikke startes igen."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage1_description" text="Let svigt i brændstofdoseringsventilen. Trykket i railen stiger langsommere, og starten tager længere tid."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage2_description" text="Moderat svigt i brændstofdoseringsventilen. Railtrykket er utilstrækkeligt under belastning: motoren mister effekt og tøver."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage3_description" text="Alvorligt svigt i brændstofdoseringsventilen. Railtrykket afviger kraftigt fra den ønskede værdi: motoren mister meget effekt og går i stå."/>
+        <text name="rms_breakdowns_fuel_metering_valve_failure_stage4_description" text="Kritisk svigt i brændstofdoseringsventilen. Der opbygges ikke længere tryk i railen: starteren drejer motoren rundt, men den starter ikke."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage1_description" text="Let svigt i railtryksensoren. Målingen bliver ustabil, og starten tager lidt længere tid."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage2_description" text="Moderat svigt i railtryksensoren. Styreenheden regulerer trykket dårligt: motoren mister effekt og tøver."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage3_description" text="Alvorligt svigt i railtryksensoren. Motoren går i nødprogram, mister meget effekt og kan gå i stå."/>
+        <text name="rms_breakdowns_rail_pressure_sensor_failure_stage4_description" text="Kritisk svigt i railtryksensoren. Uden en måling holder styreenheden motoren i nødprogram."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage1_description" text="Let svigt i railtrykbegrænsningsventilen. Den åbner for tidligt: Railtrykket stiger langsommere, og starten tager længere tid."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage2_description" text="Moderat svigt i railtrykbegrænsningsventilen. Railtrykket holder ikke under belastning: Motoren mister effekt og tøver."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage3_description" text="Alvorligt svigt i railtrykbegrænsningsventilen. Railtrykket falder brat: Motoren mister meget effekt og går i stå."/>
+        <text name="rms_breakdowns_rail_pressure_limiter_failure_stage4_description" text="Kritisk svigt i railtrykbegrænsningsventilen. Den forbliver åben: Der opbygges ikke railtryk, og starteren drejer motoren uden at få den i gang."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage1_description" text="Let svigt i gastrykregulatoren. Forsyningstrykket svinger, og starten tager længere tid."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage2_description" text="Moderat svigt i gastrykregulatoren. Trykket falder under belastning: motoren mister effekt og tøver."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage3_description" text="Alvorligt svigt i gastrykregulatoren. Tilførslen bliver ujævn: motoren mister meget effekt, starter dårligt og går i stå."/>
+        <text name="rms_breakdowns_gas_pressure_regulator_failure_stage4_description" text="Kritisk svigt i gastrykregulatoren. Den lader ikke længere gas nok passere: motoren stopper."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage1_description" text="Let svigt i magnetventilen til gasafspærring. Den åbner forsinket: starten tager længere tid, og motoren tøver indimellem."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage2_description" text="Moderat svigt i magnetventilen til gasafspærring. Den afbryder indimellem gassen: motoren tøver og går i stå."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage3_description" text="Alvorligt svigt i magnetventilen til gasafspærring. Afbrydelserne bliver hyppigere, og motoren går ofte i stå."/>
+        <text name="rms_breakdowns_gas_shutoff_solenoid_failure_stage4_description" text="Kritisk svigt i magnetventilen til gasafspærring. Den forbliver lukket: motoren stopper og kan ikke startes igen."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage1_description" text="Let tilstopning af gasfilteret. Gasgennemstrømningen falder en smule under høj belastning."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage2_description" text="Moderat tilstopning af gasfilteret. Tilførslen er utilstrækkelig under belastning: effekten falder, og motoren kan gå i stå."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage3_description" text="Alvorlig tilstopning af gasfilteret. Gennemstrømningen er stærkt begrænset: effekten falder tydeligt, og motoren går i stå."/>
+        <text name="rms_breakdowns_gas_filter_clogging_stage4_description" text="Gasfilteret er helt tilstoppet. Motoren får ikke længere gas nok og stopper."/>
+        <text name="rms_breakdowns_gas_line_leak_stage1_description" text="Let lækage i gasledningerne. Starten tager lidt længere tid."/>
+        <text name="rms_breakdowns_gas_line_leak_stage2_description" text="Moderat lækage i gasledningerne. Tilførslen bliver ujævn: motoren tøver og kan gå i stå."/>
+        <text name="rms_breakdowns_gas_line_leak_stage3_description" text="Alvorlig lækage i gasledningerne. Trykket falder: motoren tøver, starter dårligt og går ofte i stå."/>
+        <text name="rms_breakdowns_gas_line_leak_stage4_description" text="Kritisk lækage i gasledningerne. Trykket kan ikke længere holdes: motoren stopper."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage1_description" text="Let svigt i gasdyserne. Doseringen bliver ujævn: motoren kører mindre jævnt og bruger lidt mere gas."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Moderat svigt i gasdyserne. Motoren tøver, mister effekt, bruger mere gas og kan gå i stå."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Alvorligt svigt i gasdyserne. En dyse doserer meget dårligt: stort effekttab, højt forbrug og vanskelig start."/>
+        <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kritisk svigt i gasdyserne. Doseringen tillader ikke længere motorgang: motoren stopper."/>
+        <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Svigt i AdBlue-pumpen. Den forsyner ikke længere doseringen: motorlampen tænder, og derefter reducerer styreenheden effekten indtil reparationen."/>
+        <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Svigt i AdBlue-doseringsdysen. Tilstoppet af krystaller forstøver den ikke længere: motorlampen tænder, og effekten falder efterfølgende indtil reparationen."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlue-filteret er klar til udskiftning og begynder at stoppe til. Det mest omfattende service udskifter det."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage2_description" text="AdBlue-filteret er snavset: AdBlue-gennemstrømningen falder, og motorlampen tænder. Det mest omfattende service udskifter det."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage3_description" text="AdBlue-filteret er meget snavset: Doseringen svigter, og ECU reducerer effekten indtil reparationen."/>
+        <text name="rms_breakdowns_adblue_filter_clogging_stage4_description" text="AdBlue-filteret er helt tilstoppet: Der doseres ikke længere, og ECU reducerer effekten indtil reparationen."/>
+        <text name="rms_breakdowns_nox_sensor_failure_stage1_description" text="Svigt i NOx-sensoren. Styreenheden overvåger ikke længere emissionerne: motorlampen tænder, og efter flere snese timer reduceres effekten."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage1_description" text="Let svigt i partikelfilteret. En revne lader lidt sod slippe ud i udstødningen."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage2_description" text="Moderat svigt i partikelfilteret. Revnen bliver større: sort røg bliver synlig."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage3_description" text="Alvorligt svigt i partikelfilteret. Filterkernen smuldrer: udstødningen afgiver meget sort røg."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch1_stage4_description" text="Kritisk svigt i partikelfilteret. Filterkernen er brudt: soden passerer uden at blive tilbageholdt."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage1_description" text="Let svigt i partikelfilteret. En del af filterkernen er smeltet og stopper til."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage2_description" text="Moderat svigt i partikelfilteret. Det smeltede område breder sig: modtrykket stiger."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage3_description" text="Alvorligt svigt i partikelfilteret. Smeltet og tilstoppet kan det ikke længere regenerere: motorens omdrejningstal begrænses."/>
+        <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritisk svigt i partikelfilteret. Helt blokeret lader det ikke længere udstødningsgassen passere: kun en udskiftning giver motoren effekten tilbage."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Partikelfilteret er mættet. Regenereringerne er ikke blevet fuldført: motorens omdrejningstal begrænses, indtil en regenerering lykkes."/>
+        <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritisk mætning af partikelfilteret. Det er for fyldt til selv at regenerere og kræver en serviceregenerering på værkstedet; omdrejningstallet forbliver begrænset."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Let svigt i ventilatorkoblingen. Ventilatoren reagerer mindre effektivt, og køleevnen er en smule forringet."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Moderat svigt i ventilatorkoblingen. Ventilatoren kobler uregelmæssigt til, og køleevnen falder tydeligt."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Alvorligt svigt i ventilatorkoblingen. Ventilatoren giver ikke længere luft nok, og motoren overopheder lettere."/>
+        <text name="rms_breakdowns_fan_clutch_failure_stage4_description" text="Kritisk svigt i ventilatorkoblingen. Ventilatoren kan ikke længere levere den nødvendige køling."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage1_description" text="Udvekslingsstyringen reagerer langsommere og mindre præcist."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage2_description" text="Udvekslingen varierer uregelmæssigt, og styringen reagerer dårligt."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage3_description" text="Udvekslingsstyringen er stærkt forstyrret, og den overførte drivkraft falder."/>
+        <text name="rms_breakdowns_hydraulic_control_valve_malfunction_stage4_description" text="Udvekslingsstyringen har svigtet; transmissionen er næsten ubrugelig."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description" text="Let indvendig lækage i en hydraulikcylinder. Et løftet redskab synker langsomt under belastning."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description" text="Moderat indvendig lækage i en hydraulikcylinder. Den utilsigtede sænkning bliver synlig og vokser, jo tungere lasten er."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description" text="Alvorlig indvendig lækage i en hydraulikcylinder. Tunge redskaber holder ikke længere deres position pålideligt."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description" text="Kritisk indvendig lækage i en hydraulikcylinder. Enhver løftet last synker hurtigt af sig selv."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage1_description" text="Mindre indvendig lækage i hydraulikpumpen. Redskaberne arbejder en smule langsommere."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage2_description" text="Slidte pakninger i hydraulikpumpen. Hydraulikken arbejder tydeligt langsommere."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage3_description" text="Beskadiget hydraulikpumpe. Redskaberne er meget langsomme og svage."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_stage4_description" text="Svigt i hydraulikpumpen. Hydrauliksystemet er ude af drift."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage1_description" text="En hydraulikslange viser let fugt. Der slipper lidt olie ud, og hydraulikken reagerer en smule svagere."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage2_description" text="En hydraulikslange siver synligt. Olietabet fortsætter, og hydraulikfunktionerne reagerer langsommere."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage3_description" text="En hydraulikslange lækker aktivt. Olietabet er tydeligt, og hydraulikfunktionerne er mærkbart svækkede."/>
+        <text name="rms_breakdowns_hydraulic_hose_external_leak_stage4_description" text="En hydraulikslange har en kraftig lækage. Olien slipper hurtigt ud, og hydraulikkens ydeevne falder stærkt."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage1_description" text="Hydraulikfilteret er let tilsmudset og begynder at begrænse gennemstrømningen. Hydraulikfunktionerne bliver en smule langsommere. Vedligeholdelsen udskifter filteret."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage2_description" text="Hydraulikfilteret er moderat tilsmudset. Alle hydraulikfunktioner er tydeligt langsommere. Vedligeholdelsen udskifter filteret."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage3_description" text="Hydraulikfilteret er kraftigt tilsmudset. Hydraulikken reagerer meget langsomt. Vedligeholdelsen udskifter filteret."/>
+        <text name="rms_breakdowns_hydraulic_filter_clogging_stage4_description" text="Hydraulikfilteret er helt tilstoppet. Hydraulikfunktionerne reagerer næsten ikke. Vedligeholdelsen udskifter filteret."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage1_description" text="Hydraulikoliekøleren mister lidt af sin virkning. Olietemperaturen stiger en smule under længere hydraulisk arbejde."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage2_description" text="Hydraulikoliekøleren arbejder dårligt. Olietemperaturen stiger tydeligt under vedvarende hydraulisk arbejde."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage3_description" text="Hydraulikoliekøleren er stærkt forringet. Tungt hydraulisk arbejde overopheder olien hurtigt."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_stage4_description" text="Hydraulikoliekøleren er brudt sammen. Længere arbejde giver kraftig overophedning af olien og fremskynder sliddet på pumpen."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage1_description" text="En hydraulisk styreventil begynder at binde. En hydraulikfunktion tøver af og til og mister kraft under belastning."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage2_description" text="En hydraulisk styreventil binder periodevis. En hydraulikfunktion bliver langsommere og mister mere kraft, når belastningen stiger."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage3_description" text="En hydraulisk styreventil binder kraftigt. En hydraulikfunktion bevæger sig uregelmæssigt og har svært ved en tung last."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_stage4_description" text="En hydraulisk styreventil er alvorligt beskadiget. En hydraulikfunktion stopper hele tiden og kan næsten ikke flytte en tung last."/>
+        <text name="rms_breakdowns_part_transmission_pump" text="Transmissionspumpe"/>
+        <text name="rms_breakdowns_part_hydrostatic_unit" text="Hydrostatisk enhed"/>
+        <text name="rms_breakdowns_part_transmission_oil_cooler" text="Transmissionsoliekøler"/>
+        <text name="rms_breakdowns_part_gearbox_bearings" text="Gearkasselejer"/>
+        <text name="rms_breakdowns_part_powershift_clutches" text="Powershift-gearkoblinger"/>
+        <text name="rms_breakdowns_part_powershift_reverser" text="Powershift-vendekoblinger"/>
+        <text name="rms_breakdowns_part_transmission_control" text="Transmissionsstyring"/>
+        <text name="rms_breakdowns_part_rear_bevel_gear" text="Bagakslens keglehjulssæt"/>
+        <text name="rms_breakdowns_part_final_drives" text="Slutdrev"/>
+        <text name="rms_breakdowns_part_differential" text="Differentialets tandhjul"/>
+        <text name="rms_breakdowns_part_four_wd_control" text="Tilkobling af firehjulstræk"/>
+        <text name="rms_breakdowns_part_front_axle_shaft" text="Forakslens drivaksel og kardankryds"/>
+        <text name="rms_breakdowns_part_axle_bearings" text="Aksellejer"/>
+        <text name="rms_breakdowns_part_transmission_sensors" text="Gearkassesensorer"/>
+        <text name="rms_breakdowns_part_transmission_filter" text="Transmissionsfilter"/>
+        <text name="rms_breakdowns_part_lift_valve" text="Liftventil"/>
+        <text name="rms_breakdowns_part_lift_position_sensor" text="Liftpositionssensor"/>
+        <text name="rms_breakdowns_part_loader_control" text="Læsserstyring"/>
+        <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydrauliske lynkoblinger"/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Let svigt i koblingen. Den frigør ikke helt. Nogle gear er svære at vælge."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Moderat svigt i koblingen. Mekanismen frigør skiven dårligt. Gear afvises oftere."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" text="Alvorligt svigt i koblingen. Skiven drives stadig ved udkobling. Gearvalget er stærkt forstyrret."/>
+        <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" text="Kritisk svigt i koblingen. Mekanismen frigør ikke længere skiven. Intet gear kan vælges normalt."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage1_description" text="Let svigt i gearkasselejerne. Løbefladerne er beskadigede. En svag rumlen høres fra gearkassen."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage2_description" text="Moderat svigt i gearkasselejerne. Lejebanerne er beskadigede. Gearkassens rumlen høres tydeligt."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage3_description" text="Alvorligt svigt i gearkasselejerne. Lejerne drejer tungt. Gearkassen rumler kraftigt og kan sætte sig fast."/>
+        <text name="rms_breakdowns_gearbox_bearing_failure_stage4_description" text="Kritisk svigt i gearkasselejerne. Lejerne har sat sig fast. Gearkassen er blokeret, og maskinen kan ikke køre."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage1_description" text="Let svigt i Powershift-gearkoblingerne. En lamelpakke overfører kraften dårligt. Et gear glider lidt under belastning."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage1_description" text="Let svigt i Powershift-gearkoblingerne. En lamelpakke griber sent. Et gear kobles ind med et let ryk."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage2_description" text="Moderat svigt i Powershift-gearkoblingerne. En lamelpakke klemmer ikke tilstrækkeligt. Gearet glider tydeligt under belastning."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage2_description" text="Moderat svigt i Powershift-gearkoblingerne. En lamelpakke fyldes dårligt. Gearet kobles hårdt ind."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage3_description" text="Alvorligt svigt i Powershift-gearkoblingerne. En lamelpakke holder knap belastningen. Kun lidt drivkraft når hjulene."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage3_description" text="Alvorligt svigt i Powershift-gearkoblingerne. En lamelpakke griber meget dårligt. Gearskift giver kraftige ryk."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch1_stage4_description" text="Kritisk svigt i Powershift-gearkoblingerne. Lamelpakken overfører ikke længere kraft. Maskinen kan ikke køre."/>
+        <text name="rms_breakdowns_powershift_clutch_failure_branch2_stage4_description" text="Kritisk svigt i Powershift-gearkoblingerne. Lamelpakken griber ikke korrekt. Gearet driver ikke længere maskinen."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage1_description" text="Let svigt i Powershift-vendekoblingerne. En frem- eller bakkobling glider lidt ved igangsætning."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage1_description" text="Let svigt i Powershift-vendekoblingerne. En vendekobling griber sent. Trækket vender tilbage med et let ryk."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage2_description" text="Moderat svigt i Powershift-vendekoblingerne. En vendekobling glider tydeligt. Kraften overføres dårligt i den valgte retning."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage2_description" text="Moderat svigt i Powershift-vendekoblingerne. En vendekobling griber brat. Retningsskift rykker i maskinen."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage3_description" text="Alvorligt svigt i Powershift-vendekoblingerne. En vendekobling holder knap belastningen. Drivkraften falder kraftigt."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage3_description" text="Alvorligt svigt i Powershift-vendekoblingerne. En vendekobling griber meget ujævnt. Igangsætningen er meget hård."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch1_stage4_description" text="Kritisk svigt i Powershift-vendekoblingerne. Vendekoblingen overfører ikke længere kraft. Maskinen kan ikke køre."/>
+        <text name="rms_breakdowns_powershift_reverser_failure_branch2_stage4_description" text="Kritisk svigt i Powershift-vendekoblingerne. Vendekoblingen griber ikke korrekt. Trækket er væk."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage1_description" text="Let svigt i transmissionsstyringen. Den elektrohydrauliske styring arbejder ujævnt. Et gearskift tøver."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage1_description" text="Let svigt i transmissionsstyringen. Styringen afviser af og til et gearvalg."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage2_description" text="Moderat svigt i transmissionsstyringen. Styringen forstyrrer koblingernes fyldning. Gearskift giver tydelige ryk."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage2_description" text="Moderat svigt i transmissionsstyringen. Styringen afviser flere gearvalg. Gear bliver svære at vælge."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage3_description" text="Alvorligt svigt i transmissionsstyringen. Styringen aktiverer koblingerne dårligt. Gearskift giver kraftige ryk."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage3_description" text="Alvorligt svigt i transmissionsstyringen. Styringen udfører ikke mange gearvalg. Gear er sjældent til rådighed."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch1_stage4_description" text="Kritisk svigt i transmissionsstyringen. Styringen kan ikke længere aktivere koblingerne korrekt. Gearskiftene er stærkt forstyrrede."/>
+        <text name="rms_breakdowns_transmission_control_failure_branch2_stage4_description" text="Kritisk svigt i transmissionsstyringen. Styringen tillader intet gearvalg. Gearkassen reagerer ikke på anmodningen."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage1_description" text="Svigt i gearkassens hastighedssensor. Signalet bliver uregelmæssigt: Styringen afviser af og til et gearskift."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage1_description" text="Svigt i gearkassens tryksensor. Styringen regulerer koblingernes fyldning forkert: Gearskiftene kommer sent og giver ryk."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch1_stage2_description" text="Kritisk svigt i gearkassens hastighedssensor. Uden målingen afviser styringen ofte gearskift."/>
+        <text name="rms_breakdowns_transmission_sensor_failure_branch2_stage2_description" text="Kritisk svigt i gearkassens tryksensor. Uden målingen kommer hvert gearskift meget sent og tager fat med et ryk."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage1_description" text="Svigt i transmissionens hastighedssensor. Styringen går i nødprogram: Kørehastigheden begrænses."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage1_description" text="Svigt i transmissionens tryksensor. Styringen går i nødprogram: Kørehastigheden begrænses."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch1_stage2_description" text="Kritisk svigt i transmissionens hastighedssensor. Nødprogrammet tillader kun lav kørehastighed."/>
+        <text name="rms_breakdowns_cvt_sensor_failure_branch2_stage2_description" text="Kritisk svigt i transmissionens tryksensor. Nødprogrammet tillader kun lav kørehastighed."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage1_description" text="Let svigt i transmissionspumpen. Tilførslen af styreolie falder. Indkoblingen tøver, og trækket afbrydes kort."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage2_description" text="Moderat svigt i transmissionspumpen. Styretrykket er for lavt. Gear griber hårdt, og trækket afbrydes."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage3_description" text="Alvorligt svigt i transmissionspumpen. Pumpen leverer knap styreolie. Indkoblingen er meget hård, og trækket afbrydes ofte."/>
+        <text name="rms_breakdowns_transmission_pump_malfunction_stage4_description" text="Kritisk svigt i transmissionspumpen. Pumpen leverer ikke det nødvendige tryk. Transmissionen driver ikke maskinen."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage1_description" text="Let svigt i den hydrostatiske enhed. Indvendig lækage mindsker trækket. Variatoren mister lidt fart, og olien bliver varmere."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage2_description" text="Moderat svigt i den hydrostatiske enhed. Den indvendige lækage øges. Tophastigheden falder, olien bliver varm, og forbruget stiger."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage3_description" text="Alvorligt svigt i den hydrostatiske enhed. Den roterende gruppe overfører knap kraft. Farten falder meget, og olien bliver meget varm under belastning."/>
+        <text name="rms_breakdowns_hydrostatic_unit_malfunction_stage4_description" text="Kritisk svigt i den hydrostatiske enhed. Den roterende gruppe overfører ingen kraft. Maskinen står stille med motoren i gang."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage1_description" text="Let svigt i transmissionsoliekøleren. Den afgiver mindre varme. Transmissionsolien bliver varmere under belastning."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage2_description" text="Moderat svigt i transmissionsoliekøleren. Varmeudvekslingen er tydeligt nedsat. Transmissionsolien forbliver varmere under arbejde."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage3_description" text="Alvorligt svigt i transmissionsoliekøleren. Den afgiver meget lidt varme. Transmissionsolien kan overophede under belastning."/>
+        <text name="rms_breakdowns_transmission_oil_cooler_malfunction_stage4_description" text="Kritisk svigt i transmissionsoliekøleren. Kølingen af transmissionsolien svigter. Vedvarende arbejde kan overophede transmissionen."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage1_description" text="Transmissionsfilteret er klar til udskiftning og begynder at stoppe til. Displayet beder om udskiftning. Vedligeholdelse udskifter filteret."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage2_description" text="Transmissionsfilteret er snavset: Omløbsventilen åbner, og gearkasseolien løber ufiltreret igennem. Transmissionen slides hurtigere. Vedligeholdelse udskifter filteret."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage3_description" text="Transmissionsfilteret er meget snavset. Gearkasseolien cirkulerer ufiltreret og slider på transmissionen. Vedligeholdelse udskifter filteret."/>
+        <text name="rms_breakdowns_transmission_filter_clogging_stage4_description" text="Transmissionsfilteret er helt tilstoppet. Al gearkasseolien løber ufiltreret igennem og slider på transmissionen. Vedligeholdelse udskifter filteret."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage1_description" text="Let svigt i bagakslens keglehjulssæt. Keglehjulenes tænder er beskadigede. En svag hylen høres under belastning."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage2_description" text="Moderat svigt i bagakslens keglehjulssæt. Tandkontakten er forstyrret. Bagakslen hyler tydeligt under belastning."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage3_description" text="Alvorligt svigt i bagakslens keglehjulssæt. Tænderne er svært beskadigede. Bagakslen hyler kraftigt og kan miste trækket."/>
+        <text name="rms_breakdowns_rear_bevel_gear_failure_stage4_description" text="Kritisk svigt i bagakslens keglehjulssæt. Keglehjulssættet overfører ingen kraft. Bagakslen drives ikke, og maskinen kan ikke køre."/>
+        <text name="rms_breakdowns_final_drive_failure_stage1_description" text="Let svigt i slutdrevene. Tænderne i et slutdrev er beskadigede. En svag hylen høres ved et drivhjul."/>
+        <text name="rms_breakdowns_final_drive_failure_stage2_description" text="Moderat svigt i slutdrevene. Tandhjulene i et slutdrev drejer dårligt. Hylen ved hjulet høres tydeligt."/>
+        <text name="rms_breakdowns_final_drive_failure_stage3_description" text="Alvorligt svigt i slutdrevene. Tandhjulene i et slutdrev er svært beskadigede. Støjen er kraftig, og trækket kan svigte."/>
+        <text name="rms_breakdowns_final_drive_failure_stage4_description" text="Kritisk svigt i slutdrevene. Et slutdrev overfører ingen kraft til sit hjul. Maskinen kan ikke køre normalt."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch1_stage1_description" text="Svigt i tilkoblingen af firehjulstræk. Firehjulstrækket kobler ikke ind. Forakslen forbliver frakoblet."/>
+        <text name="rms_breakdowns_four_wd_control_failure_branch2_stage1_description" text="Svigt i tilkoblingen af firehjulstræk. Forakslen forbliver tilkoblet. Firehjulstrækket kan ikke kobles fra."/>
+        <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Svigt i hydraulikpumpen. Den er brudt sammen. Trykket er væk, og hydraulikfunktionerne reagerer ikke."/>
+        <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Svigt i den hydrauliske styreventil. Ventilspolen sidder fast. Den berørte hydraulikfunktion bevæger sig ikke."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Svigt i liftventilen. Den holder ikke lasten korrekt. Det løftede redskab synker."/>
+        <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Svigt i liftventilen. Den sidder fast. Liften reagerer ikke."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Svigt i liftpositionssensoren. Positionssignalet svigter. Liften holder ikke den ønskede højde, og en fejlkode gemmes."/>
+        <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Let svigt i læsserstyringen. Armen og skovlen reagerer langsommere."/>
+        <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Moderat svigt i læsserstyringen. Armen og skovlen bevæger sig kun med halv hastighed."/>
+        <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Alvorligt svigt i læsserstyringen. Armen og skovlen bevæger sig næsten ikke."/>
+        <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kritisk svigt i læsserstyringen. Armen og skovlen reagerer ikke længere."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Let svigt i hydraulikcylinderen. Stangtætningen slipper lidt olie ud. Der ses let fugt omkring stangen."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Moderat svigt i hydraulikcylinderen. Stangtætningen er utæt. Cylinderen sveder, og oliestanden falder."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Alvorligt svigt i hydraulikcylinderen. Stangtætningen lækker aktivt. Cylinderen mister tydeligt olie."/>
+        <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage4_description" text="Kritisk svigt i hydraulikcylinderen. Stangtætningen slipper meget olie ud. Oliestanden i kredsen falder hurtigt."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage1_description" text="Let svigt i de hydrauliske lynkoblinger. En koblingstætning er defekt. Der ses let fugt ved samlingen."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch2_stage1_description" text="Svigt i de hydrauliske lynkoblinger. Oliepassagen i en kobling er blokeret. Den tilsluttede hydraulikfunktion bevæger sig ikke."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage2_description" text="Moderat svigt i de hydrauliske lynkoblinger. En kobling sveder. Kredsen mister olie ved samlingen."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage3_description" text="Alvorligt svigt i de hydrauliske lynkoblinger. En kobling lækker aktivt. Olietabet ved samlingen er betydeligt."/>
+        <text name="rms_breakdowns_hydraulic_quick_coupler_failure_branch1_stage4_description" text="Kritisk svigt i de hydrauliske lynkoblinger. En kobling lækker kraftigt. Oliestanden i kredsen falder hurtigt."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage1_description" text="Let svigt i hydraulikoliekøleren. Kølerelementet er ikke helt tæt. Der ses let fugt."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage2_description" text="Moderat svigt i hydraulikoliekøleren. Kølerelementet sveder. Hydraulikoliestanden falder."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage3_description" text="Alvorligt svigt i hydraulikoliekøleren. Kølerelementet lækker aktivt. Kredsen mister tydeligt olie."/>
+        <text name="rms_breakdowns_hydraulic_oil_cooler_malfunction_branch2_stage4_description" text="Kritisk svigt i hydraulikoliekøleren. Kølerelementet lækker kraftigt. Hydraulikoliestanden falder hurtigt."/>
+        <text name="rms_breakdowns_part_diff_lock_control" text="Betjening af differentialespærre"/>
+        <text name="rms_breakdowns_differential_failure_stage1_description" text="Let svigt i differentialets tandhjul. Tandfladerne er beskadigede. En svag lyd høres i sving."/>
+        <text name="rms_breakdowns_differential_failure_stage2_description" text="Moderat svigt i differentialets tandhjul. Tandkontakten er forstyrret. Differentialets støj høres tydeligt i sving."/>
+        <text name="rms_breakdowns_differential_failure_stage3_description" text="Alvorligt svigt i differentialets tandhjul. Tænderne er svært beskadigede. Støjen er kraftig i sving, og trækket kan svigte."/>
+        <text name="rms_breakdowns_differential_failure_stage4_description" text="Kritisk svigt i differentialets tandhjul. Tandhjulene overfører ingen kraft. Maskinen kan ikke køre med motoren i gang."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage1_description" text="Let slid på kardankrydsene i forakslens drivaksel. Der opstår et let slør i forakslens træk."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage2_description" text="Moderat slid på kardankrydsene i forakslens drivaksel. Sløret i kardankrydsene bliver tydeligt."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage3_description" text="Alvorligt slid på kardankrydsene i forakslens drivaksel. Et kardankryds er tæt på at knække."/>
+        <text name="rms_breakdowns_front_axle_shaft_wear_stage4_description" text="Brud på et kardankryds i forakslens drivaksel. Forakslen trækkes ikke længere."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage1_description" text="Let slid på aksellejerne. En svag rumlen høres under kørsel."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage2_description" text="Moderat slid på aksellejerne. Rumlen tiltager med hastigheden."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage3_description" text="Alvorligt slid på aksellejerne. Et leje skaller af og begynder at beskadige vinkelgearet."/>
+        <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Kritisk slid på aksellejerne. Et leje er brudt sammen, vinkelgearet er beskadiget, og akslen overfører ikke længere trækkraft."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Svigt i betjeningen af differentialespærren. Spærren kobler ikke ind. Differentialet forbliver frit."/>
+        <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Svigt i betjeningen af differentialespærren. Spærren bliver indkoblet. Maskinen modarbejder styringen i sving."/>
+    </texts>
+</l10n>

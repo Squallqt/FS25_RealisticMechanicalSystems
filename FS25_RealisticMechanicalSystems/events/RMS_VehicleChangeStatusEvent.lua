@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Synchronizes a vehicle service status and carries an optional notification and log entry
 RMS_VehicleChangeStatusEvent = {}
 local RMS_VehicleChangeStatusEvent_mt = Class(RMS_VehicleChangeStatusEvent, Event)
 MessageType.RMS_VEHICLE_CHANGE_STATUS = nextMessageTypeId()
@@ -38,7 +37,7 @@ function RMS_VehicleChangeStatusEvent.new(vehicle, notificationText, logEntry)
 end
 
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_VehicleChangeStatusEvent:writeStream(streamId, connection)
@@ -54,7 +53,7 @@ function RMS_VehicleChangeStatusEvent:writeStream(streamId, connection)
 end
 
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_VehicleChangeStatusEvent:readStream(streamId, connection)
@@ -109,7 +108,6 @@ function RMS_VehicleChangeStatusEvent:run(connection)
         self.vehicle:recalculateAndApplyEffects()
         self.vehicle:recalculateAndApplyIndicators()
 
-        -- notification and sound for the owning farm only
         if connection:getIsServer() and self.notificationText ~= nil and self.notificationText ~= ""
                 and g_currentMission:getFarmId() == self.vehicle.ownerFarmId then
             g_currentMission.hud:addSideNotification({1, 1, 1, 1}, self.notificationText)
@@ -119,7 +117,6 @@ function RMS_VehicleChangeStatusEvent:run(connection)
         g_messageCenter:publish(MessageType.RMS_VEHICLE_CHANGE_STATUS, self.vehicle)
     end
 
-    -- relay to the other clients, only for the farm owning the vehicle
     if not connection:getIsServer() then
         if self.vehicle ~= nil and self.vehicle:getIsSynchronized() then
             local userId = g_currentMission.userManager:getUserIdByConnection(connection)

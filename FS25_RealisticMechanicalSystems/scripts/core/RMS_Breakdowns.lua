@@ -1,12 +1,11 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Runtime effects of the breakdowns, applied to the vehicle through engine function overrides
+---Vehicle breakdown effects.
 RMS_Breakdowns = {}
 
 local log_dbg = RMS_Utils.createLogger("[RMS_BREAKDOWNS]")
 
--- brake sound plays once per crossing of this speed, in km/h
 local BRAKE_SOUND_SPEED_THRESHOLD = 15
 
 source(g_currentModDirectory .. "scripts/core/RMS_BreakdownRegistry.lua")
@@ -17,10 +16,14 @@ RMS_Breakdowns.EffectApplicators = {}
 ---Returns the text describing a stage on a vehicle
 -- @param table vehicle vehicle
 -- @param table stageData stage of a registry entry
+-- @param table? breakdown active breakdown and failure mode
 -- @return string key text key
-function RMS_Breakdowns.getStageDescription(vehicle, stageData)
+function RMS_Breakdowns.getStageDescription(vehicle, stageData, breakdown)
     if stageData.electricDescription ~= nil and vehicle.spec_RealisticMechanicalSystems.isElectricVehicle then
         return stageData.electricDescription
+    end
+    if stageData.branchDescriptions ~= nil and breakdown ~= nil and stageData.branchDescriptions[breakdown.branch] ~= nil then
+        return stageData.branchDescriptions[breakdown.branch]
     end
     return stageData.description
 end
@@ -39,30 +42,18 @@ local function removeFuncFromActive(v, effectName)
     end
 end
 
----Returns the starter pitch offset, the sound dropping as the starter turns slower
-local function getStarterCrankingPitchOffset(crankSpeed)
-    return (crankSpeed or 1) - 1
-end
-
----Returns the effect currently cranking the starter
-local function getActiveStarterCrankingEffect(spec)
+---Returns the starter effect while cranking or catching
+local function getStarterEffect(spec)
     if spec == nil or spec.activeEffects == nil then
         return nil
     end
 
-    local engineFailure = spec.activeEffects.ENGINE_FAILURE
-    if engineFailure ~= nil and engineFailure.extraData ~= nil and engineFailure.extraData.status == "CRANKING" then
-        return engineFailure
-    end
-
-    local engineHardStart = spec.activeEffects.ENGINE_HARD_START_MODIFIER
-    if engineHardStart ~= nil and engineHardStart.extraData ~= nil and engineHardStart.extraData.status == "CRANKING" then
-        return engineHardStart
-    end
-
-    local glowPlugHardStart = spec.activeEffects.GLOW_PLUG_HARD_START_MODIFIER
-    if glowPlugHardStart ~= nil and glowPlugHardStart.extraData ~= nil and glowPlugHardStart.extraData.status == "CRANKING" then
-        return glowPlugHardStart
+    for _, effectId in ipairs({ "ENGINE_FAILURE", "ENGINE_HARD_START_MODIFIER", "GLOW_PLUG_HARD_START_MODIFIER" }) do
+        local effect = spec.activeEffects[effectId]
+        if effect ~= nil and effect.extraData ~= nil
+            and (effect.extraData.status == "CRANKING" or effect.extraData.status == "PASSED") then
+            return effect
+        end
     end
 
     return nil
@@ -75,49 +66,144 @@ local function getIsStarterRequestActive(vehicle, effect)
         or (effect ~= nil and effect.extraData ~= nil and effect.extraData.automaticCrank == true))
 end
 
----Plays the starter sample while the engine cranks, pitched by the battery voltage
-local function syncStarterCrankingSample(vehicle)
-    if vehicle == nil or not vehicle.isClient then
-        return
+local function getStarterVehicle(vehicle)
+    local own = RMS_StarterSoundsData.VEHICLES[string.lower(vehicle.configFileName or "")]
+    if own ~= nil then
+        return own, true
     end
 
+    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
+    local category = storeItem ~= nil and storeItem.categoryName or nil
+    local power = RMS_Fluids.getEnginePower(vehicle)
+    -- Break ties by filename to keep starter selection deterministic.
+    local nearest, nearestGap, nearestKey = nil, math.huge, nil
+    for key, candidate in pairs(RMS_StarterSoundsData.VEHICLES) do
+        local gap = math.abs(candidate[2] - power) + (candidate[1] == category and 0 or 100000)
+        if gap < nearestGap or (gap == nearestGap and key < nearestKey) then
+            nearest, nearestGap, nearestKey = candidate, gap, key
+        end
+    end
+    return nearest, false
+end
+
+local function newStarter(vehicle)
+    local starterVehicle, isOwn = getStarterVehicle(vehicle)
+    return {
+        isOwn = isOwn,
+        filename = starterVehicle[3],
+        main = { entry = RMS_StarterSoundsData.SOUNDS[string.lower(starterVehicle[3])], position = 0 },
+        layers = {}
+    }
+end
+
+local function engageStarter(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    local starterCrankingSample = spec ~= nil and spec.samples ~= nil and spec.samples.starterCranking or nil
-    if starterCrankingSample == nil then
-        return
+    local starter = newStarter(vehicle)
+    local motorSamples = vehicle.isClient and vehicle.spec_motorized.motorSamples or {}
+    for _, sample in ipairs(motorSamples) do
+        local entry = starter.isOwn and sample.filename ~= nil and RMS_StarterSoundsData.SOUNDS[string.lower(sample.filename)] or nil
+        if entry ~= nil then
+            table.insert(starter.layers, { sample = sample, entry = entry, position = 0 })
+        end
     end
+    if #starter.layers == 0 and motorSamples[1] ~= nil then
+        spec.samples.borrowedStarter = spec.samples.borrowedStarter or RMS_SoundManager.cloneSample(motorSamples[1], starter.filename)
+        table.insert(starter.layers, { sample = spec.samples.borrowedStarter, entry = starter.main.entry, position = 0, isBorrowed = true })
+    end
+    for _, layer in ipairs(starter.layers) do
+        RMS_SoundManager.playSample(layer.sample)
+    end
+    spec.starter = starter
+end
 
-    local activeEffect = getActiveStarterCrankingEffect(spec)
-    local startRequestActive = getIsStarterRequestActive(vehicle, activeEffect)
-    -- a starter that cannot turn makes no sound
-    local shouldPlay = activeEffect ~= nil and startRequestActive and not vehicle:getIsMotorStarted()
-        and activeEffect.extraData.crankSpeed ~= 0
+---Stops the starter before the engine catches
+local function releaseStarter(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    for _, layer in ipairs(spec.starter.layers) do
+        RMS_SoundManager.setSamplePitchOffset(layer.sample, 0)
+        RMS_SoundManager.stopSample(layer.sample, 0)
+    end
+    spec.starter = nil
+end
 
-    if shouldPlay then
-        local pitchOffset = getStarterCrankingPitchOffset(activeEffect.extraData.crankSpeed)
-        RMS_SoundManager.setSamplePitchOffset(starterCrankingSample, pitchOffset)
-        RMS_SoundManager.setSamplePlaying(starterCrankingSample, true)
-    else
-        RMS_SoundManager.setSamplePlaying(starterCrankingSample, false, 0, 0)
-        RMS_SoundManager.setSamplePitchOffset(starterCrankingSample, 0)
+local function turnStarterRecording(recording, dt, speed, isHeld)
+    recording.position = recording.position + dt * speed
+    if isHeld and recording.position >= recording.entry[1] then
+        recording.position = recording.position - recording.entry[2]
+        RMS_SoundManager.playSampleFrom(recording.sample, recording.position)
     end
 end
 
----Plays the starter release sample once
-local function playStarterCrankingEndSample(spec, pitchOffset)
-    local starterCrankingEndSample = spec ~= nil and spec.samples ~= nil and spec.samples.starterCrankingEnd or nil
-    if starterCrankingEndSample == nil then
+-- @param table vehicle vehicle
+-- @param float dt time since the last frame in ms
+function RMS_Breakdowns.updateStarter(vehicle, dt)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec.isElectricVehicle or vehicle:getIsMotorStarted() then
         return
     end
 
-    RMS_SoundManager.setSampleVolumeOffset(starterCrankingEndSample, 0)
-    if not RMS_SoundManager.getIsSamplePlaying(starterCrankingEndSample) then
-        RMS_SoundManager.setSamplePitchOffset(starterCrankingEndSample, pitchOffset or 0)
-        RMS_SoundManager.playSample(starterCrankingEndSample)
+    local effect = getStarterEffect(spec)
+    local crankSpeed = effect ~= nil and (effect.extraData.crankSpeed or RMS_Electrical.getCrankingSpeed(vehicle)) or 0
+    local isHeld = effect ~= nil and effect.extraData.status == "CRANKING"
+    local isTurning = crankSpeed > 0 and (not isHeld or getIsStarterRequestActive(vehicle, effect))
+    if not isTurning then
+        if spec.starter ~= nil then
+            releaseStarter(vehicle)
+        end
+        return
+    end
+
+    if spec.starter == nil then
+        engageStarter(vehicle)
+    end
+    turnStarterRecording(spec.starter.main, dt, crankSpeed, isHeld)
+    for _, layer in ipairs(spec.starter.layers) do
+        local isCaught = layer.position >= layer.entry[3]
+        RMS_SoundManager.setSamplePitchOffset(layer.sample, isCaught and 0 or crankSpeed - 1)
+        turnStarterRecording(layer, dt, RMS_SoundManager.getSamplePitch(layer.sample), isHeld or layer.isBorrowed)
     end
 end
 
--- clears its own breakdown as soon as it is applied
+-- @param table vehicle vehicle
+-- @param float crankSpeed speed of the starter, 1 at its reference speed
+-- @return float delay delay in ms
+function RMS_Breakdowns.getStarterCatchDelay(vehicle, crankSpeed)
+    local starter = vehicle.spec_RealisticMechanicalSystems.starter or newStarter(vehicle)
+    if not starter.isOwn then
+        return 0
+    end
+    return math.max(0, (starter.main.entry[3] - starter.main.position) / crankSpeed)
+end
+
+-- @param table vehicle vehicle
+function RMS_Breakdowns.onStarterCaught(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec.starter == nil then
+        return
+    end
+    for _, layer in ipairs(spec.starter.layers) do
+        RMS_SoundManager.setSamplePitchOffset(layer.sample, 0)
+        if layer.isBorrowed then
+            RMS_SoundManager.stopSample(layer.sample, 0)
+        else
+            RMS_SoundManager.playSampleFrom(layer.sample, layer.position)
+        end
+    end
+    spec.starter = nil
+end
+
+local function playDeadStartSound(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec.isElectricVehicle or spec.batteryIsolated or vehicle:getIsMotorStarted() then
+        return
+    end
+    if RMS_Electrical.getStartingVoltage(vehicle) < RMS_Electrical.getMinCrankingVoltage(vehicle) then
+        RMS_SoundManager.playSample(spec.samples.batteryClicking)
+    elseif vehicle:hasBreakdown("STARTER_RELAY_FAILURE") or vehicle:hasBreakdown("ENGINE_JAM") or spec.starterHealth <= 0 then
+        RMS_SoundManager.playSample(spec.samples.starterRelayClick)
+    end
+end
+
 RMS_Breakdowns.EffectApplicators.SELF_DISAPPEARING_BREAKDOWN_EFFECT = {
     apply = function(vehicle, effectData, handler)
         vehicle:removeBreakdown(effectData.extraData.breakdownId)
@@ -125,7 +211,6 @@ RMS_Breakdowns.EffectApplicators.SELF_DISAPPEARING_BREAKDOWN_EFFECT = {
 
 }
 
--- keeps the engine from running and cranks the starter without catching
 RMS_Breakdowns.EffectApplicators.ENGINE_FAILURE = {
     getEffectName = function()
         return "ENGINE_FAILURE"
@@ -157,18 +242,14 @@ RMS_Breakdowns.EffectApplicators.ENGINE_FAILURE = {
                     RMS_EffectSyncEvent.send(v, effectName, "IDLE", 0, 0, 0)
                 end
             end
-
-            syncStarterCrankingSample(v)
         end
         addFuncToActive(vehicle, effectName, activeFunc)
     end,
     remove = function(vehicle, handler)
-        syncStarterCrankingSample(vehicle)
         removeFuncFromActive(vehicle, handler.getEffectName())
     end,
 }
 
--- forces the affected light types off
 RMS_Breakdowns.EffectApplicators.LIGHTS_FAILURE = {
     apply = function(vehicle, effectData, handler)
         local currentLightMask = vehicle:getLightsTypesMask()
@@ -179,7 +260,117 @@ RMS_Breakdowns.EffectApplicators.LIGHTS_FAILURE = {
 
 }
 
----Keeps the lights off under a failure, an open isolator or a waiting worker
+local LIGHT_CIRCUITS = {
+    LOW_BEAM_FAILURE = "LIGHT_TYPE_DEFAULT",
+    HIGH_BEAM_FAILURE = "LIGHT_TYPE_HIGHBEAM",
+    FRONT_WORK_LIGHTS_FAILURE = "LIGHT_TYPE_WORK_FRONT",
+    REAR_WORK_LIGHTS_FAILURE = "LIGHT_TYPE_WORK_BACK"
+}
+
+---Tells whether a list of lamps holds one of a light type
+local function getHoldsLightType(lights, lightType)
+    for _, light in ipairs(lights) do
+        for _, lampLightType in ipairs(light.lightTypes or {}) do
+            if lampLightType == lightType then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+local function getCarriesLightType(vehicle, lightType)
+    local spec = vehicle.spec_lights
+    if spec == nil then
+        return false
+    end
+    for _, lights in pairs(spec.staticLights) do
+        if getHoldsLightType(lights, lightType) then
+            return true
+        end
+    end
+    for _, profile in pairs(spec.realLights) do
+        for _, lights in pairs(profile) do
+            if getHoldsLightType(lights, lightType) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+---Tells whether the machine carries turn lights
+local function getCarriesTurnLights(vehicle)
+    local spec = vehicle.spec_lights
+    if spec == nil then
+        return false
+    end
+    if #spec.staticLights.turnLightsLeft > 0 then
+        return true
+    end
+    for _, profile in pairs(spec.realLights) do
+        if #profile.turnLightsLeft > 0 then
+            return true
+        end
+    end
+    return false
+end
+
+for effectName, lightTypeName in pairs(LIGHT_CIRCUITS) do
+    RMS_Breakdowns.EffectApplicators[effectName] = {
+        apply = function(vehicle, effectData, handler)
+            vehicle:setLightsTypesMask(vehicle:getLightsTypesMask(), true, true)
+        end,
+
+        getIsCarried = function(vehicle)
+            return getCarriesLightType(vehicle, Lights[lightTypeName])
+        end
+    }
+end
+
+RMS_Breakdowns.EffectApplicators.BEACON_LIGHTS_FAILURE = {
+    apply = function(vehicle, effectData, handler)
+        if vehicle:getBeaconLightsVisibility() then
+            vehicle:setBeaconLightsVisibility(false, true, true)
+        end
+    end,
+
+    getIsCarried = function(vehicle)
+        return vehicle.spec_lights ~= nil and #vehicle.spec_lights.beaconLights > 0
+    end
+}
+
+RMS_Breakdowns.EffectApplicators.TURN_LIGHTS_FAILURE = {
+    apply = function(vehicle, effectData, handler)
+        if vehicle:getTurnLightState() ~= Lights.TURNLIGHT_OFF then
+            vehicle:setTurnLightState(Lights.TURNLIGHT_OFF, true, true)
+        end
+    end,
+
+    getIsCarried = getCarriesTurnLights
+}
+
+---Tells whether the machine carries the lamps of a light circuit
+-- @param table vehicle vehicle
+-- @param string effectName effect putting the circuit out
+-- @return boolean isCarried true when the machine has those lamps
+function RMS_Breakdowns.getCarriesLightCircuit(vehicle, effectName)
+    return RMS_Breakdowns.EffectApplicators[effectName].getIsCarried(vehicle)
+end
+
+-- @param table vehicle vehicle
+-- @param string effectName effect putting the circuit out
+-- @return boolean isLit true while the circuit is switched on
+function RMS_Breakdowns.getIsLightCircuitLit(vehicle, effectName)
+    local lightTypeName = LIGHT_CIRCUITS[effectName]
+    if lightTypeName ~= nil then
+        return bit32.band(vehicle:getLightsTypesMask(), 2 ^ Lights[lightTypeName]) ~= 0
+    elseif effectName == "BEACON_LIGHTS_FAILURE" then
+        return vehicle:getBeaconLightsVisibility()
+    end
+    return vehicle:getTurnLightState() ~= Lights.TURNLIGHT_OFF
+end
+
 -- @param table self vehicle
 -- @param function superFunc super function
 -- @param integer lightsTypesMask light types mask
@@ -188,14 +379,45 @@ RMS_Breakdowns.EffectApplicators.LIGHTS_FAILURE = {
 function RMS_Breakdowns.setLightsTypesMask(self, superFunc, lightsTypesMask, force, noEventSend)
     local rootVehicle = self:getRootVehicle()
     local spec = rootVehicle.spec_RealisticMechanicalSystems
-    if spec == nil or (spec.activeEffects.LIGHTS_FAILURE == nil and not RMS_Electrical.getKeepsLightsOff(rootVehicle)) then
+    if spec == nil then
+        superFunc(self, lightsTypesMask, force, noEventSend)
+    elseif spec.activeEffects.LIGHTS_FAILURE == nil and not RMS_Electrical.getKeepsLightsOff(rootVehicle) then
+        for effectName, lightTypeName in pairs(LIGHT_CIRCUITS) do
+            if spec.activeEffects[effectName] ~= nil then
+                lightsTypesMask = bit32.band(lightsTypesMask, bit32.bnot(2 ^ Lights[lightTypeName]))
+            end
+        end
         superFunc(self, lightsTypesMask, force, noEventSend)
     elseif self:getLightsTypesMask() ~= 0 then
         superFunc(self, 0, force, noEventSend)
     end
 end
 
----Picks the wheel a seizure acts on, reusing the cached one when it is still valid
+---Keeps the beacon lights out while their circuit has failed
+-- @param table self vehicle
+-- @param function superFunc super function
+-- @param boolean visibility true to switch them on
+-- @param boolean force force
+-- @param boolean noEventSend no event send
+function RMS_Breakdowns.setBeaconLightsVisibility(self, superFunc, visibility, force, noEventSend)
+    local spec = self:getRootVehicle().spec_RealisticMechanicalSystems
+    superFunc(self, visibility and (spec == nil or spec.activeEffects.BEACON_LIGHTS_FAILURE == nil), force, noEventSend)
+end
+
+---Keeps the turn and hazard lights out while their circuit has failed
+-- @param table self vehicle
+-- @param function superFunc super function
+-- @param integer state turn light state
+-- @param boolean force force
+-- @param boolean noEventSend no event send
+function RMS_Breakdowns.setTurnLightState(self, superFunc, state, force, noEventSend)
+    local spec = self:getRootVehicle().spec_RealisticMechanicalSystems
+    if spec ~= nil and spec.activeEffects.TURN_LIGHTS_FAILURE ~= nil then
+        state = Lights.TURNLIGHT_OFF
+    end
+    superFunc(self, state, force, noEventSend)
+end
+
 local function getWheelSeizureTargetWheel(vehicle)
     local spec_rms = vehicle.spec_RealisticMechanicalSystems
     local spec_wheels = vehicle.spec_wheels
@@ -213,8 +435,7 @@ local function getWheelSeizureTargetWheel(vehicle)
         end
 
         local data = {
-            wheel = wheel,
-            runtime = runtimeWheel
+            wheel = wheel
         }
 
         data.node = runtimeWheel.node or (wheel and wheel.node) or nil
@@ -311,11 +532,9 @@ local function getWheelSeizureTargetWheel(vehicle)
     return nil
 end
 
--- scales the brake force of the vehicle
 RMS_Breakdowns.EffectApplicators.BRAKE_FORCE_MODIFIER = {
 }
 
--- the steering faults act on the wheel angles, the steering range staying whole
 local steeringFaultApplicator = {
     apply = function(vehicle, effectData, handler)
         RMS_Steering.refreshFaults(vehicle)
@@ -326,16 +545,14 @@ local steeringFaultApplicator = {
     end
 }
 
--- toes one steered wheel off, in degrees: the vehicle pulls to that side
 RMS_Breakdowns.EffectApplicators.STEERING_STATIC_BIAS_EFFECT = steeringFaultApplicator
 
--- lets the steered wheels float inside a play, in degrees
+RMS_Breakdowns.EffectApplicators.BRAKE_PULL_EFFECT = steeringFaultApplicator
+
 RMS_Breakdowns.EffectApplicators.STEERING_PLAY_EFFECT = steeringFaultApplicator
 
--- frees one steered wheel from the steering
 RMS_Breakdowns.EffectApplicators.STEERING_WHEEL_FREE_EFFECT = steeringFaultApplicator
 
--- drags one wheel without anchoring the vehicle
 RMS_Breakdowns.EffectApplicators.WHEEL_SEIZURE_EFFECT = {
     remove = function(vehicle, handler)
         if vehicle.spec_RealisticMechanicalSystems ~= nil then
@@ -344,7 +561,23 @@ RMS_Breakdowns.EffectApplicators.WHEEL_SEIZURE_EFFECT = {
     end
 }
 
--- cuts the throttle at random and drops the cruise control
+local MISFIRE_SOUND_DIP = 0.6
+
+local function updateMisfireSound(vehicle, extra, dt)
+    local dip = 0
+    if extra.status == "CHOKING" then
+        -- Four-stroke firing frequency: one cycle per two revolutions.
+        extra.misfireCycles = (extra.misfireCycles or 0) + dt * vehicle:getMotor():getLastModulatedMotorRpm() / 120000
+        if extra.misfireCycles >= 1 then
+            extra.misfireCycles = extra.misfireCycles % 1
+            dip = MISFIRE_SOUND_DIP
+        end
+    end
+    for _, sample in ipairs(vehicle.spec_motorized.motorSamples) do
+        RMS_SoundManager.setSampleVolumeOffset(sample, -dip * sample.current.volume * sample.volumeScale)
+    end
+end
+
 RMS_Breakdowns.EffectApplicators.ENGINE_HESITATION_CHANCE = {
     getEffectName = function() return "ENGINE_HESITATION_CHANCE" end,
 
@@ -353,6 +586,9 @@ RMS_Breakdowns.EffectApplicators.ENGINE_HESITATION_CHANCE = {
         local effectName = handler.getEffectName()
         local activeFunc = function(v, dt)
             local extra = effectData.extraData
+            if v.isClient then
+                updateMisfireSound(v, extra, dt)
+            end
 
             if extra.status == "CHOKING" then
                 extra.timer = extra.timer + dt
@@ -382,6 +618,11 @@ RMS_Breakdowns.EffectApplicators.ENGINE_HESITATION_CHANCE = {
 
     remove = function(vehicle, handler)
         removeFuncFromActive(vehicle, handler.getEffectName())
+        if vehicle.isClient then
+            for _, sample in ipairs(vehicle.spec_motorized.motorSamples) do
+                RMS_SoundManager.setSampleVolumeOffset(sample, 0)
+            end
+        end
     end
 }
 
@@ -445,11 +686,10 @@ function RMS_Breakdowns.updateVehiclePhysics(vehicle, superFunc, axisForward, ax
                 brakeEffect.extraData.previousSpeed = speed
 
                 if previousSpeed >= BRAKE_SOUND_SPEED_THRESHOLD and speed < BRAKE_SOUND_SPEED_THRESHOLD
-                    and math.abs(origAxisForward) > 0.999
+                    and math.abs(origAxisForward) > 0.999 and RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
                     and math.random() < math.abs(brakeEffect.value) then
-                    local sampleIndex = math.random(3)
-                    RMS_SoundManager.playSample(spec_rms.samples["brakes" .. sampleIndex])
-                    RMS_EffectSyncEvent.send(vehicle, "BRAKE_FORCE_MODIFIER", "SOUND", 0, sampleIndex)
+                    RMS_SoundManager.playSample(spec_rms.samples.brakes)
+                    RMS_EffectSyncEvent.send(vehicle, "BRAKE_FORCE_MODIFIER", "SOUND", 0)
                 end
             end
         end
@@ -493,7 +733,6 @@ function RMS_Breakdowns.updateVehiclePhysics(vehicle, superFunc, axisForward, ax
     return result
 end
 
--- scales the engine torque
 RMS_Breakdowns.EffectApplicators.ENGINE_TORQUE_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         vehicle:updateMotorProperties()
@@ -504,8 +743,114 @@ RMS_Breakdowns.EffectApplicators.ENGINE_TORQUE_MODIFIER = {
     end
 }
 
--- Thermal protection uses the same native torque-curve refresh path as other engine torque effects.
+-- Refresh the native torque curve after thermal derating.
 RMS_Breakdowns.EffectApplicators.ENGINE_THERMAL_TORQUE_LIMIT = RMS_Breakdowns.EffectApplicators.ENGINE_TORQUE_MODIFIER
+
+RMS_Breakdowns.EffectApplicators.DRIVE_LOSS_EFFECT = {
+
+}
+
+RMS_Breakdowns.EffectApplicators.TRAILER_BRAKE_FAILURE = {
+}
+
+AttacherJoints.onBrake = Utils.overwrittenFunction(AttacherJoints.onBrake, function(self, superFunc, brakePedal)
+    local spec = self.spec_RealisticMechanicalSystems
+    local effect = spec ~= nil and spec.activeEffects.TRAILER_BRAKE_FAILURE or nil
+    if effect ~= nil then
+        brakePedal = brakePedal * math.max(1 + effect.value, 0)
+    end
+    superFunc(self, brakePedal)
+end)
+
+VehicleMotor.getMaxClutchTorque = Utils.overwrittenFunction(VehicleMotor.getMaxClutchTorque, function(self, superFunc)
+    local spec_rms = self.vehicle ~= nil and self.vehicle.spec_RealisticMechanicalSystems or nil
+    local effect = spec_rms ~= nil and spec_rms.activeEffects ~= nil and spec_rms.activeEffects.DRIVE_LOSS_EFFECT or nil
+    if effect == nil then
+        return superFunc(self)
+    end
+    return superFunc(self) * math.max(1 - effect.value, 0)
+end)
+
+RMS_Breakdowns.EffectApplicators.FOUR_WD_ENGAGE_FAILURE = {
+
+}
+RMS_Breakdowns.EffectApplicators.FOUR_WD_STUCK_ENGAGED = {
+
+}
+RMS_Breakdowns.EffectApplicators.DIFF_LOCK_ENGAGE_FAILURE = {
+
+}
+RMS_Breakdowns.EffectApplicators.DIFF_LOCK_STUCK_ENGAGED = {
+
+}
+
+-- @param table vehicle vehicle
+function RMS_Breakdowns.updateParticulateFilterOverload(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local fuelState = spec.fuelState
+    local config = RMS_Config.EXHAUST.PARTICULATE_FILTER
+    local breakdownId = "PARTICULATE_FILTER_SOOT_OVERLOAD"
+    local breakdown = spec.activeBreakdowns[breakdownId]
+    local isBlocked = spec.activeEffects.PARTICULATE_FILTER_BLOCKED ~= nil
+
+    if (fuelState.isParticulateFilterOverloaded and breakdown == nil) or (fuelState.isParticulateFilterBlocked and not isBlocked) then
+        fuelState.particulateFilterLevel = 0
+    end
+    fuelState.isParticulateFilterBlocked = isBlocked
+
+    local level = fuelState.particulateFilterLevel
+    local stage = level >= config.SERVICE_LEVEL and 2 or level >= config.DERATE_LEVEL and 1 or 0
+    if stage == 0 then
+        if breakdown ~= nil then
+            vehicle:removeBreakdown(breakdownId)
+        end
+    elseif breakdown == nil then
+        vehicle:addBreakdown(breakdownId, { stage = stage, isVisible = true })
+    elseif breakdown.stage ~= stage then
+        breakdown.stage = stage
+        vehicle:recalculateAndApplyEffects()
+        RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.BREAKDOWNS)
+    end
+    fuelState.isParticulateFilterOverloaded = stage > 0
+end
+
+-- @param table vehicle vehicle
+-- @param float dt time since last call in ms
+function RMS_Breakdowns.updateEngineDerate(vehicle, dt)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local config = RMS_Config.EXHAUST
+
+    local inducement = nil
+    if spec.activeEffects.SCR_DOSING_FAILURE ~= nil then
+        inducement = config.SCR_INDUCEMENT.DOSING
+    elseif spec.activeEffects.NOX_MONITORING_FAILURE ~= nil then
+        inducement = config.SCR_INDUCEMENT.MONITORING
+    end
+
+    if inducement == nil then
+        spec.scrInducementHours = 0
+    elseif vehicle:getIsMotorStarted() then
+        spec.scrInducementHours = spec.scrInducementHours + dt / (60 * 60 * 1000)
+    end
+
+    local targetTorque, rpmCap = 1, nil
+    if inducement ~= nil and spec.scrInducementHours >= inducement.SEVERE_HOURS then
+        targetTorque = config.SCR_INDUCEMENT.SEVERE_TORQUE
+        rpmCap = vehicle:getMotor().peakMotorPowerRotSpeed * 30 / math.pi * config.SCR_INDUCEMENT.SEVERE_RPM
+    elseif inducement ~= nil and spec.scrInducementHours >= inducement.LOW_HOURS then
+        targetTorque = config.SCR_INDUCEMENT.LOW_TORQUE
+    end
+
+    local torqueStep = config.SCR_INDUCEMENT.TORQUE_STEP_PER_MINUTE * dt / (60 * 1000)
+    local torqueCap = spec.engineTorqueCap
+    spec.engineTorqueCap = targetTorque < torqueCap and math.max(torqueCap - torqueStep, targetTorque) or targetTorque
+
+    if spec.fuelState.particulateFilterLevel >= config.PARTICULATE_FILTER.DERATE_LEVEL then
+        rpmCap = math.min(rpmCap or math.huge, config.PARTICULATE_FILTER.DERATE_RPM)
+    end
+    spec.engineRpmCap = rpmCap
+    spec.isEngineDerated = rpmCap ~= nil or spec.engineTorqueCap < 1
+end
 
 VehicleMotor.getTorqueCurveValue = Utils.overwrittenFunction(VehicleMotor.getTorqueCurveValue, function(self, superFunc, rpm)
     local torque = superFunc(self, rpm)
@@ -517,13 +862,16 @@ VehicleMotor.getTorqueCurveValue = Utils.overwrittenFunction(VehicleMotor.getTor
             if effect ~= nil and effect.value ~= nil then
                 torque = torque * math.max((1 + effect.value), 0.2)
             end
-            torque = torque * RMS_Thermal.getEngineTorqueFactor(vehicle)
+            torque = torque * RMS_Thermal.getEngineTorqueFactor(vehicle) * spec_rms.engineTorqueCap
+            local rpmCap = spec_rms.engineRpmCap
+            if rpmCap ~= nil and rpm > rpmCap - 50 then
+                torque = torque * math.clamp((rpmCap - rpm) / 50, 0, 1)
+            end
         end
     end
     return torque
 end)
                   
--- scales the fuel consumption
 RMS_Breakdowns.EffectApplicators.FUEL_CONSUMPTION_MODIFIER = {
 }
 
@@ -671,7 +1019,6 @@ function RMS_Breakdowns.updateConsumersOverwrite(vehicle, superFunc, dt, accInpu
     return superFunc(vehicle, dt, accInput)
 end
 
--- lets the transmission slip, converging on the effect value
 RMS_Breakdowns.EffectApplicators.TRANSMISSION_SLIP_EFFECT = {
     apply = function(vehicle, effectData, handler)
         local motor = vehicle:getMotor()
@@ -696,7 +1043,6 @@ RMS_Breakdowns.EffectApplicators.TRANSMISSION_SLIP_EFFECT = {
     end
 }
 
--- lets the CVT slip
 RMS_Breakdowns.EffectApplicators.CVT_SLIP_EFFECT = {
 
     remove = function(vehicle, handler)
@@ -707,13 +1053,10 @@ RMS_Breakdowns.EffectApplicators.CVT_SLIP_EFFECT = {
     end
 }
 
--- caps the CVT ratio
 RMS_Breakdowns.EffectApplicators.CVT_MAX_RATIO_MODIFIER = {
 }
 
--- convergence rate of the slip modifier, per second at full factor
 local TRANSMISSION_SLIP_CONVERGENCE_PER_SECOND = 0.9
--- gap beyond which a frame contributes no elapsed time
 local TRANSMISSION_SLIP_RESUME_GAP_SECONDS = 0.25
 
 VehicleMotor.getMinMaxGearRatio = Utils.overwrittenFunction(VehicleMotor.getMinMaxGearRatio, function(self, superFunc)
@@ -813,7 +1156,6 @@ VehicleMotor.getMinMaxGearRatio = Utils.overwrittenFunction(VehicleMotor.getMinM
     return minRatio, maxRatio
 end)
 
--- delays and roughens the powershift engagement
 RMS_Breakdowns.EffectApplicators.POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT = {
     getEffectName = function()
         return "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT" 
@@ -841,6 +1183,8 @@ RMS_Breakdowns.EffectApplicators.POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT = {
                                 motor.minGearRatio = 999.9
                             end
                             motor:applyTargetGear()
+                            RMS_SoundManager.playSample(spec.samples.powershiftClunk)
+                            RMS_EffectSyncEvent.send(v, "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", "CLUNK", 0)
                         elseif effect.extraData.timer > effect.extraData.duration and effect.extraData.status == "PASSED" then
                             if effect.extraData.backup then
                                 motor.minGearRatio = effect.extraData.backup
@@ -954,8 +1298,25 @@ local function getHydraulicMassRatio(vehicle, mass)
     return math.clamp(mass / math.max(vehicle:getTotalMass(true), 0.01), 0, 1)
 end
 
----Picks the hydraulic function the erratic effect acts on
-local function setHydraulicErraticTarget(vehicle, targetIndex)
+-- @param table spec RMS spec of the vehicle
+-- @param string effectId effect id
+-- @return table? breakdown active breakdown
+function RMS_Breakdowns.getBreakdownCarryingEffect(spec, effectId)
+    for breakdownId, breakdown in pairs(spec.activeBreakdowns or {}) do
+        local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
+        local stageData = definition ~= nil and breakdown.isActive ~= false and definition.stages[breakdown.stage] or nil
+        if stageData ~= nil then
+            for _, effectData in ipairs(RMS_Utils.getBranchItems(stageData.effects, breakdown)) do
+                if effectData.id == effectId then
+                    return breakdown
+                end
+            end
+        end
+    end
+    return nil
+end
+
+local function setHydraulicTarget(vehicle, targetIndex, flag)
     local currentIndex = 0
     local visited = {}
 
@@ -971,10 +1332,10 @@ local function setHydraulicErraticTarget(vehicle, targetIndex)
             for _, implementData in pairs(attacherSpec.attachedImplements or {}) do
                 local jointDesc = attacherSpec.attacherJoints[implementData.jointDescIndex]
                 if jointDesc ~= nil then
-                    jointDesc.rmsHydraulicErraticTarget = false
+                    jointDesc[flag] = false
                     if RMS_Utils.getIsHydraulicLiftJoint(jointDesc) then
                         currentIndex = currentIndex + 1
-                        jointDesc.rmsHydraulicErraticTarget = currentIndex == targetIndex
+                        jointDesc[flag] = currentIndex == targetIndex
                     end
                 end
             end
@@ -982,11 +1343,11 @@ local function setHydraulicErraticTarget(vehicle, targetIndex)
 
         if childVehicle.spec_cylindered ~= nil then
             for _, tool in ipairs(childVehicle.spec_cylindered.movingTools) do
-                tool.rmsHydraulicErraticTarget = false
+                tool[flag] = false
                 if RMS_Utils.getIsHydraulicMovingTool(tool)
                     and (tool.rotSpeed ~= nil or tool.transSpeed ~= nil or tool.animSpeed ~= nil) then
                     currentIndex = currentIndex + 1
-                    tool.rmsHydraulicErraticTarget = currentIndex == targetIndex
+                    tool[flag] = currentIndex == targetIndex
                 end
             end
         end
@@ -1002,55 +1363,89 @@ local function setHydraulicErraticTarget(vehicle, targetIndex)
     return currentIndex
 end
 
--- slows the hydraulic movement
 RMS_Breakdowns.EffectApplicators.HYDRAULIC_SPEED_MODIFIER = {
 
 }
 
--- makes one hydraulic function move erratically
-RMS_Breakdowns.EffectApplicators.HYDRAULIC_FUNCTION_ERRATIC_EFFECT = {
-    getEffectName = function()
-        return "HYDRAULIC_FUNCTION_ERRATIC_EFFECT"
-    end,
+RMS_Breakdowns.EffectApplicators.LOADER_CONTROL_EFFECT = {
 
+}
+
+RMS_Breakdowns.EffectApplicators.CAB_DAMPING_MODIFIER = {
     apply = function(vehicle, effectData, handler)
-        local effectName = handler.getEffectName()
-        local activeFunc = function(v, dt)
-            local spec = v.spec_RealisticMechanicalSystems
-            local effect = spec ~= nil and spec.activeEffects ~= nil and spec.activeEffects[effectName] or nil
-            local breakdown = spec ~= nil and spec.activeBreakdowns ~= nil
-                and spec.activeBreakdowns.HYDRAULIC_SPOOL_VALVE_MALFUNCTION or nil
-            if effect == nil or breakdown == nil then
-                return
-            end
-            local childVehicleHash = v:getChildVehicleHash()
-
-            if effect.extraData.childVehicleHash ~= childVehicleHash or breakdown.effectTargetIndex == 0 then
-                local targetCount = setHydraulicErraticTarget(v, breakdown.effectTargetIndex)
-                local previousTargetIndex = breakdown.effectTargetIndex
-                if breakdown.effectTargetIndex == 0 and targetCount > 0 and v.isServer then
-                    breakdown.effectTargetIndex = math.random(1, targetCount)
-                    setHydraulicErraticTarget(v, breakdown.effectTargetIndex)
-                end
-                effect.extraData.childVehicleHash = childVehicleHash
-
-                if previousTargetIndex ~= breakdown.effectTargetIndex then
-                    RealisticMechanicalSystems.raiseRMSDirty(v, RealisticMechanicalSystems.SYNC_GROUP.BREAKDOWNS)
+        for _, suspension in ipairs(vehicle.spec_suspensions.suspensionNodes) do
+            if suspension.isRotational and not suspension.useCharacterTorso then
+                local parameters = suspension.suspensionParameters
+                suspension.rmsDamping = suspension.rmsDamping or { parameters[1][2], parameters[2][2], parameters[3][2] }
+                for axis = 1, 3 do
+                    parameters[axis][2] = suspension.rmsDamping[axis] * (1 + effectData.value)
                 end
             end
         end
-
-        addFuncToActive(vehicle, effectName, activeFunc)
-        activeFunc(vehicle, 0)
     end,
 
     remove = function(vehicle, handler)
-        setHydraulicErraticTarget(vehicle, 0)
-        removeFuncFromActive(vehicle, handler.getEffectName())
+        for _, suspension in ipairs(vehicle.spec_suspensions.suspensionNodes) do
+            if suspension.rmsDamping ~= nil then
+                for axis = 1, 3 do
+                    suspension.suspensionParameters[axis][2] = suspension.rmsDamping[axis]
+                end
+            end
+        end
     end
 }
 
--- lets a raised implement drop slowly on its own
+-- @param string effectName effect id
+-- @param string flag field marking the function it acts on
+-- @return table applicator
+local function createHydraulicTargetApplicator(effectName, flag)
+    return {
+        getEffectName = function()
+            return effectName
+        end,
+
+        apply = function(vehicle, effectData, handler)
+            local activeFunc = function(v, dt)
+                local spec = v.spec_RealisticMechanicalSystems
+                local breakdown = spec ~= nil and spec.activeEffects ~= nil and spec.activeEffects[effectName] ~= nil
+                    and RMS_Breakdowns.getBreakdownCarryingEffect(spec, effectName) or nil
+                if breakdown == nil then
+                    return
+                end
+                local childVehicleHash = v:getChildVehicleHash()
+
+                if breakdown.targetChildVehicleHash ~= childVehicleHash or breakdown.effectTargetIndex == 0 then
+                    local targetCount = setHydraulicTarget(v, breakdown.effectTargetIndex, flag)
+                    local previousTargetIndex = breakdown.effectTargetIndex
+                    if breakdown.effectTargetIndex == 0 and targetCount > 0 and v.isServer then
+                        breakdown.effectTargetIndex = math.random(1, targetCount)
+                        setHydraulicTarget(v, breakdown.effectTargetIndex, flag)
+                    end
+                    breakdown.targetChildVehicleHash = childVehicleHash
+
+                    if previousTargetIndex ~= breakdown.effectTargetIndex then
+                        RealisticMechanicalSystems.raiseRMSDirty(v, RealisticMechanicalSystems.SYNC_GROUP.BREAKDOWNS)
+                    end
+                end
+            end
+
+            addFuncToActive(vehicle, effectName, activeFunc)
+            activeFunc(vehicle, 0)
+        end,
+
+        remove = function(vehicle, handler)
+            setHydraulicTarget(vehicle, 0, flag)
+            removeFuncFromActive(vehicle, handler.getEffectName())
+        end
+    }
+end
+
+RMS_Breakdowns.EffectApplicators.HYDRAULIC_FUNCTION_ERRATIC_EFFECT = createHydraulicTargetApplicator("HYDRAULIC_FUNCTION_ERRATIC_EFFECT", "rmsHydraulicErraticTarget")
+RMS_Breakdowns.EffectApplicators.HYDRAULIC_FUNCTION_BLOCKED_EFFECT = createHydraulicTargetApplicator("HYDRAULIC_FUNCTION_BLOCKED_EFFECT", "rmsHydraulicBlockedTarget")
+RMS_Breakdowns.EffectApplicators.LIFT_CONTROL_FAILURE = {
+
+}
+
 RMS_Breakdowns.EffectApplicators.HYDRAULIC_HOLD_DRIFT_EFFECT = {
     getEffectName = function()
         return "HYDRAULIC_HOLD_DRIFT_EFFECT"
@@ -1065,8 +1460,7 @@ RMS_Breakdowns.EffectApplicators.HYDRAULIC_HOLD_DRIFT_EFFECT = {
             local rootSpec = v.spec_RealisticMechanicalSystems
             local activeEffect = rootSpec ~= nil and rootSpec.activeEffects ~= nil
                 and rootSpec.activeEffects.HYDRAULIC_HOLD_DRIFT_EFFECT or nil
-            local breakdown = rootSpec ~= nil and rootSpec.activeBreakdowns ~= nil
-                and rootSpec.activeBreakdowns.HYDRAULIC_CYLINDER_INTERNAL_LEAK or nil
+            local breakdown = rootSpec ~= nil and RMS_Breakdowns.getBreakdownCarryingEffect(rootSpec, "HYDRAULIC_HOLD_DRIFT_EFFECT") or nil
             local targetCount = 0
             local attacherSpec = v.spec_attacherJoints
             if attacherSpec == nil or activeEffect == nil or breakdown == nil then
@@ -1100,14 +1494,12 @@ RMS_Breakdowns.EffectApplicators.HYDRAULIC_HOLD_DRIFT_EFFECT = {
                             local canDriftUnderLoad = isTarget and loadMassRatio > 0
                             local driftBlockedByFold = isHydraulicHoldDriftBlockedByFold(implement)
                             local isLowered = implement:getIsLowered()
-                            -- auto drift marker cleared once the movement finished or the player raised the implement
                             if jointDesc.rmsHoldDriftForced == true then
                                 if not canDriftUnderLoad or driftBlockedByFold or (isLowered and not jointDesc.isMoving) or jointDesc.moveDown == false then
                                     jointDesc.rmsHoldDriftForced = false
                                 end
                             end
 
-                            -- forced slow drop only from a raised idle state
                             if canDriftUnderLoad and not driftBlockedByFold and not isLowered and not jointDesc.isMoving and jointDesc.moveDown == false then
                                 jointDesc.rmsHoldDriftForced = true
                                 v:setJointMoveDown(jointDescIndex, true, false)
@@ -1158,6 +1550,8 @@ function RMS_Breakdowns.applyHydraulicDamageToAttacher(self, superFunc, dt, ...)
     local hydraulicEffect = activeEffects ~= nil and activeEffects.HYDRAULIC_SPEED_MODIFIER or nil
     local hydraulicHoldEffect = activeEffects ~= nil and activeEffects.HYDRAULIC_HOLD_DRIFT_EFFECT or nil
     local erraticEffect = activeEffects ~= nil and activeEffects.HYDRAULIC_FUNCTION_ERRATIC_EFFECT or nil
+    local isFunctionBlocked = activeEffects ~= nil and activeEffects.HYDRAULIC_FUNCTION_BLOCKED_EFFECT ~= nil
+    local isLiftControlFailed = activeEffects ~= nil and activeEffects.LIFT_CONTROL_FAILURE ~= nil
     local hydraulicModifier = RMS_Fluids.getHydraulicSpeedModifier(rootVehicle, (hydraulicEffect and hydraulicEffect.value) or 0)
     local erraticModifier = (erraticEffect and erraticEffect.value) or 0
     local hydraulicHoldEffectValue = hydraulicHoldEffect ~= nil and (tonumber(hydraulicHoldEffect.value) or 0) or 0
@@ -1166,7 +1560,7 @@ function RMS_Breakdowns.applyHydraulicDamageToAttacher(self, superFunc, dt, ...)
         hydraulicHoldEffectValue = 0
     end
 
-    if hydraulicModifier == 0 and hydraulicHoldEffectValue == 0 and erraticModifier == 0 then
+    if hydraulicModifier == 0 and hydraulicHoldEffectValue == 0 and erraticModifier == 0 and not isFunctionBlocked and not isLiftControlFailed then
         return superFunc(self, dt, ...)
     end
 
@@ -1190,7 +1584,6 @@ function RMS_Breakdowns.applyHydraulicDamageToAttacher(self, superFunc, dt, ...)
                 }
             end
 
-            -- raising the implement drops the forced hold drift in the same tick
             if jointDesc ~= nil and jointDesc.rmsHoldDriftForced == true and jointDesc.moveDown == false then
                 jointDesc.rmsHoldDriftForced = false
             end
@@ -1216,6 +1609,11 @@ function RMS_Breakdowns.applyHydraulicDamageToAttacher(self, superFunc, dt, ...)
                         performance = performance * (erraticPhaseActive and erraticPerformance or 0)
                         shouldAdjust = true
                     end
+                end
+
+                if isLiftControlFailed or isFunctionBlocked and jointDesc.rmsHydraulicBlockedTarget == true then
+                    performance = 0
+                    shouldAdjust = true
                 end
 
                 if shouldAdjust then
@@ -1259,9 +1657,12 @@ function RMS_Breakdowns.applyHydraulicDamageToCylindered(self, superFunc, dt, ..
 
     local hydraulicEffect = rootVehicle.spec_RealisticMechanicalSystems and rootVehicle.spec_RealisticMechanicalSystems.activeEffects.HYDRAULIC_SPEED_MODIFIER
     local erraticEffect = rootVehicle.spec_RealisticMechanicalSystems and rootVehicle.spec_RealisticMechanicalSystems.activeEffects.HYDRAULIC_FUNCTION_ERRATIC_EFFECT
+    local isFunctionBlocked = rootVehicle.spec_RealisticMechanicalSystems ~= nil
+        and rootVehicle.spec_RealisticMechanicalSystems.activeEffects.HYDRAULIC_FUNCTION_BLOCKED_EFFECT ~= nil
+    local loaderEffect = rootVehicle.spec_RealisticMechanicalSystems and rootVehicle.spec_RealisticMechanicalSystems.activeEffects.LOADER_CONTROL_EFFECT
     local hydraulicModifier = RMS_Fluids.getHydraulicSpeedModifier(rootVehicle, (hydraulicEffect and hydraulicEffect.value) or 0)
     local erraticModifier = (erraticEffect and erraticEffect.value) or 0
-    if hydraulicModifier == 0 and erraticModifier == 0 then
+    if hydraulicModifier == 0 and erraticModifier == 0 and not isFunctionBlocked and loaderEffect == nil then
         return superFunc(self, dt, ...)
     end
 
@@ -1282,6 +1683,12 @@ function RMS_Breakdowns.applyHydraulicDamageToCylindered(self, superFunc, dt, ..
             local toolPerformance = performance
             if tool.rmsHydraulicErraticTarget == true then
                 toolPerformance = toolPerformance * (erraticPhaseActive and erraticPerformance or 0)
+            end
+            if isFunctionBlocked and tool.rmsHydraulicBlockedTarget == true then
+                toolPerformance = 0
+            end
+            if loaderEffect ~= nil and RMS_Utils.getIsLoaderMovingTool(tool) then
+                toolPerformance = toolPerformance * math.max(0, 1 + loaderEffect.value)
             end
 
             if original.rotSpeed ~= nil then
@@ -1406,7 +1813,6 @@ do
     end
 end
 
--- caps the vehicle speed
 RMS_Breakdowns.EffectApplicators.MAX_SPEED_MODIFIER = {
 
 }
@@ -1455,7 +1861,6 @@ function RMS_Breakdowns.getSpeedLimitOverwrite(vehicle, superFunc, onlyIfWorking
     return speedLimit or math.huge, doCheckSpeedLimit
 end
 
--- scales the condition wear rate
 RMS_Breakdowns.EffectApplicators.CONDITION_WEAR_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1468,7 +1873,6 @@ RMS_Breakdowns.EffectApplicators.CONDITION_WEAR_MODIFIER = {
     end
 }
 
--- scales the service wear rate
 RMS_Breakdowns.EffectApplicators.SERVICE_WEAR_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1481,7 +1885,6 @@ RMS_Breakdowns.EffectApplicators.SERVICE_WEAR_MODIFIER = {
     end
 }
 
--- adds heat to the engine thermal model
 RMS_Breakdowns.EffectApplicators.ENGINE_HEAT_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1494,7 +1897,6 @@ RMS_Breakdowns.EffectApplicators.ENGINE_HEAT_MODIFIER = {
     end
 }
 
--- adds heat to the transmission thermal model
 RMS_Breakdowns.EffectApplicators.TRANSMISSION_HEAT_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1507,7 +1909,6 @@ RMS_Breakdowns.EffectApplicators.TRANSMISSION_HEAT_MODIFIER = {
     end
 }
 
--- adds heat to the hydraulic circuit
 RMS_Breakdowns.EffectApplicators.HYDRAULIC_HEAT_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1520,7 +1921,6 @@ RMS_Breakdowns.EffectApplicators.HYDRAULIC_HEAT_MODIFIER = {
     end
 }
 
--- lowers the engine thermostat health
 RMS_Breakdowns.EffectApplicators.THERMOSTAT_HEALTH_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1533,7 +1933,6 @@ RMS_Breakdowns.EffectApplicators.THERMOSTAT_HEALTH_MODIFIER = {
     end
 }
 
--- drains the coolant while the leak is open
 RMS_Breakdowns.EffectApplicators.COOLANT_LEAK_RATE = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1546,7 +1945,6 @@ RMS_Breakdowns.EffectApplicators.COOLANT_LEAK_RATE = {
     end
 }
 
--- drains the transmission oil while the leak is open
 RMS_Breakdowns.EffectApplicators.TRANSMISSION_OIL_LEAK_RATE = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1559,7 +1957,6 @@ RMS_Breakdowns.EffectApplicators.TRANSMISSION_OIL_LEAK_RATE = {
     end
 }
 
--- drains the hydraulic fluid while the leak is open
 RMS_Breakdowns.EffectApplicators.HYDRAULIC_FLUID_LEAK_RATE = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1572,7 +1969,6 @@ RMS_Breakdowns.EffectApplicators.HYDRAULIC_FLUID_LEAK_RATE = {
     end
 }
 
--- lowers the radiator health
 RMS_Breakdowns.EffectApplicators.RADIATOR_HEALTH_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1585,7 +1981,6 @@ RMS_Breakdowns.EffectApplicators.RADIATOR_HEALTH_MODIFIER = {
     end
 }
 
--- lowers the battery health
 RMS_Breakdowns.EffectApplicators.BATTERY_HEALTH_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1598,7 +1993,6 @@ RMS_Breakdowns.EffectApplicators.BATTERY_HEALTH_MODIFIER = {
     end
 }
 
--- lowers the alternator health
 RMS_Breakdowns.EffectApplicators.ALTERNATOR_HEALTH_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1611,7 +2005,30 @@ RMS_Breakdowns.EffectApplicators.ALTERNATOR_HEALTH_MODIFIER = {
     end
 }
 
--- lowers the fan clutch health
+RMS_Breakdowns.EffectApplicators.STARTER_HEALTH_MODIFIER = {
+    apply = function(vehicle, effectData, handler)
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        spec.starterHealth = math.max(1.0 + effectData.value, 0)
+    end,
+
+    remove = function(vehicle, handler)
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        spec.starterHealth = 1.0
+    end
+}
+
+RMS_Breakdowns.EffectApplicators.PARK_BRAKE_DRAG_EFFECT = {
+    apply = function(vehicle, effectData, handler)
+        vehicle.spec_RealisticMechanicalSystems.parkBrakeDrag = effectData.value
+        RMS_Drivetrain.refreshParkBrakePedal(vehicle)
+    end,
+
+    remove = function(vehicle, handler)
+        vehicle.spec_RealisticMechanicalSystems.parkBrakeDrag = 0
+        RMS_Drivetrain.refreshParkBrakePedal(vehicle)
+    end
+}
+
 RMS_Breakdowns.EffectApplicators.FAN_CLUTCH_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1624,15 +2041,9 @@ RMS_Breakdowns.EffectApplicators.FAN_CLUTCH_MODIFIER = {
     end
 }
 
--- sticks the engine thermostat at a fixed opening
 RMS_Breakdowns.EffectApplicators.THERMOSTAT_STUCK_EFFECT = {
     apply = function(vehicle, effectData, handler)
-        local spec = vehicle.spec_RealisticMechanicalSystems
-
-
-        if spec.thermostatStuckedPosition == nil or spec.thermostatStuckedPosition < 0 then
-            spec.thermostatStuckedPosition = spec.thermostatState
-        end
+        vehicle.spec_RealisticMechanicalSystems.thermostatStuckedPosition = effectData.extraData.stuckPosition
     end,
 
     remove = function(vehicle, handler)
@@ -1641,7 +2052,6 @@ RMS_Breakdowns.EffectApplicators.THERMOSTAT_STUCK_EFFECT = {
     end
 }
 
--- lowers the transmission thermostat health
 RMS_Breakdowns.EffectApplicators.TRANSMISSION_THERMOSTAT_HEALTH_MODIFIER = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1654,7 +2064,6 @@ RMS_Breakdowns.EffectApplicators.TRANSMISSION_THERMOSTAT_HEALTH_MODIFIER = {
     end
 }
 
--- sticks the transmission thermostat at a fixed opening
 RMS_Breakdowns.EffectApplicators.TRANSMISSION_THERMOSTAT_STUCK_EFFECT = {
     apply = function(vehicle, effectData, handler)
         local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1692,7 +2101,6 @@ local function updateIdleHuntingMotor(motor, effectData, dt, rpmBackup, shouldHu
     return rpmBackup
 end
 
--- swings the idle rpm up and down
 RMS_Breakdowns.EffectApplicators.IDLE_HUNTING_EFFECT = {
     getEffectName = function()
         return "IDLE_HUNTING_EFFECT" 
@@ -1704,7 +2112,6 @@ RMS_Breakdowns.EffectApplicators.IDLE_HUNTING_EFFECT = {
         local motor = vehicle:getMotor()
         local spec = vehicle.spec_RealisticMechanicalSystems
 
-        -- the idle is kept on the vehicle, read only while none is held
         if spec.idleHuntingRpmBackup == nil then
             spec.idleHuntingRpmBackup = motor.minRpm
         end
@@ -1728,7 +2135,6 @@ RMS_Breakdowns.EffectApplicators.IDLE_HUNTING_EFFECT = {
         local spec = vehicle.spec_RealisticMechanicalSystems
         local motor = vehicle:getMotor()
 
-        -- a repair made while the engine idles puts the idle back
         if spec.idleHuntingRpmBackup ~= nil then
             motor.minRpm = spec.idleHuntingRpmBackup
         end
@@ -1738,7 +2144,6 @@ RMS_Breakdowns.EffectApplicators.IDLE_HUNTING_EFFECT = {
     end
 }
 
--- raises the idle rpm while the engine is cold
 RMS_Breakdowns.EffectApplicators.GLOW_PLUG_COLD_IDLE_EFFECT = {
     getEffectName = function()
         return "GLOW_PLUG_COLD_IDLE_EFFECT"
@@ -1800,7 +2205,6 @@ RMS_Breakdowns.EffectApplicators.GLOW_PLUG_COLD_IDLE_EFFECT = {
     end
 }
 
--- lets the circuit of a parked machine leak, in multiples of the resting draw a circuit is held faulty from
 RMS_Breakdowns.EffectApplicators.ELECTRICAL_LEAKAGE_EFFECT = {
     apply = function(vehicle, effectData, handler)
         vehicle.spec_RealisticMechanicalSystems.circuitLeakageFactor = effectData.value
@@ -1811,7 +2215,6 @@ RMS_Breakdowns.EffectApplicators.ELECTRICAL_LEAKAGE_EFFECT = {
     end
 }
 
--- adds resistance between the battery and its circuit, in multiples of the drop a healthy circuit is allowed
 RMS_Breakdowns.EffectApplicators.ELECTRICAL_CONTACT_RESISTANCE_EFFECT = {
     apply = function(vehicle, effectData, handler)
         vehicle.spec_RealisticMechanicalSystems.circuitResistanceFactor = effectData.value
@@ -1851,6 +2254,111 @@ local function rmsUpdateNoiseGate(spec, effectName, targetGate, dt)
     gate = math.clamp(gate, 0, 1)
     spec.__rmsNoiseGates[effectName] = gate
     return gate
+end
+
+local KNOCK_RECORDING_RPM = { engineKnocking = 670, pistonSlap = 580, valveTrainNoise = 710, injectorKnock = 1620, highPressurePump = 800 }
+local SPEED_PITCH = {
+    wheelHubBearingNoise = { 15.0, 0.12, 1.10, 0.03 },
+    wheelSeizureGrind = { 12.0, 0.06, 1.05, 0.05 },
+    trackClatter = { 15.0, 0.08, 1.05, 0.02 },
+    trackRoller = { 15.0, 0.12, 1.10, 0.03 },
+    gearWhineNoise = { 15.0, 0.12, 1.10, 0.03 },
+    gearboxBearingNoise = { 15.0, 0.12, 1.10, 0.03 },
+    hydrostaticWhine = { 15.0, 0.12, 1.10, 0.03 },
+    electricMotorBearing = { 15.0, 0.12, 1.10, 0.03 },
+    parkBrakeDrag = { 12.0, 0.06, 1.05, 0.05 }
+}
+local FIXED_PITCH = { steeringOrbitrol = true, coolantSteam = true, gasLeak = true }
+local CLUNK_MEAN_SECONDS = 1.2
+
+local function getIsSteeringMoving(vehicle, spec_rms, effectName, dt)
+    local lock = vehicle.rotatedTime >= 0 and vehicle.maxRotTime or -vehicle.minRotTime
+    local position = lock > 0 and vehicle.rotatedTime / lock or 0
+    spec_rms.__rmsNoiseSteerPositions = spec_rms.__rmsNoiseSteerPositions or {}
+    local lastPosition = spec_rms.__rmsNoiseSteerPositions[effectName] or position
+    spec_rms.__rmsNoiseSteerPositions[effectName] = position
+    return math.abs(position - lastPosition) / (dt * 0.001) > RMS_Config.CORE.CHASSIS_FACTOR_DATA.STEER_LOAD_RATE_DEADZONE
+end
+
+local function getIsLoaderMoving(vehicle, spec_rms)
+    spec_rms.__rmsNoiseLoaderPositions = spec_rms.__rmsNoiseLoaderPositions or {}
+    local positions = spec_rms.__rmsNoiseLoaderPositions
+    local isMoving = false
+    for _, tool in ipairs(vehicle.spec_cylindered.movingTools) do
+        if RMS_Utils.getIsLoaderMovingTool(tool) then
+            local position = tool.curRot[tool.rotationAxis] + tool.curTrans[tool.translationAxis]
+            if positions[tool] ~= nil and position ~= positions[tool] then
+                isMoving = true
+            end
+            positions[tool] = position
+        end
+    end
+    return isMoving
+end
+
+local CLUNK_LOAD_MS = 500
+local BUMP_STROKE_MS = 500
+
+local function getIsFrontDriveTakenUp(vehicle, spec_rms, effectName, dt)
+    spec_rms.__rmsNoiseDriveStates = spec_rms.__rmsNoiseDriveStates or {}
+    local state = spec_rms.__rmsNoiseDriveStates[effectName] or { direction = 0, loadedFor = 0 }
+    spec_rms.__rmsNoiseDriveStates[effectName] = state
+    local direction = vehicle:getLastSpeed() > 0.5 and vehicle.movingDirection or 0
+    if direction ~= 0 and direction ~= state.direction and RMS_Drivetrain.getIsFrontAxleDriven(vehicle) then
+        state.loadedFor = CLUNK_LOAD_MS
+    end
+    state.direction = direction
+    state.loadedFor = math.max(state.loadedFor - dt, 0)
+    return state.loadedFor > 0
+end
+
+local function getIsCabBumping(vehicle, spec_rms, effectName, dt)
+    spec_rms.__rmsNoiseBumpStates = spec_rms.__rmsNoiseBumpStates or {}
+    local state = spec_rms.__rmsNoiseBumpStates[effectName] or { lengths = {}, loadedFor = 0 }
+    spec_rms.__rmsNoiseBumpStates[effectName] = state
+    for index, wheel in ipairs(vehicle.spec_wheels.wheels) do
+        local length = wheel.physics.netInfo.suspensionLength
+        local last = state.lengths[index] or length
+        state.lengths[index] = length
+        if math.abs(length - last) / wheel.physics.suspTravel > dt / BUMP_STROKE_MS then
+            state.loadedFor = CLUNK_LOAD_MS
+        end
+    end
+    state.loadedFor = math.max(state.loadedFor - dt, 0)
+    return state.loadedFor > 0
+end
+
+-- @param string effectName effect id
+-- @param string sampleName sample of the clunks
+-- @param function getIsMoving tells whether the joint moves this frame
+-- @return table applicator
+local function createClunkEffectApplicator(effectName, sampleName, getIsMoving)
+    return {
+        getEffectName = function()
+            return effectName
+        end,
+
+        apply = function(vehicle, effectData, handler)
+            addFuncToActive(vehicle, effectName, function(v, dt)
+                local spec_rms = v.spec_RealisticMechanicalSystems
+                local effect = spec_rms.activeEffects[effectName]
+                local sample = spec_rms.samples[sampleName]
+                if effect == nil or sample == nil or not v:getIsMotorStarted() then
+                    return
+                end
+                if getIsMoving(v, spec_rms, effectName, dt)
+                    and math.random() < RMS_Utils.getChancePerFrameFromMeanTime(dt, CLUNK_MEAN_SECONDS / effect.value / 60) then
+                    sample.rmsOriginalVolumeScale = sample.rmsOriginalVolumeScale or sample.volumeScale
+                    sample.volumeScale = sample.rmsOriginalVolumeScale * effect.value
+                    RMS_SoundManager.playSample(sample)
+                end
+            end)
+        end,
+
+        remove = function(vehicle, handler)
+            removeFuncFromActive(vehicle, handler.getEffectName())
+        end
+    }
 end
 
 ---Builds an effect applicator that plays one engine noise sample through a gate
@@ -1921,10 +2429,17 @@ local function createEngineNoiseEffectApplicator(effectName, sampleName, gateMod
                     local targetGate = ptoData ~= nil and ptoData.isActive and (tonumber(ptoData.rpm) or 0) > 0 and 1 or 0
                     gate = rmsUpdateNoiseGate(spec_rms, effectName, targetGate, dt)
                     baseVolumeScale = baseVolumeScale * gate
+                elseif gateMode == "steer" then
+                    local isSteering = getIsSteeringMoving(v, spec_rms, effectName, dt)
+                    gate = rmsUpdateNoiseGate(spec_rms, effectName, isSteering and 1 or 0, dt)
+                    baseVolumeScale = baseVolumeScale * gate
+                elseif gateMode == "hot" then
+                    gate = rmsUpdateNoiseGate(spec_rms, effectName, hotN, dt)
+                    baseVolumeScale = baseVolumeScale * gate
                 end
 
                 if baseVolumeScale <= 0.02 then
-                    if (gateMode == "boost" or gateMode == "speed" or gateMode == "pto") and gate > 0.001 then
+                    if gateMode ~= nil and gate > 0.001 then
                         baseVolumeScale = 0.02
                     else
                         rmsStopAndResetNoiseSample(sample)
@@ -1948,21 +2463,18 @@ local function createEngineNoiseEffectApplicator(effectName, sampleName, gateMod
 
                 RMS_SoundManager.setSampleVolumeOffset(sample, 0)
                 local pitchOffset
-                if sampleName == "turboWhistle" then
+                local speedPitch = SPEED_PITCH[sampleName]
+                if KNOCK_RECORDING_RPM[sampleName] ~= nil then
+                    pitchOffset = lastRpm / KNOCK_RECORDING_RPM[sampleName] - 1
+                elseif sampleName == "turboWhistle" then
                     local boostThreshold = 0.02
                     local boostGate = math.clamp((boostN - boostThreshold) / (1 - boostThreshold), 0, 1)
                     pitchOffset = (0.20 * boostGate + 0.16 * (rpmN ^ 1.20) * boostGate + 0.03 * loadN * boostGate) * gate
-                elseif sampleName == "fanNoice" then
+                elseif speedPitch ~= nil then
+                    local speedN = math.clamp(speedMps / speedPitch[1], 0, 1)
+                    pitchOffset = (speedPitch[2] * (speedN ^ speedPitch[3]) + speedPitch[4] * loadN * speedN) * gate
+                elseif FIXED_PITCH[sampleName] then
                     pitchOffset = 0
-                elseif sampleName == "wheelHubBearingNoise" then
-                    local speedN = math.clamp(speedMps / 15.0, 0, 1)
-                    pitchOffset = (0.12 * (speedN ^ 1.10) + 0.03 * loadN * speedN) * gate
-                elseif sampleName == "wheelSeizureGrind" then
-                    local speedN = math.clamp(speedMps / 12.0, 0, 1)
-                    pitchOffset = (0.06 * (speedN ^ 1.05) + 0.05 * loadN * speedN) * gate
-                elseif sampleName == "vibrationNoice" then
-                    local speedN = math.clamp(speedMps / 15.0, 0, 1)
-                    pitchOffset = (0.08 * (speedN ^ 1.05) + 0.02 * loadN * speedN) * gate
                 else
                     pitchOffset = 0.24 * (rpmN ^ 1.35) + 0.04 * dynamicIntensity * rpmN
                 end
@@ -1990,13 +2502,83 @@ RMS_Breakdowns.EffectApplicators.ENGINE_KNOCKING_NOISE_EFFECT = createEngineNois
 RMS_Breakdowns.EffectApplicators.VALVE_TRAIN_NOISE_EFFECT = createEngineNoiseEffectApplicator("VALVE_TRAIN_NOISE_EFFECT", "valveTrainNoise", nil)
 RMS_Breakdowns.EffectApplicators.TURBO_WHISTLE_NOISE_EFFECT = createEngineNoiseEffectApplicator("TURBO_WHISTLE_NOISE_EFFECT", "turboWhistle", "boost")
 RMS_Breakdowns.EffectApplicators.FAN_CLUTCH_NOISE_EFFECT = createEngineNoiseEffectApplicator("FAN_CLUTCH_NOISE_EFFECT", "fanNoice", nil)
-RMS_Breakdowns.EffectApplicators.VIBRATION_NOISE_EFFECT = createEngineNoiseEffectApplicator("VIBRATION_NOISE_EFFECT", "vibrationNoice", "speed")
+RMS_Breakdowns.EffectApplicators.FAN_BLADE_NOISE_EFFECT = createEngineNoiseEffectApplicator("FAN_BLADE_NOISE_EFFECT", "fanBladeImbalance", nil)
+RMS_Breakdowns.EffectApplicators.TRACK_CLATTER_NOISE_EFFECT = createEngineNoiseEffectApplicator("TRACK_CLATTER_NOISE_EFFECT", "trackClatter", "speed")
 RMS_Breakdowns.EffectApplicators.WHEEL_HUB_BEARING_NOISE_EFFECT = createEngineNoiseEffectApplicator("WHEEL_HUB_BEARING_NOISE_EFFECT", "wheelHubBearingNoise", "speed")
 RMS_Breakdowns.EffectApplicators.WHEEL_SEIZURE_GRIND_NOISE_EFFECT = createEngineNoiseEffectApplicator("WHEEL_SEIZURE_GRIND_NOISE_EFFECT", "wheelSeizureGrind", "speed")
 RMS_Breakdowns.EffectApplicators.PTO_BEARING_NOISE_EFFECT = createEngineNoiseEffectApplicator("PTO_BEARING_NOISE_EFFECT", "ptoBearingNoise", "pto")
+RMS_Breakdowns.EffectApplicators.GEAR_WHINE_NOISE_EFFECT = createEngineNoiseEffectApplicator("GEAR_WHINE_NOISE_EFFECT", "gearWhineNoise", "speed")
+RMS_Breakdowns.EffectApplicators.GEARBOX_BEARING_NOISE_EFFECT = createEngineNoiseEffectApplicator("GEARBOX_BEARING_NOISE_EFFECT", "gearboxBearingNoise", "speed")
+RMS_Breakdowns.EffectApplicators.PISTON_SLAP_NOISE_EFFECT = createEngineNoiseEffectApplicator("PISTON_SLAP_NOISE_EFFECT", "pistonSlap", nil)
+RMS_Breakdowns.EffectApplicators.INJECTOR_KNOCK_NOISE_EFFECT = createEngineNoiseEffectApplicator("INJECTOR_KNOCK_NOISE_EFFECT", "injectorKnock", nil)
+RMS_Breakdowns.EffectApplicators.HIGH_PRESSURE_PUMP_NOISE_EFFECT = createEngineNoiseEffectApplicator("HIGH_PRESSURE_PUMP_NOISE_EFFECT", "highPressurePump", nil)
+RMS_Breakdowns.EffectApplicators.BELT_SQUEAL_NOISE_EFFECT = createEngineNoiseEffectApplicator("BELT_SQUEAL_NOISE_EFFECT", "accessoryBelt", nil)
+RMS_Breakdowns.EffectApplicators.WATER_PUMP_BEARING_NOISE_EFFECT = createEngineNoiseEffectApplicator("WATER_PUMP_BEARING_NOISE_EFFECT", "waterPumpBearing", nil)
+RMS_Breakdowns.EffectApplicators.TRANSMISSION_PUMP_NOISE_EFFECT = createEngineNoiseEffectApplicator("TRANSMISSION_PUMP_NOISE_EFFECT", "transmissionPump", nil)
+RMS_Breakdowns.EffectApplicators.HYDROSTATIC_WHINE_NOISE_EFFECT = createEngineNoiseEffectApplicator("HYDROSTATIC_WHINE_NOISE_EFFECT", "hydrostaticWhine", "speed")
+RMS_Breakdowns.EffectApplicators.HYDRAULIC_PUMP_NOISE_EFFECT = createEngineNoiseEffectApplicator("HYDRAULIC_PUMP_NOISE_EFFECT", "hydraulicPump", nil)
+RMS_Breakdowns.EffectApplicators.COOLANT_STEAM_NOISE_EFFECT = createEngineNoiseEffectApplicator("COOLANT_STEAM_NOISE_EFFECT", "coolantSteam", "hot")
+RMS_Breakdowns.EffectApplicators.GAS_LEAK_NOISE_EFFECT = createEngineNoiseEffectApplicator("GAS_LEAK_NOISE_EFFECT", "gasLeak", nil)
+RMS_Breakdowns.EffectApplicators.PARK_BRAKE_DRAG_NOISE_EFFECT = createEngineNoiseEffectApplicator("PARK_BRAKE_DRAG_NOISE_EFFECT", "parkBrakeDrag", "speed")
+RMS_Breakdowns.EffectApplicators.STEERING_LINKAGE_NOISE_EFFECT = createClunkEffectApplicator("STEERING_LINKAGE_NOISE_EFFECT", "steeringLinkage",
+    getIsSteeringMoving)
+RMS_Breakdowns.EffectApplicators.STEERING_KNUCKLE_NOISE_EFFECT = createClunkEffectApplicator("STEERING_KNUCKLE_NOISE_EFFECT", "steeringKnuckle",
+    getIsSteeringMoving)
+RMS_Breakdowns.EffectApplicators.STEERING_ORBITROL_NOISE_EFFECT = createEngineNoiseEffectApplicator("STEERING_ORBITROL_NOISE_EFFECT", "steeringOrbitrol", "steer")
+RMS_Breakdowns.EffectApplicators.TRACK_ROLLER_NOISE_EFFECT = createEngineNoiseEffectApplicator("TRACK_ROLLER_NOISE_EFFECT", "trackRoller", "speed")
+RMS_Breakdowns.EffectApplicators.LOADER_PINS_NOISE_EFFECT = createClunkEffectApplicator("LOADER_PINS_NOISE_EFFECT", "loaderPins", getIsLoaderMoving)
+RMS_Breakdowns.EffectApplicators.FRONT_AXLE_SHAFT_NOISE_EFFECT = createClunkEffectApplicator("FRONT_AXLE_SHAFT_NOISE_EFFECT",
+    "frontAxleShaft", getIsFrontDriveTakenUp)
+RMS_Breakdowns.EffectApplicators.CAB_DAMPER_NOISE_EFFECT = createClunkEffectApplicator("CAB_DAMPER_NOISE_EFFECT", "cabDamper",
+    getIsCabBumping)
+RMS_Breakdowns.EffectApplicators.PTO_SPLINES_NOISE_EFFECT = createEngineNoiseEffectApplicator("PTO_SPLINES_NOISE_EFFECT", "ptoSplines", "pto")
+RMS_Breakdowns.EffectApplicators.ELECTRIC_MOTOR_BEARING_NOISE_EFFECT = createEngineNoiseEffectApplicator("ELECTRIC_MOTOR_BEARING_NOISE_EFFECT",
+    "electricMotorBearing", "speed")
+
+RMS_Breakdowns.EffectApplicators.HOSE_BURST_NOISE_EFFECT = {
+    getEffectName = function()
+        return "HOSE_BURST_NOISE_EFFECT"
+    end,
+
+    apply = function(vehicle, effectData, handler, isRestoring)
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        if not spec.hasHoseBurst then
+            spec.hasHoseBurst = true
+            -- Do not replay a burst restored from a save or join stream.
+            if not isRestoring and vehicle:getIsMotorStarted() then
+                RMS_SoundManager.playSample(spec.samples.hoseBurst)
+            end
+        end
+    end,
+
+    remove = function(vehicle, handler)
+        vehicle.spec_RealisticMechanicalSystems.hasHoseBurst = nil
+    end
+}
+
+RMS_Breakdowns.EffectApplicators.PTO_SHAFT_BREAK_NOISE_EFFECT = {
+    getEffectName = function()
+        return "PTO_SHAFT_BREAK_NOISE_EFFECT"
+    end,
+
+    apply = function(vehicle, effectData, handler, isRestoring)
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        if not spec.hasPtoShaftBroken then
+            spec.hasPtoShaftBroken = true
+            -- Do not replay a break restored from a save or join stream.
+            local ptoData = RMS_Utils.getConnectedPtoData(vehicle)
+            if not isRestoring and ptoData.isActive and (tonumber(ptoData.rpm) or 0) > 0 then
+                RMS_SoundManager.playSample(spec.samples.ptoShaftBreak)
+            end
+        end
+    end,
+
+    remove = function(vehicle, handler)
+        vehicle.spec_RealisticMechanicalSystems.hasPtoShaftBroken = nil
+    end
+}
 
 
--- drops the CVT pressure at random
 RMS_Breakdowns.EffectApplicators.CVT_PRESSURE_DROP_CHANCE = {
     getEffectName = function()
         return "CVT_PRESSURE_DROP_CHANCE"
@@ -2046,7 +2628,6 @@ RMS_Breakdowns.EffectApplicators.CVT_PRESSURE_DROP_CHANCE = {
     end
 }
 
--- stalls the engine at random and warns the driver
 RMS_Breakdowns.EffectApplicators.ENGINE_STALLS_CHANCE = {
     getEffectName = function() return "ENGINE_STALLS_CHANCE" end,
     apply = function(vehicle, effectData, handler)
@@ -2079,76 +2660,92 @@ RMS_Breakdowns.EffectApplicators.ENGINE_STALLS_CHANCE = {
     end,
 }
 
--- disengages the PTO at random
-RMS_Breakdowns.EffectApplicators.PTO_AUTO_DISENGAGE_CHANCE = {
-    getEffectName = function() return "PTO_AUTO_DISENGAGE_CHANCE" end,
-    apply = function(vehicle, effectData, handler)
-        local effectName = handler.getEffectName()
+-- @param string effectName effect id
+-- @param string side "rear" or "front"
+-- @param string messageKey warning shown to the driver
+-- @return table applicator
+local function createPtoAutoDisengageApplicator(effectName, side, messageKey)
+    return {
+        getEffectName = function() return effectName end,
+        apply = function(vehicle, effectData, handler)
+            local activeFunc = function(v, dt)
 
-        local activeFunc = function(v, dt)
-
-            local spec = v.spec_RealisticMechanicalSystems
-            local effect = spec ~= nil and spec.activeEffects ~= nil and spec.activeEffects[effectName] or nil
-            if effect == nil or (tonumber(effect.value) or 0) <= 0 or (tonumber(spec.year) or 0) < 1990 then
-                return
-            end
-
-            effect.extraData = effect.extraData or {}
-            if effect.extraData.status == nil then
-                effect.extraData.status = "IDLE"
-            end
-
-            if effect.extraData.status == "DISENGAGED" then
-                if v.isServer then
-                    RMS_Utils.setConnectedPtoConsumersTurnedOn(v, false)
-                elseif v:getIsActiveForInput(true) then
-                    g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_pto_auto_disengage_message"), 4000)
+                local spec = v.spec_RealisticMechanicalSystems
+                local effect = spec ~= nil and spec.activeEffects ~= nil and spec.activeEffects[effectName] or nil
+                if effect == nil or (tonumber(effect.value) or 0) <= 0 or (tonumber(spec.year) or 0) < 1990 then
+                    return
                 end
-                effect.extraData.status = "IDLE"
-                return
+
+                effect.extraData = effect.extraData or {}
+                if effect.extraData.status == nil then
+                    effect.extraData.status = "IDLE"
+                end
+
+                if effect.extraData.status == "DISENGAGED" then
+                    if v.isServer then
+                        RMS_Utils.setConnectedPtoConsumersTurnedOn(v, false, side)
+                    elseif v:getIsActiveForInput(true) then
+                        g_currentMission:showBlinkingWarning(g_i18n:getText(messageKey), 4000)
+                    end
+                    effect.extraData.status = "IDLE"
+                    return
+                end
+
+                if not v.isServer then
+                    return
+                end
+
+                if not RMS_Utils.getConnectedPtoData(v, side).isActive then
+                    return
+                end
+
+                local meanTimeInMinutes = (tonumber(effect.value) or 0) / 60
+                if effect.extraData.status == "IDLE" and math.random() < RMS_Utils.getChancePerFrameFromMeanTime(dt, meanTimeInMinutes) then
+                    effect.extraData.status = "DISENGAGED"
+                    RMS_EffectSyncEvent.send(v, effectName, "DISENGAGED", 0, 0, 0)
+                end
             end
 
-            if not v.isServer then
-                return
-            end
-
-            if not RMS_Utils.getConnectedPtoData(v).isActive then
-                return
-            end
-
-            local meanTimeInMinutes = (tonumber(effect.value) or 0) / 60
-            if effect.extraData.status == "IDLE" and math.random() < RMS_Utils.getChancePerFrameFromMeanTime(dt, meanTimeInMinutes) then
-                effect.extraData.status = "DISENGAGED"
-                RMS_EffectSyncEvent.send(v, effectName, "DISENGAGED", 0, 0, 0)
-            end
+            addFuncToActive(vehicle, effectName, activeFunc)
+        end,
+        remove = function(vehicle, handler)
+            removeFuncFromActive(vehicle, handler.getEffectName())
         end
+    }
+end
 
-        addFuncToActive(vehicle, effectName, activeFunc)
-    end,
-    remove = function(vehicle, handler)
-        removeFuncFromActive(vehicle, handler.getEffectName())
-    end
+---Builds the applicator that keeps one side of the PTO from running
+-- @param string effectName effect id
+-- @param string side "rear" or "front"
+-- @return table applicator
+local function createPtoFailureApplicator(effectName, side)
+    return {
+        getEffectName = function() return effectName end,
+        apply = function(vehicle, effectData, handler)
+            local activeFunc = function(v, dt)
+                local effect = v.spec_RealisticMechanicalSystems.activeEffects[effectName]
+                if v.isServer and effect ~= nil and (tonumber(effect.value) or 0) > 0 then
+                    RMS_Utils.setConnectedPtoConsumersTurnedOn(v, false, side)
+                end
+            end
+            addFuncToActive(vehicle, effectName, activeFunc)
+        end,
+        remove = function(vehicle, handler)
+            removeFuncFromActive(vehicle, handler.getEffectName())
+        end
+    }
+end
+
+RMS_Breakdowns.EffectApplicators.PTO_AUTO_DISENGAGE_CHANCE = createPtoAutoDisengageApplicator("PTO_AUTO_DISENGAGE_CHANCE", "rear",
+    "rms_breakdowns_pto_auto_disengage_message")
+RMS_Breakdowns.EffectApplicators.PTO_FAILURE = createPtoFailureApplicator("PTO_FAILURE", "rear")
+RMS_Breakdowns.EffectApplicators.FRONT_PTO_AUTO_DISENGAGE_CHANCE = createPtoAutoDisengageApplicator("FRONT_PTO_AUTO_DISENGAGE_CHANCE",
+    "front", "rms_breakdowns_front_pto_auto_disengage_message")
+RMS_Breakdowns.EffectApplicators.FRONT_PTO_FAILURE = createPtoFailureApplicator("FRONT_PTO_FAILURE", "front")
+
+RMS_Breakdowns.EffectApplicators.PTO_STUCK_ENGAGED_CHANCE = {
 }
 
--- keeps the PTO from running
-RMS_Breakdowns.EffectApplicators.PTO_FAILURE = {
-    getEffectName = function() return "PTO_FAILURE" end,
-    apply = function(vehicle, effectData, handler)
-        local effectName = handler.getEffectName()
-        local activeFunc = function(v, dt)
-            local effect = v.spec_RealisticMechanicalSystems.activeEffects[effectName]
-            if v.isServer and effect ~= nil and (tonumber(effect.value) or 0) > 0 then
-                RMS_Utils.setConnectedPtoConsumersTurnedOn(v, false)
-            end
-        end
-        addFuncToActive(vehicle, effectName, activeFunc)
-    end,
-    remove = function(vehicle, handler)
-        removeFuncFromActive(vehicle, handler.getEffectName())
-    end
-}
-
--- blocks the PTO engagement at random
 RMS_Breakdowns.EffectApplicators.PTO_ENGAGEMENT_BLOCKED_CHANCE = {
     getEffectName = function() return "PTO_ENGAGEMENT_BLOCKED_CHANCE" end,
     apply = function(vehicle, effectData, handler)
@@ -2174,7 +2771,7 @@ function RMS_Breakdowns.getCanBeTurnedOn(vehicle, superFunc)
         return canBeTurnedOn, warning
     end
 
-    local ptoData = RMS_Utils.getConnectedPtoData(rootVehicle)
+    local ptoData = RMS_Utils.getConnectedPtoData(rootVehicle, "rear")
     if ptoData.connectedVehicles[vehicle] ~= true then
         return canBeTurnedOn, warning
     end
@@ -2227,19 +2824,6 @@ function RMS_Breakdowns.actionEventTurnOn(vehicle, superFunc, actionName, inputV
     end)
 end
 
----Counts a PTO engagement attempt around the vanilla turn on all action
--- @param table vehicle vehicle
--- @param function superFunc super function
--- @param string actionName input action name
--- @param float inputValue input value
--- @param any callbackState callback state
--- @param boolean isAnalog true for an analog input
-function RMS_Breakdowns.actionEventTurnOnAll(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog)
-    return runWithPtoEngagementAttempt(vehicle, function()
-        return superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
-    end)
-end
-
 ---Counts a PTO engagement attempt around the action controller turn on
 -- @param table vehicle vehicle
 -- @param function superFunc super function
@@ -2250,9 +2834,30 @@ function RMS_Breakdowns.actionControllerTurnOnEvent(vehicle, superFunc, directio
     end)
 end
 
+-- Switch off only at the source of the event.
+-- @param table vehicle vehicle
+-- @param function superFunc super function
+-- @param boolean isTurnedOn true to turn it on
+-- @param boolean? noEventSend true when the change came over the network
+function RMS_Breakdowns.setIsTurnedOn(vehicle, superFunc, isTurnedOn, noEventSend)
+    local rootVehicle = vehicle.rootVehicle
+    local spec = rootVehicle ~= nil and rootVehicle.spec_RealisticMechanicalSystems or nil
+    local effect = spec ~= nil and spec.activeEffects ~= nil and spec.activeEffects.PTO_STUCK_ENGAGED_CHANCE or nil
+    if effect ~= nil and not isTurnedOn and noEventSend ~= true and vehicle:getIsTurnedOn() and rootVehicle:getIsMotorStarted()
+        and RMS_Utils.getConnectedPtoData(rootVehicle, "rear").connectedVehicles[vehicle] == true
+        and math.random() < effect.value then
+        if rootVehicle:getIsActiveForInput(true) then
+            g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_pto_stuck_engaged_message"), 4000)
+        end
+        return
+    end
+    return superFunc(vehicle, isTurnedOn, noEventSend)
+end
+
 TurnOnVehicle.getCanBeTurnedOn = Utils.overwrittenFunction(TurnOnVehicle.getCanBeTurnedOn, RMS_Breakdowns.getCanBeTurnedOn)
+TurnOnVehicle.setIsTurnedOn = Utils.overwrittenFunction(TurnOnVehicle.setIsTurnedOn, RMS_Breakdowns.setIsTurnedOn)
 TurnOnVehicle.actionEventTurnOn = Utils.overwrittenFunction(TurnOnVehicle.actionEventTurnOn, RMS_Breakdowns.actionEventTurnOn)
-TurnOnVehicle.actionEventTurnOnAll = Utils.overwrittenFunction(TurnOnVehicle.actionEventTurnOnAll, RMS_Breakdowns.actionEventTurnOnAll)
+TurnOnVehicle.actionEventTurnOnAll = Utils.overwrittenFunction(TurnOnVehicle.actionEventTurnOnAll, RMS_Breakdowns.actionEventTurnOn)
 TurnOnVehicle.actionControllerTurnOnEvent = Utils.overwrittenFunction(TurnOnVehicle.actionControllerTurnOnEvent, RMS_Breakdowns.actionControllerTurnOnEvent)
 
 
@@ -2281,35 +2886,12 @@ local function applyHardStartModifier(vehicle, effectName)
             return
         end
 
-        local motorStartDelay = 1500
-        local startFadeMs = 0
-        local endFadeMs = -1500
-        local crankingPitchOffset = 0
-
         if effect.extraData.status == "CRANKING" and effect.extraData.crankSpeed == nil then
-            -- one attempt keeps the starter speed it began with
             effect.extraData.crankSpeed = RMS_Electrical.getCrankingSpeed(v)
             effect.extraData.crankedMs = 0
         end
-        crankingPitchOffset = getStarterCrankingPitchOffset(effect.extraData.crankSpeed)
 
-        effect.extraData.timer = math.max((effect.extraData.timer or 0) - dt, endFadeMs)
-
-        if v.isClient and effect.extraData.status == "PASSED" then
-            playStarterCrankingEndSample(spec, crankingPitchOffset)
-        end
-
-        if effect.extraData.timer <= startFadeMs and effect.extraData.timer >= endFadeMs then
-            local starterCrankingEndSample = spec.samples ~= nil and spec.samples.starterCrankingEnd or nil
-
-            if starterCrankingEndSample ~= nil and RMS_SoundManager.getIsSamplePlaying(starterCrankingEndSample) then
-                local baseVolume = starterCrankingEndSample.current.volume or 2.0
-                local t = math.clamp(math.abs(effect.extraData.timer / endFadeMs), 0, 1)
-                local easedT = t * t
-
-                RMS_SoundManager.setSampleVolumeOffset(starterCrankingEndSample, math.max(-(baseVolume * easedT), -0.65))
-            end
-        end
+        effect.extraData.timer = math.max((effect.extraData.timer or 0) - dt, 0)
 
         if effect.extraData.timer <= 0 and effect.extraData.status == "PASSED" then
             if v.getCanMotorRun == nil or v:getCanMotorRun() then
@@ -2326,27 +2908,23 @@ local function applyHardStartModifier(vehicle, effectName)
             if v.isServer
                 and effect.extraData.blockStart ~= true
                 and tryStartMotor(effect, dt, rawEngineTemp) then
-                effect.extraData.timer = motorStartDelay
+                local catchDelay = RMS_Breakdowns.getStarterCatchDelay(v, effect.extraData.crankSpeed)
+                effect.extraData.timer = catchDelay
                 effect.extraData.status = "PASSED"
                 RMS_Preheat.onCrankPassed(v)
-                if v.isClient then
-                    playStarterCrankingEndSample(spec, crankingPitchOffset)
-                end
-                RMS_EffectSyncEvent.send(v, effectName, "PASSED", motorStartDelay, 0, 0)
+                RMS_EffectSyncEvent.send(v, effectName, "PASSED", catchDelay, 0, 0)
             end
         elseif not startRequestActive and effect.extraData.status == "CRANKING" then
             effect.extraData.status = "IDLE"
             effect.extraData.crankSpeed = nil
             effect.extraData.automaticCrank = false
         end
-
-        syncStarterCrankingSample(v)
     end
 
     addFuncToActive(vehicle, effectName, activeFunc)
 end
 
----Removes the hard start effect and its sounds
+---Removes the hard start effect
 local function removeHardStartModifier(vehicle, effectName)
     local effect = vehicle.spec_RealisticMechanicalSystems
         and vehicle.spec_RealisticMechanicalSystems.activeEffects
@@ -2358,11 +2936,9 @@ local function removeHardStartModifier(vehicle, effectName)
         effect.extraData.crankSpeed = nil
         effect.extraData.automaticCrank = false
     end
-    syncStarterCrankingSample(vehicle)
     removeFuncFromActive(vehicle, effectName)
 end
 
--- makes the engine crank before it catches
 RMS_Breakdowns.EffectApplicators.ENGINE_HARD_START_MODIFIER = {
     getEffectName = function() return "ENGINE_HARD_START_MODIFIER" end,
     apply = function(vehicle, effectData, handler)
@@ -2373,7 +2949,6 @@ RMS_Breakdowns.EffectApplicators.ENGINE_HARD_START_MODIFIER = {
     end
 }
 
--- makes the engine crank before it catches after a failed preheat
 RMS_Breakdowns.EffectApplicators.GLOW_PLUG_HARD_START_MODIFIER = {
     getEffectName = function() return "GLOW_PLUG_HARD_START_MODIFIER" end,
     apply = function(vehicle, effectData, handler)
@@ -2417,6 +2992,7 @@ function RMS_Breakdowns.onStartButtonAction(self, actionName, inputValue, callba
     end
 
     if spec.startButtonDown then
+        playDeadStartSound(self)
         local wasPreheatFailed = RMS_Preheat.isFailed(self)
         RMS_Preheat.requestStart(self)
 
@@ -2484,14 +3060,12 @@ function RMS_Breakdowns.startMotor(self, superFunc, noEventSend, passed)
         end
         return
     end
-    -- a worker closes the battery isolator of the machine it takes, like any driver
     if self.isServer and spec ~= nil and spec.batteryIsolated then
         RMS_Electrical.setBatteryIsolated(self, false)
     end
     local engineFailure = spec and spec.activeEffects.ENGINE_FAILURE
     local engineHardStart = spec and spec.activeEffects.ENGINE_HARD_START_MODIFIER
     local glowPlugHardStart = spec and spec.activeEffects.GLOW_PLUG_HARD_START_MODIFIER
-    -- an electric machine has no starter to labour: it wakes at once or not at all
     if spec ~= nil and spec.isElectricVehicle then
         engineHardStart = nil
     end
@@ -2581,12 +3155,9 @@ function RMS_Breakdowns.cancelStarterCranking(vehicle)
             RMS_EffectSyncEvent.send(vehicle, effectId, "IDLE", 0, 0, 0)
         end
     end
-
-    syncStarterCrankingSample(vehicle)
 end
 
 
--- makes a gear shift fail at random
 RMS_Breakdowns.EffectApplicators.GEAR_SHIFT_FAILURE_CHANCE = {
     getEffectName = function()
         return "GEAR_SHIFT_FAILURE_CHANCE" 
@@ -2633,9 +3204,8 @@ VehicleMotor.shiftGear = Utils.overwrittenFunction(VehicleMotor.shiftGear, funct
                 if effect.extraData.status == "FAILED" then return end
                 if vehicle.isServer and math.random() < effect.value then
                     effect.extraData.status = "FAILED"
-                    local sampleIndex = math.random(3)
-                    RMS_SoundManager.playSample(spec_rms.samples["transmissionShiftFailed" .. sampleIndex])
-                    RMS_EffectSyncEvent.send(vehicle, "GEAR_SHIFT_FAILURE_CHANCE", "FAILED", 0, sampleIndex, 0)
+                    RMS_SoundManager.playSample(spec_rms.samples.transmissionShiftFailed)
+                    RMS_EffectSyncEvent.send(vehicle, "GEAR_SHIFT_FAILURE_CHANCE", "FAILED", 0, 1, 0)
                     return
                 end
             end
@@ -2655,9 +3225,8 @@ VehicleMotor.selectGear = Utils.overwrittenFunction(VehicleMotor.selectGear, fun
                 if activation then
                     if vehicle.isServer and math.random() < effect.value then
                         effect.extraData.status = "FAILED"
-                        local sampleIndex = math.random(3)
-                        RMS_SoundManager.playSample(spec_rms.samples["transmissionShiftFailed" .. sampleIndex])
-                        RMS_EffectSyncEvent.send(vehicle, "GEAR_SHIFT_FAILURE_CHANCE", "FAILED", 0, sampleIndex, 0)
+                        RMS_SoundManager.playSample(spec_rms.samples.transmissionShiftFailed)
+                        RMS_EffectSyncEvent.send(vehicle, "GEAR_SHIFT_FAILURE_CHANCE", "FAILED", 0, 1, 0)
                         return
                     end
                 end
@@ -2685,9 +3254,8 @@ VehicleMotor.updateGear = Utils.overwrittenFunction(VehicleMotor.updateGear, fun
                     self.gearChangeTimer = effect.extraData.duration
                     self.autoGearChangeTimer = effect.extraData.duration
 
-                    local sampleIndex = math.random(3)
-                    RMS_SoundManager.playSample(spec_rms.samples["transmissionShiftFailed" .. sampleIndex])
-                    RMS_EffectSyncEvent.send(vehicle, "GEAR_SHIFT_FAILURE_CHANCE", "FAILED", 0, sampleIndex, effect.extraData.duration)
+                    RMS_SoundManager.playSample(spec_rms.samples.transmissionShiftFailed)
+                    RMS_EffectSyncEvent.send(vehicle, "GEAR_SHIFT_FAILURE_CHANCE", "FAILED", 0, 1, effect.extraData.duration)
                 end
                 if effect.value >= 1.0 then
                     self.targetGear = self.previousGear
@@ -2699,7 +3267,6 @@ VehicleMotor.updateGear = Utils.overwrittenFunction(VehicleMotor.updateGear, fun
     return adjAcceleratorPedal, adjBrakePedal
 end)
 
--- throws the gearbox into neutral at random
 RMS_Breakdowns.EffectApplicators.GEAR_REJECTION_CHANCE = {
     getEffectName = function() return "GEAR_REJECTION_CHANCE" end,
     apply = function(vehicle, effectData, handler)
@@ -2715,9 +3282,8 @@ RMS_Breakdowns.EffectApplicators.GEAR_REJECTION_CHANCE = {
                         if v.isServer and effect.extraData.timer >= effect.extraData.duration then
                             effect.extraData.status = 'IDLE'
                             effect.extraData.timer = 0
-                            local sampleIndex = math.random(3)
-                            RMS_SoundManager.playSample(v.spec_RealisticMechanicalSystems.samples["transmissionShiftFailed" .. sampleIndex])
-                            RMS_EffectSyncEvent.send(v, "GEAR_REJECTION_CHANCE", "IDLE", 0, sampleIndex)
+                            RMS_SoundManager.playSample(v.spec_RealisticMechanicalSystems.samples.transmissionShiftFailed)
+                            RMS_EffectSyncEvent.send(v, "GEAR_REJECTION_CHANCE", "IDLE", 0, 1)
                         end
 
                     elseif v.isServer and v:getMotorLoadPercentage() > 0.8 and effect.extraData.status == 'IDLE' then
@@ -2728,7 +3294,7 @@ RMS_Breakdowns.EffectApplicators.GEAR_REJECTION_CHANCE = {
                                 motor:setGear(0, false)
 
                                 RMS_EffectSyncEvent.send(v, "GEAR_REJECTION_CHANCE", "REJECTED", 0)
-                                RMS_SoundManager.playSample(v.spec_RealisticMechanicalSystems.samples.gearDisengage1)
+                                RMS_SoundManager.playSample(v.spec_RealisticMechanicalSystems.samples.gearDisengage)
                                 if v:getIsActiveForInput(true) then
                                     g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_gear_disengage_message"), 3000)
                                 end
@@ -2745,7 +3311,6 @@ RMS_Breakdowns.EffectApplicators.GEAR_REJECTION_CHANCE = {
     end
 }
 
--- flickers the lights at random
 RMS_Breakdowns.EffectApplicators.LIGHTS_FLICKER_CHANCE = {
     getEffectName = function()
         return "LIGHTS_FLICKER_CHANCE" 
@@ -2794,7 +3359,6 @@ RMS_Breakdowns.EffectApplicators.LIGHTS_FLICKER_CHANCE = {
     end
 }
 
--- carries a value for other systems to read without acting on the vehicle
 RMS_Breakdowns.EffectApplicators.EMPTY_EFFECT = {
 }
 
@@ -2820,7 +3384,6 @@ function RMS_Breakdowns.getMotorNotAllowedWarning(self, superFunc)
     return reason ~= nil and g_i18n:getText(reason) or superFunc(self)
 end
 
----Blocks the engine from running while a fault or the preheat sequence forbids it
 -- @param table self vehicle
 -- @param function superFunc super function
 -- @return boolean canRun true when the engine may run

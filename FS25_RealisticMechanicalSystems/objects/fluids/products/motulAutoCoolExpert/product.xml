@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<vehicle type="rmsFluidContainer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/vehicle.xsd">
+<vehicle type="rmsFluidContainer">
     <annotation>Copyright (C) 2026 Squallqt. Licensed under the GNU General Public License v3.0 or later.</annotation>
     <storeData>
         <name>AUTO COOL EXPERT -37°C</name>
         <specs><weight/></specs>
         <functions><function>$l10n_rms_fluid_function_coolant</function></functions>
-        <image>objects/fluids/products/motulAutoCoolExpert/store_motulAutoCoolExpert.dds</image>
-        <price>30</price>
+        <image>objects/fluids/products/motulAutoCoolExpert/store_motulAutoCoolExpert.png</image>
+        <price>16</price>
         <category>pallets</category>
         <brand>MOTUL</brand>
         <showInStore>true</showInStore>
@@ -28,25 +28,40 @@
         <input allowed="false"/>
     </base>
     <rmsFluidContainer productKey="MOTUL_AUTO_COOL_EXPERT_37C"
-        mediumBodyDiffuse="objects/fluids/products/motulAutoCoolExpert/medium_body_diffuse.dds"
-        mediumCapDiffuse="objects/fluids/products/motulAutoCoolExpert/medium_cap_diffuse.dds"
-        mediumLabelDiffuse="objects/fluids/products/motulAutoCoolExpert/medium_label_diffuse.dds"
-        largeBodyDiffuse="objects/fluids/products/motulAutoCoolExpert/large_body_diffuse.dds"
-        largeLabelDiffuse="objects/fluids/products/motulAutoCoolExpert/large_label_diffuse.dds"
-        drumBodyDiffuse="objects/fluids/products/motulAutoCoolExpert/drum_body_diffuse.dds"
-        drumLabelDiffuse="objects/fluids/products/motulAutoCoolExpert/drum_label_diffuse.dds"/>
+        mediumBodyDiffuse="objects/fluids/products/motulAutoCoolExpert/medium_body_diffuse.png"
+        mediumCapDiffuse="objects/fluids/products/motulAgriTekno/medium_cap_diffuse.png"
+        mediumLabelDiffuse="objects/fluids/products/motulAutoCoolExpert/medium_label_diffuse.png"
+        largeBodyDiffuse="objects/fluids/products/motulAutoCoolExpert/large_body_diffuse.png"
+        largeLabelDiffuse="objects/fluids/products/motulAutoCoolExpert/large_label_diffuse.png"
+        drumBodyDiffuse="objects/fluids/products/motulAgriTekno/drum_body_diffuse.png"
+        drumLabelDiffuse="objects/fluids/products/motulAutoCoolExpert/drum_label_diffuse.png"/>
     <fillUnit><fillUnitConfigurations title="$l10n_configuration_fillUnit">
             <fillUnitConfiguration name="5 L" price="0" isDefault="true">
+                <fillUnits>
+                    <fillUnit fillTypes="RMS_MOTUL_AUTO_COOL_EXPERT_37C" capacity="5" startFillType="RMS_MOTUL_AUTO_COOL_EXPERT_37C" startFillLevel="5"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                </fillUnits>
                 <objectChange node="mediumCanCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="mediumVisualLink" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="fluidContainer_component1" massActive="0.25" centerOfMassActive="0 0.1166 0"/>
             </fillUnitConfiguration>
-            <fillUnitConfiguration name="25 L" price="93">
+            <fillUnitConfiguration name="25 L" price="77">
+                <fillUnits>
+                    <fillUnit fillTypes="RMS_MOTUL_AUTO_COOL_EXPERT_37C" capacity="25" startFillType="RMS_MOTUL_AUTO_COOL_EXPERT_37C" startFillLevel="25"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                </fillUnits>
                 <objectChange node="largeCanCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="largeVisualLink" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="fluidContainer_component1" massActive="1.2" centerOfMassActive="0 0.21 0"/>
             </fillUnitConfiguration>
-            <fillUnitConfiguration name="200 L" price="940">
+            <fillUnitConfiguration name="200 L" price="742">
+                <fillUnits>
+                    <fillUnit fillTypes="RMS_MOTUL_AUTO_COOL_EXPERT_37C" capacity="200" startFillType="RMS_MOTUL_AUTO_COOL_EXPERT_37C" startFillLevel="200"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                </fillUnits>
                 <objectChange node="drumPalletCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="drumPalletFloorCollision01" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="drumPalletFloorCollision02" compoundChildActive="true" compoundChildInactive="false"/>

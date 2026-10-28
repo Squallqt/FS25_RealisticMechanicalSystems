@@ -88,9 +88,6 @@ local function rmsCancelActiveInspection(reasonText)
         if inspection ~= nil then
             inspection.isActive = false
             inspection.elapsedTime = 0
-            inspection.startTime = 0
-            inspection.targetNode = nil
-            inspection.targetVehicle = nil
         end
     end
 
@@ -117,9 +114,6 @@ local function rmsCompleteActiveInspection()
     if inspection ~= nil then
         inspection.isActive = false
         inspection.elapsedTime = inspection.duration
-        inspection.startTime = 0
-        inspection.targetNode = nil
-        inspection.targetVehicle = nil
     end
 
     rmsActiveInspectionVehicle = nil

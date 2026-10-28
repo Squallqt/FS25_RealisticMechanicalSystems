@@ -1,7 +1,6 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Client-to-server request applying the drive mode, differential lock and park brake of a vehicle
 RMS_DrivetrainEvent = {}
 local RMS_DrivetrainEvent_mt = Class(RMS_DrivetrainEvent, Event)
 
@@ -27,7 +26,7 @@ function RMS_DrivetrainEvent.new(vehicle)
     return self
 end
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_DrivetrainEvent:writeStream(streamId, connection)
@@ -37,7 +36,7 @@ function RMS_DrivetrainEvent:writeStream(streamId, connection)
     streamWriteBool(streamId, self.parkBrake)
 end
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_DrivetrainEvent:readStream(streamId, connection)

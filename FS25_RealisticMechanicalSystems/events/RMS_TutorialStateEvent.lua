@@ -26,7 +26,7 @@ function RMS_TutorialStateEvent.new(state)
     return self
 end
 
----Called on server side on join
+---Writes event data to a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_TutorialStateEvent:writeStream(streamId, connection)
@@ -37,7 +37,7 @@ function RMS_TutorialStateEvent:writeStream(streamId, connection)
     end
 end
 
----Called on client side on join
+---Reads event data from a stream.
 -- @param integer streamId streamId
 -- @param Connection connection connection
 function RMS_TutorialStateEvent:readStream(streamId, connection)
