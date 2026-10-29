@@ -379,7 +379,8 @@ end
 function RMS_Breakdowns.setLightsTypesMask(self, superFunc, lightsTypesMask, force, noEventSend)
     local rootVehicle = self:getRootVehicle()
     local spec = rootVehicle.spec_RealisticMechanicalSystems
-    if spec == nil then
+    -- a machine still loading has no RMS state yet
+    if spec == nil or spec.activeEffects == nil then
         superFunc(self, lightsTypesMask, force, noEventSend)
     elseif spec.activeEffects.LIGHTS_FAILURE == nil and not RMS_Electrical.getKeepsLightsOff(rootVehicle) then
         for effectName, lightTypeName in pairs(LIGHT_CIRCUITS) do
@@ -401,7 +402,8 @@ end
 -- @param boolean noEventSend no event send
 function RMS_Breakdowns.setBeaconLightsVisibility(self, superFunc, visibility, force, noEventSend)
     local spec = self:getRootVehicle().spec_RealisticMechanicalSystems
-    superFunc(self, visibility and (spec == nil or spec.activeEffects.BEACON_LIGHTS_FAILURE == nil), force, noEventSend)
+    local activeEffects = spec ~= nil and spec.activeEffects or {}
+    superFunc(self, visibility and activeEffects.BEACON_LIGHTS_FAILURE == nil, force, noEventSend)
 end
 
 ---Keeps the turn and hazard lights out while their circuit has failed
@@ -412,7 +414,8 @@ end
 -- @param boolean noEventSend no event send
 function RMS_Breakdowns.setTurnLightState(self, superFunc, state, force, noEventSend)
     local spec = self:getRootVehicle().spec_RealisticMechanicalSystems
-    if spec ~= nil and spec.activeEffects.TURN_LIGHTS_FAILURE ~= nil then
+    local activeEffects = spec ~= nil and spec.activeEffects or {}
+    if activeEffects.TURN_LIGHTS_FAILURE ~= nil then
         state = Lights.TURNLIGHT_OFF
     end
     superFunc(self, state, force, noEventSend)
