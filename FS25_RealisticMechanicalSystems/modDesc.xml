@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="115">
     <author>Squallqt</author>
-    <version>0.13.0.0</version>
+    <version>0.13.0.1</version>
     <title>
         <en>Realistic Mechanical Systems</en>
         <de>Realistische Mechaniksysteme</de>
@@ -51,6 +51,9 @@ SIMULATION
 - Electric vehicles tracked with their own parts: an electric motor, a traction battery that loses capacity with age and range in the cold, power electronics, and maintenance limited to its present fluid circuits
 
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.13.0.1:
+- Fixed the game freezing while loading a savegame with some mods that switch a machine's lights
 
 Changelog 0.13.0.0:
 - Reworked breakdowns to follow the wear of individual parts, with gradually worsening symptoms
@@ -245,6 +248,9 @@ SIMULATION
 
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
+Changelog 0.13.0.1:
+- Hängenbleiben beim Laden des Spielstands mit Mods, die die Beleuchtung einer Maschine schalten, behoben
+
 Changelog 0.13.0.0:
 - Defekte anhand des Verschleißes einzelner Teile mit allmählich zunehmenden Symptomen überarbeitet
 - Regeneration des Partikelfilters und AdBlue-Defekte bei modernen Dieselmotoren hinzugefügt
@@ -437,6 +443,9 @@ SIMULATION
 - Véhicules électriques suivis avec leurs propres organes : moteur électrique, batterie de traction qui perd de la capacité en vieillissant et de l'autonomie au froid, électronique de puissance, et des entretiens limités aux circuits présents
 
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 0.13.0.1 :
+- Correction du chargement de la partie qui se figeait avec certains mods qui commandent les feux d'une machine
 
 Changelog 0.13.0.0 :
 - Refonte des pannes selon l'usure de chaque pièce, avec des symptômes qui s'aggravent progressivement

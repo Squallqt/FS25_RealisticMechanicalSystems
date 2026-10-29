@@ -400,6 +400,10 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 
 ## Changelog
 
+### v0.13.0.1
+
+- Fixed the game freezing while loading a savegame with some mods that switch a machine's lights
+
 ### v0.13.0.0
 
 - Reworked breakdowns to follow the wear of individual parts, with gradually worsening symptoms
