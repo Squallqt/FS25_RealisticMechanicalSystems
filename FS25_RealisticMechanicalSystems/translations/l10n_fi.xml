@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Huolto ja kuluminen"/>
         <text name="rms_settings_section_drivetrain" text="Voimansiirto ja seisontajarru"/>
         <text name="rms_workshopOpenHour_label" text="Korjaamon aukioloaika"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Korjaustoimenpiteet voivat alkaa vasta tästä kellonajasta."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Määrittää korjaamojen aukeamisajan: toimenpiteet alkavat vasta tästä tunnista lähtien."/>
         <text name="rms_workshopCloseHour_label" text="Korjaamon sulkemisaika"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Käynnissä olevat toimenpiteet keskeytyvät tähän kellonaikaan ja jatkuvat avautumisen yhteydessä."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Määrittää korjaamojen sulkemisajan: käynnissä olevat toimenpiteet keskeytyvät ja jatkuvat korjaamon auetessa."/>
+        <text name="rms_workshopHours_locked" text="Tämä asetus edellyttää, että vähintään yksi korjaamo ei ole auki 24/7."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Jälleenmyyjän korjaamo 24/7"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Pitää jälleenmyyjän korjaamon käytettävissä mihin vuorokauden aikaan tahansa."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Määrittää, onko jälleenmyyjän korjaamo auki kaikkina vuorokaudenaikoina."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Liikkuva korjaamo 24/7"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Pitää liikkuvan korjaamon käytettävissä mihin vuorokauden aikaan tahansa."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Määrittää, onko liikkuva korjaamo käytettävissä kaikkina vuorokaudenaikoina."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Korjaamojen rajoitukset"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Rajoittaa liikkuvan ja oman korjaamon töitä tarvittavien varusteiden mukaan. Huollot ovat edelleen mahdollisia; elektroniikka vaatii koneeseen kytketyn vianmäärityslaitteen, ja liikkuvassa korjaamossa raskas purkaminen tai suurjännitetyöt vaativat varustellun korjaamon."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Määrittää, rajoittaako varustus liikkuvaa ja omaa korjaamoa: elektroniikka vaatii kytketyn vianmäärityslaitteen, eikä liikkuva korjaamo tee raskasta purkamista tai suurjännitetöitä. Huollot ovat aina mahdollisia."/>
         <text name="rms_ownWorkshopAvailable_label" text="Oma korjaamo 24/7"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Pitää oman korjaamon käytettävissä mihin vuorokauden aikaan tahansa."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Määrittää, onko oma korjaamosi auki kaikkina vuorokaudenaikoina."/>
         <text name="rms_instantInspection_label" text="Välitön tarkastus"/>
-        <text name="rms_instantInspection_tooltip" text="Kun asetus on käytössä, korjaamolla tehtävät tarkastukset valmistuvat välittömästi. Myös jo käynnissä olevat tämän tyyppiset toimenpiteet valmistuvat välittömästi."/>
+        <text name="rms_instantInspection_tooltip" text="Määrittää, valmistuvatko korjaamon tarkastukset heti, myös jo käynnissä olevat."/>
         <text name="rms_instantMaintenanceRepair_label" text="Välitön huolto ja korjaus"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Kun asetus on käytössä, korjaamolla tehtävät huollot ja korjaukset valmistuvat välittömästi. Myös jo käynnissä olevat tämän tyyppiset toimenpiteet valmistuvat välittömästi."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Määrittää, valmistuvatko korjaamon huollot ja korjaukset heti, myös jo käynnissä olevat."/>
         <text name="rms_instantBodywork_label" text="Välitön maalaus"/>
-        <text name="rms_instantBodywork_tooltip" text="Kun asetus on käytössä, korjaamon maalaustyöt valmistuvat välittömästi. Myös jo käynnissä olevat tämän tyyppiset toimenpiteet valmistuvat välittömästi."/>
+        <text name="rms_instantBodywork_tooltip" text="Määrittää, valmistuuko korjaamon maalaus heti, myös jo käynnissä oleva."/>
         <text name="rms_instantOverhaul_label" text="Välitön mekaaninen peruskorjaus"/>
-        <text name="rms_instantOverhaul_tooltip" text="Kun asetus on käytössä, korjaamon mekaaniset peruskorjaukset valmistuvat välittömästi. Myös jo käynnissä olevat tämän tyyppiset toimenpiteet valmistuvat välittömästi."/>
+        <text name="rms_instantOverhaul_tooltip" text="Määrittää, valmistuvatko korjaamon mekaaniset peruskorjaukset heti, myös jo käynnissä olevat."/>
         <text name="rms_debugMode_label" text="Virheenkorjaustila"/>
-        <text name="rms_debugMode_tooltip" text="Näyttää virheenkorjausikkunan ajamassasi ajoneuvossa; myös %s-näppäin avaa ja sulkee sen. Moninpelissä vain järjestelmänvalvojat näkevät sen. Kirjoittaa myös yksityiskohtaisia lokeja konsoliin."/>
+        <text name="rms_debugMode_tooltip" text="Määrittää, näkyykö virheenkorjausikkuna ajettavassa koneessa ja saako konsoli tarkat lokitiedot. Näppäin %s avaa ja sulkee ikkunan; moninpelissä sen näkevät vain ylläpitäjät."/>
         <text name="rms_warningMessages_label" text="Varoitusviestit"/>
-        <text name="rms_warningMessages_tooltip" text="Ottaa käyttöön tai poistaa käytöstä pelisisäiset varoitusviestit, kuten kylmän moottorin ja ylikuumenemisen hälytykset. Lämpötilasta johtuvan tehonrajoituksen ilmoitukset pysyvät käytössä."/>
+        <text name="rms_warningMessages_tooltip" text="Määrittää, näytetäänkö varoitukset kuten kylmä moottori tai ylikuumeneminen. Lämpötilasta johtuvan tehonrajoituksen viestit näytetään aina."/>
         <text name="rms_serviceInterval_label" text="Huoltojen väli"/>
-        <text name="rms_serviceInterval_tooltip" text="Aseta vertailutunnit. Arvolla 100 h valmistajan 500 h muuttuu 100 tunniksi ja 600 h 120 tunniksi. Kukin neste noudattaa ajoneuvon ohjelmaa; kalenterirajat ovat erillisiä."/>
+        <text name="rms_serviceInterval_tooltip" text="Määrittää tunnit kahden moottoriöljynvaihdon välillä vuonna 2010 tai myöhemmin julkaistussa mallissa tai mallissa, jonka vuosi on tuntematon. Vanhempi malli tarvitsee öljynvaihdon useammin:&#10;2000–2009: %s&#10;1980–1999: %s&#10;1960–1979: %s&#10;Ennen vuotta 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Ajoneuvon käyttöikä"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Asettaa ajoneuvon peruskäyttöiän tunteina, jonka jälkeen sen kunto saavuttaa 0 %. Mitä lähempänä nolla on, sitä epäluotettavammaksi ajoneuvo tulee. Myös ajoneuvon arvo laskee näiden tuntien myötä. Muutos koskee siitä hetkestä eteenpäin: ajoneuvot säilyttävät kuntonsa, vain niiden arvo lasketaan uudelleen."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Määrittää käyttötunnit, joiden jälkeen ajoneuvon kunto saavuttaa 0 %; mitä lähemmäs niitä tullaan, sitä epäluotettavampi ajoneuvo on ja sitä enemmän sen arvo laskee. Muutos koskee tulevaa: ajoneuvojen kunto säilyy, vain arvo lasketaan uudelleen."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Pakokaasusavu"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Ohjaa pakokaasupilveä moottorin todellisen kunnon mukaan: musta kun polttoainetta on enemmän kuin ilmaa, voimakkaassa kiihdytyksessä, moottorin jauhaessa matalilla kierroksilla, pitkän vähäkuormitteisen joutokäynnin jälkeen, tukkeutuneessa ilmansuodattimessa tai kuluneessa ruiskutuksessa, sininen kun väsynyt moottori polttaa öljyä, valkoinen kun polttoaine poistuu palamattomana. Pilvi myös kasvaa sen työn mukana, jota moottori tekee. Vanhemmat koneet savuavat huomattavasti enemmän kuin uudet, jotka tuskin savuavat ennen kuin jokin on vakavasti rikki. Kylmässä ilmassa palamisessa syntyvä vesi tiivistyy lisäksi lyhyeksi valkoiseksi vanaksi, joka haihtuu metrin tai kahden matkalla, myös terveessä moottorissa."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Määrittää, seuraako pakokaasusavu moottorin todellista kuntoa: mustaa ilman puuttuessa, sinistä öljyn palaessa, valkoista polttoaineen poistuessa palamatta, paksumpaa kuormitettuna. Vanhat koneet savuttavat paljon enemmän kuin nykyaikaiset."/>
         <text name="rms_tutorialMode_label" text="Opetustila"/>
-        <text name="rms_tutorialMode_tooltip" text="Näyttää opastusvihjeet pelin aikana."/>
+        <text name="rms_tutorialMode_tooltip" text="Määrittää, näytetäänkö opastusvihjeet pelin aikana."/>
         <text name="rms_tutorialResetTips_label" text="Nollaa vihjeet"/>
         <text name="rms_tutorialResetTips_text" text="Nollaa vihjeet"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Nollaa opetusvihjehistoria ja näytä kaikki vihjeet uudelleen."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Nollaa opastusvihjeiden historian: kaikki vihjeet näytetään uudelleen."/>
         <text name="rms_tutorialResetConfirm_title" text="Nollataanko opetusvihjeet?"/>
         <text name="rms_tutorialResetConfirm_message" text="Nollataanko opetusvihjehistoria ja näytetäänkö kaikki vihjeet uudelleen?"/>
         <text name="rms_drivetrainEnabled_label" text="Nelivedon ja tasauspyörästön lukon hallinta"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Ottaa käyttöön vetävän etuakselin ja tasauspyörästön lukkojen manuaalisen hallinnan traktoreissa. Jos Enhanced Vehicle on asennettu, sen tasauspyörästöjen hallinta poistetaan käytöstä; jos haluat palauttaa sen, poista tämä asetus käytöstä ja ota tasauspyörästöt sitten uudelleen käyttöön Enhanced Vehiclen valikossa."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Määrittää, ohjataanko traktorien etuakselia ja tasauspyörästön lukkoja käsin. Asetus korvaa Enhanced Vehicle -modin tasauspyörästöjen hallinnan: palauta se poistamalla asetus käytöstä ja ottamalla tasauspyörästöt taas käyttöön sen valikossa."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Salli AUTO-vetotila"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Lisää valitsimeen AUTO-asennon: etuakseli kytkeytyy automaattisesti pyörien luistaessa tai työnopeudella kuormitettuna ja irtikytkeytyy tiellä. AUTO-tilaan jätetyt ajoneuvot palaavat nelivedolle, kun asetus poistetaan käytöstä."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Määrittää, onko valitsimessa AUTO-asento, joka kytkee etuakselin pyörien luistaessa tai kuormitetussa työssä ja irrottaa sen tiellä. Asetuksen poistaminen käytöstä siirtää AUTO-tilaan jätetyt ajoneuvot nelivedolle."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Tämä asetus edellyttää, että nelivedon ja tasauspyörästön lukon hallinta on käytössä."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Seisontajarru"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Lisää seisontajarrun kaikkiin seurattuihin ajoneuvoihin. Uudet CVT- tai Powershift-vaihteistolla varustetut koneet kytkevät ja vapauttavat sen itse; muissa käytät sitä sen omalla näppäimellä. Jos Enhanced Vehicle on asennettu, sen seisontajarru poistetaan käytöstä; jos haluat palauttaa sen, poista tämä asetus käytöstä ja ota seisontajarru sitten uudelleen käyttöön Enhanced Vehiclen valikossa."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Määrittää, onko seuratuissa ajoneuvoissa seisontajarru: automaattinen uusissa CVT- tai Powershift-koneissa, omalla näppäimellä muissa. Asetus korvaa Enhanced Vehicle -modin seisontajarrun: palauta se poistamalla asetus käytöstä ja ottamalla sen seisontajarru taas käyttöön sen valikossa."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Korjaamo"/>
         <text name="rms_ws_tab_summary" text="Yhteenveto"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Huollon helppous suuri"/>
         <text name="rms_shop_service_access_average" text="Huollon helppous keskitasoinen"/>
         <text name="rms_shop_service_access_demanding" text="Huollon helppous pieni"/>
+        <text name="rms_shop_launch_year" text="Malli lanseerattu %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Lanseerausvuosi tuntematon"/>
         <text name="rms_owner_care_careful" text="Huolellinen huolto"/>
         <text name="rms_owner_care_regular" text="Säännöllinen huolto"/>
         <text name="rms_owner_care_neglected" text="Laiminlyöty huolto"/>

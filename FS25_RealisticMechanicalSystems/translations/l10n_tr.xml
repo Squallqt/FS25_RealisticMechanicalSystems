@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Bakım ve Aşınma"/>
         <text name="rms_settings_section_drivetrain" text="Aktarma Organları ve El Freni"/>
         <text name="rms_workshopOpenHour_label" text="Atölye Açılış Saati"/>
-        <text name="rms_workshopOpenHour_tooltip" text="İşlemler yalnızca bu saatten itibaren başlayabilir."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Atölyelerin açılış saatini belirler: işlemler ancak bu saatten itibaren başlar."/>
         <text name="rms_workshopCloseHour_label" text="Atölye Kapanış Saati"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Devam eden işlemler bu saatte duraklar ve atölye açıldığında yeniden başlar."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Atölyelerin kapanış saatini belirler: devam eden işlemler durur ve açılışta sürer."/>
+        <text name="rms_workshopHours_locked" text="Bu ayar, en az bir atölyenin 7/24 açık olmamasını gerektirir."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Bayi Atölyesi 7/24"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Bayi atölyesinin günün her saatinde hizmet verebilir durumda olmasını sağlar."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Bayinin atölyesinin her saatte açık kalıp kalmayacağını belirler."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobil Atölye 7/24"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Mobil atölyenin günün her saatinde kullanıma hazır olmasını sağlar."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Mobil atölyenin her saatte kullanılabilir olup olmayacağını belirler."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Atölye Kısıtlamaları"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Mobil atölyenin ve kendi atölyenin işlerini gereken ekipmana göre sınırlar. Bakım yapılabilir; elektronik işler makineye bağlı teşhis cihazı gerektirir, mobil atölyede ise ağır söküm veya yüksek gerilim işleri donanımlı bir atölye gerektirir."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Ekipmanın mobil atölyeyi ve kendi atölyeni sınırlayıp sınırlamayacağını belirler: elektronik işler bağlı teşhis cihazı gerektirir, mobil atölye ağır söküm veya yüksek gerilim işi yapmaz. Bakım her zaman mümkündür."/>
         <text name="rms_ownWorkshopAvailable_label" text="Kendi Atölyen 7/24"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Kendi atölyeni günün her saatinde kullanıma hazır tutar."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Kendi atölyenin her saatte açık kalıp kalmayacağını belirler."/>
         <text name="rms_instantInspection_label" text="Anında Muayene"/>
-        <text name="rms_instantInspection_tooltip" text="Etkinleştirildiğinde atölyedeki muayeneler anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
+        <text name="rms_instantInspection_tooltip" text="Atölyedeki muayenelerin, devam edenler dahil, anında tamamlanıp tamamlanmayacağını belirler."/>
         <text name="rms_instantMaintenanceRepair_label" text="Anında Bakım ve Onarım"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Etkinleştirildiğinde atölyedeki bakım ve onarımlar anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Atölyedeki bakım ve onarımların, devam edenler dahil, anında tamamlanıp tamamlanmayacağını belirler."/>
         <text name="rms_instantBodywork_label" text="Anında Boyama"/>
-        <text name="rms_instantBodywork_tooltip" text="Etkinleştirildiğinde atölyedeki boyama işlemleri anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
+        <text name="rms_instantBodywork_tooltip" text="Atölyedeki boyamanın, devam eden dahil, anında tamamlanıp tamamlanmayacağını belirler."/>
         <text name="rms_instantOverhaul_label" text="Anında Mekanik Revizyon"/>
-        <text name="rms_instantOverhaul_tooltip" text="Etkinleştirildiğinde atölyedeki mekanik revizyonlar anında tamamlanır. Bu türde devam eden işlemler de hemen tamamlanır."/>
+        <text name="rms_instantOverhaul_tooltip" text="Atölyedeki mekanik revizyonların, devam edenler dahil, anında tamamlanıp tamamlanmayacağını belirler."/>
         <text name="rms_debugMode_label" text="Hata Ayıklama Modu"/>
-        <text name="rms_debugMode_tooltip" text="Sürdüğün araçta hata ayıklama penceresini gösterir; %s tuşu da pencereyi açar ve kapatır. Çok oyunculu modda pencereyi yalnızca yöneticiler görür. Konsola ayrıntılı günlükler de yazar."/>
+        <text name="rms_debugMode_tooltip" text="Sürülen makinede hata ayıklama penceresinin gösterilip gösterilmeyeceğini ve konsola ayrıntılı günlük gönderilip gönderilmeyeceğini belirler. %s tuşu pencereyi açıp kapatır; çok oyunculuda yalnızca yöneticiler görür."/>
         <text name="rms_warningMessages_label" text="Uyarı Mesajları"/>
-        <text name="rms_warningMessages_tooltip" text="Soğuk motor ve aşırı ısınma uyarıları gibi oyun içi uyarı mesajlarını etkinleştirir veya devre dışı bırakır. Sıcaklık nedeniyle güç sınırlaması bildirimleri etkin kalır."/>
+        <text name="rms_warningMessages_tooltip" text="Soğuk motor veya aşırı ısınma gibi uyarıların gösterilip gösterilmeyeceğini belirler. Sıcaklığa bağlı güç sınırlama mesajları her zaman gösterilir."/>
         <text name="rms_serviceInterval_label" text="Bakımlar arası süre"/>
-        <text name="rms_serviceInterval_tooltip" text="Referans saatlerini ayarlayın. 100 saatte, 500 saatlik talimat 100 saate, 600 saatlik talimat 120 saate dönüşür. Her sıvı araç programını izler; takvim sınırları bağımsızdır."/>
+        <text name="rms_serviceInterval_tooltip" text="2010'dan itibaren piyasaya sürülen veya yılı bilinmeyen bir modelde iki motor yağı değişimi arasındaki saati belirler. Daha eski modellerde yağ daha sık değiştirilir:&#10;2000 ile 2009 arası: %s&#10;1980 ile 1999 arası: %s&#10;1960 ile 1979 arası: %s&#10;1960'tan önce: %s"/>
         <text name="rms_vehicleLifespan_label" text="Aracın Kullanım Ömrü"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Aracın temel ömrünü saat cinsinden belirler; bu sürenin sonunda aracın durumu %0’a ulaşır. Durum sıfıra ne kadar yaklaşırsa, araç o kadar güvenilmez hale gelir. Aracın değeri de bu saatler boyunca düşer. Değişiklik o andan itibaren geçerlidir: araçlar durumlarını korur, yalnızca değerleri yeniden hesaplanır."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Aracın durumunun %0'a ulaştığı çalışma saatini belirler; bu sınıra yaklaştıkça araç daha az güvenilir olur ve değeri düşer. Değişiklik o andan itibaren geçerlidir: araçlar durumlarını korur, yalnızca değerleri yeniden hesaplanır."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Egzoz Dumanı"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Egzoz dumanını motorun gerçek durumuna göre belirler: yakıt havayı aştığında, sert kalkışta, düşük devirde zorlanan motorda, düşük yükte uzun süre rölantide, tıkalı hava filtresinde veya yıpranmış enjeksiyonda siyah, yorgun bir motor yağ yaktığında mavi, yakıt yanmadan çıktığında beyaz. Duman ayrıca motorun yaptığı işle birlikte büyür. Eski makineler modern olanlardan çok daha fazla duman atar; modern makineler ciddi bir arıza olmadıkça neredeyse hiç duman çıkarmaz. Soğuk havada yanmadan çıkan su da yoğuşarak kısa beyaz bir iz oluşturur ve bir iki metre içinde buharlaşır; bu, sağlam bir motorda bile görülür."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Egzoz dumanının motorun gerçek durumunu izleyip izlemeyeceğini belirler: hava eksikliğinde siyah, yağ yakarken mavi, yakıt yanmadan çıkarken beyaz, yük altında daha yoğun. Eski makineler modern olanlardan çok daha fazla duman çıkarır."/>
         <text name="rms_tutorialMode_label" text="Eğitim Modu"/>
-        <text name="rms_tutorialMode_tooltip" text="Oyun sırasında eğitim ipuçlarını gösterir."/>
+        <text name="rms_tutorialMode_tooltip" text="Oyun sırasında eğitim ipuçlarının gösterilip gösterilmeyeceğini belirler."/>
         <text name="rms_tutorialResetTips_label" text="İpuçlarını Sıfırla"/>
         <text name="rms_tutorialResetTips_text" text="Sıfırla"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Öğretici ipucu geçmişini sıfırlar ve tüm ipuçlarını yeniden gösterir."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Eğitim ipuçlarının geçmişini sıfırlar: tüm ipuçları yeniden gösterilir."/>
         <text name="rms_tutorialResetConfirm_title" text="Öğretici İpuçlarını Sıfırla?"/>
         <text name="rms_tutorialResetConfirm_message" text="Öğretici ipucu geçmişini sıfırlayıp tüm ipuçlarını yeniden göstermek istiyor musun?"/>
         <text name="rms_drivetrainEnabled_label" text="4WD / Diferansiyel Kilidi Yönetimi"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Traktörlerde devreye alınabilir ön aksın ve diferansiyel kilitlerinin manuel kontrolünü etkinleştirir. Enhanced Vehicle kuruluysa onun diferansiyel yönetimi kapatılır; geri vermek için bu seçeneği kapat, ardından Enhanced Vehicle menüsünden diferansiyelleri yeniden aç."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Traktörlerin ön aksı ve diferansiyel kilitlerinin elle kontrol edilip edilmeyeceğini belirler. Bu seçenek Enhanced Vehicle'ın diferansiyel yönetiminin yerini alır: geri vermek için seçeneği kapat, ardından onun menüsünde diferansiyelleri yeniden aç."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="OTO Moduna İzin Ver"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Çekiş seçicisine OTO konumu ekler: ön aks patinajda veya yük altında çalışma hızında otomatik devreye girer, yolda devreden çıkar. OTO’da bırakılan araçlar bu seçenek kapatıldığında 4WD’ye döner."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Seçicide AUTO konumu sunulup sunulmayacağını belirler; bu konum patinajda veya yük altında çalışırken ön aksı devreye alır, yolda çıkarır. Seçenek kapatıldığında AUTO'da bırakılan araçlar 4WD'ye döner."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Bu ayar, 4WD / Diferansiyel Kilidi Yönetiminin açık olmasını gerektirir."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="El Freni"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="İzlenen tüm araçlara bir el freni ekler. CVT veya Powershift şanzımanlı yeni makineler onu kendiliğinden çeker ve bırakır; diğerlerinde kendi tuşuyla sen kumanda edersin. Enhanced Vehicle kuruluysa onun el freni kapatılır; geri vermek için bu seçeneği kapat, ardından Enhanced Vehicle menüsünden el frenini yeniden aç."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="İzlenen araçlarda el freni olup olmayacağını belirler: yeni CVT veya Powershift makinelerde otomatik, diğerlerinde kendi tuşuyla. Seçenek Enhanced Vehicle'ın el freninin yerini alır: geri vermek için seçeneği kapat, ardından onun menüsünde el frenini yeniden aç."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Atölye"/>
         <text name="rms_ws_tab_summary" text="Özet"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Yüksek bakım kolaylığı"/>
         <text name="rms_shop_service_access_average" text="Orta bakım kolaylığı"/>
         <text name="rms_shop_service_access_demanding" text="Düşük bakım kolaylığı"/>
+        <text name="rms_shop_launch_year" text="Modelin Piyasaya Çıkışı: %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Piyasaya Çıkış Yılı Bilinmiyor"/>
         <text name="rms_owner_care_careful" text="Özenli bakım"/>
         <text name="rms_owner_care_regular" text="Düzenli bakım"/>
         <text name="rms_owner_care_neglected" text="İhmal edilmiş bakım"/>

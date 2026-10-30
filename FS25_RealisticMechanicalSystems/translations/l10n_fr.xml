@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Entretien et usure"/>
         <text name="rms_settings_section_drivetrain" text="Transmission et frein de parking"/>
         <text name="rms_workshopOpenHour_label" text="Heure d'ouverture de l'atelier"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Les interventions ne démarrent qu'à partir de cette heure."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Définit l'heure d'ouverture des ateliers : les interventions ne démarrent qu'à partir de cette heure."/>
         <text name="rms_workshopCloseHour_label" text="Heure de fermeture de l'atelier"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Les interventions en cours sont suspendues à cette heure et reprennent à l'ouverture."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Définit l'heure de fermeture des ateliers : les interventions en cours s'y arrêtent et reprennent à l'ouverture."/>
+        <text name="rms_workshopHours_locked" text="Ce paramètre nécessite qu'au moins un atelier ne soit pas ouvert 24 h/24."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Atelier du concessionnaire 24 h/24"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Maintient l'atelier du concessionnaire disponible à toute heure du jour et de la nuit."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Détermine si l'atelier du concessionnaire reste ouvert à toute heure."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Atelier mobile 24 h/24"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Maintient l'atelier mobile disponible à toute heure du jour et de la nuit."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Détermine si l'atelier mobile reste disponible à toute heure."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Restrictions des ateliers"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Limite les interventions des ateliers mobile et personnel selon les moyens nécessaires. Les entretiens restent accessibles ; l'électronique demande la valise de diagnostic branchée sur la machine, et à l'atelier mobile, un démontage lourd ou une intervention haute tension demande un atelier équipé."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Détermine si l'équipement limite les ateliers mobile et personnel : l'électronique demande la valise de diagnostic branchée, et l'atelier mobile ne fait ni démontage lourd ni intervention haute tension. Les entretiens restent toujours possibles."/>
         <text name="rms_ownWorkshopAvailable_label" text="Atelier personnel 24 h/24"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Maintient votre atelier personnel disponible à toute heure du jour et de la nuit."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Détermine si votre atelier personnel reste ouvert à toute heure."/>
         <text name="rms_instantInspection_label" text="Inspection instantanée"/>
-        <text name="rms_instantInspection_tooltip" text="Lorsque l'option est activée, les inspections en atelier se terminent instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
+        <text name="rms_instantInspection_tooltip" text="Détermine si les inspections à l'atelier se terminent instantanément, celles en cours comprises."/>
         <text name="rms_instantMaintenanceRepair_label" text="Entretien et réparation instantanés"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Lorsque l'option est activée, les entretiens et réparations en atelier se terminent instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Détermine si les entretiens et les réparations à l'atelier se terminent instantanément, ceux en cours compris."/>
         <text name="rms_instantBodywork_label" text="Peinture instantanée"/>
-        <text name="rms_instantBodywork_tooltip" text="Lorsque l'option est activée, la peinture en atelier se termine instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
+        <text name="rms_instantBodywork_tooltip" text="Détermine si la peinture à l'atelier se termine instantanément, celle en cours comprise."/>
         <text name="rms_instantOverhaul_label" text="Révision mécanique instantanée"/>
-        <text name="rms_instantOverhaul_tooltip" text="Lorsque l'option est activée, les révisions mécaniques en atelier se terminent instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
+        <text name="rms_instantOverhaul_tooltip" text="Détermine si les révisions mécaniques à l'atelier se terminent instantanément, celles en cours comprises."/>
         <text name="rms_debugMode_label" text="Mode débogage"/>
-        <text name="rms_debugMode_tooltip" text="Affiche la fenêtre de débogage dans la machine conduite ; la touche %s l'ouvre et la ferme aussi. En multijoueur, seuls les administrateurs la voient. Écrit aussi des journaux détaillés dans la console."/>
+        <text name="rms_debugMode_tooltip" text="Détermine si la fenêtre de débogage s'affiche dans la machine conduite et si la console reçoit des journaux détaillés. La touche %s l'ouvre et la ferme ; en multijoueur, seuls les administrateurs la voient."/>
         <text name="rms_warningMessages_label" text="Messages d'avertissement"/>
-        <text name="rms_warningMessages_tooltip" text="Active ou désactive les avertissements de jeu comme moteur froid ou surchauffe. Les messages de limitation thermique de puissance restent actifs."/>
+        <text name="rms_warningMessages_tooltip" text="Détermine si les avertissements comme le moteur froid ou la surchauffe s'affichent. Les messages de limitation thermique de puissance restent toujours affichés."/>
         <text name="rms_serviceInterval_label" text="Espacement des entretiens"/>
-        <text name="rms_serviceInterval_tooltip" text="Réglez les heures de référence. Avec 100 h, une prescription de 500 h devient 100 h, et 600 h devient 120 h. Chaque fluide suit le programme du véhicule ; le calendrier reste indépendant."/>
+        <text name="rms_serviceInterval_tooltip" text="Définit les heures entre deux vidanges moteur d'un modèle lancé depuis 2010 ou d'année inconnue. Un modèle plus ancien est vidangé plus souvent :&#10;2000 à 2009 : %s&#10;1980 à 1999 : %s&#10;1960 à 1979 : %s&#10;Avant 1960 : %s"/>
         <text name="rms_vehicleLifespan_label" text="Durée de vie du véhicule"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Définit la durée de vie de base du véhicule en heures, après laquelle son état atteint 0 %. Plus l'état se rapproche de zéro, plus le véhicule devient peu fiable. La valeur du véhicule baisse aussi au fil de ces heures. Un changement vaut pour la suite : les véhicules gardent leur état, seule leur valeur est recalculée."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Définit les heures de fonctionnement après lesquelles l'état d'un véhicule atteint 0 % ; plus il s'en approche, moins le véhicule est fiable et plus sa valeur baisse. Un changement vaut pour la suite : les véhicules gardent leur état, seule leur valeur est recalculée."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fumée d'échappement"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Pilote la fumée d'échappement selon l'état réel du moteur. Elle est noire quand le carburant dépasse l'air disponible : reprise franche, moteur qui peine à bas régime, long ralenti à faible charge, filtre à air colmaté ou injection usée. Elle est bleue quand un moteur fatigué brûle de l'huile, blanche quand du carburant part imbrûlé. Le panache grossit aussi avec le travail que fournit le moteur. Les machines anciennes fument bien plus que les modernes, qui ne fument presque pas tant que rien n'est vraiment cassé. Par temps froid, l'eau issue de la combustion se condense aussi en une courte traînée blanche qui s'évapore en un mètre ou deux, même sur un moteur sain."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Détermine si la fumée d'échappement suit l'état réel du moteur : noire quand il manque d'air, bleue quand il brûle de l'huile, blanche quand du carburant part imbrûlé, plus épaisse sous l'effort. Les machines anciennes fument bien plus que les modernes."/>
         <text name="rms_tutorialMode_label" text="Mode didacticiel"/>
-        <text name="rms_tutorialMode_tooltip" text="Affiche les conseils du didacticiel pendant le jeu."/>
+        <text name="rms_tutorialMode_tooltip" text="Détermine si les conseils du didacticiel s'affichent pendant le jeu."/>
         <text name="rms_tutorialResetTips_label" text="Réinitialiser les conseils"/>
         <text name="rms_tutorialResetTips_text" text="Réinitialiser"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Réinitialise l'historique des conseils du didacticiel et les affiche tous de nouveau."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Réinitialise l'historique des conseils du didacticiel : ils s'afficheront tous de nouveau."/>
         <text name="rms_tutorialResetConfirm_title" text="Réinitialiser les conseils du didacticiel ?"/>
         <text name="rms_tutorialResetConfirm_message" text="Réinitialiser l'historique des conseils du didacticiel et tous les réafficher ?"/>
         <text name="rms_drivetrainEnabled_label" text="Gestion du 4RM et du blocage de différentiel"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Active le contrôle manuel du pont avant moteur et des blocages de différentiel sur les tracteurs. Si Enhanced Vehicle est installé, sa gestion des différentiels est désactivée ; pour la lui rendre, désactivez cette option puis réactivez les différentiels dans son menu."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Détermine si le pont avant et les blocages de différentiel des tracteurs se commandent à la main. Cette option remplace la gestion des différentiels d'Enhanced Vehicle : pour la lui rendre, désactivez-la puis réactivez les différentiels dans son menu."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Autoriser le mode AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Ajoute une position AUTO au sélecteur : le pont avant s'embraye automatiquement en cas de patinage ou à vitesse de travail sous charge, et se débraye sur route. Les véhicules laissés en AUTO repassent en 4RM quand cette option est désactivée."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Détermine si le sélecteur propose la position AUTO, qui embraye le pont avant quand les roues patinent ou en travail sous charge et le débraye sur route. Désactivée, elle fait repasser en 4RM les véhicules laissés en AUTO."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Ce paramètre nécessite l'activation de la gestion du 4RM et du blocage de différentiel."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Frein de parking"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Ajoute un frein de parking à tous les véhicules suivis. Les machines récentes à transmission CVT ou Powershift le serrent et le desserrent toutes seules ; sur les autres, vous le commandez avec sa touche. Si Enhanced Vehicle est installé, son frein de parking est désactivé ; pour le lui rendre, désactivez cette option puis réactivez le frein de parking dans son menu."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Détermine si les véhicules suivis ont un frein de parking : automatique sur les machines récentes à transmission CVT ou Powershift, à sa touche sur les autres. Cette option remplace le frein de parking d'Enhanced Vehicle : pour le lui rendre, désactivez-la puis réactivez son frein de parking dans son menu."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Atelier"/>
         <text name="rms_ws_tab_summary" text="Synthèse"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Facilité d'entretien élevée"/>
         <text name="rms_shop_service_access_average" text="Facilité d'entretien moyenne"/>
         <text name="rms_shop_service_access_demanding" text="Facilité d'entretien faible"/>
+        <text name="rms_shop_launch_year" text="Modèle lancé en %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Année de lancement inconnue"/>
         <text name="rms_owner_care_careful" text="Entretien soigné"/>
         <text name="rms_owner_care_regular" text="Entretien régulier"/>
         <text name="rms_owner_care_neglected" text="Entretien négligé"/>

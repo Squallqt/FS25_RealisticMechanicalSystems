@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="保养与磨损"/>
         <text name="rms_settings_section_drivetrain" text="传动系统与停车制动"/>
         <text name="rms_workshopOpenHour_label" text="维修车间开放时间"/>
-        <text name="rms_workshopOpenHour_tooltip" text="作业只能从此时间开始。"/>
+        <text name="rms_workshopOpenHour_tooltip" text="设置维修车间的开门时间：作业只能从此时起开始。"/>
         <text name="rms_workshopCloseHour_label" text="维修车间关闭时间"/>
-        <text name="rms_workshopCloseHour_tooltip" text="到达此时间时，进行中的作业会暂停，并在维修车间再次开放时继续。"/>
+        <text name="rms_workshopCloseHour_tooltip" text="设置维修车间的关门时间：正在进行的作业此时暂停，开门后继续。"/>
+        <text name="rms_workshopHours_locked" text="此设置要求至少一个维修车间不是全天开放。"/>
         <text name="rms_dealerWorkshopAvailable_label" text="经销商维修车间全天开放"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="使经销商维修车间昼夜均可使用。"/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="设置经销商维修车间是否全天开放。"/>
         <text name="rms_mobileWorkshopAvailable_label" text="移动维修车间全天开放"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="使移动维修车间昼夜均可使用。"/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="设置移动维修车间是否全天可用。"/>
         <text name="rms_mobileWorkshopRestrictions_label" text="维修车间限制"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="根据所需设备限制移动维修车间和自有维修车间的工作。保养仍可进行；电子维修需要将检测设备连接到机器上，移动维修车间进行大型拆卸或高压作业则需要设备齐全的车间。"/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="设置设备是否限制移动维修车间和自有维修车间的工作：电子维修需要连接检测设备，移动维修车间不进行大型拆卸或高压作业。保养始终可进行。"/>
         <text name="rms_ownWorkshopAvailable_label" text="自有维修车间全天开放"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="使自有维修车间昼夜均可使用。"/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="设置自有维修车间是否全天开放。"/>
         <text name="rms_instantInspection_label" text="即时检查"/>
-        <text name="rms_instantInspection_tooltip" text="启用后，维修车间检查会立即完成。已在进行的同类作业也会立即完成。"/>
+        <text name="rms_instantInspection_tooltip" text="设置维修车间的检查是否立即完成，包括正在进行的检查。"/>
         <text name="rms_instantMaintenanceRepair_label" text="即时保养与修理"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="启用后，维修车间保养和修理会立即完成。已在进行的同类作业也会立即完成。"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="设置维修车间的保养和修理是否立即完成，包括正在进行的作业。"/>
         <text name="rms_instantBodywork_label" text="即时喷漆"/>
-        <text name="rms_instantBodywork_tooltip" text="启用后，维修车间喷漆会立即完成。已在进行的同类作业也会立即完成。"/>
+        <text name="rms_instantBodywork_tooltip" text="设置维修车间的喷漆是否立即完成，包括正在进行的喷漆。"/>
         <text name="rms_instantOverhaul_label" text="即时机械大修"/>
-        <text name="rms_instantOverhaul_tooltip" text="启用后，维修车间机械大修会立即完成。已在进行的同类作业也会立即完成。"/>
+        <text name="rms_instantOverhaul_tooltip" text="设置维修车间的机械大修是否立即完成，包括正在进行的大修。"/>
         <text name="rms_debugMode_label" text="调试模式"/>
-        <text name="rms_debugMode_tooltip" text="在当前驾驶的载具中显示调试窗口；%s键也可打开和关闭该窗口。多人游戏中，只有管理员能看到该窗口。还会在控制台中写入详细日志。"/>
+        <text name="rms_debugMode_tooltip" text="设置是否在驾驶的机器中显示调试窗口，以及是否向控制台输出详细日志。%s键打开或关闭窗口；多人游戏中仅管理员可见。"/>
         <text name="rms_warningMessages_label" text="警告消息"/>
-        <text name="rms_warningMessages_tooltip" text="启用或禁用冷机、过热等游戏警告消息。 温度导致的动力限制通知仍会显示。"/>
+        <text name="rms_warningMessages_tooltip" text="设置是否显示发动机低温或过热等警告。因温度限制动力的消息始终显示。"/>
         <text name="rms_serviceInterval_label" text="保养间隔"/>
-        <text name="rms_serviceInterval_tooltip" text="设置参考小时数。选择100小时后，厂家规定的500小时换算为100小时，600小时换算为120小时。各油液遵循车辆保养计划；日历期限不受影响。"/>
+        <text name="rms_serviceInterval_tooltip" text="设置2010年及以后推出或年份不明的车型两次更换发动机机油之间的小时数。较旧的车型换油更频繁：&#10;2000年至2009年：%s&#10;1980年至1999年：%s&#10;1960年至1979年：%s&#10;1960年以前：%s"/>
         <text name="rms_vehicleLifespan_label" text="载具使用期限"/>
-        <text name="rms_vehicleLifespan_tooltip" text="以小时设置载具的基本使用期限，达到该时数后状况降至0%。状况越接近零，载具越不可靠。载具价值也随这些时数下降。更改从此刻起生效：载具保持当前状况，只有载具价值会重新计算。"/>
+        <text name="rms_vehicleLifespan_tooltip" text="设置载具状况降至0%所需的运行小时数；越接近此时数，载具越不可靠，价值也越低。更改从此刻起生效：载具保持当前状况，仅重新计算价值。"/>
         <text name="rms_exhaustSmokeEnabled_label" text="可见尾气"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="根据发动机的实际状态控制可见尾气。燃油量超过可用空气量时会冒黑色尾气，例如突然加速、发动机低转速重负荷运转、长时间低负荷空转、空气滤清器堵塞或喷油系统磨损。磨损的发动机燃烧机油时会冒蓝色尾气，燃油未充分燃烧时会冒白色尾气。可见尾气量还会随发动机负荷增大。旧机器的可见尾气远多于现代机器；现代机器只有在发生严重故障时才会明显排出可见尾气。在低温空气中，燃烧产生的水分也会凝结成一小段白色尾迹，并在一两米内气化，即使发动机完好也会出现。"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="设置可见尾气是否随发动机实际状态变化：缺气时为黑色，烧机油时为蓝色，燃油未燃烧就排出时为白色，负荷增大时更浓。旧机器的可见尾气远多于现代机器。"/>
         <text name="rms_tutorialMode_label" text="教程模式"/>
-        <text name="rms_tutorialMode_tooltip" text="在游戏过程中显示教程提示。"/>
+        <text name="rms_tutorialMode_tooltip" text="设置是否在游戏中显示教程提示。"/>
         <text name="rms_tutorialResetTips_label" text="重置提示"/>
         <text name="rms_tutorialResetTips_text" text="重置"/>
-        <text name="rms_tutorialResetTips_tooltip" text="重置教程提示记录，并再次显示所有提示。"/>
+        <text name="rms_tutorialResetTips_tooltip" text="重置教程提示记录：所有提示都会重新显示。"/>
         <text name="rms_tutorialResetConfirm_title" text="重置教程提示？"/>
         <text name="rms_tutorialResetConfirm_message" text="是否重置教程提示记录并再次显示所有提示？"/>
         <text name="rms_drivetrainEnabled_label" text="四轮驱动与差速锁管理"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="允许手动控制拖拉机的驱动前桥和差速锁。如果已安装Enhanced Vehicle，其差速器控制会被关闭；如需交还，可关闭此选项，再在Enhanced Vehicle的菜单中重新启用差速器。"/>
+        <text name="rms_drivetrainEnabled_tooltip" text="设置是否手动控制拖拉机的驱动前桥和差速锁。此选项取代Enhanced Vehicle的差速器控制；如需交还，关闭此选项，再在其菜单中重新启用差速器。"/>
         <text name="rms_drivetrainAllowAutoMode_label" text="允许自动驱动模式"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="为驱动模式选择器添加自动位置：车轮打滑或在负载下以作业速度行驶时，前桥会自动接合；在道路上则会分离。关闭此选项时，留在自动模式的载具会恢复为四轮驱动。"/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="设置驱动模式选择器是否提供AUTO位置：车轮打滑或带负荷作业时接合前桥，在道路上分离。关闭后，留在AUTO的载具恢复为四轮驱动。"/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="此设置要求启用四轮驱动与差速锁管理。"/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="停车制动"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="为所有受管理的载具添加停车制动。配备CVT或动力换挡变速箱的新型机器会自动启用和解除停车制动；其他机器则需使用独立按键控制。如果已安装Enhanced Vehicle，其停车制动会被关闭；如需交还，可关闭此选项，再在Enhanced Vehicle的菜单中重新启用停车制动。"/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="设置受管理的载具是否有停车制动：配备CVT或Powershift变速箱的新型机器自动控制，其他机器使用专用按键。此选项取代Enhanced Vehicle的停车制动；如需交还，关闭此选项，再在其菜单中重新启用停车制动。"/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="维修车间"/>
         <text name="rms_ws_tab_summary" text="概览"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="保养便利性高"/>
         <text name="rms_shop_service_access_average" text="保养便利性一般"/>
         <text name="rms_shop_service_access_demanding" text="保养便利性低"/>
+        <text name="rms_shop_launch_year" text="%d年上市"/>
+        <text name="rms_shop_launch_year_unknown" text="上市年份未知"/>
         <text name="rms_owner_care_careful" text="精心保养"/>
         <text name="rms_owner_care_regular" text="定期保养"/>
         <text name="rms_owner_care_neglected" text="疏于保养"/>

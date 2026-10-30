@@ -1235,29 +1235,45 @@ function RealisticMechanicalSystems:getServiceReferenceInterval()
     return (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD) / RMS_Config.CORE.BASE_SERVICE_WEAR
 end
 
+---Returns the programmed hours of a clock, engine oil by its year
+-- @param table vehicle vehicle
+-- @param string key service clock key
+-- @return float? hours programmed hours, nil for a clock without an hourly limit
+function RealisticMechanicalSystems.getServiceProgramHours(vehicle, key)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if key == "engine" and spec.yearIsKnown == true then
+        for _, step in ipairs(RMS_Config.ENGINE_OIL_HOURS_BY_YEAR) do
+            if spec.year < step.before then return step.hours end
+        end
+    end
+    return RMS_Config.SERVICE_PROGRAM[key].hours
+end
+
 ---Returns the service clocks of the circuits present, a common sump once
 function RealisticMechanicalSystems:getServiceClocks()
     local spec = self.spec_RealisticMechanicalSystems
+    local engineHours = RealisticMechanicalSystems.getServiceProgramHours(self, "engine")
     if spec.fluidCapacityVersion ~= nil and spec.serviceClocks ~= nil and spec.serviceClocksCapacityVersion == spec.fluidCapacityVersion
-        and spec.serviceClocksCapacities == spec.fluidCapacities
+        and spec.serviceClocksCapacities == spec.fluidCapacities and spec.serviceClocksEngineHours == engineHours
         and spec.serviceClocksFilename == self.configFileName then return spec.serviceClocks end
     local referenceHours = RMS_Config.SERVICE_REFERENCE_HOURS
     local clocks, bySump = {}, {}
     for _, definition in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
         local limits = RMS_Config.SERVICE_PROGRAM[definition.key]
+        local hours = RealisticMechanicalSystems.getServiceProgramHours(self, definition.key)
         for sump in pairs(getServiceClockSumps(self, definition)) do
             local clock = bySump[sump]
             if clock == nil then
                 clock = RMS_Utils.shallowCopy(definition)
-                clock.intervalFactor = limits.hours ~= nil and limits.hours / referenceHours or nil
+                clock.intervalFactor = hours ~= nil and hours / referenceHours or nil
                 clock.months = limits.months
                 clock.circuits = {sump}
                 clock.systems = RMS_Utils.shallowCopy(definition.systems)
                 bySump[sump] = clock
                 table.insert(clocks, clock)
             else
-                if limits.hours ~= nil then
-                    clock.intervalFactor = math.min(clock.intervalFactor or math.huge, limits.hours / referenceHours)
+                if hours ~= nil then
+                    clock.intervalFactor = math.min(clock.intervalFactor or math.huge, hours / referenceHours)
                 end
                 if limits.months ~= nil then clock.months = math.min(clock.months or math.huge, limits.months) end
                 for _, systemKey in ipairs(definition.systems) do table.insert(clock.systems, systemKey) end
@@ -1272,6 +1288,7 @@ function RealisticMechanicalSystems:getServiceClocks()
     spec.serviceClocks, spec.serviceClocksCapacityVersion = clocks, spec.fluidCapacityVersion
     spec.serviceClocksFilename = self.configFileName
     spec.serviceClocksCapacities = spec.fluidCapacities
+    spec.serviceClocksEngineHours = engineHours
     return clocks
 end
 
@@ -1386,7 +1403,7 @@ function RealisticMechanicalSystems:getMaintenanceLevelInterval(maintenanceType)
     local held, programmed = math.huge, math.huge
     for _, definition in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
         if RealisticMechanicalSystems.MAINTENANCE_TYPES[definition.maintenanceType] == maintenanceType then
-            local hours = RMS_Config.SERVICE_PROGRAM[definition.key].hours
+            local hours = RealisticMechanicalSystems.getServiceProgramHours(self, definition.key)
             programmed = math.min(programmed, hours)
             if next(getServiceClockSumps(self, definition)) ~= nil then
                 held = math.min(held, hours)

@@ -151,8 +151,8 @@ source(g_currentModDirectory .. "scripts/RMS_FluidStorage.lua")
 source(g_currentModDirectory .. "scripts/RMS_Bodywork.lua")
 source(g_currentModDirectory .. "scripts/RMS_FluidWorkshop.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProgressRing.lua")
-source(g_currentModDirectory .. "scripts/RMS_VehicleYearsData.lua")
-source(g_currentModDirectory .. "scripts/RMS_VehicleYears.lua")
+source(g_currentModDirectory .. "scripts/RMS_ProductionYearData.lua")
+source(g_currentModDirectory .. "scripts/RMS_ProductionYear.lua")
 source(g_currentModDirectory .. "scripts/RMS_StarterSoundsData.lua")
 source(g_currentModDirectory .. "scripts/objects/RMS_BatteryChargerAimData.lua")
 source(g_currentModDirectory .. "scripts/RMS_DebugReading.lua")
@@ -500,92 +500,84 @@ function RMS_Main.readBuyVehicleDataPrice(data, superFunc, streamId, connection)
 end
 
 
----Detects changes to the vehicle's color configurations, custom ones included
-function RMS_Main.hasConfigurationColorChange(vehicle, configurations, configurationData)
-    if vehicle == nil or configurations == nil then
-        return false
-    end
-    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
-    for _, name in ipairs(RMS_Bodywork.getColorZones(vehicle)) do
-        local selectedIndex = configurations[name] or vehicle.configurations[name]
-        if selectedIndex ~= vehicle.configurations[name] then
-            return true, name
-        end
-        local item = storeItem.configurations[name][selectedIndex]
-        if item ~= nil and item.isCustomColor then
-            local selectedData = configurationData ~= nil and configurationData[name] ~= nil
-                and configurationData[name][selectedIndex] or nil
-            local currentData = vehicle.configurationData ~= nil and vehicle.configurationData[name] ~= nil
-                and vehicle.configurationData[name][selectedIndex] or nil
-            if (selectedData == nil) ~= (currentData == nil)
-                or (selectedData ~= nil and item:hasDataChanged(selectedData, currentData)) then
-                return true, name
-            end
-        end
-    end
-    return false
-end
-
----Keeps the native color row prices aligned with the single RMS paint charge.
-function RMS_Main.updateShopConfigData(screen, superFunc, storeItem, vehicle, saleItem)
-    superFunc(screen, storeItem, vehicle, saleItem)
+---Hides the colors a full repaint changes from an owned machine
+-- @param table screen configurator
+-- @param table storeItem store item
+-- @param table? vehicle owned machine, nil in the shop
+function RMS_Main.removeShopConfigPaintColors(screen, storeItem, vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec == nil or spec.isExcludedVehicle then
         return
     end
-    local _, firstZone = RMS_Main.hasConfigurationColorChange(
-        vehicle, screen.configurations, screen.configurationData)
-    local paintPrice = firstZone ~= nil and RMS_Bodywork.getPrice(
-        vehicle, RMS_Bodywork.FULL, RealisticMechanicalSystems.WORKSHOP.DEALER) or nil
-    for index, option in ipairs(screen.colorPickers or {}) do
-        local colorElement = screen.colorElements ~= nil and screen.colorElements[index] or nil
-        local configIndex = screen.configurations[option.configName]
-        if colorElement ~= nil and configIndex ~= nil then
-            local priceElement = colorElement.parent:getDescendantByName("price")
-            screen:setConfigPrice(option.configName, configIndex, priceElement, vehicle)
-            if paintPrice ~= nil and option.configName == firstZone then
-                local optionPrice = storeItem.configurations[option.configName][configIndex].price
-                if ConfigurationUtil.hasBoughtConfiguration(vehicle, option.configName, configIndex) then
-                    optionPrice = 0
-                end
-                priceElement:setText("+" .. g_i18n:formatMoney(optionPrice + paintPrice))
-            end
+    local paintZones = {}
+    for _, zone in ipairs(RMS_Bodywork.getColorZones(vehicle)) do
+        paintZones[zone] = true
+    end
+    local colorPickers = {}
+    for _, option in ipairs(screen.colorPickers) do
+        if not paintZones[option.configName] then
+            table.insert(colorPickers, option)
         end
     end
+    screen.colorPickers = colorPickers
+    screen.displayableColorCount = #colorPickers
 end
 
----Adds one RMS full-paint price to the native configuration quote.
-function RMS_Main.getConfigurationCostsAndChanges(screen, superFunc, storeItem, vehicle, saleItem)
-    local basePrice, upgradePrice, hasChanges = superFunc(screen, storeItem, vehicle, saleItem)
+---Keeps an owned machine's paint whatever the configurator picks
+-- @param table screen configurator
+-- @param table storeItem store item
+-- @param table? vehicle owned machine, nil in the shop
+function RMS_Main.keepShopConfigPaintColors(screen, storeItem, vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec ~= nil and not spec.isExcludedVehicle
-        and RMS_Main.hasConfigurationColorChange(vehicle, screen.configurations, screen.configurationData) then
-        local price = RMS_Bodywork.getPrice(vehicle, RMS_Bodywork.FULL,
-            RealisticMechanicalSystems.WORKSHOP.DEALER)
-        if price == nil then
-            return basePrice, upgradePrice, false
-        end
-        upgradePrice = upgradePrice + price
+    if spec == nil or spec.isExcludedVehicle then
+        return
     end
-    return basePrice, upgradePrice, hasChanges
+    for _, zone in ipairs(RMS_Bodywork.getColorZones(vehicle)) do
+        screen.configurations[zone] = vehicle.configurations[zone]
+        local data = vehicle.configurationData ~= nil and vehicle.configurationData[zone] or nil
+        screen.configurationData[zone] = data ~= nil and table.clone(data, math.huge) or nil
+    end
 end
 
----Charges the RMS paint before the native transaction reloads the vehicle
-function RMS_Main.runChangeVehicleConfigEvent(event, superFunc, connection)
-    if not connection:getIsServer() and event.vehicle ~= nil and event.vehicleBuyData ~= nil then
-        local spec = event.vehicle.spec_RealisticMechanicalSystems
-        if spec ~= nil and not spec.isExcludedVehicle
-            and RMS_Main.hasConfigurationColorChange(event.vehicle,
-                event.vehicleBuyData.configurations, event.vehicleBuyData.configurationData) then
-            local price = RMS_Bodywork.getPrice(event.vehicle, RMS_Bodywork.FULL,
-                RealisticMechanicalSystems.WORKSHOP.DEALER)
-            if price == nil or (tonumber(event.vehicleBuyData.price) or 0) < price then
-                connection:sendEvent(ChangeVehicleConfigEvent.newServerToClient(false))
-                return
-            end
+---Prices a purchase's colors at the RMS paint instead of their options
+-- @return float price purchase price
+-- @return float upgradePrice price of the configurations
+function RMS_Main.getBuyPaintPrice(manager, superFunc, storeItem, configurations, saleItem)
+    local price, upgradePrice = superFunc(manager, storeItem, configurations, saleItem)
+    if configurations ~= nil then
+        local paintPrice, optionPrice = RMS_Bodywork.getPurchaseColorPrices(storeItem, configurations, saleItem)
+        if paintPrice ~= nil then
+            price = price - optionPrice + paintPrice
+            upgradePrice = upgradePrice - optionPrice + paintPrice
         end
     end
-    return superFunc(event, connection)
+    return price, upgradePrice
+end
+
+---Writes the paint on the first color row changed, 0 on the others
+function RMS_Main.setShopConfigPaintPrice(screen, superFunc, configName, configIndex, priceElement, vehicle)
+    superFunc(screen, configName, configIndex, priceElement, vehicle)
+    if vehicle == nil and screen.storeItem.configurations[configName][configIndex]:isa(VehicleConfigurationItemColor) then
+        local paintPrice, _, paintedZone = RMS_Bodywork.getPurchaseColorPrices(
+            screen.storeItem, screen.configurations, screen.saleItem)
+        if paintPrice ~= nil then
+            priceElement:setText("+" .. g_i18n:formatMoney(paintedZone == configName and paintPrice or 0))
+        end
+    end
+end
+
+---Rewrites the price of every color row once a choice changes
+function RMS_Main.updateShopConfigPaintPrices(screen, storeItem, vehicle)
+    if vehicle ~= nil then
+        return
+    end
+    for index, option in ipairs(screen.colorPickers) do
+        local colorElement = screen.colorElements[index]
+        if colorElement ~= nil then
+            screen:setConfigPrice(option.configName, screen.configurations[option.configName],
+                colorElement.parent:getDescendantByName("price"), vehicle)
+        end
+    end
 end
 
 ---Loads whether RMS tracks the store item, stored under the reliability spec
@@ -604,6 +596,17 @@ local function getIsRated(storeItem, vehicle)
     end
 
     return storeItem.specs.power ~= nil
+end
+
+---Returns the model launch year for machines RMS tracks
+local function getLaunchYear(storeItem, vehicle)
+    if getIsRated(storeItem, vehicle) then
+        local year, source = RMS_ProductionYear.getYear(storeItem)
+        if source == RMS_ProductionYear.SOURCE.UNKNOWN then
+            return g_i18n:getText("rms_shop_launch_year_unknown")
+        end
+        return string.format(g_i18n:getText("rms_shop_launch_year"), year)
+    end
 end
 
 ---Returns the reliability of a store item, the vehicle value taking precedence
@@ -713,6 +716,7 @@ end
 if not g_modIsLoaded["FS25_AdvancedDamageSystem"] then
     g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", loadIsTracked, getReliability, StoreSpecies.VEHICLE)
     g_storeManager:addSpecType("serviceAccess", "shopListAttributeIconServiceAccess", RMS_Utils.loadServiceAccess, getServiceAccess, StoreSpecies.VEHICLE)
+    g_storeManager:addSpecType("rmsLaunchYear", "shopListAttributeIconRmsLaunchYear", nil, getLaunchYear, StoreSpecies.VEHICLE)
 end
 
 ---Inserts a page into the shop menu
@@ -826,7 +830,7 @@ function RMS_Main:tryRegisterShopMenuPage()
 end
 
 
----Adds the reliability attribute to a shop item
+---Adds RMS attributes to a shop item
 -- @param table self shop frame
 -- @param table storeItem store item
 -- @param table? vehicle vehicle
@@ -843,6 +847,12 @@ function RMS_Main.processAttributeData(self, storeItem, vehicle, saleItem)
         local accessItemElement = self.attributeItem:clone(self.attributesLayout)
         accessItemElement:getDescendantByName("icon"):applyProfile("shopConfigAttributeIconServiceAccess")
         accessItemElement:getDescendantByName("text"):setText(RMS_Utils.formatServiceAccess(vehicle, storeItem, self.configurations, true))
+        local launchYear = getLaunchYear(storeItem, vehicle)
+        if launchYear ~= nil then
+            local yearItemElement = self.attributeItem:clone(self.attributesLayout)
+            yearItemElement:getDescendantByName("icon"):applyProfile("shopConfigAttributeIconRmsLaunchYear")
+            yearItemElement:getDescendantByName("text"):setText(launchYear)
+        end
         self.attributesLayout:invalidateLayout()
 
     end
@@ -903,12 +913,12 @@ WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RM
 WearableRepaintEvent.run = Utils.overwrittenFunction(WearableRepaintEvent.run, RMS_Main.runNativeRepaintEvent)
 InGameMenuStatisticsFrame.populateCellForItemInSection = Utils.overwrittenFunction(InGameMenuStatisticsFrame.populateCellForItemInSection, RMS_Main.populateCellForItemInSection)
 ShopConfigScreen.processAttributeData = Utils.appendedFunction(ShopConfigScreen.processAttributeData, RMS_Main.processAttributeData)
-ShopConfigScreen.getConfigurationCostsAndChanges = Utils.overwrittenFunction(
-    ShopConfigScreen.getConfigurationCostsAndChanges, RMS_Main.getConfigurationCostsAndChanges)
-ShopConfigScreen.updateData = Utils.overwrittenFunction(
-    ShopConfigScreen.updateData, RMS_Main.updateShopConfigData)
-ChangeVehicleConfigEvent.run = Utils.overwrittenFunction(
-    ChangeVehicleConfigEvent.run, RMS_Main.runChangeVehicleConfigEvent)
+ShopConfigScreen.processStoreItemConfigurations = Utils.appendedFunction(
+    ShopConfigScreen.processStoreItemConfigurations, RMS_Main.removeShopConfigPaintColors)
+ShopConfigScreen.updateData = Utils.prependedFunction(ShopConfigScreen.updateData, RMS_Main.keepShopConfigPaintColors)
+ShopConfigScreen.updateData = Utils.appendedFunction(ShopConfigScreen.updateData, RMS_Main.updateShopConfigPaintPrices)
+ShopConfigScreen.setConfigPrice = Utils.overwrittenFunction(ShopConfigScreen.setConfigPrice, RMS_Main.setShopConfigPaintPrice)
+EconomyManager.getBuyPrice = Utils.overwrittenFunction(EconomyManager.getBuyPrice, RMS_Main.getBuyPaintPrice)
 BuyVehicleData.writeStream = Utils.overwrittenFunction(BuyVehicleData.writeStream, RMS_Main.writeBuyVehicleDataPrice)
 BuyVehicleData.readStream = Utils.overwrittenFunction(BuyVehicleData.readStream, RMS_Main.readBuyVehicleDataPrice)
 VehicleSaleSystem.onVehicleWillSell = Utils.overwrittenFunction(VehicleSaleSystem.onVehicleWillSell, RMS_Main.onVehicleWillSell)

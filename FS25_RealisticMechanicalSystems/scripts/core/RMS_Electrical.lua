@@ -92,7 +92,7 @@ function RMS_Electrical.resolveRating(vehicle)
     if family == "HARVESTER" or family == "FORAGE_HARVESTER" then
         workLamps = workLamps * C.WORK_LAMPS_HARVESTER_FACTOR
     end
-    local lampW = year < C.WORK_LAMP_LED_YEAR and C.WORK_LAMP_HALOGEN_W or C.WORK_LAMP_LED_W
+    local lampW = year < C.LED_YEARS.FRONT_WORK_LIGHTS_FAILURE and C.WORK_LAMP_HALOGEN_W or C.WORK_LAMP_LED_W
     rating.workLamps = workLamps
     rating.workLightsSideA = workLamps / 2 * lampW / (C.LAMP_VOLTAGE_V * series)
     rating.glowPlugsA = pickStep(C.GLOW_PLUGS_BY_POWER, power) * C.GLOW_PLUG_A / series

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="115">
     <author>Squallqt</author>
-    <version>0.13.0.1</version>
+    <version>1.0.0.0-beta.1</version>
     <title>
         <en>Realistic Mechanical Systems</en>
         <de>Realistische Mechaniksysteme</de>
@@ -26,7 +26,7 @@ BREAKDOWNS
 
 WORKSHOP
 - Inspection, Maintenance, Repair, and Overhaul each offer options that change price, duration, and quality
-- Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. Dealer colour changes use the RMS repaint price
+- Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. The colours of a machine you own change only through a full repaint, and buying one in another colour than the one already selected costs a full repaint
 - Part quality from Used to Original: cheaper parts are more often defective and bring the same fault back
 - Warranty covers replacement repairs with original parts and their fluids for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service excludes only the affected fault.
 - By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make maintenance and repair, repainting, or overhauls instant
@@ -51,6 +51,17 @@ SIMULATION
 - Electric vehicles tracked with their own parts: an electric motor, a traction battery that loses capacity with age and range in the cold, power electronics, and maintenance limited to its present fluid circuits
 
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.1:
+- Reworked machine production years, which set each machine's period equipment such as the particulate filter, LED lights, the reversible fan and dashboard lamps
+- Added the model launch year to the shop
+- Added engine oil change intervals that follow the machine's era: older machines need it more often
+- Reworked the settings page, which now opens without freezing and describes each setting more clearly
+- Fixed AI workers, Courseplay and AutoDrive wearing the machine by working it cold, hitting obstacles or spinning their wheels on the spot
+- Fixed breakdowns of lamps missing from the machine, such as a beacon not chosen in the shop
+- Fixed the most powerful Stage V machines, such as large combines, having no particulate filter
+- Fixed machines bought in another colour without paying for the paint: any colour other than the one already selected now costs a full repaint
+- Fixed the vehicle configurator changing an owned machine's colours without charging the repaint: colours now change only through a full repaint
 
 Changelog 0.13.0.1:
 - Fixed the game freezing while loading a savegame with some mods that switch a machine's lights
@@ -222,7 +233,7 @@ DEFEKTE
 
 WERKSTATT
 - Inspektion, Wartung, Reparatur und Grundüberholung bieten jeweils Optionen für Preis, Dauer und Qualität
-- Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Farbwechsel beim Händler kosten den RMS-Lackierpreis
+- Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Die Farben einer eigenen Maschine ändern sich nur durch eine komplette Neulackierung, und wer eine Maschine in einer anderen als der bereits gewählten Farbe kauft, zahlt eine komplette Neulackierung
 - Teilequalität von Gebraucht bis Original: billigere Teile sind häufiger defekt und holen denselben Fehler zurück
 - Die Garantie deckt den Austausch mit Originalteilen und die benötigten Flüssigkeiten für 24 Monate oder bis zur Stundengrenze ab. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung schließt nur den betroffenen Schaden aus.
 - Standardmäßig richtet sich die Arbeitsdauer nach der Spielzeit und pausiert beim Händler über Nacht; eigene und mobile Werkstätten bleiben geöffnet. Getrennte Einstellungen ermöglichen sofortige Wartung und Reparatur, Neulackierung oder Überholung
@@ -247,6 +258,17 @@ SIMULATION
 - Elektrofahrzeuge mit ihren eigenen Bauteilen: Elektromotor, Traktionsbatterie, die mit dem Alter Kapazität und bei Kälte Reichweite verliert, Leistungselektronik und Wartung nur für vorhandene Flüssigkeitskreisläufe
 
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.1:
+- Baujahre der Maschinen überarbeitet, die ihre zeitgemäße Ausstattung wie Partikelfilter, LED-Beleuchtung, Wendelüfter und Kontrollleuchten bestimmen
+- Markteinführungsjahr des Modells im Shop hinzugefügt
+- Motorölwechselintervalle nach der Epoche der Maschine hinzugefügt: Ältere Maschinen brauchen ihn öfter
+- Einstellungsseite überarbeitet, die sich jetzt ohne Hänger öffnet und jede Einstellung verständlicher beschreibt
+- Fehler behoben, durch den KI-Helfer, Courseplay und AutoDrive die Maschine verschlissen, wenn sie sie kalt belasteten, gegen ein Hindernis fuhren oder die Räder im Stand durchdrehen ließen
+- Fehler behoben, durch den an der Maschine fehlende Leuchten ausfallen konnten, etwa eine im Shop nicht gewählte Rundumleuchte
+- Fehlender Partikelfilter bei den stärksten Stage-V-Maschinen wie großen Mähdreschern behoben
+- Fehler behoben, durch den eine Maschine ohne Lackierkosten in einer anderen Farbe gekauft werden konnte: Jede andere als die bereits gewählte Farbe kostet jetzt eine komplette Neulackierung
+- Fehler behoben, durch den der Konfigurator die Farben einer eigenen Maschine ohne Lackierkosten änderte: Farben ändern sich nur noch durch eine komplette Neulackierung
 
 Changelog 0.13.0.1:
 - Hängenbleiben beim Laden des Spielstands mit Mods, die die Beleuchtung einer Maschine schalten, behoben
@@ -418,7 +440,7 @@ PANNES
 
 ATELIER
 - L'inspection, l'entretien, la réparation et la révision proposent chacune des options qui changent le prix, la durée et la qualité
-- L'appoint remplit les fluides manquants ; la peinture retouche les petits dégâts ou se refait en entier avec les couleurs proposées par le véhicule. Le changement de couleur chez le concessionnaire est facturé au prix RMS
+- L'appoint remplit les fluides manquants ; la peinture retouche les petits dégâts ou se refait en entier avec les couleurs proposées par le véhicule. Les couleurs d'une machine possédée ne changent que par une peinture complète, et acheter une machine dans une autre couleur que celle déjà sélectionnée coûte une peinture complète
 - Qualité des pièces de l'occasion à l'origine : les pièces moins chères sont plus souvent défectueuses et ramènent la même panne
 - La garantie couvre le remplacement en pièces d'origine et ses fluides pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien en retard exclut seulement la panne concernée.
 - Par défaut, la durée des travaux suit le temps de la partie et les travaux s'interrompent la nuit chez le concessionnaire ; les ateliers personnels et mobiles restent ouverts. Des réglages distincts permettent de terminer instantanément l'entretien et les réparations, la peinture ou les révisions
@@ -443,6 +465,17 @@ SIMULATION
 - Véhicules électriques suivis avec leurs propres organes : moteur électrique, batterie de traction qui perd de la capacité en vieillissant et de l'autonomie au froid, électronique de puissance, et des entretiens limités aux circuits présents
 
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.1 :
+- Refonte des années des machines, qui décident de leurs équipements d'époque comme le filtre à particules, l'éclairage à LED, le ventilateur réversible et les voyants
+- Ajout de l'année de lancement du modèle au magasin
+- Ajout d'intervalles de vidange moteur selon l'époque de la machine : une machine ancienne la demande plus souvent
+- Refonte de la page des paramètres, qui s'ouvre sans figer le jeu et décrit plus clairement chaque réglage
+- Correction de l'usure causée par les ouvriers IA, Courseplay et AutoDrive en travaillant la machine à froid, en heurtant un obstacle ou en patinant sur place
+- Correction des pannes de feux absents de la machine, comme un gyrophare non choisi au magasin
+- Correction des machines Stage V les plus puissantes, comme les grosses moissonneuses-batteuses, qui n'avaient pas de filtre à particules
+- Correction de l'achat d'une machine dans une autre couleur sans payer la peinture : toute couleur autre que celle déjà sélectionnée coûte désormais une peinture complète
+- Correction du configurateur qui changeait les couleurs d'une machine possédée sans faire payer la peinture : elles ne changent plus que par une peinture complète
 
 Changelog 0.13.0.1 :
 - Correction du chargement de la partie qui se figeait avec certains mods qui commandent les feux d'une machine

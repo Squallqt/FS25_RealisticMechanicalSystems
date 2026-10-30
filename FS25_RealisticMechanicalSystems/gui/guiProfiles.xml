@@ -1251,6 +1251,12 @@
     <Profile name="shopConfigAttributeIconReliability" extends="shopConfigAttributeIconCapacity">
         <imageSliceId value="rms_Hud.reliability"/>
     </Profile>
+    <Profile name="shopListAttributeIconRmsLaunchYear" extends="shopListAttributeIconLifeTime">
+        <imageSliceId value="gui.icon_ingameMenu_calendar"/>
+    </Profile>
+    <Profile name="shopConfigAttributeIconRmsLaunchYear" extends="shopConfigAttributeIconCapacity">
+        <imageSliceId value="gui.icon_ingameMenu_calendar"/>
+    </Profile>
     <Profile name="shopListAttributeIconServiceAccess" extends="shopListAttributeIconLifeTime">
         <imageSliceId value="rms_Hud.maintenance"/>
     </Profile>
@@ -1575,6 +1581,9 @@
         <endImageHighlightedColor value="$preset_fs25_colorMainHighlight"/>
         <endImageSelectedColor value="$preset_fs25_colorMainHighlight"/>
         <endImagePressedColor value="$preset_fs25_colorMainHighlight"/>
+    </Profile>
+    <Profile name="rms_settingsMultiTextOption" extends="fs25_settingsMultiTextOption">
+        <defaultProfileBgThreePart value="rms_settingsMultiTextOptionBg"/>
     </Profile>
     <Profile name="rms_settingsMultiTextOptionBg" extends="fs25_multiTextOptionBg">
         <imageFocusedColor value="$preset_fs25_colorMainHighlight"/>

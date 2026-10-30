@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Obsługa techniczna i zużycie"/>
         <text name="rms_settings_section_drivetrain" text="Układ napędowy i hamulec postojowy"/>
         <text name="rms_workshopOpenHour_label" text="Godziny otwarcia warsztatu"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Czynności rozpoczynają się dopiero od tej godziny."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Określa godzinę otwarcia warsztatów: czynności zaczynają się dopiero od tej godziny."/>
         <text name="rms_workshopCloseHour_label" text="Godziny zamknięcia warsztatu"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Trwające czynności są wstrzymywane o tej godzinie i wznawiane po otwarciu."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Określa godzinę zamknięcia warsztatów: trwające czynności są przerywane i wznawiane przy otwarciu."/>
+        <text name="rms_workshopHours_locked" text="To ustawienie wymaga co najmniej jednego warsztatu, który nie jest otwarty 24/7."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Warsztat dealera 24/7"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Utrzymuje warsztat dealera dostępny przez całą dobę."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Określa, czy warsztat sprzedawcy pozostaje otwarty o każdej porze."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobilny warsztat 24/7"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Utrzymuje mobilny warsztat dostępny przez całą dobę."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Określa, czy warsztat mobilny pozostaje dostępny o każdej porze."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Ograniczenia warsztatów"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Ogranicza prace warsztatu mobilnego i własnego według potrzebnego sprzętu. Konserwacja pozostaje dostępna; elektronika wymaga urządzenia diagnostycznego podłączonego do maszyny, a w warsztacie mobilnym ciężki demontaż lub prace przy wysokim napięciu wymagają wyposażonego warsztatu."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Określa, czy wyposażenie ogranicza warsztat mobilny i własny: elektronika wymaga podłączonego urządzenia diagnostycznego, a warsztat mobilny nie wykonuje ciężkiego demontażu ani prac przy wysokim napięciu. Konserwacja jest zawsze możliwa."/>
         <text name="rms_ownWorkshopAvailable_label" text="Własny warsztat 24/7"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Utrzymuje Twój własny warsztat dostępny przez całą dobę."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Określa, czy twój własny warsztat pozostaje otwarty o każdej porze."/>
         <text name="rms_instantInspection_label" text="Natychmiastowy przegląd"/>
-        <text name="rms_instantInspection_tooltip" text="Gdy ta opcja jest włączona, przeglądy w warsztacie kończą się natychmiast. Trwające już czynności tego typu również kończą się natychmiast."/>
+        <text name="rms_instantInspection_tooltip" text="Określa, czy inspekcje w warsztacie kończą się natychmiast, również te w toku."/>
         <text name="rms_instantMaintenanceRepair_label" text="Natychmiastowa obsługa techniczna i naprawa"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Gdy ta opcja jest włączona, obsługa techniczna i naprawy w warsztacie kończą się natychmiast. Trwające już czynności tego typu również kończą się natychmiast."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Określa, czy konserwacja i naprawy w warsztacie kończą się natychmiast, również te w toku."/>
         <text name="rms_instantBodywork_label" text="Natychmiastowe lakierowanie"/>
-        <text name="rms_instantBodywork_tooltip" text="Gdy ta opcja jest włączona, lakierowanie w warsztacie kończy się natychmiast. Trwające już czynności tego typu również kończą się natychmiast."/>
+        <text name="rms_instantBodywork_tooltip" text="Określa, czy lakierowanie w warsztacie kończy się natychmiast, również to w toku."/>
         <text name="rms_instantOverhaul_label" text="Natychmiastowy remont kapitalny"/>
-        <text name="rms_instantOverhaul_tooltip" text="Gdy ta opcja jest włączona, remont kapitalny w warsztacie kończy się natychmiast. Trwające już czynności tego typu również kończą się natychmiast."/>
+        <text name="rms_instantOverhaul_tooltip" text="Określa, czy remonty kapitalne w warsztacie kończą się natychmiast, również te w toku."/>
         <text name="rms_debugMode_label" text="Tryb debugowania"/>
-        <text name="rms_debugMode_tooltip" text="Wyświetla okno debugowania w pojeździe, którym kierujesz; klawisz %s również je otwiera i zamyka. W trybie wieloosobowym widzą je tylko administratorzy. Zapisuje też szczegółowe logi w konsoli."/>
+        <text name="rms_debugMode_tooltip" text="Określa, czy okno debugowania pojawia się w prowadzonej maszynie, a konsola otrzymuje szczegółowe dzienniki. Klawisz %s otwiera i zamyka okno; w grze wieloosobowej widzą je tylko administratorzy."/>
         <text name="rms_warningMessages_label" text="Komunikaty ostrzegawcze"/>
-        <text name="rms_warningMessages_tooltip" text="Włącza lub wyłącza ostrzeżenia w grze, takie jak zimny silnik lub przegrzanie. Komunikaty o ograniczeniu mocy z powodu temperatury pozostają aktywne."/>
+        <text name="rms_warningMessages_tooltip" text="Określa, czy wyświetlane są ostrzeżenia, takie jak zimny silnik lub przegrzanie. Komunikaty o ograniczeniu mocy z powodu temperatury są zawsze wyświetlane."/>
         <text name="rms_serviceInterval_label" text="Odstęp między przeglądami"/>
-        <text name="rms_serviceInterval_tooltip" text="Ustaw godziny odniesienia. Przy 100 h zalecenie 500 h zmienia się na 100 h, a 600 h na 120 h. Każdy płyn ma program pojazdu; terminy kalendarzowe są niezależne."/>
+        <text name="rms_serviceInterval_tooltip" text="Określa godziny między dwiema wymianami oleju silnikowego w modelu wprowadzonym od 2010 roku lub o nieznanym roku. Starszy model wymaga wymiany częściej:&#10;Od 2000 do 2009: %s&#10;Od 1980 do 1999: %s&#10;Od 1960 do 1979: %s&#10;Przed 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Okres eksploatacji pojazdu"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Ustawia bazową żywotność pojazdu w godzinach, po której jego stan techniczny osiągnie 0%. Im bliżej zera znajduje się stan pojazdu, tym staje się on bardziej zawodny. Wartość pojazdu również spada wraz z tymi godzinami. Zmiana obowiązuje od tej chwili: pojazdy zachowują swój stan techniczny, przeliczana jest tylko ich wartość."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Określa godziny pracy, po których stan pojazdu osiąga 0%; im bliżej tej granicy, tym pojazd jest mniej niezawodny i tym bardziej spada jego wartość. Zmiana dotyczy przyszłości: pojazdy zachowują swój stan, przeliczana jest tylko ich wartość."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Dym z wydechu"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Steruje smugą spalin na podstawie rzeczywistego stanu silnika: czarna pojawia się, gdy paliwa jest więcej niż powietrza, przy gwałtownym przyspieszaniu, pracy na niskich obrotach pod obciążeniem, długiej pracy jałowej z małym obciążeniem, zatkanym filtrze powietrza lub zużytym wtrysku; niebieska, gdy zużyty silnik spala olej; biała, gdy paliwo pozostaje niespalone. Smuga rośnie wraz z pracą wykonywaną przez silnik. Starsze maszyny dymią znacznie mocniej niż nowoczesne, które prawie nie dymią, dopóki nie dojdzie do poważnej awarii. W zimnym powietrzu woda ze spalania dodatkowo skrapla się w krótką białą smugę, która odparowuje w ciągu metra lub dwóch, nawet w sprawnym silniku."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Określa, czy dym z wydechu odpowiada rzeczywistemu stanowi silnika: czarny przy braku powietrza, niebieski przy spalaniu oleju, biały przy wydostawaniu się niespalonego paliwa, gęstszy pod obciążeniem. Stare maszyny dymią znacznie bardziej niż nowoczesne."/>
         <text name="rms_tutorialMode_label" text="Tryb samouczka"/>
-        <text name="rms_tutorialMode_tooltip" text="Wyświetla wskazówki samouczka podczas gry."/>
+        <text name="rms_tutorialMode_tooltip" text="Określa, czy wskazówki samouczka są wyświetlane podczas gry."/>
         <text name="rms_tutorialResetTips_label" text="Zresetuj wskazówki"/>
         <text name="rms_tutorialResetTips_text" text="Zresetuj wskazówki"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Resetuje historię wskazówek samouczka i ponownie pokazuje wszystkie wskazówki."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Resetuje historię wskazówek samouczka: wszystkie zostaną wyświetlone ponownie."/>
         <text name="rms_tutorialResetConfirm_title" text="Zresetować wskazówki samouczka?"/>
         <text name="rms_tutorialResetConfirm_message" text="Zresetować historię wskazówek samouczka i pokazać wszystkie ponownie?"/>
         <text name="rms_drivetrainEnabled_label" text="Sterowanie 4WD i blokadą mechanizmu różnicowego"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Włącza ręczne sterowanie dołączanym przednim mostem i blokadami mechanizmów różnicowych w ciągnikach. Gdy zainstalowany jest Enhanced Vehicle, jego sterowanie mechanizmami różnicowymi zostaje wyłączone; aby je przywrócić, wyłącz tę opcję, a potem włącz ponownie mechanizmy różnicowe w menu Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Określa, czy przedni most i blokady mechanizmu różnicowego ciągników są sterowane ręcznie. Opcja zastępuje sterowanie mechanizmami różnicowymi w Enhanced Vehicle: aby je przywrócić, wyłącz opcję, a potem włącz mechanizmy różnicowe w jego menu."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Zezwól na tryb AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Dodaje pozycję AUTO: przedni most załącza się automatycznie przy poślizgu kół lub przy prędkości roboczej pod obciążeniem i rozłącza na drodze. Pojazdy pozostawione w AUTO wracają do 4WD po wyłączeniu tej opcji."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Określa, czy przełącznik oferuje pozycję AUTO, która załącza przedni most przy poślizgu kół lub pracy pod obciążeniem i rozłącza go na drodze. Wyłączenie opcji przełącza pojazdy pozostawione w AUTO na 4WD."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="To ustawienie wymaga włączenia sterowania 4WD i blokadą mechanizmu różnicowego."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Hamulec postojowy"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Dodaje hamulec postojowy do wszystkich pojazdów RMS. Nowsze maszyny z przekładnią CVT lub Powershift zaciągają go i zwalniają same; w pozostałych obsługujesz go jego własnym klawiszem. Gdy zainstalowany jest Enhanced Vehicle, jego hamulec postojowy zostaje wyłączony; aby go przywrócić, wyłącz tę opcję, a potem włącz ponownie hamulec postojowy w menu Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Określa, czy śledzone pojazdy mają hamulec postojowy: automatyczny w nowszych maszynach z przekładnią CVT lub Powershift, na osobnym klawiszu w pozostałych. Opcja zastępuje hamulec postojowy Enhanced Vehicle: aby go przywrócić, wyłącz opcję i włącz jego hamulec postojowy w jego menu."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Warsztat"/>
         <text name="rms_ws_tab_summary" text="Podsumowanie"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Duża łatwość obsługi"/>
         <text name="rms_shop_service_access_average" text="Przeciętna łatwość obsługi"/>
         <text name="rms_shop_service_access_demanding" text="Mała łatwość obsługi"/>
+        <text name="rms_shop_launch_year" text="Model wprowadzony w %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Rok wprowadzenia na rynek nieznany"/>
         <text name="rms_owner_care_careful" text="Staranna obsługa techniczna"/>
         <text name="rms_owner_care_regular" text="Regularna obsługa techniczna"/>
         <text name="rms_owner_care_neglected" text="Zaniedbana obsługa techniczna"/>

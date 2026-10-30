@@ -616,7 +616,7 @@ RMS_Config = {
         },
         FAN_AIRFLOW_EXPONENT = 0.39,
         FAN_DRIVE_YEARS = { VISCOUS = 1997, ELECTRONIC = 2013 },
-        REVERSIBLE_FAN = { KIT_PRICE = 2176, REVERSAL_MS = 15000, AUTO_INTERVAL_MS = 1200000 },
+        REVERSIBLE_FAN = { KIT_PRICE = 2176, REVERSAL_MS = 15000, AUTO_INTERVAL_MS = 1200000, MIN_YEAR = 2007, AUTO_MIN_YEAR = 2008 },
         PROFILES = {
             diesel = {
                 warmup = {
@@ -986,7 +986,6 @@ RMS_Config = {
             MIN_POWER_KW = 19,
             MID_POWER_MIN_KW = 56,
             MID_POWER_MAX_KW = 130,
-            MAX_POWER_KW = 560,
             SOOT_FACTOR = 0.15
         },
         PARTICULATE_FILTER = {
@@ -1097,7 +1096,9 @@ RMS_Config = {
         WORK_LAMPS_HARVESTER_FACTOR = 2,
         WORK_LAMP_HALOGEN_W = 55,
         WORK_LAMP_LED_W = 45,
-        WORK_LAMP_LED_YEAR = 2014,
+        -- year LEDs are offered on most machines, by light circuit
+        LED_YEARS = { LOW_BEAM_FAILURE = 2017, HIGH_BEAM_FAILURE = 2017, FRONT_WORK_LIGHTS_FAILURE = 2015,
+            REAR_WORK_LIGHTS_FAILURE = 2015, BEACON_LIGHTS_FAILURE = 2017, TURN_LIGHTS_FAILURE = 2016 },
         -- Starter current per kW (A)
         STARTER_CURRENT_CURVE = { { -20, 165 }, { 0, 145 } },
         GLOW_PLUG_A = 12,
@@ -1320,6 +1321,13 @@ RMS_Config = {
         transmission = { hours = 1000, months = 24 },
         hydraulic = { hours = 1000, months = 24 },
         coolant = { hours = 2000, months = 24 }
+    },
+    -- engine oil hours of a dated machine built before each year
+    ENGINE_OIL_HOURS_BY_YEAR = {
+        { before = 1960, hours = 100 },
+        { before = 1980, hours = 220 },
+        { before = 2000, hours = 250 },
+        { before = 2010, hours = 400 }
     },
 
     TUTORIAL_MESSAGES = {

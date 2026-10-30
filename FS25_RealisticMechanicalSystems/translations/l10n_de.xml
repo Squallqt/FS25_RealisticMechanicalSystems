@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Wartung und Verschleiß"/>
         <text name="rms_settings_section_drivetrain" text="Antriebsstrang und Feststellbremse"/>
         <text name="rms_workshopOpenHour_label" text="Öffnungszeit der Werkstatt"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Werkstattvorgänge beginnen erst ab dieser Uhrzeit."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Legt die Öffnungszeit der Werkstätten fest: Vorgänge beginnen erst ab dieser Stunde."/>
         <text name="rms_workshopCloseHour_label" text="Schließzeit der Werkstatt"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Laufende Vorgänge werden zu dieser Uhrzeit unterbrochen und bei Öffnung fortgesetzt."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Legt die Schließzeit der Werkstätten fest: Laufende Vorgänge werden dann unterbrochen und bei Öffnung fortgesetzt."/>
+        <text name="rms_workshopHours_locked" text="Diese Einstellung erfordert mindestens eine Werkstatt, die nicht 24/7 geöffnet ist."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Händlerwerkstatt 24/7"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Hält die Händlerwerkstatt zu jeder Tages- und Nachtzeit verfügbar."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Legt fest, ob die Händlerwerkstatt rund um die Uhr geöffnet bleibt."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobile Werkstatt 24/7"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Hält die mobile Werkstatt zu jeder Tages- und Nachtzeit verfügbar."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Legt fest, ob die mobile Werkstatt rund um die Uhr verfügbar bleibt."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Werkstatt-Einschränkungen"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Begrenzt die Arbeiten der mobilen und der eigenen Werkstatt nach der benötigten Ausrüstung. Wartungen bleiben möglich; Elektronik erfordert das an die Maschine angeschlossene Diagnosegerät, und in der mobilen Werkstatt erfordern schwere Demontage oder Hochvoltarbeiten eine ausgerüstete Werkstatt."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Legt fest, ob die Ausrüstung die mobile und die eigene Werkstatt einschränkt: Elektronik erfordert ein angeschlossenes Diagnosegerät, und die mobile Werkstatt führt weder schwere Demontagen noch Hochvoltarbeiten aus. Wartungen bleiben immer möglich."/>
         <text name="rms_ownWorkshopAvailable_label" text="Eigene Werkstatt 24/7"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Hält deine eigene Werkstatt zu jeder Tages- und Nachtzeit verfügbar."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Legt fest, ob deine eigene Werkstatt rund um die Uhr geöffnet bleibt."/>
         <text name="rms_instantInspection_label" text="Sofortige Inspektion"/>
-        <text name="rms_instantInspection_tooltip" text="Wenn die Option aktiviert ist, werden Inspektionen in der Werkstatt sofort abgeschlossen. Bereits laufende Vorgänge dieser Art werden ebenfalls sofort abgeschlossen."/>
+        <text name="rms_instantInspection_tooltip" text="Legt fest, ob Inspektionen in der Werkstatt sofort abgeschlossen werden, auch bereits laufende."/>
         <text name="rms_instantMaintenanceRepair_label" text="Sofortige Wartung und Reparatur"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Wenn die Option aktiviert ist, werden Wartungen und Reparaturen in der Werkstatt sofort abgeschlossen. Bereits laufende Vorgänge dieser Art werden ebenfalls sofort abgeschlossen."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Legt fest, ob Wartungen und Reparaturen in der Werkstatt sofort abgeschlossen werden, auch bereits laufende."/>
         <text name="rms_instantBodywork_label" text="Sofortige Lackierung"/>
-        <text name="rms_instantBodywork_tooltip" text="Wenn die Option aktiviert ist, werden Lackierarbeiten in der Werkstatt sofort abgeschlossen. Bereits laufende Vorgänge dieser Art werden ebenfalls sofort abgeschlossen."/>
+        <text name="rms_instantBodywork_tooltip" text="Legt fest, ob die Lackierung in der Werkstatt sofort abgeschlossen wird, auch eine bereits laufende."/>
         <text name="rms_instantOverhaul_label" text="Sofortige mechanische Überholung"/>
-        <text name="rms_instantOverhaul_tooltip" text="Wenn die Option aktiviert ist, werden mechanische Überholungen in der Werkstatt sofort abgeschlossen. Bereits laufende Vorgänge dieser Art werden ebenfalls sofort abgeschlossen."/>
+        <text name="rms_instantOverhaul_tooltip" text="Legt fest, ob mechanische Überholungen in der Werkstatt sofort abgeschlossen werden, auch bereits laufende."/>
         <text name="rms_debugMode_label" text="Debug-Modus"/>
-        <text name="rms_debugMode_tooltip" text="Zeigt das Debug-Fenster im Fahrzeug, das du fährst; die Taste %s öffnet und schließt es ebenfalls. Im Mehrspielermodus sehen es nur Administratoren. Schreibt außerdem ausführliche Protokolle in die Konsole."/>
+        <text name="rms_debugMode_tooltip" text="Legt fest, ob das Debugfenster in der gefahrenen Maschine erscheint und die Konsole detaillierte Protokolle erhält. Die Taste %s öffnet und schließt es; im Mehrspielermodus sehen es nur Administratoren."/>
         <text name="rms_warningMessages_label" text="Warnmeldungen"/>
-        <text name="rms_warningMessages_tooltip" text="Aktiviert oder deaktiviert Warnmeldungen wie kalter Motor oder Überhitzung. Meldungen zur thermischen Leistungsbegrenzung bleiben aktiviert."/>
+        <text name="rms_warningMessages_tooltip" text="Legt fest, ob Warnungen wie kalter Motor oder Überhitzung angezeigt werden. Meldungen zur thermischen Leistungsbegrenzung werden immer angezeigt."/>
         <text name="rms_serviceInterval_label" text="Wartungsabstände"/>
-        <text name="rms_serviceInterval_tooltip" text="Referenzstunden einstellen. Bei 100 h werden aus einer Vorgabe von 500 h 100 h und aus 600 h 120 h. Jede Flüssigkeit folgt dem Fahrzeugplan; Kalenderfristen bleiben unabhängig."/>
+        <text name="rms_serviceInterval_tooltip" text="Legt die Stunden zwischen zwei Motorölwechseln bei einem ab 2010 eingeführten Modell oder einem Modell unbekannten Jahres fest. Ältere Modelle bekommen den Ölwechsel öfter:&#10;2000 bis 2009: %s&#10;1980 bis 1999: %s&#10;1960 bis 1979: %s&#10;Vor 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Fahrzeuglebensdauer"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Legt die grundlegende Fahrzeuglebensdauer in Stunden fest, nach deren Ablauf der Zustand 0 % erreicht. Je näher der Zustand an null liegt, desto unzuverlässiger wird das Fahrzeug. Auch der Fahrzeugwert sinkt über diese Stunden. Eine Änderung gilt ab diesem Zeitpunkt: Die Fahrzeuge behalten ihren Zustand, nur ihr Wert wird neu berechnet."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Legt die Betriebsstunden fest, nach denen der Fahrzeugzustand 0 % erreicht; je näher das Fahrzeug diesem Wert kommt, desto unzuverlässiger wird es und desto stärker sinkt sein Wert. Eine Änderung gilt ab dann: Die Fahrzeuge behalten ihren Zustand, nur ihr Wert wird neu berechnet."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Abgasrauch"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Steuert die Abgasfahne anhand des tatsächlichen Motorzustands. Sie ist schwarz, wenn mehr Kraftstoff als Luft vorhanden ist: bei starkem Beschleunigen, untertourigem Betrieb, langem Leerlauf unter geringer Last, einem zugesetzten Luftfilter oder verschlissener Einspritzung. Sie ist blau, wenn ein verschlissener Motor Öl verbrennt, und weiß, wenn Kraftstoff unverbrannt austritt. Die Fahne wird auch mit steigender Motorlast größer. Ältere Maschinen rauchen deutlich stärker als moderne, die kaum rauchen, solange nichts ernsthaft beschädigt ist. Bei kalter Luft kondensiert außerdem das Wasser aus der Verbrennung zu einer kurzen weißen Fahne, die nach ein bis zwei Metern verdunstet, selbst bei einem gesunden Motor."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Legt fest, ob die Abgasfahne dem tatsächlichen Motorzustand folgt: schwarz bei Luftmangel, blau beim Verbrennen von Öl, weiß bei unverbrannt austretendem Kraftstoff, dichter unter Last. Alte Maschinen rauchen viel stärker als moderne."/>
         <text name="rms_tutorialMode_label" text="Tutorial-Modus"/>
-        <text name="rms_tutorialMode_tooltip" text="Zeigt während des Spiels Tutorial-Hinweise an."/>
+        <text name="rms_tutorialMode_tooltip" text="Legt fest, ob die Tutorial-Hinweise während des Spiels angezeigt werden."/>
         <text name="rms_tutorialResetTips_label" text="Hinweise zurücksetzen"/>
         <text name="rms_tutorialResetTips_text" text="Zurücksetzen"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Setzt den Verlauf der Tutorial-Hinweise zurück und zeigt alle Hinweise erneut an."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Setzt den Verlauf der Tutorial-Hinweise zurück: Alle Hinweise werden erneut angezeigt."/>
         <text name="rms_tutorialResetConfirm_title" text="Tutorial-Hinweise zurücksetzen?"/>
         <text name="rms_tutorialResetConfirm_message" text="Verlauf der Tutorial-Hinweise zurücksetzen und alle Hinweise erneut anzeigen?"/>
         <text name="rms_drivetrainEnabled_label" text="Verwaltung von Allrad und Differentialsperren"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Aktiviert die manuelle Steuerung der zuschaltbaren Vorderachse und der Differentialsperren bei Traktoren. Ist Enhanced Vehicle installiert, wird dessen Differentialverwaltung deaktiviert; um sie zurückzugeben, deaktiviere diese Option und aktiviere die Differentiale dann wieder in dessen Menü."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Legt fest, ob Vorderachse und Differentialsperren von Traktoren von Hand bedient werden. Die Option ersetzt die Differentialverwaltung von Enhanced Vehicle: Um sie zurückzugeben, deaktiviere die Option und aktiviere die Differentiale wieder in dessen Menü."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="AUTO-Antriebsmodus erlauben"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Fügt dem Antriebswahlschalter eine AUTO-Stellung hinzu: Die Vorderachse schaltet bei Radschlupf oder bei Arbeitsgeschwindigkeit unter Last automatisch zu und auf der Straße wieder ab. In AUTO belassene Fahrzeuge wechseln zu Allrad, wenn diese Option deaktiviert wird."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Legt fest, ob der Wahlschalter AUTO anbietet: Die Vorderachse schaltet bei Radschlupf oder Arbeit unter Last zu und auf der Straße ab. Beim Deaktivieren wechseln in AUTO belassene Fahrzeuge zu Allrad."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Diese Einstellung erfordert die aktivierte Verwaltung von Allrad und Differentialsperren."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Feststellbremse"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Fügt allen betreuten Fahrzeugen eine Feststellbremse hinzu. Neuere Maschinen mit CVT- oder Powershift-Getriebe ziehen und lösen sie von selbst; bei den anderen bedienst du sie mit ihrer eigenen Taste. Ist Enhanced Vehicle installiert, wird dessen Feststellbremse deaktiviert; um sie zurückzugeben, deaktiviere diese Option und aktiviere die Feststellbremse dann wieder in dessen Menü."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Legt fest, ob betreute Fahrzeuge eine Feststellbremse haben: automatisch bei neueren Maschinen mit CVT- oder Powershift-Getriebe, per Taste bei den übrigen. Die Option ersetzt die Feststellbremse von Enhanced Vehicle: Um sie zurückzugeben, deaktiviere die Option und aktiviere seine Feststellbremse wieder in dessen Menü."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Werkstatt"/>
         <text name="rms_ws_tab_summary" text="Übersicht"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Hohe Wartungsfreundlichkeit"/>
         <text name="rms_shop_service_access_average" text="Mittlere Wartungsfreundlichkeit"/>
         <text name="rms_shop_service_access_demanding" text="Geringe Wartungsfreundlichkeit"/>
+        <text name="rms_shop_launch_year" text="Markteinführung %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Jahr der Markteinführung unbekannt"/>
         <text name="rms_owner_care_careful" text="Sorgfältige Wartung"/>
         <text name="rms_owner_care_regular" text="Regelmäßige Wartung"/>
         <text name="rms_owner_care_neglected" text="Vernachlässigte Wartung"/>

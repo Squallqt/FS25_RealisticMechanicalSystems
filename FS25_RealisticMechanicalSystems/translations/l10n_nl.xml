@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Onderhoud en slijtage"/>
         <text name="rms_settings_section_drivetrain" text="Aandrijflijn en parkeerrem"/>
         <text name="rms_workshopOpenHour_label" text="Openingstijd werkplaats"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Procedures starten pas vanaf dit tijdstip."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Stelt het openingsuur van de werkplaatsen in: procedures beginnen pas vanaf dit uur."/>
         <text name="rms_workshopCloseHour_label" text="Sluitingstijd werkplaats"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Lopende procedures worden op dit tijdstip onderbroken en bij opening hervat."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Stelt het sluitingsuur van de werkplaatsen in: lopende procedures stoppen en gaan bij opening verder."/>
+        <text name="rms_workshopHours_locked" text="Deze instelling vereist ten minste één werkplaats die niet 24/7 open is."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Dealerwerkplaats 24/7"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Houdt de dealerwerkplaats dag en nacht beschikbaar."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Bepaalt of de werkplaats van de dealer op elk uur openblijft."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobiele werkplaats 24/7"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Houdt de mobiele werkplaats dag en nacht beschikbaar."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Bepaalt of de mobiele werkplaats op elk uur beschikbaar blijft."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Werkplaatsbeperkingen"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Beperkt de werkzaamheden van de mobiele en de eigen werkplaats op basis van de benodigde middelen. Onderhoud blijft beschikbaar; elektronica vereist de diagnoseapparatuur aangesloten op de machine, en in de mobiele werkplaats vereisen zware demontage of hoogspanningswerk een uitgeruste werkplaats."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Bepaalt of de uitrusting de mobiele en eigen werkplaats beperkt: elektronica vereist aangesloten diagnoseapparatuur, en de mobiele werkplaats doet geen zware demontage of hoogspanningswerk. Onderhoud blijft altijd mogelijk."/>
         <text name="rms_ownWorkshopAvailable_label" text="Eigen werkplaats 24/7"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Houdt je eigen werkplaats dag en nacht beschikbaar."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Bepaalt of je eigen werkplaats op elk uur openblijft."/>
         <text name="rms_instantInspection_label" text="Directe inspectie"/>
-        <text name="rms_instantInspection_tooltip" text="Als deze optie is ingeschakeld, worden inspecties in de werkplaats direct voltooid. Lopende procedures van dit type worden ook direct voltooid."/>
+        <text name="rms_instantInspection_tooltip" text="Bepaalt of inspecties in de werkplaats direct worden voltooid, ook lopende inspecties."/>
         <text name="rms_instantMaintenanceRepair_label" text="Direct onderhoud en reparatie"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Als deze optie is ingeschakeld, worden onderhoud en reparaties in de werkplaats direct voltooid. Lopende procedures van dit type worden ook direct voltooid."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Bepaalt of onderhoud en reparaties in de werkplaats direct worden voltooid, ook lopende procedures."/>
         <text name="rms_instantBodywork_label" text="Direct spuitwerk"/>
-        <text name="rms_instantBodywork_tooltip" text="Als deze optie is ingeschakeld, wordt spuitwerk in de werkplaats direct voltooid. Lopende procedures van dit type worden ook direct voltooid."/>
+        <text name="rms_instantBodywork_tooltip" text="Bepaalt of spuitwerk in de werkplaats direct wordt voltooid, ook lopend spuitwerk."/>
         <text name="rms_instantOverhaul_label" text="Directe mechanische revisie"/>
-        <text name="rms_instantOverhaul_tooltip" text="Als deze optie is ingeschakeld, worden mechanische revisies in de werkplaats direct voltooid. Lopende procedures van dit type worden ook direct voltooid."/>
+        <text name="rms_instantOverhaul_tooltip" text="Bepaalt of mechanische revisies in de werkplaats direct worden voltooid, ook lopende revisies."/>
         <text name="rms_debugMode_label" text="Debugmodus"/>
-        <text name="rms_debugMode_tooltip" text="Toont het debugvenster in het voertuig dat je bestuurt; de toets %s opent en sluit het ook. In multiplayer zien alleen beheerders het. Schrijft ook gedetailleerde logboeken naar de console."/>
+        <text name="rms_debugMode_tooltip" text="Bepaalt of het debugvenster in de bestuurde machine verschijnt en de console gedetailleerde logboeken ontvangt. De toets %s opent en sluit het; in multiplayer zien alleen beheerders het."/>
         <text name="rms_warningMessages_label" text="Waarschuwingsberichten"/>
-        <text name="rms_warningMessages_tooltip" text="Schakelt spelwaarschuwingen zoals een koude motor of oververhitting in of uit. Meldingen over vermogensbegrenzing door temperatuur blijven actief."/>
+        <text name="rms_warningMessages_tooltip" text="Bepaalt of waarschuwingen zoals een koude motor of oververhitting worden getoond. Meldingen over thermische vermogensbegrenzing blijven altijd zichtbaar."/>
         <text name="rms_serviceInterval_label" text="Onderhoudsafstand"/>
-        <text name="rms_serviceInterval_tooltip" text="Stel de referentie-uren in. Bij 100 u wordt een voorschrift van 500 u 100 u en van 600 u 120 u. Elke vloeistof volgt het voertuigprogramma; kalendergrenzen blijven onafhankelijk."/>
+        <text name="rms_serviceInterval_tooltip" text="Stelt de uren in tussen twee motorolieverversingen van een model dat vanaf 2010 is uitgebracht of waarvan het jaar onbekend is. Een ouder model krijgt vaker een verversing:&#10;2000 tot en met 2009: %s&#10;1980 tot en met 1999: %s&#10;1960 tot en met 1979: %s&#10;Vóór 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Levensduur voertuig"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Bepaalt de basislevensduur van het voertuig in uren, waarna de conditie 0% bereikt. Hoe dichter de conditie bij nul komt, hoe onbetrouwbaarder het voertuig wordt. Ook de voertuigwaarde daalt over deze uren. Een wijziging geldt vanaf dat moment: voertuigen behouden hun conditie, alleen hun waarde wordt herberekend."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Stelt de bedrijfsuren in waarna de voertuigconditie 0% bereikt; hoe dichter het voertuig daarbij komt, hoe onbetrouwbaarder het is en hoe meer de waarde daalt. Een wijziging geldt voortaan: voertuigen behouden hun conditie, alleen hun waarde wordt herberekend."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Uitlaatrook"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Regelt de uitlaatrook aan de hand van de werkelijke motorconditie. De rook is zwart wanneer er meer brandstof dan lucht beschikbaar is: bij sterk accelereren, een motor die bij laag toerental zwaar wordt belast, lang stationair draaien bij lage belasting, een verstopt luchtfilter of versleten injectie. De rook is blauw wanneer een versleten motor olie verbrandt en wit wanneer brandstof onverbrand uitstroomt. De pluim groeit ook met de motorbelasting. Oudere machines roken veel meer dan moderne, die nauwelijks roken zolang niets ernstig beschadigd is. Bij koude lucht condenseert het water uit de verbranding bovendien tot een korte witte sliert die binnen een meter of twee verdampt, zelfs bij een gezonde motor."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Bepaalt of de uitlaatrook de werkelijke motorconditie volgt: zwart bij luchtgebrek, blauw bij olieverbranding, wit bij onverbrande brandstof, dikker onder belasting. Oude machines roken veel meer dan moderne."/>
         <text name="rms_tutorialMode_label" text="Tutorialmodus"/>
-        <text name="rms_tutorialMode_tooltip" text="Toont tutorialtips tijdens het spelen."/>
+        <text name="rms_tutorialMode_tooltip" text="Bepaalt of tutorialtips tijdens het spelen worden getoond."/>
         <text name="rms_tutorialResetTips_label" text="Tips opnieuw instellen"/>
         <text name="rms_tutorialResetTips_text" text="Opnieuw instellen"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Wist de geschiedenis van tutorialtips en toont alle tips opnieuw."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Reset de geschiedenis van de tutorialtips: alle tips worden opnieuw getoond."/>
         <text name="rms_tutorialResetConfirm_title" text="Tutorialtips opnieuw instellen?"/>
         <text name="rms_tutorialResetConfirm_message" text="De geschiedenis van tutorialtips wissen en alle tips opnieuw tonen?"/>
         <text name="rms_drivetrainEnabled_label" text="Beheer van vierwielaandrijving en differentieelslot"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Schakelt handmatige bediening van de aangedreven vooras en de differentieelsloten op tractoren in. Als Enhanced Vehicle is geïnstalleerd, wordt het differentieelbeheer daarvan uitgeschakeld; om het terug te geven, schakel je deze optie uit en schakel je de differentiëlen daarna weer in via het menu van Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Bepaalt of de vooras en differentieelsloten van tractoren met de hand worden bediend. Deze optie vervangt de differentieelbesturing van Enhanced Vehicle: schakel de optie uit en de differentiëlen weer in via zijn menu om de besturing terug te geven."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="AUTO-modus toestaan"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Voegt een AUTO-stand toe aan de aandrijfkeuzeschakelaar: de vooras schakelt automatisch in bij wielslip of onder belasting bij werksnelheid en schakelt op de weg uit. Voertuigen die in AUTO staan, schakelen over op vierwielaandrijving wanneer deze optie wordt uitgeschakeld."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Bepaalt of de keuzeschakelaar AUTO biedt: de vooras schakelt in bij wielslip of werk onder belasting en uit op de weg. Uitschakelen zet voertuigen die in AUTO staan terug op vierwielaandrijving."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Deze instelling vereist dat het beheer van vierwielaandrijving en differentieelslot is ingeschakeld."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkeerrem"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Voegt aan alle gevolgde voertuigen een parkeerrem toe. Recente machines met CVT- of powershifttransmissie trekken hem zelf aan en zetten hem zelf los; bij de andere bedien je hem met de bijbehorende toets. Als Enhanced Vehicle is geïnstalleerd, wordt de parkeerrem daarvan uitgeschakeld; om hem terug te geven, schakel je deze optie uit en schakel je de parkeerrem daarna weer in via het menu van Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Bepaalt of gevolgde voertuigen een parkeerrem hebben: automatisch op recente machines met CVT- of Powershift-transmissie, met een eigen toets op de overige. De optie vervangt de parkeerrem van Enhanced Vehicle: schakel de optie uit en zijn parkeerrem weer in via zijn menu om die terug te geven."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Werkplaats"/>
         <text name="rms_ws_tab_summary" text="Overzicht"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Groot onderhoudsgemak"/>
         <text name="rms_shop_service_access_average" text="Gemiddeld onderhoudsgemak"/>
         <text name="rms_shop_service_access_demanding" text="Gering onderhoudsgemak"/>
+        <text name="rms_shop_launch_year" text="Model geïntroduceerd in %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Introductiejaar onbekend"/>
         <text name="rms_owner_care_careful" text="Zorgvuldig onderhoud"/>
         <text name="rms_owner_care_regular" text="Regelmatig onderhoud"/>
         <text name="rms_owner_care_neglected" text="Verwaarloosd onderhoud"/>

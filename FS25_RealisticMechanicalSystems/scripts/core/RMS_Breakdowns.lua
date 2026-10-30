@@ -267,13 +267,38 @@ local LIGHT_CIRCUITS = {
     REAR_WORK_LIGHTS_FAILURE = "LIGHT_TYPE_WORK_BACK"
 }
 
----Tells whether a list of lamps holds one of a light type
-local function getHoldsLightType(lights, lightType)
+---Tells whether a lamp shows on the machine, no configuration hiding it
+local function getIsLampMounted(vehicle, node)
+    local isComponent = false
+    while node ~= 0 and not isComponent do
+        if not getVisibility(node) then
+            return false
+        end
+        for _, component in ipairs(vehicle.components) do
+            isComponent = isComponent or component.node == node
+        end
+        node = getParent(node)
+    end
+    return true
+end
+
+---Tells whether a list of lamps holds a mounted one of a light type
+local function getHoldsLightType(vehicle, lights, lightType)
     for _, light in ipairs(lights) do
         for _, lampLightType in ipairs(light.lightTypes or {}) do
-            if lampLightType == lightType then
+            if lampLightType == lightType and getIsLampMounted(vehicle, light.node) then
                 return true
             end
+        end
+    end
+    return false
+end
+
+---Tells whether a list of lamps holds a mounted one
+local function getHoldsMountedLamp(vehicle, lights)
+    for _, light in ipairs(lights) do
+        if getIsLampMounted(vehicle, light.node) then
+            return true
         end
     end
     return false
@@ -285,13 +310,13 @@ local function getCarriesLightType(vehicle, lightType)
         return false
     end
     for _, lights in pairs(spec.staticLights) do
-        if getHoldsLightType(lights, lightType) then
+        if getHoldsLightType(vehicle, lights, lightType) then
             return true
         end
     end
     for _, profile in pairs(spec.realLights) do
         for _, lights in pairs(profile) do
-            if getHoldsLightType(lights, lightType) then
+            if getHoldsLightType(vehicle, lights, lightType) then
                 return true
             end
         end
@@ -305,11 +330,11 @@ local function getCarriesTurnLights(vehicle)
     if spec == nil then
         return false
     end
-    if #spec.staticLights.turnLightsLeft > 0 then
+    if getHoldsMountedLamp(vehicle, spec.staticLights.turnLightsLeft) then
         return true
     end
     for _, profile in pairs(spec.realLights) do
-        if #profile.turnLightsLeft > 0 then
+        if getHoldsMountedLamp(vehicle, profile.turnLightsLeft) then
             return true
         end
     end
@@ -336,7 +361,16 @@ RMS_Breakdowns.EffectApplicators.BEACON_LIGHTS_FAILURE = {
     end,
 
     getIsCarried = function(vehicle)
-        return vehicle.spec_lights ~= nil and #vehicle.spec_lights.beaconLights > 0
+        if vehicle.spec_lights == nil then
+            return false
+        end
+        for _, beaconLight in ipairs(vehicle.spec_lights.beaconLights) do
+            if beaconLight.linkNode ~= nil and getIsLampMounted(vehicle, beaconLight.linkNode)
+                or beaconLight.linkNode == nil and getHoldsMountedLamp(vehicle, beaconLight.staticLights or {}) then
+                return true
+            end
+        end
+        return false
     end
 }
 
@@ -379,7 +413,6 @@ end
 function RMS_Breakdowns.setLightsTypesMask(self, superFunc, lightsTypesMask, force, noEventSend)
     local rootVehicle = self:getRootVehicle()
     local spec = rootVehicle.spec_RealisticMechanicalSystems
-    -- a machine still loading has no RMS state yet
     if spec == nil or spec.activeEffects == nil then
         superFunc(self, lightsTypesMask, force, noEventSend)
     elseif spec.activeEffects.LIGHTS_FAILURE == nil and not RMS_Electrical.getKeepsLightsOff(rootVehicle) then

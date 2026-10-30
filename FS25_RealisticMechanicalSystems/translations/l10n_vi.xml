@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Bảo dưỡng và hao mòn"/>
         <text name="rms_settings_section_drivetrain" text="Hệ truyền động và phanh đỗ"/>
         <text name="rms_workshopOpenHour_label" text="Giờ mở cửa xưởng"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Các quy trình chỉ bắt đầu từ giờ này trở đi."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Đặt giờ mở cửa của các xưởng: công việc chỉ bắt đầu từ giờ này."/>
         <text name="rms_workshopCloseHour_label" text="Giờ đóng cửa xưởng"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Các quy trình đang thực hiện sẽ tạm dừng vào giờ này và tiếp tục khi xưởng mở cửa."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Đặt giờ đóng cửa của các xưởng: công việc đang tiến hành sẽ dừng và tiếp tục khi mở cửa."/>
+        <text name="rms_workshopHours_locked" text="Cài đặt này yêu cầu ít nhất một xưởng không mở 24/24."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Xưởng đại lý mở 24/24"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Duy trì xưởng đại lý hoạt động vào mọi giờ trong ngày và đêm."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Xác định xem xưởng đại lý có mở cửa vào mọi giờ hay không."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Xưởng lưu động mở 24/24"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Duy trì xưởng lưu động hoạt động vào mọi giờ trong ngày và đêm."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Xác định xem xưởng lưu động có sẵn sàng vào mọi giờ hay không."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Hạn chế của các xưởng"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Giới hạn công việc của xưởng lưu động và xưởng cá nhân theo thiết bị cần thiết. Vẫn có thể bảo dưỡng; việc điện tử cần thiết bị chẩn đoán cắm vào máy, còn ở xưởng lưu động, tháo dỡ nặng hoặc công việc điện áp cao cần xưởng đủ thiết bị."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Xác định xem thiết bị có giới hạn xưởng lưu động và xưởng cá nhân hay không: công việc điện tử cần thiết bị chẩn đoán đã kết nối, còn xưởng lưu động không tháo dỡ nặng hay làm việc với điện áp cao. Luôn có thể bảo dưỡng."/>
         <text name="rms_ownWorkshopAvailable_label" text="Xưởng cá nhân mở 24/24"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Duy trì xưởng cá nhân của bạn hoạt động vào mọi giờ trong ngày và đêm."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Xác định xem xưởng cá nhân của bạn có mở cửa vào mọi giờ hay không."/>
         <text name="rms_instantInspection_label" text="Kiểm tra tức thì"/>
-        <text name="rms_instantInspection_tooltip" text="Khi bật tùy chọn này, các cuộc kiểm tra tại xưởng hoàn tất ngay lập tức. Các quy trình cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
+        <text name="rms_instantInspection_tooltip" text="Xác định xem kiểm tra tại xưởng có hoàn tất ngay lập tức hay không, kể cả những việc đang tiến hành."/>
         <text name="rms_instantMaintenanceRepair_label" text="Bảo dưỡng và sửa chữa tức thì"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Khi bật tùy chọn này, việc bảo dưỡng và sửa chữa tại xưởng hoàn tất ngay lập tức. Các quy trình cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Xác định xem bảo dưỡng và sửa chữa tại xưởng có hoàn tất ngay lập tức hay không, kể cả những việc đang tiến hành."/>
         <text name="rms_instantBodywork_label" text="Sơn xe tức thì"/>
-        <text name="rms_instantBodywork_tooltip" text="Khi bật tùy chọn này, việc sơn xe tại xưởng hoàn tất ngay lập tức. Các quy trình cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
+        <text name="rms_instantBodywork_tooltip" text="Xác định xem sơn xe tại xưởng có hoàn tất ngay lập tức hay không, kể cả việc đang tiến hành."/>
         <text name="rms_instantOverhaul_label" text="Đại tu cơ khí tức thì"/>
-        <text name="rms_instantOverhaul_tooltip" text="Khi bật tùy chọn này, việc đại tu cơ khí tại xưởng hoàn tất ngay lập tức. Các quy trình cùng loại đang tiến hành cũng hoàn tất ngay lập tức."/>
+        <text name="rms_instantOverhaul_tooltip" text="Xác định xem đại tu cơ khí tại xưởng có hoàn tất ngay lập tức hay không, kể cả những việc đang tiến hành."/>
         <text name="rms_debugMode_label" text="Chế độ gỡ lỗi"/>
-        <text name="rms_debugMode_tooltip" text="Hiển thị cửa sổ gỡ lỗi trong xe bạn đang lái; phím %s cũng mở và đóng cửa sổ này. Trong chế độ nhiều người chơi, chỉ quản trị viên mới nhìn thấy cửa sổ này. Đồng thời ghi nhật ký chi tiết vào bảng điều khiển."/>
+        <text name="rms_debugMode_tooltip" text="Xác định xem có hiển thị cửa sổ gỡ lỗi trên máy đang lái và gửi nhật ký chi tiết đến bảng điều khiển hay không. Phím %s mở và đóng cửa sổ; trong nhiều người chơi, chỉ quản trị viên nhìn thấy."/>
         <text name="rms_warningMessages_label" text="Thông báo cảnh báo"/>
-        <text name="rms_warningMessages_tooltip" text="Bật hoặc tắt các cảnh báo trong trò chơi như động cơ nguội hoặc quá nhiệt. Thông báo giới hạn công suất do nhiệt độ vẫn được bật."/>
+        <text name="rms_warningMessages_tooltip" text="Xác định xem có hiển thị các cảnh báo như động cơ lạnh hoặc quá nhiệt hay không. Thông báo giới hạn công suất do nhiệt luôn được hiển thị."/>
         <text name="rms_serviceInterval_label" text="Khoảng cách bảo dưỡng"/>
-        <text name="rms_serviceInterval_tooltip" text="Đặt số giờ tham chiếu. Với 100 giờ, quy định 500 giờ thành 100 giờ và 600 giờ thành 120 giờ. Mỗi chất lỏng theo lịch của xe; thời hạn lịch vẫn độc lập."/>
+        <text name="rms_serviceInterval_tooltip" text="Đặt số giờ giữa hai lần thay dầu động cơ của mẫu xe ra mắt từ năm 2010 hoặc không rõ năm. Mẫu xe cũ hơn cần thay dầu thường xuyên hơn:&#10;Từ 2000 đến 2009: %s&#10;Từ 1980 đến 1999: %s&#10;Từ 1960 đến 1979: %s&#10;Trước 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Tuổi thọ xe"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Đặt tuổi thọ cơ bản của xe theo giờ; sau khoảng thời gian này, tình trạng xe đạt 0%. Tình trạng càng gần mức không thì xe càng kém tin cậy. Giá trị xe cũng giảm dần theo số giờ này. Thay đổi có hiệu lực từ lúc đó: xe giữ nguyên tình trạng, chỉ giá trị xe được tính lại."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Đặt số giờ hoạt động để tình trạng xe đạt 0%; càng gần mốc này, xe càng kém tin cậy và giá trị càng giảm. Thay đổi có hiệu lực từ lúc đó: xe giữ nguyên tình trạng, chỉ giá trị được tính lại."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Khói xả"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Điều khiển luồng khói xả theo tình trạng thực tế của động cơ. Khói màu đen khi nhiên liệu vượt quá lượng không khí sẵn có: tăng ga đột ngột, động cơ ì ở vòng tua thấp, chạy không tải kéo dài với tải thấp, bộ lọc không khí bị tắc hoặc hệ thống phun nhiên liệu bị mòn. Khói màu xanh khi động cơ mòn đốt dầu và màu trắng khi nhiên liệu không cháy hết. Luồng khói cũng lớn hơn khi động cơ làm việc nặng hơn. Máy cũ thải nhiều khói hơn hẳn máy hiện đại, vốn gần như không có khói trừ khi xảy ra hỏng hóc nghiêm trọng. Khi trời lạnh, hơi nước sinh ra từ quá trình cháy còn ngưng tụ thành một vệt trắng ngắn, bay hơi trong vòng một hai mét, kể cả ở động cơ còn tốt."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Xác định xem khói xả có theo tình trạng thực của động cơ hay không: đen khi thiếu không khí, xanh khi đốt dầu, trắng khi nhiên liệu thoát ra chưa cháy, đặc hơn khi chịu tải. Máy cũ thải nhiều khói hơn hẳn máy hiện đại."/>
         <text name="rms_tutorialMode_label" text="Chế độ hướng dẫn"/>
-        <text name="rms_tutorialMode_tooltip" text="Hiển thị mẹo hướng dẫn trong khi chơi."/>
+        <text name="rms_tutorialMode_tooltip" text="Xác định xem có hiển thị các mẹo hướng dẫn trong khi chơi hay không."/>
         <text name="rms_tutorialResetTips_label" text="Đặt lại mẹo"/>
         <text name="rms_tutorialResetTips_text" text="Đặt lại"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Đặt lại lịch sử mẹo hướng dẫn và hiển thị lại tất cả các mẹo."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Đặt lại lịch sử mẹo hướng dẫn: tất cả mẹo sẽ được hiển thị lại."/>
         <text name="rms_tutorialResetConfirm_title" text="Đặt lại mẹo hướng dẫn?"/>
         <text name="rms_tutorialResetConfirm_message" text="Đặt lại lịch sử mẹo hướng dẫn và hiển thị lại tất cả các mẹo?"/>
         <text name="rms_drivetrainEnabled_label" text="Quản lý 4WD và khóa vi sai"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Bật điều khiển thủ công cầu trước chủ động và khóa vi sai trên máy kéo. Nếu đã cài Enhanced Vehicle, tính năng điều khiển vi sai của mod đó sẽ bị tắt; để trả lại, hãy tắt tùy chọn này rồi bật lại vi sai trong menu của Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Xác định xem cầu trước và khóa vi sai trên máy kéo có được điều khiển thủ công hay không. Tùy chọn này thay thế điều khiển vi sai của Enhanced Vehicle: để trả lại, hãy tắt tùy chọn rồi bật lại vi sai trong menu của mod đó."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Cho phép chế độ TỰ ĐỘNG"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Thêm vị trí TỰ ĐỘNG vào bộ chọn chế độ dẫn động: cầu trước tự động gài khi bánh xe trượt hoặc khi xe làm việc có tải ở tốc độ thấp và ngắt trên đường. Xe đang để ở chế độ TỰ ĐỘNG sẽ trở về 4WD khi tùy chọn này bị tắt."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Xác định xem bộ chọn có vị trí AUTO hay không: cầu trước gài khi bánh trượt hoặc làm việc có tải và ngắt trên đường. Khi tắt, các xe đang ở AUTO trở về 4WD."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Cài đặt này yêu cầu bật quản lý 4WD và khóa vi sai."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Phanh đỗ"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Thêm phanh đỗ cho mọi xe được theo dõi. Máy đời mới có hộp số CVT hoặc Powershift tự kéo và tự nhả phanh; với các máy khác, bạn điều khiển phanh bằng một phím riêng. Nếu đã cài Enhanced Vehicle, phanh đỗ của mod đó sẽ bị tắt; để trả lại, hãy tắt tùy chọn này rồi bật lại phanh đỗ trong menu của Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Xác định xem xe được theo dõi có phanh đỗ hay không: tự động trên máy đời mới dùng hộp số CVT hoặc Powershift, dùng phím riêng trên máy khác. Tùy chọn thay thế phanh đỗ của Enhanced Vehicle: để trả lại, hãy tắt tùy chọn rồi bật lại phanh đỗ trong menu của mod đó."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Xưởng"/>
         <text name="rms_ws_tab_summary" text="Tổng quan"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Mức dễ bảo dưỡng cao"/>
         <text name="rms_shop_service_access_average" text="Mức dễ bảo dưỡng trung bình"/>
         <text name="rms_shop_service_access_demanding" text="Mức dễ bảo dưỡng thấp"/>
+        <text name="rms_shop_launch_year" text="Mẫu ra mắt năm %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Chưa rõ năm ra mắt"/>
         <text name="rms_owner_care_careful" text="Bảo dưỡng chu đáo"/>
         <text name="rms_owner_care_regular" text="Bảo dưỡng định kỳ"/>
         <text name="rms_owner_care_neglected" text="Bảo dưỡng bị bỏ bê"/>

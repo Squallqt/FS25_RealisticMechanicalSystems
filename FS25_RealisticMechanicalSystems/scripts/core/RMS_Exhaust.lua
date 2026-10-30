@@ -97,7 +97,7 @@ end
 -- @return float factor era emission factor
 function RMS_Exhaust.getEraFactor(year, eraFactors)
     local factors = eraFactors or RMS_Config.EXHAUST.ERA_FACTORS
-    local resolvedYear = getNumber(year, RMS_VehicleYears.DEFAULT_YEAR)
+    local resolvedYear = getNumber(year, RMS_ProductionYear.DEFAULT_YEAR)
     for _, entry in ipairs(factors) do
         if resolvedYear < entry[1] then
             return entry[2]
@@ -113,9 +113,9 @@ end
 -- @return boolean isStageV true for a Stage V engine
 function RMS_Exhaust.getIsStageV(year, peakPowerKw)
     local config = RMS_Config.EXHAUST.STAGE_V
-    local resolvedYear = getNumber(year, RMS_VehicleYears.DEFAULT_YEAR)
+    local resolvedYear = getNumber(year, RMS_ProductionYear.DEFAULT_YEAR)
     local power = getNumber(peakPowerKw, 0, 0)
-    if power < config.MIN_POWER_KW or power > config.MAX_POWER_KW then
+    if power < config.MIN_POWER_KW then
         return false
     end
 

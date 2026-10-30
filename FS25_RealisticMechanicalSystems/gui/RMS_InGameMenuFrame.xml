@@ -318,18 +318,186 @@
         <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="settingsContainer">
             <GuiElement profile="rms_menuSettingsContainer" id="settingsPage">
                 <ScrollingLayout profile="fs25_settingsLayout" id="settingsLayout">
-                    <Text profile="fs25_settingsSectionHeader" name="sectionHeader" id="subTitlePrefab"/>
-                    <Bitmap profile="fs25_multiTextOptionContainer" id="binaryPrefab">
-                        <BinaryOption profile="fs25_settingsBinaryOption" id="checkPrefab">
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" />
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsTutorialMode" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_tutorialMode_tooltip"/>
                         </BinaryOption>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" />
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_tutorialMode_label"/>
                     </Bitmap>
-                    <Bitmap profile="fs25_multiTextOptionContainer" id="multiPrefab">
-                        <MultiTextOption profile="fs25_settingsMultiTextOption" id="multiTextPrefab">
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" />
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <Button profile="rms_settingsButton" id="rmsTutorialResetTips" text="$l10n_rms_tutorialResetTips_text" onClick="onClickRmsResetTutorialTips">
+                            <ThreePartBitmap profile="rms_settingsButtonBg"/>
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_tutorialResetTips_tooltip"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_tutorialResetTips_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsWarningMessages" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_warningMessages_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_warningMessages_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDebugMode" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_debugMode_label"/>
+                    </Bitmap>
+
+                    <Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_rms_settings_section_service_wear"/>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <MultiTextOption profile="rms_settingsMultiTextOption" id="rmsServiceWear" onClick="onClickRmsOption">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore"/>
                         </MultiTextOption>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" />
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_serviceInterval_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <MultiTextOption profile="rms_settingsMultiTextOption" id="rmsConditionWear" onClick="onClickRmsOption">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_vehicleLifespan_tooltip"/>
+                        </MultiTextOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_vehicleLifespan_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsExhaustSmokeEnabled" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_exhaustSmokeEnabled_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_exhaustSmokeEnabled_label"/>
+                    </Bitmap>
+
+                    <Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_rms_ws_header_title"/>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantInspection" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantInspection_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantInspection_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantMaintenanceRepair" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantMaintenanceRepair_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantMaintenanceRepair_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantBodywork" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantBodywork_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantBodywork_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantOverhaul" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantOverhaul_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantOverhaul_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsMobileWorkshopRestrictions" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_mobileWorkshopRestrictions_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_mobileWorkshopRestrictions_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDealerWorkshopAvailable" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_dealerWorkshopAvailable_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_dealerWorkshopAvailable_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsMobileWorkshopAvailable" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_mobileWorkshopAvailable_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_mobileWorkshopAvailable_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsOwnWorkshopAvailable" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_ownWorkshopAvailable_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_ownWorkshopAvailable_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <MultiTextOption profile="rms_settingsMultiTextOption" id="rmsWorkshopOpenHour" onClick="onClickRmsOption">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_workshopOpenHour_tooltip"/>
+                        </MultiTextOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_workshopOpenHour_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <MultiTextOption profile="rms_settingsMultiTextOption" id="rmsWorkshopCloseHour" onClick="onClickRmsOption">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_workshopCloseHour_tooltip"/>
+                        </MultiTextOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_workshopCloseHour_label"/>
+                    </Bitmap>
+
+                    <Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_rms_settings_section_drivetrain"/>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainEnabled" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_drivetrainEnabled_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainEnabled_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainAllowAutoMode" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_drivetrainAllowAutoMode_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainAllowAutoMode_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainParkBrakeEnabled" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_drivetrainParkBrakeEnabled_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainParkBrakeEnabled_label"/>
                     </Bitmap>
                 </ScrollingLayout>
                 <Bitmap profile="fs25_settingsTooltipSeparator" id="settingsTooltipSeparator"/>

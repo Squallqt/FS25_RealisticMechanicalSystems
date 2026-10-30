@@ -1825,7 +1825,8 @@ local function registerVehicle(vehicle)
 
             local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
             if storeItem ~= nil then
-                spec.year, spec.yearIsKnown = RMS_VehicleYears.getVehicleYear(vehicle, storeItem)
+                spec.year, spec.yearSource = RMS_ProductionYear.getVehicleYear(vehicle, storeItem)
+                spec.yearIsKnown = spec.yearSource ~= RMS_ProductionYear.SOURCE.UNKNOWN
                 spec.electricalRating = RMS_Electrical.resolveRating(vehicle)
             end
             spec.hasParticulateFilter = RMS_Exhaust.getHasParticulateFilter(vehicle)

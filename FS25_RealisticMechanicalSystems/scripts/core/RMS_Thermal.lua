@@ -540,7 +540,7 @@ RMS_Thermal.REVERSIBLE_FAN = "rmsReversibleFan"
 
 -- @param XMLFile xmlFile vehicle xml file
 -- @param table storeItem store item
--- @return boolean takesFan true when the fan suits the machine
+-- @return boolean takesFan true when the fan suits the machine and its era
 function RMS_Thermal.getTakesReversibleFan(xmlFile, storeItem)
     if not xmlFile:hasProperty("vehicle.enterable") then
         return false
@@ -550,25 +550,24 @@ function RMS_Thermal.getTakesReversibleFan(xmlFile, storeItem)
             return false
         end
     end
+    local burnsFuel, usesDef = false, false
     local configurationIndex = 0
-    while true do
-        local configurationKey = string.format("vehicle.motorized.consumerConfigurations.consumerConfiguration(%d)", configurationIndex)
-        if not xmlFile:hasProperty(configurationKey) then
-            return false
-        end
+    while xmlFile:hasProperty(string.format("vehicle.motorized.consumerConfigurations.consumerConfiguration(%d)", configurationIndex)) do
         local consumerIndex = 0
         while true do
-            local fillType = xmlFile:getString(string.format("%s.consumer(%d)#fillType", configurationKey, consumerIndex))
+            local fillType = xmlFile:getString(string.format("vehicle.motorized.consumerConfigurations.consumerConfiguration(%d).consumer(%d)#fillType",
+                configurationIndex, consumerIndex))
             if fillType == nil then
                 break
             end
-            if string.upper(fillType) == "DIESEL" or string.upper(fillType) == "METHANE" then
-                return true
-            end
+            fillType = string.upper(fillType)
+            burnsFuel = burnsFuel or fillType == "DIESEL" or fillType == "METHANE"
+            usesDef = usesDef or fillType == "DEF"
             consumerIndex = consumerIndex + 1
         end
         configurationIndex = configurationIndex + 1
     end
+    return burnsFuel and RMS_ProductionYear.getRaisedYear(storeItem, usesDef) >= RMS_Config.THERMAL.REVERSIBLE_FAN.MIN_YEAR
 end
 
 function RMS_Thermal.registerReversibleFan()
@@ -622,9 +621,12 @@ function RMS_Thermal:updateFanReversal(dt)
         return
     end
     if spec.fanReversalTime <= 0 then
-        spec.fanRunningSinceReversal = spec.fanRunningSinceReversal + dt
-        if spec.fanRunningSinceReversal >= RMS_Config.THERMAL.REVERSIBLE_FAN.AUTO_INTERVAL_MS then
-            RMS_Thermal.startFanReversal(self)
+        -- an older fan reverses only from the cab
+        if spec.year >= RMS_Config.THERMAL.REVERSIBLE_FAN.AUTO_MIN_YEAR then
+            spec.fanRunningSinceReversal = spec.fanRunningSinceReversal + dt
+            if spec.fanRunningSinceReversal >= RMS_Config.THERMAL.REVERSIBLE_FAN.AUTO_INTERVAL_MS then
+                RMS_Thermal.startFanReversal(self)
+            end
         end
         return
     end

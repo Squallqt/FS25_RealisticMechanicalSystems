@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Underhåll och slitage"/>
         <text name="rms_settings_section_drivetrain" text="Drivlina och parkeringsbroms"/>
         <text name="rms_workshopOpenHour_label" text="Verkstadens öppningstid"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Åtgärder startar först från den här tiden."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Anger verkstädernas öppningstid: arbeten börjar först från denna timme."/>
         <text name="rms_workshopCloseHour_label" text="Verkstadens stängningstid"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Pågående åtgärder avbryts vid den här tiden och återupptas vid öppning."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Anger verkstädernas stängningstid: pågående arbeten avbryts och återupptas vid öppning."/>
+        <text name="rms_workshopHours_locked" text="Den här inställningen kräver minst en verkstad som inte har öppet dygnet runt."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Återförsäljarverkstad dygnet runt"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Håller återförsäljarens verkstad tillgänglig dygnet runt."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Avgör huruvida återförsäljarens verkstad håller öppet dygnet runt."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobil verkstad dygnet runt"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Håller den mobila verkstaden tillgänglig dygnet runt."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Avgör huruvida den mobila verkstaden är tillgänglig dygnet runt."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Begränsningar för verkstäder"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Begränsar arbetet i den mobila och den egna verkstaden efter nödvändig utrustning. Underhåll förblir tillgängligt; elektronik kräver diagnosutrustningen ansluten till maskinen, och i den mobila verkstaden kräver tung demontering eller högspänningsarbete en utrustad verkstad."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Avgör huruvida utrustningen begränsar den mobila och den egna verkstaden: elektronik kräver ansluten diagnosutrustning, och den mobila verkstaden gör varken tung demontering eller högspänningsarbete. Underhåll är alltid möjligt."/>
         <text name="rms_ownWorkshopAvailable_label" text="Egen verkstad dygnet runt"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Håller din egen verkstad tillgänglig dygnet runt."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Avgör huruvida din egen verkstad håller öppet dygnet runt."/>
         <text name="rms_instantInspection_label" text="Omedelbar inspektion"/>
-        <text name="rms_instantInspection_tooltip" text="När inställningen är på slutförs inspektioner på verkstaden omedelbart. Pågående åtgärder av den här typen slutförs också direkt."/>
+        <text name="rms_instantInspection_tooltip" text="Avgör huruvida inspektioner på verkstaden slutförs omedelbart, även pågående inspektioner."/>
         <text name="rms_instantMaintenanceRepair_label" text="Omedelbart underhåll och reparation"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="När inställningen är på slutförs underhåll och reparationer på verkstaden omedelbart. Pågående åtgärder av den här typen slutförs också direkt."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Avgör huruvida underhåll och reparationer på verkstaden slutförs omedelbart, även pågående arbeten."/>
         <text name="rms_instantBodywork_label" text="Omedelbar lackering"/>
-        <text name="rms_instantBodywork_tooltip" text="När inställningen är på slutförs lackering på verkstaden omedelbart. Pågående åtgärder av den här typen slutförs också direkt."/>
+        <text name="rms_instantBodywork_tooltip" text="Avgör huruvida lackering på verkstaden slutförs omedelbart, även pågående lackering."/>
         <text name="rms_instantOverhaul_label" text="Omedelbar mekanisk renovering"/>
-        <text name="rms_instantOverhaul_tooltip" text="När inställningen är på slutförs mekanisk renovering på verkstaden omedelbart. Pågående åtgärder av den här typen slutförs också direkt."/>
+        <text name="rms_instantOverhaul_tooltip" text="Avgör huruvida mekaniska renoveringar på verkstaden slutförs omedelbart, även pågående renoveringar."/>
         <text name="rms_debugMode_label" text="Felsökningsläge"/>
-        <text name="rms_debugMode_tooltip" text="Visar felsökningsfönstret i fordonet du kör; %s-tangenten öppnar och stänger det också. I flerspelarläge kan bara administratörer se det. Skriver också detaljerade loggar i konsolen."/>
+        <text name="rms_debugMode_tooltip" text="Avgör huruvida felsökningsfönstret visas i maskinen du kör och konsolen får detaljerade loggar. Tangenten %s öppnar och stänger fönstret; i flerspelarläge ser bara administratörer det."/>
         <text name="rms_warningMessages_label" text="Varningsmeddelanden"/>
-        <text name="rms_warningMessages_tooltip" text="Slår på eller av spelvarningar som kall motor eller överhettning. Meddelanden om effektbegränsning på grund av temperatur förblir aktiva."/>
+        <text name="rms_warningMessages_tooltip" text="Avgör huruvida varningar som kall motor eller överhettning visas. Meddelanden om termisk effektbegränsning visas alltid."/>
         <text name="rms_serviceInterval_label" text="Avstånd mellan service"/>
-        <text name="rms_serviceInterval_tooltip" text="Ställ in referenstimmarna. Vid 100 h blir en föreskrift på 500 h till 100 h och 600 h till 120 h. Varje vätska följer fordonets program; kalenderfristerna är oberoende."/>
+        <text name="rms_serviceInterval_tooltip" text="Anger timmarna mellan två motoroljebyten på en modell som lanserats från 2010 eller har okänt år. En äldre modell får oljebyte oftare:&#10;2000 till 2009: %s&#10;1980 till 1999: %s&#10;1960 till 1979: %s&#10;Före 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Fordonets livslängd"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Bestämmer fordonets grundläggande livslängd i timmar, varefter dess skick når 0 %. Ju närmare noll skicket kommer, desto mer opålitligt blir fordonet. Fordonets värde sjunker också under dessa timmar. En ändring gäller från den tidpunkten: fordonen behåller sitt skick, bara deras värde räknas om."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Anger drifttimmarna efter vilka fordonets skick når 0 %; ju närmare det kommer, desto mindre pålitligt blir det och desto mer sjunker värdet. En ändring gäller framåt: fordonen behåller sitt skick, bara värdet räknas om."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Avgasrök"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Styr avgasröken efter motorns verkliga skick. Den är svart när det finns mer bränsle än luft: kraftig acceleration, en motor som drar på för lågt varvtal, längre tomgång med låg belastning, ett igensatt luftfilter eller sliten insprutning. Den är blå när en sliten motor bränner olja, och vit när bränsle slipper ut oförbränt. Rökplymen växer också med det arbete motorn utför. Äldre maskiner ryker långt mer än moderna, som knappt ryker alls så länge inget är allvarligt trasigt. I kall luft kondenserar vattnet från förbränningen också till en kort vit strimma som avdunstar inom en meter eller två, även på en frisk motor."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Avgör huruvida avgasröken följer motorns verkliga skick: svart vid luftbrist, blå när olja bränns, vit när bränsle kommer ut oförbränt, tätare under belastning. Gamla maskiner ryker mycket mer än moderna."/>
         <text name="rms_tutorialMode_label" text="Handledningsläge"/>
-        <text name="rms_tutorialMode_tooltip" text="Visar handledningstips under spelet."/>
+        <text name="rms_tutorialMode_tooltip" text="Avgör huruvida handledningens tips visas under spelet."/>
         <text name="rms_tutorialResetTips_label" text="Återställ tipsen"/>
         <text name="rms_tutorialResetTips_text" text="Återställ"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Återställer historiken över handledningstips och visar alla tips igen."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Återställer historiken för handledningens tips: alla visas igen."/>
         <text name="rms_tutorialResetConfirm_title" text="Återställa handledningstipsen?"/>
         <text name="rms_tutorialResetConfirm_message" text="Återställa historiken över handledningstips och visa alla tips igen?"/>
         <text name="rms_drivetrainEnabled_label" text="Styrning av fyrhjulsdrift och differentialspärr"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Aktiverar manuell styrning av den drivande framaxeln och differentialspärrarna på traktorer. Om Enhanced Vehicle är installerat stängs dess differentialstyrning av; för att lämna tillbaka den stänger du av den här inställningen och slår sedan på differentialerna igen i menyn i Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Avgör huruvida traktorers framaxel och differentialspärrar styrs manuellt. Inställningen ersätter differentialstyrningen i Enhanced Vehicle: slå av inställningen och slå sedan på differentialerna igen i dess meny för att lämna tillbaka styrningen."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Tillåt AUTO-drivläge"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Lägger till ett AUTO-läge i drivväljaren: framaxeln kopplas in automatiskt vid hjulspinn eller vid arbetsfart under belastning, och kopplas ur på väg. Fordon som står i AUTO går över till fyrhjulsdrift när den här inställningen stängs av."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Avgör huruvida väljaren erbjuder AUTO, som kopplar in framaxeln vid hjulspinn eller arbete under belastning och kopplar ur den på väg. När inställningen stängs av går fordon som står i AUTO över till fyrhjulsdrift."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Den här inställningen kräver att styrning av fyrhjulsdrift och differentialspärr är aktiverad."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkeringsbroms"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Lägger till en parkeringsbroms på alla följda fordon. Nyare maskiner med CVT- eller Powershift-transmission drar åt och släpper den själva; på de andra sköter du den med dess egen tangent. Om Enhanced Vehicle är installerat stängs dess parkeringsbroms av; för att lämna tillbaka den stänger du av den här inställningen och slår sedan på parkeringsbromsen igen i menyn i Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Avgör huruvida följda fordon har parkeringsbroms: automatisk på nyare maskiner med CVT- eller Powershift-transmission, med egen tangent på de övriga. Inställningen ersätter parkeringsbromsen i Enhanced Vehicle: slå av inställningen och slå på dess parkeringsbroms igen i dess meny för att lämna tillbaka den."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Verkstad"/>
         <text name="rms_ws_tab_summary" text="Översikt"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Hög underhållsvänlighet"/>
         <text name="rms_shop_service_access_average" text="Medelgod underhållsvänlighet"/>
         <text name="rms_shop_service_access_demanding" text="Låg underhållsvänlighet"/>
+        <text name="rms_shop_launch_year" text="Modellen lanserad %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Lanseringsår okänt"/>
         <text name="rms_owner_care_careful" text="Noggrant underhåll"/>
         <text name="rms_owner_care_regular" text="Regelbundet underhåll"/>
         <text name="rms_owner_care_neglected" text="Försummat underhåll"/>

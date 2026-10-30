@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="メンテナンスと摩耗"/>
         <text name="rms_settings_section_drivetrain" text="駆動系と駐車ブレーキ"/>
         <text name="rms_workshopOpenHour_label" text="ワークショップ開始時刻"/>
-        <text name="rms_workshopOpenHour_tooltip" text="作業はこの時刻以降にのみ開始されます。"/>
+        <text name="rms_workshopOpenHour_tooltip" text="ワークショップの開店時刻を設定します。作業はこの時刻以降にのみ開始します。"/>
         <text name="rms_workshopCloseHour_label" text="ワークショップ終了時刻"/>
-        <text name="rms_workshopCloseHour_tooltip" text="この時刻になると進行中の作業は中断され、ワークショップの開始時刻に再開されます。"/>
+        <text name="rms_workshopCloseHour_tooltip" text="ワークショップの閉店時刻を設定します。進行中の作業は中断し、開店時に再開します。"/>
+        <text name="rms_workshopHours_locked" text="この設定を変更するには、少なくとも1つのワークショップが24時間営業でない必要があります。"/>
         <text name="rms_dealerWorkshopAvailable_label" text="ディーラーワークショップ24時間営業"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="ディーラーワークショップを昼夜を問わずいつでも利用できるようにします。"/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="ディーラーのワークショップを常時営業にするか設定します。"/>
         <text name="rms_mobileWorkshopAvailable_label" text="移動式ワークショップ24時間営業"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="移動式ワークショップを昼夜を問わずいつでも利用できるようにします。"/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="移動式ワークショップを常時利用可能にするか設定します。"/>
         <text name="rms_mobileWorkshopRestrictions_label" text="ワークショップの制限"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="必要な設備に応じて移動式ワークショップと個人ワークショップの作業を制限します。通常整備は可能です。電子系の作業には車両に接続したスキャンツールが必要で、移動式ワークショップでは大規模な分解や高電圧作業に設備のある工場が必要です。"/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="移動式・個人ワークショップの作業を設備で制限するか設定します。電子系には接続したスキャンツールが必要で、移動式では大規模な分解や高電圧作業は行えません。通常整備は常に可能です。"/>
         <text name="rms_ownWorkshopAvailable_label" text="個人ワークショップ24時間営業"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="個人ワークショップを昼夜を問わずいつでも利用できるようにします。"/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="個人ワークショップを常時営業にするか設定します。"/>
         <text name="rms_instantInspection_label" text="即時点検"/>
-        <text name="rms_instantInspection_tooltip" text="有効にすると、ワークショップでの点検が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantInspection_tooltip" text="ワークショップの点検を、進行中のものも含めて即座に完了するか設定します。"/>
         <text name="rms_instantMaintenanceRepair_label" text="即時整備と修理"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="有効にすると、ワークショップでの整備と修理が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="ワークショップの通常整備と修理を、進行中のものも含めて即座に完了するか設定します。"/>
         <text name="rms_instantBodywork_label" text="即時塗装"/>
-        <text name="rms_instantBodywork_tooltip" text="有効にすると、ワークショップでの塗装作業が即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantBodywork_tooltip" text="ワークショップの塗装を、進行中のものも含めて即座に完了するか設定します。"/>
         <text name="rms_instantOverhaul_label" text="即時機械オーバーホール"/>
-        <text name="rms_instantOverhaul_tooltip" text="有効にすると、ワークショップでの機械オーバーホールが即座に完了します。すでに進行中の同種の作業も直ちに完了します。"/>
+        <text name="rms_instantOverhaul_tooltip" text="ワークショップの機械オーバーホールを、進行中のものも含めて即座に完了するか設定します。"/>
         <text name="rms_debugMode_label" text="デバッグモード"/>
-        <text name="rms_debugMode_tooltip" text="運転中の車両にデバッグウィンドウを表示します。%sキーでも開閉できます。マルチプレイでは管理者だけに表示されます。詳細なログもコンソールに記録します。"/>
+        <text name="rms_debugMode_tooltip" text="運転中の車両にデバッグ画面を表示し、コンソールに詳細なログを出力するか設定します。%sキーで画面を開閉します。マルチプレイでは管理者だけに表示されます。"/>
         <text name="rms_warningMessages_label" text="警告メッセージ"/>
-        <text name="rms_warningMessages_tooltip" text="冷間時や過熱など、ゲーム中の警告メッセージの表示を切り替えます。 温度による出力制限の通知は引き続き表示されます。"/>
+        <text name="rms_warningMessages_tooltip" text="エンジンの冷えや過熱などの警告を表示するか設定します。温度による出力制限のメッセージは常に表示されます。"/>
         <text name="rms_serviceInterval_label" text="整備の間隔"/>
-        <text name="rms_serviceInterval_tooltip" text="基準時間を設定します。100時間を選ぶと、指定の500時間は100時間、600時間は120時間になります。各油液は車両の整備計画に従い、カレンダー上の期限は変わりません。"/>
+        <text name="rms_serviceInterval_tooltip" text="2010年以降に発売されたモデル、または発売年不明のモデルで、エンジンオイルを交換する間隔の時間を設定します。古いモデルはより頻繁に交換します：&#10;2000年から2009年：%s&#10;1980年から1999年：%s&#10;1960年から1979年：%s&#10;1960年より前：%s"/>
         <text name="rms_vehicleLifespan_label" text="車両耐用期間"/>
-        <text name="rms_vehicleLifespan_tooltip" text="車両の状態が0%に達するまでの基本耐用期間を時間単位で設定します。状態がゼロに近づくほど、車両の信頼性が低下します。この時間の経過とともに車両価値も下がります。変更はその時点から適用されます。車両の状態はそのままで、車両価値だけが再計算されます。"/>
+        <text name="rms_vehicleLifespan_tooltip" text="車両の状態が0%に達する稼働時間を設定します。その時間に近づくほど信頼性が下がり、価値も下がります。変更はその時点以降に適用され、車両の状態は維持され、価値だけが再計算されます。"/>
         <text name="rms_exhaustSmokeEnabled_label" text="排気煙"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="エンジンの実際の状態に応じて排気煙を制御します。急加速、低回転での高負荷運転、低負荷での長時間アイドリング、エアフィルターの目詰まり、噴射装置の摩耗など、燃料に対して空気が不足すると黒煙になります。摩耗したエンジンがオイルを燃やすと青煙、燃料が未燃焼のまま排出されると白煙になります。煙の量はエンジンの仕事量によっても増えます。旧式の車両は現代の車両よりはるかに多く煙を出しますが、現代の車両は重大な故障がない限りほとんど煙を出しません。気温の低い日には、燃焼で生じた水分も凝結して短い白いすじとなり、1～2メートルで気化します。これは健全なエンジンでも起こります。"/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="排気煙をエンジンの実際の状態に合わせるか設定します。空気不足では黒、オイルが燃えると青、未燃焼の燃料が出ると白になり、負荷がかかると濃くなります。古い機械は新しい機械よりはるかに多く煙を出します。"/>
         <text name="rms_tutorialMode_label" text="チュートリアルモード"/>
-        <text name="rms_tutorialMode_tooltip" text="ゲーム中にチュートリアルのヒントを表示します。"/>
+        <text name="rms_tutorialMode_tooltip" text="ゲーム中にチュートリアルのヒントを表示するか設定します。"/>
         <text name="rms_tutorialResetTips_label" text="ヒントをリセット"/>
         <text name="rms_tutorialResetTips_text" text="リセット"/>
-        <text name="rms_tutorialResetTips_tooltip" text="チュートリアルのヒント履歴をリセットし、すべてのヒントを再表示します。"/>
+        <text name="rms_tutorialResetTips_tooltip" text="チュートリアルのヒント履歴をリセットします。すべてのヒントが再び表示されます。"/>
         <text name="rms_tutorialResetConfirm_title" text="チュートリアルのヒントをリセットしますか？"/>
         <text name="rms_tutorialResetConfirm_message" text="チュートリアルのヒント履歴をリセットし、すべて再表示しますか？"/>
         <text name="rms_drivetrainEnabled_label" text="4駆・デフロック管理"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="トラクターの前輪駆動とデフロックを手動で制御できるようにします。Enhanced Vehicleが導入されている場合、そのデフ制御は無効になります。戻すには、この設定を無効にしてから、Enhanced Vehicleのメニューでデフを再び有効にしてください。"/>
+        <text name="rms_drivetrainEnabled_tooltip" text="トラクターの前輪駆動とデフロックを手動で操作するか設定します。Enhanced Vehicleのデフ管理を置き換えます。管理を戻すには、この設定を無効にしてから同MODのメニューでデフを再び有効にします。"/>
         <text name="rms_drivetrainAllowAutoMode_label" text="AUTO駆動モードを許可"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="駆動モードスイッチにAUTOを追加します。ホイールスリップが発生した場合や、負荷のかかった作業速度では前輪駆動が自動的に作動し、路上では解除されます。この設定を無効にすると、AUTOの車両は4駆に戻ります。"/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="駆動モードスイッチにAUTOを用意するか設定します。車輪が滑る時や負荷のかかる作業中は前輪駆動を接続し、路上では解除します。無効にすると、AUTOの車両は4駆に戻ります。"/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="この設定を変更するには、4駆・デフロック管理を有効にする必要があります。"/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="駐車ブレーキ"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="管理対象のすべての車両に駐車ブレーキを追加します。CVTまたはパワーシフトミッションを搭載した新しい車両では自動的に作動・解除され、それ以外の車両では専用キーで操作します。Enhanced Vehicleが導入されている場合、その駐車ブレーキは無効になります。戻すには、この設定を無効にしてから、Enhanced Vehicleのメニューで駐車ブレーキを再び有効にしてください。"/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="管理対象の車両に駐車ブレーキを付けるか設定します。新しいCVT・Powershift車は自動、他は専用キーで操作します。Enhanced Vehicleの駐車ブレーキを置き換えます。戻すにはこの設定を無効にし、同MODのメニューで駐車ブレーキを再び有効にします。"/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="ワークショップ"/>
         <text name="rms_ws_tab_summary" text="概要"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="整備が容易"/>
         <text name="rms_shop_service_access_average" text="整備のしやすさは平均的"/>
         <text name="rms_shop_service_access_demanding" text="整備に手間がかかる"/>
+        <text name="rms_shop_launch_year" text="%d年発売"/>
+        <text name="rms_shop_launch_year_unknown" text="発売年不明"/>
         <text name="rms_owner_care_careful" text="入念なメンテナンス"/>
         <text name="rms_owner_care_regular" text="定期的なメンテナンス"/>
         <text name="rms_owner_care_neglected" text="不十分なメンテナンス"/>

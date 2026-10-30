@@ -439,7 +439,7 @@ function RealisticMechanicalSystems:updateTransmissionSystem(dt)
 
     local transTemp = sanitizeNumber(spec.rawTransmissionTemperature or spec.transmissionTemperature, -99, -99, 180)
 
-    if isMotorStarted then
+    if isMotorStarted and not self:getIsAIActive() then
         local drivelineLoad = RMS_Drivetrain.getDrivelineLoad(self)
         if transTemp < C.COLD_TRANSMISSION_THRESHOLD and drivelineLoad > C.COLD_TRANSMISSION_LOAD_THRESHOLD then
             local temperatureFactor = RMS_Utils.calculateQuadraticMultiplier(transTemp, C.COLD_TRANSMISSION_THRESHOLD, true)
@@ -514,7 +514,8 @@ function RealisticMechanicalSystems:updateTransmissionSystem(dt)
 
         -- wheel slip factor
         local isTurning = RMS_Drivetrain.getIsTurning(self)
-        if not isTurning and spec.wheelSlipIntensity > C.WHEEL_SLIP_THRESHOLD and speed < 20 and motorLoad > 0.5 then
+        if not isTurning and spec.wheelSlipIntensity > C.WHEEL_SLIP_THRESHOLD and speed < 20 and motorLoad > 0.5
+                and (speed > 0.5 or not self:getIsAIActive()) then
             local groundFrictionCoef = spec.avgTireGroundFrictionCoeff
             wheelSlipFactor = RMS_Utils.calculateQuadraticMultiplier(spec.wheelSlipIntensity, C.WHEEL_SLIP_THRESHOLD, false)
             wheelSlipFactor = math.max(wheelSlipFactor * (C.WHEEL_SLIP_MULTIPLIER or 0) * (groundFrictionCoef ^ 2) * motorLoad, 0)
@@ -634,7 +635,7 @@ function RealisticMechanicalSystems:updateHydraulicsSystem(dt)
             and (spec.rawHydraulicTemperature or spec.hydraulicTemperature)
             or (spec.rawTransmissionTemperature or spec.transmissionTemperature)
         local oilTemperature = sanitizeNumber(hydraulicTemperature, spec.rawTransmissionTemperature or spec.transmissionTemperature or 20, -80, 180)
-        if oilTemperature < C.COLD_OIL_THRESHOLD then
+        if oilTemperature < C.COLD_OIL_THRESHOLD and not self:getIsAIActive() then
             coldOilFactor = RMS_Utils.calculateQuadraticMultiplier(oilTemperature, C.COLD_OIL_THRESHOLD, true)
                 * C.COLD_OIL_MULTIPLIER
             wearRate = wearRate + coldOilFactor
@@ -772,7 +773,7 @@ function RealisticMechanicalSystems:updateCoolingSystem(dt)
             wearRate = wearRate + overheatFactor
         end
 
-        if not spec.isElectricVehicle and engineTemperature < C.COLD_SHOCK_FACTOR_THRESHOLD and rpmLoad > 0.75 then
+        if not spec.isElectricVehicle and engineTemperature < C.COLD_SHOCK_FACTOR_THRESHOLD and rpmLoad > 0.75 and not self:getIsAIActive() then
             coldShockFactor = RMS_Utils.calculateQuadraticMultiplier(engineTemperature, C.COLD_SHOCK_FACTOR_THRESHOLD, true)
             local motorLoadInf = RMS_Utils.calculateQuadraticMultiplier(rpmLoad, 0.75, false)
             coldShockFactor = coldShockFactor * (C.COLD_SHOCK_FACTOR_MULTIPLIER or 0) * motorLoadInf
@@ -1090,7 +1091,7 @@ function RealisticMechanicalSystems:updateFuelSystem(dt)
 
         -- cold fuel factor
         fuelTemperature = fuelState.temperature
-        if fuelTemperature < C.COLD_FUEL_THRESHOLD and motorLoad > 0.5 then
+        if fuelTemperature < C.COLD_FUEL_THRESHOLD and motorLoad > 0.5 and not self:getIsAIActive() then
             coldFuelFactor = RMS_Utils.calculateQuadraticMultiplier(fuelTemperature, C.COLD_FUEL_THRESHOLD, true)
             local motorLoadInf = RMS_Utils.calculateQuadraticMultiplier(motorLoad, 0.50, false)
             coldFuelFactor = coldFuelFactor * motorLoadInf * C.COLD_FUEL_FACTOR_MULTIPLIER

@@ -415,8 +415,9 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.fluidHydraulicSpeedModifier = 0
     
     self.spec_RealisticMechanicalSystems.reliability = 1.0
-    self.spec_RealisticMechanicalSystems.year = RMS_VehicleYears.DEFAULT_YEAR
+    self.spec_RealisticMechanicalSystems.year = RMS_ProductionYear.DEFAULT_YEAR
     self.spec_RealisticMechanicalSystems.yearIsKnown = false
+    self.spec_RealisticMechanicalSystems.yearSource = RMS_ProductionYear.SOURCE.UNKNOWN
 
     self.spec_RealisticMechanicalSystems.activeBreakdowns = {}
     self.spec_RealisticMechanicalSystems.activeEffects = {}

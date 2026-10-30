@@ -232,7 +232,18 @@ local function readHeader(vehicle, spec, reading)
     }
 
     local names = {engine = "Engine oil", transmission = "Transmission", hydraulic = "Hydraulic", coolant = "Coolant"}
-    reading.service = {}
+    local SOURCE = RMS_ProductionYear.SOURCE
+    local provenance = "unknown (default)"
+    if spec.yearSource == SOURCE.FILE then
+        provenance = "vehicle file"
+    elseif spec.yearSource == SOURCE.REFERENCE then
+        provenance = "RMS reference"
+    end
+    local built = string.format("%d, %s", spec.year, provenance)
+    if not spec.isElectricVehicle then
+        built = built .. string.format("  ·  engine oil every %d h", R.getServiceProgramHours(vehicle, "engine"))
+    end
+    reading.service = {{"Built", built}}
     for _, clock in ipairs(vehicle:getServiceClocks()) do
         local used, interval = vehicle:getServiceClockHours(clock)
         local level = string.format("level %s, due at %s", pct(vehicle:getServiceClockLevel(clock)),
@@ -505,10 +516,23 @@ local function collectToolNames(vehicle, names)
     return names
 end
 
+---Writes what the reversible fan does, on its timer or from the cab
+local function getReversibleFanText(spec)
+    local fan = RMS_Config.THERMAL.REVERSIBLE_FAN
+    if not spec.hasReversibleFan then
+        return ""
+    elseif spec.fanReversalTime > 0 then
+        return "  ·  fan reversing"
+    elseif spec.year < fan.AUTO_MIN_YEAR then
+        return "  ·  reversible fan, from the cab only"
+    end
+    return string.format("  ·  reversible fan, next in %d min", math.ceil((fan.AUTO_INTERVAL_MS - spec.fanRunningSinceReversal) / 60000))
+end
+
 local function readEngineRows(vehicle, spec, rows)
     local heat = spec.engineHeatBalance
     table.insert(rows, {"Engine", string.format("%s  ·  thermostat %s  ·  fan %s%s", temperature(spec.engineTemperature),
-        pct(spec.thermostatState), pct(heat.fan or 0), spec.fanReversalTime > 0 and "  ·  fan reversing" or "")})
+        pct(spec.thermostatState), pct(heat.fan or 0), getReversibleFanText(spec))})
     table.insert(rows, {"Heat", string.format("net %s °C/min  ·  engine %s  ·  radiator %s  ·  driving %s  ·  air %s",
         signedPerMinute((heat.totalHeat or 0) - (heat.totalCooling or 0)), signedPerMinute(heat.totalHeat),
         signedPerMinute(-(heat.radiatorCooling or 0)), signedPerMinute(-(heat.speedCooling or 0)), signedPerMinute(-(heat.convectionCooling or 0)))})

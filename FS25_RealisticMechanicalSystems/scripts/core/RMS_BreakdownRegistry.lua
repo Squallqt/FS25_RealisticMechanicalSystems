@@ -1294,7 +1294,8 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.ELECTRICAL,
         part = parts.LOW_BEAM_BULBS,
         isApplicable = function(vehicle)
-            return RMS_Breakdowns.getCarriesLightCircuit(vehicle, "LOW_BEAM_FAILURE")
+            return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.LED_YEARS.LOW_BEAM_FAILURE
+                and RMS_Breakdowns.getCarriesLightCircuit(vehicle, "LOW_BEAM_FAILURE")
         end,
         causes = { primary = {}, secondary = {} },
         component = "HALOGEN_H7",
@@ -1320,7 +1321,8 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.ELECTRICAL,
         part = parts.HIGH_BEAM_BULBS,
         isApplicable = function(vehicle)
-            return RMS_Breakdowns.getCarriesLightCircuit(vehicle, "HIGH_BEAM_FAILURE")
+            return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.LED_YEARS.HIGH_BEAM_FAILURE
+                and RMS_Breakdowns.getCarriesLightCircuit(vehicle, "HIGH_BEAM_FAILURE")
         end,
         causes = { primary = {}, secondary = {} },
         component = "HALOGEN_H7",
@@ -1346,7 +1348,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.ELECTRICAL,
         part = parts.FRONT_WORK_LIGHT_BULBS,
         isApplicable = function(vehicle)
-            return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.WORK_LAMP_LED_YEAR
+            return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.LED_YEARS.FRONT_WORK_LIGHTS_FAILURE
                 and RMS_Breakdowns.getCarriesLightCircuit(vehicle, "FRONT_WORK_LIGHTS_FAILURE")
         end,
         causes = { primary = {}, secondary = {} },
@@ -1373,7 +1375,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.ELECTRICAL,
         part = parts.REAR_WORK_LIGHT_BULBS,
         isApplicable = function(vehicle)
-            return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.WORK_LAMP_LED_YEAR
+            return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.LED_YEARS.REAR_WORK_LIGHTS_FAILURE
                 and RMS_Breakdowns.getCarriesLightCircuit(vehicle, "REAR_WORK_LIGHTS_FAILURE")
         end,
         causes = { primary = {}, secondary = {} },
@@ -1400,7 +1402,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.ELECTRICAL,
         part = parts.BEACON_BULB,
         isApplicable = function(vehicle)
-            return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.WORK_LAMP_LED_YEAR
+            return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.LED_YEARS.BEACON_LIGHTS_FAILURE
                 and RMS_Breakdowns.getCarriesLightCircuit(vehicle, "BEACON_LIGHTS_FAILURE")
         end,
         causes = { primary = {}, secondary = {} },
@@ -1427,7 +1429,8 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.ELECTRICAL,
         part = parts.TURN_SIGNAL_BULBS,
         isApplicable = function(vehicle)
-            return RMS_Breakdowns.getCarriesLightCircuit(vehicle, "TURN_LIGHTS_FAILURE")
+            return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.LED_YEARS.TURN_LIGHTS_FAILURE
+                and RMS_Breakdowns.getCarriesLightCircuit(vehicle, "TURN_LIGHTS_FAILURE")
         end,
         causes = { primary = {}, secondary = {} },
         component = "P21W",

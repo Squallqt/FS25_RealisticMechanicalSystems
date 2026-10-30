@@ -176,9 +176,9 @@ function RMS_Bodywork.repaintVehicle(vehicle, superFunc, ...)
     return superFunc(vehicle, ...)
 end
 
----Returns the volume tier from the vehicle dimensions loaded by GIANTS.
-function RMS_Bodywork.getSizeTier(vehicle)
-    local size = vehicle ~= nil and vehicle.size or nil
+---Returns the volume tier of a machine size
+-- @param table? size width, length and height in m, as the game loads them
+function RMS_Bodywork.getSizeTier(size)
     local width = size ~= nil and tonumber(size.width) or nil
     local length = size ~= nil and tonumber(size.length) or nil
     local height = size ~= nil and tonumber(size.height) or nil
@@ -202,10 +202,15 @@ function RMS_Bodywork.getWear(vehicle)
     return wear ~= nil and math.max(0, math.min(wear, 1)) or nil
 end
 
+-- @param float realPrice price at normal economic difficulty
+local function getRoundedGamePrice(realPrice)
+    return math.ceil(RMS_Utils.getGamePrice(realPrice) / 10) * 10
+end
+
 ---
 function RMS_Bodywork.getPrice(vehicle, mode, workshopType)
     if vehicle == nil or vehicle.getPrice == nil or RMS_Bodywork.DURATION_HOURS[mode] == nil
-        or RMS_Bodywork.getSizeTier(vehicle) == nil then
+        or RMS_Bodywork.getSizeTier(vehicle.size) == nil then
         return nil
     end
     local currentWear = RMS_Bodywork.getWear(vehicle)
@@ -214,19 +219,19 @@ function RMS_Bodywork.getPrice(vehicle, mode, workshopType)
             or currentWear > RMS_Bodywork.MAX_TOUCHUP_WEAR)) then
         return nil
     end
-    local price = RMS_Bodywork.FULL_PRICES[RMS_Bodywork.getSizeTier(vehicle)]
+    local price = RMS_Bodywork.FULL_PRICES[RMS_Bodywork.getSizeTier(vehicle.size)]
     if mode == RMS_Bodywork.TOUCHUP then
         price = price * RMS_Bodywork.TOUCHUP_SHARE * math.sqrt(currentWear)
         if workshopType == RealisticMechanicalSystems.WORKSHOP.OWN then
             price = price * RMS_Config.WORKSHOP.PRICE_MULTIPLIERS.OWN
         end
     end
-    return math.ceil(RMS_Utils.getGamePrice(price) / 10) * 10
+    return getRoundedGamePrice(price)
 end
 
 ---Returns the service duration for the selected vehicle size.
 function RMS_Bodywork.getDurationMs(vehicle, mode)
-    local tier = RMS_Bodywork.getSizeTier(vehicle)
+    local tier = RMS_Bodywork.getSizeTier(vehicle.size)
     local hours = RMS_Bodywork.DURATION_HOURS[mode]
     if tier == nil or hours == nil then
         return nil
@@ -285,9 +290,9 @@ local function collectCrawlerRimSlots(node, slots)
     end
 end
 
----
-function RMS_Bodywork.getColorZones(vehicle)
-    local storeItem = vehicle ~= nil and g_storeManager:getItemByXMLFilename(vehicle.configFileName) or nil
+-- @param table? storeItem store item
+-- @return table zones color configuration names, in the game's order
+local function getStoreColorZones(storeItem)
     local configurations = storeItem ~= nil and storeItem.configurations or nil
     local zones = {}
     if configurations == nil then
@@ -300,6 +305,66 @@ function RMS_Bodywork.getColorZones(vehicle)
         end
     end
     return zones
+end
+
+---
+function RMS_Bodywork.getColorZones(vehicle)
+    return getStoreColorZones(vehicle ~= nil and g_storeManager:getItemByXMLFilename(vehicle.configFileName) or nil)
+end
+
+---Tells whether a purchase keeps the color already selected in a zone
+-- @param table storeItem store item
+-- @param table configurations configurations bought
+-- @param table? saleItem used machine on sale
+-- @param string zone color configuration name
+-- @param integer index color chosen
+-- @return boolean isSelected the default color, the one of the edition chosen or of the used machine
+local function getIsPurchaseColorSelected(storeItem, configurations, saleItem, zone, index)
+    if saleItem ~= nil then
+        return ConfigurationUtil.hasBoughtConfiguration(saleItem, zone, index)
+    end
+    if index == storeItem.defaultConfigurationIds[zone] then
+        return true
+    end
+    for _, configSet in ipairs(storeItem.configurationSets) do
+        if configSet.configurations[zone] == index
+            and ConfigurationUtil.getConfigurationsMatchConfigSets(configurations, {configSet}) then
+            return true
+        end
+    end
+    return false
+end
+
+---Returns what the colors of a purchase cost under RMS
+-- @param table storeItem store item
+-- @param table configurations configurations bought
+-- @param table? saleItem used machine on sale
+-- @return float? paintPrice full repaint price, 0 when every color is the one already selected; nil when RMS
+-- does not track the store item
+-- @return float? optionPrice price the game gives these colors, which the paint replaces
+-- @return string? paintedZone first color configuration painted
+function RMS_Bodywork.getPurchaseColorPrices(storeItem, configurations, saleItem)
+    if storeItem.configurations == nil
+        or storeItem.configurations[RealisticMechanicalSystems.WARRANTY_CONFIGURATION] == nil then
+        return nil
+    end
+    local optionPrice, paintedZone = 0, nil
+    for _, zone in ipairs(getStoreColorZones(storeItem)) do
+        local index = configurations[zone]
+        if index ~= nil then
+            if saleItem == nil or not ConfigurationUtil.hasBoughtConfiguration(saleItem, zone, index) then
+                optionPrice = optionPrice + storeItem.configurations[zone][index].price
+            end
+            if paintedZone == nil and not getIsPurchaseColorSelected(storeItem, configurations, saleItem, zone, index) then
+                paintedZone = zone
+            end
+        end
+    end
+    if paintedZone == nil then
+        return 0, optionPrice, nil
+    end
+    local size = StoreItemUtil.getSizeValues(storeItem.xmlFilename, "vehicle", 0, configurations)
+    return getRoundedGamePrice(RMS_Bodywork.FULL_PRICES[RMS_Bodywork.getSizeTier(size)]), optionPrice, paintedZone
 end
 
 ---
@@ -588,7 +653,7 @@ function RMS_Bodywork.isAllowed(vehicle, workshopType, mode, encoded)
         return false
     end
     local wear = RMS_Bodywork.getWear(vehicle)
-    if wear == nil or RMS_Bodywork.getSizeTier(vehicle) == nil then
+    if wear == nil or RMS_Bodywork.getSizeTier(vehicle.size) == nil then
         return false
     end
     if mode == RMS_Bodywork.TOUCHUP then

@@ -290,6 +290,7 @@ function RMS_InGameMenuFrame:initialize()
     self.lastCheckValue:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
     self.serviceFootValue:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
 
+    RMS_SettingsPage.initializeControls(self)
     self.settingsContainer:setVisible(false)
     self:setMenuButtonInfo({self.backButtonInfo, self.prevPageButtonInfo, self.nextPageButtonInfo})
 end
@@ -323,7 +324,7 @@ function RMS_InGameMenuFrame:updateSubCategoryPages(state)
     self.fleetPage:setVisible(not isSettings)
     self.settingsContainer:setVisible(isSettings)
     if isSettings then
-        RMS_SettingsPage:activateEmbeddedSettingsPage(self)
+        RMS_SettingsPage.show(self)
     end
 
     self:reloadRows()
@@ -364,8 +365,7 @@ end
 ---
 function RMS_InGameMenuFrame:onFrameClose()
     self.isFrameOpen = false
-    RMS_SettingsPage:onFrameClose()
-    RMS_SettingsPage.embeddedPage = nil
+    RMS_SettingsPage.applyChanges()
     RMS_InGameMenuFrame:superClass().onFrameClose(self)
 end
 

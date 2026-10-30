@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Perawatan dan Keausan"/>
         <text name="rms_settings_section_drivetrain" text="Sistem Penggerak dan Rem Parkir"/>
         <text name="rms_workshopOpenHour_label" text="Waktu Buka Bengkel"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Prosedur hanya dapat dimulai pada atau setelah waktu ini."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Mengatur jam buka bengkel: prosedur hanya dimulai sejak jam ini."/>
         <text name="rms_workshopCloseHour_label" text="Waktu Tutup Bengkel"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Prosedur yang sedang berlangsung dijeda pada waktu ini dan dilanjutkan saat bengkel buka."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Mengatur jam tutup bengkel: prosedur yang berlangsung berhenti saat itu dan dilanjutkan saat buka."/>
+        <text name="rms_workshopHours_locked" text="Pengaturan ini memerlukan setidaknya satu bengkel yang tidak buka 24 jam."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Bengkel Dealer 24 Jam"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Menjaga bengkel dealer tetap tersedia kapan saja, siang maupun malam."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Mengatur apakah bengkel dealer tetap buka setiap saat."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Bengkel Bergerak 24 Jam"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Menjaga bengkel bergerak tetap tersedia kapan saja, siang maupun malam."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Mengatur apakah bengkel bergerak tetap tersedia setiap saat."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Pembatasan Bengkel"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Membatasi pekerjaan bengkel bergerak dan bengkel pribadi sesuai peralatan yang diperlukan. Perawatan tetap tersedia; pekerjaan elektronik memerlukan alat diagnostik yang terhubung ke mesin, dan di bengkel bergerak, pembongkaran berat atau pekerjaan tegangan tinggi memerlukan bengkel lengkap."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Mengatur apakah peralatan membatasi bengkel bergerak dan pribadi: pekerjaan elektronik perlu alat diagnostik terhubung, dan bengkel bergerak tidak melakukan pembongkaran berat atau pekerjaan tegangan tinggi. Perawatan selalu dapat dilakukan."/>
         <text name="rms_ownWorkshopAvailable_label" text="Bengkel Pribadi 24 Jam"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Menjaga bengkel pribadimu tetap tersedia kapan saja, siang maupun malam."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Mengatur apakah bengkel pribadimu tetap buka setiap saat."/>
         <text name="rms_instantInspection_label" text="Inspeksi Seketika"/>
-        <text name="rms_instantInspection_tooltip" text="Saat opsi ini diaktifkan, inspeksi di bengkel langsung selesai. Prosedur jenis ini yang sudah berlangsung juga langsung selesai."/>
+        <text name="rms_instantInspection_tooltip" text="Mengatur apakah inspeksi di bengkel langsung selesai, termasuk yang sedang berlangsung."/>
         <text name="rms_instantMaintenanceRepair_label" text="Perawatan dan Perbaikan Seketika"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Saat opsi ini diaktifkan, perawatan dan perbaikan di bengkel langsung selesai. Prosedur jenis ini yang sudah berlangsung juga langsung selesai."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Mengatur apakah perawatan dan perbaikan di bengkel langsung selesai, termasuk yang sedang berlangsung."/>
         <text name="rms_instantBodywork_label" text="Pengecatan Seketika"/>
-        <text name="rms_instantBodywork_tooltip" text="Saat opsi ini diaktifkan, pengecatan di bengkel langsung selesai. Prosedur jenis ini yang sudah berlangsung juga langsung selesai."/>
+        <text name="rms_instantBodywork_tooltip" text="Mengatur apakah pengecatan di bengkel langsung selesai, termasuk yang sedang berlangsung."/>
         <text name="rms_instantOverhaul_label" text="Rekondisi Mekanis Seketika"/>
-        <text name="rms_instantOverhaul_tooltip" text="Saat opsi ini diaktifkan, rekondisi mekanis di bengkel langsung selesai. Prosedur jenis ini yang sudah berlangsung juga langsung selesai."/>
+        <text name="rms_instantOverhaul_tooltip" text="Mengatur apakah rekondisi mekanis di bengkel langsung selesai, termasuk yang sedang berlangsung."/>
         <text name="rms_debugMode_label" text="Mode Debug"/>
-        <text name="rms_debugMode_tooltip" text="Menampilkan jendela debug di kendaraan yang sedang kamu kendarai; tombol %s juga membuka dan menutupnya. Dalam multipemain, hanya administrator yang dapat melihatnya. Juga menulis log terperinci ke konsol."/>
+        <text name="rms_debugMode_tooltip" text="Mengatur apakah jendela debug muncul di mesin yang kamu kemudikan dan konsol menerima log terperinci. Tombol %s membuka dan menutupnya; dalam multipemain, hanya administrator yang melihatnya."/>
         <text name="rms_warningMessages_label" text="Pesan Peringatan"/>
-        <text name="rms_warningMessages_tooltip" text="Mengaktifkan atau menonaktifkan pesan peringatan permainan seperti mesin dingin dan panas berlebih. Pemberitahuan pembatasan daya akibat suhu tetap aktif."/>
+        <text name="rms_warningMessages_tooltip" text="Mengatur apakah peringatan seperti mesin dingin atau terlalu panas ditampilkan. Pesan pembatasan tenaga akibat suhu selalu ditampilkan."/>
         <text name="rms_serviceInterval_label" text="Jarak antarperawatan"/>
-        <text name="rms_serviceInterval_tooltip" text="Atur jam acuan. Pada 100 jam, ketentuan 500 jam menjadi 100 jam dan 600 jam menjadi 120 jam. Setiap cairan mengikuti jadwal kendaraan; batas kalender tetap terpisah."/>
+        <text name="rms_serviceInterval_tooltip" text="Mengatur jumlah jam antara dua ganti oli mesin pada model yang diluncurkan sejak 2010 atau yang tahunnya tidak diketahui. Model lebih tua perlu ganti oli lebih sering:&#10;2000 sampai 2009: %s&#10;1980 sampai 1999: %s&#10;1960 sampai 1979: %s&#10;Sebelum 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Masa Pakai Kendaraan"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Mengatur masa pakai dasar kendaraan dalam jam, yang setelahnya kondisinya mencapai 0%. Semakin mendekati nol kondisinya, semakin tidak andal kendaraannya. Nilai kendaraan juga turun seiring jam-jam tersebut. Perubahan berlaku sejak saat itu: kendaraan mempertahankan kondisinya, hanya nilainya yang dihitung ulang."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Mengatur jam operasi hingga kondisi kendaraan mencapai 0%; makin mendekati batas ini, makin rendah keandalan dan nilainya. Perubahan berlaku sejak saat itu: kondisi kendaraan tetap, hanya nilainya yang dihitung ulang."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Asap Knalpot"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Mengatur kepulan asap knalpot berdasarkan kondisi nyata mesin. Asap berwarna hitam ketika bahan bakar melebihi udara yang tersedia: akselerasi mendadak, mesin bekerja berat pada putaran rendah, langsam berkepanjangan dengan beban rendah, filter udara tersumbat, atau injeksi aus. Asap berwarna biru ketika mesin yang aus membakar oli, dan putih ketika bahan bakar tidak terbakar. Kepulan juga membesar sesuai kerja yang dilakukan mesin. Mesin lama berasap jauh lebih banyak daripada mesin modern, yang hampir tidak berasap kecuali ada kerusakan serius. Di udara dingin, air hasil pembakaran juga mengembun menjadi jejak putih pendek yang menguap dalam satu atau dua meter, bahkan pada mesin yang sehat."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Mengatur apakah asap knalpot mengikuti kondisi mesin sebenarnya: hitam saat kekurangan udara, biru saat membakar oli, putih saat bahan bakar keluar tanpa terbakar, lebih pekat saat terbebani. Mesin tua jauh lebih berasap daripada mesin modern."/>
         <text name="rms_tutorialMode_label" text="Mode Tutorial"/>
-        <text name="rms_tutorialMode_tooltip" text="Menampilkan kiat tutorial selama bermain."/>
+        <text name="rms_tutorialMode_tooltip" text="Mengatur apakah tips tutorial ditampilkan selama permainan."/>
         <text name="rms_tutorialResetTips_label" text="Reset Kiat"/>
         <text name="rms_tutorialResetTips_text" text="Reset"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Mereset riwayat kiat tutorial dan menampilkan kembali semua kiat."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Mereset riwayat tips tutorial: semua tips akan ditampilkan lagi."/>
         <text name="rms_tutorialResetConfirm_title" text="Reset Kiat Tutorial?"/>
         <text name="rms_tutorialResetConfirm_message" text="Reset riwayat kiat tutorial dan tampilkan semua kiat lagi?"/>
         <text name="rms_drivetrainEnabled_label" text="Pengelolaan 4WD dan Pengunci Diferensial"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Mengaktifkan kontrol manual gandar depan penggerak dan pengunci diferensial pada traktor. Jika Enhanced Vehicle terpasang, kontrol diferensialnya dinonaktifkan; untuk mengembalikannya, nonaktifkan opsi ini, lalu aktifkan kembali diferensial di menu Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Mengatur apakah gandar depan dan pengunci diferensial traktor dikendalikan manual. Opsi ini menggantikan kontrol diferensial Enhanced Vehicle: untuk mengembalikannya, matikan opsi ini lalu aktifkan kembali diferensial di menunya."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Izinkan Mode Penggerak OTOMATIS"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Menambahkan posisi OTOMATIS pada pemilih mode penggerak: gandar depan otomatis aktif ketika roda selip atau pada kecepatan kerja di bawah beban, dan nonaktif di jalan. Kendaraan yang dibiarkan dalam mode OTOMATIS kembali ke 4WD saat opsi ini dinonaktifkan."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Mengatur apakah pemilih menawarkan posisi AUTO, yang mengaktifkan gandar depan saat roda selip atau bekerja dengan beban dan menonaktifkannya di jalan. Jika dimatikan, kendaraan yang dibiarkan di AUTO kembali ke 4WD."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Pengaturan ini memerlukan Pengelolaan 4WD dan Pengunci Diferensial diaktifkan."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Rem Parkir"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Menambahkan rem parkir pada semua kendaraan yang dilacak. Mesin baru dengan transmisi CVT atau Powershift mengaktifkan dan melepaskannya sendiri; pada yang lain, kamu mengendalikannya dengan tombol tersendiri. Jika Enhanced Vehicle terpasang, rem parkirnya dinonaktifkan; untuk mengembalikannya, nonaktifkan opsi ini, lalu aktifkan kembali rem parkir di menu Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Mengatur apakah kendaraan yang dipantau memiliki rem parkir: otomatis pada mesin baru bertransmisi CVT atau Powershift, dengan tombol tersendiri pada lainnya. Opsi ini menggantikan rem parkir Enhanced Vehicle: untuk mengembalikannya, matikan opsi ini lalu aktifkan kembali rem parkirnya di menunya."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Bengkel"/>
         <text name="rms_ws_tab_summary" text="Ringkasan"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Kemudahan perawatan tinggi"/>
         <text name="rms_shop_service_access_average" text="Kemudahan perawatan sedang"/>
         <text name="rms_shop_service_access_demanding" text="Kemudahan perawatan rendah"/>
+        <text name="rms_shop_launch_year" text="Model diluncurkan tahun %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Tahun peluncuran tidak diketahui"/>
         <text name="rms_owner_care_careful" text="Perawatan cermat"/>
         <text name="rms_owner_care_regular" text="Perawatan rutin"/>
         <text name="rms_owner_care_neglected" text="Perawatan terabaikan"/>

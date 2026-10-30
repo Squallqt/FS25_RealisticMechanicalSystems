@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Обслуговування та знос"/>
         <text name="rms_settings_section_drivetrain" text="Привід і стоянкове гальмо"/>
         <text name="rms_workshopOpenHour_label" text="Час відкриття майстерні"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Роботи починаються лише з цієї години."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Задає годину відкриття майстерень: роботи починаються лише з цієї години."/>
         <text name="rms_workshopCloseHour_label" text="Час закриття майстерні"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Поточні роботи призупиняються в цей час і відновлюються під час відкриття."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Задає годину закриття майстерень: поточні роботи зупиняються та відновлюються при відкритті."/>
+        <text name="rms_workshopHours_locked" text="Для цього налаштування хоча б одна майстерня не повинна працювати цілодобово."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Майстерня дилера 24/7"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Робить майстерню дилера доступною в будь-який час доби."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Визначає, чи залишається майстерня дилера відкритою будь-якої години."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Мобільна майстерня 24/7"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Робить мобільну майстерню доступною в будь-який час доби."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Визначає, чи залишається мобільна майстерня доступною будь-якої години."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Обмеження майстерень"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Обмежує роботи мобільної та власної майстерні за потрібним обладнанням. Обслуговування доступне; електроніка потребує діагностичного обладнання, під’єднаного до машини, а в мобільній майстерні важке розбирання або високовольтні роботи потребують обладнаної майстерні."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Визначає, чи обмежує обладнання мобільну та власну майстерню: електроніка потребує під’єднаного діагностичного обладнання, а мобільна майстерня не робить важкого розбирання або високовольтних робіт. Обслуговування завжди можливе."/>
         <text name="rms_ownWorkshopAvailable_label" text="Власна майстерня 24/7"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Робить вашу власну майстерню доступною в будь-який час доби."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Визначає, чи залишається ваша власна майстерня відкритою будь-якої години."/>
         <text name="rms_instantInspection_label" text="Миттєвий огляд"/>
-        <text name="rms_instantInspection_tooltip" text="Якщо увімкнено, огляди в майстерні завершуються миттєво. Роботи цього типу, які вже тривають, також завершуються миттєво."/>
+        <text name="rms_instantInspection_tooltip" text="Визначає, чи завершуються огляди в майстерні миттєво, включно з уже розпочатими."/>
         <text name="rms_instantMaintenanceRepair_label" text="Миттєве обслуговування та ремонт"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Якщо увімкнено, обслуговування та ремонти в майстерні завершуються миттєво. Роботи цього типу, які вже тривають, також завершуються миттєво."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Визначає, чи завершуються обслуговування та ремонт у майстерні миттєво, включно з уже розпочатими роботами."/>
         <text name="rms_instantBodywork_label" text="Миттєве фарбування"/>
-        <text name="rms_instantBodywork_tooltip" text="Якщо увімкнено, фарбування в майстерні завершується миттєво. Роботи цього типу, які вже тривають, також завершуються миттєво."/>
+        <text name="rms_instantBodywork_tooltip" text="Визначає, чи завершується фарбування в майстерні миттєво, включно з уже розпочатим."/>
         <text name="rms_instantOverhaul_label" text="Миттєвий механічний капітальний ремонт"/>
-        <text name="rms_instantOverhaul_tooltip" text="Якщо увімкнено, механічний капітальний ремонт в майстерні завершується миттєво. Роботи цього типу, які вже тривають, також завершуються миттєво."/>
+        <text name="rms_instantOverhaul_tooltip" text="Визначає, чи завершується механічний капітальний ремонт у майстерні миттєво, включно з уже розпочатим."/>
         <text name="rms_debugMode_label" text="Режим налагодження"/>
-        <text name="rms_debugMode_tooltip" text="Показує вікно налагодження в техніці, якою ви керуєте; клавіша %s також відкриває й закриває його. У багатокористувацькій грі його бачать лише адміністратори. Також записує докладні журнали в консоль."/>
+        <text name="rms_debugMode_tooltip" text="Визначає, чи показується вікно налагодження в керованій машині та чи отримує консоль докладні журнали. Клавіша %s відкриває і закриває вікно; у багатокористувацькій грі його бачать лише адміністратори."/>
         <text name="rms_warningMessages_label" text="Попереджувальні повідомлення"/>
-        <text name="rms_warningMessages_tooltip" text="Вмикає або вимикає ігрові попереджувальні повідомлення, такі як сповіщення про холодний двигун та перегрів. Сповіщення про обмеження потужності через температуру залишаються активними."/>
+        <text name="rms_warningMessages_tooltip" text="Визначає, чи показуються попередження, наприклад про холодний двигун або перегрів. Повідомлення про обмеження потужності через температуру показуються завжди."/>
         <text name="rms_serviceInterval_label" text="Періодичність обслуговування"/>
-        <text name="rms_serviceInterval_tooltip" text="Задайте еталонні години. За 100 год припис 500 год стає 100 год, а 600 год — 120 год. Для кожної рідини діє програма машини; календарні строки незалежні."/>
+        <text name="rms_serviceInterval_tooltip" text="Задає години між двома замінами моторної оливи в моделі, представленої з 2010 року, або з невідомим роком. Старішій моделі заміна потрібна частіше:&#10;З 2000 по 2009 рік: %s&#10;З 1980 по 1999 рік: %s&#10;З 1960 по 1979 рік: %s&#10;До 1960 року: %s"/>
         <text name="rms_vehicleLifespan_label" text="Термін служби техніки"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Встановлює базовий термін служби техніки в годинах, після якого її стан досягне 0%. Чим ближче стан до нуля, тим менш надійною стає техніка. Вартість техніки також знижується за ці години. Зміна діє з цього моменту: техніка зберігає свій стан, перераховується лише її вартість."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Задає години роботи, після яких стан техніки досягає 0%; що ближче до цієї межі, то нижчі її надійність і вартість. Зміна діє з цього моменту: техніка зберігає свій стан, перераховується лише її вартість."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Вихлопний дим"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Керує вихлопним димом відповідно до фактичного стану двигуна. Дим чорний, коли палива більше за доступне повітря: під час різкого прискорення, важкої роботи на низьких обертах, тривалого холостого ходу з малим навантаженням, із засміченим повітряним фільтром або зношеною системою впорскування. Дим синій, коли зношений двигун спалює оливу, і білий, коли паливо виходить незгорілим. Шлейф також збільшується разом із навантаженням двигуна. Стара техніка димить значно більше за сучасну, яка майже не димить, доки немає справжньої несправності. У холодному повітрі вода, що утворюється під час згоряння, ще й конденсується в короткий білий шлейф, який випаровується в межах метра-двох навіть у справного двигуна."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Визначає, чи відповідає вихлопний дим фактичному стану двигуна: чорний за браку повітря, синій при спалюванні оливи, білий при виході незгорілого палива, густіший під навантаженням. Стара техніка димить значно більше за сучасну."/>
         <text name="rms_tutorialMode_label" text="Режим навчання"/>
-        <text name="rms_tutorialMode_tooltip" text="Показує підказки під час гри."/>
+        <text name="rms_tutorialMode_tooltip" text="Визначає, чи показуються навчальні поради під час гри."/>
         <text name="rms_tutorialResetTips_label" text="Скинути підказки"/>
         <text name="rms_tutorialResetTips_text" text="Скинути підказки"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Скидає історію навчальних підказок і знову показує їх усі."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Скидає історію навчальних порад: усі поради буде показано знову."/>
         <text name="rms_tutorialResetConfirm_title" text="Скинути навчальні підказки?"/>
         <text name="rms_tutorialResetConfirm_message" text="Скинути історію підказок і знову показати їх усі?"/>
         <text name="rms_drivetrainEnabled_label" text="Керування 4WD / блокуванням диференціала"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Вмикає ручне керування підключним переднім мостом і блокуваннями диференціалів на тракторах. Якщо встановлено Enhanced Vehicle, його керування диференціалами вимикається; щоб повернути його, вимкніть цю опцію, а потім знову ввімкніть диференціали в меню Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Визначає, чи керуються передній міст і блокування диференціалів тракторів вручну. Опція замінює керування диференціалами Enhanced Vehicle: щоб повернути його, вимкніть опцію, а потім знову ввімкніть диференціали в його меню."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Дозволити режим АВТО"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Додає положення АВТО: передній міст підключається автоматично при пробуксовці або на робочій швидкості під навантаженням і відключається на дорозі. Машини, залишені в АВТО, повертаються до 4WD після вимкнення цієї опції."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Визначає, чи пропонує перемикач положення AUTO: передній міст підключається при пробуксовці коліс або роботі під навантаженням і відключається на дорозі. Вимкнення опції повертає машини, залишені в AUTO, до 4WD."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Для цього налаштування потрібно ввімкнути керування 4WD / блокуванням диференціала."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Стоянкове гальмо"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Додає всій підтримуваній техніці стоянкове гальмо. Нова техніка з трансмісією CVT або Powershift затягує й відпускає його сама; на решті ви керуєте ним окремою клавішею. Якщо встановлено Enhanced Vehicle, його стоянкове гальмо вимикається; щоб повернути його, вимкніть цю опцію, а потім знову ввімкніть стоянкове гальмо в меню Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Визначає, чи має відстежувана техніка стоянкове гальмо: автоматичне в нових машин із CVT або Powershift, з окремою клавішею в решти. Опція замінює стоянкове гальмо Enhanced Vehicle: щоб повернути його, вимкніть опцію і знову ввімкніть його стоянкове гальмо в його меню."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Майстерня"/>
         <text name="rms_ws_tab_summary" text="Зведення"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Висока зручність сервісу"/>
         <text name="rms_shop_service_access_average" text="Середня зручність сервісу"/>
         <text name="rms_shop_service_access_demanding" text="Низька зручність сервісу"/>
+        <text name="rms_shop_launch_year" text="Модель вийшла на ринок у %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Рік виходу на ринок невідомий"/>
         <text name="rms_owner_care_careful" text="Ретельне обслуговування"/>
         <text name="rms_owner_care_regular" text="Регулярне обслуговування"/>
         <text name="rms_owner_care_neglected" text="Занедбане обслуговування"/>

@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Întreținere și uzură"/>
         <text name="rms_settings_section_drivetrain" text="Transmisie și frână de parcare"/>
         <text name="rms_workshopOpenHour_label" text="Ora de deschidere a atelierului"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Intervențiile încep doar de la această oră."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Stabilește ora de deschidere a atelierelor: intervențiile încep doar de la această oră."/>
         <text name="rms_workshopCloseHour_label" text="Ora de închidere a atelierului"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Intervențiile în curs sunt întrerupte la această oră și se reiau la deschiderea atelierului."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Stabilește ora de închidere a atelierelor: intervențiile în curs se opresc și se reiau la deschidere."/>
+        <text name="rms_workshopHours_locked" text="Această setare necesită cel puțin un atelier care să nu fie deschis 24 h/24."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Atelierul reprezentanței 24 h/24"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Menține atelierul reprezentanței disponibil la orice oră din zi și din noapte."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Stabilește dacă atelierul dealerului rămâne deschis la orice oră."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Atelier mobil 24 h/24"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Menține atelierul mobil disponibil la orice oră din zi și din noapte."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Stabilește dacă atelierul mobil rămâne disponibil la orice oră."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Restricțiile atelierelor"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Limitează lucrările atelierului mobil și ale celui propriu după mijloacele necesare. Întreținerea rămâne disponibilă; electronica necesită echipamentul de diagnoză conectat la utilaj, iar la atelierul mobil demontarea grea sau înalta tensiune necesită un atelier echipat."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Stabilește dacă echipamentul limitează atelierul mobil și pe cel propriu: electronica necesită echipamentul de diagnoză conectat, iar atelierul mobil nu face demontări grele sau lucrări de înaltă tensiune. Întreținerea rămâne mereu posibilă."/>
         <text name="rms_ownWorkshopAvailable_label" text="Atelier propriu 24 h/24"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Menține atelierul tău disponibil la orice oră din zi și din noapte."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Stabilește dacă atelierul tău propriu rămâne deschis la orice oră."/>
         <text name="rms_instantInspection_label" text="Inspecție instantanee"/>
-        <text name="rms_instantInspection_tooltip" text="Când opțiunea este activată, inspecțiile din atelier se încheie instantaneu. Intervențiile de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantInspection_tooltip" text="Stabilește dacă inspecțiile din atelier se încheie instantaneu, inclusiv cele în curs."/>
         <text name="rms_instantMaintenanceRepair_label" text="Întreținere și reparații instantanee"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Când opțiunea este activată, întreținerea și reparațiile din atelier se încheie instantaneu. Intervențiile de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Stabilește dacă întreținerea și reparațiile din atelier se încheie instantaneu, inclusiv cele în curs."/>
         <text name="rms_instantBodywork_label" text="Vopsire instantanee"/>
-        <text name="rms_instantBodywork_tooltip" text="Când opțiunea este activată, vopsirea din atelier se încheie instantaneu. Intervențiile de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantBodywork_tooltip" text="Stabilește dacă vopsirea din atelier se încheie instantaneu, inclusiv cea în curs."/>
         <text name="rms_instantOverhaul_label" text="Recondiționare mecanică instantanee"/>
-        <text name="rms_instantOverhaul_tooltip" text="Când opțiunea este activată, recondiționarea mecanică din atelier se încheie instantaneu. Intervențiile de acest tip deja în curs se încheie și ele imediat."/>
+        <text name="rms_instantOverhaul_tooltip" text="Stabilește dacă recondiționările mecanice din atelier se încheie instantaneu, inclusiv cele în curs."/>
         <text name="rms_debugMode_label" text="Mod de depanare"/>
-        <text name="rms_debugMode_tooltip" text="Afișează fereastra de depanare în vehiculul pe care îl conduci; și tasta %s o deschide și o închide. În modul multiplayer, doar administratorii o văd. Scrie și jurnale detaliate în consolă."/>
+        <text name="rms_debugMode_tooltip" text="Stabilește dacă fereastra de depanare apare în utilajul condus și consola primește jurnale detaliate. Tasta %s o deschide și o închide; în multiplayer, doar administratorii o văd."/>
         <text name="rms_warningMessages_label" text="Mesaje de avertizare"/>
-        <text name="rms_warningMessages_tooltip" text="Activează sau dezactivează avertizările din joc, precum motor rece sau supraîncălzire. Mesajele de limitare a puterii din cauza temperaturii rămân active."/>
+        <text name="rms_warningMessages_tooltip" text="Stabilește dacă sunt afișate avertizări precum motor rece sau supraîncălzire. Mesajele de limitare termică a puterii rămân mereu afișate."/>
         <text name="rms_serviceInterval_label" text="Distanța dintre întrețineri"/>
-        <text name="rms_serviceInterval_tooltip" text="Setați orele de referință. La 100 h, o cerință de 500 h devine 100 h, iar 600 h devine 120 h. Fiecare fluid urmează programul vehiculului; termenele calendaristice sunt independente."/>
+        <text name="rms_serviceInterval_tooltip" text="Stabilește orele între două schimburi de ulei de motor la un model lansat din 2010 încoace sau cu an necunoscut. Un model mai vechi are nevoie de schimb mai des:&#10;Între 2000 și 2009: %s&#10;Între 1980 și 1999: %s&#10;Între 1960 și 1979: %s&#10;Înainte de 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Durata de viață a vehiculului"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Stabilește durata de viață de bază a vehiculului în ore, după care starea sa ajunge la 0%. Cu cât starea se apropie de zero, cu atât vehiculul devine mai puțin fiabil. Și valoarea vehiculului scade pe parcursul acestor ore. O modificare se aplică din acel moment: vehiculele își păstrează starea, doar valoarea lor este recalculată."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Stabilește orele de funcționare după care starea vehiculului ajunge la 0%; cu cât se apropie, cu atât vehiculul devine mai puțin fiabil și valoarea lui scade. O schimbare se aplică de atunci înainte: vehiculele își păstrează starea, doar valoarea se recalculează."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fum de eșapament"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Controlează fumul de eșapament după starea reală a motorului. Este negru când combustibilul depășește aerul disponibil: accelerare bruscă, motor forțat la turație joasă, ralanti prelungit la sarcină mică, filtru de aer colmatat sau injecție uzată. Este albastru când un motor uzat arde ulei și alb când combustibilul iese nears. Norul de fum crește și odată cu efortul motorului. Utilajele vechi scot mult mai mult fum decât cele moderne, care aproape nu scot fum cât timp nimic nu este grav defect. În aer rece, apa rezultată din ardere se condensează și ea într-o dâră albă scurtă, care se evaporă în unul sau doi metri, chiar și la un motor sănătos."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Stabilește dacă fumul de evacuare urmează starea reală a motorului: negru când lipsește aerul, albastru când arde ulei, alb când iese combustibil nears, mai dens sub sarcină. Utilajele vechi scot mult mai mult fum decât cele moderne."/>
         <text name="rms_tutorialMode_label" text="Mod tutorial"/>
-        <text name="rms_tutorialMode_tooltip" text="Afișează sfaturile tutorialului în timpul jocului."/>
+        <text name="rms_tutorialMode_tooltip" text="Stabilește dacă sfaturile tutorialului sunt afișate în timpul jocului."/>
         <text name="rms_tutorialResetTips_label" text="Resetează sfaturile"/>
         <text name="rms_tutorialResetTips_text" text="Resetează"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Resetează istoricul sfaturilor tutorialului și afișează din nou toate sfaturile."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Resetează istoricul sfaturilor tutorialului: toate vor fi afișate din nou."/>
         <text name="rms_tutorialResetConfirm_title" text="Resetezi sfaturile tutorialului?"/>
         <text name="rms_tutorialResetConfirm_message" text="Resetezi istoricul sfaturilor tutorialului și afișezi din nou toate sfaturile?"/>
         <text name="rms_drivetrainEnabled_label" text="Gestionarea tracțiunii 4x4 și a blocării diferențialului"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Activează controlul manual al punții față motoare și al blocărilor diferențialului la tractoare. Dacă Enhanced Vehicle este instalat, gestionarea diferențialelor din acesta este dezactivată; pentru a i-o reda, dezactivează această opțiune, apoi reactivează diferențialele în meniul Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Stabilește dacă puntea față și blocările diferențialului tractoarelor se comandă manual. Opțiunea înlocuiește gestionarea diferențialelor din Enhanced Vehicle: pentru a o reda, dezactivează opțiunea și reactivează diferențialele în meniul acestuia."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Permite modul AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Adaugă selectorului o poziție AUTO: puntea față se cuplează automat la patinarea roților sau la viteza de lucru sub sarcină și se decuplează pe drum. Vehiculele lăsate în AUTO revin la 4x4 când această opțiune este dezactivată."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Stabilește dacă selectorul oferă poziția AUTO, care cuplează puntea față când roțile patinează sau la lucru sub sarcină și o decuplează pe drum. Dezactivarea trece vehiculele lăsate în AUTO la 4x4."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Această setare necesită activarea gestionării tracțiunii 4x4 și a blocării diferențialului."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Frână de parcare"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Adaugă o frână de parcare tuturor vehiculelor gestionate. Utilajele recente cu transmisie CVT sau Powershift o acționează și o eliberează singure; la celelalte, o comanzi cu propria tastă. Dacă Enhanced Vehicle este instalat, frâna de parcare din acesta este dezactivată; pentru a i-o reda, dezactivează această opțiune, apoi reactivează frâna de parcare în meniul Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Stabilește dacă vehiculele monitorizate au frână de parcare: automată pe utilajele recente cu transmisie CVT sau Powershift, cu tastă proprie pe celelalte. Opțiunea înlocuiește frâna de parcare din Enhanced Vehicle: pentru a o reda, dezactivează opțiunea și reactivează frâna de parcare în meniul acestuia."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Atelier"/>
         <text name="rms_ws_tab_summary" text="Sinteză"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Ușurință ridicată a întreținerii"/>
         <text name="rms_shop_service_access_average" text="Ușurință medie a întreținerii"/>
         <text name="rms_shop_service_access_demanding" text="Ușurință redusă a întreținerii"/>
+        <text name="rms_shop_launch_year" text="Model lansat în %d"/>
+        <text name="rms_shop_launch_year_unknown" text="An de lansare necunoscut"/>
         <text name="rms_owner_care_careful" text="Întreținere atentă"/>
         <text name="rms_owner_care_regular" text="Întreținere regulată"/>
         <text name="rms_owner_care_neglected" text="Întreținere neglijată"/>

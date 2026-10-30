@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Karbantartás és kopás"/>
         <text name="rms_settings_section_drivetrain" text="Hajtáslánc és rögzítőfék"/>
         <text name="rms_workshopOpenHour_label" text="Műhely nyitási ideje"/>
-        <text name="rms_workshopOpenHour_tooltip" text="A javítási eljárások csak ettől az órától kezdődnek."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Meghatározza a műhelyek nyitási óráját: az eljárások csak ettől az órától kezdődnek."/>
         <text name="rms_workshopCloseHour_label" text="Műhely zárási ideje"/>
-        <text name="rms_workshopCloseHour_tooltip" text="A folyamatban lévő eljárások ekkor szünetet tartanak, és nyitáskor folytatódnak."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Meghatározza a műhelyek zárási óráját: a folyamatban lévő eljárások ekkor leállnak, és nyitáskor folytatódnak."/>
+        <text name="rms_workshopHours_locked" text="Ehhez a beállításhoz legalább egy olyan műhely kell, amely nincs éjjel-nappal nyitva."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Kereskedői műhely 0–24"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="A kereskedő műhelye a nap bármely szakában elérhető marad."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Meghatározza, hogy a kereskedő műhelye bármely órában nyitva legyen-e."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobil műhely 0–24"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="A mobil műhely a nap bármely szakában elérhető marad."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Meghatározza, hogy a mobil műhely bármely órában elérhető legyen-e."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Műhelyek korlátozásai"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="A szükséges eszközök alapján korlátozza a mobil és a saját műhely munkáit. A karbantartás elérhető marad; az elektronikához a géphez csatlakoztatott diagnosztikai eszköz kell, a mobil műhelyben pedig a nehéz szétszerelés vagy a nagyfeszültségű munka felszerelt műhelyt igényel."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Meghatározza, hogy a felszerelés korlátozza-e a mobil és a saját műhelyt: az elektronikához csatlakoztatott diagnosztikai eszköz kell, a mobil műhely nem végez nehéz szétszerelést vagy nagyfeszültségű munkát. A karbantartás mindig lehetséges."/>
         <text name="rms_ownWorkshopAvailable_label" text="Saját műhely 0–24"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="A saját műhelyed a nap bármely szakában elérhető marad."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Meghatározza, hogy a saját műhelyed bármely órában nyitva legyen-e."/>
         <text name="rms_instantInspection_label" text="Azonnali átvizsgálás"/>
-        <text name="rms_instantInspection_tooltip" text="Bekapcsolva a műhelyben végzett átvizsgálások azonnal befejeződnek. Az ilyen típusú, már folyamatban lévő eljárások is azonnal befejeződnek."/>
+        <text name="rms_instantInspection_tooltip" text="Meghatározza, hogy azonnal befejeződjenek-e a műhelybeli átvizsgálások, a folyamatban lévők is."/>
         <text name="rms_instantMaintenanceRepair_label" text="Azonnali karbantartás és javítás"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Bekapcsolva a műhelyben végzett karbantartások és javítások azonnal befejeződnek. Az ilyen típusú, már folyamatban lévő eljárások is azonnal befejeződnek."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Meghatározza, hogy azonnal befejeződjenek-e a műhelybeli karbantartások és javítások, a folyamatban lévők is."/>
         <text name="rms_instantBodywork_label" text="Azonnali fényezés"/>
-        <text name="rms_instantBodywork_tooltip" text="Bekapcsolva a műhelyben végzett fényezés azonnal befejeződik. Az ilyen típusú, már folyamatban lévő eljárások is azonnal befejeződnek."/>
+        <text name="rms_instantBodywork_tooltip" text="Meghatározza, hogy azonnal befejeződjön-e a műhelybeli fényezés, a folyamatban lévő is."/>
         <text name="rms_instantOverhaul_label" text="Azonnali mechanikai nagyjavítás"/>
-        <text name="rms_instantOverhaul_tooltip" text="Bekapcsolva a műhelyben végzett mechanikai nagyjavítás azonnal befejeződik. Az ilyen típusú, már folyamatban lévő eljárások is azonnal befejeződnek."/>
+        <text name="rms_instantOverhaul_tooltip" text="Meghatározza, hogy azonnal befejeződjenek-e a műhelybeli mechanikai nagyjavítások, a folyamatban lévők is."/>
         <text name="rms_debugMode_label" text="Hibakeresési mód"/>
-        <text name="rms_debugMode_tooltip" text="Megjeleníti a hibakeresési ablakot az általad vezetett járműben; a billentyűvel (%s) is megnyitható és bezárható. Többjátékos módban csak a rendszergazdák látják. Részletes naplókat is ír a konzolba."/>
+        <text name="rms_debugMode_tooltip" text="Meghatározza, hogy megjelenjen-e a hibakereső ablak a vezetett gépben, és kapjon-e részletes naplókat a konzol. A %s billentyű nyitja és zárja; többjátékos módban csak az adminisztrátorok látják."/>
         <text name="rms_warningMessages_label" text="Figyelmeztető üzenetek"/>
-        <text name="rms_warningMessages_tooltip" text="Be- vagy kikapcsolja a játékmeneti figyelmeztetéseket, például a hideg motorra és túlmelegedésre vonatkozó riasztásokat. A hőmérséklet miatti teljesítménykorlátozás értesítései aktívak maradnak."/>
+        <text name="rms_warningMessages_tooltip" text="Meghatározza, hogy megjelenjenek-e a figyelmeztetések, például hideg motor vagy túlmelegedés esetén. A hő miatti teljesítménykorlátozás üzenetei mindig megjelennek."/>
         <text name="rms_serviceInterval_label" text="Karbantartások távolsága"/>
-        <text name="rms_serviceInterval_tooltip" text="Állítsa be a referenciaórákat. 100 h esetén az 500 h előírás 100 h-ra, a 600 h 120 h-ra változik. Minden folyadék a jármű programját követi; a naptári határidők függetlenek."/>
+        <text name="rms_serviceInterval_tooltip" text="Meghatározza a két motorolajcsere közötti órákat a 2010-ben vagy később bevezetett, illetve ismeretlen évű modelleknél. A régebbi modellek gyakrabban kapnak olajcserét:&#10;2000 és 2009 között: %s&#10;1980 és 1999 között: %s&#10;1960 és 1979 között: %s&#10;1960 előtt: %s"/>
         <text name="rms_vehicleLifespan_label" text="Jármű élettartama"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Beállítja a jármű alap élettartamát órában, amely után az állapota 0%-ra csökken. Minél közelebb van az állapot a nullához, annál megbízhatatlanabbá válik a jármű. A jármű értéke is csökken ezen órák során. A módosítás attól a pillanattól érvényes: a járművek megtartják állapotukat, csak az értékük számítódik újra."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Meghatározza az üzemórákat, amelyek után a jármű állapota eléri a 0%-ot; ehhez közeledve megbízhatósága és értéke is csökken. A változás a továbbiakra érvényes: a járművek megőrzik állapotukat, csak az értékük számolódik újra."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kipufogófüst"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="A kipufogófüstöt a motor valós állapota vezérli. Fekete, amikor több az üzemanyag, mint a rendelkezésre álló levegő: erős gyorsításnál, alacsony fordulaton erőlködő motornál, hosszan tartó kis terhelésű alapjáratnál, eltömődött légszűrőnél vagy kopott befecskendezésnél. Kék, amikor egy fáradt motor olajat éget, és fehér, amikor az üzemanyag elégetlenül távozik. A füstcsóva a motor által végzett munkával együtt nő. A régebbi gépek sokkal jobban füstölnek, mint a modernek, amelyek komoly hiba nélkül alig füstölnek. Hideg levegőben az égés során keletkező víz is lecsapódik egy rövid fehér csíkká, amely egy-két méteren belül elpárolog, még egy ép motornál is."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Meghatározza, hogy a kipufogófüst kövesse-e a motor valós állapotát: levegőhiánynál fekete, olajégetésnél kék, elégetlen üzemanyagnál fehér, terhelés alatt sűrűbb. A régi gépek sokkal jobban füstölnek a moderneknél."/>
         <text name="rms_tutorialMode_label" text="Oktató mód"/>
-        <text name="rms_tutorialMode_tooltip" text="Játék közben oktató tippeket jelenít meg."/>
+        <text name="rms_tutorialMode_tooltip" text="Meghatározza, hogy játék közben megjelenjenek-e az oktatótippek."/>
         <text name="rms_tutorialResetTips_label" text="Tippek visszaállítása"/>
         <text name="rms_tutorialResetTips_text" text="Visszaállítás"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Visszaállítja az oktató tippek előzményeit, és újra megjeleníti az összes tippet."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Alaphelyzetbe állítja az oktatótippek előzményeit: mindegyik újra megjelenik."/>
         <text name="rms_tutorialResetConfirm_title" text="Oktató tippek visszaállítása?"/>
         <text name="rms_tutorialResetConfirm_message" text="Visszaállítod az oktató tippek előzményeit, és újra megjeleníted az összes tippet?"/>
         <text name="rms_drivetrainEnabled_label" text="Összkerékhajtás és differenciálzár kezelése"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Bekapcsolja a kapcsolható első híd és a differenciálzárak kézi vezérlését a traktorokon. Ha az Enhanced Vehicle telepítve van, a differenciálkezelése kikapcsol; ha vissza akarod adni neki, kapcsold ki ezt a beállítást, majd kapcsold vissza a differenciálműveket az Enhanced Vehicle menüjében."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Meghatározza, hogy kézzel vezérelhetők-e a traktorok első hídjai és differenciálzárai. Az opció átveszi az Enhanced Vehicle differenciálkezelését: visszaadáshoz kapcsold ki az opciót, majd a menüjében kapcsold vissza a differenciálokat."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="AUTO hajtásmód engedélyezése"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="AUTO állást ad a hajtásválasztóhoz: az első híd kerékcsúszásnál vagy munkasebességnél terhelés alatt automatikusan bekapcsol, közúton pedig kikapcsol. Az AUTO-ban hagyott gépek összkerékhajtásra váltanak, ha ezt a beállítást kikapcsolják."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Meghatározza, hogy a választón legyen-e AUTO állás, amely kerékcsúszáskor vagy terhelt munka közben bekapcsolja az első hidat, közúton pedig kikapcsolja. Az opció kikapcsolásakor az AUTO-ban hagyott járművek összkerékhajtásra váltanak."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Ehhez a beállításhoz be kell kapcsolni az összkerékhajtás és a differenciálzár kezelését."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Rögzítőfék"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Rögzítőféket ad minden RMS-járműhöz. Az újabb, CVT vagy Powershift váltós gépek maguktól behúzzák és kioldják; a többin te kezeled, saját billentyűvel. Ha az Enhanced Vehicle telepítve van, a rögzítőfékje kikapcsol; ha vissza akarod adni neki, kapcsold ki ezt a beállítást, majd kapcsold vissza a rögzítőféket az Enhanced Vehicle menüjében."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Meghatározza, hogy legyen-e a követett járműveknek rögzítőféke: újabb CVT vagy Powershift gépeken automatikus, másokon saját billentyűs. Az opció átveszi az Enhanced Vehicle rögzítőfékét: visszaadáshoz kapcsold ki az opciót, majd a menüjében kapcsold vissza a rögzítőféket."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Műhely"/>
         <text name="rms_ws_tab_summary" text="Összegzés"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Jó karbantarthatóság"/>
         <text name="rms_shop_service_access_average" text="Átlagos karbantarthatóság"/>
         <text name="rms_shop_service_access_demanding" text="Gyenge karbantarthatóság"/>
+        <text name="rms_shop_launch_year" text="Modell bevezetése: %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Bevezetés éve ismeretlen"/>
         <text name="rms_owner_care_careful" text="Gondos karbantartás"/>
         <text name="rms_owner_care_regular" text="Rendszeres karbantartás"/>
         <text name="rms_owner_care_neglected" text="Elhanyagolt karbantartás"/>

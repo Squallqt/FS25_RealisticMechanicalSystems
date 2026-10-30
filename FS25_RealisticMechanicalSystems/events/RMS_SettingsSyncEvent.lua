@@ -130,7 +130,7 @@ local function applyConfig(event)
         instantOverhaul = event.instantOverhaul
     }
 
-    RMS_SettingsPage.applyPendingConfigSideEffects(oldConfig, newConfig)
+    RMS_SettingsPage.finishInstantServices(oldConfig, newConfig)
     RMS_Drivetrain.refreshAllParkBrakePedals()
     RMS_Drivetrain.claimFromOtherMod()
 

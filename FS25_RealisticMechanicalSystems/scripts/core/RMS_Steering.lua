@@ -329,7 +329,7 @@ function RMS_Steering.updateTerrainImpacts(vehicle, dt)
     if speedLoss >= C.TERRAIN_IMPACT_MIN_SPEED_LOSS and speedLoss >= impacts.speedLoss then
         impacts.speedLoss = speedLoss
     elseif impacts.speedLoss > 0 then
-        if not getIsHeldByPlayer(vehicle) then
+        if not getIsHeldByPlayer(vehicle) and not vehicle:getIsAIActive() then
             applyImpact(vehicle, impacts.speedLoss)
         end
         impacts.speedLoss = 0

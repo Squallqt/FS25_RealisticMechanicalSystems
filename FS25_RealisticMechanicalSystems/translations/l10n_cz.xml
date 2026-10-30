@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Údržba a opotřebení"/>
         <text name="rms_settings_section_drivetrain" text="Pohon a parkovací brzda"/>
         <text name="rms_workshopOpenHour_label" text="Otevírací doba dílny"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Úkony začínají až od této hodiny."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Určuje otevírací hodinu dílen: úkony začínají až od této hodiny."/>
         <text name="rms_workshopCloseHour_label" text="Zavírací doba dílny"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Probíhající úkony se v tuto hodinu pozastaví a pokračují po otevření."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Určuje zavírací hodinu dílen: probíhající úkony se v tuto hodinu přeruší a pokračují při otevření."/>
+        <text name="rms_workshopHours_locked" text="Toto nastavení vyžaduje alespoň jednu dílnu, která není otevřená 24/7."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Dílna prodejce 24/7"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Udržuje dílnu prodejce dostupnou nepřetržitě ve dne i v noci."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Určuje, zda dílna prodejce zůstává otevřená v každou hodinu."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobilní dílna 24/7"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Udržuje mobilní dílnu dostupnou nepřetržitě ve dne i v noci."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Určuje, zda mobilní dílna zůstává dostupná v každou hodinu."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Omezení dílen"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Omezuje práce mobilní a vlastní dílny podle potřebného vybavení. Údržba zůstává dostupná; elektronika vyžaduje diagnostické zařízení připojené ke stroji a v mobilní dílně vyžaduje náročná demontáž nebo vysokonapěťová práce vybavenou dílnu."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Určuje, zda vybavení omezuje mobilní a vlastní dílnu: elektronika vyžaduje připojené diagnostické zařízení a mobilní dílna neprovádí náročnou demontáž ani vysokonapěťové práce. Údržba zůstává vždy možná."/>
         <text name="rms_ownWorkshopAvailable_label" text="Vlastní dílna 24/7"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Udržuje tvou vlastní dílnu dostupnou nepřetržitě ve dne i v noci."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Určuje, zda tvoje vlastní dílna zůstává otevřená v každou hodinu."/>
         <text name="rms_instantInspection_label" text="Okamžitá prohlídka"/>
-        <text name="rms_instantInspection_tooltip" text="Je-li tato možnost zapnuta, prohlídky v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantInspection_tooltip" text="Určuje, zda se kontroly v dílně dokončí okamžitě, včetně již probíhajících."/>
         <text name="rms_instantMaintenanceRepair_label" text="Okamžitá údržba a opravy"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Je-li tato možnost zapnuta, údržba a opravy v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Určuje, zda se údržba a opravy v dílně dokončí okamžitě, včetně již probíhajících."/>
         <text name="rms_instantBodywork_label" text="Okamžité lakování"/>
-        <text name="rms_instantBodywork_tooltip" text="Je-li tato možnost zapnuta, lakování v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantBodywork_tooltip" text="Určuje, zda se lakování v dílně dokončí okamžitě, včetně již probíhajícího."/>
         <text name="rms_instantOverhaul_label" text="Okamžitá generální oprava"/>
-        <text name="rms_instantOverhaul_tooltip" text="Je-li tato možnost zapnuta, generální oprava v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantOverhaul_tooltip" text="Určuje, zda se generální opravy v dílně dokončí okamžitě, včetně již probíhajících."/>
         <text name="rms_debugMode_label" text="Režim ladění"/>
-        <text name="rms_debugMode_tooltip" text="Zobrazuje okno ladění ve vozidle, které řídíš; klávesa %s ho také otevírá a zavírá. V režimu více hráčů ho vidí jen administrátoři. Také zapisuje podrobné záznamy do konzole."/>
+        <text name="rms_debugMode_tooltip" text="Určuje, zda se v řízeném stroji zobrazuje ladicí okno a konzole dostává podrobné záznamy. Klávesa %s okno otevírá a zavírá; ve hře více hráčů ho vidí jen správci."/>
         <text name="rms_warningMessages_label" text="Varovné zprávy"/>
-        <text name="rms_warningMessages_tooltip" text="Povolí nebo zakáže varovné zprávy ve hře, jako jsou upozornění na studený motor nebo přehřátí. Upozornění na omezení výkonu kvůli teplotě zůstávají aktivní."/>
+        <text name="rms_warningMessages_tooltip" text="Určuje, zda se zobrazují varování jako studený motor nebo přehřátí. Zprávy o tepelném omezení výkonu se zobrazují vždy."/>
         <text name="rms_serviceInterval_label" text="Rozestupy údržby"/>
-        <text name="rms_serviceInterval_tooltip" text="Nastavte referenční hodiny. Při 100 h se předpis 500 h změní na 100 h a 600 h na 120 h. Každá kapalina má program vozidla; kalendářní lhůty jsou nezávislé."/>
+        <text name="rms_serviceInterval_tooltip" text="Určuje hodiny mezi dvěma výměnami motorového oleje u modelu uvedeného od roku 2010 nebo s neznámým rokem. Starší model potřebuje výměnu častěji:&#10;2000 až 2009: %s&#10;1980 až 1999: %s&#10;1960 až 1979: %s&#10;Před rokem 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Životnost vozidla"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Nastavuje základní životnost vozidla v hodinách, po jejímž uplynutí jeho stav dosáhne 0 %. Čím blíže je stav k nule, tím nespolehlivějším se vozidlo stává. Hodnota vozidla s těmito hodinami také klesá. Změna platí od té chvíle: vozidla si zachovají svůj stav, přepočítá se pouze jejich hodnota."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Určuje provozní hodiny, po kterých stav vozidla dosáhne 0 %; čím je jim blíže, tím je méně spolehlivé a tím více klesá jeho hodnota. Změna platí od té chvíle: vozidla si zachovají stav, přepočítá se jen jejich hodnota."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kouř z výfuku"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Řídí kouř z výfuku podle skutečného stavu motoru. Je černý, když motor dostává více paliva, než odpovídá dostupnému vzduchu: při prudké akceleraci, když motor pracuje namáhavě v nízkých otáčkách, po dlouhém volnoběhu s nízkým zatížením, při zaneseném vzduchovém filtru nebo opotřebeném vstřikování. Je modrý, když opotřebený motor spaluje olej, a bílý, když palivo odchází nespálené. Množství kouře se zvyšuje také s prací motoru. Starší stroje kouří výrazně více než moderní, které téměř nekouří, dokud není něco skutečně porouchané. Ve studeném vzduchu navíc voda ze spalování kondenzuje do krátké bílé stopy, která se odpaří během metru či dvou, a to i u zdravého motoru."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Určuje, zda kouř z výfuku odpovídá skutečnému stavu motoru: černý při nedostatku vzduchu, modrý při spalování oleje, bílý při úniku nespáleného paliva, hustší při zatížení. Staré stroje kouří mnohem více než moderní."/>
         <text name="rms_tutorialMode_label" text="Režim výukového programu"/>
-        <text name="rms_tutorialMode_tooltip" text="Zobrazuje během hry rady výukového programu."/>
+        <text name="rms_tutorialMode_tooltip" text="Určuje, zda se během hry zobrazují tipy výuky."/>
         <text name="rms_tutorialResetTips_label" text="Resetovat rady"/>
         <text name="rms_tutorialResetTips_text" text="Resetovat"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Resetuje historii rad výukového programu a znovu je všechny zobrazí."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Obnoví historii tipů výuky: všechny se znovu zobrazí."/>
         <text name="rms_tutorialResetConfirm_title" text="Resetovat rady výukového programu?"/>
         <text name="rms_tutorialResetConfirm_message" text="Resetovat historii rad výukového programu a znovu je všechny zobrazit?"/>
         <text name="rms_drivetrainEnabled_label" text="Správa 4x4 a uzávěrky diferenciálu"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Zapíná ruční ovládání připojitelné přední nápravy a uzávěrek diferenciálu u traktorů. Pokud je nainstalován Enhanced Vehicle, jeho správa diferenciálů se vypne; chceš-li mu ji vrátit, vypni tuto možnost a pak diferenciály znovu zapni v menu Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Určuje, zda se přední náprava a uzávěrky diferenciálu traktorů ovládají ručně. Tato možnost nahrazuje správu diferenciálů v Enhanced Vehicle: chceš-li ji vrátit, vypni tuto možnost a pak znovu zapni diferenciály v jeho menu."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Povolit režim AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Přidává polohu AUTO: přední náprava se připojí automaticky při prokluzu kol nebo při pracovní rychlosti pod zatížením a na silnici se odpojí. Vozidla ponechaná v režimu AUTO se po vypnutí této možnosti vrátí do režimu 4x4."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Určuje, zda volič nabízí polohu AUTO, která připojuje přední nápravu při prokluzu kol nebo práci pod zatížením a odpojuje ji na silnici. Vypnutí přepne vozidla ponechaná v AUTO na 4x4."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Toto nastavení vyžaduje zapnutou správu 4x4 a uzávěrky diferenciálu."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkovací brzda"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Přidává všem vozidlům RMS parkovací brzdu. Novější stroje s převodovkou CVT nebo Powershift ji zatahují a uvolňují samy; u ostatních ji ovládáš vlastní klávesou. Pokud je nainstalován Enhanced Vehicle, jeho parkovací brzda se vypne; chceš-li mu ji vrátit, vypni tuto možnost a pak parkovací brzdu znovu zapni v menu Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Určuje, zda mají sledovaná vozidla parkovací brzdu: automatickou u novějších strojů s převodovkou CVT nebo Powershift, ovládanou klávesou u ostatních. Tato možnost nahrazuje brzdu v Enhanced Vehicle: chceš-li ji vrátit, vypni tuto možnost a znovu zapni parkovací brzdu v jeho menu."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Dílna"/>
         <text name="rms_ws_tab_summary" text="Přehled"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="Vysoká snadnost údržby"/>
         <text name="rms_shop_service_access_average" text="Průměrná snadnost údržby"/>
         <text name="rms_shop_service_access_demanding" text="Nízká snadnost údržby"/>
+        <text name="rms_shop_launch_year" text="Model uveden v roce %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Rok uvedení na trh neznámý"/>
         <text name="rms_owner_care_careful" text="Pečlivá údržba"/>
         <text name="rms_owner_care_regular" text="Pravidelná údržba"/>
         <text name="rms_owner_care_neglected" text="Zanedbaná údržba"/>

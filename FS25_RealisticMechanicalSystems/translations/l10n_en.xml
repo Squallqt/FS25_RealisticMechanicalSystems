@@ -39,48 +39,50 @@
         <text name="rms_settings_section_service_wear" text="Maintenance and Wear"/>
         <text name="rms_settings_section_drivetrain" text="Drivetrain and Parking Brake"/>
         <text name="rms_workshopOpenHour_label" text="Workshop Open Time"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Procedures only start from this hour onward."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Sets the workshop opening hour: procedures only start from this hour onward."/>
         <text name="rms_workshopCloseHour_label" text="Workshop Close Time"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Procedures in progress are paused at this hour and resume when the workshop opens."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Sets the workshop closing hour: procedures in progress stop at this hour and resume at opening."/>
+        <text name="rms_workshopHours_locked" text="This setting requires at least one workshop that is not open 24/7."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Dealer Workshop 24/7"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Keeps the dealer workshop available at any hour of the day or night."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Sets whether the dealer workshop stays open at all hours."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobile Workshop 24/7"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Keeps the mobile workshop available at any hour of the day or night."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Sets whether the mobile workshop stays available at all hours."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Workshop Restrictions"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Limits the interventions of the mobile and personal workshops by the equipment required. Maintenance remains available; electronics need the diagnostic tool connected to the machine, and at a mobile workshop, heavy dismantling or high-voltage work needs an equipped workshop."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Sets whether equipment limits the mobile and personal workshops: electronics need the diagnostic tool connected, and the mobile workshop does no heavy dismantling or high-voltage work. Maintenance always remains possible."/>
         <text name="rms_ownWorkshopAvailable_label" text="Personal Workshop 24/7"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Keeps your personal workshop available at any hour of the day or night."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Sets whether your personal workshop stays open at all hours."/>
         <text name="rms_instantInspection_label" text="Instant Inspection"/>
-        <text name="rms_instantInspection_tooltip" text="When enabled, workshop inspections finish instantly. Procedures of this type already in progress also finish immediately."/>
+        <text name="rms_instantInspection_tooltip" text="Sets whether workshop inspections finish instantly, including those in progress."/>
         <text name="rms_instantMaintenanceRepair_label" text="Instant Maintenance and Repair"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="When enabled, workshop maintenance and repairs finish instantly. Procedures of this type already in progress also finish immediately."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Sets whether workshop maintenance and repairs finish instantly, including those in progress."/>
         <text name="rms_instantBodywork_label" text="Instant Repainting"/>
-        <text name="rms_instantBodywork_tooltip" text="When enabled, workshop repainting finishes instantly. Procedures of this type already in progress also finish immediately."/>
+        <text name="rms_instantBodywork_tooltip" text="Sets whether workshop repainting finishes instantly, including any in progress."/>
         <text name="rms_instantOverhaul_label" text="Instant Mechanical Overhaul"/>
-        <text name="rms_instantOverhaul_tooltip" text="When enabled, workshop mechanical overhauls finish instantly. Procedures of this type already in progress also finish immediately."/>
+        <text name="rms_instantOverhaul_tooltip" text="Sets whether workshop mechanical overhauls finish instantly, including those in progress."/>
         <text name="rms_debugMode_label" text="Debug Mode"/>
-        <text name="rms_debugMode_tooltip" text="Shows the debug window in the vehicle you drive; the %s key opens and closes it too. In multiplayer, only administrators see it. Also writes detailed logs to the console."/>
+        <text name="rms_debugMode_tooltip" text="Sets whether the debug window is shown in the vehicle you drive and whether the console receives detailed logs. The %s key opens and closes it; in multiplayer, only administrators see it."/>
         <text name="rms_warningMessages_label" text="Warning Messages"/>
-        <text name="rms_warningMessages_tooltip" text="Enables or disables gameplay warning messages such as cold engine and overheating alerts. Thermal power-limit notices remain enabled."/>
+        <text name="rms_warningMessages_tooltip" text="Sets whether warnings such as a cold engine or overheating are shown. Thermal power-limit messages are always shown."/>
         <text name="rms_serviceInterval_label" text="Maintenance spacing"/>
-        <text name="rms_serviceInterval_tooltip" text="Set the reference hours. At 100 h, a 500 h prescription becomes 100 h, and 600 h becomes 120 h. Each fluid follows the vehicle schedule; calendar limits stay independent."/>
+        <text name="rms_serviceInterval_tooltip" text="Sets the hours between two engine oil changes on a model launched in 2010 or later, or of unknown year. An older model has its oil changed more often:&#10;2000 to 2009: %s&#10;1980 to 1999: %s&#10;1960 to 1979: %s&#10;Before 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Vehicle Lifespan"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Sets the base vehicle lifespan in hours, after which its condition reaches 0%. The closer the condition is to zero, the more unreliable the vehicle becomes. The vehicle value also falls over these hours. A change applies from then on: vehicles keep their condition, only their value is recalculated."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Sets the operating hours after which a vehicle's condition reaches 0%; the closer it gets, the less reliable the vehicle and the lower its value. A change applies from then on: vehicles keep their condition, only their value is recalculated."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Exhaust Smoke"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Drives the exhaust plume from the real state of the engine. It is black when fuel outruns the available air: a hard pickup, an engine lugging at low speed, prolonged low-load idling, a clogged air filter or worn injection. It is blue when a tired engine burns oil, white when fuel leaves unburnt. The plume also grows with the work the engine is doing. Older machines smoke far more than modern ones, which barely smoke at all unless something is seriously wrong. In cold air, the water from combustion also condenses into a short white trail that evaporates within a meter or two, even on a healthy engine."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Sets whether the exhaust smoke follows the real state of the engine: black when it lacks air, blue when it burns oil, white when fuel leaves unburnt, thicker under load. Older machines smoke far more than modern ones."/>
         <text name="rms_tutorialMode_label" text="Tutorial Mode"/>
-        <text name="rms_tutorialMode_tooltip" text="Shows tutorial tips during gameplay."/>
+        <text name="rms_tutorialMode_tooltip" text="Sets whether tutorial tips are shown during gameplay."/>
         <text name="rms_tutorialResetTips_label" text="Reset Tips"/>
         <text name="rms_tutorialResetTips_text" text="Reset"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Resets the tutorial tip history and shows every tip again."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Resets the tutorial tip history: every tip will be shown again."/>
         <text name="rms_tutorialResetConfirm_title" text="Reset Tutorial Tips?"/>
         <text name="rms_tutorialResetConfirm_message" text="Reset tutorial tip history and show all tips again?"/>
         <text name="rms_drivetrainEnabled_label" text="4WD and Differential Lock Management"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Enables manual control of the driven front axle and the differential locks on tractors. If Enhanced Vehicle is installed, its differential control is turned off; to hand it back, turn this option off, then turn the differentials back on in the Enhanced Vehicle menu."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Sets whether the front axle and differential locks of tractors are controlled by hand. This option replaces the differential control of Enhanced Vehicle: to hand it back, turn this option off, then turn the differentials back on in its menu."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Allow AUTO Drive Mode"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Adds an AUTO position to the drive mode switch: the front axle engages automatically on wheel slip or at working speeds under load, and disengages on the road. Vehicles left in AUTO fall back to 4WD when this option is turned off."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Sets whether the drive mode switch offers the AUTO position, which engages the front axle when the wheels slip or when working under load, and disengages it on the road. When turned off, vehicles left in AUTO fall back to 4WD."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="This setting requires 4WD and differential lock management to be enabled."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parking Brake"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Adds a parking brake to all RMS vehicles. Recent machines with a CVT or Powershift transmission engage and release it by themselves; on the others, you operate it with its own key binding. If Enhanced Vehicle is installed, its parking brake is turned off; to hand it back, turn this option off, then turn the parking brake back on in the Enhanced Vehicle menu."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Sets whether RMS vehicles have a parking brake: automatic on recent machines with a CVT or Powershift transmission, on its own key binding on the others. This option replaces the parking brake of Enhanced Vehicle: to hand it back, turn this option off, then turn its parking brake back on in its menu."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Workshop"/>
         <text name="rms_ws_tab_summary" text="Summary"/>
@@ -132,6 +134,8 @@
         <text name="rms_shop_service_access_easy" text="High ease of maintenance"/>
         <text name="rms_shop_service_access_average" text="Average ease of maintenance"/>
         <text name="rms_shop_service_access_demanding" text="Low ease of maintenance"/>
+        <text name="rms_shop_launch_year" text="Model launched in %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Launch year unknown"/>
         <text name="rms_owner_care_careful" text="Careful maintenance"/>
         <text name="rms_owner_care_regular" text="Regular maintenance"/>
         <text name="rms_owner_care_neglected" text="Neglected maintenance"/>
