@@ -31,7 +31,7 @@
             <BoxLayout profile="rms_fleetPageFlow">
                 <!-- Fleet pulse -->
                 <GuiElement profile="rms_workshopBlock" size="1473px 48px">
-                    <RoundCorner profile="rms_workshopSurfaceBand" />
+                    <RoundCorner profile="rms_inspectionSurface" />
                     <BoxLayout profile="rms_fleetPulseRow" id="pulseLayout" size="1473px 48px">
                         <Text profile="rms_fleetPulseLabel" size="0px 48px" text="$l10n_rms_fleet_overdue_label" />
                         <Text profile="rms_fleetPulseValue" id="pulseValues[1]" size="0px 48px" />
@@ -135,51 +135,30 @@
                                 <RoundCorner profile="rms_workshopSurfaceSoft" />
                                 <Bitmap profile="rms_fleetIconReliability" position="8px -15px" />
                                 <Text profile="rms_fleetTileLabel" position="40px -9px" size="130px 18px" text="$l10n_rms_ws_label_reliability" />
-                                <Text profile="rms_fleetTileValue" id="reliabilityValue" position="40px -28px" size="130px 24px" />
+                                <Text profile="rms_tileValue" id="reliabilityValue" position="40px -28px" size="130px 24px" />
                             </GuiElement>
                             <GuiElement profile="rms_workshopBlock" position="186px 0px" size="174px 58px">
                                 <RoundCorner profile="rms_workshopSurfaceSoft" />
                                 <Bitmap profile="rms_fleetIconMaintenance" position="8px -15px" />
                                 <Text profile="rms_fleetTileLabel" position="40px -9px" size="130px 18px" text="$l10n_rms_ws_label_service_access" />
-                                <Text profile="rms_fleetTileValue" id="serviceAccessValue" position="40px -28px" size="130px 24px" />
+                                <Text profile="rms_tileValue" id="serviceAccessValue" position="40px -28px" size="130px 24px" />
                             </GuiElement>
                         </GuiElement>
                         <GuiElement profile="rms_workshopBlock" id="reasonTile" position="20px -304px" size="360px 58px" visible="false">
                             <RoundCorner profile="rms_workshopSurfaceSoft" />
                             <Bitmap profile="rms_workshopIcon" position="10px -13px" size="32px 32px" imageSliceId="gui.storeAttribute_info" />
                             <Text profile="rms_fleetTileLabel" position="52px -9px" size="296px 18px" text="$l10n_rms_ingame_menu_header_reason" />
-                            <Text profile="rms_fleetTileValue" id="reasonValue" position="52px -28px" size="296px 24px" />
+                            <Text profile="rms_tileValue" id="reasonValue" position="52px -28px" size="296px 24px" />
                         </GuiElement>
 
                         <BoxLayout profile="rms_workshopStack" position="20px -372px" size="360px 200px" elementSpacing="8px">
-                            <GuiElement profile="rms_workshopBlock" size="360px 44px">
+                            <GuiElement profile="rms_workshopBlock" id="factRowTemplate" size="360px 44px">
                                 <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <Bitmap profile="rms_workshopIcon" position="12px -4px" imageSliceId="gui.icon_calendar" />
-                                <Text profile="rms_workshopDetail" id="factLabels[1]" position="58px -9px" size="150px 26px" textMaxNumLines="1" />
-                                <RoundCorner profile="rms_fleetPillOnRow" id="factPills[1]" position="214px -8px" size="134px 28px" />
-                                <Text profile="rms_workshopPillValue" id="factValues[1]" position="226px -8px" size="110px 28px" />
-                            </GuiElement>
-                            <GuiElement profile="rms_workshopBlock" size="360px 44px">
-                                <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <Bitmap profile="rms_workshopIcon" position="12px -4px" imageSliceId="gui.storeAttribute_operatingHours" />
-                                <Text profile="rms_workshopDetail" id="factLabels[2]" position="58px -9px" size="150px 26px" textMaxNumLines="1" />
-                                <RoundCorner profile="rms_fleetPillOnRow" id="factPills[2]" position="214px -8px" size="134px 28px" />
-                                <Text profile="rms_workshopPillValue" id="factValues[2]" position="226px -8px" size="110px 28px" />
-                            </GuiElement>
-                            <GuiElement profile="rms_workshopBlock" size="360px 44px">
-                                <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <Text profile="rms_workshopPillValue" id="odometerGlyph" position="12px -4px" size="36px 36px" text="ODO" textSize="15px" />
-                                <Bitmap profile="rms_workshopIcon" id="conditionGlyph" position="12px -4px" imageSliceId="gui.storeAttribute_condition" visible="false" />
-                                <Text profile="rms_workshopDetail" id="factLabels[3]" position="58px -9px" size="150px 26px" textMaxNumLines="1" />
-                                <RoundCorner profile="rms_fleetPillOnRow" id="factPills[3]" position="214px -8px" size="134px 28px" />
-                                <Text profile="rms_workshopPillValue" id="factValues[3]" position="226px -8px" size="110px 28px" />
-                            </GuiElement>
-                            <GuiElement profile="rms_workshopBlock" size="360px 44px">
-                                <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <Bitmap profile="rms_workshopCurrencyIcon" id="currencyIcon" position="12px -4px" />
-                                <Text profile="rms_workshopDetail" id="factLabels[4]" position="58px -9px" size="150px 26px" textMaxNumLines="1" />
-                                <RoundCorner profile="rms_fleetPillOnRow" id="factPills[4]" position="214px -8px" size="134px 28px" />
-                                <Text profile="rms_workshopPillValue" id="factValues[4]" position="226px -8px" size="110px 28px" />
+                                <Bitmap profile="rms_workshopRowIcon" name="icon" />
+                                <Text profile="rms_workshopRowBadge" name="badge" text="ODO" />
+                                <Text profile="rms_workshopRowLabel" name="label" position="58px -9px" size="150px 26px" />
+                                <RoundCorner profile="rms_workshopValuePill" name="pill" position="214px -8px" size="134px 28px" />
+                                <Text profile="rms_workshopPillValue" name="value" position="226px -8px" size="110px 28px" />
                             </GuiElement>
                         </BoxLayout>
 
@@ -192,7 +171,7 @@
                     <!-- Dossier of a tracked machine -->
                     <GuiElement profile="rms_workshopBlock" id="dossierColumn" size="669px 626px">
                         <GuiElement profile="rms_workshopBlock" size="669px 64px">
-                            <RoundCorner profile="rms_workshopSurfaceBand" />
+                            <RoundCorner profile="rms_inspectionSurface" />
                             <Bitmap profile="rms_fleetUrgencyAccent" id="bannerAccent" position="10px -12px" size="4px 40px" />
                             <Bitmap profile="rms_fleetIconMaintenance" id="bannerIcons[1]" position="24px -13px" size="38px 38px" />
                             <Bitmap profile="rms_workshopIcon" id="bannerIcons[2]" position="24px -13px" size="38px 38px" imageSliceId="gui.icon_construction_buildings" visible="false" />
@@ -203,54 +182,8 @@
                             </Button>
                         </GuiElement>
 
-                        <!-- Last inspection -->
                         <GuiElement profile="rms_workshopBlock" position="0px -76px" size="328px 550px">
-                            <RoundCorner profile="rms_workshopSurfaceStrong" />
-                            <GuiElement profile="rms_workshopBlock" position="20px -16px" size="288px 32px">
-                                <RoundCorner profile="rms_workshopSectionAccent" />
-                                <Text profile="rms_workshopSectionTitle" position="16px 0px" size="272px 32px" text="$l10n_rms_ws_label_condition" />
-                                <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="272px 1px" />
-                            </GuiElement>
-                            <GuiElement profile="rms_workshopBlock" id="conditionRingArea" position="72px -51px" size="184px 184px" onDraw="onDrawConditionRing" />
-                            <BoxLayout profile="rms_ringValueStack" id="conditionValueStack" position="106px -95px" size="116px 96px">
-                                <Text profile="rms_fleetRingValue" id="conditionValue" size="116px 40px" />
-                                <Text profile="rms_ringOutdated" id="conditionOutdatedText" size="116px 18px" text="$l10n_rms_ws_reading_outdated" visible="false" />
-                            </BoxLayout>
-                            <GuiElement profile="rms_workshopBlock" position="20px -242px" size="288px 224px">
-                                <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <!-- Condition list -->
-                                <GuiElement profile="rms_workshopBlock" id="systemsLayout" position="6px -8px" size="278px 192px">
-                                    <SmoothList profile="rms_fleetStateList" id="stateList" position="0px 0px" size="268px 192px" onClick="onClickStateRow" showHighlights="true">
-                                        <ListItem profile="rms_fleetStateRow" name="system" size="268px 24px" handleFocus="true">
-                                            <Bitmap profile="rms_fleetStateBand" name="band" position="10px 0px" size="256px 24px" />
-                                            <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="256px 24px" />
-                                            <Bitmap profile="rms_fleetStateTriangle" name="triangle" position="12px -8px" />
-                                            <RoundCorner profile="rms_fleetStateDot" name="dot" position="14px -10px" size="4px 4px" />
-                                            <Text profile="rms_fleetSystemName" name="name" position="24px 0px" size="164px 24px" />
-                                            <Bitmap profile="rms_workshopGaugeTrack" name="track" position="194px -9px" size="36px 6px" />
-                                            <Bitmap profile="rms_workshopGaugeFill" name="gauge" position="194px -9px" size="36px 6px" />
-                                            <Text profile="rms_fleetSystemValue" name="value" position="236px 0px" size="26px 24px" />
-                                            <Text profile="rms_fleetSystemRating" name="rating" position="162px 0px" size="100px 24px" />
-                                        </ListItem>
-                                        <ListItem profile="rms_fleetStateRow" name="part" size="268px 24px" handleFocus="true">
-                                            <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="256px 24px" />
-                                            <Bitmap profile="rms_fleetStateGuide" position="16px 0px" size="1px 24px" />
-                                            <Text profile="rms_fleetPartName" name="name" position="30px 0px" size="200px 24px" />
-                                            <Text profile="rms_fleetPartState" name="state" position="130px 0px" size="100px 24px" />
-                                            <Text profile="rms_fleetSystemValue" name="value" position="236px 0px" size="26px 24px" />
-                                        </ListItem>
-                                    </SmoothList>
-                                    <ThreePartBitmap profile="rms_listSliderBox" position="0px 0px" size="6px 100%">
-                                        <Slider profile="fs25_listSlider" dataElementId="stateList" />
-                                    </ThreePartBitmap>
-                                </GuiElement>
-                                <RoundCorner profile="rms_fleetStateFootRule" id="stateFootRule" position="16px -201px" size="256px 1px" />
-                                <Text profile="rms_fleetStateFoot" id="stateFootText" position="12px -204px" size="264px 16px" />
-                                <Text profile="rms_workshopCenteredDetail" id="systemsEmptyText" position="12px 0px" size="264px 224px" text="$l10n_rms_ws_no_last_report_message" />
-                            </GuiElement>
-                            <Text profile="rms_workshopCenteredDetail" position="20px -472px" size="288px 24px" textMaxNumLines="1" text="$l10n_rms_ws_label_last_check" />
-                            <RoundCorner profile="rms_fleetPillOnCard" id="lastCheckPill" position="40px -498px" size="248px 30px" />
-                            <Text profile="rms_workshopPillValue" id="lastCheckValue" position="52px -498px" size="224px 30px" />
+                            <FrameReference ref="RMS_ConditionCardFrame" id="conditionCard" />
                         </GuiElement>
 
                         <!-- Next maintenance, or the running intervention -->
@@ -262,36 +195,20 @@
                                 <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="273px 1px" />
                             </GuiElement>
                             <GuiElement profile="rms_workshopBlock" id="serviceRingArea" position="72px -51px" size="184px 184px" onDraw="onDrawServiceRing" />
-                            <Text profile="rms_fleetRingValue" id="serviceValue" position="106px -115px" size="116px 56px" />
+                            <Text profile="rms_ringValue" id="serviceValue" position="106px -115px" size="116px 56px" />
                             <BoxLayout profile="rms_workshopStack" position="20px -242px" size="289px 222px" elementSpacing="10px">
-                                <GuiElement profile="rms_workshopBlock" size="289px 48px">
+                                <GuiElement profile="rms_workshopBlock" id="serviceRowTemplate" size="289px 48px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopDetail" id="serviceLabels[1]" position="14px 0px" size="82px 48px" textMaxNumLines="1" />
-                                    <RoundCorner profile="rms_fleetPillOnRow" id="servicePills[1]" position="102px -10px" size="175px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="serviceValues[1]" position="114px -10px" size="151px 28px" />
-                                </GuiElement>
-                                <GuiElement profile="rms_workshopBlock" size="289px 48px">
-                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopDetail" id="serviceLabels[2]" position="14px 0px" size="82px 48px" textMaxNumLines="1" />
-                                    <RoundCorner profile="rms_fleetPillOnRow" id="servicePills[2]" position="102px -10px" size="175px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="serviceValues[2]" position="114px -10px" size="151px 28px" />
-                                </GuiElement>
-                                <GuiElement profile="rms_workshopBlock" size="289px 48px">
-                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopDetail" id="serviceLabels[3]" position="14px 0px" size="82px 48px" textMaxNumLines="1" />
-                                    <RoundCorner profile="rms_fleetPillOnRow" id="servicePills[3]" position="102px -10px" size="175px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="serviceValues[3]" position="114px -10px" size="151px 28px" />
-                                </GuiElement>
-                                <GuiElement profile="rms_workshopBlock" size="289px 48px">
-                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopDetail" id="serviceLabels[4]" position="14px 0px" size="82px 48px" textMaxNumLines="1" />
-                                    <RoundCorner profile="rms_fleetPillOnRow" id="servicePills[4]" position="102px -10px" size="175px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="serviceValues[4]" position="114px -10px" size="151px 28px" />
+                                    <Text profile="rms_workshopRowLabel" name="label" position="14px 0px" size="82px 48px" />
+                                    <RoundCorner profile="rms_workshopValuePill" name="pill" position="102px -10px" size="175px 28px" />
+                                    <Text profile="rms_workshopPillValue" name="value" position="114px -10px" size="151px 28px" />
                                 </GuiElement>
                             </BoxLayout>
-                            <Text profile="rms_workshopCenteredDetail" id="serviceFootLabel" position="20px -472px" size="289px 24px" textMaxNumLines="1" />
-                            <RoundCorner profile="rms_fleetPillOnCard" id="serviceFootPill" position="40px -498px" size="249px 30px" />
-                            <Text profile="rms_workshopPillValue" id="serviceFootValue" position="52px -498px" size="225px 30px" />
+                            <GuiElement profile="rms_cardFoot" size="329px 56px">
+                                <Text profile="rms_workshopCenteredDetail" id="serviceFootLabel" position="20px 0px" size="289px 24px" textMaxNumLines="1" />
+                                <RoundCorner profile="rms_workshopValuePillCentered" id="serviceFootPill" position="40px -26px" size="249px 30px" />
+                                <Text profile="rms_workshopPillValue" id="serviceFootValue" position="52px -26px" size="225px 30px" />
+                            </GuiElement>
                         </GuiElement>
                     </GuiElement>
 
@@ -417,6 +334,15 @@
                         <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantOverhaul_label"/>
                     </Bitmap>
                     <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantRemap" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantRemap_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantRemap_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
                         <BinaryOption profile="fs25_settingsBinaryOption" id="rmsMobileWorkshopRestrictions" onClick="onClickRmsOption" useYesNoTexts="true">
                             <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_mobileWorkshopRestrictions_tooltip"/>
                         </BinaryOption>
@@ -502,7 +428,7 @@
                 </ScrollingLayout>
                 <Bitmap profile="fs25_settingsTooltipSeparator" id="settingsTooltipSeparator"/>
                 <ThreePartBitmap profile="rms_menuSettingsDockedSliderBg" id="settingsSliderBox">
-                    <ThreePartBitmap profile="rms_menuDockedSliderBox">
+                    <ThreePartBitmap profile="fs25_sliderDockedBox">
                         <Slider profile="rms_menuDockedSlider" id="settingsSlider" dataElementId="settingsLayout"/>
                     </ThreePartBitmap>
                 </ThreePartBitmap>

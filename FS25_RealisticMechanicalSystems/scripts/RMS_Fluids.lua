@@ -14,26 +14,31 @@ RMS_Fluids.CIRCUIT_ORDER = {
     "hydraulicFluid"
 }
 
+-- level, system, leak and pictogram profile of each circuit
 RMS_Fluids.CIRCUITS = {
     engineOil = {
         levelKey = "engineOilLevel",
         systemKey = "engine",
-        leakEffectId = nil
+        leakEffectId = nil,
+        icon = "rms_workshopFluidIconEngineOil"
     },
     coolant = {
         levelKey = "coolantLevel",
         systemKey = "cooling",
-        leakEffectId = "COOLANT_LEAK_RATE"
+        leakEffectId = "COOLANT_LEAK_RATE",
+        icon = "rms_workshopFluidIconCoolant"
     },
     transmissionOil = {
         levelKey = "transmissionOilLevel",
         systemKey = "transmission",
-        leakEffectId = "TRANSMISSION_OIL_LEAK_RATE"
+        leakEffectId = "TRANSMISSION_OIL_LEAK_RATE",
+        icon = "rms_workshopFluidIconTransmissionOil"
     },
     hydraulicFluid = {
         levelKey = "hydraulicFluidLevel",
         systemKey = "hydraulics",
-        leakEffectId = "HYDRAULIC_FLUID_LEAK_RATE"
+        leakEffectId = "HYDRAULIC_FLUID_LEAK_RATE",
+        icon = "rms_workshopFluidIconHydraulicFluid"
     }
 }
 
@@ -361,14 +366,14 @@ end
 ---Returns the text naming a circuit, the common sump having its own
 -- @param table? vehicle vehicle
 -- @param string circuit circuit key
--- @param string textKey text naming the circuit on its own
+-- @param boolean? isShort true for the short name of a common sump
 -- @return string textKey text naming the circuit on this vehicle
-function RMS_Fluids.getCircuitTextKey(vehicle, circuit, textKey)
+function RMS_Fluids.getCircuitTextKey(vehicle, circuit, isShort)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec ~= nil and spec.hasCommonSump and getSpecSumpCircuit(spec, circuit) == "transmissionOil" then
-        return RMS_Fluids.COMMON_SUMP_TEXT_KEY
+        return isShort and "rms_fluid_hud_transmissionHydraulic" or RMS_Fluids.COMMON_SUMP_TEXT_KEY
     end
-    return textKey
+    return "rms_fluid_circuit_" .. circuit
 end
 
 ---Returns the text warning what an unsuited fluid does to a circuit

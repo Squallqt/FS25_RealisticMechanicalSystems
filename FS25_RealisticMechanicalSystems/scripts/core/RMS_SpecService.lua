@@ -103,22 +103,53 @@ function RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, op
         return hours + (optionThree and C.REPAINT_TIME / 3600000 or 0)
     elseif serviceType == states.BODYWORK then
         return (RMS_Bodywork.getDurationMs(vehicle, optionOne) or 0) / 3600000
+    elseif serviceType == states.REMAP then
+        return RMS_EngineRemap.getDurationHours(optionOne)
     elseif serviceType == states.REFILL then
         return C.REFILL_TIME / 3600000
     end
     return 0
 end
 
----
+-- the setting of RMS_Config.MAINTENANCE that makes each service instant
+local INSTANT_SETTINGS = {
+    [RealisticMechanicalSystems.STATUS.INSPECTION] = "INSTANT_INSPECTION",
+    [RealisticMechanicalSystems.STATUS.MAINTENANCE] = "INSTANT_MAINTENANCE_REPAIR",
+    [RealisticMechanicalSystems.STATUS.REPAIR] = "INSTANT_MAINTENANCE_REPAIR",
+    [RealisticMechanicalSystems.STATUS.OVERHAUL] = "INSTANT_OVERHAUL",
+    [RealisticMechanicalSystems.STATUS.BODYWORK] = "INSTANT_BODYWORK",
+    [RealisticMechanicalSystems.STATUS.REMAP] = "INSTANT_REMAP"
+}
+
+---Tells whether the settings finish a service at once
+-- @param string serviceType service status
+-- @return boolean isInstant true when it takes no time
+function RealisticMechanicalSystems.getIsServiceInstant(serviceType)
+    local setting = INSTANT_SETTINGS[serviceType]
+    return setting ~= nil and RMS_Config.MAINTENANCE[setting]
+end
+
+---Finishes every running service the settings make instant
+function RealisticMechanicalSystems.finishInstantServices()
+    if not g_currentMission:getIsServer() then
+        return
+    end
+    for _, vehicle in pairs(RMS_Main.vehicles) do
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        if RealisticMechanicalSystems.getIsServiceInstant(spec.currentState) and not spec.isExcludedVehicle
+            and RealisticMechanicalSystems.forceFinishService(vehicle) then
+            RealisticMechanicalSystems.raiseServiceLifecycleDirtyFlags(vehicle)
+        end
+    end
+end
+
+---Returns the workshop time of a service, one second when it is instant
 local function getServiceWorkDurationMs(vehicle, serviceType, optionOne, optionTwo, optionThree)
     local hours = RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, optionOne, optionTwo, optionThree)
-    if hours <= 0 then return 0 end
-    local C, states = RMS_Config.MAINTENANCE, RealisticMechanicalSystems.STATUS
-    local instant = serviceType == states.INSPECTION and C.INSTANT_INSPECTION
-        or (serviceType == states.MAINTENANCE or serviceType == states.REPAIR) and C.INSTANT_MAINTENANCE_REPAIR
-        or serviceType == states.OVERHAUL and C.INSTANT_OVERHAUL
-        or serviceType == states.BODYWORK and C.INSTANT_BODYWORK
-    return instant and 1000 or hours * 3600000
+    if hours <= 0 then
+        return 0
+    end
+    return RealisticMechanicalSystems.getIsServiceInstant(serviceType) and 1000 or hours * 3600000
 end
 
 ---Clears every pending service field of the spec
@@ -258,6 +289,9 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     if type == states.BODYWORK and not RMS_Bodywork.isAllowed(self, workshopType, optionOne, optionTwo) then
         return false
     end
+    if type == states.REMAP and not RMS_EngineRemap.getAvailability(self, workshopType, optionOne) then
+        return false
+    end
 
     if type == states.OVERHAUL
         and optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
@@ -327,6 +361,9 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     -- bodywork
     elseif type == states.BODYWORK then
         repairPrice = RMS_Bodywork.getPrice(self, optionOne, workshopType)
+
+    elseif type == states.REMAP then
+        repairPrice = RMS_EngineRemap.getPrice(self, optionOne)
 
     -- overhaul
     elseif type == states.OVERHAUL then
@@ -614,17 +651,39 @@ function RealisticMechanicalSystems.getMaintenanceReadsFaultCodes(vehicle, works
         RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD) == true
 end
 
+-- the year dashboards got each telltale
+local TELLTALE_YEARS = { engine = 1990, transmission = 1990, brakes = 1980, battery = 1950, coolant = 1950, warning = 1990,
+    service = 1970, oil = 1950 }
+
+---Tells whether the dashboard of a machine carries a telltale
+-- @param table vehicle vehicle
+-- @param string indicatorId telltale
+-- @return boolean isFitted true when its dashboard has it
+function RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, indicatorId)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if indicatorId == "preheat" then
+        return spec.isDieselVehicle == true
+    elseif indicatorId == "dpf" then
+        return spec.hasParticulateFilter == true
+    elseif indicatorId == "tractionBattery" or indicatorId == "limitedPower" then
+        return spec.isElectricVehicle == true
+    elseif indicatorId == "fanReversal" then
+        return spec.hasReversibleFan == true
+    elseif indicatorId == "oil" and RMS_Fluids.getCapacity(vehicle, "engineOil") <= 0 then
+        return false
+    end
+    return TELLTALE_YEARS[indicatorId] <= spec.year
+end
+
 ---Tells whether a machine lights a telltale for an unidentified fault
 -- @param table vehicle vehicle
 -- @return boolean hasWarning unidentified fault lights a telltale
 function RealisticMechanicalSystems.getHasUnidentifiedWarning(vehicle)
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local hasEngineOil = RMS_Fluids.hasCircuit(vehicle, "engineOil")
     for breakdownId, breakdown in pairs(vehicle:getActiveBreakdowns()) do
         local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
         if definition.isSelectable and breakdown.isActive and not breakdown.isVisible then
             for _, indicator in ipairs(RMS_Utils.getBranchItems(definition.stages[breakdown.stage].indicators, breakdown)) do
-                if RMS_Hud.getIsTelltaleFitted(indicator.id, RMS_Hud.TELLTALE_YEARS[indicator.id] or 0, spec, hasEngineOil) then
+                if RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, indicator.id) then
                     return true
                 end
             end
@@ -761,6 +820,9 @@ function RealisticMechanicalSystems:completeService()
         if optionOne == RMS_Bodywork.FULL then
             RMS_BodyworkColorEvent.sendToClients(self, optionTwo)
         end
+    end
+    if serviceType == states.REMAP then
+        RMS_EngineRemap.complete(self, optionOne)
     end
 
     spec.pendingSelectedBreakdowns = selectedBreakdowns
@@ -1214,19 +1276,15 @@ function RealisticMechanicalSystems:getInspectionReportAge()
 end
 
 ---Returns the date of the newest maintenance
--- @return table? date maintenance date
+-- @return table? date maintenance date, nil before the first one
 function RealisticMechanicalSystems:getLastMaintenanceDate()
-    local spec = self.spec_RealisticMechanicalSystems
-    if not spec or not spec.maintenanceLog or #spec.maintenanceLog == 0 then
-        return 0
-    end
-
-    for i = #spec.maintenanceLog, 1, -1 do
-        local entry = spec.maintenanceLog[i]
-        if entry.type == RealisticMechanicalSystems.STATUS.MAINTENANCE or entry.type == RealisticMechanicalSystems.STATUS.OVERHAUL then
-            return entry.date
+    local STATUS, log = RealisticMechanicalSystems.STATUS, self.spec_RealisticMechanicalSystems.maintenanceLog
+    for index = #log, 1, -1 do
+        if log[index].type == STATUS.MAINTENANCE or log[index].type == STATUS.OVERHAUL then
+            return log[index].date
         end
     end
+    return nil
 end
 
 ---Returns the service reference interval the player selected
@@ -1496,6 +1554,7 @@ function RealisticMechanicalSystems:isWarrantyRepairCovered(repairType, partType
     if (partType or R.PART_TYPES.OEM) ~= R.PART_TYPES.OEM
         or (repairType or R.REPAIR_TYPES.MEDIUM) ~= R.REPAIR_TYPES.MEDIUM then return false, "options" end
     if self.propertyState == VehiclePropertyState.LEASED then return false, "lease" end
+    if spec.warrantyVoided then return false, "remapped" end
     if breakdownId ~= nil then
         local fault = self:getActiveBreakdowns()[breakdownId]
         if fault ~= nil and fault.warrantyServiceOverdue then return false, "overdue" end
@@ -1738,6 +1797,9 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
     if maintenanceType == RealisticMechanicalSystems.STATUS.BODYWORK then
         return RMS_Bodywork.getPrice(self, optionOne or self.spec_RealisticMechanicalSystems.serviceOptionOne,
             workshopTypeOverride or self.spec_RealisticMechanicalSystems.workshopType) or 0
+    end
+    if maintenanceType == RealisticMechanicalSystems.STATUS.REMAP then
+        return RMS_EngineRemap.getPrice(self, optionOne or self.spec_RealisticMechanicalSystems.serviceOptionOne)
     end
     local price = self:getPrice()
     local spec = self.spec_RealisticMechanicalSystems

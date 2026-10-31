@@ -653,63 +653,17 @@ function RMS_Utils.convertHoursToHoursAndMinutes(totalHours)
     return math.floor(totalMinutes / 60), totalMinutes % 60
 end
 
----Resizes the money box around its label and its value
--- @param table? labelElement label element
--- @param table? valueElement value element
--- @param table? boxElement box element
--- @param table? bgElement background element
--- @param string labelText label text
--- @param string valueText value text
-function RMS_Utils.updateMoneyBoxLayout(labelElement, valueElement, boxElement, bgElement, labelText, valueText)
-    if labelElement == nil or valueElement == nil or boxElement == nil or bgElement == nil then
-        return
-    end
-
-    if labelElement.setText ~= nil then
-        labelElement:setText(tostring(labelText or ""))
-    end
-    if valueElement.setText ~= nil then
-        valueElement:setText(tostring(valueText or ""))
-    end
-
-    if boxElement.invalidateLayout ~= nil then
-        boxElement:invalidateLayout()
-    end
-
-    local targetWidth = nil
-    if boxElement.flowSizes ~= nil then
-        targetWidth = boxElement.flowSizes[1]
-    end
-
-    if targetWidth == nil or targetWidth <= 0 then
-        return
-    end
-
-    local horizontalPadding = (bgElement.position[1] - boxElement.position[1]) * 2
-    local bgHeight = (bgElement.size ~= nil and bgElement.size[2]) or ((boxElement.size ~= nil and boxElement.size[2]) or 0.03)
-    targetWidth = targetWidth + horizontalPadding
-
-    if bgElement.setSize ~= nil then
-        bgElement:setSize(targetWidth, bgHeight)
-    end
-
-    if bgElement.invalidateLayout ~= nil then
-        bgElement:invalidateLayout()
-    end
-end
-
----Fits the recap vehicle card beside an optional follow-up card.
--- @param table dialog workshop procedure dialog
--- @param boolean hasFollowUp whether the follow-up card is visible
-function RMS_Utils.updateRecapVehicleCard(dialog, hasFollowUp)
-    local cardWidth = hasFollowUp and dialog.recapAddonBlock.size[1] or dialog.recapQuoteBlock.size[1]
-    local textWidth = hasFollowUp and dialog.recapAddon.size[1] or dialog.recapOptions.size[1]
-    dialog.recapVehicleBlock:setSize(cardWidth, nil)
-    dialog.recapVehicleSurface:setSize(cardWidth, nil)
-    dialog.recapVehicleLayout:setSize(cardWidth, nil)
-    dialog.recapVehicleLabel:setSize(textWidth, nil)
-    dialog.recapVehicle:setSize(textWidth, nil)
-    dialog.recapVehicleLayout:invalidateLayout()
+---Writes the farm balance as the shop does, red below zero
+-- @param table moneyBox box of the balance
+-- @param table moneyBoxBg background sized on the box
+-- @param table balanceElement text of the amount
+function RMS_Utils.setBalance(moneyBox, moneyBoxBg, balanceElement)
+    local money = g_currentMission:getMoney()
+    local GUI_PROFILE = ShopMenu.GUI_PROFILE
+    balanceElement:applyProfile(math.floor(money) <= -1 and GUI_PROFILE.SHOP_MONEY_NEGATIVE or GUI_PROFILE.SHOP_MONEY, nil, true)
+    balanceElement:setText(g_i18n:formatMoney(money, 0, true, false))
+    moneyBox:invalidateLayout()
+    moneyBoxBg:setSize(moneyBox.flowSizes[1] + 60 * g_pixelSizeScaledX)
 end
 
 ---Renders a table as a readable string
@@ -731,6 +685,56 @@ function RMS_Utils.tableToString(tbl)
         table.insert(parts, string.format("%s = %s", tostring(k), valueStr))
     end
     return "{ " .. table.concat(parts, ", ") .. " }"
+end
+
+---Lays out the boxes of an element, the inner ones first
+local function layOut(element)
+    for _, child in ipairs(element.elements) do
+        layOut(child)
+    end
+    -- a layout box, told as TextElement:updateSize tells one
+    if element.invalidateLayout ~= nil then
+        element:invalidateLayout()
+    end
+end
+
+---Clones a template at the end of its parent, then deletes the template
+-- @param table template element declared last in its parent
+-- @param integer count clones to make
+-- @return table clones each with its templateIndex
+function RMS_Utils.cloneTemplate(template, count)
+    local parent = template.parent
+    template:unlinkElement()
+    local clones = {}
+    for index = 1, count do
+        clones[index] = template:clone(parent)
+        clones[index].templateIndex = index
+    end
+    template:delete()
+    -- GuiElement:clone adds a child to its box before giving it its size
+    layOut(parent)
+    return clones
+end
+
+---Insets a card background in its frame by whole screen pixels
+-- @param table card card holding a frame and its background
+function RMS_Utils.insetCardBackground(card)
+    local frame, background = card:getDescendantByName("frame"), card:getDescendantByName("background")
+    -- two reference pixels: whole, every edge rounds alike on the screen
+    local pixels = math.max(math.floor(2 * g_pixelSizeScaledX * g_screenWidth + 0.5), 1)
+    local insetX, insetY = pixels / g_screenWidth, pixels / g_screenHeight
+    background:setPosition(frame.position[1] + insetX, frame.position[2] - insetY)
+    background:setSize(frame.size[1] - 2 * insetX, frame.size[2] - 2 * insetY)
+end
+
+---Returns the machine a tool is connected to, server or client
+-- @param table spec tool spec holding targetObjectId or target
+-- @return table? object connected machine
+function RMS_Utils.getConnectedObject(spec)
+    if spec.targetObjectId ~= nil then
+        return NetworkUtil.getObject(spec.targetObjectId)
+    end
+    return spec.target
 end
 
 ---Returns the key holding a value in a table
@@ -758,6 +762,52 @@ function RMS_Utils.hasSelectedVisibleBreakdown(vehicle)
     end
 
     return false
+end
+
+---Ids of the breakdowns the workshop knows, worst stage first
+-- @param table vehicle vehicle
+-- @return table ids breakdown ids
+function RMS_Utils.getVisibleBreakdownIds(vehicle)
+    local breakdowns = vehicle:getActiveBreakdowns()
+    local ids = {}
+    for id, breakdown in pairs(breakdowns) do
+        if breakdown.isVisible then
+            table.insert(ids, id)
+        end
+    end
+    table.sort(ids, function(a, b)
+        local aStage, bStage = breakdowns[a].stage or 0, breakdowns[b].stage or 0
+        if aStage ~= bStage then
+            return aStage > bStage
+        end
+        return tostring(a) < tostring(b)
+    end)
+    return ids
+end
+
+---Stage and description of a known breakdown, as the workshop words them
+-- @param table vehicle vehicle
+-- @param string id breakdown id
+-- @param table breakdown active breakdown
+-- @return string stageText localized stage
+-- @return string descriptionText localized description
+function RMS_Utils.getBreakdownTexts(vehicle, id, breakdown)
+    local SOURCES = RealisticMechanicalSystems.BREAKDOWN_SOURCES
+    if breakdown.isActive == false and breakdown.source == SOURCES.QUICK_FIX then
+        return g_i18n:getText("rms_breakdowns_quick_fix_stage"), g_i18n:getText("rms_breakdowns_temporarily_repaired_description")
+    elseif breakdown.isActive == false and breakdown.source == SOURCES.POOR_PARTS then
+        return g_i18n:getText("rms_breakdowns_defected_parts_stage"), g_i18n:getText("rms_breakdowns_defected_parts_detected_description")
+    end
+    local stage = RMS_Breakdowns.BreakdownRegistry[id].stages[breakdown.stage]
+    return g_i18n:getText(stage.severity), g_i18n:getText(RMS_Breakdowns.getStageDescription(vehicle, stage, breakdown))
+end
+
+---Name of the part a breakdown hits
+-- @param string id breakdown id
+-- @return string name localized part, or system
+function RMS_Utils.getBreakdownPartName(id)
+    local definition = RMS_Breakdowns.BreakdownRegistry[id]
+    return g_i18n:getText(definition.part or definition.system)
 end
 
 -- @param table? items stage items, each common to every mode or tied to one by its branch
@@ -1103,48 +1153,41 @@ function RMS_Utils.formatReportAge(hours)
     return string.format(g_i18n:getText("rms_spec_work_hours_ago_format"), g_i18n:formatNumber(math.floor(hours), 0), g_i18n:getText("rms_spec_op_hours_short"))
 end
 
----Formats how long ago a date was, in months
--- @param table? pastDate date holding year and month
+-- texts of a date counted in months: none, this month, months ago
+local MONTHS_AGO_TEXTS = {
+    fleet = { "rms_spec_never", "rms_spec_this_month", "rms_spec_months_ago_format" },
+    shop = { "rms_shop_last_maintenance_never", "rms_shop_last_maintenance_this_month", "rms_shop_last_maintenance_months_ago" }
+}
+
+---Formats how many months ago a date of the game was
+-- @param table? pastDate year and month, nil when it never happened
+-- @param table texts entry of MONTHS_AGO_TEXTS
 -- @return string text localized elapsed time
-function RMS_Utils.formatTimeAgo(pastDate) 
-    if type(pastDate) ~= "table" or not pastDate.year or not pastDate.month then
-        return g_i18n:getText('rms_spec_never')
+local function formatMonthsAgo(pastDate, texts)
+    if pastDate == nil then
+        return g_i18n:getText(texts[1])
     end
-
-    local env = g_currentMission and g_currentMission.environment
-    if not env then
-        return ""
-    end
-
-    local currentMonthsTotal = env.currentYear * 12 + env.currentPeriod
-    local pastMonthsTotal = pastDate.year * 12 + pastDate.month
-
-    local monthsAgo = math.max(0, currentMonthsTotal - pastMonthsTotal)
-
+    local environment = g_currentMission.environment
+    local monthsAgo = math.max(0, (environment.currentYear - pastDate.year) * 12 + environment.currentPeriod - pastDate.month)
     if monthsAgo == 0 then
-        return g_i18n:getText('rms_spec_this_month')
-    else
-        return string.format(
-            g_i18n:getText('rms_spec_months_ago_format'), 
-            monthsAgo, 
-            g_i18n:getText(monthsAgo == 1 and 'rms_spec_month_ago_one' or 'rms_spec_months_ago_unit')
-        )
+        return g_i18n:getText(texts[2])
     end
+    return string.format(g_i18n:getText(texts[3]), monthsAgo,
+        g_i18n:getText(monthsAgo == 1 and "rms_spec_month_ago_one" or "rms_spec_months_ago_unit"))
 end
 
+---Formats how long ago a date was, in months
+-- @param table? pastDate year and month, nil when it never happened
+-- @return string text localized elapsed time
+function RMS_Utils.formatTimeAgo(pastDate)
+    return formatMonthsAgo(pastDate, MONTHS_AGO_TEXTS.fleet)
+end
+
+---Formats the last maintenance of a machine as the shop lists it
 -- @param table? pastDate year and month, nil without maintenance
 -- @return string text localized attribute
 function RMS_Utils.formatShopLastMaintenance(pastDate)
-    if type(pastDate) ~= "table" or not pastDate.year or not pastDate.month then
-        return g_i18n:getText("rms_shop_last_maintenance_never")
-    end
-    local env = g_currentMission.environment
-    local monthsAgo = math.max(0, env.currentYear * 12 + env.currentPeriod - (pastDate.year * 12 + pastDate.month))
-    if monthsAgo == 0 then
-        return g_i18n:getText("rms_shop_last_maintenance_this_month")
-    end
-    return string.format(g_i18n:getText("rms_shop_last_maintenance_months_ago"), monthsAgo,
-        g_i18n:getText(monthsAgo == 1 and "rms_spec_month_ago_one" or "rms_spec_months_ago_unit"))
+    return formatMonthsAgo(pastDate, MONTHS_AGO_TEXTS.shop)
 end
 
 -- @param float damage repair need of the machine, 0 to 1
@@ -1239,12 +1282,7 @@ end
 ---Names the actual circuit which causes the next service recommendation.
 function RMS_Utils.formatServiceReason(vehicle, schedule, compact)
     if schedule == nil then return "" end
-    local keys = {engineOil = "rms_inspection_engine_oil", transmissionOil = "rms_inspection_transmission_oil",
-        hydraulicFluid = "rms_inspection_hydraulic_fluid", coolant = "rms_inspection_coolant"}
-    local circuit = schedule.clock.circuits[1]
-    local key = RMS_Fluids.getCircuitTextKey(vehicle, circuit, keys[circuit])
-    if compact and key == "rms_fluid_circuit_transmissionHydraulic" then key = "rms_fluid_hud_transmissionHydraulic" end
-    return g_i18n:getText(key)
+    return g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, schedule.clock.circuits[1], compact))
 end
 
 ---Formats the two limits of a service deadline
@@ -1301,6 +1339,13 @@ function RMS_Utils.formatMaintenanceLevel(vehicle, maintenanceType)
         RMS_Utils.formatHours(vehicle:getMaintenanceLevelInterval(maintenanceType)))
 end
 
+---Formats an engine power as the shop of the game writes it
+-- @param float hp power in hp
+-- @return string text rounded power with its unit
+function RMS_Utils.formatPower(hp)
+    return string.format(g_i18n:getText("shop_maxPowerValueSingle"), MathUtil.round(hp))
+end
+
 ---Names the first option of a service
 -- @param table vehicle vehicle
 -- @param string serviceType service type
@@ -1309,6 +1354,10 @@ end
 function RMS_Utils.formatServiceOption(vehicle, serviceType, optionOne)
     if serviceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
         return RMS_Utils.formatMaintenanceLevel(vehicle, optionOne)
+    elseif serviceType == RealisticMechanicalSystems.STATUS.REMAP and vehicle.spec_motorized ~= nil then
+        local stockHp = RMS_EngineRemap.getStockPeaks(vehicle)
+        local power = optionOne == RMS_EngineRemap.REMAP and stockHp * (1 + RMS_EngineRemap.getGain(vehicle)) or stockHp
+        return string.format("%s · %s", g_i18n:getText(optionOne), RMS_Utils.formatPower(power))
     end
     return g_i18n:getText(optionOne)
 end
@@ -1494,6 +1543,37 @@ RMS_Utils.LOG_ICON_PROFILES = {
     refill = {row = "rms_logTypeIconRefill", detail = "rms_logDetailIconRefill"}
 }
 
+---Entries of the maintenance log the record shows, newest first
+-- @param table vehicle vehicle
+-- @return table entries log entries
+function RMS_Utils.getVisibleLogEntries(vehicle)
+    local log = vehicle.spec_RealisticMechanicalSystems.maintenanceLog
+    local entries = {}
+    for index = #log, 1, -1 do
+        if RMS_Utils.normalizeBoolValue(log[index].isVisible, true) then
+            table.insert(entries, log[index])
+        end
+    end
+    return entries
+end
+
+---Breakdowns resolved by the completed repairs and overhauls of a log
+-- @param table log maintenance log entries
+-- @return integer count resolved breakdowns
+function RMS_Utils.getResolvedBreakdownsCount(log)
+    local STATUS, count = RealisticMechanicalSystems.STATUS, 0
+    for _, entry in ipairs(log) do
+        if entry.isCompleted ~= false and (entry.type == STATUS.REPAIR or entry.type == STATUS.OVERHAUL) then
+            for _, id in ipairs(entry.conditionData ~= nil and entry.conditionData.selectedBreakdowns or {}) do
+                if RMS_Breakdowns.BreakdownRegistry[id] ~= nil then
+                    count = count + 1
+                end
+            end
+        end
+    end
+    return count
+end
+
 ---Formats a maintenance log date in the same compact form as the report screen
 -- @param table? entry maintenance log entry
 -- @return string dateText formatted date
@@ -1537,6 +1617,8 @@ function RMS_Utils.getLogTypePresentation(entry)
         return g_i18n:getText("rms_ws_action_refill"), RMS_Utils.COLOR.HIGHLIGHT, "rms_WorkshopFluids.engineOil", "refill"
     elseif entryType == status.BODYWORK then
         return g_i18n:getText("rms_spec_state_bodywork"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_machines", "square"
+    elseif entryType == status.REMAP then
+        return g_i18n:getText("rms_spec_state_remap"), RMS_Utils.COLOR.HIGHLIGHT, "gui.storeAttribute_power", "square"
     elseif entryType == RealisticMechanicalSystems.LOG_DIAGNOSTIC_READING then
         return g_i18n:getText("rms_diagnostic_log_title"), {1, 1, 1, 1}, "rms_Diagnostic.stethoscope", "square"
     end
@@ -1572,23 +1654,6 @@ end
 function RMS_Utils.populateTwoColumnTextRow(items, index, cell, leftAttribute, rightAttribute, rightBulletAttribute)
     populateTextColumnsRow(items, index, cell, {
         {text = leftAttribute},
-        {text = rightAttribute, bullet = rightBulletAttribute}
-    })
-end
-
----Fills a three-column text row and hides its unused center and right columns
--- @param table items ordered text items
--- @param integer index row index
--- @param table cell list row element
--- @param string leftAttribute left text attribute name
--- @param string centerAttribute center text attribute name
--- @param string centerBulletAttribute center bullet attribute name
--- @param string rightAttribute right text attribute name
--- @param string rightBulletAttribute right bullet attribute name
-function RMS_Utils.populateThreeColumnTextRow(items, index, cell, leftAttribute, centerAttribute, centerBulletAttribute, rightAttribute, rightBulletAttribute)
-    populateTextColumnsRow(items, index, cell, {
-        {text = leftAttribute},
-        {text = centerAttribute, bullet = centerBulletAttribute},
         {text = rightAttribute, bullet = rightBulletAttribute}
     })
 end
@@ -1852,8 +1917,9 @@ end
 -- @param table list list element
 function RMS_Utils.reloadListTemplates(list)
     for sectionIndex, section in pairs(list.sections) do
+        local count = list.dataSource:getNumberOfItemsInSection(list, sectionIndex)
         for index, cell in pairs(section.cells) do
-            if cell.reusableName ~= list.dataSource:getCellTypeForItemInSection(list, sectionIndex, index) then
+            if index > count or cell.reusableName ~= list.dataSource:getCellTypeForItemInSection(list, sectionIndex, index) then
                 list:queueReusableCell(cell)
             end
         end
@@ -2304,6 +2370,71 @@ function RMS_Utils.getResaleValue(vehicle, isDirectSell)
     return math.min(math.floor(vehicle:getSellPrice() * multiplier), vehicle:getPrice())
 end
 
+---Hours of the hour meter, to the tenth, on any machine
+-- @param table vehicle vehicle
+-- @return float hours floored to the tenth, as Enterable:getFormattedOperatingTime
+function RMS_Utils.getHourMeter(vehicle)
+    return math.floor(vehicle:getOperatingTime() / 360000) / 10
+end
+
+---What a vehicle card lists: age, hours, distance or condition, value
+-- @param table vehicle vehicle
+-- @param boolean isTracked true for a machine RMS follows, which keeps its distance
+-- @param boolean isDirectSell true at the dealer, which pays the direct sale bonus
+-- @return table facts label, value and pictogram slice of each row, the odometer by its badge
+function RMS_Utils.getVehicleFacts(vehicle, isTracked, isDirectSell)
+    local third = { label = g_i18n:getText("rms_odometer_label"),
+        value = RMS_Utils.formatOdometerKilometers(RMS_Utils.getOdometerKilometers(vehicle)), isOdometer = true }
+    if not isTracked then
+        -- a machine without wear, as a type without Wearable, stays as new
+        local damage = vehicle.getDamageAmount ~= nil and vehicle:getDamageAmount() or 0
+        third = { label = g_i18n:getText("rms_ws_label_condition"), value = string.format("%.0f%%", math.clamp(1 - damage, 0, 1) * 100),
+            icon = "gui.storeAttribute_condition" }
+    end
+    local valueLabel, value = g_i18n:getText("rms_ws_label_value"), RMS_Utils.getResaleValue(vehicle, isDirectSell)
+    if vehicle.propertyState == VehiclePropertyState.LEASED then
+        valueLabel = g_i18n:getText("rms_ingame_menu_header_leasing_price")
+        value = vehicle:getPrice() * (EconomyManager.DEFAULT_RUNNING_LEASING_FACTOR + EconomyManager.PER_DAY_LEASING_FACTOR)
+    elseif isDirectSell and value ~= nil then
+        valueLabel = string.format("%s (+%d%%)", valueLabel, math.floor((EconomyManager.DIRECT_SELL_MULTIPLIER - 1) * 100 + 0.5))
+    end
+    return {
+        { label = g_i18n:getText("rms_ws_label_age"), value = string.format("%d %s", vehicle.age, g_i18n:getText("rms_ws_age_unit")),
+            icon = "gui.icon_calendar" },
+        { label = g_i18n:getText("rms_ws_label_operating_hours"), value = RMS_Utils.formatHours(RMS_Utils.getHourMeter(vehicle)),
+            icon = "gui.storeAttribute_operatingHours" },
+        third,
+        { label = valueLabel, value = value ~= nil and g_i18n:formatMoney(value, 0, true, false) or "-", icon = RMS_Utils.getCurrencySlice() }
+    }
+end
+
+---Writes the facts of a vehicle in rows cloned from one template
+-- @param table rows rows holding an icon, a badge, a label, a pill and a value
+-- @param table vehicle vehicle
+-- @param boolean isTracked true for a machine RMS follows
+-- @param boolean isDirectSell true at the dealer
+function RMS_Utils.writeVehicleFacts(rows, vehicle, isTracked, isDirectSell)
+    for index, fact in ipairs(RMS_Utils.getVehicleFacts(vehicle, isTracked, isDirectSell)) do
+        local row = rows[index]
+        local icon = row:getDescendantByName("icon")
+        -- the odometer reads by its badge, every other fact by its pictogram
+        icon:setVisible(not fact.isOdometer)
+        row:getDescendantByName("badge"):setVisible(fact.isOdometer == true)
+        if not fact.isOdometer then
+            icon:setImageSlice(nil, fact.icon)
+        end
+        RMS_Utils.writeRow(row, fact.label, fact.value)
+    end
+end
+
+---Writes a row cloned from a template, its pill closed on the value
+-- @param table row row holding a label, a pill and a value
+-- @param string labelText localized label
+-- @param string valueText localized value
+function RMS_Utils.writeRow(row, labelText, valueText)
+    RMS_Utils.fitRowValue(row:getDescendantByName("label"), row:getDescendantByName("pill"), row:getDescendantByName("value"), labelText, valueText)
+end
+
 ---Returns the weight a system carries on this vehicle
 -- @param table? vehicle vehicle
 -- @param string systemName system name
@@ -2737,132 +2868,91 @@ function RMS_Utils.resolveConsoleSystemKey(spec, rawSystem)
 end
 
 
-local VALUE_PILL_ANCHOR = {
-    rms_workshopValuePill = "right",
-    rms_workshopValuePillCentered = "center"
-}
-
----Restores a value pill and its text to the boxes the XML declares
-local function resetValuePill(valuePill, valueElement)
-    if valuePill.rmsPillBox == nil then
-        valuePill.rmsPillBox = {
-            x = valuePill.position[1],
-            width = valuePill.size[1],
-            padding = valueElement.position[1] - valuePill.position[1]
-        }
+---Closes a pill on its value, its label taking the width freed
+-- @param table pill rounded background of the value
+-- @param table value value text drawn inside the pill
+-- @param string? anchor "center", otherwise the right edge
+-- @param table? label text on the left of the pill
+local function fitPill(pill, value, anchor, label)
+    -- the boxes the XML declares, read before the first fit moves them
+    if pill.rmsPillBox == nil then
+        pill.rmsPillBox = { x = pill.position[1], width = pill.size[1], padding = value.position[1] - pill.position[1],
+            labelGap = label ~= nil and pill.position[1] - label.position[1] - label.size[1] or nil }
+    end
+    local box = pill.rmsPillBox
+    local function close(width)
+        local x = anchor == "center" and box.x + (box.width - width) / 2 or box.x + box.width - width
+        pill:setPosition(x, nil)
+        pill:setSize(width, nil)
+        value:setPosition(x + box.padding, nil)
+        value:setSize(width - box.padding * 2, nil)
+    end
+    -- a hair over the text, else the game takes a smaller size
+    local function getClosedWidth()
+        return math.min(box.width, value:getTextWidth(true) * 1.001 + box.padding * 2)
     end
 
-    local box = valuePill.rmsPillBox
-    valuePill:setPosition(box.x, nil)
-    valuePill:setSize(box.width, nil)
-    valueElement:setPosition(box.x + box.padding, nil)
-    valueElement:setSize(box.width - box.padding * 2, nil)
-
-    return box
-end
-
--- @param table valuePill rounded background of the value
--- @param table valueElement value text drawn inside the pill
--- @param string? anchor "center", otherwise keep right edge
--- @param string? valueText value to write, the one already in place when nil
-function RMS_Utils.fitValuePill(valuePill, valueElement, anchor, valueText)
-    local box = resetValuePill(valuePill, valueElement)
-    valueElement:setText(valueText or valueElement.sourceText or "")
-
-    local width = math.min(box.width, valueElement:getTextWidth(true) + box.padding * 2)
-    local x = box.x + box.width - width
-    if anchor == "center" then
-        x = box.x + (box.width - width) * 0.5
+    close(box.width)
+    close(getClosedWidth())
+    if label == nil then
+        return
     end
-
-    valuePill:setPosition(x, nil)
-    valuePill:setSize(width, nil)
-    valueElement:setPosition(x + box.padding, nil)
-    valueElement:setSize(width - box.padding * 2, nil)
-end
-
-local function giveLabelRoom(label, labelGap, valuePill, valueElement)
-    local box = valuePill.rmsPillBox
+    -- while the label stays cut, the value drops one size step
     while true do
-        label:setSize(valuePill.position[1] - labelGap - label.position[1], nil)
-        if label.text == label.sourceText
-            or valueElement.textSize - valueElement.defaultTextSize * 0.05 <= valueElement.textMinSize then
+        label:setSize(pill.position[1] - box.labelGap - label.position[1], nil)
+        local size = value.textSize
+        if label.text == label.sourceText or size - value.defaultTextSize * 0.05 <= value.textMinSize then
             return
         end
-
-        -- Leave a width tolerance before native text-size selection.
-        local size = valueElement.textSize
-        valueElement:setSize(valueElement:getTextWidth(true) * 0.999, nil)
-        if valueElement.textSize >= size then
+        -- a box a hair narrower makes the game take its next size
+        value:setSize(value:getTextWidth(true) * 0.999, nil)
+        if value.textSize >= size then
             return
         end
-        local width = valueElement:getTextWidth(true) * 1.001 + box.padding * 2
-        local x = box.x + box.width - width
-        valuePill:setPosition(x, nil)
-        valuePill:setSize(width, nil)
-        valueElement:setPosition(x + box.padding, nil)
-        valueElement:setSize(width - box.padding * 2, nil)
+        close(getClosedWidth())
     end
 end
 
----Gives the label left of a value pill the width the pill gave up
-local function fitPillLabel(label, valuePill, valueElement)
-    if label == nil or label.sourceText == nil then
-        return
-    end
-
-    if label.rmsLabelGap == nil then
-        label.rmsLabelGap = valuePill.rmsPillBox.x - label.position[1] - label.size[1]
-    end
-    if label.rmsLabelGap < 0 then
-        return
-    end
-
-    giveLabelRoom(label, label.rmsLabelGap, valuePill, valueElement)
+---Writes a value into its pill and closes the pill on it
+-- @param table pill rounded background of the value
+-- @param table value value text drawn inside the pill
+-- @param string? anchor "center", otherwise the right edge
+-- @param string valueText value to write
+function RMS_Utils.fitValuePill(pill, value, anchor, valueText)
+    value:setText(valueText)
+    fitPill(pill, value, anchor)
 end
 
----Fits every value pill of a screen to its value
+---Writes a row, label and value, and fits its pill
+-- @param table label row label
+-- @param table pill rounded background of the value
+-- @param table value value text drawn inside the pill
+-- @param string labelText localized row label
+-- @param string valueText localized row value
+function RMS_Utils.fitRowValue(label, pill, value, labelText, valueText)
+    label:setText(labelText)
+    value:setText(valueText)
+    fitPill(pill, value, nil, label)
+end
+
+---Fits every pill of a screen on the value written after it
 -- @param table element element to walk
 function RMS_Utils.fitValuePills(element)
-    if element == nil then
-        return
-    end
-
     local children = element.elements
-    for index = 1, #children do
-        RMS_Utils.fitValuePills(children[index])
-
-        local anchor = VALUE_PILL_ANCHOR[children[index].profile]
-        if anchor ~= nil and children[index + 1] ~= nil then
-            RMS_Utils.fitValuePill(children[index], children[index + 1], anchor)
-            if anchor == "right" then
-                fitPillLabel(children[index - 1], children[index], children[index + 1])
+    for index, child in ipairs(children) do
+        RMS_Utils.fitValuePills(child)
+        -- a pill declares its anchor in its profile, its value follows it
+        local anchor = g_gui:getProfile(child.profile):getValue("rmsPillAnchor")
+        if anchor ~= nil then
+            -- the label is the text before a right pill, ending before it
+            local label = children[index - 1]
+            if anchor ~= "right" or label == nil or label.sourceText == nil
+                or label.position[1] + label.size[1] > child.position[1] then
+                label = nil
             end
+            fitPill(child, children[index + 1], anchor, label)
         end
     end
-end
-
----Fits a row on its value, the title taking back the width the pill gives up
--- @param table titleElement row title element
--- @param table valuePill rounded background of the value
--- @param table valueElement value text drawn inside the pill
--- @param string titleText localized row title
--- @param string valueText localized row value
-function RMS_Utils.fitRowValue(titleElement, valuePill, valueElement, titleText, valueText)
-    if valuePill.rmsRowBox == nil then
-        valuePill.rmsRowBox = {
-            titleWidth = titleElement.size[1],
-            titleGap = valuePill.position[1] - titleElement.position[1] - titleElement.size[1]
-        }
-    end
-
-    local box = valuePill.rmsRowBox
-
-    titleElement:setSize(box.titleWidth, nil)
-    titleElement:setText(titleText)
-
-    RMS_Utils.fitValuePill(valuePill, valueElement, nil, valueText)
-    giveLabelRoom(titleElement, box.titleGap, valuePill, valueElement)
 end
 
 RMS_Utils.SCROLL_SPEED = 0.5
@@ -3032,11 +3122,36 @@ function RMS_Utils.linkFocusColumns(top, columns, preferred)
     if preferred ~= nil and preferred:getIsVisible() and preferred:canReceiveFocus() then
         entry = preferred
     end
+    -- a screen opening on its top element leads down to its first one
     if top ~= nil then
         FocusManager:linkElements(top, FocusManager.TOP, nil)
-        FocusManager:linkElements(top, FocusManager.BOTTOM, entry ~= top and entry or nil)
+        FocusManager:linkElements(top, FocusManager.BOTTOM, entry ~= top and entry or first)
     end
     return entry
+end
+
+---Registers a cloned branch in the focus, each element with a new id
+-- @param table element root of the branch, a cloned frame or template
+function RMS_Utils.registerFocus(element)
+    -- a clone carries the focus ids of its source, which the manager skips
+    element.focusId = nil
+    for _, child in ipairs(element:getDescendants()) do
+        child.focusId = nil
+    end
+    FocusManager:loadElementFromCustomValues(element)
+end
+
+---Puts a screen in its own focus, the frames placed in it included
+-- @param table screen screen the player navigates, its frames resolved
+function RMS_Utils.registerScreenFocus(screen)
+    -- the manager focuses what a controller of the screen's name targets
+    for _, element in ipairs(screen:getDescendants()) do
+        if element:isa(FrameElement) then
+            element.name = screen.name
+        end
+    end
+    FocusManager:setGui(screen.name)
+    RMS_Utils.registerFocus(screen)
 end
 
 ---Hands the focus to an element when what held it is no longer shown
@@ -3046,4 +3161,72 @@ function RMS_Utils.keepFocusShown(entry)
     if entry ~= nil and (focused == nil or not focused:getIsVisible()) then
         FocusManager:setFocus(entry)
     end
+end
+
+local CURRENCY_SLICES = {
+    [GS_MONEY_EURO] = "ui_elements.currency_euro",
+    [GS_MONEY_DOLLAR] = "ui_elements.currency_dollar",
+    [GS_MONEY_POUND] = "ui_elements.currency_pound"
+}
+
+---Returns the slice of the glyph of the money unit the player set
+-- @return string sliceId slice of the game sheet
+function RMS_Utils.getCurrencySlice()
+    return CURRENCY_SLICES[g_gameSettings:getValue("moneyUnit")]
+end
+
+---Shows the glyph of the money unit the player set
+-- @param table element bitmap of the glyph
+function RMS_Utils.setCurrencyIcon(element)
+    element:setImageSlice(nil, RMS_Utils.getCurrencySlice())
+end
+
+---Writes the picture, the brand and the model of a vehicle
+-- @param table vehicle vehicle
+-- @param table imageElement bitmap of the store picture
+-- @param table brandElement text of the brand
+-- @param table modelElement text of the model
+function RMS_Utils.setVehicleIdentity(vehicle, imageElement, brandElement, modelElement)
+    imageElement:setImageFilename(vehicle:getImageFilename())
+    local brand = g_brandManager:getBrandByIndex(vehicle:getBrand())
+    brandElement:setText(brand.name ~= "NONE" and brand.title or "")
+    modelElement:setText(vehicle:getName())
+end
+
+---What the last inspection report reads, as the workshop shows it
+-- @param table vehicle vehicle
+-- @return table reading texts, colors and ring shares of service and condition, report age
+function RMS_Utils.getInspectionReading(vehicle)
+    local reportHours, isOutdated = vehicle:getInspectionReportAge()
+    local service, isServiceComplete = vehicle:getLastInspectedService()
+    local condition, isConditionComplete = vehicle:getLastInspectedCondition()
+    return {
+        isOutdated = isOutdated,
+        ageText = RMS_Utils.formatReportAge(reportHours),
+        serviceText = RMS_Utils.formatService(service, isServiceComplete),
+        serviceColor = isOutdated and RMS_Utils.COLOR.TEXT_DIM or { RMS_Utils.getServiceColor(service, isServiceComplete) },
+        serviceRatio = RMS_Utils.getServiceRingRatio(service, isServiceComplete),
+        conditionText = RMS_Utils.formatCondition(condition, isConditionComplete),
+        conditionColor = isOutdated and RMS_Utils.COLOR.TEXT_DIM or { RMS_Utils.getConditionColor(condition, isConditionComplete) },
+        conditionRatio = RMS_Utils.getConditionRingRatio(condition, isConditionComplete)
+    }
+end
+
+---Shows a separator of a button bar only between two shown buttons
+-- @param table box button bar
+function RMS_Utils.showButtonSeparators(box)
+    local separator
+    local hasButtonBefore = false
+    for _, element in ipairs(box.elements) do
+        if element.profile == "fs25_dialogButtonBoxSeparator" then
+            element:setVisible(false)
+            separator = hasButtonBefore and element or separator
+        elseif element:getIsVisible() then
+            if separator ~= nil then
+                separator:setVisible(true)
+            end
+            separator, hasButtonBefore = nil, true
+        end
+    end
+    box:invalidateLayout()
 end

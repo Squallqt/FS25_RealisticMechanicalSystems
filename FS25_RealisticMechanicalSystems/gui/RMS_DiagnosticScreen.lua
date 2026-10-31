@@ -11,6 +11,8 @@ local modDirectory = g_currentModDirectory
 local PAGE = RMS_DiagnosticScreen.PAGE
 
 local REFRESH_MS = 250
+-- the fields the detail panel holds
+local DETAIL_FIELDS = 6
 local COLOR = {
     TEXT = { 0.0452, 0.0452, 0.0452, 1 },
     GREY = { 0.2346, 0.2346, 0.1981, 1 },
@@ -28,13 +30,6 @@ local function setText(element, text)
         shownTexts[element] = text
         element:setText(text)
     end
-end
-
----Loads the screen layout and stores the shared instance
-function RMS_DiagnosticScreen.register()
-    local screen = RMS_DiagnosticScreen.new()
-    g_gui:loadGui(modDirectory .. "gui/RMS_DiagnosticScreen.xml", "RMS_DiagnosticScreen", screen)
-    RMS_DiagnosticScreen.INSTANCE = screen
 end
 
 ---Create instance of RMS_DiagnosticScreen
@@ -183,13 +178,12 @@ function RMS_DiagnosticScreen:updateDetail()
         or g_i18n:getText("rms_diagnostic_uncoded_title"))
     setText(self.detailText, getCodeText(entry))
     local fields, note = getDetailFields(target, entry, RMS_DiagnosticTool.getIsLicenceValid(self.tool))
-    for fieldIndex = 1, #self.detailLabel do
+    for fieldIndex, row in ipairs(self.detailFields) do
         local field = fields[fieldIndex]
-        self.detailLabel[fieldIndex]:setVisible(field ~= nil)
-        self.detailValue[fieldIndex]:setVisible(field ~= nil)
+        row:setVisible(field ~= nil)
         if field ~= nil then
-            setText(self.detailLabel[fieldIndex], field[1])
-            setText(self.detailValue[fieldIndex], field[2])
+            setText(row:getDescendantByName("label"), field[1])
+            setText(row:getDescendantByName("value"), field[2])
         end
     end
     self.detailNoteLine:setVisible(note ~= nil)
@@ -452,6 +446,7 @@ function RMS_DiagnosticScreen:onCreate()
     self.machineList:setDelegate(self)
     self.codeList:setDataSource(self)
     self.codeList:setDelegate(self)
+    self.detailFields = RMS_Utils.cloneTemplate(self.detailFieldTemplate, DETAIL_FIELDS)
 end
 
 ---Fills the screen from the trolley and focuses its first control

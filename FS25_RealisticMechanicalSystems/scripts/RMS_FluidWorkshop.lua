@@ -15,7 +15,10 @@ RMS_FluidWorkshop.RESULT = {
     PRICE_UNAVAILABLE = "PRICE_UNAVAILABLE",
     NOT_ENOUGH_MONEY = "NOT_ENOUGH_MONEY",
     SERVICE_REFUSED = "SERVICE_REFUSED",
-    CONSUMPTION_FAILED = "CONSUMPTION_FAILED"
+    CONSUMPTION_FAILED = "CONSUMPTION_FAILED",
+    REMAP_DEALER = "REMAP_DEALER",
+    REMAP_LEASED = "REMAP_LEASED",
+    REMAP_NOT_ELIGIBLE = "REMAP_NOT_ELIGIBLE"
 }
 
 RMS_FluidWorkshop.sellingPoints = {}
@@ -30,8 +33,13 @@ RMS_FluidWorkshop.RESULT_TEXT_KEYS = {
     MOBILE_DIAGNOSTIC = "rms_mobile_workshop_diagnostic_required",
     MOBILE_HEAVY_WORK = "rms_mobile_workshop_heavy_work_required",
     MOBILE_HIGH_VOLTAGE = "rms_mobile_workshop_high_voltage_required",
+    REMAP_DEALER = "rms_remap_refusal_dealer",
+    REMAP_LEASED = "rms_remap_refusal_leased",
+    REMAP_NOT_ELIGIBLE = "rms_remap_refusal_not_eligible",
     INVALID = "rms_fluid_service_refused"
 }
+
+local REMAP_REFUSALS = { dealer = "REMAP_DEALER", leased = "REMAP_LEASED", notEligible = "REMAP_NOT_ELIGIBLE" }
 
 ---Tells whether a breakdown is covered by the requested player repair
 local function getIsBreakdownCoveredByRepair(breakdownId, breakdown, repairType)
@@ -97,6 +105,11 @@ end
 ---Returns workshop equipment requirements.
 function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, optionOne)
     local workshops = RealisticMechanicalSystems.WORKSHOP
+    if serviceType == RealisticMechanicalSystems.STATUS.REMAP then
+        local isAllowed, refusal = RMS_EngineRemap.getAvailability(vehicle, workshopType, optionOne)
+        if refusal ~= nil then return false, REMAP_REFUSALS[refusal] end
+        return isAllowed, not isAllowed and "INVALID" or nil
+    end
     if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil
         or workshopType ~= workshops.MOBILE and workshopType ~= workshops.OWN
         or not RMS_Config.WORKSHOP.MOBILE_WORKSHOP_RESTRICTIONS_ENABLED then
@@ -177,13 +190,6 @@ function RMS_FluidWorkshop.formatLiters(liters)
     return g_i18n:formatNumber(value, decimalPlaces)
 end
 
-local CIRCUIT_TEXT_KEYS = {
-    engineOil = "rms_inspection_engine_oil",
-    coolant = "rms_inspection_coolant",
-    transmissionOil = "rms_inspection_transmission_oil",
-    hydraulicFluid = "rms_inspection_hydraulic_fluid"
-}
-
 local MODE_TEXT_KEYS = {
     topUp = "rms_fluid_mode_top_up",
     replace = "rms_fluid_mode_replace",
@@ -198,13 +204,9 @@ local MODE_TEXT_KEYS = {
 -- @param boolean? compact use short common-sump name
 -- @return string text localized requirement
 function RMS_FluidWorkshop.formatRequirement(vehicle, circuit, liters, mode, compact)
-    local key = RMS_Fluids.getCircuitTextKey(vehicle, circuit, CIRCUIT_TEXT_KEYS[circuit] or circuit)
-    if compact and key == RMS_Fluids.COMMON_SUMP_TEXT_KEY then
-        key = "rms_fluid_hud_transmissionHydraulic"
-    end
     return string.format(
         "%s %s %s (%s)",
-        g_i18n:getText(key),
+        g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, circuit, compact)),
         RMS_FluidWorkshop.formatLiters(liters),
         g_i18n:getText("unit_literShort"),
         g_i18n:getText(MODE_TEXT_KEYS[mode] or "rms_fluid_mode_top_up")
@@ -515,7 +517,8 @@ function RMS_FluidWorkshop.getInvoiceRows(vehicle, serviceType, optionOne, invoi
     for _, line in ipairs(invoice) do
         local price = tonumber(line.price) or 0
         if line.kind == "service" then
-            local labelKey = serviceType == RealisticMechanicalSystems.STATUS.BODYWORK and optionOne
+            local labelKey = (serviceType == RealisticMechanicalSystems.STATUS.BODYWORK
+                or serviceType == RealisticMechanicalSystems.STATUS.REMAP) and optionOne
                 or "rms_log_invoice_workshop_flat_rate"
             table.insert(rows, { kind = line.kind, label = g_i18n:getText(labelKey), price = price })
         elseif line.kind == "labour" or line.kind == "filters" then

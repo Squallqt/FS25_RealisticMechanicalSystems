@@ -81,14 +81,6 @@ local function publishState(charger, spec)
     charger:raiseDirtyFlags(spec.dirtyFlag)
 end
 
----
-local function getTargetObject(spec)
-    if spec.targetObjectId ~= nil then
-        return NetworkUtil.getObject(spec.targetObjectId)
-    end
-    return spec.target
-end
-
 ---Notifies a live change of the charger, never the join or save snapshot
 local function notifyChange(charger, previousState, previousInsufficient, previousTarget)
     if not charger.isClient or g_currentMission.hud == nil
@@ -120,7 +112,7 @@ local function notifyChange(charger, previousState, previousInsufficient, previo
         message = g_i18n:getText("rms_charger_consumers")
     end
     if message ~= nil then
-        local target = getTargetObject(spec) or previousTarget
+        local target = RMS_Utils.getConnectedObject(spec) or previousTarget
         local name = target ~= nil and target:getFullName() or charger:getFullName()
         g_currentMission.hud:addSideNotification(HUD.COLOR.DEFAULT,
             string.format(g_i18n:getText("rms_hud_vehicle_notification"), name, message))
@@ -134,7 +126,7 @@ function RMS_BatteryCharger.getConnectedCharger(target)
     if not target.isServer then
         for _, charger in pairs(g_currentMission.vehicleSystem.vehicles) do
             local spec = getSpec(charger)
-            if spec ~= nil and canDisconnect(spec) and getIsAlive(charger) and getTargetObject(spec) == target then
+            if spec ~= nil and canDisconnect(spec) and getIsAlive(charger) and RMS_Utils.getConnectedObject(spec) == target then
                 return charger
             end
         end
@@ -249,7 +241,7 @@ local DISPLAY_INDICATIONS = { "lcdUnitV", "lcdUnitA", "lcdVoltage12V", "lcdVolta
 
 local function getShownIndications(spec)
     local shown = { "lcdUnitV", "lcdUnitA" }
-    local target = getTargetObject(spec)
+    local target = RMS_Utils.getConnectedObject(spec)
     if not canDisconnect(spec) or not getIsAlive(target) or not target.finishedLoading then
         return shown
     end
@@ -354,7 +346,7 @@ function RMS_BatteryCharger.validate(charger, target, mode)
         return "distance"
     end
     local spec = assert(getSpec(charger))
-    local connected = canDisconnect(spec) and getTargetObject(spec) == target and spec.targetPosition ~= nil
+    local connected = canDisconnect(spec) and RMS_Utils.getConnectedObject(spec) == target and spec.targetPosition ~= nil
     local process = mode or spec.mode or RMS_BatteryCharger.MODE.CHARGE
     if process == RMS_BatteryCharger.MODE.START and targetSpec.electricalRating.seriesBatteries > 1 then return "voltage" end
     if (not connected or process ~= RMS_BatteryCharger.MODE.START)
@@ -539,7 +531,7 @@ function RMS_BatteryCharger:onUpdate()
         if reason ~= "ok" then RMS_BatteryCharger.stop(self, RMS_BatteryCharger.STATE.INTERRUPTED, reason) end
     end
     if self.isServer and spec.mode == RMS_BatteryCharger.MODE.START and canDisconnect(spec) then
-        local target = getTargetObject(spec)
+        local target = RMS_Utils.getConnectedObject(spec)
         if getIsAlive(target) then
             local cranking = getIsCranking(target) and not target:getIsMotorStarted()
             if spec.wasCranking and not cranking then
@@ -554,7 +546,7 @@ function RMS_BatteryCharger:onUpdate()
         end
     end
     if self.isServer and canDisconnect(spec) and not spec.pendingTarget then
-        local target = getTargetObject(spec)
+        local target = RMS_Utils.getConnectedObject(spec)
         if getIsAlive(target) and target.spec_RealisticMechanicalSystems ~= nil then
             local voltage = target.spec_RealisticMechanicalSystems.systemVoltageV
             local changed = spec.publishedVoltage == nil or math.abs(spec.publishedVoltage - voltage) >= 0.02
@@ -564,7 +556,7 @@ function RMS_BatteryCharger:onUpdate()
         end
     end
     if spec.state == RMS_BatteryCharger.STATE.CHARGING or spec.pendingResume or spec.pendingTarget
-        or spec.state == RMS_BatteryCharger.STATE.FULL and getIsAlive(getTargetObject(spec)) then self:raiseActive() end
+        or spec.state == RMS_BatteryCharger.STATE.FULL and getIsAlive(RMS_Utils.getConnectedObject(spec)) then self:raiseActive() end
     if self.isClient then
         if spec.display ~= nil then
             local voltage = math.floor(math.clamp(spec.voltage, 0, 99.9) * 10 + 0.5)
@@ -705,7 +697,7 @@ end
 function RMS_BatteryCharger:onReadUpdateStream(streamId, timestamp, connection)
     if connection:getIsServer() and streamReadBool(streamId) then
         local spec = assert(getSpec(self))
-        local previousState, previousInsufficient, previousTarget = spec.state, spec.insufficient, getTargetObject(spec)
+        local previousState, previousInsufficient, previousTarget = spec.state, spec.insufficient, RMS_Utils.getConnectedObject(spec)
         readState(spec, streamId)
         notifyChange(self, previousState, previousInsufficient, previousTarget)
         self:raiseActive()
@@ -719,7 +711,7 @@ function RMS_BatteryCharger:showInfo(superFunc, box)
     local stateKeys = {"rms_charger_idle", "rms_charger_charging", "rms_charger_full", "rms_charger_interrupted"}
     local state = g_i18n:getText(stateKeys[spec.state + 1])
     if spec.mode == RMS_BatteryCharger.MODE.START and canDisconnect(spec) then
-        local target = getTargetObject(spec)
+        local target = RMS_Utils.getConnectedObject(spec)
         if getIsAlive(target) and target:getIsMotorStarted() then
             state = g_i18n:getText("rms_charger_start_running")
         elseif getIsAlive(target) and getIsCranking(target) then
@@ -881,7 +873,7 @@ function RMS_BatteryChargerActivatable:run()
         OptionDialog.show(function(index)
             if index == 1 then self:connect(RMS_BatteryCharger.MODE.CHARGE)
             elseif index == 2 then self:connect(RMS_BatteryCharger.MODE.START) end
-        end, g_i18n:getText("rms_charger_mode_select"), g_i18n:getText("rms_charger_name"),
+        end, g_i18n:getText("rms_charger_start"), g_i18n:getText("rms_charger_name"),
             {g_i18n:getText("rms_charger_mode_charge"), g_i18n:getText("rms_charger_mode_start")})
     end
 end

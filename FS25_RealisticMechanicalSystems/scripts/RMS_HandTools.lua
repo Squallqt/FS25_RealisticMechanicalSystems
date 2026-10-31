@@ -106,13 +106,8 @@ function rmsHandTools:attachToolToHand(superFunc)
     return attached
 end
 
----Keeps both cable pairs in the native first-person graphics container.
-function rmsHandTools:attachToolToCamera(superFunc)
-    restoreLeftCablePair(self)
-    return superFunc(self)
-end
-
-function rmsHandTools:detachTool(superFunc)
+---Puts the cable pair back in its own graphics before the native step
+function rmsHandTools:restoreCablePairFirst(superFunc)
     restoreLeftCablePair(self)
     return superFunc(self)
 end
@@ -319,11 +314,13 @@ function rmsHandTools.registerFunctions(handTool)
     SpecializationUtil.registerFunction(handTool, "tryUseGreaseGunServer", rmsHandTools.tryUseGreaseGunServer)
     SpecializationUtil.registerFunction(handTool, "handleJumperCablesActionServer", rmsHandTools.handleJumperCablesActionServer)
     SpecializationUtil.registerFunction(handTool, "applyJumperCablesState", rmsHandTools.applyJumperCablesState)
-    for _, name in ipairs({"attachToolToHand", "attachToolToCamera", "detachTool"}) do
+    local overwrites = {attachToolToHand = rmsHandTools.attachToolToHand, attachToolToCamera = rmsHandTools.restoreCablePairFirst,
+        detachTool = rmsHandTools.restoreCablePairFirst}
+    for name, overwrite in pairs(overwrites) do
         if handTool.functions[name] ~= nil then
-            SpecializationUtil.registerOverwrittenFunction(handTool, name, rmsHandTools[name])
+            SpecializationUtil.registerOverwrittenFunction(handTool, name, overwrite)
         else
-            SpecializationUtil.registerFunction(handTool, name, Utils.overwrittenFunction(HandTool[name], rmsHandTools[name]))
+            SpecializationUtil.registerFunction(handTool, name, Utils.overwrittenFunction(HandTool[name], overwrite))
         end
     end
 end

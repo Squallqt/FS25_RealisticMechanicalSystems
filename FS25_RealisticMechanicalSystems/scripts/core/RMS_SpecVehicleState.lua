@@ -72,7 +72,7 @@ local function updateDynamicMotorLoad(vehicle, dt)
         return 0
     end
 
-    local motorLoad = RealisticMechanicalSystems.sanitizeNumber(vehicle:getMotorLoadPercentage(), 0, 0, 1.5)
+    local motorLoad = RealisticMechanicalSystems.sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, vehicle:getMotorLoadPercentage()), 0, 0, 1.5)
     local hasMoreRealistic = g_modIsLoaded["MoreRealistic"] == true
 
     if hasMoreRealistic then

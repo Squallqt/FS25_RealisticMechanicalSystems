@@ -149,6 +149,7 @@ source(g_currentModDirectory .. "scripts/RMS_Fluids.lua")
 source(g_currentModDirectory .. "scripts/RMS_FluidTransfer.lua")
 source(g_currentModDirectory .. "scripts/RMS_FluidStorage.lua")
 source(g_currentModDirectory .. "scripts/RMS_Bodywork.lua")
+source(g_currentModDirectory .. "scripts/RMS_EngineRemap.lua")
 source(g_currentModDirectory .. "scripts/RMS_FluidWorkshop.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProgressRing.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProductionYearData.lua")
@@ -159,17 +160,6 @@ source(g_currentModDirectory .. "scripts/RMS_DebugReading.lua")
 source(g_currentModDirectory .. "scripts/RMS_DebugWindow.lua")
 source(g_currentModDirectory .. "scripts/RMS_Leasing.lua")
 source(g_currentModDirectory .. "scripts/RMS_Tutorial.lua")
-source(g_currentModDirectory .. "gui/RMS_WorkshopDialog.lua")
-source(g_currentModDirectory .. "gui/RMS_MaintenanceLogDialog.lua")
-source(g_currentModDirectory .. "gui/RMS_ReportDialog.lua")
-source(g_currentModDirectory .. "gui/RMS_InspectionDialog.lua")
-source(g_currentModDirectory .. "gui/RMS_SellItemDialog.lua")
-source(g_currentModDirectory .. "gui/RMS_InGameMenuFrame.lua")
-source(g_currentModDirectory .. "gui/RMS_MaintenanceTwoOptionsDialog.lua")
-source(g_currentModDirectory .. "gui/RMS_MaintenanceThreeOptionsDialog.lua")
-source(g_currentModDirectory .. "gui/RMS_WelcomeDialog.lua")
-source(g_currentModDirectory .. "gui/RMS_DiagnosticScreen.lua")
-source(g_currentModDirectory .. "gui/RMS_SettingsPage.lua")
 source(g_currentModDirectory .. "scripts/RMS_Hud.lua")
 source(g_currentModDirectory .. "scripts/RMS_PlayerInput.lua")
 source(g_currentModDirectory .. "events/RMS_VehicleChangeStatusEvent.lua")
@@ -197,42 +187,6 @@ source(g_currentModDirectory .. "events/RMS_TripResetEvent.lua")
 source(g_currentModDirectory .. "events/RMS_FanReversalEvent.lua")
 source(g_currentModDirectory .. "events/RMS_DebugReadingEvent.lua")
 
----Loads the GUI profiles of the mod
-function RMS_Main.loadGuiProfiles()
-    if RMS_Main.guiProfilesLoaded then
-        return
-    end
-
-    g_gui:loadProfiles(modDirectory .. "gui/guiProfiles.xml")
-
-    if g_overlayManager.textureConfigs.rms_MenuIcon == nil then
-        g_overlayManager:addTextureConfigFile(modDirectory .. "images/menuIcon.xml", "rms_MenuIcon")
-    end
-
-    if g_overlayManager.textureConfigs.rms_WorkshopFluids == nil then
-        g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_workshopFluids.xml", "rms_WorkshopFluids")
-    end
-
-    if g_overlayManager.textureConfigs.rms_LevelGauge == nil then
-        g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_levelGauge.xml", "rms_LevelGauge")
-    end
-
-    if g_overlayManager.textureConfigs.rms_Diagnostic == nil then
-        g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_diagnostic.xml", "rms_Diagnostic")
-    end
-
-    if g_overlayManager.textureConfigs.rms_DiagnosticPc == nil then
-        g_overlayManager:addTextureConfigFile(modDirectory .. "gui/rms_diagnosticPc.xml", "rms_DiagnosticPc")
-    end
-
-    -- Load the shared atlas before building the fleet page.
-    if g_overlayManager.textureConfigs.rms_Hud == nil then
-        g_overlayManager:addTextureConfigFile(modDirectory .. "hud/rms_hud.xml", "rms_Hud")
-        g_overlayManager:addTextureConfigFile(modDirectory .. "hud/rms_lampGlow.xml", "rms_LampGlow")
-    end
-
-    RMS_Main.guiProfilesLoaded = true
-end
 
 
 ---Declares the RMS specialization to the vehicle type manager
@@ -313,20 +267,9 @@ end
 
 ---Builds the mod state once the mission is running
 function RMS_Main:onStartMission()
-    RMS_Main.loadGuiProfiles()
+    RMS_Gui.loadResources()
     self.shopMenuPageInstalled = false
-
-    RMS_WorkshopDialog.register()
-    RMS_MaintenanceLogDialog.register()
-    RMS_ReportDialog.register()
-    RMS_InspectionDialog.register()
-    RMS_SellItemDialog.register()
-    RMS_MaintenanceTwoOptionsDialog.register()
-    RMS_MaintenanceThreeOptionsDialog.register()
-    RMS_WelcomeDialog.register()
-    RMS_DiagnosticScreen.register()
-
-    RMS_ProgressRing.register()
+    RMS_Gui.loadScreens()
 
     local mission = g_currentMission
     RMS_Main.hud = RMS_Hud:new()
@@ -376,10 +319,23 @@ function RMS_Main.refreshWorkshopResalePrices(screen, dt)
     end
 end
 
+---Workshop a vanilla workshop screen stands for
+-- @param table screenInstance workshop screen
+-- @return string workshopType workshop type
+function RMS_Main.getWorkshopType(screenInstance)
+    local WORKSHOP = RealisticMechanicalSystems.WORKSHOP
+    if screenInstance.isMobileWorkshop then
+        return WORKSHOP.MOBILE
+    elseif screenInstance.isOwnWorkshop then
+        return WORKSHOP.OWN
+    end
+    return WORKSHOP.DEALER
+end
+
 ---Opens the workshop dialog in place of the vanilla repair button
 -- @param table screenInstance workshop screen
 function RMS_Main.onCustomRepairClick(screenInstance)
-    RMS_WorkshopDialog.show(screenInstance.vehicle)
+    RMS_WorkshopDialog.show(screenInstance.vehicle, RMS_Main.getWorkshopType(screenInstance))
 end
 
 ---Redirects the vanilla repair button to the mod workshop dialog
@@ -453,16 +409,7 @@ function RMS_Main.hookRepaintButton(screenInstance, vehicle)
         and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
     if isRmsVehicle then
         button.onClickCallback = function()
-            local workshopType = RealisticMechanicalSystems.WORKSHOP.DEALER
-            if screenInstance.isOwnWorkshop then
-                workshopType = RealisticMechanicalSystems.WORKSHOP.OWN
-            end
-            if screenInstance.isMobileWorkshop then
-                workshopType = RealisticMechanicalSystems.WORKSHOP.MOBILE
-            end
-            if workshopType ~= RealisticMechanicalSystems.WORKSHOP.MOBILE then
-                RMS_WorkshopDialog.show(screenInstance.vehicle, true)
-            end
+            RMS_WorkshopDialog.show(screenInstance.vehicle, RMS_Main.getWorkshopType(screenInstance), RealisticMechanicalSystems.STATUS.BODYWORK)
         end
         button:setText(g_i18n:getText("button_repaint"))
         button:setDisabled(screenInstance.isMobileWorkshop == true)
@@ -928,6 +875,25 @@ VehicleSaleSystem.loadFromXMLFile = Utils.overwrittenFunction(VehicleSaleSystem.
 
 RMS_Main.initSpec()
 
+-- the screens read the names the specialization gives
+source(g_currentModDirectory .. "gui/RMS_Chart.lua")
+source(g_currentModDirectory .. "gui/RMS_WorkshopOrders.lua")
+source(g_currentModDirectory .. "gui/RMS_WorkshopPage.lua")
+source(g_currentModDirectory .. "gui/RMS_ConditionCardFrame.lua")
+source(g_currentModDirectory .. "gui/RMS_WorkshopStatusFrame.lua")
+source(g_currentModDirectory .. "gui/RMS_ReportFrame.lua")
+source(g_currentModDirectory .. "gui/RMS_WorkshopSummaryFrame.lua")
+source(g_currentModDirectory .. "gui/RMS_WorkshopDiagnosticFrame.lua")
+source(g_currentModDirectory .. "gui/RMS_WorkshopInterventionsFrame.lua")
+source(g_currentModDirectory .. "gui/RMS_WorkshopRecordFrame.lua")
+source(g_currentModDirectory .. "gui/RMS_WorkshopDialog.lua")
+source(g_currentModDirectory .. "gui/RMS_InspectionDialog.lua")
+source(g_currentModDirectory .. "gui/RMS_SellItemDialog.lua")
+source(g_currentModDirectory .. "gui/RMS_InGameMenuFrame.lua")
+source(g_currentModDirectory .. "gui/RMS_DiagnosticScreen.lua")
+source(g_currentModDirectory .. "gui/RMS_SettingsPage.lua")
+source(g_currentModDirectory .. "gui/RMS_Gui.lua")
+
 
 RMS_Main.vehicles = {}
 RMS_Main.numVehicles = 0
@@ -995,22 +961,6 @@ function RMS_Main:onPeriodChanged()
     RMS_DiagnosticTool.advanceLicences()
 end
 
----Refreshes the open workshop when its vehicle status or resale payment changes
-local function updateOpenWorkshopDialog()
-    local dialog = RMS_WorkshopDialog.INSTANCE
-    if dialog == nil or not dialog.isDialogOpen or dialog.vehicle == nil or dialog.vehicle.spec_RealisticMechanicalSystems == nil then
-        return
-    end
-
-    local currentStatus = dialog.vehicle:getCurrentStatus()
-    if dialog.lastObservedStatus ~= currentStatus
-        or dialog.lastResaleValue ~= RMS_Utils.getResaleValue(dialog.vehicle,
-            dialog.workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER) then
-        dialog:updateScreen()
-    end
-end
-
-
 ---Runs the mod update: workshop hours and the simulation step of every vehicle
 -- @param float dt time since last call in ms
 function RMS_Main:update(dt)
@@ -1039,7 +989,6 @@ function RMS_Main:update(dt)
 
     if not g_currentMission:getIsServer() or self.numVehicles == 0 then
         self.previousKey = nil
-        updateOpenWorkshopDialog()
         return
     end
 
@@ -1050,7 +999,6 @@ function RMS_Main:update(dt)
     local vehiclesToUpdate = math.floor(self.updateAlphaTimer / timePerVehicle)
 
     if vehiclesToUpdate < 1 then
-        updateOpenWorkshopDialog()
         return
     end
 
@@ -1091,12 +1039,12 @@ function RMS_Main:update(dt)
         end
     end
     self.updateAlphaTimer = self.updateAlphaTimer - vehiclesToUpdate * timePerVehicle
-    updateOpenWorkshopDialog()
 end
 
 ---Loads the RMS map state and GUI registrations
 function RMS_Main:loadMap()
-    RMS_Main.loadGuiProfiles()
+    RMS_Gui.loadResources()
+    RMS_Gui.loadFrames()
     RMS_SettingsPage.reset()
     self.shopMenuPageInstalled = false
     RMS_Config.resetTutorialStateSession()
@@ -1119,7 +1067,7 @@ end
 function RMS_Main:deleteMap()
     g_messageCenter:unsubscribe(MessageType.PERIOD_CHANGED, self)
     self.shopMenuPageInstalled = false
-    RMS_Main.guiProfilesLoaded = nil
+    RMS_Gui.unloadResources()
     RMS_Config._loaded = nil
     RMS_Config.resetTutorialStateSession()
     RMS_SettingsPage.reset()

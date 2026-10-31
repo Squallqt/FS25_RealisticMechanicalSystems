@@ -205,6 +205,21 @@ local function getPowerShare(motor)
     return peak * math.pi / 30 / motor.peakMotorPower
 end
 
+---Describes the engine software a tuner fitted
+local function getRemapText(vehicle, spec)
+    if not RMS_EngineRemap.getIsEligible(vehicle) and not RMS_EngineRemap.getIsRemapped(vehicle) then
+        return "not offered (no engine control unit, not owned)"
+    end
+    local stockHp = RMS_EngineRemap.getStockPeaks(vehicle)
+    local gain = RMS_EngineRemap.getGain(vehicle)
+    if not RMS_EngineRemap.getIsRemapped(vehicle) then
+        return string.format("stock %.0f hp  ·  a remap would give %.0f hp (+%.0f%%)%s", stockHp, stockHp * (1 + gain), gain * 100,
+            spec.warrantyVoided and "  ·  warranty lost to an earlier remap" or "")
+    end
+    return string.format("remapped %.0f hp, stock %.0f hp (+%.0f%%)  ·  at age %d months  ·  free restore until age %d months",
+        stockHp * (1 + gain), stockHp, gain * 100, spec.remapAge, RMS_EngineRemap.getFreeRestoreUntil(vehicle))
+end
+
 ---Reads the title line, the life and the service of the machine
 local function readHeader(vehicle, spec, reading)
     local R = RealisticMechanicalSystems
@@ -223,6 +238,7 @@ local function readHeader(vehicle, spec, reading)
     reading.facts = {
         {"Power", string.format("new %.0f hp = %.0f kW  ·  now %.0f hp = %.0f kW (%s)", power, power / RMS_Fluids.KW_TO_HP,
             power * share, power * share / RMS_Fluids.KW_TO_HP, pct(share))},
+        {"Remap", getRemapText(vehicle, spec)},
         {"Hour meter", string.format("%.1f h of play = %s h of work", vehicle:getFormattedOperatingTime(), grouped(lifeUsed * RMS_Config.CORE.MACHINE_LIFE_HOURS))},
         {"Life used", pct(lifeUsed)},
         {"Condition", pct(vehicle:getConditionLevel())},
@@ -799,6 +815,7 @@ local function readMachine(vehicle, spec, reading)
     local factoryActive = vehicle.age < months and RealisticMechanicalSystems.getRealOperatingHours(vehicle) < hours
     local warrantyState = factoryActive and "active" or "expired"
     if vehicle.propertyState == VehiclePropertyState.LEASED then warrantyState = "lease" end
+    if spec.warrantyVoided then warrantyState = "lost to a remap" end
     table.insert(rows, {"Warranty", string.format("%s (%s): age < %d months, meter < %d h of play",
         spec.warrantyPlan == 1 and "factory" or "extension", warrantyState, months, hours)})
     local ids = {}

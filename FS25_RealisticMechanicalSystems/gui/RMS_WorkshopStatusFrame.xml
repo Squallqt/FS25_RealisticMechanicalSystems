@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI>
+    <GuiElement profile="rms_workshopBand">
+        <RoundCorner profile="rms_inspectionSurface" />
+        <BoxLayout profile="rms_workshopStatusGroup" id="statusGroup">
+            <Bitmap profile="rms_workshopIconLarge" imageSliceId="gui.icon_construction_buildings" />
+            <Text profile="rms_workshopStatus" id="statusText" size="0px 40px" />
+        </BoxLayout>
+    </GuiElement>
+</GUI>

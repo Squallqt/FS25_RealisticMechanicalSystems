@@ -14,8 +14,6 @@ RMS_Hud.CONSUMPTION_REFRESH_INTERVAL = 500
 RMS_Hud.CONSUMPTION_PER_AREA_BUCKETS = 10
 RMS_Hud.MOTOR_LOAD_BUCKETS = 2
 RMS_Hud.TRANSMISSION_OIL_TEMP_WARNING = 99
-RMS_Hud.TELLTALE_YEARS = { engine = 1990, transmission = 1990, brakes = 1980, battery = 1950, coolant = 1950, warning = 1990,
-    service = 1970, oil = 1950 }
 RMS_Hud.ARC_ORDER = { "brakes", "engine", "dpf", "coolant", "fanReversal", "transmission", "battery" }
 -- Gearbox before warning: a gearbox fault also lights the warning.
 RMS_Hud.INDICATOR_ORDER = { "transmission", "engine", "brakes", "battery", "coolant", "dpf", "fanReversal", "preheat",
@@ -292,29 +290,24 @@ function RMS_Hud:new()
                 normal = engineIcon,
                 fault = lampIcon("engine"),
                 classic = lampIcon("engineClassic")
-            },
-            year = RMS_Hud.TELLTALE_YEARS.engine
+            }
         },
         transmission = {
             name = 'transmission',
-            icon = lampIcon("transmissionTemperature"),
-            year = RMS_Hud.TELLTALE_YEARS.transmission
+            icon = lampIcon("transmissionTemperature")
         },
         brakes = {
             name = 'brakes',
-            icon = lampIcon("brakes"),
-            year = RMS_Hud.TELLTALE_YEARS.brakes
+            icon = lampIcon("brakes")
         },
         battery = {
             name = 'battery',
-            icon = lampIcon("battery"),
-            year = RMS_Hud.TELLTALE_YEARS.battery
+            icon = lampIcon("battery")
         },
         coolant = {
             name = 'coolant',
             icon = coolantIcon,
-            icons = { normal = coolantIcon, coolantRoad = lampIcon("coolantRoad") },
-            year = RMS_Hud.TELLTALE_YEARS.coolant
+            icons = { normal = coolantIcon, coolantRoad = lampIcon("coolantRoad") }
         },
         dpf = {
             name = 'dpf',
@@ -326,8 +319,7 @@ function RMS_Hud:new()
         },
         warning = {
             name = 'warning',
-            icon = lampIcon("warning"),
-            year = RMS_Hud.TELLTALE_YEARS.warning
+            icon = lampIcon("warning")
         },
         preheat = {
             name = 'preheat',
@@ -336,14 +328,12 @@ function RMS_Hud:new()
         service = {
             name = 'service',
             icon = serviceIcon,
-            icons = { normal = serviceIcon, wrench = lampIcon("wrench") },
-            year = RMS_Hud.TELLTALE_YEARS.service
+            icons = { normal = serviceIcon, wrench = lampIcon("wrench") }
         },
         oil = {
             name = 'oil',
             icon = oilIcon,
-            icons = { normal = oilIcon, oilCan = lampIcon("oilCan") },
-            year = RMS_Hud.TELLTALE_YEARS.oil
+            icons = { normal = oilIcon, oilCan = lampIcon("oilCan") }
         },
         tractionBattery = {
             name = 'tractionBattery',
@@ -1108,27 +1098,6 @@ function RMS_Hud:storeScaledValues()
     self.fuelConsumptionHud.iconGap = self:scalePixelToScreenWidth(fuelIcon.GAP)
 end
 
----Tells whether a vehicle carries a telltale
--- @param string indicatorId telltale name
--- @param integer? indicatorYear year the telltale appeared on dashboards
--- @param table spec vehicle RMS state
--- @param boolean hasEngineOil true when the vehicle holds engine oil
--- @return boolean isFitted true when the dashboard of this vehicle has it
-function RMS_Hud.getIsTelltaleFitted(indicatorId, indicatorYear, spec, hasEngineOil)
-    if indicatorId == "preheat" then
-        return spec.isDieselVehicle == true
-    elseif indicatorId == "dpf" then
-        return spec.hasParticulateFilter == true
-    elseif indicatorId == "tractionBattery" or indicatorId == "limitedPower" then
-        return spec.isElectricVehicle == true
-    elseif indicatorId == "fanReversal" then
-        return spec.hasReversibleFan == true
-    elseif indicatorId == "oil" and not hasEngineOil then
-        return false
-    end
-    return indicatorYear <= spec.year
-end
-
 -- @param table spec vehicle RMS state
 -- @return boolean isCalling true from the regeneration level while no regeneration runs
 function RMS_Hud.getIsParticulateFilterCalling(spec)
@@ -1353,12 +1322,11 @@ function RMS_Hud:drawDashboard()
     local posX = speedBgX + g_currentMission.hud.speedMeter.speedGaugeCenterOffsetX
     local posY = speedBgY + g_currentMission.hud.speedMeter.speedGaugeCenterOffsetY
     local hasTransmissionOilTempDisplay = hasCVTTransmission(vehicle) or cvtAddonSpec ~= nil
-    local hasEngineOil = RMS_Fluids.getCapacity(vehicle, "engineOil") > 0
     local lamp = RMS_Hud.LAMP
 
     local units, unitsById = {}, {}
     for _, id in ipairs(RMS_Hud.ARC_ORDER) do
-        if RMS_Hud.getIsTelltaleFitted(id, self.indicators[id].year, spec, hasEngineOil) then
+        if RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, id) then
             local inkKey = RMS_Hud.getFamilyLampSlice(id, isRoadVehicle, isMachine) or RMS_Hud.LAMP_SLICE[id] or id
             if id == "engine" and RMS_Hud.getEngineTelltaleIconKey(spec, isRoadVehicle, false) == "classic" then
                 inkKey = "engineClassic"
@@ -1378,7 +1346,7 @@ function RMS_Hud:drawDashboard()
     local rowIds = {}
     for _, id in ipairs({ spec.isElectricVehicle and "limitedPower" or "preheat", "warning",
         spec.isElectricVehicle and "tractionBattery" or "oil" }) do
-        if RMS_Hud.getIsTelltaleFitted(id, self.indicators[id].year, spec, hasEngineOil) then
+        if RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, id) then
             rowIds[#rowIds + 1] = id
         end
     end
@@ -1402,7 +1370,7 @@ function RMS_Hud:drawDashboard()
         end
         hudIndicatorData.icon = icon
 
-        local isIndicatorVisible = RMS_Hud.getIsTelltaleFitted(hudIndicatorId, hudIndicatorData.year, spec, hasEngineOil)
+        local isIndicatorVisible = RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, hudIndicatorId)
         local place, unit = layout[hudIndicatorId], unitsById[hudIndicatorId]
         local centreX, centreY
         if place ~= nil then

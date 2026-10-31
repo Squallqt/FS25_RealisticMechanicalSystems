@@ -899,6 +899,7 @@ VehicleMotor.getTorqueCurveValue = Utils.overwrittenFunction(VehicleMotor.getTor
                 torque = torque * math.max((1 + effect.value), 0.2)
             end
             torque = torque * RMS_Thermal.getEngineTorqueFactor(vehicle) * spec_rms.engineTorqueCap
+                * RMS_EngineRemap.getTorqueFactor(vehicle)
             local rpmCap = spec_rms.engineRpmCap
             if rpmCap ~= nil and rpm > rpmCap - 50 then
                 torque = torque * math.clamp((rpmCap - rpm) / 50, 0, 1)
@@ -920,7 +921,7 @@ function RMS_Breakdowns.updateConsumers(vehicle, dt, accInput)
 	local idleFactor = 0.5
 	local rpmPercentage = (spec.motor.lastMotorRpm - spec.motor.minRpm) / (spec.motor.maxRpm - spec.motor.minRpm)
 	local rpmFactor = idleFactor + rpmPercentage * (1 - idleFactor)
-	local loadFactor = math.max(spec.smoothedLoadPercentage * rpmPercentage, 0)
+	local loadFactor = math.max(RMS_EngineRemap.getStockLoad(vehicle, spec.smoothedLoadPercentage) * rpmPercentage, 0)
 	local motorFactor = 0.5 * (0.2 * rpmFactor + 1.8 * loadFactor)
     local timeScale = 1
 
@@ -1048,7 +1049,7 @@ function RMS_Breakdowns.updateConsumersOverwrite(vehicle, superFunc, dt, accInpu
     local spec_rms = vehicle.spec_RealisticMechanicalSystems
     if spec_rms ~= nil and spec_rms.activeEffects ~= nil then
         local effect = spec_rms.activeEffects.FUEL_CONSUMPTION_MODIFIER
-        if effect ~= nil and effect.value ~= nil then
+        if effect ~= nil and effect.value ~= nil or RMS_EngineRemap.getIsRemapped(vehicle) then
             return RMS_Breakdowns.updateConsumers(vehicle, dt, accInput)
         end
     end

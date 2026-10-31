@@ -10,43 +10,21 @@ RMS_Tutorial.messageDowntime = 3000
 
 local downtimeAfterMessage = 60000
 
----Shows one tutorial message, optionally pausing the game
--- @param string text message text
--- @param boolean? doPause true to pause the game
--- @param float? downtime delay before the next message can show
-function RMS_Tutorial:showMessage(text, doPause, downtime)
-    local mission = g_currentMission
-    if mission == nil then
-        return
+---Welcomes the player in the question dialog of the game
+function RMS_Tutorial:showWelcome()
+    YesNoDialog.show(self.onWelcomeAnswer, self, g_i18n:getText("rms_tutorial_welcome_message"),
+        g_i18n:getText("rms_tutorial_welcome_dialog_title"), g_i18n:getText("rms_tutorial_welcome_enable_button"),
+        g_i18n:getText("rms_tutorial_welcome_disable_button"), DialogElement.TYPE_INFO)
+    self.messageDowntime = 5000
+end
+
+---Turns the tips off when the player declined them
+-- @param boolean keepsTips true when the player keeps the tips
+function RMS_Tutorial:onWelcomeAnswer(keepsTips)
+    if not keepsTips then
+        RMS_Config.TUTORIAL_MODE = false
+        RMS_Config.syncTutorialState()
     end
-
-    if doPause then
-        if mission.setManualPause ~= nil then
-            mission:setManualPause(true)
-        elseif mission.pauseGame ~= nil then
-            mission:pauseGame()
-        end
-    end
-
-    RMS_WelcomeDialog.show(text, function(_, disableTutorial)
-        if g_currentMission == nil then
-            return
-        end
-
-        if disableTutorial then
-            RMS_Config.TUTORIAL_MODE = false
-            RMS_Config.syncTutorialState()
-        end
-
-        if doPause then
-            if g_currentMission.setManualPause ~= nil then
-                g_currentMission:setManualPause(false)
-            elseif g_currentMission.tryUnpauseGame ~= nil then
-                g_currentMission:tryUnpauseGame()
-            end
-        end
-    end, self)
-    self.messageDowntime = downtime
 end
 
 ---Returns the vehicle the player drives when RMS tracks it
@@ -104,7 +82,7 @@ function RMS_Tutorial:update(dt)
 
         -- GLOBAL MESSAGES
         if not RMS_Config.WELCOME_MESSAGE_SEEN then
-            self:showMessage(g_i18n:getText("rms_tutorial_welcome_message"), false, 5000)
+            self:showWelcome()
             RMS_Config.WELCOME_MESSAGE_SEEN = true
         end
 

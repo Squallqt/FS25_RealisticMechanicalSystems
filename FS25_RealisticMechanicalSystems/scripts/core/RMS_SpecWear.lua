@@ -337,9 +337,12 @@ function RealisticMechanicalSystems:updateEngineSystem(dt)
         local maxRpm = spec_motorized.motor.maxRpm
         rpmLoad = lastRpm / maxRpm
 
-        -- overload factor
-        if dynamicMotorLoad > C.MOTOR_OVERLOADED_THRESHOLD then
-            motorLoadFactor = RMS_Utils.calculateQuadraticMultiplier(dynamicMotorLoad, C.MOTOR_OVERLOADED_THRESHOLD, false, C.MOTOR_OVERLOADED_MAX_EFFECT)
+        -- overload factor, past the strongest engine of the same block
+        local overloadRatio = RMS_EngineRemap.getOverloadRatio(self)
+        local overloadThreshold = C.MOTOR_OVERLOADED_THRESHOLD * overloadRatio
+        if dynamicMotorLoad > overloadThreshold then
+            motorLoadFactor = RMS_Utils.calculateQuadraticMultiplier(dynamicMotorLoad, overloadThreshold, false,
+                C.MOTOR_OVERLOADED_MAX_EFFECT * overloadRatio)
             motorLoadFactor = math.clamp(motorLoadFactor * (C.MOTOR_OVERLOADED_MULTIPLIER or 0), 0, C.MOTOR_OVERLOADED_MULTIPLIER or 0)
             wearRate = wearRate + motorLoadFactor
         end

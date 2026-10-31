@@ -184,7 +184,7 @@ function RMS_Leasing.onShopControllerSell(self, overwrittenFunc, storeItem, conc
     self.currentSellStoreItem = storeItem
     self.currentSellItem = concreteItem
 
-    RMS_SellItemDialog.show(vehicle, RMS_Leasing.onShopControllerSellDialogCallback, self, {isDirectSell})
+    RMS_SellItemDialog.show(vehicle, RMS_Leasing.onShopControllerSellDialogCallback, self, isDirectSell)
 end
 
 ---Forwards the player answer to the shop controller

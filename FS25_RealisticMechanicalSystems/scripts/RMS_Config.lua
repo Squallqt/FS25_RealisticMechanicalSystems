@@ -396,6 +396,7 @@ RMS_Config = {
         INSTANT_MAINTENANCE_REPAIR = false,
         INSTANT_BODYWORK = false,
         INSTANT_OVERHAUL = false,
+        INSTANT_REMAP = false,
 
         REFILL_TIME = 0.25 * 3600000,
         INSPECTION_TIME = 1 * 3600000,
@@ -1562,6 +1563,36 @@ local function loadTutorialPlayerStates(xmlFile, root)
     end
 end
 
+-- settings the savegame keeps and the server shares
+RMS_Config.SHARED_SETTINGS = {
+    { group = "CORE", field = "BASE_SERVICE_WEAR", isFloat = true },
+    { group = "CORE", field = "BASE_SYSTEMS_WEAR", isFloat = true },
+    { group = "CORE", field = "ENABLE_WARNING_MESSAGES" },
+    { group = "MAINTENANCE", field = "INSTANT_INSPECTION" },
+    { group = "MAINTENANCE", field = "INSTANT_MAINTENANCE_REPAIR" },
+    { group = "MAINTENANCE", field = "INSTANT_BODYWORK" },
+    { group = "MAINTENANCE", field = "INSTANT_OVERHAUL" },
+    { group = "MAINTENANCE", field = "INSTANT_REMAP" },
+    { group = "WORKSHOP", field = "DEALER_ALWAYS_AVAILABLE" },
+    { group = "WORKSHOP", field = "MOBILE_ALWAYS_AVAILABLE" },
+    { group = "WORKSHOP", field = "OWN_ALWAYS_AVAILABLE" },
+    { group = "WORKSHOP", field = "MOBILE_WORKSHOP_RESTRICTIONS_ENABLED" },
+    { group = "WORKSHOP", field = "OPEN_HOUR", isFloat = true },
+    { group = "WORKSHOP", field = "CLOSE_HOUR", isFloat = true },
+    { group = "DRIVETRAIN", field = "ENABLED", element = "DRIVETRAIN_ENABLED" },
+    { group = "DRIVETRAIN", field = "ALLOW_AUTO_MODE", element = "DRIVETRAIN_ALLOW_AUTO_MODE" },
+    { group = "DRIVETRAIN", field = "PARKBRAKE_ENABLED", element = "DRIVETRAIN_PARKBRAKE_ENABLED" },
+    { group = "EXHAUST", field = "ENABLED", element = "EXHAUST_SMOKE_ENABLED" },
+    { field = "DEBUG", element = "DEBUG_MODE" }
+}
+
+---Returns the table of the configuration holding a setting
+-- @param table setting setting naming its group
+-- @return table owner RMS_Config or one of its groups
+function RMS_Config.getSettingTable(setting)
+    return setting.group ~= nil and RMS_Config[setting.group] or RMS_Config
+end
+
 ---Writes every adjustable setting to a settings file
 local function writeConfigFile(xmlFileName, includeTutorialStates)
     local xmlFile = createXMLFile("realisticMechanicalSystems", xmlFileName, "realisticMechanicalSystems")
@@ -1573,37 +1604,14 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
     local root = "realisticMechanicalSystems"
     setXMLInt(xmlFile, root .. "#saveVersion", RMS_Config.CONFIG_VERSION)
 
-    -- core
-    setXMLFloat(xmlFile, root .. ".BASE_SERVICE_WEAR",      RMS_Config.CORE.BASE_SERVICE_WEAR)
-    setXMLFloat(xmlFile, root .. ".BASE_SYSTEMS_WEAR",      RMS_Config.CORE.BASE_SYSTEMS_WEAR)
-    setXMLBool (xmlFile, root .. ".ENABLE_WARNING_MESSAGES", RMS_Config.CORE.ENABLE_WARNING_MESSAGES)
-
-    -- maintenance
-    setXMLBool (xmlFile, root .. ".INSTANT_INSPECTION",     RMS_Config.MAINTENANCE.INSTANT_INSPECTION)
-    setXMLBool (xmlFile, root .. ".INSTANT_MAINTENANCE_REPAIR", RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR)
-    setXMLBool (xmlFile, root .. ".INSTANT_BODYWORK", RMS_Config.MAINTENANCE.INSTANT_BODYWORK)
-    setXMLBool (xmlFile, root .. ".INSTANT_OVERHAUL", RMS_Config.MAINTENANCE.INSTANT_OVERHAUL)
-
-    -- workshop
-    setXMLBool (xmlFile, root .. ".DEALER_ALWAYS_AVAILABLE",       RMS_Config.WORKSHOP.DEALER_ALWAYS_AVAILABLE)
-    setXMLBool (xmlFile, root .. ".MOBILE_ALWAYS_AVAILABLE",       RMS_Config.WORKSHOP.MOBILE_ALWAYS_AVAILABLE)
-    setXMLBool (xmlFile, root .. ".OWN_ALWAYS_AVAILABLE",          RMS_Config.WORKSHOP.OWN_ALWAYS_AVAILABLE)
-    setXMLBool (xmlFile, root .. ".MOBILE_WORKSHOP_RESTRICTIONS_ENABLED", RMS_Config.WORKSHOP.MOBILE_WORKSHOP_RESTRICTIONS_ENABLED)
-    setXMLFloat(xmlFile, root .. ".OPEN_HOUR",              RMS_Config.WORKSHOP.OPEN_HOUR)
-    setXMLFloat(xmlFile, root .. ".CLOSE_HOUR",             RMS_Config.WORKSHOP.CLOSE_HOUR)
-
-    -- thermal
-
-    -- drivetrain
-    setXMLBool (xmlFile, root .. ".DRIVETRAIN_ENABLED",           RMS_Config.DRIVETRAIN.ENABLED)
-    setXMLBool (xmlFile, root .. ".DRIVETRAIN_ALLOW_AUTO_MODE",   RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE)
-    setXMLBool (xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_ENABLED", RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED)
-
-    -- exhaust
-    setXMLBool (xmlFile, root .. ".EXHAUST_SMOKE_ENABLED",   RMS_Config.EXHAUST.ENABLED)
-
-    -- debug
-    setXMLBool (xmlFile, root .. ".DEBUG_MODE",             RMS_Config.DEBUG)
+    for _, setting in ipairs(RMS_Config.SHARED_SETTINGS) do
+        local key, value = root .. "." .. (setting.element or setting.field), RMS_Config.getSettingTable(setting)[setting.field]
+        if setting.isFloat then
+            setXMLFloat(xmlFile, key, value)
+        else
+            setXMLBool(xmlFile, key, value)
+        end
+    end
 
     if includeTutorialStates then
         if RMS_Config.TUTORIAL_STATE_LOADED and RMS_Config.TUTORIAL_LOCAL_USER_ID ~= nil then
@@ -1659,69 +1667,17 @@ function RMS_Config.loadFromXMLFile()
     local root = "realisticMechanicalSystems"
     RMS_Config.loadedConfigVersion = getXMLInt(xmlFile, root .. "#saveVersion") or 0
     log_dbg("LOAD VERSION", RMS_Config.loadedConfigVersion, "CURRENT", RMS_Config.CONFIG_VERSION)
-    local v
-
-    -- core
-    v = getXMLFloat(xmlFile, root .. ".BASE_SERVICE_WEAR")
-    if v ~= nil then RMS_Config.CORE.BASE_SERVICE_WEAR = v end
-
-    v = getXMLFloat(xmlFile, root .. ".BASE_SYSTEMS_WEAR")
-    if v ~= nil then RMS_Config.CORE.BASE_SYSTEMS_WEAR = v end
-
-    v = getXMLBool(xmlFile, root .. ".ENABLE_WARNING_MESSAGES")
-    if v ~= nil then RMS_Config.CORE.ENABLE_WARNING_MESSAGES = v end
-
-    -- maintenance
-    v = getXMLBool(xmlFile, root .. ".INSTANT_INSPECTION")
-    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_INSPECTION = v end
-
-    v = getXMLBool(xmlFile, root .. ".INSTANT_MAINTENANCE_REPAIR")
-    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_MAINTENANCE_REPAIR = v end
-
-    v = getXMLBool(xmlFile, root .. ".INSTANT_BODYWORK")
-    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_BODYWORK = v end
-
-    v = getXMLBool(xmlFile, root .. ".INSTANT_OVERHAUL")
-    if v ~= nil then RMS_Config.MAINTENANCE.INSTANT_OVERHAUL = v end
-
-    -- workshop
-    v = getXMLBool(xmlFile, root .. ".DEALER_ALWAYS_AVAILABLE")
-    if v ~= nil then RMS_Config.WORKSHOP.DEALER_ALWAYS_AVAILABLE = v end
-
-    v = getXMLBool(xmlFile, root .. ".MOBILE_ALWAYS_AVAILABLE")
-    if v ~= nil then RMS_Config.WORKSHOP.MOBILE_ALWAYS_AVAILABLE = v end
-
-    v = getXMLBool(xmlFile, root .. ".OWN_ALWAYS_AVAILABLE")
-    if v ~= nil then RMS_Config.WORKSHOP.OWN_ALWAYS_AVAILABLE = v end
-
-    v = getXMLBool(xmlFile, root .. ".MOBILE_WORKSHOP_RESTRICTIONS_ENABLED")
-    if v ~= nil then RMS_Config.WORKSHOP.MOBILE_WORKSHOP_RESTRICTIONS_ENABLED = v end
-
-    v = getXMLFloat(xmlFile, root .. ".OPEN_HOUR")
-    if v ~= nil then RMS_Config.WORKSHOP.OPEN_HOUR = v end
-
-    v = getXMLFloat(xmlFile, root .. ".CLOSE_HOUR")
-    if v ~= nil then RMS_Config.WORKSHOP.CLOSE_HOUR = v end
-
-    -- drivetrain
-    v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_ENABLED")
-    if v ~= nil then RMS_Config.DRIVETRAIN.ENABLED = v end
-
-    v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_ALLOW_AUTO_MODE")
-    if v ~= nil then RMS_Config.DRIVETRAIN.ALLOW_AUTO_MODE = v end
-
-
-    v = getXMLBool(xmlFile, root .. ".DRIVETRAIN_PARKBRAKE_ENABLED")
-    if v ~= nil then RMS_Config.DRIVETRAIN.PARKBRAKE_ENABLED = v end
-
-    -- exhaust
-    v = getXMLBool(xmlFile, root .. ".EXHAUST_SMOKE_ENABLED")
-    if v ~= nil then RMS_Config.EXHAUST.ENABLED = v end
-
-
-    -- debug
-    v = getXMLBool(xmlFile, root .. ".DEBUG_MODE")
-    if v ~= nil then RMS_Config.DEBUG = v end
+    for _, setting in ipairs(RMS_Config.SHARED_SETTINGS) do
+        local key, value = root .. "." .. (setting.element or setting.field), nil
+        if setting.isFloat then
+            value = getXMLFloat(xmlFile, key)
+        else
+            value = getXMLBool(xmlFile, key)
+        end
+        if value ~= nil then
+            RMS_Config.getSettingTable(setting)[setting.field] = value
+        end
+    end
 
     if g_currentMission:getIsServer() then
         loadTutorialPlayerStates(xmlFile, root)

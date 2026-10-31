@@ -194,6 +194,9 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#warrantyPlan", spec.warrantyPlan)
         xmlFile:setValue(key .. "#partWarranty", RMS_Utils.serializeNumericMap(spec.partWarranty))
         xmlFile:setValue(key .. "#usedPartWarranty", RMS_Utils.serializeNumericMap(spec.usedPartWarranty))
+        xmlFile:setValue(key .. "#warrantyVoided", spec.warrantyVoided)
+        xmlFile:setValue(key .. "#remapMotor", spec.remapMotor)
+        xmlFile:setValue(key .. "#remapAge", spec.remapAge)
         xmlFile:setValue(key .. "#condition", spec.conditionLevel or 1.0)
         xmlFile:setValue(key .. "#realOperatingTime", realOperatingTime or currentOperatingTime)
         if xmlFile.handle ~= nil then
@@ -358,6 +361,9 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.warrantyPlan = 1
     self.spec_RealisticMechanicalSystems.partWarranty = {}
     self.spec_RealisticMechanicalSystems.usedPartWarranty = {}
+    self.spec_RealisticMechanicalSystems.warrantyVoided = false
+    self.spec_RealisticMechanicalSystems.remapMotor = 0
+    self.spec_RealisticMechanicalSystems.remapAge = 0
     self.spec_RealisticMechanicalSystems.conditionLevel = self.spec_RealisticMechanicalSystems.baseConditionLevel
 
     local currentOperatingTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
@@ -656,6 +662,10 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.warrantyPlan = xmlFile:getValue(key .. "#warrantyPlan", 1)
     spec.partWarranty = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partWarranty", ""))
     spec.usedPartWarranty = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#usedPartWarranty", ""))
+    spec.warrantyVoided = xmlFile:getValue(key .. "#warrantyVoided", false)
+    spec.remapMotor = xmlFile:getValue(key .. "#remapMotor", 0)
+    spec.remapAge = xmlFile:getValue(key .. "#remapAge", 0)
+    RMS_EngineRemap.validateLoadedEngine(self)
     local savedAge = xmlFile:getValue(vehicleKey .. "#age", 0)
     for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
         if spec.serviceCalendar[clock.key] == nil then
@@ -1075,6 +1085,9 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     spec._lastSyncWear_partWarranty = RMS_Utils.serializeNumericMap(spec.partWarranty)
     spec._lastSyncWear_usedPartWarranty = RMS_Utils.serializeNumericMap(spec.usedPartWarranty)
     spec._lastSyncWear_warrantyPlan = spec.warrantyPlan
+    spec._lastSyncWear_warrantyVoided = spec.warrantyVoided
+    spec._lastSyncWear_remapMotor = spec.remapMotor
+    spec._lastSyncWear_remapAge = spec.remapAge
     spec._lastSyncWear_conditionLevel = spec.conditionLevel
     spec._lastSyncWear_ptoEngagementSequence = spec.ptoEngagementSequence
     spec._lastSyncWear_ptoShockSequence = spec.ptoShockSequence

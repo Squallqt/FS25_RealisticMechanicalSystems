@@ -416,7 +416,7 @@ local function updateTarget(handTool, player)
         spec.targetRefusal = RMS_FluidHandTool.getPourRefusal(vehicle, spec.targetCircuit, spec.container)
         if spec.targetRefusal == nil then
             spec.targetText = string.format(g_i18n:getText("rms_fluid_pour_action"),
-                g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, spec.targetCircuit, "rms_fluid_circuit_" .. spec.targetCircuit)))
+                g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, spec.targetCircuit)))
         end
     end
     if spec.pourVehicle ~= nil and spec.pourVehicle ~= vehicle and not spec.isNozzle then
@@ -689,7 +689,7 @@ function RMS_FluidHandTool.showPour(container, vehicle, circuit, isCompatible)
         isCompatible = isCompatible,
         isPouring = true,
         logo = RMS_FluidHandTool.logos[product.brand],
-        circuitText = g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, circuit, "rms_fluid_circuit_" .. circuit)),
+        circuitText = g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, circuit)),
         machineText = vehicle:getFullName(),
         productText = g_brandManager:getBrandByName(product.brand).title .. " " .. product.name,
         containerLiters = container:getRMSFluidLiters(),

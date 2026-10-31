@@ -12,6 +12,7 @@ RealisticMechanicalSystems = {
         REFILL = 'rms_spec_state_refill',
         OVERHAUL = 'rms_spec_state_overhaul',
         BODYWORK = 'button_repaint',
+        REMAP = 'rms_spec_state_remap',
         BROKEN = 'rms_spec_state_broken'
     },
 
@@ -911,6 +912,9 @@ local function markWearDirty(vehicle, spec)
        spec._lastSyncWear_partWarranty ~= RMS_Utils.serializeNumericMap(spec.partWarranty) or
        spec._lastSyncWear_usedPartWarranty ~= RMS_Utils.serializeNumericMap(spec.usedPartWarranty) or
        spec._lastSyncWear_warrantyPlan ~= spec.warrantyPlan or
+       spec._lastSyncWear_warrantyVoided ~= spec.warrantyVoided or
+       spec._lastSyncWear_remapMotor ~= spec.remapMotor or
+       spec._lastSyncWear_remapAge ~= spec.remapAge or
        syncFloatChanged(spec._lastSyncWear_conditionLevel, spec.conditionLevel, 0.001) or
        spec._lastSyncWear_ptoEngagementSequence ~= spec.ptoEngagementSequence or
        spec._lastSyncWear_ptoShockSequence ~= spec.ptoShockSequence or
@@ -925,6 +929,9 @@ local function markWearDirty(vehicle, spec)
             spec._lastSyncWear_partWarranty = RMS_Utils.serializeNumericMap(spec.partWarranty)
             spec._lastSyncWear_usedPartWarranty = RMS_Utils.serializeNumericMap(spec.usedPartWarranty)
             spec._lastSyncWear_warrantyPlan = spec.warrantyPlan
+            spec._lastSyncWear_warrantyVoided = spec.warrantyVoided
+            spec._lastSyncWear_remapMotor = spec.remapMotor
+            spec._lastSyncWear_remapAge = spec.remapAge
             spec._lastSyncWear_conditionLevel = spec.conditionLevel
             spec._lastSyncWear_ptoEngagementSequence = spec.ptoEngagementSequence
             spec._lastSyncWear_ptoShockSequence = spec.ptoShockSequence
@@ -1134,6 +1141,9 @@ function RealisticMechanicalSystems.initSpecialization()
     schemaSavegame:register(XMLValueType.INT, baseKey .. "#warrantyPlan", "Factory warranty plan")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#partWarranty", "Dealer part warranty expiry ages")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#usedPartWarranty", "Used part warranty expiry ages")
+    schemaSavegame:register(XMLValueType.BOOL, baseKey .. "#warrantyVoided", "Warranty lost to an engine remap")
+    schemaSavegame:register(XMLValueType.INT, baseKey .. "#remapMotor", "Engine configuration remapped, 0 on stock software")
+    schemaSavegame:register(XMLValueType.INT, baseKey .. "#remapAge", "Machine age in months at the remap")
     schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#condition", "Condition Level")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#breakdowns", "Active Breakdowns")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#state", "Current State")

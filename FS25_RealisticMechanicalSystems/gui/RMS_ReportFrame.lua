@@ -1,17 +1,27 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Dialog presenting a stored inspection report of a vehicle
-RMS_ReportDialog = {}
-RMS_ReportDialog.INSTANCE = nil
+---Inspection report of a log entry, shown in the record page
+RMS_ReportFrame = {}
 
-local RMS_ReportDialog_mt = Class(RMS_ReportDialog, MessageDialog)
-local modDirectory = g_currentModDirectory
+local RMS_ReportFrame_mt = Class(RMS_ReportFrame, FrameElement)
 
 local WEAR_NORMAL_PERCENT = 10
 local WEAR_HIGH_PERCENT = 30
 local WEAR_CAUSE_MIN_PERCENT = 1
 local WORN_PARTS_SHOWN = 3
+-- the causes of extra wear the report names at most
+local WEAR_CAUSES_SHOWN = 3
+-- reliability, ease of service and breakdown risk
+local ASSESSMENT_ROWS = 3
+-- the rows the technical sheet holds
+local SPEC_ROWS = 9
+-- label and figure of each pill of the band
+local SUMMARY_FIGURES = {
+    { label = "rms_report_overall_assessment_condition", figure = "condition" },
+    { label = "rms_ws_label_service", figure = "service" },
+    { label = "rms_report_detected_breakdowns_title", figure = "breakdowns" }
+}
 local WEAR_CAUSE_TEXTS = {
     sf = "rms_tutorial_service_interval_expired_title",
     mlf = "rms_tutorial_engine_overload_title",
@@ -55,7 +65,7 @@ local WEAR_CAUSE_TEXTS = {
     pef = "rms_tutorial_pto_engagement_title",
     prf = "rms_tutorial_pto_raised_title"
 }
-RMS_ReportDialog.WEAR_CAUSE_TEXTS = WEAR_CAUSE_TEXTS
+RMS_ReportFrame.WEAR_CAUSE_TEXTS = WEAR_CAUSE_TEXTS
 local getSystemDisplayName
 local formatRecommendationText
 local joinRecommendationParts
@@ -229,7 +239,6 @@ local RECOMMENDATION_RULES = {
     }
 }
 
-local log_dbg = RMS_Utils.createLogger("[RMS_REPORT_DIALOG]")
 
 ---Returns the localized text of a key, or the fallback
 local function getTextOrFallback(key, fallback)
@@ -352,59 +361,43 @@ local function buildRecommendationsData(vehicle, reportEntry, metrics)
     return recommendations
 end
 
----Loads the dialog layout and stores the shared instance
-function RMS_ReportDialog.register()
-    local dialog = RMS_ReportDialog.new()
-    g_gui:loadGui(modDirectory .. "gui/RMS_ReportDialog.xml", "RMS_ReportDialog", dialog)
-    RMS_ReportDialog.INSTANCE = dialog
+---Creates the frame
+-- @return table frame
+function RMS_ReportFrame.new()
+    return FrameElement.new(nil, RMS_ReportFrame_mt)
 end
 
----Create instance of RMS_ReportDialog
--- @param table? target target
--- @param table? customMt custom metatable
--- @return table dialog instance of class RMS_ReportDialog
-function RMS_ReportDialog.new(target, customMt)
-    local dialog = MessageDialog.new(target, customMt or RMS_ReportDialog_mt)
-    dialog.vehicle = nil
-    return dialog
-end
-
----Opens the dialog on a log entry that carries a report
--- @param table vehicle vehicle
--- @param table logEntry maintenance log entry
-function RMS_ReportDialog.show(vehicle, logEntry, parentDialog)
-
-    if logEntry == nil or not RealisticMechanicalSystems.getIsLogEntryHasReport(logEntry) then
-        log_dbg("Invalid log entry")
-        return
+---Wires the note lists and clones the rows of each card
+function RMS_ReportFrame:initialize()
+    self.breakdownsTable:setDataSource(self)
+    self.recommendationsTable:setDataSource(self)
+    self.assessmentRows = RMS_Utils.cloneTemplate(self.assessmentRowTemplate, ASSESSMENT_ROWS)
+    self.wearCauseRows = RMS_Utils.cloneTemplate(self.wearCauseRowTemplate, WEAR_CAUSES_SHOWN)
+    self.systemRows = RMS_Utils.cloneTemplate(self.systemRowTemplate, #RealisticMechanicalSystems.SYSTEMS_ORDER)
+    self.specRows = RMS_Utils.cloneTemplate(self.specRowTemplate, SPEC_ROWS)
+    self.summaryFigures = {}
+    for index, figure in ipairs(RMS_Utils.cloneTemplate(self.summaryFigureTemplate, #SUMMARY_FIGURES)) do
+        figure:getDescendantByName("label"):setText(g_i18n:getText(SUMMARY_FIGURES[index].label))
+        self.summaryFigures[SUMMARY_FIGURES[index].figure] = figure:getDescendantByName("value")
     end
+end
 
-    if RMS_ReportDialog.INSTANCE == nil then RMS_ReportDialog.register() end
-    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then return end
-    
-    local dialog = RMS_ReportDialog.INSTANCE
-    dialog.vehicle = vehicle
-    dialog.parentDialog = parentDialog
-    dialog.workshopContext = parentDialog ~= nil and (parentDialog == RMS_WorkshopDialog.INSTANCE
-        or parentDialog.workshopContext == true)
-    dialog.lastReport = logEntry
-    dialog.isCompleteInspection = RealisticMechanicalSystems.getIsCompleteReport(logEntry)
-
-    dialog.overallAssessmentData = {}
-    dialog.systemConditionData = {}
-    dialog.vehicleSpecData = {}
-    dialog.breakdownsData = {}
-    dialog.recommendationsData = {}
-    
-    dialog:updateScreen()
-    g_gui:showDialog("RMS_ReportDialog")
+---Writes the report of a log entry
+-- @param table vehicle vehicle
+-- @param table entry log entry with a report
+function RMS_ReportFrame:setReport(vehicle, entry)
+    self.vehicle = vehicle
+    self.lastReport = entry
+    self.isCompleteInspection = RealisticMechanicalSystems.getIsCompleteReport(entry)
+    self:updateScreen()
+    RMS_Utils.resetScrollingTexts(self)
 end
 
 ---Builds the technical sheet of a vehicle from what a report recorded
 -- @param table vehicle vehicle
 -- @param table conditionData condition the report recorded
 -- @return table rows sheet rows in display order
-function RMS_ReportDialog.buildVehicleSpecs(vehicle, conditionData)
+function RMS_ReportFrame.buildVehicleSpecs(vehicle, conditionData)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local systems = conditionData.systems or {}
     local rows = {}
@@ -636,8 +629,7 @@ function RMS_ReportDialog.buildVehicleSpecs(vehicle, conditionData)
 end
 
 ---Rebuilds every section of the report from the stored log entry
-function RMS_ReportDialog:updateScreen()
-    if self.vehicle == nil then return end
+function RMS_ReportFrame:updateScreen()
     local spec = self.vehicle.spec_RealisticMechanicalSystems
 
     self.overallAssessmentData = {}
@@ -646,29 +638,12 @@ function RMS_ReportDialog:updateScreen()
     self.breakdownsData = {}
     self.recommendationsData = {}
 
-    local balanceText = g_i18n:formatMoney(g_currentMission:getMoney(), 0, true, false)
-    self.balanceElement:setText(balanceText)
-    RMS_Utils.updateMoneyBoxLayout(
-        self.balanceTitleElement,
-        self.balanceElement,
-        self.moneyBox,
-        self.moneyBoxBg,
-        g_i18n:getText("ui_balance"),
-        balanceText
-    )
-
     self.reportTitle:setText(g_i18n:getText("rms_report_header_title") .. " #" .. self.lastReport.id - 1, nil, nil, true)
     self.reportVehicleImage:setImageFilename(self.vehicle:getImageFilename())
 
-    local reportDate = self.lastReport.date or {}
-    local dateStr = string.format("%s %s. '%02d",
-        reportDate.day or 1,
-        g_i18n:formatPeriod(reportDate.month or 1, true),
-        reportDate.year or 0)
-
     self.reportSubtitle:setText(table.concat({
         self.vehicle:getFullName(),
-        dateStr,
+        RMS_Utils.formatMaintenanceLogDate(self.lastReport),
         string.format("%s (%s)", g_i18n:getText(self.lastReport.type),
             RMS_Utils.formatServiceOption(self.vehicle, self.lastReport.type, self.lastReport.optionOne)),
         g_i18n:getText(self.lastReport.location),
@@ -679,10 +654,11 @@ function RMS_ReportDialog:updateScreen()
 
     local condition = self.lastReport.conditionData.condition or 1.0
     local service = self.lastReport.conditionData.service or 1.0
-    self.reportSummaryCondition:setText(RMS_Utils.formatCondition(condition, self.isCompleteInspection))
-    self.reportSummaryCondition:setTextColor(RMS_Utils.getConditionColor(condition, self.isCompleteInspection))
-    self.reportSummaryService:setText(RMS_Utils.formatService(service, self.isCompleteInspection))
-    self.reportSummaryService:setTextColor(RMS_Utils.getServiceColor(service, self.isCompleteInspection))
+    local figures = self.summaryFigures
+    figures.condition:setText(RMS_Utils.formatCondition(condition, self.isCompleteInspection))
+    figures.condition:setTextColor(RMS_Utils.getConditionColor(condition, self.isCompleteInspection))
+    figures.service:setText(RMS_Utils.formatService(service, self.isCompleteInspection))
+    figures.service:setTextColor(RMS_Utils.getServiceColor(service, self.isCompleteInspection))
 
     local systems = self.lastReport.conditionData.systems or {}
     local overallRiskTier = nil
@@ -708,7 +684,7 @@ function RMS_ReportDialog:updateScreen()
         end
     end
 
-    self.vehicleSpecData = RMS_ReportDialog.buildVehicleSpecs(self.vehicle, self.lastReport.conditionData)
+    self.vehicleSpecData = RMS_ReportFrame.buildVehicleSpecs(self.vehicle, self.lastReport.conditionData)
 
     local reportMetrics = {
         visibleSelectableBreakdownsCount = 0,
@@ -748,8 +724,7 @@ function RMS_ReportDialog:updateScreen()
             local stage = breakdownData.stage or 1
             local stageData = registryEntry.stages and registryEntry.stages[stage]
             if stageData ~= nil then
-                local partKey = registryEntry.part or registryEntry.system
-                local partText = partKey ~= nil and g_i18n:getText(partKey) or tostring(breakdownId)
+                local partText = RMS_Utils.getBreakdownPartName(breakdownId)
 
                 if breakdownData.isActive ~= false then
                     reportMetrics.visibleSelectableActiveBreakdownsCount = reportMetrics.visibleSelectableActiveBreakdownsCount + 1
@@ -759,16 +734,7 @@ function RMS_ReportDialog:updateScreen()
                     appendUniqueText(reportMetrics.inactiveQuickFixPartsNames, inactiveQuickFixSeen, partText)
                 end
 
-                local severityText = g_i18n:getText(stageData.severity)
-                local descriptionText = g_i18n:getText(RMS_Breakdowns.getStageDescription(self.vehicle, stageData, breakdownData))
-
-                if breakdownData.isActive == false and breakdownData.source == RealisticMechanicalSystems.BREAKDOWN_SOURCES.QUICK_FIX then
-                    severityText = g_i18n:getText("rms_breakdowns_quick_fix_stage")
-                    descriptionText = g_i18n:getText("rms_breakdowns_temporarily_repaired_description")
-                elseif breakdownData.isActive == false and breakdownData.source == RealisticMechanicalSystems.BREAKDOWN_SOURCES.POOR_PARTS then
-                    severityText = g_i18n:getText("rms_breakdowns_defected_parts_stage")
-                    descriptionText = g_i18n:getText("rms_breakdowns_defected_parts_detected_description")
-                end
+                local severityText, descriptionText = RMS_Utils.getBreakdownTexts(self.vehicle, breakdownId, breakdownData)
 
                 table.insert(self.breakdownsData, {
                     title = partText,
@@ -780,7 +746,7 @@ function RMS_ReportDialog:updateScreen()
             end
         end
     end
-    self.reportSummaryBreakdowns:setText(tostring(reportMetrics.visibleSelectableBreakdownsCount))
+    self.summaryFigures.breakdowns:setText(tostring(reportMetrics.visibleSelectableBreakdownsCount))
 
     if self.isCompleteInspection then
         self:addWornPartRows()
@@ -800,26 +766,22 @@ function RMS_ReportDialog:updateScreen()
     self:renderSystemRows()
     self:renderSpecRows()
 
-    self.breakdownsTable:setDataSource(self)
-    self.recommendationsTable:setDataSource(self)
     self.breakdownsTable:reloadData()
     self.recommendationsTable:reloadData()
 
     RMS_Utils.fitValuePills(self)
-    self:updateFocusLinks()
 end
 
----Chains the focus under the tab selector
-function RMS_ReportDialog:updateFocusLinks()
-    self.focusEntry = RMS_Utils.linkFocusColumns(self.workshopTabPaging, {{{self.breakdownsTable}}, {{self.recommendationsTable}}})
-    RMS_Utils.keepFocusShown(self.focusEntry)
+---The lists of detected breakdowns and of recommendations
+function RMS_ReportFrame:getFocusColumns()
+    return { { { self.breakdownsTable } }, { { self.recommendationsTable } } }
 end
 
 ---Returns the row count of the requested report note list
 -- @param table list list element
 -- @param integer section section index
 -- @return integer count row count
-function RMS_ReportDialog:getNumberOfItemsInSection(list, section)
+function RMS_ReportFrame:getNumberOfItemsInSection(list, section)
     if list == self.breakdownsTable then
         return #self.breakdownsData
     elseif list == self.recommendationsTable then
@@ -834,7 +796,7 @@ end
 -- @param integer section section index
 -- @param integer index row index
 -- @param table cell cell element
-function RMS_ReportDialog:populateCellForItemInSection(list, section, index, cell)
+function RMS_ReportFrame:populateCellForItemInSection(list, section, index, cell)
     if list == self.breakdownsTable then
         self:populateBreakdownsCell(index, cell)
     elseif list == self.recommendationsTable then
@@ -843,20 +805,15 @@ function RMS_ReportDialog:populateCellForItemInSection(list, section, index, cel
 end
 
 ---Paints the inspection assessment
-function RMS_ReportDialog:renderAssessmentRows()
-    for index, labelElement in ipairs(self.assessmentLabel) do
+function RMS_ReportFrame:renderAssessmentRows()
+    for index, row in ipairs(self.assessmentRows) do
         local data = self.overallAssessmentData[index]
-        local valueElement = self.assessmentValue[index]
-        labelElement.parent:setVisible(data ~= nil)
-        if data ~= nil then
-            local isAvailable = data[1] ~= "rms_report_breakdown_risk_title" or self.isCompleteInspection
-            local valueText = isAvailable and data[2] or g_i18n:getText("rms_report_state_not_available")
-            labelElement:setTextColor(unpack(isAvailable and RMS_Utils.COLOR.TEXT or RMS_Utils.COLOR.TEXT_DIM))
-            valueElement:setTextColor(unpack(isAvailable and (data[3] or RMS_Utils.COLOR.TEXT) or RMS_Utils.COLOR.TEXT_DIM))
-            RMS_Utils.fitRowValue(labelElement, self.assessmentPill[index], valueElement, g_i18n:getText(data[1]), valueText)
-        end
+        local isAvailable = data[1] ~= "rms_report_breakdown_risk_title" or self.isCompleteInspection
+        local valueText = isAvailable and data[2] or g_i18n:getText("rms_report_state_not_available")
+        row:getDescendantByName("label"):setTextColor(unpack(isAvailable and RMS_Utils.COLOR.TEXT or RMS_Utils.COLOR.TEXT_DIM))
+        row:getDescendantByName("value"):setTextColor(unpack(isAvailable and (data[3] or RMS_Utils.COLOR.TEXT) or RMS_Utils.COLOR.TEXT_DIM))
+        RMS_Utils.writeRow(row, g_i18n:getText(data[1]), valueText)
     end
-    self.assessmentLabel[1].parent.parent:invalidateLayout()
 end
 
 ---Returns the colour of an extra wear
@@ -865,7 +822,7 @@ local function getWearColor(percent)
 end
 
 ---Writes the extra wear of the machine and its three main causes
-function RMS_ReportDialog:renderWear()
+function RMS_ReportFrame:renderWear()
     local data = self.lastReport.conditionData
     self.wearBlock:setVisible(data.wearExcess ~= nil)
     if data.wearExcess == nil then
@@ -901,8 +858,9 @@ function RMS_ReportDialog:renderWear()
     end
     self.wearValue:setTextColor(getWearColor(percent))
 
-    for index, labelElement in ipairs(self.wearCauseLabel) do
-        local cause, valueElement = causes[index], self.wearCauseValue[index]
+    for index, row in ipairs(self.wearCauseRows) do
+        local cause = causes[index]
+        local labelElement, valueElement = row:getDescendantByName("label"), row:getDescendantByName("value")
         labelElement:setVisible(cause ~= nil or index == 1)
         valueElement:setVisible(cause ~= nil)
         if cause ~= nil then
@@ -916,19 +874,19 @@ function RMS_ReportDialog:renderWear()
         end
     end
     if #causes == 0 then
-        self.wearCauseLabel[1]:setText(g_i18n:getText("rms_report_wear_no_cause"))
+        self.wearCauseRows[1]:getDescendantByName("label"):setText(g_i18n:getText("rms_report_wear_no_cause"))
     end
 end
 
 ---Paints one gauge per enabled system
-function RMS_ReportDialog:renderSystemRows()
-    for index, nameElement in ipairs(self.systemName) do
+function RMS_ReportFrame:renderSystemRows()
+    for index, row in ipairs(self.systemRows) do
         local data = self.systemConditionData[index]
-        local valueElement = self.systemValue[index]
-        local riskElement = self.systemRisk[index]
-        nameElement.parent:setVisible(data ~= nil)
+        row:setVisible(data ~= nil)
 
         if data ~= nil then
+            local nameElement, valueElement, riskElement = row:getDescendantByName("name"), row:getDescendantByName("value"),
+                row:getDescendantByName("risk")
             local condition = clampUnitRatio(data[2])
             local percent = condition * 100
             local riskTier = data[3]
@@ -952,17 +910,17 @@ function RMS_ReportDialog:renderSystemRows()
         end
     end
 
-    self.systemName[1].parent.parent:invalidateLayout()
+    self.systemRows[1].parent:invalidateLayout()
 end
 
 ---Paints what the machine still delivers against its factory figures
-function RMS_ReportDialog:renderSpecRows()
-    for index, labelElement in ipairs(self.specLabel) do
+function RMS_ReportFrame:renderSpecRows()
+    for index, row in ipairs(self.specRows) do
         local data = self.vehicleSpecData[index]
-        local valueElement = self.specValue[index]
-        labelElement.parent:setVisible(data ~= nil)
+        row:setVisible(data ~= nil)
 
         if data ~= nil then
+            local labelElement, valueElement = row:getDescendantByName("label"), row:getDescendantByName("value")
             local kind = data.kind or "ratio"
             local ratio = tonumber(data.ratio or data.value) or 0
             local percent = (data.inverted == true and math.max(ratio, 0) or clampUnitRatio(ratio)) * 100
@@ -1012,11 +970,11 @@ function RMS_ReportDialog:renderSpecRows()
         end
     end
 
-    self.specLabel[1].parent.parent:invalidateLayout()
+    self.specRows[1].parent:invalidateLayout()
 end
 
 -- @return integer count worn parts listed
-function RMS_ReportDialog:addWornPartRows()
+function RMS_ReportFrame:addWornPartRows()
     local conditionData = self.lastReport.conditionData
     local systems = conditionData.systems or {}
     local activeBreakdowns = conditionData.activeBreakdowns or {}
@@ -1064,7 +1022,7 @@ end
 ---Fills one detected breakdown or worn part
 -- @param integer index row index
 -- @param table cell cell element
-function RMS_ReportDialog:populateBreakdownsCell(index, cell)
+function RMS_ReportFrame:populateBreakdownsCell(index, cell)
     RMS_Utils.applyScrollSpeed(cell)
     local data = self.breakdownsData[index] or {}
     local stageColor = data.color or (data.isActive == false and RMS_Utils.COLOR.TEXT_DIM or RMS_Utils.COLOR.STAGE[data.stage or 1])
@@ -1091,72 +1049,9 @@ end
 ---Fills one recommendation with its prebuilt line
 -- @param integer index row index
 -- @param table cell cell element
-function RMS_ReportDialog:populateRecommendationsCell(index, cell)
+function RMS_ReportFrame:populateRecommendationsCell(index, cell)
     RMS_Utils.applyScrollSpeed(cell)
     local rowElement = cell:getAttribute("reportRecRow")
 
     rowElement:setText(self.recommendationsData[index] or "")
-end
-
-
----Closes the dialog
-function RMS_ReportDialog:onClickBack()
-    self:close()
-end
-
----
-function RMS_ReportDialog:onClickSummaryTab()
-    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.SUMMARY)
-end
-
----
-function RMS_ReportDialog:onClickDiagnosticTab()
-    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.DIAGNOSTIC)
-end
-
----
-function RMS_ReportDialog:onClickInterventionsTab()
-    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.INTERVENTIONS)
-end
-
----
-function RMS_ReportDialog:onClickTechnicalTab()
-    RMS_WorkshopDialog.selectTabFromChildDialog(self, RMS_WorkshopDialog.TAB.TECHNICAL)
-end
-
----
-function RMS_ReportDialog:onWorkshopTabPagingChanged()
-    RMS_WorkshopDialog.onChildTabPagingChanged(self)
-end
-
----Selects the technical record tab
-function RMS_ReportDialog:onCreate()
-    RMS_Utils.mirrorSelectionToChildren(self.workshopNavTabs[4])
-    self.workshopNavTabs[4]:setSelected(true)
-    RMS_Utils.applyScrollSpeed(self.dialogElement)
-end
-
-
----Opens the dialog and subscribes to balance changes
-function RMS_ReportDialog:onOpen()
-    RMS_ReportDialog:superClass().onOpen(self)
-
-    RMS_WorkshopDialog.initializeChildTabPaging(self, RMS_WorkshopDialog.TAB.TECHNICAL)
-
-    RMS_Utils.resetScrollingTexts(self.dialogElement)
-    g_messageCenter:subscribe(MessageType.MONEY_CHANGED, self.updateScreen, self)
-
-    self:updateFocusLinks()
-    FocusManager:setFocus(self.focusEntry)
-end
-
-
----Closes the dialog and releases its subscriptions
-function RMS_ReportDialog:onClose()
-    self.vehicle = nil
-    self.parentDialog = nil
-    self.workshopContext = nil
-    g_messageCenter:unsubscribeAll(self)
-
-    RMS_ReportDialog:superClass().onClose(self)
 end

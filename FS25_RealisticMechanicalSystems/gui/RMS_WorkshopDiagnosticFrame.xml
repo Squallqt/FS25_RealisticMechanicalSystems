@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI>
+    <GuiElement profile="rms_fillParent">
+        <BoxLayout profile="rms_workshopPageFlow">
+            <GuiElement profile="rms_workshopBand">
+                <FrameReference ref="RMS_WorkshopStatusFrame" id="statusBar" />
+            </GuiElement>
+
+            <BoxLayout profile="rms_workshopRow">
+
+                <GuiElement profile="rms_workshopCardNarrow">
+                    <RoundCorner profile="rms_workshopSurfaceStrong" />
+                    <Bitmap profile="rms_workshopVehiclePicture" id="diagnosticVehicleImage" position="20px -118px" size="272px 230px" />
+                    <Text profile="rms_workshopVehicleBrand" id="diagnosticVehicleBrand" position="20px -16px" size="272px 22px" />
+                    <Text profile="rms_workshopVehicleModel" id="diagnosticVehicleName" position="20px -38px" size="272px 62px" />
+                    <Text profile="rms_workshopCenteredDetail" position="20px -366px" size="272px 26px" text="$l10n_rms_ws_label_last_check" />
+                    <RoundCorner profile="rms_workshopValuePillCentered" position="56px -396px" size="199px 30px" />
+                    <Text profile="rms_workshopPillValue" id="diagnosticLastInspection" position="68px -396px" size="175px 30px" />
+
+                    <BoxLayout profile="rms_workshopStack" position="20px -450px" size="272px 96px" elementSpacing="8px">
+                        <GuiElement profile="rms_workshopReadingRow" id="readingRowTemplate">
+                            <RoundCorner profile="rms_workshopSurfaceSoft" />
+                            <Bitmap profile="rms_workshopRowIcon" name="icon" />
+                            <Text profile="rms_workshopReadingRowLabel" name="label" />
+                            <RoundCorner profile="rms_workshopReadingRowPill" name="pill" />
+                            <Text profile="rms_workshopReadingRowValue" name="value" />
+                        </GuiElement>
+                    </BoxLayout>
+                </GuiElement>
+
+                <GuiElement profile="rms_workshopCardBreakdowns">
+                    <RoundCorner profile="rms_workshopSurfaceStrong" />
+                    <GuiElement profile="rms_workshopBlock" position="20px -16px" size="705px 32px">
+                        <RoundCorner profile="rms_workshopSectionAccent" />
+                        <Text profile="rms_workshopSectionTitle" position="16px 0px" size="689px 32px" text="$l10n_rms_ws_section_breakdowns" />
+                        <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="689px 1px" />
+                    </GuiElement>
+                    <GuiElement profile="rms_workshopBlock" id="breakdownInfoRow" position="20px -60px" size="705px 44px">
+                        <BoxLayout profile="rms_workshopInfoGroup" size="705px 44px">
+                            <Bitmap profile="rms_workshopIcon" imageSliceId="gui.storeAttribute_info" />
+                            <Text profile="rms_workshopInfoText" size="0px 26px" text="$l10n_rms_ws_info_inspection_reveals" />
+                        </BoxLayout>
+                    </GuiElement>
+                    <GuiElement profile="rms_workshopBlock" position="20px -116px" size="705px 430px">
+                        <SmoothList profile="rms_workshopTableList" id="breakdownTable" position="0px 0px" size="683px 430px" onClick="onBreakdownClick" selectedWithoutFocus="false" showHighlights="true" visible="false">
+                            <ListItem profile="rms_workshopTableRow" name="orderRowTemplate" size="683px 72px" updateChildrenState="false" handleFocus="true">
+                                <RoundCorner profile="rms_logRowSurface" name="surface" />
+                                <Button profile="rms_workshopSelectionToggle" position="14px -16px" name="rms_tableBreakdownSelect" handleFocus="false">
+                                    <RoundCorner profile="rms_workshopSelectionToggleBg" />
+                                    <Bitmap profile="rms_workshopSelectionIcon" imageSliceId="gui.tick" />
+                                </Button>
+                                <Bitmap profile="rms_workshopIconWide" position="64px -20px" imageSliceId="gui.contextAction_icon_repairAlert" />
+                                <BoxLayout profile="rms_workshopBreakdownLine" position="120px -8px" size="390px 26px">
+                                    <Text profile="rms_workshopBreakdownStage" size="0px 26px" name="rms_tableBreakdownStage" />
+                                    <Text profile="rms_workshopBreakdownSeparator" size="0px 26px" name="rms_tableBreakdownSeparator" text="·" />
+                                    <Text profile="rms_workshopBreakdownName" size="0px 26px" name="rms_tableBreakdownName" textBold="true" />
+                                </BoxLayout>
+                                <Text profile="rms_workshopBreakdownText" position="516px -8px" size="151px 26px" name="rms_tableBreakdownPrice" textAlignment="right" />
+                                <Text profile="rms_workshopBreakdownText" position="120px -38px" size="547px 26px" name="rms_tableBreakdownDisc" textLayoutMode="scrolling" textScrollOnFocusOnly="false" />
+                            </ListItem>
+                        </SmoothList>
+                        <ThreePartBitmap profile="rms_listSliderBox" position="0px 0px" size="6px 100%">
+                            <Slider profile="fs25_listSlider" dataElementId="breakdownTable" hideParentWhenEmpty="true" />
+                        </ThreePartBitmap>
+                    </GuiElement>
+                    <GuiElement profile="rms_workshopBlock" id="breakdownEmptyPanel" size="745px 566px" visible="false">
+                        <Bitmap profile="rms_workshopIcon" position="336.5px -207px" size="72px 72px" imageSliceId="gui.icon_vehicleDealer_search" />
+                        <Text profile="rms_workshopTitle" id="breakdownEmptyTitle" position="20px -303px" size="705px 36px" textAlignment="center" text="$l10n_rms_ws_faults_none_title" />
+                        <Text profile="rms_workshopCenteredDetail" id="breakdownEmptyHint" position="112.5px -347px" size="520px 40px" text="$l10n_rms_ws_faults_none_hint" />
+                    </GuiElement>
+                </GuiElement>
+
+                <GuiElement profile="rms_workshopCardQuote">
+                    <RoundCorner profile="rms_workshopSurfaceStrong" />
+                    <GuiElement profile="rms_workshopBlock" position="20px -16px" size="352px 32px">
+                        <RoundCorner profile="rms_workshopSectionAccent" />
+                        <Text profile="rms_workshopSectionTitle" position="16px 0px" size="336px 32px" text="$l10n_rms_ws_section_quote" />
+                        <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="336px 1px" />
+                    </GuiElement>
+                    <GuiElement profile="rms_workshopBlock" position="20px -60px" size="352px 348px">
+                        <RoundCorner profile="rms_workshopSurfaceSoft" />
+                        <GuiElement profile="rms_workshopBlock" position="16px -12px" size="320px 20px">
+                            <RoundCorner profile="rms_workshopSubsectionAccent" position="3px 0px" />
+                            <Text profile="rms_workshopListLabel" position="12px 0px" size="308px 18px" text="$l10n_rms_ws_section_parts" />
+                        </GuiElement>
+                        <SmoothList profile="rms_workshopPackedList" id="diagnosticSelectedPartsTable" position="16px -44px" size="320px 288px" handleFocus="false">
+                            <ListItem profile="rms_workshopQuotePartRow" name="diagnosticEstimatePartRowTemplate" size="320px 18px" updateChildrenState="false">
+                                <Text profile="rms_workshopListBullet" position="0px 0px" size="8px 18px" text="·" />
+                                <Text profile="rms_workshopQuotePart" position="12px 0px" size="308px 18px" name="diagnosticEstimatePart" />
+                            </ListItem>
+                        </SmoothList>
+                    </GuiElement>
+                    <GuiElement profile="rms_workshopBlock" position="20px -420px" size="352px 60px">
+                        <RoundCorner profile="rms_workshopSurfaceSoft" />
+                        <Text profile="rms_workshopTotalLabel" position="18px -17px" size="142px 26px" text="$l10n_rms_ws_label_total_estimate" />
+                        <RoundCorner profile="rms_workshopValuePill" position="174px -12px" size="160px 36px" />
+                        <Text profile="rms_workshopTotalValue" id="diagnosticTotal" position="184px -12px" size="140px 36px" textAlignment="center" />
+                    </GuiElement>
+                    <Button profile="rms_workshopPrimaryButton" id="diagnosticConfigureButton" position="20px -496px" size="352px 50px" text="$l10n_rms_ws_button_configure_repair" onClick="onClickRepair">
+                        <RoundCorner profile="rms_workshopPrimaryButtonBg" />
+                    </Button>
+                </GuiElement>
+            </BoxLayout>
+        </BoxLayout>
+    </GuiElement>
+</GUI>

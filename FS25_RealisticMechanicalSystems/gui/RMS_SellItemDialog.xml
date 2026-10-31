@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<GUI onOpen="onOpen" onClose="onClose">
+<GUI onOpen="onOpen" onClose="onClose" onCreate="onCreate">
     <GuiElement profile="newLayer"/>
     <Bitmap profile="dialogFullscreenBg" id="dialogBg"/>
     <GuiElement profile="rms_sellDialogBg" id="dialogElement">
@@ -9,7 +9,7 @@
 
         <GuiElement profile="fs25_dialogContentContainer">
             <!-- Machine identity -->
-            <GuiElement profile="rms_inspectionBlock" position="28px -28px" size="803px 78px">
+            <GuiElement profile="rms_workshopBlock" position="28px -28px" size="803px 78px">
                 <RoundCorner profile="rms_inspectionSurface" size="803px 78px"/>
                 <ThreePartBitmap profile="rms_inspectionHeaderEdge" size="803px 3dp"/>
                 <BoxLayout profile="rms_inspectionHeaderLayout" id="headerLayout" size="803px 78px">
@@ -24,27 +24,27 @@
             </GuiElement>
 
             <!-- Returned machine -->
-            <GuiElement profile="rms_inspectionBlock" position="28px -122px" size="300px 32px">
-                <RoundCorner profile="rms_inspectionSectionAccent"/>
+            <GuiElement profile="rms_workshopBlock" position="28px -122px" size="300px 32px">
+                <RoundCorner profile="rms_workshopSectionAccent"/>
                 <Text profile="rms_sellSectionTitle" position="16px 0px" size="268px 32px" text="$l10n_rms_sell_dialog_section_vehicle"/>
-                <RoundCorner profile="rms_inspectionSectionLine" position="16px 0px" size="284px 1px"/>
+                <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="284px 1px"/>
             </GuiElement>
-            <GuiElement profile="rms_inspectionBlock" position="28px -164px" size="300px 300px">
+            <GuiElement profile="rms_workshopBlock" position="28px -164px" size="300px 300px">
                 <RoundCorner profile="rms_inspectionCardSurface" size="300px 300px"/>
-                <Bitmap profile="rms_sellVehicleImage" id="vehicleImageElement" position="30px -30px" size="240px 240px"/>
+                <Bitmap profile="rms_workshopHeroImage" id="vehicleImageElement" position="30px -30px" size="240px 240px"/>
             </GuiElement>
 
             <!-- Return penalties -->
-            <GuiElement profile="rms_inspectionBlock" position="346px -122px" size="485px 32px">
-                <RoundCorner profile="rms_inspectionSectionAccent"/>
+            <GuiElement profile="rms_workshopBlock" position="346px -122px" size="485px 32px">
+                <RoundCorner profile="rms_workshopSectionAccent"/>
                 <Text profile="rms_sellSectionTitle" position="16px 0px" size="453px 32px" text="$l10n_rms_sell_dialog_section_penalties"/>
-                <RoundCorner profile="rms_inspectionSectionLine" position="16px 0px" size="469px 1px"/>
+                <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="469px 1px"/>
             </GuiElement>
-            <GuiElement profile="rms_inspectionBlock" position="346px -164px" size="485px 210px">
+            <GuiElement profile="rms_workshopBlock" position="346px -164px" size="485px 210px">
                 <RoundCorner profile="rms_inspectionCardSurface" size="485px 210px"/>
                 <SmoothList profile="rms_inspectionList" id="costList" position="14px -12px" size="457px 186px">
                     <ListItem profile="rms_inspectionRow" name="costRowTemplate" size="457px 42px">
-                        <RoundCorner profile="rms_inspectionRowSurface" size="457px 42px"/>
+                        <RoundCorner profile="rms_workshopSurfaceSoft" size="457px 42px"/>
                         <Text profile="rms_sellCostBullet" position="18px 0px" size="8px 42px" text="·"/>
                         <Text profile="rms_sellCostLabel" position="30px 0px" size="195px 42px" name="costLabel"/>
                         <RoundCorner profile="rms_inspectionValuePill" position="239px -7px" size="200px 28px" name="costValuePill"/>
@@ -54,7 +54,7 @@
             </GuiElement>
 
             <!-- Total charged on return -->
-            <GuiElement profile="rms_inspectionBlock" position="346px -392px" size="485px 72px">
+            <GuiElement profile="rms_workshopBlock" position="346px -392px" size="485px 72px">
                 <RoundCorner profile="rms_inspectionSurface" size="485px 72px"/>
                 <ThreePartBitmap profile="rms_sellTotalEdge" size="485px 3dp"/>
                 <Text profile="rms_sellTotalLabel" position="24px 0px" size="213px 72px" text="$l10n_rms_sell_dialog_total"/>
@@ -64,9 +64,9 @@
         </GuiElement>
 
         <BoxLayout profile="fs25_dialogButtonBox">
-            <Button profile="buttonOK" text="$l10n_button_yes" textLayoutMode="overflow" onClick="onClickYes" focusInit="onOpen"/>
+            <Button profile="buttonYes" id="yesButton" text="$l10n_button_yes" onClick="onYes" focusInit="onOpen"/>
             <Bitmap profile="fs25_dialogButtonBoxSeparator"/>
-            <Button profile="buttonBack" text="$l10n_button_no" textLayoutMode="overflow" onClick="onClickNo"/>
+            <Button profile="buttonNo" id="noButton" text="$l10n_button_no" onClick="onNo"/>
         </BoxLayout>
     </GuiElement>
 </GUI>

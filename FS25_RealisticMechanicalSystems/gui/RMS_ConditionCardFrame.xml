@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI>
+    <GuiElement profile="rms_fillParent">
+        <RoundCorner profile="rms_workshopSurfaceStrong" />
+        <GuiElement profile="rms_workshopBlock" position="20px -16px" size="288px 32px">
+            <RoundCorner profile="rms_workshopSectionAccent" />
+            <Text profile="rms_workshopSectionTitle" position="16px 0px" size="272px 32px" text="$l10n_rms_ws_label_condition" />
+            <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="272px 1px" />
+        </GuiElement>
+        <GuiElement profile="rms_workshopBlock" id="ringArea" position="72px -51px" size="184px 184px" onDraw="onDrawRing" />
+        <BoxLayout profile="rms_ringValueStack" id="valueStack" position="106px -95px" size="116px 96px">
+            <Text profile="rms_ringValue" id="valueText" size="116px 40px" />
+            <Text profile="rms_ringOutdated" id="outdatedText" size="116px 18px" text="$l10n_rms_ws_reading_outdated" />
+        </BoxLayout>
+        <GuiElement profile="rms_workshopBlock" position="20px -242px" size="288px 224px">
+            <RoundCorner profile="rms_workshopSurfaceSoft" />
+            <GuiElement profile="rms_workshopBlock" id="systemsLayout" position="6px -8px" size="278px 192px">
+                <SmoothList profile="rms_workshopPackedList" id="stateList" position="0px 0px" size="268px 192px" onClick="onClickStateRow" showHighlights="true">
+                    <ListItem profile="rms_fleetStateRow" name="system" size="268px 24px" handleFocus="true">
+                        <Bitmap profile="rms_fleetStateBand" name="band" position="10px 0px" size="256px 24px" />
+                        <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="256px 24px" />
+                        <Bitmap profile="rms_fleetStateTriangle" name="triangle" position="12px -8px" />
+                        <RoundCorner profile="rms_fleetStateDot" name="dot" position="14px -10px" size="4px 4px" />
+                        <Text profile="rms_fleetSystemName" name="name" position="24px 0px" size="164px 24px" />
+                        <Bitmap profile="rms_workshopGaugeTrack" name="track" position="194px -9px" size="36px 6px" />
+                        <Bitmap profile="rms_workshopGaugeFill" name="gauge" position="194px -9px" size="36px 6px" />
+                        <Text profile="rms_fleetSystemValue" name="value" position="236px 0px" size="26px 24px" />
+                        <Text profile="rms_fleetSystemRating" name="rating" position="162px 0px" size="100px 24px" />
+                    </ListItem>
+                    <ListItem profile="rms_fleetStateRow" name="part" size="268px 24px" handleFocus="true">
+                        <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="256px 24px" />
+                        <Bitmap profile="rms_fleetStateGuide" position="16px 0px" size="1px 24px" />
+                        <Text profile="rms_fleetPartName" name="name" position="30px 0px" size="200px 24px" />
+                        <Text profile="rms_fleetPartState" name="state" position="130px 0px" size="100px 24px" />
+                        <Text profile="rms_fleetSystemValue" name="value" position="236px 0px" size="26px 24px" />
+                    </ListItem>
+                </SmoothList>
+                <ThreePartBitmap profile="rms_listSliderBox" position="0px 0px" size="6px 100%">
+                    <Slider profile="fs25_listSlider" dataElementId="stateList" />
+                </ThreePartBitmap>
+            </GuiElement>
+            <RoundCorner profile="rms_fleetStateFootRule" id="footRule" position="16px -201px" size="256px 1px" />
+            <Text profile="rms_fleetStateFoot" id="footText" position="12px -204px" size="264px 16px" />
+            <Text profile="rms_workshopCenteredDetail" id="systemsEmptyText" position="12px 0px" size="264px 224px" text="$l10n_rms_ws_no_last_report_message" />
+        </GuiElement>
+        <GuiElement profile="rms_cardFoot" size="328px 56px">
+            <Text profile="rms_workshopCenteredDetail" position="20px 0px" size="288px 24px" textMaxNumLines="1" text="$l10n_rms_ws_label_last_check" />
+            <RoundCorner profile="rms_workshopValuePillCentered" position="40px -26px" size="248px 30px" />
+            <Text profile="rms_workshopPillValue" id="lastCheckValue" position="52px -26px" size="224px 30px" />
+        </GuiElement>
+    </GuiElement>
+</GUI>

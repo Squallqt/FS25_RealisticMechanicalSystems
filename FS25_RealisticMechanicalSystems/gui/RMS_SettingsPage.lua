@@ -36,6 +36,7 @@ local SETTINGS = {
     { row = "rmsInstantMaintenanceRepair", key = "instantMaintenanceRepair", group = "MAINTENANCE", field = "INSTANT_MAINTENANCE_REPAIR" },
     { row = "rmsInstantBodywork", key = "instantBodywork", group = "MAINTENANCE", field = "INSTANT_BODYWORK" },
     { row = "rmsInstantOverhaul", key = "instantOverhaul", group = "MAINTENANCE", field = "INSTANT_OVERHAUL" },
+    { row = "rmsInstantRemap", key = "instantRemap", group = "MAINTENANCE", field = "INSTANT_REMAP" },
     { row = "rmsMobileWorkshopRestrictions", key = "mobileWorkshopRestrictionsEnabled", group = "WORKSHOP",
         field = "MOBILE_WORKSHOP_RESTRICTIONS_ENABLED" },
     { row = "rmsDealerWorkshopAvailable", key = "dealerAlwaysAvailable", group = "WORKSHOP", field = "DEALER_ALWAYS_AVAILABLE" },
@@ -51,25 +52,12 @@ local SETTINGS = {
     { row = "rmsDrivetrainParkBrakeEnabled", key = "drivetrainParkBrakeEnabled", group = "DRIVETRAIN", field = "PARKBRAKE_ENABLED" }
 }
 
--- instant setting and the service states it finishes
-local INSTANT_SERVICES = {
-    instantInspection = { "INSPECTION" },
-    instantMaintenanceRepair = { "MAINTENANCE", "REPAIR" },
-    instantBodywork = { "BODYWORK" },
-    instantOverhaul = { "OVERHAUL" }
-}
-
----Returns the RMS_Config table holding a setting
-local function getConfigTable(setting)
-    return setting.group ~= nil and RMS_Config[setting.group] or RMS_Config
-end
-
 ---Reads the current value of every setting
 local function readSettings()
     local values = { debugMode = RMS_DebugWindow.getIsOpen() }
     for _, setting in ipairs(SETTINGS) do
         if setting.field ~= nil then
-            values[setting.key] = getConfigTable(setting)[setting.field]
+            values[setting.key] = RMS_Config.getSettingTable(setting)[setting.field]
         end
     end
     return values
@@ -162,31 +150,6 @@ local function keepWorkshopHoursOrdered(page, pickedKey)
     page.rmsWorkshopCloseHour:setState(pending.closeHour + 1)
 end
 
----Finishes the services an instant setting just turned on
--- @param table before instant settings before the change
--- @param table after instant settings after the change
-function RMS_SettingsPage.finishInstantServices(before, after)
-    if not g_currentMission:getIsServer() then
-        return
-    end
-
-    local finishedStates = {}
-    for key, states in pairs(INSTANT_SERVICES) do
-        if after[key] and not before[key] then
-            for _, state in ipairs(states) do
-                finishedStates[RealisticMechanicalSystems.STATUS[state]] = true
-            end
-        end
-    end
-
-    for _, vehicle in pairs(RMS_Main.vehicles) do
-        local spec = vehicle.spec_RealisticMechanicalSystems
-        if finishedStates[spec.currentState] and not spec.isExcludedVehicle and RealisticMechanicalSystems.forceFinishService(vehicle) then
-            RealisticMechanicalSystems.raiseServiceLifecycleDirtyFlags(vehicle)
-        end
-    end
-end
-
 ---Binds the rows of the layout to their settings, once with the frame
 -- @param table page fleet frame holding the settings tab
 function RMS_SettingsPage.initializeControls(page)
@@ -242,7 +205,6 @@ function RMS_SettingsPage.applyChanges()
         return
     end
 
-    local before = readSettings()
     -- changed group, or key of a setting outside any group
     local changed = {}
     local isShared = false
@@ -250,7 +212,7 @@ function RMS_SettingsPage.applyChanges()
         local value = pending[setting.key]
         if value ~= saved[setting.key] then
             if setting.field ~= nil then
-                getConfigTable(setting)[setting.field] = value
+                RMS_Config.getSettingTable(setting)[setting.field] = value
             end
             changed[setting.group or setting.key] = true
             isShared = isShared or not setting.isPersonal
@@ -265,7 +227,7 @@ function RMS_SettingsPage.applyChanges()
         RMS_Config.DEBUG = pending.debugMode
     end
     if changed.MAINTENANCE then
-        RMS_SettingsPage.finishInstantServices(before, readSettings())
+        RealisticMechanicalSystems.finishInstantServices()
     end
     if changed.WORKSHOP then
         RMS_Main:forceWorkshopUpdate(true)

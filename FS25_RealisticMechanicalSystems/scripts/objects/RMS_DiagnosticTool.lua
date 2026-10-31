@@ -30,14 +30,6 @@ local function updateScreen(spec)
     end
 end
 
----Returns the machine a PC is plugged into, server or client
-local function getTargetObject(spec)
-    if spec.targetObjectId ~= nil then
-        return NetworkUtil.getObject(spec.targetObjectId)
-    end
-    return spec.target
-end
-
 ---
 function RMS_DiagnosticTool.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(RMS_BatteryCharger, specializations)
@@ -184,7 +176,7 @@ function RMS_DiagnosticTool.getConnectedTool(target)
     if not target.isServer then
         for _, tool in pairs(g_currentMission.vehicleSystem.vehicles) do
             local spec = getSpec(tool)
-            if spec ~= nil and getIsAlive(tool) and getTargetObject(spec) == target then
+            if spec ~= nil and getIsAlive(tool) and RMS_Utils.getConnectedObject(spec) == target then
                 return tool
             end
         end
@@ -203,7 +195,7 @@ end
 -- @param table tool trolley
 -- @return table? target machine
 function RMS_DiagnosticTool.getTarget(tool)
-    local target = getTargetObject(assert(getSpec(tool)))
+    local target = RMS_Utils.getConnectedObject(assert(getSpec(tool)))
     return getIsAlive(target) and target or nil
 end
 

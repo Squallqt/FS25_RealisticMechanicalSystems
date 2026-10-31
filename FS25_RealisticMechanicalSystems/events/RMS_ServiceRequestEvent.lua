@@ -89,7 +89,8 @@ function RMS_ServiceRequestEvent:run(connection)
                 [RealisticMechanicalSystems.STATUS.REPAIR] = true,
                 [RealisticMechanicalSystems.STATUS.REFILL] = true,
                 [RealisticMechanicalSystems.STATUS.OVERHAUL] = true,
-                [RealisticMechanicalSystems.STATUS.BODYWORK] = true
+                [RealisticMechanicalSystems.STATUS.BODYWORK] = true,
+                [RealisticMechanicalSystems.STATUS.REMAP] = true
             }
             if not validTypes[self.serviceType] then
                 return

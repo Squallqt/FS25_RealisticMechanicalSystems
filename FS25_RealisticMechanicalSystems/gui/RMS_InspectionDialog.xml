@@ -9,7 +9,7 @@
 
         <GuiElement profile="fs25_dialogContentContainer">
             <!-- Machine identity -->
-            <GuiElement profile="rms_inspectionBlock" position="28px -28px" size="1123px 78px">
+            <GuiElement profile="rms_workshopBlock" position="28px -28px" size="1123px 78px">
                 <RoundCorner profile="rms_inspectionSurface" size="1123px 78px" />
                 <ThreePartBitmap profile="rms_inspectionHeaderEdge" size="1123px 3dp" />
                 <BoxLayout profile="rms_inspectionHeaderLayout" id="headerLayout" size="1123px 78px">
@@ -24,32 +24,32 @@
             </GuiElement>
 
             <!-- Overall verdict -->
-            <GuiElement profile="rms_inspectionBlock" position="28px -122px" size="1123px 88px">
+            <GuiElement profile="rms_workshopBlock" position="28px -122px" size="1123px 88px">
                 <RoundCorner profile="rms_inspectionSurface" size="1123px 88px" />
                 <BoxLayout profile="rms_inspectionVerdictLayout" position="0px 0px" size="1123px 88px">
                     <RoundCorner profile="rms_inspectionVerdictBadge" id="verdictBadge" size="40px 40px">
                         <Text profile="rms_inspectionVerdictBadgeText" id="verdictBadgeText" size="40px 40px" />
                     </RoundCorner>
                     <Text profile="rms_inspectionVerdictTitle" id="verdictTitle" size="0px 56px" />
-                    <RoundCorner profile="rms_inspectionVerdictDivider" size="1px 48px" />
+                    <RoundCorner profile="rms_workshopRule" size="1px 48px" />
                     <Text profile="rms_inspectionVerdictMessage" id="verdictMessage" size="0px 56px" />
                 </BoxLayout>
             </GuiElement>
 
             <!-- Technical fluids -->
-            <GuiElement profile="rms_inspectionBlock" position="28px -228px" size="688px 32px">
-                <RoundCorner profile="rms_inspectionSectionAccent" />
-                <Text profile="rms_inspectionSectionTitle" position="16px 0px" size="656px 32px" text="$l10n_rms_inspection_section_fluids" />
-                <RoundCorner profile="rms_inspectionSectionLine" position="16px 0px" size="672px 1px" />
+            <GuiElement profile="rms_workshopBlock" position="28px -228px" size="688px 32px">
+                <RoundCorner profile="rms_workshopSectionAccent" />
+                <Text profile="rms_workshopSectionTitle" position="16px 0px" size="656px 32px" text="$l10n_rms_inspection_section_fluids" />
+                <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="672px 1px" />
             </GuiElement>
-            <GuiElement profile="rms_inspectionBlock" position="28px -270px" size="688px 274px">
+            <GuiElement profile="rms_workshopBlock" position="28px -270px" size="688px 274px">
                 <RoundCorner profile="rms_inspectionCardSurface" id="technicalFluidsCard" size="688px 274px" />
                 <SmoothList profile="rms_inspectionList" id="technicalFluidsList" position="14px -12px" size="660px 250px">
                     <ListItem profile="rms_inspectionRow" name="technicalFluidsRowTemplate" size="660px 58px">
-                        <RoundCorner profile="rms_inspectionRowSurface" size="660px 58px" />
+                        <RoundCorner profile="rms_workshopSurfaceSoft" size="660px 58px" />
                         <Bitmap profile="rms_workshopFluidIconEngineOil" position="18px -16px" size="26px 26px" name="inspectionIcon" />
                         <Text profile="rms_inspectionRowTitle" position="52px -3px" size="588px 22px" name="inspectionTitle" />
-                        <Bitmap profile="rms_fluidGaugeTrack" position="52px -30px" size="588px 10px" name="inspectionGaugeTrack" />
+                        <Bitmap profile="rms_workshopGaugeTrack" position="52px -30px" size="588px 10px" name="inspectionGaugeTrack" />
                         <Bitmap profile="rms_fluidGaugeFill" position="52px -30px" size="588px 10px" name="inspectionGaugeFill" />
                         <Bitmap profile="rms_fluidGaugeUnder" position="52px -30px" size="6px 10px" name="inspectionGaugeUnder" visible="false" />
                         <Bitmap profile="rms_inspectionGaugeZone" position="287.2px -30px" size="235.2px 10px" name="inspectionGaugeZone" />
@@ -62,16 +62,16 @@
             </GuiElement>
 
             <!-- Cleaning and lubrication -->
-            <GuiElement profile="rms_inspectionBlock" position="740px -228px" size="411px 32px">
-                <RoundCorner profile="rms_inspectionSectionAccent" />
-                <Text profile="rms_inspectionSectionTitle" position="16px 0px" size="379px 32px" text="$l10n_rms_inspection_section_field_care" />
-                <RoundCorner profile="rms_inspectionSectionLine" position="16px 0px" size="395px 1px" />
+            <GuiElement profile="rms_workshopBlock" position="740px -228px" size="411px 32px">
+                <RoundCorner profile="rms_workshopSectionAccent" />
+                <Text profile="rms_workshopSectionTitle" position="16px 0px" size="379px 32px" text="$l10n_rms_inspection_section_field_care" />
+                <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="395px 1px" />
             </GuiElement>
-            <GuiElement profile="rms_inspectionBlock" position="740px -270px" size="411px 171px">
+            <GuiElement profile="rms_workshopBlock" position="740px -270px" size="411px 171px">
                 <RoundCorner profile="rms_inspectionCardSurface" id="fieldCareCard" size="411px 171px" />
                 <SmoothList profile="rms_inspectionList" id="fieldCareList" position="14px -12px" size="383px 147px">
                     <ListItem profile="rms_inspectionRow" name="fieldCareRowTemplate" size="383px 45px">
-                        <RoundCorner profile="rms_inspectionRowSurface" size="383px 45px" />
+                        <RoundCorner profile="rms_workshopSurfaceSoft" size="383px 45px" />
                         <Bitmap profile="rms_workshopFluidIconAirFilter" position="14px -9.5px" size="26px 26px" name="inspectionIcon" />
                         <Text profile="rms_inspectionRowTitle" position="48px 0px" size="148px 45px" name="inspectionTitle" />
                         <RoundCorner profile="rms_inspectionValuePill" position="209px -8px" size="156px 28px" name="inspectionValuePill" />
@@ -81,18 +81,18 @@
             </GuiElement>
 
             <!-- Additional observations -->
-            <GuiElement profile="rms_inspectionBlock" position="28px -562px" size="1123px 32px">
-                <RoundCorner profile="rms_inspectionSectionAccent" />
-                <Text profile="rms_inspectionSectionTitle" position="16px 0px" size="1091px 32px" text="$l10n_rms_inspection_section_additional" />
-                <RoundCorner profile="rms_inspectionSectionLine" position="16px 0px" size="1107px 1px" />
+            <GuiElement profile="rms_workshopBlock" position="28px -562px" size="1123px 32px">
+                <RoundCorner profile="rms_workshopSectionAccent" />
+                <Text profile="rms_workshopSectionTitle" position="16px 0px" size="1091px 32px" text="$l10n_rms_inspection_section_additional" />
+                <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="1107px 1px" />
             </GuiElement>
-            <GuiElement profile="rms_inspectionBlock" position="28px -604px" size="1123px 189px">
+            <GuiElement profile="rms_workshopBlock" position="28px -604px" size="1123px 189px">
                 <RoundCorner profile="rms_inspectionCardSurface" size="1123px 189px" />
                 <ScrollingLayout profile="rms_inspectionObservationsLayout" id="additionalScroll" position="24px -15px" size="1051px 159px">
                     <Text profile="rms_inspectionAdditionalText" id="additionalText" size="1051px 20px" />
                 </ScrollingLayout>
                 <Text profile="rms_inspectionNoFindingsText" id="noFindingsText" position="24px -15px" size="1075px 159px" text="$l10n_rms_inspection_no_suspicious_symptoms" />
-                <ThreePartBitmap profile="rms_inspectionObservationsSliderBox" id="additionalSliderBox" position="-24px -15px" size="6px 159px">
+                <ThreePartBitmap profile="rms_listSliderBox" id="additionalSliderBox" position="-24px -15px" size="6px 159px">
                     <Slider profile="fs25_listSlider" dataElementId="additionalScroll" />
                 </ThreePartBitmap>
             </GuiElement>
