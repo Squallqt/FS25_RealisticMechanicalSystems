@@ -266,7 +266,6 @@ RMS_Config = {
                 combustion = { "FUEL_INJECTOR_MALFUNCTION", "PISTON_RINGS", "CYLINDER_LINERS", "PISTONS", "INLET_VALVES", "EXHAUST_VALVES" },
                 electric = { "ELECTRIC_MOTOR_BEARING_WEAR", "ELECTRIC_MOTOR_WINDING_FAULT" } },
             { effect = "ENGINE_HARD_START_MODIFIER", system = "ENGINE", amplitude = 6, exponent = 3, aggregation = "max",
-                extraData = { timer = 0, status = "IDLE" },
                 combustion = { "BATTERY_SULFATION", "STARTER_FAILURE", "PISTON_RINGS", "CYLINDER_LINERS", "PISTONS",
                     "INLET_VALVES", "EXHAUST_VALVES", "CYLINDER_HEAD_GASKET", "CYLINDER_HEAD" } },
             { effect = "TRANSMISSION_SLIP_EFFECT", system = "TRANSMISSION", amplitude = 0.30, exponent = 3, aggregation = "max",
@@ -1066,7 +1065,7 @@ RMS_Config = {
             SYSTEM_24V_FAMILIES = { FORESTRY = true, ROAD_HEAVY = true },
             WHEEL_LOADER_24V_ABOVE_HP = 110,
             BATTERY_24V_AH = 180,
-            ROAD_LIGHT = { alternatorA = 175, batteryCapacityAh = 156, starterKw = 4.2 }
+            ROAD_LIGHT = { alternatorA = 140, batteryCapacityAh = 68, starterKw = 2.0, glowPlugs = 4 }
         },
         -- Voltages refer to one 12 V battery.
         OCV_CURVE = { { 0, 11.7 }, { 0.25, 12.0 }, { 0.5, 12.2 }, { 0.75, 12.4 }, { 1, 12.6 } },

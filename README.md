@@ -421,6 +421,7 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Fixed machines bought in another colour without paying for the paint
 - Fixed the vehicle configurator changing an owned machine's colours without charging the repaint
 - Fixed hard starts with the game's automatic start and the GIANTS Ignition Key
+- Fixed cars with a flat battery not starting on jumper cables in the cold
 
 ### v0.13.0.1
 

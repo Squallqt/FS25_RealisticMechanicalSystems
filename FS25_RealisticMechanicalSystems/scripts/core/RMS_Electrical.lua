@@ -53,24 +53,19 @@ function RMS_Electrical.resolveRating(vehicle)
         return entry.base * (power / 100) ^ entry.powerExponent * entry.decadeFactor ^ ((year - 2000) / 10)
     end
 
-    local rating = {
-        alternatorA = size(law.ALTERNATOR_A),
-        batteryCapacityAh = size(law.BATTERY_AH),
-        starterKw = size(law.STARTER_KW)
-    }
-    if family == "TELEHANDLER" then
-        rating.alternatorA = law.TELEHANDLER_ALTERNATOR_A
-    elseif family == "ROAD_LIGHT" then
+    local is24V = law.SYSTEM_24V_FAMILIES[family] == true or family == "WHEEL_LOADER" and power > law.WHEEL_LOADER_24V_ABOVE_HP
+    local series = is24V and 2 or 1
+    local rating = { seriesBatteries = series }
+    if family == "ROAD_LIGHT" then
         rating.alternatorA = law.ROAD_LIGHT.alternatorA
         rating.batteryCapacityAh = law.ROAD_LIGHT.batteryCapacityAh
         rating.starterKw = law.ROAD_LIGHT.starterKw
+    else
+        local alternatorA = family == "TELEHANDLER" and law.TELEHANDLER_ALTERNATOR_A or size(law.ALTERNATOR_A)
+        rating.alternatorA = toCatalogueStep(alternatorA / series, law.ALTERNATOR_STEP_A)
+        rating.batteryCapacityAh = is24V and law.BATTERY_24V_AH or toCatalogueStep(size(law.BATTERY_AH), law.BATTERY_STEP_AH)
+        rating.starterKw = size(law.STARTER_KW)
     end
-
-    local is24V = law.SYSTEM_24V_FAMILIES[family] == true or family == "WHEEL_LOADER" and power > law.WHEEL_LOADER_24V_ABOVE_HP
-    local series = is24V and 2 or 1
-    rating.seriesBatteries = series
-    rating.alternatorA = toCatalogueStep(rating.alternatorA / series, law.ALTERNATOR_STEP_A)
-    rating.batteryCapacityAh = is24V and law.BATTERY_24V_AH or toCatalogueStep(rating.batteryCapacityAh, law.BATTERY_STEP_AH)
 
     rating.hasCalculators = spec.isElectricVehicle == true or RMS_Utils.getUsesEngineECUProfile(vehicle)
     rating.baseLoadA = (rating.hasCalculators and C.BASE_LOAD_ECU_A or C.BASE_LOAD_A) / series
@@ -89,7 +84,8 @@ function RMS_Electrical.resolveRating(vehicle)
     local lampW = year < C.LED_YEARS.FRONT_WORK_LIGHTS_FAILURE and C.WORK_LAMP_HALOGEN_W or C.WORK_LAMP_LED_W
     rating.workLamps = workLamps
     rating.workLightsSideA = workLamps / 2 * lampW / (C.LAMP_VOLTAGE_V * series)
-    rating.glowPlugsA = pickStep(C.GLOW_PLUGS_BY_POWER, power) * C.GLOW_PLUG_A / series
+    local glowPlugs = family == "ROAD_LIGHT" and law.ROAD_LIGHT.glowPlugs or pickStep(C.GLOW_PLUGS_BY_POWER, power)
+    rating.glowPlugsA = glowPlugs * C.GLOW_PLUG_A / series
 
     local curve, resistance, current = C.OCV_CURVE, C.INTERNAL_RESISTANCE_CURVE, C.STARTER_CURRENT_CURVE
     rating.starterRatedA = rating.starterKw * current[#current][2] / series
@@ -130,10 +126,8 @@ local function getGeneratorOutput(vehicle, spec, isRunning)
         return 0
     end
 
-    local motor = vehicle:getMotor()
-    local speed = math.clamp((motor:getLastModulatedMotorRpm() - motor.minRpm) / (motor.maxRpm - motor.minRpm), 0, 1)
     local idleFactor = RMS_Config.ELECTRICAL.ALTERNATOR_IDLE_FACTOR
-    return ratedA * (idleFactor + (1 - idleFactor) * speed)
+    return ratedA * (idleFactor + (1 - idleFactor) * RMS_Utils.getMotorRpmShareAboveIdle(vehicle))
 end
 
 local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
@@ -164,7 +158,8 @@ local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
     if isCranking then
         loads.starter = rating.starterKw * interpolate(C.STARTER_CURRENT_CURVE, ambientC) / series
     end
-    if RMS_Preheat.isHeating(vehicle) then
+    -- the glow plugs are off while the starter turns
+    if RMS_Preheat.isHeating(vehicle) and not isCranking then
         loads.preheat = rating.glowPlugsA
     end
 
@@ -187,8 +182,6 @@ local function buildNode(vehicle, isStarting)
     local capacityAh = RMS_Electrical.getBatteryCapacityAh(vehicle)
 
     local node = {
-        vehicle = vehicle,
-        spec = spec,
         rating = rating,
         ambientC = ambientC,
         isRunning = isRunning,
@@ -381,21 +374,20 @@ local function getRestingDraw(spec)
 end
 RMS_Electrical.getRestingDraw = getRestingDraw
 
-local function applyCalendarLosses(node, worldElapsedMs)
+local function applyCalendarLosses(node, spec, worldElapsedMs)
     local C = RMS_Config.ELECTRICAL
     local months = worldElapsedMs / DAY_MS / g_currentMission.environment.daysPerPeriod
 
     local warmth = (node.ambientC - C.SELF_DISCHARGE_REFERENCE_TEMP_C) / C.SELF_DISCHARGE_DOUBLING_C
-    node.soc = math.max(node.soc - C.SELF_DISCHARGE_PER_MONTH * 2 ^ warmth * months / node.spec.batteryHealth, 0)
+    node.soc = math.max(node.soc - C.SELF_DISCHARGE_PER_MONTH * 2 ^ warmth * months / spec.batteryHealth, 0)
 
-    if not node.isRunning and not node.spec.batteryIsolated and node.soc > node.floorSoc then
-        local drawn = getRestingDraw(node.spec) * C.MONTH_HOURS * months / node.capacityAh
+    if not node.isRunning and not spec.batteryIsolated and node.soc > node.floorSoc then
+        local drawn = getRestingDraw(spec) * C.MONTH_HOURS * months / node.capacityAh
         node.soc = math.max(node.soc - drawn, node.floorSoc)
     end
 end
 
-local function commitNode(node, dt)
-    local spec = node.spec
+local function commitNode(node, spec, dt)
     spec.batterySoc = node.soc
     spec.rawSystemVoltageV = node.voltageV
 
@@ -411,7 +403,7 @@ local function getCablePartner(vehicle)
     end
 
     if math.abs(vehicle:getLastSpeed()) > 1 or math.abs(partner:getLastSpeed()) > 1 then
-        vehicle:clearExternalPowerConnection(partner)
+        vehicle:clearExternalPowerConnection()
         return nil
     end
 
@@ -442,11 +434,11 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
         local elapsedMs, worldElapsedMs = getElapsed(spec, dt, isWorking)
         getElapsed(partnerSpec, dt, isWorking)
 
-        applyCalendarLosses(node, worldElapsedMs)
-        applyCalendarLosses(partnerNode, worldElapsedMs)
+        applyCalendarLosses(node, spec, worldElapsedMs)
+        applyCalendarLosses(partnerNode, partnerSpec, worldElapsedMs)
         advancePair(node, partnerNode, elapsedMs)
-        commitNode(node, dt)
-        commitNode(partnerNode, dt)
+        commitNode(node, spec, dt)
+        commitNode(partnerNode, partnerSpec, dt)
 
         spec._electricalSolveStamp = solveStamp
         partnerSpec._electricalSolveStamp = solveStamp
@@ -455,9 +447,9 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
 
     local isWorking = node.isRunning or node.isCranking or node.loads.preheat > 0
     local elapsedMs, worldElapsedMs = getElapsed(spec, dt, isWorking)
-    applyCalendarLosses(node, worldElapsedMs)
+    applyCalendarLosses(node, spec, worldElapsedMs)
     advanceNode(node, elapsedMs / HOUR_MS)
-    commitNode(node, dt)
+    commitNode(node, spec, dt)
 
     if spec.batteryCharger ~= nil then
         RMS_BatteryCharger.onBatteryUpdated(self, node.chargerOutA, node.batteryA)
@@ -565,6 +557,16 @@ function RMS_Electrical.playBatteryIsolatorSound(vehicle)
     end
 end
 
+local function setBreakdownActive(vehicle, breakdownId, isActive)
+    if vehicle:hasBreakdown(breakdownId) ~= isActive then
+        if isActive then
+            vehicle:addBreakdown(breakdownId)
+        else
+            vehicle:removeBreakdown(breakdownId)
+        end
+    end
+end
+
 ---Adds or removes the dead battery breakdown
 function RMS_Electrical:syncDeadBatteryEffect()
     local spec = self.spec_RealisticMechanicalSystems
@@ -572,7 +574,6 @@ function RMS_Electrical:syncDeadBatteryEffect()
         return
     end
 
-    local breakdownId = "DEAD_BATTERY"
     local isDead = false
     if spec.batteryIsolated then
         isDead = false
@@ -581,12 +582,7 @@ function RMS_Electrical:syncDeadBatteryEffect()
     else
         isDead = not RMS_Electrical.getCanStart(self)
     end
-
-    if isDead and not self:hasBreakdown(breakdownId) then
-        self:addBreakdown(breakdownId)
-    elseif not isDead and self:hasBreakdown(breakdownId) then
-        self:removeBreakdown(breakdownId)
-    end
+    setBreakdownActive(self, "DEAD_BATTERY", isDead)
 end
 
 ---Adds or removes the voltage sag breakdown
@@ -597,167 +593,76 @@ function RMS_Electrical:syncVoltageSagEffect(dt)
     end
 
     local C = RMS_Config.ELECTRICAL
-    local breakdownId = "VOLTAGE_SAG"
-    spec.syncVoltageSagEffectTimer = spec.syncVoltageSagEffectTimer or C.VOLTAGE_SAG_DELAY_MS
-
     if self:hasBreakdown("DEAD_BATTERY") or spec.batteryIsolated then
-        spec.syncVoltageSagEffectTimer = C.VOLTAGE_SAG_DELAY_MS
-        if self:hasBreakdown(breakdownId) then
-            self:removeBreakdown(breakdownId)
-        end
-        return
-    end
-
-    if spec.isCranking then
-        return
-    end
-
-    if spec.rawSystemVoltageV >= C.VOLTAGE_SAG_V * spec.electricalRating.seriesBatteries then
-        spec.syncVoltageSagEffectTimer = C.VOLTAGE_SAG_DELAY_MS
-        if self:hasBreakdown(breakdownId) then
-            self:removeBreakdown(breakdownId)
-        end
-    elseif not self:hasBreakdown(breakdownId) then
-        spec.syncVoltageSagEffectTimer = spec.syncVoltageSagEffectTimer - dt
-        if spec.syncVoltageSagEffectTimer <= 0 then
-            self:addBreakdown(breakdownId)
-            spec.syncVoltageSagEffectTimer = C.VOLTAGE_SAG_DELAY_MS
+        spec.voltageSagMs = 0
+        setBreakdownActive(self, "VOLTAGE_SAG", false)
+    elseif not spec.isCranking then
+        local isLow = spec.rawSystemVoltageV < C.VOLTAGE_SAG_V * spec.electricalRating.seriesBatteries
+        if not isLow or self:hasBreakdown("VOLTAGE_SAG") then
+            spec.voltageSagMs = 0
+            setBreakdownActive(self, "VOLTAGE_SAG", isLow)
+        else
+            spec.voltageSagMs = (spec.voltageSagMs or 0) + dt
+            if spec.voltageSagMs >= C.VOLTAGE_SAG_DELAY_MS then
+                spec.voltageSagMs = 0
+                self:addBreakdown("VOLTAGE_SAG")
+            end
         end
     end
 end
 
 ---Tells whether two vehicles may be linked by jumper cables
 function RMS_Electrical.isValidPowerPair(vehicleA, vehicleB)
-    if vehicleA == nil or vehicleB == nil or vehicleA == vehicleB then
-        return false, ''
-    end
-
-    if vehicleA.getRootVehicle ~= nil then
-        vehicleA = vehicleA:getRootVehicle()
-    end
-
-    if vehicleB.getRootVehicle ~= nil then
-        vehicleB = vehicleB:getRootVehicle()
-    end
-
-    if vehicleA == nil or vehicleB == nil or vehicleA == vehicleB then
-        return false, 'SAME'
-    end
-
-    if vehicleA.spec_RealisticMechanicalSystems == nil or vehicleB.spec_RealisticMechanicalSystems == nil then
-        return false, 'NO_RMS'
-    end
-
-    if vehicleA.spec_RealisticMechanicalSystems.batteryCharger ~= nil
-        or vehicleB.spec_RealisticMechanicalSystems.batteryCharger ~= nil
-        or RMS_BatteryCharger.getConnectedCharger(vehicleA) ~= nil
-        or RMS_BatteryCharger.getConnectedCharger(vehicleB) ~= nil then
+    if vehicleA == nil or vehicleB == nil then
         return false
     end
 
-    local connectionA = vehicleA.spec_RealisticMechanicalSystems.externalPowerConnection
-    local connectionB = vehicleB.spec_RealisticMechanicalSystems.externalPowerConnection
-    if connectionA ~= nil and connectionA ~= vehicleB or connectionB ~= nil and connectionB ~= vehicleA then
-        return false, 'BUSY'
+    vehicleA, vehicleB = vehicleA:getRootVehicle(), vehicleB:getRootVehicle()
+    local specA, specB = vehicleA.spec_RealisticMechanicalSystems, vehicleB.spec_RealisticMechanicalSystems
+    if vehicleA == vehicleB then
+        return false, "SAME"
+    elseif specA == nil or specB == nil then
+        return false, "NO_RMS"
+    elseif specA.batteryCharger ~= nil or specB.batteryCharger ~= nil then
+        return false, "CHARGER"
+    elseif specA.externalPowerConnection ~= nil and specA.externalPowerConnection ~= vehicleB
+        or specB.externalPowerConnection ~= nil and specB.externalPowerConnection ~= vehicleA then
+        return false, "BUSY"
+    elseif calcDistanceFrom(vehicleA.rootNode, vehicleB.rootNode) > RMS_Config.FIELD_CARE.JUMPER_CABLES_MAX_CONNECTION_DISTANCE then
+        return false, "TOO_FAR"
+    elseif specA.electricalRating.seriesBatteries ~= specB.electricalRating.seriesBatteries then
+        return false, "VOLTAGE"
     end
 
-    local nodeA = vehicleA.rootNode
-    if nodeA == nil and vehicleA.components ~= nil and vehicleA.components[1] ~= nil then
-        nodeA = vehicleA.components[1].node
-    end
-
-    local nodeB = vehicleB.rootNode
-    if nodeB == nil and vehicleB.components ~= nil and vehicleB.components[1] ~= nil then
-        nodeB = vehicleB.components[1].node
-    end
-
-    if nodeA == nil or nodeB == nil then
-        return false, ''
-    end
-
-    local ax, ay, az = getWorldTranslation(nodeA)
-    local bx, by, bz = getWorldTranslation(nodeB)
-    local dx = bx - ax
-    local dy = by - ay
-    local dz = bz - az
-
-    if MathUtil.vector3Length(dx, dy, dz) > RMS_Config.FIELD_CARE.JUMPER_CABLES_MAX_CONNECTION_DISTANCE then
-        return false, 'TOO_FAR'
-    end
-
-    local specA = vehicleA.spec_RealisticMechanicalSystems
-    local specB = vehicleB.spec_RealisticMechanicalSystems
-    if specA.electricalRating.seriesBatteries ~= specB.electricalRating.seriesBatteries then
-        return false, 'VOLTAGE'
-    end
-
-    local electricSpec, engineSpec = nil, nil
-    if specA.isElectricVehicle and not specB.isElectricVehicle then
-        electricSpec, engineSpec = specA, specB
-    elseif specB.isElectricVehicle and not specA.isElectricVehicle then
+    local electricSpec, engineSpec = specA, specB
+    if specB.isElectricVehicle then
         electricSpec, engineSpec = specB, specA
     end
-    if electricSpec ~= nil and electricSpec.batterySoc > engineSpec.batterySoc then
-        return false, 'ELECTRIC_DONOR'
-    end
+    local isElectricDonor = electricSpec.isElectricVehicle and not engineSpec.isElectricVehicle
+        and electricSpec.batterySoc > engineSpec.batterySoc
+    return not isElectricDonor, isElectricDonor and "ELECTRIC_DONOR" or nil
+end
 
-    return true
+local function setCableLink(vehicle, partner, isLinked)
+    vehicle.spec_RealisticMechanicalSystems.externalPowerConnection = isLinked and partner or nil
+    partner.spec_RealisticMechanicalSystems.externalPowerConnection = isLinked and vehicle or nil
 end
 
 ---Records the jumper cable link toward another vehicle
-function RMS_Electrical:establishExternalPowerConnection(externalConnection)
-    local spec = self.spec_RealisticMechanicalSystems
-    if spec == nil or not self.isServer then
-        return
+function RMS_Electrical:establishExternalPowerConnection(otherVehicle)
+    local canLink, reason = RMS_Electrical.isValidPowerPair(self, otherVehicle)
+    if canLink then
+        setCableLink(self, otherVehicle:getRootVehicle(), true)
+    elseif reason ~= "BUSY" then
+        self:clearExternalPowerConnection()
     end
-
-    local otherVehicle = externalConnection
-    if otherVehicle ~= nil and otherVehicle.getRootVehicle ~= nil then
-        otherVehicle = otherVehicle:getRootVehicle()
-    end
-
-    local otherSpec = otherVehicle ~= nil and otherVehicle.spec_RealisticMechanicalSystems or nil
-    local isValid, reason = RMS_Electrical.isValidPowerPair(self, otherVehicle)
-
-    if reason == 'BUSY' then
-        return false
-    end
-    if isValid then
-        spec.externalPowerConnection = otherVehicle
-        if otherSpec ~= nil then
-            otherSpec.externalPowerConnection = self
-        end
-        return true
-    else
-        spec.externalPowerConnection = nil
-        if otherSpec ~= nil and otherSpec.externalPowerConnection == self then
-            otherSpec.externalPowerConnection = nil
-        end
-        return false
-    end
+    return canLink
 end
 
----Drops the jumper cable link toward another vehicle
-function RMS_Electrical:clearExternalPowerConnection(otherVehicle)
-    local spec = self.spec_RealisticMechanicalSystems
-    if spec == nil or not self.isServer then
-        return false
+---Drops the jumper cable link of a vehicle, on both ends
+function RMS_Electrical:clearExternalPowerConnection()
+    local partner = self.spec_RealisticMechanicalSystems.externalPowerConnection
+    if partner ~= nil then
+        setCableLink(self, partner, false)
     end
-
-    local normalizedOther = otherVehicle
-    if normalizedOther ~= nil and normalizedOther.getRootVehicle ~= nil then
-        normalizedOther = normalizedOther:getRootVehicle()
-    end
-    if normalizedOther == nil then
-        normalizedOther = spec.externalPowerConnection
-    end
-
-    spec.externalPowerConnection = nil
-
-    local otherSpec = normalizedOther ~= nil and normalizedOther.spec_RealisticMechanicalSystems or nil
-    if otherSpec ~= nil and otherSpec.externalPowerConnection == self then
-        otherSpec.externalPowerConnection = nil
-    end
-
-    return true
 end

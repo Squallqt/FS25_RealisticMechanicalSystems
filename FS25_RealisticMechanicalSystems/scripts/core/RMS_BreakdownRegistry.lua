@@ -2233,7 +2233,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = "IDLE",
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -2430,7 +2429,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = "IDLE",
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -2540,7 +2538,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = "IDLE",
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -2644,7 +2641,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = "IDLE",
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -3025,7 +3021,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = "IDLE",
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -3108,7 +3103,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = "IDLE",
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -8128,7 +8122,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                                 disableAi = true
                             }
                         },{ id = "ENGINE_FAILURE", value = 1.0, aggregation = "boolean_or", branch = 2,
-                            extraData = { status = 'IDLE', starter = true, reason = "BREAKDOWN", disableAi = true } }}
+                            extraData = { starter = true, reason = "BREAKDOWN", disableAi = true } }}
             }
         }
     },

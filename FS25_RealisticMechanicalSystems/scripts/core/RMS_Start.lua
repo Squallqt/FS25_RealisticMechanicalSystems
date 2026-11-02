@@ -109,8 +109,10 @@ end
 ---Tells whether RMS runs the start instead of the game
 function RMS_Start.getNeedsSequence(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec.isExcludedVehicle or spec.isElectricVehicle then
+    if spec.isExcludedVehicle then
         return false
+    elseif spec.isElectricVehicle then
+        return spec.activeEffects.ENGINE_FAILURE ~= nil
     end
     return RMS_Preheat.isDieselVehicle(vehicle) or RMS_Start.getCrankNeed(vehicle) ~= nil
 end
@@ -176,7 +178,9 @@ end
 local function release(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.isStartReleased = true
-    vehicle:startMotor()
+    if vehicle:getCanMotorRun() then
+        vehicle:startMotor()
+    end
     spec.isStartReleased = false
     if spec.startState == RMS_Start.STATE.CATCHING then
         setState(vehicle, RMS_Start.STATE.FAILED)
@@ -205,7 +209,8 @@ end
 local function updateCranking(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local crankSpeed = RMS_Electrical.getCrankingSpeed(vehicle)
-    if crankSpeed >= RMS_Config.ELECTRICAL.FIRING_CRANKING_SPEED then
+    local canFire = crankSpeed >= RMS_Config.ELECTRICAL.FIRING_CRANKING_SPEED
+    if canFire then
         spec.crankProgressS = spec.crankProgressS + crankSpeed * dt / 1000
     end
 
@@ -213,7 +218,7 @@ local function updateCranking(vehicle, dt)
     local need = RMS_Start.getCrankNeed(vehicle)
     if failure ~= nil and not failure.extraData.starter then
         setState(vehicle, RMS_Start.STATE.FAILED)
-    elseif need == nil or spec.crankProgressS >= need then
+    elseif canFire and (need == nil or spec.crankProgressS >= need) then
         catch(vehicle, RMS_Breakdowns.getStarterCatchDelay(vehicle))
     elseif spec.startTimerMs >= RMS_Start.getStarterAttempt(vehicle).crank then
         setState(vehicle, RMS_Start.STATE.FAILED)
@@ -334,7 +339,7 @@ function RMS_Start.startMotor(self, superFunc, noEventSend)
         return
     end
     if self:getIsAIActive() then
-        if not RMS_Start.getIsColdBlocked(self) then
+        if spec.activeEffects.ENGINE_FAILURE == nil and not RMS_Start.getIsColdBlocked(self) then
             superFunc(self, noEventSend)
         end
         return
@@ -385,7 +390,8 @@ end
 ---Hands the start the key asks for to the sequence
 -- @return boolean isTaken true when the game must not start the engine
 function RMS_Start.takeKeyStart(vehicle)
-    if not g_ignitionLockManager:getIsAvailable()
+    if vehicle.spec_RealisticMechanicalSystems.isStartReleased
+        or not g_ignitionLockManager:getIsAvailable()
         or g_ignitionLockManager:getState() ~= IgnitionLockState.START
         -- the key turns only the machine the local player drives
         or not vehicle:getIsActiveForInput(true) then
@@ -415,16 +421,16 @@ local function playDeadStartSound(vehicle)
     end
 end
 
-local function getIsStartIdle(vehicle)
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local motorState = vehicle:getMotorState()
-    return spec ~= nil and not spec.isExcludedVehicle and spec.startState == RMS_Start.STATE.IDLE
-        and (motorState == MotorState.OFF or motorState == MotorState.IGNITION)
-end
-
 local function getIsStarting(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return spec ~= nil and spec.startState ~= RMS_Start.STATE.IDLE and spec.startState ~= RMS_Start.STATE.FAILED
+end
+
+local function getIsStartIdle(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local motorState = vehicle:getMotorState()
+    return spec ~= nil and not spec.isExcludedVehicle and not getIsStarting(vehicle)
+        and (motorState == MotorState.OFF or motorState == MotorState.IGNITION)
 end
 
 ---Clicks a starter that cannot turn, and stops a start under way

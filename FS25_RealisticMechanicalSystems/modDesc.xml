@@ -72,6 +72,7 @@ Changelog 1.0.0.0-beta.1:
 - Fixed machines bought in another colour without paying for the paint
 - Fixed the vehicle configurator changing an owned machine's colours without charging the repaint
 - Fixed hard starts with the game's automatic start and the GIANTS Ignition Key
+- Fixed cars with a flat battery not starting on jumper cables in the cold
 
 Changelog 0.13.0.1:
 - Fixed the game freezing while loading a savegame with some mods that switch a machine's lights
@@ -289,6 +290,7 @@ Changelog 1.0.0.0-beta.1:
 - Fehler behoben, durch den eine Maschine ohne Lackierkosten in einer anderen Farbe gekauft werden konnte
 - Fehler behoben, durch den der Konfigurator die Farben einer eigenen Maschine ohne Lackierkosten änderte
 - Schwere Starts mit dem automatischen Motorstart des Spiels und dem GIANTS-Zündschlüssel behoben
+- Fehler behoben, durch den ein Auto mit leerer Batterie bei Kälte nicht per Starthilfekabel ansprang
 
 Changelog 0.13.0.1:
 - Hängenbleiben beim Laden des Spielstands mit Mods, die die Beleuchtung einer Maschine schalten, behoben
@@ -506,6 +508,7 @@ Changelog 1.0.0.0-beta.1 :
 - Correction de l'achat d'une machine dans une autre couleur sans payer la peinture
 - Correction du configurateur qui changeait les couleurs d'une machine possédée sans faire payer la peinture
 - Correction des démarrages difficiles avec le démarrage automatique du jeu et la clé de contact GIANTS
+- Correction des voitures à la batterie à plat qui ne démarraient pas aux câbles par temps froid
 
 Changelog 0.13.0.1 :
 - Correction du chargement de la partie qui se figeait avec certains mods qui commandent les feux d'une machine
