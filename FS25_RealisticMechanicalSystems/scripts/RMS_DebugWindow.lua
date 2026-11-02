@@ -45,7 +45,6 @@ RMS_DebugWindow.commands = nil
 
 local L = {}
 
----Fits the debug layout to the screen.
 local function setScreen()
     local scale = math.min(g_gameSettings:getValue(GameSettings.SETTING.UI_SCALE), 1)
     L.unit = math.min(g_screenHeight / SCREEN_H * scale, g_screenWidth * 0.98 / PANEL_W)
@@ -54,22 +53,18 @@ local function setScreen()
     L.isMeasuring = false
 end
 
----Converts a layout x coordinate to screen space.
 local function screenX(x)
     return (L.left + x * L.unit) / g_screenWidth
 end
 
----Converts a layout y coordinate to screen space.
 local function screenY(y)
     return 1 - y * L.unit / g_screenHeight
 end
 
----Converts a layout text size to screen space.
 local function textSize(px)
     return px * L.unit / g_screenHeight
 end
 
----Returns text width in layout pixels.
 local function measure(text, px, bold)
     setTextBold(bold == true)
     local width = getTextWidth(textSize(px), text) * g_screenWidth / L.unit
@@ -77,7 +72,6 @@ local function measure(text, px, bold)
     return width
 end
 
----Adds a filled rectangle
 local function rect(x, y, w, h, color, isRound)
     if L.isMeasuring then
         return
@@ -101,7 +95,6 @@ local function label(x, y, w, h, text, px, color, bold, align)
         bold = bold == true, align = align})
 end
 
----Parts a row into its items
 local function splitItems(text)
     local items, start = {}, 1
     while true do
@@ -130,7 +123,6 @@ local function wrap(text, w, px, bold)
     return lines
 end
 
----Adds a bar filled to a share, with the tick of a share on it
 local function bar(x, y, w, h, share, color, tick)
     rect(x, y, w, h, COLOR.track)
     rect(x, y, math.max(w * math.min(share, 1), 2), h, color)
@@ -139,7 +131,6 @@ local function bar(x, y, w, h, share, color, tick)
     end
 end
 
----Adds the title of a zone, its accent and its rule
 local function title(x, y, w, text, right)
     rect(x, y + 4, 4, 20, HUD.COLOR.ACTIVE)
     label(x + 14, y, w - 14, 28, text:upper(), 17, HUD.COLOR.ACTIVE, true)
@@ -149,7 +140,6 @@ local function title(x, y, w, text, right)
     rect(x, y + 31, w, 1, COLOR.line)
 end
 
----Risk colour against new: red from x2, yellow from x1.5
 local function riskColor(risk)
     return risk >= 2 and COLOR.red or risk >= 1.5 and COLOR.yellow or COLOR.ok
 end
@@ -192,7 +182,6 @@ local function placeBlocks(blocks, x, w, top)
     end
 end
 
----Block of rows; a long value wraps under its label
 local function rowBlocks(blocks, rows, x, w, labelW, pitch, px)
     for _, row in ipairs(rows) do
         table.insert(blocks, {draw = function(y, spacing)
@@ -207,14 +196,12 @@ local function rowBlocks(blocks, rows, x, w, labelW, pitch, px)
     end
 end
 
----A block of space between two parts of a column
 local function gapBlock(blocks, height)
     table.insert(blocks, {isGap = true, draw = function(_, spacing)
         return height * spacing
     end})
 end
 
----Adds a line of facts, each label followed by its value
 local function addFacts(x, y, items, lead)
     if lead ~= nil then
         label(x, y, 100, 22, lead, 15, HUD.COLOR.ACTIVE, true)
@@ -228,7 +215,6 @@ local function addFacts(x, y, items, lead)
     end
 end
 
----Returns the most parts a card holds on each row of cards
 local function getRowParts(cards)
     local shown = {0, 0}
     for position, card in ipairs(cards) do
@@ -368,8 +354,6 @@ local function addMiddle(reading)
     placeBlocks(blocks, x, w, CONTENT_TOP)
 end
 
--- @param table? reading reading
--- @return table commands rectangles and texts to draw
 function RMS_DebugWindow.layout(reading)
     setScreen()
     rect(PANEL_X, PANEL_Y, PANEL_W, PANEL_H, COLOR.panel, true)
@@ -407,7 +391,6 @@ function RMS_DebugWindow.layout(reading)
     return L.commands
 end
 
----Draws the commands of the last layout
 local function render(commands)
     setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_MIDDLE)
     for _, command in ipairs(commands) do
@@ -444,7 +427,6 @@ local function getReading(vehicle)
 end
 
 ---Tells whether the window stays open; starts from the saved debug mode
--- @return boolean isOpen true while open
 function RMS_DebugWindow.getIsOpen()
     if RMS_DebugWindow.isOpen == nil then
         RMS_DebugWindow.isOpen = g_currentMission:getIsServer() and RMS_Config.DEBUG
@@ -459,7 +441,6 @@ function RMS_DebugWindow.onToggleAction()
     end
 end
 
----Registers the key among the game's global player keys
 local function onRegisterGlobalPlayerActionEvents()
     local _, eventId = g_inputBinding:registerActionEvent(InputAction.RMS_TOGGLE_DEBUG_WINDOW, RMS_DebugWindow,
         RMS_DebugWindow.onToggleAction, false, true, false, true)
@@ -468,7 +449,6 @@ end
 PlayerInputComponent.registerGlobalPlayerActionEvents = Utils.appendedFunction(PlayerInputComponent.registerGlobalPlayerActionEvents,
     onRegisterGlobalPlayerActionEvents)
 
--- @param table? vehicle machine the HUD shows
 function RMS_DebugWindow.draw(vehicle)
     if not RMS_DebugWindow.getIsOpen() or not g_currentMission.isMasterUser or vehicle == nil then
         return

@@ -54,7 +54,6 @@ RMS_Breakdowns.COLOR_PRIORITY = {
 local getIsElectricVehicle = RMS_Utils.getIsElectricVehicle
 local hasCVTAddon = RMS_Utils.hasCVTAddon
 
----Tells whether a powershift gearbox runs without CVT conversion
 local function isPowershiftBreakdownApplicable(vehicle)
     if hasCVTAddon(vehicle) or getIsElectricVehicle(vehicle) then return false end
     local motor = vehicle:getMotor()
@@ -117,7 +116,6 @@ local function isTransmissionFilterApplicable(vehicle)
         or motor.groupType == VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT or RMS_Utils.hasCVTTransmission(vehicle))
 end
 
----Tells whether the machine burns AdBlue
 local function isAdBlueApplicable(vehicle)
     return vehicle.spec_motorized and vehicle.spec_motorized.consumersByFillTypeName and vehicle.spec_motorized.consumersByFillTypeName.DEF ~= nil
 end
@@ -484,37 +482,30 @@ local breakdownProgressMultipliers = {
     FRONT_PTO_CLUTCH_FAILURE = 1.0,
 }
 
----Tells whether the vehicle has hydraulics at all
 local function isHydraulicBreakdownApplicable(vehicle)
     return RMS_Utils.hasHydraulicCapability(vehicle)
 end
 
----Tells whether the vehicle can lift with its hydraulics
 local function isHydraulicLiftBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicLiftCapability(vehicle)
 end
 
----Tells whether the vehicle carries hydraulic hoses
 local function isHydraulicHoseBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicHoseCapability(vehicle)
 end
 
----Tells whether the vehicle has a hydraulic function the player can drive
 local function isHydraulicActuatorBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicControllableTargetCapability(vehicle)
 end
 
----Tells whether the vehicle has a PTO output
 local function isPtoBreakdownApplicable(vehicle)
     return RMS_Utils.hasPtoOutputCapability(vehicle)
 end
 
----Tells whether the vehicle drives its wheels through a reducer
 local function isReducerBreakdownApplicable(vehicle)
     return getIsElectricVehicle(vehicle) and vehicle:getMotor().minForwardGearRatio ~= nil
 end
 
----Tells whether the vehicle runs a variator
 local function isVariatorBreakdownApplicable(vehicle)
     return not hasCVTAddon(vehicle) and RMS_Utils.hasCVTTransmission(vehicle)
 end
@@ -543,8 +534,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                     {
                         id = "ENGINE_HARD_START_MODIFIER",
                         value = 0,
-                        aggregation = "max",
-                        extraData = {timer = 0, status = 'IDLE'}
+                        aggregation = "max"
                     }
                 },
                 indicators = {}
@@ -574,7 +564,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             id = "ENGINE_FAILURE",
                             value = 1.0,
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 message = "rms_breakdowns_dead_battery_message",
                                 reason = "BREAKDOWN",
@@ -612,7 +601,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "LIGHTS_FLICKER_CHANCE", value = 0.1, extraData = {timer = 0, status = 'IDLE', duration = 200, maskBackup = 0}, aggregation = "min"},
                     { id = "PTO_AUTO_DISENGAGE_CHANCE", value = 1, aggregation = "min", extraData = {status = 'IDLE'} },
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", extraData = { timer = 0, status = 'IDLE', message = "rms_breakdowns_voltage_sag_message"}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", extraData = { message = "rms_breakdowns_voltage_sag_message"}},
                 },
                 indicators = {
                     { id = db.BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -976,7 +965,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 message = "rms_breakdowns_overheat_protection_stage4_message",
                                 reason = "OVERHEAT",
@@ -1017,7 +1005,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 reason = "OVERHEAT",
                                 disableAi = true
@@ -1103,7 +1090,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.35, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.5, aggregation = "sum" },
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"},
                     { id = "EXHAUST_SOOT", value = 0.80, aggregation = "max" }
                 },
                 indicators = {
@@ -1122,7 +1109,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -1156,7 +1142,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.POWER_CABLE_CONNECTION_FAILURE[1],
                 effects = {
                     { id = "LIGHTS_FLICKER_CHANCE", value = 1.0, extraData = {timer = 0, status = 'IDLE', duration = 200, maskBackup = 0}, aggregation = "min"},
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max"},
                     { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 1, aggregation = "max" },
                     { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 1, aggregation = "sum" }
                 }
@@ -1171,7 +1157,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 effects = {
                     { id = "LIGHTS_FLICKER_CHANCE", value = 0.33, extraData = {timer = 0, status = 'IDLE', duration = 300, maskBackup = 0}, aggregation = "min" },
                     { id = "ENGINE_STALLS_CHANCE", value = 30.0, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 5, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 5, aggregation = "max"},
                     { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 2, aggregation = "max" },
                     { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 2, aggregation = "sum" }
                 },
@@ -1193,7 +1179,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.10, aggregation = "sum"},
                     { id = "LIGHTS_FAILURE", value = 1.0, aggregation = "boolean_or" },
                     { id = "ENGINE_STALLS_CHANCE", value = 20.0, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 8, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 8, aggregation = "max"},
                     { id = "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", value = 4, aggregation = "max" },
                     { id = "ELECTRICAL_LEAKAGE_EFFECT", value = 4, aggregation = "sum" }
                 },
@@ -1218,7 +1204,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             id = "ENGINE_FAILURE",
                             value = 1.0,
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -1254,7 +1239,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.STARTER_RELAY_FAILURE[1],
                 effects = {
                     { id = "STARTER_HEALTH_MODIFIER", value = -1.0, aggregation = "min", extraData = { disableAi = true } },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max", extraData = { timer = 0, status = "IDLE" } }
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max" }
                 },
                 indicators = {
                     { id = db.ENGINE, color = color.WARNING, switchOn = true, switchOff = false }
@@ -1281,7 +1266,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.PREHEAT_RELAY_FAILURE[1],
                 effects = {
                     { id = "GLOW_PLUG_FAILURE", value = 4, aggregation = "max" },
-                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 8, aggregation = "max", extraData = { timer = 0, status = "IDLE", blockStart = true } },
+                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 8, aggregation = "max", extraData = { blockStart = true } },
                     { id = "GLOW_PLUG_COLD_IDLE_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1500 } }
                 },
                 indicators = { glowPlugFailureIndicator }
@@ -1482,7 +1467,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.BATTERY_SULFATION[2],
                 effects = {
                     { id = "BATTERY_HEALTH_MODIFIER", value = -0.6, aggregation = "min"},
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max"},
                 },
                 indicators = {
                     { id = db.BATTERY, color = color.WARNING, switchOn = true, switchOff = false }
@@ -1497,7 +1482,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.BATTERY_SULFATION[3],
                 effects = { 
                     { id = "BATTERY_HEALTH_MODIFIER", value = -0.75, aggregation = "min"},
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                 },
                 indicators = {
                     { id = db.BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -1512,7 +1497,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.BATTERY_SULFATION[4],
                 effects = { 
                     { id = "BATTERY_HEALTH_MODIFIER", value = -1.0, aggregation = "min"},
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, extraData = { timer = 0, status = 'IDLE'}, aggregation = "max"},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, aggregation = "max"},
                 },
                 indicators = {
                     { id = db.BATTERY, color = color.CRITICAL, switchOn = true, switchOff = false }
@@ -1539,7 +1524,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GLOW_PLUG_FAILURE[1],
                 effects = {
                     { id = "GLOW_PLUG_FAILURE", value = 1, aggregation = "max" },
-                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = "IDLE" } }
+                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 2, aggregation = "max" }
                 },
                 indicators = {
                     glowPlugFailureIndicator
@@ -1553,7 +1538,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GLOW_PLUG_FAILURE[2],
                 effects = {
                     { id = "GLOW_PLUG_FAILURE", value = 2, aggregation = "max" },
-                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 4, aggregation = "max", extraData = { timer = 0, status = "IDLE" } },
+                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 4, aggregation = "max" },
                     { id = "GLOW_PLUG_COLD_IDLE_EFFECT", value = 0.05, aggregation = "max", extraData = { timer = 0, period = 1800 } }
                 },
                 indicators = {
@@ -1568,7 +1553,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GLOW_PLUG_FAILURE[3],
                 effects = {
                     { id = "GLOW_PLUG_FAILURE", value = 3, aggregation = "max" },
-                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 8, aggregation = "max", extraData = { timer = 0, status = "IDLE" } },
+                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 8, aggregation = "max" },
                     { id = "GLOW_PLUG_COLD_IDLE_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1500 } }
                 },
                 indicators = {
@@ -1583,7 +1568,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GLOW_PLUG_FAILURE[4],
                 effects = {
                     { id = "GLOW_PLUG_FAILURE", value = 4, aggregation = "max" },
-                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 8, aggregation = "max", extraData = { timer = 0, status = "IDLE", blockStart = true } },
+                    { id = "GLOW_PLUG_HARD_START_MODIFIER", value = 8, aggregation = "max", extraData = { blockStart = true } },
                     { id = "GLOW_PLUG_COLD_IDLE_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1500 } }
                 },
                 indicators = {
@@ -1700,7 +1685,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.STARTER_FAILURE[1],
                 effects = {
                     { id = "STARTER_HEALTH_MODIFIER", value = -0.2, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}}
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max"}
                 }
             },
             {
@@ -1711,7 +1696,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.STARTER_FAILURE[2],
                 effects = {
                     { id = "STARTER_HEALTH_MODIFIER", value = -0.4, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}}
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max"}
                 }
             },
             {
@@ -1722,7 +1707,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.STARTER_FAILURE[3],
                 effects = {
                     { id = "STARTER_HEALTH_MODIFIER", value = -0.55, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}}
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max"}
                 }
             },
             {
@@ -1733,7 +1718,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.STARTER_FAILURE[4],
                 effects = {
                     { id = "STARTER_HEALTH_MODIFIER", value = -1.0, aggregation = "min", extraData = {disableAi = true} },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}}
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max"}
                 }
             }
         }
@@ -1800,7 +1785,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -1996,7 +1980,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -2162,7 +2145,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -2228,7 +2210,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 effects = {
                     { id = "EXHAUST_OIL", value = 0.4, aggregation = "max" },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.12, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", extraData = { timer = 0, status = "IDLE" } },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max" },
                     { id = "PISTON_SLAP_NOISE_EFFECT", value = 0.8, aggregation = "max" }
                 },
                 indicators = {
@@ -2302,10 +2284,10 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.PISTON_RINGS[2],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.04, aggregation = "sum", branch = 1 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 1 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", branch = 1 },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.05, aggregation = "sum", branch = 1 },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.04, aggregation = "sum", branch = 3 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 3 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", branch = 3 },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.05, aggregation = "sum", branch = 3 },
                     { id = "EXHAUST_OIL", value = 0.2, aggregation = "max", branch = 2 }
                 }
@@ -2323,10 +2305,10 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.PISTON_RINGS[3],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.12, aggregation = "sum", branch = 1 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 1 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", branch = 1 },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.1, aggregation = "sum", branch = 1 },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.12, aggregation = "sum", branch = 3 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 3 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", branch = 3 },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.1, aggregation = "sum", branch = 3 },
                     { id = "EXHAUST_OIL", value = 0.4, aggregation = "max", branch = 2 }
                 },
@@ -2348,10 +2330,10 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.PISTON_RINGS[4],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.25, aggregation = "sum", branch = 1 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 1 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, aggregation = "max", branch = 1 },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.2, aggregation = "sum", branch = 1 },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.25, aggregation = "sum", branch = 3 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 3 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, aggregation = "max", branch = 3 },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.2, aggregation = "sum", branch = 3 },
                     { id = "EXHAUST_OIL", value = 0.65, aggregation = "max", branch = 2 },
                     { id = "EXHAUST_OIL", value = 0.65, aggregation = "max", branch = 3 }
@@ -2801,7 +2783,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.CYLINDER_HEAD[2],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.04, aggregation = "sum", branch = 1 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 1 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.08, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.08, aggregation = "max", branch = 2 },
                     { id = "COOLANT_LEAK_RATE", value = 0.08, aggregation = "max", branch = 3 }
@@ -2823,7 +2805,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.CYLINDER_HEAD[3],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.12, aggregation = "sum", branch = 1 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 1 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.25, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.25, aggregation = "max", branch = 2 },
                     { id = "COOLANT_LEAK_RATE", value = 0.25, aggregation = "max", branch = 3 },
@@ -2851,7 +2833,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.CYLINDER_HEAD[4],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.25, aggregation = "sum", branch = 1 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 1 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.8, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.8, aggregation = "max", branch = 2 },
                     { id = "COOLANT_LEAK_RATE", value = 0.8, aggregation = "max", branch = 3 },
@@ -2906,7 +2888,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.CYLINDER_HEAD_GASKET[2],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.04, aggregation = "sum", branch = 1 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 1 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.08, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.08, aggregation = "max", branch = 2 },
                     { id = "COOLANT_LEAK_RATE", value = 0.08, aggregation = "max", branch = 3 }
@@ -2928,7 +2910,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.CYLINDER_HEAD_GASKET[3],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.12, aggregation = "sum", branch = 1 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 1 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.25, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.25, aggregation = "max", branch = 2 },
                     { id = "COOLANT_LEAK_RATE", value = 0.25, aggregation = "max", branch = 3 },
@@ -2956,7 +2938,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.CYLINDER_HEAD_GASKET[4],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.25, aggregation = "sum", branch = 1 },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, aggregation = "max", extraData = { timer = 0, status = "IDLE" }, branch = 1 },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 9, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.8, aggregation = "max", branch = 1 },
                     { id = "COOLANT_LEAK_RATE", value = 0.8, aggregation = "max", branch = 2 },
                     { id = "COOLANT_LEAK_RATE", value = 0.8, aggregation = "max", branch = 3 },
@@ -3204,7 +3186,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -3282,7 +3263,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -3357,7 +3337,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -7733,7 +7712,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "IDLE_HUNTING_EFFECT", value = 0.05, aggregation = "max", extraData = { timer = 0, period = 1800} },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.15, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.8, cruiseState = 0} }
                 }
             },
@@ -7748,7 +7727,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.12, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.4, aggregation = "sum" },
                     { id = "ENGINE_STALLS_CHANCE", value = 20.0, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max"},
                     { id = "EXHAUST_UNBURNT", value = 0.20, aggregation = "max" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} }
                 },
@@ -7777,7 +7756,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.25, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 1.0, aggregation = "sum" },
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "EXHAUST_UNBURNT", value = 0.30, aggregation = "max" },
                     { id = "EXHAUST_SOOT", value = 0.15, aggregation = "max" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.15, aggregation = "min", extraData = {timer = 0, duration = 500, status = 'IDLE', amplitude = 1.0, motorLoad = 0.5, cruiseState = 0} }
@@ -7798,7 +7777,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -7868,7 +7846,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "IDLE_HUNTING_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1800} },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.35, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.50, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "EXHAUST_SOOT", value = 0.70, aggregation = "max" },
                     { id = "EXHAUST_UNBURNT", value = 0.50, aggregation = "max" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 500, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} },
@@ -7890,7 +7868,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -7924,7 +7901,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.HIGH_PRESSURE_PUMP_MALFUNCTION[1],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"},
                     { id = "HIGH_PRESSURE_PUMP_NOISE_EFFECT", value = 0.3, aggregation = "max" }
                 }
             },
@@ -7936,7 +7913,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.HIGH_PRESSURE_PUMP_MALFUNCTION[2],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.15, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.8, cruiseState = 0} },
                     { id = "HIGH_PRESSURE_PUMP_NOISE_EFFECT", value = 0.5, aggregation = "max" }
                 },
@@ -7952,7 +7929,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.HIGH_PRESSURE_PUMP_MALFUNCTION[3],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.30, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} },
                     { id = "HIGH_PRESSURE_PUMP_NOISE_EFFECT", value = 0.8, aggregation = "max" }
@@ -7973,7 +7950,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = 'IDLE',
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -8070,7 +8046,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -8100,7 +8075,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.FUEL_LINE_AIR_LEAK,
                 repairPrice = stagePartPrices.FUEL_LINE_AIR_LEAK[1],
                 effects = {
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max", branch = 1, extraData = { timer = 0, status = 'IDLE', count = 0}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max", branch = 1},
                     { id = "ENGINE_STALLS_CHANCE", value = 40.0, aggregation = "min", branch = 2 }}
             },
             {
@@ -8113,7 +8088,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 effects = {
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", branch = 1,
                         extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.5, cruiseState = 0} },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", branch = 1, extraData = { timer = 0, status = 'IDLE', count = 0}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", branch = 1},
                     { id = "ENGINE_STALLS_CHANCE", value = 20.0, aggregation = "min", branch = 1 },
                     { id = "EXHAUST_UNBURNT", value = 0.20, aggregation = "max", branch = 1 },
                 
@@ -8129,7 +8104,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 effects = {
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", branch = 1,
                         extraData = {timer = 0, duration = 500, status = 'IDLE', amplitude = 0.7, motorLoad = 0.5, cruiseState = 0} },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", branch = 1, extraData = {timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", branch = 1},
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min", branch = 1 },
                     { id = "EXHAUST_UNBURNT", value = 0.35, aggregation = "max", branch = 1 },
                 
@@ -8148,7 +8123,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or", branch = 1,
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -8178,7 +8152,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.MECHANICAL_INJECTION_PUMP_MALFUNCTION[1],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"},
                     { id = "INJECTOR_KNOCK_NOISE_EFFECT", value = 0.3, aggregation = "max" }
                 }
             },
@@ -8190,7 +8164,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.MECHANICAL_INJECTION_PUMP_MALFUNCTION[2],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.15, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.8, cruiseState = 0} },
                     { id = "INJECTOR_KNOCK_NOISE_EFFECT", value = 0.5, aggregation = "max" }
                 }
@@ -8203,7 +8177,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.MECHANICAL_INJECTION_PUMP_MALFUNCTION[3],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.30, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} },
                     { id = "INJECTOR_KNOCK_NOISE_EFFECT", value = 0.8, aggregation = "max" }
@@ -8221,7 +8195,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = 'IDLE',
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -8250,7 +8223,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.FUEL_METERING_VALVE_FAILURE[1],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}}
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"}
                 }
             },
             {
@@ -8261,7 +8234,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.FUEL_METERING_VALVE_FAILURE[2],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.15, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.8, cruiseState = 0} }
                 },
                 indicators = {
@@ -8276,7 +8249,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.FUEL_METERING_VALVE_FAILURE[3],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.30, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} }
                 },
@@ -8296,7 +8269,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = 'IDLE',
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -8327,7 +8299,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.RAIL_PRESSURE_SENSOR_FAILURE[1],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}}
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"}
                 }
             },
             {
@@ -8338,7 +8310,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.RAIL_PRESSURE_SENSOR_FAILURE[2],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.15, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.8, cruiseState = 0} }
                 },
                 indicators = {
@@ -8353,7 +8325,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.RAIL_PRESSURE_SENSOR_FAILURE[3],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.30, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} }
                 },
@@ -8369,7 +8341,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.RAIL_PRESSURE_SENSOR_FAILURE[4],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.30, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} }
                 },
@@ -8397,7 +8369,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.RAIL_PRESSURE_LIMITER_FAILURE[1],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}}
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"}
                 }
             },
             {
@@ -8408,7 +8380,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.RAIL_PRESSURE_LIMITER_FAILURE[2],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.15, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.8, cruiseState = 0} }
                 },
                 indicators = {
@@ -8423,7 +8395,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.RAIL_PRESSURE_LIMITER_FAILURE[3],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.30, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} }
                 },
@@ -8443,7 +8415,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = 'IDLE',
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -8474,7 +8445,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GAS_PRESSURE_REGULATOR_FAILURE[1],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.05, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}}
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"}
                 }
             },
             {
@@ -8485,7 +8456,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GAS_PRESSURE_REGULATOR_FAILURE[2],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.15, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.8, cruiseState = 0} }
                 },
                 indicators = {
@@ -8500,7 +8471,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GAS_PRESSURE_REGULATOR_FAILURE[3],
                 effects = {
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.30, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} }
                 },
@@ -8520,7 +8491,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                         value = 1.0,
                         aggregation = "boolean_or",
                         extraData = {
-                            status = 'IDLE',
                             starter = true,
                             reason = "BREAKDOWN",
                             disableAi = true
@@ -8550,7 +8520,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.GAS_SHUTOFF_SOLENOID_FAILURE,
                 repairPrice = stagePartPrices.GAS_SHUTOFF_SOLENOID_FAILURE[1],
                 effects = {
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.8, cruiseState = 0} }
                 }
             },
@@ -8562,7 +8532,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GAS_SHUTOFF_SOLENOID_FAILURE[2],
                 effects = {
                     { id = "ENGINE_STALLS_CHANCE", value = 20.0, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 4, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 400, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} }
                 },
                 indicators = {
@@ -8587,7 +8557,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GAS_SHUTOFF_SOLENOID_FAILURE[3],
                 effects = {
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.15, aggregation = "min", extraData = {timer = 0, duration = 500, status = 'IDLE', amplitude = 1.0, motorLoad = 0.5, cruiseState = 0} }
                 },
                 indicators = {
@@ -8606,7 +8576,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -8703,7 +8672,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -8730,7 +8698,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.GAS_LINE_LEAK,
                 repairPrice = stagePartPrices.GAS_LINE_LEAK[1],
                 effects = {
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max", extraData = { timer = 0, status = 'IDLE', count = 0}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 1, aggregation = "max"},
                     { id = "GAS_LEAK_NOISE_EFFECT", value = 0.3, aggregation = "max" }
                 }
             },
@@ -8742,7 +8710,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GAS_LINE_LEAK[2],
                 effects = {
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = {timer = 0, duration = 300, status = 'IDLE', amplitude = 0.6, motorLoad = 0.5, cruiseState = 0} },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max", extraData = { timer = 0, status = 'IDLE', count = 0}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 2, aggregation = "max"},
                     { id = "ENGINE_STALLS_CHANCE", value = 20.0, aggregation = "min" },
                     { id = "EXHAUST_UNBURNT", value = 0.20, aggregation = "max" },
                     { id = "GAS_LEAK_NOISE_EFFECT", value = 0.5, aggregation = "max" }
@@ -8756,7 +8724,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                 repairPrice = stagePartPrices.GAS_LINE_LEAK[3],
                 effects = {
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 500, status = 'IDLE', amplitude = 0.7, motorLoad = 0.5, cruiseState = 0} },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max", extraData = {timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 3, aggregation = "max"},
                     { id = "ENGINE_STALLS_CHANCE", value = 10.0, aggregation = "min" },
                     { id = "EXHAUST_UNBURNT", value = 0.35, aggregation = "max" },
                     { id = "GAS_LEAK_NOISE_EFFECT", value = 0.8, aggregation = "max" }
@@ -8774,7 +8742,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -8839,7 +8806,7 @@ RMS_Breakdowns.BreakdownRegistry = {
                     { id = "IDLE_HUNTING_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1800} },
                     { id = "ENGINE_TORQUE_MODIFIER", value = -0.35, aggregation = "sum" },
                     { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.50, aggregation = "sum" },
-                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max", extraData = { timer = 0, status = 'IDLE'}},
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max"},
                     { id = "EXHAUST_SOOT", value = 0.70, aggregation = "max" },
                     { id = "EXHAUST_UNBURNT", value = 0.50, aggregation = "max" },
                     { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = {timer = 0, duration = 500, status = 'IDLE', amplitude = 1.0, motorLoad = 0.7, cruiseState = 0} }
@@ -8860,7 +8827,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = true,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -9157,7 +9123,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -9229,7 +9194,6 @@ RMS_Breakdowns.BreakdownRegistry = {
                             value = 1.0,
                             aggregation = "boolean_or",
                             extraData = {
-                                status = 'IDLE',
                                 starter = false,
                                 reason = "BREAKDOWN",
                                 disableAi = true
@@ -9244,7 +9208,6 @@ RMS_Breakdowns.BreakdownRegistry = {
     },
 }
 
----Wraps every applicability test so a disabled system never breaks down
 local function wrapBreakdownApplicabilityByEnabledSystem()
     for _, entry in pairs(RMS_Breakdowns.BreakdownRegistry or {}) do
         if type(entry) == "table" and entry.system ~= nil and type(entry.isApplicable) == "function" then

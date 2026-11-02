@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Nyalakan mesin untuk melepaskan rem parkir"/>
         <text name="rms_preheat_ignition_message" text="Kontak dinyalakan: pemanasan awal berlangsung"/>
         <text name="rms_preheat_system_failure_message" text="Kegagalan sistem pemanasan awal: mesin tidak dapat dinyalakan dalam kondisi dingin"/>
-        <text name="rms_preheat_start_failed_message" text="Mesin tidak menyala: matikan kontak sebelum mencoba lagi"/>
+        <text name="rms_preheat_start_failed_message" text="Mesin tidak menyala"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Periksa kendaraan"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Inspeksi atau perawatan dapat mengidentifikasi kerusakan lain."/>
         <text name="rms_ws_status_ready_title" text="Bengkel siap"/>
         <text name="rms_ws_status_ready_hint" text="Pilih prosedur. Opsi, suku cadang, dan harga akan dikonfirmasi sebelum prosedur dimulai."/>
+        <text name="rms_ws_status_closed_hint" text="Prosedur dapat dipesan pukul %s sampai %s."/>
         <text name="rms_ws_label_value" text="Nilai Kendaraan"/>
         <text name="rms_ws_label_age" text="Usia"/>
         <text name="rms_ws_label_operating_hours" text="Jam Operasi"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Tidak ada kerusakan yang dicentang. Centang kerusakan yang akan diperbaiki di Diagnostik dan Perkiraan."/>
         <text name="rms_ws_reason_overhaul_none" text="Rekondisi mekanis memulihkan sistem di bawah 50% kondisi. Mesin ini tidak memilikinya."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Bengkel bergerak tidak melakukan pengecatan. Pengecatan dilakukan di dealer."/>
+        <text name="rms_ws_reason_refill_dealer" text="Hanya dealer yang melakukan penambahan fluida. Di tempat lain, dilakukan dengan wadah."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Gunakan bengkel yang lengkap."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Hubungkan alat diagnostik dari troli ke mesin."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnosis elektronik diperlukan"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Penyaluran Daya Lemah"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Rasio Berkurang"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Penyaluran Daya Tidak Teratur"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Kondisi Termostat Menurun"/>
         <text name="rms_report_transmission_failed" text="Gagal"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistol Gemuk"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Trailer Terlalu Berat"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Beban yang ditarik tampak terlalu berat untuk kendaraan ini. Kamu dapat terus berkendara, tetapi transmisi dan sistem penggerak akan menerima tegangan lebih besar.&#10;&#10;RMS menggunakan dua acuan: traktor memerlukan setidaknya 10 HP per ton beban yang ditarik, sedangkan truk memerlukan setidaknya 6 HP per ton bobot kombinasi bruto. Di bawah nilai yang berlaku dan saat beban mesin tinggi, keausan transmisi meningkat."/>
         <text name="rms_tutorial_hard_start_title" text="Mesin Sulit Dinyalakan"/>
-        <text name="rms_tutorial_hard_start_message" text="Mesin %s milikmu sulit dinyalakan. Baterai lemah, suhu beku, kerusakan mekanis, atau keausan starter dapat menjadi penyebabnya. Tahan tombol starter hingga mesin menyala.&#10;&#10;Sistem kelistrikan menerima beban berat selama penyalaan akibat arus masuk awal yang tinggi."/>
+        <text name="rms_tutorial_hard_start_message" text="Mesin %s milikmu sulit dinyalakan. Baterai lemah, suhu beku, kerusakan mekanis, atau keausan starter dapat menjadi penyebabnya.&#10;&#10;Sistem kelistrikan menerima beban berat selama penyalaan akibat arus masuk awal yang tinggi."/>
         <text name="rms_tutorial_low_fuel_title" text="Cadangan Bahan Bakar"/>
         <text name="rms_tutorial_low_fuel_message" text="Tangki mendekati tingkat cadangan. Semakin sedikit bahan bakar yang tersisa, semakin berat kerja pompa bahan bakar untuk mengisapnya, dan dasar tangki mengirim air serta endapannya ke filter sehingga filter lebih cepat tersumbat.&#10;&#10;Sebaiknya isi penuh tangki di akhir hari: tangki yang penuh menghasilkan lebih sedikit embun."/>
         <text name="rms_tutorial_lugging_title" text="Mesin Terbebani pada Putaran Rendah"/>

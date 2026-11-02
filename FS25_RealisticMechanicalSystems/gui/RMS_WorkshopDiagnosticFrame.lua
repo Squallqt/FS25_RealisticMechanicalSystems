@@ -6,17 +6,14 @@ RMS_WorkshopDiagnosticFrame = {}
 
 local RMS_WorkshopDiagnosticFrame_mt = Class(RMS_WorkshopDiagnosticFrame, RMS_WorkshopPage)
 
--- the estimate names this many parts at most
 local MAX_LISTED_PARTS = 16
 
--- label, pictogram and reading fields of each reading row
 local READING_ROWS = {
     { label = "rms_ws_label_condition", icon = "rms_workshopRowConditionIcon", text = "conditionText", color = "conditionColor" },
     { label = "rms_ws_label_service", icon = "rms_workshopRowMaintenanceIcon", text = "serviceText", color = "serviceColor" }
 }
 
 ---Creates the page
--- @return table page
 function RMS_WorkshopDiagnosticFrame.new()
     local self = RMS_WorkshopPage.new(nil, RMS_WorkshopDiagnosticFrame_mt)
     self.breakdownIds = {}
@@ -25,7 +22,6 @@ function RMS_WorkshopDiagnosticFrame.new()
 end
 
 ---Wires both lists
--- @param table dialog workshop dialog
 function RMS_WorkshopDiagnosticFrame:initialize(dialog)
     RMS_WorkshopDiagnosticFrame:superClass().initialize(self, dialog)
     for _, list in ipairs({ self.breakdownTable, self.diagnosticSelectedPartsTable }) do
@@ -41,7 +37,6 @@ function RMS_WorkshopDiagnosticFrame:initialize(dialog)
 end
 
 ---Writes the reading, the breakdowns and the estimate
--- @param table state workshop state of RMS_WorkshopDialog:refresh
 function RMS_WorkshopDiagnosticFrame:refresh(state)
     local vehicle = self.vehicle
     self.isUnderService = state.isUnderService
@@ -140,9 +135,6 @@ function RMS_WorkshopDiagnosticFrame:populateCellForItemInSection(list, _section
 end
 
 ---Picks a breakdown for repair, or puts it back
--- @param table _list list element
--- @param integer _section section index
--- @param integer index row index
 function RMS_WorkshopDiagnosticFrame:onBreakdownClick(_list, _section, index)
     if self.isUnderService then
         return

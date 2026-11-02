@@ -9,16 +9,12 @@ InitEventClass(RMS_LogEntrySyncEvent, "RMS_LogEntrySyncEvent")
 
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_LogEntrySyncEvent.emptyNew()
     return Event.new(RMS_LogEntrySyncEvent_mt)
 end
 
 
 ---Create new instance of event
--- @param table vehicle vehicle
--- @param string? serializedEntry serialized maintenance log entry
--- @return table self instance of class event
 function RMS_LogEntrySyncEvent.new(vehicle, serializedEntry)
     local self = RMS_LogEntrySyncEvent.emptyNew()
     self.vehicle = vehicle
@@ -28,8 +24,6 @@ end
 
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_LogEntrySyncEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
     streamWriteString(streamId, self.serializedEntry)
@@ -37,8 +31,6 @@ end
 
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_LogEntrySyncEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
     self.serializedEntry = streamReadString(streamId)
@@ -47,7 +39,6 @@ end
 
 
 ---Run action on receiving side
--- @param Connection connection connection
 function RMS_LogEntrySyncEvent:run(connection)
     local vehicle = self.vehicle
     if vehicle == nil or not vehicle:getIsSynchronized() then
@@ -74,8 +65,6 @@ end
 
 
 ---Sends the entry from the server to the clients of the vehicle
--- @param table vehicle vehicle
--- @param table entry maintenance log entry
 function RMS_LogEntrySyncEvent.sendToClients(vehicle, entry)
     if g_server ~= nil and entry ~= nil then
         local serialized = RMS_Utils.serializeMaintenanceLogEntry(entry)

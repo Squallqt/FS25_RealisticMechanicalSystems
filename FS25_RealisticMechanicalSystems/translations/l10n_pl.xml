@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Uruchom silnik, aby zwolnić hamulec postojowy"/>
         <text name="rms_preheat_ignition_message" text="Zapłon włączony: trwa podgrzewanie"/>
         <text name="rms_preheat_system_failure_message" text="Awaria układu świec żarowych: rozruch na zimno niemożliwy"/>
-        <text name="rms_preheat_start_failed_message" text="Silnik nie uruchomił się: wyłącz zapłon przed kolejną próbą"/>
+        <text name="rms_preheat_start_failed_message" text="Silnik nie uruchomił się"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Skontroluj pojazd"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Przegląd lub obsługa techniczna może zidentyfikować kolejne awarie."/>
         <text name="rms_ws_status_ready_title" text="Warsztat gotowy"/>
         <text name="rms_ws_status_ready_hint" text="Wybierz czynność. Opcje, części i cena zostaną potwierdzone przed rozpoczęciem."/>
+        <text name="rms_ws_status_closed_hint" text="Czynności można zlecać od %s do %s."/>
         <text name="rms_ws_label_value" text="Wartość pojazdu"/>
         <text name="rms_ws_label_age" text="Wiek"/>
         <text name="rms_ws_label_operating_hours" text="Godziny pracy"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Nie zaznaczono żadnej awarii. Zaznacz w Diagnostyka i wycena awarie do naprawy."/>
         <text name="rms_ws_reason_overhaul_none" text="Remont kapitalny przywraca układy o stanie poniżej 50%. Ta maszyna nie ma żadnego takiego."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Mobilny warsztat nie wykonuje lakierowania. Wykonuje je dealer."/>
+        <text name="rms_ws_reason_refill_dealer" text="Tylko dealer uzupełnia płyny. Gdzie indziej robi się to kanistrem."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Skorzystaj z wyposażonego warsztatu."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Podłącz do maszyny urządzenie diagnostyczne wózka."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Wymagana diagnostyka elektroniczna"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Nieskuteczne przenoszenie napędu"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Ograniczony zakres przełożeń"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Nieregularne przenoszenie napędu"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Osłabiony termostat"/>
         <text name="rms_report_transmission_failed" text="Uszkodzona"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Ręczna smarownica"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Ciężka przyczepa"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Holowany ładunek może być zbyt ciężki dla tego pojazdu. Możesz jechać dalej, ale skrzynia biegów i układ napędowy będą pracować pod większym obciążeniem.&#10;&#10;RMS stosuje dwa punkty odniesienia: ciągnik potrzebuje co najmniej 10 KM na tonę holowanej masy, a ciężarówka co najmniej 6 KM na tonę całkowitej masy zestawu. Poniżej właściwej wartości i przy dużym obciążeniu silnika zużycie przekładni wzrasta."/>
         <text name="rms_tutorial_hard_start_title" text="Trudny rozruch"/>
-        <text name="rms_tutorial_hard_start_message" text="Silnik pojazdu %s uruchamia się z trudem. Przyczyną może być słaby akumulator, mróz, awaria mechaniczna lub zużycie rozrusznika. Przytrzymaj przycisk rozruchu, aż silnik się uruchomi.&#10;&#10;Podczas rozruchu układ elektryczny jest silnie obciążony przez wysoki prąd rozruchowy."/>
+        <text name="rms_tutorial_hard_start_message" text="Silnik pojazdu %s uruchamia się z trudem. Przyczyną może być słaby akumulator, mróz, awaria mechaniczna lub zużycie rozrusznika.&#10;&#10;Podczas rozruchu układ elektryczny jest silnie obciążony przez wysoki prąd rozruchowy."/>
         <text name="rms_tutorial_low_fuel_title" text="Mało paliwa"/>
         <text name="rms_tutorial_low_fuel_message" text="Zbiornik zbliża się do rezerwy. Im mniej zostaje paliwa, tym mocniej pompa paliwa musi pracować, aby je zassać, a z dna zbiornika do filtra trafiają woda i osady, przez co filtr szybciej się zapycha.&#10;&#10;Najlepiej tankować do pełna pod koniec dnia: w pełnym zbiorniku skrapla się mniej wody."/>
         <text name="rms_tutorial_lugging_title" text="Dławienie silnika na niskich obrotach"/>

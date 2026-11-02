@@ -6,10 +6,8 @@ RMS_WorkshopRecordFrame = {}
 
 local RMS_WorkshopRecordFrame_mt = Class(RMS_WorkshopRecordFrame, RMS_WorkshopPage)
 
--- no cost per hour under one operating hour
 local MIN_HOURS_FOR_COST_PER_HOUR = 1
 
--- pictogram, label and figure of each metric of the band
 local HERO_METRICS = {
     { icon = "gui.icon_ingameMenu_statistics", label = "rms_log_recorded_interventions_title", figure = "entries" },
     { icon = "gui.icon_calendar", label = "rms_log_last_intervention_title", figure = "lastIntervention" },
@@ -28,7 +26,6 @@ local KPI_CARDS = {
     { profile = "rms_logKpiMaintenanceIcon", label = "rms_log_average_maintenance_interval_title", figure = "maintenanceInterval" }
 }
 
----Unique names of the parts an entry repaired
 local function getPartNames(entry)
     local names, seen = {}, {}
     for _, id in ipairs(entry.conditionData ~= nil and entry.conditionData.selectedBreakdowns or {}) do
@@ -43,12 +40,10 @@ local function getPartNames(entry)
     return names
 end
 
----Workshop an entry was done at
 local function getLocation(entry)
     return RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, entry.location) ~= nil and g_i18n:getText(entry.location) or ""
 end
 
----Option suffix of an entry, the system it was done on
 local function getSystemSuffix(vehicle, entry)
     if entry.type ~= RealisticMechanicalSystems.STATUS.BODYWORK and entry.optionTwo ~= nil and entry.optionTwo ~= "NONE" then
         return " (" .. g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, entry.optionTwo)) .. ")"
@@ -56,7 +51,6 @@ local function getSystemSuffix(vehicle, entry)
     return ""
 end
 
----What an entry did: summary, detail list title and items
 local function getPresentation(vehicle, entry)
     local STATUS = RealisticMechanicalSystems.STATUS
     local partNames = getPartNames(entry)
@@ -89,7 +83,6 @@ local function getPresentation(vehicle, entry)
     return { summary = (RMS_Utils.getLogTypePresentation(entry)), detailLabel = "", detailItems = {} }
 end
 
----One line of a history row: what was done, then where
 local function getDescription(vehicle, entry)
     local STATUS = RealisticMechanicalSystems.STATUS
     local partNames = getPartNames(entry)
@@ -117,7 +110,6 @@ local function getDescription(vehicle, entry)
 end
 
 ---Creates the page
--- @return table page
 function RMS_WorkshopRecordFrame.new()
     local self = RMS_WorkshopPage.new(nil, RMS_WorkshopRecordFrame_mt)
     self.entries = {}
@@ -127,7 +119,6 @@ function RMS_WorkshopRecordFrame.new()
 end
 
 ---Wires the lists and the report view
--- @param table dialog workshop dialog
 function RMS_WorkshopRecordFrame:initialize(dialog)
     RMS_WorkshopRecordFrame:superClass().initialize(self, dialog)
     for _, list in ipairs({ self.logTable, self.detailPartsTable, self.invoiceTable }) do
@@ -152,8 +143,6 @@ function RMS_WorkshopRecordFrame:initialize(dialog)
 end
 
 ---Opens the log on the newest entry
--- @param table? vehicle vehicle
--- @param string? workshopType workshop
 function RMS_WorkshopRecordFrame:setVehicle(vehicle, workshopType)
     RMS_WorkshopRecordFrame:superClass().setVehicle(self, vehicle, workshopType)
     self.selectedIndex = 1
@@ -322,13 +311,11 @@ function RMS_WorkshopRecordFrame:onListSelectionChanged(list, _section, index)
 end
 
 ---Selects the clicked entry
--- @param table row clicked row
 function RMS_WorkshopRecordFrame:onRowClick(row)
     self.logTable:setSelectedItem(1, row.indexInSection, false, false)
 end
 
 ---Shows the report of an entry, or the log again
--- @param table? entry log entry with a report, nil for the log
 function RMS_WorkshopRecordFrame:showReport(entry)
     self.logView:setVisible(entry == nil)
     self.reportView:setVisible(entry ~= nil)
@@ -344,8 +331,6 @@ function RMS_WorkshopRecordFrame:onAction()
 end
 
 ---The report button of the log
--- @return string? text button text, nil in the report
--- @return boolean isDisabled true when the selected entry has no report
 function RMS_WorkshopRecordFrame:getAction()
     if self.reportView:getIsVisible() then
         return nil, true
@@ -355,7 +340,6 @@ function RMS_WorkshopRecordFrame:getAction()
 end
 
 ---Leaves the report for the log
--- @return boolean isLeft true when the report was open
 function RMS_WorkshopRecordFrame:goBack()
     if not self.reportView:getIsVisible() then
         return false

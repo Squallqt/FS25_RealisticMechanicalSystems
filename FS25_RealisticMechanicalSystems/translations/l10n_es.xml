@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Arranca el motor para liberar el freno de estacionamiento"/>
         <text name="rms_preheat_ignition_message" text="Contacto encendido: precalentamiento en curso"/>
         <text name="rms_preheat_system_failure_message" text="Fallo del sistema de precalentamiento: arranque en frío no disponible"/>
-        <text name="rms_preheat_start_failed_message" text="El motor no arrancó: quita el contacto antes de volver a intentarlo"/>
+        <text name="rms_preheat_start_failed_message" text="El motor no arrancó"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Comprobar el vehículo"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Una inspección o un mantenimiento puede identificar otras averías."/>
         <text name="rms_ws_status_ready_title" text="Taller listo"/>
         <text name="rms_ws_status_ready_hint" text="Selecciona un procedimiento. Las opciones, las piezas y el precio se confirmarán antes de empezar."/>
+        <text name="rms_ws_status_closed_hint" text="Los procedimientos se solicitan de %s a %s."/>
         <text name="rms_ws_label_value" text="Valor del vehículo"/>
         <text name="rms_ws_label_age" text="Antigüedad"/>
         <text name="rms_ws_label_operating_hours" text="Horas de funcionamiento"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Ninguna avería marcada. Marca en Diagnóstico y presupuesto las averías que reparar."/>
         <text name="rms_ws_reason_overhaul_none" text="Una revisión mecánica restaura los sistemas por debajo del 50 % de estado. Esta máquina no tiene ninguno."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Un taller móvil no hace trabajos de pintura. Se hacen en el concesionario."/>
+        <text name="rms_ws_reason_refill_dealer" text="Solo el concesionario hace la reposición de fluidos. En otro lugar, se hace con el bidón."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Utiliza un taller equipado."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Conecta el equipo de diagnóstico de un carro a la máquina."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnóstico electrónico necesario"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Transmisión ineficaz"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Relación reducida"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Transmisión irregular"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Termostato degradado"/>
         <text name="rms_report_transmission_failed" text="Averiada"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistola de engrase"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Remolque pesado"/>
         <text name="rms_tutorial_heavy_trailer_message" text="La carga remolcada parece demasiado pesada para este vehículo. Puedes seguir conduciendo, pero la transmisión y la cadena cinemática soportarán más esfuerzo.&#10;&#10;RMS usa dos referencias: un tractor necesita al menos 10 CV por tonelada remolcada, mientras que un camión necesita al menos 6 CV por tonelada de peso bruto combinado. Por debajo del valor aplicable y con una carga elevada del motor, el desgaste de la transmisión aumenta."/>
         <text name="rms_tutorial_hard_start_title" text="Arranque difícil"/>
-        <text name="rms_tutorial_hard_start_message" text="El motor de tu %s arranca con dificultad. Una batería baja, las heladas, una avería mecánica o el desgaste del motor de arranque pueden ser la causa. Mantén pulsado el botón de arranque hasta que el motor gire.&#10;&#10;El sistema eléctrico soporta grandes cargas durante el arranque, por las altas corrientes de irrupción."/>
+        <text name="rms_tutorial_hard_start_message" text="El motor de tu %s arranca con dificultad. Una batería baja, las heladas, una avería mecánica o el desgaste del motor de arranque pueden ser la causa.&#10;&#10;El sistema eléctrico soporta grandes cargas durante el arranque, por las altas corrientes de irrupción."/>
         <text name="rms_tutorial_low_fuel_title" text="Poco combustible"/>
         <text name="rms_tutorial_low_fuel_message" text="El depósito se acerca a la reserva. Cuanto menos combustible queda, más tiene que forzar la bomba de combustible para aspirarlo, y el fondo del depósito manda su agua y sus sedimentos al filtro, que se obstruye antes.&#10;&#10;Mejor llenar el depósito al final del día: un depósito lleno acumula menos condensación."/>
         <text name="rms_tutorial_lugging_title" text="Motor a bajo régimen"/>

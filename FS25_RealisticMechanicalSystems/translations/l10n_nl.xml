@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Start de motor om de parkeerrem los te zetten"/>
         <text name="rms_preheat_ignition_message" text="Contact aan: voorverwarmen wordt uitgevoerd"/>
         <text name="rms_preheat_system_failure_message" text="Storing voorverwarmingssysteem: koude start niet mogelijk"/>
-        <text name="rms_preheat_start_failed_message" text="Motor niet gestart: zet het contact uit voordat je het opnieuw probeert"/>
+        <text name="rms_preheat_start_failed_message" text="Motor niet gestart"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Voertuig controleren"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Een inspectie of een onderhoudsbeurt kan meer storingen vaststellen."/>
         <text name="rms_ws_status_ready_title" text="Werkplaats gereed"/>
         <text name="rms_ws_status_ready_hint" text="Selecteer een procedure. De opties, onderdelen en prijs worden vóór de start bevestigd."/>
+        <text name="rms_ws_status_closed_hint" text="Procedures worden aangenomen van %s tot %s."/>
         <text name="rms_ws_label_value" text="Voertuigwaarde"/>
         <text name="rms_ws_label_age" text="Leeftijd"/>
         <text name="rms_ws_label_operating_hours" text="Bedrijfsuren"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Geen storing aangevinkt. Vink in Diagnose en offerte de storingen aan die gerepareerd moeten worden."/>
         <text name="rms_ws_reason_overhaul_none" text="Een mechanische revisie herstelt de systemen onder 50% conditie. Deze machine heeft er geen."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Een mobiele werkplaats doet geen spuitwerk. Dat gebeurt bij de dealer."/>
+        <text name="rms_ws_reason_refill_dealer" text="Alleen de dealer vult vloeistoffen bij. Elders gebeurt dat met de kan."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Gebruik een uitgeruste werkplaats."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Sluit de diagnoseapparatuur van een kar aan op de machine."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronische diagnose vereist"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Slechte krachtoverdracht"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Overbrengingsverhouding beperkt"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Onregelmatige krachtoverdracht"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Thermostaat verslechterd"/>
         <text name="rms_report_transmission_failed" text="Uitgevallen"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Vetspuit"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Te zware aanhanger"/>
         <text name="rms_tutorial_heavy_trailer_message" text="De getrokken last lijkt te zwaar voor dit voertuig. Je kunt blijven rijden, maar de transmissie en aandrijflijn worden zwaarder belast.&#10;&#10;RMS gebruikt twee richtwaarden: een tractor heeft minstens 10 pk per ton getrokken massa nodig en een vrachtwagen minstens 6 pk per ton totaal treingewicht. Onder de toepasselijke waarde en bij hoge motorbelasting neemt de transmissieslijtage toe."/>
         <text name="rms_tutorial_hard_start_title" text="Moeilijk starten"/>
-        <text name="rms_tutorial_hard_start_message" text="De motor van %s start moeilijk. Een zwakke accu, vorst, een mechanische storing of slijtage van de startmotor kan de oorzaak zijn. Houd de startknop ingedrukt totdat de motor aanslaat.&#10;&#10;Het elektrische systeem wordt tijdens het starten zwaar belast door de hoge inschakelstromen."/>
+        <text name="rms_tutorial_hard_start_message" text="De motor van %s start moeilijk. Een zwakke accu, vorst, een mechanische storing of slijtage van de startmotor kan de oorzaak zijn.&#10;&#10;Het elektrische systeem wordt tijdens het starten zwaar belast door de hoge inschakelstromen."/>
         <text name="rms_tutorial_low_fuel_title" text="Brandstofreserve"/>
         <text name="rms_tutorial_low_fuel_message" text="De tank nadert de reserve. Hoe minder brandstof er overblijft, hoe harder de brandstofpomp moet werken om deze aan te zuigen, en de bodem van de tank stuurt water en bezinksel naar het filter, dat sneller verstopt raakt.&#10;&#10;Tank liever vol aan het eind van de dag: in een volle tank vormt zich minder condens."/>
         <text name="rms_tutorial_lugging_title" text="Motor op te laag toerental"/>

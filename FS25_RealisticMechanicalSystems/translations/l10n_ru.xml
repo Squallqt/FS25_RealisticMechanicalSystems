@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Запустите двигатель, чтобы отпустить стояночный тормоз"/>
         <text name="rms_preheat_ignition_message" text="Зажигание включено: идёт предпусковой подогрев"/>
         <text name="rms_preheat_system_failure_message" text="Отказ системы накаливания: холодный запуск невозможен"/>
-        <text name="rms_preheat_start_failed_message" text="Двигатель не запустился: выключите зажигание перед новой попыткой"/>
+        <text name="rms_preheat_start_failed_message" text="Двигатель не запустился"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Проверить технику"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Осмотр или техобслуживание может выявить другие неисправности."/>
         <text name="rms_ws_status_ready_title" text="Мастерская готова"/>
         <text name="rms_ws_status_ready_hint" text="Выберите работу. Параметры, детали и цена будут подтверждены до начала."/>
+        <text name="rms_ws_status_closed_hint" text="Работы принимаются с %s до %s."/>
         <text name="rms_ws_label_value" text="Стоимость техники"/>
         <text name="rms_ws_label_age" text="Возраст"/>
         <text name="rms_ws_label_operating_hours" text="Моточасы"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Ни одна неисправность не отмечена. Отметьте в разделе «Диагностика и смета» неисправности для ремонта."/>
         <text name="rms_ws_reason_overhaul_none" text="Капитальный ремонт восстанавливает системы с состоянием ниже 50%. У этой техники таких нет."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Мобильная мастерская не выполняет покраску. Её выполняют у дилера."/>
+        <text name="rms_ws_reason_refill_dealer" text="Долив жидкостей выполняет только дилер. В других местах доливают из канистры."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Используйте оборудованную мастерскую."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Подключите к машине диагностическое оборудование тележки."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Требуется электронная диагностика"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Неэффективная передача тяги"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Передаточное отношение ограничено"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Неравномерная передача тяги"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Износ термостата"/>
         <text name="rms_report_transmission_failed" text="Неисправна"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Смазочный шприц"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Тяжёлый прицеп"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Похоже, буксируемая нагрузка может быть слишком велика для этой техники. Вы можете продолжать движение, но трансмиссия и привод будут испытывать повышенную нагрузку.&#10;&#10;RMS использует два правила: трактору требуется не менее 10 л.с. на тонну буксируемой массы, а тягачу — не менее 6 л.с. на тонну полной массы автопоезда. Если при высокой нагрузке двигателя соответствующее значение ниже нормы, износ трансмиссии увеличивается."/>
         <text name="rms_tutorial_hard_start_title" text="Запуск затруднён"/>
-        <text name="rms_tutorial_hard_start_message" text="Запуск двигателя %s затруднён. Это может быть вызвано низким зарядом аккумулятора, морозом, техническими неисправностями или износом стартера. Удерживайте кнопку запуска, пока двигатель не заведётся.&#10;&#10;Электросистема подвергается высоким нагрузкам во время запуска из-за больших пусковых токов."/>
+        <text name="rms_tutorial_hard_start_message" text="Запуск двигателя %s затруднён. Это может быть вызвано низким зарядом аккумулятора, морозом, техническими неисправностями или износом стартера.&#10;&#10;Электросистема подвергается высоким нагрузкам во время запуска из-за больших пусковых токов."/>
         <text name="rms_tutorial_low_fuel_title" text="Мало топлива"/>
         <text name="rms_tutorial_low_fuel_message" text="Топливо в баке приближается к резерву. Чем меньше его остаётся, тем больше усилий требуется топливному насосу для всасывания, а со дна бака в фильтр попадают вода и осадок, и он быстрее засоряется.&#10;&#10;Лучше заправляться до полного бака в конце дня: в полном баке образуется меньше конденсата."/>
         <text name="rms_tutorial_lugging_title" text="Работа двигателя внатяг"/>

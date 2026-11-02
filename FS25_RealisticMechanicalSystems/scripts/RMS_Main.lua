@@ -8,41 +8,27 @@ RMS_SoundManager = {}
 
 ---Plays a sample once
 -- @param table? sample audio sample
-function RMS_SoundManager.playSample(sample)
+-- @param table? afterSample sample whose end starts this one
+function RMS_SoundManager.playSample(sample, afterSample)
     if sample ~= nil then
-        g_soundManager:playSample(sample)
+        g_soundManager:playSample(sample, 0, afterSample)
     end
 end
 
----Stops a sample, fading it out over the given duration
--- @param table? sample audio sample
--- @param float? fadeDuration fade out duration in ms
--- @param boolean? force true to stop it at once
-function RMS_SoundManager.stopSample(sample, fadeDuration, force)
-    if sample == nil then
-        return
-    end
-
-    if fadeDuration == nil then
-        g_soundManager:stopSample(sample)
-    else
-        g_soundManager:stopSample(sample, fadeDuration, force or 0)
+---Stops a sample, its delay and fade out in ms
+function RMS_SoundManager.stopSample(sample, delay, fadeOut)
+    if sample ~= nil then
+        g_soundManager:stopSample(sample, delay, fadeOut)
     end
 end
 
 ---Tells whether a sample is playing
--- @param table? sample audio sample
--- @return boolean isPlaying true while it plays
 function RMS_SoundManager.getIsSamplePlaying(sample)
     return sample ~= nil and g_soundManager:getIsSamplePlaying(sample)
 end
 
----Starts or stops a looping sample
--- @param table? sample audio sample
--- @param boolean shouldPlay true to play it
--- @param float? fadeDuration fade duration in ms
--- @param boolean? force true to apply it at once
-function RMS_SoundManager.setSamplePlaying(sample, shouldPlay, fadeDuration, force)
+---Starts or stops a looping sample, its stop delay and fade out in ms
+function RMS_SoundManager.setSamplePlaying(sample, shouldPlay, delay, fadeOut)
     if sample == nil then
         return
     end
@@ -51,51 +37,42 @@ function RMS_SoundManager.setSamplePlaying(sample, shouldPlay, fadeDuration, for
     if shouldPlay and not isPlaying then
         RMS_SoundManager.playSample(sample)
     elseif not shouldPlay and isPlaying then
-        RMS_SoundManager.stopSample(sample, fadeDuration, force)
+        RMS_SoundManager.stopSample(sample, delay, fadeOut)
     end
 end
 
 ---Sets the pitch offset of a sample
--- @param table? sample audio sample
--- @param float pitchOffset pitch offset
 function RMS_SoundManager.setSamplePitchOffset(sample, pitchOffset)
     if sample ~= nil then
         g_soundManager:setSamplePitchOffset(sample, pitchOffset)
     end
 end
 
+---Plays a sample from a point of its recording
+-- @param table sample audio sample
+-- @param float offset point of the recording in ms
+function RMS_SoundManager.playSampleFrom(sample, offset)
+    local volume = g_soundManager:getModifierFactor(sample, "volume") * g_soundManager:getCurrentSampleVolume(sample)
+    playSample(sample.soundSample, sample.loops, volume, offset, 0, 0)
+end
+
+---Returns the length of the start recording of an engine sound
+-- @param table sample audio sample
+-- @return float duration duration in ms, 0 for a sound without one
+function RMS_SoundManager.getSampleStartDuration(sample)
+    return g_soundManager:getSampleLoopSynthesisStartDuration(sample)
+end
+
+---Returns the volume of a sample before its offset
+function RMS_SoundManager.getSampleVolume(sample)
+    return sample.current.volume * g_soundManager:getCurrentFadeFactor(sample) * sample.volumeScale
+end
+
 ---Sets the volume offset of a sample
--- @param table? sample audio sample
--- @param float volumeOffset volume offset
 function RMS_SoundManager.setSampleVolumeOffset(sample, volumeOffset)
     if sample ~= nil then
         g_soundManager:setSampleVolumeOffset(sample, volumeOffset)
     end
-end
-
--- @param table? sample audio sample
--- @param float offset point of the recording in ms
-function RMS_SoundManager.playSampleFrom(sample, offset)
-    if sample ~= nil and sample.soundSample ~= nil then
-        local volume = g_soundManager:getModifierFactor(sample, "volume") * g_soundManager:getCurrentSampleVolume(sample)
-        playSample(sample.soundSample, sample.loops, volume, offset, 0, 0)
-    end
-end
-
----Returns the pitch a sample plays at, the speed its recording runs at
--- @param table? sample audio sample
--- @return float pitch pitch
-function RMS_SoundManager.getSamplePitch(sample)
-    return sample ~= nil and sample.soundSample ~= nil and getSamplePitch(sample.soundSample) or 1
-end
-
--- @param table sample audio sample
--- @param string filename file of the copy
--- @return table copy audio sample
-function RMS_SoundManager.cloneSample(sample, filename)
-    local copy = g_soundManager:cloneSample(sample, sample.linkNode, sample.modifierTargetObject)
-    g_soundManager:createAudioSource(copy, filename)
-    return copy
 end
 
 local modDirectory = g_currentModDirectory
@@ -154,7 +131,6 @@ source(g_currentModDirectory .. "scripts/RMS_FluidWorkshop.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProgressRing.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProductionYearData.lua")
 source(g_currentModDirectory .. "scripts/RMS_ProductionYear.lua")
-source(g_currentModDirectory .. "scripts/RMS_StarterSoundsData.lua")
 source(g_currentModDirectory .. "scripts/objects/RMS_BatteryChargerAimData.lua")
 source(g_currentModDirectory .. "scripts/RMS_DebugReading.lua")
 source(g_currentModDirectory .. "scripts/RMS_DebugWindow.lua")
@@ -177,7 +153,7 @@ source(g_currentModDirectory .. "events/RMS_EffectSyncEvent.lua")
 source(g_currentModDirectory .. "events/RMS_LogEntrySyncEvent.lua")
 source(g_currentModDirectory .. "events/RMS_ConsoleCommandEvent.lua")
 source(g_currentModDirectory .. "events/RMS_VehicleExclusionEvent.lua")
-source(g_currentModDirectory .. "events/RMS_StartButtonEvent.lua")
+source(g_currentModDirectory .. "events/RMS_StartEvent.lua")
 source(g_currentModDirectory .. "events/RMS_FieldInspectionEvent.lua")
 source(g_currentModDirectory .. "events/RMS_BatteryIsolatorEvent.lua")
 source(g_currentModDirectory .. "events/RMS_HandToolSyncEvent.lua")
@@ -199,7 +175,6 @@ local RMS_REQUIRED_SPECIALIZATIONS = {"motorized", "wheels", "enterable"}
 
 local RMS_REJECTED_SPECIALIZATIONS = {"pushHandTool", "locomotive", "motorbike"}
 
----Tells whether a vehicle type gets the RMS specialization
 local function getIsTypeManagedByRMS(vehicleType)
 	local specializations = vehicleType.specializationsByName
 	if specializations.RealisticMechanicalSystems ~= nil then
@@ -298,8 +273,6 @@ end
 
 
 ---Refreshes the native trigger cards when an RMS dealer payment changes
--- @param table screen workshop screen
--- @param float dt frame duration in milliseconds
 function RMS_Main.refreshWorkshopResalePrices(screen, dt)
     screen.rmsResaleRefreshTimer = (screen.rmsResaleRefreshTimer or 0) + dt
     if screen.rmsResaleRefreshTimer < 250 then
@@ -320,8 +293,6 @@ function RMS_Main.refreshWorkshopResalePrices(screen, dt)
 end
 
 ---Workshop a vanilla workshop screen stands for
--- @param table screenInstance workshop screen
--- @return string workshopType workshop type
 function RMS_Main.getWorkshopType(screenInstance)
     local WORKSHOP = RealisticMechanicalSystems.WORKSHOP
     if screenInstance.isMobileWorkshop then
@@ -333,14 +304,11 @@ function RMS_Main.getWorkshopType(screenInstance)
 end
 
 ---Opens the workshop dialog in place of the vanilla repair button
--- @param table screenInstance workshop screen
 function RMS_Main.onCustomRepairClick(screenInstance)
     RMS_WorkshopDialog.show(screenInstance.vehicle, RMS_Main.getWorkshopType(screenInstance))
 end
 
 ---Redirects the vanilla repair button to the mod workshop dialog
--- @param table screenInstance workshop screen
--- @param table? vehicle vehicle
 function RMS_Main.hookRepairButton(screenInstance, vehicle)
     if screenInstance.rmsOriginalRepairCallback == nil and screenInstance.repairButton.onClickCallback ~= nil then
         screenInstance.rmsOriginalRepairCallback = screenInstance.repairButton.onClickCallback
@@ -357,8 +325,6 @@ end
 
 
 ---Finds the native repaint control by its actual GUI callback.
--- @param table screenInstance workshop screen
--- @return table? button repaint button, when the native callback is exposed
 function RMS_Main.findNativeRepaintButton(screenInstance)
     if screenInstance.rmsNativeRepaintButton ~= nil then
         return screenInstance.rmsNativeRepaintButton
@@ -391,8 +357,6 @@ end
 
 
 ---Redirects the native repaint action for RMS vehicles only.
--- @param table screenInstance workshop screen
--- @param table? vehicle selected vehicle
 function RMS_Main.hookRepaintButton(screenInstance, vehicle)
     local button = RMS_Main.findNativeRepaintButton(screenInstance)
     if button == nil then
@@ -420,9 +384,6 @@ end
 
 
 ---Stops the native repaint event on RMS vehicles
--- @param table event repaint event
--- @param function superFunc native event handler
--- @param table connection event connection
 function RMS_Main.runNativeRepaintEvent(event, superFunc, connection)
     local vehicle = event.vehicle
     if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil
@@ -448,8 +409,6 @@ end
 
 
 ---Hides the colors a full repaint changes from an owned machine
--- @param table screen configurator
--- @param table storeItem store item
 -- @param table? vehicle owned machine, nil in the shop
 function RMS_Main.removeShopConfigPaintColors(screen, storeItem, vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
@@ -471,8 +430,6 @@ function RMS_Main.removeShopConfigPaintColors(screen, storeItem, vehicle)
 end
 
 ---Keeps an owned machine's paint whatever the configurator picks
--- @param table screen configurator
--- @param table storeItem store item
 -- @param table? vehicle owned machine, nil in the shop
 function RMS_Main.keepShopConfigPaintColors(screen, storeItem, vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
@@ -487,8 +444,6 @@ function RMS_Main.keepShopConfigPaintColors(screen, storeItem, vehicle)
 end
 
 ---Prices a purchase's colors at the RMS paint instead of their options
--- @return float price purchase price
--- @return float upgradePrice price of the configurations
 function RMS_Main.getBuyPaintPrice(manager, superFunc, storeItem, configurations, saleItem)
     local price, upgradePrice = superFunc(manager, storeItem, configurations, saleItem)
     if configurations ~= nil then
@@ -527,7 +482,6 @@ function RMS_Main.updateShopConfigPaintPrices(screen, storeItem, vehicle)
     end
 end
 
----Loads whether RMS tracks the store item, stored under the reliability spec
 local function loadIsTracked(xmlFile, customEnvironment)
     return RealisticMechanicalSystems.getIsStoreItemTracked(xmlFile, customEnvironment)
 end
@@ -545,7 +499,6 @@ local function getIsRated(storeItem, vehicle)
     return storeItem.specs.power ~= nil
 end
 
----Returns the model launch year for machines RMS tracks
 local function getLaunchYear(storeItem, vehicle)
     if getIsRated(storeItem, vehicle) then
         local year, source = RMS_ProductionYear.getYear(storeItem)
@@ -556,7 +509,6 @@ local function getLaunchYear(storeItem, vehicle)
     end
 end
 
----Returns the reliability of a store item, the vehicle value taking precedence
 local function getReliability(storeItem, vehicle)
     if getIsRated(storeItem, vehicle) then
         local reliability = RealisticMechanicalSystems.getBrandReliability(vehicle, storeItem)
@@ -564,16 +516,12 @@ local function getReliability(storeItem, vehicle)
     end
 end
 
----
 local function getServiceAccess(storeItem, vehicle, configurations)
     if getIsRated(storeItem, vehicle) then
         return RMS_Utils.formatServiceAccess(vehicle, storeItem, configurations, true)
     end
 end
 
--- @param table storeItem store item
--- @param table? realItem owned vehicle
--- @param table? saleItem used offer
 -- @return string? text attribute, nil for an item RMS leaves to the game
 function RMS_Main.getShopCondition(storeItem, realItem, saleItem)
     if realItem ~= nil then
@@ -587,9 +535,6 @@ function RMS_Main.getShopCondition(storeItem, realItem, saleItem)
 end
 
 ---Keeps a sold machine's RMS state on the used offer it becomes
--- @param table saleSystem vehicle sale system
--- @param function superFunc super function
--- @param table vehicle vehicle sold
 function RMS_Main.onVehicleWillSell(saleSystem, superFunc, vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil or spec.isExcludedVehicle or spec.isNewToRMS then
@@ -606,7 +551,6 @@ function RMS_Main.onVehicleWillSell(saleSystem, superFunc, vehicle)
     end
 end
 
----Returns the used offer an entry of the sales file describes
 local function getSaleItem(saleSystem, xmlFile, key)
     local xmlFilename = xmlFile:getString(key .. "#xmlFilename")
     local age = xmlFile:getInt(key .. "#age")
@@ -619,10 +563,6 @@ local function getSaleItem(saleSystem, xmlFile, key)
 end
 
 ---Writes in the sales file the RMS state each used offer carries
--- @param table saleSystem vehicle sale system
--- @param function superFunc super function
--- @param string xmlFilename sales file
--- @return boolean? isSaved
 function RMS_Main.saveVehicleSales(saleSystem, superFunc, xmlFilename)
     local isSaved = superFunc(saleSystem, xmlFilename)
     local xmlFile = XMLFile.loadIfExists("rmsVehicleSales", xmlFilename)
@@ -640,10 +580,6 @@ function RMS_Main.saveVehicleSales(saleSystem, superFunc, xmlFilename)
 end
 
 ---Reads from the sales file the RMS state each used offer carries
--- @param table saleSystem vehicle sale system
--- @param function superFunc super function
--- @param string xmlFilename sales file
--- @return boolean isLoaded
 function RMS_Main.loadVehicleSales(saleSystem, superFunc, xmlFilename)
     local isLoaded = superFunc(saleSystem, xmlFilename)
     local xmlFile = XMLFile.loadIfExists("rmsVehicleSales", xmlFilename)
@@ -667,11 +603,6 @@ if not g_modIsLoaded["FS25_AdvancedDamageSystem"] then
 end
 
 ---Inserts a page into the shop menu
--- @param table frame shop frame
--- @param string pageName page name
--- @param table uvs icon uv coordinates
--- @param function predicateFunc tells whether the page applies to an item
--- @param string? insertAfter page the new one is placed after
 function RMS_Main.addShopMenuPage(frame, pageName, uvs, predicateFunc, insertAfter)
     local targetPosition = 0
 
@@ -729,8 +660,6 @@ function RMS_Main.addShopMenuPage(frame, pageName, uvs, predicateFunc, insertAft
 end
 
 ---Clones the last menu button until the menu holds enough of them
--- @param table menu tabbed menu
--- @param integer count buttons needed
 function RMS_Main.ensureMenuButtonCount(menu, count)
     if menu.menuButton == nil or menu.buttonsPanel == nil then
         return
@@ -778,10 +707,6 @@ end
 
 
 ---Adds RMS attributes to a shop item
--- @param table self shop frame
--- @param table storeItem store item
--- @param table? vehicle vehicle
--- @param table? saleItem sale item
 function RMS_Main.processAttributeData(self, storeItem, vehicle, saleItem)
     if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
         local reliabilityItemElement = self.attributeItem:clone(self.attributesLayout)
@@ -806,12 +731,6 @@ function RMS_Main.processAttributeData(self, storeItem, vehicle, saleItem)
 end
 
 ---Fills a shop list cell, adding the RMS attributes to it
--- @param table self shop frame
--- @param function superFunc super function
--- @param table list list element
--- @param integer section section index
--- @param integer index row index
--- @param table cell cell element
 function RMS_Main.populateCellForItemInSection(self, superFunc, list, section, index, cell)
     if list.id == 'vehiclesList' then
         local vehicle = self.vehicles[index].vehicle
@@ -912,8 +831,6 @@ function RMS_Main:evaluateWorkshopState()
 end
 
 ---Tells whether a workshop type ignores the opening hours
--- @param string? workshopType workshop type
--- @return boolean isAlwaysAvailable true when it never closes
 function RMS_Main:isWorkshopTypeAlwaysAvailable(workshopType)
     local workshopConfig = RMS_Config.WORKSHOP
 
@@ -929,15 +846,12 @@ function RMS_Main:isWorkshopTypeAlwaysAvailable(workshopType)
 end
 
 ---Tells whether a workshop type accepts a service now
--- @param string? workshopType workshop type
--- @return boolean isOpen true when it is open
 function RMS_Main:isWorkshopTypeOpen(workshopType)
     return self:isWorkshopTypeAlwaysAvailable(workshopType) or self.isWorkshopOpen == true
 end
 
 
 ---Recomputes the workshop state at once and replicates it
--- @param boolean? forceNotify true to notify even without a change
 function RMS_Main:forceWorkshopUpdate(forceNotify)
     local isWorkshopOpen = self:evaluateWorkshopState()
     if forceNotify or isWorkshopOpen ~= self.isWorkshopOpen then
@@ -962,7 +876,6 @@ function RMS_Main:onPeriodChanged()
 end
 
 ---Runs the mod update: workshop hours and the simulation step of every vehicle
--- @param float dt time since last call in ms
 function RMS_Main:update(dt)
     if g_currentMission:getIsClient() then
         if not self.shopMenuPageInstalled then
@@ -970,7 +883,6 @@ function RMS_Main:update(dt)
         end
     end
 
-    -- workshop
     self.workshopCheckTimer = self.workshopCheckTimer + dt
     if self.workshopFirstEval == nil or self.workshopCheckTimer >= RMS_Config.CORE_UPDATE_DELAY then
         self.workshopFirstEval = true
@@ -994,7 +906,6 @@ function RMS_Main:update(dt)
 
     self.updateAlphaTimer = self.updateAlphaTimer + dt
 
-    -- vehicles
     local timePerVehicle = RMS_Config.CORE_UPDATE_DELAY / self.numVehicles
     local vehiclesToUpdate = math.floor(self.updateAlphaTimer / timePerVehicle)
 
@@ -1013,7 +924,6 @@ function RMS_Main:update(dt)
         if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
             vehicle:rmsUpdate(RMS_Config.CORE_UPDATE_DELAY, self.isWorkshopOpen)
 
-            -- meta
             local spec = vehicle.spec_RealisticMechanicalSystems
             spec.metaUpdateTimer = spec.metaUpdateTimer + RMS_Config.CORE_UPDATE_DELAY
             if spec.metaUpdateTimer > RMS_Config.META_UPDATE_DELAY then
@@ -1063,7 +973,6 @@ function RMS_Main:loadMap()
     delete(soundsXmlFile)
 end
 
----
 function RMS_Main:deleteMap()
     g_messageCenter:unsubscribe(MessageType.PERIOD_CHANGED, self)
     self.shopMenuPageInstalled = false

@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Motor starten, um die Feststellbremse zu lösen"/>
         <text name="rms_preheat_ignition_message" text="Zündung ein: Vorglühen läuft"/>
         <text name="rms_preheat_system_failure_message" text="Vorglühsystem ausgefallen: Kaltstart nicht möglich"/>
-        <text name="rms_preheat_start_failed_message" text="Motor nicht gestartet: Zündung vor erneutem Versuch ausschalten"/>
+        <text name="rms_preheat_start_failed_message" text="Motor nicht gestartet"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Fahrzeug kontrollieren"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Eine Inspektion oder eine Wartung kann weitere Schäden feststellen."/>
         <text name="rms_ws_status_ready_title" text="Werkstatt bereit"/>
         <text name="rms_ws_status_ready_hint" text="Wähle einen Vorgang. Optionen, Teile und Preis werden vor dem Start bestätigt."/>
+        <text name="rms_ws_status_closed_hint" text="Vorgänge werden von %s bis %s angenommen."/>
         <text name="rms_ws_label_value" text="Fahrzeugwert"/>
         <text name="rms_ws_label_age" text="Alter"/>
         <text name="rms_ws_label_operating_hours" text="Betriebsstunden"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Kein Schaden angehakt. Hake die zu reparierenden Schäden in Diagnose und Kostenvoranschlag an."/>
         <text name="rms_ws_reason_overhaul_none" text="Eine mechanische Überholung setzt die Systeme unter 50 % Zustand instand. An dieser Maschine ist keines darunter."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Eine mobile Werkstatt lackiert nicht. Die Lackierung erfolgt beim Händler."/>
+        <text name="rms_ws_reason_refill_dealer" text="Nur der Händler füllt Flüssigkeiten nach. Anderswo wird mit dem Kanister nachgefüllt."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Eine ausgerüstete Werkstatt nutzen."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Das Diagnosegerät eines Wagens an die Maschine anschließen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronische Diagnose erforderlich"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Schlechte Kraftübertragung"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Übersetzung begrenzt"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Unregelmäßige Kraftübertragung"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Thermostat beeinträchtigt"/>
         <text name="rms_report_transmission_failed" text="Ausgefallen"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Fettpresse"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Schwerer Anhänger"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Die gezogene Last scheint für dieses Fahrzeug zu hoch zu sein. Du kannst weiterfahren, aber Getriebe und Antriebsstrang werden stärker belastet.&#10;&#10;RMS verwendet zwei Richtwerte: Traktoren benötigen mindestens 10 PS pro Tonne gezogener Masse, Lkw mindestens 6 PS pro Tonne Gesamtzuggewicht. Wird der jeweilige Wert bei hoher Motorlast unterschritten, steigt der Getriebeverschleiß."/>
         <text name="rms_tutorial_hard_start_title" text="Schwieriger Start"/>
-        <text name="rms_tutorial_hard_start_message" text="Der Motor von %s springt schwer an. Eine schwache Batterie, Frost, ein mechanischer Schaden oder Anlasserverschleiß können die Ursache sein. Halte den Startknopf gedrückt, bis der Motor anspringt.&#10;&#10;Das Bordnetz wird beim Starten wegen der hohen Einschaltströme stark belastet."/>
+        <text name="rms_tutorial_hard_start_message" text="Der Motor von %s springt schwer an. Eine schwache Batterie, Frost, ein mechanischer Schaden oder Anlasserverschleiß können die Ursache sein.&#10;&#10;Das Bordnetz wird beim Starten wegen der hohen Einschaltströme stark belastet."/>
         <text name="rms_tutorial_low_fuel_title" text="Wenig Kraftstoff"/>
         <text name="rms_tutorial_low_fuel_message" text="Der Tank nähert sich der Reserve. Je weniger Kraftstoff übrig ist, desto stärker muss die Kraftstoffpumpe ansaugen, und vom Tankboden gelangen Wasser und Ablagerungen in den Filter, der schneller verstopft.&#10;&#10;Tanke am besten am Ende des Tages voll: In einem vollen Tank bildet sich weniger Kondenswasser."/>
         <text name="rms_tutorial_lugging_title" text="Untertouriger Betrieb"/>

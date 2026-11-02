@@ -6,22 +6,17 @@ RMS_SellItemDialog = {}
 
 local RMS_SellItemDialog_mt = Class(RMS_SellItemDialog, YesNoDialog)
 
----Writes an amount with its sign, none at zero
 local function formatSignedMoney(amount)
     local sign = amount > 0 and "+" or amount < 0 and "-" or ""
     return sign .. g_i18n:formatMoney(math.abs(amount), 0, true, false)
 end
 
----Colours a credit green, a charge red, nothing grey
 local function setAmountColor(element, amount)
     local COLOR = RMS_Utils.COLOR
     element:setTextColor(unpack(amount > 0 and COLOR.HIGHLIGHT or amount < 0 and COLOR.ALERT or COLOR.TEXT_DIM))
 end
 
 ---Creates the dialog
--- @param table? target target
--- @param table? customMt custom metatable
--- @return table dialog dialog
 function RMS_SellItemDialog.new(target, customMt)
     local self = YesNoDialog.new(target, customMt or RMS_SellItemDialog_mt)
     self.costRows = {}
@@ -36,10 +31,6 @@ function RMS_SellItemDialog:onCreate()
 end
 
 ---Asks to confirm the return, as SellItemDialog.show asks a sale
--- @param table vehicle leased machine
--- @param function callback called with the target, the answer and the argument
--- @param table? target callback target
--- @param any? args argument of the callback
 function RMS_SellItemDialog.show(vehicle, callback, target, args)
     local self = RMS_SellItemDialog.INSTANCE
     self:setVehicle(vehicle)
@@ -48,11 +39,9 @@ function RMS_SellItemDialog.show(vehicle, callback, target, args)
 end
 
 ---Writes the machine and the cost of its return, line by line
--- @param table vehicle leased machine
 function RMS_SellItemDialog:setVehicle(vehicle)
     self.vehicleImageElement:setImageFilename(vehicle:getImageFilename())
     self.vehicleNameElement:setText(vehicle:getFullName())
-    -- the title and the name share the width of the longer one
     self.headerTextLayout:setSize(math.max(self.dialogTitleElement.size[1], self.vehicleNameElement.size[1]), nil)
     self.headerTextLayout:invalidateLayout()
     self.headerLayout:invalidateLayout()

@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Start the engine to release the parking brake"/>
         <text name="rms_preheat_ignition_message" text="Ignition on: preheating in progress"/>
         <text name="rms_preheat_system_failure_message" text="Preheating system failure: cold start unavailable"/>
-        <text name="rms_preheat_start_failed_message" text="Engine did not start: switch the ignition off before retrying"/>
+        <text name="rms_preheat_start_failed_message" text="Engine did not start"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Check the vehicle"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="An inspection or a service can identify further breakdowns."/>
         <text name="rms_ws_status_ready_title" text="Workshop ready"/>
         <text name="rms_ws_status_ready_hint" text="Select a procedure. Options, parts and price are confirmed before it starts."/>
+        <text name="rms_ws_status_closed_hint" text="Procedures can be ordered from %s to %s."/>
         <text name="rms_ws_label_value" text="Vehicle Value"/>
         <text name="rms_ws_label_age" text="Age"/>
         <text name="rms_ws_label_operating_hours" text="Operating Hours"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="No breakdown ticked. Tick the breakdowns to repair in Diagnostic and Estimate."/>
         <text name="rms_ws_reason_overhaul_none" text="A mechanical overhaul restores the systems below 50% condition. None is on this machine."/>
         <text name="rms_ws_reason_bodywork_mobile" text="A mobile workshop does no repainting. It is done at the dealer."/>
+        <text name="rms_ws_reason_refill_dealer" text="Only the dealer does fluid top-ups. Elsewhere, pour them from a container."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Use an equipped workshop."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Connect a trolley's diagnostic tool to the machine."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Electronic diagnostics required"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Poor Drive Transfer"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Ratio Reduced"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Irregular Drive Transfer"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Thermostat Degraded"/>
         <text name="rms_report_transmission_failed" text="Failed"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Grease Gun"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Heavy Trailer"/>
         <text name="rms_tutorial_heavy_trailer_message" text="The towed load looks too heavy for this vehicle. You can keep driving, but the transmission and drivetrain will take more strain.&#10;&#10;RMS uses two references: a tractor needs at least 10 hp per tonne towed, and a truck at least 6 hp per tonne of gross combined weight. Below the applicable value and under high engine load, transmission wear increases."/>
         <text name="rms_tutorial_hard_start_title" text="Hard Start"/>
-        <text name="rms_tutorial_hard_start_message" text="The engine of your %s is hard to start. A weak battery, frost, a mechanical breakdown or starter wear can be the cause. Hold the start button until the engine fires.&#10;&#10;The electrical system takes heavy loads during starting, because of the high inrush currents."/>
+        <text name="rms_tutorial_hard_start_message" text="The engine of your %s is hard to start. A weak battery, frost, a mechanical breakdown or starter wear can be the cause.&#10;&#10;The electrical system takes heavy loads during starting, because of the high inrush currents."/>
         <text name="rms_tutorial_low_fuel_title" text="Low Fuel"/>
         <text name="rms_tutorial_low_fuel_message" text="The tank is nearing reserve. The less fuel is left, the harder the fuel pump has to work to draw it, and the bottom of the tank sends its water and sediment to the filter, which clogs faster.&#10;&#10;Better to fill up at the end of the day: a full tank gathers less condensation."/>
         <text name="rms_tutorial_lugging_title" text="Engine Lugging"/>

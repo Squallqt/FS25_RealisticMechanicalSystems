@@ -52,7 +52,6 @@ local MENU_BUTTONS = {
 
 local RMS_InGameMenuFrame_mt = Class(RMS_InGameMenuFrame, TabbedMenuFrameElement)
 
----Returns the colour of an urgency level, the game green while nothing is due
 local function getUrgencyColor(urgency)
     if urgency == URGENCY.OVERDUE then
         return RMS_Utils.COLOR.ALERT
@@ -62,13 +61,11 @@ local function getUrgencyColor(urgency)
     return RMS_Utils.COLOR.HIGHLIGHT
 end
 
----Formats the hours left before the next maintenance, or overdue
 local function formatDeadline(remaining)
     local key = remaining < 0 and "rms_fleet_overdue" or "rms_fleet_remaining"
     return string.format(g_i18n:getText(key), g_i18n:formatNumber(math.abs(remaining), 1))
 end
 
----Sums the price of every maintenance log entry of a vehicle
 local function getTotalCost(vehicle)
     local totalCost = 0
     for _, entry in ipairs(vehicle.spec_RealisticMechanicalSystems.maintenanceLog) do
@@ -77,7 +74,6 @@ local function getTotalCost(vehicle)
     return totalCost
 end
 
----Returns what the running intervention costs
 local function getCommittedCost(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local price = spec.pendingServicePrice
@@ -93,7 +89,6 @@ local function getCommittedCost(vehicle)
         spec.serviceOptionThree or false) or 0
 end
 
----Tells whether a vehicle belongs in the menu
 local function canDisplayVehicle(vehicle, farmId)
     return g_currentMission.accessHandler:canPlayerAccess(vehicle)
         and vehicle:getOwnerFarmId() == farmId
@@ -101,7 +96,6 @@ local function canDisplayVehicle(vehicle, farmId)
         and g_storeManager:getItemByXMLFilename(vehicle.configFileName) ~= nil
 end
 
----Builds the list row of a vehicle, tracked or not
 local function buildRow(vehicle, isTracked)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     local category = g_storeManager:getCategoryByName(storeItem.categoryName)
@@ -148,7 +142,6 @@ local function buildRow(vehicle, isTracked)
     return row
 end
 
----Orders two rows on a sort mode, ties broken by name then by vehicle
 local function isRowBefore(sortMode, a, b)
     if sortMode == SORT.DEADLINE and a.remaining ~= b.remaining then
         return a.remaining < b.remaining
@@ -164,7 +157,6 @@ local function isRowBefore(sortMode, a, b)
 end
 
 ---Loads the frame layout and returns the frame
--- @return table frame instance of class RMS_InGameMenuFrame
 function RMS_InGameMenuFrame.register()
     local frame = RMS_InGameMenuFrame.new()
     local filename = RMS_InGameMenuFrame.MOD_DIR .. "gui/RMS_InGameMenuFrame.xml"
@@ -174,9 +166,6 @@ function RMS_InGameMenuFrame.register()
 end
 
 ---Create instance of RMS_InGameMenuFrame
--- @param table? target target
--- @param table? customMt custom metatable
--- @return table self instance of class RMS_InGameMenuFrame
 function RMS_InGameMenuFrame.new(target, customMt)
     local self = TabbedMenuFrameElement.new(target, customMt or RMS_InGameMenuFrame_mt)
 
@@ -210,7 +199,6 @@ end
 function RMS_InGameMenuFrame:initialize()
     RMS_InGameMenuFrame:superClass().initialize(self)
 
-    -- the back of the menu itself, which closes it
     self.backButtonInfo = { inputAction = InputAction.MENU_BACK }
     for name, button in pairs(MENU_BUTTONS) do
         self[name .. "ButtonInfo"] = { inputAction = InputAction[button[1]], text = button[2] ~= nil and g_i18n:getText(button[2]) or nil,
@@ -250,13 +238,11 @@ function RMS_InGameMenuFrame:initialize()
 end
 
 ---Tells whether the navigator shows a view opened from another one
--- @return boolean isNested true when the back action leads to a parent view
 function RMS_InGameMenuFrame:getIsNestedView()
     return self.subCategoryState == SUB_CATEGORY.ACTIVE and (self.isUntrackedView or not self.isCategoryView)
 end
 
 ---Shows a main tab from its first view, the last one being the settings page
--- @param integer state sub category index
 function RMS_InGameMenuFrame:updateSubCategoryPages(state)
     local isSettings = state == SUB_CATEGORY.SETTINGS
 
@@ -295,7 +281,6 @@ function RMS_InGameMenuFrame:updateScreenEdgeSliders()
     end
 end
 
----
 function RMS_InGameMenuFrame:onFrameOpen()
     self.subCategoryBox:invalidateLayout()
     self.subCategoryPaging:setSize(self.subCategoryBox.maxFlowSize + 140 * g_pixelSizeScaledX)
@@ -309,15 +294,12 @@ function RMS_InGameMenuFrame:onFrameOpen()
     self:updateScreenEdgeSliders()
 end
 
----
 function RMS_InGameMenuFrame:onFrameClose()
     self.isFrameOpen = false
     RMS_SettingsPage.applyChanges()
     RMS_InGameMenuFrame:superClass().onFrameClose(self)
 end
 
----
--- @param float dt time since last call in ms
 function RMS_InGameMenuFrame:update(dt)
     RMS_InGameMenuFrame:superClass().update(self, dt)
     self:updateScreenEdgeSliders()
@@ -371,9 +353,6 @@ function RMS_InGameMenuFrame:reloadRows()
 end
 
 ---Writes the three counters of the fleet
--- @param integer overdue machines past their maintenance
--- @param integer soon machines due soon
--- @param integer servicing machines in a workshop
 function RMS_InGameMenuFrame:updatePulse(overdue, soon, servicing)
     local counts = {overdue, soon, servicing}
     local colors = {RMS_Utils.COLOR.ALERT, COLOR_SOON, RMS_Utils.COLOR.HIGHLIGHT}
@@ -386,7 +365,6 @@ function RMS_InGameMenuFrame:updatePulse(overdue, soon, servicing)
 end
 
 ---Returns the rows of the section on screen
--- @return table rows list rows
 function RMS_InGameMenuFrame:getSectionRows()
     if self.subCategoryState == SUB_CATEGORY.SERVICE then
         return self.servicingRows
@@ -394,7 +372,6 @@ function RMS_InGameMenuFrame:getSectionRows()
     return self.isUntrackedView and self.untrackedRows or self.trackedRows
 end
 
----Groups rows by store category, each group keeping its most urgent machine
 local function groupCategories(rows)
     local categories, byName = {}, {}
 
@@ -515,7 +492,6 @@ function RMS_InGameMenuFrame:refreshNavigator()
 end
 
 ---Returns the l10n key of the title of the section on screen
--- @return string key l10n key
 function RMS_InGameMenuFrame:getSectionTitleKey()
     if self.subCategoryState == SUB_CATEGORY.SERVICE then
         return "rms_ingame_menu_section_service"
@@ -524,7 +500,6 @@ function RMS_InGameMenuFrame:getSectionTitleKey()
 end
 
 ---Returns the l10n key of the message an empty section shows
--- @return string key l10n key
 function RMS_InGameMenuFrame:getEmptyTextKey()
     if self.subCategoryState == SUB_CATEGORY.SERVICE then
         return "rms_ingame_menu_empty_service"
@@ -533,14 +508,11 @@ function RMS_InGameMenuFrame:getEmptyTextKey()
 end
 
 ---Returns the l10n key of the entry listing every machine of the pool on screen
--- @return string key l10n key
 function RMS_InGameMenuFrame:getAllMachinesTextKey()
     return self.isUntrackedView and "rms_fleet_all_untracked" or "rms_fleet_all"
 end
 
 ---Returns a category of the section on screen
--- @param string? name store category name
--- @return table? category category group, nil when the section holds none of that name
 function RMS_InGameMenuFrame:getCategory(name)
     for _, category in ipairs(self.categories) do
         if category.name == name then
@@ -551,7 +523,6 @@ function RMS_InGameMenuFrame:getCategory(name)
 end
 
 ---Returns the list index of the highlighted category
--- @return integer index list index
 function RMS_InGameMenuFrame:getFocusedCategoryIndex()
     for index, category in ipairs(self.categories) do
         if category.name == self.focusedCategory then
@@ -564,7 +535,6 @@ function RMS_InGameMenuFrame:getFocusedCategoryIndex()
 end
 
 ---Returns the list index of the selected machine
--- @return integer index list index
 function RMS_InGameMenuFrame:getSelectedMachineIndex()
     for index, row in ipairs(self.machineRows) do
         if row.vehicle == self.selectedVehicle then
@@ -637,10 +607,6 @@ function RMS_InGameMenuFrame:focusNavigator()
     end
 end
 
----
--- @param table list list element
--- @param integer _section section index
--- @return integer count number of rows
 function RMS_InGameMenuFrame:getNumberOfItemsInSection(list, _section)
     if list == self.categoryList then
         return #self.categories + 1
@@ -648,11 +614,6 @@ function RMS_InGameMenuFrame:getNumberOfItemsInSection(list, _section)
     return #self.machineRows
 end
 
----
--- @param table list list element
--- @param integer _section section index
--- @param integer index row index
--- @return string name cell template name
 function RMS_InGameMenuFrame:getCellTypeForItemInSection(list, _section, index)
     if list == self.categoryList then
         return index == 1 and "all" or "category"
@@ -660,7 +621,6 @@ function RMS_InGameMenuFrame:getCellTypeForItemInSection(list, _section, index)
     return "machine"
 end
 
----Loads a picture into a cell only when it changes
 local function setCellImage(element, filename)
     if element.rmsImageFilename ~= filename then
         element.rmsImageFilename = filename
@@ -668,11 +628,6 @@ local function setCellImage(element, filename)
     end
 end
 
----
--- @param table list list element
--- @param integer _section section index
--- @param integer index row index
--- @param table cell cell element
 function RMS_InGameMenuFrame:populateCellForItemInSection(list, _section, index, cell)
     if list == self.machineList then
         local row = self.machineRows[index]
@@ -713,9 +668,6 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(list, _section, index,
 end
 
 ---Follows the highlight: a category shows its most urgent machine
--- @param table list list element
--- @param integer _section section index
--- @param integer index row index
 function RMS_InGameMenuFrame:onListSelectionChanged(list, _section, index)
     if self.isRefreshing then
         return
@@ -734,9 +686,6 @@ function RMS_InGameMenuFrame:onListSelectionChanged(list, _section, index)
 end
 
 ---Opens the list of a category, or of the whole section from the first entry
--- @param table _list list element
--- @param integer _section section index
--- @param integer index row index
 function RMS_InGameMenuFrame:onClickCategory(_list, _section, index)
     local category = self.categories[index - 1]
     local top = category ~= nil and category.top or self.topRow
@@ -775,24 +724,19 @@ function RMS_InGameMenuFrame:onClickView()
     self:focusNavigator()
 end
 
----
--- @param integer state selector state
 function RMS_InGameMenuFrame:onSortChanged(state)
     self.sortMode = self.sortModes[state]
     self:reloadRows()
 end
 
----
 function RMS_InGameMenuFrame:onClickFleetSection()
     self:updateSubCategoryPages(SUB_CATEGORY.ACTIVE)
 end
 
----
 function RMS_InGameMenuFrame:onClickServiceSection()
     self:updateSubCategoryPages(SUB_CATEGORY.SERVICE)
 end
 
----
 function RMS_InGameMenuFrame:onClickSettingsSection()
     self:updateSubCategoryPages(SUB_CATEGORY.SETTINGS)
 end
@@ -808,7 +752,6 @@ function RMS_InGameMenuFrame:onPagePrevious()
 end
 
 ---Returns the row the right side shows
--- @return table? row list row, nil when the section is empty
 function RMS_InGameMenuFrame:getDisplayedRow()
     if #self:getSectionRows() == 0 then
         return nil
@@ -852,7 +795,6 @@ function RMS_InGameMenuFrame:refreshDossier()
 end
 
 ---Fills the identity card: what the machine is, its reliability and its figures
--- @param table row list row
 function RMS_InGameMenuFrame:updateIdentity(row)
     local vehicle = row.vehicle
     if self.identityVehicle ~= vehicle then
@@ -895,7 +837,6 @@ function RMS_InGameMenuFrame:updateIdentity(row)
 end
 
 ---Fills the banner and the second card: next maintenance or running work
--- @param table row list row
 function RMS_InGameMenuFrame:updateService(row)
     local vehicle = row.vehicle
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -999,12 +940,10 @@ function RMS_InGameMenuFrame:changeMapZoom(direction)
     self:updateMapZoomControls()
 end
 
----
 function RMS_InGameMenuFrame:onClickMapZoomIn()
     self:changeMapZoom(1)
 end
 
----
 function RMS_InGameMenuFrame:onClickMapZoomOut()
     self:changeMapZoom(-1)
 end
@@ -1027,7 +966,6 @@ function RMS_InGameMenuFrame:mouseEvent(posX, posY, isDown, isUp, button, eventU
 end
 
 ---Returns the machine the footer actions apply to
--- @return table? vehicle vehicle, nil while the player browses categories
 function RMS_InGameMenuFrame:getSelectedVehicle()
     if self.subCategoryState == SUB_CATEGORY.SETTINGS or (self.subCategoryState == SUB_CATEGORY.ACTIVE and self.isCategoryView) then
         return nil
@@ -1114,8 +1052,6 @@ function RMS_InGameMenuFrame:onSellSelectedVehicle()
 end
 
 ---Sends the vehicle return once the player confirmed it
--- @param boolean yes true when the player confirmed
--- @param table vehicle vehicle the dialog was opened for
 function RMS_InGameMenuFrame:onRMSSellDialogCallback(yes, vehicle)
     if not yes or vehicle.isDeleted or vehicle.propertyState ~= VehiclePropertyState.LEASED or vehicle:isUnderService() then
         return

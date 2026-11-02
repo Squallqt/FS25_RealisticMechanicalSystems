@@ -3,7 +3,6 @@
 
 RMS_Leasing = {}
 
----Converts a value to a number, falling back when it cannot
 local function getNumber(value, fallback)
     local numericValue = tonumber(value)
     if numericValue == nil then
@@ -14,13 +13,11 @@ local function getNumber(value, fallback)
 end
 
 ---Tells whether the extended leasing mod is loaded
--- @return boolean hasMod true when it is present
 function RMS_Leasing.hasExtendedLeasing()
     return g_modIsLoaded["FS25_ExtendedLeasing"] == true
 end
 
 ---Routes the sale of a leased RMS vehicle through the mod dialog
--- @param table _mission current mission
 function RMS_Leasing.preLoad(_mission)
     SellVehicleEvent.run = Utils.overwrittenFunction(SellVehicleEvent.run, RMS_Leasing.onSellVehicleEventRun)
     ShopController.sell = Utils.overwrittenFunction(ShopController.sell, RMS_Leasing.onShopControllerSell)
@@ -32,8 +29,6 @@ function RMS_Leasing.init()
 end
 
 ---Tells whether RMS tracks the vehicle
--- @param table? vehicle vehicle
--- @return boolean isTracked true when RMS tracks it
 function RMS_Leasing.isRMSVehicle(vehicle)
     return vehicle ~= nil
         and vehicle.spec_RealisticMechanicalSystems ~= nil
@@ -41,8 +36,6 @@ function RMS_Leasing.isRMSVehicle(vehicle)
 end
 
 ---Tells whether the vehicle is leased
--- @param table? vehicle vehicle
--- @return boolean isLeased true for a leased vehicle
 function RMS_Leasing.isLeasedVehicle(vehicle)
     if vehicle == nil then
         return false
@@ -52,13 +45,10 @@ function RMS_Leasing.isLeasedVehicle(vehicle)
 end
 
 ---Tells whether the vehicle is both leased and tracked by RMS
--- @param table? vehicle vehicle
--- @return boolean isSupported true when the charges apply
 function RMS_Leasing.isSupportedVehicle(vehicle)
     return RMS_Leasing.isRMSVehicle(vehicle) and RMS_Leasing.isLeasedVehicle(vehicle)
 end
 
----Returns what the dealer bills for a maintenance, the lease left aside
 local function getDealerMaintenancePrice(vehicle, maintenanceType)
     local price = 0
     for _, line in ipairs(vehicle:getMaintenancePriceLines(maintenanceType, RealisticMechanicalSystems.PART_TYPES.OEM,
@@ -69,8 +59,6 @@ local function getDealerMaintenancePrice(vehicle, maintenanceType)
 end
 
 ---Computes the return charges, Extended Leasing refunding the deposit
--- @param table? vehicle vehicle
--- @return table breakdown raw amounts, displayed amounts, charged amounts and rows
 function RMS_Leasing.getReturnBreakdown(vehicle)
     local emptyResult = {
         vehicle = vehicle,
@@ -166,11 +154,6 @@ function RMS_Leasing.getReturnBreakdown(vehicle)
 end
 
 ---Routes the sale of a leased RMS vehicle through the mod dialog
--- @param table self shop controller
--- @param function overwrittenFunc overwritten function
--- @param table storeItem store item
--- @param table concreteItem vehicle being sold
--- @param boolean? isDirectSell true for the dealer trigger sale
 function RMS_Leasing.onShopControllerSell(self, overwrittenFunc, storeItem, concreteItem, isDirectSell)
     local vehicle = concreteItem
     local isConcreteVehicle = vehicle ~= nil and vehicle ~= ShopDisplayItem.NO_CONCRETE_ITEM
@@ -188,9 +171,6 @@ function RMS_Leasing.onShopControllerSell(self, overwrittenFunc, storeItem, conc
 end
 
 ---Forwards the player answer to the shop controller
--- @param table? self shop controller
--- @param boolean yes true when the player confirmed
--- @param boolean? isDirectSell true for the dealer trigger sale
 function RMS_Leasing.onShopControllerSellDialogCallback(self, yes, isDirectSell)
     if self == nil then
         return
@@ -200,9 +180,6 @@ function RMS_Leasing.onShopControllerSellDialogCallback(self, yes, isDirectSell)
 end
 
 ---Debits the return charges on the server once the vehicle is sold
--- @param table self sell vehicle event
--- @param function overwrittenFunc overwritten function
--- @param Connection connection connection
 function RMS_Leasing.onSellVehicleEventRun(self, overwrittenFunc, connection)
     local vehicle = self.vehicle
     local ownerFarmId = vehicle ~= nil and vehicle:getOwnerFarmId() or FarmManager.SPECTATOR_FARM_ID

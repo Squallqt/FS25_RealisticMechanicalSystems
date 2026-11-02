@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="请启动发动机以解除停车制动"/>
         <text name="rms_preheat_ignition_message" text="点火开关已打开：正在预热"/>
         <text name="rms_preheat_system_failure_message" text="预热系统故障：无法冷启动"/>
-        <text name="rms_preheat_start_failed_message" text="发动机未启动：再次尝试前请关闭点火开关"/>
+        <text name="rms_preheat_start_failed_message" text="发动机未启动"/>
         <text name="rms_hud_vehicle_notification" text="%s：%s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="进行作业前检查"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="检查或保养可能确认更多故障。"/>
         <text name="rms_ws_status_ready_title" text="维修车间已就绪"/>
         <text name="rms_ws_status_ready_hint" text="请选择一项作业。选项、部件和价格将在开始前确认。"/>
+        <text name="rms_ws_status_closed_hint" text="作业受理时间为%s至%s。"/>
         <text name="rms_ws_label_value" text="载具价值"/>
         <text name="rms_ws_label_age" text="车龄"/>
         <text name="rms_ws_label_operating_hours" text="工作小时"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="未勾选任何故障。请在“检测与报价”中勾选要修理的故障。"/>
         <text name="rms_ws_reason_overhaul_none" text="机械大修用于修复状态低于50%的系统，这台机器没有此类系统。"/>
         <text name="rms_ws_reason_bodywork_mobile" text="移动维修车间不做喷漆，喷漆在经销商处进行。"/>
+        <text name="rms_ws_reason_refill_dealer" text="只有经销商提供油液补充。在其他地方，使用容器补充。"/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s：%s。请使用设备齐全的维修车间。"/>
         <text name="rms_workshop_diagnostic_blocked" text="%s：%s。请将推车的检测设备连接到机器上。"/>
         <text name="rms_mobile_workshop_diagnostic_required" text="需要电子检测"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="动力传送效率低"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="传动比受限"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="动力传送不稳定"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="节温器性能下降"/>
         <text name="rms_report_transmission_failed" text="失效"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="黄油加注器"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="挂车过重"/>
         <text name="rms_tutorial_heavy_trailer_message" text="牵引负载对这辆载具而言似乎过重。可以继续行驶，但变速箱和传动系统会承受更大应力。&#10;&#10;RMS采用两个参考值：拖拉机每吨牵引质量至少需要10马力，卡车每吨车组总质量至少需要6马力。低于适用数值并让发动机承受高负载时，变速箱磨损会增加。"/>
         <text name="rms_tutorial_hard_start_title" text="启动困难"/>
-        <text name="rms_tutorial_hard_start_message" text="%s的发动机难以启动。电池电量低、极低温、机械故障或启动机磨损都可能是原因。请按住启动按钮，直到发动机启动。&#10;&#10;启动时的高启动电流会使电气系统承受很大负载。"/>
+        <text name="rms_tutorial_hard_start_message" text="%s的发动机难以启动。电池电量低、极低温、机械故障或启动机磨损都可能是原因。&#10;&#10;启动时的高启动电流会使电气系统承受很大负载。"/>
         <text name="rms_tutorial_low_fuel_title" text="燃油余量低"/>
         <text name="rms_tutorial_low_fuel_message" text="油箱接近备用油量。剩余燃油越少，燃油泵吸取燃油时负担越重，油箱底部的水分和沉积物也会被送入滤清器，使其更快堵塞。&#10;&#10;最好在一天结束时加满油：加满的油箱产生的冷凝水更少。"/>
         <text name="rms_tutorial_lugging_title" text="发动机低转速重负荷"/>

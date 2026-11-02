@@ -16,14 +16,12 @@ local rmsActiveInspectionVehicle = nil
 local rmsInspectionMaxDistance = 6.0
 
 
----Clears the hold timer of the inspection action
 local function rmsResetInspectionHoldState()
     rmsInspectionHoldVehicle = nil
     rmsInspectionHoldTime = 0
     rmsInspectionHoldTriggered = false
 end
 
----Runs the native interaction after a short press of the inspection key
 local function rmsActivateCurrentObject()
     local system = g_currentMission.activatableObjectsSystem
     if system == nil then
@@ -49,7 +47,6 @@ local function rmsActivateCurrentObject()
     end
 end
 
----Returns the tracked vehicle the player looks at and may access
 local function rmsGetInspectionVehicleFromTargeter(player)
     local object = nil
 
@@ -77,7 +74,6 @@ local function rmsGetInspectionVehicleFromTargeter(player)
     return object
 end
 
----Stops the running inspection and tells the player why
 local function rmsCancelActiveInspection(reasonText)
     local vehicle = rmsActiveInspectionVehicle
     if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil then
@@ -99,7 +95,6 @@ local function rmsCancelActiveInspection(reasonText)
     end
 end
 
----Ends the inspection and opens the inspection dialog
 local function rmsCompleteActiveInspection()
     local vehicle = rmsActiveInspectionVehicle
     if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
@@ -122,7 +117,6 @@ local function rmsCompleteActiveInspection()
     RMS_InspectionDialog.show(vehicle)
 end
 
----Advances the inspection, cancelling it when the player looks away or moves
 local function rmsUpdateActiveInspection(inputComponent, dt)
     local vehicle = rmsActiveInspectionVehicle
     if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
@@ -174,7 +168,6 @@ local function rmsUpdateActiveInspection(inputComponent, dt)
     end
 end
 
----Starts the inspection on hold, a short press going to the native action
 local function rmsOnInputFieldInspection(inputComponent, actionName, inputValue, callbackState, isAnalog)
     if inputValue == 0 then
         local activateObject = not rmsInspectionConsumeUntilRelease
@@ -226,7 +219,6 @@ local function rmsOnInputFieldInspection(inputComponent, actionName, inputValue,
     end
 end
 
----Opens or closes the battery isolator of the machine in front of the player
 local function rmsOnInputBatteryIsolator()
     local vehicle = rmsInspectionVehicle
     if vehicle == nil or not RMS_Electrical.getHasBatteryIsolator(vehicle) then
@@ -242,7 +234,6 @@ local function rmsOnInputBatteryIsolator()
     RMS_BatteryIsolatorEvent.send(vehicle, not vehicle.spec_RealisticMechanicalSystems.batteryIsolated)
 end
 
----Offers the battery isolator action, named after what it will do
 local function rmsUpdateBatteryIsolatorAction(vehicle)
     if rmsBatteryIsolatorActionId == nil then
         return
@@ -258,7 +249,6 @@ local function rmsUpdateBatteryIsolatorAction(vehicle)
     end
 end
 
----Offers the inspection action while the player looks at a tracked vehicle
 local function rmsOnPlayerInputComponentUpdate(inputComponent, superFunc, dt)
     superFunc(inputComponent, dt)
 
@@ -302,7 +292,6 @@ local function rmsOnPlayerInputComponentUpdate(inputComponent, superFunc, dt)
     end
 end
 
----Registers the field inspection and battery isolator actions
 local function rmsOnPlayerInputComponentRegisterActionEvents(inputComponent)
     if not inputComponent.player.isOwner then
         return
@@ -348,7 +337,6 @@ local function rmsOnPlayerInputComponentRegisterActionEvents(inputComponent)
     g_inputBinding:endActionEventsModification()
 end
 
----Hides the hand crosshair while an inspection runs
 local function rmsOnHandToolHandsDraw(self, superFunc, ...)
     if rmsActiveInspectionVehicle ~= nil then
         return

@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Käynnistä moottori vapauttaaksesi seisontajarrun"/>
         <text name="rms_preheat_ignition_message" text="Virta kytketty: hehkutus käynnissä"/>
         <text name="rms_preheat_system_failure_message" text="Hehkutusjärjestelmän vika: kylmäkäynnistys ei ole mahdollista"/>
-        <text name="rms_preheat_start_failed_message" text="Moottori ei käynnistynyt: katkaise virta ennen uutta yritystä"/>
+        <text name="rms_preheat_start_failed_message" text="Moottori ei käynnistynyt"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Tarkista ajoneuvo"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Tarkastus tai huolto voi todeta lisää vikoja."/>
         <text name="rms_ws_status_ready_title" text="Korjaamo valmis"/>
         <text name="rms_ws_status_ready_hint" text="Valitse toimenpide. Vaihtoehdot, osat ja hinta vahvistetaan ennen aloitusta."/>
+        <text name="rms_ws_status_closed_hint" text="Toimenpiteitä voi tilata klo %s ja %s välillä."/>
         <text name="rms_ws_label_value" text="Ajoneuvon arvo"/>
         <text name="rms_ws_label_age" text="Ikä"/>
         <text name="rms_ws_label_operating_hours" text="Käyttötunnit"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Yhtään vikaa ei ole valittu. Valitse korjattavat viat kohdassa Vianmääritys ja arvio."/>
         <text name="rms_ws_reason_overhaul_none" text="Mekaaninen peruskorjaus kunnostaa alle 50 % kunnossa olevat järjestelmät. Tässä koneessa ei ole yhtään."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Liikkuva korjaamo ei tee maalausta. Se tehdään jälleenmyyjällä."/>
+        <text name="rms_ws_reason_refill_dealer" text="Vain jälleenmyyjä tekee nesteiden täydennyksen. Muualla se tehdään kanisterilla."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Käytä varusteltua korjaamoa."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Kytke kärryn vianmäärityslaite koneeseen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektroninen diagnostiikka vaaditaan"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Heikko voimansiirto"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Välityssuhde rajoittunut"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Epätasainen voimansiirto"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Termostaatti heikentynyt"/>
         <text name="rms_report_transmission_failed" text="Vikaantunut"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Rasvaruisku"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Liian raskas perävaunu"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Hinattava kuorma saattaa olla liian raskas tälle ajoneuvolle. Voit jatkaa ajamista, mutta vaihteisto ja voimansiirto kuormittuvat tavallista enemmän.&#10;&#10;RMS käyttää kahta ohjearvoa: traktori tarvitsee vähintään 10 hv hinattavan massan tonnia kohti ja kuorma-auto vähintään 6 hv yhdistelmän kokonaismassan tonnia kohti. Kun arvo alittuu moottorin suurella kuormituksella, vaihteiston kuluminen lisääntyy."/>
         <text name="rms_tutorial_hard_start_title" text="Vaikea käynnistys"/>
-        <text name="rms_tutorial_hard_start_message" text="Kone %s: moottori käynnistyy vaikeasti. Syynä voi olla heikko akku, pakkanen, mekaaninen vika tai käynnistimen kuluminen. Pidä käynnistyspainiketta painettuna, kunnes moottori käynnistyy.&#10;&#10;Sähköjärjestelmä kuormittuu käynnistyksen aikana voimakkaasti suurten käynnistysvirtojen vuoksi."/>
+        <text name="rms_tutorial_hard_start_message" text="Kone %s: moottori käynnistyy vaikeasti. Syynä voi olla heikko akku, pakkanen, mekaaninen vika tai käynnistimen kuluminen.&#10;&#10;Sähköjärjestelmä kuormittuu käynnistyksen aikana voimakkaasti suurten käynnistysvirtojen vuoksi."/>
         <text name="rms_tutorial_low_fuel_title" text="Vähän polttoainetta"/>
         <text name="rms_tutorial_low_fuel_message" text="Säiliö lähestyy varatasoa. Mitä vähemmän polttoainetta on jäljellä, sitä kovemmalla polttoainepumpun on imettävä sitä, ja säiliön pohjalta kulkeutuu vettä ja sakkaa suodattimeen, joka tukkeutuu nopeammin.&#10;&#10;Tankkaa mieluiten päivän päätteeksi: täyteen säiliöön tiivistyy vähemmän vettä."/>
         <text name="rms_tutorial_lugging_title" text="Moottorin alikierrosrasitus"/>

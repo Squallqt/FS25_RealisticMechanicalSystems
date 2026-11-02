@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Hãy khởi động động cơ để nhả phanh đỗ"/>
         <text name="rms_preheat_ignition_message" text="Đã bật khóa điện: đang sấy nóng"/>
         <text name="rms_preheat_system_failure_message" text="Hỏng hệ thống sấy nóng: không thể khởi động nguội"/>
-        <text name="rms_preheat_start_failed_message" text="Động cơ không khởi động: hãy tắt khóa điện trước khi thử lại"/>
+        <text name="rms_preheat_start_failed_message" text="Động cơ không khởi động"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Kiểm tra xe"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Kiểm tra hoặc bảo dưỡng có thể xác định thêm hỏng hóc."/>
         <text name="rms_ws_status_ready_title" text="Xưởng đã sẵn sàng"/>
         <text name="rms_ws_status_ready_hint" text="Chọn một quy trình. Các tùy chọn, linh kiện và giá sẽ được xác nhận trước khi bắt đầu."/>
+        <text name="rms_ws_status_closed_hint" text="Có thể đặt quy trình từ %s đến %s."/>
         <text name="rms_ws_label_value" text="Giá trị xe"/>
         <text name="rms_ws_label_age" text="Tuổi"/>
         <text name="rms_ws_label_operating_hours" text="Giờ hoạt động"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Chưa đánh dấu hỏng hóc nào. Hãy đánh dấu các hỏng hóc cần sửa trong Chẩn đoán và báo giá."/>
         <text name="rms_ws_reason_overhaul_none" text="Đại tu cơ khí phục hồi các hệ thống dưới 50% tình trạng. Máy này không có hệ thống nào như vậy."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Xưởng lưu động không sơn xe. Việc sơn xe được thực hiện tại đại lý."/>
+        <text name="rms_ws_reason_refill_dealer" text="Chỉ đại lý mới bổ sung chất lỏng. Ở nơi khác, việc này được thực hiện bằng bình."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Hãy dùng xưởng có đủ thiết bị."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Hãy cắm thiết bị chẩn đoán của một xe đẩy vào máy."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Cần chẩn đoán điện tử"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Truyền lực kém hiệu quả"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Tỷ số truyền bị giới hạn"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Truyền lực thất thường"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Van hằng nhiệt xuống cấp"/>
         <text name="rms_report_transmission_failed" text="Hư hỏng"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Súng bơm mỡ"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Rơ-moóc quá nặng"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Tải kéo có vẻ quá nặng đối với xe này. Bạn vẫn có thể tiếp tục lái, nhưng hộp số và hệ truyền động sẽ chịu nhiều ứng suất hơn.&#10;&#10;RMS sử dụng hai mốc: máy kéo cần ít nhất 10 HP cho mỗi tấn tải kéo, còn xe tải cần ít nhất 6 HP cho mỗi tấn tổng khối lượng kết hợp. Khi thấp hơn giá trị áp dụng và động cơ chịu tải cao, độ hao mòn hộp số tăng."/>
         <text name="rms_tutorial_hard_start_title" text="Khó khởi động"/>
-        <text name="rms_tutorial_hard_start_message" text="Động cơ của %s khó khởi động. Nguyên nhân có thể là ắc quy yếu, thời tiết giá rét, hỏng hóc cơ học hoặc bộ đề bị mòn. Giữ nút khởi động cho đến khi động cơ nổ máy.&#10;&#10;Hệ thống điện chịu tải nặng trong lúc khởi động do dòng khởi động rất cao."/>
+        <text name="rms_tutorial_hard_start_message" text="Động cơ của %s khó khởi động. Nguyên nhân có thể là ắc quy yếu, thời tiết giá rét, hỏng hóc cơ học hoặc bộ đề bị mòn.&#10;&#10;Hệ thống điện chịu tải nặng trong lúc khởi động do dòng khởi động rất cao."/>
         <text name="rms_tutorial_low_fuel_title" text="Nhiên liệu dự trữ"/>
         <text name="rms_tutorial_low_fuel_message" text="Bình nhiên liệu sắp chạm mức dự trữ. Nhiên liệu còn lại càng ít thì bơm nhiên liệu càng phải làm việc nhiều hơn để hút nhiên liệu, và nước cùng cặn dưới đáy bình bị đưa tới bộ lọc, khiến bộ lọc tắc nhanh hơn.&#10;&#10;Tốt nhất nên đổ đầy bình vào cuối ngày: bình đầy ít bị ngưng tụ hơi nước hơn."/>
         <text name="rms_tutorial_lugging_title" text="Động cơ ì ở vòng tua thấp"/>

@@ -100,7 +100,6 @@ function RMS_FluidContainer.loadNativeDrumVisual(parentNode)
     return true
 end
 
----Loads the pump a drum carries on its bung
 local function loadPump(container, drumLink)
     local i3dRoot = g_i3DManager:loadI3DFile(Utils.getFilename(RMS_FluidContainer.PUMP_I3D_FILENAME, container.baseDirectory), false, false)
     local node = getChildAt(i3dRoot, 0)
@@ -112,7 +111,6 @@ local function loadPump(container, drumLink)
     return { node = node, hoseOutlet = getChildAt(graphics, 2), restHose = getChildAt(graphics, 4), storedNozzle = getChildAt(graphics, 5) }
 end
 
----Shows the pump of a drum as it stands
 local function applyPump(container)
     local spec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     setVisibility(spec.pump.node, spec.hasPump)
@@ -232,8 +230,6 @@ function RMS_FluidContainer.applyDiffuseByName(roots, nodeName, filename)
 end
 
 ---Dresses a can in the colours and label of its product
--- @param entityId root node holding the can
--- @param float capacity format of the can in liters
 function RMS_FluidContainer:applyRMSFluidVisuals(root, capacity)
     local filenames = self[RMS_FluidContainer.SPEC_TABLE_NAME].canDiffuseFilenames
     if capacity > 5 then
@@ -287,7 +283,6 @@ function RMS_FluidContainer:onDelete()
     end
 end
 
----Takes the container out of the world while carried, or sets it back down
 local function applyCarried(container, isCarried, x, y, z, rotY)
     if isCarried then
         container:removeFromPhysics()
@@ -300,7 +295,6 @@ local function applyCarried(container, isCarried, x, y, z, rotY)
 end
 
 ---Tells which player carries the container in hand, as the server knows it
--- @return table? player carrying player
 function RMS_FluidContainer:getRMSFluidCarrier()
     local handTool = self[RMS_FluidContainer.SPEC_TABLE_NAME].carrierTool
     return handTool ~= nil and handTool:getCarryingPlayer() or nil
@@ -308,10 +302,6 @@ end
 
 ---Hands the container to the hand tool standing for it, or sets it down
 -- @param table? handTool hand tool carrying it, nil to set it down
--- @param float? x world position it is set down at
--- @param float? y
--- @param float? z
--- @param float? rotY heading it is set down with
 function RMS_FluidContainer:setRMSFluidCarried(handTool, x, y, z, rotY)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     spec.carrierTool = handTool
@@ -323,13 +313,11 @@ function RMS_FluidContainer:setRMSFluidCarried(handTool, x, y, z, rotY)
 end
 
 ---Tells whether a pump sits on the drum
--- @return boolean hasPump
 function RMS_FluidContainer:getHasRMSFluidPump()
     return self[RMS_FluidContainer.SPEC_TABLE_NAME].hasPump
 end
 
 ---Sets a pump on the bung of the drum or takes it off, on the server
--- @param boolean hasPump
 function RMS_FluidContainer:setRMSFluidPump(hasPump)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     spec.hasPump = hasPump
@@ -352,8 +340,6 @@ function RMS_FluidContainer:setRMSFluidNozzle(handTool)
 end
 
 ---Returns how much of the hose a player has pulled out
--- @param table player player holding or taking the nozzle
--- @return float span metres between the player and the pump
 function RMS_FluidContainer:getRMSFluidHoseSpan(player)
     local x, _, z = player:getPosition()
     local outletX, _, outletZ = getWorldTranslation(self[RMS_FluidContainer.SPEC_TABLE_NAME].pump.hoseOutlet)
@@ -454,7 +440,6 @@ function RMS_FluidContainer:onReadUpdateStream(streamId, timestamp, connection)
     end
 end
 
--- @return boolean isActive true while fluid is being poured
 function RMS_FluidContainer:getIsRMSFluidTransferActive()
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     if self.isServer then
@@ -491,7 +476,6 @@ local FLUID_KIND_TEXT_KEYS = {
     coolant = "rms_fluid_hud_coolant"
 }
 
----Returns the kind of fluid a product is
 local function getFluidKind(product)
     if product.compatibleCircuits.engineOil then
         return "engineOil"
@@ -502,7 +486,6 @@ local function getFluidKind(product)
 end
 
 ---Returns the short name of the kind of fluid a container holds
--- @return string text kind of fluid, as the container shows it
 function RMS_FluidContainer:getRMSFluidKindText()
     local product = RMS_Fluids.PRODUCTS[self[RMS_FluidContainer.SPEC_TABLE_NAME].productKey]
     return g_i18n:getText(FLUID_KIND_TEXT_KEYS[getFluidKind(product)])
@@ -579,7 +562,6 @@ function RMS_FluidContainer:endRMSFluidTransaction(committed)
     end
 end
 
----Sets the native fill level without exceeding the container capacity
 local function setLiters(container, liters)
     local spec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     local target = math.clamp(liters, 0, container:getRMSFluidCapacity())
@@ -587,8 +569,6 @@ local function setLiters(container, liters)
 end
 
 ---Removes liters, an emptied container going away once its transaction ends
--- @param float liters liters asked for
--- @return float removed liters actually taken
 function RMS_FluidContainer:removeRMSFluidLiters(liters)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     local removed = -setLiters(self, self:getRMSFluidLiters() - math.max(liters, 0))
@@ -604,15 +584,11 @@ function RMS_FluidContainer:removeRMSFluidLiters(liters)
 end
 
 ---Puts back liters a rolled-back allocation took
--- @param float liters liters to put back
--- @return float restored liters actually put back
 function RMS_FluidContainer:restoreRMSFluidLiters(liters)
     return setLiters(self, self:getRMSFluidLiters() + math.max(liters, 0))
 end
 
 ---Gives a container back the liters and the pump it was stored with
--- @param float liters liters it held
--- @param boolean hasPump true when a pump sat on the drum
 function RMS_FluidContainer:setRMSFluidStored(liters, hasPump)
     setLiters(self, liters)
     if hasPump then

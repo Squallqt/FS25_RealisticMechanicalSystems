@@ -8,7 +8,6 @@ local RMS_WorkshopInterventionsFrame_mt = Class(RMS_WorkshopInterventionsFrame, 
 
 local STATUS = RealisticMechanicalSystems.STATUS
 
--- service, name, pictogram profile and slice of each choice, in order
 local ACTIONS = {
     { service = STATUS.INSPECTION, label = "rms_ws_action_choice_inspection", icon = "rms_workshopActionIcon", slice = "gui.icon_vehicleDealer_search" },
     { service = STATUS.MAINTENANCE, label = "rms_ws_action_choice_maintenance", icon = "rms_workshopMaintenanceActionIcon" },
@@ -19,7 +18,6 @@ local ACTIONS = {
     { service = STATUS.REMAP, label = "rms_ws_action_choice_remap", icon = "rms_workshopActionIcon", slice = "gui.storeAttribute_power" }
 }
 
--- label and recap field of each figure under the price
 local RECAP_FIGURES = {
     { label = "rms_option_menu_duration_text", field = "duration" },
     { label = "rms_ws_label_finish_time", field = "finish" }
@@ -77,9 +75,6 @@ local LEGEND = {
 }
 
 ---Fault state of a machine with no identified fault
--- @param table vehicle vehicle
--- @return string text localized sentence
--- @return boolean isWarning true when a telltale is lit for a fault to identify
 function RMS_WorkshopInterventionsFrame.getFaultStateText(vehicle)
     if RealisticMechanicalSystems.getHasUnidentifiedWarning(vehicle) then
         return g_i18n:getText("rms_ws_info_warning_unidentified"), true
@@ -88,11 +83,6 @@ function RMS_WorkshopInterventionsFrame.getFaultStateText(vehicle)
 end
 
 ---Says why an intervention has nothing to do here
--- @param table vehicle vehicle
--- @param string serviceType intervention picked
--- @param string workshopType workshop the machine is in
--- @return string? text localized sentence, nil when the intervention has work to do
--- @return boolean isWarning true when a telltale is lit for a fault to identify
 function RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType, workshopType)
     if serviceType == STATUS.REPAIR and not RMS_Utils.hasSelectedVisibleBreakdown(vehicle) then
         for id, breakdown in pairs(vehicle:getActiveBreakdowns()) do
@@ -105,6 +95,8 @@ function RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType,
         return g_i18n:getText("rms_ws_reason_overhaul_none"), false
     elseif serviceType == STATUS.BODYWORK and workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE then
         return g_i18n:getText("rms_ws_reason_bodywork_mobile"), false
+    elseif serviceType == STATUS.REFILL and not RMS_FluidWorkshop.getIsTopUpOffered(workshopType) then
+        return g_i18n:getText("rms_ws_reason_refill_dealer"), false
     elseif serviceType == STATUS.REMAP then
         local _, refusal = RMS_EngineRemap.getAvailability(vehicle, workshopType)
         if refusal == "dealer" then
@@ -116,20 +108,23 @@ function RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType,
     return nil, false
 end
 
+---Tells whether the workshop never does an intervention, its card greyed
+function RMS_WorkshopInterventionsFrame.getIsRefusedHere(vehicle, serviceType, workshopType)
+    if serviceType == STATUS.REPAIR or serviceType == STATUS.OVERHAUL then
+        return false
+    end
+    return RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType, workshopType) ~= nil
+end
+
 local cloneTemplate = RMS_Utils.cloneTemplate
 
 local formatPower = RMS_Utils.formatPower
 
----Formats a torque in Nm, rounded as a power is
 local function formatTorque(nm)
     return string.format(g_i18n:getText("rms_remap_torque_format"), g_i18n:formatNumber(MathUtil.round(nm), 0))
 end
 
----Formats the time of a service, or the word of an instant one
--- @param string serviceType service status
 -- @param float duration duration in hours
--- @param function format formatter of a duration
--- @return string text duration text
 local function formatServiceDuration(serviceType, duration, format)
     if duration > 0 and RealisticMechanicalSystems.getIsServiceInstant(serviceType) then
         return g_i18n:getText("rms_option_menu_duration_instant")
@@ -137,18 +132,12 @@ local function formatServiceDuration(serviceType, duration, format)
     return format(duration)
 end
 
----Quote group of the warranty a remap takes: factory term, covered parts
--- @param table vehicle vehicle
--- @param table offer remap offer
--- @param boolean isRestore true when the stock software goes back
--- @return table group warranty, lost, with its lines
 local function getLostWarranty(vehicle, offer, isRestore)
     local lines = {}
     if offer.factoryTerm then
         local months, hours = vehicle:getWarrantyLimits()
         table.insert(lines, { label = string.format(g_i18n:getText("rms_ws_warranty_terms"), months, g_i18n:formatNumber(hours, 0)) })
     end
-    -- parts the remap takes, those ending together on one line
     local names, expiries = {}, {}
     for _, part in ipairs(isRestore and {} or offer.coveredParts) do
         if names[part.expiry] == nil then
@@ -169,7 +158,6 @@ local function getLostWarranty(vehicle, offer, isRestore)
 end
 
 ---Creates the page
--- @return table page
 function RMS_WorkshopInterventionsFrame.new()
     local self = RMS_WorkshopPage.new(nil, RMS_WorkshopInterventionsFrame_mt)
     self.quoteLines = {}
@@ -185,7 +173,6 @@ function RMS_WorkshopInterventionsFrame:delete()
 end
 
 ---Builds the table, the cards and the rows from their templates
--- @param table dialog workshop dialog
 function RMS_WorkshopInterventionsFrame:initialize(dialog)
     RMS_WorkshopInterventionsFrame:superClass().initialize(self, dialog)
     self.unitX, self.unitY = self.optionTable.size[1] / TABLE_WIDTH, self.optionTable.size[2] / TABLE_HEIGHT
@@ -275,15 +262,12 @@ function RMS_WorkshopInterventionsFrame:buildRemapLegend()
 end
 
 ---Opens on no order when the vehicle changes
--- @param table? vehicle vehicle
--- @param string? workshopType workshop
 function RMS_WorkshopInterventionsFrame:setVehicle(vehicle, workshopType)
     RMS_WorkshopInterventionsFrame:superClass().setVehicle(self, vehicle, workshopType)
     self.serviceType, self.refusedService = nil, nil
 end
 
 ---Opens an intervention, or says why it has nothing to do here
--- @param string serviceType intervention
 function RMS_WorkshopInterventionsFrame:selectService(serviceType)
     local vehicle, workshopType = self.vehicle, self.workshopType
     self.serviceType, self.refusedService = nil, nil
@@ -307,8 +291,6 @@ function RMS_WorkshopInterventionsFrame:selectService(serviceType)
 end
 
 ---Second option a choice of the open order sends
--- @param string? choice first option
--- @return any optionTwo second option
 function RMS_WorkshopInterventionsFrame:getOptionTwo(choice)
     if self.serviceType == STATUS.OVERHAUL then
         return choice == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL and self.optionTwo or "NONE"
@@ -321,7 +303,6 @@ function RMS_WorkshopInterventionsFrame:getOptionTwo(choice)
 end
 
 ---Writes the choices, the order and the recap
--- @param table state workshop state of RMS_WorkshopDialog:refresh
 function RMS_WorkshopInterventionsFrame:refresh(state)
     self.state = state
     self.statusBar:setStatus(state)
@@ -350,17 +331,15 @@ end
 
 ---Selects the open choice, greys the ones this workshop refuses
 function RMS_WorkshopInterventionsFrame:updateActions()
-    local isTopUpOffered = RMS_FluidWorkshop.getIsTopUpOffered(self.workshopType)
     for index, button in ipairs(self.actionButtons) do
         local serviceType = ACTIONS[index].service
-        local isRefused = serviceType == STATUS.REMAP and RMS_EngineRemap.getAvailability(self.vehicle, self.workshopType) == false
+        local isRefused = RMS_WorkshopInterventionsFrame.getIsRefusedHere(self.vehicle, serviceType, self.workshopType)
         local suffix = isRefused and "Refused" or ""
         button:applyProfile("rms_workshopActionChoice" .. suffix, true)
         button:getDescendantByName("background"):applyProfile("rms_workshopActionBg" .. suffix, true)
         local icon = button:getDescendantByName("icon")
         icon:setImageColor(nil, unpack(isRefused and COLOR_DISABLED or RMS_Utils.COLOR.HIGHLIGHT))
         icon:setImageColor(GuiOverlay.STATE_SELECTED, unpack(isRefused and COLOR_DISABLED or COLOR_MAIN_DARK))
-        button:setVisible(serviceType ~= STATUS.REFILL or isTopUpOffered)
         button:setDisabled(not self.state.isOpen or self.state.isUnderService)
         button:setSelected(not self.state.isUnderService and (self.serviceType == serviceType or self.refusedService == serviceType))
         RMS_Utils.centerActionContent(button)
@@ -375,11 +354,18 @@ function RMS_WorkshopInterventionsFrame:updateReady()
         text, isWarning = RMS_WorkshopInterventionsFrame.getUnavailableText(self.vehicle, self.refusedService, self.workshopType)
     end
     local titleKeys = { [STATUS.REPAIR] = "rms_ws_action_choice_repair", [STATUS.OVERHAUL] = "rms_ws_action_choice_overhaul",
-        [STATUS.BODYWORK] = "rms_ws_action_choice_bodywork", [STATUS.REMAP] = "rms_remap_unavailable" }
-    local isRemapRefused = self.refusedService == STATUS.REMAP
-    self.readyIcon:setImageSlice(nil, isRemapRefused and "gui.storeAttribute_power" or "gui.icon_construction_buildings")
-    self.readyIcon:setImageColor(nil, unpack(isRemapRefused and COLOR_DISABLED or RMS_Utils.COLOR.HIGHLIGHT))
-    self.readyTitle:setText(g_i18n:getText(titleKeys[self.refusedService] or "rms_ws_status_ready_title"))
+        [STATUS.BODYWORK] = "rms_ws_action_choice_bodywork", [STATUS.REFILL] = "rms_ws_action_choice_refill",
+        [STATUS.REMAP] = "rms_remap_unavailable" }
+    local isRefusedHere = self.refusedService ~= nil
+        and RMS_WorkshopInterventionsFrame.getIsRefusedHere(self.vehicle, self.refusedService, self.workshopType)
+    local isClosed = self.refusedService == nil and not self.state.isOpen
+    if isClosed then
+        text = string.format(g_i18n:getText("rms_ws_status_closed_hint"), RMS_Utils.formatFinishTime(RMS_Config.WORKSHOP.OPEN_HOUR),
+            RMS_Utils.formatFinishTime(RMS_Config.WORKSHOP.CLOSE_HOUR))
+    end
+    self.readyIcon:setImageSlice(nil, self.refusedService == STATUS.REMAP and "gui.storeAttribute_power" or "gui.icon_construction_buildings")
+    self.readyIcon:setImageColor(nil, unpack((isRefusedHere or isClosed) and COLOR_DISABLED or RMS_Utils.COLOR.HIGHLIGHT))
+    self.readyTitle:setText(g_i18n:getText(titleKeys[self.refusedService] or isClosed and "rms_ws_status_closed" or "rms_ws_status_ready_title"))
     self.readyHint:setText(text or g_i18n:getText("rms_ws_status_ready_hint"))
     self.readyHint:setTextColor(unpack(isWarning and RMS_Breakdowns.COLORS.WARNING or self.readyHintColor))
     self:writeRecap({ type = g_i18n:getText(self.state.isOpen and "rms_ws_status_open" or "rms_ws_status_closed"),
@@ -440,7 +426,6 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
     if order.footerKeys ~= nil then
         self.footer:setText(g_i18n:getText(order.footerKeys[1]) .. " " .. g_i18n:getText(order.footerKeys[2]))
     end
-    -- a rule of the mobile workshop, or one of the order, stops the choice
     local isAllowed = RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, self.choice)
     local refusalKey = isAllowed and order.getRefusalKey ~= nil and order.getRefusalKey(vehicle, workshopType, self.choice) or nil
     self.restriction:setVisible(not isAllowed or refusalKey ~= nil)
@@ -492,7 +477,6 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
 end
 
 ---Lays the table out and writes each row and column
--- @param table order order of the open intervention
 function RMS_WorkshopInterventionsFrame:updateTable(order)
     local vehicle, choices = self.vehicle, self.choices
     local ux, uy = self.unitX, self.unitY
@@ -587,7 +571,6 @@ function RMS_WorkshopInterventionsFrame:updateTable(order)
 end
 
 ---Writes the systems of a partial overhaul, or the part qualities
--- @param table order order of the open intervention
 function RMS_WorkshopInterventionsFrame:updateSecondOption(order)
     local vehicle = self.vehicle
     local isPartial = self.serviceType == STATUS.OVERHAUL and self.choice == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
@@ -615,7 +598,6 @@ function RMS_WorkshopInterventionsFrame:updateSecondOption(order)
     end
 end
 
----Part, origin and warranty of a quality card of a repair
 local function getQualityPartInfo(frame, quality)
     local R, vehicle = RealisticMechanicalSystems, frame.vehicle
     local minimum, maximum, count, guaranteed = R.getUsedPartOfferSummary(vehicle, frame.choice)
@@ -695,7 +677,6 @@ function RMS_WorkshopInterventionsFrame:updateQualities()
 end
 
 ---Writes the follow-up choice of the open order
--- @param table order order of the open intervention
 function RMS_WorkshopInterventionsFrame:updateFollowUp(order)
     local followUp = order.followUp
     self.followUpCard:setVisible(followUp ~= nil)
@@ -744,9 +725,6 @@ function RMS_WorkshopInterventionsFrame:updateRefill()
 end
 
 ---Writes one color zone of a repaint
--- @param string zone color configuration
--- @param table row color row
--- @return boolean hasChoices true when the zone offers another color
 function RMS_WorkshopInterventionsFrame:updateColorRow(zone, row)
     local vehicle, selection = self.vehicle, self.bodyworkColors[zone]
     local choices = RMS_Bodywork.getColorChoices(vehicle, zone, self.bodyworkColors)
@@ -817,8 +795,6 @@ function RMS_WorkshopInterventionsFrame:updateColors()
 end
 
 ---Options of the open order, as the recap names them
--- @param any optionTwo second option sent
--- @return string text localized options
 function RMS_WorkshopInterventionsFrame:getRecapOptions(optionTwo)
     local vehicle, serviceType = self.vehicle, self.serviceType
     if serviceType == STATUS.REFILL then
@@ -837,9 +813,6 @@ function RMS_WorkshopInterventionsFrame:getRecapOptions(optionTwo)
 end
 
 ---Lines of the quote of the open order, gathered by group
--- @param any optionTwo second option sent
--- @param string? coverKey "warranty" or "lease"
--- @return table groups label, price and lines of each group
 function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey)
     local vehicle, serviceType, workshopType = self.vehicle, self.serviceType, self.workshopType
     local WORKSHOP = RealisticMechanicalSystems.WORKSHOP
@@ -892,7 +865,6 @@ function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey)
     if gathered.fluid ~= nil and not self.hasStockShortage and (coverKey ~= nil or workshopType ~= WORKSHOP.DEALER) then
         table.insert(gathered.fluid.lines, { note = g_i18n:getText(coverKey ~= nil and COVER_TEXTS[coverKey].fluids or "rms_fluid_stock_required") })
     end
-    -- the follow-up chosen closes the quote, its answer in place of a sum
     local followUp = RMS_WorkshopOrders.ORDERS[serviceType].followUp
     if followUp ~= nil then
         table.insert(groups, { label = g_i18n:getText(followUp.textKey), lines = {},
@@ -902,7 +874,6 @@ function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey)
 end
 
 ---Writes the recap: type, options, vehicle, price, time, quote
--- @param table recap texts; missing ones read "-", no quote hides it
 function RMS_WorkshopInterventionsFrame:writeRecap(recap)
     self.recapType:setText(recap.type)
     self.recapOptions:setText(recap.options or "-")
@@ -1059,7 +1030,6 @@ function RMS_WorkshopInterventionsFrame:updateRemap()
 end
 
 ---Draws the stroke of a legend entry, dashed for torque
--- @param table element swatch area
 function RMS_WorkshopInterventionsFrame:onDrawLegendSwatch(element)
     local entry = element.legendEntry
     local x, width = element.absPosition[1], element.absSize[1]
@@ -1074,7 +1044,6 @@ function RMS_WorkshopInterventionsFrame:onDrawLegendSwatch(element)
     end
 end
 
----Returns the bottom value and the step of an axis showing a range
 local function getAxisScale(low, high, steps)
     for _, step in ipairs(steps) do
         local bottom = math.floor(low / step) * step
@@ -1086,7 +1055,6 @@ local function getAxisScale(low, high, steps)
     return math.floor(low / step) * step, step
 end
 
----Draws a label of the axes
 local function drawAxisText(x, y, size, text, color, isBold, alignment)
     setTextBold(isBold)
     setTextColor(color[1], color[2], color[3], color[4])
@@ -1094,7 +1062,6 @@ local function drawAxisText(x, y, size, text, color, isBold, alignment)
     renderText(x, y, size, text)
 end
 
----Draws a value pill centred on a screen point
 local function drawPill(x, y, text, size, background, textColor)
     setTextBold(true)
     local width = getTextWidth(size, text) + size * 1.2 * g_screenHeight / g_screenWidth
@@ -1194,41 +1161,35 @@ function RMS_WorkshopInterventionsFrame:onDrawRemapChart()
 end
 
 ---Opens the intervention of a clicked choice
--- @param table button clicked choice
 function RMS_WorkshopInterventionsFrame:onClickAction(button)
     self.dialog:selectService(ACTIONS[RMS_Utils.getKeyByValue(self.actionButtons, button)].service)
 end
 
 ---Picks the option of a clicked column
--- @param table button clicked column
 function RMS_WorkshopInterventionsFrame:onClickColumn(button)
     self.choice = self.choices[button.templateIndex]
     self.dialog:refresh()
 end
 
 ---Picks the system of a partial overhaul
--- @param table button clicked card
 function RMS_WorkshopInterventionsFrame:onClickSystem(button)
     self.optionTwo = self.systemValues[button.templateIndex]
     self.dialog:refresh()
 end
 
 ---Picks a part quality
--- @param table button clicked card
 function RMS_WorkshopInterventionsFrame:onClickQuality(button)
     self.optionTwo = RealisticMechanicalSystems.PART_TYPES_ORDER[button.templateIndex]
     self.dialog:refresh()
 end
 
 ---Picks the follow-up, no then yes
--- @param table button clicked card
 function RMS_WorkshopInterventionsFrame:onClickFollowUp(button)
     self.followUp = button.templateIndex == 2
     self.dialog:refresh()
 end
 
 ---Opens the color picker of a zone
--- @param table button clicked color button
 function RMS_WorkshopInterventionsFrame:onClickColor(button)
     local zone, vehicle = button.colorZone, self.vehicle
     local choices = RMS_Bodywork.getColorChoices(vehicle, zone, self.bodyworkColors)
@@ -1321,7 +1282,6 @@ function RMS_WorkshopInterventionsFrame:onClickStart()
 end
 
 ---Starts the remap once the player confirmed it
--- @param boolean yes true when the player confirmed
 function RMS_WorkshopInterventionsFrame:onRemapConfirm(yes)
     if yes then
         self:startOrder()
@@ -1337,7 +1297,6 @@ function RMS_WorkshopInterventionsFrame:startOrder()
 end
 
 ---Leaves the open order for the choice list
--- @return boolean isLeft true when an order or a refusal was open
 function RMS_WorkshopInterventionsFrame:goBack()
     if self.serviceType == nil and self.refusedService == nil then
         return false

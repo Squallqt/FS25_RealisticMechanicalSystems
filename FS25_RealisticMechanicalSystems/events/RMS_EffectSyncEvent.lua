@@ -9,20 +9,12 @@ InitEventClass(RMS_EffectSyncEvent, "RMS_EffectSyncEvent")
 
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_EffectSyncEvent.emptyNew()
     return Event.new(RMS_EffectSyncEvent_mt)
 end
 
 
 ---Create new instance of event
--- @param table vehicle vehicle
--- @param string? effectId effect id
--- @param string? status effect status
--- @param float? timer effect timer
--- @param integer? extraInt effect specific integer payload
--- @param float? extraFloat effect specific float payload
--- @return table self instance of class event
 function RMS_EffectSyncEvent.new(vehicle, effectId, status, timer, extraInt, extraFloat)
     local self = RMS_EffectSyncEvent.emptyNew()
     self.vehicle    = vehicle
@@ -36,8 +28,6 @@ end
 
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_EffectSyncEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
     streamWriteString(streamId,  self.effectId)
@@ -49,8 +39,6 @@ end
 
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_EffectSyncEvent:readStream(streamId, connection)
     self.vehicle    = NetworkUtil.readNodeObject(streamId)
     self.effectId   = streamReadString(streamId)
@@ -63,10 +51,7 @@ end
 
 
 ---Applies the received effect state, dispatching on the effect id
--- @param Connection connection connection
 function RMS_EffectSyncEvent:run(connection)
-    local isFromClient = connection ~= nil and not connection:getIsServer()
-
     local vehicle = self.vehicle
     if vehicle == nil or not vehicle:getIsSynchronized() then
         return
@@ -85,29 +70,6 @@ function RMS_EffectSyncEvent:run(connection)
         end
         if vehicle:getIsActiveForInput(true) then
             g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_engine_stalled_message"), 5000)
-        end
-
-    elseif self.effectId == "ENGINE_HARD_START_MODIFIER" or self.effectId == "GLOW_PLUG_HARD_START_MODIFIER" then
-        if effect ~= nil then
-            effect.extraData = effect.extraData or {}
-            effect.extraData.status = self.status
-            effect.extraData.timer = self.timer
-            effect.extraData.automaticCrank = self.extraInt == 1
-        end
-
-        if isFromClient and g_server ~= nil then
-            g_server:broadcastEvent(RMS_EffectSyncEvent.new(vehicle, self.effectId, self.status, self.timer, self.extraInt, self.extraFloat), nil, connection, vehicle)
-        end
-
-    elseif self.effectId == "ENGINE_FAILURE" then
-        if effect ~= nil then
-            effect.extraData = effect.extraData or {}
-            effect.extraData.status = self.status
-            effect.extraData.automaticCrank = self.extraInt == 1
-        end
-
-        if isFromClient and g_server ~= nil then
-            g_server:broadcastEvent(RMS_EffectSyncEvent.new(vehicle, self.effectId, self.status, self.timer, self.extraInt, self.extraFloat), nil, connection, vehicle)
         end
 
     elseif self.effectId == "PTO_AUTO_DISENGAGE_CHANCE" or self.effectId == "FRONT_PTO_AUTO_DISENGAGE_CHANCE" then
@@ -182,12 +144,6 @@ end
 
 
 ---Sends the effect state from the server, or the start effects to it
--- @param table vehicle vehicle
--- @param string effectId effect id
--- @param string? status effect status
--- @param float? timer effect timer
--- @param integer? extraInt effect specific integer payload
--- @param float? extraFloat effect specific float payload
 function RMS_EffectSyncEvent.send(vehicle, effectId, status, timer, extraInt, extraFloat)
     if g_server ~= nil then
         g_server:broadcastEvent(RMS_EffectSyncEvent.new(vehicle, effectId, status, timer, extraInt, extraFloat), nil, nil, vehicle)

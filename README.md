@@ -235,8 +235,8 @@ Every machine has the battery, the alternator and the starter of its size and it
 - **Lights left on with the engine stopped** flatten the battery in three to six hours of game time, sooner on a machine loaded with work lamps.
 - **The cold keeps part of the charge out of reach.** A battery needs about 12 % to start at `10 C`, 25 % at `0 C`, 40 % at `-10 C` and more than half at `-18 C`. The charge comes back as the weather warms.
 - **The starter no longer rolls dice.** The same situation always takes the same time. It turns slower, with a lower sound, when the voltage drops: cold, a battery running empty or aged, corroded wiring. A cold engine drags it too, its oil thick: on a full battery it turns about `250 rpm` on a mild engine and `150 rpm` at `-19 C`. A diesel needs about `100 rpm` to fire; slower, the starter turns without the engine catching. Insisting drains the battery; when it can no longer turn the engine, the machine says **Battery too weak**.
-- **Hold the start key while the engine is slow to start.** An engine colder than `-10 C` or a fault that makes starting hard keeps the starter turning until the engine catches: hold the key, let go and it stops. Otherwise a press starts the engine.
-- **Each machine cranks its own starter.** A machine of the base game turns the starter heard in its own engine sound, for as long as the key holds it, and its engine catches as in that sound. Another machine starts with its own engine sound, and while the key holds a slow start it borrows the starter of the base game machine of its kind nearest in power.
+- **One press starts every engine.** The starter turns on its own until the engine catches; an engine colder than `-10 C` or a fault that makes starting hard keeps it turning longer. A car starter turns `10 s` at most and a tractor or heavy machine starter `30 s`, as their owner's manuals allow. If the engine has not caught, press again: the cranking already done counts. A press while the starter turns stops it and switches the ignition off. With the game's automatic start, the game waits the rest the manuals ask before it tries again, `20 s` for a car and `2 min` for the others.
+- **Each kind of machine has its starter.** On a hard start a car, a tractor up to 150 hp, a larger tractor and a heavy machine such as a truck or a harvester each crank with their own starter, slower as the battery and the cold slow it. Once the engine catches, the machine starts on its own engine sound.
 - **A failed alternator** leaves the machine running on its battery: two to three hours at night with every light on, four and a half to six and a half by day, while the voltmeter reads the battery instead of `14 V`.
 - **Workers switch their lights off** when they stop their engine to wait, and light them again as they leave. Your own lights stay as you set them.
 - **Wheel loaders above 110 hp, forestry machines and trucks run 24 V**, like the real ones, on two 12 V batteries of 180 Ah in series. The voltmeter reads `28 V` running and `25.2 V` at rest, the report shows a **24 V Battery**, and with their larger batteries they hold longer: a 250 hp loader keeps its lights on for eight hours with the engine stopped. Jumper cables never link a 12 V machine to a 24 V one.
@@ -403,19 +403,24 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 
 ### v1.0.0.0-beta.1
 
-- Reworked machine production years, which set each machine's period equipment such as the particulate filter, LED lights, the reversible fan and dashboard lamps
+- Reworked machine production years and their period equipment
 - Added the model launch year to the shop
-- Added engine oil change intervals that follow the machine's era: older machines need it more often
-- Added engine remapping by a tuner at the farm or mobile workshop: more power, and the warranty lost for good
-- Added an instant setting for engine remapping, like the other workshop services
-- Reworked the settings page, which now opens without freezing and describes each setting more clearly
-- Reworked the workshop, the fleet page and the other RMS screens on the menus of the game, every text fitting in the 27 languages
-- Replaced the sounds of worn brakes and of the jumper cable clamps
+- Added engine oil change intervals that follow the machine's era
+- Added engine remapping by a tuner at the farm or mobile workshop
+- Added an instant setting for engine remapping
+- Reworked the workshop, the fleet page, the settings page and the other RMS screens
+- Reworked the colours and limits of the dashboard lamps, and the limits of the inspection report and the overhaul advice
+- Replaced the sounds of the starter, worn brakes and the jumper cable clamps
+- Added a single-press engine start for every engine
+- Fixed the buttons of the settings page
 - Fixed AI workers, Courseplay and AutoDrive wearing the machine by working it cold, hitting obstacles or spinning their wheels on the spot
-- Fixed breakdowns of lamps missing from the machine, such as a beacon not chosen in the shop
-- Fixed the most powerful Stage V machines, such as large combines, having no particulate filter
-- Fixed machines bought in another colour without paying for the paint: any colour other than the one already selected now costs a full repaint
-- Fixed the vehicle configurator changing an owned machine's colours without charging the repaint: colours now change only through a full repaint
+- Fixed breakdowns and worn parts of lamps missing from the machine
+- Fixed the committed cost of a running service showing 0 in multiplayer
+- Fixed the finish time of a running service jumping back and forth by a minute when time is sped up
+- Fixed the most powerful Stage V machines having no particulate filter
+- Fixed machines bought in another colour without paying for the paint
+- Fixed the vehicle configurator changing an owned machine's colours without charging the repaint
+- Fixed hard starts with the game's automatic start and the GIANTS Ignition Key
 
 ### v0.13.0.1
 

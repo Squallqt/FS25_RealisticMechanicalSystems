@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Ligue o motor para liberar o freio de estacionamento"/>
         <text name="rms_preheat_ignition_message" text="Ignição ligada: pré-aquecimento em andamento"/>
         <text name="rms_preheat_system_failure_message" text="Avaria no sistema de pré-aquecimento: partida a frio impossível"/>
-        <text name="rms_preheat_start_failed_message" text="O motor não ligou: desligue a ignição antes de tentar novamente"/>
+        <text name="rms_preheat_start_failed_message" text="O motor não ligou"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Verificar o veículo"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Uma inspeção ou uma manutenção pode identificar outras avarias."/>
         <text name="rms_ws_status_ready_title" text="Oficina pronta"/>
         <text name="rms_ws_status_ready_hint" text="Selecione uma intervenção. As opções, as peças e o preço serão confirmados antes do início."/>
+        <text name="rms_ws_status_closed_hint" text="As intervenções são aceitas das %s às %s."/>
         <text name="rms_ws_label_value" text="Valor do veículo"/>
         <text name="rms_ws_label_age" text="Idade"/>
         <text name="rms_ws_label_operating_hours" text="Horas de operação"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Nenhuma avaria marcada. Marque em Diagnóstico e orçamento as avarias a reparar."/>
         <text name="rms_ws_reason_overhaul_none" text="Uma revisão mecânica recupera os sistemas abaixo de 50% de estado. Esta máquina não tem nenhum."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Uma oficina móvel não faz pintura. Ela é feita na concessionária."/>
+        <text name="rms_ws_reason_refill_dealer" text="Só a concessionária faz a reposição de fluidos. Em outro lugar, ela é feita com o galão."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Use uma oficina equipada."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Conecte o equipamento de diagnóstico de um carrinho à máquina."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnóstico eletrônico necessário"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Transmissão ineficaz"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Relação reduzida"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Transmissão irregular"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Termostato degradado"/>
         <text name="rms_report_transmission_failed" text="Com falha"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistola de graxa"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Reboque pesado demais"/>
         <text name="rms_tutorial_heavy_trailer_message" text="A carga rebocada parece pesada demais para este veículo. Você pode continuar dirigindo, mas a transmissão e o trem de força ficarão sob maior esforço.&#10;&#10;O RMS usa duas referências: um trator precisa de pelo menos 10 HP por tonelada rebocada, e um caminhão de pelo menos 6 HP por tonelada de peso bruto combinado. Abaixo do valor aplicável e com carga alta no motor, o desgaste da transmissão aumenta."/>
         <text name="rms_tutorial_hard_start_title" text="Partida difícil"/>
-        <text name="rms_tutorial_hard_start_message" text="O motor do seu %s está difícil de ligar. Bateria fraca, frio intenso, avaria mecânica ou desgaste do motor de arranque podem ser a causa. Mantenha o botão de partida pressionado até o motor pegar.&#10;&#10;O sistema elétrico sofre cargas elevadas na partida, por causa das correntes de pico."/>
+        <text name="rms_tutorial_hard_start_message" text="O motor do seu %s está difícil de ligar. Bateria fraca, frio intenso, avaria mecânica ou desgaste do motor de arranque podem ser a causa.&#10;&#10;O sistema elétrico sofre cargas elevadas na partida, por causa das correntes de pico."/>
         <text name="rms_tutorial_low_fuel_title" text="Pouco combustível"/>
         <text name="rms_tutorial_low_fuel_message" text="O tanque está chegando à reserva. Quanto menos combustível resta, mais a bomba precisa forçar para aspirá-lo, e o fundo do tanque manda sua água e seus resíduos para o filtro, que entope mais rápido.&#10;&#10;Melhor abastecer no fim do dia: um tanque cheio forma menos condensação."/>
         <text name="rms_tutorial_lugging_title" text="Motor forçando em baixa rotação"/>

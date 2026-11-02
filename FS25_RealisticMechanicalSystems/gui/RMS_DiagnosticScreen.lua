@@ -11,7 +11,6 @@ local modDirectory = g_currentModDirectory
 local PAGE = RMS_DiagnosticScreen.PAGE
 
 local REFRESH_MS = 250
--- the fields the detail panel holds
 local DETAIL_FIELDS = 6
 local COLOR = {
     TEXT = { 0.0452, 0.0452, 0.0452, 1 },
@@ -23,8 +22,6 @@ local MACHINE_STATE_COLORS = { ok = COLOR.OK, plugged = COLOR.OK, moving = COLOR
 local shownTexts = setmetatable({}, { __mode = "k" })
 
 ---Sets a text only when it changes; every setText lays it out again
--- @param table element text element or button
--- @param string text text
 local function setText(element, text)
     if shownTexts[element] ~= text then
         shownTexts[element] = text
@@ -33,9 +30,6 @@ local function setText(element, text)
 end
 
 ---Create instance of RMS_DiagnosticScreen
--- @param table? target target
--- @param table? customMt custom metatable
--- @return table screen instance of class RMS_DiagnosticScreen
 function RMS_DiagnosticScreen.new(target, customMt)
     local self = MessageDialog.new(target, customMt or RMS_DiagnosticScreen_mt)
     self.tool = nil
@@ -46,7 +40,6 @@ function RMS_DiagnosticScreen.new(target, customMt)
     return self
 end
 
--- @param table tool trolley
 function RMS_DiagnosticScreen.show(tool)
     local screen = RMS_DiagnosticScreen.INSTANCE
     screen.tool = tool
@@ -123,7 +116,6 @@ local function getScanRows(tool, target, controllers)
     return rows, answered, #controllers
 end
 
----Returns a key identifying a list's rows
 local function getRowsSignature(rows)
     local parts = {}
     for _, row in ipairs(rows) do

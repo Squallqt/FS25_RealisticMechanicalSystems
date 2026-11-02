@@ -41,7 +41,6 @@ RMS_FluidWorkshop.RESULT_TEXT_KEYS = {
 
 local REMAP_REFUSALS = { dealer = "REMAP_DEALER", leased = "REMAP_LEASED", notEligible = "REMAP_NOT_ELIGIBLE" }
 
----Tells whether a breakdown is covered by the requested player repair
 local function getIsBreakdownCoveredByRepair(breakdownId, breakdown, repairType)
     local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
     if definition == nil or definition.isSelectable ~= true or breakdown == nil
@@ -56,7 +55,6 @@ local function getIsBreakdownCoveredByRepair(breakdownId, breakdown, repairType)
         or repairType == RealisticMechanicalSystems.REPAIR_TYPES.HIGH
 end
 
----Collects the deterministically ordered breakdown ids covered by a repair
 local function collectCoveredRepairBreakdowns(vehicle, repairType)
     local result = {}
     for breakdownId, breakdown in pairs(vehicle:getActiveBreakdowns() or {}) do
@@ -96,8 +94,6 @@ local function getStockRequirements(vehicle, requirements, serviceType, workshop
 end
 
 ---Tells whether a workshop tops the fluids up
--- @param string workshopType workshop type
--- @return boolean isOffered true at the dealer
 function RMS_FluidWorkshop.getIsTopUpOffered(workshopType)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
 end
@@ -157,11 +153,6 @@ function RMS_FluidWorkshop.getWorkshopRestrictionText(vehicle, serviceType, work
 end
 
 ---Returns the exact fluid requirements used by a workshop transaction
--- @param table vehicle vehicle
--- @param string serviceType service status
--- @param string? optionOne first service option
--- @param string? optionTwo second service option
--- @return table requirements ordered requirements
 function RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, optionOne, optionTwo)
     if vehicle == nil then
         return {}
@@ -176,8 +167,6 @@ end
 local MAX_LITER_DECIMAL_PLACES = 4
 
 ---Formats a fluid quantity without rounding a small positive volume to zero
--- @param float liters fluid quantity
--- @return string formatted quantity
 function RMS_FluidWorkshop.formatLiters(liters)
     local value = math.max(tonumber(liters) or 0, 0)
     local decimalPlaces = 1
@@ -197,12 +186,6 @@ local MODE_TEXT_KEYS = {
 }
 
 ---Formats one fluid operation as its circuit, liters and performed operation
--- @param table vehicle vehicle
--- @param string circuit fluid circuit
--- @param float liters fluid quantity
--- @param string? mode performed operation
--- @param boolean? compact use short common-sump name
--- @return string text localized requirement
 function RMS_FluidWorkshop.formatRequirement(vehicle, circuit, liters, mode, compact)
     return string.format(
         "%s %s %s (%s)",
@@ -221,13 +204,11 @@ function RMS_FluidWorkshop.showResult(result)
     end
 end
 
----
 local function getIsScreenOnlyMobileWorkshop(workshopType)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE
         and g_modIsLoaded["FS25_mobileWorkshop"] == true
 end
 
----
 local function getRootVehicle(object)
     if object == nil then
         return nil
@@ -238,7 +219,6 @@ local function getRootVehicle(object)
     return object.rootVehicle or object
 end
 
----
 local function getDistance(objectA, objectB)
     local nodeA = objectA ~= nil and (objectA.rootNode or objectA.nodeId) or nil
     local nodeB = objectB ~= nil and (objectB.rootNode or objectB.nodeId) or nil
@@ -270,7 +250,6 @@ end
 
 ---Finds the workshop selling point containing the vehicle
 function RMS_FluidWorkshop.findSellingPoint(vehicle, workshopType, preferred)
-    ---
     local function matchesWorkshopType(sellingPoint)
         return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER and not sellingPoint.ownWorkshop
             or workshopType == RealisticMechanicalSystems.WORKSHOP.OWN and sellingPoint.ownWorkshop and not sellingPoint.mobileWorkshop
@@ -363,19 +342,12 @@ function RMS_FluidWorkshop.allocateStock(vehicle, sellingPoint, farmId, requirem
     return next(shortages) == nil and allocations or nil, shortages
 end
 
----Tells whether the workshop brings the fluids of a service
 local function getIsFluidSupplied(vehicle, serviceType, workshopType)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
         or serviceType == RealisticMechanicalSystems.STATUS.MAINTENANCE and vehicle:isLeaseMaintenanceCovered(workshopType)
 end
 
 ---Tells what a farm or mobile workshop zone lacks to run a service
--- @param table vehicle vehicle
--- @param table? sellingPoint workshop the screen is opened on
--- @param string serviceType service status
--- @param string workshopType workshop type
--- @param table requirements fluids the service needs
--- @return table shortages missing stock liters by circuit
 function RMS_FluidWorkshop.getStockShortages(vehicle, sellingPoint, serviceType, workshopType, requirements, optionOne, optionTwo)
     if getIsFluidSupplied(vehicle, serviceType, workshopType) then
         return {}
@@ -415,14 +387,6 @@ function RMS_FluidWorkshop.getDealerFluidPrice(requirements)
 end
 
 ---Builds the invoice lines of a service
--- @param table vehicle vehicle
--- @param string serviceType service status
--- @param string? workshopType workshop type
--- @param string? optionOne first service option
--- @param string? optionTwo second service option
--- @param float servicePrice charged procedure price
--- @param table requirements fluid requirements of the service
--- @param boolean isFluidBilled true when the dealer supplies and bills the fluids
 -- @return table lines kind, key, mode, liters and price of each line
 function RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, optionOne, optionTwo, servicePrice, requirements, isFluidBilled)
     local lines = {}
@@ -457,7 +421,6 @@ function RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, opti
     return lines
 end
 
----Returns the procedure charge when fluid supply is not priced separately
 local function getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
     if serviceType == RealisticMechanicalSystems.STATUS.REFILL then
         return 0
@@ -465,7 +428,6 @@ local function getTransactionServicePrice(vehicle, serviceType, workshopType, op
     return math.max(tonumber(vehicle:getServicePrice(serviceType, optionOne, optionTwo, optionThree, workshopType)) or 0, 0)
 end
 
----Tells whether the fluids of a service are bought from the dealer
 local function getIsFluidBilled(vehicle, serviceType, workshopType, optionOne, optionTwo)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
         and not (serviceType == RealisticMechanicalSystems.STATUS.REPAIR
@@ -493,7 +455,6 @@ function RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopTyp
 end
 
 ---Returns the bill a service would charge, line by line
--- @return table? lines invoice lines, nil while a fluid the dealer bills has no price
 function RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
     local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, optionOne, optionTwo)
     local isFluidBilled = getIsFluidBilled(vehicle, serviceType, workshopType, optionOne, optionTwo)
@@ -505,12 +466,6 @@ function RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopT
 end
 
 ---Lists the rows of a bill, the repairs of one part merged
--- @param table vehicle vehicle
--- @param string serviceType service type
--- @param string? optionOne first service option, naming a bodywork
--- @param table invoice invoice lines
--- @param boolean? includeWarrantyNotes add warranty notes as separate log rows
--- @return table rows kind, label and price of each row
 function RMS_FluidWorkshop.getInvoiceRows(vehicle, serviceType, optionOne, invoice, includeWarrantyNotes)
     local rows = {}
     local repairRowsByLabel = {}

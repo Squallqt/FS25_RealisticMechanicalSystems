@@ -15,7 +15,6 @@ local CONFIGURATION_KEY = "vehicle.rmsDiagnosticTool.rmsDiagnosticPcConfiguratio
 local getIsAlive = RMS_BatteryCharger.getIsAlive
 local getDistance = RMS_BatteryCharger.getDistance
 
----
 local function getSpec(tool)
     return tool ~= nil and tool[RMS_DiagnosticTool.SPEC_TABLE_NAME] or nil
 end
@@ -30,12 +29,10 @@ local function updateScreen(spec)
     end
 end
 
----
 function RMS_DiagnosticTool.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(RMS_BatteryCharger, specializations)
 end
 
----
 function RMS_DiagnosticTool.initSpecialization()
     if g_iconGenerator == nil then
         g_vehicleConfigurationManager:addConfigurationType(RMS_DiagnosticTool.CONFIGURATION,
@@ -51,7 +48,6 @@ function RMS_DiagnosticTool.initSpecialization()
         .. "#licenceMonths", "Months left on the paid licence")
 end
 
----
 function RMS_DiagnosticTool.registerEventListeners(vehicleType)
     for _, name in ipairs({ "onLoad", "onDelete", "onUpdate", "saveToXMLFile", "onReadStream", "onWriteStream",
         "onReadUpdateStream", "onWriteUpdateStream" }) do
@@ -59,7 +55,6 @@ function RMS_DiagnosticTool.registerEventListeners(vehicleType)
     end
 end
 
----
 function RMS_DiagnosticTool:onLoad(savegame)
     local spec = assert(getSpec(self))
     local option = self.configurations[RMS_DiagnosticTool.CONFIGURATION] or 1
@@ -84,16 +79,12 @@ function RMS_DiagnosticTool:onLoad(savegame)
     end
 end
 
----
 function RMS_DiagnosticTool:onDelete()
     if self.isServer then
         RMS_DiagnosticTool.unplug(self)
     end
 end
 
--- @param table tool trolley
--- @param table? target machine
--- @return string reason "ok", or the reason of the refusal
 function RMS_DiagnosticTool.validate(tool, target)
     local spec = getSpec(tool)
     if spec == nil or not spec.hasPc or not getIsAlive(tool) or not getIsAlive(target) then
@@ -125,9 +116,6 @@ function RMS_DiagnosticTool.validate(tool, target)
 end
 
 ---Plugs the PC of a trolley into a machine, on the server
--- @param table tool trolley
--- @param table target machine
--- @return string reason "ok", or the reason of the refusal
 function RMS_DiagnosticTool.plug(tool, target)
     local reason = RMS_DiagnosticTool.validate(tool, target)
     if reason ~= "ok" then
@@ -146,7 +134,6 @@ function RMS_DiagnosticTool.plug(tool, target)
 end
 
 ---Unplugs the PC of a trolley, on the server
--- @param table tool trolley
 function RMS_DiagnosticTool.unplug(tool)
     local spec = getSpec(tool)
     local target = spec.target
@@ -163,8 +150,6 @@ function RMS_DiagnosticTool.unplug(tool)
 end
 
 ---Finds the trolley whose PC is plugged into a machine
--- @param table target machine
--- @return table? tool trolley
 function RMS_DiagnosticTool.getConnectedTool(target)
     local targetSpec = target ~= nil and target.spec_RealisticMechanicalSystems or nil
     if targetSpec == nil then
@@ -185,15 +170,11 @@ function RMS_DiagnosticTool.getConnectedTool(target)
 end
 
 ---Returns the root node of the PC a trolley carries, nil without the PC
--- @param table tool trolley
--- @return entityId? pcRoot
 function RMS_DiagnosticTool.getPcRoot(tool)
     local spec = getSpec(tool)
     return spec ~= nil and spec.hasPc and spec.pcRoot or nil
 end
 
--- @param table tool trolley
--- @return table? target machine
 function RMS_DiagnosticTool.getTarget(tool)
     local target = RMS_Utils.getConnectedObject(assert(getSpec(tool)))
     return getIsAlive(target) and target or nil
@@ -251,8 +232,6 @@ function RMS_DiagnosticTool:onUpdate()
     end
 end
 
--- @param table target machine
--- @return boolean hasControllers
 function RMS_DiagnosticTool.getHasControllers(target)
     return target.spec_RealisticMechanicalSystems.isElectricVehicle == true or RMS_Utils.getUsesEngineECUProfile(target)
 end
@@ -260,8 +239,6 @@ end
 local FIRST_CYLINDER_SPN, LAST_CYLINDER_SPN = 1323, 1325
 
 ---Returns the name of a suspect parameter as the J1939 standard gives it
--- @param integer spn suspect parameter
--- @return string name
 function RMS_DiagnosticTool.getSpnName(spn)
     if spn >= FIRST_CYLINDER_SPN and spn <= LAST_CYLINDER_SPN then
         return string.format(g_i18n:getText("rms_diagnostic_spn_cylinder"), spn - FIRST_CYLINDER_SPN + 1)
@@ -269,15 +246,11 @@ function RMS_DiagnosticTool.getSpnName(spn)
     return g_i18n:getText("rms_diagnostic_spn_" .. spn)
 end
 
--- @param table entry code from getFaultEntry
--- @return string text
 function RMS_DiagnosticTool.getDisplayText(entry)
     return string.format(g_i18n:getText("rms_dashboard_code_message"), RMS_DiagnosticTool.getSpnName(entry.spn),
         g_i18n:getText("rms_dashboard_fmi_" .. entry.fmi))
 end
 
--- @param table target machine
--- @return boolean isPowered
 function RMS_DiagnosticTool.getIsPowered(target)
     return not target.spec_RealisticMechanicalSystems.batteryIsolated
 end
@@ -304,10 +277,6 @@ local function getCodeController(target, code)
     return ecu, spn
 end
 
--- @param table target machine
--- @param string breakdownId fault
--- @param boolean isCritical true when the fault lights its telltale red
--- @return table entry breakdownId, isCritical, and ecu, spn, fmi or the system
 function RMS_DiagnosticTool.getFaultEntry(target, breakdownId, isCritical)
     local code = RMS_Config.DIAGNOSTIC.FAULT_CODES[breakdownId]
     local breakdown = target:getActiveBreakdowns()[breakdownId]
@@ -333,8 +302,6 @@ function RMS_DiagnosticTool.getFaultEntry(target, breakdownId, isCritical)
         fmi = isCritical and code.critical or code.warning }
 end
 
--- @param table target machine
--- @return table controllers ecu names
 function RMS_DiagnosticTool.getControllers(target)
     local present = { DASHBOARD = true }
     for breakdownId, code in pairs(RMS_Config.DIAGNOSTIC.FAULT_CODES) do
@@ -361,9 +328,6 @@ function RMS_DiagnosticTool.getControllers(target)
     return controllers
 end
 
--- @param table target machine
--- @return table? codes codes and uncoded systems, nil when the machine is not powered
--- @return string? reason "power" when the battery of the machine is cut
 function RMS_DiagnosticTool.readFaultCodes(target)
     if not RMS_DiagnosticTool.getIsPowered(target) then
         return nil, "power"
@@ -400,9 +364,6 @@ function RMS_DiagnosticTool.readFaultCodes(target)
 end
 
 ---Returns a logged reading's codes in the PC's format
--- @param table vehicle machine
--- @param table entry journal entry of a reading
--- @return table codes "SPN 157 FMI 18", or the light lit without a code
 function RMS_DiagnosticTool.getReadingCodes(vehicle, entry)
     local codes, written = {}, {}
     for reading in string.gmatch(entry.optionOne or "", "[^,]+") do
@@ -421,16 +382,11 @@ function RMS_DiagnosticTool.getReadingCodes(vehicle, entry)
 end
 
 ---Returns the codes of a reading in one line, or that it found none
--- @param table vehicle machine
--- @param table entry journal entry of a reading
--- @return string text
 function RMS_DiagnosticTool.formatReadingCodes(vehicle, entry)
     local codes = RMS_DiagnosticTool.getReadingCodes(vehicle, entry)
     return #codes > 0 and table.concat(codes, ", ") or g_i18n:getText("rms_diagnostic_no_fault")
 end
 
--- @param table tool trolley
--- @return string reason "ok", "unplugged" or "power"
 function RMS_DiagnosticTool.startScan(tool)
     local spec = assert(getSpec(tool))
     if spec.target == nil then
@@ -449,8 +405,6 @@ function RMS_DiagnosticTool.startScan(tool)
 end
 
 ---Returns how far a scan has gone, on the server and on a client
--- @param table tool trolley
--- @return float progress 0 to 1
 function RMS_DiagnosticTool.getScanProgress(tool)
     local spec = assert(getSpec(tool))
     if spec.scanState ~= RMS_DiagnosticTool.SCAN.RUNNING then
@@ -469,29 +423,21 @@ function RMS_DiagnosticTool.advanceLicences()
     end
 end
 
--- @param table tool trolley
--- @return boolean isValid
 function RMS_DiagnosticTool.getIsLicenceValid(tool)
     return assert(getSpec(tool)).licenceMonths > 0
 end
 
--- @return float price
 function RMS_DiagnosticTool.getLicencePrice()
     return RMS_Utils.getGamePrice(RMS_Config.DIAGNOSTIC.LICENCE_PRICE)
 end
 
 ---Returns the month and the year the licence of a PC runs out in
--- @param table tool trolley
--- @return integer period month of the game, 1 being March
--- @return integer year
 function RMS_DiagnosticTool.getLicenceEnd(tool)
     local environment = g_currentMission.environment
     local months = environment.currentPeriod - 1 + assert(getSpec(tool)).licenceMonths
     return months % 12 + 1, environment.currentYear + math.floor(months / 12)
 end
 
--- @param table tool trolley
--- @return string reason "ok", or "money"
 function RMS_DiagnosticTool.renewLicence(tool)
     local spec = assert(getSpec(tool))
     if spec.licenceMonths > 0 then
@@ -508,14 +454,12 @@ function RMS_DiagnosticTool.renewLicence(tool)
     return "ok"
 end
 
----
 function RMS_DiagnosticTool:saveToXMLFile(xmlFile, key)
     local spec = assert(getSpec(self))
     xmlFile:setValue(key .. "#targetUniqueId", spec.target ~= nil and spec.targetUniqueId or "")
     xmlFile:setValue(key .. "#licenceMonths", spec.licenceMonths)
 end
 
----
 local function writeState(spec, streamId)
     local target = getIsAlive(spec.target) and spec.target or nil
     streamWriteBool(streamId, target ~= nil)
@@ -534,7 +478,6 @@ local function writeState(spec, streamId)
     end
 end
 
----
 local function readState(spec, streamId)
     spec.targetObjectId = nil
     if streamReadBool(streamId) then
@@ -552,17 +495,14 @@ local function readState(spec, streamId)
     updateScreen(spec)
 end
 
----
 function RMS_DiagnosticTool:onWriteStream(streamId)
     writeState(assert(getSpec(self)), streamId)
 end
 
----
 function RMS_DiagnosticTool:onReadStream(streamId)
     readState(assert(getSpec(self)), streamId)
 end
 
----
 function RMS_DiagnosticTool:onWriteUpdateStream(streamId, connection, dirtyMask)
     if not connection:getIsServer() then
         local spec = assert(getSpec(self))
@@ -574,7 +514,6 @@ function RMS_DiagnosticTool:onWriteUpdateStream(streamId, connection, dirtyMask)
     end
 end
 
----
 function RMS_DiagnosticTool:onReadUpdateStream(streamId, timestamp, connection)
     if connection:getIsServer() and streamReadBool(streamId) then
         readState(assert(getSpec(self)), streamId)

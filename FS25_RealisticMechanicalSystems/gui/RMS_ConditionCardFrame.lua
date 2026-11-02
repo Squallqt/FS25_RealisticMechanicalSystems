@@ -7,7 +7,6 @@ RMS_ConditionCardFrame = {}
 local RMS_ConditionCardFrame_mt = Class(RMS_ConditionCardFrame, FrameElement)
 
 ---Creates the card
--- @return table card
 function RMS_ConditionCardFrame.new()
     local self = FrameElement.new(nil, RMS_ConditionCardFrame_mt)
     self.stateRows = {}
@@ -23,7 +22,6 @@ function RMS_ConditionCardFrame:initialize()
 end
 
 ---Keeps the vehicle the card reads, its systems folded when it changes
--- @param table? vehicle vehicle
 function RMS_ConditionCardFrame:setVehicle(vehicle)
     if vehicle ~= self.vehicle then
         self.openSystem = nil
@@ -81,9 +79,6 @@ function RMS_ConditionCardFrame:populateCellForItemInSection(_list, _section, in
 end
 
 ---Unfolds a system on its parts, or folds it back
--- @param table _list list element
--- @param integer _section section index
--- @param integer index row index
 function RMS_ConditionCardFrame:onClickStateRow(_list, _section, index)
     local row = self.stateRows[index]
     if row.kind ~= "system" or not row.canOpen then

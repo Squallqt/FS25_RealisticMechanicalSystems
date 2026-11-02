@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="주차 브레이크를 해제하려면 엔진 시동을 거십시오"/>
         <text name="rms_preheat_ignition_message" text="점화 켜짐: 예열 진행 중"/>
         <text name="rms_preheat_system_failure_message" text="예열 시스템 고장: 저온 시동 불가"/>
-        <text name="rms_preheat_start_failed_message" text="엔진이 시동되지 않음: 다시 시도하기 전에 점화를 끄십시오"/>
+        <text name="rms_preheat_start_failed_message" text="엔진이 시동되지 않음"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="차량 점검"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="점검이나 정비로 다른 고장을 확인할 수 있습니다."/>
         <text name="rms_ws_status_ready_title" text="정비소 준비 완료"/>
         <text name="rms_ws_status_ready_hint" text="작업을 선택하십시오. 옵션, 부품 및 가격은 시작 전에 확정됩니다."/>
+        <text name="rms_ws_status_closed_hint" text="작업은 %s부터 %s까지 접수됩니다."/>
         <text name="rms_ws_label_value" text="차량 가치"/>
         <text name="rms_ws_label_age" text="차령"/>
         <text name="rms_ws_label_operating_hours" text="가동 시간"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="선택한 고장이 없습니다. 진단 및 견적에서 수리할 고장을 선택하십시오."/>
         <text name="rms_ws_reason_overhaul_none" text="기계 오버홀은 상태가 50% 미만인 시스템을 복원합니다. 이 차량에는 해당 시스템이 없습니다."/>
         <text name="rms_ws_reason_bodywork_mobile" text="이동식 정비소에서는 도장을 하지 않습니다. 대리점에서 합니다."/>
+        <text name="rms_ws_reason_refill_dealer" text="유체 보충은 대리점에서만 합니다. 다른 곳에서는 용기로 보충합니다."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. 장비를 갖춘 정비소를 이용하세요."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. 카트의 진단 장비를 기계에 연결하세요."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="전자 진단 필요"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="구동력 전달 불량"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="변속비 제한"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="불규칙한 구동력 전달"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="온도 조절 밸브 성능 저하"/>
         <text name="rms_report_transmission_failed" text="고장"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="그리스 건"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="너무 무거운 트레일러"/>
         <text name="rms_tutorial_heavy_trailer_message" text="견인 하중이 이 차량에 비해 너무 무거울 수 있습니다. 계속 주행할 수는 있지만 변속기와 구동계의 부담이 증가합니다.&#10;&#10;RMS는 두 가지 기준을 사용합니다. 트랙터는 견인 중량 톤당 최소 10마력, 트럭은 총 조합 중량 톤당 최소 6마력이 필요합니다. 엔진 부하가 높은 상태에서 해당 기준보다 낮으면 변속기 마모가 증가합니다."/>
         <text name="rms_tutorial_hard_start_title" text="시동 어려움"/>
-        <text name="rms_tutorial_hard_start_message" text="%s 차량의 엔진 시동이 어렵습니다. 약한 배터리, 서리, 기계적 고장 또는 스타터 마모가 원인일 수 있습니다. 엔진이 시동될 때까지 시동 버튼을 누르십시오.&#10;&#10;시동 시 높은 돌입 전류로 인해 전기 시스템에 큰 부하가 걸립니다."/>
+        <text name="rms_tutorial_hard_start_message" text="%s 차량의 엔진 시동이 어렵습니다. 약한 배터리, 서리, 기계적 고장 또는 스타터 마모가 원인일 수 있습니다.&#10;&#10;시동 시 높은 돌입 전류로 인해 전기 시스템에 큰 부하가 걸립니다."/>
         <text name="rms_tutorial_low_fuel_title" text="연료 부족"/>
         <text name="rms_tutorial_low_fuel_message" text="연료 탱크가 예비 수준에 가까워지고 있습니다. 남은 연료가 적을수록 연료 펌프가 연료를 끌어올리기 위해 더 힘들게 작동하고, 탱크 바닥의 물과 침전물이 필터로 넘어가 필터가 더 빨리 막히게 됩니다.&#10;&#10;하루 작업을 마칠 때 연료를 가득 채워 두는 것이 좋습니다. 가득 찬 탱크에는 응결수가 덜 생깁니다."/>
         <text name="rms_tutorial_lugging_title" text="저회전 고부하 운전"/>

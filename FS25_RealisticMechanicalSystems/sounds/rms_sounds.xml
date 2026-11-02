@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <sounds>
-    <!-- Engine start -->
+    <!-- Engine start, by machine family -->
+    <starterCarIntro file="sounds/starterCarIntro.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="2.26" outdoor="2.41" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterCarIntro>
+    <starterTractor4Intro file="sounds/starterTractor4Intro.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.93" outdoor="2.05" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterTractor4Intro>
+    <starterTractor6Intro file="sounds/starterTractor6Intro.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.13" outdoor="1.2" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterTractor6Intro>
+    <starterHeavyIntro file="sounds/starterHeavyIntro.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.92" outdoor="2.04" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterHeavyIntro>
+    <starterCar file="sounds/starterCar.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="2.26" outdoor="2.41" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterCar>
+    <starterCarCatch file="sounds/starterCarCatch.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="2.26" outdoor="2.41" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterCarCatch>
+    <starterTractor4 file="sounds/starterTractor4.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.93" outdoor="2.05" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterTractor4>
+    <starterTractor4Catch file="sounds/starterTractor4Catch.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.93" outdoor="2.05" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterTractor4Catch>
+    <starterTractor6 file="sounds/starterTractor6.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.13" outdoor="1.2" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterTractor6>
+    <starterTractor6Catch file="sounds/starterTractor6Catch.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.13" outdoor="1.2" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterTractor6Catch>
+    <starterHeavy file="sounds/starterHeavy.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.92" outdoor="2.04" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterHeavy>
+    <starterHeavyCatch file="sounds/starterHeavyCatch.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
+        <volume indoor="1.92" outdoor="2.04" />
+        <pitch indoor="1.0" outdoor="1.0" />
+        <lowpassGain indoor="0.5" outdoor="1.0" />
+        <lowpassCutoffFrequency indoor="700" outdoor="20000.0" />
+        <lowpassResonance indoor="1.0" outdoor="1.0"/>
+    </starterHeavyCatch>
     <!-- Failed start -->
     <starterRelayClick file="sounds/starterRelayClick.ogg" linkNode="0>" innerRadius="7.0" outerRadius="60.0" >
         <volume indoor="2.0" outdoor="2.1" />

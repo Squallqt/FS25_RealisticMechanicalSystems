@@ -8,19 +8,12 @@ InitEventClass(RMS_JumperCablesEvent, "RMS_JumperCablesEvent")
 
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_JumperCablesEvent.emptyNew()
     return Event.new(RMS_JumperCablesEvent_mt)
 end
 
 
 ---Create new instance of event
--- @param table tool jumper cables hand tool
--- @param string? state requested or resulting cable state
--- @param table? targetVehicle vehicle aimed at by the request
--- @param table? connectedVehicleA vehicle on the first clamp
--- @param table? connectedVehicleB vehicle on the second clamp
--- @return table self instance of class event
 function RMS_JumperCablesEvent.new(tool, state, targetVehicle, connectedVehicleA, connectedVehicleB)
     local self = RMS_JumperCablesEvent.emptyNew()
     self.tool = tool
@@ -33,8 +26,6 @@ end
 
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_JumperCablesEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.tool)
     streamWriteString(streamId, self.state)
@@ -45,8 +36,6 @@ end
 
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_JumperCablesEvent:readStream(streamId, connection)
     self.tool = NetworkUtil.readNodeObject(streamId)
     self.state = streamReadString(streamId)
@@ -58,7 +47,6 @@ end
 
 
 ---Run action on receiving side
--- @param Connection connection connection
 function RMS_JumperCablesEvent:run(connection)
     local tool = self.tool
     if tool == nil or not tool:getIsSynchronized() then
@@ -85,9 +73,6 @@ end
 
 
 ---Send a cable request from a client to the server
--- @param table tool jumper cables hand tool
--- @param string state requested cable state
--- @param table? targetVehicle vehicle aimed at by the request
 function RMS_JumperCablesEvent.sendRequest(tool, state, targetVehicle)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_JumperCablesEvent.new(tool, state, targetVehicle, nil, nil))
@@ -95,11 +80,6 @@ function RMS_JumperCablesEvent.sendRequest(tool, state, targetVehicle)
 end
 
 
--- @param table tool jumper cables hand tool
--- @param string state resulting cable state
--- @param table? targetVehicle vehicle aimed at by the request
--- @param table? connectedVehicleA vehicle on the first clamp
--- @param table? connectedVehicleB vehicle on the second clamp
 function RMS_JumperCablesEvent.broadcastState(tool, state, targetVehicle, connectedVehicleA, connectedVehicleB)
     if g_server ~= nil then
         g_server:broadcastEvent(RMS_JumperCablesEvent.new(tool, state, targetVehicle, connectedVehicleA, connectedVehicleB), nil, nil, tool)

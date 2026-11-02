@@ -3,20 +3,15 @@
 
 ---Inspection report of a log entry, shown in the record page
 RMS_ReportFrame = {}
-
 local RMS_ReportFrame_mt = Class(RMS_ReportFrame, FrameElement)
 
 local WEAR_NORMAL_PERCENT = 10
 local WEAR_HIGH_PERCENT = 30
 local WEAR_CAUSE_MIN_PERCENT = 1
 local WORN_PARTS_SHOWN = 3
--- the causes of extra wear the report names at most
 local WEAR_CAUSES_SHOWN = 3
--- reliability, ease of service and breakdown risk
 local ASSESSMENT_ROWS = 3
--- the rows the technical sheet holds
 local SPEC_ROWS = 9
--- label and figure of each pill of the band
 local SUMMARY_FIGURES = {
     { label = "rms_report_overall_assessment_condition", figure = "condition" },
     { label = "rms_ws_label_service", figure = "service" },
@@ -66,311 +61,177 @@ local WEAR_CAUSE_TEXTS = {
     prf = "rms_tutorial_pto_raised_title"
 }
 RMS_ReportFrame.WEAR_CAUSE_TEXTS = WEAR_CAUSE_TEXTS
-local getSystemDisplayName
-local formatRecommendationText
-local joinRecommendationParts
+RMS_ReportFrame.SERVICE_NOTICE_HOURS = 100
+RMS_ReportFrame.POWER_MIN_PERCENT = 90
+RMS_ReportFrame.HYDRAULIC_FLOW_MIN_PERCENT = 85
+RMS_ReportFrame.BATTERY_CAPACITY_MIN_PERCENT = 80
+RMS_ReportFrame.ALTERNATOR_MIN_PERCENT = 90
+RMS_ReportFrame.TRACTION_BATTERY_MIN_PERCENT = 70
+RMS_ReportFrame.CONSUMPTION_MAX_PERCENT = 110
+RMS_ReportFrame.BATTERY_CHARGE_SCALE = { IDEAL = 100, HIGH = 75, MID = 50, LOW = 25 }
+RMS_ReportFrame.OVERHAUL_HOURS = 8000
+RMS_ReportFrame.SHEET_SCALE = { IDEAL = 99, HIGH = 90, MID = 70, LOW = 30 }
+local POOR_CONSUMABLES = "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES"
 
-local RECOMMENDATION_RULES = {
-    {
-        l10nKey = "rms_report_recommendation_service_due",
-        check = function(vehicle, reportEntry, metrics)
-            if reportEntry == nil or reportEntry.conditionData == nil then
-                return false
-            end
-            local service = reportEntry.conditionData.service
-            return type(service) == "number" and service > 0.45 and service < 0.65
-        end
-    },
-    {
-        l10nKey = "rms_report_recommendation_service_urgent",
-        check = function(vehicle, reportEntry, metrics)
-            if reportEntry == nil or reportEntry.conditionData == nil then
-                return false
-            end
-            local service = reportEntry.conditionData.service
-            return type(service) == "number" and service < 0.45
-        end
-    },
-    {
-        l10nKey = "rms_report_recommendation_repair_active_breakdowns",
-        check = function(vehicle, reportEntry, metrics)
-            if metrics == nil then
-                return false
-            end
-            return (metrics.visibleSelectableActiveBreakdownsCount or 0) > 0
-        end
-    },
-    {
-        l10nKey = "rms_report_recommendation_defective_parts",
-        check = function(vehicle, reportEntry, metrics)
-            if metrics == nil then
-                return false
-            end
-
-            local partsText = joinRecommendationParts(metrics.inactivePoorPartsNames)
-            if partsText ~= nil then
-                return {
-                    params = {partsText}
-                }
-            end
-
-            return false
-        end
-    },
-    {
-        l10nKey = "rms_report_recommendation_quick_fix",
-        check = function(vehicle, reportEntry, metrics)
-            if metrics == nil then
-                return false
-            end
-
-            local partsText = joinRecommendationParts(metrics.inactiveQuickFixPartsNames)
-            if partsText ~= nil then
-                return {
-                    params = {partsText}
-                }
-            end
-
-            return false
-        end
-    },
-    {
-        l10nKey = "rms_report_recommendation_overhaul",
-        check = function(vehicle, reportEntry, metrics)
-            if reportEntry == nil or reportEntry.conditionData == nil then
-                return false
-            end
-            local condition = reportEntry.conditionData.condition
-            return type(condition) == "number" and condition < 0.4
-        end
-    },
-    {
-        l10nKey = "rms_report_recommendation_operating_conditions",
-        check = function(vehicle, reportEntry, metrics)
-            if metrics == nil or not metrics.isCompleteInspection then
-                return false
-            end
-            return (reportEntry.conditionData.wearExcess or 0) * 100 > WEAR_HIGH_PERCENT
-        end
-    },
-    {
-        l10nKey = "rms_report_recommendation_repeat_maintenance",
-        check = function(vehicle, reportEntry, metrics)
-            if metrics == nil or not metrics.isCompleteInspection then
-                return false
-            end
-            return metrics.hasPoorQualityConsumablesBreakdown == true
-        end
-    },
-    {
-        l10nKey = "rms_report_recommendation_system_overhaul",
-        check = function(vehicle, reportEntry, metrics)
-            if reportEntry == nil or reportEntry.conditionData == nil then
-                return false
-            end
-
-            local overallCondition = tonumber(reportEntry.conditionData.condition)
-            if overallCondition ~= nil and overallCondition <= 0.4 then
-                return false
-            end
-
-            local minCond = 1.0
-            local targetSystemKey = nil
-            local systems = reportEntry.conditionData.systems or {}
-
-            for systemName, systemData in pairs(systems) do
-                if type(systemData) == "table" and systemData.enabled ~= false then
-                    local systemCondition = tonumber(systemData.condition)
-                    if systemCondition ~= nil and systemCondition < 0.4 and systemCondition < minCond then
-                        minCond = systemCondition
-                        targetSystemKey = systemName
-                    end
-                end
-            end
-
-            if targetSystemKey ~= nil then
-                return {
-                    params = {getSystemDisplayName(vehicle, targetSystemKey)}
-                }
-            end
-
-            return false
-        end
-    },
-    {
-        l10nKey = "rms_report_recommendation_system_preventive_maintenance",
-        check = function(vehicle, reportEntry, metrics)
-            if reportEntry == nil or reportEntry.conditionData == nil or metrics == nil or not metrics.isCompleteInspection then
-                return false
-            end
-
-            local overallCondition = tonumber(reportEntry.conditionData.condition)
-            if overallCondition ~= nil and overallCondition <= 0.4 then
-                return false
-            end
-
-            local highestRatio = 0
-            local targetSystemKey = nil
-            local systems = reportEntry.conditionData.systems or {}
-            local partWear = reportEntry.conditionData.partWear or {}
-
-            for _, partId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
-                local systemName = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, RMS_Breakdowns.BreakdownRegistry[partId].system)
-                local systemData = systems[systemName]
-                if partWear[partId] ~= nil and type(systemData) == "table" and (tonumber(systemData.condition) or 0) >= 0.4
-                    and RMS_Utils.getIsPartWorn(partId, partWear[partId]) then
-                    local ratio = RMS_Utils.getPartRiskRatio(partId, partWear[partId])
-                    if ratio > highestRatio then
-                        highestRatio = ratio
-                        targetSystemKey = systemName
-                    end
-                end
-            end
-
-            if targetSystemKey ~= nil then
-                return {
-                    params = {getSystemDisplayName(vehicle, targetSystemKey), RMS_Utils.formatHours(
-                        vehicle:getMaintenanceLevelInterval(RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE))}
-                }
-            end
-
-            return false
-        end
-    }
-}
-
-
----Returns the localized text of a key, or the fallback
-local function getTextOrFallback(key, fallback)
-    local text = g_i18n:getText(key)
-    if text == nil or text == "" or text == key then
-        return fallback
-    end
-    return text
-end
-
----Returns the localized display name of a system on a vehicle
--- @param table vehicle vehicle
--- @param string systemKey system key
--- @return string name localized system name, the key itself when unknown
-function getSystemDisplayName(vehicle, systemKey)
-    local normalizedKey = string.lower(tostring(systemKey or ""))
-
-    for enumKey, l10nKey in pairs(RealisticMechanicalSystems.SYSTEMS or {}) do
-        if string.lower(enumKey) == normalizedKey then
-            return getTextOrFallback(RMS_Utils.getSystemLabel(vehicle, l10nKey), tostring(systemKey))
-        end
-    end
-
-    return tostring(systemKey or "")
-end
-
----Formats a recommendation template with its parameters
--- @param string l10nKey l10n key of the template
--- @param table? params format arguments
--- @param string? fallback text used when the key resolves to nothing
--- @return string text formatted recommendation
-function formatRecommendationText(l10nKey, params, fallback)
-    local template = getTextOrFallback(l10nKey, fallback or l10nKey)
-    if type(params) == "table" and #params > 0 then
-        local formattedText = string.format(template, table.unpack(params))
-        if formattedText ~= nil and formattedText ~= "" then
-            return formattedText
-        end
-    end
-
-    return template
-end
-
----Returns the numeric value of an active effect
-local function getEffectValue(activeEffects, effectId)
+local function getRecorded(activeEffects, effectId)
     local effect = activeEffects[effectId]
-    if type(effect) == "table" and type(effect.value) == "number" then
+    if type(effect) == "table" then
         return effect.value
     end
     return nil
 end
 
----Clamps a value to the 0 to 1 range
-local function clampUnitRatio(value)
-    return math.max(math.min(tonumber(value) or 0, 1), 0)
+local function getHealth(activeEffects, effectId)
+    return math.clamp(1 + (getRecorded(activeEffects, effectId) or 0), 0, 1)
 end
 
----Returns the numeric value of an active effect, the table possibly nil
-local function getTransmissionEffectValue(activeEffects, effectId)
-    local effect = activeEffects ~= nil and activeEffects[effectId] or nil
-    if type(effect) == "table" and type(effect.value) == "number" then
-        return effect.value
+local function getSystemName(vehicle, systemKey)
+    return g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, RMS_Utils.getSystemNameByKey(RealisticMechanicalSystems.SYSTEMS, systemKey)))
+end
+
+-- Level once the shortest hourly clock has its notice hours left
+local function getServiceNoticeLevel(vehicle)
+    local hours = math.huge
+    for _, clock in ipairs(vehicle:getServiceClocks()) do
+        if clock.intervalFactor ~= nil then
+            hours = math.min(hours, clock.intervalFactor * RMS_Config.SERVICE_REFERENCE_HOURS)
+        end
     end
-    return nil
+    local expired = RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
+    local base = vehicle.spec_RealisticMechanicalSystems.baseServiceLevel
+    return expired + (base - expired) * math.min(RMS_ReportFrame.SERVICE_NOTICE_HOURS / hours, 1)
 end
 
----Appends a text to the list unless empty or already there
-local function appendUniqueText(list, seen, value)
-    if value == nil or value == "" or seen[value] then
-        return
+local function joinNames(names)
+    local list = {}
+    for name in pairs(names) do
+        table.insert(list, name)
+    end
+    table.sort(list)
+    return table.concat(list, ", ")
+end
+
+local function readGearbox(activeEffects)
+    local failed = "rms_report_transmission_failed"
+    local value = getRecorded(activeEffects, "TRANSMISSION_SLIP_EFFECT")
+    if value ~= nil then
+        return value >= 1 and failed or "rms_report_transmission_slipping", 1 - value
+    end
+    value = getRecorded(activeEffects, "GEAR_SHIFT_FAILURE_CHANCE")
+    if value ~= nil then
+        return value >= 1 and failed or "rms_report_transmission_shifting_impaired", 1 - value
+    end
+    value = getRecorded(activeEffects, "GEAR_REJECTION_CHANCE")
+    if value ~= nil then
+        return value <= 3 and failed or "rms_report_transmission_gear_rejection", value / 20
+    end
+    value = getRecorded(activeEffects, "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT")
+    if value ~= nil then
+        return value >= 1 and failed or "rms_report_transmission_shift_delay", 1 - value
+    end
+    value = getRecorded(activeEffects, "CVT_SLIP_EFFECT")
+    if value ~= nil then
+        return value >= 1 and failed or "rms_report_transmission_cvt_slipping", 1 - value
+    end
+    value = getRecorded(activeEffects, "CVT_MAX_RATIO_MODIFIER")
+    if value ~= nil then
+        return value >= 0.8 and failed or "rms_report_transmission_cvt_ratio_limited", 1 - value
+    end
+    value = getRecorded(activeEffects, "CVT_PRESSURE_DROP_CHANCE")
+    if value ~= nil then
+        return value <= 0.1 and failed or "rms_report_transmission_cvt_pressure_instability", value / 2
+    end
+    return "rms_report_state_optimal", 1
+end
+
+---Writes the advice of a report, in the order the player acts on it
+function RMS_ReportFrame.getRecommendations(vehicle, conditionData, findings, isComplete)
+    local advice = {}
+    local function advise(key, ...)
+        local text = g_i18n:getText(key)
+        if select("#", ...) > 0 then
+            text = string.format(text, ...)
+        end
+        table.insert(advice, text)
     end
 
-    seen[value] = true
-    table.insert(list, value)
-end
-
----Sorts and joins part names into a comma separated list
--- @param table parts part names
--- @return string? text joined names, nil when the list is empty
-function joinRecommendationParts(parts)
-    if type(parts) ~= "table" or #parts == 0 then
-        return nil
+    local service, condition = conditionData.service, conditionData.condition
+    local overhaul = 1 - RMS_ReportFrame.OVERHAUL_HOURS / RMS_Config.CORE.MACHINE_LIFE_HOURS
+    if service <= RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD then
+        advise("rms_report_recommendation_service_urgent")
+    elseif service <= getServiceNoticeLevel(vehicle) then
+        advise("rms_report_recommendation_service_due")
+    end
+    if findings.activeCount > 0 then
+        advise("rms_report_recommendation_repair_active_breakdowns")
+    end
+    if next(findings.poorParts) ~= nil then
+        advise("rms_report_recommendation_defective_parts", joinNames(findings.poorParts))
+    end
+    if next(findings.quickFixParts) ~= nil then
+        advise("rms_report_recommendation_quick_fix", joinNames(findings.quickFixParts))
+    end
+    if condition < overhaul then
+        advise("rms_report_recommendation_overhaul")
+    end
+    if isComplete and conditionData.wearExcess ~= nil and conditionData.wearExcess * 100 > WEAR_HIGH_PERCENT then
+        advise("rms_report_recommendation_operating_conditions")
+    end
+    if isComplete and findings.hasPoorConsumables then
+        advise("rms_report_recommendation_repeat_maintenance")
     end
 
-    table.sort(parts)
-    return table.concat(parts, ", ")
-end
+    if condition > overhaul then
+        -- A sound machine with one system to overhaul: the weakest
+        local systems, weakestKey, weakest = conditionData.systems, nil, overhaul
+        for _, systemName in ipairs(RealisticMechanicalSystems.SYSTEMS_ORDER) do
+            local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemName)
+            local system = systems[systemKey]
+            if system ~= nil and system.enabled ~= false and system.condition < weakest then
+                weakestKey, weakest = systemKey, system.condition
+            end
+        end
+        if weakestKey ~= nil then
+            advise("rms_report_recommendation_system_overhaul", getSystemName(vehicle, weakestKey))
+        end
 
----Evaluates every recommendation rule into a bullet list
-local function buildRecommendationsData(vehicle, reportEntry, metrics)
-    local recommendations = {}
-
-    for _, rule in ipairs(RECOMMENDATION_RULES) do
-        if type(rule.check) == "function" then
-            local result = rule.check(vehicle, reportEntry, metrics)
-            if result then
-                local recommendationText = nil
-
-                if result == true then
-                    recommendationText = formatRecommendationText(rule.l10nKey)
-                elseif type(result) == "table" then
-                    recommendationText = formatRecommendationText(
-                        result.l10nKey or rule.l10nKey,
-                        result.params,
-                        result.fallback
-                    )
-                end
-
-                if recommendationText ~= nil and recommendationText ~= "" then
-                    table.insert(recommendations, recommendationText)
+        -- The riskiest worn part the major service adjusts, system sound
+        local riskiestKey, highest = nil, 0
+        if isComplete then
+            for _, partId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
+                local wear = conditionData.partWear[partId]
+                if wear ~= nil and RMS_Utils.getIsPartWorn(partId, wear) then
+                    local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, RMS_Breakdowns.BreakdownRegistry[partId].system)
+                    local system = systems[systemKey]
+                    local ratio = RMS_Utils.getPartRiskRatio(partId, wear)
+                    if system ~= nil and system.condition >= overhaul and ratio > highest then
+                        riskiestKey, highest = systemKey, ratio
+                    end
                 end
             end
         end
+        if riskiestKey ~= nil then
+            advise("rms_report_recommendation_system_preventive_maintenance", getSystemName(vehicle, riskiestKey),
+                RMS_Utils.formatHours(vehicle:getMaintenanceLevelInterval(RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE)))
+        end
     end
 
-    if #recommendations == 0 then
-        table.insert(recommendations, formatRecommendationText("rms_report_recommendation_all_ok"))
+    if advice[1] == nil then
+        advise("rms_report_recommendation_all_ok")
     end
-
-    return recommendations
+    return advice
 end
 
 ---Creates the frame
--- @return table frame
 function RMS_ReportFrame.new()
     return FrameElement.new(nil, RMS_ReportFrame_mt)
 end
 
 ---Wires the note lists and clones the rows of each card
 function RMS_ReportFrame:initialize()
-    self.breakdownsTable:setDataSource(self)
-    self.recommendationsTable:setDataSource(self)
+    for _, list in ipairs({ self.breakdownsTable, self.recommendationsTable }) do
+        list:setDataSource(self)
+    end
     self.assessmentRows = RMS_Utils.cloneTemplate(self.assessmentRowTemplate, ASSESSMENT_ROWS)
     self.wearCauseRows = RMS_Utils.cloneTemplate(self.wearCauseRowTemplate, WEAR_CAUSES_SHOWN)
     self.systemRows = RMS_Utils.cloneTemplate(self.systemRowTemplate, #RealisticMechanicalSystems.SYSTEMS_ORDER)
@@ -383,8 +244,6 @@ function RMS_ReportFrame:initialize()
 end
 
 ---Writes the report of a log entry
--- @param table vehicle vehicle
--- @param table entry log entry with a report
 function RMS_ReportFrame:setReport(vehicle, entry)
     self.vehicle = vehicle
     self.lastReport = entry
@@ -393,63 +252,25 @@ function RMS_ReportFrame:setReport(vehicle, entry)
     RMS_Utils.resetScrollingTexts(self)
 end
 
----Builds the technical sheet of a vehicle from what a report recorded
--- @param table vehicle vehicle
--- @param table conditionData condition the report recorded
--- @return table rows sheet rows in display order
+---Builds the technical sheet against the factory figures
 function RMS_ReportFrame.buildVehicleSpecs(vehicle, conditionData)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    local systems = conditionData.systems or {}
+    local effects, rating = conditionData.activeEffects, spec.electricalRating
+    local isElectric = spec.isElectricVehicle
     local rows = {}
 
-    local activeEffects = conditionData.activeEffects or {}
-    local nominalBatteryCapacityAh = spec.electricalRating.batteryCapacityAh
-    local batterySoc = clampUnitRatio(conditionData.batterySoc or 1)
-    local batteryHealth = clampUnitRatio(1.0 + (getEffectValue(activeEffects, "BATTERY_HEALTH_MODIFIER") or 0))
-    local alternatorHealth = clampUnitRatio(1.0 + (getEffectValue(activeEffects, "ALTERNATOR_HEALTH_MODIFIER") or 0))
-    local thermostatHealth = clampUnitRatio(1.0 + (getEffectValue(activeEffects, "THERMOSTAT_HEALTH_MODIFIER") or 0))
-    local radiatorHealth = clampUnitRatio(1.0 + (getEffectValue(activeEffects, "RADIATOR_HEALTH_MODIFIER") or 0))
-    local fanClutchHealth = clampUnitRatio(1.0 + (getEffectValue(activeEffects, "FAN_CLUTCH_MODIFIER") or 0))
-
-    ---Appends one spec row to the vehicle spec section
-    local function addVehicleSpec(data)
-        table.insert(rows, data)
+    local function addFigure(key, nominal, share, unit, isPublic, minPercent)
+        table.insert(rows, { key = key, kind = "pair", current = nominal * share, nominal = nominal, ratio = share, unit = unit,
+            isPublic = isPublic, minPercent = minPercent })
+    end
+    local function addShare(key, share, isPublic, minPercent)
+        table.insert(rows, { key = key, kind = "ratio", ratio = share, isPublic = isPublic, minPercent = minPercent })
     end
 
-    local motor = vehicle:getMotor()
-    local peakPowerHp = ((motor ~= nil and motor.peakMotorPower) or 0) * 1.36
-    local currentPowerModifier = 1.0 + (getEffectValue(activeEffects, "ENGINE_TORQUE_MODIFIER") or 0)
-    local currentPowerHp = math.max(peakPowerHp * currentPowerModifier, 0)
-    addVehicleSpec({
-        key = "rms_report_system_condition_power",
-        kind = "pair",
-        currentValue = currentPowerHp,
-        nominalValue = peakPowerHp,
-        ratio = peakPowerHp > 0 and (currentPowerHp / peakPowerHp) or 1.0,
-        unit = "hp",
-        stdVisible = true
-    })
+    addFigure("rms_report_system_condition_power", vehicle:getMotor().peakMotorPower * 1.36,
+        math.max(1 + (getRecorded(effects, "ENGINE_TORQUE_MODIFIER") or 0), 0), "hp", true, RMS_ReportFrame.POWER_MIN_PERCENT)
+    addShare("rms_report_system_condition_brakes", 1 + (getRecorded(effects, "BRAKE_FORCE_MODIFIER") or 0), true)
 
-    local brakesPowerModifier = 1.0 + (getEffectValue(activeEffects, "BRAKE_FORCE_MODIFIER") or 0)
-    addVehicleSpec({
-        key = "rms_report_system_condition_brakes",
-        kind = "ratio",
-        value = brakesPowerModifier,
-        stdVisible = true
-    })
-
-    ---Appends a textual transmission spec row
-    local function addTransmissionTextSpec(titleKey, textKey, ratio)
-        addVehicleSpec({
-            key = titleKey,
-            kind = "text",
-            textKey = textKey,
-            ratio = clampUnitRatio(ratio),
-            stdVisible = false
-        })
-    end
-
-    local isElectric = spec.isElectricVehicle
     local batteryChargeKey, batteryCapacityKey = "rms_report_vehicle_spec_battery_charge", "rms_report_vehicle_spec_battery_capacity"
     if isElectric then
         batteryChargeKey = "rms_report_vehicle_spec_auxiliary_battery_charge"
@@ -458,316 +279,154 @@ function RMS_ReportFrame.buildVehicleSpecs(vehicle, conditionData)
         batteryChargeKey = "rms_report_vehicle_spec_battery_24v_charge"
         batteryCapacityKey = "rms_report_vehicle_spec_battery_24v_capacity"
     end
-    addVehicleSpec({
-        key = batteryChargeKey,
-        kind = "ratio",
-        value = batterySoc,
-        isAlwaysMeasured = true,
-        stdVisible = true
-    })
+    table.insert(rows, { key = batteryChargeKey, kind = "ratio", ratio = math.clamp(conditionData.batterySoc, 0, 1), isPublic = true,
+        isMeasured = true, scale = RMS_ReportFrame.BATTERY_CHARGE_SCALE })
 
-    local hasTransmissionIssues = false
-
-    local transmissionSlipValue = getTransmissionEffectValue(activeEffects, "TRANSMISSION_SLIP_EFFECT")
-    if transmissionSlipValue ~= nil and not hasTransmissionIssues then
-        hasTransmissionIssues = true
-        addTransmissionTextSpec(
-            "rms_report_system_condition_transmission",
-            transmissionSlipValue >= 1.0 and "rms_report_transmission_failed" or "rms_report_transmission_slipping",
-            1.0 - transmissionSlipValue
-        )
-    end
-
-    local gearShiftFailureValue = getTransmissionEffectValue(activeEffects, "GEAR_SHIFT_FAILURE_CHANCE")
-    if gearShiftFailureValue ~= nil and not hasTransmissionIssues then
-        hasTransmissionIssues = true
-        addTransmissionTextSpec(
-            "rms_report_system_condition_transmission",
-            gearShiftFailureValue >= 1.0 and "rms_report_transmission_failed" or "rms_report_transmission_shifting_impaired",
-            1.0 - gearShiftFailureValue
-        )
-    end
-
-    local gearRejectionValue = getTransmissionEffectValue(activeEffects, "GEAR_REJECTION_CHANCE")
-    if gearRejectionValue ~= nil and not hasTransmissionIssues then
-        hasTransmissionIssues = true
-        addTransmissionTextSpec(
-            "rms_report_system_condition_transmission",
-            gearRejectionValue <= 3.0 and "rms_report_transmission_failed" or "rms_report_transmission_gear_rejection",
-            gearRejectionValue / 20.0
-        )
-    end
-
-    local powershiftLagValue = getTransmissionEffectValue(activeEffects, "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT")
-    if powershiftLagValue ~= nil and not hasTransmissionIssues then
-        hasTransmissionIssues = true
-        addTransmissionTextSpec(
-            "rms_report_system_condition_transmission",
-            powershiftLagValue >= 1.0 and "rms_report_transmission_failed" or "rms_report_transmission_shift_delay",
-            1.0 - powershiftLagValue
-        )
-    end
-
-    local cvtSlipValue = getTransmissionEffectValue(activeEffects, "CVT_SLIP_EFFECT")
-    if cvtSlipValue ~= nil and not hasTransmissionIssues then
-        hasTransmissionIssues = true
-        addTransmissionTextSpec(
-            "rms_report_system_condition_transmission",
-            cvtSlipValue >= 1.0 and "rms_report_transmission_failed" or "rms_report_transmission_cvt_slipping",
-            1.0 - cvtSlipValue
-        )
-    end
-
-    local cvtRatioLimitValue = getTransmissionEffectValue(activeEffects, "CVT_MAX_RATIO_MODIFIER")
-    if cvtRatioLimitValue ~= nil and not hasTransmissionIssues then
-        hasTransmissionIssues = true
-        addTransmissionTextSpec(
-            "rms_report_system_condition_transmission",
-            cvtRatioLimitValue >= 0.8 and "rms_report_transmission_failed" or "rms_report_transmission_cvt_ratio_limited",
-            1.0 - cvtRatioLimitValue
-        )
-    end
-
-    local cvtPressureDropValue = getTransmissionEffectValue(activeEffects, "CVT_PRESSURE_DROP_CHANCE")
-    if cvtPressureDropValue ~= nil and not hasTransmissionIssues then
-        hasTransmissionIssues = true
-        addTransmissionTextSpec(
-            "rms_report_system_condition_transmission",
-            cvtPressureDropValue <= 0.1 and "rms_report_transmission_failed" or "rms_report_transmission_cvt_pressure_instability",
-            cvtPressureDropValue / 2.0
-        )
-    end
-
-    local transThermostatStuckValue = getTransmissionEffectValue(activeEffects, "TRANSMISSION_THERMOSTAT_STUCK_EFFECT")
-    local transThermostatHealthValue = getTransmissionEffectValue(activeEffects, "TRANSMISSION_THERMOSTAT_HEALTH_MODIFIER")
-    if (transThermostatStuckValue ~= nil or transThermostatHealthValue ~= nil) and not hasTransmissionIssues then
-        hasTransmissionIssues = true
-        addTransmissionTextSpec(
-            "rms_report_system_condition_transmission",
-            transThermostatStuckValue ~= nil and "rms_report_transmission_failed" or "rms_report_transmission_thermostat_degraded",
-            transThermostatStuckValue ~= nil and 0.0 or (1.0 + transThermostatHealthValue)
-        )
-    end
-
-    if not hasTransmissionIssues then
-        addTransmissionTextSpec(
-            "rms_report_system_condition_transmission",
-            "rms_report_state_optimal",
-            1.0
-        )
-    end
-
-    local coolingEfficiencyModifier = math.min(thermostatHealth, radiatorHealth, fanClutchHealth)
-    addVehicleSpec({
-        key = "rms_report_system_condition_cooling",
-        kind = "ratio",
-        value = coolingEfficiencyModifier,
-        stdVisible = false
-    })
-
-    local fuelConsumptionModifier = 1.0 + (getEffectValue(activeEffects, "FUEL_CONSUMPTION_MODIFIER") or 0)
-    addVehicleSpec({
-        key = isElectric and "rms_report_system_condition_energy_consumption" or "rms_report_system_condition_consumption",
-        kind = "ratio",
-        value = fuelConsumptionModifier,
-        stdVisible = false,
-        inverted = true,
-        ideal = 100,
-        low = 105,
-        mid = 110,
-        high = 130
-    })
-
+    local gearboxText, gearboxShare = readGearbox(effects)
+    table.insert(rows, { key = "rms_report_system_condition_transmission", kind = "text", textKey = gearboxText,
+        ratio = math.clamp(gearboxShare, 0, 1) })
+    addShare("rms_report_system_condition_cooling", math.min(getHealth(effects, "THERMOSTAT_HEALTH_MODIFIER"),
+        getHealth(effects, "RADIATOR_HEALTH_MODIFIER"), getHealth(effects, "FAN_CLUTCH_MODIFIER")))
+    table.insert(rows, { key = isElectric and "rms_report_system_condition_energy_consumption" or "rms_report_system_condition_consumption",
+        kind = "ratio", ratio = 1 + (getRecorded(effects, "FUEL_CONSUMPTION_MODIFIER") or 0), isConsumption = true })
     if RMS_Breakdowns.BreakdownRegistry.HYDRAULIC_PUMP_MALFUNCTION.isApplicable(vehicle) then
-        local hydraulicEfficiencyModifier = 1.0 + (getEffectValue(activeEffects, "HYDRAULIC_SPEED_MODIFIER") or 0)
-        addVehicleSpec({
-            key = "rms_report_system_condition_hydraulic",
-            kind = "ratio",
-            value = hydraulicEfficiencyModifier,
-            stdVisible = false
-        })
+        addShare("rms_report_system_condition_hydraulic", 1 + (getRecorded(effects, "HYDRAULIC_SPEED_MODIFIER") or 0), false,
+            RMS_ReportFrame.HYDRAULIC_FLOW_MIN_PERCENT)
     end
 
     if isElectric then
-        local capacityShare = RMS_ElectricDrive.getCapacityShare(clampUnitRatio(systems.fuel.condition),
-            getEffectValue(activeEffects, "TRACTION_BATTERY_CAPACITY_MODIFIER") or 0)
-        addVehicleSpec({
-            key = "rms_report_vehicle_spec_traction_battery_capacity",
-            kind = "pair",
-            currentValue = spec.tractionBatteryNominalCapacity * capacityShare,
-            nominalValue = spec.tractionBatteryNominalCapacity,
-            ratio = capacityShare,
-            unit = "kWh",
-            stdVisible = true
-        })
+        local capacityShare = RMS_ElectricDrive.getCapacityShare(math.clamp(conditionData.systems.fuel.condition, 0, 1),
+            getRecorded(effects, "TRACTION_BATTERY_CAPACITY_MODIFIER") or 0)
+        addFigure("rms_report_vehicle_spec_traction_battery_capacity", spec.tractionBatteryNominalCapacity, capacityShare, "kWh", true,
+            RMS_ReportFrame.TRACTION_BATTERY_MIN_PERCENT)
     else
-        local nominalAlternatorCurrent = spec.electricalRating.alternatorA
-        local currentAlternatorCurrent = nominalAlternatorCurrent * alternatorHealth
-        addVehicleSpec({
-            key = "rms_report_vehicle_spec_max_alternator_current",
-            kind = "pair",
-            currentValue = currentAlternatorCurrent,
-            nominalValue = nominalAlternatorCurrent,
-            ratio = nominalAlternatorCurrent > 0 and (currentAlternatorCurrent / nominalAlternatorCurrent) or 1.0,
-            unit = "A",
-            stdVisible = false
-        })
+        addFigure("rms_report_vehicle_spec_max_alternator_current", rating.alternatorA, getHealth(effects, "ALTERNATOR_HEALTH_MODIFIER"),
+            "A", false, RMS_ReportFrame.ALTERNATOR_MIN_PERCENT)
     end
-
-    local effectiveBatteryCapacityAh = nominalBatteryCapacityAh * batteryHealth
-    addVehicleSpec({
-        key = batteryCapacityKey,
-        kind = "pair",
-        currentValue = effectiveBatteryCapacityAh,
-        nominalValue = nominalBatteryCapacityAh,
-        ratio = nominalBatteryCapacityAh > 0 and (effectiveBatteryCapacityAh / nominalBatteryCapacityAh) or batteryHealth,
-        unit = "Ah",
-        stdVisible = false
-    })
+    addFigure(batteryCapacityKey, rating.batteryCapacityAh, getHealth(effects, "BATTERY_HEALTH_MODIFIER"), "Ah", false,
+        RMS_ReportFrame.BATTERY_CAPACITY_MIN_PERCENT)
 
     return rows
 end
 
----Rebuilds every section of the report from the stored log entry
-function RMS_ReportFrame:updateScreen()
-    local spec = self.vehicle.spec_RealisticMechanicalSystems
+---Lists the breakdowns found, worst first, with what the advice reads
+function RMS_ReportFrame:collectBreakdowns()
+    local breakdowns = self.lastReport.conditionData.activeBreakdowns
+    local findings = { activeCount = 0, poorParts = {}, quickFixParts = {}, hasPoorConsumables = false }
+    local shownCount = 0
 
-    self.overallAssessmentData = {}
-    self.systemConditionData = {}
-    self.vehicleSpecData = {}
-    self.breakdownsData = {}
-    self.recommendationsData = {}
-
-    self.reportTitle:setText(g_i18n:getText("rms_report_header_title") .. " #" .. self.lastReport.id - 1, nil, nil, true)
-    self.reportVehicleImage:setImageFilename(self.vehicle:getImageFilename())
-
-    self.reportSubtitle:setText(table.concat({
-        self.vehicle:getFullName(),
-        RMS_Utils.formatMaintenanceLogDate(self.lastReport),
-        string.format("%s (%s)", g_i18n:getText(self.lastReport.type),
-            RMS_Utils.formatServiceOption(self.vehicle, self.lastReport.type, self.lastReport.optionOne)),
-        g_i18n:getText(self.lastReport.location),
-        string.format("%d %s", self.lastReport.conditionData.age or 0, g_i18n:getText("rms_ws_age_unit")),
-        RMS_Utils.formatHours(self.lastReport.conditionData.operatingHours),
-        "ODO " .. RMS_Utils.formatOdometerKilometers(self.lastReport.conditionData.odometerKilometers)
-    }, " · "), nil, nil, true)
-
-    local condition = self.lastReport.conditionData.condition or 1.0
-    local service = self.lastReport.conditionData.service or 1.0
-    local figures = self.summaryFigures
-    figures.condition:setText(RMS_Utils.formatCondition(condition, self.isCompleteInspection))
-    figures.condition:setTextColor(RMS_Utils.getConditionColor(condition, self.isCompleteInspection))
-    figures.service:setText(RMS_Utils.formatService(service, self.isCompleteInspection))
-    figures.service:setTextColor(RMS_Utils.getServiceColor(service, self.isCompleteInspection))
-
-    local systems = self.lastReport.conditionData.systems or {}
-    local overallRiskTier = nil
-    for systemKey, systemData in pairs(systems) do
-        local tier = RMS_Utils.getBreakdownRiskTier(RMS_Utils.getSystemRiskRatio(self.vehicle, systemKey, self.lastReport.conditionData.partWear))
-        if tier ~= nil then overallRiskTier = math.max(overallRiskTier or 0, tier) end
+    local ids = {}
+    for id in pairs(breakdowns) do
+        table.insert(ids, id)
     end
-
-    table.insert(self.overallAssessmentData, {'rms_ws_label_reliability', RMS_Utils.formatReliability(spec.reliability),
-        {RMS_Utils.getReliabilityColor(spec.reliability)}})
-    table.insert(self.overallAssessmentData, {'rms_ws_label_service_access', RMS_Utils.formatServiceAccess(self.vehicle),
-        {RMS_Utils.getServiceAccessColor(self.vehicle)}})
-    table.insert(self.overallAssessmentData, {'rms_report_breakdown_risk_title', RMS_Utils.formatBreakdownRisk(overallRiskTier),
-        overallRiskTier ~= nil and {RMS_Utils.getValueColorInverted(overallRiskTier, 1, 1, 2, 2, false)} or RMS_Utils.COLOR.TEXT_DIM})
-
-    for _, systemL10nKey in ipairs(RealisticMechanicalSystems.SYSTEMS_ORDER) do
-        local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemL10nKey)
-        local systemData = systems[systemKey]
-        if type(systemData) == "table" and systemData.enabled ~= false then
-            local systemCondition = math.max(math.min(systemData.condition or 1.0, 1.0), 0.0)
-            local ratio = RMS_Utils.getSystemRiskRatio(self.vehicle, systemKey, self.lastReport.conditionData.partWear)
-            table.insert(self.systemConditionData, {systemL10nKey, systemCondition, RMS_Utils.getBreakdownRiskTier(ratio)})
+    table.sort(ids, function(a, b)
+        local stageA, stageB = breakdowns[a].stage or 0, breakdowns[b].stage or 0
+        if stageA == stageB then
+            return a < b
         end
-    end
-
-    self.vehicleSpecData = RMS_ReportFrame.buildVehicleSpecs(self.vehicle, self.lastReport.conditionData)
-
-    local reportMetrics = {
-        visibleSelectableBreakdownsCount = 0,
-        visibleSelectableActiveBreakdownsCount = 0,
-        hasPoorQualityConsumablesBreakdown = false,
-        isCompleteInspection = self.isCompleteInspection == true,
-        inactivePoorPartsNames = {},
-        inactiveQuickFixPartsNames = {}
-    }
-    local inactivePoorPartsSeen = {}
-    local inactiveQuickFixSeen = {}
-
-    local reportActiveBreakdowns = (self.lastReport.conditionData and self.lastReport.conditionData.activeBreakdowns) or {}
-    local breakdownIds = {}
-    for breakdownId, _ in pairs(reportActiveBreakdowns) do
-        table.insert(breakdownIds, breakdownId)
-    end
-    table.sort(breakdownIds, function(a, b)
-        local aStage = reportActiveBreakdowns[a] ~= nil and (reportActiveBreakdowns[a].stage or 0) or 0
-        local bStage = reportActiveBreakdowns[b] ~= nil and (reportActiveBreakdowns[b].stage or 0) or 0
-        if aStage ~= bStage then
-            return aStage > bStage
-        end
-        return tostring(a) < tostring(b)
+        return stageA > stageB
     end)
 
-    for _, breakdownId in ipairs(breakdownIds) do
-        local breakdownData = reportActiveBreakdowns[breakdownId]
-        local registryEntry = RMS_Breakdowns.BreakdownRegistry[breakdownId]
-
-        if breakdownId == "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES" then
-            reportMetrics.hasPoorQualityConsumablesBreakdown = true
-        end
-
-        if breakdownData ~= nil and breakdownData.isVisible and registryEntry ~= nil and registryEntry.isSelectable then
-            reportMetrics.visibleSelectableBreakdownsCount = reportMetrics.visibleSelectableBreakdownsCount + 1
-            local stage = breakdownData.stage or 1
-            local stageData = registryEntry.stages and registryEntry.stages[stage]
-            if stageData ~= nil then
-                local partText = RMS_Utils.getBreakdownPartName(breakdownId)
-
-                if breakdownData.isActive ~= false then
-                    reportMetrics.visibleSelectableActiveBreakdownsCount = reportMetrics.visibleSelectableActiveBreakdownsCount + 1
-                elseif breakdownData.source == RealisticMechanicalSystems.BREAKDOWN_SOURCES.POOR_PARTS then
-                    appendUniqueText(reportMetrics.inactivePoorPartsNames, inactivePoorPartsSeen, partText)
-                elseif breakdownData.source == RealisticMechanicalSystems.BREAKDOWN_SOURCES.QUICK_FIX then
-                    appendUniqueText(reportMetrics.inactiveQuickFixPartsNames, inactiveQuickFixSeen, partText)
+    local sources = RealisticMechanicalSystems.BREAKDOWN_SOURCES
+    for _, id in ipairs(ids) do
+        local breakdown, definition = breakdowns[id], RMS_Breakdowns.BreakdownRegistry[id]
+        findings.hasPoorConsumables = findings.hasPoorConsumables or id == POOR_CONSUMABLES
+        if breakdown.isVisible and definition ~= nil and definition.isSelectable then
+            shownCount = shownCount + 1
+            local stage = breakdown.stage or 1
+            if definition.stages[stage] ~= nil then
+                local partName = RMS_Utils.getBreakdownPartName(id)
+                local isActive = breakdown.isActive ~= false
+                if isActive then
+                    findings.activeCount = findings.activeCount + 1
+                elseif breakdown.source == sources.POOR_PARTS then
+                    findings.poorParts[partName] = true
+                elseif breakdown.source == sources.QUICK_FIX then
+                    findings.quickFixParts[partName] = true
                 end
-
-                local severityText, descriptionText = RMS_Utils.getBreakdownTexts(self.vehicle, breakdownId, breakdownData)
-
-                table.insert(self.breakdownsData, {
-                    title = partText,
-                    severity = severityText,
-                    text = descriptionText,
-                    stage = stage,
-                    isActive = breakdownData.isActive ~= false
-                })
+                local severityText, descriptionText = RMS_Utils.getBreakdownTexts(self.vehicle, id, breakdown)
+                table.insert(self.breakdownsData, { title = partName, severity = severityText, text = descriptionText, stage = stage,
+                    isActive = isActive })
             end
         end
     end
-    self.summaryFigures.breakdowns:setText(tostring(reportMetrics.visibleSelectableBreakdownsCount))
+    return findings, shownCount
+end
 
+---Rebuilds every section of the report from the stored log entry
+function RMS_ReportFrame:updateScreen()
+    local vehicle, entry = self.vehicle, self.lastReport
+    local conditionData = entry.conditionData
+    local spec = vehicle.spec_RealisticMechanicalSystems
+
+    self.reportTitle:setText(g_i18n:getText("rms_report_header_title") .. " #" .. entry.id - 1, nil, nil, true)
+    self.reportVehicleImage:setImageFilename(vehicle:getImageFilename())
+
+    self.reportSubtitle:setText(table.concat({
+        vehicle:getFullName(),
+        RMS_Utils.formatMaintenanceLogDate(entry),
+        string.format("%s (%s)", g_i18n:getText(entry.type),
+            RMS_Utils.formatServiceOption(vehicle, entry.type, entry.optionOne)),
+        g_i18n:getText(entry.location),
+        string.format("%d %s", conditionData.age or 0, g_i18n:getText("rms_ws_age_unit")),
+        RMS_Utils.formatHours(conditionData.operatingHours),
+        "ODO " .. RMS_Utils.formatOdometerKilometers(conditionData.odometerKilometers)
+    }, " · "), nil, nil, true)
+
+    local figures = self.summaryFigures
+    figures.condition:setText(RMS_Utils.formatCondition(conditionData.condition, self.isCompleteInspection))
+    figures.condition:setTextColor(RMS_Utils.getConditionColor(conditionData.condition, self.isCompleteInspection))
+    figures.service:setText(RMS_Utils.formatService(conditionData.service, self.isCompleteInspection))
+    figures.service:setTextColor(RMS_Utils.getServiceColor(conditionData.service, self.isCompleteInspection))
+
+    local riskTier
+    for systemKey in pairs(conditionData.systems) do
+        local tier = RMS_Utils.getBreakdownRiskTier(RMS_Utils.getSystemRiskRatio(vehicle, systemKey, conditionData.partWear))
+        if tier ~= nil and (riskTier == nil or tier > riskTier) then
+            riskTier = tier
+        end
+    end
+    self.overallAssessmentData = {
+        {'rms_ws_label_reliability', RMS_Utils.formatReliability(spec.reliability), {RMS_Utils.getReliabilityColor(spec.reliability)}},
+        {'rms_ws_label_service_access', RMS_Utils.formatServiceAccess(vehicle), {RMS_Utils.getServiceAccessColor(vehicle)}},
+        {'rms_report_breakdown_risk_title', RMS_Utils.formatBreakdownRisk(riskTier),
+            riskTier ~= nil and {RMS_Utils.getValueColorInverted(riskTier, 1, 1, 2, 2, false)} or RMS_Utils.COLOR.TEXT_DIM}
+    }
+
+    self.systemConditionData = {}
+    for _, systemL10nKey in ipairs(RealisticMechanicalSystems.SYSTEMS_ORDER) do
+        local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemL10nKey)
+        local system = conditionData.systems[systemKey]
+        if system ~= nil and system.enabled ~= false then
+            local ratio = RMS_Utils.getSystemRiskRatio(vehicle, systemKey, conditionData.partWear)
+            table.insert(self.systemConditionData, {systemL10nKey, math.clamp(system.condition, 0, 1), RMS_Utils.getBreakdownRiskTier(ratio)})
+        end
+    end
+
+    self.vehicleSpecData = RMS_ReportFrame.buildVehicleSpecs(vehicle, conditionData)
+
+    self.breakdownsData = {}
+    local findings, shownCount = self:collectBreakdowns()
+    figures.breakdowns:setText(tostring(shownCount))
     if self.isCompleteInspection then
         self:addWornPartRows()
     end
     self.breakdownsCardTitle:setText(g_i18n:getText(self.isCompleteInspection and "rms_report_breakdowns_worn_title"
         or "rms_report_detected_breakdowns_title"))
-
-    if #self.breakdownsData == 0 then
+    if self.breakdownsData[1] == nil then
         table.insert(self.breakdownsData, {title = g_i18n:getText(self.isCompleteInspection and "rms_report_no_breakdowns_worn"
             or "rms_log_inspection_desc_no_breakdowns"), text = "", severity = ""})
     end
 
-    self.recommendationsData = buildRecommendationsData(self.vehicle, self.lastReport, reportMetrics)
+    self.recommendationsData = RMS_ReportFrame.getRecommendations(vehicle, conditionData, findings, self.isCompleteInspection)
 
     self:renderAssessmentRows()
     self:renderWear()
     self:renderSystemRows()
     self:renderSpecRows()
-
-    self.breakdownsTable:reloadData()
-    self.recommendationsTable:reloadData()
+    for _, list in ipairs({ self.breakdownsTable, self.recommendationsTable }) do
+        list:reloadData()
+    end
 
     RMS_Utils.fitValuePills(self)
 end
@@ -777,30 +436,20 @@ function RMS_ReportFrame:getFocusColumns()
     return { { { self.breakdownsTable } }, { { self.recommendationsTable } } }
 end
 
----Returns the row count of the requested report note list
--- @param table list list element
--- @param integer section section index
--- @return integer count row count
+---Returns the row count of a note list
 function RMS_ReportFrame:getNumberOfItemsInSection(list, section)
-    if list == self.breakdownsTable then
-        return #self.breakdownsData
-    elseif list == self.recommendationsTable then
+    if list == self.recommendationsTable then
         return #self.recommendationsData
     end
-
-    return 0
+    return #self.breakdownsData
 end
 
----Fills one note cell, dispatching on the list it belongs to
--- @param table list list element
--- @param integer section section index
--- @param integer index row index
--- @param table cell cell element
+---Fills one note cell of a list
 function RMS_ReportFrame:populateCellForItemInSection(list, section, index, cell)
-    if list == self.breakdownsTable then
-        self:populateBreakdownsCell(index, cell)
-    elseif list == self.recommendationsTable then
+    if list == self.recommendationsTable then
         self:populateRecommendationsCell(index, cell)
+    else
+        self:populateBreakdownsCell(index, cell)
     end
 end
 
@@ -816,7 +465,6 @@ function RMS_ReportFrame:renderAssessmentRows()
     end
 end
 
----Returns the colour of an extra wear
 local function getWearColor(percent)
     return RMS_Utils.getValueColorInverted(percent, WEAR_NORMAL_PERCENT, WEAR_NORMAL_PERCENT, WEAR_HIGH_PERCENT, 100, false)
 end
@@ -887,7 +535,7 @@ function RMS_ReportFrame:renderSystemRows()
         if data ~= nil then
             local nameElement, valueElement, riskElement = row:getDescendantByName("name"), row:getDescendantByName("value"),
                 row:getDescendantByName("risk")
-            local condition = clampUnitRatio(data[2])
+            local condition = data[2]
             local percent = condition * 100
             local riskTier = data[3]
             nameElement:setText(g_i18n:getText(RMS_Utils.getSystemLabel(self.vehicle, data[1])))
@@ -915,65 +563,55 @@ end
 
 ---Paints what the machine still delivers against its factory figures
 function RMS_ReportFrame:renderSpecRows()
+    local isComplete = self.isCompleteInspection
+    local stateTexts = {}
+    for index, key in ipairs({ "rms_report_state_optimal", "rms_report_state_normal", "rms_report_state_degraded",
+            "rms_report_state_impaired", "rms_report_state_critical" }) do
+        stateTexts[index] = g_i18n:getText(key)
+    end
+
     for index, row in ipairs(self.specRows) do
-        local data = self.vehicleSpecData[index]
-        row:setVisible(data ~= nil)
-
-        if data ~= nil then
+        local figure = self.vehicleSpecData[index]
+        row:setVisible(figure ~= nil)
+        if figure ~= nil then
             local labelElement, valueElement = row:getDescendantByName("label"), row:getDescendantByName("value")
-            local kind = data.kind or "ratio"
-            local ratio = tonumber(data.ratio or data.value) or 0
-            local percent = (data.inverted == true and math.max(ratio, 0) or clampUnitRatio(ratio)) * 100
-            local cfg = {
-                inverted = data.inverted == true,
-                ideal = data.ideal or 99,
-                high = data.high or 90,
-                mid = data.mid or 70,
-                low = data.low or 30
-            }
-            local isReadable = self.isCompleteInspection or data.stdVisible ~= false
-
-            local valueText
-            labelElement:setTextColor(unpack(isReadable and RMS_Utils.COLOR.TEXT or RMS_Utils.COLOR.TEXT_DIM))
-
-            if not isReadable then
-                valueText = g_i18n:getText("rms_report_state_not_available")
+            local isRead = isComplete or figure.isPublic
+            local valueText = g_i18n:getText("rms_report_state_not_available")
+            labelElement:setTextColor(unpack(isRead and RMS_Utils.COLOR.TEXT or RMS_Utils.COLOR.TEXT_DIM))
+            if not isRead then
                 valueElement:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
+            elseif figure.isConsumption then
+                local percent = math.max(figure.ratio, 0) * 100
+                local limit = RMS_ReportFrame.CONSUMPTION_MAX_PERCENT
+                valueText = string.format("%.1f %%", percent)
+                valueElement:setTextColor(RMS_Utils.getValueColorInverted(percent, limit, limit, limit, limit, isComplete))
             else
-                local stateTexts = {
-                    g_i18n:getText("rms_report_state_optimal"),
-                    g_i18n:getText("rms_report_state_normal"),
-                    g_i18n:getText("rms_report_state_degraded"),
-                    g_i18n:getText("rms_report_state_impaired"),
-                    g_i18n:getText("rms_report_state_critical")
-                }
-                if kind == "text" then
-                    valueText = g_i18n:getText(data.textKey or "")
-                elseif kind == "pair" then
-                    valueText = string.format("%.1f | %.1f %s", data.currentValue or 0, data.nominalValue or 0, data.unit or "")
-                elseif self.isCompleteInspection or data.isAlwaysMeasured then
+                local percent = math.clamp(figure.ratio, 0, 1) * 100
+                local steps = figure.scale or RMS_ReportFrame.SHEET_SCALE
+                if figure.minPercent ~= nil then
+                    -- A tested part passes or fails at its limit
+                    local limit = figure.minPercent
+                    steps = { IDEAL = limit, HIGH = limit, MID = limit, LOW = limit }
+                end
+                if figure.kind == "pair" then
+                    valueText = string.format("%.1f | %.1f %s", figure.current, figure.nominal, figure.unit)
+                elseif figure.kind == "text" then
+                    valueText = g_i18n:getText(figure.textKey)
+                elseif isComplete or figure.isMeasured then
                     valueText = string.format("%.1f %%", percent)
-                elseif cfg.inverted then
-                    valueText = RMS_Utils.getValueLabelInverted(percent, cfg.ideal, cfg.low, cfg.mid, cfg.high, unpack(stateTexts))
                 else
-                    valueText = RMS_Utils.getValueLabel(percent, cfg.ideal, cfg.high, cfg.mid, cfg.low, unpack(stateTexts))
+                    valueText = RMS_Utils.getValueLabel(percent, steps.IDEAL, steps.HIGH, steps.MID, steps.LOW, unpack(stateTexts))
                 end
-
-                if cfg.inverted then
-                    valueElement:setTextColor(RMS_Utils.getValueColorInverted(percent, cfg.ideal, cfg.low, cfg.mid, cfg.high, self.isCompleteInspection))
-                else
-                    valueElement:setTextColor(RMS_Utils.getValueColor(percent, cfg.ideal, cfg.high, cfg.mid, cfg.low, self.isCompleteInspection))
-                end
+                valueElement:setTextColor(RMS_Utils.getValueColor(percent, steps.IDEAL, steps.HIGH, steps.MID, steps.LOW,
+                    isComplete and figure.minPercent == nil))
             end
-
-            RMS_Utils.fitRowText(labelElement, valueElement, g_i18n:getText(data.key), valueText)
+            RMS_Utils.fitRowText(labelElement, valueElement, g_i18n:getText(figure.key), valueText)
         end
     end
 
     self.specRows[1].parent:invalidateLayout()
 end
 
--- @return integer count worn parts listed
 function RMS_ReportFrame:addWornPartRows()
     local conditionData = self.lastReport.conditionData
     local systems = conditionData.systems or {}
@@ -984,12 +622,14 @@ function RMS_ReportFrame:addWornPartRows()
     end
 
     local worn = {}
-    for partId, wear in pairs(conditionData.partWear or {}) do
-        local definition = RMS_Breakdowns.BreakdownRegistry[partId]
-        if definition ~= nil and activeBreakdowns[partId] == nil and RMS_Utils.getIsPartWorn(partId, wear) then
-            local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, definition.system)
-            if type(systems[systemKey]) == "table" and systems[systemKey].enabled ~= false then
-                table.insert(worn, { partId = partId, systemKey = systemKey, ratio = RMS_Utils.getPartRiskRatio(partId, wear) })
+    local systemParts = self.vehicle.spec_RealisticMechanicalSystems.systemParts
+    for systemKey, system in pairs(systems) do
+        if system.enabled ~= false then
+            for _, partId in ipairs(systemParts[systemKey]) do
+                local wear = conditionData.partWear[partId]
+                if wear ~= nil and activeBreakdowns[partId] == nil and RMS_Utils.getIsPartWorn(partId, wear) then
+                    table.insert(worn, { partId = partId, systemKey = systemKey, ratio = RMS_Utils.getPartRiskRatio(partId, wear) })
+                end
             end
         end
     end
@@ -1004,7 +644,7 @@ function RMS_ReportFrame:addWornPartRows()
     local color = { RMS_Utils.getValueColorInverted(3, 1, 1, 2, 3, false) }
     for index = 1, count do
         local entry = worn[index]
-        local systemName = getSystemDisplayName(self.vehicle, entry.systemKey)
+        local systemName = getSystemName(self.vehicle, entry.systemKey)
         local text = adjusted[entry.partId]
             and string.format(g_i18n:getText("rms_report_worn_part_adjust"), systemName,
                 RMS_Utils.formatMaintenanceLevel(self.vehicle, RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE))
@@ -1020,8 +660,6 @@ function RMS_ReportFrame:addWornPartRows()
 end
 
 ---Fills one detected breakdown or worn part
--- @param integer index row index
--- @param table cell cell element
 function RMS_ReportFrame:populateBreakdownsCell(index, cell)
     RMS_Utils.applyScrollSpeed(cell)
     local data = self.breakdownsData[index] or {}
@@ -1047,11 +685,7 @@ function RMS_ReportFrame:populateBreakdownsCell(index, cell)
 end
 
 ---Fills one recommendation with its prebuilt line
--- @param integer index row index
--- @param table cell cell element
 function RMS_ReportFrame:populateRecommendationsCell(index, cell)
     RMS_Utils.applyScrollSpeed(cell)
-    local rowElement = cell:getAttribute("reportRecRow")
-
-    rowElement:setText(self.recommendationsData[index] or "")
+    cell:getAttribute("reportRecRow"):setText(self.recommendationsData[index])
 end

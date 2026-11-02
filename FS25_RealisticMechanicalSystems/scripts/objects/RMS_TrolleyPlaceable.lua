@@ -6,12 +6,10 @@ RMS_TrolleyPlaceable = {}
 
 local CONFIGURATIONS_KEY = "placeable.rmsDiagnosticTool.rmsDiagnosticPcConfigurations"
 
----
 function RMS_TrolleyPlaceable.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(PlaceableVehicle, specializations)
 end
 
----
 function RMS_TrolleyPlaceable.initSpecialization()
     if g_iconGenerator == nil then
         g_placeableConfigurationManager:addConfigurationType(RMS_DiagnosticTool.CONFIGURATION,
@@ -22,9 +20,6 @@ function RMS_TrolleyPlaceable.initSpecialization()
 end
 
 ---Applies a construction's PC option to the trolley it loads
--- @param table data vehicle loading data
--- @param function callback load callback
--- @param table? target callback target, the construction
 function RMS_TrolleyPlaceable.applyPcOption(data, callback, target)
     if type(target) == "table" and target.isa ~= nil and target:isa(Placeable) and target.configurations ~= nil then
         local option = target.configurations[RMS_DiagnosticTool.CONFIGURATION]
@@ -35,9 +30,6 @@ function RMS_TrolleyPlaceable.applyPcOption(data, callback, target)
 end
 
 ---Prices the trolley being placed with its PC option, as it is charged
--- @param table brush construction brush
--- @param function superFunc original function
--- @return integer price price shown at the cursor
 function RMS_TrolleyPlaceable.getBrushPrice(brush, superFunc)
     if brush.configurations ~= nil and brush.configurations[RMS_DiagnosticTool.CONFIGURATION] ~= nil then
         return g_currentMission.economyManager:getBuyPrice(brush.storeItem, brush.configurations, nil) + brush:getDisplacementCost()

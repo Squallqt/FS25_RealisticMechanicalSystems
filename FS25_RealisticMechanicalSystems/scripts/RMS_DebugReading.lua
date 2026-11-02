@@ -19,7 +19,6 @@ local SYSTEMS = {
 
 local ACRONYMS = {cvt = "CVT", ecu = "ECU", nox = "NOx", adblue = "AdBlue", hv = "HV", dcdc = "DC/DC", pto = "PTO", gcw = "GCW", ["4wd"] = "4WD"}
 
----Writes a number with its thousands grouped
 local function grouped(value)
     local text = tostring(math.floor(value + 0.5))
     while true do
@@ -31,12 +30,10 @@ local function grouped(value)
     end
 end
 
----Writes a share in percent
 local function pct(value)
     return string.format("%d %%", math.floor(value * 100 + 0.5))
 end
 
----Writes a l10n key of an option as its plain words
 local function plainKey(key)
     local words = tostring(key):gsub("^rms_spec_", ""):gsub("^%a+_types?_", ""):gsub("^%a+_", "")
     return (words:gsub("_", " "))
@@ -71,7 +68,6 @@ local function getServiceLevel(vehicle, systemKey)
     return 1
 end
 
----Returns the level of the fluid a system runs on
 local function getFluidLevel(vehicle, spec, systemKey)
     if systemKey == "engine" then
         return spec.engineOilLevel
@@ -134,9 +130,6 @@ local CAUSES = {
 
 local SOURCES = {"wear", "poor parts", "quick fix"}
 
--- @param string partId breakdown id of the part
--- @param string? systemWord word its system drops
--- @return string name
 function RMS_DebugReading.getPartName(partId, systemWord)
     local key = RMS_Breakdowns.BreakdownRegistry[partId].part:gsub("^rms_breakdowns_part_", "")
     if systemWord ~= nil then
@@ -154,7 +147,6 @@ function RMS_DebugReading.getPartName(partId, systemWord)
     return name:sub(1, 1):upper() .. name:sub(2)
 end
 
----Names the system of a vehicle
 local function getSystemName(system, isElectric)
     return isElectric and system.electricName or system.name
 end
@@ -194,8 +186,6 @@ local function countFaults(vehicle, spec)
     return count
 end
 
----Returns the share of its new peak power the engine gives now
--- @param table motor vehicle motor
 -- @return float share peak power now over the peak of its new torque curve
 local function getPowerShare(motor)
     local peak = 0
@@ -205,7 +195,6 @@ local function getPowerShare(motor)
     return peak * math.pi / 30 / motor.peakMotorPower
 end
 
----Describes the engine software a tuner fitted
 local function getRemapText(vehicle, spec)
     if not RMS_EngineRemap.getIsEligible(vehicle) and not RMS_EngineRemap.getIsRemapped(vehicle) then
         return "not offered (no engine control unit, not owned)"
@@ -220,7 +209,6 @@ local function getRemapText(vehicle, spec)
         stockHp * (1 + gain), stockHp, gain * 100, spec.remapAge, RMS_EngineRemap.getFreeRestoreUntil(vehicle))
 end
 
----Reads the title line, the life and the service of the machine
 local function readHeader(vehicle, spec, reading)
     local R = RealisticMechanicalSystems
     reading.title = table.concat({vehicle:getFullName(), tostring(spec.year), getKind(vehicle, spec)}, SEP)
@@ -279,7 +267,6 @@ local function readHeader(vehicle, spec, reading)
     table.insert(reading.service, {"Greasing", spec.isVehicleNeedLubricate and pct(spec.lubricationLevel) or "not needed"})
 end
 
----Writes a system's lifetime wear and the share of each cause
 local function getSince(stats)
     local total = stats.total
     if total <= 0 then
@@ -368,7 +355,6 @@ local function readSystems(vehicle, spec, reading)
     end
 end
 
----Returns a fault name; a fault without a system is named by its id
 local function getFaultName(breakdownId, systemWord)
     if RMS_Breakdowns.BreakdownRegistry[breakdownId].system == nil then
         return breakdownId:sub(1, 1) .. breakdownId:sub(2):lower():gsub("_", " ")
@@ -376,7 +362,6 @@ local function getFaultName(breakdownId, systemWord)
     return RMS_DebugReading.getPartName(breakdownId, systemWord)
 end
 
----Finds the system a breakdown belongs to
 local function getBreakdownSystem(definition, isElectric)
     for _, system in ipairs(SYSTEMS) do
         if RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, definition.system) == system.key then
@@ -386,7 +371,6 @@ local function getBreakdownSystem(definition, isElectric)
     return "Machine", nil
 end
 
----Reads the faults, the lamps, the display, the codes and the effects
 local function readFaults(vehicle, spec, reading)
     local R = RealisticMechanicalSystems
     local isInWorkshop = spec.currentState ~= R.STATUS.READY
@@ -532,7 +516,6 @@ local function collectToolNames(vehicle, names)
     return names
 end
 
----Writes what the reversible fan does, on its timer or from the cab
 local function getReversibleFanText(spec)
     local fan = RMS_Config.THERMAL.REVERSIBLE_FAN
     if not spec.hasReversibleFan then
@@ -554,7 +537,6 @@ local function readEngineRows(vehicle, spec, rows)
         signedPerMinute(-(heat.radiatorCooling or 0)), signedPerMinute(-(heat.speedCooling or 0)), signedPerMinute(-(heat.convectionCooling or 0)))})
 end
 
----Writes an oil as the model heats it, then as its gauge follows it
 local function getOilTemperature(raw, gauge)
     return raw == -99 and temperature(-99) or string.format("%s (gauge %s)", temperature(raw), temperature(gauge))
 end
@@ -577,7 +559,6 @@ local function readOilRows(spec, rows)
     end
 end
 
----Reads the battery of the 12 V circuit and its balance
 local function readBatteryRows(vehicle, spec, rows)
     local balance = spec.electricalBalance
     local rating = spec.electricalRating
@@ -603,8 +584,8 @@ local function readBatteryRows(vehicle, spec, rows)
     else
         table.insert(rows, {"Currents", string.format("alternator up to %.1f A  ·  base %.1f A  ·  cab %.1f A  ·  lights %.1f A  ·  starter %.0f A  ·  preheat %.0f A",
             balance.generatorA, loads.base, loads.cab, loads.lights, loads.starter, loads.preheat)})
-        table.insert(rows, {"Last start", string.format("%.1f V under the starter  ·  %s cranking speed",
-            RMS_Electrical.getStartingVoltage(vehicle), pct(RMS_Electrical.getCrankingSpeed(vehicle)))})
+        table.insert(rows, {"Last start", string.format("%.1f V under the starter  ·  %s cranking speed  ·  %s starter",
+            RMS_Electrical.getStartingVoltage(vehicle), pct(RMS_Electrical.getCrankingSpeed(vehicle)), RMS_Breakdowns.getStarterFamily(vehicle))})
         table.insert(rows, {"Resistance", string.format("battery %.1f mOhm  ·  circuit %.1f mOhm", balance.resistanceOhm * 1000, balance.circuitOhm * 1000)})
     end
 end
@@ -629,7 +610,6 @@ local function getGear(motor)
     return string.format("gear %s%s, %s", motor:getGearToDisplay(false), hasGroups and " in range " .. group or "", shifting)
 end
 
----Reads the rows of the machine itself, only those it has
 local function readMachine(vehicle, spec, reading)
     local rows = {}
     if spec.isElectricVehicle then
@@ -706,11 +686,16 @@ local function readMachine(vehicle, spec, reading)
 
     readBatteryRows(vehicle, spec, rows)
 
+    if not spec.isElectricVehicle then
+        local need = RMS_Start.getCrankNeed(vehicle)
+        local attempt = RMS_Start.getStarterAttempt(vehicle)
+        table.insert(rows, {"Start", string.format("%s for %.1f s  ·  starter %.0f s, rest %.0f s  ·  cranked %.1f of %s s",
+            RMS_Start.STATE_NAME[spec.startState], spec.startTimerMs / 1000, attempt.crank / 1000, attempt.rest / 1000,
+            spec.crankProgressS, need == nil and "0" or need == math.huge and "never" or string.format("%.1f", need))})
+    end
     if RMS_Preheat.isDieselVehicle(vehicle) then
-        table.insert(rows, {"Preheat", string.format("%s  ·  %.1f s needed  ·  %.1f s left  ·  lamp test %s", RMS_Preheat.getStateName(spec.preheatState):lower(),
-            spec.preheatRequiredMs / 1000, spec.preheatRemainingMs / 1000, spec.preheatLampTestActive and "on" or "over")})
-        table.insert(rows, {"Auto crank", string.format("%.1f of %.0f s  ·  glow fault %d  ·  cold start fault %d",
-            spec.preheatAutomaticCrankElapsedMs / 1000, RMS_Config.PREHEAT.MAX_AUTOMATIC_CRANK_MS / 1000,
+        table.insert(rows, {"Preheat", string.format("%.1f s needed  ·  %.1f s left  ·  lamp test %s  ·  glow fault %d  ·  cold start fault %d",
+            spec.preheatRequiredMs / 1000, spec.preheatRemainingMs / 1000, spec.preheatLampTestActive and "on" or "over",
             RMS_Preheat.getGlowPlugFailureSeverity(vehicle), spec.preheatColdStartFaultSeverity)})
     end
 
@@ -837,8 +822,6 @@ local function readMachine(vehicle, spec, reading)
     reading.machine = rows
 end
 
--- @param table vehicle vehicle
--- @return table reading debug blocks
 function RMS_DebugReading.read(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local reading = {}
@@ -850,8 +833,6 @@ function RMS_DebugReading.read(vehicle)
     return reading
 end
 
--- @param table vehicle vehicle
--- @param table reading reading received
 function RMS_DebugReading.useLocalExhaust(vehicle, reading)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec.isElectricVehicle then
@@ -884,7 +865,6 @@ local SCHEMA = {fields = {
     {"machine", ROWS}
 }}
 
----Writes one value of a reading by its place in the shape
 local function writeValue(streamId, schema, value)
     if schema == "string" then
         streamWriteString(streamId, value)
@@ -906,7 +886,6 @@ local function writeValue(streamId, schema, value)
     end
 end
 
----Reads one value of a reading by its place in the shape
 local function readValue(streamId, schema)
     if schema == "string" then
         return streamReadString(streamId)
@@ -931,15 +910,11 @@ local function readValue(streamId, schema)
 end
 
 ---Writes a reading to a stream
--- @param integer streamId stream id
--- @param table reading reading
 function RMS_DebugReading.writeStream(streamId, reading)
     writeValue(streamId, SCHEMA, reading)
 end
 
 ---Reads a reading from a stream
--- @param integer streamId stream id
--- @return table reading reading
 function RMS_DebugReading.readStream(streamId)
     return readValue(streamId, SCHEMA)
 end

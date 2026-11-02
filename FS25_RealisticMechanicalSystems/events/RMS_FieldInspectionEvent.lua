@@ -7,15 +7,11 @@ local RMS_FieldInspectionEvent_mt = Class(RMS_FieldInspectionEvent, Event)
 InitEventClass(RMS_FieldInspectionEvent, "RMS_FieldInspectionEvent")
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_FieldInspectionEvent.emptyNew()
     return Event.new(RMS_FieldInspectionEvent_mt)
 end
 
 ---Create new instance of event
--- @param table vehicle vehicle
--- @param boolean isActive true if the inspection is starting
--- @return table self instance of class event
 function RMS_FieldInspectionEvent.new(vehicle, isActive)
     local self = RMS_FieldInspectionEvent.emptyNew()
     self.vehicle = vehicle
@@ -24,16 +20,12 @@ function RMS_FieldInspectionEvent.new(vehicle, isActive)
 end
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_FieldInspectionEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
     streamWriteBool(streamId, self.isActive)
 end
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_FieldInspectionEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
     self.isActive = streamReadBool(streamId)
@@ -41,7 +33,6 @@ function RMS_FieldInspectionEvent:readStream(streamId, connection)
 end
 
 ---Applies the inspection state for the player behind the sending connection
--- @param Connection connection connection
 function RMS_FieldInspectionEvent:run(connection)
     local vehicle = self.vehicle
     if vehicle == nil or not vehicle:getIsSynchronized() then
@@ -55,8 +46,6 @@ function RMS_FieldInspectionEvent:run(connection)
 end
 
 ---Sends the inspection state through the server
--- @param table vehicle vehicle
--- @param boolean isActive true if the inspection is starting
 function RMS_FieldInspectionEvent.send(vehicle, isActive)
     if g_server ~= nil then
         vehicle:setFieldInspectionPlayerActive(g_localPlayer, isActive)

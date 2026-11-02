@@ -16,14 +16,6 @@ function RMS_ProgressRing.createOverlays()
     RMS_ProgressRing.disc = g_overlayManager:createOverlay("rms_ProgressRing.disc", 0, 0, 0, 0)
 end
 
----
--- @param float centerX horizontal center in screen space
--- @param float centerY vertical center in screen space
--- @param float width ring width in screen space
--- @param float height ring height in screen space
--- @param float ratio progress between 0 and 1
--- @param table arcColor colour of the filled segments
--- @param table trackColor colour of the other segments, alpha optional
 function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, arcColor, trackColor)
     local overlay = RMS_ProgressRing.segment
     local segmentWidth, segmentHeight = width * RMS_ProgressRing.SEGMENT_WIDTH, height * RMS_ProgressRing.SEGMENT_HEIGHT
@@ -44,10 +36,6 @@ function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, arcColo
 end
 
 ---Draws a ring as high as a GUI area, centred in it
--- @param table area GUI element the ring fills
--- @param float ratio lit share of the ring
--- @param table? arcColor lit segments, the highlight by default
--- @param table? trackColor unlit segments, the ring track by default
 function RMS_ProgressRing.renderInArea(area, ratio, arcColor, trackColor)
     local height = area.absSize[2]
     RMS_ProgressRing.render(area.absPosition[1] + area.absSize[1] * 0.5, area.absPosition[2] + height * 0.5,

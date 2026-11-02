@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Pro uvolnění parkovací brzdy spusť motor"/>
         <text name="rms_preheat_ignition_message" text="Zapalování zapnuto: probíhá předehřev"/>
         <text name="rms_preheat_system_failure_message" text="Porucha systému žhavení: studený start není možný"/>
-        <text name="rms_preheat_start_failed_message" text="Motor nenastartoval: před dalším pokusem vypni zapalování"/>
+        <text name="rms_preheat_start_failed_message" text="Motor nenastartoval"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Zkontrolovat vozidlo"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Prohlídka nebo údržba může zjistit další poruchy."/>
         <text name="rms_ws_status_ready_title" text="Dílna je připravena"/>
         <text name="rms_ws_status_ready_hint" text="Vyber úkon. Volby, díly a cena budou potvrzeny před zahájením."/>
+        <text name="rms_ws_status_closed_hint" text="Úkony lze objednat od %s do %s."/>
         <text name="rms_ws_label_value" text="Hodnota vozidla"/>
         <text name="rms_ws_label_age" text="Stáří"/>
         <text name="rms_ws_label_operating_hours" text="Provozní hodiny"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Není zaškrtnutá žádná porucha. Zaškrtni v Diagnostika a cenová nabídka poruchy k opravě."/>
         <text name="rms_ws_reason_overhaul_none" text="Generální oprava obnoví systémy pod 50 % stavu. Tento stroj žádný takový nemá."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Mobilní dílna lakování neprovádí. Provádí se u prodejce."/>
+        <text name="rms_ws_reason_refill_dealer" text="Doplnění kapalin provádí pouze prodejce. Jinde se provádí z kanystru."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Použijte vybavenou dílnu."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Připojte ke stroji diagnostické zařízení vozíku."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Vyžadována elektronická diagnostika"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Neúčinný přenos síly"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Omezený převodový poměr"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Nepravidelný přenos síly"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Zhoršený stav termostatu"/>
         <text name="rms_report_transmission_failed" text="Nefunkční"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Mazací lis"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Příliš těžký přívěs"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Tažený náklad může být pro toto vozidlo příliš těžký. Můžeš pokračovat v jízdě, ale převodovka a hnací ústrojí budou více namáhány.&#10;&#10;RMS používá dvě hodnoty: traktor potřebuje alespoň 10 koní na tunu tažené hmotnosti, zatímco nákladní vůz alespoň 6 koní na tunu celkové hmotnosti soupravy. Pod příslušnou hodnotou a při vysokém zatížení motoru se opotřebení převodovky zvyšuje."/>
         <text name="rms_tutorial_hard_start_title" text="Obtížné startování"/>
-        <text name="rms_tutorial_hard_start_message" text="Motor stroje %s se obtížně spouští. Příčinou může být slabá baterie, mráz, mechanická porucha nebo opotřebovaný startér. Drž tlačítko spuštění, dokud se motor nerozběhne.&#10;&#10;Elektrický systém je při spouštění silně namáhán vysokými nárazovými proudy."/>
+        <text name="rms_tutorial_hard_start_message" text="Motor stroje %s se obtížně spouští. Příčinou může být slabá baterie, mráz, mechanická porucha nebo opotřebovaný startér.&#10;&#10;Elektrický systém je při spouštění silně namáhán vysokými nárazovými proudy."/>
         <text name="rms_tutorial_low_fuel_title" text="Nízká zásoba paliva"/>
         <text name="rms_tutorial_low_fuel_message" text="Nádrž se blíží k rezervě. Čím méně paliva zbývá, tím více se palivové čerpadlo musí namáhat, aby ho nasálo, a ze dna nádrže se do filtru dostává voda a usazeniny, takže se rychleji zanáší.&#10;&#10;Nejlépe je dotankovat na konci dne: v plné nádrži vzniká méně kondenzátu."/>
         <text name="rms_tutorial_lugging_title" text="Podtáčení motoru"/>

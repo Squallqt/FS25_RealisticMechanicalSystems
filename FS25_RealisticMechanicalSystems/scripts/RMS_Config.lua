@@ -7,7 +7,6 @@ local LAMP_LIFE_FACTOR = 2
 RMS_Config = {
     CONFIG_VERSION = 1,
 
-    -- extensive debug logging in the console
     DEBUG = false,
     TUTORIAL_MODE = true,
 
@@ -1040,7 +1039,6 @@ RMS_Config = {
 
     PREHEAT = {
         LAMP_TEST_DURATION_MS = 1000,
-        MAX_AUTOMATIC_CRANK_MS = 10000,
         START_ASSIST_TEMPERATURE_C = 5,
         ACTIVATION_TEMPERATURE_C = 25,
         WAIT_TIME_CURVE = {
@@ -1394,10 +1392,6 @@ RMS_Config.TUTORIAL_STATE_LOADED = false
 RMS_Config.TUTORIAL_LOCAL_USER_ID = nil
 
 ---Builds a normalized tutorial state from its three parts
--- @param boolean? tutorialMode true while the tips are shown
--- @param boolean? welcomeMessageSeen true once the welcome dialog was answered
--- @param table? messages seen flag of each message
--- @return table state tutorial state
 function RMS_Config.createTutorialState(tutorialMode, welcomeMessageSeen, messages)
     local state = {
         tutorialMode = tutorialMode ~= false,
@@ -1413,7 +1407,6 @@ function RMS_Config.createTutorialState(tutorialMode, welcomeMessageSeen, messag
 end
 
 ---Snapshots the current tutorial state
--- @return table state tutorial state
 function RMS_Config.captureTutorialState()
     return RMS_Config.createTutorialState(
         RMS_Config.TUTORIAL_MODE,
@@ -1423,7 +1416,6 @@ function RMS_Config.captureTutorialState()
 end
 
 ---Writes a tutorial state into the configuration
--- @param table? state tutorial state
 function RMS_Config.applyTutorialState(state)
     local normalized = RMS_Config.createTutorialState(
         state ~= nil and state.tutorialMode or nil,
@@ -1457,8 +1449,6 @@ function RMS_Config.resetTutorialStateSession()
 end
 
 ---Returns the tutorial state stored for a player
--- @param string? uniqueUserId unique user id
--- @return table? state tutorial state
 function RMS_Config.getTutorialPlayerState(uniqueUserId)
     if uniqueUserId == nil or uniqueUserId == "" then return nil end
 
@@ -1472,8 +1462,6 @@ function RMS_Config.getTutorialPlayerState(uniqueUserId)
 end
 
 ---Stores the tutorial state of a player
--- @param string? uniqueUserId unique user id
--- @param table? state tutorial state
 function RMS_Config.setTutorialPlayerState(uniqueUserId, state)
     if uniqueUserId == nil or uniqueUserId == "" or state == nil then return end
     RMS_Config.TUTORIAL_PLAYER_STATES[tostring(uniqueUserId)] = RMS_Config.createTutorialState(
@@ -1511,7 +1499,6 @@ end
 
 RMS_Config.savegameFile = "realisticMechanicalSystems.xml"
 
----Prints a debug line while debug mode is on
 local function log_dbg(...)
     if RMS_Config.DEBUG then
         local args = {...}
@@ -1520,7 +1507,6 @@ local function log_dbg(...)
     end
 end
 
----Writes the tutorial state of every player to the settings file
 local function saveTutorialPlayerStates(xmlFile, root)
     local userIds = {}
     for uniqueUserId, _ in pairs(RMS_Config.TUTORIAL_PLAYER_STATES) do
@@ -1540,7 +1526,6 @@ local function saveTutorialPlayerStates(xmlFile, root)
     end
 end
 
----Reads the tutorial state of every player from the settings file
 local function loadTutorialPlayerStates(xmlFile, root)
     RMS_Config.TUTORIAL_PLAYER_STATES = {}
     local index = 0
@@ -1587,13 +1572,10 @@ RMS_Config.SHARED_SETTINGS = {
 }
 
 ---Returns the table of the configuration holding a setting
--- @param table setting setting naming its group
--- @return table owner RMS_Config or one of its groups
 function RMS_Config.getSettingTable(setting)
     return setting.group ~= nil and RMS_Config[setting.group] or RMS_Config
 end
 
----Writes every adjustable setting to a settings file
 local function writeConfigFile(xmlFileName, includeTutorialStates)
     local xmlFile = createXMLFile("realisticMechanicalSystems", xmlFileName, "realisticMechanicalSystems")
     if xmlFile == nil or xmlFile == 0 then
@@ -1626,7 +1608,6 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
 end
 
 ---Writes every adjustable setting to the savegame file
--- @return boolean written true once the file is written
 function RMS_Config.saveToXMLFile()
     if not g_currentMission:getIsServer() then
         return false

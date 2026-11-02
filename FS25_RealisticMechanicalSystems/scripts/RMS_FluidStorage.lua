@@ -6,7 +6,6 @@ RMS_FluidStorage = {}
 
 local PalletRecord = PlaceableObjectStorage.ABSTRACT_OBJECTS_BY_CLASS_NAME.Vehicle
 
----Tells whether two records hold the same fluid
 local function getIsSameFluid(fluid, otherFluid)
     if fluid == nil or otherFluid == nil then
         return fluid == otherFluid
@@ -14,7 +13,6 @@ local function getIsSameFluid(fluid, otherFluid)
     return fluid.capacity == otherFluid.capacity and fluid.liters == otherFluid.liters and fluid.hasPump == otherFluid.hasPump
 end
 
----Tells whether the game loaded the vehicle a record asked for
 local function getIsLoaded(vehicles, vehicleLoadState)
     return vehicleLoadState == VehicleLoadingState.OK and #vehicles > 0
 end

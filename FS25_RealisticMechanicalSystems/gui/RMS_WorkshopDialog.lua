@@ -13,18 +13,14 @@ RMS_WorkshopDialog.TAB = {
     RECORD = 4
 }
 
--- interventions of the shortcut bar, in its order
 local SHORTCUT_SERVICES = { "INSPECTION", "MAINTENANCE", "REPAIR", "OVERHAUL", "REFILL", "BODYWORK", "REMAP" }
 
 ---Resale value quoted here, the dealer paying its direct sale bonus
--- @param table self workshop dialog
--- @return integer? value resale value, nil when the vehicle is not the farm's to sell
 local function getResaleValue(self)
     return RMS_Utils.getResaleValue(self.vehicle, self.workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER)
 end
 
 ---Creates the dialog
--- @return table dialog
 function RMS_WorkshopDialog.new()
     local self = MessageDialog.new(nil, RMS_WorkshopDialog_mt)
     self.currentTab = RMS_WorkshopDialog.TAB.SUMMARY
@@ -32,9 +28,7 @@ function RMS_WorkshopDialog.new()
 end
 
 ---Opens the workshop on a vehicle
--- @param table vehicle vehicle
 -- @param string? workshopType workshop the vehicle stands in, nil for its record only
--- @param string? serviceType intervention to open on
 function RMS_WorkshopDialog.show(vehicle, workshopType, serviceType)
     local self = RMS_WorkshopDialog.INSTANCE
     self.vehicle = vehicle
@@ -96,7 +90,6 @@ function RMS_WorkshopDialog:onClose()
 end
 
 ---Refreshes the pages when the vehicle changes status or value
--- @param float dt time since last frame in ms
 function RMS_WorkshopDialog:update(dt)
     RMS_WorkshopDialog:superClass().update(self, dt)
     if self.vehicle:getCurrentStatus() ~= self.observedStatus or getResaleValue(self) ~= self.observedResaleValue then
@@ -146,7 +139,6 @@ function RMS_WorkshopDialog:refresh()
 end
 
 ---Shows a page and links the focus over it
--- @param integer tabIndex page index
 function RMS_WorkshopDialog:setTab(tabIndex)
     self.currentTab = tabIndex
     for index, page in ipairs(self.pages) do
@@ -193,7 +185,6 @@ function RMS_WorkshopDialog:updateFocusLinks()
 end
 
 ---Shows the page of a clicked tab
--- @param table button clicked tab
 function RMS_WorkshopDialog:onClickTab(button)
     for index, tab in ipairs(self.tabs) do
         if tab == button then
@@ -208,7 +199,6 @@ function RMS_WorkshopDialog:onTabPagingChanged()
 end
 
 ---Opens the intervention of a shortcut
--- @param table button clicked shortcut
 function RMS_WorkshopDialog:onClickShortcut(button)
     for index, shortcut in ipairs(self.shortcuts) do
         if shortcut == button then
@@ -218,7 +208,6 @@ function RMS_WorkshopDialog:onClickShortcut(button)
 end
 
 ---Opens an intervention on the interventions page
--- @param string serviceType intervention
 function RMS_WorkshopDialog:selectService(serviceType)
     self.pages[RMS_WorkshopDialog.TAB.INTERVENTIONS]:selectService(serviceType)
     self.currentTab = RMS_WorkshopDialog.TAB.INTERVENTIONS
@@ -233,7 +222,6 @@ function RMS_WorkshopDialog:onClickCancelService()
 end
 
 ---Cancels the running service once the player confirmed it
--- @param boolean yes true when the player confirmed
 function RMS_WorkshopDialog:onCancelServiceConfirm(yes)
     if not yes then
         return

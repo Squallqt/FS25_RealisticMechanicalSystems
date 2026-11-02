@@ -24,9 +24,6 @@ RMS_FluidTransfer.RESULT = {
 }
 
 ---Returns how far a node stands from the body of a machine, on the ground
--- @param table vehicle machine
--- @param entityId node node standing beside it
--- @return float distance metres to the footprint of the machine, zero inside it
 function RMS_FluidTransfer.getDistanceToVehicle(vehicle, node)
     local x, _, z = worldToLocal(vehicle.rootNode, getWorldTranslation(node))
     local size = vehicle.size
@@ -36,8 +33,6 @@ function RMS_FluidTransfer.getDistanceToVehicle(vehicle, node)
 end
 
 ---Returns the player, user and farm of a network connection
--- @param Connection connection requester connection
--- @return table? requester authenticated requester context
 function RMS_FluidTransfer.getRequesterContext(connection)
     if connection == nil then
         return nil
@@ -57,7 +52,6 @@ function RMS_FluidTransfer.getRequesterContext(connection)
     }
 end
 
----
 local function getIsOwnedByRequester(container, target, requester)
     return requester ~= nil and requester.farmId ~= nil
         and container ~= nil and container.getOwnerFarmId ~= nil
@@ -66,7 +60,6 @@ local function getIsOwnedByRequester(container, target, requester)
         and target:getOwnerFarmId() == requester.farmId
 end
 
----
 local function getRuntimeValidation(container, target, circuit, requester)
     if g_server == nil or container == nil or target == nil or requester == nil
         or container.isDeleted == true or target.isDeleted == true
@@ -123,9 +116,6 @@ local REFUSAL_TEXT_KEYS = {
 }
 
 ---Returns the text telling a player why the server refused the pour
--- @param table container container the player poured from
--- @param string result result of the server
--- @return string? textKey refusal, nil for an invalid request
 function RMS_FluidTransfer.getRefusalTextKey(container, result)
     local isDrum = container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY
     if result == RMS_FluidTransfer.RESULT.OUT_OF_RANGE then
@@ -137,13 +127,6 @@ function RMS_FluidTransfer.getRefusalTextKey(container, result)
 end
 
 ---Starts one locked manual transfer after all authoritative checks
--- @param table container physical source container
--- @param table target RMS target vehicle
--- @param string circuit target circuit
--- @param table requester authenticated requester context
--- @param boolean incompatibleConfirmed explicit incompatible-fluid confirmation
--- @return boolean started whether the transfer started
--- @return string result validation result
 function RMS_FluidTransfer.tryStart(container, target, circuit, requester, incompatibleConfirmed)
     local result = getRuntimeValidation(container, target, circuit, requester)
     if result ~= RMS_FluidTransfer.RESULT.OK then
@@ -184,7 +167,6 @@ function RMS_FluidTransfer.tryStart(container, target, circuit, requester, incom
 end
 
 ---Releases the container and target-circuit locks without changing fluid levels
--- @param table container physical source container
 function RMS_FluidTransfer.cancel(container)
     local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
     local transfer = containerSpec ~= nil and containerSpec.activeTransfer or nil
@@ -201,7 +183,6 @@ function RMS_FluidTransfer.cancel(container)
     container:raiseDirtyFlags(containerSpec.dirtyFlag)
 end
 
----
 local function getActiveRequester(transfer)
     local player = transfer.requesterUserId ~= nil
         and g_currentMission.playerSystem:getPlayerByUserId(transfer.requesterUserId) or nil
@@ -215,8 +196,6 @@ local function getActiveRequester(transfer)
     }
 end
 
--- @param table container physical source container
--- @param float dt elapsed milliseconds
 function RMS_FluidTransfer.update(container, dt)
     local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
     local transfer = containerSpec ~= nil and containerSpec.activeTransfer or nil

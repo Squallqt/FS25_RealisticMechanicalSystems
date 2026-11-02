@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Start motoren for at udløse parkeringsbremsen"/>
         <text name="rms_preheat_ignition_message" text="Tænding slået til: forglødning i gang"/>
         <text name="rms_preheat_system_failure_message" text="Svigt i forglødningssystemet: koldstart ikke mulig"/>
-        <text name="rms_preheat_start_failed_message" text="Motoren startede ikke: slå tændingen fra, før du prøver igen"/>
+        <text name="rms_preheat_start_failed_message" text="Motoren startede ikke"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Kontrollér køretøjet"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="En inspektion eller en service kan fastslå flere fejl."/>
         <text name="rms_ws_status_ready_title" text="Værkstedet er klar"/>
         <text name="rms_ws_status_ready_hint" text="Vælg en procedure. Tilvalg, dele og pris bekræftes, før den starter."/>
+        <text name="rms_ws_status_closed_hint" text="Procedurer kan bestilles fra %s til %s."/>
         <text name="rms_ws_label_value" text="Køretøjets værdi"/>
         <text name="rms_ws_label_age" text="Alder"/>
         <text name="rms_ws_label_operating_hours" text="Driftstimer"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Ingen fejl markeret. Markér de fejl, der skal repareres, under Diagnose og prisoverslag."/>
         <text name="rms_ws_reason_overhaul_none" text="En mekanisk renovering genopretter systemer under 50 % tilstand. Denne maskine har ingen."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Et mobilt værksted udfører ikke lakarbejde. Det udføres hos forhandleren."/>
+        <text name="rms_ws_reason_refill_dealer" text="Kun forhandleren udfører påfyldning af væsker. Andre steder sker det med dunken."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Brug et udstyret værksted."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Tilslut en vogns diagnoseudstyr til maskinen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronisk diagnose kræves"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Dårlig kraftoverførsel"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Begrænset udveksling"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Uregelmæssig kraftoverførsel"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Forringet termostat"/>
         <text name="rms_report_transmission_failed" text="Svigtet"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Fedtpistol"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="For tungt påhæng"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Den trukne last ser ud til at være for tung til dette køretøj. Du kan køre videre, men transmissionen og drivlinjen bliver mere belastede.&#10;&#10;RMS bruger to rettesnore: en traktor har brug for mindst 10 hk per ton trukket masse, mens en lastbil har brug for mindst 6 hk per ton samlet vogntogsvægt. Under den gældende værdi og ved høj motorbelastning stiger sliddet på transmissionen."/>
         <text name="rms_tutorial_hard_start_title" text="Svær start"/>
-        <text name="rms_tutorial_hard_start_message" text="Motoren i %s er svær at starte. Et svagt batteri, frost, en mekanisk fejl eller slid på startmotoren kan være årsagen. Hold startknappen nede, indtil motoren går i gang.&#10;&#10;Elsystemet belastes hårdt under start på grund af de høje startstrømme."/>
+        <text name="rms_tutorial_hard_start_message" text="Motoren i %s er svær at starte. Et svagt batteri, frost, en mekanisk fejl eller slid på startmotoren kan være årsagen.&#10;&#10;Elsystemet belastes hårdt under start på grund af de høje startstrømme."/>
         <text name="rms_tutorial_low_fuel_title" text="Brændstofreserve"/>
         <text name="rms_tutorial_low_fuel_message" text="Tanken nærmer sig reserven. Jo mindre brændstof der er tilbage, desto hårdere skal brændstofpumpen arbejde for at suge det op, og bunden af tanken sender vand og bundfald til filteret, som stopper hurtigere til.&#10;&#10;Fyld hellere tanken op sidst på dagen: En fuld tank danner mindre kondensvand."/>
         <text name="rms_tutorial_lugging_title" text="Motor på for lavt omdrejningstal"/>

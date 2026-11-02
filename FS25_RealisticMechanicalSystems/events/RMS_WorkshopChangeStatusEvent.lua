@@ -10,15 +10,12 @@ InitEventClass(RMS_WorkshopChangeStatusEvent, "RMS_WorkshopChangeStatusEvent")
 
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_WorkshopChangeStatusEvent.emptyNew()
     return Event.new(RMS_WorkshopChangeStatusEvent_mt)
 end
 
 
 ---Create new instance of event
--- @param boolean isOpen true if the workshop is open
--- @return table self instance of class event
 function RMS_WorkshopChangeStatusEvent.new(isOpen)
     local self = RMS_WorkshopChangeStatusEvent.emptyNew()
     self.isOpen = isOpen
@@ -27,16 +24,12 @@ end
 
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_WorkshopChangeStatusEvent:writeStream(streamId, connection)
     streamWriteBool(streamId, self.isOpen)
 end
 
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_WorkshopChangeStatusEvent:readStream(streamId, connection)
     self.isOpen = streamReadBool(streamId)
     self:run(connection)
@@ -44,7 +37,6 @@ end
 
 
 ---Run action on receiving side
--- @param Connection connection connection
 function RMS_WorkshopChangeStatusEvent:run(connection)
     if not connection:getIsServer() then
         return
@@ -56,7 +48,6 @@ end
 
 
 ---Broadcast the workshop state from the server to all clients
--- @param boolean isOpen true if the workshop is open
 function RMS_WorkshopChangeStatusEvent.send(isOpen)
     if g_server ~= nil then
         g_server:broadcastEvent(RMS_WorkshopChangeStatusEvent.new(isOpen))

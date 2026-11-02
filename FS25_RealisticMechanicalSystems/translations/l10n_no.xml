@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Start motoren for å slippe parkeringsbremsen"/>
         <text name="rms_preheat_ignition_message" text="Tenningen er på: forvarming pågår"/>
         <text name="rms_preheat_system_failure_message" text="Svikt i forvarmingssystemet: kaldstart er ikke mulig"/>
-        <text name="rms_preheat_start_failed_message" text="Motoren startet ikke: slå av tenningen før du prøver igjen"/>
+        <text name="rms_preheat_start_failed_message" text="Motoren startet ikke"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Kontroller kjøretøyet"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="En inspeksjon eller en service kan fastslå flere feil."/>
         <text name="rms_ws_status_ready_title" text="Verkstedet er klart"/>
         <text name="rms_ws_status_ready_hint" text="Velg en prosedyre. Tillegg, deler og pris bekreftes før den starter."/>
+        <text name="rms_ws_status_closed_hint" text="Prosedyrer kan bestilles fra %s til %s."/>
         <text name="rms_ws_label_value" text="Kjøretøyets verdi"/>
         <text name="rms_ws_label_age" text="Alder"/>
         <text name="rms_ws_label_operating_hours" text="Driftstimer"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Ingen feil krysset av. Kryss av feilene som skal repareres under Diagnose og prisoverslag."/>
         <text name="rms_ws_reason_overhaul_none" text="En mekanisk overhaling setter i stand systemer under 50 % tilstand. Denne maskinen har ingen."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Et mobilt verksted utfører ikke lakkering. Den utføres hos forhandleren."/>
+        <text name="rms_ws_reason_refill_dealer" text="Bare forhandleren utfører påfylling av væsker. Andre steder gjøres det med kannen."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Bruk et utstyrt verksted."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Koble en vogns diagnoseutstyr til maskinen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronisk diagnose kreves"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Dårlig kraftoverføring"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Begrenset utveksling"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Uregelmessig kraftoverføring"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Forringet termostat"/>
         <text name="rms_report_transmission_failed" text="Sviktet"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Fettpresse"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="For tung henger"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Den trukne lasten ser ut til å være for tung for dette kjøretøyet. Du kan kjøre videre, men transmisjonen og drivlinjen blir mer belastet.&#10;&#10;RMS bruker to rettesnorer: en traktor trenger minst 10 hk per tonn trukket masse, mens en lastebil trenger minst 6 hk per tonn samlet vogntogvekt. Under den gjeldende verdien og ved høy motorbelastning stiger slitasjen på transmisjonen."/>
         <text name="rms_tutorial_hard_start_title" text="Vanskelig start"/>
-        <text name="rms_tutorial_hard_start_message" text="Motoren i %s er vanskelig å starte. Et svakt batteri, frost, en mekanisk feil eller slitasje på startmotoren kan være årsaken. Hold startknappen inne til motoren går i gang.&#10;&#10;Det elektriske systemet belastes hardt under start på grunn av de høye startstrømmene."/>
+        <text name="rms_tutorial_hard_start_message" text="Motoren i %s er vanskelig å starte. Et svakt batteri, frost, en mekanisk feil eller slitasje på startmotoren kan være årsaken.&#10;&#10;Det elektriske systemet belastes hardt under start på grunn av de høye startstrømmene."/>
         <text name="rms_tutorial_low_fuel_title" text="Drivstoffreserve"/>
         <text name="rms_tutorial_low_fuel_message" text="Tanken nærmer seg reserven. Jo mindre drivstoff det er igjen, desto hardere må drivstoffpumpen arbeide for å suge det opp, og bunnen av tanken sender vann og bunnfall til filteret, som tettes raskere.&#10;&#10;Fyll heller tanken ved slutten av dagen: En full tank danner mindre kondens."/>
         <text name="rms_tutorial_lugging_title" text="Motor på for lavt turtall"/>

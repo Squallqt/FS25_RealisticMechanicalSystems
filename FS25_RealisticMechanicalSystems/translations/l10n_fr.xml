@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Démarrez le moteur pour desserrer le frein de parking"/>
         <text name="rms_preheat_ignition_message" text="Contact mis : préchauffage en cours"/>
         <text name="rms_preheat_system_failure_message" text="Panne du système de préchauffage : démarrage à froid impossible"/>
-        <text name="rms_preheat_start_failed_message" text="Le moteur n'a pas démarré : coupez le contact avant de réessayer"/>
+        <text name="rms_preheat_start_failed_message" text="Le moteur n'a pas démarré"/>
         <text name="rms_hud_vehicle_notification" text="%s : %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Contrôler le véhicule"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Une inspection ou un entretien peut identifier d'autres pannes."/>
         <text name="rms_ws_status_ready_title" text="Atelier prêt"/>
         <text name="rms_ws_status_ready_hint" text="Sélectionnez une intervention. Les options, les pièces et le prix seront confirmés avant le démarrage."/>
+        <text name="rms_ws_status_closed_hint" text="Les interventions se commandent de %s à %s."/>
         <text name="rms_ws_label_value" text="Valeur du véhicule"/>
         <text name="rms_ws_label_age" text="Âge"/>
         <text name="rms_ws_label_operating_hours" text="Heures de fonctionnement"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Aucune panne cochée. Cochez dans Diagnostic et devis les pannes à réparer."/>
         <text name="rms_ws_reason_overhaul_none" text="Une révision mécanique remet en état les systèmes sous 50 % d'état. Aucun ne l'est sur cette machine."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Un atelier mobile ne fait pas de peinture. Elle se fait chez le concessionnaire."/>
+        <text name="rms_ws_reason_refill_dealer" text="Seul le concessionnaire fait l'appoint des fluides. Ailleurs, versez-les au bidon."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s : %s. Utilisez un atelier équipé."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s : %s. Branchez la valise de diagnostic d'un chariot sur la machine."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnostic électronique requis"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Transmission inefficace"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Rapport réduit"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Transmission irrégulière"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Thermostat dégradé"/>
         <text name="rms_report_transmission_failed" text="Défaillante"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistolet à graisse"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Remorque trop lourde"/>
         <text name="rms_tutorial_heavy_trailer_message" text="La charge tractée semble trop lourde pour ce véhicule. Vous pouvez continuer à rouler, mais la transmission et la chaîne cinématique subiront davantage de contraintes.&#10;&#10;RMS utilise deux repères : un tracteur nécessite au moins 10 ch par tonne de masse tractée, tandis qu'un camion nécessite au moins 6 ch par tonne de poids total roulant. Sous la valeur applicable et à forte charge moteur, l'usure de la transmission augmente."/>
         <text name="rms_tutorial_hard_start_title" text="Démarrage difficile"/>
-        <text name="rms_tutorial_hard_start_message" text="Le moteur de votre %s démarre difficilement. Une batterie faible, le gel, une panne mécanique ou l'usure du démarreur peuvent en être la cause. Maintenez le bouton de démarrage enfoncé jusqu'au lancement.&#10;&#10;Le système électrique subit de fortes charges au démarrage, à cause des courants d'appel élevés."/>
+        <text name="rms_tutorial_hard_start_message" text="Le moteur de votre %s démarre difficilement. Une batterie faible, le gel, une panne mécanique ou l'usure du démarreur peuvent en être la cause.&#10;&#10;Le système électrique subit de fortes charges au démarrage, à cause des courants d'appel élevés."/>
         <text name="rms_tutorial_low_fuel_title" text="Réserve de carburant"/>
         <text name="rms_tutorial_low_fuel_message" text="Le réservoir approche de la réserve. Moins il reste de carburant, plus la pompe à carburant doit forcer pour l'aspirer, et le fond du réservoir envoie son eau et ses dépôts au filtre, qui s'encrasse plus vite.&#10;&#10;Mieux vaut faire le plein en fin de journée : un réservoir plein prend moins de condensation."/>
         <text name="rms_tutorial_lugging_title" text="Moteur en sous-régime"/>

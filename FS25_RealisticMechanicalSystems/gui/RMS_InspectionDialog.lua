@@ -32,18 +32,15 @@ local CARE_POINTS = {
     { target = "lubrication", titleKey = "rms_inspection_lubrication_level", icon = "rms_workshopFluidIconLubrication" }
 }
 
--- the status of each blow-out stage of the air filter
 local AIR_FILTER_STATUS = { "rms_inspection_status_slightly_dirty", "rms_inspection_status_dirty", "rms_inspection_status_heavily_clogged" }
 
 local GAUGE_PARTS = { "inspectionGaugeTrack", "inspectionGaugeZone", "inspectionGaugeMinMark", "inspectionGaugeMaxMark",
     "inspectionGaugeMinLabel", "inspectionGaugeMaxLabel" }
 
----Returns the severity of a status, none for a fine or unneeded point
 local function getSeverity(status)
     return SEVERITY[status] or 0
 end
 
----Returns the colour of a severity, as the dashboard telltales show it
 local function getSeverityColor(severity)
     if severity >= 4 then
         return RMS_Breakdowns.COLORS.CRITICAL
@@ -53,14 +50,11 @@ local function getSeverityColor(severity)
     return RMS_Utils.COLOR.HIGHLIGHT
 end
 
----Builds a row of the check, fine until a finding says otherwise
 local function newRow(titleKey, title, icon)
     return { titleKey = titleKey, title = title, icon = icon, statusKey = OK, value = g_i18n:getText(OK) }
 end
 
 ---Builds a row for each fluid circuit of a machine, at its level
--- @param table vehicle vehicle
--- @return table rows fluid rows
 function RMS_InspectionDialog.buildFluidRows(vehicle)
     local rows = {}
     for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
@@ -75,8 +69,6 @@ function RMS_InspectionDialog.buildFluidRows(vehicle)
 end
 
 ---Builds a row for each cleaning and greasing point of a machine
--- @param table vehicle vehicle
--- @return table rows care rows
 function RMS_InspectionDialog.buildFieldCareRows(vehicle)
     local isElectric = vehicle.spec_RealisticMechanicalSystems.isElectricVehicle
     local rows = {}
@@ -262,9 +254,6 @@ function Report:getWorst()
 end
 
 ---Creates the dialog
--- @param table? target target
--- @param table? customMt custom metatable
--- @return table dialog dialog
 function RMS_InspectionDialog.new(target, customMt)
     local self = MessageDialog.new(target, customMt or RMS_InspectionDialog_mt)
     self.technicalFluidsData, self.fieldCareData = {}, {}
@@ -283,7 +272,6 @@ function RMS_InspectionDialog:onCreate()
 end
 
 ---Opens the check on a machine
--- @param table vehicle vehicle
 function RMS_InspectionDialog.show(vehicle)
     local self = RMS_InspectionDialog.INSTANCE
     self.vehicle = vehicle
@@ -337,7 +325,6 @@ function RMS_InspectionDialog:updateIdentity()
     self.identityElement:setText(table.concat({ vehicle:getFullName(), RMS_Utils.formatHours(RMS_Utils.getHourMeter(vehicle)),
         "ODO " .. RMS_Utils.formatOdometerKilometers(RMS_Utils.getOdometerKilometers(vehicle)),
         RMS_Utils.formatServiceDue(vehicle, vehicle:getServiceSchedule()) }, "  \194\183  "))
-    -- the title and the identity share the width of the longer one
     self.headerTextLayout:setSize(math.max(self.dialogTitleElement.size[1], self.identityElement.size[1]), nil)
     self.headerTextLayout:invalidateLayout()
     self.headerLayout:invalidateLayout()
@@ -348,7 +335,6 @@ function RMS_InspectionDialog:updateVerdict(report)
     local worst, isOtherWarned = report:getWorst()
     local name = worst >= 4 and "stop" or worst >= 1 and "watch" or "ok"
     local message = g_i18n:getText("rms_inspection_verdict_" .. name .. "_message")
-    -- an air filter at its blow-out limit, and nothing else to say
     if name == "watch" and report.isAirFilterReplacementDue and #report.lines == 1 and not isOtherWarned then
         message = string.format(g_i18n:getText("rms_inspection_verdict_air_filter_service_message"),
             RMS_Utils.formatAirFilterServiceHours(self.vehicle))

@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Avvia il motore per rilasciare il freno di stazionamento"/>
         <text name="rms_preheat_ignition_message" text="Quadro acceso: preriscaldamento in corso"/>
         <text name="rms_preheat_system_failure_message" text="Guasto del sistema di preriscaldamento: avviamento a freddo non disponibile"/>
-        <text name="rms_preheat_start_failed_message" text="Il motore non si è avviato: spegni il quadro prima di riprovare"/>
+        <text name="rms_preheat_start_failed_message" text="Il motore non si è avviato"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Controlla il veicolo"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Un'ispezione o una manutenzione può identificare altri guasti."/>
         <text name="rms_ws_status_ready_title" text="Officina pronta"/>
         <text name="rms_ws_status_ready_hint" text="Seleziona un intervento. Opzioni, ricambi e prezzo verranno confermati prima dell'avvio."/>
+        <text name="rms_ws_status_closed_hint" text="Gli interventi si prenotano dalle %s alle %s."/>
         <text name="rms_ws_label_value" text="Valore del veicolo"/>
         <text name="rms_ws_label_age" text="Età"/>
         <text name="rms_ws_label_operating_hours" text="Ore di funzionamento"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Nessun guasto spuntato. Spunta in Diagnosi e preventivo i guasti da riparare."/>
         <text name="rms_ws_reason_overhaul_none" text="Una revisione meccanica ripristina i sistemi sotto il 50% di stato. Questa macchina non ne ha."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Un'officina mobile non esegue verniciature. Si eseguono dal concessionario."/>
+        <text name="rms_ws_reason_refill_dealer" text="Solo il concessionario esegue il rabbocco dei fluidi. Altrove si fa con la tanica."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Usa un'officina attrezzata."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Collega alla macchina lo strumento di diagnosi di un carrello."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnosi elettronica necessaria"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Trasmissione inefficiente"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Rapporto ridotto"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Trasmissione irregolare"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Termostato degradato"/>
         <text name="rms_report_transmission_failed" text="Guasta"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistola ingrassatrice"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Rimorchio troppo pesante"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Il carico trainato sembra troppo pesante per questo veicolo. Puoi continuare a guidare, ma la trasmissione e la catena cinematica subiranno maggiori sollecitazioni.&#10;&#10;RMS usa due riferimenti: un trattore richiede almeno 10 CV per tonnellata di massa trainata, mentre un camion richiede almeno 6 CV per tonnellata di peso totale della combinazione. Sotto il valore applicabile e con un carico motore elevato, l'usura della trasmissione aumenta."/>
         <text name="rms_tutorial_hard_start_title" text="Avviamento difficile"/>
-        <text name="rms_tutorial_hard_start_message" text="Il motore di %s parte con difficoltà. Una batteria scarica, il gelo, un guasto meccanico o l'usura del motorino d'avviamento possono esserne la causa. Tieni premuto il pulsante di avviamento finché il motore non parte.&#10;&#10;L'impianto elettrico subisce forti sollecitazioni all'avvio, a causa delle elevate correnti di spunto."/>
+        <text name="rms_tutorial_hard_start_message" text="Il motore di %s parte con difficoltà. Una batteria scarica, il gelo, un guasto meccanico o l'usura del motorino d'avviamento possono esserne la causa.&#10;&#10;L'impianto elettrico subisce forti sollecitazioni all'avvio, a causa delle elevate correnti di spunto."/>
         <text name="rms_tutorial_low_fuel_title" text="Riserva di carburante"/>
         <text name="rms_tutorial_low_fuel_message" text="Il serbatoio si sta avvicinando alla riserva. Meno carburante resta, più la pompa del carburante deve forzare per aspirarlo, e il fondo del serbatoio manda acqua e sedimenti al filtro, che si intasa prima.&#10;&#10;Meglio fare il pieno a fine giornata: un serbatoio pieno forma meno condensa."/>
         <text name="rms_tutorial_lugging_title" text="Motore sotto sforzo a basso regime"/>

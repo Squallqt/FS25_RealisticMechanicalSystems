@@ -9,7 +9,7 @@ RMS_EngineRemap.RESTORE = "rms_remap_restore"
 -- gain of the weakest and of the strongest engine of a store item
 RMS_EngineRemap.LOW_GAIN = 0.20
 RMS_EngineRemap.HIGH_GAIN = 0.10
--- tuner price at the reference power, sized like the repair grid
+-- tuner price at the reference power
 RMS_EngineRemap.PRICE = 1000
 RMS_EngineRemap.PRICE_POWER = 160
 RMS_EngineRemap.PRICE_EXPONENT = 0.6
@@ -23,14 +23,12 @@ RMS_EngineRemap.DURATION_HOURS = {
 -- rpm between two points of the bench curve
 RMS_EngineRemap.CURVE_STEP = 10
 
----Returns the store item's engine items and the index in use
 local function getMotorItems(vehicle)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     local items = storeItem ~= nil and storeItem.configurations ~= nil and storeItem.configurations.motor or nil
     return items, vehicle.configurations ~= nil and vehicle.configurations.motor or 1
 end
 
----Returns the weakest and strongest selectable engines by shop power
 local function getFamilyPower(vehicle)
     local items = getMotorItems(vehicle)
     local low, high, lowItem, highItem = nil, nil, nil, nil
@@ -44,8 +42,6 @@ local function getFamilyPower(vehicle)
 end
 
 ---Tells whether a remap applies to the machine
--- @param table vehicle vehicle
--- @return boolean isEligible true for an owned combustion engine with an engine control unit
 function RMS_EngineRemap.getIsEligible(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return spec ~= nil and not spec.isExcludedVehicle and vehicle.spec_motorized ~= nil
@@ -53,8 +49,6 @@ function RMS_EngineRemap.getIsEligible(vehicle)
 end
 
 ---Returns the gain from the engine's place in its store item
--- @param table vehicle vehicle
--- @return float gain torque gain, 0.10 to 0.20
 function RMS_EngineRemap.getGain(vehicle)
     local low, high = getFamilyPower(vehicle)
     local power = RMS_Fluids.getEnginePower(vehicle)
@@ -66,16 +60,12 @@ function RMS_EngineRemap.getGain(vehicle)
 end
 
 ---Tells whether the machine runs remapped software
--- @param table vehicle vehicle
--- @return boolean isRemapped true while the remap of its current engine is fitted
 function RMS_EngineRemap.getIsRemapped(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return spec ~= nil and (spec.remapMotor or 0) > 0
 end
 
 ---Returns the torque factor the remap gives the engine
--- @param table vehicle vehicle
--- @return float factor 1 on stock software
 function RMS_EngineRemap.getTorqueFactor(vehicle)
     if not RMS_EngineRemap.getIsRemapped(vehicle) then
         return 1
@@ -88,14 +78,10 @@ function RMS_EngineRemap.getTorqueFactor(vehicle)
 end
 
 ---Converts the native load share to a share of the stock torque
--- @param table vehicle vehicle
--- @param float load native motor load share, read against the torque fitted
--- @return float load share of the stock torque
 function RMS_EngineRemap.getStockLoad(vehicle, load)
     return load * RMS_EngineRemap.getTorqueFactor(vehicle)
 end
 
----Returns the strongest engine of the store item over this one
 local function getBlockRatio(vehicle)
     local _, high = getFamilyPower(vehicle)
     local power = RMS_Fluids.getEnginePower(vehicle)
@@ -104,8 +90,6 @@ local function getBlockRatio(vehicle)
 end
 
 ---Returns how far the overload threshold moves on a remapped engine
--- @param table vehicle vehicle
--- @return float ratio strongest engine of the store item over this one, 1 on stock software
 function RMS_EngineRemap.getOverloadRatio(vehicle)
     if not RMS_EngineRemap.getIsRemapped(vehicle) then
         return 1
@@ -114,26 +98,18 @@ function RMS_EngineRemap.getOverloadRatio(vehicle)
 end
 
 ---Tells whether the remap takes full load past what the block holds
--- @param table vehicle vehicle
--- @return boolean isBeyond true when full load wears as an overload
 function RMS_EngineRemap.getIsBeyondBlock(vehicle)
     local threshold = RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD
     return 1 + RMS_EngineRemap.getGain(vehicle) > threshold * getBlockRatio(vehicle)
 end
 
 ---Returns the stock peaks of the engine
--- @param table vehicle vehicle
--- @return float power peak power in hp
--- @return float torque peak torque in Nm
 function RMS_EngineRemap.getStockPeaks(vehicle)
     local motor = vehicle.spec_motorized.motor
     return motor.peakMotorPower * RMS_Fluids.KW_TO_HP, motor.peakMotorTorque * 1000
 end
 
 ---Returns the tuner price at the game's economic difficulty
--- @param table vehicle vehicle
--- @param string option REMAP or RESTORE
--- @return float price
 function RMS_EngineRemap.getPrice(vehicle, option)
     local price
     if option == RMS_EngineRemap.RESTORE then
@@ -149,15 +125,11 @@ function RMS_EngineRemap.getPrice(vehicle, option)
 end
 
 ---Returns the work hours of a remap or of a restore
--- @param string option REMAP or RESTORE
--- @return float hours
 function RMS_EngineRemap.getDurationHours(option)
     return RMS_EngineRemap.DURATION_HOURS[option] or 0
 end
 
 ---Returns the machine age in months up to which a restore is free
--- @param table vehicle vehicle
--- @return integer? age nil on stock software
 function RMS_EngineRemap.getFreeRestoreUntil(vehicle)
     if not RMS_EngineRemap.getIsRemapped(vehicle) then
         return nil
@@ -166,33 +138,22 @@ function RMS_EngineRemap.getFreeRestoreUntil(vehicle)
 end
 
 ---Tells whether a restore costs nothing now
--- @param table vehicle vehicle
--- @return boolean isFree true within the months after the remap
 function RMS_EngineRemap.getIsRestoreFree(vehicle)
     local untilAge = RMS_EngineRemap.getFreeRestoreUntil(vehicle)
     return untilAge ~= nil and (vehicle.age or 0) < untilAge
 end
 
 ---Returns the option a tuner offers the machine now
--- @param table vehicle vehicle
--- @return string option RESTORE when remapped, REMAP otherwise
 function RMS_EngineRemap.getOption(vehicle)
     return RMS_EngineRemap.getIsRemapped(vehicle) and RMS_EngineRemap.RESTORE or RMS_EngineRemap.REMAP
 end
 
 ---Tells whether the tuner comes to a workshop: never to the dealer
--- @param string workshopType workshop type
--- @return boolean isTunerAt
 function RMS_EngineRemap.getIsTunerAt(workshopType)
     return workshopType ~= RealisticMechanicalSystems.WORKSHOP.DEALER
 end
 
 ---Tells whether a workshop does the service, and why not
--- @param table vehicle vehicle
--- @param string workshopType workshop type
--- @param string? option REMAP or RESTORE
--- @return boolean isAllowed true when the tuner can do it
--- @return string? refusal dealer, leased or notEligible
 function RMS_EngineRemap.getAvailability(vehicle, workshopType, option)
     if not RMS_EngineRemap.getIsEligible(vehicle) then
         return false, vehicle.propertyState ~= VehiclePropertyState.OWNED and "leased" or "notEligible"
@@ -203,15 +164,12 @@ function RMS_EngineRemap.getAvailability(vehicle, workshopType, option)
     return option == nil or option == RMS_EngineRemap.getOption(vehicle), nil
 end
 
----Tells whether the factory warranty term runs, by age and hours
 local function getIsFactoryTermRunning(vehicle)
     local months, hours = vehicle:getWarrantyLimits()
     return (vehicle.age or 0) < months and RealisticMechanicalSystems.getRealOperatingHours(vehicle) < hours
 end
 
 ---Returns the fitted parts whose warranty runs, the first to end first
--- @param table vehicle vehicle
--- @return table parts each with its breakdown id and expiry age
 function RMS_EngineRemap.getCoveredParts(vehicle)
     local parts = {}
     for id, expiry in pairs(vehicle.spec_RealisticMechanicalSystems.partWarranty or {}) do
@@ -226,8 +184,6 @@ function RMS_EngineRemap.getCoveredParts(vehicle)
 end
 
 ---Tells whether a factory or fitted part warranty still runs
--- @param table vehicle vehicle
--- @return boolean isActive
 function RMS_EngineRemap.getIsWarrantyActive(vehicle)
     if vehicle.spec_RealisticMechanicalSystems.warrantyVoided then
         return false
@@ -235,7 +191,6 @@ function RMS_EngineRemap.getIsWarrantyActive(vehicle)
     return getIsFactoryTermRunning(vehicle) or #RMS_EngineRemap.getCoveredParts(vehicle) > 0
 end
 
----Returns the engines at both ends of the store item with their gain
 local function getRangeEnds(vehicle)
     local _, _, lowItem, highItem = getFamilyPower(vehicle)
     if lowItem == nil or lowItem == highItem then
@@ -245,8 +200,6 @@ local function getRangeEnds(vehicle)
 end
 
 ---Describes what the tuner offers the machine at this workshop
--- @param table vehicle vehicle
--- @param string workshopType workshop type
 -- @return table offer refusal, option, peaks in hp and Nm, gain, range ends, price, hours, restore terms
 function RMS_EngineRemap.getOffer(vehicle, workshopType)
     local isAllowed, refusal = RMS_EngineRemap.getAvailability(vehicle, workshopType)
@@ -276,7 +229,6 @@ function RMS_EngineRemap.getOffer(vehicle, workshopType)
 end
 
 ---Samples the stock and remapped curves for the bench chart
--- @param table vehicle vehicle
 -- @return table curve rpm, stockTorque, remapTorque (Nm), stockHp, remapHp lists and peakRpm
 function RMS_EngineRemap.getCurve(vehicle)
     local motor = vehicle.spec_motorized.motor
@@ -304,8 +256,6 @@ function RMS_EngineRemap.getCurve(vehicle)
 end
 
 ---Fits the remap or the stock software at the end of the service
--- @param table vehicle vehicle
--- @param string option REMAP or RESTORE
 function RMS_EngineRemap.complete(vehicle, option)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if option == RMS_EngineRemap.REMAP then
@@ -321,7 +271,6 @@ function RMS_EngineRemap.complete(vehicle, option)
 end
 
 ---Puts the stock software back
--- @param table vehicle vehicle
 function RMS_EngineRemap.reset(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.remapMotor = 0
@@ -330,7 +279,6 @@ function RMS_EngineRemap.reset(vehicle)
 end
 
 ---Keeps a remap only on the engine it was made for
--- @param table vehicle vehicle loaded from its savegame
 function RMS_EngineRemap.validateLoadedEngine(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local _, index = getMotorItems(vehicle)

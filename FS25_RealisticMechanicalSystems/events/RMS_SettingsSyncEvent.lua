@@ -8,13 +8,11 @@ local RMS_SettingsSyncEvent_mt = Class(RMS_SettingsSyncEvent, Event)
 InitEventClass(RMS_SettingsSyncEvent, "RMS_SettingsSyncEvent")
 
 ---Creates an empty event, filled by readStream
--- @return table event event
 function RMS_SettingsSyncEvent.emptyNew()
     return Event.new(RMS_SettingsSyncEvent_mt)
 end
 
 ---Creates an event holding the current shared settings
--- @return table event event
 function RMS_SettingsSyncEvent.new()
     local self = RMS_SettingsSyncEvent.emptyNew()
     self.values = {}
@@ -25,8 +23,6 @@ function RMS_SettingsSyncEvent.new()
 end
 
 ---Writes the settings in the order of RMS_Config.SHARED_SETTINGS
--- @param integer streamId stream id
--- @param table connection connection
 function RMS_SettingsSyncEvent:writeStream(streamId, connection)
     for index, setting in ipairs(RMS_Config.SHARED_SETTINGS) do
         if setting.isFloat then
@@ -38,8 +34,6 @@ function RMS_SettingsSyncEvent:writeStream(streamId, connection)
 end
 
 ---Reads the settings in the order of RMS_Config.SHARED_SETTINGS
--- @param integer streamId stream id
--- @param table connection connection
 function RMS_SettingsSyncEvent:readStream(streamId, connection)
     self.values = {}
     for index, setting in ipairs(RMS_Config.SHARED_SETTINGS) do
@@ -52,8 +46,6 @@ function RMS_SettingsSyncEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
----Writes the received settings in the configuration and applies them
--- @param table event received event
 local function applySettings(event)
     for index, setting in ipairs(RMS_Config.SHARED_SETTINGS) do
         RMS_Config.getSettingTable(setting)[setting.field] = event.values[index]
@@ -65,7 +57,6 @@ local function applySettings(event)
 end
 
 ---Applies the settings, from a master user only on the server
--- @param table connection connection
 function RMS_SettingsSyncEvent:run(connection)
     if not connection:getIsServer() then
         local userId = g_currentMission.userManager:getUserIdByConnection(connection)
@@ -75,7 +66,6 @@ function RMS_SettingsSyncEvent:run(connection)
         end
 
         applySettings(self)
-        -- the other clients receive what the server now holds
         g_server:broadcastEvent(RMS_SettingsSyncEvent.new(), nil, connection)
     else
         applySettings(self)

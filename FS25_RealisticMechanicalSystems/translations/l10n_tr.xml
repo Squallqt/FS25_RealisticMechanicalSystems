@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="El frenini bırakmak için motoru çalıştır"/>
         <text name="rms_preheat_ignition_message" text="Kontak açık: ön ısıtma sürüyor"/>
         <text name="rms_preheat_system_failure_message" text="Ön ısıtma sistemi arızası: soğuk çalıştırma kullanılamıyor"/>
-        <text name="rms_preheat_start_failed_message" text="Motor çalışmadı: yeniden denemeden önce kontağı kapat"/>
+        <text name="rms_preheat_start_failed_message" text="Motor çalışmadı"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Aracı kontrol et"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Muayene ya da bakım başka arızaları tespit edebilir."/>
         <text name="rms_ws_status_ready_title" text="Atölye Hazır"/>
         <text name="rms_ws_status_ready_hint" text="Bir işlem seç. Seçenekler, parçalar ve fiyat başlamadan önce onaylanır."/>
+        <text name="rms_ws_status_closed_hint" text="İşlemler %s ile %s arasında kabul edilir."/>
         <text name="rms_ws_label_value" text="Değer"/>
         <text name="rms_ws_label_age" text="Yaş"/>
         <text name="rms_ws_label_operating_hours" text="Çalışma Saatleri"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="İşaretli arıza yok. Onarılacak arızaları Teşhis ve Teklif bölümünde işaretle."/>
         <text name="rms_ws_reason_overhaul_none" text="Mekanik revizyon, durumu %50'nin altındaki sistemleri yeniler. Bu makinede böyle bir sistem yok."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Mobil atölye boyama yapmaz. Boyama bayide yapılır."/>
+        <text name="rms_ws_reason_refill_dealer" text="Sıvı tamamlamayı yalnızca bayi yapar. Başka yerlerde bidonla yapılır."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Donanımlı bir atölye kullanın."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Bir arabanın teşhis cihazını makineye bağla."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronik teşhis gerekli"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Verimsiz Güç Aktarımı"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Sınırlı oran aralığı"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Düzensiz Güç Aktarımı"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Termostat zayıflamış"/>
         <text name="rms_report_transmission_failed" text="Arızalı"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Gres Tabancası"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Römork Çok Ağır"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Çekilen yük bu araç için fazla ağır görünüyor. Sürmeye devam edebilirsin ancak şanzıman ve aktarma organları daha fazla zorlanmaya maruz kalır.&#10;&#10;RMS iki ölçüt kullanır: traktör için çekilen ton başına en az 10 bg, kamyon için toplam yüklü kütlenin tonu başına en az 6 bg gerekir. Ağır motor yükünde ilgili değerin altında kalmak şanzıman aşınmasını artırır."/>
         <text name="rms_tutorial_hard_start_title" text="Zor Çalıştırma"/>
-        <text name="rms_tutorial_hard_start_message" text="Bu %s üzerindeki motor zor çalışıyor. Nedeni zayıf akü, don, mekanik arıza veya marş motoru aşınması olabilir. Motor çalışana kadar çalıştırma düğmesini basılı tut.&#10;&#10;Yüksek ilk akımlar nedeniyle elektrik sistemi çalıştırma sırasında ağır yük altında kalır."/>
+        <text name="rms_tutorial_hard_start_message" text="Bu %s üzerindeki motor zor çalışıyor. Nedeni zayıf akü, don, mekanik arıza veya marş motoru aşınması olabilir.&#10;&#10;Yüksek ilk akımlar nedeniyle elektrik sistemi çalıştırma sırasında ağır yük altında kalır."/>
         <text name="rms_tutorial_low_fuel_title" text="Yakıt Rezervi"/>
         <text name="rms_tutorial_low_fuel_message" text="Depo, yedek seviyeye yaklaşıyor. Depoda ne kadar az yakıt kalırsa, yakıt pompasının onu çekmek için o kadar zorlanması gerekir; deponun dibindeki su ve tortu da filtreye gider ve filtre daha çabuk tıkanır.&#10;&#10;Depoyu gün sonunda doldurmak en iyisidir: Dolu bir depoda daha az yoğuşma olur."/>
         <text name="rms_tutorial_lugging_title" text="Düşük Devirde Zorlanma"/>

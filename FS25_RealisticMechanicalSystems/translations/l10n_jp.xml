@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="駐車ブレーキを解除するにはエンジンを始動してください"/>
         <text name="rms_preheat_ignition_message" text="イグニッションON：予熱中"/>
         <text name="rms_preheat_system_failure_message" text="予熱システム故障：冷間始動不可"/>
-        <text name="rms_preheat_start_failed_message" text="エンジンを始動できませんでした：再試行する前にイグニッションをOFFにしてください"/>
+        <text name="rms_preheat_start_failed_message" text="エンジンを始動できませんでした"/>
         <text name="rms_hud_vehicle_notification" text="%s：%s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="車両を点検"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="点検またはメンテナンスで、ほかの故障を特定できる場合があります。"/>
         <text name="rms_ws_status_ready_title" text="ワークショップ準備完了"/>
         <text name="rms_ws_status_ready_hint" text="作業を選択してください。オプション、部品、料金は開始前に確定されます。"/>
+        <text name="rms_ws_status_closed_hint" text="作業の受付時間は%sから%sまでです。"/>
         <text name="rms_ws_label_value" text="車両価値"/>
         <text name="rms_ws_label_age" text="車齢"/>
         <text name="rms_ws_label_operating_hours" text="稼働時間"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="故障が選択されていません。「故障判定と見積り」で修理する故障を選択してください。"/>
         <text name="rms_ws_reason_overhaul_none" text="機械オーバーホールは状態50%未満のシステムを整備します。この車両には該当がありません。"/>
         <text name="rms_ws_reason_bodywork_mobile" text="移動式ワークショップでは塗装できません。ディーラーで行います。"/>
+        <text name="rms_ws_reason_refill_dealer" text="油水類の補給はディーラーのみが行います。それ以外の場所では容器で補給します。"/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s：%s。設備のある整備工場をご利用ください。"/>
         <text name="rms_workshop_diagnostic_blocked" text="%s：%s。カートのスキャンツールを車両に接続してください。"/>
         <text name="rms_mobile_workshop_diagnostic_required" text="電子系の故障判定が必要"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="駆動力の伝達不良"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="変速比制限"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="駆動力の伝達が不安定"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="サーモスタット劣化"/>
         <text name="rms_report_transmission_failed" text="故障"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="グリースガン"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="重すぎるトレーラー"/>
         <text name="rms_tutorial_heavy_trailer_message" text="けん引荷重がこの車両には重すぎる可能性があります。走行を続けることはできますが、ミッションと駆動系にかかる応力が増えます。&#10;&#10;RMSでは二つの基準を使用します。トラクターにはけん引重量の各トンにつき最低10馬力、トラックには連結車両総重量の各トンにつき最低6馬力が必要です。該当する基準を下回った状態でエンジンに高い負荷がかかると、ミッションの摩耗が増えます。"/>
         <text name="rms_tutorial_hard_start_title" text="始動不良"/>
-        <text name="rms_tutorial_hard_start_message" text="%sのエンジンが始動しにくくなっています。バッテリーの電力不足、厳しい冷え込み、機械的な故障、スターターの摩耗などが原因です。エンジンが始動するまで始動ボタンを長押ししてください。&#10;&#10;始動時の大きな突入電流により、電気システムには大きな負荷がかかります。"/>
+        <text name="rms_tutorial_hard_start_message" text="%sのエンジンが始動しにくくなっています。バッテリーの電力不足、厳しい冷え込み、機械的な故障、スターターの摩耗などが原因です。&#10;&#10;始動時の大きな突入電流により、電気システムには大きな負荷がかかります。"/>
         <text name="rms_tutorial_low_fuel_title" text="燃料残量低下"/>
         <text name="rms_tutorial_low_fuel_message" text="燃料タンクの残量が予備水準に近づいています。燃料が少なくなるほど吸い上げる燃料ポンプへの負荷が増え、タンク底の水分や沈んだ汚れがフィルターへ送られて目詰まりが早まります。&#10;&#10;一日の終わりに満タンにしておくのがおすすめです。満タンのタンクは結露が少なくなります。"/>
         <text name="rms_tutorial_lugging_title" text="低回転高負荷運転"/>

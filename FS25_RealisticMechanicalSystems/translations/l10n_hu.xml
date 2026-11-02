@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="A rögzítőfék kiengedéséhez indítsd be a motort"/>
         <text name="rms_preheat_ignition_message" text="Gyújtás bekapcsolva: előizzítás folyamatban"/>
         <text name="rms_preheat_system_failure_message" text="Az előizzító rendszer hibája: hidegindítás nem lehetséges"/>
-        <text name="rms_preheat_start_failed_message" text="A motor nem indult el: újabb próbálkozás előtt kapcsold ki a gyújtást"/>
+        <text name="rms_preheat_start_failed_message" text="A motor nem indult el"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Jármű ellenőrzése"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Egy átvizsgálás vagy karbantartás további meghibásodásokat azonosíthat."/>
         <text name="rms_ws_status_ready_title" text="A műhely készen áll"/>
         <text name="rms_ws_status_ready_hint" text="Válassz eljárást. A beállításokat, az alkatrészeket és az árat indítás előtt kell megerősíteni."/>
+        <text name="rms_ws_status_closed_hint" text="Eljárást %s és %s között lehet rendelni."/>
         <text name="rms_ws_label_value" text="Jármű értéke"/>
         <text name="rms_ws_label_age" text="Kor"/>
         <text name="rms_ws_label_operating_hours" text="Üzemórák"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Nincs kijelölt meghibásodás. Jelöld ki a javítandókat a Diagnosztika és árajánlat lapon."/>
         <text name="rms_ws_reason_overhaul_none" text="A mechanikai nagyjavítás az 50% állapot alatti rendszereket hozza rendbe. Ennél a gépnél nincs ilyen."/>
         <text name="rms_ws_reason_bodywork_mobile" text="A mobil műhely nem végez fényezést. Azt a kereskedőnél végzik."/>
+        <text name="rms_ws_reason_refill_dealer" text="Folyadékok utántöltését csak a kereskedő végzi. Máshol kannából töltik."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Használj felszerelt műhelyt."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Csatlakoztasd egy kocsi diagnosztikai eszközét a géphez."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronikus diagnosztika szükséges"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Gyenge erőátvitel"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Áttétel korlátozva"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Egyenetlen erőátvitel"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Gyengülő termosztát"/>
         <text name="rms_report_transmission_failed" text="Meghibásodott"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Zsírzópisztoly"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Túl nehéz pótkocsi"/>
         <text name="rms_tutorial_heavy_trailer_message" text="A vontatott terhelés túl nehéz lehet ehhez a járműhöz. Tovább haladhatsz, de a sebességváltó és a hajtáslánc nagyobb terhelést kap.&#10;&#10;Az RMS két viszonyítási értéket használ: traktoroknál legalább 10 LE szükséges a vontatott tömeg minden tonnájára, teherautóknál pedig legalább 6 LE a járműszerelvény össztömegének minden tonnájára. A járműre vonatkozó érték alatt, nagy motorterhelésnél nő a sebességváltó kopása."/>
         <text name="rms_tutorial_hard_start_title" text="Nehéz indítás"/>
-        <text name="rms_tutorial_hard_start_message" text="A következő jármű motorja nehezen indul: %s. Ezt okozhatja alacsony akkumulátortöltöttség, fagyos hőmérséklet, mechanikai hiba vagy az önindító kopása. Tartsd nyomva az indítógombot, amíg a motor be nem indul.&#10;&#10;Indítás közben az elektromos rendszer nagy terhelést kap a magas indulóáramok miatt."/>
+        <text name="rms_tutorial_hard_start_message" text="A következő jármű motorja nehezen indul: %s. Ezt okozhatja alacsony akkumulátortöltöttség, fagyos hőmérséklet, mechanikai hiba vagy az önindító kopása.&#10;&#10;Indítás közben az elektromos rendszer nagy terhelést kap a magas indulóáramok miatt."/>
         <text name="rms_tutorial_low_fuel_title" text="Kevés üzemanyag"/>
         <text name="rms_tutorial_low_fuel_message" text="A tartály közelít a tartalékszinthez. Minél kevesebb üzemanyag marad, annál nagyobb erővel kell szívnia az üzemanyag-szivattyúnak, és a tartály aljáról víz és üledék kerül a szűrőbe, amely így gyorsabban eltömődik.&#10;&#10;Érdemes a nap végén teletankolni: a teli tartályban kevesebb pára csapódik le."/>
         <text name="rms_tutorial_lugging_title" text="Motor erőltetése alacsony fordulaton"/>

@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Pornește motorul pentru a elibera frâna de parcare"/>
         <text name="rms_preheat_ignition_message" text="Contact pornit: preîncălzire în curs"/>
         <text name="rms_preheat_system_failure_message" text="Defecțiune a sistemului de preîncălzire: pornirea la rece este imposibilă"/>
-        <text name="rms_preheat_start_failed_message" text="Motorul nu a pornit: oprește contactul înainte de a încerca din nou"/>
+        <text name="rms_preheat_start_failed_message" text="Motorul nu a pornit"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Verifică vehiculul"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="O inspecție sau o întreținere poate identifica alte avarii."/>
         <text name="rms_ws_status_ready_title" text="Atelier pregătit"/>
         <text name="rms_ws_status_ready_hint" text="Selectează o intervenție. Opțiunile, piesele și prețul vor fi confirmate înainte de începere."/>
+        <text name="rms_ws_status_closed_hint" text="Intervențiile se comandă între %s și %s."/>
         <text name="rms_ws_label_value" text="Valoarea vehiculului"/>
         <text name="rms_ws_label_age" text="Vechime"/>
         <text name="rms_ws_label_operating_hours" text="Ore de funcționare"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="Nicio avarie bifată. Bifează în Diagnostic și deviz avariile de reparat."/>
         <text name="rms_ws_reason_overhaul_none" text="O recondiționare mecanică repune în stare sistemele sub 50% stare. Acest utilaj nu are niciunul."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Un atelier mobil nu face vopsire. Aceasta se face la reprezentanță."/>
+        <text name="rms_ws_reason_refill_dealer" text="Doar reprezentanța face completarea fluidelor. În altă parte, se face cu canistra."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Folosește un atelier echipat."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Conectează la utilaj echipamentul de diagnoză al unui cărucior."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Este necesar un diagnostic electronic"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="Transmitere ineficientă a forței"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Raport limitat"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Transmitere neregulată a forței"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Termostat degradat"/>
         <text name="rms_report_transmission_failed" text="Defectă"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistol de gresat"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Remorcă prea grea"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Sarcina remorcată pare prea grea pentru acest vehicul. Poți continua deplasarea, dar transmisia și lanțul cinematic vor fi mai solicitate.&#10;&#10;RMS folosește două valori de referință: un tractor necesită cel puțin 10 CP pe tonă de masă remorcată, iar un camion cel puțin 6 CP pe tonă de masă totală a ansamblului. Sub valoarea aplicabilă și la sarcină mare a motorului, uzura transmisiei crește."/>
         <text name="rms_tutorial_hard_start_title" text="Pornire dificilă"/>
-        <text name="rms_tutorial_hard_start_message" text="Motorul vehiculului %s pornește greu. Cauza poate fi o baterie slabă, gerul, o avarie mecanică sau uzura demarorului. Ține apăsat butonul de pornire până când motorul pornește.&#10;&#10;În timpul pornirii, sistemul electric este puternic solicitat din cauza curenților mari de pornire."/>
+        <text name="rms_tutorial_hard_start_message" text="Motorul vehiculului %s pornește greu. Cauza poate fi o baterie slabă, gerul, o avarie mecanică sau uzura demarorului.&#10;&#10;În timpul pornirii, sistemul electric este puternic solicitat din cauza curenților mari de pornire."/>
         <text name="rms_tutorial_low_fuel_title" text="Rezervă de combustibil"/>
         <text name="rms_tutorial_low_fuel_message" text="Rezervorul se apropie de nivelul de rezervă. Cu cât rămâne mai puțin combustibil, cu atât pompa de combustibil trebuie să lucreze mai intens pentru a-l aspira, iar fundul rezervorului trimite apa și depunerile spre filtru, care se înfundă mai repede.&#10;&#10;Este mai bine să faceți plinul la sfârșitul zilei: într-un rezervor plin se formează mai puțin condens."/>
         <text name="rms_tutorial_lugging_title" text="Motor subturat"/>

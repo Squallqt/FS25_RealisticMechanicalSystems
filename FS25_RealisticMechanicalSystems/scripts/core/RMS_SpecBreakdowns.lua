@@ -5,7 +5,6 @@
 
 local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
 
----Tells whether a player sits in the vehicle or its implements
 local function hasEnteredPlayerInVehicleChain(rootVehicle)
     if rootVehicle == nil then
         return false
@@ -51,7 +50,6 @@ local function getSymptomCarriers(spec, symptom)
     return nil
 end
 
----Returns a part's symptom for an effect, nil without one
 local function getCarriedSymptom(spec, partId, effectId)
     for _, symptom in ipairs(RMS_Config.CORE.WORN_PART_SYMPTOMS) do
         if symptom.effect == effectId then
@@ -127,8 +125,6 @@ function RealisticMechanicalSystems:getRandomBreakdown()
 end
 
 ---Adds a breakdown at a stage, rolling its detection and reapplying the effects
--- @param string breakdownId breakdown id
--- @param any stageOrOptions stage index or an option table
 function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec then return end
@@ -209,7 +205,6 @@ function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
 end
 
 ---Suspends a breakdown for a delay and marks it as quick fixed
--- @param string breakdownId breakdown id
 -- @param float? resumeTimer delay before it resumes in ms
 function RealisticMechanicalSystems:suspendBreakdown(breakdownId, resumeTimer)
     local spec = self.spec_RealisticMechanicalSystems
@@ -232,7 +227,6 @@ function RealisticMechanicalSystems:suspendBreakdown(breakdownId, resumeTimer)
 end
 
 ---Removes the listed breakdowns, all of them when called without an argument
--- @param any ... breakdown ids
 function RealisticMechanicalSystems:removeBreakdown(...)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not spec.activeBreakdowns or next(spec.activeBreakdowns) == nil then
@@ -263,8 +257,6 @@ function RealisticMechanicalSystems:removeBreakdown(...)
 end
 
 ---Tells whether a breakdown is active, any selectable one without an id
--- @param string? breakdownId breakdown id
--- @return boolean hasBreakdown true when the breakdown is active
 function RealisticMechanicalSystems:hasBreakdown(breakdownId)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not spec.activeBreakdowns or next(spec.activeBreakdowns) == nil then
@@ -286,8 +278,6 @@ function RealisticMechanicalSystems:hasBreakdown(breakdownId)
 end
 
 ---Tells whether an effect is active, or any one when called without an id
--- @param string? effectId effect id
--- @return boolean hasEffect true when the effect is active
 function RealisticMechanicalSystems:hasEffect(effectId)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not spec.activeEffects or next(spec.activeEffects) == nil then
@@ -302,8 +292,6 @@ function RealisticMechanicalSystems:hasEffect(effectId)
 end
 
 ---Tells whether a system carries an active breakdown
--- @param string system system name
--- @return boolean hasBreakdown true when the system has one
 function RealisticMechanicalSystems:hasSystemBreakdowns(system)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not spec.activeBreakdowns or next(spec.activeBreakdowns) == nil then
@@ -333,8 +321,6 @@ function RealisticMechanicalSystems:hasSystemBreakdowns(system)
 end
 
 ---Moves a breakdown to a stage, or one stage back
--- @param string breakdownId breakdown id
--- @param any targetStageOrReverse target stage index, or true to step back
 function RealisticMechanicalSystems:changeBreakdownStage(breakdownId, targetStageOrReverse)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not spec.activeBreakdowns or next(spec.activeBreakdowns) == nil or spec.activeBreakdowns[breakdownId] == nil then
@@ -390,7 +376,6 @@ end
 RealisticMechanicalSystems.getStageProgress = getStageProgress
 
 ---Counts down suspended breakdowns and advances progressing ones
--- @param float dt time since last call in ms
 function RealisticMechanicalSystems:processBreakdowns(dt)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not spec.activeBreakdowns or next(spec.activeBreakdowns) == nil then

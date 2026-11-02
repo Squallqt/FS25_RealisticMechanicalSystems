@@ -7,13 +7,11 @@ RMS_WorkshopSummaryFrame = {}
 local RMS_WorkshopSummaryFrame_mt = Class(RMS_WorkshopSummaryFrame, RMS_WorkshopPage)
 
 ---Creates the page
--- @return table page
 function RMS_WorkshopSummaryFrame.new()
     return RMS_WorkshopPage.new(nil, RMS_WorkshopSummaryFrame_mt)
 end
 
 ---Wires the condition card, builds the fact and fluid rows
--- @param table dialog workshop dialog
 function RMS_WorkshopSummaryFrame:initialize(dialog)
     RMS_WorkshopSummaryFrame:superClass().initialize(self, dialog)
     self.conditionCard:initialize()
@@ -28,15 +26,12 @@ function RMS_WorkshopSummaryFrame:initialize(dialog)
 end
 
 ---Hands the vehicle to the condition card too
--- @param table? vehicle vehicle
--- @param string? workshopType workshop
 function RMS_WorkshopSummaryFrame:setVehicle(vehicle, workshopType)
     RMS_WorkshopSummaryFrame:superClass().setVehicle(self, vehicle, workshopType)
     self.conditionCard:setVehicle(vehicle)
 end
 
 ---Writes every card of the page
--- @param table state workshop state of RMS_WorkshopDialog:refresh
 function RMS_WorkshopSummaryFrame:refresh(state)
     self.statusBar:setStatus(state)
     self:updateVehicleCard()

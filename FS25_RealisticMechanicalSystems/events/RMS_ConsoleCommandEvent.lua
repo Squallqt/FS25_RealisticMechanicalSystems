@@ -29,18 +29,12 @@ RMS_ConsoleCommandEvent.ALLOWED_COMMANDS = {
 }
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_ConsoleCommandEvent.emptyNew()
     return Event.new(RMS_ConsoleCommandEvent_mt)
 end
 
 
 ---Create new instance of event
--- @param string commandName console command name
--- @param string? argsOne first command argument
--- @param string? argsTwo second command argument
--- @param table? vehicle vehicle the command is applied to
--- @return table self instance of class event
 function RMS_ConsoleCommandEvent.new(commandName, argsOne, argsTwo, vehicle)
     local self = RMS_ConsoleCommandEvent.emptyNew()
     self.commandName = commandName
@@ -52,8 +46,6 @@ end
 
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_ConsoleCommandEvent:writeStream(streamId, connection)
     streamWriteString(streamId, self.commandName or "")
     streamWriteString(streamId, self.argsOne or "")
@@ -67,8 +59,6 @@ end
 
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_ConsoleCommandEvent:readStream(streamId, connection)
     self.commandName = streamReadString(streamId)
     self.argsOne = streamReadString(streamId)
@@ -87,7 +77,6 @@ end
 
 
 ---Run action on receiving side
--- @param Connection connection connection
 function RMS_ConsoleCommandEvent:run(connection)
     if connection:getIsServer() then
         if self.commandName == "__response" and self.argsOne ~= nil then
@@ -139,10 +128,6 @@ end
 
 
 ---Send the console command from a client to the server
--- @param string commandName console command name
--- @param string? argsOne first command argument
--- @param string? argsTwo second command argument
--- @param table? vehicle vehicle the command is applied to
 function RMS_ConsoleCommandEvent.sendToServer(commandName, argsOne, argsTwo, vehicle)
     if g_client ~= nil then
         if not g_currentMission.isMasterUser then

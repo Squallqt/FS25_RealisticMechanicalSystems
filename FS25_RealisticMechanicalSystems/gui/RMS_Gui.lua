@@ -6,7 +6,6 @@ RMS_Gui = {}
 
 local modDirectory = g_currentModDirectory
 
--- atlas files by prefix
 RMS_Gui.ATLASES = {
     { "rms_MenuIcon", "images/menuIcon.xml" },
     { "rms_WorkshopFluids", "gui/rms_workshopFluids.xml" },
@@ -38,7 +37,6 @@ RMS_Gui.DIALOGS = {
     { RMS_DiagnosticScreen, "gui/RMS_DiagnosticScreen.xml" }
 }
 
----Name of a frame or a screen: its file name
 local function getName(path)
     return path:match("([%w_]+)%.xml$")
 end

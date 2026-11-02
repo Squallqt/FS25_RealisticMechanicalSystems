@@ -19,7 +19,6 @@ function RMS_Tutorial:showWelcome()
 end
 
 ---Turns the tips off when the player declined them
--- @param boolean keepsTips true when the player keeps the tips
 function RMS_Tutorial:onWelcomeAnswer(keepsTips)
     if not keepsTips then
         RMS_Config.TUTORIAL_MODE = false
@@ -28,7 +27,6 @@ function RMS_Tutorial:onWelcomeAnswer(keepsTips)
 end
 
 ---Returns the vehicle the player drives when RMS tracks it
--- @return table? vehicle tracked vehicle
 function RMS_Tutorial:getRMSVehicle()
     self.vehicle = nil
 
@@ -44,7 +42,6 @@ function RMS_Tutorial:getRMSVehicle()
 end
 
 ---Checks the trigger of every unseen tip and shows the first one that fires
--- @param float dt time since last call in ms
 function RMS_Tutorial:update(dt)
     if g_localPlayer == nil or not RMS_Config.ensureLocalTutorialState() or not RMS_Config.TUTORIAL_MODE then
         self.vehicle = nil
@@ -92,7 +89,6 @@ function RMS_Tutorial:update(dt)
             local isMotorStarted = vehicle:getIsMotorStarted()
             local speed = vehicle:getLastSpeed()
             local systems = spec.systems or {}
-            ---
             local function isSystemEnabled(systemKey)
                 local systemData = systems[systemKey]
                 return type(systemData) == "table" and systemData.enabled == true
@@ -158,7 +154,6 @@ function RMS_Tutorial:update(dt)
             local serviceInterval = (spec.baseServiceLevel - vehicle:getServiceLevel())
                 / (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
 
-            -- heavy trailer
             if not messagedData.HEAVY_TRAILER and transmissionSystemEnabled and isMotorStarted and speed > 5 and hasHeavyTrailer then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_heavy_trailer_message"),
@@ -169,7 +164,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.HEAVY_TRAILER = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- age degradation
             elseif not messagedData.AGE_DEGRADATION and vehicle:getConditionLevel() < 0.66 then
                 RMS_Hud.showNotification(
                     string.format(g_i18n:getText("rms_tutorial_age_degradation_message"), vehicle:getFullName()),
@@ -190,7 +184,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.IDLE_AND_DOWNTIME = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- hot weather
             elseif not messagedData.HOT_WEATHER
                 and (engineSystemEnabled or coolingSystemEnabled)
                 and RMS_Utils.getAmbientTemperature() > 30 then
@@ -206,7 +199,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.HOT_WEATHER = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- wet weather
             elseif not messagedData.WET_WEATHER
                 and electricalSystemEnabled
                 and (
@@ -242,7 +234,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.RAD_OR_FILTER_CLOGGED = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- needs lubrication
             elseif not messagedData.NEEDS_LUBRICATION and spec.isVehicleNeedLubricate and spec.lubricationLevel <= RMS_Config.FIELD_CARE.LUBRICATION_WARNING_THRESHOLD then
                 RMS_Hud.showNotification(
                     string.format(
@@ -257,7 +248,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.NEEDS_LUBRICATION = true
                 self.messageDowntime = downtimeAfterMessage
             
-            -- engine overheat
             elseif not messagedData.ENGINE_OVERHEAT and engineSystemEnabled and isMotorStarted and spec.engineTemperature > 100 and not spec.isElectricVehicle then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_engine_overheat_message"),
@@ -269,7 +259,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.CVT_OVERHEAT = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- cold engine
             elseif not messagedData.COLD_ENGINE and engineSystemEnabled and spec.engineTemperature < 40 and isMotorStarted and speed < 1 and not spec.isElectricVehicle then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_cold_engine_message"),
@@ -280,7 +269,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.COLD_ENGINE = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- overload indicator
             elseif not messagedData.OVERLOAD_INDICATOR and isMotorStarted and vehicle:hasBreakdown('STRESS_OVERLOAD') then
                 RMS_Hud.showNotification(
                     string.format(g_i18n:getText("rms_tutorial_overload_indicator_message"), vehicle:getFullName()),
@@ -291,7 +279,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.OVERLOAD_INDICATOR = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- engine overload
             elseif not messagedData.ENGINE_OVERLOAD and engineSystemEnabled and isMotorStarted and spec.dynamicMotorLoad >= 1.15 and not spec.isElectricVehicle then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_engine_overload_message"),
@@ -302,7 +289,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.ENGINE_OVERLOAD = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- lugging
             elseif not messagedData.LUGGING and transmissionSystemEnabled and spec.luggingTutorialTimer ~= nil and spec.luggingTutorialTimer >= 5000 and not spec.isElectricVehicle then
                 RMS_Hud.showNotification(  
                     g_i18n:getText("rms_tutorial_lugging_message"),
@@ -313,7 +299,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.LUGGING = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- cvt overheat
             elseif not messagedData.CVT_OVERHEAT
                     and transmissionSystemEnabled
                     and isMotorStarted
@@ -330,7 +315,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.ENGINE_OVERHEAT = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- transmission overheat outside cvt
             elseif not messagedData.TRANSMISSION_OVERHEAT
                     and transmissionSystemEnabled
                     and isMotorStarted
@@ -346,7 +330,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.TRANSMISSION_OVERHEAT = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- fluid level under its mark
             elseif not messagedData.FLUID_LEVEL
                 and isMotorStarted
                 and ((engineSystemEnabled and (tonumber(spec.engineOilLevel) or 1) < RMS_Config.FLUIDS.LEVEL_MIN_MARK)
@@ -362,7 +345,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.FLUID_LEVEL = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- coloured exhaust smoke
             elseif not messagedData.EXHAUST_SMOKE
                 and engineSystemEnabled
                 and isMotorStarted
@@ -378,7 +360,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.EXHAUST_SMOKE = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- drivetrain modes and diff lock
             elseif not messagedData.DRIVETRAIN_MODES
                 and isMotorStarted
                 and spec.drivetrain ~= nil
@@ -392,7 +373,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.DRIVETRAIN_MODES = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- park brake engaged, automatic or by hand
             elseif not messagedData[parkBrakeTip] and RMS_Drivetrain.getIsParkBrakeEngaged(vehicle) then
                 local parkBrakeMessage = parkBrakeTip == "PARK_BRAKE"
                     and "rms_tutorial_park_brake_message"
@@ -406,7 +386,6 @@ function RMS_Tutorial:update(dt)
                 messagedData[parkBrakeTip] = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- wheel slip
             elseif not messagedData.WHEEL_SLIP
                     and transmissionSystemEnabled
                     and isMotorStarted
@@ -438,7 +417,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.DRIVETRAIN_WINDUP = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- terrain impact, checked before the shaking
             elseif not messagedData.TERRAIN_IMPACT and chassisSystemEnabled and spec.terrainImpactTutorialTimer > 0 then
                 RMS_Hud.showNotification(
                     g_i18n:getText("rms_tutorial_terrain_impact_message"),
@@ -462,7 +440,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.CHASSIS_VIBRATION = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- steering
             elseif not messagedData.STEERING
                 and chassisSystemEnabled
                 and isMotorStarted
@@ -478,7 +455,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.STEERING = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- diesel preheating
             elseif not messagedData.PREHEAT
                 and electricalSystemEnabled
                 and RMS_Preheat.isHeating(vehicle) then
@@ -491,7 +467,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.PREHEAT = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- cranking
             elseif not messagedData.CRANKING
                 and electricalSystemEnabled
                 and not spec.isElectricVehicle
@@ -508,7 +483,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.CRANKING = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- battery low
             elseif not messagedData.BATTERY_LOW
                 and electricalSystemEnabled
                 and not isMotorStarted
@@ -524,7 +498,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.HARD_START = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- hard start
             elseif not messagedData.HARD_START
                 and (engineSystemEnabled or electricalSystemEnabled or fuelSystemEnabled)
                 and (vehicle:hasEffect("ENGINE_HARD_START_MODIFIER")
@@ -540,7 +513,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.HARD_START = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- critical failure
             elseif not messagedData.CRITICAL_FAILURE
                 and (engineSystemEnabled or coolingSystemEnabled or electricalSystemEnabled or fuelSystemEnabled)
                 and vehicle:hasEffect("ENGINE_FAILURE") then
@@ -553,7 +525,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.CRITICAL_FAILURE = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- low fuel
             elseif not messagedData.LOW_FUEL
                 and fuelSystemEnabled
                 and isMotorStarted
@@ -568,7 +539,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.LOW_FUEL = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- idle deposit
             elseif not messagedData.IDLE_DEPOSIT
                 and fuelSystemEnabled
                 and isMotorStarted
@@ -622,7 +592,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.COLD_OIL = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- service due soon
             elseif not messagedData.SERVICE_DUE_SOON and (serviceInterval >= 0.9 and serviceInterval < 1.0) then
                 RMS_Hud.showNotification(
                     string.format(g_i18n:getText("rms_tutorial_service_due_soon_message"), vehicle:getFullName()),
@@ -633,7 +602,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.SERVICE_DUE_SOON = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- service interval expired
             elseif not messagedData.SERVICE_INTERVAL_EXPIRED and serviceInterval >= 1.01 then
                 RMS_Hud.showNotification(
                     string.format(g_i18n:getText("rms_tutorial_service_interval_expired_message"), vehicle:getFullName()),
@@ -644,7 +612,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.SERVICE_INTERVAL_EXPIRED = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- needs repair
             elseif not messagedData.NEEDS_REPAIR and isMotorStarted and vehicle:hasBreakdown() then
                 RMS_Hud.showNotification(
                     string.format(g_i18n:getText("rms_tutorial_needs_repair_message"), vehicle:getFullName()),
@@ -678,7 +645,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.NEEDS_PREVENTIVE = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- poor consumables
             elseif not messagedData.POOR_CONSUMABLES and vehicle:hasBreakdown("MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES") then
                 RMS_Hud.showNotification(
                     string.format(g_i18n:getText("rms_tutorial_poor_consumables_message"), vehicle:getFullName()),
@@ -689,7 +655,6 @@ function RMS_Tutorial:update(dt)
                 messagedData.POOR_CONSUMABLES = true
                 self.messageDowntime = downtimeAfterMessage
 
-            -- poor parts
             elseif not messagedData.POOR_PARTS and hasPoorPartsBreakdown then
                 RMS_Hud.showNotification(
                     string.format(g_i18n:getText("rms_tutorial_poor_parts_message"), vehicle:getFullName()),

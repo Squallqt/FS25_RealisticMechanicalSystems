@@ -54,19 +54,24 @@ SIMULATION
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 1.0.0.0-beta.1:
-- Reworked machine production years, which set each machine's period equipment such as the particulate filter, LED lights, the reversible fan and dashboard lamps
+- Reworked machine production years and their period equipment
 - Added the model launch year to the shop
-- Added engine oil change intervals that follow the machine's era: older machines need it more often
-- Added engine remapping by a tuner at the farm or mobile workshop: more power, and the warranty lost for good
-- Added an instant setting for engine remapping, like the other workshop services
-- Reworked the settings page, which now opens without freezing and describes each setting more clearly
-- Reworked the workshop, the fleet page and the other RMS screens on the menus of the game, every text fitting in the 27 languages
-- Replaced the sounds of worn brakes and of the jumper cable clamps
+- Added engine oil change intervals that follow the machine's era
+- Added engine remapping by a tuner at the farm or mobile workshop
+- Added an instant setting for engine remapping
+- Reworked the workshop, the fleet page, the settings page and the other RMS screens
+- Reworked the colours and limits of the dashboard lamps, and the limits of the inspection report and the overhaul advice
+- Replaced the sounds of the starter, worn brakes and the jumper cable clamps
+- Added a single-press engine start for every engine
+- Fixed the buttons of the settings page
 - Fixed AI workers, Courseplay and AutoDrive wearing the machine by working it cold, hitting obstacles or spinning their wheels on the spot
-- Fixed breakdowns of lamps missing from the machine, such as a beacon not chosen in the shop
-- Fixed the most powerful Stage V machines, such as large combines, having no particulate filter
-- Fixed machines bought in another colour without paying for the paint: any colour other than the one already selected now costs a full repaint
-- Fixed the vehicle configurator changing an owned machine's colours without charging the repaint: colours now change only through a full repaint
+- Fixed breakdowns and worn parts of lamps missing from the machine
+- Fixed the committed cost of a running service showing 0 in multiplayer
+- Fixed the finish time of a running service jumping back and forth by a minute when time is sped up
+- Fixed the most powerful Stage V machines having no particulate filter
+- Fixed machines bought in another colour without paying for the paint
+- Fixed the vehicle configurator changing an owned machine's colours without charging the repaint
+- Fixed hard starts with the game's automatic start and the GIANTS Ignition Key
 
 Changelog 0.13.0.1:
 - Fixed the game freezing while loading a savegame with some mods that switch a machine's lights
@@ -266,19 +271,24 @@ SIMULATION
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 1.0.0.0-beta.1:
-- Baujahre der Maschinen überarbeitet, die ihre zeitgemäße Ausstattung wie Partikelfilter, LED-Beleuchtung, Wendelüfter und Kontrollleuchten bestimmen
+- Baujahre der Maschinen und ihre zeitgemäße Ausstattung überarbeitet
 - Markteinführungsjahr des Modells im Shop hinzugefügt
-- Motorölwechselintervalle nach der Epoche der Maschine hinzugefügt: Ältere Maschinen brauchen ihn öfter
-- Motoroptimierung durch einen Tuner in der Hofwerkstatt oder der mobilen Werkstatt hinzugefügt: mehr Leistung, die Garantie erlischt endgültig
-- Sofort-Einstellung für die Motoroptimierung hinzugefügt, wie bei den anderen Werkstattarbeiten
-- Einstellungsseite überarbeitet, die sich jetzt ohne Hänger öffnet und jede Einstellung verständlicher beschreibt
-- Werkstatt, Fuhrpark-Seite und die übrigen RMS-Fenster nach dem Vorbild der Spielmenüs überarbeitet, jeder Text passt in allen 27 Sprachen
-- Geräusche verschlissener Bremsen und der Klemmen des Starthilfekabels ersetzt
+- Motorölwechselintervalle nach der Epoche der Maschine hinzugefügt
+- Motoroptimierung durch einen Tuner in der Hofwerkstatt oder der mobilen Werkstatt hinzugefügt
+- Sofort-Einstellung für die Motoroptimierung hinzugefügt
+- Werkstatt, Fuhrpark-Seite, Einstellungsseite und die übrigen RMS-Fenster überarbeitet
+- Farben und Grenzwerte der Kontrollleuchten sowie Grenzwerte von Inspektionsbericht und Überholungsempfehlung überarbeitet
+- Geräusche des Anlassers, verschlissener Bremsen und der Klemmen des Starthilfekabels ersetzt
+- Motorstart mit einem einzigen Tastendruck für alle Motoren hinzugefügt
+- Fehler der Schaltflächen der Einstellungsseite behoben
 - Fehler behoben, durch den KI-Helfer, Courseplay und AutoDrive die Maschine verschlissen, wenn sie sie kalt belasteten, gegen ein Hindernis fuhren oder die Räder im Stand durchdrehen ließen
-- Fehler behoben, durch den an der Maschine fehlende Leuchten ausfallen konnten, etwa eine im Shop nicht gewählte Rundumleuchte
-- Fehlender Partikelfilter bei den stärksten Stage-V-Maschinen wie großen Mähdreschern behoben
-- Fehler behoben, durch den eine Maschine ohne Lackierkosten in einer anderen Farbe gekauft werden konnte: Jede andere als die bereits gewählte Farbe kostet jetzt eine komplette Neulackierung
-- Fehler behoben, durch den der Konfigurator die Farben einer eigenen Maschine ohne Lackierkosten änderte: Farben ändern sich nur noch durch eine komplette Neulackierung
+- Fehler behoben, durch den an der Maschine fehlende Leuchten ausfallen oder als verschlissene Teile erscheinen konnten
+- Fehler behoben, durch den die gebundenen Kosten eines laufenden Vorgangs im Mehrspielermodus als 0 angezeigt wurden
+- Fehler behoben, durch den die Endzeit eines laufenden Vorgangs bei beschleunigter Zeit um eine Minute hin und her sprang
+- Fehlender Partikelfilter bei den stärksten Stage-V-Maschinen behoben
+- Fehler behoben, durch den eine Maschine ohne Lackierkosten in einer anderen Farbe gekauft werden konnte
+- Fehler behoben, durch den der Konfigurator die Farben einer eigenen Maschine ohne Lackierkosten änderte
+- Schwere Starts mit dem automatischen Motorstart des Spiels und dem GIANTS-Zündschlüssel behoben
 
 Changelog 0.13.0.1:
 - Hängenbleiben beim Laden des Spielstands mit Mods, die die Beleuchtung einer Maschine schalten, behoben
@@ -478,19 +488,24 @@ SIMULATION
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 1.0.0.0-beta.1 :
-- Refonte des années des machines, qui décident de leurs équipements d'époque comme le filtre à particules, l'éclairage à LED, le ventilateur réversible et les voyants
+- Refonte des années des machines et de leurs équipements d'époque
 - Ajout de l'année de lancement du modèle au magasin
-- Ajout d'intervalles de vidange moteur selon l'époque de la machine : une machine ancienne la demande plus souvent
-- Ajout de la reprogrammation moteur par un préparateur à l'atelier de la ferme ou à l'atelier mobile : plus de puissance, et la garantie perdue pour toujours
-- Ajout d'un réglage pour terminer instantanément la reprogrammation moteur, comme les autres prestations de l'atelier
-- Refonte de la page des paramètres, qui s'ouvre sans figer le jeu et décrit plus clairement chaque réglage
-- Refonte de l'atelier, de la page du parc et des autres fenêtres RMS sur le modèle des menus du jeu, chaque texte tenant dans les 27 langues
-- Remplacement des sons des freins usés et des pinces des câbles de démarrage
+- Ajout d'intervalles de vidange moteur selon l'époque de la machine
+- Ajout de la reprogrammation moteur par un préparateur à l'atelier de la ferme ou à l'atelier mobile
+- Ajout d'un réglage pour terminer instantanément la reprogrammation moteur
+- Refonte de l'atelier, de la page du parc, de la page des paramètres et des autres fenêtres RMS
+- Refonte des couleurs et des limites des voyants du tableau de bord, et des limites du rapport d'inspection et du conseil de révision
+- Remplacement des sons du démarreur, des freins usés et des pinces des câbles de démarrage
+- Ajout du démarrage d'un seul appui pour tous les moteurs
+- Correction des boutons de la page des paramètres
 - Correction de l'usure causée par les ouvriers IA, Courseplay et AutoDrive en travaillant la machine à froid, en heurtant un obstacle ou en patinant sur place
-- Correction des pannes de feux absents de la machine, comme un gyrophare non choisi au magasin
-- Correction des machines Stage V les plus puissantes, comme les grosses moissonneuses-batteuses, qui n'avaient pas de filtre à particules
-- Correction de l'achat d'une machine dans une autre couleur sans payer la peinture : toute couleur autre que celle déjà sélectionnée coûte désormais une peinture complète
-- Correction du configurateur qui changeait les couleurs d'une machine possédée sans faire payer la peinture : elles ne changent plus que par une peinture complète
+- Correction des pannes et des pièces usées de feux absents de la machine
+- Correction du coût engagé d'une intervention en cours, affiché à 0 en multijoueur
+- Correction de l'heure de fin d'une intervention en cours, qui oscillait d'une minute quand le temps est accéléré
+- Correction des machines Stage V les plus puissantes, qui n'avaient pas de filtre à particules
+- Correction de l'achat d'une machine dans une autre couleur sans payer la peinture
+- Correction du configurateur qui changeait les couleurs d'une machine possédée sans faire payer la peinture
+- Correction des démarrages difficiles avec le démarrage automatique du jeu et la clé de contact GIANTS
 
 Changelog 0.13.0.1 :
 - Correction du chargement de la partie qui se figeait avec certains mods qui commandent les feux d'une machine

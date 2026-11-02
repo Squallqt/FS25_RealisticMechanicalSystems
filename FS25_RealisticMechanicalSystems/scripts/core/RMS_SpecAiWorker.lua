@@ -3,7 +3,6 @@
 
 ---AI worker easing off while the machine is overloaded
 
----Returns the pace an AI worker is eased to
 local function getAiWorkerSpeedLimit(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec ~= nil and vehicle:getIsAIActive() then
@@ -13,7 +12,6 @@ local function getAiWorkerSpeedLimit(vehicle)
 end
 
 ---Eases the helper off under overload and gives its pace back after
--- @param float dt time since last call in ms
 function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
     if not self.isServer then return end
     local spec = self.spec_RealisticMechanicalSystems
@@ -45,7 +43,6 @@ function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
 end
 
 ---Holds the helper under its eased pace, the player's cruise speed untouched
--- @param function superFunc original function
 -- @return float speed cruise control speed in km/h
 function RealisticMechanicalSystems:getCruiseControlSpeed(superFunc)
     local speed = superFunc(self)

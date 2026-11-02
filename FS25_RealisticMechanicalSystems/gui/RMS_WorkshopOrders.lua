@@ -4,7 +4,6 @@
 ---What each intervention of the workshop offers, and how it starts
 RMS_WorkshopOrders = {}
 
--- the fluids of the maintenance table, short names, oils first
 local LEVEL_FLUIDS = {
     { circuit = "engineOil", nameKey = "rms_fluid_hud_engineOil" },
     { circuit = "transmissionOil", nameKey = "rms_fluid_circuit_transmissionOil" },
@@ -12,14 +11,12 @@ local LEVEL_FLUIDS = {
     { circuit = "coolant", nameKey = "rms_fluid_hud_coolant" }
 }
 
----A cell every choice fills alike
 local function every(key)
     return function()
         return g_i18n:getText(key), 2
     end
 end
 
----Share of the faults of a kind an inspection finds, as a cell
 local function shareCell(value)
     if value <= 0 then
         return "-", 0
@@ -27,7 +24,6 @@ local function shareCell(value)
     return string.format("%d%%", math.floor(value * 100 + 0.5)), value >= 1 and 2 or 1
 end
 
----Names the oil a circuit holds, a common sump as one
 local function getOilName(vehicle, circuit)
     if circuit == "transmissionOil" and RMS_Fluids.getSumpCircuit(vehicle, "hydraulicFluid") == "transmissionOil" then
         return g_i18n:getText("rms_fluid_hud_transmissionHydraulic")
@@ -39,7 +35,6 @@ local function getOilName(vehicle, circuit)
     end
 end
 
----Change interval of an oil, from the service programme
 local function getIntervalText(vehicle, circuit)
     for _, clock in ipairs(vehicle:getServiceClocks()) do
         if RMS_Utils.getKeyByValue(clock.circuits, circuit) ~= nil then
@@ -51,7 +46,6 @@ local function getIntervalText(vehicle, circuit)
     return ""
 end
 
----How often a level comes, against the lightest one
 local function getFrequencyText(vehicle, level, lightest)
     local interval = vehicle:getMaintenanceLevelInterval(level)
     local ratio = interval / vehicle:getMaintenanceLevelInterval(lightest)
@@ -64,7 +58,6 @@ local function getFrequencyText(vehicle, level, lightest)
     return string.format(g_i18n:getText("rms_ws_levels_one_service_in"), count)
 end
 
----Detail and cell keys of the filter row of a level table
 local function getFiltersKeys(vehicle)
     local hasEngine = not vehicle.spec_RealisticMechanicalSystems.isElectricVehicle
     local hasHydraulic = RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("HYDRAULIC_FILTER_CLOGGING"))
@@ -83,7 +76,6 @@ local function getFiltersKeys(vehicle)
     return detailKey, hasEngine and "rms_ws_levels_new_plural" or "rms_ws_levels_new"
 end
 
----Level renewing the AdBlue filter, nil on a machine burning none
 local function getAdBlueFilterLevel(vehicle)
     local filter = RMS_Consumables.getFilterOfBreakdown("ADBLUE_FILTER_CLOGGING")
     if RMS_Consumables.getHasFilter(vehicle, filter) then
@@ -93,9 +85,6 @@ local function getAdBlueFilterLevel(vehicle)
 end
 
 ---Names each filter a maintenance level fits the machine
--- @param table vehicle vehicle
--- @param string level maintenance level
--- @return table names localized filter names
 function RMS_WorkshopOrders.getFittedFilters(vehicle, level)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local names = {}
@@ -118,10 +107,8 @@ function RMS_WorkshopOrders.getFittedFilters(vehicle, level)
     return names
 end
 
----Rows of the inspection table
 local function getInspectionRows()
     local R = RealisticMechanicalSystems
-    ---Whether an inspection type writes a report, and measures it
     local function report(inspectionType)
         local entry = { type = R.STATUS.INSPECTION, optionOne = inspectionType }
         local hasReport = R.getIsLogEntryHasReport(entry)
@@ -157,7 +144,6 @@ local function getInspectionRows()
     }
 end
 
----Rows of the maintenance table, with what each level does
 local function getLevelRows(vehicle, workshopType)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local R = RealisticMechanicalSystems
@@ -212,7 +198,6 @@ local function getLevelRows(vehicle, workshopType)
     return rows
 end
 
----Rows of the repair table, with what each method does
 local function getRepairRows(vehicle)
     local REPAIR = RealisticMechanicalSystems.REPAIR_TYPES
     local picked, running = 0, 0
@@ -222,7 +207,6 @@ local function getRepairRows(vehicle)
             running = running + (breakdown.isActive and 1 or 0)
         end
     end
-    ---A cell a quick fix leaves untouched
     local function replaces(key)
         return function(method)
             if method == REPAIR.LOW then
@@ -260,7 +244,6 @@ local function getRepairRows(vehicle)
     return rows
 end
 
----Rows of the overhaul table, with what each extent does
 local function getOverhaulRows(vehicle, system)
     local OVERHAUL = RealisticMechanicalSystems.OVERHAUL_TYPES
     local targets = RMS_Config.MAINTENANCE.OVERHAUL_CONDITION_TARGETS
@@ -315,8 +298,6 @@ local function getOverhaulRows(vehicle, system)
 end
 
 ---Tells whether a full repaint offers other colors
--- @param table vehicle vehicle
--- @return boolean hasColors true when a color zone offers a choice
 function RMS_WorkshopOrders.getHasBodyworkColors(vehicle)
     for _, zone in ipairs(RMS_Bodywork.getColorZones(vehicle)) do
         if #RMS_Bodywork.getColorChoices(vehicle, zone, {}) > 0 or RMS_Bodywork.getCustomColorChoice(vehicle, zone, {}) ~= nil then
@@ -326,7 +307,6 @@ function RMS_WorkshopOrders.getHasBodyworkColors(vehicle)
     return false
 end
 
----Rows of the repaint table
 local function getBodyworkRows(vehicle)
     local dealer = g_i18n:getText(RealisticMechanicalSystems.WORKSHOP.DEALER)
     local hasColors = RMS_WorkshopOrders.getHasBodyworkColors(vehicle)
@@ -356,7 +336,6 @@ local function getBodyworkRows(vehicle)
     }
 end
 
----Corner of the repair table: what the warranty covers
 local function getWarrantyCorner(vehicle, workshopType)
     local R = RealisticMechanicalSystems
     local isCovered, status = vehicle:isWarrantyRepairCovered(R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM, workshopType)
@@ -383,7 +362,6 @@ end
 
 local STATUS = RealisticMechanicalSystems.STATUS
 
--- one order per intervention: choices, table, second option, follow-up
 RMS_WorkshopOrders.ORDERS = {
     [STATUS.INSPECTION] = {
         getChoices = function()
@@ -493,11 +471,6 @@ RMS_WorkshopOrders.ORDERS = {
 }
 
 ---Tells who pays a job for the farm, the warranty or the lease
--- @param table vehicle vehicle
--- @param string serviceType service status
--- @param string? optionOne first option chosen
--- @param string? optionTwo second option chosen
--- @param string workshopType workshop type
 -- @return string? coverKey "warranty" or "lease", nil when the farm pays
 function RMS_WorkshopOrders.getCoverKey(vehicle, serviceType, optionOne, optionTwo, workshopType)
     if serviceType == STATUS.REPAIR and vehicle:isWarrantyRepairCovered(optionOne, optionTwo, workshopType) then
@@ -509,13 +482,6 @@ function RMS_WorkshopOrders.getCoverKey(vehicle, serviceType, optionOne, optionT
 end
 
 ---Starts an order on the server, or asks the server from a client
--- @param table vehicle vehicle
--- @param string workshopType workshop type
--- @param string serviceType service status
--- @param string? optionOne first option
--- @param any optionTwo second option
--- @param boolean optionThree follow-up
--- @return boolean isStarted true when the order went out
 function RMS_WorkshopOrders.start(vehicle, workshopType, serviceType, optionOne, optionTwo, optionThree)
     local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
     if price == nil then

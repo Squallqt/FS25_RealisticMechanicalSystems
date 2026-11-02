@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="請啟動發動機以解除駐車煞車"/>
         <text name="rms_preheat_ignition_message" text="點火開關已打開：正在預熱"/>
         <text name="rms_preheat_system_failure_message" text="預熱系統故障：無法冷啟動"/>
-        <text name="rms_preheat_start_failed_message" text="發動機未啟動：再次嘗試前請關閉點火開關"/>
+        <text name="rms_preheat_start_failed_message" text="發動機未啟動"/>
         <text name="rms_hud_vehicle_notification" text="%s：%s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="進行作業前檢查"/>
@@ -110,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="檢查或保養可能確認更多故障。"/>
         <text name="rms_ws_status_ready_title" text="維修廠已就緒"/>
         <text name="rms_ws_status_ready_hint" text="請選擇一項作業。選項、零組件和價格將在開始前確認。"/>
+        <text name="rms_ws_status_closed_hint" text="作業受理時間為%s至%s。"/>
         <text name="rms_ws_label_value" text="機具價值"/>
         <text name="rms_ws_label_age" text="車齡"/>
         <text name="rms_ws_label_operating_hours" text="工作小時"/>
@@ -153,6 +154,7 @@
         <text name="rms_ws_reason_repair_unselected" text="未勾選任何故障。請在「檢測與報價」中勾選要修理的故障。"/>
         <text name="rms_ws_reason_overhaul_none" text="機械大修用於修復狀態低於50%的系統，這台機具沒有此類系統。"/>
         <text name="rms_ws_reason_bodywork_mobile" text="移動維修廠不做噴漆，噴漆在經銷商處進行。"/>
+        <text name="rms_ws_reason_refill_dealer" text="只有經銷商提供油液補充。在其他地方，使用容器補充。"/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s：%s。請使用設備齊全的維修車間。"/>
         <text name="rms_workshop_diagnostic_blocked" text="%s：%s。請將推車的檢測設備連接到機器上。"/>
         <text name="rms_mobile_workshop_diagnostic_required" text="需要電子檢測"/>
@@ -558,7 +560,6 @@
         <text name="rms_report_transmission_cvt_slipping" text="動力傳送效率低"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="傳動比受限"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="動力傳送不穩定"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="節溫器性能下降"/>
         <text name="rms_report_transmission_failed" text="失效"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="黃油加注器"/>
@@ -899,7 +900,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="拖車過重"/>
         <text name="rms_tutorial_heavy_trailer_message" text="牽引負載對這輛機具而言似乎過重。可以繼續行駛，但變速箱和傳動系統會承受更大應力。&#10;&#10;RMS採用兩個參考值：拖拉機每噸牽引重量至少需要10馬力，卡車每噸車組總重量至少需要6馬力。低於適用數值並讓發動機承受高負載時，變速箱磨損會增加。"/>
         <text name="rms_tutorial_hard_start_title" text="啟動困難"/>
-        <text name="rms_tutorial_hard_start_message" text="%s的發動機難以啟動。電池電量低、極低溫、機械故障或啟動機磨損都可能是原因。請按住啟動按鈕，直到發動機啟動。&#10;&#10;啟動時的高啟動電流會使電氣系統承受很大負載。"/>
+        <text name="rms_tutorial_hard_start_message" text="%s的發動機難以啟動。電池電量低、極低溫、機械故障或啟動機磨損都可能是原因。&#10;&#10;啟動時的高啟動電流會使電氣系統承受很大負載。"/>
         <text name="rms_tutorial_low_fuel_title" text="燃油餘量低"/>
         <text name="rms_tutorial_low_fuel_message" text="油箱接近備用油量。剩餘燃油越少，燃油泵吸取燃油時負擔越重，油箱底部的水分和沉積物也會被送入濾清器，使其更快堵塞。&#10;&#10;最好在一天結束時加滿油：加滿的油箱產生的冷凝水更少。"/>
         <text name="rms_tutorial_lugging_title" text="發動機低轉速重負荷"/>
