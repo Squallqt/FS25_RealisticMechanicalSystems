@@ -805,8 +805,7 @@ function RealisticMechanicalSystems:completeService()
         else
             spec.airFilterClogging = spec.airFilterResidue
         end
-        spec.lubricationLevel = 1.0
-        spec.lubricationUsedThisPeriod = true
+        RMS_Greasing.greaseAll(self)
     end
 
     local function resetVehicleRepaintWear(vehicle)
@@ -1646,7 +1645,7 @@ local function getBilledPrice(realPrice)
     return math.ceil(cents / 1000) * 10
 end
 
-local function getLabourPrice(vehicle, hours, workshopType)
+local function getLabourPrice(hours, workshopType)
     local C = RMS_Config.MAINTENANCE
     local workshopKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, workshopType)
     return getBilledPrice(hours * C.LABOUR_RATE
@@ -1677,7 +1676,7 @@ local function getBreakdownLinePrice(vehicle, breakdownId, stage, repairType, pa
         * C.PARTS_PRICE_MULTIPLIERS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, partType)]
         * C.REPAIR_PRICE_MULTIPLIERS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, repairType)]
         * RMS_Config.WORKSHOP.PRICE_MULTIPLIERS[workshopKey])
-    return partsPrice + getLabourPrice(vehicle, RealisticMechanicalSystems.getRepairLabourHours(vehicle, breakdownId, repairType), workshopType)
+    return partsPrice + getLabourPrice(RealisticMechanicalSystems.getRepairLabourHours(vehicle, breakdownId, repairType), workshopType)
 end
 
 ---Returns the price of a service
@@ -1705,7 +1704,7 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
     local ownWorkshopDiscount = RMS_Config.WORKSHOP.PRICE_MULTIPLIERS[workshopKey] or 1.0
 
     if maintenanceType == RealisticMechanicalSystems.STATUS.INSPECTION then
-        return getLabourPrice(self, RealisticMechanicalSystems.getServiceWorkHours(self, maintenanceType, optionOne), workshopType)
+        return getLabourPrice(RealisticMechanicalSystems.getServiceWorkHours(self, maintenanceType, optionOne), workshopType)
 
     elseif maintenanceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
         local maintenancePrice = 0
@@ -1726,7 +1725,7 @@ function RealisticMechanicalSystems:getServicePrice(maintenanceType, optionOne, 
         end
         local overhaulPrice = getBilledPrice(share * C.OVERHAUL_REFERENCE_VALUE * getSizeScale(self, C.PARTS_POWER_EXPONENT, "parts")
             * ownWorkshopDiscount)
-        overhaulPrice = overhaulPrice + getLabourPrice(self,
+        overhaulPrice = overhaulPrice + getLabourPrice(
             RealisticMechanicalSystems.getServiceWorkHours(self, maintenanceType, optionOne, optionTwo, optionThree), workshopType)
         return math.min(math.max(overhaulPrice, 100), price * C.OVERHAUL_MAX_PRICE_RATIO)
     
@@ -1749,7 +1748,7 @@ function RealisticMechanicalSystems:getMaintenancePriceLines(optionOne, optionTw
     local billedShare = (not isFullPrice and self:isLeaseMaintenanceCovered(workshopType)) and 0 or 1
     local lines = {}
     if workshopType ~= RealisticMechanicalSystems.WORKSHOP.OWN then
-        table.insert(lines, { kind = "labour", price = billedShare * getLabourPrice(self,
+        table.insert(lines, { kind = "labour", price = billedShare * getLabourPrice(
             RealisticMechanicalSystems.getServiceWorkHours(self, RealisticMechanicalSystems.STATUS.MAINTENANCE, optionOne), workshopType) })
     end
     table.insert(lines, { kind = "filters", price = billedShare * getBilledPrice(C.MAINTENANCE_FILTER_PRICES[key]
@@ -1792,13 +1791,13 @@ function RealisticMechanicalSystems:getBreakdownRepairPrice(breakdownId, breakdo
     local workshopType = workshopTypeOverride or self.spec_RealisticMechanicalSystems.workshopType
     repairType = repairType or RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM
     if RealisticMechanicalSystems.getIsUsedPartWarrantyCovered(self, breakdownId, repairType, partType) then
-        return getLabourPrice(self, RealisticMechanicalSystems.getRepairLabourHours(self, breakdownId, repairType), workshopType)
+        return getLabourPrice(RealisticMechanicalSystems.getRepairLabourHours(self, breakdownId, repairType), workshopType)
     end
     if self:isWarrantyRepairCovered(repairType, partType, workshopType, breakdownId) then
         if workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE then
             local hours = RealisticMechanicalSystems.getRepairLabourHours(self, breakdownId, repairType)
-            return math.max(getLabourPrice(self, hours, workshopType)
-                - getLabourPrice(self, hours, RealisticMechanicalSystems.WORKSHOP.DEALER), 0)
+            return math.max(getLabourPrice(hours, workshopType)
+                - getLabourPrice(hours, RealisticMechanicalSystems.WORKSHOP.DEALER), 0)
         end
         return 0
     end

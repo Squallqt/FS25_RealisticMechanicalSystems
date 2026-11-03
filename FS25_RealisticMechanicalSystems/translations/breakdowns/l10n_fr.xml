@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Usure sévère des pivots de fusée. Le jeu dans la direction est important."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Usure critique des pivots de fusée. La direction présente un jeu très important."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Défaillance légère de l'orbitrol de direction. Le volant tourne avec un peu de jeu avant que les roues suivent."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Défaillance légère du boîtier de direction. Le volant tourne avec un peu de jeu avant que les roues suivent."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Défaillance légère de la crémaillère de direction. Le volant tourne avec un peu de jeu avant que les roues suivent."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Défaillance modérée de l'orbitrol de direction. Le volant tourne davantage avant que les roues suivent."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Défaillance modérée du boîtier de direction. Le volant tourne davantage avant que les roues suivent."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Défaillance modérée de la crémaillère de direction. Le volant tourne davantage avant que les roues suivent."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Défaillance sévère de l'orbitrol de direction. Le volant tourne beaucoup sans que les roues suivent bien."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Défaillance sévère du boîtier de direction. Le volant tourne beaucoup sans que les roues suivent bien."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Défaillance sévère de la crémaillère de direction. Le volant tourne beaucoup sans que les roues suivent bien."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Défaillance critique de l'orbitrol de direction. Le volant tourne avec un jeu très important avant que les roues suivent."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Défaillance critique du boîtier de direction. Le volant tourne avec un jeu très important avant que les roues suivent."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Défaillance critique de la crémaillère de direction. Le volant tourne avec un jeu très important avant que les roues suivent."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Fuite interne légère du vérin de direction. La machine commence à dériver d'un côté."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Fuite légère au joint de tige du vérin de direction. Le niveau d'huile hydraulique baisse un peu."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Fuite interne modérée du vérin de direction. La machine dérive davantage d'un côté."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Axes et bagues des articulations du chargeur"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pivots de fusée"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol de direction"/>
+        <text name="rms_breakdowns_part_steering_box" text="Boîtier de direction"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Crémaillère de direction"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Vérin de direction"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Suspension de cabine"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Embrayage de PDF"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Capteurs de boîte"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filtre de transmission"/>
         <text name="rms_breakdowns_part_lift_valve" text="Valve de relevage"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Valve de levage de la coupe"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Capteur de position du relevage"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Capteur de hauteur de coupe"/>
         <text name="rms_breakdowns_part_loader_control" text="Commande du chargeur"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Coupleurs hydrauliques"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Défaillance légère de l'embrayage. Le débrayage est incomplet. Certains passages de vitesses sont difficiles."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Défaillance de la pompe hydraulique. La pompe est cassée. La pression est perdue et les fonctions hydrauliques ne répondent plus."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Défaillance du distributeur hydraulique. Le tiroir reste bloqué. La fonction hydraulique concernée ne bouge plus."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Défaillance de la valve de relevage. La valve du relevage ne tient plus correctement la charge. L'outil levé redescend."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Défaillance de la valve de levage de la coupe. La valve ne tient plus correctement la charge. La coupe levée redescend."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Défaillance de la valve de relevage. La valve du relevage reste bloquée. Le relevage ne répond plus."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Défaillance de la valve de levage de la coupe. La valve reste bloquée. La coupe ne monte plus et ne descend plus."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Défaillance du capteur de position du relevage. Le signal de position est défaillant. Le relevage ne tient plus la hauteur demandée et un code défaut est enregistré."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Défaillance du capteur de hauteur de coupe. Le signal de hauteur est défaillant. La coupe ne tient plus la hauteur demandée et un code défaut est enregistré."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Défaillance légère de la commande du chargeur. Le bras et le godet répondent plus lentement."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Défaillance modérée de la commande du chargeur. Le bras et le godet ne se déplacent plus qu'à mi-vitesse."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Défaillance sévère de la commande du chargeur. Le bras et le godet bougent à peine."/>

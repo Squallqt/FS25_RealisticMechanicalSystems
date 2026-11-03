@@ -52,6 +52,9 @@ end
 -- @param table sample audio sample
 -- @param float offset point of the recording in ms
 function RMS_SoundManager.playSampleFrom(sample, offset)
+    if sample.isEmptySample or sample.soundSample == nil then
+        return
+    end
     local volume = g_soundManager:getModifierFactor(sample, "volume") * g_soundManager:getCurrentSampleVolume(sample)
     playSample(sample.soundSample, sample.loops, volume, offset, 0, 0)
 end
@@ -156,7 +159,7 @@ source(g_currentModDirectory .. "events/RMS_VehicleExclusionEvent.lua")
 source(g_currentModDirectory .. "events/RMS_StartEvent.lua")
 source(g_currentModDirectory .. "events/RMS_FieldInspectionEvent.lua")
 source(g_currentModDirectory .. "events/RMS_BatteryIsolatorEvent.lua")
-source(g_currentModDirectory .. "events/RMS_HandToolSyncEvent.lua")
+source(g_currentModDirectory .. "events/RMS_AirBlowerEvent.lua")
 source(g_currentModDirectory .. "events/RMS_JumperCablesEvent.lua")
 source(g_currentModDirectory .. "events/RMS_DrivetrainEvent.lua")
 source(g_currentModDirectory .. "events/RMS_TripResetEvent.lua")
@@ -168,6 +171,7 @@ source(g_currentModDirectory .. "events/RMS_DebugReadingEvent.lua")
 ---Declares the RMS specialization to the vehicle type manager
 function RMS_Main.initSpec()
     g_specializationManager:addSpecialization("RealisticMechanicalSystems", "RealisticMechanicalSystems", g_currentModDirectory.."scripts/core/RMS_Specialization.lua", "")
+    g_specializationManager:addSpecialization("rmsImplementGreasing", "RMS_ImplementGreasing", g_currentModDirectory .. "scripts/RMS_ImplementGreasing.lua", "")
     TypeManager.finalizeTypes = Utils.appendedFunction(TypeManager.finalizeTypes, RMS_Main.registerSpecializationToVehicles)
 end
 
@@ -196,7 +200,20 @@ local function getIsTypeManagedByRMS(vehicleType)
 	return true
 end
 
----Attaches the RMS specialization to every managed vehicle type
+local function getIsImplementType(vehicleType)
+	local specializations = vehicleType.specializationsByName
+	return specializations.attachable ~= nil and specializations.wearable ~= nil
+		and specializations.RealisticMechanicalSystems == nil and specializations.rmsImplementGreasing == nil
+end
+
+local function addSpecialization(vehicleType, specName)
+	local specObject = g_specializationManager:getSpecializationObjectByName(specName)
+	vehicleType.specializationsByName[specName] = specObject
+	table.insert(vehicleType.specializationNames, specName)
+	table.insert(vehicleType.specializations, specObject)
+end
+
+---Attaches RMS to the machines and the greasing to the implements
 function RMS_Main.registerSpecializationToVehicles()
 	if g_modIsLoaded["FS25_AdvancedDamageSystem"] then
 		if not RMS_Main.conflictLogged then
@@ -206,14 +223,11 @@ function RMS_Main.registerSpecializationToVehicles()
 		return
 	end
 
-	local specName = "RealisticMechanicalSystems"
-	local specObject = g_specializationManager:getSpecializationObjectByName(specName)
-
 	for _, vehicleType in pairs(g_vehicleTypeManager.types) do
 		if getIsTypeManagedByRMS(vehicleType) then
-			vehicleType.specializationsByName[specName] = specObject
-			table.insert(vehicleType.specializationNames, specName)
-			table.insert(vehicleType.specializations, specObject)
+			addSpecialization(vehicleType, "RealisticMechanicalSystems")
+		elseif getIsImplementType(vehicleType) then
+			addSpecialization(vehicleType, "rmsImplementGreasing")
 		end
 	end
 end
@@ -752,9 +766,10 @@ function RMS_Main.populateCellForItemInSection(self, superFunc, list, section, i
     end
 end
 
-
--- Increase the fill-type limit before map registration.
-FillTypeManager.SEND_NUM_BITS = math.max(FillTypeManager.SEND_NUM_BITS, 9)
+---Keeps the tools on the trolley out of the hand tools menu
+function RMS_Main.getCanPickupHandToolFromMenu(holder, superFunc, handTool)
+    return holder.parent[RMS_BatteryCharger.SPEC_TABLE_NAME] == nil and superFunc(holder, handTool)
+end
 
 FSBaseMission.onStartMission = Utils.prependedFunction(FSBaseMission.onStartMission, RMS_Main.onStartMission)
 FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, RMS_Config.saveToXMLFile)
@@ -778,6 +793,7 @@ WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RM
 WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RMS_Main.hookRepaintButton)
 WearableRepaintEvent.run = Utils.overwrittenFunction(WearableRepaintEvent.run, RMS_Main.runNativeRepaintEvent)
 InGameMenuStatisticsFrame.populateCellForItemInSection = Utils.overwrittenFunction(InGameMenuStatisticsFrame.populateCellForItemInSection, RMS_Main.populateCellForItemInSection)
+HandToolHolder.getCanPickupHandToolFromMenu = Utils.overwrittenFunction(HandToolHolder.getCanPickupHandToolFromMenu, RMS_Main.getCanPickupHandToolFromMenu)
 ShopConfigScreen.processAttributeData = Utils.appendedFunction(ShopConfigScreen.processAttributeData, RMS_Main.processAttributeData)
 ShopConfigScreen.processStoreItemConfigurations = Utils.appendedFunction(
     ShopConfigScreen.processStoreItemConfigurations, RMS_Main.removeShopConfigPaintColors)
@@ -863,16 +879,32 @@ function RMS_Main:forceWorkshopUpdate(forceNotify)
     end
 end
 
----Runs the per period upkeep of every tracked vehicle
+---Advances the diagnostic tool licences and the monthly greasing
 function RMS_Main:onPeriodChanged()
     if not g_currentMission:getIsServer() then
         return
     end
 
-    for _, vehicle in pairs(self.vehicles) do
-        RMS_Consumables.onLubricationPeriodChanged(vehicle)
-    end
     RMS_DiagnosticTool.advanceLicences()
+    for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
+        if vehicle.spec_rmsImplementGreasing ~= nil then
+            RMS_Greasing.onPeriodChanged(vehicle)
+        end
+    end
+end
+
+---Makes the daily grease points of what worked that day due
+function RMS_Main:onDayChanged()
+    for _, vehicle in pairs(self.vehicles) do
+        if not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
+            RMS_Greasing.onDayChanged(vehicle)
+        end
+    end
+    for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
+        if vehicle.spec_rmsImplementGreasing ~= nil then
+            RMS_Greasing.onDayChanged(vehicle)
+        end
+    end
 end
 
 ---Runs the mod update: workshop hours and the simulation step of every vehicle
@@ -963,6 +995,7 @@ function RMS_Main:loadMap()
 
     if g_currentMission:getIsServer() then
         g_messageCenter:subscribe(MessageType.PERIOD_CHANGED, self.onPeriodChanged, self)
+        g_messageCenter:subscribe(MessageType.DAY_CHANGED, self.onDayChanged, self)
     end
 
     local soundsXmlFile = loadXMLFile("rmsSounds2D", Utils.getFilename("sounds/rms_sounds.xml", modDirectory))
@@ -975,6 +1008,7 @@ end
 
 function RMS_Main:deleteMap()
     g_messageCenter:unsubscribe(MessageType.PERIOD_CHANGED, self)
+    g_messageCenter:unsubscribe(MessageType.DAY_CHANGED, self)
     self.shopMenuPageInstalled = false
     RMS_Gui.unloadResources()
     RMS_Config._loaded = nil

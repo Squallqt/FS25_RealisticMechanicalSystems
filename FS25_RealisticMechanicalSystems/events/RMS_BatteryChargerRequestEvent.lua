@@ -54,7 +54,7 @@ function RMS_BatteryChargerRequestEvent:run(connection)
         local player = requester.player
         local cx, cy, cz = getWorldTranslation(self.charger.rootNode)
         local px, py, pz = getWorldTranslation(player.rootNode)
-        if requester.farmId == FarmManager.SPECTATOR_FARM_ID or self.charger:getOwnerFarmId() ~= requester.farmId then
+        if not g_currentMission.accessHandler:canFarmAccess(requester.farmId, self.charger) then
             result = "access"
         elseif player:getIsInVehicle()
             or MathUtil.vector3Length(cx - px, cy - py, cz - pz) > RMS_BatteryCharger.MAX_DISTANCE then

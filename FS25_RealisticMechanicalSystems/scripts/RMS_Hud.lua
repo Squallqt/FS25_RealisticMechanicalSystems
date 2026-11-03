@@ -1650,13 +1650,7 @@ function RMS_Hud:showInfoVehicle(box)
     box:addLine(g_i18n:getText('rms_ws_label_condition'), RMS_Utils.formatCondition(self:getLastInspectedCondition()), isReportOutdated)
     if schedule ~= nil then
         -- Native info-box rows cannot resize text.
-        local hasHours = schedule.interval < math.huge
-        local deadline = hasHours and RMS_Utils.formatHours(math.max(schedule.interval - schedule.used, 0))
-            or RMS_Utils.formatMonths(schedule.remainingMonths)
-        box:addLine(RMS_Utils.formatMaintenanceLevel(self, schedule.maintenanceType), deadline, schedule.overdue)
-        if hasHours and schedule.months ~= nil then
-            box:addLine(RMS_Utils.formatServiceReason(self, schedule, true), RMS_Utils.formatMonths(schedule.remainingMonths), schedule.calendarDue)
-        end
+        box:addLine(RMS_Utils.formatMaintenanceLevel(self, schedule.maintenanceType), RMS_Utils.formatServiceDeadline(schedule), schedule.overdue)
     end
 
     if spec.batteryIsolated then

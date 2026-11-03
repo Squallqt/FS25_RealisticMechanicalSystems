@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Välitön"/>
         <text name="rms_option_menu_start_text" text="Aloita"/>
         <text name="rms_service_months" text="%s kuukautta"/>
+        <text name="rms_service_either" text="%s tai %s"/>
         <text name="rms_service_month" text="%s kuukausi"/>
         <text name="rms_service_calendar_due" text="Kalenteriraja saavutettu"/>
         <text name="rms_service_program_estimated" text="Arvioitu huolto-ohjelma"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Rasvaruisku"/>
         <text name="rms_grease_gun_no_vehicle" text="Ei ajoneuvoa voitelualueella"/>
-        <text name="rms_grease_gun_function" text="Käytetään koneen voitelupisteiden rasvaamiseen"/>
+        <text name="rms_grease_gun_function" text="Rasvaa koneiden rasvanipat. Ladataan rasvapatruunalla."/>
         <text name="rms_grease_gun_action" text="Rasvaa"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: voitelu on jo tehty"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s ei tarvitse voitelua"/>
+        <text name="rms_grease_gun_load" text="Lataa patruuna"/>
+        <text name="rms_grease_gun_empty" text="Rasvaruisku tyhjä: lataa patruuna"/>
+        <text name="rms_grease_gun_not_empty" text="Rasvaruiskussa on vielä rasvaa"/>
+        <text name="rms_grease_gun_points" text="Rasvanippoja jäljellä: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Rasvapatruuna"/>
+        <text name="rms_grease_cartridge_function" text="Täyttää rasvaruiskun: asetu patruunan eteen rasvaruisku kädessä."/>
+        <text name="rms_grease_cartridge_count" text="Patruunat"/>
+        <text name="rms_grease_quantity" text="Määrä"/>
+        <text name="rms_grease_hud_title" text="Rasvaus"/>
+        <text name="rms_grease_hud_done" text="Ajan tasalla"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Paineilmapuhallin"/>
         <text name="rms_air_blower_no_vehicle" text="Ei ajoneuvoa puhdistusalueella"/>
         <text name="rms_air_blower_function" text="Käytetään jäähdyttimien ja ilmansuodattimien puhdistukseen"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s myöhässä %s"/>
         <text name="rms_inspection_status_slightly_low" text="Hieman alhainen"/>
         <text name="rms_inspection_status_slightly_dirty" text="Hieman tukossa"/>
-        <text name="rms_inspection_status_slightly_dry" text="Hieman kuiva"/>
+        <text name="rms_inspection_status_grease_due" text="Rasvattava"/>
         <text name="rms_inspection_status_slight_moisture" text="Kevyttä kosteutta"/>
         <text name="rms_inspection_status_seepage" text="Vuotoa"/>
         <text name="rms_inspection_status_severe_leak" text="Vakava vuoto"/>
         <text name="rms_inspection_status_low" text="Alhainen"/>
         <text name="rms_inspection_status_very_low" text="Erittäin alhainen"/>
-        <text name="rms_inspection_status_very_dry" text="Erittäin kuiva"/>
         <text name="rms_inspection_status_critically_low" text="Kiireellinen täydennys"/>
         <text name="rms_inspection_status_critically_clogged" text="Täysin tukossa"/>
-        <text name="rms_inspection_status_critically_dry" text="Metalli metallia vasten"/>
         <text name="rms_inspection_status_dirty" text="Tukossa"/>
-        <text name="rms_inspection_status_dry" text="Kuiva"/>
+        <text name="rms_inspection_status_grease_late" text="Myöhässä"/>
         <text name="rms_inspection_status_active_leak" text="Aktiivinen vuoto"/>
         <text name="rms_inspection_status_heavily_clogged" text="Pahasti tukossa"/>
         <text name="rms_inspection_status_not_required" text="Ei tarvita"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Toteamattoman vian oire: korjaamo toteaa sen tarkastuksella tai huollolla."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Laturin ympärillä ja joissakin liitännöissä on nähtävissä ylikuumenemisen ja tummentumisen merkkejä."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Laturin ja sen johdotuksen ympärillä on nähtävissä voimakkaita ylikuumenemisen merkkejä ja tummentuneita liitäntöjä."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Voitelupisteet näyttävät hieman kuivilta."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Voitelupisteet näyttävät kuivilta ja riittämättömästi voideluilta."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Voitelupisteet ovat erittäin kuivat ja rasvan jälkiä on vähän jäljellä."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Voitelupisteet käyvät metalli metallia vasten, eikä lähes yhtään rasvaa ole näkyvissä."/>
+        <text name="rms_inspection_hint_grease_due" text="Rasvattavia rasvanippoja: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Vaihteiston kotelossa näkyy vähäisiä öljyjälkiä."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Vaihteiston alla näkyy öljypisaroita."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Vaihteiston ympärillä näkyy selvää öljyhukkaa."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Jäähdytysneste on vaihdettava: kulunut neste nopeuttaa jäähdytysjärjestelmän kulumista. Korjaamon suosittelema huolto vaihtaa sen."/>
         <text name="rms_inspection_radiator" text="Jäähdytin"/>
         <text name="rms_inspection_air_filter" text="Ilmasuodatin"/>
-        <text name="rms_inspection_lubrication_level" text="Voitelutaso"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Ei epäilyttäviä oireita havaittu"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Ei mittausta"/>
         <text name="rms_fleet_parts_reading" text="Osat mitattu %s"/>
         <text name="rms_fleet_parts_need_complete" text="Osamittaus seuraavassa täydellisessä tarkastuksessa"/>
+        <text name="rms_fleet_greasing_done" text="Rasvaus ajan tasalla"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s h työtä"/>
+        <text name="rms_fleet_greasing_period_day" text="Joka käyttöpäivä"/>
+        <text name="rms_fleet_greasing_period_month" text="Kuukausittain"/>
+        <text name="rms_fleet_greasing_period_months" text="Joka %d. kuukausi"/>
+        <text name="rms_fleet_greasing_period_bales" text="%d paalin välein"/>
+        <text name="rms_fleet_greasing_bales" text="%d paalia"/>
+        <text name="rms_fleet_greasing_day" text="%d päivä"/>
+        <text name="rms_fleet_greasing_days" text="%d päivää"/>
+        <text name="rms_fleet_day_late" text="%d päivä myöhässä"/>
+        <text name="rms_fleet_days_late" text="%d päivää myöhässä"/>
+        <text name="rms_fleet_greasing_to_do" text="%d jäljellä"/>
+        <text name="rms_fleet_greasing_points" text="Rasvanipat"/>
+        <text name="rms_fleet_greasing_next" text="Seuraava rasvaus"/>
+        <text name="rms_fleet_greasing_now" text="Nyt"/>
+        <text name="rms_fleet_greasing_in" text="jäljellä %s"/>
+        <text name="rms_fleet_months_late" text="%d kk myöhässä"/>
+        <text name="rms_fleet_bales_late" text="%d paalia myöhässä"/>
+        <text name="rms_fleet_wear" text="Kuluminen"/>
+        <text name="rms_fleet_wear_faster" text="Nopeammin"/>
+        <text name="rms_fleet_wear_normal" text="Normaali"/>
+        <text name="rms_fleet_wear_late" text="Rasvauksen viive"/>
+        <text name="rms_fleet_wear_dry" text="Kuluminen kuivana"/>
+        <text name="rms_fleet_wear_repair_greases" text="Rasvataan korjauksessa"/>
+        <text name="rms_fleet_wear_repair" text="Korjaus korjaamolla"/>
+        <text name="rms_fleet_wear_none" text="Ei ole"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Ajoneuvon palautus"/>
         <text name="rms_sell_dialog_section_vehicle" text="Ajoneuvo"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Jäähdytys ja ilmansuodatin"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Jäähdytin tai ilmansuodatin on tukossa. Pidä %s-näppäintä painettuna, kun katsot ajoneuvoa, niin näet kumman. Puhdista se paineilmapuhaltimella. Jos suodatinta ei voi enää puhdistaa puhaltamalla, korjaamo vaihtaa sen %s huollosta alkaen."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Voitelu tarpeen"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Kone %s tarvitsee säännöllistä voitelua.&#10;&#10;RMS:ssä voitelutaso laskee käyttötuntien myötä. Pitkän käyttämättömän jakson jälkeen kone on myös voideltava ennen käyttöönottoa. Riittämätön voitelu nopeuttaa alustan kulumista.&#10;&#10;Osta kaupasta rasvaruisku ja voitele kone, kun tarkastus sitä edellyttää.&#10;&#10;Voit tarkistaa voitelutason pitämällä %s-näppäintä painettuna ajoneuvoa katsoessasi."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Koneessa %s on rasvattavia rasvanippoja.&#10;&#10;RMS:ssä jokaisella koneella on käyttöohjeensa rasvanipat. Ne on rasvattava uudelleen tietyn käyttötuntimäärän jälkeen tai joillakin koneilla jokaisena työpäivänä. Myöhästynyt rasvaus nopeuttaa alustan kulumista.&#10;&#10;Osta kaupasta rasvaruisku ja patruunoita. Tähtää patruunaan rasvaruisku kädessä ladataksesi sen ja sitten koneeseen: jokainen napsautus rasvaa yhden rasvanipan, ja painikkeen pitäminen pohjassa jatkaa seuraaviin.&#10;&#10;Näet jäljellä olevat rasvanipat pitämällä %s-näppäintä painettuna ajoneuvoa katsoessasi."/>
         <text name="rms_tutorial_needs_repair_title" text="Ajoneuvon vika"/>
         <text name="rms_tutorial_needs_repair_message" text="Kone %s: siinä on ongelma, ja yksi osa on saattanut vikaantua.&#10;&#10;Vie se korjaamolle: tarkastus, tai huolto jos se on erääntynyt, toteaa vian. Älä viivyttele: vika voi pahentua edelleen ja korjauskustannukset kasvavat sen mukana.&#10;&#10;Kun vika on todettu, anna korjaamon korjata se."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Peruskorjaus tarpeen"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Ahtopaine"/>
         <text name="rms_diagnostic_spn_100" text="Moottoriöljyn paine"/>
         <text name="rms_diagnostic_spn_101" text="Moottorin kampikammion paine"/>
-        <text name="rms_diagnostic_spn_1322" text="Sytytyskatkoja useassa sylinterissä"/>
         <text name="rms_diagnostic_spn_cylinder" text="Sytytyskatko sylinterissä %d"/>
         <text name="rms_diagnostic_spn_94" text="Polttoaineen syöttöpaine"/>
         <text name="rms_diagnostic_spn_110" text="Jäähdytysnesteen lämpötila"/>

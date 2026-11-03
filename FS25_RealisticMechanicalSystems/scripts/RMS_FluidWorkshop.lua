@@ -137,7 +137,7 @@ function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, worksho
             local requirement = RMS_Config.MAINTENANCE.REPAIR_OPERATIONS[id].mobileRequirement
             if requirement == "MOBILE_DIAGNOSTIC" and not hasDiagnosticTool
                 or requirement ~= nil and requirement ~= "MOBILE_DIAGNOSTIC" and isMobile then
-                return false, requirement, RMS_Breakdowns.BreakdownRegistry[id].part
+                return false, requirement, RMS_Utils.getBreakdownPartKey(vehicle, RMS_Breakdowns.BreakdownRegistry[id])
             end
         end
     end
@@ -480,7 +480,7 @@ function RMS_FluidWorkshop.getInvoiceRows(vehicle, serviceType, optionOne, invoi
             table.insert(rows, { kind = line.kind, label = g_i18n:getText("rms_log_invoice_" .. line.kind), price = price })
         elseif line.kind == "repair" then
             local breakdownDef = RMS_Breakdowns.BreakdownRegistry[line.key]
-            local partKey = breakdownDef ~= nil and (breakdownDef.part or breakdownDef.system) or "rms_log_repair_desc_generic"
+            local partKey = breakdownDef ~= nil and RMS_Utils.getBreakdownPartKey(vehicle, breakdownDef) or "rms_log_repair_desc_generic"
             local label = g_i18n:getText(partKey)
             if line.warrantyReason == "factory" or line.warrantyReason == "part" then
                 label = label .. " (" .. g_i18n:getText("rms_ws_badge_warranty") .. ")"

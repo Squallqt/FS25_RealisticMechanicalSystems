@@ -7,7 +7,6 @@ RMS_DiagnosticScreen.INSTANCE = nil
 RMS_DiagnosticScreen.PAGE = { CONNECTION = 1, SCAN = 2 }
 
 local RMS_DiagnosticScreen_mt = Class(RMS_DiagnosticScreen, MessageDialog)
-local modDirectory = g_currentModDirectory
 local PAGE = RMS_DiagnosticScreen.PAGE
 
 local REFRESH_MS = 250
@@ -146,7 +145,7 @@ local function getDetailFields(target, entry, isLicenceValid)
     end
     local operation = RMS_Config.MAINTENANCE.REPAIR_OPERATIONS[entry.breakdownId]
     local hours = RealisticMechanicalSystems.getRepairLabourHours(target, entry.breakdownId, RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM)
-    table.insert(fields, { g_i18n:getText("rms_diagnostic_part_label"), g_i18n:getText(definition.part) })
+    table.insert(fields, { g_i18n:getText("rms_diagnostic_part_label"), g_i18n:getText(RMS_Utils.getBreakdownPartKey(target, definition)) })
     table.insert(fields, { g_i18n:getText("rms_diagnostic_repair_time_label"), RMS_Utils.formatDuration(hours) })
     table.insert(fields, { g_i18n:getText("rms_diagnostic_where_label"),
         g_i18n:getText(operation.category == "highVoltage" and "rms_diagnostic_where_high_voltage" or "rms_diagnostic_where_diagnostic") })

@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Severe steering knuckle pivot wear. Play in the steering is large."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Critical steering knuckle pivot wear. The steering has very large play."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Light steering orbitrol failure. The steering wheel turns with a little play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Light steering box failure. The steering wheel turns with a little play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Light steering rack failure. The steering wheel turns with a little play before the wheels follow."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Moderate steering orbitrol failure. The steering wheel turns farther before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Moderate steering box failure. The steering wheel turns farther before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Moderate steering rack failure. The steering wheel turns farther before the wheels follow."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Severe steering orbitrol failure. The steering wheel turns a lot without the wheels following well."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Severe steering box failure. The steering wheel turns a lot without the wheels following well."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Severe steering rack failure. The steering wheel turns a lot without the wheels following well."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Critical steering orbitrol failure. The steering wheel has very large play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Critical steering box failure. The steering wheel has very large play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Critical steering rack failure. The steering wheel has very large play before the wheels follow."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Light internal steering cylinder leak. The machine starts to drift to one side."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Light steering cylinder rod seal leak. Hydraulic oil level drops slightly."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Moderate internal steering cylinder leak. The machine drifts farther to one side."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Front Loader Pins and Bushings"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Steering Knuckle Pivots"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Steering Control Unit"/>
+        <text name="rms_breakdowns_part_steering_box" text="Steering Box"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Steering Rack"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Steering Cylinder"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Cab Suspension"/>
         <text name="rms_breakdowns_part_pto_clutch" text="PTO Clutch"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Transmission Sensors"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Transmission Filter"/>
         <text name="rms_breakdowns_part_lift_valve" text="Lift Valve"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Header Lift Valve"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Lift Position Sensor"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Header Height Sensor"/>
         <text name="rms_breakdowns_part_loader_control" text="Loader Control"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulic Quick Couplers"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Light clutch failure. It does not fully release. Some gear selections are difficult."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Hydraulic pump failure. It is broken. Pressure is lost and the hydraulic functions no longer respond."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Hydraulic control valve failure. The spool is stuck. The affected hydraulic function no longer moves."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Lift valve failure. It no longer holds the load correctly. The raised implement sinks."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Header lift valve failure. It no longer holds the load correctly. The raised header sinks."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Lift valve failure. It is stuck. The lift no longer responds."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Header lift valve failure. It is stuck. The header can no longer be raised or lowered."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Lift position sensor failure. The position signal has failed. The lift no longer holds the requested height and a fault code is stored."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Header height sensor failure. The height signal has failed. The header no longer holds the requested height and a fault code is stored."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Light loader control failure. The arm and bucket respond more slowly."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Moderate loader control failure. The arm and bucket move at half speed only."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Severe loader control failure. The arm and bucket barely move."/>

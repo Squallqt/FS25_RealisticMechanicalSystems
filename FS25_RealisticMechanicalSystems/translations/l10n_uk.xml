@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Миттєво"/>
         <text name="rms_option_menu_start_text" text="Почати"/>
         <text name="rms_service_months" text="%s міс."/>
+        <text name="rms_service_either" text="%s або %s"/>
         <text name="rms_service_month" text="%s міс."/>
         <text name="rms_service_calendar_due" text="Календарний строк досягнуто"/>
         <text name="rms_service_program_estimated" text="Орієнтовний графік"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Шприц для змащування"/>
         <text name="rms_grease_gun_no_vehicle" text="У зоні доступу немає техніки для змащування"/>
-        <text name="rms_grease_gun_function" text="Використовується для змащування точок машини"/>
+        <text name="rms_grease_gun_function" text="Змащує прес-маслянки машин. Заправляється картриджем із мастилом."/>
         <text name="rms_grease_gun_action" text="Змастити"/>
         <text name="rms_grease_gun_already_lubricated" text="%s вже змащено"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s не потребує змащування"/>
+        <text name="rms_grease_gun_load" text="Вставити картридж"/>
+        <text name="rms_grease_gun_empty" text="Шприц порожній: вставте картридж"/>
+        <text name="rms_grease_gun_not_empty" text="У шприці для змащування ще є мастило"/>
+        <text name="rms_grease_gun_points" text="Залишилося прес-маслянок: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Картридж із мастилом"/>
+        <text name="rms_grease_cartridge_function" text="Заправляє шприц для змащування: тримаючи шприц у руках, станьте перед картриджем."/>
+        <text name="rms_grease_cartridge_count" text="Картриджі"/>
+        <text name="rms_grease_quantity" text="Кількість"/>
+        <text name="rms_grease_hud_title" text="Змащування"/>
+        <text name="rms_grease_hud_done" text="Змащено"/>
+        <text name="rms_unit_milliliterShort" text="мл"/>
         <text name="rms_air_blower_name" text="Повітродувка"/>
         <text name="rms_air_blower_no_vehicle" text="У зоні доступу немає техніки для очищення"/>
         <text name="rms_air_blower_function" text="Використовується для чищення радіаторів та повітряних фільтрів"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s прострочена на %s"/>
         <text name="rms_inspection_status_slightly_low" text="Трохи низький"/>
         <text name="rms_inspection_status_slightly_dirty" text="Злегка забитий"/>
-        <text name="rms_inspection_status_slightly_dry" text="Трохи сухі"/>
+        <text name="rms_inspection_status_grease_due" text="Час змастити"/>
         <text name="rms_inspection_status_slight_moisture" text="Легка вологість"/>
         <text name="rms_inspection_status_seepage" text="Просочування"/>
         <text name="rms_inspection_status_severe_leak" text="Сильний витік"/>
         <text name="rms_inspection_status_low" text="Низький"/>
         <text name="rms_inspection_status_very_low" text="Дуже низький"/>
-        <text name="rms_inspection_status_very_dry" text="Дуже сухі"/>
         <text name="rms_inspection_status_critically_low" text="Термінове доливання"/>
         <text name="rms_inspection_status_critically_clogged" text="Повністю забитий"/>
-        <text name="rms_inspection_status_critically_dry" text="Метал по металу"/>
         <text name="rms_inspection_status_dirty" text="Забитий"/>
-        <text name="rms_inspection_status_dry" text="Сухі"/>
+        <text name="rms_inspection_status_grease_late" text="Прострочено"/>
         <text name="rms_inspection_status_active_leak" text="Активний витік"/>
         <text name="rms_inspection_status_heavily_clogged" text="Сильно забитий"/>
         <text name="rms_inspection_status_not_required" text="Не потрібно"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Ознака невиявленої несправності: майстерня виявить її під час огляду або обслуговування."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Біля генератора видно сліди перегріву й потемніння деяких з’єднань."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Біля генератора та його проводки видно значні сліди перегріву й потемнілі роз’єми."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Точки змащування виглядають злегка сухими."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Точки змащування виглядають сухими, мастила недостатньо."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Точки змащування дуже сухі, видимих залишків мастила майже немає."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Точки змащування працюють метал по металу, мастила майже не видно."/>
+        <text name="rms_inspection_hint_grease_due" text="Прес-маслянок для змащування: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="На корпусі коробки передач помітні слабкі сліди оливи."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Під коробкою передач видно краплі оливи."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Навколо коробки передач помітна значна втрата оливи."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Охолоджувальну рідину час замінити: відпрацьована рідина прискорює знос системи охолодження. Рекомендоване в майстерні ТО замінює її."/>
         <text name="rms_inspection_radiator" text="Радіатор"/>
         <text name="rms_inspection_air_filter" text="Повітряний фільтр"/>
-        <text name="rms_inspection_lubrication_level" text="Рівень змащування"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Підозрілих симптомів не виявлено"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Немає виміру"/>
         <text name="rms_fleet_parts_reading" text="Вимір деталей %s"/>
         <text name="rms_fleet_parts_need_complete" text="Вимір деталей на наступному повному огляді"/>
+        <text name="rms_fleet_greasing_done" text="Змащування виконано"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s год роботи"/>
+        <text name="rms_fleet_greasing_period_day" text="Кожен день роботи"/>
+        <text name="rms_fleet_greasing_period_month" text="Щомісяця"/>
+        <text name="rms_fleet_greasing_period_months" text="Кожні %d міс."/>
+        <text name="rms_fleet_greasing_period_bales" text="Кожні %d тюків"/>
+        <text name="rms_fleet_greasing_bales" text="%d тюків"/>
+        <text name="rms_fleet_greasing_day" text="%d день"/>
+        <text name="rms_fleet_greasing_days" text="%d дн."/>
+        <text name="rms_fleet_day_late" text="Прострочено на %d день"/>
+        <text name="rms_fleet_days_late" text="Прострочено на %d дн."/>
+        <text name="rms_fleet_greasing_to_do" text="Залишилося %d"/>
+        <text name="rms_fleet_greasing_points" text="Прес-маслянки"/>
+        <text name="rms_fleet_greasing_next" text="Наступне змащування"/>
+        <text name="rms_fleet_greasing_now" text="Зараз"/>
+        <text name="rms_fleet_greasing_in" text="через %s"/>
+        <text name="rms_fleet_months_late" text="Прострочено на %d міс."/>
+        <text name="rms_fleet_bales_late" text="Прострочено на %d тюків"/>
+        <text name="rms_fleet_wear" text="Знос"/>
+        <text name="rms_fleet_wear_faster" text="Швидше"/>
+        <text name="rms_fleet_wear_normal" text="Звичайний знос"/>
+        <text name="rms_fleet_wear_late" text="Прострочка змащування"/>
+        <text name="rms_fleet_wear_dry" text="Знос насухо"/>
+        <text name="rms_fleet_wear_repair_greases" text="Змащування під час ремонту"/>
+        <text name="rms_fleet_wear_repair" text="Ремонт у майстерні"/>
+        <text name="rms_fleet_wear_none" text="Немає"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Повернення техніки"/>
         <text name="rms_sell_dialog_section_vehicle" text="Техніка"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Система охолодження та повітряний фільтр"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Радіатор або повітряний фільтр засмічений. Дивіться на техніку й утримуйте клавішу %s, щоб дізнатися, який саме. Очистьте його повітродувкою зі стисненим повітрям. Якщо фільтр більше не продувається, майстерня замінює його починаючи з ТО %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Необхідне змащування"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Техніка %s потребує регулярного змащування.&#10;&#10;У RMS рівень змащування знижується з мотогодинами. Після тривалого простою змащування також потрібне перед поверненням техніки до роботи. Недостатнє змащування прискорює знос ходової частини.&#10;&#10;Придбайте в магазині шприц для змащування та змастіть техніку, коли цього вимагатиме огляд.&#10;&#10;Рівень змащування можна перевірити, утримуючи клавішу %s і дивлячись на техніку."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Техніка %s має прес-маслянки, які потрібно змастити.&#10;&#10;У RMS кожна машина має прес-маслянки зі своєї інструкції. Їх потрібно змащувати знову через певну кількість мотогодин, а в деяких машин кожного робочого дня. Запізніле змащування прискорює знос ходової частини.&#10;&#10;Придбайте в магазині шприц для змащування та картриджі. Тримаючи шприц у руках, наведіть його на картридж для заправки, потім на машину: кожне клацання змащує одну прес-маслянку, а утримання кнопки продовжує змащування наступних.&#10;&#10;Щоб побачити решту прес-маслянок, утримуйте клавішу %s, дивлячись на техніку."/>
         <text name="rms_tutorial_needs_repair_title" text="Виявлено несправність"/>
         <text name="rms_tutorial_needs_repair_message" text="З технікою %s щось не так. Можливо, одна з її деталей вийшла з ладу.&#10;&#10;Завітайте до майстерні: огляд або обслуговування, якщо воно настало, виявить несправність. Не зволікайте: несправність може погіршуватися, а вартість ремонту — зростати.&#10;&#10;Коли несправність виявлено, відремонтуйте її в майстерні."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Потрібен капітальний ремонт"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Тиск наддуву"/>
         <text name="rms_diagnostic_spn_100" text="Тиск моторної оливи"/>
         <text name="rms_diagnostic_spn_101" text="Тиск у картері двигуна"/>
-        <text name="rms_diagnostic_spn_1322" text="Пропуски запалювання в кількох циліндрах"/>
         <text name="rms_diagnostic_spn_cylinder" text="Пропуск запалювання в циліндрі %d"/>
         <text name="rms_diagnostic_spn_94" text="Тиск подачі палива"/>
         <text name="rms_diagnostic_spn_110" text="Температура охолоджувальної рідини"/>

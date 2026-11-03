@@ -232,8 +232,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#particulateFilterLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
         xmlFile:setValue(key .. "#scrInducementHours", RealisticMechanicalSystems.sanitizeNumber(spec.scrInducementHours, 0, 0))
         xmlFile:setValue(key .. "#particulateFilterOverloaded", spec.fuelState.isParticulateFilterOverloaded == true)
-        xmlFile:setValue(key .. "#lubricationLevel", math.clamp(spec.lubricationLevel or 1.0, 0.0, 1.0))
-        xmlFile:setValue(key .. "#lubricationUsedThisPeriod", spec.lubricationUsedThisPeriod == true)
+        xmlFile:setValue(key .. "#greasing", RMS_Greasing.serialize(self))
         xmlFile:setValue(key .. "#thermostatState", RealisticMechanicalSystems.sanitizeNumber(spec.thermostatState, 0.0, 0.0, 1.0))
         xmlFile:setValue(key .. "#transmissionThermostatState", RealisticMechanicalSystems.sanitizeNumber(spec.transmissionThermostatState, 0.0, 0.0, 1.0))
         xmlFile:setValue(key .. "#serviceOptionOne", spec.serviceOptionOne or "")
@@ -364,7 +363,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
         pto = { name = RealisticMechanicalSystems.SYSTEMS.PTO, condition = 1.0, enabled = true }
     }
     self.spec_RealisticMechanicalSystems.factorStats = createEmptyFactorStats(self.spec_RealisticMechanicalSystems.systems)
-    ensureFactorStats(self.spec_RealisticMechanicalSystems, self)
+    ensureFactorStats(self.spec_RealisticMechanicalSystems)
 
     self.spec_RealisticMechanicalSystems.airFilterClogging = 0.0
     self.spec_RealisticMechanicalSystems.airFilterResidue = 0.0
@@ -435,7 +434,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
 
     self.spec_RealisticMechanicalSystems.radiatorClogging = 0.0
     self.spec_RealisticMechanicalSystems.lubricationLevel = 1.0
-    self.spec_RealisticMechanicalSystems.lubricationUsedThisPeriod = true
     self.spec_RealisticMechanicalSystems.fieldInspectionSoundActive = false
     self.spec_RealisticMechanicalSystems.fieldInspectionActivePlayers = {}
 
@@ -720,8 +718,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
         RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL)
     spec.scrInducementHours = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#scrInducementHours", 0), 0, 0)
     spec.fuelState.isParticulateFilterOverloaded = xmlFile:getValue(key .. "#particulateFilterOverloaded", false)
-    spec.lubricationLevel = math.clamp(xmlFile:getValue(key .. "#lubricationLevel", spec.lubricationLevel), 0.0, 1.0)
-    spec.lubricationUsedThisPeriod = xmlFile:getValue(key .. "#lubricationUsedThisPeriod", true)
+    RMS_Greasing.deserialize(self, xmlFile:getValue(key .. "#greasing"))
     spec.thermostatState = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#thermostatState", spec.thermostatState), spec.thermostatState or 0, 0.0, 1.0)
     spec.transmissionThermostatState = RealisticMechanicalSystems.sanitizeNumber(
         xmlFile:getValue(key .. "#transmissionThermostatState", spec.transmissionThermostatState),
@@ -811,9 +808,9 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
 
         systemData.name = RMS_Utils.getSystemNameByKey(RealisticMechanicalSystems.SYSTEMS, systemKey)
     end
-    ensureFactorStats(spec, self)
+    ensureFactorStats(spec)
     applyFlattenedFactorStats(spec, loadedFactorStatsFlat)
-    ensureFactorStats(spec, self)
+    ensureFactorStats(spec)
 
     spec.maintenanceLog = {}
     local i = 0
@@ -1013,7 +1010,7 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         RMS_ElectricDrive.initBatteryCapacity(self)
     end
     local isRoadVehicle = RMS_Drivetrain.getIsRoadVehicleCategory(self)
-    spec.isVehicleNeedLubricate = not isRoadVehicle
+    RMS_Greasing.initialize(self)
     spec.isVehicleNeedBlowOut = not isRoadVehicle
     resetIsMovingRecursive(self, {})
 

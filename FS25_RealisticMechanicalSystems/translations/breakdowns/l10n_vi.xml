@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Chốt trụ đứng bị mòn nặng. Độ rơ trong hệ thống lái lớn."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Chốt trụ đứng bị mòn nghiêm trọng. Hệ thống lái có độ rơ rất lớn."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Van lái orbitrol hư hỏng nhẹ. Vô lăng quay với một chút độ rơ trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Hộp lái hư hỏng nhẹ. Vô lăng quay với một chút độ rơ trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Thước lái hư hỏng nhẹ. Vô lăng quay với một chút độ rơ trước khi bánh xe quay theo."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Van lái orbitrol hư hỏng ở mức trung bình. Vô lăng quay nhiều hơn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Hộp lái hư hỏng ở mức trung bình. Vô lăng quay nhiều hơn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Thước lái hư hỏng ở mức trung bình. Vô lăng quay nhiều hơn trước khi bánh xe quay theo."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Van lái orbitrol hư hỏng nặng. Vô lăng quay nhiều nhưng bánh xe không quay theo tốt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Hộp lái hư hỏng nặng. Vô lăng quay nhiều nhưng bánh xe không quay theo tốt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Thước lái hư hỏng nặng. Vô lăng quay nhiều nhưng bánh xe không quay theo tốt."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Van lái orbitrol hư hỏng nghiêm trọng. Vô lăng có độ rơ rất lớn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Hộp lái hư hỏng nghiêm trọng. Vô lăng có độ rơ rất lớn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Thước lái hư hỏng nghiêm trọng. Vô lăng có độ rơ rất lớn trước khi bánh xe quay theo."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Xi lanh lái bị rò rỉ nhẹ bên trong. Xe bắt đầu trôi lệch sang một bên."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Phớt cần xi lanh lái bị rò rỉ nhẹ. Mức dầu thủy lực giảm một chút."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Xi lanh lái bị rò rỉ bên trong ở mức trung bình. Xe trôi lệch sang một bên nhiều hơn."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Chốt và bạc lót khớp bộ nạp trước"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Chốt trụ đứng"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Van lái orbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Hộp lái"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Thước lái"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Xi lanh lái"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Hệ thống treo ca bin"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Ly hợp PTO"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Cảm biến hộp số"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Bộ lọc truyền động"/>
         <text name="rms_breakdowns_part_lift_valve" text="Van nâng"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Van nâng bàn cắt"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Cảm biến vị trí cơ cấu nâng"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Cảm biến độ cao bàn cắt"/>
         <text name="rms_breakdowns_part_loader_control" text="Bộ điều khiển bộ nạp"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Khớp nối nhanh thủy lực"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Ly hợp hư hỏng nhẹ. Bộ phận này không ngắt hoàn toàn. Một số cấp số khó gài."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Bơm thủy lực hư hỏng. Bộ phận này bị vỡ. Áp suất mất và các chức năng thủy lực không đáp ứng."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Van điều khiển thủy lực hư hỏng. Con trượt bị kẹt. Chức năng thủy lực bị ảnh hưởng không chuyển động."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Van nâng hư hỏng. Bộ phận này không giữ tải đúng. Nông cụ đã nâng bị hạ xuống."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Van nâng bàn cắt hư hỏng. Bộ phận này không giữ tải đúng. Bàn cắt đã nâng bị hạ xuống."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Van nâng hư hỏng. Bộ phận này bị kẹt. Cơ cấu nâng không đáp ứng."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Van nâng bàn cắt hư hỏng. Bộ phận này bị kẹt. Bàn cắt không còn nâng lên hay hạ xuống được."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Cảm biến vị trí cơ cấu nâng hư hỏng. Tín hiệu vị trí bị hỏng. Cơ cấu nâng không giữ được độ cao yêu cầu và mã lỗi được lưu."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Cảm biến độ cao bàn cắt hư hỏng. Tín hiệu độ cao bị hỏng. Bàn cắt không giữ được độ cao yêu cầu và mã lỗi được lưu."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Bộ điều khiển bộ nạp hư hỏng nhẹ. Tay nâng và gầu phản ứng chậm hơn."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Bộ điều khiển bộ nạp hư hỏng ở mức trung bình. Tay nâng và gầu chỉ di chuyển với nửa tốc độ."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Bộ điều khiển bộ nạp hư hỏng nặng. Tay nâng và gầu hầu như không di chuyển."/>

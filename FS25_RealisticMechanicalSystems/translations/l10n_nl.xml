@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Direct"/>
         <text name="rms_option_menu_start_text" text="Starten"/>
         <text name="rms_service_months" text="%s maanden"/>
+        <text name="rms_service_either" text="%s of %s"/>
         <text name="rms_service_month" text="%s maand"/>
         <text name="rms_service_calendar_due" text="Kalendertermijn bereikt"/>
         <text name="rms_service_program_estimated" text="Geschat onderhoudsschema"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Vetspuit"/>
         <text name="rms_grease_gun_no_vehicle" text="Geen voertuig binnen smeerbereik"/>
-        <text name="rms_grease_gun_function" text="Voor het smeren van de smeerpunten van de machine"/>
+        <text name="rms_grease_gun_function" text="Smeert de smeernippels van machines. Wordt geladen met een vetpatroon."/>
         <text name="rms_grease_gun_action" text="Smeren"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: smering al uitgevoerd"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s hoeft niet te worden gesmeerd"/>
+        <text name="rms_grease_gun_load" text="Patroon laden"/>
+        <text name="rms_grease_gun_empty" text="Vetspuit leeg: laad een patroon"/>
+        <text name="rms_grease_gun_not_empty" text="De vetspuit bevat nog vet"/>
+        <text name="rms_grease_gun_points" text="Smeernippels te doen: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Vetpatroon"/>
+        <text name="rms_grease_cartridge_function" text="Vult de vetspuit: ga met de vetspuit in de hand voor de patroon staan."/>
+        <text name="rms_grease_cartridge_count" text="Patronen"/>
+        <text name="rms_grease_quantity" text="Aantal"/>
+        <text name="rms_grease_hud_title" text="Smeren"/>
+        <text name="rms_grease_hud_done" text="In orde"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Persluchtblazer"/>
         <text name="rms_air_blower_no_vehicle" text="Geen voertuig binnen reinigingsbereik"/>
         <text name="rms_air_blower_function" text="Voor het reinigen van radiateurs en luchtfilters"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s: %s achterstallig"/>
         <text name="rms_inspection_status_slightly_low" text="Iets te laag"/>
         <text name="rms_inspection_status_slightly_dirty" text="Licht vervuild"/>
-        <text name="rms_inspection_status_slightly_dry" text="Enigszins droog"/>
+        <text name="rms_inspection_status_grease_due" text="Smeren nodig"/>
         <text name="rms_inspection_status_slight_moisture" text="Lichte vochtigheid"/>
         <text name="rms_inspection_status_seepage" text="Doorsijpeling"/>
         <text name="rms_inspection_status_severe_leak" text="Ernstige lekkage"/>
         <text name="rms_inspection_status_low" text="Laag"/>
         <text name="rms_inspection_status_very_low" text="Zeer laag"/>
-        <text name="rms_inspection_status_very_dry" text="Zeer droog"/>
         <text name="rms_inspection_status_critically_low" text="Dringend bijvullen"/>
         <text name="rms_inspection_status_critically_clogged" text="Volledig verstopt"/>
-        <text name="rms_inspection_status_critically_dry" text="Metaal op metaal"/>
         <text name="rms_inspection_status_dirty" text="Vervuild"/>
-        <text name="rms_inspection_status_dry" text="Droog"/>
+        <text name="rms_inspection_status_grease_late" text="Te laat"/>
         <text name="rms_inspection_status_active_leak" text="Actieve lekkage"/>
         <text name="rms_inspection_status_heavily_clogged" text="Sterk vervuild"/>
         <text name="rms_inspection_status_not_required" text="Niet vereist"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Symptoom van een niet vastgestelde storing: de werkplaats stelt hem vast met een inspectie of een onderhoudsbeurt."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Rond de dynamo en enkele aansluitingen zijn sporen van oververhitting en donkere verkleuring zichtbaar."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Rond de dynamo en de bedrading zijn duidelijke sporen van oververhitting en donker verkleurde stekkers zichtbaar."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="De smeerpunten lijken licht droog."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="De smeerpunten lijken droog en hebben onvoldoende vet."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="De smeerpunten zijn zeer droog en er is nog maar weinig vet zichtbaar."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="De smeerpunten werken metaal op metaal en er is bijna geen vet meer zichtbaar."/>
+        <text name="rms_inspection_hint_grease_due" text="Te smeren smeernippels: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Rond het transmissiehuis zijn lichte oliesporen zichtbaar."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Er zijn oliedruppels zichtbaar onder de transmissie."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Rond de transmissie is duidelijk olieverlies zichtbaar."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="De koelvloeistof moet worden vervangen: versleten koelvloeistof versnelt de slijtage van het koelsysteem. Het in de werkplaats aanbevolen onderhoud vervangt ze."/>
         <text name="rms_inspection_radiator" text="Radiateur"/>
         <text name="rms_inspection_air_filter" text="Luchtfilter"/>
-        <text name="rms_inspection_lubrication_level" text="Smeerniveau"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Geen verdachte symptomen gedetecteerd"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Geen meting"/>
         <text name="rms_fleet_parts_reading" text="Delen gemeten %s"/>
         <text name="rms_fleet_parts_need_complete" text="Delen gemeten bij de volgende volledige inspectie"/>
+        <text name="rms_fleet_greasing_done" text="Smeren in orde"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s u werk"/>
+        <text name="rms_fleet_greasing_period_day" text="Elke gebruiksdag"/>
+        <text name="rms_fleet_greasing_period_month" text="Elke maand"/>
+        <text name="rms_fleet_greasing_period_months" text="Elke %d maanden"/>
+        <text name="rms_fleet_greasing_period_bales" text="Elke %d balen"/>
+        <text name="rms_fleet_greasing_bales" text="%d balen"/>
+        <text name="rms_fleet_greasing_day" text="%d dag"/>
+        <text name="rms_fleet_greasing_days" text="%d dagen"/>
+        <text name="rms_fleet_day_late" text="%d dag te laat"/>
+        <text name="rms_fleet_days_late" text="%d dagen te laat"/>
+        <text name="rms_fleet_greasing_to_do" text="%d te doen"/>
+        <text name="rms_fleet_greasing_points" text="Smeernippels"/>
+        <text name="rms_fleet_greasing_next" text="Volgende smeerbeurt"/>
+        <text name="rms_fleet_greasing_now" text="Nu"/>
+        <text name="rms_fleet_greasing_in" text="over %s"/>
+        <text name="rms_fleet_months_late" text="%d maanden te laat"/>
+        <text name="rms_fleet_bales_late" text="%d balen te laat"/>
+        <text name="rms_fleet_wear" text="Slijtage"/>
+        <text name="rms_fleet_wear_faster" text="Sneller"/>
+        <text name="rms_fleet_wear_normal" text="Normale slijtage"/>
+        <text name="rms_fleet_wear_late" text="Smeerachterstand"/>
+        <text name="rms_fleet_wear_dry" text="Slijtage zonder vet"/>
+        <text name="rms_fleet_wear_repair_greases" text="Gesmeerd bij reparatie"/>
+        <text name="rms_fleet_wear_repair" text="Reparatie in de werkplaats"/>
+        <text name="rms_fleet_wear_none" text="Geen"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Voertuig inleveren"/>
         <text name="rms_sell_dialog_section_vehicle" text="Voertuig"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Koeling en luchtfilter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="De radiateur of het luchtfilter is verstopt. Houd de toets %s ingedrukt terwijl je naar het voertuig kijkt om te zien welke van de twee. Reinig het met de persluchtblazer. Als het filter niet meer kan worden uitgeblazen, vervangt de werkplaats het vanaf het onderhoud %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Smering vereist"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s heeft regelmatig smering nodig.&#10;&#10;In RMS daalt het smeerniveau met de bedrijfsuren. Na een lange periode zonder gebruik is smering ook vereist voordat de machine weer in bedrijf wordt genomen. Onvoldoende smering versnelt de slijtage van het chassis.&#10;&#10;Koop een vetspuit in de winkel en smeer de machine wanneer de inspectie dit vraagt.&#10;&#10;Je kunt het smeerniveau controleren: houd de toets %s ingedrukt terwijl je naar het voertuig kijkt."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s heeft smeernippels die gesmeerd moeten worden.&#10;&#10;In RMS heeft elke machine de smeernippels uit haar handleiding. Ze moeten na een aantal bedrijfsuren opnieuw gesmeerd worden, bij sommige machines elke werkdag. Te laat smeren versnelt de slijtage van het chassis.&#10;&#10;Koop een vetspuit en patronen in de winkel. Richt met de vetspuit in de hand op een patroon om die te laden en daarna op de machine: elke klik smeert één smeernippel en ingedrukt houden gaat door met de volgende.&#10;&#10;Houd de toets %s ingedrukt terwijl je naar het voertuig kijkt om de resterende smeernippels te zien."/>
         <text name="rms_tutorial_needs_repair_title" text="Storing gedetecteerd"/>
         <text name="rms_tutorial_needs_repair_message" text="%s heeft een probleem. Mogelijk is een van de onderdelen uitgevallen.&#10;&#10;Ga naar de werkplaats: een inspectie, of de onderhoudsbeurt als die nodig is, stelt de storing vast. Wacht niet: de storing kan blijven verergeren en de reparatiekosten stijgen mee.&#10;&#10;Laat de storing in de werkplaats repareren zodra die is vastgesteld."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revisie vereist"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Laaddruk"/>
         <text name="rms_diagnostic_spn_100" text="Motoroliedruk"/>
         <text name="rms_diagnostic_spn_101" text="Carterdruk"/>
-        <text name="rms_diagnostic_spn_1322" text="Ontstekingsfouten op meerdere cilinders"/>
         <text name="rms_diagnostic_spn_cylinder" text="Ontstekingsfout cilinder %d"/>
         <text name="rms_diagnostic_spn_94" text="Brandstoftoevoerdruk"/>
         <text name="rms_diagnostic_spn_110" text="Koelvloeistoftemperatuur"/>

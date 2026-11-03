@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Vakava olkatappien kuluminen. Ohjauksen välys on suuri."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kriittinen olkatappien kuluminen. Ohjauksessa on erittäin suuri välys."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lievä ohjauksen orbitrolin toimintahäiriö. Ohjauspyörässä on hieman välystä ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Lievä ohjausvaihteen toimintahäiriö. Ohjauspyörässä on hieman välystä ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Lievä ohjaushammastangon toimintahäiriö. Ohjauspyörässä on hieman välystä ennen kuin pyörät seuraavat mukana."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Kohtalainen ohjauksen orbitrolin toimintahäiriö. Ohjauspyörä kääntyy enemmän ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Kohtalainen ohjausvaihteen toimintahäiriö. Ohjauspyörä kääntyy enemmän ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Kohtalainen ohjaushammastangon toimintahäiriö. Ohjauspyörä kääntyy enemmän ennen kuin pyörät seuraavat mukana."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Vakava ohjauksen orbitrolin toimintahäiriö. Ohjauspyörä kääntyy paljon ilman että pyörät seuraavat kunnolla mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Vakava ohjausvaihteen toimintahäiriö. Ohjauspyörä kääntyy paljon ilman että pyörät seuraavat kunnolla mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Vakava ohjaushammastangon toimintahäiriö. Ohjauspyörä kääntyy paljon ilman että pyörät seuraavat kunnolla mukana."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Ohjauksen orbitrolissa on kriittinen vika. Ohjauspyörässä on erittäin suuri välys ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Ohjausvaihteessa on kriittinen vika. Ohjauspyörässä on erittäin suuri välys ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Ohjaushammastangossa on kriittinen vika. Ohjauspyörässä on erittäin suuri välys ennen kuin pyörät seuraavat mukana."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Ohjaussylinterissä on lievä sisäinen vuoto. Ajoneuvo alkaa ajautua sivulle."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Ohjaussylinterin varren tiivisteessä on lievä vuoto. Hydrauliöljyn pinta laskee hieman."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Ohjaussylinterissä on kohtalainen sisäinen vuoto. Ajoneuvo ajautuu enemmän sivulle."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Kuormaimen nivelten tapit ja holkit"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Olkatapit"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Ohjauksen orbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Ohjausvaihde"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Ohjaushammastanko"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Ohjaussylinteri"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Ohjaamon jousitus"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Voimanottokytkin"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Vaihteiston anturit"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Vaihteistosuodatin"/>
         <text name="rms_breakdowns_part_lift_valve" text="Nostolaitteen venttiili"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Leikkuupöydän nostoventtiili"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Nostolaitteen asentotunnistin"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Leikkuukorkeuden tunnistin"/>
         <text name="rms_breakdowns_part_loader_control" text="Kuormaimen ohjaus"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydrauliikan pikaliittimet"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lievä kytkimen toimintahäiriö. Se ei irrota täysin. Joitakin vaihteita on vaikea kytkeä."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Hydraulipumpussa on vika. Se on rikkoutunut. Paine katoaa eivätkä hydrauliikkatoiminnot vastaa."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Hydraulisessa ohjausventtiilissä on vika. Kara on jumissa. Kyseinen hydrauliikkatoiminto ei liiku."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Nostolaitteen venttiilissä on vika. Se ei pidä kuormaa oikein. Nostettu työkone laskee."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Leikkuupöydän nostoventtiilissä on vika. Se ei pidä kuormaa oikein. Nostettu leikkuupöytä laskee."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Nostolaitteen venttiilissä on vika. Se on jumissa. Nostolaite ei vastaa."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Leikkuupöydän nostoventtiilissä on vika. Se on jumissa. Leikkuupöytä ei enää nouse eikä laske."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Nostolaitteen asentotunnistimessa on vika. Asentosignaali on viallinen. Nostolaite ei pidä pyydettyä korkeutta ja vikakoodi tallentuu."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Leikkuukorkeuden tunnistimessa on vika. Korkeussignaali on viallinen. Leikkuupöytä ei pidä pyydettyä korkeutta ja vikakoodi tallentuu."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Kuormaimen ohjauksen lievä toimintahäiriö. Puomi ja kauha reagoivat hitaammin."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Kuormaimen ohjauksen kohtalainen toimintahäiriö. Puomi ja kauha liikkuvat vain puolella nopeudella."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Kuormaimen ohjauksen vakava toimintahäiriö. Puomi ja kauha liikkuvat tuskin lainkaan."/>

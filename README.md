@@ -159,14 +159,14 @@ Maintenance and repair let you pick part quality between `Used`, `Aftermarket` a
 
 ## Pre-Shift Care
 
-- **Pre-shift check**: hold `R` near a vehicle for a go or no go verdict, the machine and its next service, the four fluid levels, radiator and air filter fouling, and the symptoms a real visual check would catch. Takes seconds, works anywhere. When a symptom comes from a fault the workshop has not identified yet, the check says that an inspection or a maintenance identifies it.
+- **Pre-shift check**: hold `R` near a vehicle for a go or no go verdict, the machine and its next service, the four fluid levels, radiator and air filter fouling, the grease points greased out of all with a gauge of one segment per point, and the symptoms a real visual check would catch. Takes seconds, works anywhere. When a symptom comes from a fault the workshop has not identified yet, the check says that an inspection or a maintenance identifies it.
 - **Fluids**: engine oil, coolant, transmission oil and hydraulic fluid each have a level, read against the minimum mark of their gauge. Engine oil is burnt off with the work done, faster under load and much faster as the engine wears, at the rates measured on real diesels: a healthy engine worked hard reaches its minimum mark late in its service interval and takes a litre or two, a worn one asks for oil many times per interval; the other three only drop through a leak. A shortage of coolant or transmission/hydraulic oil progressively weakens the cooling of its circuit as the level falls; check the gauges and top up before sustained heavy work. Every level gauge reads like a dipstick: the stretch between its MIN and MAX marks is hatched, and a level that falls below the gauge only shows its red end. Below the minimum mark, low engine, transmission or hydraulic oil also increases wear, more as the level falls; the oil lamp, which reads the oil pressure, lights only once the engine oil is critically low, under `30%`. The dealer's `Top up` service fills what is missing for the price of the fluids, maintenance and overhaul replace the fluids covered by the selected procedure, and a repair puts back what the fault it fixed had let out.
 - **Fluid cans**: the game's fill displays identify each product and show its remaining litres. A 5 or 25 L can is carried like any object with the left click, which sets it down where you want. `R` takes it in hand to pour: aim at a machine within `4 m` and hold the left click. The can tops up the circuit made for its fluid first, and the gauge shows the level rising towards its MAX mark. Release the click to stop, and press `R` again to carry the can like any object. The `R` key can be changed in the controls. Switching hand tool or climbing into a machine sets it down for you.
 - **Drum pump**: a 200 L drum stays on its pallet and delivers through a battery drum pump, bought with the hand tools. Pump in hand, aim at a drum and click to fit it on the bung; with empty hands, a click on the drum takes the pump back. `R` on a fitted drum takes the nozzle at the end of its `4 m` hose, and `R` again hangs it up. Bring the drum within `4 m` of the machine, aim at the machine and hold the click, as with a can: the pump runs at `1 L/s` for as long as you hold it and stops by itself at the MAX mark. The hose is counted from you to the pump: from `3 m` a warning tells how far it still reaches, as the game does for its pressure washer, and past `4 m` the nozzle is hung up. A drum pumped empty stays until its pump is taken off.
 - **Putting containers away**: cans and drums go into a `Bale & Pallet Storage` like any pallet, as long as the building accepts their product. Its list names each container with the liters left in it out of what it holds, and says which drum carries the pump. Each one comes back out as it went in: same format, same liters, pump still fitted.
 - **Wrong fluid**: watch what you hold. When the circuit made for its fluid is full, a can or the nozzle of a drum offers the circuit that is short instead. Manually transferring an incompatible product contaminates only the selected circuit, and the pour gauge says `Incompatible Fluid` for as long as it runs. Depending on the proportion in the mixture, system wear can rise to three times its normal rate, heat can increase, and contaminated hydraulic fluid can slow hydraulic functions by up to `25%`. The transfer requires explicit confirmation, which says what the wrong fluid harms on that circuit, and only a complete fluid replacement clears the contamination. Workshop procedures only reserve compatible products.
 - **Air Blower**: clears dust from the cooling pack and the air filter. Blowing an air filter out only recovers part of it, since what is embedded in the media stays until the workshop replaces it, from the second maintenance level up. Washing the vehicle exterior does not clear either component. Their clogging speed follows the game's dirt speed independently of the RMS service interval.
-- **Grease Gun**: restores lubrication on machines that need it, harvesters above all. Lubrication drops `10%` per period only if the machine was neither operated, greased, nor serviced during it; inspection alone does not count.
+- **Grease Gun and cartridges**: the SKF grease gun empties SKF grease cartridges, bought one at a time or up to twelve in a carton. Each machine has the grease points of its operator's manual: they come due after its working hours, counted like its services, or every working day on the machines their manual greases daily, such as yard loaders, combines and forwarders. Implements have the grease points of their kind too: a mower, a plough or a baler after its own working hours, which the game counts while the tractor carrying it runs; a trailer every few months of the calendar; a bale wrapper after the bales it drops; an implement driven by the PTO adds its shaft. Fixed loader forks, weights and pallets have none. Gun in hand, face a cartridge or a carton within reach and press `R`, the key that takes a can, to load the gun once it is empty; then aim at the machine: each click greases one point with the stroke of the pump, holding the click carries on to the next, and a machine already greased takes nothing. Gun in hand, a display at the bottom of the screen shows the grease left in the cartridge, in millilitres; aimed at a machine, it shows the points greased out of those due, one segment per point lit at each stroke, and whether the greasing is due, late or up to date. In multiplayer, the machines of other farms can be greased too. One cartridge greases `304` points. Points left past their interval wear the machine faster as their grease runs out: twice as fast a whole interval late, four times two intervals late, up to 26 times once the joints are dry. A daily point left for a worked day is a whole interval late; a workshop maintenance greases a machine, a workshop repair an implement.
 - **Aiming a hand tool**: point it directly at the machine within `5 m`.
 
 ## Reliability and Workshop Access
@@ -300,8 +300,6 @@ An electric machine is tracked like any other, with the parts it really has: an 
 2. Activate the mod in mod selection.
 3. Access RMS from the fleet menu (`P` key), the in-game settings, and workshop interactions.
 
-> **Note:** RMS raises the game's limit of 255 fill types to 511. Large maps and long mod lists then keep the products of every mod.
-
 > **Important:** Do not run RMS and Advanced Damage System together. RMS steps aside when it finds ADS and leaves it in charge, so nothing runs twice.
 
 ## Usage
@@ -325,6 +323,8 @@ An electric machine is tracked like any other, with the parts it really has: an 
 1. Open the fleet menu (`P` key) and select `Mechanical Dashboard`.
 2. In `Equipment fleet`, open a category or `All equipment`, highlight the machine and press `X` (`Exclude from RMS`): RMS stops tracking its wear.
 3. Go back to `Equipment fleet` with the button under the list, open `Untracked equipment` in its place and pick a category: each machine states why it is left out, and `X` (`Include in RMS`) brings a supported machine back in. A machine that was never tracked starts from its resale value, like a used one.
+
+Implements with grease points are listed in `Equipment fleet`, in their category beside the machines: their row and their file show the grease points due, how often they come back, and how much faster the implement wears while its greasing is late. Implements without grease points stay in `Untracked equipment`.
 4. On a server, only an admin can make this choice, and a machine under a workshop procedure cannot be excluded until it is done.
 
 ## Debug Window
@@ -346,6 +346,7 @@ For testing and debugging. Unless noted, a command acts on the vehicle you sit i
 | `rms_setPartWear <id> <wear>` | Sets the wear of one part of the vehicle, named by its breakdown ID: `1.0` is a whole machine life, more is allowed. Prints the risk of the part against that of a new one; the next draw starts from the wear set. An unknown ID lists the parts of the vehicle |
 | `rms_setService [0.0-1.0] [engine\|transmission\|hydraulic\|coolant]` | Sets how much of its hours a service clock has left: `1.0` just serviced, `0` used up. Sets the four clocks without a clock name; defaults to `1.0`. The dates of the last services do not change |
 | `rms_setPaintWear <0.0-1.0>` | Sets the paint wear a Repainting order repairs |
+| `rms_setGreasing <0.0-1.0>` | Sets how much of each greasing interval is left on the machine and the implements attached to it: `1.0` just greased, `0` every grease point due at once |
 | `rms_setDirtAmount <0.0-1.0>` | Sets the dirt level |
 | `rms_setFuelLevel <value>` | Sets fuel or electric traction charge: values from `0` to `1` are fractions, values above `1` to `100` are percentages |
 | `rms_reinitializeVehicle` | Seeds the vehicle again as a used machine of its hours, as when RMS first met it: each part worn by those hours and the care of its previous owner (`careful`, `regular` or `neglected`, by default the one its repair need tells), the parts that failed replaced, service clocks where the owner left them, and a neglectful owner's breakdowns since his last service; unavailable during a workshop procedure |
@@ -355,7 +356,7 @@ For testing and debugging. Unless noted, a command acts on the vehicle you sit i
 | `rms_showServiceLog [index]` | Prints the service log, or one entry in detail using its integer index |
 | `rms_getDebugVehicleInfo [1]` | Prints how RMS reads the vehicle: brand, type, category, electrical circuit and transmission; lists its specializations when given `1` |
 | `rms_exhaustOverride <opacity\|-> [flow\|-] [vapour\|-]` | Overrides exhaust rendering locally for all machines; `-` keeps each engine's value and `off` clears the override |
-| `rms_setSpecVar <path> <value>` | Sets one value of the vehicle's RMS state, see the paths below; displayed oil temperatures, the Condition of the vehicle and of each system, and circuit voltage are calculated and cannot be set |
+| `rms_setSpecVar <path> <value>` | Sets one value of the vehicle's RMS state, see the paths below; displayed oil temperatures, the Condition of the vehicle and of each system, circuit voltage and the grease level, which follows the grease points due (`rms_setGreasing`), are calculated and cannot be set |
 | `rms_printSpecVar <path>` | Prints a value of the vehicle's RMS state, or a whole table when the path names one |
 
 ### Useful paths for `rms_setSpecVar`
@@ -364,7 +365,6 @@ For testing and debugging. Unless noted, a command acts on the vehicle you sit i
 | --- | --- |
 | `batterySoc` | Battery charge, from `0` to `1` |
 | `engineOilLevel`, `coolantLevel`, `transmissionOilLevel`, `hydraulicFluidLevel` | Fluid level as a share of the circuit's capacity, from `0` to `1`; with a common sump the hydraulic oil follows `transmissionOilLevel` |
-| `lubricationLevel` | Grease, from `0` to `1` |
 | `radiatorClogging`, `airFilterClogging`, `fuelFilterClogging`, `hydraulicFilterClogging` | Clogging, from `0` to `1` |
 | `serviceCalendar.engine`, `.transmission`, `.hydraulic`, `.coolant` | Age of the machine, in months, at the last service of that clock; a low value on an old machine makes the service due by date |
 | `activeBreakdowns.<ID>.isVisible` | `true` identifies a breakdown as an inspection would, `false` hides it again |
@@ -412,6 +412,11 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Reworked the colours and limits of the dashboard lamps, and the limits of the inspection report and the overhaul advice
 - Replaced the sounds of the starter, worn brakes and the jumper cable clamps
 - Added a single-press engine start for every engine
+- Added grease cartridges for the grease gun
+- Reworked greasing with the grease points of each machine
+- Added greasing of implements and their PTO shafts, shown in the fleet page
+- Fixed farms contracting for another being unable to use its trolley, charger and fluids, as the game allows
+- Removed the raised fill type limit, which the game itself raises to 1023 since patch 1.25.1.0
 - Fixed the buttons of the settings page
 - Fixed AI workers, Courseplay and AutoDrive wearing the machine by working it cold, hitting obstacles or spinning their wheels on the spot
 - Fixed breakdowns and worn parts of lamps missing from the machine
@@ -422,6 +427,9 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Fixed the vehicle configurator changing an owned machine's colours without charging the repaint
 - Fixed hard starts with the game's automatic start and the GIANTS Ignition Key
 - Fixed cars with a flat battery not starting on jumper cables in the cold
+- Fixed the jumper cable clamps held off the left hand
+- Fixed the wheel slip following the 4WD switch instead of the front axle after a 4WD engagement failure
+- Fixed the differential lock not holding a spinning wheel in 4WD, and only partly in 2WD
 
 ### v0.13.0.1
 

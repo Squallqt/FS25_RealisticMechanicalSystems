@@ -328,7 +328,8 @@ function RMS_BatteryCharger.validate(charger, target, mode)
         or targetSpec.systems.electrical.enabled == false then
         return "unavailable"
     end
-    if charger:getOwnerFarmId() ~= target:getOwnerFarmId() then
+    local accessHandler = g_currentMission.accessHandler
+    if not accessHandler:canFarmAccess(charger:getOwnerFarmId(), target) and not accessHandler:canFarmAccess(target:getOwnerFarmId(), charger) then
         return "access"
     end
     if getDistance(charger, target) > RMS_BatteryCharger.MAX_DISTANCE then
@@ -388,8 +389,8 @@ function RMS_BatteryCharger.tryStart(charger, target, requester, restoring, mode
     local spec = getSpec(charger)
     if charger == nil or not charger.isServer or spec == nil then return "unavailable" end
     if not restoring and (requester == nil or requester.player == nil
-        or requester.farmId == FarmManager.SPECTATOR_FARM_ID
-        or requester.farmId ~= charger:getOwnerFarmId()) then
+        or not g_currentMission.accessHandler:canFarmAccess(requester.farmId, charger)
+        or not g_currentMission.accessHandler:canFarmAccess(requester.farmId, target)) then
         return "access"
     end
     if not restoring and (requester.player:getIsInVehicle()
@@ -805,8 +806,7 @@ end
 function RMS_BatteryChargerActivatable:getIsActivatable()
     return getIsAlive(self.charger) and g_localPlayer ~= nil and not g_localPlayer:getIsInVehicle()
         and self.charger.isAddedToPhysics == true
-        and self.charger:getOwnerFarmId() == g_currentMission:getFarmId()
-        and g_currentMission:getFarmId() ~= FarmManager.SPECTATOR_FARM_ID
+        and g_currentMission.accessHandler:canPlayerAccess(self.charger)
         and getDistance(self.charger, g_localPlayer) <= RMS_BatteryCharger.MAX_DISTANCE
 end
 

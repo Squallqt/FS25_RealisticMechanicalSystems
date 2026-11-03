@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="キングピンが重度に摩耗しています。ステアリングの遊びが大きくなります。"/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="キングピンが重大な摩耗を起こしています。ステアリングに非常に大きな遊びがあります。"/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="ステアリングオービトロールに軽度の不具合が発生しています。ハンドルにわずかな遊びがあり、その後に車輪が動きます。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="ステアリングギアボックスに軽度の不具合が発生しています。ハンドルにわずかな遊びがあり、その後に車輪が動きます。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="ステアリングラックに軽度の不具合が発生しています。ハンドルにわずかな遊びがあり、その後に車輪が動きます。"/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="ステアリングオービトロールに中度の不具合が発生しています。車輪が動くまでにハンドルをさらに回す必要があります。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="ステアリングギアボックスに中度の不具合が発生しています。車輪が動くまでにハンドルをさらに回す必要があります。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="ステアリングラックに中度の不具合が発生しています。車輪が動くまでにハンドルをさらに回す必要があります。"/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="ステアリングオービトロールに重度の不具合が発生しています。ハンドルを大きく回しても車輪が十分に追従しません。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="ステアリングギアボックスに重度の不具合が発生しています。ハンドルを大きく回しても車輪が十分に追従しません。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="ステアリングラックに重度の不具合が発生しています。ハンドルを大きく回しても車輪が十分に追従しません。"/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="ステアリングオービトロールに重大な不具合が発生しています。ハンドルに非常に大きな遊びがあり、その後に車輪が動きます。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="ステアリングギアボックスに重大な不具合が発生しています。ハンドルに非常に大きな遊びがあり、その後に車輪が動きます。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="ステアリングラックに重大な不具合が発生しています。ハンドルに非常に大きな遊びがあり、その後に車輪が動きます。"/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="ステアリングシリンダーで軽度の内部もれが発生しています。車両が片側へ流れ始めます。"/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="ステアリングシリンダーのロッドシールで軽度のもれが発生しています。作動油の量がわずかに減ります。"/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="ステアリングシリンダーで中度の内部もれが発生しています。車両が片側へさらに流れます。"/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="ローダー関節のピンとブッシュ"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="キングピン"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="ステアリングオービトロール"/>
+        <text name="rms_breakdowns_part_steering_box" text="ステアリングギアボックス"/>
+        <text name="rms_breakdowns_part_steering_rack" text="ステアリングラック"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="ステアリングシリンダー"/>
         <text name="rms_breakdowns_part_cab_suspension" text="キャビンサスペンション"/>
         <text name="rms_breakdowns_part_pto_clutch" text="PTOクラッチ"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="変速機センサー"/>
         <text name="rms_breakdowns_part_transmission_filter" text="変速機フィルター"/>
         <text name="rms_breakdowns_part_lift_valve" text="リフトバルブ"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="ヘッダー昇降バルブ"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="リフト位置センサー"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="ヘッダー高さセンサー"/>
         <text name="rms_breakdowns_part_loader_control" text="ローダー制御装置"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="油圧クイックカプラー"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="クラッチに軽度の不具合が発生しています。完全に切れず、一部のギアを選びにくくなります。"/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="油圧ポンプに不具合が発生しています。破損し、圧力が失われ、油圧機能が応答しません。"/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="油圧制御バルブに不具合が発生しています。スプールが固着し、対象の油圧機能が動きません。"/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="リフトバルブに不具合が発生しています。荷重を正常に保持できず、上げた作業機が下がります。"/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="ヘッダー昇降バルブに不具合が発生しています。荷重を正常に保持できず、上げたヘッダーが下がります。"/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="リフトバルブに不具合が発生しています。固着し、リフトが応答しません。"/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="ヘッダー昇降バルブに不具合が発生しています。固着し、ヘッダーが上下しません。"/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="リフト位置センサーに不具合が発生しています。位置信号が故障し、リフトが指定した高さを保持できず、故障コードが記録されます。"/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="ヘッダー高さセンサーに不具合が発生しています。高さ信号が故障し、ヘッダーが指定した高さを保持できず、故障コードが記録されます。"/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="ローダー制御装置に軽度の不具合が発生しています。アームとバケットの応答が遅くなります。"/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="ローダー制御装置に中度の不具合が発生しています。アームとバケットが半分の速度でしか動きません。"/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="ローダー制御装置に重度の不具合が発生しています。アームとバケットがほとんど動きません。"/>

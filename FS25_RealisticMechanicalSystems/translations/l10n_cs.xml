@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="即时"/>
         <text name="rms_option_menu_start_text" text="开始"/>
         <text name="rms_service_months" text="%s个月"/>
+        <text name="rms_service_either" text="%s或%s"/>
         <text name="rms_service_month" text="%s 个月"/>
         <text name="rms_service_calendar_due" text="已到日历期限"/>
         <text name="rms_service_program_estimated" text="推算保养计划"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="黄油加注器"/>
         <text name="rms_grease_gun_no_vehicle" text="润滑范围内没有载具"/>
-        <text name="rms_grease_gun_function" text="用于向机器的润滑点加注黄油"/>
+        <text name="rms_grease_gun_function" text="为机器的黄油嘴加注黄油。使用黄油筒装填。"/>
         <text name="rms_grease_gun_action" text="打黄油"/>
         <text name="rms_grease_gun_already_lubricated" text="%s：已完成润滑"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s不需要润滑"/>
+        <text name="rms_grease_gun_load" text="装入油筒"/>
+        <text name="rms_grease_gun_empty" text="黄油加注器已空：请装入油筒"/>
+        <text name="rms_grease_gun_not_empty" text="黄油加注器中仍有黄油"/>
+        <text name="rms_grease_gun_points" text="待加注黄油嘴：%d"/>
+        <text name="rms_grease_cartridge_typedesc" text="黄油筒"/>
+        <text name="rms_grease_cartridge_function" text="补充黄油加注器：手持加注器，站在油筒前。"/>
+        <text name="rms_grease_cartridge_count" text="油筒数量"/>
+        <text name="rms_grease_quantity" text="数量"/>
+        <text name="rms_grease_hud_title" text="打黄油"/>
+        <text name="rms_grease_hud_done" text="已完成"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="压缩空气吹尘器"/>
         <text name="rms_air_blower_no_vehicle" text="清洁范围内没有载具"/>
         <text name="rms_air_blower_function" text="用于清洁散热器和空气滤清器"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s已逾期%s"/>
         <text name="rms_inspection_status_slightly_low" text="略低"/>
         <text name="rms_inspection_status_slightly_dirty" text="轻微堵塞"/>
-        <text name="rms_inspection_status_slightly_dry" text="略干"/>
+        <text name="rms_inspection_status_grease_due" text="需要打黄油"/>
         <text name="rms_inspection_status_slight_moisture" text="轻微湿润"/>
         <text name="rms_inspection_status_seepage" text="慢速外流"/>
         <text name="rms_inspection_status_severe_leak" text="严重外流"/>
         <text name="rms_inspection_status_low" text="低"/>
         <text name="rms_inspection_status_very_low" text="很低"/>
-        <text name="rms_inspection_status_very_dry" text="很干"/>
         <text name="rms_inspection_status_critically_low" text="急需补充"/>
         <text name="rms_inspection_status_critically_clogged" text="完全堵塞"/>
-        <text name="rms_inspection_status_critically_dry" text="金属直接接触"/>
         <text name="rms_inspection_status_dirty" text="堵塞"/>
-        <text name="rms_inspection_status_dry" text="干燥"/>
+        <text name="rms_inspection_status_grease_late" text="已逾期"/>
         <text name="rms_inspection_status_active_leak" text="正在外流"/>
         <text name="rms_inspection_status_heavily_clogged" text="严重堵塞"/>
         <text name="rms_inspection_status_not_required" text="不需要"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="未确认故障的征象：维修车间可通过检查或保养确认。"/>
         <text name="rms_inspection_hint_alternator_stage3" text="交流发电机周围可见过热痕迹，部分连接处已经变暗。"/>
         <text name="rms_inspection_hint_alternator_stage4" text="交流发电机及其线束周围可见明显过热痕迹，连接器已经变暗。"/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="润滑点看起来略显干燥。"/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="润滑点看起来已经干燥，黄油不足。"/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="润滑点非常干燥，几乎看不到黄油。"/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="润滑点处于金属直接接触状态，几乎看不到黄油。"/>
+        <text name="rms_inspection_hint_grease_due" text="待加注黄油嘴：%d。"/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="变速箱壳体周围可见轻微油迹。"/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="变速箱下方可见点状油迹。"/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="变速箱周围可见明显流油痕迹。"/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="冷却液需要更换：老化的冷却液会加快冷却系统的磨损。维修车间建议的保养会将其更换。"/>
         <text name="rms_inspection_radiator" text="散热器"/>
         <text name="rms_inspection_air_filter" text="空气滤清器"/>
-        <text name="rms_inspection_lubrication_level" text="润滑水平"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="未检测到异常征象"/>
         <text name="rms_inspection_ok" text="确定"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="无测量记录"/>
         <text name="rms_fleet_parts_reading" text="部件测量：%s"/>
         <text name="rms_fleet_parts_need_complete" text="部件测量：下次全面检查时"/>
+        <text name="rms_fleet_greasing_done" text="打黄油已完成"/>
+        <text name="rms_fleet_greasing_period_hours" text="工作 %s 小时"/>
+        <text name="rms_fleet_greasing_period_day" text="每个作业日"/>
+        <text name="rms_fleet_greasing_period_month" text="每月"/>
+        <text name="rms_fleet_greasing_period_months" text="每 %d 个月"/>
+        <text name="rms_fleet_greasing_period_bales" text="每 %d 捆"/>
+        <text name="rms_fleet_greasing_bales" text="%d 捆"/>
+        <text name="rms_fleet_greasing_day" text="%d 天"/>
+        <text name="rms_fleet_greasing_days" text="%d 天"/>
+        <text name="rms_fleet_day_late" text="逾期 %d 天"/>
+        <text name="rms_fleet_days_late" text="逾期 %d 天"/>
+        <text name="rms_fleet_greasing_to_do" text="剩余 %d"/>
+        <text name="rms_fleet_greasing_points" text="黄油嘴"/>
+        <text name="rms_fleet_greasing_next" text="下次打黄油"/>
+        <text name="rms_fleet_greasing_now" text="现在"/>
+        <text name="rms_fleet_greasing_in" text="%s后"/>
+        <text name="rms_fleet_months_late" text="逾期 %d 个月"/>
+        <text name="rms_fleet_bales_late" text="逾期 %d 捆"/>
+        <text name="rms_fleet_wear" text="磨损"/>
+        <text name="rms_fleet_wear_faster" text="磨损加快"/>
+        <text name="rms_fleet_wear_normal" text="正常磨损"/>
+        <text name="rms_fleet_wear_late" text="打黄油逾期"/>
+        <text name="rms_fleet_wear_dry" text="无黄油磨损"/>
+        <text name="rms_fleet_wear_repair_greases" text="修理时打黄油"/>
+        <text name="rms_fleet_wear_repair" text="维修车间修理"/>
+        <text name="rms_fleet_wear_none" text="无"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="返还载具"/>
         <text name="rms_sell_dialog_section_vehicle" text="载具"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="冷却系统与空气滤清器"/>
         <text name="rms_tutorial_cooling_air_check_message" text="散热器或空气滤清器已堵塞。看向载具时按住%s键，确认是哪个部件。使用压缩空气吹风机清洁。如果滤清器无法继续吹扫清洁，维修车间从%s保养起将其更换。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="需要润滑"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s需要定期润滑。&#10;&#10;在RMS中，润滑水平会随工作小时增加而下降。长时间停用后，重新投入使用前也需要润滑。润滑不足会加快底盘磨损。&#10;&#10;请在商店购买黄油加注器，并在检查要求时为机器加注黄油。&#10;&#10;可以检查润滑水平：看向载具时按住%s键。"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s有黄油嘴需要加注黄油。&#10;&#10;在RMS中，每台机器都有其说明书中的黄油嘴。经过一定工作小时后需要再次加注，部分机器则每个工作日都需要加注。加注延误会加快底盘磨损。&#10;&#10;在商店购买黄油加注器和黄油筒。手持加注器，对准油筒进行装填，再对准机器：每次点击为一个黄油嘴加注，按住鼠标按钮可继续为后续黄油嘴加注。&#10;&#10;要查看剩余待加注黄油嘴，看向载具时按住%s键。"/>
         <text name="rms_tutorial_needs_repair_title" text="检测到故障"/>
         <text name="rms_tutorial_needs_repair_message" text="%s出现了问题，其中一个部件可能已经失效。&#10;&#10;请前往维修车间：检查，或到期的保养，可以确认故障。不要拖延：故障可能继续加重，修理费用也会随之增加。&#10;&#10;故障确认后，请在维修车间进行修理。"/>
         <text name="rms_tutorial_needs_overhaul_title" text="需要大修"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="增压压力"/>
         <text name="rms_diagnostic_spn_100" text="机油压力"/>
         <text name="rms_diagnostic_spn_101" text="发动机曲轴箱压力"/>
-        <text name="rms_diagnostic_spn_1322" text="多缸失火"/>
         <text name="rms_diagnostic_spn_cylinder" text="%d缸失火"/>
         <text name="rms_diagnostic_spn_94" text="燃油供给压力"/>
         <text name="rms_diagnostic_spn_110" text="冷却液温度"/>

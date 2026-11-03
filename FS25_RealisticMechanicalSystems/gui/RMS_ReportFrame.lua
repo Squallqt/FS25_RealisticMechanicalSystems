@@ -335,7 +335,7 @@ function RMS_ReportFrame:collectBreakdowns()
             shownCount = shownCount + 1
             local stage = breakdown.stage or 1
             if definition.stages[stage] ~= nil then
-                local partName = RMS_Utils.getBreakdownPartName(id)
+                local partName = RMS_Utils.getBreakdownPartName(id, self.vehicle)
                 local isActive = breakdown.isActive ~= false
                 if isActive then
                     findings.activeCount = findings.activeCount + 1
@@ -369,7 +369,7 @@ function RMS_ReportFrame:updateScreen()
             RMS_Utils.formatServiceOption(vehicle, entry.type, entry.optionOne)),
         g_i18n:getText(entry.location),
         string.format("%d %s", conditionData.age or 0, g_i18n:getText("rms_ws_age_unit")),
-        RMS_Utils.formatHours(conditionData.operatingHours),
+        RMS_Utils.formatHours(math.floor(conditionData.operatingHours * 10) / 10),
         "ODO " .. RMS_Utils.formatOdometerKilometers(conditionData.odometerKilometers)
     }, " · "), nil, nil, true)
 
@@ -650,7 +650,7 @@ function RMS_ReportFrame:addWornPartRows()
                 RMS_Utils.formatMaintenanceLevel(self.vehicle, RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE))
             or string.format(g_i18n:getText("rms_report_worn_part_replace"), systemName)
         table.insert(self.breakdownsData, {
-            title = g_i18n:getText(RMS_Breakdowns.BreakdownRegistry[entry.partId].part),
+            title = RMS_Utils.getBreakdownPartName(entry.partId, self.vehicle),
             severity = string.format(g_i18n:getText("rms_report_worn_part_risk"), g_i18n:formatNumber(entry.ratio, 1)),
             text = text,
             color = color

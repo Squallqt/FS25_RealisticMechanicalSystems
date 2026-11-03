@@ -1771,6 +1771,14 @@
         <size value="28px 28px"/>
         <imageSliceId value="rms_Hud.maintenance"/>
     </Profile>
+    <Profile name="rms_fleetIconLubrication" extends="rms_workshopIcon">
+        <size value="28px 28px"/>
+        <imageSliceId value="rms_WorkshopFluids.lubrication"/>
+    </Profile>
+    <Profile name="rms_fleetIconOperatingHours" extends="rms_workshopIcon">
+        <size value="28px 28px"/>
+        <imageSliceId value="gui.storeAttribute_operatingHours"/>
+    </Profile>
     <Profile name="rms_fleetTileLabel" extends="rms_workshopDetail">
         <textSize value="13px"/>
         <textMinSize value="10px"/>

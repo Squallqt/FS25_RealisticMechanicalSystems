@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Tức thì"/>
         <text name="rms_option_menu_start_text" text="Bắt đầu"/>
         <text name="rms_service_months" text="%s tháng"/>
+        <text name="rms_service_either" text="%s hoặc %s"/>
         <text name="rms_service_month" text="%s tháng"/>
         <text name="rms_service_calendar_due" text="Đã đến hạn theo lịch"/>
         <text name="rms_service_program_estimated" text="Lịch bảo dưỡng ước tính"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Súng bơm mỡ"/>
         <text name="rms_grease_gun_no_vehicle" text="Không có xe nào trong tầm bơm mỡ"/>
-        <text name="rms_grease_gun_function" text="Dùng để bơm mỡ vào các điểm bôi trơn của máy"/>
+        <text name="rms_grease_gun_function" text="Bơm mỡ vào các đầu bơm mỡ của máy. Nạp bằng hộp mỡ."/>
         <text name="rms_grease_gun_action" text="Bơm mỡ"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: đã bơm mỡ"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s không cần bôi trơn"/>
+        <text name="rms_grease_gun_load" text="Nạp hộp mỡ"/>
+        <text name="rms_grease_gun_empty" text="Súng bơm mỡ hết mỡ: nạp hộp mỡ"/>
+        <text name="rms_grease_gun_not_empty" text="Súng bơm mỡ vẫn còn mỡ"/>
+        <text name="rms_grease_gun_points" text="Đầu bơm mỡ còn lại: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Hộp mỡ"/>
+        <text name="rms_grease_cartridge_function" text="Nạp lại súng bơm mỡ: cầm súng và đứng trước hộp mỡ."/>
+        <text name="rms_grease_cartridge_count" text="Hộp mỡ"/>
+        <text name="rms_grease_quantity" text="Số lượng"/>
+        <text name="rms_grease_hud_title" text="Bơm mỡ"/>
+        <text name="rms_grease_hud_done" text="Đã xong"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Máy thổi khí nén"/>
         <text name="rms_air_blower_no_vehicle" text="Không có xe nào trong tầm vệ sinh"/>
         <text name="rms_air_blower_function" text="Dùng để vệ sinh két tản nhiệt và bộ lọc không khí"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s quá hạn %s"/>
         <text name="rms_inspection_status_slightly_low" text="Hơi thấp"/>
         <text name="rms_inspection_status_slightly_dirty" text="Hơi tắc"/>
-        <text name="rms_inspection_status_slightly_dry" text="Hơi khô"/>
+        <text name="rms_inspection_status_grease_due" text="Cần bơm mỡ"/>
         <text name="rms_inspection_status_slight_moisture" text="Ẩm nhẹ"/>
         <text name="rms_inspection_status_seepage" text="Rịn dầu"/>
         <text name="rms_inspection_status_severe_leak" text="Rò rỉ nặng"/>
         <text name="rms_inspection_status_low" text="Thấp"/>
         <text name="rms_inspection_status_very_low" text="Rất thấp"/>
-        <text name="rms_inspection_status_very_dry" text="Rất khô"/>
         <text name="rms_inspection_status_critically_low" text="Cần bổ sung gấp"/>
         <text name="rms_inspection_status_critically_clogged" text="Nghẹt hoàn toàn"/>
-        <text name="rms_inspection_status_critically_dry" text="Kim loại cọ kim loại"/>
         <text name="rms_inspection_status_dirty" text="Tắc"/>
-        <text name="rms_inspection_status_dry" text="Khô"/>
+        <text name="rms_inspection_status_grease_late" text="Quá hạn"/>
         <text name="rms_inspection_status_active_leak" text="Đang rò rỉ"/>
         <text name="rms_inspection_status_heavily_clogged" text="Tắc nặng"/>
         <text name="rms_inspection_status_not_required" text="Không cần"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Triệu chứng của hỏng hóc chưa xác định: xưởng sẽ xác định bằng kiểm tra hoặc bảo dưỡng."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Có thể thấy dấu hiệu quá nhiệt và một số đầu nối bị sẫm màu gần máy phát."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Có thể thấy dấu hiệu quá nhiệt rõ rệt và các đầu nối bị sẫm màu gần máy phát cùng dây điện của máy phát."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Các điểm bôi trơn có vẻ hơi khô."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Các điểm bôi trơn có vẻ khô và không đủ mỡ."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Các điểm bôi trơn rất khô và chỉ còn thấy rất ít mỡ."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Các điểm bôi trơn đang làm việc trong tình trạng kim loại cọ kim loại và gần như không còn thấy mỡ."/>
+        <text name="rms_inspection_hint_grease_due" text="Đầu bơm mỡ cần bơm: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Có thể thấy một ít vết dầu quanh vỏ hộp số."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Có thể thấy dầu nhỏ giọt dưới hộp số."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Có thể thấy lượng dầu hao hụt rõ rệt quanh hộp số."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Đã đến lúc thay nước làm mát: nước làm mát cũ làm hệ thống làm mát mòn nhanh hơn. Mức bảo dưỡng được khuyến nghị tại xưởng sẽ thay mới."/>
         <text name="rms_inspection_radiator" text="Két tản nhiệt"/>
         <text name="rms_inspection_air_filter" text="Bộ lọc không khí"/>
-        <text name="rms_inspection_lubrication_level" text="Mức bôi trơn"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Không phát hiện triệu chứng đáng ngờ"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Chưa đo"/>
         <text name="rms_fleet_parts_reading" text="Bộ phận được đo %s"/>
         <text name="rms_fleet_parts_need_complete" text="Bộ phận được đo ở lần kiểm tra toàn diện tiếp theo"/>
+        <text name="rms_fleet_greasing_done" text="Bơm mỡ đã xong"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s giờ làm việc"/>
+        <text name="rms_fleet_greasing_period_day" text="Mỗi ngày làm việc"/>
+        <text name="rms_fleet_greasing_period_month" text="Mỗi tháng"/>
+        <text name="rms_fleet_greasing_period_months" text="Mỗi %d tháng"/>
+        <text name="rms_fleet_greasing_period_bales" text="Mỗi %d kiện"/>
+        <text name="rms_fleet_greasing_bales" text="%d kiện"/>
+        <text name="rms_fleet_greasing_day" text="%d ngày"/>
+        <text name="rms_fleet_greasing_days" text="%d ngày"/>
+        <text name="rms_fleet_day_late" text="Trễ %d ngày"/>
+        <text name="rms_fleet_days_late" text="Trễ %d ngày"/>
+        <text name="rms_fleet_greasing_to_do" text="Còn %d"/>
+        <text name="rms_fleet_greasing_points" text="Đầu bơm mỡ"/>
+        <text name="rms_fleet_greasing_next" text="Lần bơm mỡ tới"/>
+        <text name="rms_fleet_greasing_now" text="Ngay bây giờ"/>
+        <text name="rms_fleet_greasing_in" text="còn %s"/>
+        <text name="rms_fleet_months_late" text="Trễ %d tháng"/>
+        <text name="rms_fleet_bales_late" text="Trễ %d kiện"/>
+        <text name="rms_fleet_wear" text="Hao mòn"/>
+        <text name="rms_fleet_wear_faster" text="Nhanh hơn"/>
+        <text name="rms_fleet_wear_normal" text="Bình thường"/>
+        <text name="rms_fleet_wear_late" text="Trễ bơm mỡ"/>
+        <text name="rms_fleet_wear_dry" text="Mòn khi khô mỡ"/>
+        <text name="rms_fleet_wear_repair_greases" text="Bơm mỡ khi sửa chữa"/>
+        <text name="rms_fleet_wear_repair" text="Sửa chữa tại xưởng"/>
+        <text name="rms_fleet_wear_none" text="Không"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Trả lại xe"/>
         <text name="rms_sell_dialog_section_vehicle" text="Xe"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Hệ thống làm mát và bộ lọc không khí"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Két tản nhiệt hoặc bộ lọc không khí bị tắc. Giữ phím %s khi nhìn vào xe để biết bộ phận nào. Dùng máy thổi khí nén để làm sạch. Nếu không thể thổi sạch bộ lọc nữa, xưởng sẽ thay bộ lọc từ mức bảo dưỡng %s trở lên."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Cần bôi trơn"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s của bạn cần được bôi trơn thường xuyên.&#10;&#10;Trong RMS, mức bôi trơn giảm theo giờ hoạt động. Sau một thời gian dài không sử dụng, máy cũng cần được bôi trơn trước khi hoạt động trở lại. Bôi trơn không đủ làm khung gầm mòn nhanh hơn.&#10;&#10;Mua một Súng bơm mỡ trong cửa hàng và bơm mỡ cho máy khi kết quả kiểm tra yêu cầu.&#10;&#10;Bạn có thể kiểm tra mức bôi trơn: giữ phím %s khi nhìn vào xe."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s của bạn có các đầu bơm mỡ cần bơm.&#10;&#10;Trong RMS, mỗi máy có các đầu bơm mỡ theo hướng dẫn sử dụng. Chúng cần được bơm lại sau một số giờ hoạt động, hoặc mỗi ngày làm việc đối với một số máy. Bơm mỡ muộn làm khung gầm mòn nhanh hơn.&#10;&#10;Mua súng bơm mỡ và hộp mỡ trong cửa hàng. Cầm súng, ngắm vào hộp mỡ để nạp rồi ngắm vào máy: mỗi lần nhấp bơm mỡ cho một đầu, giữ nút nhấp sẽ tiếp tục với các đầu tiếp theo.&#10;&#10;Để xem các đầu bơm mỡ còn lại, giữ phím %s khi nhìn vào xe."/>
         <text name="rms_tutorial_needs_repair_title" text="Đã phát hiện hỏng hóc"/>
         <text name="rms_tutorial_needs_repair_message" text="%s của bạn đang gặp vấn đề. Một trong các linh kiện có thể đã hỏng.&#10;&#10;Hãy đưa xe đến xưởng: kiểm tra, hoặc bảo dưỡng nếu đã đến hạn, sẽ xác định hỏng hóc. Đừng trì hoãn: hỏng hóc có thể tiếp tục trở nên nghiêm trọng hơn và chi phí sửa chữa sẽ tăng theo.&#10;&#10;Khi hỏng hóc đã được xác định, hãy sửa chữa tại xưởng."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Cần đại tu"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Áp suất tăng áp"/>
         <text name="rms_diagnostic_spn_100" text="Áp suất dầu động cơ"/>
         <text name="rms_diagnostic_spn_101" text="Áp suất cácte động cơ"/>
-        <text name="rms_diagnostic_spn_1322" text="Bỏ máy ở nhiều xi lanh"/>
         <text name="rms_diagnostic_spn_cylinder" text="Bỏ máy ở xi lanh %d"/>
         <text name="rms_diagnostic_spn_94" text="Áp suất cấp nhiên liệu"/>
         <text name="rms_diagnostic_spn_110" text="Nhiệt độ nước làm mát"/>

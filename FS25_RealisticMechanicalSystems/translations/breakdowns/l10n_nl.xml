@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Ernstige slijtage van de fuseepennen. De speling in de besturing is groot."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritieke slijtage van de fuseepennen. De besturing heeft zeer grote speling."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lichte storing van de stuurorbitrol. Het stuur heeft wat speling voordat de wielen volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Lichte storing van het stuurhuis. Het stuur heeft wat speling voordat de wielen volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Lichte storing van de stuurheugel. Het stuur heeft wat speling voordat de wielen volgen."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Matige storing van de stuurorbitrol. Het stuur draait verder voordat de wielen volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Matige storing van het stuurhuis. Het stuur draait verder voordat de wielen volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Matige storing van de stuurheugel. Het stuur draait verder voordat de wielen volgen."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Ernstige storing van de stuurorbitrol. Het stuur draait veel zonder dat de wielen goed volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Ernstige storing van het stuurhuis. Het stuur draait veel zonder dat de wielen goed volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Ernstige storing van de stuurheugel. Het stuur draait veel zonder dat de wielen goed volgen."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritieke uitval van de stuurorbitrol. Het stuur heeft zeer grote speling voordat de wielen volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kritieke uitval van het stuurhuis. Het stuur heeft zeer grote speling voordat de wielen volgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kritieke uitval van de stuurheugel. Het stuur heeft zeer grote speling voordat de wielen volgen."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lichte interne lekkage in de stuurcilinder. Het voertuig begint naar één kant af te wijken."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lichte lekkage bij de stangafdichting van de stuurcilinder. Het hydrauliekoliepeil daalt licht."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Matige interne lekkage in de stuurcilinder. Het voertuig wijkt meer naar één kant af."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Pennen en bussen van de voorladergewrichten"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Fuseepennen"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Stuurorbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Stuurhuis"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Stuurheugel"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Stuurcilinder"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Cabinevering"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Aftakaskoppeling"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Versnellingsbaksensoren"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Transmissiefilter"/>
         <text name="rms_breakdowns_part_lift_valve" text="Hefventiel"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Maaibordhefventiel"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Hefpositiesensor"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Snijhoogtesensor"/>
         <text name="rms_breakdowns_part_loader_control" text="Laderbediening"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulische snelkoppelingen"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lichte storing van de koppeling. Deze komt niet volledig vrij. Sommige versnellingen schakelen moeilijk."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Storing van de hydrauliekpomp. Deze is gebroken. De druk valt weg en de hydraulische functies reageren niet meer."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Storing van het hydraulische regelventiel. De schuif zit vast. De betreffende hydraulische functie beweegt niet meer."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Storing van het hefventiel. Het houdt de last niet meer goed vast. Het geheven werktuig zakt."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Storing van het maaibordhefventiel. Het houdt de last niet meer goed vast. Het geheven maaibord zakt."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Storing van het hefventiel. Het zit vast. De hefinrichting reageert niet meer."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Storing van het maaibordhefventiel. Het zit vast. Het maaibord gaat niet meer omhoog of omlaag."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Storing van de hefpositiesensor. Het positiesignaal is uitgevallen. De hefinrichting houdt de gevraagde hoogte niet vast en er wordt een foutcode opgeslagen."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Storing van de snijhoogtesensor. Het hoogtesignaal is uitgevallen. Het maaibord houdt de gevraagde hoogte niet vast en er wordt een foutcode opgeslagen."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lichte storing van de laderbediening. Arm en bak reageren langzamer."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Matige storing van de laderbediening. Arm en bak bewegen nog maar op halve snelheid."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Ernstige storing van de laderbediening. Arm en bak bewegen nauwelijks."/>

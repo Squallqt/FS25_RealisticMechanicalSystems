@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Schwerer Verschleiß der Achsschenkelbolzen. Das Spiel in der Lenkung ist groß."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritischer Verschleiß der Achsschenkelbolzen. Die Lenkung weist sehr großes Spiel auf."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Leichte Fehlfunktion des Lenkorbitrols. Das Lenkrad hat etwas Spiel, bevor die Räder folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Leichte Fehlfunktion des Lenkgetriebes. Das Lenkrad hat etwas Spiel, bevor die Räder folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Leichte Fehlfunktion der Zahnstangenlenkung. Das Lenkrad hat etwas Spiel, bevor die Räder folgen."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Mäßige Fehlfunktion des Lenkorbitrols. Das Lenkrad dreht sich weiter, bevor die Räder folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Mäßige Fehlfunktion des Lenkgetriebes. Das Lenkrad dreht sich weiter, bevor die Räder folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Mäßige Fehlfunktion der Zahnstangenlenkung. Das Lenkrad dreht sich weiter, bevor die Räder folgen."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Schwere Fehlfunktion des Lenkorbitrols. Das Lenkrad dreht sich stark, ohne dass die Räder richtig folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Schwere Fehlfunktion des Lenkgetriebes. Das Lenkrad dreht sich stark, ohne dass die Räder richtig folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Schwere Fehlfunktion der Zahnstangenlenkung. Das Lenkrad dreht sich stark, ohne dass die Räder richtig folgen."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritischer Ausfall des Lenkorbitrols. Das Lenkrad hat sehr großes Spiel, bevor die Räder folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kritischer Ausfall des Lenkgetriebes. Das Lenkrad hat sehr großes Spiel, bevor die Räder folgen."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kritischer Ausfall der Zahnstangenlenkung. Das Lenkrad hat sehr großes Spiel, bevor die Räder folgen."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Leichte interne Leckage im Lenkzylinder. Das Fahrzeug beginnt zu einer Seite abzudriften."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Leichte Leckage an der Stangendichtung des Lenkzylinders. Der Hydraulikölstand sinkt leicht."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Mäßige interne Leckage im Lenkzylinder. Das Fahrzeug driftet stärker zu einer Seite ab."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Bolzen und Buchsen der Frontladergelenke"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Achsschenkelbolzen"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Lenkorbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Lenkgetriebe"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Zahnstangenlenkung"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Lenkzylinder"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Kabinenfederung"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Zapfwellenkupplung"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Getriebesensoren"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Getriebefilter"/>
         <text name="rms_breakdowns_part_lift_valve" text="Hubwerksventil"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Vorsatzhubventil"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Hubwerkspositionssensor"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Schnitthöhensensor"/>
         <text name="rms_breakdowns_part_loader_control" text="Ladersteuerung"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulikschnellkupplungen"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Leichte Fehlfunktion der Kupplung. Sie trennt nicht vollständig. Einige Gänge lassen sich schwer einlegen."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Ausfall der Hydraulikpumpe. Sie ist gebrochen. Der Druck fehlt und die Hydraulikfunktionen reagieren nicht mehr."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Ausfall des Hydrauliksteuerventils. Der Schieber sitzt fest. Die betroffene Hydraulikfunktion bewegt sich nicht mehr."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Ausfall des Hubwerksventils. Es hält die Last nicht mehr richtig. Das angehobene Gerät sinkt ab."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Ausfall des Vorsatzhubventils. Es hält die Last nicht mehr richtig. Der angehobene Vorsatz sinkt ab."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Ausfall des Hubwerksventils. Es sitzt fest. Das Hubwerk reagiert nicht mehr."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Ausfall des Vorsatzhubventils. Es sitzt fest. Der Vorsatz lässt sich nicht mehr heben oder senken."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Ausfall des Hubwerkspositionssensors. Das Positionssignal ist ausgefallen. Das Hubwerk hält die gewählte Höhe nicht mehr und ein Fehlercode wird gespeichert."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Ausfall des Schnitthöhensensors. Das Höhensignal ist ausgefallen. Der Vorsatz hält die gewählte Höhe nicht mehr und ein Fehlercode wird gespeichert."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Leichte Fehlfunktion der Ladersteuerung. Hubarm und Schaufel reagieren langsamer."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Mäßige Fehlfunktion der Ladersteuerung. Hubarm und Schaufel bewegen sich nur noch mit halber Geschwindigkeit."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Schwere Fehlfunktion der Ladersteuerung. Hubarm und Schaufel bewegen sich kaum noch."/>

@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Øyeblikkelig"/>
         <text name="rms_option_menu_start_text" text="Start"/>
         <text name="rms_service_months" text="%s måneder"/>
+        <text name="rms_service_either" text="%s eller %s"/>
         <text name="rms_service_month" text="%s måned"/>
         <text name="rms_service_calendar_due" text="Kalenderfrist nådd"/>
         <text name="rms_service_program_estimated" text="Anslått serviceplan"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Fettpresse"/>
         <text name="rms_grease_gun_no_vehicle" text="Ingen kjøretøy innen smøreavstand"/>
-        <text name="rms_grease_gun_function" text="Brukes til å smøre maskinens smørepunkter"/>
+        <text name="rms_grease_gun_function" text="Smører maskinenes smørenipler. Fylles med en fettpatron."/>
         <text name="rms_grease_gun_action" text="Smør"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: smøring allerede utført"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s trenger ikke smøring"/>
+        <text name="rms_grease_gun_load" text="Sett inn patron"/>
+        <text name="rms_grease_gun_empty" text="Fettpresse tom: sett inn en patron"/>
+        <text name="rms_grease_gun_not_empty" text="Fettpressen inneholder fortsatt fett"/>
+        <text name="rms_grease_gun_points" text="Smørenipler igjen: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Fettpatron"/>
+        <text name="rms_grease_cartridge_function" text="Fyller fettpressen: still deg foran patronen med fettpressen i hånden."/>
+        <text name="rms_grease_cartridge_count" text="Patroner"/>
+        <text name="rms_grease_quantity" text="Antall"/>
+        <text name="rms_grease_hud_title" text="Smøring"/>
+        <text name="rms_grease_hud_done" text="I orden"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Trykkluftblåser"/>
         <text name="rms_air_blower_no_vehicle" text="Ingen kjøretøy innen rengjøringsavstand"/>
         <text name="rms_air_blower_function" text="Brukes til å rense kjølere og luftfiltre"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s overskredet med %s"/>
         <text name="rms_inspection_status_slightly_low" text="Litt for lavt"/>
         <text name="rms_inspection_status_slightly_dirty" text="Lett tilsmusset"/>
-        <text name="rms_inspection_status_slightly_dry" text="Litt tørr"/>
+        <text name="rms_inspection_status_grease_due" text="Må smøres"/>
         <text name="rms_inspection_status_slight_moisture" text="Lett fukt"/>
         <text name="rms_inspection_status_seepage" text="Siving"/>
         <text name="rms_inspection_status_severe_leak" text="Kraftig lekkasje"/>
         <text name="rms_inspection_status_low" text="Lavt"/>
         <text name="rms_inspection_status_very_low" text="Svært lavt"/>
-        <text name="rms_inspection_status_very_dry" text="Svært tørr"/>
         <text name="rms_inspection_status_critically_low" text="Påfylling haster"/>
         <text name="rms_inspection_status_critically_clogged" text="Helt tettet igjen"/>
-        <text name="rms_inspection_status_critically_dry" text="Metall mot metall"/>
         <text name="rms_inspection_status_dirty" text="Tilsmusset"/>
-        <text name="rms_inspection_status_dry" text="Tørr"/>
+        <text name="rms_inspection_status_grease_late" text="Forsinket"/>
         <text name="rms_inspection_status_active_leak" text="Aktiv lekkasje"/>
         <text name="rms_inspection_status_heavily_clogged" text="Kraftig tilsmusset"/>
         <text name="rms_inspection_status_not_required" text="Ikke påkrevd"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Symptom på en ikke fastslått feil: verkstedet fastslår den med en inspeksjon eller en service."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Det er spor av overoppheting og misfarging på enkelte koblinger nær generatoren."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Det er tydelige spor av overoppheting og misfargede kontakter nær generatoren og ledningene dens."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Smørepunktene virker litt tørre."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Smørepunktene virker tørre, og det er for lite fett."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Smørepunktene er svært tørre, og det er lite fett å se."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Smørepunktene arbeider metall mot metall, og det er nesten ikke fett å se."/>
+        <text name="rms_inspection_hint_grease_due" text="Smørenipler som må smøres: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Det er lette oljespor rundt transmisjonshuset."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Det er oljedråper å se under transmisjonen."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Det er et merkbart oljetap rundt transmisjonen."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Kjølevæsken må skiftes: slitt kjølevæske øker slitasjen på kjølesystemet. Servicen verkstedet anbefaler, skifter den ut."/>
         <text name="rms_inspection_radiator" text="Kjøler"/>
         <text name="rms_inspection_air_filter" text="Luftfilter"/>
-        <text name="rms_inspection_lubrication_level" text="Smørenivå"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Ingen mistenkelige symptomer funnet"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Ingen måling"/>
         <text name="rms_fleet_parts_reading" text="Deler målt %s"/>
         <text name="rms_fleet_parts_need_complete" text="Deler måles ved neste fullstendige inspeksjon"/>
+        <text name="rms_fleet_greasing_done" text="Smøring i orden"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s t arbeid"/>
+        <text name="rms_fleet_greasing_period_day" text="Hver arbeidsdag"/>
+        <text name="rms_fleet_greasing_period_month" text="Hver måned"/>
+        <text name="rms_fleet_greasing_period_months" text="Hver %d. måned"/>
+        <text name="rms_fleet_greasing_period_bales" text="Hver %d. ball"/>
+        <text name="rms_fleet_greasing_bales" text="%d baller"/>
+        <text name="rms_fleet_greasing_day" text="%d dag"/>
+        <text name="rms_fleet_greasing_days" text="%d dager"/>
+        <text name="rms_fleet_day_late" text="%d dag forsinket"/>
+        <text name="rms_fleet_days_late" text="%d dager forsinket"/>
+        <text name="rms_fleet_greasing_to_do" text="%d igjen"/>
+        <text name="rms_fleet_greasing_points" text="Smørenipler"/>
+        <text name="rms_fleet_greasing_next" text="Neste smøring"/>
+        <text name="rms_fleet_greasing_now" text="Nå"/>
+        <text name="rms_fleet_greasing_in" text="om %s"/>
+        <text name="rms_fleet_months_late" text="%d måneder forsinket"/>
+        <text name="rms_fleet_bales_late" text="%d baller forsinket"/>
+        <text name="rms_fleet_wear" text="Slitasje"/>
+        <text name="rms_fleet_wear_faster" text="Raskere"/>
+        <text name="rms_fleet_wear_normal" text="Normal slitasje"/>
+        <text name="rms_fleet_wear_late" text="Smøreforsinkelse"/>
+        <text name="rms_fleet_wear_dry" text="Slitasje uten fett"/>
+        <text name="rms_fleet_wear_repair_greases" text="Smøres ved reparasjon"/>
+        <text name="rms_fleet_wear_repair" text="Reparasjon på verksted"/>
+        <text name="rms_fleet_wear_none" text="Ingen"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Innlevering av kjøretøyet"/>
         <text name="rms_sell_dialog_section_vehicle" text="Kjøretøy"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Kjøling og luftfilter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Kjøleren eller luftfilteret er tett. Hold %s-tasten inne mens du ser på kjøretøyet for å finne ut hvilket. Rens det med trykkluftblåseren. Hvis filteret ikke lenger kan blåses rent, skifter verkstedet det fra service %s og oppover."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Smøring nødvendig"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s trenger regelmessig smøring.&#10;&#10;I RMS faller smørenivået med driftstimene. Etter en lang periode uten bruk trengs smøring også før maskinen settes i drift igjen. For lite smøring fremskynder slitasjen på chassiset.&#10;&#10;Kjøp en fettpresse i butikken, og smør maskinen når inspeksjonen ber om det.&#10;&#10;Du kan se smørenivået: hold %s-tasten inne mens du ser på kjøretøyet."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s har smørenipler som må smøres.&#10;&#10;I RMS har hver maskin smøreniplene fra bruksanvisningen. De må smøres igjen etter et antall driftstimer, eller hver arbeidsdag på noen maskiner. Forsinket smøring øker slitasjen på chassiset.&#10;&#10;Kjøp en fettpresse og patroner i butikken. Sikt på en patron med fettpressen i hånden for å sette den inn, og sikt deretter på maskinen: hvert klikk smører én smørenippel, og holdes knappen inne, fortsetter smøringen på de neste.&#10;&#10;Hold %s-tasten inne mens du ser på kjøretøyet for å se smøreniplene som gjenstår."/>
         <text name="rms_tutorial_needs_repair_title" text="Feil funnet"/>
         <text name="rms_tutorial_needs_repair_message" text="%s har et problem. En av delene kan ha gått i stykker.&#10;&#10;Kjør på verkstedet: en inspeksjon, eller servicen hvis den er forfalt, fastslår feilen. Ikke vent: feilen kan bli verre, og reparasjonen blir dyrere med den.&#10;&#10;Når feilen er fastslått, få den reparert på verkstedet."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Overhaling nødvendig"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Ladetrykk"/>
         <text name="rms_diagnostic_spn_100" text="Motoroljetrykk"/>
         <text name="rms_diagnostic_spn_101" text="Trykk i veivhuset"/>
-        <text name="rms_diagnostic_spn_1322" text="Feiltenning i flere sylindre"/>
         <text name="rms_diagnostic_spn_cylinder" text="Feiltenning i sylinder %d"/>
         <text name="rms_diagnostic_spn_94" text="Drivstofftilførselstrykk"/>
         <text name="rms_diagnostic_spn_110" text="Kjølevæsketemperatur"/>

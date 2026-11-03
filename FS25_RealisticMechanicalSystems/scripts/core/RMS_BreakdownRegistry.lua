@@ -61,21 +61,96 @@ local function isPowershiftBreakdownApplicable(vehicle)
         or motor.groupType == VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT)
 end
 
-local function isSteeringWheelBreakdownApplicable(vehicle)
-    if vehicle.spec_wheels == nil or vehicle.spec_wheels.wheels == nil or #vehicle.spec_wheels.wheels == 0 then
-        return false
+-- the game shifts a truck's robotised gearbox like a powershift
+local function isPowershiftClutchBreakdownApplicable(vehicle)
+    return isPowershiftBreakdownApplicable(vehicle) and not vehicle.spec_RealisticMechanicalSystems.isTruck
+end
+
+local SKID_STEER_CATEGORIES = { SKIDSTEERVEHICLES = true }
+
+---Tells whether a wheel runs inside a track
+local function getIsTrackWheel(wheel)
+    return wheel.physics ~= nil and wheel.physics.tireType == WheelsUtil.getTireType("crawler")
+end
+
+---Tells whether a tyre runs outside the tracks
+local function getHasRoadWheel(vehicle)
+    for _, wheel in ipairs(vehicle.spec_wheels ~= nil and vehicle.spec_wheels.wheels or {}) do
+        if not getIsTrackWheel(wheel) then
+            return true
+        end
     end
-    return vehicle.spec_crawlers == nil or #vehicle.spec_crawlers.crawlers == 0
+    return false
+end
+
+---Tells whether one of those tyres steers
+local function getHasSteeredRoadWheel(vehicle)
+    for _, wheel in ipairs(vehicle.spec_wheels ~= nil and vehicle.spec_wheels.wheels or {}) do
+        if not getIsTrackWheel(wheel) and RMS_Drivetrain.getIsWheelSteerable(wheel) then
+            return true
+        end
+    end
+    return false
+end
+
+---Tells whether the machine turns by bending at its central joint
+local function getIsArticulated(vehicle)
+    return vehicle.spec_articulatedAxis ~= nil and vehicle.spec_articulatedAxis.componentJoint ~= nil
+end
+
+---Tells whether a steering wheel turns the machine
+local function getHasSteeringWheel(vehicle)
+    return vehicle.spec_motorbike == nil and not RMS_Drivetrain.getIsInCategories(vehicle, SKID_STEER_CATEGORIES)
+end
+
+---Tells whether a steered axle carries knuckles and tie rods
+local function isSteeredAxleBreakdownApplicable(vehicle)
+    return getHasSteeringWheel(vehicle) and getHasSteeredRoadWheel(vehicle)
+end
+
+---Tells whether a hydraulic steering unit turns the machine
+local function isSteeringUnitBreakdownApplicable(vehicle)
+    return getHasSteeringWheel(vehicle) and (getHasSteeredRoadWheel(vehicle) or getIsArticulated(vehicle))
+end
+
+---Names the steering gear of a road vehicle, cylinder included
+local function getSteeringGearVariant(vehicle)
+    if vehicle.spec_RealisticMechanicalSystems.isTruck then
+        return "box"
+    elseif RMS_Drivetrain.getIsRoadVehicleCategory(vehicle) then
+        return "rack"
+    end
+    return nil
+end
+
+---Tells whether service brakes act on tyres or behind steered tracks
+local function isServiceBrakeBreakdownApplicable(vehicle)
+    return getHasRoadWheel(vehicle) or getIsArticulated(vehicle)
 end
 
 local function isCrawlerBreakdownApplicable(vehicle)
     return vehicle.spec_crawlers ~= nil and vehicle.spec_crawlers.crawlers ~= nil and #vehicle.spec_crawlers.crawlers > 0
 end
 
+-- the game also drives a sprayer's track width on the loader tool axis
 local function isFrontLoaderPivotBreakdownApplicable(vehicle)
     local spec = vehicle.spec_cylindered
     for _, tool in ipairs(spec ~= nil and spec.movingTools or {}) do
-        if RMS_Utils.getIsLoaderMovingTool(tool) then
+        if tool.axis == "AXIS_FRONTLOADER_ARM" then
+            return true
+        end
+    end
+    return false
+end
+
+---Tells whether a differential splits the drive between two wheels
+local function isWheelDifferentialBreakdownApplicable(vehicle)
+    local motorized = vehicle.spec_motorized
+    if vehicle.spec_motorbike ~= nil or motorized == nil or motorized.differentials == nil then
+        return false
+    end
+    for _, differential in ipairs(motorized.differentials) do
+        if differential.diffIndex1IsWheel and differential.diffIndex2IsWheel then
             return true
         end
     end
@@ -90,7 +165,8 @@ local function isTrailerBrakeValveApplicable(vehicle)
     for _, joint in pairs(spec.attacherJoints) do
         local jointType = joint.jointType
         if jointType == AttacherJoints.JOINTTYPE_TRAILER
-            or jointType == AttacherJoints.JOINTTYPE_TRAILERLOW then
+            or jointType == AttacherJoints.JOINTTYPE_TRAILERLOW
+            or jointType == AttacherJoints.JOINTTYPE_SEMITRAILER then
             return true
         end
     end
@@ -193,6 +269,8 @@ RMS_Breakdowns.PARTS = {
     TRANSMISSION_FILTER = "rms_breakdowns_part_transmission_filter",
     LIFT_VALVE = "rms_breakdowns_part_lift_valve",
     LIFT_POSITION_SENSOR = "rms_breakdowns_part_lift_position_sensor",
+    HEADER_LIFT_VALVE = "rms_breakdowns_part_header_lift_valve",
+    HEADER_HEIGHT_SENSOR = "rms_breakdowns_part_header_height_sensor",
     LOADER_CONTROL = "rms_breakdowns_part_loader_control",
     HYDRAULIC_QUICK_COUPLERS = "rms_breakdowns_part_hydraulic_quick_couplers",
     HYDRAULIC_PUMP = "rms_breakdowns_part_hydraulic_pump",
@@ -210,6 +288,8 @@ RMS_Breakdowns.PARTS = {
     STEERING_KNUCKLE_PIVOT = "rms_breakdowns_part_steering_knuckle_pivot",
     STEERING_ORBITROL = "rms_breakdowns_part_steering_orbitrol",
     STEERING_CYLINDER = "rms_breakdowns_part_steering_cylinder",
+    STEERING_BOX = "rms_breakdowns_part_steering_box",
+    STEERING_RACK = "rms_breakdowns_part_steering_rack",
     CAB_SUSPENSION = "rms_breakdowns_part_cab_suspension",
     LOADER_PINS_AND_BUSHINGS = "rms_breakdowns_part_loader_pins_and_bushings",
     TRACK_TENSIONER = "rms_breakdowns_part_track_tensioner",
@@ -490,6 +570,26 @@ local function isHydraulicLiftBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicLiftCapability(vehicle)
 end
 
+-- the game lowers a car's tow hitch like a three-point lift
+local function isHitchLiftBreakdownApplicable(vehicle)
+    return isHydraulicLiftBreakdownApplicable(vehicle) and not RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
+end
+
+---Names a lift that only ever raises a harvesting header
+local function getLiftVariant(vehicle)
+    local carriesHeader = false
+    for _, jointDesc in pairs(vehicle.spec_attacherJoints ~= nil and vehicle.spec_attacherJoints.attacherJoints or {}) do
+        if RMS_Utils.getIsHydraulicLiftJoint(jointDesc) then
+            if jointDesc.jointType ~= AttacherJoints.JOINTTYPE_CUTTER
+                and jointDesc.jointType ~= AttacherJoints.JOINTTYPE_CUTTERHARVESTER then
+                return nil
+            end
+            carriesHeader = true
+        end
+    end
+    return carriesHeader and "header" or nil
+end
+
 local function isHydraulicHoseBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicHoseCapability(vehicle)
 end
@@ -688,10 +788,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isApplicable = function(vehicle)
             local spec = vehicle.spec_RealisticMechanicalSystems
             if spec == nil then return end
-            if spec.isVehicleNeedBlowOut then
-                return true
-            end
-            return false
+            return spec.isVehicleNeedBlowOut and not spec.isElectricVehicle
         end,
         isCanProgress = function(vehicle)
             return false
@@ -1999,7 +2096,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         part = parts.TURBOCHARGER,
         isApplicable = function(vehicle)
             local motor = vehicle:getMotor()
-            return not getIsElectricVehicle(vehicle)
+            return not getIsElectricVehicle(vehicle) and vehicle.spec_motorbike == nil
                 and (motor.peakMotorPower or 0) >= RMS_Config.CORE.TURBO_MIN_POWER_KW
         end,
         causes = { primary = {"hmf", "mlf"}, secondary = {"aicf", "sf", "flf", "cmf"} },
@@ -3349,7 +3446,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.TRANSMISSION,
         part = parts.CLUTCH,
         isApplicable = function(vehicle)
-            if hasCVTAddon(vehicle) then return false end
+            if hasCVTAddon(vehicle) or RMS_Drivetrain.getIsMachineCategory(vehicle) then return false end
             local motor = vehicle:getMotor()
             if not motor then return false end
             return motor.minForwardGearRatio == nil
@@ -3441,7 +3538,9 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.TRANSMISSION,
         part = parts.SYNCHRONIZER,
         isApplicable = function(vehicle)
-            if hasCVTAddon(vehicle) then return false end
+            if hasCVTAddon(vehicle) or vehicle.spec_motorbike ~= nil or RMS_Drivetrain.getIsMachineCategory(vehicle) then
+                return false
+            end
             local motor = vehicle:getMotor()
             if not motor then return false end
             return motor.minForwardGearRatio == nil and motor.gearType ~= VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT
@@ -3568,7 +3667,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.TRANSMISSION,
         part = parts.POWERSHIFT_CLUTCHES,
-        isApplicable = isPowershiftBreakdownApplicable,
+        isApplicable = isPowershiftClutchBreakdownApplicable,
         causes = { primary = {}, secondary = { "pof", "sf", "ctf", "flf", "hfbf" } },
         component = "POWERSHIFT_REPLACEMENT_BUDGET",
         branches = 2,
@@ -3654,7 +3753,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.TRANSMISSION,
         part = parts.POWERSHIFT_REVERSER,
-        isApplicable = isPowershiftBreakdownApplicable,
+        isApplicable = isPowershiftClutchBreakdownApplicable,
         causes = { primary = {}, secondary = { "pof", "sf", "ctf", "flf", "hfbf" } },
         component = "POWERSHIFT_REPLACEMENT_BUDGET",
         branches = 2,
@@ -4358,14 +4457,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.TRANSMISSION,
         part = parts.REAR_BEVEL_GEAR,
-        isApplicable = function(vehicle)
-            local motorized = vehicle.spec_motorized
-            if motorized == nil or motorized.differentials == nil then return false end
-            for _, differential in ipairs(motorized.differentials) do
-                if differential.diffIndex1IsWheel and differential.diffIndex2IsWheel then return true end
-            end
-            return false
-        end,
+        isApplicable = isWheelDifferentialBreakdownApplicable,
         causes = { primary = { "pof", "htf" }, secondary = { "sf", "flf", "hfbf" } },
         component = "GEAR",
         stages = {
@@ -4416,14 +4508,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.TRANSMISSION,
         part = parts.FINAL_DRIVES,
-        isApplicable = function(vehicle)
-            local motorized = vehicle.spec_motorized
-            if motorized == nil or motorized.differentials == nil then return false end
-            for _, differential in ipairs(motorized.differentials) do
-                if differential.diffIndex1IsWheel and differential.diffIndex2IsWheel then return true end
-            end
-            return false
-        end,
+        isApplicable = isWheelDifferentialBreakdownApplicable,
         causes = { primary = { "pof", "htf" }, secondary = { "sf", "flf", "hfbf" } },
         component = "GEAR",
         stages = {
@@ -4474,14 +4559,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.TRANSMISSION,
         part = parts.DIFFERENTIAL,
-        isApplicable = function(vehicle)
-            local motorized = vehicle.spec_motorized
-            if motorized == nil or motorized.differentials == nil then return false end
-            for _, differential in ipairs(motorized.differentials) do
-                if differential.diffIndex1IsWheel and differential.diffIndex2IsWheel then return true end
-            end
-            return false
-        end,
+        isApplicable = isWheelDifferentialBreakdownApplicable,
         causes = { primary = { "pof", "htf" }, secondary = { "sf", "flf", "hfbf" } },
         component = "GEAR",
         stages = {
@@ -4592,14 +4670,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.TRANSMISSION,
         part = parts.AXLE_BEARINGS,
-        isApplicable = function(vehicle)
-            local motorized = vehicle.spec_motorized
-            if motorized == nil or motorized.differentials == nil then return false end
-            for _, differential in ipairs(motorized.differentials) do
-                if differential.diffIndex1IsWheel and differential.diffIndex2IsWheel then return true end
-            end
-            return false
-        end,
+        isApplicable = isWheelDifferentialBreakdownApplicable,
         causes = { primary = { "pof", "htf" }, secondary = { "sf", "flf", "hfbf" } },
         component = "ROLLER_BEARING",
         stages = {
@@ -5032,7 +5103,9 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.HYDRAULICS,
         part = parts.LIFT_VALVE,
-        isApplicable = isHydraulicLiftBreakdownApplicable,
+        isApplicable = isHitchLiftBreakdownApplicable,
+        getNameVariant = getLiftVariant,
+        variantParts = { header = parts.HEADER_LIFT_VALVE },
         causes = { primary = { "of", "sf" }, secondary = { "hfbf" } },
         component = "SOLENOID_VALVE",
         branches = 2,
@@ -5040,6 +5113,10 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_major",
                 description = "rms_breakdowns_lift_valve_failure_branch1_stage1_description",
+                variantDescriptions = { header = {
+                    "rms_breakdowns_lift_valve_failure_header_branch1_stage1_description",
+                    "rms_breakdowns_lift_valve_failure_header_branch2_stage1_description"
+                } },
                 branchDescriptions = {
                     "rms_breakdowns_lift_valve_failure_branch1_stage1_description",
                     "rms_breakdowns_lift_valve_failure_branch2_stage1_description"
@@ -5062,9 +5139,11 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.HYDRAULICS,
         part = parts.LIFT_POSITION_SENSOR,
+        getNameVariant = getLiftVariant,
+        variantParts = { header = parts.HEADER_HEIGHT_SENSOR },
         isApplicable = function(vehicle)
             local spec = vehicle.spec_RealisticMechanicalSystems
-            return isHydraulicLiftBreakdownApplicable(vehicle) and spec ~= nil
+            return isHitchLiftBreakdownApplicable(vehicle) and spec ~= nil
                 and spec.yearIsKnown == true and (tonumber(spec.year) or 0) >= 2000
         end,
         causes = { primary = {}, secondary = {} },
@@ -5073,6 +5152,7 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_major",
                 description = "rms_breakdowns_lift_position_sensor_failure_stage1_description",
+                variantDescriptions = { header = "rms_breakdowns_lift_position_sensor_failure_header_stage1_description" },
                 detectionChance = 1.0,
                 progressMultiplier = 0,
                 repairPrice = stagePartPrices.LIFT_POSITION_SENSOR_FAILURE[1],
@@ -6068,7 +6148,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.CHASSIS,
         part = parts.BRAKE_DISCS,
-        isApplicable = isSteeringWheelBreakdownApplicable,
+        isApplicable = isServiceBrakeBreakdownApplicable,
         causes = { primary = {"bmf"}, secondary = {} },
         component = "BRAKE_SERVICE_BUDGET",
         isCanProgress = function(vehicle)
@@ -6122,7 +6202,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.CHASSIS,
         part = parts.BRAKE_CONTROL,
-        isApplicable = isSteeringWheelBreakdownApplicable,
+        isApplicable = isServiceBrakeBreakdownApplicable,
         causes = { primary = {"bmf"}, secondary = {} },
         component = "BRAKE_SERVICE_BUDGET",
         branches = 2,
@@ -6238,11 +6318,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.CHASSIS,
         part = parts.PARK_BRAKE,
         isApplicable = function(vehicle)
-            if vehicle.spec_crawlers ~= nil then
-                return #vehicle.spec_crawlers.crawlers == 0
-            else
-                return true
-            end
+            return vehicle.spec_motorbike == nil
         end,
         causes = { primary = {"pbf"}, secondary = {} },
         component = "FRICTION_CLUTCH",
@@ -6304,7 +6380,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.CHASSIS,
         part = parts.WHEEL_BEARING,
-        isApplicable = isSteeringWheelBreakdownApplicable,
+        isApplicable = getHasRoadWheel,
         causes = { primary = {"vf", "tif"}, secondary = {"lubf"} },
         component = "ROLLER_BEARING",
         isCanProgress = function(vehicle)
@@ -6375,15 +6451,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.CHASSIS,
         part = parts.STEERING_LINKAGE,
-        isApplicable = function(vehicle)
-            if vehicle.spec_wheels == nil or vehicle.spec_wheels.wheels == nil or #vehicle.spec_wheels.wheels == 0 then
-                return false
-            end
-            if vehicle.spec_crawlers ~= nil and #vehicle.spec_crawlers.crawlers > 0 then
-                return false
-            end
-            return true
-        end,
+        isApplicable = isSteeredAxleBreakdownApplicable,
         causes = { primary = {"slf", "tif"}, secondary = {"vf", "lubf"} },
         component = "STEERING_COMPONENT_BUDGET",
         isCanProgress = function(vehicle)
@@ -6446,7 +6514,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.CHASSIS,
         part = parts.STEERING_KNUCKLE_PIVOT,
-        isApplicable = isSteeringWheelBreakdownApplicable,
+        isApplicable = isSteeredAxleBreakdownApplicable,
         causes = { primary = {"slf", "tif"}, secondary = {"vf", "lubf"} },
         component = "STEERING_COMPONENT_BUDGET",
         isCanProgress = function(vehicle)
@@ -6496,7 +6564,9 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.CHASSIS,
         part = parts.STEERING_ORBITROL,
-        isApplicable = isSteeringWheelBreakdownApplicable,
+        isApplicable = isSteeringUnitBreakdownApplicable,
+        getNameVariant = getSteeringGearVariant,
+        variantParts = { box = parts.STEERING_BOX, rack = parts.STEERING_RACK },
         causes = { primary = {"slf", "tif"}, secondary = {"vf", "lubf"} },
         component = "STEERING_COMPONENT_BUDGET",
         isCanProgress = function(vehicle)
@@ -6506,6 +6576,10 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_minor",
                 description = "rms_breakdowns_steering_orbitrol_malfunction_stage1_description",
+                variantDescriptions = {
+                    box = "rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description",
+                    rack = "rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description"
+                },
                 inspection = { { additional = "rms_inspection_hint_steering_orbitrol_malfunction_stage1" } },
                 detectionChance = 1.0,
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.STEERING_ORBITROL_MALFUNCTION,
@@ -6515,6 +6589,10 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_moderate",
                 description = "rms_breakdowns_steering_orbitrol_malfunction_stage2_description",
+                variantDescriptions = {
+                    box = "rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description",
+                    rack = "rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description"
+                },
                 inspection = { { additional = "rms_inspection_hint_steering_orbitrol_malfunction_stage2" } },
                 detectionChance = 1.0,
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.STEERING_ORBITROL_MALFUNCTION,
@@ -6524,6 +6602,10 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_major",
                 description = "rms_breakdowns_steering_orbitrol_malfunction_stage3_description",
+                variantDescriptions = {
+                    box = "rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description",
+                    rack = "rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description"
+                },
                 inspection = { { additional = "rms_inspection_hint_steering_orbitrol_malfunction_stage3" } },
                 detectionChance = 1.0,
                 progressMultiplier = 0.5 * breakdownProgressMultipliers.STEERING_ORBITROL_MALFUNCTION,
@@ -6533,6 +6615,10 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_critical",
                 description = "rms_breakdowns_steering_orbitrol_malfunction_stage4_description",
+                variantDescriptions = {
+                    box = "rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description",
+                    rack = "rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description"
+                },
                 inspection = { { additional = "rms_inspection_hint_steering_orbitrol_malfunction_stage4" } },
                 detectionChance = 1.0,
                 progressMultiplier = 0 * breakdownProgressMultipliers.STEERING_ORBITROL_MALFUNCTION,
@@ -6546,7 +6632,9 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.CHASSIS,
         part = parts.STEERING_CYLINDER,
-        isApplicable = isSteeringWheelBreakdownApplicable,
+        isApplicable = function(vehicle)
+            return isSteeringUnitBreakdownApplicable(vehicle) and getSteeringGearVariant(vehicle) == nil
+        end,
         causes = { primary = {}, secondary = {} },
         component = "STEERING_COMPONENT_BUDGET",
         isCanProgress = function(vehicle)
@@ -7167,7 +7255,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         system = systems.COOLING,
         part = parts.ACCESSORY_BELT_KIT,
         isApplicable = function(vehicle)
-            return not getIsElectricVehicle(vehicle)
+            return not getIsElectricVehicle(vehicle) and vehicle.spec_motorbike == nil
         end,
         causes = { primary = {"ohf", "crf"}, secondary = {"ltf", "vf"} },
         component = "DRIVE_BELT",
@@ -7368,7 +7456,7 @@ RMS_Breakdowns.BreakdownRegistry = {
         part = parts.FAN_CLUTCH,
         isApplicable = function(vehicle)
             local drive = RMS_Utils.getFanDrive(vehicle)
-            return drive == "VISCOUS" or drive == "ELECTRONIC"
+            return vehicle.spec_motorbike == nil and (drive == "VISCOUS" or drive == "ELECTRONIC")
         end,
         causes = { primary = {}, secondary = {"ohf", "sf"} },
         component = "MAGNETIC_CLUTCH",
@@ -9233,9 +9321,3 @@ local function wrapBreakdownApplicabilityByEnabledSystem()
 end
 
 wrapBreakdownApplicabilityByEnabledSystem()
-
-
-
-
-
-

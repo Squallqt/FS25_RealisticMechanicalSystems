@@ -27,7 +27,8 @@ RMS_FluidHandTool.LOGO_SLICE_PREFIX = "rms_Brand"
 RMS_FluidHandTool.LOGO_SHEETS = {
     MOTOREX = "brands/hud_brand_motorex.xml",
     MOTUL = "brands/hud_brand_motul.xml",
-    FUCHS = "brands/hud_brand_fuchs.xml"
+    FUCHS = "brands/hud_brand_fuchs.xml",
+    SKF = "brands/hud_brand_skf.xml"
 }
 RMS_FluidHandTool.LOGO_COLOR = { 1, 1, 1, 1 }
 RMS_FluidHandTool.GAUGE_ZONE_ALPHA = 0.2
@@ -70,13 +71,11 @@ function RMS_FluidHandTool.registerOverlays()
     RMS_FluidHandTool.gaugeZone = g_overlayManager:createOverlay("rms_LevelGauge.pourZone", 0, 0, 0, 0)
     RMS_FluidHandTool.gaugeZone:setColor(1, 1, 1, RMS_FluidHandTool.GAUGE_ZONE_ALPHA)
     RMS_FluidHandTool.logos = {}
-    for _, product in pairs(RMS_Fluids.PRODUCTS) do
-        if RMS_FluidHandTool.logos[product.brand] == nil then
-            local prefix = RMS_FluidHandTool.LOGO_SLICE_PREFIX .. product.brand
-            g_overlayManager:addTextureConfigFile(modDirectory .. RMS_FluidHandTool.LOGO_SHEETS[product.brand], prefix)
-            RMS_FluidHandTool.logos[product.brand] = g_overlayManager:createOverlay(prefix .. ".logo", 0, 0, 0, 0)
-            contextDisplay.slicesIds[prefix] = prefix .. ".logo"
-        end
+    for brand, sheet in pairs(RMS_FluidHandTool.LOGO_SHEETS) do
+        local prefix = RMS_FluidHandTool.LOGO_SLICE_PREFIX .. brand
+        g_overlayManager:addTextureConfigFile(modDirectory .. sheet, prefix)
+        RMS_FluidHandTool.logos[brand] = g_overlayManager:createOverlay(prefix .. ".logo", 0, 0, 0, 0)
+        contextDisplay.slicesIds[prefix] = prefix .. ".logo"
     end
 end
 
@@ -115,7 +114,7 @@ local function getHandsDrum(hands)
 
     local object = g_currentMission:getNodeObject(target.node)
     local spec = object ~= nil and object[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
-    if spec ~= nil and spec.hasPump and not spec.isNozzleOut and object:getOwnerFarmId() == g_currentMission:getFarmId() then
+    if spec ~= nil and spec.hasPump and not spec.isNozzleOut and g_currentMission.accessHandler:canPlayerAccess(object) then
         return object
     end
     return nil
@@ -214,7 +213,7 @@ end
 function RMS_FluidHandTool.take(player, container)
     local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     if containerSpec == nil or containerSpec.carrierTool ~= nil or containerSpec.isBeingTaken
-        or container:getOwnerFarmId() ~= player.farmId or player:getIsHoldingHandTool() then
+        or not g_currentMission.accessHandler:canPlayerAccess(container, player) or player:getIsHoldingHandTool() then
         return
     end
     if container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY then
@@ -366,11 +365,11 @@ local function stopPour(handTool)
     end
 end
 
----Tells whether a node the player looks at is a tracked machine of his farm
+---Tells whether a node looked at is a tracked machine the farm may use
 function RMS_FluidHandTool.getIsMachineNode(node)
     local vehicle = g_currentMission:getNodeObject(node)
     local vehicleSpec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    return vehicleSpec ~= nil and not vehicleSpec.isExcludedVehicle and vehicle:getOwnerFarmId() == g_currentMission:getFarmId()
+    return vehicleSpec ~= nil and not vehicleSpec.isExcludedVehicle and g_currentMission.accessHandler:canPlayerAccess(vehicle)
 end
 
 local function updateTarget(handTool, player)
@@ -668,7 +667,8 @@ function RMS_FluidHandTool.endPour()
     end
 end
 
-local function fitTextSize(text, textSize, width)
+---Shrinks a text size until the text holds in a width
+function RMS_FluidHandTool.fitTextSize(text, textSize, width)
     while getTextWidth(textSize, text) > width do
         textSize = textSize * 0.95
     end
@@ -756,10 +756,10 @@ function RMS_FluidHandTool.draw()
     local textX, gap = x + padding + hud:scalePixelToScreenWidth(58), hud:scalePixelToScreenWidth(12)
     setTextAlignment(RenderText.ALIGN_LEFT)
     setTextColor(1, 1, 1, 1)
-    renderText(textX, rowY(115), fitTextSize(display.circuitText, size(20), right - capacityWidth - litersWidth - gap - textX), display.circuitText)
+    renderText(textX, rowY(115), RMS_FluidHandTool.fitTextSize(display.circuitText, size(20), right - capacityWidth - litersWidth - gap - textX), display.circuitText)
     setTextBold(false)
     setTextColor(1, 1, 1, 0.6)
-    renderText(textX, rowY(92), fitTextSize(display.machineText, size(14), right - statusWidth - gap - textX), display.machineText)
+    renderText(textX, rowY(92), RMS_FluidHandTool.fitTextSize(display.machineText, size(14), right - statusWidth - gap - textX), display.machineText)
     renderText(x + padding, rowY(16), size(13), display.productText)
 
     local trackX, trackWidth = x + padding, width - padding * 2

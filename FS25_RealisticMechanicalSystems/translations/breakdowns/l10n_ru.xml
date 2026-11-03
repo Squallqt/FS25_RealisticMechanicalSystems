@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Сильный износ шкворней поворотных кулаков. Люфт в рулевом управлении большой."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Критический износ шкворней поворотных кулаков. В рулевом управлении очень большой люфт."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Лёгкая неисправность рулевого насоса-дозатора. Руль поворачивается с небольшим люфтом, прежде чем колёса начинают следовать за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Лёгкая неисправность рулевого механизма. Руль поворачивается с небольшим люфтом, прежде чем колёса начинают следовать за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Лёгкая неисправность рулевой рейки. Руль поворачивается с небольшим люфтом, прежде чем колёса начинают следовать за ним."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Умеренная неисправность рулевого насоса-дозатора. Руль поворачивается дальше, прежде чем колёса начинают следовать за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Умеренная неисправность рулевого механизма. Руль поворачивается дальше, прежде чем колёса начинают следовать за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Умеренная неисправность рулевой рейки. Руль поворачивается дальше, прежде чем колёса начинают следовать за ним."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Сильная неисправность рулевого насоса-дозатора. Руль поворачивается сильно, а колёса плохо следуют за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Сильная неисправность рулевого механизма. Руль поворачивается сильно, а колёса плохо следуют за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Сильная неисправность рулевой рейки. Руль поворачивается сильно, а колёса плохо следуют за ним."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Критический отказ рулевого насоса-дозатора. Руль имеет очень большой люфт, прежде чем колёса начинают следовать за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Критический отказ рулевого механизма. Руль имеет очень большой люфт, прежде чем колёса начинают следовать за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Критический отказ рулевой рейки. Руль имеет очень большой люфт, прежде чем колёса начинают следовать за ним."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Лёгкая внутренняя утечка в гидроцилиндре рулевого управления. Машина начинает отклоняться в сторону."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Лёгкая утечка через уплотнение штока гидроцилиндра рулевого управления. Уровень гидравлического масла немного падает."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Умеренная внутренняя утечка в гидроцилиндре рулевого управления. Машина сильнее отклоняется в сторону."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Пальцы и втулки шарниров погрузчика"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Шкворни поворотных кулаков"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Рулевой насос-дозатор"/>
+        <text name="rms_breakdowns_part_steering_box" text="Рулевой механизм"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Рулевая рейка"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Гидроцилиндр рулевого управления"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Подвеска кабины"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Муфта ВОМ"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Датчики коробки передач"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Фильтр трансмиссии"/>
         <text name="rms_breakdowns_part_lift_valve" text="Клапан навески"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Клапан подъёма жатки"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Датчик положения навески"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Датчик высоты жатки"/>
         <text name="rms_breakdowns_part_loader_control" text="Управление погрузчиком"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Гидравлические быстроразъёмы"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Лёгкая неисправность сцепления. Оно выключается не полностью. Некоторые передачи включаются с трудом."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Неисправность гидравлического насоса. Он сломан. Давление потеряно, гидравлические функции не отвечают."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Неисправность гидравлического распределителя. Золотник заклинил. Затронутая гидравлическая функция не движется."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Неисправность клапана навески. Он не удерживает груз правильно. Поднятое орудие опускается."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Неисправность клапана подъёма жатки. Он не удерживает груз правильно. Поднятая жатка опускается."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Неисправность клапана навески. Он заклинил. Навеска не отвечает."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Неисправность клапана подъёма жатки. Он заклинил. Жатка не поднимается и не опускается."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Неисправность датчика положения навески. Сигнал положения неисправен. Навеска не удерживает заданную высоту, сохраняется код неисправности."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Неисправность датчика высоты жатки. Сигнал высоты неисправен. Жатка не удерживает заданную высоту, сохраняется код неисправности."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Лёгкая неисправность управления погрузчиком. Стрела и ковш реагируют медленнее."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Умеренная неисправность управления погрузчиком. Стрела и ковш движутся лишь с половинной скоростью."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Сильная неисправность управления погрузчиком. Стрела и ковш едва движутся."/>

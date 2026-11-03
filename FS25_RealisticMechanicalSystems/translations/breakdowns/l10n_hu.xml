@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Súlyos függőcsapszegkopás. A kormányzás holtjátéka jelentős."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritikus függőcsapszegkopás. A kormányzás holtjátéka nagyon jelentős."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Enyhe meghibásodás a kormányorbitrolban. A kormánykerék kis holtjátékkal fordul, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Enyhe meghibásodás a kormányműben. A kormánykerék kis holtjátékkal fordul, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Enyhe meghibásodás a fogasléces kormányműben. A kormánykerék kis holtjátékkal fordul, mielőtt a kerekek követnék."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Közepes meghibásodás a kormányorbitrolban. A kormánykerék többet fordul, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Közepes meghibásodás a kormányműben. A kormánykerék többet fordul, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Közepes meghibásodás a fogasléces kormányműben. A kormánykerék többet fordul, mielőtt a kerekek követnék."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Súlyos meghibásodás a kormányorbitrolban. A kormánykerék sokat fordul, de a kerekek nem követik megfelelően."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Súlyos meghibásodás a kormányműben. A kormánykerék sokat fordul, de a kerekek nem követik megfelelően."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Súlyos meghibásodás a fogasléces kormányműben. A kormánykerék sokat fordul, de a kerekek nem követik megfelelően."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritikus hiba a kormányorbitrolban. A kormánykerék holtjátéka nagyon jelentős, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kritikus hiba a kormányműben. A kormánykerék holtjátéka nagyon jelentős, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kritikus hiba a fogasléces kormányműben. A kormánykerék holtjátéka nagyon jelentős, mielőtt a kerekek követnék."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Enyhe belső szivárgás a kormányhengerben. A jármű elkezd oldalra sodródni."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Enyhe szivárgás a kormányhenger rúdtömítésénél. A hidraulikaolaj szintje kissé csökken."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Közepes belső szivárgás a kormányhengerben. A jármű jobban oldalra sodródik."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Rakodócsuklók csapjai és perselyei"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Függőcsapszegek"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Kormányorbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Kormánymű"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Fogasléces kormánymű"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Kormányhenger"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Fülkerugózás"/>
         <text name="rms_breakdowns_part_pto_clutch" text="TLT-kuplung"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Sebességváltó-érzékelők"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Sebességváltószűrő"/>
         <text name="rms_breakdowns_part_lift_valve" text="Emelőmű szelepe"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Vágóasztal emelőszelepe"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Emelőmű helyzetérzékelője"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Vágásmagasság-érzékelő"/>
         <text name="rms_breakdowns_part_loader_control" text="Rakodóvezérlés"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hidraulikus gyorscsatlakozók"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Enyhe meghibásodás a kuplungban. Nem emel ki teljesen. Néhány fokozat nehezen kapcsolható."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Meghibásodás a hidraulikaszivattyúban. Eltört. A nyomás megszűnik, a hidraulikus funkciók nem reagálnak."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Meghibásodás a hidraulikus vezérlőszelepben. A tolattyú beszorult. Az érintett hidraulikus funkció nem mozog."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Meghibásodás az emelőmű szelepében. Nem tartja rendesen a terhet. A felemelt munkagép lesüllyed."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Meghibásodás a vágóasztal emelőszelepében. Nem tartja rendesen a terhet. A felemelt vágóasztal lesüllyed."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Meghibásodás az emelőmű szelepében. Beszorult. Az emelőmű nem reagál."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Meghibásodás a vágóasztal emelőszelepében. Beszorult. A vágóasztal nem emelhető és nem süllyeszthető."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Meghibásodás az emelőmű helyzetérzékelőjében. A helyzetjel hibás. Az emelőmű nem tartja a kért magasságot, és hibakód tárolódik."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Meghibásodás a vágásmagasság-érzékelőben. A magasságjel hibás. A vágóasztal nem tartja a kért magasságot, és hibakód tárolódik."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Enyhe meghibásodás a rakodóvezérlésben. A kar és a kanál lassabban reagál."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Közepes meghibásodás a rakodóvezérlésben. A kar és a kanál csak félsebességgel mozog."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Súlyos meghibásodás a rakodóvezérlésben. A kar és a kanál alig mozog."/>

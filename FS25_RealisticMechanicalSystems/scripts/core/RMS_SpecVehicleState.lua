@@ -63,7 +63,7 @@ local function updateActiveDraftStats(vehicle)
     spec.activeDraftEffectiveForceCap = result.effectiveForceCap
 end
 
-local function updateDynamicMotorLoad(vehicle, dt)
+local function updateDynamicMotorLoad(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
         return 0
@@ -200,10 +200,7 @@ local function updateWheelSlip(vehicle)
             addWheelSpeed(wheelIndex)
         end
 
-        local fourWheelDrive = layout.centerIdx0 == nil
-            or drivetrainState.driveMode == RMS_Drivetrain.MODE.FOUR_WD
-            or (drivetrainState.driveMode == RMS_Drivetrain.MODE.AUTO and drivetrainState.autoEngaged)
-        if fourWheelDrive then
+        if RMS_Drivetrain.getIsFrontAxleDriven(vehicle) then
             for _, wheelIndex in ipairs(layout.engageableWheelIndices) do
                 addWheelSpeed(wheelIndex)
             end
@@ -873,7 +870,7 @@ local function updateFuelState(vehicle, dt)
     end
 end
 
-local function updatePtoState(vehicle, dt)
+local function updatePtoState(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local systemData = spec.systems.pto
 
@@ -932,9 +929,9 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
     -- GROUP 1
     if spec.updateVehicleStateTimerOne >= delayOne then
         spec.updateVehicleStateTimerOne = spec.updateVehicleStateTimerOne % delayOne
-        updatePtoState(self, delayOne)
+        updatePtoState(self)
         updateAvgAbsDiffAccWindow(spec, self:getMotor(), delayOne)
-        updateDynamicMotorLoad(self, delayOne)
+        updateDynamicMotorLoad(self)
     end
 
     -- GROUP 2

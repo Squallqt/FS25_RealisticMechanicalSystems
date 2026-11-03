@@ -12,13 +12,12 @@ local OK, NOT_REQUIRED = "rms_inspection_ok", "rms_inspection_status_not_require
 local SEVERITY = {}
 for severity, statuses in ipairs({
     { "rms_inspection_status_slightly_low", "rms_inspection_status_slight_moisture", "rms_inspection_status_slightly_dirty",
-        "rms_inspection_status_slightly_dry", "rms_inspection_status_change_overdue" },
-    { "rms_inspection_status_low", "rms_inspection_status_seepage", "rms_inspection_status_dirty", "rms_inspection_status_dry",
+        "rms_inspection_status_grease_due", "rms_inspection_status_change_overdue" },
+    { "rms_inspection_status_low", "rms_inspection_status_seepage", "rms_inspection_status_dirty", "rms_inspection_status_grease_late",
         "rms_inspection_status_change_long_overdue" },
     { "rms_inspection_status_very_low", "rms_inspection_status_active_leak", "rms_inspection_status_heavily_clogged",
-        "rms_inspection_status_very_dry", "rms_inspection_status_replacement_due" },
-    { "rms_inspection_status_critically_low", "rms_inspection_status_severe_leak", "rms_inspection_status_critically_clogged",
-        "rms_inspection_status_critically_dry" }
+        "rms_inspection_status_replacement_due" },
+    { "rms_inspection_status_critically_low", "rms_inspection_status_severe_leak", "rms_inspection_status_critically_clogged" }
 }) do
     for _, status in ipairs(statuses) do
         SEVERITY[status] = severity
@@ -29,7 +28,7 @@ end
 local CARE_POINTS = {
     { target = "airFilter", titleKey = "rms_inspection_air_filter", icon = "rms_workshopFluidIconAirFilter", isFuelled = true },
     { target = "radiator", titleKey = "rms_inspection_radiator", icon = "rms_workshopFluidIconRadiator" },
-    { target = "lubrication", titleKey = "rms_inspection_lubrication_level", icon = "rms_workshopFluidIconLubrication" }
+    { target = "lubrication", titleKey = "rms_grease_hud_title", icon = "rms_workshopFluidIconLubrication" }
 }
 
 local AIR_FILTER_STATUS = { "rms_inspection_status_slightly_dirty", "rms_inspection_status_dirty", "rms_inspection_status_heavily_clogged" }
@@ -219,27 +218,19 @@ function Report:readClogging()
     end
 end
 
----Rates the greasing of the machine
+---Rates the greasing, late once a whole interval has passed
 function Report:readLubrication()
-    if self.spec.isVehicleNeedLubricate == false then
+    if not self.spec.isVehicleNeedLubricate then
         return
     end
 
-    local C = RMS_Config.FIELD_CARE
-    local level = math.clamp(tonumber(self.spec.lubricationLevel) or 0, 0, 1)
-    if level <= C.LUBRICATION_CRITICALLY_DRY_THRESHOLD then
-        self:mark("lubrication", "rms_inspection_status_critically_dry")
-        self:note("rms_inspection_hint_lubrication_stage4")
-    elseif level <= C.LUBRICATION_VERY_DRY_THRESHOLD then
-        self:mark("lubrication", "rms_inspection_status_very_dry")
-        self:note("rms_inspection_hint_lubrication_stage3")
-    elseif level <= C.LUBRICATION_DRY_THRESHOLD then
-        self:mark("lubrication", "rms_inspection_status_dry")
-        self:note("rms_inspection_hint_lubrication_stage2")
-    elseif level <= C.LUBRICATION_WARNING_THRESHOLD then
-        self:mark("lubrication", "rms_inspection_status_slightly_dry")
-        self:note("rms_inspection_hint_lubrication_stage1")
+    local total, duePoints = RMS_Greasing.getTotalPoints(self.vehicle), RMS_Greasing.getDuePoints(self.vehicle)
+    self.rows.lubrication.greasing = { total = total, greased = total - duePoints }
+    if duePoints == 0 then
+        return
     end
+    self:mark("lubrication", self.spec.lubricationLevel > 0 and "rms_inspection_status_grease_due" or "rms_inspection_status_grease_late")
+    self:note("rms_inspection_hint_grease_due", duePoints)
 end
 
 ---Returns the worst severity, and a warning off the air filter
@@ -312,7 +303,7 @@ function RMS_InspectionDialog:updateScreen()
 
     self.technicalFluidsList:reloadData()
     self.technicalFluidsCard:setSize(nil, self.technicalFluidsList.contentSize + self.technicalFluidsCardPadding)
-    self.fieldCareList:reloadData()
+    RMS_Utils.reloadListTemplates(self.fieldCareList)
     self.fieldCareCard:setSize(nil, self.fieldCareList.contentSize + self.fieldCareCardPadding)
 
     self:updateIdentity()
@@ -369,8 +360,34 @@ function RMS_InspectionDialog:populateCellForItemInSection(list, _section, index
     else
         local value = cell:getAttribute("inspectionValue")
         RMS_Utils.fitRowValue(title, cell:getAttribute("inspectionValuePill"), value, row.title, row.value)
-        value:setTextColor(unpack(row.statusKey == NOT_REQUIRED and RMS_Breakdowns.COLORS.DEFAULT or getSeverityColor(getSeverity(row.statusKey))))
+        local color = row.statusKey == NOT_REQUIRED and RMS_Breakdowns.COLORS.DEFAULT or getSeverityColor(getSeverity(row.statusKey))
+        value:setTextColor(unpack(color))
+        local greasing = row.greasing
+        if greasing ~= nil then
+            local count, segments = cell:getAttribute("inspectionCount"), cell:getAttribute("inspectionSegments")
+            count:setText(string.format("%d / %d", greasing.greased, greasing.total))
+            count:setPosition(title.position[1] + title:getTextWidth() + 8 * g_pixelSizeScaledX, count.position[2])
+            segments.rmsGreasing = greasing
+            segments.rmsRestColor = { color[1], color[2], color[3], 0.35 }
+        end
     end
+end
+
+---Gives the greasing its own row, its gauge under the title
+function RMS_InspectionDialog:getCellTypeForItemInSection(list, _section, index)
+    if list == self.technicalFluidsList then
+        return "technicalFluidsRowTemplate"
+    end
+    -- the list also asks for row 0, where a section header would go
+    local row = self.fieldCareData[index]
+    return row ~= nil and row.greasing ~= nil and "fieldCareGreasingRowTemplate" or "fieldCareRowTemplate"
+end
+
+---Draws one segment per grease point of the machine, the greased lit
+function RMS_InspectionDialog:onDrawGreasingSegments(element)
+    local greasing = element.rmsGreasing
+    RMS_Utils.drawSegments(element.absPosition[1], element.absPosition[2], element.absSize[1], element.absSize[2], greasing.total,
+        greasing.greased, RMS_Utils.COLOR.HIGHLIGHT, element.rmsRestColor, RMS_Utils.getSegmentGap(greasing.total, 2) * g_pixelSizeScaledX)
 end
 
 ---Forgets the machine

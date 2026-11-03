@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Okamžitě"/>
         <text name="rms_option_menu_start_text" text="Spustit"/>
         <text name="rms_service_months" text="%s měsíců"/>
+        <text name="rms_service_either" text="%s nebo %s"/>
         <text name="rms_service_month" text="%s měs."/>
         <text name="rms_service_calendar_due" text="Kalendářní lhůta dosažena"/>
         <text name="rms_service_program_estimated" text="Odhadovaný plán"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Mazací lis"/>
         <text name="rms_grease_gun_no_vehicle" text="V dosahu mazání není žádné vozidlo"/>
-        <text name="rms_grease_gun_function" text="Slouží k mazání mazacích bodů stroje"/>
+        <text name="rms_grease_gun_function" text="Maže maznice strojů. Plní se kartuší s mazivem."/>
         <text name="rms_grease_gun_action" text="Mazat"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: mazání již provedeno"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s nevyžaduje mazání"/>
+        <text name="rms_grease_gun_load" text="Vložit kartuši"/>
+        <text name="rms_grease_gun_empty" text="Mazací lis je prázdný: vlož kartuši"/>
+        <text name="rms_grease_gun_not_empty" text="Mazací lis stále obsahuje mazivo"/>
+        <text name="rms_grease_gun_points" text="Zbývající maznice: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Kartuše s mazivem"/>
+        <text name="rms_grease_cartridge_function" text="Doplňuje mazací lis: s lisem v ruce se postav před kartuši."/>
+        <text name="rms_grease_cartridge_count" text="Kartuše"/>
+        <text name="rms_grease_quantity" text="Množství"/>
+        <text name="rms_grease_hud_title" text="Mazání"/>
+        <text name="rms_grease_hud_done" text="Promazáno"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Ofukovací pistole"/>
         <text name="rms_air_blower_no_vehicle" text="V dosahu čištění není žádné vozidlo"/>
         <text name="rms_air_blower_function" text="Používá se k čištění chladičů a vzduchových filtrů"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s překročena o %s"/>
         <text name="rms_inspection_status_slightly_low" text="Mírně nízká"/>
         <text name="rms_inspection_status_slightly_dirty" text="Mírně zanesený"/>
-        <text name="rms_inspection_status_slightly_dry" text="Mírně suché"/>
+        <text name="rms_inspection_status_grease_due" text="Namazat"/>
         <text name="rms_inspection_status_slight_moisture" text="Lehká vlhkost"/>
         <text name="rms_inspection_status_seepage" text="Průsak"/>
         <text name="rms_inspection_status_severe_leak" text="Silný únik"/>
         <text name="rms_inspection_status_low" text="Nízká"/>
         <text name="rms_inspection_status_very_low" text="Velmi nízká"/>
-        <text name="rms_inspection_status_very_dry" text="Velmi suché"/>
         <text name="rms_inspection_status_critically_low" text="Nutné doplnění"/>
         <text name="rms_inspection_status_critically_clogged" text="Zcela ucpaný"/>
-        <text name="rms_inspection_status_critically_dry" text="Kov na kov"/>
         <text name="rms_inspection_status_dirty" text="Zanesený"/>
-        <text name="rms_inspection_status_dry" text="Suché"/>
+        <text name="rms_inspection_status_grease_late" text="Po termínu"/>
         <text name="rms_inspection_status_active_leak" text="Aktivní únik"/>
         <text name="rms_inspection_status_heavily_clogged" text="Silně zanesený"/>
         <text name="rms_inspection_status_not_required" text="Není vyžadováno"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Příznak nezjištěné poruchy: dílna ji zjistí prohlídkou nebo údržbou."/>
         <text name="rms_inspection_hint_alternator_stage3" text="V okolí alternátoru a některých spojů jsou patrné známky přehřívání a ztmavnutí."/>
         <text name="rms_inspection_hint_alternator_stage4" text="V okolí alternátoru a jeho kabeláže jsou viditelné výrazné známky přehřívání a ztmavlé konektory."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Mazací body vypadají mírně suché."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Mazací body vypadají suché a nedostatečně promazané."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Mazací body jsou velmi suché, s minimem zbývajícího maziva."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Mazací body pracují kov na kov, téměř bez viditelného maziva."/>
+        <text name="rms_inspection_hint_grease_due" text="Maznice k namazání: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Na skříni převodovky jsou patrné lehké stopy oleje."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Pod převodovkou jsou vidět kapky oleje."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Kolem převodovky je patrná výrazná ztráta oleje."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Chladicí kapalinu je třeba vyměnit: opotřebovaná kapalina urychluje opotřebení chladicího systému. Údržba doporučená v dílně ji vymění."/>
         <text name="rms_inspection_radiator" text="Chladič"/>
         <text name="rms_inspection_air_filter" text="Vzduchový filtr"/>
-        <text name="rms_inspection_lubrication_level" text="Úroveň mazání"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Nebyly zjištěny žádné podezřelé příznaky"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Bez měření"/>
         <text name="rms_fleet_parts_reading" text="Měření součástí %s"/>
         <text name="rms_fleet_parts_need_complete" text="Měření součástí při příští úplné prohlídce"/>
+        <text name="rms_fleet_greasing_done" text="Mazání provedeno"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s h práce"/>
+        <text name="rms_fleet_greasing_period_day" text="Každý den provozu"/>
+        <text name="rms_fleet_greasing_period_month" text="Každý měsíc"/>
+        <text name="rms_fleet_greasing_period_months" text="Každých %d měs."/>
+        <text name="rms_fleet_greasing_period_bales" text="Každých %d balíků"/>
+        <text name="rms_fleet_greasing_bales" text="%d balíků"/>
+        <text name="rms_fleet_greasing_day" text="%d den"/>
+        <text name="rms_fleet_greasing_days" text="%d dní"/>
+        <text name="rms_fleet_day_late" text="Zpoždění %d den"/>
+        <text name="rms_fleet_days_late" text="Zpoždění %d dní"/>
+        <text name="rms_fleet_greasing_to_do" text="Zbývá %d"/>
+        <text name="rms_fleet_greasing_points" text="Maznice"/>
+        <text name="rms_fleet_greasing_next" text="Příští mazání"/>
+        <text name="rms_fleet_greasing_now" text="Nyní"/>
+        <text name="rms_fleet_greasing_in" text="za %s"/>
+        <text name="rms_fleet_months_late" text="Zpoždění %d měs."/>
+        <text name="rms_fleet_bales_late" text="Zpoždění %d balíků"/>
+        <text name="rms_fleet_wear" text="Opotřebení"/>
+        <text name="rms_fleet_wear_faster" text="Rychleji"/>
+        <text name="rms_fleet_wear_normal" text="Běžné opotřebení"/>
+        <text name="rms_fleet_wear_late" text="Zpoždění mazání"/>
+        <text name="rms_fleet_wear_dry" text="Opotřebení nasucho"/>
+        <text name="rms_fleet_wear_repair_greases" text="Promazáno při opravě"/>
+        <text name="rms_fleet_wear_repair" text="Oprava v dílně"/>
+        <text name="rms_fleet_wear_none" text="Žádné"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Vrácení vozidla"/>
         <text name="rms_sell_dialog_section_vehicle" text="Vozidlo"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Chlazení a vzduchový filtr"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Chladič nebo vzduchový filtr je zanesený. Při pohledu na vozidlo podrž klávesu %s a zjisti, který z nich to je. Vyčisti jej ofukovačem stlačeného vzduchu. Pokud už filtr nelze profouknout, dílna jej vymění od údržby %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Nutné mazání"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Stroj %s potřebuje pravidelné mazání.&#10;&#10;V RMS úroveň mazání klesá s provozními hodinami. Po dlouhé době bez používání je mazání nutné také před opětovným uvedením stroje do provozu. Nedostatečné mazání urychluje opotřebení podvozku.&#10;&#10;Kup si v obchodě mazací lis a namaž stroj, když to prohlídka vyžaduje.&#10;&#10;Úroveň mazání můžeš zkontrolovat: při pohledu na vozidlo podrž klávesu %s."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Stroj %s má maznice k namazání.&#10;&#10;V RMS má každý stroj maznice podle svého návodu. Znovu se mažou po určitém počtu provozních hodin, u některých strojů každý pracovní den. Opožděné mazání urychluje opotřebení podvozku.&#10;&#10;Kup si v obchodě mazací lis a kartuše. S lisem v ruce zamiř na kartuši, aby se vložila, a potom na stroj: každé kliknutí namaže jednu maznici a podržením tlačítka pokračuješ na další.&#10;&#10;Zbývající maznice uvidíš, když při pohledu na vozidlo podržíš klávesu %s."/>
         <text name="rms_tutorial_needs_repair_title" text="Zjištěná porucha"/>
         <text name="rms_tutorial_needs_repair_message" text="Stroj %s má problém. Jedna z jeho součástí možná selhala.&#10;&#10;Zajeď do dílny: prohlídka, nebo údržba, pokud je na řadě, poruchu zjistí. Neotálej: porucha se může dále zhoršovat a spolu s ní rostou i náklady na opravu.&#10;&#10;Jakmile je porucha zjištěna, nech ji opravit v dílně."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Nutná generální oprava"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Plnicí tlak"/>
         <text name="rms_diagnostic_spn_100" text="Tlak motorového oleje"/>
         <text name="rms_diagnostic_spn_101" text="Tlak v klikové skříni motoru"/>
-        <text name="rms_diagnostic_spn_1322" text="Vynechávání zapalování ve více válcích"/>
         <text name="rms_diagnostic_spn_cylinder" text="Vynechávání zapalování ve válci %d"/>
         <text name="rms_diagnostic_spn_94" text="Dopravní tlak paliva"/>
         <text name="rms_diagnostic_spn_110" text="Teplota chladicí kapaliny"/>

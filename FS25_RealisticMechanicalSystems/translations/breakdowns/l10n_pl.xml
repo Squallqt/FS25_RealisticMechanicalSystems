@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Poważne zużycie sworzni zwrotnic. Luz w układzie kierowniczym jest duży."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Krytyczne zużycie sworzni zwrotnic. Układ kierowniczy wykazuje bardzo duży luz."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lekkie uszkodzenie orbitrola układu kierowniczego. Kierownica obraca się z niewielkim luzem, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Lekkie uszkodzenie przekładni kierowniczej. Kierownica obraca się z niewielkim luzem, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Lekkie uszkodzenie listwy kierowniczej. Kierownica obraca się z niewielkim luzem, zanim koła zareagują."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Umiarkowane uszkodzenie orbitrola układu kierowniczego. Kierownica obraca się dalej, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Umiarkowane uszkodzenie przekładni kierowniczej. Kierownica obraca się dalej, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Umiarkowane uszkodzenie listwy kierowniczej. Kierownica obraca się dalej, zanim koła zareagują."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Poważne uszkodzenie orbitrola układu kierowniczego. Kierownica obraca się znacznie, a koła nie podążają za nią prawidłowo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Poważne uszkodzenie przekładni kierowniczej. Kierownica obraca się znacznie, a koła nie podążają za nią prawidłowo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Poważne uszkodzenie listwy kierowniczej. Kierownica obraca się znacznie, a koła nie podążają za nią prawidłowo."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Krytyczna awaria orbitrola układu kierowniczego. Kierownica ma bardzo duży luz, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Krytyczna awaria przekładni kierowniczej. Kierownica ma bardzo duży luz, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Krytyczna awaria listwy kierowniczej. Kierownica ma bardzo duży luz, zanim koła zareagują."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lekki wewnętrzny wyciek w siłowniku układu kierowniczego. Pojazd zaczyna zbaczać na jedną stronę."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lekki wyciek przez uszczelnienie tłoczyska siłownika układu kierowniczego. Poziom oleju hydraulicznego nieznacznie spada."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Umiarkowany wewnętrzny wyciek w siłowniku układu kierowniczego. Pojazd bardziej zbacza na jedną stronę."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Sworznie i tuleje przegubów ładowacza"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Sworznie zwrotnic"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol układu kierowniczego"/>
+        <text name="rms_breakdowns_part_steering_box" text="Przekładnia kierownicza"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Listwa kierownicza"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Siłownik układu kierowniczego"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Zawieszenie kabiny"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Sprzęgło WOM"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Czujniki skrzyni biegów"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filtr przekładni"/>
         <text name="rms_breakdowns_part_lift_valve" text="Zawór podnośnika"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Zawór podnoszenia hedera"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Czujnik położenia podnośnika"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Czujnik wysokości hedera"/>
         <text name="rms_breakdowns_part_loader_control" text="Sterowanie ładowaczem"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Szybkozłącza hydrauliczne"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lekkie uszkodzenie sprzęgła. Nie rozłącza całkowicie. Niektóre biegi trudno włączyć."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Uszkodzenie pompy hydraulicznej. Jest rozbita. Ciśnienie zanika, a funkcje hydrauliczne nie odpowiadają."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Uszkodzenie zaworu sterowania hydrauliką. Suwak jest zablokowany. Dana funkcja hydrauliczna nie porusza się."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Uszkodzenie zaworu podnośnika. Nie utrzymuje prawidłowo ciężaru. Podniesione narzędzie opada."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Uszkodzenie zaworu podnoszenia hedera. Nie utrzymuje prawidłowo ciężaru. Podniesiony heder opada."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Uszkodzenie zaworu podnośnika. Jest zablokowany. Podnośnik nie odpowiada."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Uszkodzenie zaworu podnoszenia hedera. Jest zablokowany. Heder nie podnosi się ani nie opuszcza."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Uszkodzenie czujnika położenia podnośnika. Sygnał położenia zawiódł. Podnośnik nie utrzymuje zadanej wysokości i zapisywany jest kod usterki."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Uszkodzenie czujnika wysokości hedera. Sygnał wysokości zawiódł. Heder nie utrzymuje zadanej wysokości i zapisywany jest kod usterki."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lekkie uszkodzenie sterowania ładowaczem. Ramię i łyżka reagują wolniej."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Umiarkowane uszkodzenie sterowania ładowaczem. Ramię i łyżka poruszają się tylko z połową prędkości."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Poważne uszkodzenie sterowania ładowaczem. Ramię i łyżka ledwo się poruszają."/>

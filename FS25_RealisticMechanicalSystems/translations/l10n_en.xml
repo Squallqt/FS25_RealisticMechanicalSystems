@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Instant"/>
         <text name="rms_option_menu_start_text" text="Start"/>
         <text name="rms_service_months" text="%s months"/>
+        <text name="rms_service_either" text="%s or %s"/>
         <text name="rms_service_month" text="%s month"/>
         <text name="rms_service_calendar_due" text="Calendar limit reached"/>
         <text name="rms_service_program_estimated" text="Estimated schedule"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Grease Gun"/>
         <text name="rms_grease_gun_no_vehicle" text="No vehicle in lubrication range"/>
-        <text name="rms_grease_gun_function" text="Used to grease the lubrication points of the machine"/>
+        <text name="rms_grease_gun_function" text="Greases the grease points of machines. Loads with a grease cartridge."/>
         <text name="rms_grease_gun_action" text="Grease"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: grease already applied"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s does not require lubrication"/>
+        <text name="rms_grease_gun_load" text="Load the cartridge"/>
+        <text name="rms_grease_gun_empty" text="Grease gun empty: load a cartridge"/>
+        <text name="rms_grease_gun_not_empty" text="The grease gun still holds grease"/>
+        <text name="rms_grease_gun_points" text="Grease points left: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Grease cartridge"/>
+        <text name="rms_grease_cartridge_function" text="Refills the grease gun: stand in front of the cartridge with the gun in hand."/>
+        <text name="rms_grease_cartridge_count" text="Cartridges"/>
+        <text name="rms_grease_quantity" text="Quantity"/>
+        <text name="rms_grease_hud_title" text="Greasing"/>
+        <text name="rms_grease_hud_done" text="Up to date"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Air Blower"/>
         <text name="rms_air_blower_no_vehicle" text="No vehicle in cleaning range"/>
         <text name="rms_air_blower_function" text="Used to clean radiators and air filters"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s overdue by %s"/>
         <text name="rms_inspection_status_slightly_low" text="Slightly Low"/>
         <text name="rms_inspection_status_slightly_dirty" text="Slightly Clogged"/>
-        <text name="rms_inspection_status_slightly_dry" text="Slightly Dry"/>
+        <text name="rms_inspection_status_grease_due" text="Greasing Due"/>
         <text name="rms_inspection_status_slight_moisture" text="Light Moisture"/>
         <text name="rms_inspection_status_seepage" text="Seepage"/>
         <text name="rms_inspection_status_severe_leak" text="Severe Leak"/>
         <text name="rms_inspection_status_low" text="Low"/>
         <text name="rms_inspection_status_very_low" text="Very Low"/>
-        <text name="rms_inspection_status_very_dry" text="Very Dry"/>
         <text name="rms_inspection_status_critically_low" text="Urgent Top-Up"/>
         <text name="rms_inspection_status_critically_clogged" text="Fully Obstructed"/>
-        <text name="rms_inspection_status_critically_dry" text="Metal on Metal"/>
         <text name="rms_inspection_status_dirty" text="Clogged"/>
-        <text name="rms_inspection_status_dry" text="Dry"/>
+        <text name="rms_inspection_status_grease_late" text="Overdue"/>
         <text name="rms_inspection_status_active_leak" text="Active Leak"/>
         <text name="rms_inspection_status_heavily_clogged" text="Heavily Clogged"/>
         <text name="rms_inspection_status_not_required" text="Not Required"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Symptom of an unidentified breakdown: the workshop identifies it with an inspection or a service."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Signs of overheating and darkening are visible around the alternator and some connections."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Pronounced signs of overheating and darkened connectors are visible around the alternator and its wiring."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Lubrication points look slightly dry."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Lubrication points look dry and insufficiently greased."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Lubrication points are very dry, with little visible grease remaining."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Lubrication points are running metal on metal, with almost no visible grease remaining."/>
+        <text name="rms_inspection_hint_grease_due" text="Grease points to grease: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Slight oil traces are visible around the transmission housing."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Oil drips are visible under the transmission."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="A noticeable oil loss is visible around the transmission."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="The coolant is due for a change: worn coolant speeds up cooling system wear. The service recommended at the workshop replaces it."/>
         <text name="rms_inspection_radiator" text="Radiator"/>
         <text name="rms_inspection_air_filter" text="Air Filter"/>
-        <text name="rms_inspection_lubrication_level" text="Lubrication Level"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="No suspicious symptoms detected"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Not measured"/>
         <text name="rms_fleet_parts_reading" text="Parts measured %s"/>
         <text name="rms_fleet_parts_need_complete" text="Parts measured at the next complete inspection"/>
+        <text name="rms_fleet_greasing_done" text="Greasing up to date"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s h of work"/>
+        <text name="rms_fleet_greasing_period_day" text="Each day of work"/>
+        <text name="rms_fleet_greasing_period_month" text="Every month"/>
+        <text name="rms_fleet_greasing_period_months" text="Every %d months"/>
+        <text name="rms_fleet_greasing_period_bales" text="Every %d bales"/>
+        <text name="rms_fleet_greasing_bales" text="%d bales"/>
+        <text name="rms_fleet_greasing_day" text="%d day"/>
+        <text name="rms_fleet_greasing_days" text="%d days"/>
+        <text name="rms_fleet_day_late" text="%d day overdue"/>
+        <text name="rms_fleet_days_late" text="%d days overdue"/>
+        <text name="rms_fleet_greasing_to_do" text="%d left"/>
+        <text name="rms_fleet_greasing_points" text="Grease points"/>
+        <text name="rms_fleet_greasing_next" text="Next greasing"/>
+        <text name="rms_fleet_greasing_now" text="Now"/>
+        <text name="rms_fleet_greasing_in" text="in %s"/>
+        <text name="rms_fleet_months_late" text="%d months overdue"/>
+        <text name="rms_fleet_bales_late" text="%d bales overdue"/>
+        <text name="rms_fleet_wear" text="Wear"/>
+        <text name="rms_fleet_wear_faster" text="Faster"/>
+        <text name="rms_fleet_wear_normal" text="Normal wear"/>
+        <text name="rms_fleet_wear_late" text="Greasing delay"/>
+        <text name="rms_fleet_wear_dry" text="Wear when dry"/>
+        <text name="rms_fleet_wear_repair_greases" text="Greased when repaired"/>
+        <text name="rms_fleet_wear_repair" text="Workshop repair"/>
+        <text name="rms_fleet_wear_none" text="None"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Vehicle Return"/>
         <text name="rms_sell_dialog_section_vehicle" text="Vehicle"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Cooling and Air Filter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="The radiator or air filter is clogged. Hold the %s key while looking at the vehicle to see which one. Clean it with the compressed-air blower. If the filter can no longer be blown clean, the workshop replaces it from the %s service up."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubrication Required"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Your %s needs regular lubrication.&#10;&#10;In RMS, the lubrication level drops with operating hours. After a long period without use, lubrication is also required before returning the machine to service. Insufficient lubrication accelerates chassis wear.&#10;&#10;Buy a Grease Gun in the shop and lubricate the machine when the inspection calls for it.&#10;&#10;You can check the lubrication level: hold the %s key while looking at the vehicle."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Your %s has grease points to grease.&#10;&#10;In RMS, every machine has the grease points of its operator's manual. They come due again after a number of working hours, or every working day on some machines. A machine greased late wears its chassis faster.&#10;&#10;Buy a grease gun and cartridges in the shop. With the gun in hand, aim at a cartridge to load it, then aim at the machine: each click greases one grease point, and holding the click carries on to the next.&#10;&#10;To see the grease points left, hold %s while looking at the vehicle."/>
         <text name="rms_tutorial_needs_repair_title" text="Breakdown Detected"/>
         <text name="rms_tutorial_needs_repair_message" text="Your %s has a problem. One of its parts may have failed.&#10;&#10;Take it to the workshop: an inspection, or a service if one is due, identifies the breakdown. Do not wait: the breakdown can keep worsening, and the repair cost rises with it.&#10;&#10;Once the breakdown is identified, have it repaired at the workshop."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Overhaul Required"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Engine intake manifold pressure"/>
         <text name="rms_diagnostic_spn_100" text="Engine oil pressure"/>
         <text name="rms_diagnostic_spn_101" text="Engine crankcase pressure"/>
-        <text name="rms_diagnostic_spn_1322" text="Engine misfire for multiple cylinders"/>
         <text name="rms_diagnostic_spn_cylinder" text="Engine misfire cylinder %d"/>
         <text name="rms_diagnostic_spn_94" text="Engine fuel delivery pressure"/>
         <text name="rms_diagnostic_spn_110" text="Engine coolant temperature"/>

@@ -73,7 +73,7 @@ function RMS_WorkshopDiagnosticFrame:updateEstimate()
     local parts = {}
     for _, id in ipairs(self.breakdownIds) do
         if breakdowns[id].isSelectedForRepair then
-            table.insert(parts, RMS_Utils.getBreakdownPartName(id))
+            table.insert(parts, RMS_Utils.getBreakdownPartName(id, self.vehicle))
         end
     end
     local pickedCount = #parts
@@ -116,7 +116,7 @@ function RMS_WorkshopDiagnosticFrame:populateCellForItemInSection(list, _section
     local stage = cell:getAttribute("rms_tableBreakdownStage")
     stage:setText(stageText)
     stage:setTextColor(unpack(RMS_Utils.COLOR.STAGE[breakdown.stage] or RMS_Utils.COLOR.STAGE[4]))
-    cell:getAttribute("rms_tableBreakdownName"):setText(RMS_Utils.getBreakdownPartName(id))
+    cell:getAttribute("rms_tableBreakdownName"):setText(RMS_Utils.getBreakdownPartName(id, vehicle))
     cell:getAttribute("rms_tableBreakdownPrice"):setText(g_i18n:formatMoney(price, 0, true, false))
     local description = cell:getAttribute("rms_tableBreakdownDisc")
     -- an unpicked row starts its description over

@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Azonnali"/>
         <text name="rms_option_menu_start_text" text="Indítás"/>
         <text name="rms_service_months" text="%s hónap"/>
+        <text name="rms_service_either" text="%s v. %s"/>
         <text name="rms_service_month" text="%s hónap"/>
         <text name="rms_service_calendar_due" text="Naptári határidő elérve"/>
         <text name="rms_service_program_estimated" text="Becsült karbantartási terv"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Zsírzópisztoly"/>
         <text name="rms_grease_gun_no_vehicle" text="Nincs jármű kenési hatótávban"/>
-        <text name="rms_grease_gun_function" text="A gép kenési pontjainak megkenésére használható"/>
+        <text name="rms_grease_gun_function" text="Megkeni a gépek zsírzószemeit. Zsírpatronnal tölthető fel."/>
         <text name="rms_grease_gun_action" text="Zsírozás"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: a kenés már megtörtént"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s nem igényel kenést"/>
+        <text name="rms_grease_gun_load" text="Patron betöltése"/>
+        <text name="rms_grease_gun_empty" text="A zsírzópisztoly üres: tölts be egy patront"/>
+        <text name="rms_grease_gun_not_empty" text="A zsírzópisztolyban még van zsír"/>
+        <text name="rms_grease_gun_points" text="Hátralévő zsírzószemek: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Zsírpatron"/>
+        <text name="rms_grease_cartridge_function" text="Feltölti a zsírzópisztolyt: a pisztollyal a kézben állj a patron elé."/>
+        <text name="rms_grease_cartridge_count" text="Patronok"/>
+        <text name="rms_grease_quantity" text="Mennyiség"/>
+        <text name="rms_grease_hud_title" text="Zsírzás"/>
+        <text name="rms_grease_hud_done" text="Rendben"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Légfúvó"/>
         <text name="rms_air_blower_no_vehicle" text="Nincs jármű tisztítási hatótávban"/>
         <text name="rms_air_blower_function" text="Hűtők és légszűrők tisztítására használható"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s késése: %s"/>
         <text name="rms_inspection_status_slightly_low" text="Kissé alacsony"/>
         <text name="rms_inspection_status_slightly_dirty" text="Kissé eltömődött"/>
-        <text name="rms_inspection_status_slightly_dry" text="Kissé száraz"/>
+        <text name="rms_inspection_status_grease_due" text="Zsírzás esedékes"/>
         <text name="rms_inspection_status_slight_moisture" text="Enyhe nedvesség"/>
         <text name="rms_inspection_status_seepage" text="Szivárgásnyom"/>
         <text name="rms_inspection_status_severe_leak" text="Jelentős szivárgás"/>
         <text name="rms_inspection_status_low" text="Alacsony"/>
         <text name="rms_inspection_status_very_low" text="Nagyon alacsony"/>
-        <text name="rms_inspection_status_very_dry" text="Nagyon száraz"/>
         <text name="rms_inspection_status_critically_low" text="Sürgős utántöltés"/>
         <text name="rms_inspection_status_critically_clogged" text="Teljesen eltömődött"/>
-        <text name="rms_inspection_status_critically_dry" text="Fém a fémen"/>
         <text name="rms_inspection_status_dirty" text="Eltömődött"/>
-        <text name="rms_inspection_status_dry" text="Száraz"/>
+        <text name="rms_inspection_status_grease_late" text="Késésben"/>
         <text name="rms_inspection_status_active_leak" text="Aktív szivárgás"/>
         <text name="rms_inspection_status_heavily_clogged" text="Erősen eltömődött"/>
         <text name="rms_inspection_status_not_required" text="Nem szükséges"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Nem azonosított meghibásodás tünete: a műhely egy átvizsgálással vagy karbantartással azonosítja."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Túlmelegedés és elsötétedés jelei láthatók a generátor és néhány csatlakozás körül."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Erős túlmelegedési nyomok és elsötétedett csatlakozók láthatók a generátor és a kábelezése körül."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="A kenési pontok kissé száraznak tűnnek."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="A kenési pontok száraznak és elégtelenül zsírozottnak tűnnek."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="A kenési pontok nagyon szárazak, kevés látható zsír maradt rajtuk."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="A kenési pontokon fém súrlódik fémen, szinte semennyi látható zsír nem maradt rajtuk."/>
+        <text name="rms_inspection_hint_grease_due" text="Kenésre váró zsírzószemek: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Enyhe olajnyomok láthatók a váltóházon."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Olajcseppek láthatók a váltó alatt."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Jelentős olajveszteség látható a váltó körül."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="A hűtőfolyadékot cserélni kell: az elhasznált folyadék gyorsítja a hűtőrendszer kopását. A műhelyben ajánlott karbantartás kicseréli."/>
         <text name="rms_inspection_radiator" text="Hűtő"/>
         <text name="rms_inspection_air_filter" text="Légszűrő"/>
-        <text name="rms_inspection_lubrication_level" text="Kenési szint"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Nem láthatók gyanús tünetek"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Nincs mérés"/>
         <text name="rms_fleet_parts_reading" text="Alkatrészmérés %s"/>
         <text name="rms_fleet_parts_need_complete" text="Alkatrészmérés a következő teljes átvizsgáláskor"/>
+        <text name="rms_fleet_greasing_done" text="Zsírzás rendben"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s óra munka"/>
+        <text name="rms_fleet_greasing_period_day" text="Minden munkanap"/>
+        <text name="rms_fleet_greasing_period_month" text="Havonta"/>
+        <text name="rms_fleet_greasing_period_months" text="%d havonta"/>
+        <text name="rms_fleet_greasing_period_bales" text="%d bálánként"/>
+        <text name="rms_fleet_greasing_bales" text="%d bála"/>
+        <text name="rms_fleet_greasing_day" text="%d nap"/>
+        <text name="rms_fleet_greasing_days" text="%d nap"/>
+        <text name="rms_fleet_day_late" text="%d nap késés"/>
+        <text name="rms_fleet_days_late" text="%d nap késés"/>
+        <text name="rms_fleet_greasing_to_do" text="%d hátra"/>
+        <text name="rms_fleet_greasing_points" text="Zsírzószemek"/>
+        <text name="rms_fleet_greasing_next" text="Következő zsírzás"/>
+        <text name="rms_fleet_greasing_now" text="Most"/>
+        <text name="rms_fleet_greasing_in" text="%s múlva"/>
+        <text name="rms_fleet_months_late" text="%d hónap késés"/>
+        <text name="rms_fleet_bales_late" text="%d bála késés"/>
+        <text name="rms_fleet_wear" text="Kopás"/>
+        <text name="rms_fleet_wear_faster" text="Gyorsabban"/>
+        <text name="rms_fleet_wear_normal" text="Normál kopás"/>
+        <text name="rms_fleet_wear_late" text="Zsírzási késés"/>
+        <text name="rms_fleet_wear_dry" text="Kopás zsír nélkül"/>
+        <text name="rms_fleet_wear_repair_greases" text="Javításkor zsírozva"/>
+        <text name="rms_fleet_wear_repair" text="Műhelyi javítás"/>
+        <text name="rms_fleet_wear_none" text="Nincs"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Jármű visszaadása"/>
         <text name="rms_sell_dialog_section_vehicle" text="Jármű"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Hűtés és légszűrő"/>
         <text name="rms_tutorial_cooling_air_check_message" text="A hűtő vagy a légszűrő eltömődött. Nézz a járműre, és tartsd lenyomva a %s billentyűt, hogy megtudd, melyik. Tisztítsd meg sűrített levegős fúvóval. Ha a szűrő már nem fújható tisztára, a műhely a(z) %s karbantartástól kezdve cseréli."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Kenés szükséges"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s rendszeres kenést igényel.&#10;&#10;Az RMS-ben a kenési szint az üzemórákkal csökken. Hosszabb használaton kívüli időszak után a gépet az újbóli üzembe helyezés előtt is meg kell kenni. Az elégtelen kenés felgyorsítja az alváz kopását.&#10;&#10;Vásárolj zsírzópisztolyt a boltban, és kend meg a gépet, amikor az átvizsgálás ezt szükségesnek jelzi.&#10;&#10;A kenési szintet ellenőrizheted: nézz a járműre, és tartsd nyomva az %s billentyűt."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s zsírzószemei kenésre várnak.&#10;&#10;Az RMS-ben minden gépnek a kézikönyvében szereplő zsírzószemei vannak. Bizonyos számú üzemóra után, egyes gépeknél minden munkanapon újra kenést igényelnek. A késedelmes zsírzás gyorsítja az alváz kopását.&#10;&#10;Vásárolj zsírzópisztolyt és patronokat a boltban. A pisztollyal a kézben célozz egy patronra a betöltéshez, majd a gépre: minden kattintás egy zsírzószemet ken meg, a gomb nyomva tartásával pedig folytatódik a következőn.&#10;&#10;A hátralévő zsírzószemek megtekintéséhez nézz a járműre, és tartsd nyomva a következő billentyűt: %s."/>
         <text name="rms_tutorial_needs_repair_title" text="Meghibásodás észlelve"/>
         <text name="rms_tutorial_needs_repair_message" text="%s problémát jelez. Lehet, hogy az egyik alkatrésze meghibásodott.&#10;&#10;Látogass el egy műhelybe: egy átvizsgálás, vagy a karbantartás, ha esedékes, azonosítja a meghibásodást. Ne halogasd: a meghibásodás tovább súlyosbodhat, és vele együtt a javítás költsége is nő.&#10;&#10;Ha a meghibásodás azonosítva van, javíttasd meg a műhelyben."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Nagyjavítás szükséges"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Töltőnyomás"/>
         <text name="rms_diagnostic_spn_100" text="Motorolajnyomás"/>
         <text name="rms_diagnostic_spn_101" text="A motor forgattyúsházának nyomása"/>
-        <text name="rms_diagnostic_spn_1322" text="Gyújtáskimaradás több hengerben"/>
         <text name="rms_diagnostic_spn_cylinder" text="Gyújtáskimaradás a(z) %d. hengerben"/>
         <text name="rms_diagnostic_spn_94" text="Üzemanyag-szállítási nyomás"/>
         <text name="rms_diagnostic_spn_110" text="Hűtőfolyadék hőmérséklete"/>

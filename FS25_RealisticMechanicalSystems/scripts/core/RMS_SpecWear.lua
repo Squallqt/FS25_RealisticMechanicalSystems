@@ -300,7 +300,6 @@ function RealisticMechanicalSystems:updateEngineSystem(dt)
     local motorLoadFactor, luggingFactor, expiredServiceFactor, coldMotorFactor, hotMotorFactor, airFilterCloggingFactor = 0, 0, 0, 0, 0, 0
     local baseWearRate = 1.0
     local wearRate = baseWearRate
-    local rpmLoad = 0
     local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, spec.systems.engine.name)
     local systemData = spec.systems.engine
 
@@ -318,9 +317,6 @@ function RealisticMechanicalSystems:updateEngineSystem(dt)
     if self.getIsMotorStarted ~= nil and self:getIsMotorStarted() then
         local motorLoad = self:getMotorLoadPercentage()
         local dynamicMotorLoad = spec.dynamicMotorLoad
-        local lastRpm = spec_motorized.motor:getLastRealMotorRpm()
-        local maxRpm = spec_motorized.motor.maxRpm
-        rpmLoad = lastRpm / maxRpm
 
         -- overload factor, past the strongest engine of the same block
         local overloadRatio = RMS_EngineRemap.getOverloadRatio(self)
@@ -390,7 +386,6 @@ end
 function RealisticMechanicalSystems:updateTransmissionSystem(dt)
     local spec = self.spec_RealisticMechanicalSystems
     local spec_motorized = self.spec_motorized
-    local spec_wheels = self.spec_wheels
     local C = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA
     local systemData = spec.systems.transmission
     systemData.pullOverloadTimer = tonumber(systemData.pullOverloadTimer) or 0
@@ -901,14 +896,7 @@ function RealisticMechanicalSystems:updateChassisSystem(dt)
 
     if self.getIsMotorStarted ~= nil and self:getIsMotorStarted() then
         if spec.isVehicleNeedLubricate then
-            local lubricationLevel = math.clamp(tonumber(spec.lubricationLevel) or 1.0, 0.0, 1.0)
-            lubricationFactor = RMS_Utils.calculateQuadraticMultiplier(
-                lubricationLevel,
-                RMS_Config.FIELD_CARE.LUBRICATION_WARNING_THRESHOLD,
-                true,
-                0.0
-            )
-            lubricationFactor = lubricationFactor * (C.LUBRICATION_FACTOR_MULTIPLIER or 0)
+            lubricationFactor = RMS_Greasing.getWearFactor(self) - 1
             wearRate = wearRate + lubricationFactor
         end
 

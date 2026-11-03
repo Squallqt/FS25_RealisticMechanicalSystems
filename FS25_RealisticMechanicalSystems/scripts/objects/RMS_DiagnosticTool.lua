@@ -94,7 +94,8 @@ function RMS_DiagnosticTool.validate(tool, target)
     if targetSpec == nil or targetSpec.isExcludedVehicle then
         return "unavailable"
     end
-    if tool:getOwnerFarmId() ~= target:getOwnerFarmId() then
+    local accessHandler = g_currentMission.accessHandler
+    if not accessHandler:canFarmAccess(tool:getOwnerFarmId(), target) and not accessHandler:canFarmAccess(target:getOwnerFarmId(), tool) then
         return "access"
     end
     if getDistance(tool, target) > RMS_BatteryCharger.MAX_DISTANCE then

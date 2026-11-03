@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Desgaste severo dos pinos de manga de eixo. A folga na direção é grande."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Desgaste crítico dos pinos de manga de eixo. A direção apresenta uma folga muito grande."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Falha leve do orbitrol da direção. O volante gira com um pouco de folga antes que as rodas acompanhem."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Falha leve da caixa de direção. O volante gira com um pouco de folga antes que as rodas acompanhem."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Falha leve da cremalheira da direção. O volante gira com um pouco de folga antes que as rodas acompanhem."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Falha moderada do orbitrol da direção. O volante gira mais antes que as rodas acompanhem."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Falha moderada da caixa de direção. O volante gira mais antes que as rodas acompanhem."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Falha moderada da cremalheira da direção. O volante gira mais antes que as rodas acompanhem."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Falha severa do orbitrol da direção. O volante gira muito sem que as rodas acompanhem bem."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Falha severa da caixa de direção. O volante gira muito sem que as rodas acompanhem bem."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Falha severa da cremalheira da direção. O volante gira muito sem que as rodas acompanhem bem."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Falha crítica do orbitrol da direção. O volante apresenta uma folga muito grande antes que as rodas acompanhem."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Falha crítica da caixa de direção. O volante apresenta uma folga muito grande antes que as rodas acompanhem."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Falha crítica da cremalheira da direção. O volante apresenta uma folga muito grande antes que as rodas acompanhem."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Leve vazamento interno no cilindro da direção. O veículo começa a desviar para um lado."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Leve vazamento na vedação da haste do cilindro da direção. O nível de óleo hidráulico baixa um pouco."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Vazamento interno moderado no cilindro da direção. O veículo desvia mais para um lado."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Pinos e buchas das articulações do carregador"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pinos de manga de eixo"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol da direção"/>
+        <text name="rms_breakdowns_part_steering_box" text="Caixa de direção"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Cremalheira da direção"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Cilindro da direção"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Suspensão da cabine"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Embreagem da TDP"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Sensores da caixa de câmbio"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filtro da transmissão"/>
         <text name="rms_breakdowns_part_lift_valve" text="Válvula do levante"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Válvula de elevação da plataforma"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Sensor de posição do levante"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Sensor de altura da plataforma"/>
         <text name="rms_breakdowns_part_loader_control" text="Comando do carregador"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Engates hidráulicos rápidos"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Falha leve da embreagem. Ela não desacopla totalmente. Algumas marchas entram com dificuldade."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Falha da bomba hidráulica. Ela está quebrada. A pressão é perdida e as funções hidráulicas não respondem."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Falha da válvula de controle hidráulico. O carretel está travado. A função hidráulica afetada não se move mais."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Falha da válvula do levante. Ela não sustenta bem a carga. O implemento levantado desce."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Falha da válvula de elevação da plataforma. Ela não sustenta bem a carga. A plataforma levantada desce."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Falha da válvula do levante. Ela está travada. O levante não responde."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Falha da válvula de elevação da plataforma. Ela está travada. A plataforma não sobe nem desce."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Falha do sensor de posição do levante. O sinal de posição falha. O levante não mantém a altura solicitada e um código de falha é registrado."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Falha do sensor de altura da plataforma. O sinal de altura falha. A plataforma não mantém a altura solicitada e um código de falha é registrado."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Falha leve do comando do carregador. O braço e a caçamba respondem mais lentamente."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Falha moderada do comando do carregador. O braço e a caçamba só se movem à metade da velocidade."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Falha severa do comando do carregador. O braço e a caçamba mal se movem."/>

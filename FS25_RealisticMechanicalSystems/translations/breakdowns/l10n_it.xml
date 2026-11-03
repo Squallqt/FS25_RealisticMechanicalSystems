@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Grave usura dei perni dei fusi a snodo. Il gioco nello sterzo è importante."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Usura critica dei perni dei fusi a snodo. Lo sterzo presenta un gioco molto importante."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Malfunzionamento lieve dell'orbitrol dello sterzo. Il volante gira con un po' di gioco prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Malfunzionamento lieve della scatola dello sterzo. Il volante gira con un po' di gioco prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Malfunzionamento lieve della cremagliera dello sterzo. Il volante gira con un po' di gioco prima che le ruote seguano."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Malfunzionamento moderato dell'orbitrol dello sterzo. Il volante gira di più prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Malfunzionamento moderato della scatola dello sterzo. Il volante gira di più prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Malfunzionamento moderato della cremagliera dello sterzo. Il volante gira di più prima che le ruote seguano."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Grave malfunzionamento dell'orbitrol dello sterzo. Il volante gira molto senza che le ruote lo seguano bene."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Grave malfunzionamento della scatola dello sterzo. Il volante gira molto senza che le ruote lo seguano bene."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Grave malfunzionamento della cremagliera dello sterzo. Il volante gira molto senza che le ruote lo seguano bene."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Guasto critico dell'orbitrol dello sterzo. Il volante presenta un gioco molto importante prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Guasto critico della scatola dello sterzo. Il volante presenta un gioco molto importante prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Guasto critico della cremagliera dello sterzo. Il volante presenta un gioco molto importante prima che le ruote seguano."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lieve perdita interna nel cilindro dello sterzo. Il veicolo inizia a deviare da un lato."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lieve perdita dal paraolio dello stelo del cilindro dello sterzo. Il livello dell'olio idraulico scende un po'."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Perdita interna moderata nel cilindro dello sterzo. Il veicolo devia maggiormente da un lato."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Perni e boccole delle articolazioni del caricatore"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Perni dei fusi a snodo"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol dello sterzo"/>
+        <text name="rms_breakdowns_part_steering_box" text="Scatola dello sterzo"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Cremagliera dello sterzo"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Cilindro dello sterzo"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Sospensione della cabina"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Frizione della PDF"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Sensori del cambio"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filtro della trasmissione"/>
         <text name="rms_breakdowns_part_lift_valve" text="Valvola del sollevatore"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Valvola di sollevamento della testata"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Sensore di posizione del sollevatore"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Sensore di altezza della testata"/>
         <text name="rms_breakdowns_part_loader_control" text="Comando del caricatore"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Innesti idraulici rapidi"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Malfunzionamento lieve della frizione. Non stacca del tutto. Alcune marce entrano con difficoltà."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Guasto della pompa idraulica. È rotta. La pressione è persa e le funzioni idrauliche non rispondono."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Guasto del distributore idraulico. Il cursore è bloccato. La funzione idraulica interessata non si muove più."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Guasto della valvola del sollevatore. Non tiene bene il carico. L'attrezzo sollevato scende."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Guasto della valvola di sollevamento della testata. Non tiene bene il carico. La testata sollevata scende."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Guasto della valvola del sollevatore. È bloccata. Il sollevatore non risponde."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Guasto della valvola di sollevamento della testata. È bloccata. La testata non sale e non scende più."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Guasto del sensore di posizione del sollevatore. Il segnale di posizione è guasto. Il sollevatore non mantiene l'altezza richiesta e viene registrato un codice guasto."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Guasto del sensore di altezza della testata. Il segnale di altezza è guasto. La testata non mantiene l'altezza richiesta e viene registrato un codice guasto."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Malfunzionamento lieve del comando del caricatore. Il braccio e la benna rispondono più lentamente."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Malfunzionamento moderato del comando del caricatore. Il braccio e la benna si muovono solo a metà velocità."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Malfunzionamento grave del comando del caricatore. Il braccio e la benna si muovono appena."/>

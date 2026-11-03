@@ -144,7 +144,7 @@ local function getLostWarranty(vehicle, offer, isRestore)
             names[part.expiry] = {}
             table.insert(expiries, part.expiry)
         end
-        table.insert(names[part.expiry], RMS_Utils.getBreakdownPartName(part.id))
+        table.insert(names[part.expiry], RMS_Utils.getBreakdownPartName(part.id, vehicle))
     end
     for _, expiry in ipairs(expiries) do
         for _, name in ipairs(names[expiry]) do

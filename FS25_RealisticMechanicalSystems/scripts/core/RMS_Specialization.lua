@@ -192,6 +192,7 @@ source(g_currentModDirectory .. "scripts/core/RMS_Exhaust.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Breakdowns.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Start.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Consumables.lua")
+source(g_currentModDirectory .. "scripts/core/RMS_Greasing.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Drivetrain.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Steering.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_ElectricDrive.lua")
@@ -257,8 +258,6 @@ for _, alias in pairs(RealisticMechanicalSystems.FACTOR_STATS_ALIASES) do
     RealisticMechanicalSystems.FACTOR_STATS_KEYS[alias] = true
 end
 
-local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
-
 local function getVehicleOperatingHours(vehicle)
     if vehicle == nil then
         return 0
@@ -304,7 +303,7 @@ local function ensureFactorStatsEntry(spec, systemKey)
 end
 RealisticMechanicalSystems.ensureFactorStatsEntry = ensureFactorStatsEntry
 
-local function ensureFactorStats(spec, vehicle)
+local function ensureFactorStats(spec)
     if spec == nil then
         return {}
     end
@@ -468,7 +467,6 @@ function RealisticMechanicalSystems:setRMSUserExcluded(isExcluded, noEventSend)
         RMS_Drivetrain.releaseControl(self)
         spec.pendingSideNotifications = {}
     else
-        spec.lubricationUsedThisPeriod = true
         RealisticMechanicalSystems.registerVehicle(self)
     end
 
@@ -769,6 +767,7 @@ function RealisticMechanicalSystems.storeFieldcareSyncState(vehicle, spec, seria
         spec["_lastSyncFieldcare_" .. filter.stateKey] = spec[filter.stateKey]
     end
     spec._lastSyncFieldcare_lubricationLevel = spec.lubricationLevel
+    spec._lastSyncFieldcare_greasingDuePoints = spec.greasingDuePoints
     spec._lastSyncFieldcare_engineOilLevel = spec.engineOilLevel
     spec._lastSyncFieldcare_coolantLevel = spec.coolantLevel
     spec._lastSyncFieldcare_transmissionOilLevel = spec.transmissionOilLevel
@@ -805,6 +804,7 @@ local function markFieldcareDirty(vehicle, spec)
        syncFloatChanged(spec._lastSyncFieldcare_airFilterResidue, spec.airFilterResidue, 0.005) or
        filterChanged or
        syncFloatChanged(spec._lastSyncFieldcare_lubricationLevel, spec.lubricationLevel, 0.005) or
+       spec._lastSyncFieldcare_greasingDuePoints ~= spec.greasingDuePoints or
        syncFloatChanged(spec._lastSyncFieldcare_engineOilLevel, spec.engineOilLevel, 0.005) or
        syncFloatChanged(spec._lastSyncFieldcare_coolantLevel, spec.coolantLevel, 0.005) or
        syncFloatChanged(spec._lastSyncFieldcare_transmissionOilLevel, spec.transmissionOilLevel, 0.005) or
@@ -1140,8 +1140,7 @@ function RealisticMechanicalSystems.initSpecialization()
     schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#particulateFilterLevel", "Particulate filter soot level, 1 calling a regeneration")
     schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#scrInducementHours", "Engine hours since an AdBlue fault was confirmed")
     schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#particulateFilterOverloaded", "Whether the particulate filter overload is shown as a breakdown")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#lubricationLevel", "Lubrication level")
-    schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#lubricationUsedThisPeriod", "Whether the vehicle was used during the current period")
+    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#greasing", "Grease points due, hours elapsed and hours late per interval, then the worked day")
     schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#thermostatState", "Engine Thermostat Position")
     schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionThermostatState", "Transmission Thermostat Position")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#serviceOptionOne", "Current Service Option One")
@@ -1322,7 +1321,6 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "updateAirFilterClogging", RMS_Consumables.updateAirFilterClogging)
     SpecializationUtil.registerFunction(vehicleType, "updateFilterClogging", RMS_Consumables.updateFilterClogging)
     SpecializationUtil.registerFunction(vehicleType, "cleanRadiatorAndAirFilter", RMS_Consumables.cleanRadiatorAndAirFilter)
-    SpecializationUtil.registerFunction(vehicleType, "updateLubricationLevel", RMS_Consumables.updateLubricationLevel)
     SpecializationUtil.registerFunction(vehicleType, "updateFluidLevels", RMS_Consumables.updateFluidLevels)
     SpecializationUtil.registerFunction(vehicleType, "refillVehicleFluids", RMS_Consumables.refillVehicleFluids)
     SpecializationUtil.registerFunction(vehicleType, "topUpRepairedLeaks", RMS_Consumables.topUpRepairedLeaks)
@@ -1333,7 +1331,6 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getFluidCompatibility", RMS_Consumables.getFluidCompatibility)
     SpecializationUtil.registerFunction(vehicleType, "addFluidLiters", RMS_Consumables.addFluidLiters)
     SpecializationUtil.registerFunction(vehicleType, "replaceFluidCircuit", RMS_Consumables.replaceFluidCircuit)
-    SpecializationUtil.registerFunction(vehicleType, "lubricateVehicle", RMS_Consumables.lubricateVehicle)
     SpecializationUtil.registerFunction(vehicleType, "startFieldVisualInspectionProcess", RMS_Consumables.startFieldVisualInspectionProcess)
     SpecializationUtil.registerFunction(vehicleType, "setFieldInspectionPlayerActive", RMS_Consumables.setFieldInspectionPlayerActive)
     SpecializationUtil.registerFunction(vehicleType, "updateFieldInspectionSound", RMS_Consumables.updateFieldInspectionSound)
@@ -1708,7 +1705,7 @@ local function registerVehicle(vehicle)
                 RMS_Drivetrain.resolveParkBrakeKind(vehicle)
             end
 
-            local factorStats = ensureFactorStats(spec, vehicle)
+            local factorStats = ensureFactorStats(spec)
             local currentOperatingHours = getVehicleOperatingHours(vehicle)
             for _, systemStats in pairs(factorStats) do
                 if type(systemStats) == "table" then
@@ -2069,7 +2066,7 @@ local function syncOverloadWarning(vehicle, dt)
     local sampleDurationMs = math.max(tonumber(dt) or 0, 1)
     local isMotorStarted = vehicle.getIsMotorStarted ~= nil and vehicle:getIsMotorStarted()
 
-    local factorStats = ensureFactorStats(spec, vehicle)
+    local factorStats = ensureFactorStats(spec)
 
     local shouldStage = 0
     local maxAvgStress = 0
@@ -2314,7 +2311,7 @@ function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
         self:updateConditionLevel()
         self:processWornParts()
         if not isMissionVehicle then
-            self:updateLubricationLevel(operatingDt, motorState)
+            RMS_Greasing.update(self, operatingDt)
             self:updateFluidLevels(operatingDt)
             self:updateFilterClogging(operatingDt)
         end

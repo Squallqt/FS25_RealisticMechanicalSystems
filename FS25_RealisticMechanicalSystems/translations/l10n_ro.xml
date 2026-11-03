@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Instantanee"/>
         <text name="rms_option_menu_start_text" text="Începe"/>
         <text name="rms_service_months" text="%s luni"/>
+        <text name="rms_service_either" text="%s sau %s"/>
         <text name="rms_service_month" text="%s lună"/>
         <text name="rms_service_calendar_due" text="Termenul calendaristic a fost atins"/>
         <text name="rms_service_program_estimated" text="Program estimat"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistol de gresat"/>
         <text name="rms_grease_gun_no_vehicle" text="Niciun vehicul în raza de lubrifiere"/>
-        <text name="rms_grease_gun_function" text="Folosit pentru aplicarea unsorii în punctele de lubrifiere ale utilajului"/>
+        <text name="rms_grease_gun_function" text="Unge gresoarele utilajelor. Se încarcă cu un cartuș de vaselină."/>
         <text name="rms_grease_gun_action" text="Unge"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: lubrifierea a fost deja efectuată"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s nu necesită lubrifiere"/>
+        <text name="rms_grease_gun_load" text="Încarcă un cartuș"/>
+        <text name="rms_grease_gun_empty" text="Pistol de gresat gol: încarcă un cartuș"/>
+        <text name="rms_grease_gun_not_empty" text="Pistolul de gresat mai conține vaselină"/>
+        <text name="rms_grease_gun_points" text="Gresoare rămase: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Cartuș de vaselină"/>
+        <text name="rms_grease_cartridge_function" text="Reîncarcă pistolul de gresat: cu pistolul în mână, așază-te în fața cartușului."/>
+        <text name="rms_grease_cartridge_count" text="Cartușe"/>
+        <text name="rms_grease_quantity" text="Cantitate"/>
+        <text name="rms_grease_hud_title" text="Gresare"/>
+        <text name="rms_grease_hud_done" text="La zi"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Suflantă cu aer comprimat"/>
         <text name="rms_air_blower_no_vehicle" text="Niciun vehicul în raza de curățare"/>
         <text name="rms_air_blower_function" text="Folosită pentru curățarea radiatoarelor și a filtrelor de aer"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s depășit cu %s"/>
         <text name="rms_inspection_status_slightly_low" text="Ușor scăzut"/>
         <text name="rms_inspection_status_slightly_dirty" text="Ușor colmatat"/>
-        <text name="rms_inspection_status_slightly_dry" text="Ușor uscat"/>
+        <text name="rms_inspection_status_grease_due" text="De uns"/>
         <text name="rms_inspection_status_slight_moisture" text="Ușoară umezeală"/>
         <text name="rms_inspection_status_seepage" text="Infiltrație"/>
         <text name="rms_inspection_status_severe_leak" text="Scurgere gravă"/>
         <text name="rms_inspection_status_low" text="Scăzut"/>
         <text name="rms_inspection_status_very_low" text="Foarte scăzut"/>
-        <text name="rms_inspection_status_very_dry" text="Foarte uscat"/>
         <text name="rms_inspection_status_critically_low" text="Completare urgentă"/>
         <text name="rms_inspection_status_critically_clogged" text="Complet colmatat"/>
-        <text name="rms_inspection_status_critically_dry" text="Metal pe metal"/>
         <text name="rms_inspection_status_dirty" text="Colmatat"/>
-        <text name="rms_inspection_status_dry" text="Uscat"/>
+        <text name="rms_inspection_status_grease_late" text="În întârziere"/>
         <text name="rms_inspection_status_active_leak" text="Scurgere activă"/>
         <text name="rms_inspection_status_heavily_clogged" text="Puternic colmatat"/>
         <text name="rms_inspection_status_not_required" text="Nu este necesar"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Simptom al unei avarii neidentificate: atelierul o identifică printr-o inspecție sau o întreținere."/>
         <text name="rms_inspection_hint_alternator_stage3" text="În apropierea alternatorului sunt vizibile urme de supraîncălzire și înnegrirea unor conexiuni."/>
         <text name="rms_inspection_hint_alternator_stage4" text="În apropierea alternatorului și a cablajului său sunt vizibile urme pronunțate de supraîncălzire și conectori înnegriți."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Punctele de lubrifiere par ușor uscate."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Punctele de lubrifiere par uscate și nu au suficientă unsoare."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Punctele de lubrifiere sunt foarte uscate, cu puțină unsoare vizibilă."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Punctele de lubrifiere funcționează metal pe metal, aproape fără nicio urmă vizibilă de unsoare."/>
+        <text name="rms_inspection_hint_grease_due" text="Gresoare de uns: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="În jurul carcasei transmisiei sunt vizibile urme ușoare de ulei."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Sub transmisie sunt vizibile picături de ulei."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="În jurul transmisiei este vizibilă o pierdere importantă de ulei."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Lichidul de răcire trebuie schimbat: uzat, accelerează uzura sistemului de răcire. Revizia recomandată la atelier îl înlocuiește."/>
         <text name="rms_inspection_radiator" text="Radiator"/>
         <text name="rms_inspection_air_filter" text="Filtru de aer"/>
-        <text name="rms_inspection_lubrication_level" text="Nivel de lubrifiere"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Nu a fost detectat niciun simptom suspect"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Fără măsurare"/>
         <text name="rms_fleet_parts_reading" text="Piese măsurate %s"/>
         <text name="rms_fleet_parts_need_complete" text="Piese măsurate la următoarea inspecție completă"/>
+        <text name="rms_fleet_greasing_done" text="Gresare la zi"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s h de lucru"/>
+        <text name="rms_fleet_greasing_period_day" text="În fiecare zi lucrată"/>
+        <text name="rms_fleet_greasing_period_month" text="În fiecare lună"/>
+        <text name="rms_fleet_greasing_period_months" text="La fiecare %d luni"/>
+        <text name="rms_fleet_greasing_period_bales" text="La fiecare %d baloți"/>
+        <text name="rms_fleet_greasing_bales" text="%d baloți"/>
+        <text name="rms_fleet_greasing_day" text="%d zi"/>
+        <text name="rms_fleet_greasing_days" text="%d zile"/>
+        <text name="rms_fleet_day_late" text="%d zi întârziere"/>
+        <text name="rms_fleet_days_late" text="%d zile întârziere"/>
+        <text name="rms_fleet_greasing_to_do" text="%d de făcut"/>
+        <text name="rms_fleet_greasing_points" text="Gresoare"/>
+        <text name="rms_fleet_greasing_next" text="Următoarea gresare"/>
+        <text name="rms_fleet_greasing_now" text="Acum"/>
+        <text name="rms_fleet_greasing_in" text="peste %s"/>
+        <text name="rms_fleet_months_late" text="%d luni întârziere"/>
+        <text name="rms_fleet_bales_late" text="%d baloți întârziere"/>
+        <text name="rms_fleet_wear" text="Uzură"/>
+        <text name="rms_fleet_wear_faster" text="Mai rapid"/>
+        <text name="rms_fleet_wear_normal" text="Uzură normală"/>
+        <text name="rms_fleet_wear_late" text="Întârziere gresare"/>
+        <text name="rms_fleet_wear_dry" text="Uzură la uscat"/>
+        <text name="rms_fleet_wear_repair_greases" text="Gresat la reparație"/>
+        <text name="rms_fleet_wear_repair" text="Reparație la atelier"/>
+        <text name="rms_fleet_wear_none" text="Niciuna"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Returnarea vehiculului"/>
         <text name="rms_sell_dialog_section_vehicle" text="Vehicul"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Răcire și filtru de aer"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Radiatorul sau filtrul de aer este colmatat. Ține apăsată tasta %s în timp ce privești vehiculul pentru a afla care dintre ele. Curăță-l cu suflanta cu aer comprimat. Dacă filtrul nu mai poate fi curățat, atelierul îl înlocuiește începând cu revizia %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubrifiere necesară"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s necesită lubrifiere regulată.&#10;&#10;În RMS, nivelul de lubrifiere scade odată cu orele de funcționare. După o perioadă lungă de neutilizare, lubrifierea este necesară și înainte de repunerea în funcțiune. Lubrifierea insuficientă accelerează uzura șasiului.&#10;&#10;Cumpără un pistol de gresat din magazin și unge utilajul atunci când inspecția o cere.&#10;&#10;Poți verifica nivelul de lubrifiere: ține apăsată tasta %s în timp ce privești vehiculul."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s are gresoare de uns.&#10;&#10;În RMS, fiecare utilaj are gresoarele din manualul său. Acestea trebuie unse din nou după un anumit număr de ore de funcționare, iar la unele utilaje în fiecare zi de lucru. Ungerea întârziată accelerează uzura șasiului.&#10;&#10;Cumpără un pistol de gresat și cartușe din magazin. Cu pistolul în mână, țintește un cartuș pentru a-l încărca, apoi utilajul: fiecare clic unge un gresor, iar menținerea butonului apăsat continuă cu următoarele.&#10;&#10;Pentru a vedea gresoarele rămase, ține apăsată tasta %s în timp ce privești vehiculul."/>
         <text name="rms_tutorial_needs_repair_title" text="Avarie detectată"/>
         <text name="rms_tutorial_needs_repair_message" text="%s are o problemă. Este posibil ca una dintre piese să se fi defectat.&#10;&#10;Mergi la atelier: o inspecție, sau întreținerea dacă este scadentă, identifică avaria. Nu amâna: avaria poate continua să se agraveze, iar costul reparației crește odată cu aceasta.&#10;&#10;După ce avaria este identificată, repar-o la atelier."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Recondiționare necesară"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Presiune de supraalimentare"/>
         <text name="rms_diagnostic_spn_100" text="Presiunea uleiului de motor"/>
         <text name="rms_diagnostic_spn_101" text="Presiunea carterului motorului"/>
-        <text name="rms_diagnostic_spn_1322" text="Rateuri la mai mulți cilindri"/>
         <text name="rms_diagnostic_spn_cylinder" text="Rateu la cilindrul %d"/>
         <text name="rms_diagnostic_spn_94" text="Presiunea de alimentare cu combustibil"/>
         <text name="rms_diagnostic_spn_110" text="Temperatura lichidului de răcire"/>

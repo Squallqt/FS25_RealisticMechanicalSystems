@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Allvarligt slitage på spindeltapparna. Glappet i styrningen är stort."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritiskt slitage på spindeltapparna. Styrningen har mycket stort glapp."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lätt haveri i styrorbitrolen. Ratten vrids med lite glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Lätt haveri i styrväxeln. Ratten vrids med lite glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Lätt haveri i styrkuggstången. Ratten vrids med lite glapp innan hjulen följer med."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Måttligt haveri i styrorbitrolen. Ratten vrids mer innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Måttligt haveri i styrväxeln. Ratten vrids mer innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Måttligt haveri i styrkuggstången. Ratten vrids mer innan hjulen följer med."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Allvarligt haveri i styrorbitrolen. Ratten vrids mycket utan att hjulen följer med ordentligt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Allvarligt haveri i styrväxeln. Ratten vrids mycket utan att hjulen följer med ordentligt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Allvarligt haveri i styrkuggstången. Ratten vrids mycket utan att hjulen följer med ordentligt."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritiskt haveri i styrorbitrolen. Ratten har mycket stort glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kritiskt haveri i styrväxeln. Ratten har mycket stort glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kritiskt haveri i styrkuggstången. Ratten har mycket stort glapp innan hjulen följer med."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lätt inre läckage i styrcylindern. Fordonet börjar driva åt ena sidan."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lätt läckage vid styrcylinderns stångtätning. Hydrauloljenivån sjunker lite."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Måttligt inre läckage i styrcylindern. Fordonet driver mer åt ena sidan."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Tappar och bussningar i lastarens leder"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Spindeltappar"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Styrorbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Styrväxel"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Styrkuggstång"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Styrcylinder"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Hyttfjädring"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Kraftuttagets koppling"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Växellådsgivare"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Transmissionsfilter"/>
         <text name="rms_breakdowns_part_lift_valve" text="Lyftventil"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Skärbordslyftventil"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Lyftlägesgivare"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Skärhöjdsgivare"/>
         <text name="rms_breakdowns_part_loader_control" text="Lastarstyrning"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydrauliska snabbkopplingar"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lätt haveri i kopplingen. Den frikopplar inte helt. Vissa växlar är svåra att lägga i."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Haveri i hydraulpumpen. Den är trasig. Trycket försvinner och hydraulfunktionerna svarar inte."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Haveri i den hydrauliska styrventilen. Sliden sitter fast. Den berörda hydraulfunktionen rör sig inte."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Haveri i lyftventilen. Den håller inte lasten rätt. Det lyfta redskapet sjunker."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Haveri i skärbordslyftventilen. Den håller inte lasten rätt. Det lyfta skärbordet sjunker."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Haveri i lyftventilen. Den sitter fast. Lyften svarar inte."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Haveri i skärbordslyftventilen. Den sitter fast. Skärbordet går inte längre att höja eller sänka."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Haveri i lyftlägesgivaren. Lägessignalen har fallerat. Lyften håller inte önskad höjd och en felkod lagras."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Haveri i skärhöjdsgivaren. Höjdsignalen har fallerat. Skärbordet håller inte önskad höjd och en felkod lagras."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lätt haveri i lastarstyrningen. Armen och skopan reagerar långsammare."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Måttligt haveri i lastarstyrningen. Armen och skopan rör sig bara med halv hastighet."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Allvarligt haveri i lastarstyrningen. Armen och skopan rör sig knappt."/>

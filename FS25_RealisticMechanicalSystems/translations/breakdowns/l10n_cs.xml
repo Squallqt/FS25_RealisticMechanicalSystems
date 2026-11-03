@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="转向节主销严重磨损。转向间隙很大。"/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="转向节主销极重度磨损。转向存在极大间隙。"/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="全液压转向器发生轻微故障。方向盘转过少量空行程后，车轮才跟随转动。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="转向器发生轻微故障。方向盘转过少量空行程后，车轮才跟随转动。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="齿轮齿条转向器发生轻微故障。方向盘转过少量空行程后，车轮才跟随转动。"/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="全液压转向器发生中度故障。方向盘需要转过更多角度，车轮才跟随转动。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="转向器发生中度故障。方向盘需要转过更多角度，车轮才跟随转动。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="齿轮齿条转向器发生中度故障。方向盘需要转过更多角度，车轮才跟随转动。"/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="全液压转向器发生严重故障。方向盘转过很大角度，车轮仍不能良好跟随。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="转向器发生严重故障。方向盘转过很大角度，车轮仍不能良好跟随。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="齿轮齿条转向器发生严重故障。方向盘转过很大角度，车轮仍不能良好跟随。"/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="全液压转向器发生极重度失效。方向盘存在极大空行程，车轮才跟随转动。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="转向器发生极重度失效。方向盘存在极大空行程，车轮才跟随转动。"/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="齿轮齿条转向器发生极重度失效。方向盘存在极大空行程，车轮才跟随转动。"/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="转向油缸轻微内部串流。载具开始向一侧偏移。"/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="转向油缸活塞杆密封件有轻微油液流出。液压油位略有下降。"/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="转向油缸中度内部串流。载具向一侧偏移更多。"/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="装载机关节销轴和衬套"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="转向节主销"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="全液压转向器"/>
+        <text name="rms_breakdowns_part_steering_box" text="转向器"/>
+        <text name="rms_breakdowns_part_steering_rack" text="齿轮齿条转向器"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="转向油缸"/>
         <text name="rms_breakdowns_part_cab_suspension" text="驾驶室悬挂"/>
         <text name="rms_breakdowns_part_pto_clutch" text="动力输出轴离合器"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="变速箱传感器"/>
         <text name="rms_breakdowns_part_transmission_filter" text="变速箱滤清器"/>
         <text name="rms_breakdowns_part_lift_valve" text="提升液压分配器"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="割台升降液压分配器"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="提升位置传感器"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="割台高度传感器"/>
         <text name="rms_breakdowns_part_loader_control" text="装载机控制装置"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="液压快接头"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="离合器发生轻微故障。分离不彻底，部分挡位难以挂入。"/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="液压泵失效。破损，压力消失，液压功能不再响应。"/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="液压分配器失效。滑动配油件卡住，受影响的液压功能不再动作。"/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="提升液压分配器失效。无法正确保持负载，已升起的农具下沉。"/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="割台升降液压分配器失效。无法正确保持负载，已升起的割台下沉。"/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="提升液压分配器失效。卡住，提升机构不再响应。"/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="割台升降液压分配器失效。卡住，割台无法升降。"/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="提升位置传感器失效。位置信号故障，提升机构无法保持所需高度，并记录故障码。"/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="割台高度传感器失效。高度信号故障，割台无法保持所需高度，并记录故障码。"/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="装载机控制装置发生轻微故障。动臂和铲斗响应变慢。"/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="装载机控制装置发生中度故障。动臂和铲斗只能以一半速度运动。"/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="装载机控制装置发生严重故障。动臂和铲斗几乎无法运动。"/>

@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Uzură gravă a pivoților de fuzetă. Jocul în direcție este mare."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Uzură critică a pivoților de fuzetă. Direcția prezintă un joc foarte mare."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Defecțiune ușoară a orbitrolului de direcție. Volanul se rotește cu puțin joc înainte ca roțile să urmeze mișcarea."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Defecțiune ușoară a casetei de direcție. Volanul se rotește cu puțin joc înainte ca roțile să urmeze mișcarea."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Defecțiune ușoară a cremalierei de direcție. Volanul se rotește cu puțin joc înainte ca roțile să urmeze mișcarea."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Defecțiune moderată a orbitrolului de direcție. Volanul se rotește mai mult înainte ca roțile să urmeze mișcarea."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Defecțiune moderată a casetei de direcție. Volanul se rotește mai mult înainte ca roțile să urmeze mișcarea."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Defecțiune moderată a cremalierei de direcție. Volanul se rotește mai mult înainte ca roțile să urmeze mișcarea."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Defecțiune gravă a orbitrolului de direcție. Volanul se rotește mult fără ca roțile să urmeze bine mișcarea."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Defecțiune gravă a casetei de direcție. Volanul se rotește mult fără ca roțile să urmeze bine mișcarea."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Defecțiune gravă a cremalierei de direcție. Volanul se rotește mult fără ca roțile să urmeze bine mișcarea."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Defecțiune critică a orbitrolului de direcție. Volanul prezintă un joc foarte mare înainte ca roțile să urmeze mișcarea."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Defecțiune critică a casetei de direcție. Volanul prezintă un joc foarte mare înainte ca roțile să urmeze mișcarea."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Defecțiune critică a cremalierei de direcție. Volanul prezintă un joc foarte mare înainte ca roțile să urmeze mișcarea."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Scurgere internă ușoară a cilindrului de direcție. Vehiculul începe să devieze într-o parte."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Scurgere ușoară la simeringul tijei cilindrului de direcție. Nivelul uleiului hidraulic scade puțin."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Scurgere internă moderată a cilindrului de direcție. Vehiculul deviază mai mult într-o parte."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Bolțuri și bucșe ale articulațiilor încărcătorului"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pivoți de fuzetă"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol de direcție"/>
+        <text name="rms_breakdowns_part_steering_box" text="Caseta de direcție"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Cremaliera de direcție"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Cilindru de direcție"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Suspensia cabinei"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Ambreiajul prizei de putere"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Senzorii cutiei de viteze"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filtrul transmisiei"/>
         <text name="rms_breakdowns_part_lift_valve" text="Supapa ridicătorului"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Supapa de ridicare a hederului"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Senzorul de poziție al ridicătorului"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Senzorul de înălțime al hederului"/>
         <text name="rms_breakdowns_part_loader_control" text="Comanda încărcătorului"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Cuplaje hidraulice rapide"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Defecțiune ușoară a ambreiajului. Acesta nu decuplează complet. Unele trepte se selectează greu."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Defecțiune a pompei hidraulice. Aceasta este ruptă. Presiunea se pierde, iar funcțiile hidraulice nu mai răspund."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Defecțiune a distribuitorului hidraulic. Sertarul este blocat. Funcția hidraulică afectată nu se mai mișcă."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Defecțiune a supapei ridicătorului. Aceasta nu mai susține corect sarcina. Utilajul ridicat coboară."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Defecțiune a supapei de ridicare a hederului. Aceasta nu mai susține corect sarcina. Hederul ridicat coboară."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Defecțiune a supapei ridicătorului. Aceasta este blocată. Ridicătorul nu mai răspunde."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Defecțiune a supapei de ridicare a hederului. Aceasta este blocată. Hederul nu mai urcă și nu mai coboară."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Defecțiune a senzorului de poziție al ridicătorului. Semnalul de poziție este defect. Ridicătorul nu menține înălțimea cerută și se memorează un cod de eroare."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Defecțiune a senzorului de înălțime al hederului. Semnalul de înălțime este defect. Hederul nu menține înălțimea cerută și se memorează un cod de eroare."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Defecțiune ușoară a comenzii încărcătorului. Brațul și cupa răspund mai lent."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Defecțiune moderată a comenzii încărcătorului. Brațul și cupa se mișcă doar la jumătate din viteză."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Defecțiune gravă a comenzii încărcătorului. Brațul și cupa abia se mișcă."/>

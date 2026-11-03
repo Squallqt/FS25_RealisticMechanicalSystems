@@ -17,6 +17,7 @@ RMS_ConsoleCommandEvent.ALLOWED_COMMANDS = {
     changeBreakdownStage = true,
     setDirtAmount = true,
     setPaintWear = true,
+    setGreasing = true,
     setFuelLevel = true,
     resetFactorStats = true,
     reinitializeVehicle = true,

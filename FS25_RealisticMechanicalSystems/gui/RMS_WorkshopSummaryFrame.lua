@@ -98,7 +98,7 @@ function RMS_WorkshopSummaryFrame:updateAlert()
     local breakdown = vehicle:getActiveBreakdowns()[alertId]
     local _, descriptionText = RMS_Utils.getBreakdownTexts(vehicle, alertId, breakdown)
     local price = vehicle:getBreakdownRepairPrice(alertId, breakdown.stage, RealisticMechanicalSystems.PART_TYPES.OEM, self.workshopType)
-    RMS_Utils.fitRowValue(self.summaryAlertPart, self.summaryAlertPricePill, self.summaryAlertPrice, RMS_Utils.getBreakdownPartName(alertId),
+    RMS_Utils.fitRowValue(self.summaryAlertPart, self.summaryAlertPricePill, self.summaryAlertPrice, RMS_Utils.getBreakdownPartName(alertId, vehicle),
         g_i18n:formatMoney(price, 0, true, false))
     self.summaryAlertDescription:setText(descriptionText)
 end

@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="即時"/>
         <text name="rms_option_menu_start_text" text="開始"/>
         <text name="rms_service_months" text="%sか月"/>
+        <text name="rms_service_either" text="%sまたは%s"/>
         <text name="rms_service_month" text="%s か月"/>
         <text name="rms_service_calendar_due" text="カレンダー上の期限に到達"/>
         <text name="rms_service_program_estimated" text="推定整備計画"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="グリースガン"/>
         <text name="rms_grease_gun_no_vehicle" text="グリース補給範囲内に車両がありません"/>
-        <text name="rms_grease_gun_function" text="車両のグリース補給箇所へのグリース補給に使用します"/>
+        <text name="rms_grease_gun_function" text="機械のグリースニップルにグリースを注入します。グリースカートリッジを装着して使用します。"/>
         <text name="rms_grease_gun_action" text="グリース注入"/>
         <text name="rms_grease_gun_already_lubricated" text="%s：グリース補給済みです"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s：グリース補給は不要です"/>
+        <text name="rms_grease_gun_load" text="カートリッジ装着"/>
+        <text name="rms_grease_gun_empty" text="グリースガンが空：カートリッジを装着"/>
+        <text name="rms_grease_gun_not_empty" text="グリースガンにはまだグリースが残っています"/>
+        <text name="rms_grease_gun_points" text="残りのグリースニップル：%d"/>
+        <text name="rms_grease_cartridge_typedesc" text="グリースカートリッジ"/>
+        <text name="rms_grease_cartridge_function" text="グリースガンを補充します。ガンを持ってカートリッジの前に立ってください。"/>
+        <text name="rms_grease_cartridge_count" text="カートリッジ数"/>
+        <text name="rms_grease_quantity" text="数量"/>
+        <text name="rms_grease_hud_title" text="グリース"/>
+        <text name="rms_grease_hud_done" text="完了"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="エアブロワー"/>
         <text name="rms_air_blower_no_vehicle" text="清掃範囲内に車両がありません"/>
         <text name="rms_air_blower_function" text="ラジエーターとエアフィルターの清掃に使用します"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%sを%s超過"/>
         <text name="rms_inspection_status_slightly_low" text="やや低い"/>
         <text name="rms_inspection_status_slightly_dirty" text="軽度の目詰まり"/>
-        <text name="rms_inspection_status_slightly_dry" text="やや乾燥"/>
+        <text name="rms_inspection_status_grease_due" text="グリース補給時期"/>
         <text name="rms_inspection_status_slight_moisture" text="わずかな湿り"/>
         <text name="rms_inspection_status_seepage" text="にじみ"/>
         <text name="rms_inspection_status_severe_leak" text="大量もれ"/>
         <text name="rms_inspection_status_low" text="低い"/>
         <text name="rms_inspection_status_very_low" text="非常に低い"/>
-        <text name="rms_inspection_status_very_dry" text="非常に乾燥"/>
         <text name="rms_inspection_status_critically_low" text="至急補給"/>
         <text name="rms_inspection_status_critically_clogged" text="完全な目詰まり"/>
-        <text name="rms_inspection_status_critically_dry" text="金属同士の接触"/>
         <text name="rms_inspection_status_dirty" text="目詰まり"/>
-        <text name="rms_inspection_status_dry" text="乾燥"/>
+        <text name="rms_inspection_status_grease_late" text="期限超過"/>
         <text name="rms_inspection_status_active_leak" text="もれ発生中"/>
         <text name="rms_inspection_status_heavily_clogged" text="重度の目詰まり"/>
         <text name="rms_inspection_status_not_required" text="不要"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="特定されていない故障のしるしです。ワークショップで点検またはメンテナンスを行うと特定できます。"/>
         <text name="rms_inspection_hint_alternator_stage3" text="オルタネーター周辺に過熱の跡があり、一部の接続部が変色しています。"/>
         <text name="rms_inspection_hint_alternator_stage4" text="オルタネーターと配線の周辺に著しい過熱の跡があり、コネクターが変色しています。"/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="グリース補給箇所がやや乾燥しているようです。"/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="グリース補給箇所が乾燥し、グリースが不足しているようです。"/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="グリース補給箇所が非常に乾燥し、目に見えるグリースがほとんど残っていません。"/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="グリース補給箇所が金属同士で接触し、目に見えるグリースはほとんど残っていません。"/>
+        <text name="rms_inspection_hint_grease_due" text="グリース補給が必要なニップル：%d。"/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="ミッションケース周辺に、わずかなオイルの跡が見えます。"/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="ミッションの下にオイルのしずくが見えます。"/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="ミッション周辺に明らかなオイルもれの跡が見えます。"/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="冷却液の交換時期です。劣化した冷却液は冷却システムの摩耗を早めます。ワークショップの推奨整備で交換できます。"/>
         <text name="rms_inspection_radiator" text="ラジエーター"/>
         <text name="rms_inspection_air_filter" text="エアフィルター"/>
-        <text name="rms_inspection_lubrication_level" text="グリース量"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="不具合のきざしは検出されませんでした"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="測定記録なし"/>
         <text name="rms_fleet_parts_reading" text="部品測定：%s"/>
         <text name="rms_fleet_parts_need_complete" text="部品測定：次回の完全点検で"/>
+        <text name="rms_fleet_greasing_done" text="グリース完了"/>
+        <text name="rms_fleet_greasing_period_hours" text="作業 %s 時間"/>
+        <text name="rms_fleet_greasing_period_day" text="稼働日ごと"/>
+        <text name="rms_fleet_greasing_period_month" text="毎月"/>
+        <text name="rms_fleet_greasing_period_months" text="%dか月ごと"/>
+        <text name="rms_fleet_greasing_period_bales" text="%d 個ごと"/>
+        <text name="rms_fleet_greasing_bales" text="%d 個"/>
+        <text name="rms_fleet_greasing_day" text="%d日"/>
+        <text name="rms_fleet_greasing_days" text="%d日"/>
+        <text name="rms_fleet_day_late" text="%d日超過"/>
+        <text name="rms_fleet_days_late" text="%d日超過"/>
+        <text name="rms_fleet_greasing_to_do" text="残り %d"/>
+        <text name="rms_fleet_greasing_points" text="グリースニップル"/>
+        <text name="rms_fleet_greasing_next" text="次回のグリース"/>
+        <text name="rms_fleet_greasing_now" text="今すぐ"/>
+        <text name="rms_fleet_greasing_in" text="あと%s"/>
+        <text name="rms_fleet_months_late" text="%dか月超過"/>
+        <text name="rms_fleet_bales_late" text="%d 個超過"/>
+        <text name="rms_fleet_wear" text="摩耗"/>
+        <text name="rms_fleet_wear_faster" text="進行が速い"/>
+        <text name="rms_fleet_wear_normal" text="通常の摩耗"/>
+        <text name="rms_fleet_wear_late" text="グリース遅れ"/>
+        <text name="rms_fleet_wear_dry" text="グリース切れの摩耗"/>
+        <text name="rms_fleet_wear_repair_greases" text="修理時にグリース"/>
+        <text name="rms_fleet_wear_repair" text="ワークショップで修理"/>
+        <text name="rms_fleet_wear_none" text="なし"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="車両返却"/>
         <text name="rms_sell_dialog_section_vehicle" text="車両"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="冷却装置とエアフィルター"/>
         <text name="rms_tutorial_cooling_air_check_message" text="ラジエーターまたはエアフィルターが詰まっています。車両を見ながら%sキーを長押しして、どちらかを確認してください。圧縮空気ブロワーで清掃できます。フィルターをこれ以上清掃できない場合は、ワークショップの%s整備以上で交換されます。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="グリース補給時期"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%sには定期的なグリース補給が必要です。&#10;&#10;RMSでは、稼働時間に応じてグリース量が減ります。長期間使用しなかった場合も、再び使用する前にグリース補給が必要です。グリース不足はシャーシの摩耗を速めます。&#10;&#10;ショップでグリースガンを購入し、点検で必要と判断されたときに車両にグリースを補給してください。&#10;&#10;グリース量を確認するには、車両を見ながら%sキーを長押ししてください。"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%sのグリースニップルにグリース補給が必要です。&#10;&#10;RMSでは各機械に取扱説明書に記載されたグリースニップルがあります。一定の稼働時間ごとに、機械によっては毎作業日に補給が必要になります。補給が遅れるとシャーシの摩耗が速まります。&#10;&#10;ショップでグリースガンとカートリッジを購入してください。ガンを持ち、カートリッジをねらって装着してから機械をねらってください。クリックするたびにニップル1個に補給し、長押しすると次のニップルへの補給を続けます。&#10;&#10;残りのニップルを確認するには、車両を見ながら%sキーを長押ししてください。"/>
         <text name="rms_tutorial_needs_repair_title" text="故障検出"/>
         <text name="rms_tutorial_needs_repair_message" text="%sに問題が発生しています。部品の一つが故障した可能性があります。&#10;&#10;ワークショップに持ち込んでください。点検、または時期であればメンテナンスで故障を特定します。先延ばしにしないでください。故障がさらに悪化し、修理費用も増える可能性があります。&#10;&#10;故障が特定されたら、ワークショップで修理してください。"/>
         <text name="rms_tutorial_needs_overhaul_title" text="オーバーホール時期"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="過給圧"/>
         <text name="rms_diagnostic_spn_100" text="エンジンオイル圧"/>
         <text name="rms_diagnostic_spn_101" text="クランクケース内圧力"/>
-        <text name="rms_diagnostic_spn_1322" text="複数気筒の失火"/>
         <text name="rms_diagnostic_spn_cylinder" text="%d番気筒の失火"/>
         <text name="rms_diagnostic_spn_94" text="燃料供給圧"/>
         <text name="rms_diagnostic_spn_110" text="冷却水温"/>

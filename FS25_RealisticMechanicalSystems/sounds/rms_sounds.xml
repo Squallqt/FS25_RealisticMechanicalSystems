@@ -456,6 +456,7 @@
     <greaseGunTool file="sounds/greaseGun_1.ogg" linkNode="raycastNode" innerRadius="1.5" outerRadius="8.0" >
         <sourceRandomization file="sounds/greaseGun_2.ogg" />
         <sourceRandomization file="sounds/greaseGun_3.ogg" />
+        <sourceRandomization file="sounds/greaseGun_4.ogg" />
         <volume indoor="1.0" outdoor="1.0" />
         <pitch indoor="1.0" outdoor="1.0" />
         <lowpassGain indoor="1.0" outdoor="1.0" />

@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Keausan berat pada pin buku roda kemudi. Gerak bebas pada kemudi besar."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Keausan kritis pada pin buku roda kemudi. Kemudi memiliki gerak bebas yang sangat besar."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Kegagalan ringan orbitrol kemudi. Roda kemudi berputar dengan sedikit gerak bebas sebelum roda mengikuti."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Kegagalan ringan kotak kemudi. Roda kemudi berputar dengan sedikit gerak bebas sebelum roda mengikuti."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Kegagalan ringan rack kemudi. Roda kemudi berputar dengan sedikit gerak bebas sebelum roda mengikuti."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Kegagalan sedang orbitrol kemudi. Roda kemudi berputar lebih jauh sebelum roda mengikuti."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Kegagalan sedang kotak kemudi. Roda kemudi berputar lebih jauh sebelum roda mengikuti."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Kegagalan sedang rack kemudi. Roda kemudi berputar lebih jauh sebelum roda mengikuti."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Kegagalan berat orbitrol kemudi. Roda kemudi berputar banyak tanpa diikuti roda dengan baik."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Kegagalan berat kotak kemudi. Roda kemudi berputar banyak tanpa diikuti roda dengan baik."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Kegagalan berat rack kemudi. Roda kemudi berputar banyak tanpa diikuti roda dengan baik."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kegagalan kritis orbitrol kemudi. Roda kemudi memiliki gerak bebas yang sangat besar sebelum roda mengikuti."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kegagalan kritis kotak kemudi. Roda kemudi memiliki gerak bebas yang sangat besar sebelum roda mengikuti."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kegagalan kritis rack kemudi. Roda kemudi memiliki gerak bebas yang sangat besar sebelum roda mengikuti."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Kebocoran internal ringan pada silinder kemudi. Kendaraan mulai menyimpang ke satu sisi."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Kebocoran ringan pada sil batang silinder kemudi. Level oli hidraulis sedikit turun."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Kebocoran internal sedang pada silinder kemudi. Kendaraan semakin menyimpang ke satu sisi."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Pin dan Busing Sendi Pemuat Depan"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pin Buku Roda Kemudi"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol Kemudi"/>
+        <text name="rms_breakdowns_part_steering_box" text="Kotak Kemudi"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Rack Kemudi"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Silinder Kemudi"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Suspensi Kabin"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Kopling PTO"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Sensor Transmisi"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filter Transmisi"/>
         <text name="rms_breakdowns_part_lift_valve" text="Katup Pengangkat"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Katup Pengangkat Pemotong"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Sensor Posisi Pengangkat"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Sensor Ketinggian Pemotong"/>
         <text name="rms_breakdowns_part_loader_control" text="Kontrol Pemuat"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Kopling Cepat Hidraulis"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Kegagalan ringan kopling. Komponen ini tidak melepas sepenuhnya. Beberapa gigi sulit dipilih."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Kegagalan pompa hidraulis. Komponen ini patah. Tekanan hilang dan fungsi hidraulis tidak merespons."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Kegagalan katup kontrol hidraulis. Spul macet. Fungsi hidraulis yang terkait tidak bergerak."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Kegagalan katup pengangkat. Komponen ini tidak menahan beban dengan benar. Alat yang terangkat turun."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Kegagalan katup pengangkat pemotong. Komponen ini tidak menahan beban dengan benar. Pemotong yang terangkat turun."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Kegagalan katup pengangkat. Komponen ini macet. Pengangkat tidak merespons."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Kegagalan katup pengangkat pemotong. Komponen ini macet. Pemotong tidak dapat dinaikkan atau diturunkan."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Kegagalan sensor posisi pengangkat. Sinyal posisi gagal. Pengangkat tidak menjaga ketinggian yang diminta dan kode kerusakan disimpan."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Kegagalan sensor ketinggian pemotong. Sinyal ketinggian gagal. Pemotong tidak menjaga ketinggian yang diminta dan kode kerusakan disimpan."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Kegagalan ringan kontrol pemuat. Lengan dan bucket merespons lebih lambat."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Kegagalan sedang kontrol pemuat. Lengan dan bucket hanya bergerak dengan separuh kecepatan."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Kegagalan berat kontrol pemuat. Lengan dan bucket nyaris tidak bergerak."/>

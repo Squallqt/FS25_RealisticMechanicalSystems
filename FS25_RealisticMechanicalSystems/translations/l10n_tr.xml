@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Anında"/>
         <text name="rms_option_menu_start_text" text="Başla"/>
         <text name="rms_service_months" text="%s ay"/>
+        <text name="rms_service_either" text="%s veya %s"/>
         <text name="rms_service_month" text="%s ay"/>
         <text name="rms_service_calendar_due" text="Takvim sınırına ulaşıldı"/>
         <text name="rms_service_program_estimated" text="Tahmini bakım programı"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Gres Tabancası"/>
         <text name="rms_grease_gun_no_vehicle" text="Gresleme menzilinde araç yok"/>
-        <text name="rms_grease_gun_function" text="Makinenin gresleme noktalarını greslemek için kullanılır"/>
+        <text name="rms_grease_gun_function" text="Makinelerin gresörlüklerini gresler. Gres kartuşuyla doldurulur."/>
         <text name="rms_grease_gun_action" text="Gresle"/>
         <text name="rms_grease_gun_already_lubricated" text="%s zaten greslendi"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s gres gerektirmez"/>
+        <text name="rms_grease_gun_load" text="Kartuş Tak"/>
+        <text name="rms_grease_gun_empty" text="Gres Tabancası boş: kartuş tak"/>
+        <text name="rms_grease_gun_not_empty" text="Gres Tabancası hâlâ gres içeriyor"/>
+        <text name="rms_grease_gun_points" text="Kalan gresörlük: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Gres Kartuşu"/>
+        <text name="rms_grease_cartridge_function" text="Gres Tabancası'nı doldurur: tabanca elindeyken kartuşun önünde dur."/>
+        <text name="rms_grease_cartridge_count" text="Kartuşlar"/>
+        <text name="rms_grease_quantity" text="Miktar"/>
+        <text name="rms_grease_hud_title" text="Gresleme"/>
+        <text name="rms_grease_hud_done" text="Güncel"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Hava Üfleyici"/>
         <text name="rms_air_blower_no_vehicle" text="Temizlik alanında hiçbir araç yok"/>
         <text name="rms_air_blower_function" text="Radyatörleri ve hava filtrelerini temizlemek için kullanılır"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s %s gecikti"/>
         <text name="rms_inspection_status_slightly_low" text="Hafif Düşük"/>
         <text name="rms_inspection_status_slightly_dirty" text="Hafif Kirli"/>
-        <text name="rms_inspection_status_slightly_dry" text="Hafif Kuru"/>
+        <text name="rms_inspection_status_grease_due" text="Gresleme Gerekli"/>
         <text name="rms_inspection_status_slight_moisture" text="Hafif Nem"/>
         <text name="rms_inspection_status_seepage" text="Sızıntı"/>
         <text name="rms_inspection_status_severe_leak" text="Yoğun Sızıntı"/>
         <text name="rms_inspection_status_low" text="Düşük"/>
         <text name="rms_inspection_status_very_low" text="Çok Düşük"/>
-        <text name="rms_inspection_status_very_dry" text="Çok Kuru"/>
         <text name="rms_inspection_status_critically_low" text="Acil Tamamlama"/>
         <text name="rms_inspection_status_critically_clogged" text="Tamamen Tıkalı"/>
-        <text name="rms_inspection_status_critically_dry" text="Metal Metale"/>
         <text name="rms_inspection_status_dirty" text="Kirli"/>
-        <text name="rms_inspection_status_dry" text="Kuru"/>
+        <text name="rms_inspection_status_grease_late" text="Gecikmiş"/>
         <text name="rms_inspection_status_active_leak" text="Aktif Sızıntı"/>
         <text name="rms_inspection_status_heavily_clogged" text="Çok Kirli"/>
         <text name="rms_inspection_status_not_required" text="Gerekli Değil"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Tespit edilmemiş bir arızanın belirtisi: atölye onu muayene ya da bakımla tespit eder."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Alternatörün çevresinde ve bazı bağlantı noktalarında aşırı ısınma ve koyulaşma belirtileri görülmektedir."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Alternatörün çevresinde ve kablolarında belirgin aşırı ısınma belirtileri ve koyulaşmış konektörler görülmektedir."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Gresleme noktaları hafifçe kuru görünüyor."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Gresleme noktaları kuru görünüyor; gres yetersiz."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Gresleme noktaları çok kuru; çok az gres görünüyor."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Gresleme noktaları metal metale çalışıyor; neredeyse hiç gres görünmüyor."/>
+        <text name="rms_inspection_hint_grease_due" text="Greslenecek gresörlük: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Şanzıman gövdesinin çevresinde hafif yağ izleri görülüyor."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Şanzımanın altında yağ damlaları görülüyor."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Şanzımanın çevresinde belirgin bir yağ kaybı görülüyor."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Soğutma sıvısının değişmesi gerekiyor: yıpranmış sıvı soğutma sisteminin aşınmasını hızlandırır. Atölyede önerilen bakım onu yeniler."/>
         <text name="rms_inspection_radiator" text="Radyatör"/>
         <text name="rms_inspection_air_filter" text="Hava Filtresi"/>
-        <text name="rms_inspection_lubrication_level" text="Gres Seviyesi"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Şüpheli herhangi bir belirti tespit edilmedi"/>
         <text name="rms_inspection_ok" text="Tamam"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Ölçüm yok"/>
         <text name="rms_fleet_parts_reading" text="Parçaların ölçümü: %s"/>
         <text name="rms_fleet_parts_need_complete" text="Parçaların ölçümü: bir sonraki kapsamlı muayenede"/>
+        <text name="rms_fleet_greasing_done" text="Gresleme güncel"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s sa çalışma"/>
+        <text name="rms_fleet_greasing_period_day" text="Her çalışılan gün"/>
+        <text name="rms_fleet_greasing_period_month" text="Her ay"/>
+        <text name="rms_fleet_greasing_period_months" text="%d ayda bir"/>
+        <text name="rms_fleet_greasing_period_bales" text="Her %d balyada"/>
+        <text name="rms_fleet_greasing_bales" text="%d balya"/>
+        <text name="rms_fleet_greasing_day" text="%d gün"/>
+        <text name="rms_fleet_greasing_days" text="%d gün"/>
+        <text name="rms_fleet_day_late" text="%d gün gecikme"/>
+        <text name="rms_fleet_days_late" text="%d gün gecikme"/>
+        <text name="rms_fleet_greasing_to_do" text="%d kaldı"/>
+        <text name="rms_fleet_greasing_points" text="Gresörlükler"/>
+        <text name="rms_fleet_greasing_next" text="Sonraki gresleme"/>
+        <text name="rms_fleet_greasing_now" text="Şimdi"/>
+        <text name="rms_fleet_greasing_in" text="%s sonra"/>
+        <text name="rms_fleet_months_late" text="%d ay gecikme"/>
+        <text name="rms_fleet_bales_late" text="%d balya gecikme"/>
+        <text name="rms_fleet_wear" text="Aşınma"/>
+        <text name="rms_fleet_wear_faster" text="Daha hızlı"/>
+        <text name="rms_fleet_wear_normal" text="Normal aşınma"/>
+        <text name="rms_fleet_wear_late" text="Gresleme gecikmesi"/>
+        <text name="rms_fleet_wear_dry" text="Yağsız aşınma"/>
+        <text name="rms_fleet_wear_repair_greases" text="Onarımda greslenir"/>
+        <text name="rms_fleet_wear_repair" text="Atölyede onarım"/>
+        <text name="rms_fleet_wear_none" text="Yok"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Araç İadesi"/>
         <text name="rms_sell_dialog_section_vehicle" text="Araç"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Soğutma ve Hava Filtresi"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Radyatör veya hava filtresi tıkandı. Hangisi olduğunu görmek için araca bakarken %s tuşunu basılı tut. Basınçlı hava üfleyicisiyle temizle. Filtre artık üflenerek temizlenemiyorsa atölye onu %s bakımından itibaren değiştirir."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Gresleme Gerekiyor"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Bu %s düzenli gresleme gerektiriyor.&#10;&#10;RMS’de gres seviyesi çalışma saatleriyle düşer. Uzun süre kullanılmayan makineyi yeniden hizmete almadan önce de greslemek gerekir. Yetersiz gresleme şasi aşınmasını hızlandırır.&#10;&#10;Mağazadan gres tabancası satın al ve muayene istediğinde makineyi gresle.&#10;&#10;Gres seviyesini kontrol edebilirsin: araca bakarken %s tuşunu basılı tut."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Bu %s üzerinde greslenecek gresörlükler var.&#10;&#10;RMS’de her makinenin kendi kılavuzundaki gresörlükleri bulunur. Belirli bir çalışma saatinden sonra, bazı makinelerde ise her iş gününde yeniden greslenmeleri gerekir. Geç gresleme şasi aşınmasını hızlandırır.&#10;&#10;Mağazadan Gres Tabancası ve kartuşlar satın al. Tabanca elindeyken doldurmak için bir kartuşa, ardından makineye nişan al: her tıklama bir gresörlüğü gresler, düğmeyi basılı tutmak sonraki gresörlüklerle devam eder.&#10;&#10;Kalan gresörlükleri görmek için araca bakarken %s tuşunu basılı tut."/>
         <text name="rms_tutorial_needs_repair_title" text="Arıza Tespit Edildi"/>
         <text name="rms_tutorial_needs_repair_message" text="Bu %s üzerinde bir sorun var. Parçalarından biri arızalanmış olabilir.&#10;&#10;Atölyeye git: muayene ya da zamanı geldiyse bakım arızayı tespit eder. Geciktirme: arıza kötüleşmeye devam edebilir ve onarım maliyeti artar.&#10;&#10;Arıza tespit edildiğinde atölyede onart."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revizyon Gerekli"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Turbo Basıncı"/>
         <text name="rms_diagnostic_spn_100" text="Motor Yağı Basıncı"/>
         <text name="rms_diagnostic_spn_101" text="Motor Karter Basıncı"/>
-        <text name="rms_diagnostic_spn_1322" text="Birden Fazla Silindirde Ateşleme Kaçırma"/>
         <text name="rms_diagnostic_spn_cylinder" text="%d. Silindirde Ateşleme Kaçırma"/>
         <text name="rms_diagnostic_spn_94" text="Yakıt Besleme Basıncı"/>
         <text name="rms_diagnostic_spn_110" text="Soğutma Sıvısı Sıcaklığı"/>

@@ -14,7 +14,14 @@ source(g_currentModDirectory .. "scripts/core/RMS_BreakdownRegistry.lua")
 RMS_Breakdowns.EffectApplicators = {}
 
 ---Returns the text describing a stage on a vehicle
-function RMS_Breakdowns.getStageDescription(vehicle, stageData, breakdown)
+function RMS_Breakdowns.getStageDescription(vehicle, stageData, breakdown, definition)
+    local variant = RMS_Utils.getBreakdownNameVariant(vehicle, definition)
+    local variantDescription = variant ~= nil and stageData.variantDescriptions[variant] or nil
+    if type(variantDescription) == "table" then
+        return variantDescription[breakdown ~= nil and breakdown.branch or 1]
+    elseif variantDescription ~= nil then
+        return variantDescription
+    end
     if stageData.electricDescription ~= nil and vehicle.spec_RealisticMechanicalSystems.isElectricVehicle then
         return stageData.electricDescription
     end

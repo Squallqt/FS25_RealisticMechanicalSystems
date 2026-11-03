@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Sofort"/>
         <text name="rms_option_menu_start_text" text="Starten"/>
         <text name="rms_service_months" text="%s Monate"/>
+        <text name="rms_service_either" text="%s oder %s"/>
         <text name="rms_service_month" text="%s Monat"/>
         <text name="rms_service_calendar_due" text="Kalenderfrist erreicht"/>
         <text name="rms_service_program_estimated" text="Geschätzter Wartungsplan"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Fettpresse"/>
         <text name="rms_grease_gun_no_vehicle" text="Kein Fahrzeug in Schmierreichweite"/>
-        <text name="rms_grease_gun_function" text="Wird zum Abschmieren der Schmierstellen verwendet"/>
+        <text name="rms_grease_gun_function" text="Schmiert die Schmiernippel der Maschinen. Wird mit einer Fettkartusche geladen."/>
         <text name="rms_grease_gun_action" text="Schmieren"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: Schmierung bereits erfolgt"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s benötigt keine Schmierung"/>
+        <text name="rms_grease_gun_load" text="Kartusche laden"/>
+        <text name="rms_grease_gun_empty" text="Fettpresse leer: Kartusche laden"/>
+        <text name="rms_grease_gun_not_empty" text="Die Fettpresse enthält noch Fett"/>
+        <text name="rms_grease_gun_points" text="Offene Schmiernippel: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Fettkartusche"/>
+        <text name="rms_grease_cartridge_function" text="Füllt die Fettpresse: Mit der Fettpresse in der Hand vor die Kartusche stellen."/>
+        <text name="rms_grease_cartridge_count" text="Kartuschen"/>
+        <text name="rms_grease_quantity" text="Menge"/>
+        <text name="rms_grease_hud_title" text="Schmierung"/>
+        <text name="rms_grease_hud_done" text="Erledigt"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Druckluftgebläse"/>
         <text name="rms_air_blower_no_vehicle" text="Kein Fahrzeug in Reinigungsreichweite"/>
         <text name="rms_air_blower_function" text="Wird zum Reinigen von Kühlern und Luftfiltern verwendet"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s seit %s überfällig"/>
         <text name="rms_inspection_status_slightly_low" text="Leicht niedrig"/>
         <text name="rms_inspection_status_slightly_dirty" text="Leicht zugesetzt"/>
-        <text name="rms_inspection_status_slightly_dry" text="Leicht trocken"/>
+        <text name="rms_inspection_status_grease_due" text="Schmieren fällig"/>
         <text name="rms_inspection_status_slight_moisture" text="Leichte Feuchtigkeit"/>
         <text name="rms_inspection_status_seepage" text="Sickerung"/>
         <text name="rms_inspection_status_severe_leak" text="Starke Leckage"/>
         <text name="rms_inspection_status_low" text="Niedrig"/>
         <text name="rms_inspection_status_very_low" text="Sehr niedrig"/>
-        <text name="rms_inspection_status_very_dry" text="Sehr trocken"/>
         <text name="rms_inspection_status_critically_low" text="Nachfüllen erforderlich"/>
         <text name="rms_inspection_status_critically_clogged" text="Vollständig zugesetzt"/>
-        <text name="rms_inspection_status_critically_dry" text="Metall auf Metall"/>
         <text name="rms_inspection_status_dirty" text="Zugesetzt"/>
-        <text name="rms_inspection_status_dry" text="Trocken"/>
+        <text name="rms_inspection_status_grease_late" text="Überfällig"/>
         <text name="rms_inspection_status_active_leak" text="Aktive Leckage"/>
         <text name="rms_inspection_status_heavily_clogged" text="Stark zugesetzt"/>
         <text name="rms_inspection_status_not_required" text="Nicht erforderlich"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Symptom eines nicht festgestellten Schadens: Die Werkstatt stellt ihn mit einer Inspektion oder einer Wartung fest."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Im Bereich des Generators sind Spuren von Überhitzung und nachgedunkelte Verbindungen sichtbar."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Im Bereich des Generators und seiner Verkabelung sind deutliche Überhitzungsspuren und nachgedunkelte Steckverbindungen sichtbar."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Die Schmierstellen wirken leicht trocken."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Die Schmierstellen wirken trocken und unzureichend geschmiert."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Die Schmierstellen sind sehr trocken, sichtbares Fett ist kaum vorhanden."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Die Schmierstellen laufen Metall auf Metall, sichtbares Fett ist nahezu nicht mehr vorhanden."/>
+        <text name="rms_inspection_hint_grease_due" text="Zu schmierende Schmiernippel: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Leichte Ölspuren sind am Getriebegehäuse sichtbar."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Öltropfen sind unter dem Getriebe sichtbar."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Ein deutlicher Ölverlust ist am Getriebe sichtbar."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Das Kühlmittel muss gewechselt werden: Verbrauchtes Kühlmittel beschleunigt den Verschleiß des Kühlsystems. Die in der Werkstatt empfohlene Wartung ersetzt es."/>
         <text name="rms_inspection_radiator" text="Kühler"/>
         <text name="rms_inspection_air_filter" text="Luftfilter"/>
-        <text name="rms_inspection_lubrication_level" text="Schmierstand"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Keine verdächtigen Symptome festgestellt"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Nicht erfasst"/>
         <text name="rms_fleet_parts_reading" text="Teile erfasst %s"/>
         <text name="rms_fleet_parts_need_complete" text="Teileerfassung bei nächster vollständiger Inspektion"/>
+        <text name="rms_fleet_greasing_done" text="Schmierung erledigt"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s h Arbeit"/>
+        <text name="rms_fleet_greasing_period_day" text="Jeder Einsatztag"/>
+        <text name="rms_fleet_greasing_period_month" text="Jeden Monat"/>
+        <text name="rms_fleet_greasing_period_months" text="Alle %d Monate"/>
+        <text name="rms_fleet_greasing_period_bales" text="Alle %d Ballen"/>
+        <text name="rms_fleet_greasing_bales" text="%d Ballen"/>
+        <text name="rms_fleet_greasing_day" text="%d Tag"/>
+        <text name="rms_fleet_greasing_days" text="%d Tage"/>
+        <text name="rms_fleet_day_late" text="%d Tag überfällig"/>
+        <text name="rms_fleet_days_late" text="%d Tage überfällig"/>
+        <text name="rms_fleet_greasing_to_do" text="%d offen"/>
+        <text name="rms_fleet_greasing_points" text="Schmiernippel"/>
+        <text name="rms_fleet_greasing_next" text="Nächste Schmierung"/>
+        <text name="rms_fleet_greasing_now" text="Jetzt"/>
+        <text name="rms_fleet_greasing_in" text="noch %s"/>
+        <text name="rms_fleet_months_late" text="%d Monate überfällig"/>
+        <text name="rms_fleet_bales_late" text="%d Ballen überfällig"/>
+        <text name="rms_fleet_wear" text="Verschleiß"/>
+        <text name="rms_fleet_wear_faster" text="Schneller"/>
+        <text name="rms_fleet_wear_normal" text="Normal"/>
+        <text name="rms_fleet_wear_late" text="Schmierverzug"/>
+        <text name="rms_fleet_wear_dry" text="Verschleiß ohne Fett"/>
+        <text name="rms_fleet_wear_repair_greases" text="Bei Reparatur geschmiert"/>
+        <text name="rms_fleet_wear_repair" text="Reparatur in der Werkstatt"/>
+        <text name="rms_fleet_wear_none" text="Keiner"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Fahrzeugrückgabe"/>
         <text name="rms_sell_dialog_section_vehicle" text="Fahrzeug"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Kühlsystem und Luftfilter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Der Kühler oder der Luftfilter ist verschmutzt. Halte die Taste %s gedrückt, während du das Fahrzeug ansiehst, um zu erkennen, welcher betroffen ist. Reinige ihn mit dem Druckluftgebläse. Lässt sich der Filter nicht mehr ausblasen, ersetzt ihn die Werkstatt ab der Wartung %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Schmierung erforderlich"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s benötigt regelmäßige Schmierung.&#10;&#10;In RMS sinkt der Schmierstand mit den Betriebsstunden. Nach längerer Stilllegung muss die Maschine vor der Wiederinbetriebnahme ebenfalls geschmiert werden. Zu wenig Schmierung beschleunigt den Verschleiß des Fahrwerks.&#10;&#10;Kauf im Shop eine Fettpresse und schmiere die Maschine, wenn die Inspektion es verlangt.&#10;&#10;Den Schmierstand prüfst du, indem du die Taste %s gedrückt hältst und die Maschine ansiehst."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s hat Schmiernippel, die geschmiert werden müssen.&#10;&#10;In RMS hat jede Maschine die Schmiernippel ihrer Betriebsanleitung. Sie werden nach einer bestimmten Anzahl Betriebsstunden wieder fällig, bei manchen Maschinen an jedem Arbeitstag. Verspätetes Schmieren beschleunigt den Verschleiß des Fahrwerks.&#10;&#10;Kauf im Shop eine Fettpresse und Kartuschen. Ziele mit der Fettpresse in der Hand auf eine Kartusche, um sie zu laden, dann auf die Maschine: Jeder Klick schmiert einen Schmiernippel. Gedrückthalten setzt das Schmieren am nächsten fort.&#10;&#10;Halte die Taste %s gedrückt und sieh die Maschine an, um die noch zu schmierenden Schmiernippel zu sehen."/>
         <text name="rms_tutorial_needs_repair_title" text="Schaden festgestellt"/>
         <text name="rms_tutorial_needs_repair_message" text="Dein %s hat ein Problem. Eines seiner Teile ist möglicherweise ausgefallen.&#10;&#10;Fahr zur Werkstatt: Eine Inspektion, oder die Wartung, wenn sie fällig ist, stellt den Schaden fest. Warte nicht: Der Schaden kann sich weiter verschlimmern, und die Reparaturkosten steigen mit ihm.&#10;&#10;Ist der Schaden festgestellt, lass ihn in der Werkstatt reparieren."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Überholung erforderlich"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Ladeluftdruck"/>
         <text name="rms_diagnostic_spn_100" text="Motoröldruck"/>
         <text name="rms_diagnostic_spn_101" text="Kurbelgehäusedruck"/>
-        <text name="rms_diagnostic_spn_1322" text="Fehlzündung mehrere Zylinder"/>
         <text name="rms_diagnostic_spn_cylinder" text="Fehlzündung Zylinder %d"/>
         <text name="rms_diagnostic_spn_94" text="Kraftstoffniederdruck"/>
         <text name="rms_diagnostic_spn_110" text="Kühlmitteltemperatur"/>

@@ -37,6 +37,12 @@ local SORT_TEXT_KEYS = {"rms_fleet_sort_deadline", "rms_fleet_sort_name", "rms_f
 local TRACKED_SORTS = {SORT.DEADLINE, SORT.NAME, SORT.HOURS}
 local UNTRACKED_SORTS = {SORT.NAME, SORT.HOURS}
 local COLOR_SOON = {1.0, 0.55, 0.0, 1.0}
+local COLOR_LATE_TRACK = {0.102, 0.0103, 0.0103, 1.0}
+local GREASING_STATE = {
+    done = { value = "rms_grease_hud_done", banner = "rms_fleet_greasing_done" },
+    due = { value = "rms_inspection_status_grease_due", banner = "rms_inspection_status_grease_due" },
+    late = { value = "rms_inspection_status_grease_late", banner = "rms_report_wear_lubrication" }
+}
 
 -- each footer button of the page: its input, its text, its method
 local MENU_BUTTONS = {
@@ -96,6 +102,96 @@ local function canDisplayVehicle(vehicle, farmId)
         and g_storeManager:getItemByXMLFilename(vehicle.configFileName) ~= nil
 end
 
+local function getGreasingColor(state)
+    if state == "late" then
+        return RMS_Utils.COLOR.ALERT
+    elseif state == "due" then
+        return COLOR_SOON
+    end
+    return RMS_Utils.COLOR.HIGHLIGHT
+end
+
+local function formatHoursValue(hours)
+    return g_i18n:formatNumber(math.ceil(hours * 10 - 1e-6) / 10, 1)
+end
+
+local function formatTierPeriod(tier)
+    if tier.unit == "hours" then
+        return string.format(g_i18n:getText("rms_fleet_greasing_period_hours"), g_i18n:formatNumber(tier.interval, 1))
+    elseif tier.unit == "months" then
+        return tier.interval == 1 and g_i18n:getText("rms_fleet_greasing_period_month")
+            or string.format(g_i18n:getText("rms_fleet_greasing_period_months"), tier.interval)
+    elseif tier.unit == "bales" then
+        return string.format(g_i18n:getText("rms_fleet_greasing_period_bales"), tier.interval)
+    end
+    return g_i18n:getText("rms_fleet_greasing_period_day")
+end
+
+local function formatTierDelay(tier, delay)
+    local count = math.ceil(delay)
+    if tier.unit == "months" then
+        return string.format(g_i18n:getText("rms_fleet_months_late"), count)
+    elseif tier.unit == "bales" then
+        return string.format(g_i18n:getText("rms_fleet_bales_late"), count)
+    elseif tier.unit == "day" then
+        return string.format(g_i18n:getText(count == 1 and "rms_fleet_day_late" or "rms_fleet_days_late"), count)
+    end
+    return string.format(g_i18n:getText("rms_fleet_overdue"), formatHoursValue(delay))
+end
+
+local function formatTierAmount(tier, amount)
+    local count = math.ceil(amount)
+    if tier.unit == "months" then
+        return RMS_Utils.formatMonths(count)
+    elseif tier.unit == "bales" then
+        return string.format(g_i18n:getText("rms_fleet_greasing_bales"), count)
+    elseif tier.unit == "day" then
+        return string.format(g_i18n:getText(count == 1 and "rms_fleet_greasing_day" or "rms_fleet_greasing_days"), count)
+    end
+    return string.format("%s %s", formatHoursValue(amount), g_i18n:getText("rms_spec_op_hours_short"))
+end
+
+local function formatTierLeft(tier)
+    return string.format(g_i18n:getText("rms_fleet_greasing_in"), formatTierAmount(tier, math.max(tier.interval - tier.elapsed, 0)))
+end
+
+local function readGreasing(vehicle)
+    local greasing = { tiers = RMS_Greasing.getTierStates(vehicle), total = RMS_Greasing.getTotalPoints(vehicle),
+        due = RMS_Greasing.getDuePoints(vehicle), level = RMS_Greasing.getSpec(vehicle).lubricationLevel or 1 }
+    for _, tier in ipairs(greasing.tiers) do
+        if tier.due > 0 then
+            if greasing.latest == nil or tier.late / tier.interval > greasing.latest.late / greasing.latest.interval then
+                greasing.latest = tier
+            end
+        elseif tier.unit ~= "day" and (greasing.next == nil
+            or 1 - tier.elapsed / tier.interval < 1 - greasing.next.elapsed / greasing.next.interval) then
+            greasing.next = tier
+        end
+    end
+    greasing.state = greasing.due == 0 and "done" or greasing.level > 0 and "due" or "late"
+    return greasing
+end
+
+local function buildImplementRow(row, vehicle)
+    local greasing = readGreasing(vehicle)
+    row.isImplement, row.greasing = true, greasing
+    row.label = g_i18n:getText("rms_grease_hud_title")
+    row.condition, row.conditionColor = g_i18n:getText(GREASING_STATE[greasing.state].value), getGreasingColor(greasing.state)
+    if greasing.due > 0 then
+        row.status = string.format(g_i18n:getText("rms_grease_gun_points"), greasing.due)
+        row.remaining = -greasing.latest.late
+        row.urgency = greasing.state == "late" and URGENCY.OVERDUE or URGENCY.SOON
+    elseif greasing.next ~= nil then
+        row.status = formatTierLeft(greasing.next)
+        row.remaining = greasing.next.unit == "hours" and greasing.next.interval - greasing.next.elapsed or math.huge
+        if greasing.next.elapsed / greasing.next.interval >= RMS_InGameMenuFrame.DUE_SOON_RATIO then
+            row.urgency = URGENCY.SOON
+        end
+    else
+        row.status = g_i18n:getText("rms_fleet_greasing_period_day")
+    end
+end
+
 local function buildRow(vehicle, isTracked)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     local category = g_storeManager:getCategoryByName(storeItem.categoryName)
@@ -115,7 +211,12 @@ local function buildRow(vehicle, isTracked)
     }
 
     if not isTracked then
-        row.status = g_i18n:getText(RealisticMechanicalSystems.getExclusionReason(vehicle))
+        local implementSpec = vehicle.spec_rmsImplementGreasing
+        if implementSpec ~= nil and implementSpec.isVehicleNeedLubricate then
+            buildImplementRow(row, vehicle)
+        else
+            row.status = g_i18n:getText(RealisticMechanicalSystems.getExclusionReason(vehicle))
+        end
         return row
     end
 
@@ -135,8 +236,13 @@ local function buildRow(vehicle, isTracked)
         elseif row.schedule ~= nil and row.schedule.progress >= RMS_InGameMenuFrame.DUE_SOON_RATIO then
             row.urgency = URGENCY.SOON
         end
-        row.status = row.schedule ~= nil and row.schedule.calendarDue
-            and g_i18n:getText("rms_service_calendar_due") or formatDeadline(row.remaining)
+        if row.schedule ~= nil and row.schedule.calendarDue then
+            row.status = g_i18n:getText("rms_service_calendar_due")
+        elseif row.remaining >= 0 and row.schedule ~= nil and row.schedule.months ~= nil then
+            row.status = RMS_Utils.formatServiceDeadline(row.schedule)
+        else
+            row.status = formatDeadline(row.remaining)
+        end
     end
 
     return row
@@ -221,7 +327,9 @@ function RMS_InGameMenuFrame:initialize()
     end
     self.conditionCard:initialize()
     self.factRows = RMS_Utils.cloneTemplate(self.factRowTemplate, 4)
-    self.serviceRows = RMS_Utils.cloneTemplate(self.serviceRowTemplate, 4)
+    self.serviceRows = RMS_Utils.cloneTemplate(self.serviceRowTemplate, 5)
+    self.greasingRows = RMS_Utils.cloneTemplate(self.greasingRowTemplate, 5)
+    self.wearRows = RMS_Utils.cloneTemplate(self.wearRowTemplate, 3)
 
     self.locationButton.getIsSelected = function()
         return self.showMap
@@ -326,7 +434,7 @@ function RMS_InGameMenuFrame:reloadRows()
             local spec = vehicle.spec_RealisticMechanicalSystems
             local row = buildRow(vehicle, spec ~= nil and not spec.isExcludedVehicle)
 
-            if not row.isTracked then
+            if not row.isTracked and not row.isImplement then
                 table.insert(self.untrackedRows, row)
             else
                 table.insert(self.trackedRows, row)
@@ -636,11 +744,11 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(list, _section, index,
 
         setCellImage(cell:getAttribute("picture"), row.image)
         cell:getAttribute("title"):setText(row.name)
-        cell:getAttribute("label"):setText(row.isTracked and g_i18n:getText("rms_fleet_check") or "")
+        cell:getAttribute("label"):setText(row.label or row.isTracked and g_i18n:getText("rms_fleet_check") or "")
         conditionElement:setText(row.condition or "")
         conditionElement:setTextColor(unpack(row.conditionColor or RMS_Utils.COLOR.TEXT))
         statusElement:setText(row.status)
-        statusElement:setTextColor(unpack(row.isTracked and getUrgencyColor(row.urgency) or RMS_Utils.COLOR.TEXT_DIM))
+        statusElement:setTextColor(unpack((row.isTracked or row.isImplement) and getUrgencyColor(row.urgency) or RMS_Utils.COLOR.TEXT_DIM))
         return
     end
 
@@ -774,9 +882,10 @@ end
 function RMS_InGameMenuFrame:refreshDossier()
     local row = self:getDisplayedRow()
 
+    local hasDossier = row ~= nil and (row.isTracked or row.isImplement == true)
     self.identityCard:setVisible(row ~= nil)
-    self.dossierColumn:setVisible(row ~= nil and row.isTracked)
-    self.untrackedCard:setVisible(row ~= nil and not row.isTracked)
+    self.dossierColumn:setVisible(hasDossier)
+    self.untrackedCard:setVisible(row ~= nil and not hasDossier)
     self.emptyCard:setVisible(row == nil)
     self.cardRow:invalidateLayout()
 
@@ -787,10 +896,20 @@ function RMS_InGameMenuFrame:refreshDossier()
     end
 
     self:updateIdentity(row)
+    if hasDossier then
+        self.conditionCard:setVisible(row.isTracked)
+        self.greasingCard:setVisible(not row.isTracked)
+        self.serviceCard:setVisible(row.isTracked)
+        self.wearCard:setVisible(not row.isTracked)
+        self.logButton:setVisible(row.isTracked)
+        self.bannerIcons[3]:setVisible(not row.isTracked)
+    end
     if row.isTracked then
         self.conditionCard:setVehicle(row.vehicle)
         self.conditionCard:refresh()
         self:updateService(row)
+    elseif hasDossier then
+        self:updateImplementDossier(row)
     end
 end
 
@@ -808,15 +927,20 @@ function RMS_InGameMenuFrame:updateIdentity(row)
         self.vehicleImage:setImageFilename(row.image)
 
         StoreItemUtil.loadSpecsFromXML(storeItem)
-        local power = Motorized.getSpecValuePower(storeItem, vehicle)
-        self.categoryText:setText(power ~= nil and string.format("%s · %s", row.categoryTitle, power) or row.categoryTitle)
+        local detail = Motorized.getSpecValuePower(storeItem, vehicle) or Vehicle.getSpecValueWorkingWidth(storeItem, vehicle)
+        self.categoryText:setText(detail ~= nil and string.format("%s · %s", row.categoryTitle, detail) or row.categoryTitle)
 
         self.ratingTiles:setVisible(row.isTracked)
-        self.reasonTile:setVisible(not row.isTracked)
+        self.greasingTiles:setVisible(row.isImplement == true)
+        self.reasonTile:setVisible(not row.isTracked and not row.isImplement)
         if row.isTracked then
             local reliability = RealisticMechanicalSystems.getBrandReliability(vehicle, nil)
             self.reliabilityValue:setText(RMS_Utils.formatReliability(reliability))
             self.serviceAccessValue:setText(RMS_Utils.formatServiceAccess(vehicle, storeItem))
+        elseif row.isImplement then
+            local tier = row.greasing.tiers[1]
+            self.greasingPointsValue:setText(tostring(row.greasing.total))
+            self.greasingIntervalValue:setText(tier.unit == "day" and formatTierPeriod(tier) or formatTierAmount(tier, tier.interval))
         end
     end
 
@@ -830,10 +954,89 @@ function RMS_InGameMenuFrame:updateIdentity(row)
     end
     self:updateMapZoomControls()
 
-    if not row.isTracked then
+    if not row.isTracked and not row.isImplement then
         self.reasonValue:setText(row.status)
     end
     RMS_Utils.writeVehicleFacts(self.factRows, vehicle, row.isTracked, false)
+end
+
+---Fills the banner and the two cards of an implement: greasing and wear
+function RMS_InGameMenuFrame:updateImplementDossier(row)
+    local vehicle, greasing = row.vehicle, row.greasing
+    local color = getGreasingColor(greasing.state)
+
+    self.bannerIcons[1]:setVisible(false)
+    self.bannerIcons[2]:setVisible(false)
+    self.bannerTitle:setText(g_i18n:getText(GREASING_STATE[greasing.state].banner))
+    local detail = g_i18n:getText("rms_fleet_greasing_period_day")
+    if greasing.due > 0 then
+        detail = string.format(g_i18n:getText("rms_fleet_greasing_to_do"), greasing.due)
+        if greasing.latest.late > 0 then
+            detail = string.format("%s · %s", detail, formatTierDelay(greasing.latest, greasing.latest.late))
+        end
+    elseif greasing.next ~= nil then
+        detail = string.format("%s · %s", g_i18n:getText("rms_fleet_greasing_next"), formatTierLeft(greasing.next))
+    end
+    self.bannerDetail:setText(detail)
+    self.bannerDetail:setTextColor(unpack(color))
+    self.bannerAccent:setImageColor(nil, unpack(color))
+    self.bannerIcons[3]:setImageColor(nil, unpack(color))
+
+    self.greasingRingColor = greasing.state == "late" and COLOR_LATE_TRACK or RMS_Utils.COLOR.RING_TRACK
+    self.greasingValue:setText(string.format("%d / %d", greasing.total - greasing.due, greasing.total))
+    self.greasingState:setText(g_i18n:getText(GREASING_STATE[greasing.state].value))
+    self.greasingState:setTextColor(unpack(color))
+    for index, greasingRow in ipairs(self.greasingRows) do
+        local tier = greasing.tiers[index]
+        greasingRow:setVisible(tier ~= nil)
+        if tier ~= nil then
+            local value = tier.unit == "day" and g_i18n:getText("rms_grease_hud_done") or formatTierLeft(tier)
+            if tier.due > 0 then
+                value = string.format(g_i18n:getText("rms_fleet_greasing_to_do"), tier.due)
+            end
+            RMS_Utils.writeRow(greasingRow, formatTierPeriod(tier), value)
+            greasingRow:getDescendantByName("value"):setTextColor(unpack(tier.due > 0 and color or RMS_Utils.COLOR.HIGHLIGHT))
+        end
+    end
+    local nextText = greasing.next ~= nil and formatTierLeft(greasing.next) or g_i18n:getText("rms_fleet_greasing_period_day")
+    RMS_Utils.fitValuePill(self.greasingFootPill, self.greasingFootValue, "center",
+        greasing.due > 0 and g_i18n:getText("rms_fleet_greasing_now") or nextText)
+    self.greasingFootValue:setTextColor(unpack(greasing.due > 0 and color or self.pillValueColor))
+
+    local factor, dryFactor = RMS_Greasing.getWearFactor(vehicle), RMS_Config.GREASING.DRY_WEAR_FACTOR
+    local isFaster = factor > 1
+    self.wearRingRatio = (factor - 1) / (dryFactor - 1)
+    self.wearValue:setText("×" .. g_i18n:formatNumber(factor, isFaster and 2 or 0))
+    self.wearValue:setTextColor(unpack(isFaster and RMS_Utils.COLOR.ALERT or RMS_Utils.COLOR.TEXT))
+    self.wearState:setText(g_i18n:getText(isFaster and "rms_fleet_wear_faster" or "rms_fleet_wear_normal"))
+    self.wearState:setTextColor(unpack(isFaster and RMS_Utils.COLOR.ALERT or RMS_Utils.COLOR.HIGHLIGHT))
+
+    local late = greasing.latest ~= nil and greasing.latest.late > 0
+    local rows = {
+        {"rms_fleet_wear_late", late and formatTierAmount(greasing.latest, greasing.latest.late) or g_i18n:getText("rms_fleet_wear_none"),
+            late and color or RMS_Utils.COLOR.HIGHLIGHT},
+        {"rms_fleet_wear_dry", "×" .. g_i18n:formatNumber(dryFactor, 0)},
+        {"rms_fleet_wear_repair_greases", g_i18n:getText("ui_yes"), RMS_Utils.COLOR.HIGHLIGHT}
+    }
+    for index, entry in ipairs(rows) do
+        local wearRow = self.wearRows[index]
+        RMS_Utils.writeRow(wearRow, g_i18n:getText(entry[1]), entry[2])
+        wearRow:getDescendantByName("value"):setTextColor(unpack(entry[3] or self.pillValueColor))
+    end
+    RMS_Utils.fitValuePill(self.wearFootPill, self.wearFootValue, "center", g_i18n:formatMoney(vehicle:getRepairPrice(), 0, true, false))
+end
+
+---Draws the wear of the implement against that of a dry joint
+function RMS_InGameMenuFrame:onDrawWearRing()
+    RMS_ProgressRing.renderInArea(self.wearRingArea, self.wearRingRatio or 0, RMS_Utils.COLOR.ALERT)
+end
+
+---Draws the share of the implement's grease points greased
+function RMS_InGameMenuFrame:onDrawGreasingRing()
+    local row = self:getDisplayedRow()
+    if row ~= nil and row.isImplement then
+        RMS_ProgressRing.renderInArea(self.greasingRingArea, 1 - row.greasing.due / row.greasing.total, nil, self.greasingRingColor)
+    end
 end
 
 ---Fills the banner and the second card: next maintenance or running work
@@ -893,6 +1096,11 @@ function RMS_InGameMenuFrame:updateService(row)
             {"rms_ingame_menu_header_cost", totalCost},
             {"rms_ingame_menu_header_interval", RMS_Utils.formatServiceDeadline(row.schedule, true)}
         }
+        if RMS_Greasing.getTiers(vehicle) ~= nil then
+            local greasing = readGreasing(vehicle)
+            table.insert(rows, {"rms_grease_hud_title", greasing.due > 0 and string.format(g_i18n:getText("rms_fleet_greasing_to_do"), greasing.due)
+                or g_i18n:getText("rms_grease_hud_done"), getGreasingColor(greasing.state)})
+        end
         foot = {"rms_ws_label_last_maintenance", RMS_Utils.formatTimeAgo(vehicle:getLastMaintenanceDate())}
     end
 
@@ -903,10 +1111,13 @@ function RMS_InGameMenuFrame:updateService(row)
         icon:setImageColor(nil, unpack(color))
     end
 
-    for index, entry in ipairs(rows) do
-        local serviceRow = self.serviceRows[index]
-        RMS_Utils.writeRow(serviceRow, g_i18n:getText(entry[1]), entry[2])
-        serviceRow:getDescendantByName("value"):setTextColor(unpack(entry[3] or self.pillValueColor))
+    for index, serviceRow in ipairs(self.serviceRows) do
+        local entry = rows[index]
+        serviceRow:setVisible(entry ~= nil)
+        if entry ~= nil then
+            RMS_Utils.writeRow(serviceRow, g_i18n:getText(entry[1]), entry[2])
+            serviceRow:getDescendantByName("value"):setTextColor(unpack(entry[3] or self.pillValueColor))
+        end
     end
     self.serviceFootLabel:setText(g_i18n:getText(foot[1]))
     RMS_Utils.fitValuePill(self.serviceFootPill, self.serviceFootValue, "center", foot[2])

@@ -27,8 +27,9 @@ local PARK_STANDSTILL_KMH = 1.0
 
 local LOCKED_MIN_TORQUE_RATIO = 0.1
 local LOCKED_MAX_TORQUE_RATIO = 0.9
-local LOCKED_TORQUE_DEAD_ZONE = 0.02
-local LOCKED_WHEEL_SPEED_FILTER = 0.2
+local LOCKED_TORQUE_GAIN = 2 -- share/s per relative speed gap
+local LOCKED_GAP_CAP = 0.25 -- launch: no wheel flare
+local LOCKED_MIN_SPEED = 0.1389 -- m/s
 local TRACK_STEER_INPUT_EPSILON = 0.001
 local AXLE_RATIO_MIN_SPEED = 0.05
 local AXLE_RATIO_MAX = 99
@@ -103,7 +104,8 @@ local function getStoreCategoryNames(vehicle)
     return nil
 end
 
-local function getIsInCategories(vehicle, categories)
+---Tells whether the vehicle sits in one of the store categories
+function RMS_Drivetrain.getIsInCategories(vehicle, categories)
     local categoryNames = getStoreCategoryNames(vehicle)
     if categoryNames == nil then
         return false
@@ -120,12 +122,12 @@ end
 
 ---Tells whether the vehicle sits in one of the excluded road categories
 function RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
-    return getIsInCategories(vehicle, getConfig().EXCLUDED_CATEGORIES)
+    return RMS_Drivetrain.getIsInCategories(vehicle, getConfig().EXCLUDED_CATEGORIES)
 end
 
 ---Tells whether the vehicle is in MACHINE_CATEGORIES
 function RMS_Drivetrain.getIsMachineCategory(vehicle)
-    return getIsInCategories(vehicle, getConfig().MACHINE_CATEGORIES)
+    return RMS_Drivetrain.getIsInCategories(vehicle, getConfig().MACHINE_CATEGORIES)
 end
 
 ---Tells whether a wheel steers, on its rotation range or its rotation speed
@@ -362,7 +364,7 @@ function RMS_Drivetrain.initSpec(vehicle)
         _activeDifferentialIndices = nil,
         _activeFourWheelDrive = nil,
         _graphManaged = false,
-        _wheelPeripheralSpeeds = {},
+        _lockedTorqueRatios = {},
         _wasAddedToPhysics = false,
         _autoConditionTimer = 0,
         _lastNotifiedMode = nil,
@@ -449,16 +451,12 @@ function RMS_Drivetrain.getIsFrontAxleDriven(vehicle)
     return getEffectiveFourWheelDrive(vehicle, RMS_Drivetrain.getState(vehicle))
 end
 
-local function getIsNativeLock(layout, fourWheelDrive)
-    return fourWheelDrive and layout.centerIdx0 ~= nil
-end
-
-local function getTargetSpeedRatio(original, lockEngaged, nativeLock)
+local function getTargetSpeedRatio(original, lockEngaged)
     local C = getConfig()
 
     if original.diffIndex1IsWheel and original.diffIndex2IsWheel then
         if lockEngaged then
-            return nativeLock and original.maxSpeedRatio or C.LOCKED_AXLE_SPEED_RATIO
+            return C.LOCKED_AXLE_SPEED_RATIO
         end
         return math.max(original.maxSpeedRatio, C.OPEN_AXLE_SPEED_RATIO)
     end
@@ -469,7 +467,6 @@ end
 local function buildDifferentialPlan(vehicle, state, useFullGraph)
     local layout = state.layout
     local lockEngaged = state.diffLockEngaged == true
-    local nativeLock = getIsNativeLock(layout, useFullGraph)
     local plan = {}
     local sourceToNative = {}
     local visiting = {}
@@ -515,7 +512,7 @@ local function buildDifferentialPlan(vehicle, state, useFullGraph)
             output2 = output2,
             output2IsWheel = original.diffIndex2IsWheel,
             torqueRatio = original.torqueRatio,
-            maxSpeedRatio = getTargetSpeedRatio(original, lockEngaged, nativeLock)
+            maxSpeedRatio = getTargetSpeedRatio(original, lockEngaged)
         }
         sourceToNative[sourceIdx0] = nativeIdx0
         visiting[sourceIdx0] = nil
@@ -595,7 +592,6 @@ function RMS_Drivetrain.applyState(vehicle, force)
         return
     end
 
-    local layout = state.layout
     local fourWheelDrive = getEffectiveFourWheelDrive(vehicle, state)
     if not force
         and state._graphManaged
@@ -640,75 +636,30 @@ function RMS_Drivetrain.releaseControl(vehicle)
     RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.DRIVETRAIN)
 end
 
-local function getLockedTorqueRatio(original, speed1, speed2, gearRatio)
-    local torqueRatio = original.torqueRatio
-
+---Shifts torque to the slower wheel: a 1.0 speed ratio alone never locks
+local function getLockedTorqueRatio(torqueRatio, speed1, speed2, gearRatio, dt)
     if gearRatio < 0 then
         speed1 = -speed1
         speed2 = -speed2
     end
 
-    local isStandstill = speed1 < 0.1389 and speed2 < 0.1389
-    local isOutOfRange = not (-0.2778 < speed1 and speed1 < 90 and -0.2778 < speed2 and speed2 < 90)
-    if isStandstill or isOutOfRange then
+    local meanSpeed = (speed1 + speed2) * 0.5
+    if meanSpeed < LOCKED_MIN_SPEED then
         return torqueRatio
     end
 
-    if speed1 < speed2 then
-        torqueRatio = 1 - (math.max(speed1, 0) / speed2) * (1 - torqueRatio)
-    elseif speed2 < speed1 then
-        torqueRatio = torqueRatio * (math.max(speed2, 0) / speed1)
-    end
-
-    if math.abs(torqueRatio - original.torqueRatio) < LOCKED_TORQUE_DEAD_ZONE then
-        return original.torqueRatio
-    end
-
+    local gap = math.clamp((speed2 - speed1) / meanSpeed, -LOCKED_GAP_CAP, LOCKED_GAP_CAP)
+    torqueRatio = torqueRatio + gap * LOCKED_TORQUE_GAIN * dt / 1000
     return math.clamp(torqueRatio, LOCKED_MIN_TORQUE_RATIO, LOCKED_MAX_TORQUE_RATIO)
 end
 
-local function getDifferentialOutputSpeeds(vehicle, state, differentialIdx0, wheelSpeeds, depth)
-    local layout = state.layout
-    if depth > layout.differentialCount then
-        return 0, 0
-    end
-
-    local differential = layout.originals[differentialIdx0]
-    if differential == nil then
-        return 0, 0
-    end
-
-    local function getOutputSpeed(outputIndex, outputIsWheel)
-        if outputIsWheel then
-            local speed = wheelSpeeds[outputIndex]
-            if speed ~= nil then
-                return speed
-            end
-
-            local wheel = vehicle.getWheelFromWheelIndex ~= nil and vehicle:getWheelFromWheelIndex(outputIndex) or nil
-            local physics = wheel ~= nil and wheel.physics or nil
-            local rawSpeed = 0
-            if wheel ~= nil and wheel.node ~= nil and physics ~= nil and physics.wheelShapeCreated then
-                rawSpeed = getWheelAxleSpeed(wheel) * (tonumber(physics.radius) or 0)
-            end
-
-            local previousSpeed = state._wheelPeripheralSpeeds[outputIndex]
-            speed = previousSpeed == nil and rawSpeed
-                or previousSpeed + LOCKED_WHEEL_SPEED_FILTER * (rawSpeed - previousSpeed)
-            state._wheelPeripheralSpeeds[outputIndex] = speed
-            wheelSpeeds[outputIndex] = speed
-            return speed
-        end
-
-        local childSpeed1, childSpeed2 = getDifferentialOutputSpeeds(vehicle, state, outputIndex, wheelSpeeds, depth + 1)
-        return (childSpeed1 + childSpeed2) * 0.5
-    end
-
-    return getOutputSpeed(differential.diffIndex1, differential.diffIndex1IsWheel),
-        getOutputSpeed(differential.diffIndex2, differential.diffIndex2IsWheel)
+local function getWheelPeripheralSpeed(vehicle, wheelIndex)
+    local wheel = vehicle:getWheelFromWheelIndex(wheelIndex)
+    local physics = wheel ~= nil and wheel.physics or nil
+    return physics ~= nil and getWheelAxleSpeed(wheel) * physics.radius or 0
 end
 
-local function applyDifferentialLock(vehicle, state)
+local function applyDifferentialLock(vehicle, state, dt)
     local spec_motorized = vehicle.spec_motorized
     local activeIndices = state._activeDifferentialIndices
     if spec_motorized == nil or spec_motorized.motorizedNode == nil or activeIndices == nil or not vehicle.isAddedToPhysics then
@@ -721,29 +672,25 @@ local function applyDifferentialLock(vehicle, state)
     end
 
     local layout = state.layout
-    local nativeLock = getIsNativeLock(layout, state._activeFourWheelDrive == true)
-    local wheelSpeeds = {}
     local gearRatio = tonumber(spec_motorized.motor ~= nil and spec_motorized.motor.gearRatio) or 0
-
     if lockEngaged and state._appliedLock ~= true then
-        state._wheelPeripheralSpeeds = {}
-    else
-        state._wheelPeripheralSpeeds = state._wheelPeripheralSpeeds or {}
+        state._lockedTorqueRatios = {}
     end
 
     for sourceIdx0 = 0, layout.differentialCount - 1 do
         local nativeIdx0 = activeIndices[sourceIdx0]
         local original = layout.originals[sourceIdx0]
         if nativeIdx0 ~= nil and original ~= nil then
-            local isAxleDifferential = original.diffIndex1IsWheel and original.diffIndex2IsWheel
             local torqueRatio = original.torqueRatio
-            local maxSpeedRatio = getTargetSpeedRatio(original, lockEngaged, nativeLock)
-            if lockEngaged and isAxleDifferential and not nativeLock then
-                local speed1, speed2 = getDifferentialOutputSpeeds(vehicle, state, sourceIdx0, wheelSpeeds, 1)
-                torqueRatio = getLockedTorqueRatio(original, speed1, speed2, gearRatio)
+            if lockEngaged and original.diffIndex1IsWheel and original.diffIndex2IsWheel then
+                torqueRatio = getLockedTorqueRatio(state._lockedTorqueRatios[sourceIdx0] or torqueRatio,
+                    getWheelPeripheralSpeed(vehicle, original.diffIndex1),
+                    getWheelPeripheralSpeed(vehicle, original.diffIndex2),
+                    gearRatio, dt)
+                state._lockedTorqueRatios[sourceIdx0] = torqueRatio
             end
 
-            updateDifferential(spec_motorized.motorizedNode, nativeIdx0, torqueRatio, maxSpeedRatio)
+            updateDifferential(spec_motorized.motorizedNode, nativeIdx0, torqueRatio, getTargetSpeedRatio(original, lockEngaged))
         end
     end
 
@@ -772,7 +719,7 @@ function RMS_Drivetrain.addToPhysics(vehicle, superFunc)
         and ensureLayout(vehicle, state)
         and state.hasControl then
         RMS_Drivetrain.applyState(vehicle, true)
-        applyDifferentialLock(vehicle, state)
+        applyDifferentialLock(vehicle, state, 0)
     end
 
     return true
@@ -1114,7 +1061,7 @@ local function updateAutoMode(vehicle, state, spec, dt)
     end
 end
 
-local function updateDiffLockState(vehicle, state, dt)
+local function updateDiffLockState(vehicle, state)
     local effects = vehicle.spec_RealisticMechanicalSystems.activeEffects
     if effects.DIFF_LOCK_STUCK_ENGAGED ~= nil or effects.DIFF_LOCK_ENGAGE_FAILURE ~= nil then
         state.diffLockEngaged = effects.DIFF_LOCK_STUCK_ENGAGED ~= nil
@@ -1349,7 +1296,6 @@ function RMS_Drivetrain.getAxleRatios(vehicle)
     end
 
     local lockEngaged = state.diffLockEngaged == true
-    local nativeLock = getIsNativeLock(layout, state._activeFourWheelDrive == true)
     for sourceIdx0 = 0, layout.differentialCount - 1 do
         local original = layout.originals[sourceIdx0]
         if original ~= nil and original.diffIndex1IsWheel and original.diffIndex2IsWheel
@@ -1362,7 +1308,7 @@ function RMS_Drivetrain.getAxleRatios(vehicle)
             table.insert(entries, {
                 label = string.format("wheels %d and %d", original.diffIndex1, original.diffIndex2),
                 ratio = fast >= AXLE_RATIO_MIN_SPEED and math.min(fast / math.max(slow, fast / AXLE_RATIO_MAX), AXLE_RATIO_MAX) or nil,
-                cap = getTargetSpeedRatio(original, lockEngaged, nativeLock)
+                cap = getTargetSpeedRatio(original, lockEngaged)
             })
         end
     end
@@ -1407,10 +1353,10 @@ local function updateManagedGraph(vehicle, state, spec, dt)
     local prevWindupQuantized = math.floor(sanitizeNumber(state.windupStress, 0, 0, 1) * 255 + 0.5)
 
     updateAutoMode(vehicle, state, spec, dt)
-    updateDiffLockState(vehicle, state, dt)
+    updateDiffLockState(vehicle, state)
     updateWindupModel(vehicle, state, spec, dt)
     RMS_Drivetrain.applyState(vehicle, physicsRestored)
-    applyDifferentialLock(vehicle, state)
+    applyDifferentialLock(vehicle, state, dt)
 
     local windupQuantized = math.floor(sanitizeNumber(state.windupStress, 0, 0, 1) * 255 + 0.5)
     local physicalStateChanged = prevAutoEngaged ~= state.autoEngaged

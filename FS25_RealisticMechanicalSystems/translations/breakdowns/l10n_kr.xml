@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="조향 너클 킹핀이 심하게 마모되었습니다. 조향 유격이 큽니다."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="조향 너클 킹핀이 임계 수준으로 마모되었습니다. 조향 유격이 매우 큽니다."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="조향 오비트롤이 약간 오작동합니다. 핸들이 약간의 유격을 두고 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="조향 기어박스가 약간 오작동합니다. 핸들이 약간의 유격을 두고 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="조향 랙이 약간 오작동합니다. 핸들이 약간의 유격을 두고 돌아간 뒤 바퀴가 따라옵니다."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="조향 오비트롤이 중간 정도로 오작동합니다. 핸들이 더 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="조향 기어박스가 중간 정도로 오작동합니다. 핸들이 더 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="조향 랙이 중간 정도로 오작동합니다. 핸들이 더 많이 돌아간 뒤 바퀴가 따라옵니다."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="조향 오비트롤이 심하게 오작동합니다. 핸들이 많이 돌아가도 바퀴가 잘 따라오지 않습니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="조향 기어박스가 심하게 오작동합니다. 핸들이 많이 돌아가도 바퀴가 잘 따라오지 않습니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="조향 랙이 심하게 오작동합니다. 핸들이 많이 돌아가도 바퀴가 잘 따라오지 않습니다."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="조향 오비트롤에 임계 고장이 발생했습니다. 핸들의 유격이 매우 커서 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="조향 기어박스에 임계 고장이 발생했습니다. 핸들의 유격이 매우 커서 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="조향 랙에 임계 고장이 발생했습니다. 핸들의 유격이 매우 커서 많이 돌아간 뒤 바퀴가 따라옵니다."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="조향 실린더에서 내부 누설이 약간 발생합니다. 차량이 한쪽으로 흐르기 시작합니다."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="조향 실린더 로드 씰에서 누설이 약간 발생합니다. 유압 오일 수위가 조금 내려갑니다."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="조향 실린더에 중간 정도의 내부 누출이 있습니다. 차량이 한쪽으로 더 많이 흐릅니다."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="로더 관절 핀과 부싱"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="조향 너클 킹핀"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="조향 오비트롤"/>
+        <text name="rms_breakdowns_part_steering_box" text="조향 기어박스"/>
+        <text name="rms_breakdowns_part_steering_rack" text="조향 랙"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="조향 실린더"/>
         <text name="rms_breakdowns_part_cab_suspension" text="운전실 서스펜션"/>
         <text name="rms_breakdowns_part_pto_clutch" text="PTO 클러치"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="변속기 센서"/>
         <text name="rms_breakdowns_part_transmission_filter" text="변속기 필터"/>
         <text name="rms_breakdowns_part_lift_valve" text="리프트 밸브"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="헤더 승강 밸브"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="리프트 위치 센서"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="헤더 높이 센서"/>
         <text name="rms_breakdowns_part_loader_control" text="로더 제어 장치"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="유압 신속 연결기"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="클러치가 약간 오작동합니다. 완전히 분리되지 않아 일부 기어를 넣기 어렵습니다."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="유압 펌프에 고장이 발생했습니다. 파손되어 압력이 사라지고 유압 기능이 반응하지 않습니다."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="유압 제어 밸브에 고장이 발생했습니다. 스풀이 고착되어 해당 유압 기능이 움직이지 않습니다."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="리프트 밸브에 고장이 발생했습니다. 하중을 제대로 유지하지 못해 올린 작업기가 내려옵니다."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="헤더 승강 밸브에 고장이 발생했습니다. 하중을 제대로 유지하지 못해 올린 헤더가 내려옵니다."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="리프트 밸브에 고장이 발생했습니다. 고착되어 리프트가 반응하지 않습니다."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="헤더 승강 밸브에 고장이 발생했습니다. 고착되어 헤더가 오르내리지 않습니다."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="리프트 위치 센서에 고장이 발생했습니다. 위치 신호가 고장 나 리프트가 요청한 높이를 유지하지 못하며 고장 코드가 저장됩니다."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="헤더 높이 센서에 고장이 발생했습니다. 높이 신호가 고장 나 헤더가 요청한 높이를 유지하지 못하며 고장 코드가 저장됩니다."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="로더 제어 장치가 약간 오작동합니다. 암과 버킷의 반응이 느려집니다."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="로더 제어 장치가 중간 정도로 오작동합니다. 암과 버킷이 절반 속도로만 움직입니다."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="로더 제어 장치가 심하게 오작동합니다. 암과 버킷이 거의 움직이지 않습니다."/>

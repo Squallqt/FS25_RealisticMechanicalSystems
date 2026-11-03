@@ -1,13 +1,13 @@
 <handTools>
     <types>
         <type name="greaseGun" parent="base" xmlFile="objects/greaseGun/greaseGun.xml">
-            <specialization name="rmsHandTools"/>
+            <specialization name="rmsGreaseGun"/>
         </type>
         <type name="airBlower" parent="base" xmlFile="objects/airBlower/airBlower.xml">
-            <specialization name="rmsHandTools"/>
+            <specialization name="rmsAirBlower"/>
         </type>
         <type name="jumperCables" parent="base" xmlFile="objects/jumperCables/jumperCables.xml">
-            <specialization name="rmsHandTools"/>
+            <specialization name="rmsJumperCables"/>
         </type>
         <type name="rmsFluidCanister" parent="base">
             <specialization name="rmsFluidHandTool"/>
@@ -19,9 +19,17 @@
 
     <specializations>
         <specialization
-            name="rmsHandTools"
-            className="rmsHandTools"
-            filename="scripts/RMS_HandTools.lua"/>
+            name="rmsAirBlower"
+            className="RMS_AirBlower"
+            filename="scripts/RMS_AirBlower.lua"/>
+        <specialization
+            name="rmsJumperCables"
+            className="RMS_JumperCables"
+            filename="scripts/RMS_JumperCables.lua"/>
+        <specialization
+            name="rmsGreaseGun"
+            className="RMS_GreaseGun"
+            filename="scripts/RMS_GreaseGun.lua"/>
         <specialization
             name="rmsFluidHandTool"
             className="RMS_FluidHandTool"

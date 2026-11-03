@@ -26,11 +26,11 @@ local KPI_CARDS = {
     { profile = "rms_logKpiMaintenanceIcon", label = "rms_log_average_maintenance_interval_title", figure = "maintenanceInterval" }
 }
 
-local function getPartNames(entry)
+local function getPartNames(vehicle, entry)
     local names, seen = {}, {}
     for _, id in ipairs(entry.conditionData ~= nil and entry.conditionData.selectedBreakdowns or {}) do
         if RMS_Breakdowns.BreakdownRegistry[id] ~= nil then
-            local name = RMS_Utils.getBreakdownPartName(id)
+            local name = RMS_Utils.getBreakdownPartName(id, vehicle)
             if not seen[name] then
                 seen[name] = true
                 table.insert(names, name)
@@ -53,7 +53,7 @@ end
 
 local function getPresentation(vehicle, entry)
     local STATUS = RealisticMechanicalSystems.STATUS
-    local partNames = getPartNames(entry)
+    local partNames = getPartNames(vehicle, entry)
     local suffix = getSystemSuffix(vehicle, entry)
     local performed = g_i18n:getText("rms_log_performed")
     if entry.isCompleted == false then
@@ -66,8 +66,7 @@ local function getPresentation(vehicle, entry)
         return { summary = g_i18n:getText("rms_log_repair_desc_generic") .. suffix,
             detailLabel = #partNames > 0 and g_i18n:getText("rms_log_total_breakdowns_count_title") or "", detailItems = partNames }
     elseif entry.type == STATUS.MAINTENANCE then
-        return { summary = string.format(performed, g_i18n:getText("rms_ws_task_maintenance"), RMS_Utils.formatMaintenanceLevel(vehicle,
-            entry.optionOne)) .. suffix, detailLabel = #partNames > 0 and g_i18n:getText("rms_report_detected_breakdowns_title") or "",
+        return { summary = RMS_Utils.formatMaintenanceLevel(vehicle, entry.optionOne) .. suffix, detailLabel = #partNames > 0 and g_i18n:getText("rms_report_detected_breakdowns_title") or "",
             detailItems = partNames }
     elseif entry.type == STATUS.INSPECTION then
         return { summary = string.format(performed, g_i18n:getText("rms_ws_task_inspection"), g_i18n:getText(entry.optionOne)),
@@ -85,7 +84,7 @@ end
 
 local function getDescription(vehicle, entry)
     local STATUS = RealisticMechanicalSystems.STATUS
-    local partNames = getPartNames(entry)
+    local partNames = getPartNames(vehicle, entry)
     local partsText = string.format(g_i18n:getText("rms_log_inspection_desc_with_breakdowns"), table.concat(partNames, ", "))
     local description = getPresentation(vehicle, entry).summary
     if entry.isCompleted == false then
@@ -243,7 +242,7 @@ function RMS_WorkshopRecordFrame:updateSelectedEntry()
         self.selectedLogType:setText(typeText)
         self.selectedLogType:setTextColor(unpack(color))
         self.selectedLogDate:setText(RMS_Utils.formatMaintenanceLogDate(entry))
-        self.selectedLogHours:setText(RMS_Utils.formatHours(entry.conditionData ~= nil and tonumber(entry.conditionData.operatingHours) or 0))
+        self.selectedLogHours:setText(RMS_Utils.formatHours(math.floor((entry.conditionData ~= nil and tonumber(entry.conditionData.operatingHours) or 0) * 10) / 10))
         self.selectedLogPrice:setText(g_i18n:formatMoney(entry.price or 0, 0, true, false))
         self.selectedLogSummary:setText(presentation.summary)
         local location = getLocation(entry)
@@ -297,7 +296,7 @@ function RMS_WorkshopRecordFrame:populateCellForItemInSection(list, _section, in
     cell:getAttribute("logType"):setText(typeText)
     cell:getAttribute("logType"):setTextColor(unpack(color))
     cell:getAttribute("logDate"):setText(RMS_Utils.formatMaintenanceLogDate(entry))
-    cell:getAttribute("logHours"):setText(RMS_Utils.formatHours(entry.conditionData ~= nil and tonumber(entry.conditionData.operatingHours) or 0))
+    cell:getAttribute("logHours"):setText(RMS_Utils.formatHours(math.floor((entry.conditionData ~= nil and tonumber(entry.conditionData.operatingHours) or 0) * 10) / 10))
     cell:getAttribute("logDescription"):setText(getDescription(self.vehicle, entry))
     cell:getAttribute("logPrice"):setText(g_i18n:formatMoney(entry.price or 0, 0, true, false))
 end

@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Natychmiastowy"/>
         <text name="rms_option_menu_start_text" text="Rozpoczęcie"/>
         <text name="rms_service_months" text="%s mies."/>
+        <text name="rms_service_either" text="%s lub %s"/>
         <text name="rms_service_month" text="%s mies."/>
         <text name="rms_service_calendar_due" text="Termin kalendarzowy osiągnięty"/>
         <text name="rms_service_program_estimated" text="Plan szacunkowy"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Ręczna smarownica"/>
         <text name="rms_grease_gun_no_vehicle" text="Nie wykryto pojazdu w strefie smarowania"/>
-        <text name="rms_grease_gun_function" text="Służy do smarowania punktów smarowania maszyny"/>
+        <text name="rms_grease_gun_function" text="Smaruje smarowniczki maszyn. Napełniana wkładem ze smarem."/>
         <text name="rms_grease_gun_action" text="Smaruj"/>
         <text name="rms_grease_gun_already_lubricated" text="Smarowanie pojazdu %s zostało już wykonane"/>
         <text name="rms_grease_gun_lubrication_not_require" text="Pojazd %s nie wymaga smarowania"/>
+        <text name="rms_grease_gun_load" text="Włóż wkład"/>
+        <text name="rms_grease_gun_empty" text="Ręczna smarownica jest pusta: włóż wkład"/>
+        <text name="rms_grease_gun_not_empty" text="Ręczna smarownica nadal zawiera smar"/>
+        <text name="rms_grease_gun_points" text="Smarowniczki do zrobienia: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Wkład ze smarem"/>
+        <text name="rms_grease_cartridge_function" text="Napełnia ręczną smarownicę: trzymając ją w ręku, stań przed wkładem."/>
+        <text name="rms_grease_cartridge_count" text="Wkłady"/>
+        <text name="rms_grease_quantity" text="Ilość"/>
+        <text name="rms_grease_hud_title" text="Smarowanie"/>
+        <text name="rms_grease_hud_done" text="Nasmarowano"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Dmuchawa sprężonego powietrza"/>
         <text name="rms_air_blower_no_vehicle" text="Nie wykryto pojazdu w strefie czyszczenia"/>
         <text name="rms_air_blower_function" text="Służy do oczyszczania chłodnic i filtrów powietrza"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s opóźniona o %s"/>
         <text name="rms_inspection_status_slightly_low" text="Lekko niski"/>
         <text name="rms_inspection_status_slightly_dirty" text="Lekko zapchany"/>
-        <text name="rms_inspection_status_slightly_dry" text="Lekko suchy"/>
+        <text name="rms_inspection_status_grease_due" text="Do smarowania"/>
         <text name="rms_inspection_status_slight_moisture" text="Lekka wilgoć"/>
         <text name="rms_inspection_status_seepage" text="Powolny wyciek"/>
         <text name="rms_inspection_status_severe_leak" text="Silny wyciek"/>
         <text name="rms_inspection_status_low" text="Niski"/>
         <text name="rms_inspection_status_very_low" text="Bardzo niski"/>
-        <text name="rms_inspection_status_very_dry" text="Bardzo suchy"/>
         <text name="rms_inspection_status_critically_low" text="Pilne uzupełnienie"/>
         <text name="rms_inspection_status_critically_clogged" text="Całkowicie zapchany"/>
-        <text name="rms_inspection_status_critically_dry" text="Metal o metal"/>
         <text name="rms_inspection_status_dirty" text="Zapchany"/>
-        <text name="rms_inspection_status_dry" text="Suchy"/>
+        <text name="rms_inspection_status_grease_late" text="Po terminie"/>
         <text name="rms_inspection_status_active_leak" text="Trwający wyciek"/>
         <text name="rms_inspection_status_heavily_clogged" text="Mocno zapchany"/>
         <text name="rms_inspection_status_not_required" text="Niewymagane"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Objaw niezidentyfikowanej awarii: warsztat identyfikuje ją przeglądem lub obsługą techniczną."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Widoczne są oznaki przegrzewania oraz przebarwienia w okolicy alternatora i niektórych połączeń."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Wyraźne oznaki przegrzewania oraz przyciemnione złącza są widoczne w okolicy alternatora i jego okablowania."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Zauważalne jest niewielkie wysuszenie punktów smarowania."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Punkty smarowania wyglądają na suche i niewystarczająco nasmarowane."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Punkty smarowania są bardzo suche, z niewielką ilością widocznego smaru."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Punkty smarowania pracują metal o metal, z niemal całkowitym brakiem widocznego smaru."/>
+        <text name="rms_inspection_hint_grease_due" text="Smarowniczki do nasmarowania: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Lekkie ślady oleju są widoczne wokół obudowy skrzyni biegów."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Krople oleju są widoczne pod skrzynią biegów."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Wyraźna utrata oleju jest widoczna wokół skrzyni biegów."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Płyn chłodniczy wymaga wymiany: zużyty płyn przyspiesza zużycie układu chłodzenia. Przegląd zalecany w warsztacie go wymienia."/>
         <text name="rms_inspection_radiator" text="Chłodnica"/>
         <text name="rms_inspection_air_filter" text="Filtr powietrza"/>
-        <text name="rms_inspection_lubrication_level" text="Poziom smarowania"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Nie wykryto podejrzanych objawów"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Brak pomiaru"/>
         <text name="rms_fleet_parts_reading" text="Pomiar części %s"/>
         <text name="rms_fleet_parts_need_complete" text="Pomiar części przy następnym pełnym przeglądzie"/>
+        <text name="rms_fleet_greasing_done" text="Smarowanie wykonane"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s h pracy"/>
+        <text name="rms_fleet_greasing_period_day" text="Każdy dzień pracy"/>
+        <text name="rms_fleet_greasing_period_month" text="Co miesiąc"/>
+        <text name="rms_fleet_greasing_period_months" text="Co %d mies."/>
+        <text name="rms_fleet_greasing_period_bales" text="Co %d bel"/>
+        <text name="rms_fleet_greasing_bales" text="%d bel"/>
+        <text name="rms_fleet_greasing_day" text="%d dzień"/>
+        <text name="rms_fleet_greasing_days" text="%d dni"/>
+        <text name="rms_fleet_day_late" text="Opóźnienie %d dzień"/>
+        <text name="rms_fleet_days_late" text="Opóźnienie %d dni"/>
+        <text name="rms_fleet_greasing_to_do" text="%d do zrobienia"/>
+        <text name="rms_fleet_greasing_points" text="Smarowniczki"/>
+        <text name="rms_fleet_greasing_next" text="Następne smarowanie"/>
+        <text name="rms_fleet_greasing_now" text="Teraz"/>
+        <text name="rms_fleet_greasing_in" text="za %s"/>
+        <text name="rms_fleet_months_late" text="Opóźnienie %d mies."/>
+        <text name="rms_fleet_bales_late" text="Opóźnienie %d bel"/>
+        <text name="rms_fleet_wear" text="Zużycie"/>
+        <text name="rms_fleet_wear_faster" text="Szybciej"/>
+        <text name="rms_fleet_wear_normal" text="Normalne zużycie"/>
+        <text name="rms_fleet_wear_late" text="Opóźnienie smarowania"/>
+        <text name="rms_fleet_wear_dry" text="Zużycie na sucho"/>
+        <text name="rms_fleet_wear_repair_greases" text="Smarowane przy naprawie"/>
+        <text name="rms_fleet_wear_repair" text="Naprawa w warsztacie"/>
+        <text name="rms_fleet_wear_none" text="Brak"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Zwrot pojazdu"/>
         <text name="rms_sell_dialog_section_vehicle" text="Pojazd"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Układ chłodzenia i filtr powietrza"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Chłodnica lub filtr powietrza jest zapchany. Patrząc na pojazd, przytrzymaj klawisz %s, aby sprawdzić który element. Oczyść go dmuchawą sprężonego powietrza. Jeśli filtra nie da się już przedmuchać, warsztat wymienia go od przeglądu %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Wymagane smarowanie"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Pojazd %s wymaga regularnego smarowania.&#10;&#10;W RMS poziom smarowania spada wraz z godzinami pracy. Po długim okresie nieużywania maszynę trzeba również nasmarować przed ponownym uruchomieniem. Niedostateczne smarowanie przyspiesza zużycie podwozia.&#10;&#10;Kup w sklepie smarownicę i nasmaruj maszynę, gdy przegląd wykaże taką potrzebę.&#10;&#10;Poziom smarowania możesz sprawdzić, przytrzymując klawisz %s i patrząc na pojazd."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Pojazd %s ma smarowniczki do nasmarowania.&#10;&#10;W RMS każda maszyna ma smarowniczki wymienione w jej instrukcji. Wymagają ponownego smarowania po określonej liczbie godzin pracy, a w niektórych maszynach każdego dnia pracy. Spóźnione smarowanie przyspiesza zużycie podwozia.&#10;&#10;Kup w sklepie ręczną smarownicę i wkłady. Trzymając smarownicę w ręku, wyceluj we wkład, aby go włożyć, a potem w maszynę: każde kliknięcie smaruje jedną smarowniczkę, a przytrzymanie przycisku przechodzi do kolejnych.&#10;&#10;Aby zobaczyć pozostałe smarowniczki, przytrzymaj klawisz %s, patrząc na pojazd."/>
         <text name="rms_tutorial_needs_repair_title" text="Wykryto awarię"/>
         <text name="rms_tutorial_needs_repair_message" text="Pojazd %s ma problem. Jedna z jego części mogła ulec awarii.&#10;&#10;Odwiedź warsztat: przegląd albo obsługa techniczna, jeśli przypada, zidentyfikuje awarię. Nie zwlekaj: awaria może się pogłębiać, a wraz z nią wzrasta koszt naprawy.&#10;&#10;Gdy awaria zostanie zidentyfikowana, napraw ją w warsztacie."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Wymagany remont kapitalny"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Ciśnienie doładowania"/>
         <text name="rms_diagnostic_spn_100" text="Ciśnienie oleju silnikowego"/>
         <text name="rms_diagnostic_spn_101" text="Ciśnienie w skrzyni korbowej silnika"/>
-        <text name="rms_diagnostic_spn_1322" text="Wypadanie zapłonów w kilku cylindrach"/>
         <text name="rms_diagnostic_spn_cylinder" text="Wypadanie zapłonu w cylindrze %d"/>
         <text name="rms_diagnostic_spn_94" text="Ciśnienie zasilania paliwem"/>
         <text name="rms_diagnostic_spn_110" text="Temperatura płynu chłodzącego"/>

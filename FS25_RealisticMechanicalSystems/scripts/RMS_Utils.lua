@@ -434,6 +434,66 @@ function RMS_Utils.setConnectedPtoConsumersTurnedOn(vehicle, isTurnedOn, side)
     return changed
 end
 
+local machineHit = {}
+
+function machineHit:onRaycastHit(hitActorId, x, y, z, distance, nx, ny, nz, subShapeIndex, hitShapeId)
+    local vehicle = g_currentMission.vehicleSystem:getVehicleByNodeId(hitActorId, hitShapeId)
+    if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil then
+        self.vehicle, self.distance = vehicle, distance
+        return false
+    end
+    return true
+end
+
+---Returns the first machine a tool node points at, and its distance
+function RMS_Utils.raycastMachine(node)
+    machineHit.vehicle, machineHit.distance = nil, nil
+    local x, y, z = getWorldTranslation(node)
+    local dirX, dirY, dirZ = localDirectionToWorld(node, 0, 0, -1)
+    raycastAll(x, y, z, dirX, dirY, dirZ, RMS_Config.FIELD_CARE.RAYCAST_DISTANCE, "onRaycastHit", machineHit, nil, false, true)
+    return machineHit.vehicle, machineHit.distance
+end
+
+---Returns the gap between segments in px: halved past 30, none past 60
+function RMS_Utils.getSegmentGap(count, gap)
+    return count > 60 and 0 or count > 30 and gap / 2 or gap
+end
+
+local function fillPixels(left, width, y, height, color)
+    drawFilledRect(left * g_pixelSizeX, y, width * g_pixelSizeX, height, color[1], color[2], color[3], color[4] or 1)
+end
+
+---Draws a row of segments on whole pixels, the first ones lit
+-- @return float? x of the first unlit segment, nil on a bar too dense to split
+-- @return float? y
+-- @return float? width
+-- @return float? height
+function RMS_Utils.drawSegments(x, y, width, height, count, lit, litColor, restColor, gap)
+    local left, total = math.floor(x / g_pixelSizeX + 0.5), math.floor(width / g_pixelSizeX + 0.5)
+    y, height = math.floor(y / g_pixelSizeY + 0.5) * g_pixelSizeY, math.floor(height / g_pixelSizeY + 0.5) * g_pixelSizeY
+    local gapPixels = math.floor(gap / g_pixelSizeX + 0.5)
+    local segment = math.floor((total - gapPixels * (count - 1)) / count)
+    if gapPixels == 0 or segment < 2 then
+        local litWidth = math.floor(total * lit / count + 0.5)
+        fillPixels(left, litWidth, y, height, litColor)
+        fillPixels(left + litWidth, total - litWidth, y, height, restColor)
+        return
+    end
+
+    local extra, position, nextX, nextWidth = total - segment * count - gapPixels * (count - 1), left, nil, nil
+    for index = 1, count do
+        local segmentWidth = segment + (index <= extra and 1 or 0)
+        fillPixels(position, segmentWidth, y, height, index <= lit and litColor or restColor)
+        if index == lit + 1 then
+            nextX, nextWidth = position * g_pixelSizeX, segmentWidth * g_pixelSizeX
+        end
+        position = position + segmentWidth + gapPixels
+    end
+    if nextX ~= nil then
+        return nextX, y, nextWidth, height
+    end
+end
+
 ---Shows a level on the level gauge of a screen
 function RMS_Utils.setLevelGauge(fillElement, underElement, trackWidth, level)
     local fill, color = RMS_Fluids.getGaugeFill(level, RMS_Utils.COLOR.HIGHLIGHT)
@@ -685,14 +745,28 @@ function RMS_Utils.getBreakdownTexts(vehicle, id, breakdown)
     elseif breakdown.isActive == false and breakdown.source == SOURCES.POOR_PARTS then
         return g_i18n:getText("rms_breakdowns_defected_parts_stage"), g_i18n:getText("rms_breakdowns_defected_parts_detected_description")
     end
-    local stage = RMS_Breakdowns.BreakdownRegistry[id].stages[breakdown.stage]
-    return g_i18n:getText(stage.severity), g_i18n:getText(RMS_Breakdowns.getStageDescription(vehicle, stage, breakdown))
+    local definition = RMS_Breakdowns.BreakdownRegistry[id]
+    local stage = definition.stages[breakdown.stage]
+    return g_i18n:getText(stage.severity), g_i18n:getText(RMS_Breakdowns.getStageDescription(vehicle, stage, breakdown, definition))
 end
 
----Name of the part a breakdown hits
-function RMS_Utils.getBreakdownPartName(id)
-    local definition = RMS_Breakdowns.BreakdownRegistry[id]
-    return g_i18n:getText(definition.part or definition.system)
+---Returns the name a breakdown takes where its organ differs, if any
+function RMS_Utils.getBreakdownNameVariant(vehicle, definition)
+    if vehicle == nil or definition.getNameVariant == nil then
+        return nil
+    end
+    return definition.getNameVariant(vehicle)
+end
+
+---Returns the text key of the part a breakdown hits on a vehicle
+function RMS_Utils.getBreakdownPartKey(vehicle, definition)
+    local variant = RMS_Utils.getBreakdownNameVariant(vehicle, definition)
+    return variant ~= nil and definition.variantParts[variant] or definition.part or definition.system
+end
+
+---Name of the part a breakdown hits on a vehicle
+function RMS_Utils.getBreakdownPartName(id, vehicle)
+    return g_i18n:getText(RMS_Utils.getBreakdownPartKey(vehicle, RMS_Breakdowns.BreakdownRegistry[id]))
 end
 
 -- @param table? items stage items, each common to every mode or tied to one by its branch
@@ -1120,7 +1194,10 @@ function RMS_Utils.formatServiceDeadline(schedule, showInterval)
     if months ~= nil then
         table.insert(values, RMS_Utils.formatMonths(months))
     end
-    return table.concat(values, " / ")
+    if #values == 2 then
+        return string.format(g_i18n:getText("rms_service_either"), values[1], values[2])
+    end
+    return values[1] or ""
 end
 
 ---Says which change the next service is for and when it falls due
@@ -1502,7 +1579,7 @@ function RMS_Utils.getConditionRows(vehicle, report, systems, isMeasured, isOutd
                 local failed = partsReport.conditionData.activeBreakdowns or {}
                 for _, partId in ipairs(parts) do
                     local wear = partsReport.conditionData.partWear[partId]
-                    table.insert(partRows, {kind = "part", name = g_i18n:getText(RMS_Breakdowns.BreakdownRegistry[partId].part),
+                    table.insert(partRows, {kind = "part", name = RMS_Utils.getBreakdownPartName(partId, vehicle),
                         condition = wear ~= nil and 1 - math.min(wear, 1) or nil, isFailed = wear ~= nil and failed[partId] ~= nil,
                         isWorn = wear ~= nil and RMS_Utils.getIsPartWorn(partId, wear)})
                 end

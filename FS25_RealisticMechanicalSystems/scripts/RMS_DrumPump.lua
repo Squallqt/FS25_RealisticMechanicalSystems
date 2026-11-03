@@ -34,7 +34,7 @@ end
 function RMS_DrumPump.mount(player, handTool, container)
     local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     if containerSpec == nil or containerSpec.pump == nil or containerSpec.hasPump or handTool[specName] == nil
-        or handTool:getCarryingPlayer() ~= player or container:getOwnerFarmId() ~= player.farmId
+        or handTool:getCarryingPlayer() ~= player or not g_currentMission.accessHandler:canPlayerAccess(container, player)
         or not getIsInReach(player, container) then
         return
     end
@@ -63,7 +63,7 @@ end
 function RMS_DrumPump.unmount(player, container)
     local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     if containerSpec == nil or not containerSpec.hasPump or containerSpec.carrierTool ~= nil or containerSpec.isBeingTaken
-        or container:getOwnerFarmId() ~= player.farmId or player:getIsHoldingHandTool()
+        or not g_currentMission.accessHandler:canPlayerAccess(container, player) or player:getIsHoldingHandTool()
         or not getIsInReach(player, container) then
         return
     end
@@ -115,7 +115,7 @@ local function updateTarget(handTool, player)
     local container = node ~= nil and g_currentMission:getNodeObject(node) or nil
     local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
     if containerSpec == nil or containerSpec.pump == nil or containerSpec.hasPump
-        or container:getOwnerFarmId() ~= g_currentMission:getFarmId() then
+        or not g_currentMission.accessHandler:canPlayerAccess(container) then
         container = nil
     end
 

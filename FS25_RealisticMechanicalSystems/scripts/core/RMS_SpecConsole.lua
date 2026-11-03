@@ -1051,6 +1051,36 @@ function RealisticMechanicalSystems.ConsoleCommands:setDirtAmount(rawArgs)
     print(string.format("RMS: Set Dirt amount for '%s' to %.2f.", vehicle:getFullName(), value))
 end
 
+---Sets the greasing left of a machine and its implements
+function RealisticMechanicalSystems.ConsoleCommands:setGreasing(rawArgs)
+    if not g_currentMission:getIsServer() then
+        local vehicle = self:getTargetVehicle()
+        if vehicle then RMS_ConsoleCommandEvent.sendToServer("setGreasing", rawArgs, nil, vehicle) end
+        return
+    end
+    local vehicle = self:getTargetVehicle()
+    if not vehicle then return end
+
+    local value = tonumber(parseArguments(rawArgs)[1])
+    if value == nil or value < 0 or value > 1 then
+        print("RMS Error: Invalid value. Usage: rms_setGreasing <0.0-1.0>")
+        return
+    end
+
+    local isGreased = false
+    for _, child in ipairs(vehicle:getChildVehicles()) do
+        if RMS_Greasing.getSpec(child) ~= nil and RMS_Greasing.getTiers(child) ~= nil then
+            RMS_Greasing.setIntervalLeft(child, value)
+            print(string.format("RMS: Set greasing for '%s' to %.2f, %d grease points due.", child:getFullName(), value,
+                RMS_Greasing.getDuePoints(child)))
+            isGreased = true
+        end
+    end
+    if not isGreased then
+        print(string.format("RMS Error: Vehicle '%s' has no grease points.", vehicle:getFullName()))
+    end
+end
+
 ---Sets the paint wear, usage rms_setPaintWear [0-1]
 function RealisticMechanicalSystems.ConsoleCommands:setPaintWear(rawArgs)
     if not g_currentMission:getIsServer() then
@@ -1165,7 +1195,7 @@ function RealisticMechanicalSystems.ConsoleCommands:resetFactorStats()
     end
 
     local spec = vehicle.spec_RealisticMechanicalSystems
-    local factorStats = ensureFactorStats(spec, vehicle)
+    local factorStats = ensureFactorStats(spec)
 
     for _, systemStats in pairs(factorStats) do
         if type(systemStats) == "table" then
@@ -1236,6 +1266,8 @@ addConsoleCommand("rms_getDebugVehicleInfo", "Prints how RMS reads the vehicle. 
     "getDebugVehicleInfo", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setDirtAmount", "Sets vehicle dirt amount. Usage: rms_setDirtAmount [0.0-1.0]", "setDirtAmount", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setPaintWear", "Sets vehicle paint wear. Usage: rms_setPaintWear [0.0-1.0]", "setPaintWear", RealisticMechanicalSystems.ConsoleCommands)
+addConsoleCommand("rms_setGreasing", "Sets the greasing interval left of the vehicle and its implements, 0 making every grease point due. Usage: rms_setGreasing [0.0-1.0]", "setGreasing",
+    RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setFuelLevel", "Sets fuel or traction charge. Usage: rms_setFuelLevel [fraction 0..1 or percentage >1..100]", "setFuelLevel", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_resetFactorStats", "Resets accumulated factor stats for current vehicle.", "resetFactorStats", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_setSpecVar", "Sets physical RMS vehicle state, including raw oil temperatures. Usage: rms_setSpecVar <path> <value>", "setSpecVar", RealisticMechanicalSystems.ConsoleCommands)

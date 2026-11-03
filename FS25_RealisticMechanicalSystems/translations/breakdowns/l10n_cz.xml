@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Silné opotřebení svislých čepů těhlic. Vůle v řízení je značná."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritické opotřebení svislých čepů těhlic. Řízení vykazuje velmi značnou vůli."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lehká porucha orbitrolu řízení. Volant se otáčí s malou vůlí, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Lehká porucha převodky řízení. Volant se otáčí s malou vůlí, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Lehká porucha hřebenu řízení. Volant se otáčí s malou vůlí, než kola zareagují."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Střední porucha orbitrolu řízení. Volant se otáčí více, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Střední porucha převodky řízení. Volant se otáčí více, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Střední porucha hřebenu řízení. Volant se otáčí více, než kola zareagují."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Silná porucha orbitrolu řízení. Volant se hodně otáčí, aniž by kola správně reagovala."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Silná porucha převodky řízení. Volant se hodně otáčí, aniž by kola správně reagovala."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Silná porucha hřebenu řízení. Volant se hodně otáčí, aniž by kola správně reagovala."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritické selhání orbitrolu řízení. Volant má velmi značnou vůli, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kritické selhání převodky řízení. Volant má velmi značnou vůli, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kritické selhání hřebenu řízení. Volant má velmi značnou vůli, než kola zareagují."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lehká vnitřní netěsnost válce řízení. Vozidlo začíná vybočovat ke straně."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lehká netěsnost těsnění pístnice válce řízení. Hladina hydraulického oleje mírně klesá."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Střední vnitřní netěsnost válce řízení. Vozidlo vybočuje více ke straně."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Čepy a pouzdra kloubů nakladače"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Svislé čepy těhlic"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol řízení"/>
+        <text name="rms_breakdowns_part_steering_box" text="Převodka řízení"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Hřeben řízení"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Válec řízení"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Odpružení kabiny"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Spojka vývodového hřídele"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Snímače převodovky"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filtr převodovky"/>
         <text name="rms_breakdowns_part_lift_valve" text="Ventil závěsu"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Ventil zvedání adaptéru"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Snímač polohy závěsu"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Snímač výšky adaptéru"/>
         <text name="rms_breakdowns_part_loader_control" text="Ovládání nakladače"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulické rychlospojky"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lehká porucha spojky. Nevypíná úplně. Některé stupně se řadí obtížně."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Porucha hydraulického čerpadla. Je rozbité. Tlak se ztratil a hydraulické funkce nereagují."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Porucha hydraulického rozvaděče. Šoupátko je zaseknuté. Dotčená hydraulická funkce se nepohybuje."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Porucha ventilu závěsu. Neudrží správně zátěž. Zvednuté nářadí klesá."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Porucha ventilu zvedání adaptéru. Neudrží správně zátěž. Zvednutý adaptér klesá."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Porucha ventilu závěsu. Je zaseknutý. Závěs nereaguje."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Porucha ventilu zvedání adaptéru. Je zaseknutý. Adaptér nelze zvednout ani spustit."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Porucha snímače polohy závěsu. Signál polohy selhal. Závěs neudrží požadovanou výšku a uloží se chybový kód."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Porucha snímače výšky adaptéru. Signál výšky selhal. Adaptér neudrží požadovanou výšku a uloží se chybový kód."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lehká porucha ovládání nakladače. Rameno a lopata reagují pomaleji."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Střední porucha ovládání nakladače. Rameno a lopata se pohybují jen poloviční rychlostí."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Závažná porucha ovládání nakladače. Rameno a lopata se téměř nepohybují."/>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<vehicle type="rmsGreaseCartridge">
+    <annotation>Copyright (C) 2026 Squallqt. Licensed under the GNU General Public License v3.0 or later.</annotation>
+    <storeData>
+        <name>$l10n_rms_grease_cartridge_typedesc</name>
+        <specs><weight/></specs>
+        <functions><function>$l10n_rms_grease_cartridge_function</function></functions>
+        <image>objects/greaseCartridge/store_greaseCartridge.png</image>
+        <price>17</price>
+        <category>pallets</category>
+        <brand>SKF</brand>
+        <showInStore>true</showInStore>
+        <canBeSold>false</canBeSold>
+        <allowLeasing>false</allowLeasing>
+        <rotation>0</rotation>
+        <shopHeight>0.24</shopHeight>
+        <financeCategory>OTHER</financeCategory>
+        <storeIconRendering><settings centerIcon="true" cameraXRot="-15" cameraYRot="35"/></storeIconRendering>
+    </storeData>
+    <base>
+        <typeDesc>$l10n_rms_grease_cartridge_typedesc</typeDesc>
+        <filename>objects/greaseCartridge/greaseCarton.i3d</filename>
+        <size width="1.2" length="0.8" height="1.1"/>
+        <components maxMass="10"><component centerOfMass="0 0.12 0" solverIterationCount="10" mass="0.43"/></components>
+        <supportsPickUp>true</supportsPickUp>
+        <showInVehicleMenu>false</showInVehicleMenu>
+        <mapHotspot available="false"/>
+        <input allowed="false"/>
+    </base>
+    <designConfigurations title="$l10n_rms_grease_quantity">
+        <designConfiguration name="1" price="0" vehicleIcon="objects/greaseCartridge/store_greaseCartridge.png">
+            <objectChange node="singleVariant" visibilityActive="true" visibilityInactive="false"/>
+            <objectChange node="cartonVariant" visibilityActive="false" visibilityInactive="true"/>
+            <objectChange node="singleCartridgeBody" compoundChildActive="true" compoundChildInactive="false"/>
+            <objectChange node="cartonBody" compoundChildActive="false" compoundChildInactive="true"/>
+            <objectChange node="greasePackage" massActive="0.43"/>
+        </designConfiguration>
+        <designConfiguration name="2" price="17" vehicleIcon="objects/greaseCartridge/store_greaseCarton02.png">
+            <objectChange node="greasePackage" massActive="0.86"/>
+        </designConfiguration>
+        <designConfiguration name="3" price="34" vehicleIcon="objects/greaseCartridge/store_greaseCarton03.png">
+            <objectChange node="greasePackage" massActive="1.29"/>
+        </designConfiguration>
+        <designConfiguration name="4" price="51" vehicleIcon="objects/greaseCartridge/store_greaseCarton04.png">
+            <objectChange node="greasePackage" massActive="1.72"/>
+        </designConfiguration>
+        <designConfiguration name="5" price="68" vehicleIcon="objects/greaseCartridge/store_greaseCarton05.png">
+            <objectChange node="greasePackage" massActive="2.15"/>
+        </designConfiguration>
+        <designConfiguration name="6" price="85" vehicleIcon="objects/greaseCartridge/store_greaseCarton06.png">
+            <objectChange node="greasePackage" massActive="2.58"/>
+        </designConfiguration>
+        <designConfiguration name="7" price="102" vehicleIcon="objects/greaseCartridge/store_greaseCarton07.png">
+            <objectChange node="greasePackage" massActive="3.01"/>
+        </designConfiguration>
+        <designConfiguration name="8" price="119" vehicleIcon="objects/greaseCartridge/store_greaseCarton08.png">
+            <objectChange node="greasePackage" massActive="3.44"/>
+        </designConfiguration>
+        <designConfiguration name="9" price="136" vehicleIcon="objects/greaseCartridge/store_greaseCarton09.png">
+            <objectChange node="greasePackage" massActive="3.87"/>
+        </designConfiguration>
+        <designConfiguration name="10" price="153" vehicleIcon="objects/greaseCartridge/store_greaseCarton10.png">
+            <objectChange node="greasePackage" massActive="4.3"/>
+        </designConfiguration>
+        <designConfiguration name="11" price="170" vehicleIcon="objects/greaseCartridge/store_greaseCarton11.png">
+            <objectChange node="greasePackage" massActive="4.73"/>
+        </designConfiguration>
+        <designConfiguration name="12" price="187" vehicleIcon="objects/greaseCartridge/store_greaseCarton12.png">
+            <objectChange node="greasePackage" massActive="5.16"/>
+        </designConfiguration>
+    </designConfigurations>
+    <rmsGreaseCartridge>
+        <cartridge node="cartridge01"/>
+        <cartridge node="cartridge02"/>
+        <cartridge node="cartridge03"/>
+        <cartridge node="cartridge04"/>
+        <cartridge node="cartridge05"/>
+        <cartridge node="cartridge06"/>
+        <cartridge node="cartridge07"/>
+        <cartridge node="cartridge08"/>
+        <cartridge node="cartridge09"/>
+        <cartridge node="cartridge10"/>
+        <cartridge node="cartridge11"/>
+        <cartridge node="cartridge12"/>
+    </rmsGreaseCartridge>
+    <pallet/>
+    <foliageBending/>
+    <i3dMappings>
+        <i3dMapping id="greasePackage" node="0>"/>
+        <i3dMapping id="cartonBody" node="0>0"/>
+        <i3dMapping id="singleCartridgeBody" node="0>1"/>
+        <i3dMapping id="cartonVariant" node="0>2"/>
+        <i3dMapping id="cartridge01" node="0>2|0|1"/>
+        <i3dMapping id="cartridge02" node="0>2|0|2"/>
+        <i3dMapping id="cartridge03" node="0>2|0|3"/>
+        <i3dMapping id="cartridge04" node="0>2|0|4"/>
+        <i3dMapping id="cartridge05" node="0>2|0|5"/>
+        <i3dMapping id="cartridge06" node="0>2|0|6"/>
+        <i3dMapping id="cartridge07" node="0>2|0|7"/>
+        <i3dMapping id="cartridge08" node="0>2|0|8"/>
+        <i3dMapping id="cartridge09" node="0>2|0|9"/>
+        <i3dMapping id="cartridge10" node="0>2|0|10"/>
+        <i3dMapping id="cartridge11" node="0>2|0|11"/>
+        <i3dMapping id="cartridge12" node="0>2|0|12"/>
+        <i3dMapping id="singleVariant" node="0>3"/>
+        <i3dMapping id="pickupNode" node="0>4"/>
+    </i3dMappings>
+</vehicle>

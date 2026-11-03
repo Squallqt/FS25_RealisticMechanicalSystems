@@ -110,7 +110,7 @@ local CAUSES = {
     wef = {"Weather exposure", "weather", function() return string.format("weather x%.2f", RMS_Main.currentWeatherFactor) end},
     ltf = {"Lights on", "lights", function(_, spec) return string.format("%.0f W lit", spec.electricalBalance.loads.lights * spec.systemVoltageV) end},
     crf = {"Cranking", "cranking", function(f) return string.format("%.1f s cranking", f.crankingTimer / 1000) end},
-    lubf = {"Greasing due", "greasing", function(_, spec) return "grease left " .. pct(spec.lubricationLevel) end},
+    lubf = {"Greasing late", "greasing", function(_, spec) return pct(1 - spec.lubricationLevel) .. " of an interval late" end},
     slf = {"Steering load", "steering", function(f) return pct(f.steerTravelRate) .. " of the lock a second" end},
     tif = {"Impacts", "impacts", function(f) return string.format("%d %s", f.impactCount, f.impactCount == 1 and "impact" or "impacts") end},
     bmf = {"Braking mass", "braking", function(f) return getPowerToMass(f.brakeMassRatio, f.brakeMassBasis) end},
@@ -264,7 +264,15 @@ local function readHeader(vehicle, spec, reading)
         local text = isDue and "overdue  (" .. level .. ")" or #left > 0 and table.concat(left, " or ") .. " left  (" .. level .. ")" or level
         table.insert(reading.service, {names[clock.key], text})
     end
-    table.insert(reading.service, {"Greasing", spec.isVehicleNeedLubricate and pct(spec.lubricationLevel) or "not needed"})
+    table.insert(reading.service, {"Greasing", spec.isVehicleNeedLubricate and string.format("%d points due  (%s of an interval late)",
+        spec.greasingDuePoints or 0, pct(1 - spec.lubricationLevel)) or "not needed"})
+    for _, child in ipairs(vehicle:getChildVehicles()) do
+        local childSpec = child.spec_rmsImplementGreasing
+        if childSpec ~= nil and childSpec.isVehicleNeedLubricate then
+            table.insert(reading.service, {"Implement greasing", string.format("%s: %d points due  (%s late, wears x%.2f)",
+                child:getFullName(), childSpec.greasingDuePoints, pct(1 - childSpec.lubricationLevel), RMS_Greasing.getWearFactor(child))})
+        end
+    end
 end
 
 local function getSince(stats)

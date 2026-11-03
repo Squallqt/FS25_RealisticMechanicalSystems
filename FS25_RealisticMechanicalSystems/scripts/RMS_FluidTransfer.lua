@@ -56,8 +56,8 @@ local function getIsOwnedByRequester(container, target, requester)
     return requester ~= nil and requester.farmId ~= nil
         and container ~= nil and container.getOwnerFarmId ~= nil
         and target ~= nil and target.getOwnerFarmId ~= nil
-        and container:getOwnerFarmId() == requester.farmId
-        and target:getOwnerFarmId() == requester.farmId
+        and g_currentMission.accessHandler:canFarmAccess(requester.farmId, container)
+        and g_currentMission.accessHandler:canFarmAccess(requester.farmId, target)
 end
 
 local function getRuntimeValidation(container, target, circuit, requester)

@@ -251,7 +251,7 @@
         <text name="rms_spec_work_under_hour_ago" text="menos de 1 h de trabalho atrás"/>
         <text name="rms_spec_maintenance_complete_notification" text="Intervenção concluída: %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Intervenção cancelada: %s"/>
-        <text name="rms_spec_maintenance_level" text="Revisão %s"/>
+        <text name="rms_spec_maintenance_level" text="Manutenção %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s até %s"/>
         <text name="rms_spec_workshop_dealer" text="Concessionário"/>
         <text name="rms_spec_workshop_own" text="Própria"/>
@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Instantâneo"/>
         <text name="rms_option_menu_start_text" text="Iniciar"/>
         <text name="rms_service_months" text="%s meses"/>
+        <text name="rms_service_either" text="%s ou %s"/>
         <text name="rms_service_month" text="%s mês"/>
         <text name="rms_service_calendar_due" text="Prazo do calendário atingido"/>
         <text name="rms_service_program_estimated" text="Programa estimado"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistola de massa lubrificante"/>
         <text name="rms_grease_gun_no_vehicle" text="Nenhum veículo ao alcance da lubrificação"/>
-        <text name="rms_grease_gun_function" text="Usada para lubrificar os pontos de lubrificação da máquina"/>
+        <text name="rms_grease_gun_function" text="Lubrifica os copos de lubrificação das máquinas. Usa um cartucho de massa lubrificante."/>
         <text name="rms_grease_gun_action" text="Lubrificar"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: lubrificação já efetuada"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s não requer lubrificação"/>
+        <text name="rms_grease_gun_load" text="Carregar cartucho"/>
+        <text name="rms_grease_gun_empty" text="Pistola vazia: carrega um cartucho"/>
+        <text name="rms_grease_gun_not_empty" text="A pistola ainda contém massa"/>
+        <text name="rms_grease_gun_points" text="Copos por lubrificar: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Cartucho de massa"/>
+        <text name="rms_grease_cartridge_function" text="Recarrega a pistola de massa lubrificante: com ela na mão, coloca-te em frente ao cartucho."/>
+        <text name="rms_grease_cartridge_count" text="Cartuchos"/>
+        <text name="rms_grease_quantity" text="Quantidade"/>
+        <text name="rms_grease_hud_title" text="Lubrificação"/>
+        <text name="rms_grease_hud_done" text="Em dia"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Soprador de ar comprimido"/>
         <text name="rms_air_blower_no_vehicle" text="Nenhum veículo ao alcance da limpeza"/>
         <text name="rms_air_blower_function" text="Usado para limpar radiadores e filtros de ar"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s atrasada em %s"/>
         <text name="rms_inspection_status_slightly_low" text="Ligeiramente baixo"/>
         <text name="rms_inspection_status_slightly_dirty" text="Ligeiramente entupido"/>
-        <text name="rms_inspection_status_slightly_dry" text="Ligeiramente seco"/>
+        <text name="rms_inspection_status_grease_due" text="Por lubrificar"/>
         <text name="rms_inspection_status_slight_moisture" text="Ligeira humidade"/>
         <text name="rms_inspection_status_seepage" text="Suintamento"/>
         <text name="rms_inspection_status_severe_leak" text="Fuga importante"/>
         <text name="rms_inspection_status_low" text="Baixo"/>
         <text name="rms_inspection_status_very_low" text="Muito baixo"/>
-        <text name="rms_inspection_status_very_dry" text="Muito seco"/>
         <text name="rms_inspection_status_critically_low" text="Atesto urgente"/>
         <text name="rms_inspection_status_critically_clogged" text="Totalmente entupido"/>
-        <text name="rms_inspection_status_critically_dry" text="Metal com metal"/>
         <text name="rms_inspection_status_dirty" text="Entupido"/>
-        <text name="rms_inspection_status_dry" text="Seco"/>
+        <text name="rms_inspection_status_grease_late" text="Em atraso"/>
         <text name="rms_inspection_status_active_leak" text="Fuga ativa"/>
         <text name="rms_inspection_status_heavily_clogged" text="Fortemente entupido"/>
         <text name="rms_inspection_status_not_required" text="Não necessário"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Sintoma de uma avaria não identificada: a oficina identifica-a com uma inspeção ou uma manutenção."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Vestígios de sobreaquecimento e escurecimento de algumas conexões são visíveis perto do alternador."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Vestígios pronunciados de sobreaquecimento e conectores escurecidos são visíveis perto do alternador e dos seus cabos."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Os pontos de lubrificação parecem ligeiramente secos."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Os pontos de lubrificação parecem secos e insuficientemente lubrificados."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Os pontos de lubrificação estão muito secos, com muito pouca massa lubrificante visível."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Os pontos de lubrificação trabalham metal com metal, quase sem massa lubrificante visível."/>
+        <text name="rms_inspection_hint_grease_due" text="Copos de lubrificação por lubrificar: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Ligeiras marcas de óleo são visíveis à volta da caixa da transmissão."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Gotas de óleo são visíveis sob a transmissão."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Uma perda de óleo considerável é visível à volta da transmissão."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="O líquido de arrefecimento tem de ser mudado: gasto, acelera o desgaste do sistema de arrefecimento. A revisão recomendada na oficina substitui-o."/>
         <text name="rms_inspection_radiator" text="Radiador"/>
         <text name="rms_inspection_air_filter" text="Filtro de ar"/>
-        <text name="rms_inspection_lubrication_level" text="Nível de lubrificação"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Nenhum sintoma suspeito detetado"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Sem medição"/>
         <text name="rms_fleet_parts_reading" text="Peças medidas %s"/>
         <text name="rms_fleet_parts_need_complete" text="Peças medidas na próxima inspeção completa"/>
+        <text name="rms_fleet_greasing_done" text="Lubrificação em dia"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s h de trabalho"/>
+        <text name="rms_fleet_greasing_period_day" text="Cada dia trabalhado"/>
+        <text name="rms_fleet_greasing_period_month" text="Todos os meses"/>
+        <text name="rms_fleet_greasing_period_months" text="A cada %d meses"/>
+        <text name="rms_fleet_greasing_period_bales" text="A cada %d fardos"/>
+        <text name="rms_fleet_greasing_bales" text="%d fardos"/>
+        <text name="rms_fleet_greasing_day" text="%d dia"/>
+        <text name="rms_fleet_greasing_days" text="%d dias"/>
+        <text name="rms_fleet_day_late" text="%d dia de atraso"/>
+        <text name="rms_fleet_days_late" text="%d dias de atraso"/>
+        <text name="rms_fleet_greasing_to_do" text="%d por fazer"/>
+        <text name="rms_fleet_greasing_points" text="Copos de lubrificação"/>
+        <text name="rms_fleet_greasing_next" text="Próxima lubrificação"/>
+        <text name="rms_fleet_greasing_now" text="Agora"/>
+        <text name="rms_fleet_greasing_in" text="em %s"/>
+        <text name="rms_fleet_months_late" text="%d meses de atraso"/>
+        <text name="rms_fleet_bales_late" text="%d fardos de atraso"/>
+        <text name="rms_fleet_wear" text="Desgaste"/>
+        <text name="rms_fleet_wear_faster" text="Mais rápido"/>
+        <text name="rms_fleet_wear_normal" text="Desgaste normal"/>
+        <text name="rms_fleet_wear_late" text="Atraso na lubrificação"/>
+        <text name="rms_fleet_wear_dry" text="Desgaste a seco"/>
+        <text name="rms_fleet_wear_repair_greases" text="Lubrificado na reparação"/>
+        <text name="rms_fleet_wear_repair" text="Reparação na oficina"/>
+        <text name="rms_fleet_wear_none" text="Nenhum"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Devolução do veículo"/>
         <text name="rms_sell_dialog_section_vehicle" text="Veículo"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Sistema de arrefecimento e filtro de ar"/>
         <text name="rms_tutorial_cooling_air_check_message" text="O radiador ou o filtro de ar está sujo. Mantém premida a tecla %s enquanto olhas para o veículo para identificares qual deles. Limpa-o com o soprador de ar comprimido. Se o filtro já não puder ser limpo, a oficina substitui-o a partir da revisão %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubrificação necessária"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="O veículo %s precisa de lubrificação regular.&#10;&#10;No RMS, o nível de lubrificação diminui com as horas de funcionamento. Após um longo período sem utilização, também é necessário lubrificar a máquina antes de a colocar novamente em serviço. Uma lubrificação insuficiente acelera o desgaste do chassis.&#10;&#10;Compra uma pistola de massa lubrificante na loja e lubrifica a máquina quando a inspeção indicar que é necessário.&#10;&#10;Podes verificar o nível de lubrificação: mantém premida a tecla %s enquanto olhas para o veículo."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="O veículo %s tem copos de lubrificação por lubrificar.&#10;&#10;No RMS, cada máquina tem os copos de lubrificação do seu manual. Precisam novamente de lubrificação após um certo número de horas de funcionamento, ou a cada dia de trabalho em algumas máquinas. Lubrificar com atraso acelera o desgaste do chassis.&#10;&#10;Compra uma pistola de massa lubrificante e cartuchos na loja. Com a pistola na mão, aponta para um cartucho para o carregar e depois para a máquina: cada clique lubrifica um copo e manter o botão premido continua nos seguintes.&#10;&#10;Para ver os copos de lubrificação pendentes, mantém premida a tecla %s enquanto olhas para o veículo."/>
         <text name="rms_tutorial_needs_repair_title" text="Avaria detetada"/>
         <text name="rms_tutorial_needs_repair_message" text="O veículo %s apresenta um problema. Uma das peças pode ter avariado.&#10;&#10;Passa numa oficina: uma inspeção, ou a manutenção se estiver na altura, identifica a avaria. Não demores: a avaria pode continuar a agravar-se e o custo da reparação aumenta com ela.&#10;&#10;Depois de identificada a avaria, efetua a reparação na oficina."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revisão necessária"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Pressão de sobrealimentação"/>
         <text name="rms_diagnostic_spn_100" text="Pressão do óleo do motor"/>
         <text name="rms_diagnostic_spn_101" text="Pressão do cárter do motor"/>
-        <text name="rms_diagnostic_spn_1322" text="Falhas de ignição em vários cilindros"/>
         <text name="rms_diagnostic_spn_cylinder" text="Falha de ignição do cilindro %d"/>
         <text name="rms_diagnostic_spn_94" text="Pressão de alimentação de combustível"/>
         <text name="rms_diagnostic_spn_110" text="Temperatura do líquido de arrefecimento"/>

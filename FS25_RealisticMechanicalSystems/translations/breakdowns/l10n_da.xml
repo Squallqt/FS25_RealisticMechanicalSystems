@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Alvorligt slid på styrespindelboltene. Slørret i styringen er stort."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritisk slid på styrespindelboltene. Styringen har meget stort slør."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Let svigt i styreorbitrolen. Rattet drejer med lidt slør, før hjulene følger med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Let svigt i styreboksen. Rattet drejer med lidt slør, før hjulene følger med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Let svigt i styretandstangen. Rattet drejer med lidt slør, før hjulene følger med."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Moderat svigt i styreorbitrolen. Rattet drejer længere, før hjulene følger med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Moderat svigt i styreboksen. Rattet drejer længere, før hjulene følger med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Moderat svigt i styretandstangen. Rattet drejer længere, før hjulene følger med."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Alvorligt svigt i styreorbitrolen. Rattet drejer meget, uden at hjulene følger ordentligt med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Alvorligt svigt i styreboksen. Rattet drejer meget, uden at hjulene følger ordentligt med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Alvorligt svigt i styretandstangen. Rattet drejer meget, uden at hjulene følger ordentligt med."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritisk svigt i styreorbitrolen. Rattet har meget stort slør, før hjulene følger med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kritisk svigt i styreboksen. Rattet har meget stort slør, før hjulene følger med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kritisk svigt i styretandstangen. Rattet har meget stort slør, før hjulene følger med."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Let indvendig lækage i styrecylinderen. Køretøjet begynder at drive til den ene side."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Let lækage ved styrecylinderens stangtætning. Hydraulikoliestanden falder lidt."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Moderat indvendig lækage i styrecylinderen. Køretøjet driver mere til den ene side."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Bolte og bøsninger i læsserens led"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Styrespindelbolte"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Styreorbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Styreboks"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Styretandstang"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Styrecylinder"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Kabineaffjedring"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Kraftudtagets kobling"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Gearkassesensorer"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Transmissionsfilter"/>
         <text name="rms_breakdowns_part_lift_valve" text="Liftventil"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Skærebordsløfteventil"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Liftpositionssensor"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Skærehøjdesensor"/>
         <text name="rms_breakdowns_part_loader_control" text="Læsserstyring"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydrauliske lynkoblinger"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Let svigt i koblingen. Den frigør ikke helt. Nogle gear er svære at vælge."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Svigt i hydraulikpumpen. Den er brudt sammen. Trykket er væk, og hydraulikfunktionerne reagerer ikke."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Svigt i den hydrauliske styreventil. Ventilspolen sidder fast. Den berørte hydraulikfunktion bevæger sig ikke."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Svigt i liftventilen. Den holder ikke lasten korrekt. Det løftede redskab synker."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Svigt i skærebordsløfteventilen. Den holder ikke lasten korrekt. Det løftede skærebord synker."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Svigt i liftventilen. Den sidder fast. Liften reagerer ikke."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Svigt i skærebordsløfteventilen. Den sidder fast. Skærebordet kan ikke længere hæves eller sænkes."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Svigt i liftpositionssensoren. Positionssignalet svigter. Liften holder ikke den ønskede højde, og en fejlkode gemmes."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Svigt i skærehøjdesensoren. Højdesignalet svigter. Skærebordet holder ikke den ønskede højde, og en fejlkode gemmes."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Let svigt i læsserstyringen. Armen og skovlen reagerer langsommere."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Moderat svigt i læsserstyringen. Armen og skovlen bevæger sig kun med halv hastighed."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Alvorligt svigt i læsserstyringen. Armen og skovlen bevæger sig næsten ikke."/>

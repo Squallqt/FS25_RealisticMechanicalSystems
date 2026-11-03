@@ -234,7 +234,7 @@ function RMS_Tutorial:update(dt)
                 messagedData.RAD_OR_FILTER_CLOGGED = true
                 self.messageDowntime = downtimeAfterMessage
 
-            elseif not messagedData.NEEDS_LUBRICATION and spec.isVehicleNeedLubricate and spec.lubricationLevel <= RMS_Config.FIELD_CARE.LUBRICATION_WARNING_THRESHOLD then
+            elseif not messagedData.NEEDS_LUBRICATION and RMS_Greasing.getDuePoints(vehicle) > 0 then
                 RMS_Hud.showNotification(
                     string.format(
                         g_i18n:getText("rms_tutorial_needs_lubrication_message"),

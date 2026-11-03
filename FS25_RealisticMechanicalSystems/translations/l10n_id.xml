@@ -314,6 +314,7 @@
         <text name="rms_option_menu_duration_instant" text="Seketika"/>
         <text name="rms_option_menu_start_text" text="Mulai"/>
         <text name="rms_service_months" text="%s bulan"/>
+        <text name="rms_service_either" text="%s atau %s"/>
         <text name="rms_service_month" text="%s bulan"/>
         <text name="rms_service_calendar_due" text="Batas kalender tercapai"/>
         <text name="rms_service_program_estimated" text="Jadwal perkiraan"/>
@@ -564,10 +565,21 @@
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistol Gemuk"/>
         <text name="rms_grease_gun_no_vehicle" text="Tidak ada kendaraan dalam jangkauan pelumasan"/>
-        <text name="rms_grease_gun_function" text="Digunakan untuk memberi gemuk pada titik pelumasan mesin"/>
+        <text name="rms_grease_gun_function" text="Melumasi nipel gemuk pada mesin. Diisi dengan kartrid gemuk."/>
         <text name="rms_grease_gun_action" text="Beri gemuk"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: pelumasan sudah dilakukan"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s tidak memerlukan pelumasan"/>
+        <text name="rms_grease_gun_load" text="Pasang Kartrid"/>
+        <text name="rms_grease_gun_empty" text="Pistol Gemuk kosong: pasang kartrid"/>
+        <text name="rms_grease_gun_not_empty" text="Pistol Gemuk masih berisi gemuk"/>
+        <text name="rms_grease_gun_points" text="Nipel tersisa: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Kartrid Gemuk"/>
+        <text name="rms_grease_cartridge_function" text="Mengisi ulang Pistol Gemuk: pegang pistol dan berdirilah di depan kartrid."/>
+        <text name="rms_grease_cartridge_count" text="Kartrid"/>
+        <text name="rms_grease_quantity" text="Jumlah"/>
+        <text name="rms_grease_hud_title" text="Pelumasan"/>
+        <text name="rms_grease_hud_done" text="Selesai"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Peniup Udara Bertekanan"/>
         <text name="rms_air_blower_no_vehicle" text="Tidak ada kendaraan dalam jangkauan pembersihan"/>
         <text name="rms_air_blower_function" text="Digunakan untuk membersihkan radiator dan filter udara"/>
@@ -665,18 +677,16 @@
         <text name="rms_inspection_service_overdue" text="%s terlambat %s"/>
         <text name="rms_inspection_status_slightly_low" text="Sedikit Rendah"/>
         <text name="rms_inspection_status_slightly_dirty" text="Sedikit Tersumbat"/>
-        <text name="rms_inspection_status_slightly_dry" text="Sedikit Kering"/>
+        <text name="rms_inspection_status_grease_due" text="Perlu Gemuk"/>
         <text name="rms_inspection_status_slight_moisture" text="Sedikit Lembap"/>
         <text name="rms_inspection_status_seepage" text="Rembesan"/>
         <text name="rms_inspection_status_severe_leak" text="Kebocoran Berat"/>
         <text name="rms_inspection_status_low" text="Rendah"/>
         <text name="rms_inspection_status_very_low" text="Sangat Rendah"/>
-        <text name="rms_inspection_status_very_dry" text="Sangat Kering"/>
         <text name="rms_inspection_status_critically_low" text="Penambahan Mendesak"/>
         <text name="rms_inspection_status_critically_clogged" text="Tersumbat Sepenuhnya"/>
-        <text name="rms_inspection_status_critically_dry" text="Logam Bergesekan"/>
         <text name="rms_inspection_status_dirty" text="Tersumbat"/>
-        <text name="rms_inspection_status_dry" text="Kering"/>
+        <text name="rms_inspection_status_grease_late" text="Terlambat"/>
         <text name="rms_inspection_status_active_leak" text="Kebocoran Aktif"/>
         <text name="rms_inspection_status_heavily_clogged" text="Sangat Tersumbat"/>
         <text name="rms_inspection_status_not_required" text="Tidak Diperlukan"/>
@@ -722,10 +732,7 @@
         <text name="rms_inspection_hint_unidentified" text="Gejala kerusakan yang belum teridentifikasi: bengkel mengidentifikasinya dengan inspeksi atau perawatan."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Tanda panas berlebih dan penggelapan terlihat di sekitar alternator dan beberapa sambungan."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Tanda panas berlebih yang jelas dan konektor yang menggelap terlihat di sekitar alternator serta kabelnya."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Titik pelumasan tampak sedikit kering."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Titik pelumasan tampak kering dan kekurangan gemuk."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Titik pelumasan sangat kering dan hanya sedikit gemuk yang masih terlihat."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Titik pelumasan bekerja dengan logam bergesekan langsung dan hampir tidak ada gemuk yang terlihat."/>
+        <text name="rms_inspection_hint_grease_due" text="Nipel gemuk yang perlu dilumasi: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Sedikit jejak oli terlihat di sekitar rumah transmisi."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Tetesan oli terlihat di bawah transmisi."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Kehilangan oli yang jelas terlihat di sekitar transmisi."/>
@@ -797,7 +804,6 @@
         <text name="rms_inspection_hint_service_coolant" text="Cairan pendingin perlu diganti: cairan yang aus mempercepat keausan sistem pendingin. Servis yang disarankan di bengkel menggantinya."/>
         <text name="rms_inspection_radiator" text="Radiator"/>
         <text name="rms_inspection_air_filter" text="Filter Udara"/>
-        <text name="rms_inspection_lubrication_level" text="Tingkat Pelumasan"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Tidak ada gejala mencurigakan yang terdeteksi"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -840,6 +846,32 @@
         <text name="rms_fleet_part_unmeasured" text="Belum diukur"/>
         <text name="rms_fleet_parts_reading" text="Komponen diukur %s"/>
         <text name="rms_fleet_parts_need_complete" text="Komponen diukur pada inspeksi lengkap berikutnya"/>
+        <text name="rms_fleet_greasing_done" text="Pelumasan selesai"/>
+        <text name="rms_fleet_greasing_period_hours" text="%s jam kerja"/>
+        <text name="rms_fleet_greasing_period_day" text="Tiap hari dipakai"/>
+        <text name="rms_fleet_greasing_period_month" text="Setiap bulan"/>
+        <text name="rms_fleet_greasing_period_months" text="Setiap %d bulan"/>
+        <text name="rms_fleet_greasing_period_bales" text="Setiap %d bal"/>
+        <text name="rms_fleet_greasing_bales" text="%d bal"/>
+        <text name="rms_fleet_greasing_day" text="%d hari"/>
+        <text name="rms_fleet_greasing_days" text="%d hari"/>
+        <text name="rms_fleet_day_late" text="Terlambat %d hari"/>
+        <text name="rms_fleet_days_late" text="Terlambat %d hari"/>
+        <text name="rms_fleet_greasing_to_do" text="%d tersisa"/>
+        <text name="rms_fleet_greasing_points" text="Nipel"/>
+        <text name="rms_fleet_greasing_next" text="Pelumasan berikutnya"/>
+        <text name="rms_fleet_greasing_now" text="Sekarang"/>
+        <text name="rms_fleet_greasing_in" text="dalam %s"/>
+        <text name="rms_fleet_months_late" text="Terlambat %d bulan"/>
+        <text name="rms_fleet_bales_late" text="Terlambat %d bal"/>
+        <text name="rms_fleet_wear" text="Keausan"/>
+        <text name="rms_fleet_wear_faster" text="Lebih cepat"/>
+        <text name="rms_fleet_wear_normal" text="Keausan normal"/>
+        <text name="rms_fleet_wear_late" text="Keterlambatan pelumasan"/>
+        <text name="rms_fleet_wear_dry" text="Keausan tanpa gemuk"/>
+        <text name="rms_fleet_wear_repair_greases" text="Dilumasi saat perbaikan"/>
+        <text name="rms_fleet_wear_repair" text="Perbaikan di bengkel"/>
+        <text name="rms_fleet_wear_none" text="Tidak ada"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Pengembalian Kendaraan"/>
         <text name="rms_sell_dialog_section_vehicle" text="Kendaraan"/>
@@ -869,7 +901,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Pendinginan dan Filter Udara"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Radiator atau filter udara tersumbat. Tahan tombol %s sambil melihat kendaraan untuk mengetahui yang mana. Bersihkan dengan peniup udara bertekanan. Jika filter tidak dapat dibersihkan lagi, bengkel menggantinya mulai dari servis %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Pelumasan Diperlukan"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s milikmu memerlukan pelumasan rutin.&#10;&#10;Dalam RMS, tingkat pelumasan menurun seiring jam operasi. Setelah lama tidak digunakan, pelumasan juga diperlukan sebelum mesin digunakan kembali. Pelumasan yang tidak memadai mempercepat keausan sasis.&#10;&#10;Beli Pistol Gemuk di toko dan beri gemuk pada mesin ketika inspeksi memintanya.&#10;&#10;Kamu dapat memeriksa tingkat pelumasan: tahan tombol %s sambil melihat kendaraan."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s milikmu memiliki nipel gemuk yang perlu dilumasi.&#10;&#10;Dalam RMS, setiap mesin memiliki nipel gemuk sesuai buku petunjuknya. Nipel perlu dilumasi lagi setelah sejumlah jam operasi, atau setiap hari kerja pada mesin tertentu. Pelumasan yang terlambat mempercepat keausan sasis.&#10;&#10;Beli Pistol Gemuk dan kartrid di toko. Pegang pistol dan bidik kartrid untuk memasangnya, lalu bidik mesin: setiap klik melumasi satu nipel, dan menahan tombol akan melanjutkan ke nipel berikutnya.&#10;&#10;Untuk melihat nipel yang tersisa, tahan tombol %s sambil melihat kendaraan."/>
         <text name="rms_tutorial_needs_repair_title" text="Kerusakan Terdeteksi"/>
         <text name="rms_tutorial_needs_repair_message" text="%s milikmu mengalami masalah. Salah satu suku cadangnya mungkin gagal.&#10;&#10;Bawa kendaraan ke bengkel: inspeksi, atau perawatan jika sudah waktunya, mengidentifikasi kerusakan. Jangan menunda: kerusakan dapat terus memburuk dan biaya perbaikan ikut meningkat.&#10;&#10;Setelah kerusakan teridentifikasi, lakukan perbaikan di bengkel."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Rekondisi Diperlukan"/>
@@ -1012,7 +1044,6 @@
         <text name="rms_diagnostic_spn_102" text="Tekanan turbo"/>
         <text name="rms_diagnostic_spn_100" text="Tekanan oli mesin"/>
         <text name="rms_diagnostic_spn_101" text="Tekanan Bak Mesin"/>
-        <text name="rms_diagnostic_spn_1322" text="Salah pengapian di beberapa silinder"/>
         <text name="rms_diagnostic_spn_cylinder" text="Salah pengapian silinder %d"/>
         <text name="rms_diagnostic_spn_94" text="Tekanan pasokan bahan bakar"/>
         <text name="rms_diagnostic_spn_110" text="Suhu cairan pendingin"/>

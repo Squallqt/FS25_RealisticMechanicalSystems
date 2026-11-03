@@ -144,6 +144,20 @@
                                 <Text profile="rms_tileValue" id="serviceAccessValue" position="40px -28px" size="130px 24px" />
                             </GuiElement>
                         </GuiElement>
+                        <GuiElement profile="rms_workshopBlock" id="greasingTiles" position="20px -304px" size="360px 58px" visible="false">
+                            <GuiElement profile="rms_workshopBlock" size="174px 58px">
+                                <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                <Bitmap profile="rms_fleetIconLubrication" position="8px -15px" />
+                                <Text profile="rms_fleetTileLabel" position="40px -9px" size="130px 18px" text="$l10n_rms_fleet_greasing_points" />
+                                <Text profile="rms_tileValue" id="greasingPointsValue" position="40px -28px" size="130px 24px" />
+                            </GuiElement>
+                            <GuiElement profile="rms_workshopBlock" position="186px 0px" size="174px 58px">
+                                <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                <Bitmap profile="rms_fleetIconOperatingHours" position="8px -15px" />
+                                <Text profile="rms_fleetTileLabel" position="40px -9px" size="130px 18px" text="$l10n_rms_ingame_menu_header_interval" />
+                                <Text profile="rms_tileValue" id="greasingIntervalValue" position="40px -28px" size="130px 24px" />
+                            </GuiElement>
+                        </GuiElement>
                         <GuiElement profile="rms_workshopBlock" id="reasonTile" position="20px -304px" size="360px 58px" visible="false">
                             <RoundCorner profile="rms_workshopSurfaceSoft" />
                             <Bitmap profile="rms_workshopIcon" position="10px -13px" size="32px 32px" imageSliceId="gui.storeAttribute_info" />
@@ -175,6 +189,7 @@
                             <Bitmap profile="rms_fleetUrgencyAccent" id="bannerAccent" position="10px -12px" size="4px 40px" />
                             <Bitmap profile="rms_fleetIconMaintenance" id="bannerIcons[1]" position="24px -13px" size="38px 38px" />
                             <Bitmap profile="rms_workshopIcon" id="bannerIcons[2]" position="24px -13px" size="38px 38px" imageSliceId="gui.icon_construction_buildings" visible="false" />
+                            <Bitmap profile="rms_fleetIconLubrication" id="bannerIcons[3]" position="24px -13px" size="38px 38px" visible="false" />
                             <Text profile="rms_fleetBannerTitle" id="bannerTitle" position="76px -9px" size="331px 26px" />
                             <Text profile="rms_fleetBannerDetail" id="bannerDetail" position="76px -35px" size="331px 20px" />
                             <Button profile="rms_workshopPrimaryButton" id="logButton" position="425px -7px" size="236px 50px" textMaxWidth="212px" text="$l10n_rms_ws_label_maintenance_log" onClick="onShowMaintenanceLog">
@@ -184,10 +199,65 @@
 
                         <GuiElement profile="rms_workshopBlock" position="0px -76px" size="328px 550px">
                             <FrameReference ref="RMS_ConditionCardFrame" id="conditionCard" />
+                            <!-- Greasing of an implement -->
+                            <GuiElement profile="rms_fillParent" id="greasingCard" visible="false">
+                                <RoundCorner profile="rms_workshopSurfaceStrong" />
+                                <GuiElement profile="rms_workshopBlock" position="20px -16px" size="288px 32px">
+                                    <RoundCorner profile="rms_workshopSectionAccent" />
+                                    <Text profile="rms_workshopSectionTitle" position="16px 0px" size="272px 32px" text="$l10n_rms_grease_hud_title" />
+                                    <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="272px 1px" />
+                                </GuiElement>
+                                <GuiElement profile="rms_workshopBlock" id="greasingRingArea" position="72px -51px" size="184px 184px" onDraw="onDrawGreasingRing" />
+                                <BoxLayout profile="rms_ringValueStack" position="106px -95px" size="116px 96px">
+                                    <Text profile="rms_ringValue" id="greasingValue" size="116px 40px" />
+                                    <Text profile="rms_ringOutdated" id="greasingState" size="116px 18px" />
+                                </BoxLayout>
+                                <BoxLayout profile="rms_workshopStack" position="20px -242px" size="288px 222px" elementSpacing="8px">
+                                    <GuiElement profile="rms_workshopBlock" id="greasingRowTemplate" size="288px 38px">
+                                        <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                        <Text profile="rms_workshopRowLabel" name="label" position="14px 0px" size="82px 38px" />
+                                        <RoundCorner profile="rms_workshopValuePill" name="pill" position="102px -5px" size="174px 28px" />
+                                        <Text profile="rms_workshopPillValue" name="value" position="114px -5px" size="150px 28px" />
+                                    </GuiElement>
+                                </BoxLayout>
+                                <GuiElement profile="rms_cardFoot" size="328px 56px">
+                                    <Text profile="rms_workshopCenteredDetail" position="20px 0px" size="288px 24px" textMaxNumLines="1" text="$l10n_rms_fleet_greasing_next" />
+                                    <RoundCorner profile="rms_workshopValuePillCentered" id="greasingFootPill" position="40px -26px" size="248px 30px" />
+                                    <Text profile="rms_workshopPillValue" id="greasingFootValue" position="52px -26px" size="224px 30px" />
+                                </GuiElement>
+                            </GuiElement>
+                        </GuiElement>
+
+                        <!-- Wear of an implement -->
+                        <GuiElement profile="rms_workshopBlock" id="wearCard" position="340px -76px" size="329px 550px" visible="false">
+                            <RoundCorner profile="rms_workshopSurfaceStrong" />
+                            <GuiElement profile="rms_workshopBlock" position="20px -16px" size="289px 32px">
+                                <RoundCorner profile="rms_workshopSectionAccent" />
+                                <Text profile="rms_workshopSectionTitle" position="16px 0px" size="273px 32px" text="$l10n_rms_fleet_wear" />
+                                <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="273px 1px" />
+                            </GuiElement>
+                            <GuiElement profile="rms_workshopBlock" id="wearRingArea" position="72px -51px" size="184px 184px" onDraw="onDrawWearRing" />
+                            <BoxLayout profile="rms_ringValueStack" position="106px -95px" size="116px 96px">
+                                <Text profile="rms_ringValue" id="wearValue" size="116px 40px" />
+                                <Text profile="rms_ringOutdated" id="wearState" size="116px 18px" />
+                            </BoxLayout>
+                            <BoxLayout profile="rms_workshopStack" position="20px -242px" size="289px 222px" elementSpacing="8px">
+                                <GuiElement profile="rms_workshopBlock" id="wearRowTemplate" size="289px 38px">
+                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                    <Text profile="rms_workshopRowLabel" name="label" position="14px 0px" size="82px 38px" />
+                                    <RoundCorner profile="rms_workshopValuePill" name="pill" position="102px -5px" size="175px 28px" />
+                                    <Text profile="rms_workshopPillValue" name="value" position="114px -5px" size="151px 28px" />
+                                </GuiElement>
+                            </BoxLayout>
+                            <GuiElement profile="rms_cardFoot" size="329px 56px">
+                                <Text profile="rms_workshopCenteredDetail" position="20px 0px" size="289px 24px" textMaxNumLines="1" text="$l10n_rms_fleet_wear_repair" />
+                                <RoundCorner profile="rms_workshopValuePillCentered" id="wearFootPill" position="40px -26px" size="249px 30px" />
+                                <Text profile="rms_workshopPillValue" id="wearFootValue" position="52px -26px" size="225px 30px" />
+                            </GuiElement>
                         </GuiElement>
 
                         <!-- Next maintenance, or the running intervention -->
-                        <GuiElement profile="rms_workshopBlock" position="340px -76px" size="329px 550px">
+                        <GuiElement profile="rms_workshopBlock" id="serviceCard" position="340px -76px" size="329px 550px">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="289px 32px">
                                 <RoundCorner profile="rms_workshopSectionAccent" />
@@ -196,12 +266,12 @@
                             </GuiElement>
                             <GuiElement profile="rms_workshopBlock" id="serviceRingArea" position="72px -51px" size="184px 184px" onDraw="onDrawServiceRing" />
                             <Text profile="rms_ringValue" id="serviceValue" position="106px -115px" size="116px 56px" />
-                            <BoxLayout profile="rms_workshopStack" position="20px -242px" size="289px 222px" elementSpacing="10px">
-                                <GuiElement profile="rms_workshopBlock" id="serviceRowTemplate" size="289px 48px">
+                            <BoxLayout profile="rms_workshopStack" position="20px -242px" size="289px 222px" elementSpacing="8px">
+                                <GuiElement profile="rms_workshopBlock" id="serviceRowTemplate" size="289px 38px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopRowLabel" name="label" position="14px 0px" size="82px 48px" />
-                                    <RoundCorner profile="rms_workshopValuePill" name="pill" position="102px -10px" size="175px 28px" />
-                                    <Text profile="rms_workshopPillValue" name="value" position="114px -10px" size="151px 28px" />
+                                    <Text profile="rms_workshopRowLabel" name="label" position="14px 0px" size="82px 38px" />
+                                    <RoundCorner profile="rms_workshopValuePill" name="pill" position="102px -5px" size="175px 28px" />
+                                    <Text profile="rms_workshopPillValue" name="value" position="114px -5px" size="151px 28px" />
                                 </GuiElement>
                             </BoxLayout>
                             <GuiElement profile="rms_cardFoot" size="329px 56px">

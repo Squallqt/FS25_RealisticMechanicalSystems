@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Aks başlığı pimlerinde ciddi aşınma. Direksiyondaki boşluk fazladır."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Aks başlığı pimlerinde kritik aşınma. Direksiyonda çok fazla boşluk vardır."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Direksiyon orbitrolünde hafif arıza. Tekerlekler tepki vermeden önce direksiyon simidi biraz boşlukla döner."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Direksiyon kutusunda hafif arıza. Tekerlekler tepki vermeden önce direksiyon simidi biraz boşlukla döner."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Direksiyon kremayerinde hafif arıza. Tekerlekler tepki vermeden önce direksiyon simidi biraz boşlukla döner."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Direksiyon orbitrolünde orta derecede arıza. Tekerlekler tepki vermeden önce direksiyon simidi daha fazla döner."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Direksiyon kutusunda orta derecede arıza. Tekerlekler tepki vermeden önce direksiyon simidi daha fazla döner."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Direksiyon kremayerinde orta derecede arıza. Tekerlekler tepki vermeden önce direksiyon simidi daha fazla döner."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Direksiyon orbitrolünde ciddi arıza. Direksiyon simidi çok döner, ancak tekerlekler düzgün tepki vermez."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Direksiyon kutusunda ciddi arıza. Direksiyon simidi çok döner, ancak tekerlekler düzgün tepki vermez."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Direksiyon kremayerinde ciddi arıza. Direksiyon simidi çok döner, ancak tekerlekler düzgün tepki vermez."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Direksiyon orbitrolünde kritik arıza. Tekerlekler tepki vermeden önce direksiyon simidinde çok fazla boşluk vardır."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Direksiyon kutusunda kritik arıza. Tekerlekler tepki vermeden önce direksiyon simidinde çok fazla boşluk vardır."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Direksiyon kremayerinde kritik arıza. Tekerlekler tepki vermeden önce direksiyon simidinde çok fazla boşluk vardır."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Direksiyon silindirinde hafif bir iç sızıntı var. Araç bir yana kaymaya başlar."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Direksiyon silindirinin kol keçesinde hafif sızıntı var. Hidrolik yağı seviyesi biraz düşer."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Direksiyon silindirinde orta derecede iç sızıntı var. Araç bir yana daha fazla kayar."/>
@@ -112,6 +120,8 @@
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Yükleyici Mafsal Pimleri ve Burçları"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Aks Başlığı Pimleri"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Direksiyon Orbitrolü"/>
+        <text name="rms_breakdowns_part_steering_box" text="Direksiyon Kutusu"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Direksiyon Kremayeri"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Direksiyon Silindiri"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Kabin Süspansiyonu"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Kuyruk Mili Kavraması"/>
@@ -616,7 +626,9 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Şanzıman Sensörleri"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Şanzıman Filtresi"/>
         <text name="rms_breakdowns_part_lift_valve" text="Kaldırıcı Valfi"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Tabla Kaldırma Valfi"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Kaldırıcı Konum Sensörü"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Tabla Yükseklik Sensörü"/>
         <text name="rms_breakdowns_part_loader_control" text="Yükleyici Kumandası"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hidrolik Hızlı Bağlantılar"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Debriyajda hafif arıza. Tam ayırmıyor. Bazı vitesleri seçmek zorlaşıyor."/>
@@ -688,8 +700,11 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Hidrolik pompada arıza. Kırılmış. Basınç kaybolmuş ve hidrolik işlevler yanıt vermiyor."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Hidrolik yön valfinde arıza. Sürgü sıkışmış. Etkilenen hidrolik işlev hareket etmiyor."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Kaldırıcı valfinde arıza. Yükü düzgün tutmuyor. Kaldırılmış ekipman aşağı iniyor."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Tabla kaldırma valfinde arıza. Yükü düzgün tutmuyor. Kaldırılmış tabla aşağı iniyor."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Kaldırıcı valfinde arıza. Sıkışmış. Kaldırıcı yanıt vermiyor."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Tabla kaldırma valfinde arıza. Sıkışmış. Tabla artık kalkmıyor ve inmiyor."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Kaldırıcı konum sensöründe arıza. Konum sinyali arızalı. Kaldırıcı istenen yüksekliği tutmuyor ve bir arıza kodu kaydediliyor."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Tabla yükseklik sensöründe arıza. Yükseklik sinyali arızalı. Tabla istenen yüksekliği tutmuyor ve bir arıza kodu kaydediliyor."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Yükleyici kumandasında hafif arıza. Kol ve kepçe daha yavaş tepki verir."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Yükleyici kumandasında orta derecede arıza. Kol ve kepçe yalnızca yarı hızda hareket eder."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Yükleyici kumandasında ciddi arıza. Kol ve kepçe neredeyse hiç hareket etmez."/>
