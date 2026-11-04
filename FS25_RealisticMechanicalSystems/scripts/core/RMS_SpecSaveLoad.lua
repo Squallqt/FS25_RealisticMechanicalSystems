@@ -360,7 +360,8 @@ function RealisticMechanicalSystems:onLoad(savegame)
         electrical = { name = RealisticMechanicalSystems.SYSTEMS.ELECTRICAL, condition = 1.0, enabled = true },
         chassis = { name = RealisticMechanicalSystems.SYSTEMS.CHASSIS, condition = 1.0, enabled = true },
         fuel = { name = RealisticMechanicalSystems.SYSTEMS.FUEL, condition = 1.0, enabled = true },
-        pto = { name = RealisticMechanicalSystems.SYSTEMS.PTO, condition = 1.0, enabled = true }
+        pto = { name = RealisticMechanicalSystems.SYSTEMS.PTO, condition = 1.0, enabled = true },
+        harvest = { name = RealisticMechanicalSystems.SYSTEMS.HARVEST, condition = 1.0, enabled = false }
     }
     self.spec_RealisticMechanicalSystems.factorStats = createEmptyFactorStats(self.spec_RealisticMechanicalSystems.systems)
     ensureFactorStats(self.spec_RealisticMechanicalSystems)
@@ -982,12 +983,15 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     local function enableOrDisableSystems(vehicle)
         local spec = vehicle.spec_RealisticMechanicalSystems
         local resolvedCapacities = RMS_Fluids.resolveCapacities(vehicle)
+        local isHarvester = RMS_Drivetrain.getHarvestKind(vehicle) ~= nil
         for _, systemData in pairs(spec.systems) do
             if systemData.name == RealisticMechanicalSystems.SYSTEMS.HYDRAULICS then
                 systemData.enabled = RMS_Utils.hasHydraulicCapability(vehicle)
                     and resolvedCapacities.hydraulicFluid > 0
             elseif systemData.name == RealisticMechanicalSystems.SYSTEMS.PTO then
-                systemData.enabled = RMS_Utils.hasPtoOutputCapability(vehicle)
+                systemData.enabled = not isHarvester and RMS_Utils.hasPtoOutputCapability(vehicle)
+            elseif systemData.name == RealisticMechanicalSystems.SYSTEMS.HARVEST then
+                systemData.enabled = isHarvester
             end
         end
     end

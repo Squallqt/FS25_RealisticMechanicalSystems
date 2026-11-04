@@ -173,7 +173,8 @@ function Report:readBreakdowns()
                 self:mark(RMS_Fluids.getSumpCircuit(self.vehicle, finding.target), finding.status)
             end
             if finding.additional ~= nil and finding.additional ~= "" then
-                self:note(finding.additional)
+                local variant = RMS_Utils.getBreakdownNameVariant(self.vehicle, definition)
+                self:note(variant ~= nil and finding.variantAdditional ~= nil and finding.variantAdditional[variant] or finding.additional)
             end
         end
     end
@@ -218,7 +219,7 @@ function Report:readClogging()
     end
 end
 
----Rates the greasing, late once a whole interval has passed
+---Rates the greasing, late once its delay has begun
 function Report:readLubrication()
     if not self.spec.isVehicleNeedLubricate then
         return
@@ -229,7 +230,8 @@ function Report:readLubrication()
     if duePoints == 0 then
         return
     end
-    self:mark("lubrication", self.spec.lubricationLevel > 0 and "rms_inspection_status_grease_due" or "rms_inspection_status_grease_late")
+    self:mark("lubrication", RMS_Greasing.getStatus(self.vehicle) == "late" and "rms_inspection_status_grease_late"
+        or "rms_inspection_status_grease_due")
     self:note("rms_inspection_hint_grease_due", duePoints)
 end
 

@@ -40,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="ローダー関節のピンとブッシュが中度に摩耗しています。アームの関節の遊びがはっきりわかるようになります。"/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="ローダー関節のピンとブッシュが重度に摩耗しています。アームに大きな遊びがあります。"/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="ローダー関節のピンとブッシュが重大な摩耗を起こしています。アームの遊びが非常に大きくなります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="マスト関節のピンとブッシュが軽度に摩耗しています。マストの関節にわずかな遊びが生じます。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="マスト関節のピンとブッシュが中度に摩耗しています。マストの関節の遊びがはっきりわかるようになります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="マスト関節のピンとブッシュが重度に摩耗しています。マストに大きな遊びがあります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="マスト関節のピンとブッシュが重大な摩耗を起こしています。マストの遊びが非常に大きくなります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="ブーム関節のピンとブッシュが軽度に摩耗しています。ブームの関節にわずかな遊びが生じます。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="ブーム関節のピンとブッシュが中度に摩耗しています。ブームの関節の遊びがはっきりわかるようになります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="ブーム関節のピンとブッシュが重度に摩耗しています。ブームに大きな遊びがあります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="ブーム関節のピンとブッシュが重大な摩耗を起こしています。ブームの遊びが非常に大きくなります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="ミーリングアーム関節のピンとブッシュが軽度に摩耗しています。アームの関節にわずかな遊びが生じます。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="ミーリングアーム関節のピンとブッシュが中度に摩耗しています。アームの関節の遊びがはっきりわかるようになります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="ミーリングアーム関節のピンとブッシュが重度に摩耗しています。アームに大きな遊びがあります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="ミーリングアーム関節のピンとブッシュが重大な摩耗を起こしています。アームの遊びが非常に大きくなります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="ブレードアーム関節のピンとブッシュが軽度に摩耗しています。アームの関節にわずかな遊びが生じます。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="ブレードアーム関節のピンとブッシュが中度に摩耗しています。アームの関節の遊びがはっきりわかるようになります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="ブレードアーム関節のピンとブッシュが重度に摩耗しています。アームに大きな遊びがあります。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="ブレードアーム関節のピンとブッシュが重大な摩耗を起こしています。アームの遊びが非常に大きくなります。"/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="キャビンダンパーに軽度のオイルもれが発生しています。キャビンの揺れを抑える力が少し低下しています。"/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="キャビンダンパーに中度のオイルもれが発生しています。段差でキャビンが跳ねます。"/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="キャビンダンパーに重度のオイルもれが発生しています。路面のショックのたびにキャビンが揺れます。"/>
@@ -118,6 +134,10 @@
         <text name="rms_breakdowns_part_synchronizer" text="シンクロナイザー"/>
         <text name="rms_breakdowns_part_steering_linkage" text="ステアリングのボールジョイントとロッド"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="ローダー関節のピンとブッシュ"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="マスト関節のピンとブッシュ"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="ブーム関節のピンとブッシュ"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="ミーリングアーム関節のピンとブッシュ"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="ブレードアーム関節のピンとブッシュ"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="キングピン"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="ステアリングオービトロール"/>
         <text name="rms_breakdowns_part_steering_box" text="ステアリングギアボックス"/>
@@ -154,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="ガスフィルター"/>
         <text name="rms_breakdowns_part_gas_lines" text="ガス配管"/>
         <text name="rms_breakdowns_part_gas_injectors" text="ガスインジェクター"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="スパークプラグ"/>
         <text name="rms_breakdowns_part_adblue_pump" text="尿素水ポンプ"/>
         <text name="rms_breakdowns_part_adblue_doser" text="尿素水定量噴射インジェクター"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlueフィルター"/>
@@ -561,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="ガスインジェクターに中度の不具合が発生しています。エンジンに息つきが生じ、出力が低下し、消費量が増えて停止する場合があります。"/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="ガスインジェクターに重度の不具合が発生しています。一つのインジェクターの噴射量が大きく乱れ、出力が大幅に低下して消費量が増え、始動が困難になります。"/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="ガスインジェクターに重大な不具合が発生しています。噴射量がエンジンの運転を維持できなくなり、エンジンが停止します。"/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="スパークプラグが交換時期に達しています。高負荷で失火が起こり、エンジンの回転が乱れ、消費量が少し増えます。整備で交換されます。"/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="スパークプラグが摩耗しています。失火が頻繁になり、出力が低下し、消費量が増えて停止する場合があります。エンジン警告灯が点灯します。"/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="スパークプラグがひどく摩耗しています。出力が大幅に低下し、消費量が増え、始動が困難になります。"/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="スパークプラグが使用できない状態です。失火が続き、エンジンが停止して再始動できなくなる場合があります。"/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="尿素水ポンプに不具合が発生しています。定量噴射への供給が止まり、エンジン警告灯が点灯します。その後、修理されるまで制御ユニットが出力を制限します。"/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="尿素水定量噴射インジェクターに不具合が発生しています。固まった尿素で詰まって噴霧できなくなり、エンジン警告灯が点灯します。その後、修理されるまで出力が低下します。"/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlueフィルターが交換時期に達し、目詰まりし始めています。最も充実した整備で交換されます。"/>
@@ -630,6 +655,10 @@
         <text name="rms_breakdowns_part_lift_position_sensor" text="リフト位置センサー"/>
         <text name="rms_breakdowns_part_header_height_sensor" text="ヘッダー高さセンサー"/>
         <text name="rms_breakdowns_part_loader_control" text="ローダー制御装置"/>
+        <text name="rms_breakdowns_part_mast_control" text="マスト制御装置"/>
+        <text name="rms_breakdowns_part_boom_control" text="ブーム制御装置"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="ミーリングアーム制御装置"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="ブレードアーム制御装置"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="油圧クイックカプラー"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="クラッチに軽度の不具合が発生しています。完全に切れず、一部のギアを選びにくくなります。"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="クラッチに中度の不具合が発生しています。機構がクラッチ板を十分に解放せず、ギアの選択が拒否されることが増えます。"/>
@@ -709,6 +738,22 @@
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="ローダー制御装置に中度の不具合が発生しています。アームとバケットが半分の速度でしか動きません。"/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="ローダー制御装置に重度の不具合が発生しています。アームとバケットがほとんど動きません。"/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="ローダー制御装置に重大な不具合が発生しています。アームとバケットが応答しません。"/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="マスト制御装置に軽度の不具合が発生しています。マストとフォークの応答が遅くなります。"/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="マスト制御装置に中度の不具合が発生しています。マストとフォークが半分の速度でしか動きません。"/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="マスト制御装置に重度の不具合が発生しています。マストとフォークがほとんど動きません。"/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="マスト制御装置に重大な不具合が発生しています。マストとフォークが応答しません。"/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="ブーム制御装置に軽度の不具合が発生しています。ブームと作業具の応答が遅くなります。"/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="ブーム制御装置に中度の不具合が発生しています。ブームと作業具が半分の速度でしか動きません。"/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="ブーム制御装置に重度の不具合が発生しています。ブームと作業具がほとんど動きません。"/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="ブーム制御装置に重大な不具合が発生しています。ブームと作業具が応答しません。"/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="ミーリングアーム制御装置に軽度の不具合が発生しています。アームの応答が遅くなります。"/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="ミーリングアーム制御装置に中度の不具合が発生しています。アームが半分の速度でしか動きません。"/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="ミーリングアーム制御装置に重度の不具合が発生しています。アームがほとんど動きません。"/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="ミーリングアーム制御装置に重大な不具合が発生しています。アームが応答しません。"/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="ブレードアーム制御装置に軽度の不具合が発生しています。アームとブレードの応答が遅くなります。"/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="ブレードアーム制御装置に中度の不具合が発生しています。アームとブレードが半分の速度でしか動きません。"/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="ブレードアーム制御装置に重度の不具合が発生しています。アームとブレードがほとんど動きません。"/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="ブレードアーム制御装置に重大な不具合が発生しています。アームとブレードが応答しません。"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="油圧シリンダーに軽度の不具合が発生しています。ロッドシールから少量のオイルがもれ、ロッド周囲がわずかに湿ります。"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="油圧シリンダーに中度の不具合が発生しています。ロッドシールの密閉性が失われ、シリンダーからオイルがにじみ、油量が減ります。"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="油圧シリンダーに重度の不具合が発生しています。ロッドシールからオイルがもれ続け、シリンダーの油もれが多くなります。"/>
@@ -737,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="車軸ベアリングが重大な摩耗状態です。ベアリングが破損し、ベベルギアも損傷して、車軸が駆動力を伝えられません。"/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="デフロック制御装置に不具合が発生しています。デフロックがかからず、デフはロックされません。"/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="デフロック制御装置に不具合が発生しています。デフロックがかかったままとなり、旋回しにくくなります。"/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="駆動ベルトとバリエーター"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="駆動ベアリングとギアボックス"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="フィーダーハウスチェーン"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="フィードアクセラレーター"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="ラスプバー"/>
+        <text name="rms_breakdowns_part_concave" text="コンケーブ"/>
+        <text name="rms_breakdowns_part_separation" text="分離タインとストローウォーカー"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="清選シーブ"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="穀物オーガーとエレベーター"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="ストローチョッパーとスプレッダー"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="フィードロール"/>
+        <text name="rms_breakdowns_part_metal_detector" text="金属・石探知機"/>
+        <text name="rms_breakdowns_part_cutterhead" text="カッターヘッド"/>
+        <text name="rms_breakdowns_part_forage_knives" text="カッターヘッドナイフ"/>
+        <text name="rms_breakdowns_part_shear_bar" text="シャーバー"/>
+        <text name="rms_breakdowns_part_crop_processor" text="クロッププロセッサー"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="アクセラレーターとブロワー"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="排出シュート"/>
+        <text name="rms_breakdowns_part_beet_topper" text="トッパーとスカルパー"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="掘取りシェア"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="清選タービン"/>
+        <text name="rms_breakdowns_part_root_elevator" text="ビートエレベーター"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="ホッパー床と排出ベルト"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="ふるいウェブ"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="茎葉分離機とローラー"/>
+        <text name="rms_breakdowns_part_picking_units" text="摘み取りユニット"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="スピンドル加湿器"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="ファンとダクト"/>
+        <text name="rms_breakdowns_part_module_builder" text="モジュール成形室"/>
+        <text name="rms_breakdowns_part_base_cutters" text="ベースカッター"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="フィードローラー"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="チョッパードラム"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="一次エクストラクター"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="ケーンエレベーター"/>
+        <text name="rms_breakdowns_part_shaker" text="揺動システム"/>
+        <text name="rms_breakdowns_part_catching_scales" text="受けスケール"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="バケットコンベヤー"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="清選吸引機"/>
+        <text name="rms_breakdowns_part_destemmer" text="除梗機"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="摘み取りヘッド"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="清選ファンとシーブ"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="エレベーターとコンベヤー"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="収穫不能：収穫部品が壊れています"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="詰まり：収穫が停止しました"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="チョッパー故障：わらが列状に落ちます"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="チョッパー故障：この作物はもう収穫できません"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="駆動ベルトが摩耗し始めています。負荷がかかると少し滑ります。"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="駆動ベルトが中度に摩耗しています。負荷で回転が落ちる部品があり、回転数警報でときどき収穫が止まります。"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="駆動ベルトが重度に摩耗しています。処理量が落ち、停止が何度も繰り返されます。"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="駆動ベルトに重大な不具合が発生しています。ベルトが切れました：収穫できません。"/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="駆動ベアリングが摩耗し始めています。収穫中にかすかなうなりが出ます。"/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="駆動ベアリングが中度に摩耗しています。うなりがはっきり聞こえ、ベアリングが熱を持ちます。"/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="駆動ベアリングが重度に摩耗しています。うなりが大きくなり、シャフトにがたが出ます。"/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="駆動ベアリングに重大な不具合が発生しています。ベアリングが焼き付きました：収穫できません。"/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="フィーダーハウスチェーンが摩耗し始めています。チェーンが伸び、送り込みが不均一になります。"/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="フィーダーハウスチェーンが中度に摩耗しています。フィーダーハウスの入口で詰まりが発生します。"/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="フィーダーハウスチェーンが重度に摩耗しています。スプロケットから外れかけ、詰まりが続きます。"/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="フィーダーハウスチェーンに重大な不具合が発生しています。チェーンが切れました：機械に何も入りません。"/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="フィードアクセラレーターが摩耗し始めています。作物がドラムに均一に届かなくなります。"/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="フィードアクセラレーターが中度に摩耗しています。処理量が伸びず、詰まりが発生します。"/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="フィードアクセラレーターが重度に摩耗しています。処理量が落ち、詰まりが続きます。"/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="フィードアクセラレーターに重大な不具合が発生しています。パドルが外れました：収穫できません。"/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="ラスプバーが摩耗し始めています。一部の穀粒が脱穀されずに畑に戻ります。"/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="ラスプバーが中度に摩耗しています。ドラムが揺れ、穀物ロスが増えます。"/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="ラスプバーが重度に摩耗しています。一部のバーが折れています：大きなロスと詰まり。"/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="ラスプバーに重大な不具合が発生しています。バーが外れました：脱穀できません。"/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="コンケーブが摩耗し始めています。脱穀が悪くなり、一部が畑に戻ります。"/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="コンケーブが中度に摩耗しています。穀物ロスが増えます。"/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="コンケーブが重度に摩耗しています。穀粒が割れ、ロスが大きく、詰まりが発生します。"/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="コンケーブに重大な不具合が発生しています。バーが外れました：脱穀できません。"/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="分離部が摩耗し始めています。わらに穀粒が残り、畑に戻ります。"/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="分離部が中度に摩耗しています。わらと一緒に出る穀物ロスが増えます。"/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="分離部が重度に摩耗しています。大きなロスとわら詰まり。"/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="分離部に重大な不具合が発生しています。わらが通らなくなりました：収穫できません。"/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="清選シーブが摩耗し始めています。もみがらがグレンタンクに入り、少量の穀物がくずと一緒に出ます。"/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="清選シーブが中度に摩耗しています。シーブでのロスが増えます。"/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="清選シーブが重度に摩耗しています。シーブにひびがあります：大きなロスと詰まり。"/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="清選シーブに重大な不具合が発生しています。清選が機能しません：収穫できません。"/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="穀物オーガーとエレベーターが摩耗し始めています。グレンタンクへの流れが減ります。"/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="穀物オーガーとエレベーターが中度に摩耗しています。一部の穀粒が割れるか途中で失われます。"/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="穀物オーガーとエレベーターが重度に摩耗しています。エレベーターが頻繁に詰まります。"/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="穀物オーガーとエレベーターに重大な不具合が発生しています。グレンタンクが満たされません：収穫できません。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="ストローチョッパーが摩耗し始めています。わらが短く切れなくなり、チョッパーの必要動力が少し増えます。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="ストローチョッパーが中度に摩耗しています。チョッパーが揺れ、必要動力が増えます。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="ストローチョッパーが重度に摩耗しています。ローターのバランスが崩れ、多くの動力を消費します。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="ストローチョッパーに重大な不具合が発生しています。ナイフが折れました：チョッパーが止まり、わらが列状に落ちます。"/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="フィードロールが摩耗し始めています。作物をつかむ力が落ち、送り込みが不均一になります。"/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="フィードロールが中度に摩耗しています。切断長が不均一になり、詰まりが発生します。"/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="フィードロールが重度に摩耗しています。処理量が落ち、詰まりが続きます。"/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="フィードロールに重大な不具合が発生しています。機械に何も入りません：収穫できません。"/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="金属・石探知機に初期の不具合があります。誤警報でときどき送り込みが止まります。"/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="金属・石探知機に中度の不具合があります。不要な停止が続きます。"/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="金属・石探知機が故障しています。何も検知しなくなり、石がナイフに届いて摩耗がはるかに速くなります。"/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="カッターヘッドが摩耗し始めています。わずかに揺れ、必要動力が少し増えます。"/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="カッターヘッドが中度に摩耗しています。ローターのバランスが崩れ、必要動力が増えます。"/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="カッターヘッドが重度に摩耗しています。ナイフ取付部にひびがあります：必要動力の増加と詰まり。"/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="カッターヘッドに重大な不具合が発生しています。ローターが損傷しました：収穫できません。"/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="ナイフが摩耗し始めています。切り口がきれいでなくなり、必要動力が少し増えます。"/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="ナイフが中度に摩耗しています。動力と燃料の消費が増えます。"/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="ナイフが重度に摩耗しています。切断が不均一になり、必要動力が上がり、詰まりが発生します。"/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="ナイフに重大な不具合が発生しています。ナイフが折れました：収穫できません。"/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="シャーバーが摩耗し始めています。すき間が広がり、切断の必要動力が少し増えます。"/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="シャーバーが中度に摩耗しています。切断が作物を引きちぎり、必要動力が増えます。"/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="シャーバーが重度に摩耗しています。先端が摩耗しています：必要動力の増加と詰まり。"/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="シャーバーに重大な不具合が発生しています。使用できません：収穫できません。"/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="クロッププロセッサーが摩耗し始めています。子実の破砕が悪くなり、必要動力が少し増えます。"/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="クロッププロセッサーが中度に摩耗しています。丸ごとの子実が通過し、必要動力が上がります。"/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="クロッププロセッサーが重度に摩耗しています。ロールに傷があります：必要動力の増加と詰まり。"/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="クロッププロセッサーに重大な不具合が発生しています。ロールが固着しました：収穫できません。"/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="アクセラレーターが摩耗し始めています。投てき距離が短くなり、処理量が少し落ちます。"/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="アクセラレーターが中度に摩耗しています。排出シュートがときどき詰まります。"/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="アクセラレーターが重度に摩耗しています。パドルが外れました：頻繁な詰まりと飼料のロス。"/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="アクセラレーターに重大な不具合が発生しています。飼料が排出されません：収穫できません。"/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="排出シュートが摩耗し始めています。投てき方向がずれ、処理量が少し落ちます。"/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="排出シュートが中度に摩耗しています。飼料が付着し、ときどきシュートが詰まります。"/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="排出シュートが重度に摩耗しています。ライナーに穴があいています：飼料のロスと頻繁な詰まり。"/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="排出シュートに重大な不具合が発生しています。完全に穴があきました：収穫できません。"/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="摩耗し始めています。作物の一部が畑に残ります。"/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="中度に摩耗しています。揺れとロスの増加。"/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="重度に摩耗しています。一部の部材が折れています：大きなロスと詰まり。"/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="重大な不具合が発生しています。部品が壊れました：収穫できません。"/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="シェアが摩耗し始めています。一部の根が折れるか地中に残ります。"/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="シェアが中度に摩耗しています。掘取りが悪くなり、ロスと負荷が増えます。"/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="シェアが重度に摩耗しています。限界まですり減っています：大きなロスと機械への負担。"/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="シェアに重大な不具合が発生しています。シェアが折れました：掘取りできません。"/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="摩耗し始めています。清選が悪くなり、土や異物が混じり、作物が少し失われます。"/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="中度に摩耗しています。清選ロスが増えます。"/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="重度に摩耗しています。格子やパドルが折れています：大きなロスと詰まり。"/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="重大な不具合が発生しています。清選が止まりました：収穫できません。"/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="摩耗し始めています。チェーンやベルトが伸び、送り込みが不均一になります。"/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="中度に摩耗しています。バーやパドルの摩耗：処理量の低下と詰まり。"/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="重度に摩耗しています。チェーンが外れかけ、詰まりが続きます。"/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="重大な不具合が発生しています。チェーンやベルトが切れました：何も通りません。"/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="摩耗し始めています。作物の受け渡しが遅くなります。"/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="中度に摩耗しています。受け渡しが不均一になり、作物の一部が失われます。"/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="重度に摩耗しています。受け渡しが頻繁に引っかかります。"/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="重大な不具合が発生しています。受け渡しが止まりました：収穫できません。"/>
     </texts>
 </l10n>

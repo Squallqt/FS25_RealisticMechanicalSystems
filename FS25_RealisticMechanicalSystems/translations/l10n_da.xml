@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Chassis"/>
         <text name="rms_spec_system_fuel" text="Brændstofsystem"/>
         <text name="rms_spec_system_pto" text="Kraftudtag"/>
+        <text name="rms_spec_system_harvest" text="Høst"/>
         <text name="rms_spec_system_electric_motor" text="Elmotor"/>
         <text name="rms_spec_system_traction_battery" text="Traktionsbatteri"/>
         <text name="rms_spec_state_ready" text="Klar"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Batteriet overopheder"/>
         <text name="rms_report_wear_lubrication" text="Forsinket smøring"/>
         <text name="rms_report_wear_pto_overload" text="PTO overbelastet"/>
+        <text name="rms_report_wear_harvest_overload" text="Høst overbelastet"/>
+        <text name="rms_report_wear_harvest_flow" text="Stor kornstrøm"/>
+        <text name="rms_report_wear_harvest_straw" text="Snitter overbelastet"/>
+        <text name="rms_report_wear_harvest_stones" text="Sten"/>
+        <text name="rms_report_wear_harvest_rice" text="Rishøst"/>
+        <text name="rms_report_wear_harvest_wet" text="Fugtig afgrøde"/>
         <text name="rms_report_component_title" text="Komponent"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Aktuel effekt"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Antal"/>
         <text name="rms_grease_hud_title" text="Smøring"/>
         <text name="rms_grease_hud_done" text="I orden"/>
+        <text name="rms_grease_hud_greased" text="Smurt"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Trykluftblæser"/>
         <text name="rms_air_blower_no_vehicle" text="Intet køretøj inden for rengøringsafstand"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Inspektionen viser mærkbart slør ved bolte og bøsninger i læsserens led."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Inspektionen viser stort slør ved bolte og bøsninger i læsserens led."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Inspektionen viser meget stort slør ved bolte og bøsninger i læsserens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Inspektionen viser begyndende slid på bolte og bøsninger i mastens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Inspektionen viser mærkbart slør ved bolte og bøsninger i mastens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Inspektionen viser stort slør ved bolte og bøsninger i mastens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Inspektionen viser meget stort slør ved bolte og bøsninger i mastens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Inspektionen viser begyndende slid på bolte og bøsninger i bommens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Inspektionen viser mærkbart slør ved bolte og bøsninger i bommens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Inspektionen viser stort slør ved bolte og bøsninger i bommens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Inspektionen viser meget stort slør ved bolte og bøsninger i bommens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Inspektionen viser begyndende slid på bolte og bøsninger i fræsearmens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Inspektionen viser mærkbart slør ved bolte og bøsninger i fræsearmens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Inspektionen viser stort slør ved bolte og bøsninger i fræsearmens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Inspektionen viser meget stort slør ved bolte og bøsninger i fræsearmens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Inspektionen viser begyndende slid på bolte og bøsninger i bladarmens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Inspektionen viser mærkbart slør ved bolte og bøsninger i bladarmens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Inspektionen viser stort slør ved bolte og bøsninger i bladarmens led."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Inspektionen viser meget stort slør ved bolte og bøsninger i bladarmens led."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="En kabinestøddæmper er let fugtig."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Der siver olie fra en kabinestøddæmper."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="En kabinestøddæmper har en aktiv lækage."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Dele målt %s"/>
         <text name="rms_fleet_parts_need_complete" text="Dele måles ved næste fuldstændige inspektion"/>
         <text name="rms_fleet_greasing_done" text="Smøring i orden"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s t arbejde"/>
+        <text name="rms_fleet_greasing_period_days" text="Hver %d. arbejdsdag"/>
         <text name="rms_fleet_greasing_period_day" text="Hver arbejdsdag"/>
         <text name="rms_fleet_greasing_period_month" text="Hver måned"/>
         <text name="rms_fleet_greasing_period_months" text="Hver %d. måned"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d dage forsinket"/>
         <text name="rms_fleet_greasing_to_do" text="%d tilbage"/>
         <text name="rms_fleet_greasing_points" text="Smørenipler"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Hyppigst"/>
         <text name="rms_fleet_greasing_next" text="Næste smøring"/>
         <text name="rms_fleet_greasing_now" text="Nu"/>
         <text name="rms_fleet_greasing_in" text="om %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Hurtigere"/>
         <text name="rms_fleet_wear_normal" text="Normalt slid"/>
         <text name="rms_fleet_wear_late" text="Smøringsforsinkelse"/>
-        <text name="rms_fleet_wear_dry" text="Slid uden fedt"/>
         <text name="rms_fleet_wear_repair_greases" text="Smøres ved reparation"/>
         <text name="rms_fleet_wear_repair" text="Reparation på værksted"/>
         <text name="rms_fleet_wear_none" text="Ingen"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Køling og luftfilter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Køleren eller luftfilteret er tilstoppet. Hold %s-tasten nede, mens du kigger på køretøjet, for at se hvilket. Rens det med trykluftblæseren. Hvis filteret ikke længere kan renses, udskifter værkstedet det fra service %s og opefter."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Smøring nødvendig"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s har smørenipler, der skal smøres.&#10;&#10;I RMS har hver maskine smøreniplerne fra sin brugsanvisning. De skal smøres igen efter et antal driftstimer eller hver arbejdsdag på nogle maskiner. Forsinket smøring øger sliddet på chassiset.&#10;&#10;Køb en fedtpistol og patroner i butikken. Sigt på en patron med fedtpistolen i hånden for at sætte den i, og sigt derefter på maskinen: hvert klik smører én smørenippel, og holdes knappen nede, fortsætter smøringen på de næste.&#10;&#10;Hold %s-tasten nede, mens du kigger på køretøjet, for at se de resterende smørenipler."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s har smørenipler, der skal smøres.&#10;&#10;I RMS har hver maskine smøreniplerne fra sin brugsanvisning. De skal smøres igen efter de dage, maskinen arbejder: hver arbejdsdag eller med nogle arbejdsdages mellemrum for dem, brugsanvisningen smører sjældnere. Forsinket smøring øger sliddet på chassiset.&#10;&#10;Køb en fedtpistol og patroner i butikken. Stil dig foran en patron med fedtpistolen i hånden for at sætte den i, og sigt derefter på maskinen: hvert klik smører én smørenippel, og holdes knappen nede, fortsætter smøringen på de næste.&#10;&#10;Hold %s-tasten nede, mens du kigger på køretøjet, for at se de resterende smørenipler."/>
         <text name="rms_tutorial_needs_repair_title" text="Fejl fundet"/>
         <text name="rms_tutorial_needs_repair_message" text="%s har et problem. En af delene kan være gået i stykker.&#10;&#10;Kør på værkstedet: en inspektion, eller servicen hvis den er forfalden, fastslår fejlen. Vent ikke: fejlen kan blive ved med at forværres, og reparationen bliver dyrere med den.&#10;&#10;Når fejlen er fastslået, så få den repareret på værkstedet."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Renovering nødvendig"/>

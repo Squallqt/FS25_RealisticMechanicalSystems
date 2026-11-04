@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Şasi"/>
         <text name="rms_spec_system_fuel" text="Yakıt Sistemi"/>
         <text name="rms_spec_system_pto" text="Kuyruk Mili"/>
+        <text name="rms_spec_system_harvest" text="Hasat"/>
         <text name="rms_spec_system_electric_motor" text="Elektrik Motoru"/>
         <text name="rms_spec_system_traction_battery" text="Çekiş Aküsü"/>
         <text name="rms_spec_state_ready" text="Hazır"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Akünün Aşırı Isınması"/>
         <text name="rms_report_wear_lubrication" text="Geciken Gresleme"/>
         <text name="rms_report_wear_pto_overload" text="Kuyruk Milinin Aşırı Yüklenmesi"/>
+        <text name="rms_report_wear_harvest_overload" text="Hasat aşırı yükü"/>
+        <text name="rms_report_wear_harvest_flow" text="Yüksek tane akışı"/>
+        <text name="rms_report_wear_harvest_straw" text="Saman parçalayıcı aşırı yükü"/>
+        <text name="rms_report_wear_harvest_stones" text="Taşlar"/>
+        <text name="rms_report_wear_harvest_rice" text="Pirinç hasadı"/>
+        <text name="rms_report_wear_harvest_wet" text="Nemli ürün"/>
         <text name="rms_report_component_title" text="Bileşen"/>
         <text name="rms_report_system_condition_transmission" text="Şanzıman"/>
         <text name="rms_report_system_condition_power" text="Mevcut Güç"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Miktar"/>
         <text name="rms_grease_hud_title" text="Gresleme"/>
         <text name="rms_grease_hud_done" text="Güncel"/>
+        <text name="rms_grease_hud_greased" text="Greslenen"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Hava Üfleyici"/>
         <text name="rms_air_blower_no_vehicle" text="Temizlik alanında hiçbir araç yok"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Muayenede yükleyici mafsal pimleri ve burçlarında fark edilir boşluk görülür."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Muayenede yükleyici mafsal pimleri ve burçlarında fazla boşluk görülür."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Muayenede yükleyici mafsal pimleri ve burçlarında çok fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Muayenede direk mafsal pimleri ve burçlarında başlangıç aşınması görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Muayenede direk mafsal pimleri ve burçlarında fark edilir boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Muayenede direk mafsal pimleri ve burçlarında fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Muayenede direk mafsal pimleri ve burçlarında çok fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Muayenede bom mafsal pimleri ve burçlarında başlangıç aşınması görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Muayenede bom mafsal pimleri ve burçlarında fark edilir boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Muayenede bom mafsal pimleri ve burçlarında fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Muayenede bom mafsal pimleri ve burçlarında çok fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Muayenede freze kolu mafsal pimleri ve burçlarında başlangıç aşınması görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Muayenede freze kolu mafsal pimleri ve burçlarında fark edilir boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Muayenede freze kolu mafsal pimleri ve burçlarında fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Muayenede freze kolu mafsal pimleri ve burçlarında çok fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Muayenede bıçak kolu mafsal pimleri ve burçlarında başlangıç aşınması görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Muayenede bıçak kolu mafsal pimleri ve burçlarında fark edilir boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Muayenede bıçak kolu mafsal pimleri ve burçlarında fazla boşluk görülür."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Muayenede bıçak kolu mafsal pimleri ve burçlarında çok fazla boşluk görülür."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Bir kabin amortisöründe hafif nemlenme vardır."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Bir kabin amortisöründe yağ terlemesi vardır."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Bir kabin amortisöründe aktif kaçak vardır."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Parçaların ölçümü: %s"/>
         <text name="rms_fleet_parts_need_complete" text="Parçaların ölçümü: bir sonraki kapsamlı muayenede"/>
         <text name="rms_fleet_greasing_done" text="Gresleme güncel"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s sa çalışma"/>
+        <text name="rms_fleet_greasing_period_days" text="%d çalışılan günde bir"/>
         <text name="rms_fleet_greasing_period_day" text="Her çalışılan gün"/>
         <text name="rms_fleet_greasing_period_month" text="Her ay"/>
         <text name="rms_fleet_greasing_period_months" text="%d ayda bir"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d gün gecikme"/>
         <text name="rms_fleet_greasing_to_do" text="%d kaldı"/>
         <text name="rms_fleet_greasing_points" text="Gresörlükler"/>
+        <text name="rms_fleet_greasing_most_frequent" text="En sık"/>
         <text name="rms_fleet_greasing_next" text="Sonraki gresleme"/>
         <text name="rms_fleet_greasing_now" text="Şimdi"/>
         <text name="rms_fleet_greasing_in" text="%s sonra"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Daha hızlı"/>
         <text name="rms_fleet_wear_normal" text="Normal aşınma"/>
         <text name="rms_fleet_wear_late" text="Gresleme gecikmesi"/>
-        <text name="rms_fleet_wear_dry" text="Yağsız aşınma"/>
         <text name="rms_fleet_wear_repair_greases" text="Onarımda greslenir"/>
         <text name="rms_fleet_wear_repair" text="Atölyede onarım"/>
         <text name="rms_fleet_wear_none" text="Yok"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Soğutma ve Hava Filtresi"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Radyatör veya hava filtresi tıkandı. Hangisi olduğunu görmek için araca bakarken %s tuşunu basılı tut. Basınçlı hava üfleyicisiyle temizle. Filtre artık üflenerek temizlenemiyorsa atölye onu %s bakımından itibaren değiştirir."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Gresleme Gerekiyor"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Bu %s üzerinde greslenecek gresörlükler var.&#10;&#10;RMS’de her makinenin kendi kılavuzundaki gresörlükleri bulunur. Belirli bir çalışma saatinden sonra, bazı makinelerde ise her iş gününde yeniden greslenmeleri gerekir. Geç gresleme şasi aşınmasını hızlandırır.&#10;&#10;Mağazadan Gres Tabancası ve kartuşlar satın al. Tabanca elindeyken doldurmak için bir kartuşa, ardından makineye nişan al: her tıklama bir gresörlüğü gresler, düğmeyi basılı tutmak sonraki gresörlüklerle devam eder.&#10;&#10;Kalan gresörlükleri görmek için araca bakarken %s tuşunu basılı tut."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Bu %s üzerinde greslenecek gresörlükler var.&#10;&#10;RMS’de her makinenin kendi kılavuzundaki gresörlükleri bulunur. Makinenin çalıştığı günlere göre yeniden greslenmeleri gerekir: her çalışılan gün ya da kılavuzun daha seyrek greslediklerinde birkaç çalışılan günde bir. Geç gresleme şasi aşınmasını hızlandırır.&#10;&#10;Mağazadan Gres Tabancası ve kartuşlar satın al. Tabanca elindeyken doldurmak için bir kartuşun önünde dur, ardından makineye nişan al: her tıklama bir gresörlüğü gresler, düğmeyi basılı tutmak sonraki gresörlüklerle devam eder.&#10;&#10;Kalan gresörlükleri görmek için araca bakarken %s tuşunu basılı tut."/>
         <text name="rms_tutorial_needs_repair_title" text="Arıza Tespit Edildi"/>
         <text name="rms_tutorial_needs_repair_message" text="Bu %s üzerinde bir sorun var. Parçalarından biri arızalanmış olabilir.&#10;&#10;Atölyeye git: muayene ya da zamanı geldiyse bakım arızayı tespit eder. Geciktirme: arıza kötüleşmeye devam edebilir ve onarım maliyeti artar.&#10;&#10;Arıza tespit edildiğinde atölyede onart."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revizyon Gerekli"/>

@@ -256,8 +256,12 @@ function RMS_DiagnosticTool.getIsPowered(target)
     return not target.spec_RealisticMechanicalSystems.batteryIsolated
 end
 
-local function getCodeController(target, code)
+local function getCodeController(target, code, breakdownId)
     local isElectric = target.spec_RealisticMechanicalSystems.isElectricVehicle
+    if code.uncodedVariant ~= nil
+        and RMS_Utils.getBreakdownNameVariant(target, RMS_Breakdowns.BreakdownRegistry[breakdownId]) == code.uncodedVariant then
+        return nil
+    end
     local ecu, spn = code.ecu, code.spn
     if code.electric ~= nil and isElectric then
         ecu, spn = code.electric.ecu, code.electric.spn
@@ -286,7 +290,7 @@ function RMS_DiagnosticTool.getFaultEntry(target, breakdownId, isCritical)
     end
     local ecu, spn
     if code ~= nil then
-        ecu, spn = getCodeController(target, code)
+        ecu, spn = getCodeController(target, code, breakdownId)
     end
     if ecu == nil then
         local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
@@ -309,12 +313,12 @@ function RMS_DiagnosticTool.getControllers(target)
         local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
         if definition ~= nil and (definition.isApplicable == nil or definition.isApplicable(target)) then
             for _, wayCode in pairs(code.branches or {}) do
-                local wayEcu = getCodeController(target, wayCode)
+                local wayEcu = getCodeController(target, wayCode, breakdownId)
                 if wayEcu ~= nil then
                     present[wayEcu] = true
                 end
             end
-            local ecu = code.ecu ~= nil and getCodeController(target, code) or nil
+            local ecu = code.ecu ~= nil and getCodeController(target, code, breakdownId) or nil
             if ecu ~= nil then
                 present[ecu] = true
             end

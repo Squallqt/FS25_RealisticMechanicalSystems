@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Podwozie"/>
         <text name="rms_spec_system_fuel" text="Układ paliwowy"/>
         <text name="rms_spec_system_pto" text="WOM"/>
+        <text name="rms_spec_system_harvest" text="Zbiór"/>
         <text name="rms_spec_system_electric_motor" text="Silnik elektryczny"/>
         <text name="rms_spec_system_traction_battery" text="Akumulator trakcyjny"/>
         <text name="rms_spec_state_ready" text="Gotowy"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Przegrzewanie akumulatora"/>
         <text name="rms_report_wear_lubrication" text="Zaległe smarowanie"/>
         <text name="rms_report_wear_pto_overload" text="Przeciążenie WOM"/>
+        <text name="rms_report_wear_harvest_overload" text="Przeciążenie zbioru"/>
+        <text name="rms_report_wear_harvest_flow" text="Duży przepływ ziarna"/>
+        <text name="rms_report_wear_harvest_straw" text="Przeciążony rozdrabniacz"/>
+        <text name="rms_report_wear_harvest_stones" text="Kamienie"/>
+        <text name="rms_report_wear_harvest_rice" text="Zbiór ryżu"/>
+        <text name="rms_report_wear_harvest_wet" text="Wilgotny plon"/>
         <text name="rms_report_component_title" text="Podzespół"/>
         <text name="rms_report_system_condition_transmission" text="Skrzynia biegów"/>
         <text name="rms_report_system_condition_power" text="Aktualna moc"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Ilość"/>
         <text name="rms_grease_hud_title" text="Smarowanie"/>
         <text name="rms_grease_hud_done" text="Nasmarowano"/>
+        <text name="rms_grease_hud_greased" text="Nasmarowane"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Dmuchawa sprężonego powietrza"/>
         <text name="rms_air_blower_no_vehicle" text="Nie wykryto pojazdu w strefie czyszczenia"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Przegląd wykazuje wyczuwalny luz sworzni i tulei przegubów ładowacza."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Przegląd wykazuje duży luz sworzni i tulei przegubów ładowacza."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Przegląd wykazuje bardzo duży luz sworzni i tulei przegubów ładowacza."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Przegląd wykazuje początkowe zużycie sworzni i tulei masztu."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Przegląd wykazuje wyczuwalny luz sworzni i tulei masztu."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Przegląd wykazuje duży luz sworzni i tulei masztu."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Przegląd wykazuje bardzo duży luz sworzni i tulei masztu."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Przegląd wykazuje początkowe zużycie sworzni i tulei wysięgnika."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Przegląd wykazuje wyczuwalny luz sworzni i tulei wysięgnika."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Przegląd wykazuje duży luz sworzni i tulei wysięgnika."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Przegląd wykazuje bardzo duży luz sworzni i tulei wysięgnika."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Przegląd wykazuje początkowe zużycie sworzni i tulei ramienia frezującego."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Przegląd wykazuje wyczuwalny luz sworzni i tulei ramienia frezującego."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Przegląd wykazuje duży luz sworzni i tulei ramienia frezującego."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Przegląd wykazuje bardzo duży luz sworzni i tulei ramienia frezującego."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Przegląd wykazuje początkowe zużycie sworzni i tulei ramienia lemiesza."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Przegląd wykazuje wyczuwalny luz sworzni i tulei ramienia lemiesza."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Przegląd wykazuje duży luz sworzni i tulei ramienia lemiesza."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Przegląd wykazuje bardzo duży luz sworzni i tulei ramienia lemiesza."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Amortyzator kabiny jest lekko wilgotny."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Z amortyzatora kabiny sączy się olej."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Amortyzator kabiny ma aktywny wyciek."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Pomiar części %s"/>
         <text name="rms_fleet_parts_need_complete" text="Pomiar części przy następnym pełnym przeglądzie"/>
         <text name="rms_fleet_greasing_done" text="Smarowanie wykonane"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s h pracy"/>
+        <text name="rms_fleet_greasing_period_days" text="Co %d dni pracy"/>
         <text name="rms_fleet_greasing_period_day" text="Każdy dzień pracy"/>
         <text name="rms_fleet_greasing_period_month" text="Co miesiąc"/>
         <text name="rms_fleet_greasing_period_months" text="Co %d mies."/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="Opóźnienie %d dni"/>
         <text name="rms_fleet_greasing_to_do" text="%d do zrobienia"/>
         <text name="rms_fleet_greasing_points" text="Smarowniczki"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Najczęstszy"/>
         <text name="rms_fleet_greasing_next" text="Następne smarowanie"/>
         <text name="rms_fleet_greasing_now" text="Teraz"/>
         <text name="rms_fleet_greasing_in" text="za %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Szybciej"/>
         <text name="rms_fleet_wear_normal" text="Normalne zużycie"/>
         <text name="rms_fleet_wear_late" text="Opóźnienie smarowania"/>
-        <text name="rms_fleet_wear_dry" text="Zużycie na sucho"/>
         <text name="rms_fleet_wear_repair_greases" text="Smarowane przy naprawie"/>
         <text name="rms_fleet_wear_repair" text="Naprawa w warsztacie"/>
         <text name="rms_fleet_wear_none" text="Brak"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Układ chłodzenia i filtr powietrza"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Chłodnica lub filtr powietrza jest zapchany. Patrząc na pojazd, przytrzymaj klawisz %s, aby sprawdzić który element. Oczyść go dmuchawą sprężonego powietrza. Jeśli filtra nie da się już przedmuchać, warsztat wymienia go od przeglądu %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Wymagane smarowanie"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Pojazd %s ma smarowniczki do nasmarowania.&#10;&#10;W RMS każda maszyna ma smarowniczki wymienione w jej instrukcji. Wymagają ponownego smarowania po określonej liczbie godzin pracy, a w niektórych maszynach każdego dnia pracy. Spóźnione smarowanie przyspiesza zużycie podwozia.&#10;&#10;Kup w sklepie ręczną smarownicę i wkłady. Trzymając smarownicę w ręku, wyceluj we wkład, aby go włożyć, a potem w maszynę: każde kliknięcie smaruje jedną smarowniczkę, a przytrzymanie przycisku przechodzi do kolejnych.&#10;&#10;Aby zobaczyć pozostałe smarowniczki, przytrzymaj klawisz %s, patrząc na pojazd."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Pojazd %s ma smarowniczki do nasmarowania.&#10;&#10;W RMS każda maszyna ma smarowniczki wymienione w jej instrukcji. Wymagają ponownego smarowania w miarę dni pracy maszyny: każdego dnia pracy albo co kilka dni pracy te, które instrukcja smaruje rzadziej. Spóźnione smarowanie przyspiesza zużycie podwozia.&#10;&#10;Kup w sklepie ręczną smarownicę i wkłady. Trzymając smarownicę w ręku, stań przed wkładem, aby go włożyć, a potem wyceluj w maszynę: każde kliknięcie smaruje jedną smarowniczkę, a przytrzymanie przycisku przechodzi do kolejnych.&#10;&#10;Aby zobaczyć pozostałe smarowniczki, przytrzymaj klawisz %s, patrząc na pojazd."/>
         <text name="rms_tutorial_needs_repair_title" text="Wykryto awarię"/>
         <text name="rms_tutorial_needs_repair_message" text="Pojazd %s ma problem. Jedna z jego części mogła ulec awarii.&#10;&#10;Odwiedź warsztat: przegląd albo obsługa techniczna, jeśli przypada, zidentyfikuje awarię. Nie zwlekaj: awaria może się pogłębiać, a wraz z nią wzrasta koszt naprawy.&#10;&#10;Gdy awaria zostanie zidentyfikowana, napraw ją w warsztacie."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Wymagany remont kapitalny"/>

@@ -40,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Yükleyici mafsal pimleri ve burçlarında orta derecede aşınma. Kol mafsallarındaki boşluk fark edilir hale gelir."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Yükleyici mafsal pimleri ve burçlarında ciddi aşınma. Kolda fazla boşluk vardır."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Yükleyici mafsal pimleri ve burçlarında kritik aşınma. Kolun boşluğu çok fazladır."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Direk mafsal pimleri ve burçlarında hafif aşınma. Direk mafsallarında hafif boşluk oluşur."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Direk mafsal pimleri ve burçlarında orta derecede aşınma. Direk mafsallarındaki boşluk fark edilir hale gelir."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Direk mafsal pimleri ve burçlarında ciddi aşınma. Direkte fazla boşluk vardır."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Direk mafsal pimleri ve burçlarında kritik aşınma. Direğin boşluğu çok fazladır."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Bom mafsal pimleri ve burçlarında hafif aşınma. Bom mafsallarında hafif boşluk oluşur."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Bom mafsal pimleri ve burçlarında orta derecede aşınma. Bom mafsallarındaki boşluk fark edilir hale gelir."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Bom mafsal pimleri ve burçlarında ciddi aşınma. Bomda fazla boşluk vardır."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Bom mafsal pimleri ve burçlarında kritik aşınma. Bomun boşluğu çok fazladır."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Freze kolu mafsal pimleri ve burçlarında hafif aşınma. Kol mafsallarında hafif boşluk oluşur."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Freze kolu mafsal pimleri ve burçlarında orta derecede aşınma. Kol mafsallarındaki boşluk fark edilir hale gelir."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Freze kolu mafsal pimleri ve burçlarında ciddi aşınma. Kolda fazla boşluk vardır."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Freze kolu mafsal pimleri ve burçlarında kritik aşınma. Kolun boşluğu çok fazladır."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Bıçak kolu mafsal pimleri ve burçlarında hafif aşınma. Kol mafsallarında hafif boşluk oluşur."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Bıçak kolu mafsal pimleri ve burçlarında orta derecede aşınma. Kol mafsallarındaki boşluk fark edilir hale gelir."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Bıçak kolu mafsal pimleri ve burçlarında ciddi aşınma. Kolda fazla boşluk vardır."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Bıçak kolu mafsal pimleri ve burçlarında kritik aşınma. Kolun boşluğu çok fazladır."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Kabin amortisöründe hafif kaçak. Kabin biraz daha az sönümlenir."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Kabin amortisöründe orta derecede kaçak. Kabin tümseklerde zıplar."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Kabin amortisöründe ciddi kaçak. Kabin her sarsıntıda sallanır."/>
@@ -118,6 +134,10 @@
         <text name="rms_breakdowns_part_synchronizer" text="Senkronizör"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Rot Başları ve Rot Kolları"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Yükleyici Mafsal Pimleri ve Burçları"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Direk Mafsal Pimleri ve Burçları"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Bom Mafsal Pimleri ve Burçları"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Freze Kolu Mafsal Pimleri ve Burçları"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Bıçak Kolu Mafsal Pimleri ve Burçları"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Aks Başlığı Pimleri"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Direksiyon Orbitrolü"/>
         <text name="rms_breakdowns_part_steering_box" text="Direksiyon Kutusu"/>
@@ -154,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Gaz Filtresi"/>
         <text name="rms_breakdowns_part_gas_lines" text="Gaz Hatları"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Gaz Enjektörleri"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Bujiler"/>
         <text name="rms_breakdowns_part_adblue_pump" text="AdBlue Pompası"/>
         <text name="rms_breakdowns_part_adblue_doser" text="AdBlue Dozaj Enjektörü"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlue Filtresi"/>
@@ -561,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Gaz enjektörlerinde orta derecede arıza. Motor tekler, güç kaybeder, daha fazla tüketir ve durabilir."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Gaz enjektörlerinde ciddi arıza. Bir enjektör çok hatalı dozaj yapar: büyük güç kaybı, aşırı tüketim ve zor çalışma görülür."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Gaz enjektörlerinde kritik arıza. Dozaj artık motorun çalışmasına izin vermez: motor durur."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Bujilerin değişim zamanı gelmiştir: yüksek yükte ateşleme kaçırmaları görülür, motor daha düzensiz çalışır ve biraz daha fazla tüketir. Bakım bujileri değiştirir."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Bujiler aşınmıştır: ateşleme kaçırmaları sıklaşır, motor güç kaybeder, daha fazla tüketir ve durabilir. Motor lambası yanar."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Bujiler çok aşınmıştır: büyük güç kaybı, aşırı tüketim ve zor çalışma görülür."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Bujiler kullanılamaz durumdadır: sürekli ateşleme kaçırması görülür, motor durabilir ve bir daha çalışmayabilir."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="AdBlue pompasında arıza. Dozaj sistemini artık beslemez: motor lambası yanar, ardından kontrol ünitesi onarıma kadar gücü azaltır."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="AdBlue dozaj enjektöründe arıza. Kristallerle tıkandığı için artık püskürtmez: motor lambası yanar ve daha sonra güç onarıma kadar azalır."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlue filtresinin değişim zamanı gelmiştir ve filtre tıkanmaya başlar. En kapsamlı bakım filtreyi değiştirir."/>
@@ -630,6 +655,10 @@
         <text name="rms_breakdowns_part_lift_position_sensor" text="Kaldırıcı Konum Sensörü"/>
         <text name="rms_breakdowns_part_header_height_sensor" text="Tabla Yükseklik Sensörü"/>
         <text name="rms_breakdowns_part_loader_control" text="Yükleyici Kumandası"/>
+        <text name="rms_breakdowns_part_mast_control" text="Direk Kumandası"/>
+        <text name="rms_breakdowns_part_boom_control" text="Bom Kumandası"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Freze Kolu Kumandası"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Bıçak Kolu Kumandası"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hidrolik Hızlı Bağlantılar"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Debriyajda hafif arıza. Tam ayırmıyor. Bazı vitesleri seçmek zorlaşıyor."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Debriyajda orta derecede arıza. Mekanizma diski yeterince bırakmıyor. Vitesler daha sık reddediliyor."/>
@@ -709,6 +738,22 @@
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Yükleyici kumandasında orta derecede arıza. Kol ve kepçe yalnızca yarı hızda hareket eder."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Yükleyici kumandasında ciddi arıza. Kol ve kepçe neredeyse hiç hareket etmez."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Yükleyici kumandasında kritik arıza. Kol ve kepçe artık tepki vermez."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Direk kumandasında hafif arıza. Direk ve çatallar daha yavaş tepki verir."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Direk kumandasında orta derecede arıza. Direk ve çatallar yalnızca yarı hızda hareket eder."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Direk kumandasında ciddi arıza. Direk ve çatallar neredeyse hiç hareket etmez."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Direk kumandasında kritik arıza. Direk ve çatallar artık tepki vermez."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Bom kumandasında hafif arıza. Bom ve ekipmanı daha yavaş tepki verir."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Bom kumandasında orta derecede arıza. Bom ve ekipmanı yalnızca yarı hızda hareket eder."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Bom kumandasında ciddi arıza. Bom ve ekipmanı neredeyse hiç hareket etmez."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Bom kumandasında kritik arıza. Bom ve ekipmanı artık tepki vermez."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Freze kolu kumandasında hafif arıza. Kol daha yavaş tepki verir."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Freze kolu kumandasında orta derecede arıza. Kol yalnızca yarı hızda hareket eder."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Freze kolu kumandasında ciddi arıza. Kol neredeyse hiç hareket etmez."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Freze kolu kumandasında kritik arıza. Kol artık tepki vermez."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Bıçak kolu kumandasında hafif arıza. Kol ve bıçak daha yavaş tepki verir."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Bıçak kolu kumandasında orta derecede arıza. Kol ve bıçak yalnızca yarı hızda hareket eder."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Bıçak kolu kumandasında ciddi arıza. Kol ve bıçak neredeyse hiç hareket etmez."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Bıçak kolu kumandasında kritik arıza. Kol ve bıçak artık tepki vermez."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Hidrolik silindirde hafif arıza. Kol keçesi biraz yağ kaçırıyor. Kol çevresinde hafif ıslaklık görülüyor."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Hidrolik silindirde orta derecede arıza. Kol keçesi sızdırmazlığını kaybetmiş. Silindir terliyor ve yağ seviyesi düşüyor."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Hidrolik silindirde ciddi arıza. Kol keçesi sürekli kaçırıyor. Silindir belirgin miktarda yağ kaybediyor."/>
@@ -737,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Aks rulmanlarında kritik aşınma. Bir rulman dağılmış, ayna mahruti dişlileri hasar görmüştür; aks artık çekiş iletmez."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Diferansiyel kilit kumandasında arıza. Kilit devreye girmiyor. Diferansiyel serbest kalıyor."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Diferansiyel kilit kumandasında arıza. Kilit devrede kalıyor. Makine dönüşlerde direksiyona direniyor."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Tahrik Kayışları ve Varyatörler"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Tahrik Rulmanları ve Dişli Kutuları"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Besleme Kanalı Zinciri"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Besleme Hızlandırıcısı"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Dövücü Çubukları"/>
+        <text name="rms_breakdowns_part_concave" text="Kontrbatör"/>
+        <text name="rms_breakdowns_part_separation" text="Ayırma Dişleri ve Sarsaklar"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Temizleme Elekleri"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Tane Helezonları ve Elevatörleri"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Saman Parçalayıcı ve Serpici"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Besleme Merdaneleri"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Metal ve Taş Dedektörü"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Kesici Tambur"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Kesici Tambur Bıçakları"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Karşı Bıçak"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Tane Kırıcı"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Hızlandırıcı ve Üfleyici"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Boşaltma Borusu"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Yaprak ve Baş Kesiciler"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Söküm Uçları"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Temizleme Türbinleri"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Pancar Elevatörü"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Hareketli Taban ve Boşaltma Bandı"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Eleme Bantları"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Sap Ayırıcı ve Merdaneler"/>
+        <text name="rms_breakdowns_part_picking_units" text="Toplama Üniteleri"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="İğ Nemlendirici"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Fan ve Kanallar"/>
+        <text name="rms_breakdowns_part_module_builder" text="Modül Oluşturma Odası"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Taban Bıçakları"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Besleme Merdaneleri"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Parçalama Tamburları"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Birincil Emici"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Kamış Elevatörü"/>
+        <text name="rms_breakdowns_part_shaker" text="Silkeleme Sistemi"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Toplama Pulları"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Kovalı Taşıyıcılar"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Temizleme Emicileri"/>
+        <text name="rms_breakdowns_part_destemmer" text="Sap Ayırma Makinesi"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Toplama Kafası"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Temizleme Fanı ve Elekleri"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevatörler ve Taşıyıcılar"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Hasat imkânsız: bir hasat organı bozuldu"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Tıkanma: hasat durdu"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Saman parçalayıcı bozuk: saman namlu halinde düşüyor"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Saman parçalayıcı bozuk: bu ürün artık hasat edilemez"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Tahrik kayışlarında başlangıç aşınması. Yük altında biraz kayarlar."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Tahrik kayışlarında orta derecede aşınma. Bir organ yük altında yavaşlar ve devir alarmı zaman zaman hasadı durdurur."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Tahrik kayışlarında ciddi aşınma. Kapasite düşer ve duruşlar tekrar tekrar yaşanır."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Tahrik kayışlarında kritik arıza. Bir kayış koptu: hasat imkânsız."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Tahrik rulmanlarında başlangıç aşınması. Hasat sırasında hafif bir uğultu duyulur."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Tahrik rulmanlarında orta derecede aşınma. Uğultu açıkça duyulur ve rulmanlar ısınır."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Tahrik rulmanlarında ciddi aşınma. Uğultu artar ve miller boşluk yapar."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Tahrik rulmanlarında kritik arıza. Bir rulman sarmış: hasat imkânsız."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Besleme kanalı zincirinde başlangıç aşınması. Zincir uzar ve besleme düzensizleşir."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Besleme kanalı zincirinde orta derecede aşınma. Besleme kanalının girişinde tıkanmalar oluşur."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Besleme kanalı zincirinde ciddi aşınma. Dişliler üzerinde atlar ve tıkanmalar sürer."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Besleme kanalı zincirinde kritik arıza. Zincir koptu: makineye artık hiçbir şey girmiyor."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Besleme hızlandırıcısında başlangıç aşınması. Ürün tambura daha az düzenli ulaşır."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Besleme hızlandırıcısında orta derecede aşınma. Kapasite yerinde sayar ve tıkanmalar başlar."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Besleme hızlandırıcısında ciddi aşınma. Kapasite düşer ve tıkanmalar sürer."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Besleme hızlandırıcısında kritik arıza. Bir kanat koptu: hasat imkânsız."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Dövücü çubuklarında başlangıç aşınması. Tanelerin bir kısmı başakta kalır ve tarlaya geri döner."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Dövücü çubuklarında orta derecede aşınma. Tambur titrer ve tane kayıpları artar."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Dövücü çubuklarında ciddi aşınma. Bazı çubuklar kırık: büyük kayıplar ve tıkanmalar."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Dövücü çubuklarında kritik arıza. Bir çubuk koptu: harman imkânsız."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Kontrbatörde başlangıç aşınması. Tane daha kötü harmanlanır ve bir kısmı tarlaya geri döner."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Kontrbatörde orta derecede aşınma. Tane kayıpları artar."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Kontrbatörde ciddi aşınma. Taneler kırılır, kayıplar büyüktür ve tıkanmalar başlar."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Kontrbatörde kritik arıza. Bir çubuk koptu: harman imkânsız."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Ayırma bölümünde başlangıç aşınması. Samanda tane kalır ve tarlaya geri döner."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Ayırma bölümünde orta derecede aşınma. Samandaki tane kayıpları artar."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Ayırma bölümünde ciddi aşınma. Büyük kayıplar ve saman tıkanmaları."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Ayırma bölümünde kritik arıza. Saman artık geçmiyor: hasat imkânsız."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Temizleme eleklerinde başlangıç aşınması. Tane deposuna kavuz gelir ve biraz tane atıkla birlikte gider."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Temizleme eleklerinde orta derecede aşınma. Eleklerdeki kayıplar artar."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Temizleme eleklerinde ciddi aşınma. Bir elek çatlak: büyük kayıplar ve tıkanmalar."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Temizleme eleklerinde kritik arıza. Temizleme artık çalışmıyor: hasat imkânsız."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Tane helezonları ve elevatörlerinde başlangıç aşınması. Tane deposuna akış azalır."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Tane helezonları ve elevatörlerinde orta derecede aşınma. Tanelerin bir kısmı kırılır ya da yolda kaybolur."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Tane helezonları ve elevatörlerinde ciddi aşınma. Elevatör düzenli olarak tıkanır."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Tane helezonları ve elevatörlerinde kritik arıza. Tane deposu artık dolmuyor: hasat imkânsız."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Saman parçalayıcıda başlangıç aşınması. Saman daha az kısa doğranır ve parçalayıcı biraz daha fazla güç çeker."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Saman parçalayıcıda orta derecede aşınma. Parçalayıcı titrer ve daha fazla güç çeker."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Saman parçalayıcıda ciddi aşınma. Rotor balanssız ve çok güç çeker."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Saman parçalayıcıda kritik arıza. Bir bıçak kırıldı: parçalayıcı durdu ve saman namlu halinde düşüyor."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Besleme merdanelerinde başlangıç aşınması. Ürünü daha kötü kavrarlar: besleme düzensizleşir."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Besleme merdanelerinde orta derecede aşınma. Kıyım boyu düzensizleşir ve tıkanmalar başlar."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Besleme merdanelerinde ciddi aşınma. Kapasite düşer ve tıkanmalar sürer."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Besleme merdanelerinde kritik arıza. Makineye artık hiçbir şey girmiyor: hasat imkânsız."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Metal ve taş dedektöründe başlangıç arızası. Yanlış alarmlar zaman zaman beslemeyi durdurur."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Metal ve taş dedektöründe orta derecede arıza. Gereksiz duruşlar sürer."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Metal ve taş dedektörü arızalı. Artık hiçbir şey algılamıyor: taşlar bıçaklara ulaşır ve onları çok daha hızlı aşındırır."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Kesici tamburda başlangıç aşınması. Hafifçe titrer ve biraz daha fazla güç çeker."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Kesici tamburda orta derecede aşınma. Rotor balanssız ve daha fazla güç çeker."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Kesici tamburda ciddi aşınma. Bir bıçak tutucusu çatlak: daha fazla güç ve tıkanmalar."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Kesici tamburda kritik arıza. Rotor hasarlı: hasat imkânsız."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Bıçaklarda başlangıç aşınması. Kesim daha az temizdir ve biraz daha fazla güç çeker."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Bıçaklarda orta derecede aşınma. Daha fazla güç ve daha fazla yakıt çekerler."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Bıçaklarda ciddi aşınma. Kesim düzensizdir, çekilen güç artar ve tıkanmalar başlar."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Bıçaklarda kritik arıza. Bir bıçak kırıldı: hasat imkânsız."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Karşı bıçakta başlangıç aşınması. Aralık büyür: kesim biraz daha fazla güç çeker."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Karşı bıçakta orta derecede aşınma. Kesim yırtar ve daha fazla güç çeker."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Karşı bıçakta ciddi aşınma. Ağzı aşınmış: daha fazla güç ve tıkanmalar."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Karşı bıçakta kritik arıza. Kullanılamaz durumda: hasat imkânsız."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Tane kırıcıda başlangıç aşınması. Taneler daha kötü kırılır ve kırıcı biraz daha fazla güç çeker."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Tane kırıcıda orta derecede aşınma. Bütün taneler geçer ve çekilen güç artar."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Tane kırıcıda ciddi aşınma. Bir merdane çizik: daha fazla güç ve tıkanmalar."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Tane kırıcıda kritik arıza. Bir merdane sıkıştı: hasat imkânsız."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Hızlandırıcıda başlangıç aşınması. Atış mesafesi kısalır ve kapasite biraz düşer."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Hızlandırıcıda orta derecede aşınma. Boşaltma borusu zaman zaman tıkanır."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Hızlandırıcıda ciddi aşınma. Bir kanat koptu: sık tıkanmalar ve kaybolan yem."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Hızlandırıcıda kritik arıza. Yem artık dışarı atılmıyor: hasat imkânsız."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Boşaltma borusunda başlangıç aşınması. Atış sapar ve kapasite biraz düşer."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Boşaltma borusunda orta derecede aşınma. Yem birikir ve zaman zaman boruyu tıkar."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Boşaltma borusunda ciddi aşınma. Aşınma kaplaması delinmiş: kaybolan yem ve sık tıkanmalar."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Boşaltma borusunda kritik arıza. Boru tamamen delinmiş: hasat imkânsız."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Başlangıç aşınması. Ürünün bir kısmı tarlada kalır."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Orta derecede aşınma. Titreşimler ve daha büyük kayıplar."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Ciddi aşınma. Bazı elemanlar kırık: büyük kayıplar ve tıkanmalar."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Kritik arıza. Organ kırık: hasat imkânsız."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Söküm uçlarında başlangıç aşınması. Bazı kökler kırılır ya da toprakta kalır."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Söküm uçlarında orta derecede aşınma. Kötü sökerler: daha fazla kayıp ve daha fazla çeki kuvveti."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Söküm uçlarında ciddi aşınma. Sonuna kadar aşınmışlar: büyük kayıplar ve makine zorlanır."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Söküm uçlarında kritik arıza. Bir uç kırıldı: söküm imkânsız."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Başlangıç aşınması. Temizleme daha kötü çalışır: üründe toprak ya da yabancı madde, biraz ürün kaybı."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Orta derecede aşınma. Temizleme kayıpları artar."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Ciddi aşınma. Kırık ızgaralar ya da kanatlar: büyük kayıplar ve tıkanmalar."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Kritik arıza. Temizleme durdu: hasat imkânsız."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Başlangıç aşınması. Zincir ya da bant uzar: besleme düzensizleşir."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Orta derecede aşınma. Aşınmış çubuklar ya da kanatlar: düşük kapasite ve tıkanmalar."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Ciddi aşınma. Zincir atlar: tıkanmalar sürer."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Kritik arıza. Zincir ya da bant koptu: artık hiçbir şey geçmiyor."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Başlangıç aşınması. Ürün aktarımı yavaşlar."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Orta derecede aşınma. Aktarım düzensizleşir ve ürünün bir kısmı kaybolur."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Ciddi aşınma. Aktarım düzenli olarak takılır."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Kritik arıza. Aktarım durdu: hasat imkânsız."/>
     </texts>
 </l10n>

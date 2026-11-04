@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Chasis"/>
         <text name="rms_spec_system_fuel" text="Sistema de combustible"/>
         <text name="rms_spec_system_pto" text="Toma de fuerza"/>
+        <text name="rms_spec_system_harvest" text="Cosecha"/>
         <text name="rms_spec_system_electric_motor" text="Motor eléctrico"/>
         <text name="rms_spec_system_traction_battery" text="Batería de tracción"/>
         <text name="rms_spec_state_ready" text="Listo"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Sobrecalentamiento de la batería"/>
         <text name="rms_report_wear_lubrication" text="Lubricación atrasada"/>
         <text name="rms_report_wear_pto_overload" text="Sobrecarga de la TDF"/>
+        <text name="rms_report_wear_harvest_overload" text="Sobrecarga de la cosecha"/>
+        <text name="rms_report_wear_harvest_flow" text="Flujo de grano elevado"/>
+        <text name="rms_report_wear_harvest_straw" text="Picador sobrecargado"/>
+        <text name="rms_report_wear_harvest_stones" text="Piedras"/>
+        <text name="rms_report_wear_harvest_rice" text="Cosecha de arroz"/>
+        <text name="rms_report_wear_harvest_wet" text="Cosecha húmeda"/>
         <text name="rms_report_component_title" text="Componente"/>
         <text name="rms_report_system_condition_transmission" text="Transmisión"/>
         <text name="rms_report_system_condition_power" text="Potencia actual"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Cantidad"/>
         <text name="rms_grease_hud_title" text="Engrase"/>
         <text name="rms_grease_hud_done" text="Al día"/>
+        <text name="rms_grease_hud_greased" text="Engrasados"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Soplador de aire"/>
         <text name="rms_air_blower_no_vehicle" text="No hay vehículo en el rango de limpieza"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="La inspección detecta un juego perceptible en los bulones y casquillos de las articulaciones del cargador."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="La inspección detecta un juego importante en los bulones y casquillos de las articulaciones del cargador."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="La inspección detecta un juego muy importante en los bulones y casquillos de las articulaciones del cargador."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="La inspección detecta un inicio de desgaste en los bulones y casquillos del mástil."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="La inspección detecta un juego perceptible en los bulones y casquillos del mástil."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="La inspección detecta un juego importante en los bulones y casquillos del mástil."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="La inspección detecta un juego muy importante en los bulones y casquillos del mástil."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="La inspección detecta un inicio de desgaste en los bulones y casquillos de la grúa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="La inspección detecta un juego perceptible en los bulones y casquillos de la grúa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="La inspección detecta un juego importante en los bulones y casquillos de la grúa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="La inspección detecta un juego muy importante en los bulones y casquillos de la grúa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="La inspección detecta un inicio de desgaste en los bulones y casquillos del brazo desensilador."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="La inspección detecta un juego perceptible en los bulones y casquillos del brazo desensilador."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="La inspección detecta un juego importante en los bulones y casquillos del brazo desensilador."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="La inspección detecta un juego muy importante en los bulones y casquillos del brazo desensilador."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="La inspección detecta un inicio de desgaste en los bulones y casquillos del brazo portapala."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="La inspección detecta un juego perceptible en los bulones y casquillos del brazo portapala."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="La inspección detecta un juego importante en los bulones y casquillos del brazo portapala."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="La inspección detecta un juego muy importante en los bulones y casquillos del brazo portapala."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Un amortiguador de cabina presenta una ligera humedad."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Un amortiguador de cabina presenta un rezumado."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Un amortiguador de cabina presenta una fuga activa."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Piezas medidas %s"/>
         <text name="rms_fleet_parts_need_complete" text="Piezas medidas en la próxima inspección completa"/>
         <text name="rms_fleet_greasing_done" text="Engrase al día"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s h de trabajo"/>
+        <text name="rms_fleet_greasing_period_days" text="Cada %d días trabajados"/>
         <text name="rms_fleet_greasing_period_day" text="Cada día trabajado"/>
         <text name="rms_fleet_greasing_period_month" text="Cada mes"/>
         <text name="rms_fleet_greasing_period_months" text="Cada %d meses"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d días de retraso"/>
         <text name="rms_fleet_greasing_to_do" text="%d pendientes"/>
         <text name="rms_fleet_greasing_points" text="Engrasadores"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Más frecuente"/>
         <text name="rms_fleet_greasing_next" text="Próximo engrase"/>
         <text name="rms_fleet_greasing_now" text="Ahora"/>
         <text name="rms_fleet_greasing_in" text="en %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Más rápido"/>
         <text name="rms_fleet_wear_normal" text="Desgaste normal"/>
         <text name="rms_fleet_wear_late" text="Retraso de engrase"/>
-        <text name="rms_fleet_wear_dry" text="Desgaste en seco"/>
         <text name="rms_fleet_wear_repair_greases" text="Engrasado al reparar"/>
         <text name="rms_fleet_wear_repair" text="Reparación en el taller"/>
         <text name="rms_fleet_wear_none" text="Ninguno"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Sistema de refrigeración y filtro de aire"/>
         <text name="rms_tutorial_cooling_air_check_message" text="El radiador o el filtro de aire está obstruido. Mantén pulsada la tecla %s mientras miras el vehículo para saber cuál es. Límpialo con el soplador de aire comprimido. Si el filtro ya no se puede limpiar, el taller lo sustituye a partir de la revisión %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubricación necesaria"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Tu %s tiene engrasadores por engrasar.&#10;&#10;En RMS, cada máquina tiene los engrasadores de su manual. Vuelven a necesitar engrase tras cierto número de horas de funcionamiento, o cada día de trabajo en algunas máquinas. Engrasar con retraso acelera el desgaste del chasis.&#10;&#10;Compra una pistola de engrase y cartuchos en la tienda. Con la pistola en la mano, apunta a un cartucho para cargarlo y luego a la máquina: cada clic engrasa un engrasador y mantenerlo pulsado continúa con los siguientes.&#10;&#10;Para ver los engrasadores pendientes, mantén pulsada la tecla %s mientras miras al vehículo."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Tu %s tiene engrasadores por engrasar.&#10;&#10;En RMS, cada máquina tiene los engrasadores de su manual. Vuelven a necesitar engrase según los días que trabaja la máquina: cada día de trabajo, o cada pocos días de trabajo los que el manual engrasa con menos frecuencia. Engrasar con retraso acelera el desgaste del chasis.&#10;&#10;Compra una pistola de engrase y cartuchos en la tienda. Con la pistola en la mano, ponte frente a un cartucho para cargarlo y luego apunta a la máquina: cada clic engrasa un engrasador y mantenerlo pulsado continúa con los siguientes.&#10;&#10;Para ver los engrasadores pendientes, mantén pulsada la tecla %s mientras miras al vehículo."/>
         <text name="rms_tutorial_needs_repair_title" text="Avería detectada"/>
         <text name="rms_tutorial_needs_repair_message" text="Tu %s presenta un problema. Puede que una de sus piezas haya fallado.&#10;&#10;Pásate por el taller: una inspección, o el mantenimiento si corresponde, identifica la avería. No lo dejes pasar: la avería puede seguir empeorando, y con ella también aumenta el coste de la reparación.&#10;&#10;Una vez identificada la avería, hazla reparar en el taller."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revisión necesaria"/>

@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Alváz"/>
         <text name="rms_spec_system_fuel" text="Üzemanyagrendszer"/>
         <text name="rms_spec_system_pto" text="Teljesítményleadó tengely"/>
+        <text name="rms_spec_system_harvest" text="Betakarítás"/>
         <text name="rms_spec_system_electric_motor" text="Villanymotor"/>
         <text name="rms_spec_system_traction_battery" text="Hajtóakkumulátor"/>
         <text name="rms_spec_state_ready" text="Kész"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Akkumulátor túlmelegedése"/>
         <text name="rms_report_wear_lubrication" text="Elmaradt kenés"/>
         <text name="rms_report_wear_pto_overload" text="TLT túlterhelése"/>
+        <text name="rms_report_wear_harvest_overload" text="Betakarítási túlterhelés"/>
+        <text name="rms_report_wear_harvest_flow" text="Nagy szemáram"/>
+        <text name="rms_report_wear_harvest_straw" text="Szecskázó túlterhelve"/>
+        <text name="rms_report_wear_harvest_stones" text="Kövek"/>
+        <text name="rms_report_wear_harvest_rice" text="Rizsbetakarítás"/>
+        <text name="rms_report_wear_harvest_wet" text="Nedves termény"/>
         <text name="rms_report_component_title" text="Alkatrész"/>
         <text name="rms_report_system_condition_transmission" text="Váltó"/>
         <text name="rms_report_system_condition_power" text="Aktuális teljesítmény"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Mennyiség"/>
         <text name="rms_grease_hud_title" text="Zsírzás"/>
         <text name="rms_grease_hud_done" text="Rendben"/>
+        <text name="rms_grease_hud_greased" text="Zsírozva"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Légfúvó"/>
         <text name="rms_air_blower_no_vehicle" text="Nincs jármű tisztítási hatótávban"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Az átvizsgálás észrevehető holtjátékot mutat a rakodócsuklók csapjainál és perselyeinél."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Az átvizsgálás jelentős holtjátékot mutat a rakodócsuklók csapjainál és perselyeinél."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Az átvizsgálás nagyon jelentős holtjátékot mutat a rakodócsuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Az átvizsgálás kezdődő kopást mutat az árboccsuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Az átvizsgálás észrevehető holtjátékot mutat az árboccsuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Az átvizsgálás jelentős holtjátékot mutat az árboccsuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Az átvizsgálás nagyon jelentős holtjátékot mutat az árboccsuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Az átvizsgálás kezdődő kopást mutat a gémcsuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Az átvizsgálás észrevehető holtjátékot mutat a gémcsuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Az átvizsgálás jelentős holtjátékot mutat a gémcsuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Az átvizsgálás nagyon jelentős holtjátékot mutat a gémcsuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Az átvizsgálás kezdődő kopást mutat a marókar-csuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Az átvizsgálás észrevehető holtjátékot mutat a marókar-csuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Az átvizsgálás jelentős holtjátékot mutat a marókar-csuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Az átvizsgálás nagyon jelentős holtjátékot mutat a marókar-csuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Az átvizsgálás kezdődő kopást mutat a tolólapkar-csuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Az átvizsgálás észrevehető holtjátékot mutat a tolólapkar-csuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Az átvizsgálás jelentős holtjátékot mutat a tolólapkar-csuklók csapjainál és perselyeinél."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Az átvizsgálás nagyon jelentős holtjátékot mutat a tolólapkar-csuklók csapjainál és perselyeinél."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="A fülke egyik lengéscsillapítója enyhén nedves."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="A fülke egyik lengéscsillapítóján olajizzadás látható."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="A fülke egyik lengéscsillapítóján aktív szivárgás látható."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Alkatrészmérés %s"/>
         <text name="rms_fleet_parts_need_complete" text="Alkatrészmérés a következő teljes átvizsgáláskor"/>
         <text name="rms_fleet_greasing_done" text="Zsírzás rendben"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s óra munka"/>
+        <text name="rms_fleet_greasing_period_days" text="%d munkanaponta"/>
         <text name="rms_fleet_greasing_period_day" text="Minden munkanap"/>
         <text name="rms_fleet_greasing_period_month" text="Havonta"/>
         <text name="rms_fleet_greasing_period_months" text="%d havonta"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d nap késés"/>
         <text name="rms_fleet_greasing_to_do" text="%d hátra"/>
         <text name="rms_fleet_greasing_points" text="Zsírzószemek"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Leggyakoribb"/>
         <text name="rms_fleet_greasing_next" text="Következő zsírzás"/>
         <text name="rms_fleet_greasing_now" text="Most"/>
         <text name="rms_fleet_greasing_in" text="%s múlva"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Gyorsabban"/>
         <text name="rms_fleet_wear_normal" text="Normál kopás"/>
         <text name="rms_fleet_wear_late" text="Zsírzási késés"/>
-        <text name="rms_fleet_wear_dry" text="Kopás zsír nélkül"/>
         <text name="rms_fleet_wear_repair_greases" text="Javításkor zsírozva"/>
         <text name="rms_fleet_wear_repair" text="Műhelyi javítás"/>
         <text name="rms_fleet_wear_none" text="Nincs"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Hűtés és légszűrő"/>
         <text name="rms_tutorial_cooling_air_check_message" text="A hűtő vagy a légszűrő eltömődött. Nézz a járműre, és tartsd lenyomva a %s billentyűt, hogy megtudd, melyik. Tisztítsd meg sűrített levegős fúvóval. Ha a szűrő már nem fújható tisztára, a műhely a(z) %s karbantartástól kezdve cseréli."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Kenés szükséges"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s zsírzószemei kenésre várnak.&#10;&#10;Az RMS-ben minden gépnek a kézikönyvében szereplő zsírzószemei vannak. Bizonyos számú üzemóra után, egyes gépeknél minden munkanapon újra kenést igényelnek. A késedelmes zsírzás gyorsítja az alváz kopását.&#10;&#10;Vásárolj zsírzópisztolyt és patronokat a boltban. A pisztollyal a kézben célozz egy patronra a betöltéshez, majd a gépre: minden kattintás egy zsírzószemet ken meg, a gomb nyomva tartásával pedig folytatódik a következőn.&#10;&#10;A hátralévő zsírzószemek megtekintéséhez nézz a járműre, és tartsd nyomva a következő billentyűt: %s."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s zsírzószemei kenésre várnak.&#10;&#10;Az RMS-ben minden gépnek a kézikönyvében szereplő zsírzószemei vannak. A gép munkanapjai szerint igényelnek újra kenést: minden munkanapon, vagy néhány munkanaponta azok, amelyeket a kézikönyv ritkábban ken. A késedelmes zsírzás gyorsítja az alváz kopását.&#10;&#10;Vásárolj zsírzópisztolyt és patronokat a boltban. A pisztollyal a kézben állj egy patron elé a betöltéshez, majd célozz a gépre: minden kattintás egy zsírzószemet ken meg, a gomb nyomva tartásával pedig folytatódik a következőn.&#10;&#10;A hátralévő zsírzószemek megtekintéséhez nézz a járműre, és tartsd nyomva a következő billentyűt: %s."/>
         <text name="rms_tutorial_needs_repair_title" text="Meghibásodás észlelve"/>
         <text name="rms_tutorial_needs_repair_message" text="%s problémát jelez. Lehet, hogy az egyik alkatrésze meghibásodott.&#10;&#10;Látogass el egy műhelybe: egy átvizsgálás, vagy a karbantartás, ha esedékes, azonosítja a meghibásodást. Ne halogasd: a meghibásodás tovább súlyosbodhat, és vele együtt a javítás költsége is nő.&#10;&#10;Ha a meghibásodás azonosítva van, javíttasd meg a műhelyben."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Nagyjavítás szükséges"/>

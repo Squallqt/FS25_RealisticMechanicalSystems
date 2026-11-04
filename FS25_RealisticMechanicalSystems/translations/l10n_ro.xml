@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Șasiu"/>
         <text name="rms_spec_system_fuel" text="Sistem de alimentare"/>
         <text name="rms_spec_system_pto" text="Priză de putere"/>
+        <text name="rms_spec_system_harvest" text="Recoltare"/>
         <text name="rms_spec_system_electric_motor" text="Motor electric"/>
         <text name="rms_spec_system_traction_battery" text="Baterie de tracțiune"/>
         <text name="rms_spec_state_ready" text="Pregătit"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Supraîncălzirea bateriei"/>
         <text name="rms_report_wear_lubrication" text="Lubrifiere întârziată"/>
         <text name="rms_report_wear_pto_overload" text="Suprasolicitarea prizei de putere"/>
+        <text name="rms_report_wear_harvest_overload" text="Suprasarcină la recoltare"/>
+        <text name="rms_report_wear_harvest_flow" text="Flux mare de boabe"/>
+        <text name="rms_report_wear_harvest_straw" text="Tocător suprasolicitat"/>
+        <text name="rms_report_wear_harvest_stones" text="Pietre"/>
+        <text name="rms_report_wear_harvest_rice" text="Recoltarea orezului"/>
+        <text name="rms_report_wear_harvest_wet" text="Cultură umedă"/>
         <text name="rms_report_component_title" text="Componentă"/>
         <text name="rms_report_system_condition_transmission" text="Transmisie"/>
         <text name="rms_report_system_condition_power" text="Putere actuală"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Cantitate"/>
         <text name="rms_grease_hud_title" text="Gresare"/>
         <text name="rms_grease_hud_done" text="La zi"/>
+        <text name="rms_grease_hud_greased" text="Gresate"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Suflantă cu aer comprimat"/>
         <text name="rms_air_blower_no_vehicle" text="Niciun vehicul în raza de curățare"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Inspecția arată joc perceptibil la bolțurile și bucșele articulațiilor încărcătorului."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Inspecția arată joc mare la bolțurile și bucșele articulațiilor încărcătorului."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Inspecția arată joc foarte mare la bolțurile și bucșele articulațiilor încărcătorului."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Inspecția arată început de uzură la bolțurile și bucșele catargului."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Inspecția arată joc perceptibil la bolțurile și bucșele catargului."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Inspecția arată joc mare la bolțurile și bucșele catargului."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Inspecția arată joc foarte mare la bolțurile și bucșele catargului."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Inspecția arată început de uzură la bolțurile și bucșele macaralei."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Inspecția arată joc perceptibil la bolțurile și bucșele macaralei."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Inspecția arată joc mare la bolțurile și bucșele macaralei."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Inspecția arată joc foarte mare la bolțurile și bucșele macaralei."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Inspecția arată început de uzură la bolțurile și bucșele brațului de frezare."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Inspecția arată joc perceptibil la bolțurile și bucșele brațului de frezare."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Inspecția arată joc mare la bolțurile și bucșele brațului de frezare."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Inspecția arată joc foarte mare la bolțurile și bucșele brațului de frezare."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Inspecția arată început de uzură la bolțurile și bucșele brațului lamei."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Inspecția arată joc perceptibil la bolțurile și bucșele brațului lamei."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Inspecția arată joc mare la bolțurile și bucșele brațului lamei."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Inspecția arată joc foarte mare la bolțurile și bucșele brațului lamei."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Un amortizor al cabinei prezintă o ușoară umezeală."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Un amortizor al cabinei prezintă o infiltrație de ulei."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Un amortizor al cabinei prezintă o scurgere activă."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Piese măsurate %s"/>
         <text name="rms_fleet_parts_need_complete" text="Piese măsurate la următoarea inspecție completă"/>
         <text name="rms_fleet_greasing_done" text="Gresare la zi"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s h de lucru"/>
+        <text name="rms_fleet_greasing_period_days" text="La fiecare %d zile lucrate"/>
         <text name="rms_fleet_greasing_period_day" text="În fiecare zi lucrată"/>
         <text name="rms_fleet_greasing_period_month" text="În fiecare lună"/>
         <text name="rms_fleet_greasing_period_months" text="La fiecare %d luni"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d zile întârziere"/>
         <text name="rms_fleet_greasing_to_do" text="%d de făcut"/>
         <text name="rms_fleet_greasing_points" text="Gresoare"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Cel mai des"/>
         <text name="rms_fleet_greasing_next" text="Următoarea gresare"/>
         <text name="rms_fleet_greasing_now" text="Acum"/>
         <text name="rms_fleet_greasing_in" text="peste %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Mai rapid"/>
         <text name="rms_fleet_wear_normal" text="Uzură normală"/>
         <text name="rms_fleet_wear_late" text="Întârziere gresare"/>
-        <text name="rms_fleet_wear_dry" text="Uzură la uscat"/>
         <text name="rms_fleet_wear_repair_greases" text="Gresat la reparație"/>
         <text name="rms_fleet_wear_repair" text="Reparație la atelier"/>
         <text name="rms_fleet_wear_none" text="Niciuna"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Răcire și filtru de aer"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Radiatorul sau filtrul de aer este colmatat. Ține apăsată tasta %s în timp ce privești vehiculul pentru a afla care dintre ele. Curăță-l cu suflanta cu aer comprimat. Dacă filtrul nu mai poate fi curățat, atelierul îl înlocuiește începând cu revizia %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubrifiere necesară"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s are gresoare de uns.&#10;&#10;În RMS, fiecare utilaj are gresoarele din manualul său. Acestea trebuie unse din nou după un anumit număr de ore de funcționare, iar la unele utilaje în fiecare zi de lucru. Ungerea întârziată accelerează uzura șasiului.&#10;&#10;Cumpără un pistol de gresat și cartușe din magazin. Cu pistolul în mână, țintește un cartuș pentru a-l încărca, apoi utilajul: fiecare clic unge un gresor, iar menținerea butonului apăsat continuă cu următoarele.&#10;&#10;Pentru a vedea gresoarele rămase, ține apăsată tasta %s în timp ce privești vehiculul."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s are gresoare de uns.&#10;&#10;În RMS, fiecare utilaj are gresoarele din manualul său. Acestea trebuie unse din nou după zilele în care utilajul lucrează: în fiecare zi lucrată sau la câteva zile lucrate cele pe care manualul le unge mai rar. Ungerea întârziată accelerează uzura șasiului.&#10;&#10;Cumpără un pistol de gresat și cartușe din magazin. Cu pistolul în mână, așază-te în fața unui cartuș pentru a-l încărca, apoi țintește utilajul: fiecare clic unge un gresor, iar menținerea butonului apăsat continuă cu următoarele.&#10;&#10;Pentru a vedea gresoarele rămase, ține apăsată tasta %s în timp ce privești vehiculul."/>
         <text name="rms_tutorial_needs_repair_title" text="Avarie detectată"/>
         <text name="rms_tutorial_needs_repair_message" text="%s are o problemă. Este posibil ca una dintre piese să se fi defectat.&#10;&#10;Mergi la atelier: o inspecție, sau întreținerea dacă este scadentă, identifică avaria. Nu amâna: avaria poate continua să se agraveze, iar costul reparației crește odată cu aceasta.&#10;&#10;După ce avaria este identificată, repar-o la atelier."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Recondiționare necesară"/>

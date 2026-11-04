@@ -40,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Mäßiger Verschleiß der Bolzen und Buchsen der Frontladergelenke. Das Spiel an den Armgelenken wird spürbar."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Schwerer Verschleiß der Bolzen und Buchsen der Frontladergelenke. Der Arm weist großes Spiel auf."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kritischer Verschleiß der Bolzen und Buchsen der Frontladergelenke. Das Spiel des Arms ist sehr groß."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Leichter Verschleiß der Bolzen und Buchsen des Hubmasts. An den Mastgelenken entsteht leichtes Spiel."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Mäßiger Verschleiß der Bolzen und Buchsen des Hubmasts. Das Spiel an den Mastgelenken wird spürbar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Schwerer Verschleiß der Bolzen und Buchsen des Hubmasts. Der Hubmast weist großes Spiel auf."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Kritischer Verschleiß der Bolzen und Buchsen des Hubmasts. Das Spiel des Hubmasts ist sehr groß."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Leichter Verschleiß der Bolzen und Buchsen des Krans. An den Krangelenken entsteht leichtes Spiel."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Mäßiger Verschleiß der Bolzen und Buchsen des Krans. Das Spiel an den Krangelenken wird spürbar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Schwerer Verschleiß der Bolzen und Buchsen des Krans. Der Kran weist großes Spiel auf."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Kritischer Verschleiß der Bolzen und Buchsen des Krans. Das Spiel des Krans ist sehr groß."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Leichter Verschleiß der Bolzen und Buchsen des Fräsarms. An den Armgelenken entsteht leichtes Spiel."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Mäßiger Verschleiß der Bolzen und Buchsen des Fräsarms. Das Spiel an den Armgelenken wird spürbar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Schwerer Verschleiß der Bolzen und Buchsen des Fräsarms. Der Arm weist großes Spiel auf."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Kritischer Verschleiß der Bolzen und Buchsen des Fräsarms. Das Spiel des Arms ist sehr groß."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Leichter Verschleiß der Bolzen und Buchsen des Schildarms. An den Armgelenken entsteht leichtes Spiel."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Mäßiger Verschleiß der Bolzen und Buchsen des Schildarms. Das Spiel an den Armgelenken wird spürbar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Schwerer Verschleiß der Bolzen und Buchsen des Schildarms. Der Arm weist großes Spiel auf."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Kritischer Verschleiß der Bolzen und Buchsen des Schildarms. Das Spiel des Arms ist sehr groß."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Leichte Undichtigkeit eines Kabinenstoßdämpfers. Die Kabine wird etwas weniger gedämpft."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Mäßige Undichtigkeit eines Kabinenstoßdämpfers. Die Kabine springt auf Unebenheiten."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Schwere Undichtigkeit eines Kabinenstoßdämpfers. Die Kabine schaukelt bei jedem Stoß."/>
@@ -118,6 +134,10 @@
         <text name="rms_breakdowns_part_synchronizer" text="Synchronring"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Lenkkugelgelenke und Lenkstangen"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Bolzen und Buchsen der Frontladergelenke"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Bolzen und Buchsen des Hubmasts"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Bolzen und Buchsen des Krans"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Bolzen und Buchsen des Fräsarms"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Bolzen und Buchsen des Schildarms"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Achsschenkelbolzen"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Lenkorbitrol"/>
         <text name="rms_breakdowns_part_steering_box" text="Lenkgetriebe"/>
@@ -154,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Gasfilter"/>
         <text name="rms_breakdowns_part_gas_lines" text="Gasleitungen"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Gaseinspritzdüsen"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Zündkerzen"/>
         <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-Pumpe"/>
         <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-Dosierdüse"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-Filter"/>
@@ -561,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Mäßige Fehlfunktion der Gaseinspritzdüsen. Der Motor verschluckt sich, verliert Leistung, verbraucht mehr und kann absterben."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Schwere Fehlfunktion der Gaseinspritzdüsen. Eine Einspritzdüse dosiert sehr schlecht: starker Leistungsverlust, Mehrverbrauch und schlechter Start."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kritischer Ausfall der Gaseinspritzdüsen. Die Dosierung ermöglicht keinen Motorlauf mehr: Der Motor bleibt stehen."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Die Zündkerzen sind zum Wechsel fällig: Unter hoher Last treten Zündaussetzer auf, der Motor läuft unruhiger und verbraucht etwas mehr. Die Wartung ersetzt sie."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Die Zündkerzen sind verschlissen: Die Zündaussetzer werden häufig, der Motor verliert Leistung, verbraucht mehr und kann absterben. Die Motorkontrollleuchte geht an."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Die Zündkerzen sind stark verschlissen: starker Leistungsverlust, Mehrverbrauch und schlechter Start."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Die Zündkerzen sind unbrauchbar: ständige Zündaussetzer, der Motor kann absterben und nicht mehr anspringen."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Fehlfunktion der AdBlue-Pumpe. Sie versorgt die Dosierung nicht mehr: Die Motorkontrollleuchte geht an, anschließend reduziert das Steuergerät die Leistung bis zur Reparatur."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Fehlfunktion der AdBlue-Dosierdüse. Durch Kristalle zugesetzt, sprüht sie nicht mehr ein: Die Motorkontrollleuchte geht an und die Leistung sinkt anschließend bis zur Reparatur."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Der AdBlue-Filter ist zum Wechsel fällig und beginnt zu verstopfen. Die umfassendste Wartung ersetzt ihn."/>
@@ -630,6 +655,10 @@
         <text name="rms_breakdowns_part_lift_position_sensor" text="Hubwerkspositionssensor"/>
         <text name="rms_breakdowns_part_header_height_sensor" text="Schnitthöhensensor"/>
         <text name="rms_breakdowns_part_loader_control" text="Ladersteuerung"/>
+        <text name="rms_breakdowns_part_mast_control" text="Hubmaststeuerung"/>
+        <text name="rms_breakdowns_part_boom_control" text="Kransteuerung"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Fräsarmsteuerung"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Schildarmsteuerung"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulikschnellkupplungen"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Leichte Fehlfunktion der Kupplung. Sie trennt nicht vollständig. Einige Gänge lassen sich schwer einlegen."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Mäßige Fehlfunktion der Kupplung. Der Mechanismus gibt die Scheibe schlecht frei. Gänge werden häufiger abgewiesen."/>
@@ -709,6 +738,22 @@
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Mäßige Fehlfunktion der Ladersteuerung. Hubarm und Schaufel bewegen sich nur noch mit halber Geschwindigkeit."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Schwere Fehlfunktion der Ladersteuerung. Hubarm und Schaufel bewegen sich kaum noch."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kritische Fehlfunktion der Ladersteuerung. Hubarm und Schaufel reagieren nicht mehr."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Leichte Fehlfunktion der Hubmaststeuerung. Hubmast und Gabeln reagieren langsamer."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Mäßige Fehlfunktion der Hubmaststeuerung. Hubmast und Gabeln bewegen sich nur noch mit halber Geschwindigkeit."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Schwere Fehlfunktion der Hubmaststeuerung. Hubmast und Gabeln bewegen sich kaum noch."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Kritische Fehlfunktion der Hubmaststeuerung. Hubmast und Gabeln reagieren nicht mehr."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Leichte Fehlfunktion der Kransteuerung. Kran und Werkzeug reagieren langsamer."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Mäßige Fehlfunktion der Kransteuerung. Kran und Werkzeug bewegen sich nur noch mit halber Geschwindigkeit."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Schwere Fehlfunktion der Kransteuerung. Kran und Werkzeug bewegen sich kaum noch."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Kritische Fehlfunktion der Kransteuerung. Kran und Werkzeug reagieren nicht mehr."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Leichte Fehlfunktion der Fräsarmsteuerung. Der Fräsarm reagiert langsamer."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Mäßige Fehlfunktion der Fräsarmsteuerung. Der Fräsarm bewegt sich nur noch mit halber Geschwindigkeit."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Schwere Fehlfunktion der Fräsarmsteuerung. Der Fräsarm bewegt sich kaum noch."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Kritische Fehlfunktion der Fräsarmsteuerung. Der Fräsarm reagiert nicht mehr."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Leichte Fehlfunktion der Schildarmsteuerung. Arm und Schild reagieren langsamer."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Mäßige Fehlfunktion der Schildarmsteuerung. Arm und Schild bewegen sich nur noch mit halber Geschwindigkeit."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Schwere Fehlfunktion der Schildarmsteuerung. Arm und Schild bewegen sich kaum noch."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Kritische Fehlfunktion der Schildarmsteuerung. Arm und Schild reagieren nicht mehr."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Leichte Fehlfunktion des Hydraulikzylinders. Die Stangendichtung lässt etwas Öl austreten. An der Stange zeigt sich leichte Feuchtigkeit."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Mäßige Fehlfunktion des Hydraulikzylinders. Die Stangendichtung ist undicht. Der Zylinder schwitzt und der Ölstand sinkt."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Schwere Fehlfunktion des Hydraulikzylinders. Die Stangendichtung leckt aktiv. Der Zylinder verliert deutlich Öl."/>
@@ -737,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Kritischer Verschleiß der Achslager. Ein Lager ist ausgefallen, der Kegeltrieb ist beschädigt und die Achse überträgt keine Antriebskraft mehr."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Ausfall der Differenzialsperrenbetätigung. Die Sperre rückt nicht mehr ein. Das Differenzial bleibt ungesperrt."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Ausfall der Differenzialsperrenbetätigung. Die Sperre bleibt eingerückt. Die Maschine widersetzt sich dem Lenken in Kurven."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Antriebsriemen und Variatoren"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Antriebslager und Getriebe"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Schrägförderkette"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Beschleunigertrommel"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Schlagleisten"/>
+        <text name="rms_breakdowns_part_concave" text="Dreschkorb"/>
+        <text name="rms_breakdowns_part_separation" text="Abscheidezinken und Schüttler"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Reinigungssiebe"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Kornschnecken und Elevatoren"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Strohhäcksler und Verteiler"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Einzugswalzen"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Metall- und Steindetektor"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Häckseltrommel"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Häckselmesser"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Gegenschneide"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Corncracker"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Nachbeschleuniger und Gebläse"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Auswurfkrümmer"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Entblätterer und Köpfer"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Rodeschare"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Reinigungsturbinen"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Rübenelevator"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Bunkerboden und Entladeband"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Siebbänder"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Krautabscheider und Walzen"/>
+        <text name="rms_breakdowns_part_picking_units" text="Pflückeinheiten"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Spindelbefeuchtung"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Gebläse und Kanäle"/>
+        <text name="rms_breakdowns_part_module_builder" text="Modulbildner"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Basisschneidwerk"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Einzugswalzen"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Häckseltrommeln"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Primärextraktor"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Rohrelevator"/>
+        <text name="rms_breakdowns_part_shaker" text="Schüttelsystem"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Auffangschuppen"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Becherförderer"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Reinigungsabsauger"/>
+        <text name="rms_breakdowns_part_destemmer" text="Entrapper"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Pflückorgan"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Reinigungsgebläse und Siebe"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevatoren und Förderbänder"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Ernte unmöglich: ein Ernteorgan ist defekt"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Verstopfung: die Ernte ist stehen geblieben"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Häcksler defekt: das Stroh fällt in den Schwad"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Häcksler defekt: diese Kultur kann nicht mehr geerntet werden"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Beginnender Verschleiß der Antriebsriemen. Sie rutschen unter Last etwas durch."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Mäßiger Verschleiß der Antriebsriemen. Ein Organ wird unter Last langsamer und der Drehzahlalarm stoppt die Ernte gelegentlich."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Schwerer Verschleiß der Antriebsriemen. Der Durchsatz sinkt und die Stillstände häufen sich."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Kritischer Ausfall der Antriebsriemen. Ein Riemen ist gerissen: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Beginnender Verschleiß der Antriebslager. Bei der Ernte tritt ein leichtes Rumpeln auf."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Mäßiger Verschleiß der Antriebslager. Das Rumpeln wird deutlich hörbar und sie werden heiß."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Schwerer Verschleiß der Antriebslager. Das Rumpeln wird lauter, die Wellen bekommen Spiel."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritischer Ausfall der Antriebslager. Ein Lager hat sich festgefressen: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Beginnender Verschleiß der Schrägförderkette. Sie längt sich und der Einzug wird ungleichmäßig."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Mäßiger Verschleiß der Schrägförderkette. Am Einlauf des Schrägförderers bilden sich Verstopfungen."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Schwerer Verschleiß der Schrägförderkette. Sie springt über die Kettenräder und die Verstopfungen häufen sich."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Kritischer Ausfall der Schrägförderkette. Die Kette ist gerissen: nichts gelangt mehr in die Maschine."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Beginnender Verschleiß der Beschleunigertrommel. Das Erntegut erreicht die Dreschtrommel ungleichmäßiger."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Mäßiger Verschleiß der Beschleunigertrommel. Der Durchsatz stagniert und Verstopfungen treten auf."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Schwerer Verschleiß der Beschleunigertrommel. Der Durchsatz sinkt und die Verstopfungen häufen sich."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Kritischer Ausfall der Beschleunigertrommel. Eine Leiste ist abgerissen: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Beginnender Verschleiß der Schlagleisten. Ein Teil des Korns bleibt in den Ähren und geht aufs Feld."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Mäßiger Verschleiß der Schlagleisten. Die Trommel vibriert und die Kornverluste steigen."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Schwerer Verschleiß der Schlagleisten. Einige Leisten sind gebrochen: hohe Verluste und Verstopfungen."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Kritischer Ausfall der Schlagleisten. Eine Leiste ist abgerissen: das Dreschen ist unmöglich."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Beginnender Verschleiß des Dreschkorbs. Das Korn wird schlechter ausgedroschen und ein Teil geht aufs Feld."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Mäßiger Verschleiß des Dreschkorbs. Die Kornverluste steigen."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Schwerer Verschleiß des Dreschkorbs. Das Korn bricht, die Verluste sind hoch und Verstopfungen treten auf."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Kritischer Ausfall des Dreschkorbs. Eine Leiste ist abgerissen: das Dreschen ist unmöglich."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Beginnender Verschleiß der Abscheidung. Korn bleibt im Stroh und geht aufs Feld."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Mäßiger Verschleiß der Abscheidung. Die Kornverluste im Stroh steigen."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Schwerer Verschleiß der Abscheidung. Hohe Verluste und Strohverstopfungen."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Kritischer Ausfall der Abscheidung. Das Stroh kommt nicht mehr durch: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Beginnender Verschleiß der Reinigungssiebe. Spreu gelangt in den Korntank und etwas Korn geht mit dem Abfall verloren."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Mäßiger Verschleiß der Reinigungssiebe. Die Siebverluste steigen."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Schwerer Verschleiß der Reinigungssiebe. Ein Sieb ist gerissen: hohe Verluste und Verstopfungen."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Kritischer Ausfall der Reinigungssiebe. Die Reinigung funktioniert nicht mehr: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Beginnender Verschleiß der Kornschnecken und Elevatoren. Der Fluss zum Korntank sinkt."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Mäßiger Verschleiß der Kornschnecken und Elevatoren. Korn bricht oder geht unterwegs verloren."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Schwerer Verschleiß der Kornschnecken und Elevatoren. Der Elevator verstopft regelmäßig."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Kritischer Ausfall der Kornschnecken und Elevatoren. Der Korntank füllt sich nicht mehr: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Beginnender Verschleiß des Strohhäckslers. Das Stroh wird weniger kurz gehäckselt und der Häcksler braucht etwas mehr Leistung."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Mäßiger Verschleiß des Strohhäckslers. Der Häcksler vibriert und braucht mehr Leistung."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Schwerer Verschleiß des Strohhäckslers. Der Rotor ist unwuchtig und braucht viel Leistung."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritischer Ausfall des Strohhäckslers. Ein Messer ist gebrochen: der Häcksler steht und das Stroh fällt in den Schwad."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Beginnender Verschleiß der Einzugswalzen. Sie greifen das Erntegut schlechter: der Einzug wird ungleichmäßig."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Mäßiger Verschleiß der Einzugswalzen. Die Schnittlänge wird ungleichmäßig und Verstopfungen treten auf."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Schwerer Verschleiß der Einzugswalzen. Der Durchsatz sinkt und die Verstopfungen häufen sich."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Kritischer Ausfall der Einzugswalzen. Nichts gelangt mehr in die Maschine: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Beginnender Fehler des Metall- und Steindetektors. Fehlalarme stoppen gelegentlich den Einzug."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Mäßiger Fehler des Metall- und Steindetektors. Die unnötigen Stopps häufen sich."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Ausfall des Metall- und Steindetektors. Er erkennt nichts mehr: Steine erreichen die Messer und verschleißen sie viel schneller."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Beginnender Verschleiß der Häckseltrommel. Sie vibriert leicht und braucht etwas mehr Leistung."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Mäßiger Verschleiß der Häckseltrommel. Die Trommel ist unwuchtig und braucht mehr Leistung."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Schwerer Verschleiß der Häckseltrommel. Ein Messerhalter ist gerissen: mehr Leistung und Verstopfungen."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Kritischer Ausfall der Häckseltrommel. Die Trommel ist beschädigt: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Beginnender Verschleiß der Messer. Der Schnitt ist weniger sauber und braucht etwas mehr Leistung."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Mäßiger Verschleiß der Messer. Sie brauchen mehr Leistung und mehr Kraftstoff."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Schwerer Verschleiß der Messer. Der Schnitt ist ungleichmäßig, der Leistungsbedarf steigt und Verstopfungen treten auf."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Kritischer Ausfall der Messer. Ein Messer ist gebrochen: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Beginnender Verschleiß der Gegenschneide. Der Spalt wird größer: der Schnitt braucht etwas mehr Leistung."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Mäßiger Verschleiß der Gegenschneide. Der Schnitt reißt und braucht mehr Leistung."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Schwerer Verschleiß der Gegenschneide. Ihre Kante ist abgenutzt: mehr Leistung und Verstopfungen."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Kritischer Ausfall der Gegenschneide. Sie ist unbrauchbar: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Beginnender Verschleiß des Corncrackers. Die Körner werden schlechter aufgeschlossen und der Cracker braucht etwas mehr Leistung."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Mäßiger Verschleiß des Corncrackers. Ganze Körner gehen durch und der Leistungsbedarf steigt."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Schwerer Verschleiß des Corncrackers. Eine Walze ist riefig: mehr Leistung und Verstopfungen."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Kritischer Ausfall des Corncrackers. Eine Walze ist blockiert: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Beginnender Verschleiß des Nachbeschleunigers. Der Wurf ist kürzer und der Durchsatz sinkt etwas."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Mäßiger Verschleiß des Nachbeschleunigers. Der Krümmer verstopft gelegentlich."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Schwerer Verschleiß des Nachbeschleunigers. Eine Wurfschaufel ist abgerissen: häufige Verstopfungen und Futterverluste."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Kritischer Ausfall des Nachbeschleunigers. Das Futter wird nicht mehr ausgeworfen: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Beginnender Verschleiß des Auswurfkrümmers. Der Wurf weicht ab und der Durchsatz sinkt etwas."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Mäßiger Verschleiß des Auswurfkrümmers. Futter sammelt sich an und verstopft gelegentlich den Krümmer."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Schwerer Verschleiß des Auswurfkrümmers. Die Auskleidung ist durchlöchert: Futterverluste und häufige Verstopfungen."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Kritischer Ausfall des Auswurfkrümmers. Er ist durchgescheuert: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Beginnender Verschleiß. Ein Teil des Ernteguts bleibt zurück."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Mäßiger Verschleiß. Vibrationen und höhere Verluste."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Schwerer Verschleiß. Einige Elemente sind gebrochen: hohe Verluste und Verstopfungen."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Kritischer Ausfall. Das Organ ist defekt: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Beginnender Verschleiß der Schare. Einige Rüben oder Knollen werden beschädigt oder bleiben im Boden."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Mäßiger Verschleiß der Schare. Sie roden schlecht: mehr Verluste und mehr Kraftaufwand."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Schwerer Verschleiß der Schare. Sie sind bis zum Ende abgenutzt: hohe Verluste und die Maschine quält sich."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Kritischer Ausfall der Schare. Ein Schar ist gebrochen: das Roden ist unmöglich."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Beginnender Verschleiß. Die Reinigung arbeitet schlechter: Erde oder Fremdteile im Erntegut, etwas Erntegut geht verloren."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Mäßiger Verschleiß. Die Reinigungsverluste steigen."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Schwerer Verschleiß. Gebrochene Roste oder Flügel: hohe Verluste und Verstopfungen."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Kritischer Ausfall. Die Reinigung steht: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Beginnender Verschleiß. Kette oder Band längt sich: die Zufuhr wird ungleichmäßig."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Mäßiger Verschleiß. Abgenutzte Stäbe oder Schaufeln: geringerer Durchsatz und Verstopfungen."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Schwerer Verschleiß. Die Kette springt: die Verstopfungen häufen sich."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Kritischer Ausfall. Kette oder Band ist gerissen: nichts kommt mehr durch."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Beginnender Verschleiß. Die Übergabe des Ernteguts wird langsamer."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Mäßiger Verschleiß. Die Übergabe wird ungleichmäßig und ein Teil des Ernteguts geht verloren."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Schwerer Verschleiß. Die Übergabe blockiert regelmäßig."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Kritischer Ausfall. Die Übergabe steht: die Ernte ist unmöglich."/>
     </texts>
 </l10n>

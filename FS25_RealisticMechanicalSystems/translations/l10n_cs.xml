@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="底盘"/>
         <text name="rms_spec_system_fuel" text="燃油系统"/>
         <text name="rms_spec_system_pto" text="动力输出轴"/>
+        <text name="rms_spec_system_harvest" text="收获"/>
         <text name="rms_spec_system_electric_motor" text="电动机"/>
         <text name="rms_spec_system_traction_battery" text="动力电池"/>
         <text name="rms_spec_state_ready" text="就绪"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="电池过热"/>
         <text name="rms_report_wear_lubrication" text="润滑逾期"/>
         <text name="rms_report_wear_pto_overload" text="动力输出轴过载"/>
+        <text name="rms_report_wear_harvest_overload" text="收获过载"/>
+        <text name="rms_report_wear_harvest_flow" text="谷物流量大"/>
+        <text name="rms_report_wear_harvest_straw" text="切碎器过载"/>
+        <text name="rms_report_wear_harvest_stones" text="石块"/>
+        <text name="rms_report_wear_harvest_rice" text="收获水稻"/>
+        <text name="rms_report_wear_harvest_wet" text="作物过湿"/>
         <text name="rms_report_component_title" text="部件"/>
         <text name="rms_report_system_condition_transmission" text="变速箱"/>
         <text name="rms_report_system_condition_power" text="当前功率"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="数量"/>
         <text name="rms_grease_hud_title" text="打黄油"/>
         <text name="rms_grease_hud_done" text="已完成"/>
+        <text name="rms_grease_hud_greased" text="已打黄油"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="压缩空气吹尘器"/>
         <text name="rms_air_blower_no_vehicle" text="清洁范围内没有载具"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="检查发现装载机关节销轴和衬套存在明显间隙。"/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="检查发现装载机关节销轴和衬套存在很大间隙。"/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="检查发现装载机关节销轴和衬套存在极大间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="检查发现门架销轴和衬套开始磨损。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="检查发现门架销轴和衬套存在明显间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="检查发现门架销轴和衬套存在很大间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="检查发现门架销轴和衬套存在极大间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="检查发现吊臂销轴和衬套开始磨损。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="检查发现吊臂销轴和衬套存在明显间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="检查发现吊臂销轴和衬套存在很大间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="检查发现吊臂销轴和衬套存在极大间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="检查发现取料臂销轴和衬套开始磨损。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="检查发现取料臂销轴和衬套存在明显间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="检查发现取料臂销轴和衬套存在很大间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="检查发现取料臂销轴和衬套存在极大间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="检查发现铲刀臂销轴和衬套开始磨损。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="检查发现铲刀臂销轴和衬套存在明显间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="检查发现铲刀臂销轴和衬套存在很大间隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="检查发现铲刀臂销轴和衬套存在极大间隙。"/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="一个驾驶室减震器表面轻微湿润。"/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="一个驾驶室减震器有油慢速外流。"/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="一个驾驶室减震器有油正在外流。"/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="部件测量：%s"/>
         <text name="rms_fleet_parts_need_complete" text="部件测量：下次全面检查时"/>
         <text name="rms_fleet_greasing_done" text="打黄油已完成"/>
-        <text name="rms_fleet_greasing_period_hours" text="工作 %s 小时"/>
+        <text name="rms_fleet_greasing_period_days" text="每 %d 个作业日"/>
         <text name="rms_fleet_greasing_period_day" text="每个作业日"/>
         <text name="rms_fleet_greasing_period_month" text="每月"/>
         <text name="rms_fleet_greasing_period_months" text="每 %d 个月"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="逾期 %d 天"/>
         <text name="rms_fleet_greasing_to_do" text="剩余 %d"/>
         <text name="rms_fleet_greasing_points" text="黄油嘴"/>
+        <text name="rms_fleet_greasing_most_frequent" text="最短间隔"/>
         <text name="rms_fleet_greasing_next" text="下次打黄油"/>
         <text name="rms_fleet_greasing_now" text="现在"/>
         <text name="rms_fleet_greasing_in" text="%s后"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="磨损加快"/>
         <text name="rms_fleet_wear_normal" text="正常磨损"/>
         <text name="rms_fleet_wear_late" text="打黄油逾期"/>
-        <text name="rms_fleet_wear_dry" text="无黄油磨损"/>
         <text name="rms_fleet_wear_repair_greases" text="修理时打黄油"/>
         <text name="rms_fleet_wear_repair" text="维修车间修理"/>
         <text name="rms_fleet_wear_none" text="无"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="冷却系统与空气滤清器"/>
         <text name="rms_tutorial_cooling_air_check_message" text="散热器或空气滤清器已堵塞。看向载具时按住%s键，确认是哪个部件。使用压缩空气吹风机清洁。如果滤清器无法继续吹扫清洁，维修车间从%s保养起将其更换。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="需要润滑"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s有黄油嘴需要加注黄油。&#10;&#10;在RMS中，每台机器都有其说明书中的黄油嘴。经过一定工作小时后需要再次加注，部分机器则每个工作日都需要加注。加注延误会加快底盘磨损。&#10;&#10;在商店购买黄油加注器和黄油筒。手持加注器，对准油筒进行装填，再对准机器：每次点击为一个黄油嘴加注，按住鼠标按钮可继续为后续黄油嘴加注。&#10;&#10;要查看剩余待加注黄油嘴，看向载具时按住%s键。"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s有黄油嘴需要加注黄油。&#10;&#10;在RMS中，每台机器都有其说明书中的黄油嘴。每个作业日需要再次加注，说明书中加注间隔较长的则每隔几个作业日加注一次。加注延误会加快底盘磨损。&#10;&#10;在商店购买黄油加注器和黄油筒。手持加注器，站在油筒前进行装填，再对准机器：每次点击为一个黄油嘴加注，按住鼠标按钮可继续为后续黄油嘴加注。&#10;&#10;要查看剩余待加注黄油嘴，看向载具时按住%s键。"/>
         <text name="rms_tutorial_needs_repair_title" text="检测到故障"/>
         <text name="rms_tutorial_needs_repair_message" text="%s出现了问题，其中一个部件可能已经失效。&#10;&#10;请前往维修车间：检查，或到期的保养，可以确认故障。不要拖延：故障可能继续加重，修理费用也会随之增加。&#10;&#10;故障确认后，请在维修车间进行修理。"/>
         <text name="rms_tutorial_needs_overhaul_title" text="需要大修"/>

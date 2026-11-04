@@ -40,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Usure modérée des axes et bagues des articulations du chargeur. Le jeu aux articulations du bras devient perceptible."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Usure sévère des axes et bagues des articulations du chargeur. Le bras présente un jeu important."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Usure critique des axes et bagues des articulations du chargeur. Le jeu du bras est très important."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Usure légère des axes et bagues du mât. Un léger jeu apparaît aux articulations du mât."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Usure modérée des axes et bagues du mât. Le jeu aux articulations du mât devient perceptible."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Usure sévère des axes et bagues du mât. Le mât présente un jeu important."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Usure critique des axes et bagues du mât. Le jeu du mât est très important."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Usure légère des axes et bagues de la flèche. Un léger jeu apparaît aux articulations de la flèche."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Usure modérée des axes et bagues de la flèche. Le jeu aux articulations de la flèche devient perceptible."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Usure sévère des axes et bagues de la flèche. La flèche présente un jeu important."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Usure critique des axes et bagues de la flèche. Le jeu de la flèche est très important."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Usure légère des axes et bagues du bras de désilage. Un léger jeu apparaît aux articulations du bras."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Usure modérée des axes et bagues du bras de désilage. Le jeu aux articulations du bras devient perceptible."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Usure sévère des axes et bagues du bras de désilage. Le bras présente un jeu important."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Usure critique des axes et bagues du bras de désilage. Le jeu du bras est très important."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Usure légère des axes et bagues du bras porte-lame. Un léger jeu apparaît aux articulations du bras."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Usure modérée des axes et bagues du bras porte-lame. Le jeu aux articulations du bras devient perceptible."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Usure sévère des axes et bagues du bras porte-lame. Le bras présente un jeu important."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Usure critique des axes et bagues du bras porte-lame. Le jeu du bras est très important."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Fuite légère d'un amortisseur de cabine. La cabine est un peu moins amortie."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Fuite modérée d'un amortisseur de cabine. La cabine rebondit sur les bosses."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Fuite sévère d'un amortisseur de cabine. La cabine ballotte à chaque cahot."/>
@@ -118,6 +134,10 @@
         <text name="rms_breakdowns_part_synchronizer" text="Synchroniseur"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Rotules et barres de direction"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Axes et bagues des articulations du chargeur"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Axes et bagues du mât"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Axes et bagues de la flèche"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Axes et bagues du bras de désilage"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Axes et bagues du bras porte-lame"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pivots de fusée"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol de direction"/>
         <text name="rms_breakdowns_part_steering_box" text="Boîtier de direction"/>
@@ -154,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Filtre à gaz"/>
         <text name="rms_breakdowns_part_gas_lines" text="Conduites de gaz"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Injecteurs de gaz"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Bougies d'allumage"/>
         <text name="rms_breakdowns_part_adblue_pump" text="Pompe d'AdBlue"/>
         <text name="rms_breakdowns_part_adblue_doser" text="Injecteur doseur d'AdBlue"/>
         <text name="rms_breakdowns_part_adblue_filter" text="Filtre d'AdBlue"/>
@@ -561,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Défaillance modérée des injecteurs de gaz. Le moteur hésite, perd de la puissance, consomme davantage et peut caler."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Défaillance sévère des injecteurs de gaz. Un injecteur dose très mal : forte perte de puissance, surconsommation et démarrage difficile."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Défaillance critique des injecteurs de gaz. Le dosage ne permet plus au moteur de tourner : il s'arrête."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Les bougies d'allumage arrivent à leur échéance : des ratés apparaissent sous forte charge, le moteur tourne moins rond et consomme un peu plus. L'entretien les remplace."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Les bougies d'allumage sont usées : les ratés deviennent fréquents, le moteur perd de la puissance, consomme davantage et peut caler. Le voyant moteur s'allume."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Les bougies d'allumage sont très usées : forte perte de puissance, surconsommation et démarrage difficile."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Les bougies d'allumage sont hors d'usage : ratés permanents, le moteur peut caler et refuser de démarrer."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Défaillance de la pompe d'AdBlue. Elle n'alimente plus le dosage : le voyant moteur s'allume, puis le calculateur réduit la puissance jusqu'à la réparation."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Défaillance de l'injecteur doseur d'AdBlue. Encrassé de cristaux, il ne pulvérise plus : le voyant moteur s'allume et la puissance baisse ensuite jusqu'à la réparation."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Le filtre d'AdBlue arrive à son échéance et commence à se colmater. La révision la plus complète le remplace."/>
@@ -630,6 +655,10 @@
         <text name="rms_breakdowns_part_lift_position_sensor" text="Capteur de position du relevage"/>
         <text name="rms_breakdowns_part_header_height_sensor" text="Capteur de hauteur de coupe"/>
         <text name="rms_breakdowns_part_loader_control" text="Commande du chargeur"/>
+        <text name="rms_breakdowns_part_mast_control" text="Commande du mât"/>
+        <text name="rms_breakdowns_part_boom_control" text="Commande de la flèche"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Commande du bras de désilage"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Commande du bras porte-lame"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Coupleurs hydrauliques"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Défaillance légère de l'embrayage. Le débrayage est incomplet. Certains passages de vitesses sont difficiles."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Défaillance modérée de l'embrayage. Le mécanisme libère mal le disque. Les rapports sont refusés plus souvent."/>
@@ -709,6 +738,22 @@
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Défaillance modérée de la commande du chargeur. Le bras et le godet ne se déplacent plus qu'à mi-vitesse."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Défaillance sévère de la commande du chargeur. Le bras et le godet bougent à peine."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Défaillance critique de la commande du chargeur. Le bras et le godet ne répondent plus."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Défaillance légère de la commande du mât. Le mât et les fourches répondent plus lentement."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Défaillance modérée de la commande du mât. Le mât et les fourches ne se déplacent plus qu'à mi-vitesse."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Défaillance sévère de la commande du mât. Le mât et les fourches bougent à peine."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Défaillance critique de la commande du mât. Le mât et les fourches ne répondent plus."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Défaillance légère de la commande de la flèche. La flèche et son outil répondent plus lentement."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Défaillance modérée de la commande de la flèche. La flèche et son outil ne se déplacent plus qu'à mi-vitesse."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Défaillance sévère de la commande de la flèche. La flèche et son outil bougent à peine."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Défaillance critique de la commande de la flèche. La flèche et son outil ne répondent plus."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Défaillance légère de la commande du bras de désilage. Le bras répond plus lentement."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Défaillance modérée de la commande du bras de désilage. Le bras ne se déplace plus qu'à mi-vitesse."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Défaillance sévère de la commande du bras de désilage. Le bras bouge à peine."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Défaillance critique de la commande du bras de désilage. Le bras ne répond plus."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Défaillance légère de la commande du bras porte-lame. Le bras et la lame répondent plus lentement."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Défaillance modérée de la commande du bras porte-lame. Le bras et la lame ne se déplacent plus qu'à mi-vitesse."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Défaillance sévère de la commande du bras porte-lame. Le bras et la lame bougent à peine."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Défaillance critique de la commande du bras porte-lame. Le bras et la lame ne répondent plus."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Défaillance légère du vérin hydraulique. Le joint de tige laisse passer un peu d'huile. Une légère humidité apparaît autour de la tige."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Défaillance modérée du vérin hydraulique. Le joint de tige n'est plus étanche. Le vérin suinte et le niveau d'huile baisse."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Défaillance sévère du vérin hydraulique. Le joint de tige fuit activement. La perte d'huile du vérin devient importante."/>
@@ -737,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Usure critique des roulements de pont. Un roulement a lâché, le couple conique est abîmé et le pont ne transmet plus la traction."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Défaillance de la commande du blocage de différentiel. Le blocage ne s'enclenche plus. Le différentiel reste libre."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Défaillance de la commande du blocage de différentiel. Le blocage reste enclenché. La machine résiste au braquage en virage."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Courroies et variateurs"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Roulements et boîtiers d'entraînement"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Chaîne du convoyeur"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Accélérateur d'alimentation"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Battes"/>
+        <text name="rms_breakdowns_part_concave" text="Contre-batteur"/>
+        <text name="rms_breakdowns_part_separation" text="Dents et secoueurs de séparation"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Grilles de nettoyage"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Vis et élévateurs à grain"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Broyeur et éparpilleur"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Rouleaux d'alimentation"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Détecteur de métaux et de pierres"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Rotor hacheur"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Couteaux du rotor hacheur"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Contre-couteau"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Éclateur de grains"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Accélérateur et soufflerie"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Goulotte"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Effeuilleuse et scalpeurs"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Socs d'arrachage"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Turbines de nettoyage"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Élévateur à betteraves"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Fond mouvant et tapis de déchargement"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Tapis tamiseurs"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Séparateur de fanes et rouleaux"/>
+        <text name="rms_breakdowns_part_picking_units" text="Unités de cueillette"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Humidificateur des broches"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Soufflerie et conduits"/>
+        <text name="rms_breakdowns_part_module_builder" text="Chambre de formation des modules"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Couteaux de base"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Rouleaux d'alimentation"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Tronçonneur"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Extracteur primaire"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Élévateur à cannes"/>
+        <text name="rms_breakdowns_part_shaker" text="Système de secouage"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Écailles de réception"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Convoyeurs à godets"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Aspirateurs de nettoyage"/>
+        <text name="rms_breakdowns_part_destemmer" text="Égrappoir"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Organe de cueillette"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Soufflerie et grilles de nettoyage"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Élévateurs et convoyeurs"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Récolte impossible : un organe est cassé"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Bourrage : la récolte s'est arrêtée"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Broyeur cassé : la paille tombe en andain"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Broyeur cassé : cette culture ne peut plus être récoltée"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Usure naissante des courroies des organes. Elles patinent un peu sous la charge."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Usure modérée des courroies des organes. Un organe ralentit sous la charge et l'alarme de régime arrête parfois la récolte."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Usure sévère des courroies des organes. Le débit baisse et les arrêts se répètent."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Défaillance critique des courroies des organes. Une courroie a cassé : la récolte est impossible."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Usure naissante des roulements d'entraînement des organes. Un léger grondement apparaît pendant la récolte."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Usure modérée des roulements d'entraînement des organes. Le grondement devient nettement audible et ils chauffent."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Usure sévère des roulements d'entraînement des organes. Le grondement s'amplifie, les arbres prennent du jeu."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Défaillance critique des roulements d'entraînement des organes. Un roulement a grippé : la récolte est impossible."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Usure naissante de la chaîne du convoyeur. Elle s'allonge et l'alimentation devient irrégulière."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Usure modérée de la chaîne du convoyeur. Des bourrages se forment à l'entrée du convoyeur."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Usure sévère de la chaîne du convoyeur. Elle saute sur ses pignons et les bourrages se répètent."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Défaillance critique de la chaîne du convoyeur. La chaîne a cassé : plus rien n'entre dans la machine."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Usure naissante de l'accélérateur d'alimentation. La récolte arrive moins régulièrement au batteur."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Usure modérée de l'accélérateur d'alimentation. Le débit plafonne et des bourrages apparaissent."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Usure sévère de l'accélérateur d'alimentation. Le débit baisse et les bourrages se répètent."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Défaillance critique de l'accélérateur d'alimentation. Une lame s'est arrachée : la récolte est impossible."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Usure naissante des battes. Une partie du grain reste dans les épis et part au champ."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Usure modérée des battes. Le batteur vibre et les pertes de grain augmentent."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Usure sévère des battes. Des battes sont cassées : pertes fortes et bourrages."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Défaillance critique des battes. Une batte s'est arrachée : le battage est impossible."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Usure naissante du contre-batteur. Le grain est moins bien battu et une partie part au champ."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Usure modérée du contre-batteur. Les pertes de grain augmentent."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Usure sévère du contre-batteur. Le grain casse, les pertes sont fortes et des bourrages apparaissent."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Défaillance critique du contre-batteur. Une barre s'est arrachée : le battage est impossible."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Usure naissante de la séparation. Du grain reste dans la paille et part au champ."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Usure modérée de la séparation. Les pertes de grain dans la paille augmentent."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Usure sévère de la séparation. Pertes fortes et bourrages de paille."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Défaillance critique de la séparation. La paille ne passe plus : la récolte est impossible."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Usure naissante des grilles de nettoyage. De la menue paille arrive dans la trémie et un peu de grain part avec les déchets."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Usure modérée des grilles de nettoyage. Les pertes aux grilles augmentent."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Usure sévère des grilles de nettoyage. Une grille est fissurée : pertes fortes et bourrages."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Défaillance critique des grilles de nettoyage. Le nettoyage ne fonctionne plus : la récolte est impossible."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Usure naissante des vis et élévateurs à grain. Le débit vers la trémie baisse."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Usure modérée des vis et élévateurs à grain. Du grain casse ou se perd en route."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Usure sévère des vis et élévateurs à grain. L'élévateur se bourre régulièrement."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Défaillance critique des vis et élévateurs à grain. La trémie ne se remplit plus : la récolte est impossible."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Usure naissante du broyeur. La paille est hachée moins court et le broyeur demande un peu plus de puissance."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Usure modérée du broyeur. Le broyeur vibre et demande plus de puissance."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Usure sévère du broyeur. Le rotor est déséquilibré et prend beaucoup de puissance."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Défaillance critique du broyeur. Un couteau a cassé : le broyeur est arrêté et la paille tombe en andain."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Usure naissante des rouleaux d'alimentation. Ils accrochent moins bien la récolte : l'alimentation devient irrégulière."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Usure modérée des rouleaux d'alimentation. La longueur de coupe devient inégale et des bourrages apparaissent."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Usure sévère des rouleaux d'alimentation. Le débit baisse et les bourrages se répètent."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Défaillance critique des rouleaux d'alimentation. Plus rien n'entre dans la machine : la récolte est impossible."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Défaut naissant du détecteur de métaux et de pierres. De fausses alertes arrêtent parfois l'alimentation."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Défaut modéré du détecteur de métaux et de pierres. Les arrêts intempestifs se répètent."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Défaillance du détecteur de métaux et de pierres. Il ne détecte plus rien : les pierres atteignent les couteaux et les usent bien plus vite."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Usure naissante du rotor hacheur. Il vibre légèrement et demande un peu plus de puissance."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Usure modérée du rotor hacheur. Le rotor est déséquilibré et demande plus de puissance."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Usure sévère du rotor hacheur. Un support de couteau est fissuré : puissance en plus et bourrages."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Défaillance critique du rotor hacheur. Le rotor est endommagé : la récolte est impossible."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Usure naissante des couteaux. La coupe est moins nette et demande un peu plus de puissance."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Usure modérée des couteaux. Ils demandent plus de puissance et de carburant."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Usure sévère des couteaux. La coupe est irrégulière, la puissance demandée grimpe et des bourrages apparaissent."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Défaillance critique des couteaux. Un couteau a cassé : la récolte est impossible."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Usure naissante du contre-couteau. L'écart grandit : la coupe demande un peu plus de puissance."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Usure modérée du contre-couteau. La coupe se déchire et demande plus de puissance."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Usure sévère du contre-couteau. Son arête est usée : puissance en plus et bourrages."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Défaillance critique du contre-couteau. Il est hors d'usage : la récolte est impossible."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Usure naissante de l'éclateur. Les grains sont moins bien éclatés et l'éclateur demande un peu plus de puissance."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Usure modérée de l'éclateur. Des grains entiers passent et la puissance demandée augmente."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Usure sévère de l'éclateur. Un rouleau est rayé : puissance en plus et bourrages."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Défaillance critique de l'éclateur. Un rouleau est bloqué : la récolte est impossible."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Usure naissante de l'accélérateur. Le jet est plus court et le débit baisse un peu."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Usure modérée de l'accélérateur. La goulotte se bourre parfois."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Usure sévère de l'accélérateur. Une palette s'est arrachée : bourrages fréquents et fourrage perdu."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Défaillance critique de l'accélérateur. Le fourrage n'est plus éjecté : la récolte est impossible."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Usure naissante de la goulotte. Le jet dévie et le débit baisse un peu."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Usure modérée de la goulotte. Le fourrage s'accumule et bourre parfois la goulotte."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Usure sévère de la goulotte. Le revêtement est percé : fourrage perdu et bourrages fréquents."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Défaillance critique de la goulotte. Elle est percée de part en part : la récolte est impossible."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Usure naissante. Une partie de la récolte reste sur place."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Usure modérée. Vibrations et pertes plus fortes."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Usure sévère. Des éléments sont cassés : pertes fortes et bourrages."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Défaillance critique. L'organe est cassé : la récolte est impossible."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Usure naissante des socs. Des racines sont cassées ou laissées en terre."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Usure modérée des socs. Ils arrachent mal : plus de pertes et plus d'effort."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Usure sévère des socs. Ils sont usés jusqu'au bout : pertes fortes et la machine force."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Défaillance critique des socs. Un soc a cassé : l'arrachage est impossible."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Usure naissante. Le nettoyage est moins efficace : terre ou déchets dans la récolte, un peu de récolte perdue."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Usure modérée. Les pertes au nettoyage augmentent."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Usure sévère. Grilles ou pales cassées : pertes fortes et bourrages."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Défaillance critique. Le nettoyage est à l'arrêt : la récolte est impossible."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Usure naissante. La chaîne ou le tapis s'allonge : l'alimentation devient irrégulière."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Usure modérée. Barreaux ou palettes usés : débit réduit et bourrages."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Usure sévère. La chaîne saute : les bourrages se répètent."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Défaillance critique. La chaîne ou le tapis a rompu : plus rien ne passe."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Usure naissante. Le transfert de la récolte ralentit."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Usure modérée. Le transfert devient irrégulier et une partie de la récolte se perd."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Usure sévère. Le transfert se bloque régulièrement."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Défaillance critique. Le transfert est à l'arrêt : la récolte est impossible."/>
     </texts>
 </l10n>

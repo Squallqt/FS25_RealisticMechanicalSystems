@@ -180,8 +180,26 @@ RMS_Consumables.FILTERS = {
             return 1 / RMS_Config.FIELD_CARE.ADBLUE_FILTER_SERVICE_INTERVALS
         end,
         maintenanceType = "PREVENTIVE"
+    },
+    {
+        stateKey = "sparkPlugWear",
+        systemKey = "electrical",
+        breakdownId = "SPARK_PLUG_WEAR",
+        hours = RMS_Config.FIELD_CARE.SPARK_PLUG_HOURS,
+        getCloggingMultiplier = function()
+            return RMS_Config.SERVICE_REFERENCE_HOURS / RMS_Config.FIELD_CARE.SPARK_PLUG_HOURS
+        end
     }
 }
+
+---Tells whether a service changes a filter now rather than at the next
+function RMS_Consumables.getIsFilterDue(vehicle, filter)
+    if filter.hours == nil then
+        return true
+    end
+    local nextService = RealisticMechanicalSystems.getServiceProgramHours(vehicle, "engine") / filter.hours
+    return vehicle.spec_RealisticMechanicalSystems[filter.stateKey] + nextService > 1
+end
 
 ---Returns the tracked filter a breakdown shows
 function RMS_Consumables.getFilterOfBreakdown(breakdownId)
@@ -257,8 +275,9 @@ function RMS_Consumables.renewFilters(vehicle, breakdownId, maintenanceType)
     local spec = vehicle.spec_RealisticMechanicalSystems
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
         if (breakdownId == nil or breakdownId == filter.breakdownId)
-            and (maintenanceType == nil or filter.maintenanceType == nil
-                or RealisticMechanicalSystems.MAINTENANCE_TYPES[filter.maintenanceType] == maintenanceType) then
+            and (maintenanceType == nil or (filter.maintenanceType == nil
+                or RealisticMechanicalSystems.MAINTENANCE_TYPES[filter.maintenanceType] == maintenanceType)
+                and RMS_Consumables.getIsFilterDue(vehicle, filter)) then
             spec[filter.stateKey] = 0
             vehicle:removeBreakdown(filter.breakdownId)
         end

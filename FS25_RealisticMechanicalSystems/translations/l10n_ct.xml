@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="底盤"/>
         <text name="rms_spec_system_fuel" text="燃油系統"/>
         <text name="rms_spec_system_pto" text="動力輸出軸"/>
+        <text name="rms_spec_system_harvest" text="收穫"/>
         <text name="rms_spec_system_electric_motor" text="電動機"/>
         <text name="rms_spec_system_traction_battery" text="動力電池"/>
         <text name="rms_spec_state_ready" text="就緒"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="電池過熱"/>
         <text name="rms_report_wear_lubrication" text="加注黃油逾期"/>
         <text name="rms_report_wear_pto_overload" text="動力輸出軸過載"/>
+        <text name="rms_report_wear_harvest_overload" text="收穫過載"/>
+        <text name="rms_report_wear_harvest_flow" text="穀物流量大"/>
+        <text name="rms_report_wear_harvest_straw" text="切碎器過載"/>
+        <text name="rms_report_wear_harvest_stones" text="石塊"/>
+        <text name="rms_report_wear_harvest_rice" text="收穫水稻"/>
+        <text name="rms_report_wear_harvest_wet" text="作物過濕"/>
         <text name="rms_report_component_title" text="零組件"/>
         <text name="rms_report_system_condition_transmission" text="變速箱"/>
         <text name="rms_report_system_condition_power" text="目前功率"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="數量"/>
         <text name="rms_grease_hud_title" text="打黃油"/>
         <text name="rms_grease_hud_done" text="已完成"/>
+        <text name="rms_grease_hud_greased" text="已打黃油"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="壓縮空氣吹氣器"/>
         <text name="rms_air_blower_no_vehicle" text="清潔範圍內沒有機具"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="檢查發現裝載機關節銷軸與軸套存在明顯間隙。"/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="檢查發現裝載機關節銷軸與軸套存在很大間隙。"/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="檢查發現裝載機關節銷軸與軸套存在極大間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="檢查發現門架銷軸與軸套開始磨損。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="檢查發現門架銷軸與軸套存在明顯間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="檢查發現門架銷軸與軸套存在很大間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="檢查發現門架銷軸與軸套存在極大間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="檢查發現吊臂銷軸與軸套開始磨損。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="檢查發現吊臂銷軸與軸套存在明顯間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="檢查發現吊臂銷軸與軸套存在很大間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="檢查發現吊臂銷軸與軸套存在極大間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="檢查發現取料臂銷軸與軸套開始磨損。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="檢查發現取料臂銷軸與軸套存在明顯間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="檢查發現取料臂銷軸與軸套存在很大間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="檢查發現取料臂銷軸與軸套存在極大間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="檢查發現鏟刀臂銷軸與軸套開始磨損。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="檢查發現鏟刀臂銷軸與軸套存在明顯間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="檢查發現鏟刀臂銷軸與軸套存在很大間隙。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="檢查發現鏟刀臂銷軸與軸套存在極大間隙。"/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="一個駕駛室減震器表面略微濕。"/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="一個駕駛室減震器有油慢速外流。"/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="一個駕駛室減震器有油正在外流。"/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="零件量測：%s"/>
         <text name="rms_fleet_parts_need_complete" text="零件量測：下次全面檢查時"/>
         <text name="rms_fleet_greasing_done" text="打黃油已完成"/>
-        <text name="rms_fleet_greasing_period_hours" text="工作 %s 小時"/>
+        <text name="rms_fleet_greasing_period_days" text="每 %d 個作業日"/>
         <text name="rms_fleet_greasing_period_day" text="每個作業日"/>
         <text name="rms_fleet_greasing_period_month" text="每月"/>
         <text name="rms_fleet_greasing_period_months" text="每 %d 個月"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="逾期 %d 天"/>
         <text name="rms_fleet_greasing_to_do" text="剩餘 %d"/>
         <text name="rms_fleet_greasing_points" text="黃油嘴"/>
+        <text name="rms_fleet_greasing_most_frequent" text="最短間隔"/>
         <text name="rms_fleet_greasing_next" text="下次打黃油"/>
         <text name="rms_fleet_greasing_now" text="現在"/>
         <text name="rms_fleet_greasing_in" text="%s後"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="磨損加快"/>
         <text name="rms_fleet_wear_normal" text="正常磨損"/>
         <text name="rms_fleet_wear_late" text="打黃油逾期"/>
-        <text name="rms_fleet_wear_dry" text="無黃油磨損"/>
         <text name="rms_fleet_wear_repair_greases" text="修理時打黃油"/>
         <text name="rms_fleet_wear_repair" text="維修廠修理"/>
         <text name="rms_fleet_wear_none" text="無"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="冷卻系統與空氣濾清器"/>
         <text name="rms_tutorial_cooling_air_check_message" text="散熱器或空氣濾清器已堵塞。看向機具時按住%s鍵，確認是哪個部件。使用壓縮空氣吹風機清潔。如果濾清器無法繼續吹掃清潔，維修廠從%s保養起將其更換。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="需要加注黃油"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s有黃油嘴需要加注黃油。&#10;&#10;在RMS中，每台機具都有其說明書中的黃油嘴。經過一定工作小時後需要再次加注，部分機具則每個工作日都需要加注。加注延誤會加快底盤磨損。&#10;&#10;在商店購買黃油加注器和黃油筒。手持加注器，對準油筒進行裝填，再對準機具：每次點擊為一個黃油嘴加注，按住滑鼠按鈕可繼續為後續黃油嘴加注。&#10;&#10;要查看剩餘待加注黃油嘴，看向機具時按住%s鍵。"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s有黃油嘴需要加注黃油。&#10;&#10;在RMS中，每台機具都有其說明書中的黃油嘴。每個作業日需要再次加注，說明書中加注間隔較長的則每隔幾個作業日加注一次。加注延誤會加快底盤磨損。&#10;&#10;在商店購買黃油加注器和黃油筒。手持加注器，站在油筒前進行裝填，再對準機具：每次點擊為一個黃油嘴加注，按住滑鼠按鈕可繼續為後續黃油嘴加注。&#10;&#10;要查看剩餘待加注黃油嘴，看向機具時按住%s鍵。"/>
         <text name="rms_tutorial_needs_repair_title" text="檢測到故障"/>
         <text name="rms_tutorial_needs_repair_message" text="%s出現了問題，其中一個零組件可能已經失效。&#10;&#10;請前往維修廠：檢查，或到期的保養，可以確認故障。不要拖延：故障可能繼續加重，修理費用也會隨之增加。&#10;&#10;故障確認後，請在維修廠進行修理。"/>
         <text name="rms_tutorial_needs_overhaul_title" text="需要大修"/>

@@ -398,7 +398,7 @@ function RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, opti
         end
     elseif serviceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
         for _, maintenanceLine in ipairs(vehicle:getMaintenancePriceLines(optionOne, optionTwo, workshopType)) do
-            table.insert(lines, { kind = maintenanceLine.kind, key = "", liters = 0, price = maintenanceLine.price })
+            table.insert(lines, { kind = maintenanceLine.kind, key = maintenanceLine.key or "", liters = 0, price = maintenanceLine.price })
         end
     elseif serviceType ~= RealisticMechanicalSystems.STATUS.REFILL then
         table.insert(lines, { kind = "service", key = "", liters = 0, price = servicePrice })

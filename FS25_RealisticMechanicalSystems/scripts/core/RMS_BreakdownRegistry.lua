@@ -133,6 +133,20 @@ local function isCrawlerBreakdownApplicable(vehicle)
 end
 
 -- the game also drives a sprayer's track width on the loader tool axis
+---Names the arm a loader axis moves on a machine that is no loader
+local function getLoaderVariant(vehicle)
+    if RMS_Drivetrain.getIsInCategories(vehicle, { FORKLIFTS = true }) then
+        return "mast"
+    elseif RMS_Drivetrain.getIsInCategories(vehicle, { FORESTRYHARVESTERS = true, FORESTRYFORWARDERS = true }) then
+        return "boom"
+    elseif RMS_Drivetrain.getIsInCategories(vehicle, { FORAGEMIXERS = true }) then
+        return "arm"
+    elseif vehicle.spec_leveler ~= nil then
+        return "blade"
+    end
+    return nil
+end
+
 local function isFrontLoaderPivotBreakdownApplicable(vehicle)
     local spec = vehicle.spec_cylindered
     for _, tool in ipairs(spec ~= nil and spec.movingTools or {}) do
@@ -272,6 +286,10 @@ RMS_Breakdowns.PARTS = {
     HEADER_LIFT_VALVE = "rms_breakdowns_part_header_lift_valve",
     HEADER_HEIGHT_SENSOR = "rms_breakdowns_part_header_height_sensor",
     LOADER_CONTROL = "rms_breakdowns_part_loader_control",
+    MAST_CONTROL = "rms_breakdowns_part_mast_control",
+    BOOM_CONTROL = "rms_breakdowns_part_boom_control",
+    MILLING_ARM_CONTROL = "rms_breakdowns_part_milling_arm_control",
+    BLADE_ARM_CONTROL = "rms_breakdowns_part_blade_arm_control",
     HYDRAULIC_QUICK_COUPLERS = "rms_breakdowns_part_hydraulic_quick_couplers",
     HYDRAULIC_PUMP = "rms_breakdowns_part_hydraulic_pump",
     HYDRAULIC_CYLINDER = "rms_breakdowns_part_hydraulic_cylinder",
@@ -292,6 +310,10 @@ RMS_Breakdowns.PARTS = {
     STEERING_RACK = "rms_breakdowns_part_steering_rack",
     CAB_SUSPENSION = "rms_breakdowns_part_cab_suspension",
     LOADER_PINS_AND_BUSHINGS = "rms_breakdowns_part_loader_pins_and_bushings",
+    MAST_PINS_AND_BUSHINGS = "rms_breakdowns_part_mast_pins_and_bushings",
+    BOOM_PINS_AND_BUSHINGS = "rms_breakdowns_part_boom_pins_and_bushings",
+    MILLING_ARM_PINS_AND_BUSHINGS = "rms_breakdowns_part_milling_arm_pins_and_bushings",
+    BLADE_ARM_PINS_AND_BUSHINGS = "rms_breakdowns_part_blade_arm_pins_and_bushings",
     TRACK_TENSIONER = "rms_breakdowns_part_track_tensioner",
     TRACK_ROLLERS = "rms_breakdowns_part_track_rollers",
     THERMOSTAT = "rms_breakdowns_part_thermostat",
@@ -310,6 +332,7 @@ RMS_Breakdowns.PARTS = {
     GAS_FILTER = "rms_breakdowns_part_gas_filter",
     GAS_LINES = "rms_breakdowns_part_gas_lines",
     GAS_INJECTORS = "rms_breakdowns_part_gas_injectors",
+    SPARK_PLUGS = "rms_breakdowns_part_spark_plugs",
     ADBLUE_PUMP = "rms_breakdowns_part_adblue_pump",
     ADBLUE_DOSER = "rms_breakdowns_part_adblue_doser",
     ADBLUE_FILTER = "rms_breakdowns_part_adblue_filter",
@@ -323,7 +346,49 @@ RMS_Breakdowns.PARTS = {
     PTO_ENGAGEMENT_SWITCH = "rms_breakdowns_part_pto_engagement_switch",
     PTO_SPEED_SENSOR = "rms_breakdowns_part_pto_speed_sensor",
     PTO_BRAKE = "rms_breakdowns_part_pto_brake",
-    FRONT_PTO_CLUTCH = "rms_breakdowns_part_front_pto_clutch"
+    FRONT_PTO_CLUTCH = "rms_breakdowns_part_front_pto_clutch",
+    HARVEST_DRIVE_BELTS = "rms_breakdowns_part_harvest_drive_belts",
+    HARVEST_DRIVE_BEARINGS = "rms_breakdowns_part_harvest_drive_bearings",
+    FEEDER_CHAIN = "rms_breakdowns_part_feeder_chain",
+    FEED_ACCELERATOR = "rms_breakdowns_part_feed_accelerator",
+    THRESHING_BARS = "rms_breakdowns_part_threshing_bars",
+    CONCAVE = "rms_breakdowns_part_concave",
+    SEPARATION = "rms_breakdowns_part_separation",
+    CLEANING_SIEVES = "rms_breakdowns_part_cleaning_sieves",
+    GRAIN_ELEVATORS = "rms_breakdowns_part_grain_elevators",
+    STRAW_CHOPPER = "rms_breakdowns_part_straw_chopper",
+    FEED_ROLLS = "rms_breakdowns_part_feed_rolls",
+    METAL_DETECTOR = "rms_breakdowns_part_metal_detector",
+    CUTTERHEAD = "rms_breakdowns_part_cutterhead",
+    FORAGE_KNIVES = "rms_breakdowns_part_forage_knives",
+    SHEAR_BAR = "rms_breakdowns_part_shear_bar",
+    CROP_PROCESSOR = "rms_breakdowns_part_crop_processor",
+    CROP_ACCELERATOR = "rms_breakdowns_part_crop_accelerator",
+    DISCHARGE_SPOUT = "rms_breakdowns_part_discharge_spout",
+    BEET_TOPPER = "rms_breakdowns_part_beet_topper",
+    LIFTING_SHARES = "rms_breakdowns_part_lifting_shares",
+    BEET_CLEANING = "rms_breakdowns_part_beet_cleaning",
+    ROOT_ELEVATOR = "rms_breakdowns_part_root_elevator",
+    HOPPER_FLOOR = "rms_breakdowns_part_hopper_floor",
+    SIEVE_WEBS = "rms_breakdowns_part_sieve_webs",
+    HAULM_SEPARATOR = "rms_breakdowns_part_haulm_separator",
+    PICKING_UNITS = "rms_breakdowns_part_picking_units",
+    SPINDLE_MOISTENER = "rms_breakdowns_part_spindle_moistener",
+    COTTON_FAN = "rms_breakdowns_part_cotton_fan",
+    MODULE_BUILDER = "rms_breakdowns_part_module_builder",
+    BASE_CUTTERS = "rms_breakdowns_part_base_cutters",
+    CANE_FEED_ROLLS = "rms_breakdowns_part_cane_feed_rolls",
+    CANE_CHOPPER = "rms_breakdowns_part_cane_chopper",
+    CANE_EXTRACTOR = "rms_breakdowns_part_cane_extractor",
+    CANE_ELEVATOR = "rms_breakdowns_part_cane_elevator",
+    SHAKER = "rms_breakdowns_part_shaker",
+    CATCHING_SCALES = "rms_breakdowns_part_catching_scales",
+    BUCKET_CONVEYORS = "rms_breakdowns_part_bucket_conveyors",
+    CLEANING_FANS = "rms_breakdowns_part_cleaning_fans",
+    DESTEMMER = "rms_breakdowns_part_destemmer",
+    VEGETABLE_PICKER = "rms_breakdowns_part_vegetable_picker",
+    VEGETABLE_CLEANING = "rms_breakdowns_part_vegetable_cleaning",
+    VEGETABLE_ELEVATORS = "rms_breakdowns_part_vegetable_elevators"
 }
 
 local parts = RMS_Breakdowns.PARTS
@@ -442,6 +507,7 @@ local stagePartPrices = {
     GAS_FILTER_CLOGGING = { 0.1086, 0.1086, 0.1086, 0.1086 },
     GAS_LINE_LEAK = { 0.04035, 0.04035, 0.04035, 0.04035 },
     GAS_INJECTOR_MALFUNCTION = { 1.303, 1.303, 1.303, 1.303 },
+    SPARK_PLUG_WEAR = { 0.1167, 0.1167, 0.1167, 0.1167 },
     ADBLUE_PUMP_FAILURE = { 0.2912 },
     ADBLUE_DOSER_FAILURE = { 0.2182 },
     ADBLUE_FILTER_CLOGGING = { 0.02477, 0.02477, 0.02477, 0.02477 },
@@ -450,6 +516,48 @@ local stagePartPrices = {
     PARTICULATE_FILTER_SOOT_OVERLOAD = { 0.0, 0.1548 },
     TRACTION_BATTERY_CELL_FAULT = { 45.88, 45.88, 45.88, 45.88 },
     HV_CONTACTOR_FAILURE = { 0.3363, 0.3363, 0.3363, 0.3363 },
+    HARVEST_DRIVE_BELT_WEAR = { 0.0185, 0.0185, 0.02774, 0.03699 },
+    HARVEST_DRIVE_BEARING_WEAR = { 0.04624, 0.04624, 0.06936, 0.09248 },
+    FEEDER_CHAIN_WEAR = { 0.185, 0.185, 0.2774, 0.3699 },
+    FEED_ACCELERATOR_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
+    THRESHING_BAR_WEAR = { 0.7399, 0.7399, 1.11, 1.48 },
+    CONCAVE_WEAR = { 0.4162, 0.4162, 0.6243, 0.8323 },
+    SEPARATION_WEAR = { 0.2774, 0.2774, 0.4162, 0.5549 },
+    CLEANING_SIEVE_WEAR = { 0.185, 0.185, 0.2774, 0.3699 },
+    GRAIN_ELEVATOR_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
+    STRAW_CHOPPER_WEAR = { 0.3052, 0.3052, 0.4578, 0.6104 },
+    FEED_ROLL_WEAR = { 0.05549, 0.05549, 0.08323, 0.111 },
+    METAL_DETECTOR_FAILURE = { 0.09248, 0.09248, 0.09248 },
+    CUTTERHEAD_WEAR = { 0.4624, 0.4624, 0.6936, 0.9248 },
+    FORAGE_KNIFE_WEAR = { 0.3329, 0.3329, 0.4994, 0.6659 },
+    SHEAR_BAR_WEAR = { 0.1572, 0.1572, 0.2358, 0.3144 },
+    CROP_PROCESSOR_WEAR = { 0.8323, 0.8323, 1.249, 1.665 },
+    CROP_ACCELERATOR_WEAR = { 0.09248, 0.09248, 0.1387, 0.185 },
+    DISCHARGE_SPOUT_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
+    BEET_TOPPER_WEAR = { 0.3052, 0.3052, 0.4578, 0.6104 },
+    LIFTING_SHARE_WEAR = { 0.2774, 0.2774, 0.4162, 0.5549 },
+    BEET_CLEANING_WEAR = { 0.4162, 0.4162, 0.6243, 0.8323 },
+    ROOT_ELEVATOR_WEAR = { 0.185, 0.185, 0.2774, 0.3699 },
+    HOPPER_FLOOR_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
+    SIEVE_WEB_WEAR = { 0.185, 0.185, 0.2774, 0.3699 },
+    HAULM_SEPARATOR_WEAR = { 0.4162, 0.4162, 0.6243, 0.8323 },
+    PICKING_UNIT_WEAR = { 0.3329, 0.3329, 0.4994, 0.6659 },
+    SPINDLE_MOISTENER_WEAR = { 0.0185, 0.0185, 0.02774, 0.03699 },
+    COTTON_FAN_WEAR = { 0.185, 0.185, 0.2774, 0.3699 },
+    MODULE_BUILDER_WEAR = { 0.0185, 0.0185, 0.02774, 0.03699 },
+    BASE_CUTTER_WEAR = { 0.3329, 0.3329, 0.4994, 0.6659 },
+    CANE_FEED_ROLL_WEAR = { 0.05549, 0.05549, 0.08323, 0.111 },
+    CANE_CHOPPER_WEAR = { 0.3329, 0.3329, 0.4994, 0.6659 },
+    CANE_EXTRACTOR_WEAR = { 0.09248, 0.09248, 0.1387, 0.185 },
+    CANE_ELEVATOR_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
+    SHAKER_WEAR = { 0.7399, 0.7399, 1.11, 1.48 },
+    CATCHING_SCALE_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
+    BUCKET_CONVEYOR_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
+    CLEANING_FAN_WEAR = { 0.185, 0.185, 0.2774, 0.3699 },
+    DESTEMMER_WEAR = { 0.185, 0.185, 0.2774, 0.3699 },
+    VEGETABLE_PICKER_WEAR = { 0.7399, 0.7399, 1.11, 1.48 },
+    VEGETABLE_CLEANING_WEAR = { 0.185, 0.185, 0.2774, 0.3699 },
+    VEGETABLE_ELEVATOR_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
 }
 
 local breakdownProgressMultipliers = {
@@ -5170,6 +5278,8 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.HYDRAULICS,
         part = parts.LOADER_CONTROL,
+        getNameVariant = getLoaderVariant,
+        variantParts = { mast = parts.MAST_CONTROL, boom = parts.BOOM_CONTROL, arm = parts.MILLING_ARM_CONTROL, blade = parts.BLADE_ARM_CONTROL },
         isApplicable = isFrontLoaderPivotBreakdownApplicable,
         causes = { primary = { "of" }, secondary = { "vf" } },
         component = "ELECTRO_MECHANICAL",
@@ -5180,6 +5290,8 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_minor",
                 description = "rms_breakdowns_loader_control_failure_stage1_description",
+                variantDescriptions = { mast = "rms_breakdowns_loader_control_failure_mast_stage1_description", boom = "rms_breakdowns_loader_control_failure_boom_stage1_description",
+                    arm = "rms_breakdowns_loader_control_failure_arm_stage1_description", blade = "rms_breakdowns_loader_control_failure_blade_stage1_description" },
                 detectionChance = 1.0,
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.LOADER_CONTROL_FAILURE,
                 repairPrice = stagePartPrices.LOADER_CONTROL_FAILURE[1],
@@ -5190,6 +5302,8 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_moderate",
                 description = "rms_breakdowns_loader_control_failure_stage2_description",
+                variantDescriptions = { mast = "rms_breakdowns_loader_control_failure_mast_stage2_description", boom = "rms_breakdowns_loader_control_failure_boom_stage2_description",
+                    arm = "rms_breakdowns_loader_control_failure_arm_stage2_description", blade = "rms_breakdowns_loader_control_failure_blade_stage2_description" },
                 detectionChance = 1.0,
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.LOADER_CONTROL_FAILURE,
                 repairPrice = stagePartPrices.LOADER_CONTROL_FAILURE[2],
@@ -5203,6 +5317,8 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_major",
                 description = "rms_breakdowns_loader_control_failure_stage3_description",
+                variantDescriptions = { mast = "rms_breakdowns_loader_control_failure_mast_stage3_description", boom = "rms_breakdowns_loader_control_failure_boom_stage3_description",
+                    arm = "rms_breakdowns_loader_control_failure_arm_stage3_description", blade = "rms_breakdowns_loader_control_failure_blade_stage3_description" },
                 detectionChance = 1.0,
                 progressMultiplier = 0.5 * breakdownProgressMultipliers.LOADER_CONTROL_FAILURE,
                 repairPrice = stagePartPrices.LOADER_CONTROL_FAILURE[3],
@@ -5216,6 +5332,8 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_critical",
                 description = "rms_breakdowns_loader_control_failure_stage4_description",
+                variantDescriptions = { mast = "rms_breakdowns_loader_control_failure_mast_stage4_description", boom = "rms_breakdowns_loader_control_failure_boom_stage4_description",
+                    arm = "rms_breakdowns_loader_control_failure_arm_stage4_description", blade = "rms_breakdowns_loader_control_failure_blade_stage4_description" },
                 detectionChance = 1.0,
                 progressMultiplier = 0,
                 repairPrice = stagePartPrices.LOADER_CONTROL_FAILURE[4],
@@ -6708,6 +6826,8 @@ RMS_Breakdowns.BreakdownRegistry = {
         isSelectable = true,
         system = systems.CHASSIS,
         part = parts.LOADER_PINS_AND_BUSHINGS,
+        getNameVariant = getLoaderVariant,
+        variantParts = { mast = parts.MAST_PINS_AND_BUSHINGS, boom = parts.BOOM_PINS_AND_BUSHINGS, arm = parts.MILLING_ARM_PINS_AND_BUSHINGS, blade = parts.BLADE_ARM_PINS_AND_BUSHINGS },
         isApplicable = isFrontLoaderPivotBreakdownApplicable,
         causes = { primary = {}, secondary = {} },
         component = "PIN",
@@ -6718,38 +6838,54 @@ RMS_Breakdowns.BreakdownRegistry = {
             {
                 severity = "rms_breakdowns_severity_minor",
                 description = "rms_breakdowns_loader_pivot_pin_wear_stage1_description",
+                variantDescriptions = { mast = "rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description", boom = "rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description",
+                    arm = "rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description", blade = "rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" },
                 detectionChance = 1.0,
                 progressMultiplier = 2.0 * breakdownProgressMultipliers.LOADER_PIVOT_PIN_WEAR,
                 repairPrice = stagePartPrices.LOADER_PIVOT_PIN_WEAR[1],
                 effects = { { id = "LOADER_PINS_NOISE_EFFECT", value = 0.3, aggregation = "max" } },
-                inspection = { { additional = "rms_inspection_hint_loader_pivot_pin_wear_stage1" } },
+                inspection = { { additional = "rms_inspection_hint_loader_pivot_pin_wear_stage1",
+                    variantAdditional = { mast = "rms_inspection_hint_loader_pivot_pin_wear_mast_stage1", boom = "rms_inspection_hint_loader_pivot_pin_wear_boom_stage1",
+                        arm = "rms_inspection_hint_loader_pivot_pin_wear_arm_stage1", blade = "rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" } } },
             },
             {
                 severity = "rms_breakdowns_severity_moderate",
                 description = "rms_breakdowns_loader_pivot_pin_wear_stage2_description",
+                variantDescriptions = { mast = "rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description", boom = "rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description",
+                    arm = "rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description", blade = "rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" },
                 detectionChance = 1.0,
                 progressMultiplier = 1.0 * breakdownProgressMultipliers.LOADER_PIVOT_PIN_WEAR,
                 repairPrice = stagePartPrices.LOADER_PIVOT_PIN_WEAR[2],
                 effects = { { id = "LOADER_PINS_NOISE_EFFECT", value = 0.5, aggregation = "max" } },
-                inspection = { { additional = "rms_inspection_hint_loader_pivot_pin_wear_stage2" } },
+                inspection = { { additional = "rms_inspection_hint_loader_pivot_pin_wear_stage2",
+                    variantAdditional = { mast = "rms_inspection_hint_loader_pivot_pin_wear_mast_stage2", boom = "rms_inspection_hint_loader_pivot_pin_wear_boom_stage2",
+                        arm = "rms_inspection_hint_loader_pivot_pin_wear_arm_stage2", blade = "rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" } } },
             },
             {
                 severity = "rms_breakdowns_severity_major",
                 description = "rms_breakdowns_loader_pivot_pin_wear_stage3_description",
+                variantDescriptions = { mast = "rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description", boom = "rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description",
+                    arm = "rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description", blade = "rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" },
                 detectionChance = 1.0,
                 progressMultiplier = 0.5 * breakdownProgressMultipliers.LOADER_PIVOT_PIN_WEAR,
                 repairPrice = stagePartPrices.LOADER_PIVOT_PIN_WEAR[3],
                 effects = { { id = "LOADER_PINS_NOISE_EFFECT", value = 0.8, aggregation = "max" } },
-                inspection = { { additional = "rms_inspection_hint_loader_pivot_pin_wear_stage3" } },
+                inspection = { { additional = "rms_inspection_hint_loader_pivot_pin_wear_stage3",
+                    variantAdditional = { mast = "rms_inspection_hint_loader_pivot_pin_wear_mast_stage3", boom = "rms_inspection_hint_loader_pivot_pin_wear_boom_stage3",
+                        arm = "rms_inspection_hint_loader_pivot_pin_wear_arm_stage3", blade = "rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" } } },
             },
             {
                 severity = "rms_breakdowns_severity_critical",
                 description = "rms_breakdowns_loader_pivot_pin_wear_stage4_description",
+                variantDescriptions = { mast = "rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description", boom = "rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description",
+                    arm = "rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description", blade = "rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" },
                 detectionChance = 1.0,
                 progressMultiplier = 0 * breakdownProgressMultipliers.LOADER_PIVOT_PIN_WEAR,
                 repairPrice = stagePartPrices.LOADER_PIVOT_PIN_WEAR[4],
                 effects = { { id = "LOADER_PINS_NOISE_EFFECT", value = 1.0, aggregation = "max" } },
-                inspection = { { additional = "rms_inspection_hint_loader_pivot_pin_wear_stage4" } },
+                inspection = { { additional = "rms_inspection_hint_loader_pivot_pin_wear_stage4",
+                    variantAdditional = { mast = "rms_inspection_hint_loader_pivot_pin_wear_mast_stage4", boom = "rms_inspection_hint_loader_pivot_pin_wear_boom_stage4",
+                        arm = "rms_inspection_hint_loader_pivot_pin_wear_arm_stage4", blade = "rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" } } },
             },
         }
     },
@@ -8921,6 +9057,90 @@ RMS_Breakdowns.BreakdownRegistry = {
             }
         }
     },
+    -- worn by the hours as a filter, misfiring as the gas injectors
+    SPARK_PLUG_WEAR = {
+        isSelectable = true,
+        system = systems.ELECTRICAL,
+        part = parts.SPARK_PLUGS,
+        isApplicable = function(vehicle)
+            return vehicle.spec_motorized and vehicle.spec_motorized.consumersByFillTypeName and vehicle.spec_motorized.consumersByFillTypeName.METHANE ~= nil
+        end,
+        stages = {
+            {
+                severity = "rms_breakdowns_severity_minor",
+                description = "rms_breakdowns_spark_plug_wear_stage1_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = stagePartPrices.SPARK_PLUG_WEAR[1],
+                effects = {
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.05, aggregation = "max", extraData = { timer = 0, period = 1800 } },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.08, aggregation = "sum" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.10, aggregation = "sum" },
+                    { id = "EXHAUST_UNBURNT", value = 0.15, aggregation = "max" },
+                    { id = "ENGINE_HESITATION_CHANCE", value = 0.4, aggregation = "min", extraData = { timer = 0, duration = 300, status = 'IDLE',
+                        amplitude = 0.6, motorLoad = 0.9, cruiseState = 0 } }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_moderate",
+                description = "rms_breakdowns_spark_plug_wear_stage2_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = stagePartPrices.SPARK_PLUG_WEAR[2],
+                effects = {
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.08, aggregation = "max", extraData = { timer = 0, period = 1500 } },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.20, aggregation = "sum" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.25, aggregation = "sum" },
+                    { id = "ENGINE_STALLS_CHANCE", value = 30.0, aggregation = "min" },
+                    { id = "EXHAUST_UNBURNT", value = 0.30, aggregation = "max" },
+                    { id = "ENGINE_HESITATION_CHANCE", value = 0.3, aggregation = "min", extraData = { timer = 0, duration = 400, status = 'IDLE',
+                        amplitude = 0.8, motorLoad = 0.8, cruiseState = 0 } }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.WARNING, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_major",
+                description = "rms_breakdowns_spark_plug_wear_stage3_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = stagePartPrices.SPARK_PLUG_WEAR[3],
+                effects = {
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1800 } },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.35, aggregation = "sum" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.50, aggregation = "sum" },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 6, aggregation = "max" },
+                    { id = "EXHAUST_UNBURNT", value = 0.50, aggregation = "max" },
+                    { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = { timer = 0, duration = 500, status = 'IDLE',
+                        amplitude = 1.0, motorLoad = 0.7, cruiseState = 0 } }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            },
+            {
+                severity = "rms_breakdowns_severity_critical",
+                description = "rms_breakdowns_spark_plug_wear_stage4_description",
+                detectionChance = 1.0,
+                progressMultiplier = 0,
+                repairPrice = stagePartPrices.SPARK_PLUG_WEAR[4],
+                effects = {
+                    { id = "IDLE_HUNTING_EFFECT", value = 0.10, aggregation = "max", extraData = { timer = 0, period = 1800 } },
+                    { id = "ENGINE_TORQUE_MODIFIER", value = -0.35, aggregation = "sum" },
+                    { id = "FUEL_CONSUMPTION_MODIFIER", value = 0.50, aggregation = "sum" },
+                    { id = "ENGINE_HARD_START_MODIFIER", value = 12, aggregation = "max" },
+                    { id = "ENGINE_STALLS_CHANCE", value = 30.0, aggregation = "min" },
+                    { id = "EXHAUST_UNBURNT", value = 0.50, aggregation = "max" },
+                    { id = "ENGINE_HESITATION_CHANCE", value = 0.2, aggregation = "min", extraData = { timer = 0, duration = 500, status = 'IDLE',
+                        amplitude = 1.0, motorLoad = 0.7, cruiseState = 0 } }
+                },
+                indicators = {
+                    { id = db.ENGINE, color = color.CRITICAL, switchOn = true, switchOff = false }
+                }
+            }
+        }
+    },
     ADBLUE_PUMP_FAILURE = {
         isSelectable = true,
         system = systems.FUEL,
@@ -9289,6 +9509,210 @@ RMS_Breakdowns.BreakdownRegistry = {
         }
     },
 }
+
+local function isHarvestRunning(vehicle)
+    return vehicle.spec_RealisticMechanicalSystems.isHarvestRunning == true
+end
+
+local function forHarvestKinds(...)
+    local kinds = {}
+    for _, kind in ipairs({...}) do
+        kinds[kind] = true
+    end
+    return function(vehicle)
+        return kinds[RMS_Drivetrain.getHarvestKind(vehicle)] == true
+    end
+end
+
+local isAnyHarvester = forHarvestKinds("grain", "forage", "beet", "potato", "cotton", "sugarcane", "grape", "vegetable")
+local isGrainHarvester = forHarvestKinds("grain")
+local isForageHarvester = forHarvestKinds("forage")
+local isBeetHarvester = forHarvestKinds("beet")
+local isRootHarvester = forHarvestKinds("beet", "potato")
+local isPotatoHarvester = forHarvestKinds("potato")
+local isCottonHarvester = forHarvestKinds("cotton")
+local isSugarcaneHarvester = forHarvestKinds("sugarcane")
+local isGrapeHarvester = forHarvestKinds("grape")
+local isVegetableHarvester = forHarvestKinds("vegetable")
+
+-- an attached beet head carries the topper and the shares itself
+local function isBeetHeadOrgan(vehicle)
+    return isBeetHarvester(vehicle) and vehicle.spec_cutter ~= nil
+end
+
+local function isLiftingShareOrgan(vehicle)
+    return isRootHarvester(vehicle) and vehicle.spec_cutter ~= nil
+end
+
+local function isStrawChopperOrgan(vehicle)
+    return isGrainHarvester(vehicle) and vehicle.spec_combine.chopper.isAvailable == true
+end
+
+local HARVEST_SEVERITIES = { "rms_breakdowns_severity_minor", "rms_breakdowns_severity_moderate", "rms_breakdowns_severity_major",
+    "rms_breakdowns_severity_critical" }
+local HARVEST_STAGE_PROGRESS = { 2.0, 1.0, 0.5 }
+
+local function getHarvestSymptoms(profile)
+    local function throughput(value) return { id = "HARVEST_THROUGHPUT_LIMIT", value = value, aggregation = "max" } end
+    -- value is the mean time between two blockages, in minutes
+    local function blockage(minutes) return { id = "HARVEST_BLOCKAGE_CHANCE", value = minutes, aggregation = "min", extraData = { status = "IDLE" } } end
+    local function grainLoss(value) return { id = "HARVEST_GRAIN_LOSS", value = value, aggregation = "sum" } end
+    local function powerDemand(value) return { id = "HARVEST_POWER_DEMAND", value = value, aggregation = "sum" } end
+    local function bearingNoise(value) return { id = "HARVEST_BEARING_NOISE_EFFECT", value = value, aggregation = "max" } end
+    local function stop()
+        return { id = "HARVEST_FAILURE", value = 1.0, aggregation = "boolean_or", extraData = { disableAi = true } }
+    end
+
+    if profile == "feed" then
+        return { { throughput(0.10) }, { throughput(0.15), blockage(30) }, { throughput(0.25), blockage(10) }, { stop() } }
+    elseif profile == "loss" then
+        return { { grainLoss(0.01) }, { grainLoss(0.02) }, { grainLoss(0.04), blockage(20) }, { stop() } }
+    elseif profile == "flow" then
+        return { { throughput(0.10) }, { throughput(0.15), grainLoss(0.01) }, { throughput(0.25), blockage(10) }, { stop() } }
+    elseif profile == "chopper" then
+        return { { powerDemand(0.03) }, { powerDemand(0.06) }, { powerDemand(0.10) },
+            { { id = "CHOPPER_FAILURE", value = 1.0, aggregation = "boolean_or" } } }
+    elseif profile == "cutting" then
+        return { { powerDemand(0.05) }, { powerDemand(0.10) }, { powerDemand(0.15), blockage(20) }, { stop() } }
+    elseif profile == "blower" then
+        return { { throughput(0.05) }, { blockage(30) }, { blockage(10), grainLoss(0.01) }, { stop() } }
+    elseif profile == "drive" then
+        return { { throughput(0.05) }, { blockage(30) }, { throughput(0.15), blockage(10) }, { stop() } }
+    elseif profile == "bearing" then
+        return { { bearingNoise(0.7) }, { bearingNoise(1.2) }, { bearingNoise(1.7) }, { bearingNoise(1.7), stop() } }
+    elseif profile == "detector" then
+        return { { blockage(30) }, { blockage(10) }, { { id = "METAL_DETECTOR_OFF", value = 1.0, aggregation = "boolean_or" } } }
+    end
+    return { { grainLoss(0.01) }, { grainLoss(0.02), powerDemand(0.05) }, { grainLoss(0.04), powerDemand(0.10) }, { stop() } }
+end
+
+-- def={part, isApplicable, component, causes, symptoms, texts, progress}
+local function addHarvestOrgan(id, def)
+    local stages = {}
+    local symptoms = getHarvestSymptoms(def.symptoms)
+    for index, effects in ipairs(symptoms) do
+        local indicators = nil
+        if index >= 2 then
+            indicators = { { id = db.WARNING, color = index == 2 and color.WARNING or color.CRITICAL, switchOn = true, switchOff = false } }
+        end
+        stages[index] = {
+            severity = HARVEST_SEVERITIES[index],
+            description = string.format("rms_breakdowns_%s_stage%d_description", def.texts, index),
+            detectionChance = 1.0,
+            progressMultiplier = index == #symptoms and 0 or HARVEST_STAGE_PROGRESS[index] * (def.progress or 1),
+            repairPrice = stagePartPrices[id][index],
+            effects = effects,
+            indicators = indicators
+        }
+    end
+    RMS_Breakdowns.BreakdownRegistry[id] = {
+        isSelectable = true,
+        system = systems.HARVEST,
+        part = def.part,
+        isApplicable = def.isApplicable,
+        causes = def.causes,
+        component = def.component,
+        isCanProgress = isHarvestRunning,
+        stages = stages
+    }
+end
+
+local function causes(primary, secondary)
+    table.insert(primary, 1, "hef")
+    return { primary = primary, secondary = secondary or {} }
+end
+
+addHarvestOrgan("HARVEST_DRIVE_BELT_WEAR", { part = parts.HARVEST_DRIVE_BELTS, isApplicable = isAnyHarvester, component = "DRIVE_BELT",
+    causes = causes({ "hwf" }), symptoms = "drive", texts = "harvest_drive_belt_wear" })
+addHarvestOrgan("HARVEST_DRIVE_BEARING_WEAR", { part = parts.HARVEST_DRIVE_BEARINGS, isApplicable = isAnyHarvester, component = "ROLLER_BEARING",
+    causes = causes({ "lubf" }), symptoms = "bearing", texts = "harvest_drive_bearing_wear", progress = 1.2 })
+
+addHarvestOrgan("FEEDER_CHAIN_WEAR", { part = parts.FEEDER_CHAIN, isApplicable = isGrainHarvester, component = "FEEDER_CHAIN",
+    causes = causes({ "hstf", "lubf" }), symptoms = "feed", texts = "feeder_chain_wear" })
+addHarvestOrgan("FEED_ACCELERATOR_WEAR", { part = parts.FEED_ACCELERATOR, isApplicable = isGrainHarvester, component = "FEED_ACCELERATOR",
+    causes = causes({ "hstf" }), symptoms = "feed", texts = "feed_accelerator_wear" })
+addHarvestOrgan("THRESHING_BAR_WEAR", { part = parts.THRESHING_BARS, isApplicable = isGrainHarvester, component = "THRESHING_BARS",
+    causes = causes({ "hstf", "hrf" }), symptoms = "loss", texts = "threshing_bar_wear" })
+addHarvestOrgan("CONCAVE_WEAR", { part = parts.CONCAVE, isApplicable = isGrainHarvester, component = "CONCAVE",
+    causes = causes({ "hstf", "hrf" }), symptoms = "loss", texts = "concave_wear" })
+addHarvestOrgan("SEPARATION_WEAR", { part = parts.SEPARATION, isApplicable = isGrainHarvester, component = "SEPARATION_ELEMENTS",
+    causes = causes({ "hwf" }), symptoms = "loss", texts = "separation_wear" })
+addHarvestOrgan("CLEANING_SIEVE_WEAR", { part = parts.CLEANING_SIEVES, isApplicable = isGrainHarvester, component = "CLEANING_SIEVES",
+    causes = causes({}, { "hwf" }), symptoms = "loss", texts = "cleaning_sieve_wear" })
+addHarvestOrgan("GRAIN_ELEVATOR_WEAR", { part = parts.GRAIN_ELEVATORS, isApplicable = isGrainHarvester, component = "GRAIN_ELEVATOR",
+    causes = causes({ "hgf" }, { "lubf" }), symptoms = "flow", texts = "grain_elevator_wear" })
+addHarvestOrgan("STRAW_CHOPPER_WEAR", { part = parts.STRAW_CHOPPER, isApplicable = isStrawChopperOrgan, component = "STRAW_CHOPPER_KNIVES",
+    causes = causes({ "hsf", "hwf" }, { "hstf" }), symptoms = "chopper", texts = "straw_chopper_wear" })
+
+addHarvestOrgan("FEED_ROLL_WEAR", { part = parts.FEED_ROLLS, isApplicable = isForageHarvester, component = "FEED_ROLLS",
+    causes = causes({ "hstf" }), symptoms = "feed", texts = "feed_roll_wear" })
+addHarvestOrgan("METAL_DETECTOR_FAILURE", { part = parts.METAL_DETECTOR, isApplicable = isForageHarvester, component = "TRANSDUCER",
+    causes = causes({}), symptoms = "detector", texts = "metal_detector_failure" })
+addHarvestOrgan("CUTTERHEAD_WEAR", { part = parts.CUTTERHEAD, isApplicable = isForageHarvester, component = "CUTTERHEAD",
+    causes = causes({ "hstf" }), symptoms = "cutting", texts = "cutterhead_wear" })
+addHarvestOrgan("FORAGE_KNIFE_WEAR", { part = parts.FORAGE_KNIVES, isApplicable = isForageHarvester, component = "FORAGE_KNIVES",
+    causes = causes({ "hstf" }), symptoms = "cutting", texts = "forage_knife_wear" })
+addHarvestOrgan("SHEAR_BAR_WEAR", { part = parts.SHEAR_BAR, isApplicable = isForageHarvester, component = "SHEAR_BAR",
+    causes = causes({ "hstf" }), symptoms = "cutting", texts = "shear_bar_wear" })
+addHarvestOrgan("CROP_PROCESSOR_WEAR", { part = parts.CROP_PROCESSOR, isApplicable = isForageHarvester, component = "CROP_PROCESSOR",
+    causes = causes({ "hgf" }), symptoms = "cutting", texts = "crop_processor_wear" })
+addHarvestOrgan("CROP_ACCELERATOR_WEAR", { part = parts.CROP_ACCELERATOR, isApplicable = isForageHarvester, component = "CROP_ACCELERATOR",
+    causes = causes({ "hgf" }), symptoms = "blower", texts = "crop_accelerator_wear" })
+addHarvestOrgan("DISCHARGE_SPOUT_WEAR", { part = parts.DISCHARGE_SPOUT, isApplicable = isForageHarvester, component = "DISCHARGE_SPOUT",
+    causes = causes({ "hgf" }), symptoms = "blower", texts = "discharge_spout_wear" })
+
+addHarvestOrgan("BEET_TOPPER_WEAR", { part = parts.BEET_TOPPER, isApplicable = isBeetHeadOrgan, component = "STRAW_CHOPPER_KNIVES",
+    causes = causes({ "hstf" }), symptoms = "loss", texts = "harvest_pickup_wear" })
+addHarvestOrgan("LIFTING_SHARE_WEAR", { part = parts.LIFTING_SHARES, isApplicable = isLiftingShareOrgan, component = "SEPARATION_ELEMENTS",
+    causes = causes({ "hstf" }), symptoms = "shares", texts = "lifting_share_wear" })
+addHarvestOrgan("BEET_CLEANING_WEAR", { part = parts.BEET_CLEANING, isApplicable = isBeetHarvester, component = "CONCAVE",
+    causes = causes({ "hstf" }, { "hwf" }), symptoms = "loss", texts = "harvest_cleaning_wear" })
+addHarvestOrgan("ROOT_ELEVATOR_WEAR", { part = parts.ROOT_ELEVATOR, isApplicable = isBeetHarvester, component = "FEEDER_CHAIN",
+    causes = causes({ "hstf" }, { "lubf" }), symptoms = "feed", texts = "harvest_conveyor_wear" })
+addHarvestOrgan("HOPPER_FLOOR_WEAR", { part = parts.HOPPER_FLOOR, isApplicable = isRootHarvester, component = "GRAIN_ELEVATOR",
+    causes = causes({}, { "lubf" }), symptoms = "flow", texts = "harvest_unloading_wear" })
+addHarvestOrgan("SIEVE_WEB_WEAR", { part = parts.SIEVE_WEBS, isApplicable = isPotatoHarvester, component = "FEEDER_CHAIN",
+    causes = causes({ "hstf" }, { "lubf" }), symptoms = "feed", texts = "harvest_conveyor_wear" })
+addHarvestOrgan("HAULM_SEPARATOR_WEAR", { part = parts.HAULM_SEPARATOR, isApplicable = isPotatoHarvester, component = "CONCAVE",
+    causes = causes({ "hstf" }, { "hwf" }), symptoms = "loss", texts = "harvest_cleaning_wear" })
+
+addHarvestOrgan("PICKING_UNIT_WEAR", { part = parts.PICKING_UNITS, isApplicable = isCottonHarvester, component = "FORAGE_KNIVES",
+    causes = causes({}), symptoms = "loss", texts = "harvest_pickup_wear" })
+addHarvestOrgan("SPINDLE_MOISTENER_WEAR", { part = parts.SPINDLE_MOISTENER, isApplicable = isCottonHarvester, component = "DRIVE_BELT",
+    causes = causes({}), symptoms = "loss", texts = "harvest_pickup_wear" })
+addHarvestOrgan("COTTON_FAN_WEAR", { part = parts.COTTON_FAN, isApplicable = isCottonHarvester, component = "CLEANING_SIEVES",
+    causes = causes({}), symptoms = "loss", texts = "harvest_cleaning_wear" })
+addHarvestOrgan("MODULE_BUILDER_WEAR", { part = parts.MODULE_BUILDER, isApplicable = isCottonHarvester, component = "DRIVE_BELT",
+    causes = causes({}), symptoms = "flow", texts = "harvest_unloading_wear" })
+
+addHarvestOrgan("BASE_CUTTER_WEAR", { part = parts.BASE_CUTTERS, isApplicable = isSugarcaneHarvester, component = "FORAGE_KNIVES",
+    causes = causes({ "hstf" }), symptoms = "cutting", texts = "forage_knife_wear" })
+addHarvestOrgan("CANE_FEED_ROLL_WEAR", { part = parts.CANE_FEED_ROLLS, isApplicable = isSugarcaneHarvester, component = "FEED_ROLLS",
+    causes = causes({ "hstf" }), symptoms = "feed", texts = "feed_roll_wear" })
+addHarvestOrgan("CANE_CHOPPER_WEAR", { part = parts.CANE_CHOPPER, isApplicable = isSugarcaneHarvester, component = "FORAGE_KNIVES",
+    causes = causes({}), symptoms = "cutting", texts = "forage_knife_wear" })
+addHarvestOrgan("CANE_EXTRACTOR_WEAR", { part = parts.CANE_EXTRACTOR, isApplicable = isSugarcaneHarvester, component = "CROP_ACCELERATOR",
+    causes = causes({}), symptoms = "loss", texts = "harvest_cleaning_wear" })
+addHarvestOrgan("CANE_ELEVATOR_WEAR", { part = parts.CANE_ELEVATOR, isApplicable = isSugarcaneHarvester, component = "GRAIN_ELEVATOR",
+    causes = causes({}, { "lubf" }), symptoms = "feed", texts = "harvest_conveyor_wear" })
+
+addHarvestOrgan("SHAKER_WEAR", { part = parts.SHAKER, isApplicable = isGrapeHarvester, component = "THRESHING_BARS",
+    causes = causes({}), symptoms = "loss", texts = "harvest_pickup_wear" })
+addHarvestOrgan("CATCHING_SCALE_WEAR", { part = parts.CATCHING_SCALES, isApplicable = isGrapeHarvester, component = "GRAIN_ELEVATOR",
+    causes = causes({}), symptoms = "loss", texts = "harvest_pickup_wear" })
+addHarvestOrgan("BUCKET_CONVEYOR_WEAR", { part = parts.BUCKET_CONVEYORS, isApplicable = isGrapeHarvester, component = "GRAIN_ELEVATOR",
+    causes = causes({}, { "lubf" }), symptoms = "feed", texts = "harvest_conveyor_wear" })
+addHarvestOrgan("CLEANING_FAN_WEAR", { part = parts.CLEANING_FANS, isApplicable = isGrapeHarvester, component = "CLEANING_SIEVES",
+    causes = causes({}), symptoms = "loss", texts = "harvest_cleaning_wear" })
+addHarvestOrgan("DESTEMMER_WEAR", { part = parts.DESTEMMER, isApplicable = isGrapeHarvester, component = "CLEANING_SIEVES",
+    causes = causes({}), symptoms = "loss", texts = "harvest_cleaning_wear" })
+
+addHarvestOrgan("VEGETABLE_PICKER_WEAR", { part = parts.VEGETABLE_PICKER, isApplicable = isVegetableHarvester, component = "THRESHING_BARS",
+    causes = causes({}), symptoms = "loss", texts = "harvest_pickup_wear" })
+addHarvestOrgan("VEGETABLE_CLEANING_WEAR", { part = parts.VEGETABLE_CLEANING, isApplicable = isVegetableHarvester, component = "CLEANING_SIEVES",
+    causes = causes({}), symptoms = "loss", texts = "harvest_cleaning_wear" })
+addHarvestOrgan("VEGETABLE_ELEVATOR_WEAR", { part = parts.VEGETABLE_ELEVATORS, isApplicable = isVegetableHarvester, component = "GRAIN_ELEVATOR",
+    causes = causes({}, { "lubf" }), symptoms = "feed", texts = "harvest_conveyor_wear" })
 
 local function wrapBreakdownApplicabilityByEnabledSystem()
     for _, entry in pairs(RMS_Breakdowns.BreakdownRegistry or {}) do

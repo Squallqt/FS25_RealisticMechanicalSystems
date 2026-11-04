@@ -196,22 +196,6 @@ local function updateTarget(handTool, player)
     end
 end
 
----Returns the points greased since aiming at the machine, out of all
--- @return integer done, integer total, string state done, due or late
-function RMS_GreaseGun.getGreasingProgress(handTool)
-    local spec = handTool[specName]
-    local vehicle = spec.target
-    local due = RMS_Greasing.getDuePoints(vehicle)
-    if spec.progressVehicle ~= vehicle or due > spec.progressDue then
-        spec.progressVehicle, spec.progressDone = vehicle, 0
-    elseif due < spec.progressDue then
-        spec.progressDone = spec.progressDone + spec.progressDue - due
-    end
-    spec.progressDue = due
-    local state = due == 0 and "done" or RMS_Greasing.getSpec(vehicle).lubricationLevel > 0 and "due" or "late"
-    return spec.progressDone, spec.progressDone + due, state
-end
-
 function RMS_GreaseGun:onUpdate(dt)
     local spec = self[specName]
     local player = self:getCarryingPlayer()
@@ -314,7 +298,9 @@ end
 ---Draws the greasing of the machine aimed at, one segment per point
 local function drawMachinePanel(handTool, hud)
     local spec = handTool[specName]
-    local done, total, state = RMS_GreaseGun.getGreasingProgress(handTool)
+    local vehicle = spec.target
+    local total, due, state = RMS_Greasing.getTotalPoints(vehicle), RMS_Greasing.getDuePoints(vehicle), RMS_Greasing.getStatus(vehicle)
+    local done = total - due
     local x, y, width, padding = drawFrame(hud, RMS_GreaseGun.HUD_MACHINE_HEIGHT)
     local right, textX = x + width - padding, x + padding + hud:scalePixelToScreenWidth(56)
     local gap = hud:scalePixelToScreenWidth(12)
@@ -323,33 +309,34 @@ local function drawMachinePanel(handTool, hud)
     local status = ({ done = { "rms_grease_hud_done", HUD.COLOR.ACTIVE }, due = { "rms_inspection_status_grease_due", RMS_Breakdowns.COLORS.WARNING },
         late = { "rms_inspection_status_grease_late", RMS_Breakdowns.COLORS.CRITICAL } })[state]
 
-    local countWidth = 0
-    if total > 0 then
-        local totalText = string.format(" / %d", total)
-        setTextBold(false)
-        local totalWidth = getTextWidth(size(18), totalText)
-        text(right, rowY(142), size(18), totalText, false, GREY, RenderText.ALIGN_RIGHT)
-        setTextBold(true)
-        countWidth = totalWidth + getTextWidth(size(30), tostring(done))
-        text(right - totalWidth, rowY(144), size(30), tostring(done), true, WHITE, RenderText.ALIGN_RIGHT)
-    end
-    local statusText = utf8ToUpper(g_i18n:getText(status[1]))
+    local totalText = string.format(" / %d", total)
+    setTextBold(false)
+    local totalWidth = getTextWidth(size(18), totalText)
+    text(right, rowY(142), size(18), totalText, false, GREY, RenderText.ALIGN_RIGHT)
     setTextBold(true)
-    local statusWidth = getTextWidth(size(15), statusText)
-    text(right, rowY(117), size(15), statusText, true, status[2], RenderText.ALIGN_RIGHT)
+    local countWidth = totalWidth + getTextWidth(size(30), tostring(done))
+    text(right - totalWidth, rowY(144), size(30), tostring(done), true, WHITE, RenderText.ALIGN_RIGHT)
+    local greasedText = utf8ToUpper(g_i18n:getText("rms_grease_hud_greased"))
+    setTextBold(true)
+    local greasedWidth = getTextWidth(size(15), greasedText)
+    text(right, rowY(117), size(15), greasedText, true, GREY, RenderText.ALIGN_RIGHT)
     text(textX, rowY(144), size(22), g_i18n:getText("rms_grease_hud_title"), true, WHITE, nil, right - countWidth - gap - textX)
-    text(textX, rowY(119), size(16), spec.target:getFullName(), false, GREY, nil, right - statusWidth - gap - textX)
+    text(textX, rowY(119), size(16), vehicle:getFullName(), false, GREY, nil, right - greasedWidth - gap - textX)
 
     local barX, barWidth, barY, barHeight = x + padding, width - padding * 2, rowY(78), size(16)
     local segmentGap = hud:scalePixelToScreenWidth(RMS_Utils.getSegmentGap(total, 4))
     local critical = RMS_Breakdowns.COLORS.CRITICAL
     local rest = state == "late" and { critical[1], critical[2], critical[3], 0.35 } or TRACK
-    local nextX, nextY, nextWidth, nextHeight = RMS_Utils.drawSegments(barX, barY, barWidth, barHeight, math.max(total, 1),
-        total == 0 and 1 or done, HUD.COLOR.ACTIVE, rest, segmentGap)
+    local nextX, nextY, nextWidth, nextHeight = RMS_Utils.drawSegments(barX, barY, barWidth, barHeight, total, done,
+        HUD.COLOR.ACTIVE, rest, segmentGap)
     if nextX ~= nil then
         outline(hud, nextX, nextY, nextWidth, nextHeight, state == "late" and critical or WHITE)
     end
-    text(barX, rowY(63), size(14), string.format(g_i18n:getText("rms_grease_gun_points"), total - done), true, GREY, nil, barWidth)
+    local statusText = utf8ToUpper(g_i18n:getText(status[1]))
+    setTextBold(true)
+    local statusWidth = getTextWidth(size(14), statusText)
+    text(barX + barWidth, rowY(63), size(14), statusText, true, status[2], RenderText.ALIGN_RIGHT)
+    text(barX, rowY(63), size(14), string.format(g_i18n:getText("rms_grease_gun_points"), due), true, GREY, nil, barWidth - statusWidth - gap)
     fill(barX, rowY(47), barWidth, size(1), WHITE, 0.16)
 
     local leftWidth = drawGreaseLeft(spec, right, rowY(31), size(16), size(16))

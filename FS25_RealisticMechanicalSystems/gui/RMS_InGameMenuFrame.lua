@@ -43,6 +43,8 @@ local GREASING_STATE = {
     due = { value = "rms_inspection_status_grease_due", banner = "rms_inspection_status_grease_due" },
     late = { value = "rms_inspection_status_grease_late", banner = "rms_report_wear_lubrication" }
 }
+-- greasing units from the most frequent: worked days, months, bales
+local UNIT_RANK = { day = 1, months = 2, bales = 3 }
 
 -- each footer button of the page: its input, its text, its method
 local MENU_BUTTONS = {
@@ -111,18 +113,14 @@ local function getGreasingColor(state)
     return RMS_Utils.COLOR.HIGHLIGHT
 end
 
-local function formatHoursValue(hours)
-    return g_i18n:formatNumber(math.ceil(hours * 10 - 1e-6) / 10, 1)
-end
-
 local function formatTierPeriod(tier)
-    if tier.unit == "hours" then
-        return string.format(g_i18n:getText("rms_fleet_greasing_period_hours"), g_i18n:formatNumber(tier.interval, 1))
-    elseif tier.unit == "months" then
+    if tier.unit == "months" then
         return tier.interval == 1 and g_i18n:getText("rms_fleet_greasing_period_month")
             or string.format(g_i18n:getText("rms_fleet_greasing_period_months"), tier.interval)
     elseif tier.unit == "bales" then
         return string.format(g_i18n:getText("rms_fleet_greasing_period_bales"), tier.interval)
+    elseif tier.interval > 1 then
+        return string.format(g_i18n:getText("rms_fleet_greasing_period_days"), tier.interval)
     end
     return g_i18n:getText("rms_fleet_greasing_period_day")
 end
@@ -133,10 +131,8 @@ local function formatTierDelay(tier, delay)
         return string.format(g_i18n:getText("rms_fleet_months_late"), count)
     elseif tier.unit == "bales" then
         return string.format(g_i18n:getText("rms_fleet_bales_late"), count)
-    elseif tier.unit == "day" then
-        return string.format(g_i18n:getText(count == 1 and "rms_fleet_day_late" or "rms_fleet_days_late"), count)
     end
-    return string.format(g_i18n:getText("rms_fleet_overdue"), formatHoursValue(delay))
+    return string.format(g_i18n:getText(count == 1 and "rms_fleet_day_late" or "rms_fleet_days_late"), count)
 end
 
 local function formatTierAmount(tier, amount)
@@ -145,10 +141,8 @@ local function formatTierAmount(tier, amount)
         return RMS_Utils.formatMonths(count)
     elseif tier.unit == "bales" then
         return string.format(g_i18n:getText("rms_fleet_greasing_bales"), count)
-    elseif tier.unit == "day" then
-        return string.format(g_i18n:getText(count == 1 and "rms_fleet_greasing_day" or "rms_fleet_greasing_days"), count)
     end
-    return string.format("%s %s", formatHoursValue(amount), g_i18n:getText("rms_spec_op_hours_short"))
+    return string.format(g_i18n:getText(count == 1 and "rms_fleet_greasing_day" or "rms_fleet_greasing_days"), count)
 end
 
 local function formatTierLeft(tier)
@@ -157,18 +151,21 @@ end
 
 local function readGreasing(vehicle)
     local greasing = { tiers = RMS_Greasing.getTierStates(vehicle), total = RMS_Greasing.getTotalPoints(vehicle),
-        due = RMS_Greasing.getDuePoints(vehicle), level = RMS_Greasing.getSpec(vehicle).lubricationLevel or 1 }
+        due = RMS_Greasing.getDuePoints(vehicle), state = RMS_Greasing.getStatus(vehicle) }
     for _, tier in ipairs(greasing.tiers) do
         if tier.due > 0 then
             if greasing.latest == nil or tier.late / tier.interval > greasing.latest.late / greasing.latest.interval then
                 greasing.latest = tier
             end
-        elseif tier.unit ~= "day" and (greasing.next == nil
+        elseif (tier.unit ~= "day" or tier.interval > 1) and (greasing.next == nil
             or 1 - tier.elapsed / tier.interval < 1 - greasing.next.elapsed / greasing.next.interval) then
             greasing.next = tier
         end
+        if greasing.frequent == nil or UNIT_RANK[tier.unit] < UNIT_RANK[greasing.frequent.unit]
+            or tier.unit == greasing.frequent.unit and tier.interval < greasing.frequent.interval then
+            greasing.frequent = tier
+        end
     end
-    greasing.state = greasing.due == 0 and "done" or greasing.level > 0 and "due" or "late"
     return greasing
 end
 
@@ -183,7 +180,6 @@ local function buildImplementRow(row, vehicle)
         row.urgency = greasing.state == "late" and URGENCY.OVERDUE or URGENCY.SOON
     elseif greasing.next ~= nil then
         row.status = formatTierLeft(greasing.next)
-        row.remaining = greasing.next.unit == "hours" and greasing.next.interval - greasing.next.elapsed or math.huge
         if greasing.next.elapsed / greasing.next.interval >= RMS_InGameMenuFrame.DUE_SOON_RATIO then
             row.urgency = URGENCY.SOON
         end
@@ -329,7 +325,7 @@ function RMS_InGameMenuFrame:initialize()
     self.factRows = RMS_Utils.cloneTemplate(self.factRowTemplate, 4)
     self.serviceRows = RMS_Utils.cloneTemplate(self.serviceRowTemplate, 5)
     self.greasingRows = RMS_Utils.cloneTemplate(self.greasingRowTemplate, 5)
-    self.wearRows = RMS_Utils.cloneTemplate(self.wearRowTemplate, 3)
+    self.wearRows = RMS_Utils.cloneTemplate(self.wearRowTemplate, 2)
 
     self.locationButton.getIsSelected = function()
         return self.showMap
@@ -938,9 +934,12 @@ function RMS_InGameMenuFrame:updateIdentity(row)
             self.reliabilityValue:setText(RMS_Utils.formatReliability(reliability))
             self.serviceAccessValue:setText(RMS_Utils.formatServiceAccess(vehicle, storeItem))
         elseif row.isImplement then
-            local tier = row.greasing.tiers[1]
+            local tier = row.greasing.frequent
             self.greasingPointsValue:setText(tostring(row.greasing.total))
-            self.greasingIntervalValue:setText(tier.unit == "day" and formatTierPeriod(tier) or formatTierAmount(tier, tier.interval))
+            self.greasingIntervalLabel:setText(g_i18n:getText(#row.greasing.tiers > 1 and "rms_fleet_greasing_most_frequent"
+                or "rms_ingame_menu_header_interval"))
+            self.greasingIntervalValue:setText(tier.unit == "day" and tier.interval == 1 and formatTierPeriod(tier)
+                or formatTierAmount(tier, tier.interval))
         end
     end
 
@@ -982,15 +981,17 @@ function RMS_InGameMenuFrame:updateImplementDossier(row)
     self.bannerAccent:setImageColor(nil, unpack(color))
     self.bannerIcons[3]:setImageColor(nil, unpack(color))
 
+    self.greasingRingArcColor = color
     self.greasingRingColor = greasing.state == "late" and COLOR_LATE_TRACK or RMS_Utils.COLOR.RING_TRACK
     self.greasingValue:setText(string.format("%d / %d", greasing.total - greasing.due, greasing.total))
-    self.greasingState:setText(g_i18n:getText(GREASING_STATE[greasing.state].value))
+    self.greasingValue:setTextColor(unpack(color))
+    self.greasingState:setText(g_i18n:getText("rms_grease_hud_greased"))
     self.greasingState:setTextColor(unpack(color))
     for index, greasingRow in ipairs(self.greasingRows) do
         local tier = greasing.tiers[index]
         greasingRow:setVisible(tier ~= nil)
         if tier ~= nil then
-            local value = tier.unit == "day" and g_i18n:getText("rms_grease_hud_done") or formatTierLeft(tier)
+            local value = tier.unit == "day" and tier.interval == 1 and g_i18n:getText("rms_grease_hud_done") or formatTierLeft(tier)
             if tier.due > 0 then
                 value = string.format(g_i18n:getText("rms_fleet_greasing_to_do"), tier.due)
             end
@@ -1015,13 +1016,12 @@ function RMS_InGameMenuFrame:updateImplementDossier(row)
     local rows = {
         {"rms_fleet_wear_late", late and formatTierAmount(greasing.latest, greasing.latest.late) or g_i18n:getText("rms_fleet_wear_none"),
             late and color or RMS_Utils.COLOR.HIGHLIGHT},
-        {"rms_fleet_wear_dry", "×" .. g_i18n:formatNumber(dryFactor, 0)},
         {"rms_fleet_wear_repair_greases", g_i18n:getText("ui_yes"), RMS_Utils.COLOR.HIGHLIGHT}
     }
     for index, entry in ipairs(rows) do
         local wearRow = self.wearRows[index]
         RMS_Utils.writeRow(wearRow, g_i18n:getText(entry[1]), entry[2])
-        wearRow:getDescendantByName("value"):setTextColor(unpack(entry[3] or self.pillValueColor))
+        wearRow:getDescendantByName("value"):setTextColor(unpack(entry[3]))
     end
     RMS_Utils.fitValuePill(self.wearFootPill, self.wearFootValue, "center", g_i18n:formatMoney(vehicle:getRepairPrice(), 0, true, false))
 end
@@ -1035,7 +1035,8 @@ end
 function RMS_InGameMenuFrame:onDrawGreasingRing()
     local row = self:getDisplayedRow()
     if row ~= nil and row.isImplement then
-        RMS_ProgressRing.renderInArea(self.greasingRingArea, 1 - row.greasing.due / row.greasing.total, nil, self.greasingRingColor)
+        RMS_ProgressRing.renderInArea(self.greasingRingArea, 1 - row.greasing.due / row.greasing.total, self.greasingRingArcColor,
+            self.greasingRingColor)
     end
 end
 

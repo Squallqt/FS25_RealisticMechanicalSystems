@@ -997,6 +997,9 @@ function RMS_Main:loadMap()
         g_messageCenter:subscribe(MessageType.PERIOD_CHANGED, self.onPeriodChanged, self)
         g_messageCenter:subscribe(MessageType.DAY_CHANGED, self.onDayChanged, self)
     end
+    if RHM_Api ~= nil and RHM_Api.registerWearProvider ~= nil then
+        RHM_Api.registerWearProvider(RealisticMechanicalSystems.HARVEST_WEAR_PROVIDER)
+    end
 
     local soundsXmlFile = loadXMLFile("rmsSounds2D", Utils.getFilename("sounds/rms_sounds.xml", modDirectory))
     self.samples = {

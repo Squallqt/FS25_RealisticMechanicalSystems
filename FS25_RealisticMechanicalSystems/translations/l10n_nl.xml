@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Chassis"/>
         <text name="rms_spec_system_fuel" text="Brandstofsysteem"/>
         <text name="rms_spec_system_pto" text="Aftakas"/>
+        <text name="rms_spec_system_harvest" text="Oogsten"/>
         <text name="rms_spec_system_electric_motor" text="Elektromotor"/>
         <text name="rms_spec_system_traction_battery" text="Tractieaccu"/>
         <text name="rms_spec_state_ready" text="Gereed"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Accu oververhit"/>
         <text name="rms_report_wear_lubrication" text="Smering achterstallig"/>
         <text name="rms_report_wear_pto_overload" text="Aftakas overbelast"/>
+        <text name="rms_report_wear_harvest_overload" text="Oogst overbelast"/>
+        <text name="rms_report_wear_harvest_flow" text="Hoge graanstroom"/>
+        <text name="rms_report_wear_harvest_straw" text="Hakselaar overbelast"/>
+        <text name="rms_report_wear_harvest_stones" text="Stenen"/>
+        <text name="rms_report_wear_harvest_rice" text="Rijst oogsten"/>
+        <text name="rms_report_wear_harvest_wet" text="Vochtig gewas"/>
         <text name="rms_report_component_title" text="Component"/>
         <text name="rms_report_system_condition_transmission" text="Transmissie"/>
         <text name="rms_report_system_condition_power" text="Huidig vermogen"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Aantal"/>
         <text name="rms_grease_hud_title" text="Smeren"/>
         <text name="rms_grease_hud_done" text="In orde"/>
+        <text name="rms_grease_hud_greased" text="Gesmeerd"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Persluchtblazer"/>
         <text name="rms_air_blower_no_vehicle" text="Geen voertuig binnen reinigingsbereik"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="De inspectie toont merkbare speling op de pennen en bussen van de voorladergewrichten."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="De inspectie toont grote speling op de pennen en bussen van de voorladergewrichten."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="De inspectie toont zeer grote speling op de pennen en bussen van de voorladergewrichten."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="De inspectie toont beginnende slijtage aan de pennen en bussen van de mast."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="De inspectie toont merkbare speling op de pennen en bussen van de mast."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="De inspectie toont grote speling op de pennen en bussen van de mast."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="De inspectie toont zeer grote speling op de pennen en bussen van de mast."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="De inspectie toont beginnende slijtage aan de pennen en bussen van de giek."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="De inspectie toont merkbare speling op de pennen en bussen van de giek."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="De inspectie toont grote speling op de pennen en bussen van de giek."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="De inspectie toont zeer grote speling op de pennen en bussen van de giek."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="De inspectie toont beginnende slijtage aan de pennen en bussen van de freesarm."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="De inspectie toont merkbare speling op de pennen en bussen van de freesarm."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="De inspectie toont grote speling op de pennen en bussen van de freesarm."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="De inspectie toont zeer grote speling op de pennen en bussen van de freesarm."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="De inspectie toont beginnende slijtage aan de pennen en bussen van de bladarm."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="De inspectie toont merkbare speling op de pennen en bussen van de bladarm."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="De inspectie toont grote speling op de pennen en bussen van de bladarm."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="De inspectie toont zeer grote speling op de pennen en bussen van de bladarm."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Een cabineschokdemper is licht vochtig."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Een cabineschokdemper vertoont sijpelende olie."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Een cabineschokdemper heeft een actief lek."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Delen gemeten %s"/>
         <text name="rms_fleet_parts_need_complete" text="Delen gemeten bij de volgende volledige inspectie"/>
         <text name="rms_fleet_greasing_done" text="Smeren in orde"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s u werk"/>
+        <text name="rms_fleet_greasing_period_days" text="Elke %d gebruiksdagen"/>
         <text name="rms_fleet_greasing_period_day" text="Elke gebruiksdag"/>
         <text name="rms_fleet_greasing_period_month" text="Elke maand"/>
         <text name="rms_fleet_greasing_period_months" text="Elke %d maanden"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d dagen te laat"/>
         <text name="rms_fleet_greasing_to_do" text="%d te doen"/>
         <text name="rms_fleet_greasing_points" text="Smeernippels"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Meest frequent"/>
         <text name="rms_fleet_greasing_next" text="Volgende smeerbeurt"/>
         <text name="rms_fleet_greasing_now" text="Nu"/>
         <text name="rms_fleet_greasing_in" text="over %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Sneller"/>
         <text name="rms_fleet_wear_normal" text="Normale slijtage"/>
         <text name="rms_fleet_wear_late" text="Smeerachterstand"/>
-        <text name="rms_fleet_wear_dry" text="Slijtage zonder vet"/>
         <text name="rms_fleet_wear_repair_greases" text="Gesmeerd bij reparatie"/>
         <text name="rms_fleet_wear_repair" text="Reparatie in de werkplaats"/>
         <text name="rms_fleet_wear_none" text="Geen"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Koeling en luchtfilter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="De radiateur of het luchtfilter is verstopt. Houd de toets %s ingedrukt terwijl je naar het voertuig kijkt om te zien welke van de twee. Reinig het met de persluchtblazer. Als het filter niet meer kan worden uitgeblazen, vervangt de werkplaats het vanaf het onderhoud %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Smering vereist"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s heeft smeernippels die gesmeerd moeten worden.&#10;&#10;In RMS heeft elke machine de smeernippels uit haar handleiding. Ze moeten na een aantal bedrijfsuren opnieuw gesmeerd worden, bij sommige machines elke werkdag. Te laat smeren versnelt de slijtage van het chassis.&#10;&#10;Koop een vetspuit en patronen in de winkel. Richt met de vetspuit in de hand op een patroon om die te laden en daarna op de machine: elke klik smeert één smeernippel en ingedrukt houden gaat door met de volgende.&#10;&#10;Houd de toets %s ingedrukt terwijl je naar het voertuig kijkt om de resterende smeernippels te zien."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s heeft smeernippels die gesmeerd moeten worden.&#10;&#10;In RMS heeft elke machine de smeernippels uit haar handleiding. Ze moeten opnieuw gesmeerd worden naar de dagen dat de machine werkt: elke gebruiksdag, of om de paar gebruiksdagen voor de nippels die de handleiding minder vaak smeert. Te laat smeren versnelt de slijtage van het chassis.&#10;&#10;Koop een vetspuit en patronen in de winkel. Ga met de vetspuit in de hand voor een patroon staan om die te laden en richt daarna op de machine: elke klik smeert één smeernippel en ingedrukt houden gaat door met de volgende.&#10;&#10;Houd de toets %s ingedrukt terwijl je naar het voertuig kijkt om de resterende smeernippels te zien."/>
         <text name="rms_tutorial_needs_repair_title" text="Storing gedetecteerd"/>
         <text name="rms_tutorial_needs_repair_message" text="%s heeft een probleem. Mogelijk is een van de onderdelen uitgevallen.&#10;&#10;Ga naar de werkplaats: een inspectie, of de onderhoudsbeurt als die nodig is, stelt de storing vast. Wacht niet: de storing kan blijven verergeren en de reparatiekosten stijgen mee.&#10;&#10;Laat de storing in de werkplaats repareren zodra die is vastgesteld."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revisie vereist"/>

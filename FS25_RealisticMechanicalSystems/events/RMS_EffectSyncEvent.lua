@@ -72,10 +72,17 @@ function RMS_EffectSyncEvent:run(connection)
             g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_engine_stalled_message"), 5000)
         end
 
-    elseif self.effectId == "PTO_AUTO_DISENGAGE_CHANCE" or self.effectId == "FRONT_PTO_AUTO_DISENGAGE_CHANCE" then
+    elseif self.effectId == "PTO_AUTO_DISENGAGE_CHANCE" or self.effectId == "FRONT_PTO_AUTO_DISENGAGE_CHANCE"
+        or self.effectId == "HARVEST_BLOCKAGE_CHANCE" then
         if effect ~= nil then
             effect.extraData = effect.extraData or {}
             effect.extraData.status = self.status
+        end
+
+    elseif self.effectId == "CHOPPER_FAILURE" then
+        if vehicle:getIsActiveForInput(true) then
+            local messageKey = self.status == "SWATH" and "rms_breakdowns_chopper_failure_message" or "rms_breakdowns_chopper_failure_spread_message"
+            g_currentMission:showBlinkingWarning(g_i18n:getText(messageKey), 4000)
         end
 
     elseif self.effectId == "BRAKE_FORCE_MODIFIER" then

@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Châssis"/>
         <text name="rms_spec_system_fuel" text="Système de carburant"/>
         <text name="rms_spec_system_pto" text="Prise de force"/>
+        <text name="rms_spec_system_harvest" text="Récolte"/>
         <text name="rms_spec_system_electric_motor" text="Moteur électrique"/>
         <text name="rms_spec_system_traction_battery" text="Batterie de traction"/>
         <text name="rms_spec_state_ready" text="Prêt"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Batterie en surchauffe"/>
         <text name="rms_report_wear_lubrication" text="Graissage en retard"/>
         <text name="rms_report_wear_pto_overload" text="PDF en surcharge"/>
+        <text name="rms_report_wear_harvest_overload" text="Récolte en surcharge"/>
+        <text name="rms_report_wear_harvest_flow" text="Fort débit de grain"/>
+        <text name="rms_report_wear_harvest_straw" text="Broyeur surchargé"/>
+        <text name="rms_report_wear_harvest_stones" text="Pierres"/>
+        <text name="rms_report_wear_harvest_rice" text="Récolte du riz"/>
+        <text name="rms_report_wear_harvest_wet" text="Récolte humide"/>
         <text name="rms_report_component_title" text="Composant"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Puissance actuelle"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Quantité"/>
         <text name="rms_grease_hud_title" text="Graissage"/>
         <text name="rms_grease_hud_done" text="À jour"/>
+        <text name="rms_grease_hud_greased" text="Graissés"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Souffleur d'air comprimé"/>
         <text name="rms_air_blower_no_vehicle" text="Aucun véhicule à portée de nettoyage"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues des articulations du chargeur."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="L'inspection relève un jeu important aux axes et bagues des articulations du chargeur."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="L'inspection relève un jeu très important aux axes et bagues des articulations du chargeur."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="L'inspection relève un début d'usure des axes et bagues du mât."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues du mât."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="L'inspection relève un jeu important aux axes et bagues du mât."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="L'inspection relève un jeu très important aux axes et bagues du mât."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="L'inspection relève un début d'usure des axes et bagues de la flèche."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues de la flèche."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="L'inspection relève un jeu important aux axes et bagues de la flèche."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="L'inspection relève un jeu très important aux axes et bagues de la flèche."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="L'inspection relève un début d'usure des axes et bagues du bras de désilage."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues du bras de désilage."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="L'inspection relève un jeu important aux axes et bagues du bras de désilage."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="L'inspection relève un jeu très important aux axes et bagues du bras de désilage."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="L'inspection relève un début d'usure des axes et bagues du bras porte-lame."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues du bras porte-lame."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="L'inspection relève un jeu important aux axes et bagues du bras porte-lame."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="L'inspection relève un jeu très important aux axes et bagues du bras porte-lame."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Un amortisseur de cabine présente une légère humidité."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Un amortisseur de cabine présente un suintement."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Un amortisseur de cabine présente une fuite active."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Pièces relevées %s"/>
         <text name="rms_fleet_parts_need_complete" text="Pièces relevées à la prochaine inspection complète"/>
         <text name="rms_fleet_greasing_done" text="Graissage à jour"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s h de travail"/>
+        <text name="rms_fleet_greasing_period_days" text="Tous les %d jours travaillés"/>
         <text name="rms_fleet_greasing_period_day" text="Chaque jour travaillé"/>
         <text name="rms_fleet_greasing_period_month" text="Chaque mois"/>
         <text name="rms_fleet_greasing_period_months" text="Tous les %d mois"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d jours de retard"/>
         <text name="rms_fleet_greasing_to_do" text="%d à faire"/>
         <text name="rms_fleet_greasing_points" text="Graisseurs"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Le plus fréquent"/>
         <text name="rms_fleet_greasing_next" text="Prochain graissage"/>
         <text name="rms_fleet_greasing_now" text="Maintenant"/>
         <text name="rms_fleet_greasing_in" text="dans %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Plus vite"/>
         <text name="rms_fleet_wear_normal" text="Usure normale"/>
         <text name="rms_fleet_wear_late" text="Retard de graissage"/>
-        <text name="rms_fleet_wear_dry" text="Usure à sec"/>
         <text name="rms_fleet_wear_repair_greases" text="Graissé à la réparation"/>
         <text name="rms_fleet_wear_repair" text="Réparation à l'atelier"/>
         <text name="rms_fleet_wear_none" text="Aucun"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Refroidissement et filtre à air"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Le radiateur ou le filtre à air est encrassé. Maintenez la touche %s en regardant le véhicule pour savoir lequel. Utilisez le souffleur d'air comprimé pour le nettoyer. Si le filtre ne peut plus être nettoyé, l'atelier le remplace à partir de la révision %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Graissage nécessaire"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Votre %s a des graisseurs à graisser.&#10;&#10;Dans RMS, chaque machine a les graisseurs de sa notice. Ils reviennent à graisser après un certain nombre d'heures de travail, ou chaque jour de travail pour certaines machines. Une machine graissée en retard use son châssis plus vite.&#10;&#10;Achetez un pistolet à graisse et des cartouches au magasin. Pistolet en main, visez une cartouche pour la charger, puis visez la machine : chaque clic graisse un graisseur, et garder le clic enfoncé enchaîne les graisseurs.&#10;&#10;Pour voir les graisseurs à faire, maintenez la touche %s en regardant le véhicule."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Votre %s a des graisseurs à graisser.&#10;&#10;Dans RMS, chaque machine a les graisseurs de sa notice. Ils reviennent à graisser au fil des jours où la machine travaille : chaque jour de travail, ou tous les quelques jours de travail pour ceux que la notice graisse moins souvent. Une machine graissée en retard use son châssis plus vite.&#10;&#10;Achetez un pistolet à graisse et des cartouches au magasin. Pistolet en main, placez-vous devant une cartouche pour la charger, puis visez la machine : chaque clic graisse un graisseur, et garder le clic enfoncé enchaîne les graisseurs.&#10;&#10;Pour voir les graisseurs à faire, maintenez la touche %s en regardant le véhicule."/>
         <text name="rms_tutorial_needs_repair_title" text="Panne détectée"/>
         <text name="rms_tutorial_needs_repair_message" text="Votre %s présente un problème. Une de ses pièces a peut-être lâché.&#10;&#10;Passez à l'atelier : une inspection, ou l'entretien s'il est dû, identifie la panne. Ne tardez pas : la panne peut continuer à s'aggraver et le coût de la réparation augmente avec elle.&#10;&#10;Une fois la panne identifiée, faites-la réparer à l'atelier."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Révision nécessaire"/>

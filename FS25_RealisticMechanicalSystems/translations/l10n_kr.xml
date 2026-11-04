@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="섀시"/>
         <text name="rms_spec_system_fuel" text="연료 시스템"/>
         <text name="rms_spec_system_pto" text="PTO"/>
+        <text name="rms_spec_system_harvest" text="수확"/>
         <text name="rms_spec_system_electric_motor" text="전기 모터"/>
         <text name="rms_spec_system_traction_battery" text="구동 배터리"/>
         <text name="rms_spec_state_ready" text="준비됨"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="배터리 과열"/>
         <text name="rms_report_wear_lubrication" text="그리스 주입 지연"/>
         <text name="rms_report_wear_pto_overload" text="PTO 과부하"/>
+        <text name="rms_report_wear_harvest_overload" text="수확 과부하"/>
+        <text name="rms_report_wear_harvest_flow" text="곡물 유량 과다"/>
+        <text name="rms_report_wear_harvest_straw" text="초퍼 과부하"/>
+        <text name="rms_report_wear_harvest_stones" text="돌"/>
+        <text name="rms_report_wear_harvest_rice" text="벼 수확"/>
+        <text name="rms_report_wear_harvest_wet" text="습한 작물"/>
         <text name="rms_report_component_title" text="부품"/>
         <text name="rms_report_system_condition_transmission" text="변속기"/>
         <text name="rms_report_system_condition_power" text="현재 출력"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="수량"/>
         <text name="rms_grease_hud_title" text="그리스 주입"/>
         <text name="rms_grease_hud_done" text="완료"/>
+        <text name="rms_grease_hud_greased" text="주입 완료"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="에어 블로워"/>
         <text name="rms_air_blower_no_vehicle" text="청소 범위 내에 차량이 없습니다"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="점검에서 로더 관절 핀과 부싱의 확연한 유격이 확인됩니다."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="점검에서 로더 관절 핀과 부싱의 큰 유격이 확인됩니다."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="점검에서 로더 관절 핀과 부싱의 매우 큰 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="점검에서 마스트 관절 핀과 부싱의 초기 마모가 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="점검에서 마스트 관절 핀과 부싱의 확연한 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="점검에서 마스트 관절 핀과 부싱의 큰 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="점검에서 마스트 관절 핀과 부싱의 매우 큰 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="점검에서 크레인 관절 핀과 부싱의 초기 마모가 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="점검에서 크레인 관절 핀과 부싱의 확연한 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="점검에서 크레인 관절 핀과 부싱의 큰 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="점검에서 크레인 관절 핀과 부싱의 매우 큰 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="점검에서 밀링 암 관절 핀과 부싱의 초기 마모가 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="점검에서 밀링 암 관절 핀과 부싱의 확연한 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="점검에서 밀링 암 관절 핀과 부싱의 큰 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="점검에서 밀링 암 관절 핀과 부싱의 매우 큰 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="점검에서 블레이드 암 관절 핀과 부싱의 초기 마모가 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="점검에서 블레이드 암 관절 핀과 부싱의 확연한 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="점검에서 블레이드 암 관절 핀과 부싱의 큰 유격이 확인됩니다."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="점검에서 블레이드 암 관절 핀과 부싱의 매우 큰 유격이 확인됩니다."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="운전실 충격 흡수기에 약간의 습기가 있습니다."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="운전실 충격 흡수기에서 오일이 스며 나오는 상태입니다."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="운전실 충격 흡수기에서 오일이 누출 중입니다."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="부품 측정: %s"/>
         <text name="rms_fleet_parts_need_complete" text="부품 측정: 다음 종합 점검 시"/>
         <text name="rms_fleet_greasing_done" text="그리스 주입 완료"/>
-        <text name="rms_fleet_greasing_period_hours" text="작업 %s시간"/>
+        <text name="rms_fleet_greasing_period_days" text="작업한 날 %d일마다"/>
         <text name="rms_fleet_greasing_period_day" text="작업한 날마다"/>
         <text name="rms_fleet_greasing_period_month" text="매월"/>
         <text name="rms_fleet_greasing_period_months" text="%d개월마다"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d일 초과"/>
         <text name="rms_fleet_greasing_to_do" text="%d개 남음"/>
         <text name="rms_fleet_greasing_points" text="그리스 주입구"/>
+        <text name="rms_fleet_greasing_most_frequent" text="가장 짧은 주기"/>
         <text name="rms_fleet_greasing_next" text="다음 그리스 주입"/>
         <text name="rms_fleet_greasing_now" text="지금"/>
         <text name="rms_fleet_greasing_in" text="%s 후"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="더 빠르게"/>
         <text name="rms_fleet_wear_normal" text="정상 마모"/>
         <text name="rms_fleet_wear_late" text="그리스 주입 지연"/>
-        <text name="rms_fleet_wear_dry" text="그리스 없는 마모"/>
         <text name="rms_fleet_wear_repair_greases" text="수리 시 그리스 주입"/>
         <text name="rms_fleet_wear_repair" text="정비소 수리"/>
         <text name="rms_fleet_wear_none" text="없음"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="열 제거 및 에어 필터"/>
         <text name="rms_tutorial_cooling_air_check_message" text="라디에이터 또는 에어 필터가 막혔습니다. 차량을 바라보며 %s 키를 길게 눌러 어느 쪽인지 확인하십시오. 압축 공기 블로어로 청소하십시오. 필터를 더 이상 불어내어 청소할 수 없다면 정비소가 %s 정비부터 교체합니다."/>
         <text name="rms_tutorial_needs_lubrication_title" text="그리스 주입 필요"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s 차량에 그리스 주입이 필요한 주입구가 있습니다.&#10;&#10;RMS에서 각 기계에는 사용 설명서에 나오는 그리스 주입구가 있습니다. 일정 작동 시간이 지나면 다시 주입해야 하며, 일부 기계는 작업일마다 주입해야 합니다. 주입이 늦어지면 섀시 마모가 빨라집니다.&#10;&#10;상점에서 그리스 건과 카트리지를 구입하십시오. 건을 손에 들고 카트리지를 조준하여 장착한 다음 기계를 조준하십시오. 클릭할 때마다 주입구 하나에 그리스를 주입하며, 버튼을 누르고 있으면 다음 주입구로 이어집니다.&#10;&#10;남은 주입구를 보려면 차량을 바라보며 %s 키를 길게 누르십시오."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s 차량에 그리스 주입이 필요한 주입구가 있습니다.&#10;&#10;RMS에서 각 기계에는 사용 설명서에 나오는 그리스 주입구가 있습니다. 작업한 날마다 다시 주입해야 하며, 설명서의 주입 주기가 긴 곳은 작업한 날 며칠마다 주입해야 합니다. 주입이 늦어지면 섀시 마모가 빨라집니다.&#10;&#10;상점에서 그리스 건과 카트리지를 구입하십시오. 건을 손에 들고 카트리지 앞에 서서 장착한 다음 기계를 조준하십시오. 클릭할 때마다 주입구 하나에 그리스를 주입하며, 버튼을 누르고 있으면 다음 주입구로 이어집니다.&#10;&#10;남은 주입구를 보려면 차량을 바라보며 %s 키를 길게 누르십시오."/>
         <text name="rms_tutorial_needs_repair_title" text="고장 감지"/>
         <text name="rms_tutorial_needs_repair_message" text="%s 차량에 문제가 있습니다. 부품 하나가 고장 났을 수 있습니다.&#10;&#10;정비소로 가십시오. 점검, 또는 시기가 된 정비로 고장을 확인합니다. 미루면 고장이 계속 악화되고 수리 비용도 증가할 수 있습니다.&#10;&#10;고장이 확인되면 정비소에서 수리하십시오."/>
         <text name="rms_tutorial_needs_overhaul_title" text="오버홀 필요"/>

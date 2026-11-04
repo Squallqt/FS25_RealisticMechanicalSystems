@@ -154,7 +154,7 @@
                             <GuiElement profile="rms_workshopBlock" position="186px 0px" size="174px 58px">
                                 <RoundCorner profile="rms_workshopSurfaceSoft" />
                                 <Bitmap profile="rms_fleetIconOperatingHours" position="8px -15px" />
-                                <Text profile="rms_fleetTileLabel" position="40px -9px" size="130px 18px" text="$l10n_rms_ingame_menu_header_interval" />
+                                <Text profile="rms_fleetTileLabel" id="greasingIntervalLabel" position="40px -9px" size="130px 18px" />
                                 <Text profile="rms_tileValue" id="greasingIntervalValue" position="40px -28px" size="130px 24px" />
                             </GuiElement>
                         </GuiElement>

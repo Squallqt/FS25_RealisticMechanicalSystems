@@ -48,7 +48,7 @@ RealisticMechanicalSystems = {
         RESALE = 2048
     },
 
-    -- the eight tracked vehicle systems
+    -- a harvester carries the harvest system in place of the PTO
     SYSTEMS = {
         ENGINE = "rms_spec_system_engine",
         TRANSMISSION = "rms_spec_system_transmission",
@@ -57,7 +57,8 @@ RealisticMechanicalSystems = {
         ELECTRICAL = "rms_spec_system_electrical",
         CHASSIS = "rms_spec_system_chassis",
         FUEL = "rms_spec_system_fuel",
-        PTO = "rms_spec_system_pto"
+        PTO = "rms_spec_system_pto",
+        HARVEST = "rms_spec_system_harvest"
     },
 
     BREAKDOWN_SOURCES = {
@@ -122,7 +123,8 @@ RealisticMechanicalSystems.SYSTEMS_ORDER = {
     RealisticMechanicalSystems.SYSTEMS.ELECTRICAL,
     RealisticMechanicalSystems.SYSTEMS.CHASSIS,
     RealisticMechanicalSystems.SYSTEMS.FUEL,
-    RealisticMechanicalSystems.SYSTEMS.PTO
+    RealisticMechanicalSystems.SYSTEMS.PTO,
+    RealisticMechanicalSystems.SYSTEMS.HARVEST
 }
 
 RealisticMechanicalSystems.SERVICE_CLOCKS = {
@@ -132,7 +134,15 @@ RealisticMechanicalSystems.SERVICE_CLOCKS = {
     { key = "coolant", levelKey = "coolantServiceLevel", intervalFactor = 4, maintenanceType = "PREVENTIVE", circuits = { "coolant" }, systems = { "cooling" } }
 }
 
-RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS = { "INLET_VALVES", "EXHAUST_VALVES", "FUEL_INJECTOR_MALFUNCTION", "THERMOSTAT_MALFUNCTION" }
+-- the harvest organs among them are renewed and billed when worn
+RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS = { "INLET_VALVES", "EXHAUST_VALVES", "FUEL_INJECTOR_MALFUNCTION", "THERMOSTAT_MALFUNCTION",
+    "FEEDER_CHAIN_WEAR", "FEED_ACCELERATOR_WEAR", "THRESHING_BAR_WEAR", "CONCAVE_WEAR", "SEPARATION_WEAR", "CLEANING_SIEVE_WEAR",
+    "GRAIN_ELEVATOR_WEAR", "STRAW_CHOPPER_WEAR", "FEED_ROLL_WEAR", "CUTTERHEAD_WEAR", "FORAGE_KNIFE_WEAR", "SHEAR_BAR_WEAR",
+    "CROP_PROCESSOR_WEAR", "CROP_ACCELERATOR_WEAR", "DISCHARGE_SPOUT_WEAR", "BEET_TOPPER_WEAR", "LIFTING_SHARE_WEAR",
+    "BEET_CLEANING_WEAR", "ROOT_ELEVATOR_WEAR", "HOPPER_FLOOR_WEAR", "SIEVE_WEB_WEAR", "HAULM_SEPARATOR_WEAR", "PICKING_UNIT_WEAR",
+    "COTTON_FAN_WEAR", "BASE_CUTTER_WEAR", "CANE_FEED_ROLL_WEAR", "CANE_CHOPPER_WEAR", "CANE_EXTRACTOR_WEAR", "CANE_ELEVATOR_WEAR",
+    "SHAKER_WEAR", "CATCHING_SCALE_WEAR", "BUCKET_CONVEYOR_WEAR", "CLEANING_FAN_WEAR", "DESTEMMER_WEAR", "VEGETABLE_PICKER_WEAR",
+    "VEGETABLE_CLEANING_WEAR", "VEGETABLE_ELEVATOR_WEAR" }
 
 RealisticMechanicalSystems.PART_TYPES_ORDER = {
     RealisticMechanicalSystems.PART_TYPES.USED,
@@ -250,7 +260,14 @@ RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
     instantDamageFactor = "idfg",
     ptoLoadFactor = "plf",
     ptoEngagementFactor = "pef",
-    ptoRaisedFactor = "prf"
+    ptoRaisedFactor = "prf",
+    -- harvest
+    harvestEffortFactor = "hef",
+    harvestGrainFactor = "hgf",
+    harvestStrawFactor = "hsf",
+    harvestStoneFactor = "hstf",
+    harvestRiceFactor = "hrf",
+    harvestWetFactor = "hwf"
 }
 
 RealisticMechanicalSystems.FACTOR_STATS_KEYS = {}
@@ -1293,6 +1310,7 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getTransmissionType", RealisticMechanicalSystems.getTransmissionType)
     SpecializationUtil.registerFunction(vehicleType, "updateHydraulicsSystem", RealisticMechanicalSystems.updateHydraulicsSystem)
     SpecializationUtil.registerFunction(vehicleType, "updatePtoSystem", RealisticMechanicalSystems.updatePtoSystem)
+    SpecializationUtil.registerFunction(vehicleType, "updateHarvestSystem", RealisticMechanicalSystems.updateHarvestSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateCoolingSystem", RealisticMechanicalSystems.updateCoolingSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateElectricalSystem", RealisticMechanicalSystems.updateElectricalSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateChassisSystem", RealisticMechanicalSystems.updateChassisSystem)
@@ -2304,6 +2322,7 @@ function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
         self:updateTransmissionSystem(dt)
         self:updateHydraulicsSystem(dt)
         self:updatePtoSystem(dt)
+        self:updateHarvestSystem(dt)
         self:updateCoolingSystem(dt)
         self:updateElectricalSystem(dt)
         self:updateChassisSystem(dt)

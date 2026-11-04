@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Podvozek"/>
         <text name="rms_spec_system_fuel" text="Palivová soustava"/>
         <text name="rms_spec_system_pto" text="Vývodový hřídel"/>
+        <text name="rms_spec_system_harvest" text="Sklizeň"/>
         <text name="rms_spec_system_electric_motor" text="Elektromotor"/>
         <text name="rms_spec_system_traction_battery" text="Trakční baterie"/>
         <text name="rms_spec_state_ready" text="Připraveno"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Přehřívání baterie"/>
         <text name="rms_report_wear_lubrication" text="Opožděné mazání"/>
         <text name="rms_report_wear_pto_overload" text="Přetížení vývodového hřídele"/>
+        <text name="rms_report_wear_harvest_overload" text="Přetížení sklizně"/>
+        <text name="rms_report_wear_harvest_flow" text="Velký průtok zrna"/>
+        <text name="rms_report_wear_harvest_straw" text="Přetížený drtič"/>
+        <text name="rms_report_wear_harvest_stones" text="Kameny"/>
+        <text name="rms_report_wear_harvest_rice" text="Sklizeň rýže"/>
+        <text name="rms_report_wear_harvest_wet" text="Vlhká plodina"/>
         <text name="rms_report_component_title" text="Součást"/>
         <text name="rms_report_system_condition_transmission" text="Převodovka"/>
         <text name="rms_report_system_condition_power" text="Aktuální výkon"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Množství"/>
         <text name="rms_grease_hud_title" text="Mazání"/>
         <text name="rms_grease_hud_done" text="Promazáno"/>
+        <text name="rms_grease_hud_greased" text="Promazaných"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Ofukovací pistole"/>
         <text name="rms_air_blower_no_vehicle" text="V dosahu čištění není žádné vozidlo"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder kloubů nakladače."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder kloubů nakladače."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder kloubů nakladače."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Prohlídka zjišťuje počínající opotřebení čepů a pouzder stožáru."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder stožáru."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder stožáru."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder stožáru."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Prohlídka zjišťuje počínající opotřebení čepů a pouzder výložníku."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder výložníku."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder výložníku."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder výložníku."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Prohlídka zjišťuje počínající opotřebení čepů a pouzder frézovacího ramene."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder frézovacího ramene."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder frézovacího ramene."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder frézovacího ramene."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Prohlídka zjišťuje počínající opotřebení čepů a pouzder ramene radlice."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder ramene radlice."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder ramene radlice."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder ramene radlice."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Tlumič kabiny je mírně vlhký."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Z tlumiče kabiny prosakuje olej."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Tlumič kabiny vykazuje aktivní únik."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Měření součástí %s"/>
         <text name="rms_fleet_parts_need_complete" text="Měření součástí při příští úplné prohlídce"/>
         <text name="rms_fleet_greasing_done" text="Mazání provedeno"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s h práce"/>
+        <text name="rms_fleet_greasing_period_days" text="Každých %d dní provozu"/>
         <text name="rms_fleet_greasing_period_day" text="Každý den provozu"/>
         <text name="rms_fleet_greasing_period_month" text="Každý měsíc"/>
         <text name="rms_fleet_greasing_period_months" text="Každých %d měs."/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="Zpoždění %d dní"/>
         <text name="rms_fleet_greasing_to_do" text="Zbývá %d"/>
         <text name="rms_fleet_greasing_points" text="Maznice"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Nejčastější"/>
         <text name="rms_fleet_greasing_next" text="Příští mazání"/>
         <text name="rms_fleet_greasing_now" text="Nyní"/>
         <text name="rms_fleet_greasing_in" text="za %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Rychleji"/>
         <text name="rms_fleet_wear_normal" text="Běžné opotřebení"/>
         <text name="rms_fleet_wear_late" text="Zpoždění mazání"/>
-        <text name="rms_fleet_wear_dry" text="Opotřebení nasucho"/>
         <text name="rms_fleet_wear_repair_greases" text="Promazáno při opravě"/>
         <text name="rms_fleet_wear_repair" text="Oprava v dílně"/>
         <text name="rms_fleet_wear_none" text="Žádné"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Chlazení a vzduchový filtr"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Chladič nebo vzduchový filtr je zanesený. Při pohledu na vozidlo podrž klávesu %s a zjisti, který z nich to je. Vyčisti jej ofukovačem stlačeného vzduchu. Pokud už filtr nelze profouknout, dílna jej vymění od údržby %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Nutné mazání"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Stroj %s má maznice k namazání.&#10;&#10;V RMS má každý stroj maznice podle svého návodu. Znovu se mažou po určitém počtu provozních hodin, u některých strojů každý pracovní den. Opožděné mazání urychluje opotřebení podvozku.&#10;&#10;Kup si v obchodě mazací lis a kartuše. S lisem v ruce zamiř na kartuši, aby se vložila, a potom na stroj: každé kliknutí namaže jednu maznici a podržením tlačítka pokračuješ na další.&#10;&#10;Zbývající maznice uvidíš, když při pohledu na vozidlo podržíš klávesu %s."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Stroj %s má maznice k namazání.&#10;&#10;V RMS má každý stroj maznice podle svého návodu. Znovu se mažou podle dnů, kdy stroj pracuje: každý pracovní den, nebo jednou za několik pracovních dnů ty, které návod maže méně často. Opožděné mazání urychluje opotřebení podvozku.&#10;&#10;Kup si v obchodě mazací lis a kartuše. S lisem v ruce se postav před kartuši, aby se vložila, a potom zamiř na stroj: každé kliknutí namaže jednu maznici a podržením tlačítka pokračuješ na další.&#10;&#10;Zbývající maznice uvidíš, když při pohledu na vozidlo podržíš klávesu %s."/>
         <text name="rms_tutorial_needs_repair_title" text="Zjištěná porucha"/>
         <text name="rms_tutorial_needs_repair_message" text="Stroj %s má problém. Jedna z jeho součástí možná selhala.&#10;&#10;Zajeď do dílny: prohlídka, nebo údržba, pokud je na řadě, poruchu zjistí. Neotálej: porucha se může dále zhoršovat a spolu s ní rostou i náklady na opravu.&#10;&#10;Jakmile je porucha zjištěna, nech ji opravit v dílně."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Nutná generální oprava"/>

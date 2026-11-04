@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="シャーシ"/>
         <text name="rms_spec_system_fuel" text="燃料システム"/>
         <text name="rms_spec_system_pto" text="PTO"/>
+        <text name="rms_spec_system_harvest" text="収穫"/>
         <text name="rms_spec_system_electric_motor" text="電動モーター"/>
         <text name="rms_spec_system_traction_battery" text="駆動用バッテリー"/>
         <text name="rms_spec_state_ready" text="準備完了"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="バッテリーの過熱"/>
         <text name="rms_report_wear_lubrication" text="グリース補給の遅れ"/>
         <text name="rms_report_wear_pto_overload" text="PTOの過負荷"/>
+        <text name="rms_report_wear_harvest_overload" text="収穫の過負荷"/>
+        <text name="rms_report_wear_harvest_flow" text="穀物流量の増大"/>
+        <text name="rms_report_wear_harvest_straw" text="チョッパーの過負荷"/>
+        <text name="rms_report_wear_harvest_stones" text="石"/>
+        <text name="rms_report_wear_harvest_rice" text="稲の収穫"/>
+        <text name="rms_report_wear_harvest_wet" text="湿った作物"/>
         <text name="rms_report_component_title" text="部品"/>
         <text name="rms_report_system_condition_transmission" text="ミッション"/>
         <text name="rms_report_system_condition_power" text="現在の出力"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="数量"/>
         <text name="rms_grease_hud_title" text="グリース"/>
         <text name="rms_grease_hud_done" text="完了"/>
+        <text name="rms_grease_hud_greased" text="グリース済み"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="エアブロワー"/>
         <text name="rms_air_blower_no_vehicle" text="清掃範囲内に車両がありません"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="点検でローダー関節のピンとブッシュにはっきりした遊びが確認されます。"/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="点検でローダー関節のピンとブッシュに大きな遊びが確認されます。"/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="点検でローダー関節のピンとブッシュに非常に大きな遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="点検でマスト関節のピンとブッシュに初期の摩耗が確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="点検でマスト関節のピンとブッシュにはっきりした遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="点検でマスト関節のピンとブッシュに大きな遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="点検でマスト関節のピンとブッシュに非常に大きな遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="点検でブーム関節のピンとブッシュに初期の摩耗が確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="点検でブーム関節のピンとブッシュにはっきりした遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="点検でブーム関節のピンとブッシュに大きな遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="点検でブーム関節のピンとブッシュに非常に大きな遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="点検でミーリングアーム関節のピンとブッシュに初期の摩耗が確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="点検でミーリングアーム関節のピンとブッシュにはっきりした遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="点検でミーリングアーム関節のピンとブッシュに大きな遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="点検でミーリングアーム関節のピンとブッシュに非常に大きな遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="点検でブレードアーム関節のピンとブッシュに初期の摩耗が確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="点検でブレードアーム関節のピンとブッシュにはっきりした遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="点検でブレードアーム関節のピンとブッシュに大きな遊びが確認されます。"/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="点検でブレードアーム関節のピンとブッシュに非常に大きな遊びが確認されます。"/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="キャビンダンパーにわずかな湿りがあります。"/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="キャビンダンパーにオイルのにじみがあります。"/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="キャビンダンパーでオイルもれが発生中です。"/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="部品測定：%s"/>
         <text name="rms_fleet_parts_need_complete" text="部品測定：次回の完全点検で"/>
         <text name="rms_fleet_greasing_done" text="グリース完了"/>
-        <text name="rms_fleet_greasing_period_hours" text="作業 %s 時間"/>
+        <text name="rms_fleet_greasing_period_days" text="%d稼働日ごと"/>
         <text name="rms_fleet_greasing_period_day" text="稼働日ごと"/>
         <text name="rms_fleet_greasing_period_month" text="毎月"/>
         <text name="rms_fleet_greasing_period_months" text="%dか月ごと"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d日超過"/>
         <text name="rms_fleet_greasing_to_do" text="残り %d"/>
         <text name="rms_fleet_greasing_points" text="グリースニップル"/>
+        <text name="rms_fleet_greasing_most_frequent" text="最短の間隔"/>
         <text name="rms_fleet_greasing_next" text="次回のグリース"/>
         <text name="rms_fleet_greasing_now" text="今すぐ"/>
         <text name="rms_fleet_greasing_in" text="あと%s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="進行が速い"/>
         <text name="rms_fleet_wear_normal" text="通常の摩耗"/>
         <text name="rms_fleet_wear_late" text="グリース遅れ"/>
-        <text name="rms_fleet_wear_dry" text="グリース切れの摩耗"/>
         <text name="rms_fleet_wear_repair_greases" text="修理時にグリース"/>
         <text name="rms_fleet_wear_repair" text="ワークショップで修理"/>
         <text name="rms_fleet_wear_none" text="なし"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="冷却装置とエアフィルター"/>
         <text name="rms_tutorial_cooling_air_check_message" text="ラジエーターまたはエアフィルターが詰まっています。車両を見ながら%sキーを長押しして、どちらかを確認してください。圧縮空気ブロワーで清掃できます。フィルターをこれ以上清掃できない場合は、ワークショップの%s整備以上で交換されます。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="グリース補給時期"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%sのグリースニップルにグリース補給が必要です。&#10;&#10;RMSでは各機械に取扱説明書に記載されたグリースニップルがあります。一定の稼働時間ごとに、機械によっては毎作業日に補給が必要になります。補給が遅れるとシャーシの摩耗が速まります。&#10;&#10;ショップでグリースガンとカートリッジを購入してください。ガンを持ち、カートリッジをねらって装着してから機械をねらってください。クリックするたびにニップル1個に補給し、長押しすると次のニップルへの補給を続けます。&#10;&#10;残りのニップルを確認するには、車両を見ながら%sキーを長押ししてください。"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%sのグリースニップルにグリース補給が必要です。&#10;&#10;RMSでは各機械に取扱説明書に記載されたグリースニップルがあります。稼働日ごとに、取扱説明書で補給の間隔が長いものは数稼働日ごとに補給が必要になります。補給が遅れるとシャーシの摩耗が速まります。&#10;&#10;ショップでグリースガンとカートリッジを購入してください。ガンを持ち、カートリッジの前に立って装着してから機械をねらってください。クリックするたびにニップル1個に補給し、長押しすると次のニップルへの補給を続けます。&#10;&#10;残りのニップルを確認するには、車両を見ながら%sキーを長押ししてください。"/>
         <text name="rms_tutorial_needs_repair_title" text="故障検出"/>
         <text name="rms_tutorial_needs_repair_message" text="%sに問題が発生しています。部品の一つが故障した可能性があります。&#10;&#10;ワークショップに持ち込んでください。点検、または時期であればメンテナンスで故障を特定します。先延ばしにしないでください。故障がさらに悪化し、修理費用も増える可能性があります。&#10;&#10;故障が特定されたら、ワークショップで修理してください。"/>
         <text name="rms_tutorial_needs_overhaul_title" text="オーバーホール時期"/>

@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Sasis"/>
         <text name="rms_spec_system_fuel" text="Sistem Bahan Bakar"/>
         <text name="rms_spec_system_pto" text="PTO"/>
+        <text name="rms_spec_system_harvest" text="Panen"/>
         <text name="rms_spec_system_electric_motor" text="Motor listrik"/>
         <text name="rms_spec_system_traction_battery" text="Baterai traksi"/>
         <text name="rms_spec_state_ready" text="Siap"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Panas Berlebih pada Baterai"/>
         <text name="rms_report_wear_lubrication" text="Pelumasan Terlambat"/>
         <text name="rms_report_wear_pto_overload" text="Beban Berlebih pada PTO"/>
+        <text name="rms_report_wear_harvest_overload" text="Beban berlebih panen"/>
+        <text name="rms_report_wear_harvest_flow" text="Aliran gabah tinggi"/>
+        <text name="rms_report_wear_harvest_straw" text="Pencacah kelebihan beban"/>
+        <text name="rms_report_wear_harvest_stones" text="Batu"/>
+        <text name="rms_report_wear_harvest_rice" text="Panen padi"/>
+        <text name="rms_report_wear_harvest_wet" text="Tanaman lembap"/>
         <text name="rms_report_component_title" text="Komponen"/>
         <text name="rms_report_system_condition_transmission" text="Transmisi"/>
         <text name="rms_report_system_condition_power" text="Daya Saat Ini"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Jumlah"/>
         <text name="rms_grease_hud_title" text="Pelumasan"/>
         <text name="rms_grease_hud_done" text="Selesai"/>
+        <text name="rms_grease_hud_greased" text="Dilumasi"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Peniup Udara Bertekanan"/>
         <text name="rms_air_blower_no_vehicle" text="Tidak ada kendaraan dalam jangkauan pembersihan"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Inspeksi menemukan gerak bebas yang terasa pada pin dan busing sendi pemuat depan."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Inspeksi menemukan gerak bebas besar pada pin dan busing sendi pemuat depan."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Inspeksi menemukan gerak bebas sangat besar pada pin dan busing sendi pemuat depan."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Inspeksi menemukan keausan awal pada pin dan busing sendi tiang."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Inspeksi menemukan gerak bebas yang terasa pada pin dan busing sendi tiang."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Inspeksi menemukan gerak bebas besar pada pin dan busing sendi tiang."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Inspeksi menemukan gerak bebas sangat besar pada pin dan busing sendi tiang."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Inspeksi menemukan keausan awal pada pin dan busing sendi lengan derek."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Inspeksi menemukan gerak bebas yang terasa pada pin dan busing sendi lengan derek."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Inspeksi menemukan gerak bebas besar pada pin dan busing sendi lengan derek."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Inspeksi menemukan gerak bebas sangat besar pada pin dan busing sendi lengan derek."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Inspeksi menemukan keausan awal pada pin dan busing sendi lengan frais."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Inspeksi menemukan gerak bebas yang terasa pada pin dan busing sendi lengan frais."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Inspeksi menemukan gerak bebas besar pada pin dan busing sendi lengan frais."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Inspeksi menemukan gerak bebas sangat besar pada pin dan busing sendi lengan frais."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Inspeksi menemukan keausan awal pada pin dan busing sendi lengan bilah."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Inspeksi menemukan gerak bebas yang terasa pada pin dan busing sendi lengan bilah."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Inspeksi menemukan gerak bebas besar pada pin dan busing sendi lengan bilah."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Inspeksi menemukan gerak bebas sangat besar pada pin dan busing sendi lengan bilah."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Satu peredam kejut kabin sedikit lembap."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Oli merembes dari satu peredam kejut kabin."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Satu peredam kejut kabin mengalami kebocoran aktif."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Komponen diukur %s"/>
         <text name="rms_fleet_parts_need_complete" text="Komponen diukur pada inspeksi lengkap berikutnya"/>
         <text name="rms_fleet_greasing_done" text="Pelumasan selesai"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s jam kerja"/>
+        <text name="rms_fleet_greasing_period_days" text="Setiap %d hari dipakai"/>
         <text name="rms_fleet_greasing_period_day" text="Tiap hari dipakai"/>
         <text name="rms_fleet_greasing_period_month" text="Setiap bulan"/>
         <text name="rms_fleet_greasing_period_months" text="Setiap %d bulan"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="Terlambat %d hari"/>
         <text name="rms_fleet_greasing_to_do" text="%d tersisa"/>
         <text name="rms_fleet_greasing_points" text="Nipel"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Paling sering"/>
         <text name="rms_fleet_greasing_next" text="Pelumasan berikutnya"/>
         <text name="rms_fleet_greasing_now" text="Sekarang"/>
         <text name="rms_fleet_greasing_in" text="dalam %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Lebih cepat"/>
         <text name="rms_fleet_wear_normal" text="Keausan normal"/>
         <text name="rms_fleet_wear_late" text="Keterlambatan pelumasan"/>
-        <text name="rms_fleet_wear_dry" text="Keausan tanpa gemuk"/>
         <text name="rms_fleet_wear_repair_greases" text="Dilumasi saat perbaikan"/>
         <text name="rms_fleet_wear_repair" text="Perbaikan di bengkel"/>
         <text name="rms_fleet_wear_none" text="Tidak ada"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Pendinginan dan Filter Udara"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Radiator atau filter udara tersumbat. Tahan tombol %s sambil melihat kendaraan untuk mengetahui yang mana. Bersihkan dengan peniup udara bertekanan. Jika filter tidak dapat dibersihkan lagi, bengkel menggantinya mulai dari servis %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Pelumasan Diperlukan"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s milikmu memiliki nipel gemuk yang perlu dilumasi.&#10;&#10;Dalam RMS, setiap mesin memiliki nipel gemuk sesuai buku petunjuknya. Nipel perlu dilumasi lagi setelah sejumlah jam operasi, atau setiap hari kerja pada mesin tertentu. Pelumasan yang terlambat mempercepat keausan sasis.&#10;&#10;Beli Pistol Gemuk dan kartrid di toko. Pegang pistol dan bidik kartrid untuk memasangnya, lalu bidik mesin: setiap klik melumasi satu nipel, dan menahan tombol akan melanjutkan ke nipel berikutnya.&#10;&#10;Untuk melihat nipel yang tersisa, tahan tombol %s sambil melihat kendaraan."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s milikmu memiliki nipel gemuk yang perlu dilumasi.&#10;&#10;Dalam RMS, setiap mesin memiliki nipel gemuk sesuai buku petunjuknya. Nipel perlu dilumasi lagi menurut hari mesin dipakai: setiap hari dipakai, atau setiap beberapa hari dipakai untuk nipel yang lebih jarang dilumasi menurut buku petunjuk. Pelumasan yang terlambat mempercepat keausan sasis.&#10;&#10;Beli Pistol Gemuk dan kartrid di toko. Pegang pistol dan berdirilah di depan kartrid untuk memasangnya, lalu bidik mesin: setiap klik melumasi satu nipel, dan menahan tombol akan melanjutkan ke nipel berikutnya.&#10;&#10;Untuk melihat nipel yang tersisa, tahan tombol %s sambil melihat kendaraan."/>
         <text name="rms_tutorial_needs_repair_title" text="Kerusakan Terdeteksi"/>
         <text name="rms_tutorial_needs_repair_message" text="%s milikmu mengalami masalah. Salah satu suku cadangnya mungkin gagal.&#10;&#10;Bawa kendaraan ke bengkel: inspeksi, atau perawatan jika sudah waktunya, mengidentifikasi kerusakan. Jangan menunda: kerusakan dapat terus memburuk dan biaya perbaikan ikut meningkat.&#10;&#10;Setelah kerusakan teridentifikasi, lakukan perbaikan di bengkel."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Rekondisi Diperlukan"/>

@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Khung gầm"/>
         <text name="rms_spec_system_fuel" text="Hệ thống nhiên liệu"/>
         <text name="rms_spec_system_pto" text="PTO"/>
+        <text name="rms_spec_system_harvest" text="Thu hoạch"/>
         <text name="rms_spec_system_electric_motor" text="Động cơ điện"/>
         <text name="rms_spec_system_traction_battery" text="Pin cao áp"/>
         <text name="rms_spec_state_ready" text="Sẵn sàng"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Ắc quy quá nhiệt"/>
         <text name="rms_report_wear_lubrication" text="Bôi trơn chậm trễ"/>
         <text name="rms_report_wear_pto_overload" text="PTO quá tải"/>
+        <text name="rms_report_wear_harvest_overload" text="Quá tải thu hoạch"/>
+        <text name="rms_report_wear_harvest_flow" text="Lưu lượng hạt lớn"/>
+        <text name="rms_report_wear_harvest_straw" text="Máy băm rơm quá tải"/>
+        <text name="rms_report_wear_harvest_stones" text="Đá"/>
+        <text name="rms_report_wear_harvest_rice" text="Thu hoạch lúa"/>
+        <text name="rms_report_wear_harvest_wet" text="Cây trồng ẩm"/>
         <text name="rms_report_component_title" text="Bộ phận"/>
         <text name="rms_report_system_condition_transmission" text="Hộp số"/>
         <text name="rms_report_system_condition_power" text="Công suất hiện tại"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Số lượng"/>
         <text name="rms_grease_hud_title" text="Bơm mỡ"/>
         <text name="rms_grease_hud_done" text="Đã xong"/>
+        <text name="rms_grease_hud_greased" text="Đã bơm mỡ"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Máy thổi khí nén"/>
         <text name="rms_air_blower_no_vehicle" text="Không có xe nào trong tầm vệ sinh"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Kiểm tra phát hiện độ rơ rõ rệt ở chốt và bạc lót khớp bộ nạp trước."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Kiểm tra phát hiện độ rơ lớn ở chốt và bạc lót khớp bộ nạp trước."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Kiểm tra phát hiện độ rơ rất lớn ở chốt và bạc lót khớp bộ nạp trước."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Kiểm tra phát hiện chốt và bạc lót khớp trụ nâng bắt đầu mòn."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Kiểm tra phát hiện độ rơ rõ rệt ở chốt và bạc lót khớp trụ nâng."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Kiểm tra phát hiện độ rơ lớn ở chốt và bạc lót khớp trụ nâng."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Kiểm tra phát hiện độ rơ rất lớn ở chốt và bạc lót khớp trụ nâng."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Kiểm tra phát hiện chốt và bạc lót khớp cần cẩu bắt đầu mòn."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Kiểm tra phát hiện độ rơ rõ rệt ở chốt và bạc lót khớp cần cẩu."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Kiểm tra phát hiện độ rơ lớn ở chốt và bạc lót khớp cần cẩu."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Kiểm tra phát hiện độ rơ rất lớn ở chốt và bạc lót khớp cần cẩu."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Kiểm tra phát hiện chốt và bạc lót khớp tay phay bắt đầu mòn."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Kiểm tra phát hiện độ rơ rõ rệt ở chốt và bạc lót khớp tay phay."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Kiểm tra phát hiện độ rơ lớn ở chốt và bạc lót khớp tay phay."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Kiểm tra phát hiện độ rơ rất lớn ở chốt và bạc lót khớp tay phay."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Kiểm tra phát hiện chốt và bạc lót khớp tay lưỡi ủi bắt đầu mòn."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Kiểm tra phát hiện độ rơ rõ rệt ở chốt và bạc lót khớp tay lưỡi ủi."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Kiểm tra phát hiện độ rơ lớn ở chốt và bạc lót khớp tay lưỡi ủi."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Kiểm tra phát hiện độ rơ rất lớn ở chốt và bạc lót khớp tay lưỡi ủi."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Một giảm chấn ca bin hơi ẩm."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Dầu rịn ra từ một giảm chấn ca bin."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Một giảm chấn ca bin đang rò rỉ."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Bộ phận được đo %s"/>
         <text name="rms_fleet_parts_need_complete" text="Bộ phận được đo ở lần kiểm tra toàn diện tiếp theo"/>
         <text name="rms_fleet_greasing_done" text="Bơm mỡ đã xong"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s giờ làm việc"/>
+        <text name="rms_fleet_greasing_period_days" text="Mỗi %d ngày làm việc"/>
         <text name="rms_fleet_greasing_period_day" text="Mỗi ngày làm việc"/>
         <text name="rms_fleet_greasing_period_month" text="Mỗi tháng"/>
         <text name="rms_fleet_greasing_period_months" text="Mỗi %d tháng"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="Trễ %d ngày"/>
         <text name="rms_fleet_greasing_to_do" text="Còn %d"/>
         <text name="rms_fleet_greasing_points" text="Đầu bơm mỡ"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Thường xuyên nhất"/>
         <text name="rms_fleet_greasing_next" text="Lần bơm mỡ tới"/>
         <text name="rms_fleet_greasing_now" text="Ngay bây giờ"/>
         <text name="rms_fleet_greasing_in" text="còn %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Nhanh hơn"/>
         <text name="rms_fleet_wear_normal" text="Bình thường"/>
         <text name="rms_fleet_wear_late" text="Trễ bơm mỡ"/>
-        <text name="rms_fleet_wear_dry" text="Mòn khi khô mỡ"/>
         <text name="rms_fleet_wear_repair_greases" text="Bơm mỡ khi sửa chữa"/>
         <text name="rms_fleet_wear_repair" text="Sửa chữa tại xưởng"/>
         <text name="rms_fleet_wear_none" text="Không"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Hệ thống làm mát và bộ lọc không khí"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Két tản nhiệt hoặc bộ lọc không khí bị tắc. Giữ phím %s khi nhìn vào xe để biết bộ phận nào. Dùng máy thổi khí nén để làm sạch. Nếu không thể thổi sạch bộ lọc nữa, xưởng sẽ thay bộ lọc từ mức bảo dưỡng %s trở lên."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Cần bôi trơn"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s của bạn có các đầu bơm mỡ cần bơm.&#10;&#10;Trong RMS, mỗi máy có các đầu bơm mỡ theo hướng dẫn sử dụng. Chúng cần được bơm lại sau một số giờ hoạt động, hoặc mỗi ngày làm việc đối với một số máy. Bơm mỡ muộn làm khung gầm mòn nhanh hơn.&#10;&#10;Mua súng bơm mỡ và hộp mỡ trong cửa hàng. Cầm súng, ngắm vào hộp mỡ để nạp rồi ngắm vào máy: mỗi lần nhấp bơm mỡ cho một đầu, giữ nút nhấp sẽ tiếp tục với các đầu tiếp theo.&#10;&#10;Để xem các đầu bơm mỡ còn lại, giữ phím %s khi nhìn vào xe."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s của bạn có các đầu bơm mỡ cần bơm.&#10;&#10;Trong RMS, mỗi máy có các đầu bơm mỡ theo hướng dẫn sử dụng. Chúng cần được bơm lại theo những ngày máy làm việc: mỗi ngày làm việc, hoặc vài ngày làm việc một lần với các đầu mà hướng dẫn bơm thưa hơn. Bơm mỡ muộn làm khung gầm mòn nhanh hơn.&#10;&#10;Mua súng bơm mỡ và hộp mỡ trong cửa hàng. Cầm súng, đứng trước hộp mỡ để nạp rồi ngắm vào máy: mỗi lần nhấp bơm mỡ cho một đầu, giữ nút nhấp sẽ tiếp tục với các đầu tiếp theo.&#10;&#10;Để xem các đầu bơm mỡ còn lại, giữ phím %s khi nhìn vào xe."/>
         <text name="rms_tutorial_needs_repair_title" text="Đã phát hiện hỏng hóc"/>
         <text name="rms_tutorial_needs_repair_message" text="%s của bạn đang gặp vấn đề. Một trong các linh kiện có thể đã hỏng.&#10;&#10;Hãy đưa xe đến xưởng: kiểm tra, hoặc bảo dưỡng nếu đã đến hạn, sẽ xác định hỏng hóc. Đừng trì hoãn: hỏng hóc có thể tiếp tục trở nên nghiêm trọng hơn và chi phí sửa chữa sẽ tăng theo.&#10;&#10;Khi hỏng hóc đã được xác định, hãy sửa chữa tại xưởng."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Cần đại tu"/>

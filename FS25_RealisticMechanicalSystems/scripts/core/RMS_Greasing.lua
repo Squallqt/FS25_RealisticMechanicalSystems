@@ -4,23 +4,30 @@
 ---Machine and implement greasing, an interval's points due together
 RMS_Greasing = {}
 
-local HOUR_MS = 60 * 60 * 1000
-
 ---Returns the specialization holding the greasing
 function RMS_Greasing.getSpec(vehicle)
     return vehicle.spec_RealisticMechanicalSystems or vehicle.spec_rmsImplementGreasing
 end
 
----Returns what an interval counts: hours, worked days, months or bales
+---Returns what an interval counts: worked days, months or bales
 function RMS_Greasing.getUnit(tier)
-    if tier.hours ~= nil then
-        return "hours"
-    elseif tier.months ~= nil then
+    if tier.months ~= nil then
         return "months"
     elseif tier.bales ~= nil then
         return "bales"
     end
     return "day"
+end
+
+---Returns an interval in its unit, the hours of a notice in worked days
+function RMS_Greasing.getInterval(tier)
+    local unit = RMS_Greasing.getUnit(tier)
+    if unit ~= "day" then
+        return tier[unit]
+    elseif tier.hours == nil then
+        return 1
+    end
+    return math.max(math.floor(tier.hours / RMS_Config.GREASING.DAY_HOURS + 0.5), 1)
 end
 
 local function resolveFamily(vehicle, entry)
@@ -91,7 +98,8 @@ local function getImplementTiers(vehicle)
         for _, cardanTier in ipairs(C.CARDAN) do
             local merged = false
             for index, tier in ipairs(tiers) do
-                if not merged and RMS_Greasing.getUnit(tier) == RMS_Greasing.getUnit(cardanTier) and tier.hours == cardanTier.hours then
+                if not merged and RMS_Greasing.getUnit(tier) == RMS_Greasing.getUnit(cardanTier)
+                    and RMS_Greasing.getInterval(tier) == RMS_Greasing.getInterval(cardanTier) then
                     tiers[index] = { points = tier.points + cardanTier.points, hours = tier.hours }
                     merged = true
                 end
@@ -119,17 +127,6 @@ function RMS_Greasing.getTiers(vehicle)
     return spec.greasingTiers or nil
 end
 
----Returns an interval in its unit, hours of the meter for hours
-function RMS_Greasing.getInterval(vehicle, tier)
-    local unit = RMS_Greasing.getUnit(tier)
-    if unit == "day" then
-        return 1
-    elseif unit ~= "hours" then
-        return tier[unit]
-    end
-    return tier.hours / RMS_Config.SERVICE_REFERENCE_HOURS * vehicle:getServiceReferenceInterval()
-end
-
 local function getState(vehicle)
     local spec = RMS_Greasing.getSpec(vehicle)
     local tiers = RMS_Greasing.getTiers(vehicle)
@@ -142,20 +139,34 @@ local function getState(vehicle)
     return spec.greasing
 end
 
-local function refresh(vehicle)
+---Returns the share of joints run dry since the due date
+local function getDryShare(lateShare)
+    local shape = math.log(math.log(0.9) / math.log(0.99)) / math.log(RMS_Config.GREASING.GREASE_L10_INTERVALS)
+    local scale = (-math.log(0.99)) ^ (-1 / shape)
+    local function dry(intervals)
+        return 1 - math.exp(-(intervals / scale) ^ shape)
+    end
+    return (dry(1 + lateShare) - dry(1)) / (1 - dry(1))
+end
+
+-- @param boolean? isCounted true once a day, month or bale counted, or a service
+local function refresh(vehicle, isCounted)
     local spec = RMS_Greasing.getSpec(vehicle)
     local state, tiers = getState(vehicle), RMS_Greasing.getTiers(vehicle) or {}
-    local duePoints, lateShare = 0, 0
+    local duePoints, totalPoints, lateShare, dryPoints = 0, 0, 0, 0
     for index, tier in ipairs(tiers) do
         duePoints = duePoints + state.due[index]
-        if state.due[index] > 0 then
-            lateShare = math.max(lateShare, state.late[index] / RMS_Greasing.getInterval(vehicle, tier))
+        totalPoints = totalPoints + tier.points
+        if state.due[index] > 0 and state.late[index] > 0 then
+            local share = state.late[index] / RMS_Greasing.getInterval(tier)
+            lateShare = math.max(lateShare, share)
+            dryPoints = dryPoints + state.due[index] * getDryShare(share)
         end
     end
 
-    spec.greasingLateShare = lateShare
+    spec.greasingWearFactor = totalPoints > 0 and 1 + dryPoints / totalPoints * (RMS_Config.GREASING.DRY_WEAR_FACTOR - 1) or 1
     local lubricationLevel = 1 - math.min(lateShare, 1)
-    if duePoints ~= spec.greasingDuePoints or math.abs(lubricationLevel - (spec.lubricationLevel or 1)) >= 0.005 then
+    if isCounted or duePoints ~= spec.greasingDuePoints or lubricationLevel ~= (spec.lubricationLevel or 1) then
         spec.greasingDuePoints = duePoints
         spec.lubricationLevel = lubricationLevel
         if vehicle.spec_RealisticMechanicalSystems ~= nil then
@@ -173,26 +184,22 @@ function RMS_Greasing.initialize(vehicle)
     refresh(vehicle)
 end
 
----Returns the share of joints run dry, Weibull of the grease life
-local function getDryShare(intervals)
-    local shape = math.log(math.log(0.9) / math.log(0.99)) / math.log(RMS_Config.GREASING.GREASE_L10_INTERVALS)
-    local scale = (-math.log(0.99)) ^ (-1 / shape)
-    return 1 - math.exp(-(intervals / scale) ^ shape)
-end
-
 ---Returns how many times faster a late greased vehicle wears
 function RMS_Greasing.getWearFactor(vehicle)
-    local lateShare = RMS_Greasing.getSpec(vehicle).greasingLateShare or 0
-    if lateShare <= 0 then
-        return 1
+    return RMS_Greasing.getSpec(vehicle).greasingWearFactor or 1
+end
+
+---Returns done, due on the day points fall due, late once delayed
+function RMS_Greasing.getStatus(vehicle)
+    local spec = RMS_Greasing.getSpec(vehicle)
+    if (spec.greasingDuePoints or 0) == 0 then
+        return "done"
     end
-    local dryAtInterval = getDryShare(1)
-    local dryShare = (getDryShare(1 + lateShare) - dryAtInterval) / (1 - dryAtInterval)
-    return 1 + dryShare * (RMS_Config.GREASING.DRY_WEAR_FACTOR - 1)
+    return (spec.lubricationLevel or 1) < 1 and "late" or "due"
 end
 
 ---Counts a unit: delay on due intervals, run on the others
--- @param string unit hours, months or bales
+-- @param string unit day, months or bales
 local function advance(vehicle, unit, amount)
     local tiers = RMS_Greasing.getTiers(vehicle)
     if tiers == nil or amount <= 0 then
@@ -208,24 +215,22 @@ local function advance(vehicle, unit, amount)
             end
         elseif tierUnit == unit then
             state.elapsed[index] = state.elapsed[index] + amount
-            local interval = RMS_Greasing.getInterval(vehicle, tier)
+            local interval = RMS_Greasing.getInterval(tier)
             if state.elapsed[index] >= interval then
                 state.due[index] = tier.points
                 state.late[index] = state.elapsed[index] - interval
             end
         end
     end
-    refresh(vehicle)
+    refresh(vehicle, true)
 end
 
----Counts running time against each interval and the delay of due ones
--- @param float operatingDt engine running time since last call in ms
+---Marks the day worked once the machine or implement has run
+-- @param float operatingDt running time since last call in ms
 function RMS_Greasing.update(vehicle, operatingDt)
-    if RMS_Greasing.getTiers(vehicle) == nil or operatingDt <= 0 then
-        return
+    if RMS_Greasing.getTiers(vehicle) ~= nil and operatingDt > 0 then
+        getState(vehicle).workedToday = true
     end
-    getState(vehicle).workedToday = true
-    advance(vehicle, "hours", operatingDt / HOUR_MS)
 end
 
 ---Counts a month of the calendar against the monthly intervals
@@ -238,26 +243,13 @@ function RMS_Greasing.onBaleWrapped(vehicle)
     advance(vehicle, "bales", 1)
 end
 
----Makes the daily points due after a day of work, a day later if left
+---Counts a worked day against the intervals in days, idle days not
 function RMS_Greasing.onDayChanged(vehicle)
-    local tiers = RMS_Greasing.getTiers(vehicle)
-    if tiers == nil then
-        return
-    end
-
     local state = getState(vehicle)
-    for index, tier in ipairs(tiers) do
-        if RMS_Greasing.getUnit(tier) == "day" and state.workedToday then
-            if state.due[index] > 0 then
-                state.late[index] = state.late[index] + 1
-            else
-                state.due[index] = tier.points
-                state.late[index] = 0
-            end
-        end
+    if state.workedToday then
+        state.workedToday = false
+        advance(vehicle, "day", 1)
     end
-    state.workedToday = false
-    refresh(vehicle)
 end
 
 ---Greases the due point of the latest interval
@@ -265,7 +257,7 @@ end
 function RMS_Greasing.greasePoint(vehicle)
     local state, tiers, latest, latestShare = getState(vehicle), RMS_Greasing.getTiers(vehicle) or {}, nil, -1
     for index, tier in ipairs(tiers) do
-        local share = state.late[index] / RMS_Greasing.getInterval(vehicle, tier)
+        local share = state.late[index] / RMS_Greasing.getInterval(tier)
         if state.due[index] > 0 and share > latestShare then
             latest, latestShare = index, share
         end
@@ -288,7 +280,7 @@ function RMS_Greasing.greaseAll(vehicle)
     for index in ipairs(state.due) do
         state.due[index], state.elapsed[index], state.late[index] = 0, 0, 0
     end
-    refresh(vehicle)
+    refresh(vehicle, true)
 end
 
 ---Leaves a share of each interval before its points fall due
@@ -297,16 +289,16 @@ function RMS_Greasing.setIntervalLeft(vehicle, share)
     local state = getState(vehicle)
     for index, tier in ipairs(RMS_Greasing.getTiers(vehicle) or {}) do
         state.due[index], state.late[index] = share == 0 and tier.points or 0, 0
-        state.elapsed[index] = share == 0 and 0 or (1 - share) * RMS_Greasing.getInterval(vehicle, tier)
+        state.elapsed[index] = share == 0 and 0 or (1 - share) * RMS_Greasing.getInterval(tier)
     end
-    refresh(vehicle)
+    refresh(vehicle, true)
 end
 
 ---Returns each interval: points, unit, length, due, run and delay
 function RMS_Greasing.getTierStates(vehicle)
     local state, states = getState(vehicle), {}
     for index, tier in ipairs(RMS_Greasing.getTiers(vehicle) or {}) do
-        table.insert(states, { points = tier.points, unit = RMS_Greasing.getUnit(tier), interval = RMS_Greasing.getInterval(vehicle, tier),
+        table.insert(states, { points = tier.points, unit = RMS_Greasing.getUnit(tier), interval = RMS_Greasing.getInterval(tier),
             due = state.due[index], elapsed = state.elapsed[index], late = state.late[index] })
     end
     return states

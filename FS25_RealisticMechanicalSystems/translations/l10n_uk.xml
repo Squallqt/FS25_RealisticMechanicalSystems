@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Ходова частина"/>
         <text name="rms_spec_system_fuel" text="Паливна система"/>
         <text name="rms_spec_system_pto" text="Вал відбору потужності"/>
+        <text name="rms_spec_system_harvest" text="Збирання"/>
         <text name="rms_spec_system_electric_motor" text="Електродвигун"/>
         <text name="rms_spec_system_traction_battery" text="Тягова батарея"/>
         <text name="rms_spec_state_ready" text="Готово"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Перегрів акумулятора"/>
         <text name="rms_report_wear_lubrication" text="Прострочене змащування"/>
         <text name="rms_report_wear_pto_overload" text="Перевантаження ВВП"/>
+        <text name="rms_report_wear_harvest_overload" text="Перевантаження збирання"/>
+        <text name="rms_report_wear_harvest_flow" text="Великий потік зерна"/>
+        <text name="rms_report_wear_harvest_straw" text="Перевантаження подрібнювача"/>
+        <text name="rms_report_wear_harvest_stones" text="Каміння"/>
+        <text name="rms_report_wear_harvest_rice" text="Збирання рису"/>
+        <text name="rms_report_wear_harvest_wet" text="Волога маса"/>
         <text name="rms_report_component_title" text="Вузол"/>
         <text name="rms_report_system_condition_transmission" text="Трансмісія"/>
         <text name="rms_report_system_condition_power" text="Поточна потужність"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Кількість"/>
         <text name="rms_grease_hud_title" text="Змащування"/>
         <text name="rms_grease_hud_done" text="Змащено"/>
+        <text name="rms_grease_hud_greased" text="Змащено"/>
         <text name="rms_unit_milliliterShort" text="мл"/>
         <text name="rms_air_blower_name" text="Повітродувка"/>
         <text name="rms_air_blower_no_vehicle" text="У зоні доступу немає техніки для очищення"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів навантажувача."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів навантажувача."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів навантажувача."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Огляд виявляє початковий знос пальців та втулок шарнірів щогли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів щогли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів щогли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів щогли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Огляд виявляє початковий знос пальців та втулок шарнірів маніпулятора."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів маніпулятора."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів маніпулятора."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів маніпулятора."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Огляд виявляє початковий знос пальців та втулок шарнірів фрезерної стріли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів фрезерної стріли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів фрезерної стріли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів фрезерної стріли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Огляд виявляє початковий знос пальців та втулок шарнірів рами відвалу."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів рами відвалу."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів рами відвалу."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів рами відвалу."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="На амортизаторі кабіни видно легку вологість."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="З амортизатора кабіни просочується олива."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Амортизатор кабіни має активний витік."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Вимір деталей %s"/>
         <text name="rms_fleet_parts_need_complete" text="Вимір деталей на наступному повному огляді"/>
         <text name="rms_fleet_greasing_done" text="Змащування виконано"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s год роботи"/>
+        <text name="rms_fleet_greasing_period_days" text="Що %d дн. роботи"/>
         <text name="rms_fleet_greasing_period_day" text="Кожен день роботи"/>
         <text name="rms_fleet_greasing_period_month" text="Щомісяця"/>
         <text name="rms_fleet_greasing_period_months" text="Кожні %d міс."/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="Прострочено на %d дн."/>
         <text name="rms_fleet_greasing_to_do" text="Залишилося %d"/>
         <text name="rms_fleet_greasing_points" text="Прес-маслянки"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Найчастіший"/>
         <text name="rms_fleet_greasing_next" text="Наступне змащування"/>
         <text name="rms_fleet_greasing_now" text="Зараз"/>
         <text name="rms_fleet_greasing_in" text="через %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Швидше"/>
         <text name="rms_fleet_wear_normal" text="Звичайний знос"/>
         <text name="rms_fleet_wear_late" text="Прострочка змащування"/>
-        <text name="rms_fleet_wear_dry" text="Знос насухо"/>
         <text name="rms_fleet_wear_repair_greases" text="Змащування під час ремонту"/>
         <text name="rms_fleet_wear_repair" text="Ремонт у майстерні"/>
         <text name="rms_fleet_wear_none" text="Немає"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Система охолодження та повітряний фільтр"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Радіатор або повітряний фільтр засмічений. Дивіться на техніку й утримуйте клавішу %s, щоб дізнатися, який саме. Очистьте його повітродувкою зі стисненим повітрям. Якщо фільтр більше не продувається, майстерня замінює його починаючи з ТО %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Необхідне змащування"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Техніка %s має прес-маслянки, які потрібно змастити.&#10;&#10;У RMS кожна машина має прес-маслянки зі своєї інструкції. Їх потрібно змащувати знову через певну кількість мотогодин, а в деяких машин кожного робочого дня. Запізніле змащування прискорює знос ходової частини.&#10;&#10;Придбайте в магазині шприц для змащування та картриджі. Тримаючи шприц у руках, наведіть його на картридж для заправки, потім на машину: кожне клацання змащує одну прес-маслянку, а утримання кнопки продовжує змащування наступних.&#10;&#10;Щоб побачити решту прес-маслянок, утримуйте клавішу %s, дивлячись на техніку."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Техніка %s має прес-маслянки, які потрібно змастити.&#10;&#10;У RMS кожна машина має прес-маслянки зі своєї інструкції. Їх потрібно змащувати знову за днями роботи машини: кожного робочого дня або раз на кілька робочих днів ті, що інструкція змащує рідше. Запізніле змащування прискорює знос ходової частини.&#10;&#10;Придбайте в магазині шприц для змащування та картриджі. Тримаючи шприц у руках, станьте перед картриджем для заправки, потім наведіть шприц на машину: кожне клацання змащує одну прес-маслянку, а утримання кнопки продовжує змащування наступних.&#10;&#10;Щоб побачити решту прес-маслянок, утримуйте клавішу %s, дивлячись на техніку."/>
         <text name="rms_tutorial_needs_repair_title" text="Виявлено несправність"/>
         <text name="rms_tutorial_needs_repair_message" text="З технікою %s щось не так. Можливо, одна з її деталей вийшла з ладу.&#10;&#10;Завітайте до майстерні: огляд або обслуговування, якщо воно настало, виявить несправність. Не зволікайте: несправність може погіршуватися, а вартість ремонту — зростати.&#10;&#10;Коли несправність виявлено, відремонтуйте її в майстерні."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Потрібен капітальний ремонт"/>

@@ -28,6 +28,27 @@ local function getIsSelectableBreakdown(breakdownId)
     return true
 end
 
+local function getRenewedParts(vehicle, maintenanceType)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local ids = {}
+    for _, filter in ipairs(RMS_Consumables.FILTERS) do
+        if filter.hours ~= nil and RMS_Consumables.getHasFilter(vehicle, filter) and RMS_Consumables.getIsFilterDue(vehicle, filter) then
+            table.insert(ids, filter.breakdownId)
+        end
+    end
+    if maintenanceType ~= RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE then
+        return ids
+    end
+    for _, partId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
+        local wear = spec.partWear[partId]
+        if wear ~= nil and RMS_Breakdowns.BreakdownRegistry[partId].system == RealisticMechanicalSystems.SYSTEMS.HARVEST
+            and RMS_Utils.getIsPartWorn(partId, wear) then
+            table.insert(ids, partId)
+        end
+    end
+    return ids
+end
+
 local AGRICULTURAL_PRICE_FACTORS = { labour = 1, filters = 1, parts = 1 }
 
 local function getSizeScale(vehicle, exponent, factorKey)
@@ -73,7 +94,11 @@ function RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, op
             key == "VISUAL" and "external" or "diagnostic")
     elseif serviceType == states.MAINTENANCE then
         local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.MAINTENANCE_TYPES, optionOne)
-        return getLabourHours(vehicle, C.MAINTENANCE_LABOUR_HOURS[key], "maintenance")
+        local hours = getLabourHours(vehicle, C.MAINTENANCE_LABOUR_HOURS[key], "maintenance")
+        for _, partId in ipairs(getRenewedParts(vehicle, optionOne)) do
+            hours = hours + RealisticMechanicalSystems.getRepairLabourHours(vehicle, partId, RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM)
+        end
+        return hours
     elseif serviceType == states.REPAIR then
         local hours = 0
         for id, breakdown in pairs(vehicle:getActiveBreakdowns() or {}) do
@@ -218,7 +243,7 @@ function RealisticMechanicalSystems.getMajorServiceSystems(vehicle)
     for _, breakdownId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
         local breakdown = RMS_Breakdowns.BreakdownRegistry[breakdownId]
         local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, breakdown.system)
-        if systems[systemKey].enabled and breakdown.isApplicable(vehicle) and not table.hasElement(systemKeys, systemKey) then
+        if breakdown.isApplicable(vehicle) and systems[systemKey].enabled and not table.hasElement(systemKeys, systemKey) then
             table.insert(systemKeys, systemKey)
         end
     end
@@ -1668,15 +1693,19 @@ local function getStagePartsShare(vehicle, breakdownId, stage)
     return total / #share
 end
 
-local function getBreakdownLinePrice(vehicle, breakdownId, stage, repairType, partType, workshopType)
+local function getBreakdownPartsPrice(vehicle, breakdownId, stage, repairType, partType, workshopType)
     local C = RMS_Config.MAINTENANCE
     local workshopKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, workshopType)
-    local partsPrice = getBilledPrice(getStagePartsShare(vehicle, breakdownId, stage) / 100 * C.REPAIR_REFERENCE_VALUE
+    return getBilledPrice(getStagePartsShare(vehicle, breakdownId, stage) / 100 * C.REPAIR_REFERENCE_VALUE
         * getSizeScale(vehicle, C.PARTS_POWER_EXPONENT, "parts")
         * C.PARTS_PRICE_MULTIPLIERS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, partType)]
         * C.REPAIR_PRICE_MULTIPLIERS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, repairType)]
         * RMS_Config.WORKSHOP.PRICE_MULTIPLIERS[workshopKey])
-    return partsPrice + getLabourPrice(RealisticMechanicalSystems.getRepairLabourHours(vehicle, breakdownId, repairType), workshopType)
+end
+
+local function getBreakdownLinePrice(vehicle, breakdownId, stage, repairType, partType, workshopType)
+    return getBreakdownPartsPrice(vehicle, breakdownId, stage, repairType, partType, workshopType)
+        + getLabourPrice(RealisticMechanicalSystems.getRepairLabourHours(vehicle, breakdownId, repairType), workshopType)
 end
 
 ---Returns the price of a service
@@ -1753,6 +1782,10 @@ function RealisticMechanicalSystems:getMaintenancePriceLines(optionOne, optionTw
     end
     table.insert(lines, { kind = "filters", price = billedShare * getBilledPrice(C.MAINTENANCE_FILTER_PRICES[key]
         * getSizeScale(self, C.PARTS_POWER_EXPONENT, "filters") * C.PARTS_PRICE_MULTIPLIERS[partKey]) })
+    for _, partId in ipairs(getRenewedParts(self, optionOne)) do
+        table.insert(lines, { kind = "repair", key = partId, price = billedShare * getBreakdownPartsPrice(self, partId, 1,
+            RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM, optionTwo, workshopType) })
+    end
     return lines
 end
 

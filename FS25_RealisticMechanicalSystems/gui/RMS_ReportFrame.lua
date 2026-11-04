@@ -58,7 +58,13 @@ local WEAR_CAUSE_TEXTS = {
     lubf = "rms_report_wear_lubrication",
     plf = "rms_report_wear_pto_overload",
     pef = "rms_tutorial_pto_engagement_title",
-    prf = "rms_tutorial_pto_raised_title"
+    prf = "rms_tutorial_pto_raised_title",
+    hef = "rms_report_wear_harvest_overload",
+    hgf = "rms_report_wear_harvest_flow",
+    hsf = "rms_report_wear_harvest_straw",
+    hstf = "rms_report_wear_harvest_stones",
+    hrf = "rms_report_wear_harvest_rice",
+    hwf = "rms_report_wear_harvest_wet"
 }
 RMS_ReportFrame.WEAR_CAUSE_TEXTS = WEAR_CAUSE_TEXTS
 RMS_ReportFrame.SERVICE_NOTICE_HOURS = 100

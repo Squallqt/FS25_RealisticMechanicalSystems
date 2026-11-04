@@ -130,6 +130,20 @@ function RMS_Drivetrain.getIsMachineCategory(vehicle)
     return RMS_Drivetrain.getIsInCategories(vehicle, getConfig().MACHINE_CATEGORIES)
 end
 
+---Returns the harvest organ set of a self-propelled harvester
+function RMS_Drivetrain.getHarvestKind(vehicle)
+    if vehicle == nil or vehicle.spec_combine == nil or vehicle.spec_motorized == nil then
+        return nil
+    end
+    for _, categoryName in ipairs(getStoreCategoryNames(vehicle) or {}) do
+        local kind = RMS_Config.CORE.HARVEST_FACTOR_DATA.KINDS[string.upper(tostring(categoryName))]
+        if kind ~= nil then
+            return kind
+        end
+    end
+    return nil
+end
+
 ---Tells whether a wheel steers, on its rotation range or its rotation speed
 function RMS_Drivetrain.getIsWheelSteerable(wheel)
     local physics = wheel ~= nil and wheel.physics or nil

@@ -40,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Matige slijtage van de pennen en bussen van de voorladergewrichten. De speling in de armgewrichten wordt merkbaar."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Ernstige slijtage van de pennen en bussen van de voorladergewrichten. De arm heeft grote speling."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kritieke slijtage van de pennen en bussen van de voorladergewrichten. De speling in de arm is zeer groot."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Lichte slijtage van de pennen en bussen van de mast. Er ontstaat lichte speling in de mastgewrichten."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Matige slijtage van de pennen en bussen van de mast. De speling in de mastgewrichten wordt merkbaar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Ernstige slijtage van de pennen en bussen van de mast. De mast heeft grote speling."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Kritieke slijtage van de pennen en bussen van de mast. De speling in de mast is zeer groot."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Lichte slijtage van de pennen en bussen van de giek. Er ontstaat lichte speling in de giekgewrichten."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Matige slijtage van de pennen en bussen van de giek. De speling in de giekgewrichten wordt merkbaar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Ernstige slijtage van de pennen en bussen van de giek. De giek heeft grote speling."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Kritieke slijtage van de pennen en bussen van de giek. De speling in de giek is zeer groot."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Lichte slijtage van de pennen en bussen van de freesarm. Er ontstaat lichte speling in de armgewrichten."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Matige slijtage van de pennen en bussen van de freesarm. De speling in de armgewrichten wordt merkbaar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Ernstige slijtage van de pennen en bussen van de freesarm. De arm heeft grote speling."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Kritieke slijtage van de pennen en bussen van de freesarm. De speling in de arm is zeer groot."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Lichte slijtage van de pennen en bussen van de bladarm. Er ontstaat lichte speling in de armgewrichten."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Matige slijtage van de pennen en bussen van de bladarm. De speling in de armgewrichten wordt merkbaar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Ernstige slijtage van de pennen en bussen van de bladarm. De arm heeft grote speling."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Kritieke slijtage van de pennen en bussen van de bladarm. De speling in de arm is zeer groot."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Lichte lekkage van een cabineschokdemper. De cabine wordt iets minder gedempt."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Matige lekkage van een cabineschokdemper. De cabine stuitert over oneffenheden."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Ernstige lekkage van een cabineschokdemper. De cabine schommelt bij elke schok."/>
@@ -118,6 +134,10 @@
         <text name="rms_breakdowns_part_synchronizer" text="Synchronisator"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Stuurkogels en stuurstangen"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Pennen en bussen van de voorladergewrichten"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Pennen en bussen van de mast"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Pennen en bussen van de giek"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Pennen en bussen van de freesarm"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Pennen en bussen van de bladarm"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Fuseepennen"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Stuurorbitrol"/>
         <text name="rms_breakdowns_part_steering_box" text="Stuurhuis"/>
@@ -154,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Gasfilter"/>
         <text name="rms_breakdowns_part_gas_lines" text="Gasleidingen"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Gasinjectoren"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Bougies"/>
         <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-pomp"/>
         <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-doseerinjector"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-filter"/>
@@ -561,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Matige storing van de gasinjectoren. De motor hapert, verliest vermogen, verbruikt meer en kan afslaan."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Ernstige storing van de gasinjectoren. Een injector doseert zeer slecht: groot vermogensverlies, hoog verbruik en moeilijk starten."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kritieke uitval van de gasinjectoren. Door de dosering kan de motor niet meer draaien: hij stopt."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="De bougies zijn aan vervanging toe: onder zware belasting ontstaan ontstekingsfouten, de motor loopt minder rond en verbruikt iets meer. Het onderhoud vervangt ze."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="De bougies zijn versleten: de ontstekingsfouten worden frequent, de motor verliest vermogen, verbruikt meer en kan afslaan. Het motorlampje gaat aan."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="De bougies zijn zwaar versleten: groot vermogensverlies, hoog verbruik en moeilijk starten."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="De bougies zijn onbruikbaar: voortdurende ontstekingsfouten, de motor kan afslaan en niet meer starten."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Storing van de AdBlue-pomp. De dosering krijgt geen toevoer meer: het motorlampje gaat branden en daarna beperkt de regeleenheid het vermogen tot de reparatie."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Storing van de AdBlue-doseerinjector. Door kristallen verstopt, vernevelt hij niet meer: het motorlampje gaat branden en daarna daalt het vermogen tot de reparatie."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Het AdBlue-filter is aan vervanging toe en begint te verstoppen. Het meest uitgebreide onderhoud vervangt het."/>
@@ -630,6 +655,10 @@
         <text name="rms_breakdowns_part_lift_position_sensor" text="Hefpositiesensor"/>
         <text name="rms_breakdowns_part_header_height_sensor" text="Snijhoogtesensor"/>
         <text name="rms_breakdowns_part_loader_control" text="Laderbediening"/>
+        <text name="rms_breakdowns_part_mast_control" text="Mastbediening"/>
+        <text name="rms_breakdowns_part_boom_control" text="Giekbediening"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Freesarmbediening"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Bladarmbediening"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulische snelkoppelingen"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lichte storing van de koppeling. Deze komt niet volledig vrij. Sommige versnellingen schakelen moeilijk."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Matige storing van de koppeling. Het mechanisme laat de plaat slecht los. Versnellingen worden vaker geweigerd."/>
@@ -709,6 +738,22 @@
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Matige storing van de laderbediening. Arm en bak bewegen nog maar op halve snelheid."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Ernstige storing van de laderbediening. Arm en bak bewegen nauwelijks."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kritieke storing van de laderbediening. Arm en bak reageren niet meer."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Lichte storing van de mastbediening. Mast en vorken reageren langzamer."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Matige storing van de mastbediening. Mast en vorken bewegen nog maar op halve snelheid."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Ernstige storing van de mastbediening. Mast en vorken bewegen nauwelijks."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Kritieke storing van de mastbediening. Mast en vorken reageren niet meer."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Lichte storing van de giekbediening. Giek en werktuig reageren langzamer."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Matige storing van de giekbediening. Giek en werktuig bewegen nog maar op halve snelheid."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Ernstige storing van de giekbediening. Giek en werktuig bewegen nauwelijks."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Kritieke storing van de giekbediening. Giek en werktuig reageren niet meer."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Lichte storing van de freesarmbediening. De freesarm reageert langzamer."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Matige storing van de freesarmbediening. De freesarm beweegt nog maar op halve snelheid."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Ernstige storing van de freesarmbediening. De freesarm beweegt nauwelijks."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Kritieke storing van de freesarmbediening. De freesarm reageert niet meer."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Lichte storing van de bladarmbediening. Arm en blad reageren langzamer."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Matige storing van de bladarmbediening. Arm en blad bewegen nog maar op halve snelheid."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Ernstige storing van de bladarmbediening. Arm en blad bewegen nauwelijks."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Kritieke storing van de bladarmbediening. Arm en blad reageren niet meer."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Lichte storing van de hydraulische cilinder. De stangafdichting laat wat olie door. Er verschijnt lichte vochtigheid rond de stang."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Matige storing van de hydraulische cilinder. De stangafdichting sluit niet meer goed af. De cilinder zweet en het oliepeil daalt."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Ernstige storing van de hydraulische cilinder. De stangafdichting lekt actief. De cilinder verliest duidelijk olie."/>
@@ -737,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Kritieke slijtage van de aslagers. Een lager is bezweken, het kegelwielstel is beschadigd en de as brengt geen aandrijfkracht meer over."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Storing van de differentieelsperbediening. De sper schakelt niet meer in. Het differentieel blijft vrij."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Storing van de differentieelsperbediening. De sper blijft ingeschakeld. De machine verzet zich tegen sturen in bochten."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Aandrijfriemen en variators"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Aandrijflagers en tandwielkasten"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Ketting van het invoerkanaal"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Invoerversneller"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Dorslijsten"/>
+        <text name="rms_breakdowns_part_concave" text="Dorskorf"/>
+        <text name="rms_breakdowns_part_separation" text="Scheidingstanden en schudders"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Reinigingszeven"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Graanvijzels en elevatoren"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Strohakselaar en -verspreider"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Invoerrollen"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Metaal- en steendetector"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Hakseltrommel"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Hakselmessen"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Tegenmes"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Korrelkneuzer"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Versneller en blazer"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Uitwerppijp"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Ontbladeraar en koppers"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Rooischaren"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Reinigingsturbines"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Bietenelevator"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Bunkerbodem en losband"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Zeefbanden"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Loofafscheider en rollen"/>
+        <text name="rms_breakdowns_part_picking_units" text="Plukeenheden"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Spindelbevochtiger"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Ventilator en kanalen"/>
+        <text name="rms_breakdowns_part_module_builder" text="Modulevormkamer"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Basismessen"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Invoerrollen"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Hakseltrommels"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Primaire afzuiger"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Rietelevator"/>
+        <text name="rms_breakdowns_part_shaker" text="Schudsysteem"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Opvangschubben"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Bakjestransporteurs"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Reinigingsafzuigers"/>
+        <text name="rms_breakdowns_part_destemmer" text="Ontsteler"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Plukkop"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Reinigingsventilator en zeven"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevatoren en transporteurs"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Oogsten onmogelijk: een oogstonderdeel is kapot"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Verstopping: het oogsten is gestopt"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Hakselaar kapot: het stro valt in een zwad"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Hakselaar kapot: dit gewas kan niet meer worden geoogst"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Beginnende slijtage van de aandrijfriemen. Ze slippen een beetje onder belasting."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Matige slijtage van de aandrijfriemen. Een onderdeel loopt terug onder belasting en het toerentalalarm stopt soms het oogsten."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Ernstige slijtage van de aandrijfriemen. De doorvoer daalt en het oogsten stopt steeds weer."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Kritieke uitval van de aandrijfriemen. Een riem is gebroken: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Beginnende slijtage van de aandrijflagers. Tijdens het oogsten klinkt een licht gebrom."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Matige slijtage van de aandrijflagers. Het gebrom is duidelijk hoorbaar en ze worden warm."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Ernstige slijtage van de aandrijflagers. Het gebrom wordt luider en de assen krijgen speling."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritieke uitval van de aandrijflagers. Een lager is vastgelopen: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Beginnende slijtage van de ketting van het invoerkanaal. Hij rekt uit en de invoer wordt onregelmatig."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Matige slijtage van de ketting van het invoerkanaal. Bij de ingang van het invoerkanaal ontstaan verstoppingen."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Ernstige slijtage van de ketting van het invoerkanaal. Hij springt over de tandwielen en de verstoppingen blijven komen."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Kritieke uitval van de ketting van het invoerkanaal. De ketting is gebroken: er komt niets meer de machine in."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Beginnende slijtage van de invoerversneller. Het gewas komt minder gelijkmatig bij de trommel."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Matige slijtage van de invoerversneller. De doorvoer stagneert en er ontstaan verstoppingen."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Ernstige slijtage van de invoerversneller. De doorvoer daalt en de verstoppingen blijven komen."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Kritieke uitval van de invoerversneller. Een schoep is afgebroken: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Beginnende slijtage van de dorslijsten. Er blijft graan in de aren en dat gaat terug het veld op."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Matige slijtage van de dorslijsten. De trommel trilt en de graanverliezen nemen toe."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Ernstige slijtage van de dorslijsten. Enkele lijsten zijn gebroken: grote verliezen en verstoppingen."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Kritieke uitval van de dorslijsten. Een lijst is afgebroken: dorsen is onmogelijk."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Beginnende slijtage van de dorskorf. Het graan wordt slechter gedorst en een deel gaat terug het veld op."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Matige slijtage van de dorskorf. De graanverliezen nemen toe."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Ernstige slijtage van de dorskorf. Het graan breekt, de verliezen zijn groot en er ontstaan verstoppingen."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Kritieke uitval van de dorskorf. Een lijst is afgebroken: dorsen is onmogelijk."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Beginnende slijtage van de scheiding. Er blijft graan in het stro en dat gaat terug het veld op."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Matige slijtage van de scheiding. De graanverliezen in het stro nemen toe."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Ernstige slijtage van de scheiding. Grote verliezen en strostoppingen."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Kritieke uitval van de scheiding. Het stro komt er niet meer door: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Beginnende slijtage van de reinigingszeven. Er komt kaf in de graantank en een beetje graan verdwijnt met het afval."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Matige slijtage van de reinigingszeven. De zeefverliezen nemen toe."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Ernstige slijtage van de reinigingszeven. Een zeef is gescheurd: grote verliezen en verstoppingen."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Kritieke uitval van de reinigingszeven. De reiniging werkt niet meer: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Beginnende slijtage van de graanvijzels en elevatoren. De stroom naar de graantank neemt af."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Matige slijtage van de graanvijzels en elevatoren. Een deel van het graan breekt of gaat onderweg verloren."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Ernstige slijtage van de graanvijzels en elevatoren. De elevator raakt regelmatig verstopt."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Kritieke uitval van de graanvijzels en elevatoren. De graantank vult niet meer: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Beginnende slijtage van de strohakselaar. Het stro wordt minder kort gehakseld en de hakselaar vraagt iets meer vermogen."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Matige slijtage van de strohakselaar. De hakselaar trilt en vraagt meer vermogen."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Ernstige slijtage van de strohakselaar. De rotor is uit balans en vraagt veel vermogen."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritieke uitval van de strohakselaar. Een mes is gebroken: de hakselaar staat stil en het stro valt in een zwad."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Beginnende slijtage van de invoerrollen. Ze grijpen het gewas slechter: de invoer wordt onregelmatig."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Matige slijtage van de invoerrollen. De haksellengte wordt onregelmatig en er ontstaan verstoppingen."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Ernstige slijtage van de invoerrollen. De doorvoer daalt en de verstoppingen blijven komen."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Kritieke uitval van de invoerrollen. Er komt niets meer de machine in: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Beginnende storing van de metaal- en steendetector. Valse alarmen stoppen soms de invoer."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Matige storing van de metaal- en steendetector. De onnodige stops blijven komen."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Uitval van de metaal- en steendetector. Hij detecteert niets meer: stenen bereiken de messen en slijten ze veel sneller."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Beginnende slijtage van de hakseltrommel. Hij trilt licht en vraagt iets meer vermogen."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Matige slijtage van de hakseltrommel. De rotor is uit balans en vraagt meer vermogen."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Ernstige slijtage van de hakseltrommel. Een meshouder is gescheurd: meer vermogen nodig en verstoppingen."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Kritieke uitval van de hakseltrommel. De rotor is beschadigd: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Beginnende slijtage van de messen. De snede is minder schoon en vraagt iets meer vermogen."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Matige slijtage van de messen. Ze vragen meer vermogen en meer brandstof."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Ernstige slijtage van de messen. De snede is onregelmatig, het gevraagde vermogen stijgt en er ontstaan verstoppingen."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Kritieke uitval van de messen. Een mes is gebroken: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Beginnende slijtage van het tegenmes. De spleet wordt groter: het snijden vraagt iets meer vermogen."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Matige slijtage van het tegenmes. De snede scheurt en vraagt meer vermogen."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Ernstige slijtage van het tegenmes. De snijkant is versleten: meer vermogen nodig en verstoppingen."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Kritieke uitval van het tegenmes. Het is onbruikbaar: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Beginnende slijtage van de korrelkneuzer. Korrels worden slechter gekneusd en de kneuzer vraagt iets meer vermogen."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Matige slijtage van de korrelkneuzer. Er komen hele korrels door en het gevraagde vermogen stijgt."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Ernstige slijtage van de korrelkneuzer. Een rol is ingesleten: meer vermogen nodig en verstoppingen."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Kritieke uitval van de korrelkneuzer. Een rol zit vast: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Beginnende slijtage van de versneller. De worp is korter en de doorvoer daalt iets."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Matige slijtage van de versneller. De uitwerppijp raakt soms verstopt."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Ernstige slijtage van de versneller. Een schoep is afgebroken: vaak verstoppingen en voer gaat verloren."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Kritieke uitval van de versneller. Het voer wordt niet meer uitgeworpen: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Beginnende slijtage van de uitwerppijp. De worp wijkt af en de doorvoer daalt iets."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Matige slijtage van de uitwerppijp. Het voer hoopt zich op en verstopt soms de pijp."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Ernstige slijtage van de uitwerppijp. De slijtvoering is doorgesleten: voer gaat verloren en vaak verstoppingen."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Kritieke uitval van de uitwerppijp. Hij is helemaal doorgesleten: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Beginnende slijtage. Een deel van het gewas blijft achter."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Matige slijtage. Trillingen en grotere verliezen."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Ernstige slijtage. Enkele elementen zijn gebroken: grote verliezen en verstoppingen."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Kritieke uitval. Het onderdeel is kapot: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Beginnende slijtage van de rooischaren. Sommige wortels breken of blijven in de grond."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Matige slijtage van de rooischaren. Ze rooien slecht: meer verliezen en meer trekkracht."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Ernstige slijtage van de rooischaren. Ze zijn tot het eind versleten: grote verliezen en de machine moet zwoegen."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Kritieke uitval van de rooischaren. Een schaar is gebroken: rooien is onmogelijk."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Beginnende slijtage. De reiniging werkt minder goed: grond of vuil in het gewas, een beetje gewas gaat verloren."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Matige slijtage. De reinigingsverliezen nemen toe."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Ernstige slijtage. Gebroken roosters of schoepen: grote verliezen en verstoppingen."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Kritieke uitval. De reiniging is gestopt: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Beginnende slijtage. De ketting of band rekt uit: de invoer wordt onregelmatig."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Matige slijtage. Versleten staven of schoepen: lagere doorvoer en verstoppingen."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Ernstige slijtage. De ketting springt over: de verstoppingen blijven komen."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Kritieke uitval. De ketting of band is gebroken: er komt niets meer door."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Beginnende slijtage. De overdracht van het gewas verloopt trager."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Matige slijtage. De overdracht wordt onregelmatig en een deel van het gewas gaat verloren."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Ernstige slijtage. De overdracht loopt regelmatig vast."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Kritieke uitval. De overdracht is gestopt: oogsten is onmogelijk."/>
     </texts>
 </l10n>

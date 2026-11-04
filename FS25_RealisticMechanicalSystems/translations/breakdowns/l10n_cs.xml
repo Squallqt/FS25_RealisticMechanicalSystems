@@ -40,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="装载机关节销轴和衬套中度磨损。臂架关节处的间隙变得明显。"/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="装载机关节销轴和衬套严重磨损。臂架存在很大间隙。"/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="装载机关节销轴和衬套极重度磨损。臂架间隙极大。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="门架销轴和衬套轻微磨损。门架关节处出现少量间隙。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="门架销轴和衬套中度磨损。门架关节处的间隙变得明显。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="门架销轴和衬套严重磨损。门架存在很大间隙。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="门架销轴和衬套极重度磨损。门架间隙极大。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="吊臂销轴和衬套轻微磨损。吊臂关节处出现少量间隙。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="吊臂销轴和衬套中度磨损。吊臂关节处的间隙变得明显。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="吊臂销轴和衬套严重磨损。吊臂存在很大间隙。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="吊臂销轴和衬套极重度磨损。吊臂间隙极大。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="取料臂销轴和衬套轻微磨损。取料臂关节处出现少量间隙。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="取料臂销轴和衬套中度磨损。取料臂关节处的间隙变得明显。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="取料臂销轴和衬套严重磨损。取料臂存在很大间隙。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="取料臂销轴和衬套极重度磨损。取料臂间隙极大。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="铲刀臂销轴和衬套轻微磨损。铲刀臂关节处出现少量间隙。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="铲刀臂销轴和衬套中度磨损。铲刀臂关节处的间隙变得明显。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="铲刀臂销轴和衬套严重磨损。铲刀臂存在很大间隙。"/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="铲刀臂销轴和衬套极重度磨损。铲刀臂间隙极大。"/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="驾驶室减震器轻微外流。驾驶室减震效果略有降低。"/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="驾驶室减震器中度外流。驾驶室在不平路面上弹跳。"/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="驾驶室减震器严重外流。驾驶室随每次冲击晃动。"/>
@@ -118,6 +134,10 @@
         <text name="rms_breakdowns_part_synchronizer" text="同步器"/>
         <text name="rms_breakdowns_part_steering_linkage" text="转向球头和拉杆"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="装载机关节销轴和衬套"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="门架销轴和衬套"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="吊臂销轴和衬套"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="取料臂销轴和衬套"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="铲刀臂销轴和衬套"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="转向节主销"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="全液压转向器"/>
         <text name="rms_breakdowns_part_steering_box" text="转向器"/>
@@ -154,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="燃气滤清器"/>
         <text name="rms_breakdowns_part_gas_lines" text="燃气管路"/>
         <text name="rms_breakdowns_part_gas_injectors" text="燃气喷射器"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="火花塞"/>
         <text name="rms_breakdowns_part_adblue_pump" text="车用尿素泵"/>
         <text name="rms_breakdowns_part_adblue_doser" text="车用尿素计量喷射器"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlue滤清器"/>
@@ -561,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="燃气喷射器发生中度故障。发动机出现反应延时，功率下降，消耗增加，并可能停止运转。"/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="燃气喷射器发生严重故障。一个喷射器计量严重失准：功率大幅下降，消耗过高且启动困难。"/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="燃气喷射器发生极重度失效。喷射量已无法维持发动机运转：发动机停止运转。"/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="火花塞已到更换期限：高负荷时出现失火，发动机运转不够平顺，消耗略有增加。保养会更换火花塞。"/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="火花塞已磨损：失火变得频繁，功率下降，消耗增加，并可能停止运转。发动机指示灯亮起。"/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="火花塞严重磨损：功率大幅下降，消耗过高且启动困难。"/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="火花塞已无法使用：持续失火，发动机可能停止运转且无法启动。"/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="车用尿素泵发生故障。不再向计量系统供液：发动机故障灯亮起，随后控制单元限制功率，直到修复。"/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="车用尿素计量喷射器发生故障。被尿素固体沉积堵塞，无法继续喷射：发动机故障灯亮起，之后功率下降，直到修复。"/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlue滤清器已到更换期限并开始堵塞。最全面的保养会更换滤清器。"/>
@@ -630,6 +655,10 @@
         <text name="rms_breakdowns_part_lift_position_sensor" text="提升位置传感器"/>
         <text name="rms_breakdowns_part_header_height_sensor" text="割台高度传感器"/>
         <text name="rms_breakdowns_part_loader_control" text="装载机控制装置"/>
+        <text name="rms_breakdowns_part_mast_control" text="门架控制装置"/>
+        <text name="rms_breakdowns_part_boom_control" text="吊臂控制装置"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="取料臂控制装置"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="铲刀臂控制装置"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="液压快接头"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="离合器发生轻微故障。分离不彻底，部分挡位难以挂入。"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="离合器发生中度故障。机构不能充分释放离合器片，挡位被拒绝的次数增加。"/>
@@ -709,6 +738,22 @@
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="装载机控制装置发生中度故障。动臂和铲斗只能以一半速度运动。"/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="装载机控制装置发生严重故障。动臂和铲斗几乎无法运动。"/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="装载机控制装置发生极重度失效。动臂和铲斗不再响应。"/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="门架控制装置发生轻微故障。门架和货叉响应变慢。"/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="门架控制装置发生中度故障。门架和货叉只能以一半速度运动。"/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="门架控制装置发生严重故障。门架和货叉几乎无法运动。"/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="门架控制装置发生极重度失效。门架和货叉不再响应。"/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="吊臂控制装置发生轻微故障。吊臂及其机具响应变慢。"/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="吊臂控制装置发生中度故障。吊臂及其机具只能以一半速度运动。"/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="吊臂控制装置发生严重故障。吊臂及其机具几乎无法运动。"/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="吊臂控制装置发生极重度失效。吊臂及其机具不再响应。"/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="取料臂控制装置发生轻微故障。取料臂响应变慢。"/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="取料臂控制装置发生中度故障。取料臂只能以一半速度运动。"/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="取料臂控制装置发生严重故障。取料臂几乎无法运动。"/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="取料臂控制装置发生极重度失效。取料臂不再响应。"/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="铲刀臂控制装置发生轻微故障。铲刀臂和铲刀响应变慢。"/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="铲刀臂控制装置发生中度故障。铲刀臂和铲刀只能以一半速度运动。"/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="铲刀臂控制装置发生严重故障。铲刀臂和铲刀几乎无法运动。"/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="铲刀臂控制装置发生极重度失效。铲刀臂和铲刀不再响应。"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="液压缸发生轻微故障。活塞杆密封件流出少量油，杆周围略微湿润。"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="液压缸发生中度故障。活塞杆密封不良，油缸缓慢流出油液，油位下降。"/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="液压缸发生严重故障。活塞杆密封件持续流出油液，油缸失油明显。"/>
@@ -737,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="车桥轴承极重度磨损。一个轴承已损坏，主减速齿轮组受损，车桥不再传送驱动力。"/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="差速锁控制装置失效。差速锁无法接合，差速器保持自由状态。"/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="差速锁控制装置失效。差速锁无法解除，机器转弯时转向受阻。"/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="传动带和无级变速器"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="传动轴承和齿轮箱"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="过桥输送链"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="喂入加速器"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="纹杆"/>
+        <text name="rms_breakdowns_part_concave" text="脱粒栅格"/>
+        <text name="rms_breakdowns_part_separation" text="分离齿和逐稿器"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="清选筛"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="谷物螺旋输送器和升运器"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="秸秆切碎器和抛撒器"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="喂入辊"/>
+        <text name="rms_breakdowns_part_metal_detector" text="金属和石块探测器"/>
+        <text name="rms_breakdowns_part_cutterhead" text="切碎滚筒"/>
+        <text name="rms_breakdowns_part_forage_knives" text="切碎滚筒动刀"/>
+        <text name="rms_breakdowns_part_shear_bar" text="定刀"/>
+        <text name="rms_breakdowns_part_crop_processor" text="籽粒破碎器"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="加速器和抛送风机"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="抛送筒"/>
+        <text name="rms_breakdowns_part_beet_topper" text="切顶器和削顶器"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="挖掘铲"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="清选涡轮"/>
+        <text name="rms_breakdowns_part_root_elevator" text="甜菜升运器"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="活动底板和卸料带"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="筛分带"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="茎叶分离器和辊"/>
+        <text name="rms_breakdowns_part_picking_units" text="采摘单元"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="主轴润湿器"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="风机和管道"/>
+        <text name="rms_breakdowns_part_module_builder" text="模块成型室"/>
+        <text name="rms_breakdowns_part_base_cutters" text="根部切割刀"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="喂入辊"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="切段滚筒"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="一级排杂风机"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="甘蔗升运器"/>
+        <text name="rms_breakdowns_part_shaker" text="震动系统"/>
+        <text name="rms_breakdowns_part_catching_scales" text="接果板"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="斗式输送器"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="清选吸风机"/>
+        <text name="rms_breakdowns_part_destemmer" text="除梗机"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="采摘头"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="清选风机和筛子"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="升运器和输送器"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="无法收获：一个收获部件已损坏"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="堵塞：收获已停止"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="切碎器损坏：秸秆落成草条"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="切碎器损坏：无法再收获这种作物"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="部件传动带开始磨损。负载时略有打滑。"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="部件传动带中度磨损。某个部件负载时转速下降，转速报警有时会停止收获。"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="部件传动带严重磨损。通过量下降，停机反复发生。"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="部件传动带发生极重度失效。一根传动带断裂：无法收获。"/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="部件传动轴承开始磨损。收获时出现轻微轰鸣。"/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="部件传动轴承中度磨损。轰鸣清晰可闻，轴承发热。"/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="部件传动轴承严重磨损。轰鸣加剧，轴出现间隙。"/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="部件传动轴承发生极重度失效。一个轴承卡死：无法收获。"/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="过桥输送链开始磨损。链条伸长，喂入变得不均匀。"/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="过桥输送链中度磨损。过桥入口处出现堵塞。"/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="过桥输送链严重磨损。链条在链轮上跳齿，堵塞反复发生。"/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="过桥输送链发生极重度失效。链条断裂：机器无法再喂入任何作物。"/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="喂入加速器开始磨损。作物进入滚筒不够均匀。"/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="喂入加速器中度磨损。通过量不再增加，出现堵塞。"/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="喂入加速器严重磨损。通过量下降，堵塞反复发生。"/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="喂入加速器发生极重度失效。一片叶片脱落：无法收获。"/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="纹杆开始磨损。部分谷粒未脱下，回到田里。"/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="纹杆中度磨损。滚筒震动，谷物损失增加。"/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="纹杆严重磨损。部分纹杆断裂：损失严重并出现堵塞。"/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="纹杆发生极重度失效。一根纹杆脱落：无法脱粒。"/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="脱粒栅格开始磨损。谷物脱粒变差，部分回到田里。"/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="脱粒栅格中度磨损。谷物损失增加。"/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="脱粒栅格严重磨损。谷粒破碎，损失严重并出现堵塞。"/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="脱粒栅格发生极重度失效。一根栅条脱落：无法脱粒。"/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="分离装置开始磨损。谷粒留在秸秆中，回到田里。"/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="分离装置中度磨损。秸秆中的谷物损失增加。"/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="分离装置严重磨损。损失严重，秸秆堵塞。"/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="分离装置发生极重度失效。秸秆无法通过：无法收获。"/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="清选筛开始磨损。谷壳进入粮仓，少量谷物随杂余排出。"/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="清选筛中度磨损。筛面损失增加。"/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="清选筛严重磨损。一块筛子开裂：损失严重并出现堵塞。"/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="清选筛发生极重度失效。清选不再工作：无法收获。"/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="谷物螺旋输送器和升运器开始磨损。进入粮仓的流量下降。"/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="谷物螺旋输送器和升运器中度磨损。部分谷粒破碎或在途中损失。"/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="谷物螺旋输送器和升运器严重磨损。升运器经常堵塞。"/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="谷物螺旋输送器和升运器发生极重度失效。粮仓不再装粮：无法收获。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="秸秆切碎器开始磨损。秸秆切得不够短，切碎器多消耗一些功率。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="秸秆切碎器中度磨损。切碎器震动，消耗更多功率。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="秸秆切碎器严重磨损。转子失衡，消耗大量功率。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="秸秆切碎器发生极重度失效。一把刀片断裂：切碎器停转，秸秆落成草条。"/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="喂入辊开始磨损。夹持作物变差：喂入变得不均匀。"/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="喂入辊中度磨损。切段长度不均匀，出现堵塞。"/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="喂入辊严重磨损。通过量下降，堵塞反复发生。"/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="喂入辊发生极重度失效。机器无法再喂入任何作物：无法收获。"/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="金属和石块探测器出现初期故障。误报有时会停止喂入。"/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="金属和石块探测器出现中度故障。不必要的停机反复发生。"/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="金属和石块探测器失效。它不再探测任何东西：石块到达动刀，使其磨损快得多。"/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="切碎滚筒开始磨损。轻微震动，多消耗一些功率。"/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="切碎滚筒中度磨损。转子失衡，消耗更多功率。"/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="切碎滚筒严重磨损。一个刀座开裂：功率消耗增加并出现堵塞。"/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="切碎滚筒发生极重度失效。转子损坏：无法收获。"/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="动刀开始磨损。切口不够整齐，多消耗一些功率。"/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="动刀中度磨损。消耗更多功率和更多燃油。"/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="动刀严重磨损。切割不均匀，功率消耗上升并出现堵塞。"/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="动刀发生极重度失效。一把动刀断裂：无法收获。"/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="定刀开始磨损。间隙变大：切割多消耗一些功率。"/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="定刀中度磨损。切割撕扯作物，消耗更多功率。"/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="定刀严重磨损。刀口已磨损：功率消耗增加并出现堵塞。"/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="定刀发生极重度失效。已无法使用：无法收获。"/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="籽粒破碎器开始磨损。籽粒破碎变差，破碎器多消耗一些功率。"/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="籽粒破碎器中度磨损。整粒通过，功率消耗上升。"/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="籽粒破碎器严重磨损。一根辊出现划痕：功率消耗增加并出现堵塞。"/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="籽粒破碎器发生极重度失效。一根辊卡死：无法收获。"/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="加速器开始磨损。抛送距离变短，通过量略有下降。"/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="加速器中度磨损。抛送筒有时堵塞。"/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="加速器严重磨损。一片叶片脱落：频繁堵塞，饲料损失。"/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="加速器发生极重度失效。饲料不再抛出：无法收获。"/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="抛送筒开始磨损。抛送方向偏移，通过量略有下降。"/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="抛送筒中度磨损。饲料堆积，有时堵塞抛送筒。"/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="抛送筒严重磨损。衬板磨穿：饲料损失，频繁堵塞。"/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="抛送筒发生极重度失效。筒体完全磨穿：无法收获。"/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="开始磨损。部分作物留在田里。"/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="中度磨损。出现震动，损失增加。"/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="严重磨损。部分元件断裂：损失严重并出现堵塞。"/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="极重度失效。该部件已损坏：无法收获。"/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="挖掘铲开始磨损。部分根茎折断或留在土中。"/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="挖掘铲中度磨损。挖掘效果差：损失增加，阻力增大。"/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="挖掘铲严重磨损。已磨损到底：损失严重，机器吃力。"/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="挖掘铲发生极重度失效。一把挖掘铲断裂：无法挖掘。"/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="开始磨损。清选效果变差：作物中夹带泥土或杂物，少量作物损失。"/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="中度磨损。清选损失增加。"/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="严重磨损。栅格或叶片断裂：损失严重并出现堵塞。"/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="极重度失效。清选已停止：无法收获。"/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="开始磨损。链条或输送带伸长：喂入变得不均匀。"/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="中度磨损。杆条或刮板磨损：通过量下降并出现堵塞。"/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="严重磨损。链条跳齿：堵塞反复发生。"/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="极重度失效。链条或输送带断裂：作物无法再通过。"/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="开始磨损。作物输送变慢。"/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="中度磨损。输送变得不均匀，部分作物损失。"/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="严重磨损。输送经常卡住。"/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="极重度失效。输送已停止：无法收获。"/>
     </texts>
 </l10n>

@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Alusta"/>
         <text name="rms_spec_system_fuel" text="Polttoainejärjestelmä"/>
         <text name="rms_spec_system_pto" text="Voimanotto"/>
+        <text name="rms_spec_system_harvest" text="Korjuu"/>
         <text name="rms_spec_system_electric_motor" text="Sähkömoottori"/>
         <text name="rms_spec_system_traction_battery" text="Ajoakku"/>
         <text name="rms_spec_state_ready" text="Valmis"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Akku ylikuumenee"/>
         <text name="rms_report_wear_lubrication" text="Voitelu myöhässä"/>
         <text name="rms_report_wear_pto_overload" text="Voimanoton ylikuormitus"/>
+        <text name="rms_report_wear_harvest_overload" text="Korjuun ylikuorma"/>
+        <text name="rms_report_wear_harvest_flow" text="Suuri viljavirta"/>
+        <text name="rms_report_wear_harvest_straw" text="Silppurin ylikuorma"/>
+        <text name="rms_report_wear_harvest_stones" text="Kivet"/>
+        <text name="rms_report_wear_harvest_rice" text="Riisin korjuu"/>
+        <text name="rms_report_wear_harvest_wet" text="Kostea kasvusto"/>
         <text name="rms_report_component_title" text="Komponentti"/>
         <text name="rms_report_system_condition_transmission" text="Vaihteisto"/>
         <text name="rms_report_system_condition_power" text="Nykyinen teho"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Määrä"/>
         <text name="rms_grease_hud_title" text="Rasvaus"/>
         <text name="rms_grease_hud_done" text="Ajan tasalla"/>
+        <text name="rms_grease_hud_greased" text="Rasvattu"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Paineilmapuhallin"/>
         <text name="rms_air_blower_no_vehicle" text="Ei ajoneuvoa puhdistusalueella"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Tarkastus osoittaa havaittavaa välystä kuormaimen nivelten tapeissa ja holkeissa."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Tarkastus osoittaa suurta välystä kuormaimen nivelten tapeissa ja holkeissa."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Tarkastus osoittaa erittäin suurta välystä kuormaimen nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Tarkastus osoittaa alkavaa kulumista maston nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Tarkastus osoittaa havaittavaa välystä maston nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Tarkastus osoittaa suurta välystä maston nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Tarkastus osoittaa erittäin suurta välystä maston nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Tarkastus osoittaa alkavaa kulumista puomin nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Tarkastus osoittaa havaittavaa välystä puomin nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Tarkastus osoittaa suurta välystä puomin nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Tarkastus osoittaa erittäin suurta välystä puomin nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Tarkastus osoittaa alkavaa kulumista jyrsinvarren nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Tarkastus osoittaa havaittavaa välystä jyrsinvarren nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Tarkastus osoittaa suurta välystä jyrsinvarren nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Tarkastus osoittaa erittäin suurta välystä jyrsinvarren nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Tarkastus osoittaa alkavaa kulumista lanan varren nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Tarkastus osoittaa havaittavaa välystä lanan varren nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Tarkastus osoittaa suurta välystä lanan varren nivelten tapeissa ja holkeissa."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Tarkastus osoittaa erittäin suurta välystä lanan varren nivelten tapeissa ja holkeissa."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Ohjaamon iskunvaimentimessa on lievää kosteutta."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Ohjaamon iskunvaimentimesta tihkuu öljyä."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Ohjaamon iskunvaimentimessa on aktiivinen vuoto."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Osat mitattu %s"/>
         <text name="rms_fleet_parts_need_complete" text="Osamittaus seuraavassa täydellisessä tarkastuksessa"/>
         <text name="rms_fleet_greasing_done" text="Rasvaus ajan tasalla"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s h työtä"/>
+        <text name="rms_fleet_greasing_period_days" text="Joka %d. käyttöpäivä"/>
         <text name="rms_fleet_greasing_period_day" text="Joka käyttöpäivä"/>
         <text name="rms_fleet_greasing_period_month" text="Kuukausittain"/>
         <text name="rms_fleet_greasing_period_months" text="Joka %d. kuukausi"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d päivää myöhässä"/>
         <text name="rms_fleet_greasing_to_do" text="%d jäljellä"/>
         <text name="rms_fleet_greasing_points" text="Rasvanipat"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Tihein"/>
         <text name="rms_fleet_greasing_next" text="Seuraava rasvaus"/>
         <text name="rms_fleet_greasing_now" text="Nyt"/>
         <text name="rms_fleet_greasing_in" text="jäljellä %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Nopeammin"/>
         <text name="rms_fleet_wear_normal" text="Normaali"/>
         <text name="rms_fleet_wear_late" text="Rasvauksen viive"/>
-        <text name="rms_fleet_wear_dry" text="Kuluminen kuivana"/>
         <text name="rms_fleet_wear_repair_greases" text="Rasvataan korjauksessa"/>
         <text name="rms_fleet_wear_repair" text="Korjaus korjaamolla"/>
         <text name="rms_fleet_wear_none" text="Ei ole"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Jäähdytys ja ilmansuodatin"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Jäähdytin tai ilmansuodatin on tukossa. Pidä %s-näppäintä painettuna, kun katsot ajoneuvoa, niin näet kumman. Puhdista se paineilmapuhaltimella. Jos suodatinta ei voi enää puhdistaa puhaltamalla, korjaamo vaihtaa sen %s huollosta alkaen."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Voitelu tarpeen"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Koneessa %s on rasvattavia rasvanippoja.&#10;&#10;RMS:ssä jokaisella koneella on käyttöohjeensa rasvanipat. Ne on rasvattava uudelleen tietyn käyttötuntimäärän jälkeen tai joillakin koneilla jokaisena työpäivänä. Myöhästynyt rasvaus nopeuttaa alustan kulumista.&#10;&#10;Osta kaupasta rasvaruisku ja patruunoita. Tähtää patruunaan rasvaruisku kädessä ladataksesi sen ja sitten koneeseen: jokainen napsautus rasvaa yhden rasvanipan, ja painikkeen pitäminen pohjassa jatkaa seuraaviin.&#10;&#10;Näet jäljellä olevat rasvanipat pitämällä %s-näppäintä painettuna ajoneuvoa katsoessasi."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Koneessa %s on rasvattavia rasvanippoja.&#10;&#10;RMS:ssä jokaisella koneella on käyttöohjeensa rasvanipat. Ne on rasvattava uudelleen koneen käyttöpäivien mukaan: jokaisena käyttöpäivänä tai muutaman käyttöpäivän välein ne, jotka käyttöohje rasvaa harvemmin. Myöhästynyt rasvaus nopeuttaa alustan kulumista.&#10;&#10;Osta kaupasta rasvaruisku ja patruunoita. Asetu patruunan eteen rasvaruisku kädessä ladataksesi sen ja tähtää sitten koneeseen: jokainen napsautus rasvaa yhden rasvanipan, ja painikkeen pitäminen pohjassa jatkaa seuraaviin.&#10;&#10;Näet jäljellä olevat rasvanipat pitämällä %s-näppäintä painettuna ajoneuvoa katsoessasi."/>
         <text name="rms_tutorial_needs_repair_title" text="Ajoneuvon vika"/>
         <text name="rms_tutorial_needs_repair_message" text="Kone %s: siinä on ongelma, ja yksi osa on saattanut vikaantua.&#10;&#10;Vie se korjaamolle: tarkastus, tai huolto jos se on erääntynyt, toteaa vian. Älä viivyttele: vika voi pahentua edelleen ja korjauskustannukset kasvavat sen mukana.&#10;&#10;Kun vika on todettu, anna korjaamon korjata se."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Peruskorjaus tarpeen"/>

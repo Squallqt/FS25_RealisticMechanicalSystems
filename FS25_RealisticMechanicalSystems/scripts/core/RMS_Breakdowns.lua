@@ -1723,6 +1723,11 @@ function RMS_Breakdowns.getSpeedLimitOverwrite(vehicle, superFunc, onlyIfWorking
         return speedLimit, doCheckSpeedLimit
     end
 
+    local throughput = spec_rms.activeEffects.HARVEST_THROUGHPUT_LIMIT
+    if throughput ~= nil and speedLimit ~= nil and speedLimit < math.huge and vehicle:getIsTurnedOn() then
+        speedLimit = speedLimit * (1 - math.clamp(tonumber(throughput.value) or 0, 0, 0.9))
+    end
+
     local effect = spec_rms.activeEffects.MAX_SPEED_MODIFIER
     if effect == nil or effect.value == nil then
         return speedLimit, doCheckSpeedLimit
@@ -2314,6 +2319,9 @@ local function createEngineNoiseEffectApplicator(effectName, sampleName, gateMod
                     local targetGate = ptoData ~= nil and ptoData.isActive and (tonumber(ptoData.rpm) or 0) > 0 and 1 or 0
                     gate = rmsUpdateNoiseGate(spec_rms, effectName, targetGate, dt)
                     baseVolumeScale = baseVolumeScale * gate
+                elseif gateMode == "harvest" then
+                    gate = rmsUpdateNoiseGate(spec_rms, effectName, v.getIsTurnedOn ~= nil and v:getIsTurnedOn() and 1 or 0, dt)
+                    baseVolumeScale = baseVolumeScale * gate
                 elseif gateMode == "steer" then
                     local isSteering = getIsSteeringMoving(v, spec_rms, effectName, dt)
                     gate = rmsUpdateNoiseGate(spec_rms, effectName, isSteering and 1 or 0, dt)
@@ -2417,6 +2425,8 @@ RMS_Breakdowns.EffectApplicators.FRONT_AXLE_SHAFT_NOISE_EFFECT = createClunkEffe
 RMS_Breakdowns.EffectApplicators.CAB_DAMPER_NOISE_EFFECT = createClunkEffectApplicator("CAB_DAMPER_NOISE_EFFECT", "cabDamper",
     getIsCabBumping)
 RMS_Breakdowns.EffectApplicators.PTO_SPLINES_NOISE_EFFECT = createEngineNoiseEffectApplicator("PTO_SPLINES_NOISE_EFFECT", "ptoSplines", "pto")
+RMS_Breakdowns.EffectApplicators.HARVEST_BEARING_NOISE_EFFECT = createEngineNoiseEffectApplicator("HARVEST_BEARING_NOISE_EFFECT",
+    "ptoBearingNoise", "harvest")
 RMS_Breakdowns.EffectApplicators.ELECTRIC_MOTOR_BEARING_NOISE_EFFECT = createEngineNoiseEffectApplicator("ELECTRIC_MOTOR_BEARING_NOISE_EFFECT",
     "electricMotorBearing", "speed")
 
@@ -2565,7 +2575,8 @@ local function createPtoAutoDisengageApplicator(effectName, side, messageKey)
                 if effect.extraData.status == "DISENGAGED" then
                     if v.isServer then
                         RMS_Utils.setConnectedPtoConsumersTurnedOn(v, false, side)
-                    elseif v:getIsActiveForInput(true) then
+                    end
+                    if v:getIsActiveForInput(true) then
                         g_currentMission:showBlinkingWarning(g_i18n:getText(messageKey), 4000)
                     end
                     effect.extraData.status = "IDLE"
@@ -2623,6 +2634,118 @@ RMS_Breakdowns.EffectApplicators.FRONT_PTO_FAILURE = createPtoFailureApplicator(
 RMS_Breakdowns.EffectApplicators.PTO_STUCK_ENGAGED_CHANCE = {
 }
 
+local function setThreshingLoss(vehicle, loss)
+    local spec_combine = vehicle.spec_combine
+    if spec_combine == nil then
+        return
+    end
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    spec.baseThreshingScale = spec.baseThreshingScale or spec_combine.threshingScale
+    spec_combine.threshingScale = spec.baseThreshingScale * (1 - loss)
+end
+
+RMS_Breakdowns.EffectApplicators.HARVEST_GRAIN_LOSS = {
+    apply = function(vehicle, effectData, handler)
+        setThreshingLoss(vehicle, math.clamp(tonumber(effectData.value) or 0, 0, RMS_Config.CORE.HARVEST_FACTOR_DATA.MAX_GRAIN_LOSS))
+    end,
+    remove = function(vehicle, handler)
+        setThreshingLoss(vehicle, 0)
+    end
+}
+
+local function setHarvestPowerDemand(vehicle, extra)
+    local spec_powerConsumer = vehicle.spec_powerConsumer
+    if spec_powerConsumer == nil then
+        return
+    end
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    spec.basePtoPower = spec.basePtoPower or { spec_powerConsumer.neededMinPtoPower, spec_powerConsumer.neededMaxPtoPower }
+    spec_powerConsumer.neededMinPtoPower = spec.basePtoPower[1] * (1 + extra)
+    spec_powerConsumer.neededMaxPtoPower = spec.basePtoPower[2] * (1 + extra)
+end
+
+RMS_Breakdowns.EffectApplicators.HARVEST_POWER_DEMAND = {
+    apply = function(vehicle, effectData, handler)
+        setHarvestPowerDemand(vehicle, math.max(tonumber(effectData.value) or 0, 0))
+    end,
+    remove = function(vehicle, handler)
+        setHarvestPowerDemand(vehicle, 0)
+    end
+}
+
+RMS_Breakdowns.EffectApplicators.HARVEST_BLOCKAGE_CHANCE = {
+    getEffectName = function() return "HARVEST_BLOCKAGE_CHANCE" end,
+    apply = function(vehicle, effectData, handler)
+        addFuncToActive(vehicle, "HARVEST_BLOCKAGE_CHANCE", function(v, dt)
+            local effect = v.spec_RealisticMechanicalSystems.activeEffects.HARVEST_BLOCKAGE_CHANCE
+            if effect == nil then
+                return
+            end
+            effect.extraData = effect.extraData or {}
+            if effect.extraData.status == "BLOCKED" then
+                if v.isServer then
+                    v:setIsTurnedOn(false)
+                end
+                if v:getIsActiveForInput(true) then
+                    g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_harvest_blockage_message"), 4000)
+                end
+                effect.extraData.status = "IDLE"
+                return
+            end
+            if v.isServer and v:getIsTurnedOn() and v:getLastSpeed() > 0.5
+                and math.random() < RMS_Utils.getChancePerFrameFromMeanTime(dt, tonumber(effect.value) or 0) then
+                effect.extraData.status = "BLOCKED"
+                RMS_EffectSyncEvent.send(v, "HARVEST_BLOCKAGE_CHANCE", "BLOCKED", 0, 0, 0)
+            end
+        end)
+    end,
+    remove = function(vehicle, handler)
+        removeFuncFromActive(vehicle, "HARVEST_BLOCKAGE_CHANCE")
+    end
+}
+
+RMS_Breakdowns.EffectApplicators.HARVEST_FAILURE = {
+    getEffectName = function() return "HARVEST_FAILURE" end,
+    apply = function(vehicle, effectData, handler)
+        addFuncToActive(vehicle, "HARVEST_FAILURE", function(v, dt)
+            if v.isServer and v:getIsTurnedOn() then
+                v:setIsTurnedOn(false)
+            end
+        end)
+    end,
+    remove = function(vehicle, handler)
+        removeFuncFromActive(vehicle, "HARVEST_FAILURE")
+    end
+}
+
+-- a crop without windrow is spread by the chopper, the harvest stops
+RMS_Breakdowns.EffectApplicators.CHOPPER_FAILURE = {
+    getEffectName = function() return "CHOPPER_FAILURE" end,
+    apply = function(vehicle, effectData, handler)
+        addFuncToActive(vehicle, "CHOPPER_FAILURE", function(v, dt)
+            local spec_combine = v.spec_combine
+            if not v.isServer or spec_combine == nil or spec_combine.isSwathActive or not v:getIsTurnedOn() then
+                return
+            end
+            local fruitDesc = g_fruitTypeManager:getFruitTypeByIndex(spec_combine.lastValidInputFruitType)
+            local isSwath = spec_combine.swath.isAvailable and fruitDesc ~= nil and fruitDesc.hasWindrow
+            if isSwath then
+                v:setIsSwathActive(true)
+            else
+                v:setIsTurnedOn(false)
+            end
+            RMS_EffectSyncEvent.send(v, "CHOPPER_FAILURE", isSwath and "SWATH" or "STOPPED", 0, 0, 0)
+            if v:getIsActiveForInput(true) then
+                g_currentMission:showBlinkingWarning(g_i18n:getText(isSwath and "rms_breakdowns_chopper_failure_message"
+                    or "rms_breakdowns_chopper_failure_spread_message"), 4000)
+            end
+        end)
+    end,
+    remove = function(vehicle, handler)
+        removeFuncFromActive(vehicle, "CHOPPER_FAILURE")
+    end
+}
+
 RMS_Breakdowns.EffectApplicators.PTO_ENGAGEMENT_BLOCKED_CHANCE = {
     getEffectName = function() return "PTO_ENGAGEMENT_BLOCKED_CHANCE" end,
     apply = function(vehicle, effectData, handler)
@@ -2640,6 +2763,13 @@ function RMS_Breakdowns.getCanBeTurnedOn(vehicle, superFunc)
 
     local rootVehicle = vehicle.rootVehicle
     local spec = rootVehicle ~= nil and rootVehicle.spec_RealisticMechanicalSystems or nil
+    if vehicle == rootVehicle and spec ~= nil and spec.activeEffects ~= nil and spec.activeEffects.HARVEST_FAILURE ~= nil then
+        if spec.ptoEngagementAttempt == true and spec.ptoEngagementAttemptWarningShown ~= true and rootVehicle:getIsActiveForInput(true) then
+            g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_harvest_failure_message"), 4000)
+            spec.ptoEngagementAttemptWarningShown = true
+        end
+        return false, warning
+    end
     local effect = spec ~= nil and spec.activeEffects ~= nil and spec.activeEffects.PTO_ENGAGEMENT_BLOCKED_CHANCE or nil
     if effect == nil or spec.ptoEngagementAttempt ~= true then
         return canBeTurnedOn, warning

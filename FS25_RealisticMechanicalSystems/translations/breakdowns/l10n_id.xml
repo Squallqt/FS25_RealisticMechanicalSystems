@@ -40,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Keausan sedang pada pin dan busing sendi pemuat depan. Gerak bebas pada sendi lengan mulai terasa."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Keausan berat pada pin dan busing sendi pemuat depan. Lengan memiliki gerak bebas yang besar."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Keausan kritis pada pin dan busing sendi pemuat depan. Gerak bebas pada lengan sangat besar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Keausan ringan pada pin dan busing sendi tiang. Muncul sedikit gerak bebas pada sendi tiang."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Keausan sedang pada pin dan busing sendi tiang. Gerak bebas pada sendi tiang mulai terasa."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Keausan berat pada pin dan busing sendi tiang. Tiang memiliki gerak bebas yang besar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Keausan kritis pada pin dan busing sendi tiang. Gerak bebas pada tiang sangat besar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Keausan ringan pada pin dan busing sendi lengan derek. Muncul sedikit gerak bebas pada sendi lengan derek."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Keausan sedang pada pin dan busing sendi lengan derek. Gerak bebas pada sendi lengan derek mulai terasa."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Keausan berat pada pin dan busing sendi lengan derek. Lengan derek memiliki gerak bebas yang besar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Keausan kritis pada pin dan busing sendi lengan derek. Gerak bebas pada lengan derek sangat besar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Keausan ringan pada pin dan busing sendi lengan frais. Muncul sedikit gerak bebas pada sendi lengan."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Keausan sedang pada pin dan busing sendi lengan frais. Gerak bebas pada sendi lengan mulai terasa."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Keausan berat pada pin dan busing sendi lengan frais. Lengan memiliki gerak bebas yang besar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Keausan kritis pada pin dan busing sendi lengan frais. Gerak bebas pada lengan sangat besar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Keausan ringan pada pin dan busing sendi lengan bilah. Muncul sedikit gerak bebas pada sendi lengan."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Keausan sedang pada pin dan busing sendi lengan bilah. Gerak bebas pada sendi lengan mulai terasa."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Keausan berat pada pin dan busing sendi lengan bilah. Lengan memiliki gerak bebas yang besar."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Keausan kritis pada pin dan busing sendi lengan bilah. Gerak bebas pada lengan sangat besar."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Kebocoran ringan pada peredam kejut kabin. Peredaman kabin sedikit berkurang."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Kebocoran sedang pada peredam kejut kabin. Kabin memantul di permukaan tidak rata."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Kebocoran berat pada peredam kejut kabin. Kabin bergoyang pada setiap guncangan."/>
@@ -118,6 +134,10 @@
         <text name="rms_breakdowns_part_synchronizer" text="Sinkroniser"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Sendi Bola dan Batang Kemudi"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Pin dan Busing Sendi Pemuat Depan"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Pin dan Busing Sendi Tiang"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Pin dan Busing Sendi Lengan Derek"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Pin dan Busing Sendi Lengan Frais"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Pin dan Busing Sendi Lengan Bilah"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pin Buku Roda Kemudi"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol Kemudi"/>
         <text name="rms_breakdowns_part_steering_box" text="Kotak Kemudi"/>
@@ -154,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Filter Gas"/>
         <text name="rms_breakdowns_part_gas_lines" text="Saluran Gas"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Injektor Gas"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Busi"/>
         <text name="rms_breakdowns_part_adblue_pump" text="Pompa AdBlue"/>
         <text name="rms_breakdowns_part_adblue_doser" text="Injektor Penakar AdBlue"/>
         <text name="rms_breakdowns_part_adblue_filter" text="Filter AdBlue"/>
@@ -561,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Kegagalan sedang injektor gas. Mesin tersendat, kehilangan daya, konsumsi meningkat dan mesin dapat mati."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Kegagalan berat injektor gas. Satu injektor menakar dengan sangat buruk: kehilangan daya besar, konsumsi berlebih dan sulit menyala."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kegagalan kritis injektor gas. Penakaran tidak lagi memungkinkan mesin bekerja: mesin berhenti."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Busi telah mencapai jadwal penggantian: muncul salah pengapian saat beban berat, mesin berjalan kurang halus dan konsumsi sedikit meningkat. Servis menggantinya."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Busi aus: salah pengapian makin sering, mesin kehilangan daya, konsumsi meningkat dan mesin dapat mati. Lampu mesin menyala."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Busi sangat aus: kehilangan daya besar, konsumsi berlebih dan sulit menyala."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Busi tidak dapat dipakai lagi: salah pengapian terus-menerus, mesin dapat mati dan tidak mau menyala."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Kegagalan pompa AdBlue. Pompa tidak lagi memasok penakaran: lampu mesin menyala, lalu unit kontrol mengurangi daya sampai perbaikan dilakukan."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Kegagalan injektor penakar AdBlue. Tersumbat kristal, injektor tidak lagi menyemprot: lampu mesin menyala dan daya kemudian menurun sampai perbaikan dilakukan."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Filter AdBlue telah mencapai jadwal penggantian dan mulai tersumbat. Servis yang paling lengkap menggantinya."/>
@@ -630,6 +655,10 @@
         <text name="rms_breakdowns_part_lift_position_sensor" text="Sensor Posisi Pengangkat"/>
         <text name="rms_breakdowns_part_header_height_sensor" text="Sensor Ketinggian Pemotong"/>
         <text name="rms_breakdowns_part_loader_control" text="Kontrol Pemuat"/>
+        <text name="rms_breakdowns_part_mast_control" text="Kontrol Tiang"/>
+        <text name="rms_breakdowns_part_boom_control" text="Kontrol Lengan Derek"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Kontrol Lengan Frais"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Kontrol Lengan Bilah"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Kopling Cepat Hidraulis"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Kegagalan ringan kopling. Komponen ini tidak melepas sepenuhnya. Beberapa gigi sulit dipilih."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Kegagalan sedang kopling. Mekanisme kurang membebaskan cakram. Gigi lebih sering ditolak."/>
@@ -709,6 +738,22 @@
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Kegagalan sedang kontrol pemuat. Lengan dan bucket hanya bergerak dengan separuh kecepatan."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Kegagalan berat kontrol pemuat. Lengan dan bucket nyaris tidak bergerak."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kegagalan kritis kontrol pemuat. Lengan dan bucket tidak lagi merespons."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Kegagalan ringan kontrol tiang. Tiang dan garpu merespons lebih lambat."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Kegagalan sedang kontrol tiang. Tiang dan garpu hanya bergerak dengan separuh kecepatan."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Kegagalan berat kontrol tiang. Tiang dan garpu nyaris tidak bergerak."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Kegagalan kritis kontrol tiang. Tiang dan garpu tidak lagi merespons."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Kegagalan ringan kontrol lengan derek. Lengan derek dan alatnya merespons lebih lambat."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Kegagalan sedang kontrol lengan derek. Lengan derek dan alatnya hanya bergerak dengan separuh kecepatan."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Kegagalan berat kontrol lengan derek. Lengan derek dan alatnya nyaris tidak bergerak."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Kegagalan kritis kontrol lengan derek. Lengan derek dan alatnya tidak lagi merespons."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Kegagalan ringan kontrol lengan frais. Lengan merespons lebih lambat."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Kegagalan sedang kontrol lengan frais. Lengan hanya bergerak dengan separuh kecepatan."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Kegagalan berat kontrol lengan frais. Lengan nyaris tidak bergerak."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Kegagalan kritis kontrol lengan frais. Lengan tidak lagi merespons."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Kegagalan ringan kontrol lengan bilah. Lengan dan bilah merespons lebih lambat."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Kegagalan sedang kontrol lengan bilah. Lengan dan bilah hanya bergerak dengan separuh kecepatan."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Kegagalan berat kontrol lengan bilah. Lengan dan bilah nyaris tidak bergerak."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Kegagalan kritis kontrol lengan bilah. Lengan dan bilah tidak lagi merespons."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Kegagalan ringan silinder hidraulis. Seal batang meloloskan sedikit oli. Tampak sedikit lembap di sekitar batang."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Kegagalan sedang silinder hidraulis. Seal batang tidak rapat. Silinder merembes dan level oli turun."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Kegagalan berat silinder hidraulis. Seal batang bocor aktif. Silinder kehilangan banyak oli."/>
@@ -737,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Keausan kritis pada bantalan gandar. Satu bantalan rusak, pasangan roda gigi kerucut rusak dan gandar tidak lagi meneruskan daya gerak."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Kegagalan kontrol pengunci diferensial. Pengunci tidak aktif. Diferensial tetap bebas."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Kegagalan kontrol pengunci diferensial. Pengunci tetap aktif. Mesin sulit diarahkan saat berbelok."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Sabuk Penggerak dan Variator"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Bantalan dan Girboks Penggerak"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Rantai Saluran Pengumpan"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Akselerator Pengumpan"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Batang Perontok"/>
+        <text name="rms_breakdowns_part_concave" text="Cekungan Perontok"/>
+        <text name="rms_breakdowns_part_separation" text="Gigi Pemisah dan Pengguncang Jerami"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Ayakan Pembersih"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Ulir dan Elevator Gabah"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Pencacah dan Penyebar Jerami"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Rol Pengumpan"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Detektor Logam dan Batu"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Drum Pemotong"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Pisau Drum Pemotong"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Pisau Penahan"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Pemecah Biji"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Akselerator dan Peniup"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Corong Pembuang"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Pemotong Daun dan Pengupas"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Mata Pencabut"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Turbin Pembersih"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Elevator Bit"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Lantai Bergerak dan Sabuk Pembongkar"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Sabuk Pengayak"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Pemisah Batang dan Rol"/>
+        <text name="rms_breakdowns_part_picking_units" text="Unit Pemetik"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Pelembap Spindel"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Kipas dan Saluran"/>
+        <text name="rms_breakdowns_part_module_builder" text="Ruang Pembentuk Modul"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Pisau Dasar"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Rol Pengumpan"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Drum Pencacah"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Ekstraktor Primer"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Elevator Tebu"/>
+        <text name="rms_breakdowns_part_shaker" text="Sistem Penggoyang"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Sisik Penangkap"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Konveyor Ember"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Pengisap Pembersih"/>
+        <text name="rms_breakdowns_part_destemmer" text="Penghilang Tangkai"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Kepala Pemetik"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Kipas dan Ayakan Pembersih"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevator dan Konveyor"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Panen tidak mungkin: satu bagian panen rusak"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Penyumbatan: panen terhenti"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Pencacah rusak: jerami jatuh membentuk barisan"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Pencacah rusak: tanaman ini tidak bisa dipanen lagi"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Awal keausan sabuk penggerak. Sabuk sedikit selip saat terbebani."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Keausan sedang pada sabuk penggerak. Satu bagian melambat saat terbebani dan alarm putaran sesekali menghentikan panen."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Keausan berat pada sabuk penggerak. Kapasitas turun dan penghentian terjadi berulang kali."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Kegagalan kritis pada sabuk penggerak. Sebuah sabuk putus: panen tidak mungkin."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Awal keausan bantalan penggerak. Muncul dengung ringan saat panen."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Keausan sedang pada bantalan penggerak. Dengung terdengar jelas dan bantalan memanas."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Keausan berat pada bantalan penggerak. Dengung makin keras dan poros mulai longgar."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kegagalan kritis pada bantalan penggerak. Sebuah bantalan macet: panen tidak mungkin."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Awal keausan rantai saluran pengumpan. Rantai memanjang dan pengumpanan menjadi tidak rata."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Keausan sedang pada rantai saluran pengumpan. Penyumbatan terbentuk di pintu masuk saluran pengumpan."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Keausan berat pada rantai saluran pengumpan. Rantai melompat di gigi sproket dan penyumbatan terus terjadi."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Kegagalan kritis pada rantai saluran pengumpan. Rantai putus: tidak ada lagi yang masuk ke mesin."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Awal keausan akselerator pengumpan. Tanaman mencapai drum dengan kurang rata."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Keausan sedang pada akselerator pengumpan. Kapasitas tertahan dan muncul penyumbatan."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Keausan berat pada akselerator pengumpan. Kapasitas turun dan penyumbatan terus terjadi."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Kegagalan kritis pada akselerator pengumpan. Sebuah sudu terlepas: panen tidak mungkin."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Awal keausan batang perontok. Sebagian gabah tertinggal di malai dan kembali ke lahan."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Keausan sedang pada batang perontok. Drum bergetar dan kehilangan gabah meningkat."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Keausan berat pada batang perontok. Beberapa batang patah: kehilangan besar dan penyumbatan."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Kegagalan kritis pada batang perontok. Sebuah batang terlepas: perontokan tidak mungkin."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Awal keausan cekungan perontok. Gabah dirontok kurang baik dan sebagian kembali ke lahan."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Keausan sedang pada cekungan perontok. Kehilangan gabah meningkat."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Keausan berat pada cekungan perontok. Gabah pecah, kehilangan besar, dan muncul penyumbatan."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Kegagalan kritis pada cekungan perontok. Sebuah batang terlepas: perontokan tidak mungkin."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Awal keausan pemisahan. Gabah tertinggal di jerami dan kembali ke lahan."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Keausan sedang pada pemisahan. Kehilangan gabah bersama jerami meningkat."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Keausan berat pada pemisahan. Kehilangan besar dan penyumbatan jerami."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Kegagalan kritis pada pemisahan. Jerami tidak bisa lewat lagi: panen tidak mungkin."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Awal keausan ayakan pembersih. Sekam masuk ke tangki gabah dan sedikit gabah terbuang bersama kotoran."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Keausan sedang pada ayakan pembersih. Kehilangan di ayakan meningkat."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Keausan berat pada ayakan pembersih. Sebuah ayakan retak: kehilangan besar dan penyumbatan."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Kegagalan kritis pada ayakan pembersih. Pembersihan tidak berfungsi lagi: panen tidak mungkin."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Awal keausan ulir dan elevator gabah. Aliran ke tangki gabah berkurang."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Keausan sedang pada ulir dan elevator gabah. Sebagian gabah pecah atau hilang di jalan."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Keausan berat pada ulir dan elevator gabah. Elevator tersumbat secara teratur."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Kegagalan kritis pada ulir dan elevator gabah. Tangki gabah tidak terisi lagi: panen tidak mungkin."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Awal keausan pencacah jerami. Jerami dicacah kurang pendek dan pencacah butuh sedikit lebih banyak daya."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Keausan sedang pada pencacah jerami. Pencacah bergetar dan butuh lebih banyak daya."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Keausan berat pada pencacah jerami. Rotor tidak seimbang dan butuh banyak daya."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kegagalan kritis pada pencacah jerami. Sebuah pisau patah: pencacah berhenti dan jerami jatuh membentuk barisan."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Awal keausan rol pengumpan. Rol mencengkeram tanaman kurang baik: pengumpanan menjadi tidak rata."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Keausan sedang pada rol pengumpan. Panjang potongan menjadi tidak rata dan muncul penyumbatan."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Keausan berat pada rol pengumpan. Kapasitas turun dan penyumbatan terus terjadi."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Kegagalan kritis pada rol pengumpan. Tidak ada lagi yang masuk ke mesin: panen tidak mungkin."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Awal gangguan detektor logam dan batu. Alarm palsu sesekali menghentikan pengumpanan."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Gangguan sedang pada detektor logam dan batu. Penghentian yang tidak perlu terus terjadi."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Detektor logam dan batu rusak. Detektor tidak lagi mendeteksi apa pun: batu mencapai pisau dan mengausnya jauh lebih cepat."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Awal keausan drum pemotong. Drum sedikit bergetar dan butuh sedikit lebih banyak daya."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Keausan sedang pada drum pemotong. Rotor tidak seimbang dan butuh lebih banyak daya."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Keausan berat pada drum pemotong. Dudukan pisau retak: daya lebih besar dan penyumbatan."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Kegagalan kritis pada drum pemotong. Rotor rusak: panen tidak mungkin."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Awal keausan pisau. Potongan kurang bersih dan butuh sedikit lebih banyak daya."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Keausan sedang pada pisau. Pisau butuh lebih banyak daya dan bahan bakar."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Keausan berat pada pisau. Potongan tidak rata, kebutuhan daya naik, dan muncul penyumbatan."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Kegagalan kritis pada pisau. Sebuah pisau patah: panen tidak mungkin."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Awal keausan pisau penahan. Celah melebar: pemotongan butuh sedikit lebih banyak daya."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Keausan sedang pada pisau penahan. Potongan menyobek dan butuh lebih banyak daya."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Keausan berat pada pisau penahan. Mata pisau aus: daya lebih besar dan penyumbatan."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Kegagalan kritis pada pisau penahan. Pisau tidak bisa dipakai lagi: panen tidak mungkin."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Awal keausan pemecah biji. Biji kurang terpecah dan pemecah butuh sedikit lebih banyak daya."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Keausan sedang pada pemecah biji. Biji utuh lolos dan kebutuhan daya naik."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Keausan berat pada pemecah biji. Sebuah rol tergores: daya lebih besar dan penyumbatan."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Kegagalan kritis pada pemecah biji. Sebuah rol macet: panen tidak mungkin."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Awal keausan akselerator. Lemparan lebih pendek dan kapasitas sedikit turun."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Keausan sedang pada akselerator. Corong pembuang sesekali tersumbat."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Keausan berat pada akselerator. Sebuah sudu terlepas: sering tersumbat dan pakan terbuang."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Kegagalan kritis pada akselerator. Pakan tidak terlempar keluar lagi: panen tidak mungkin."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Awal keausan corong pembuang. Lemparan menyimpang dan kapasitas sedikit turun."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Keausan sedang pada corong pembuang. Pakan menumpuk dan sesekali menyumbat corong."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Keausan berat pada corong pembuang. Lapisan aus berlubang: pakan terbuang dan sering tersumbat."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Kegagalan kritis pada corong pembuang. Corong berlubang tembus: panen tidak mungkin."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Awal keausan. Sebagian hasil panen tertinggal di lahan."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Keausan sedang. Getaran dan kehilangan lebih besar."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Keausan berat. Beberapa elemen patah: kehilangan besar dan penyumbatan."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Kegagalan kritis. Bagian ini rusak: panen tidak mungkin."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Awal keausan mata pencabut. Beberapa umbi patah atau tertinggal di tanah."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Keausan sedang pada mata pencabut. Pencabutan buruk: kehilangan lebih besar dan beban lebih berat."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Keausan berat pada mata pencabut. Mata aus sampai habis: kehilangan besar dan mesin bekerja keras."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Kegagalan kritis pada mata pencabut. Sebuah mata patah: pencabutan tidak mungkin."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Awal keausan. Pembersihan bekerja kurang baik: tanah atau kotoran di hasil panen, sedikit hasil panen hilang."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Keausan sedang. Kehilangan saat pembersihan meningkat."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Keausan berat. Kisi atau sudu patah: kehilangan besar dan penyumbatan."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Kegagalan kritis. Pembersihan berhenti: panen tidak mungkin."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Awal keausan. Rantai atau sabuk memanjang: pengumpanan menjadi tidak rata."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Keausan sedang. Batang atau sudu aus: kapasitas berkurang dan penyumbatan."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Keausan berat. Rantai melompat: penyumbatan terus terjadi."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Kegagalan kritis. Rantai atau sabuk putus: tidak ada lagi yang lewat."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Awal keausan. Pemindahan hasil panen melambat."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Keausan sedang. Pemindahan menjadi tidak rata dan sebagian hasil panen hilang."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Keausan berat. Pemindahan sering macet."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Kegagalan kritis. Pemindahan berhenti: panen tidak mungkin."/>
     </texts>
 </l10n>

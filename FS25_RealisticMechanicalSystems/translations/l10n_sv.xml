@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Chassi"/>
         <text name="rms_spec_system_fuel" text="Bränslesystem"/>
         <text name="rms_spec_system_pto" text="Kraftuttag"/>
+        <text name="rms_spec_system_harvest" text="Skörd"/>
         <text name="rms_spec_system_electric_motor" text="Elmotor"/>
         <text name="rms_spec_system_traction_battery" text="Traktionsbatteri"/>
         <text name="rms_spec_state_ready" text="Klar"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Batteriet överhettas"/>
         <text name="rms_report_wear_lubrication" text="Försenad smörjning"/>
         <text name="rms_report_wear_pto_overload" text="Kraftuttag överbelastat"/>
+        <text name="rms_report_wear_harvest_overload" text="Skörd överbelastad"/>
+        <text name="rms_report_wear_harvest_flow" text="Stort spannmålsflöde"/>
+        <text name="rms_report_wear_harvest_straw" text="Halmhack överbelastad"/>
+        <text name="rms_report_wear_harvest_stones" text="Stenar"/>
+        <text name="rms_report_wear_harvest_rice" text="Risskörd"/>
+        <text name="rms_report_wear_harvest_wet" text="Fuktig gröda"/>
         <text name="rms_report_component_title" text="Komponent"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Aktuell effekt"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Antal"/>
         <text name="rms_grease_hud_title" text="Smörjning"/>
         <text name="rms_grease_hud_done" text="Klart"/>
+        <text name="rms_grease_hud_greased" text="Smorda"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Tryckluftsblåsare"/>
         <text name="rms_air_blower_no_vehicle" text="Inget fordon inom rengöringsavstånd"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Inspektionen visar märkbart glapp vid tappar och bussningar i lastarens leder."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Inspektionen visar stort glapp vid tappar och bussningar i lastarens leder."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Inspektionen visar mycket stort glapp vid tappar och bussningar i lastarens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Inspektionen visar begynnande slitage på tappar och bussningar i mastens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Inspektionen visar märkbart glapp vid tappar och bussningar i mastens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Inspektionen visar stort glapp vid tappar och bussningar i mastens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Inspektionen visar mycket stort glapp vid tappar och bussningar i mastens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Inspektionen visar begynnande slitage på tappar och bussningar i bommens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Inspektionen visar märkbart glapp vid tappar och bussningar i bommens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Inspektionen visar stort glapp vid tappar och bussningar i bommens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Inspektionen visar mycket stort glapp vid tappar och bussningar i bommens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Inspektionen visar begynnande slitage på tappar och bussningar i fräsarmens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Inspektionen visar märkbart glapp vid tappar och bussningar i fräsarmens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Inspektionen visar stort glapp vid tappar och bussningar i fräsarmens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Inspektionen visar mycket stort glapp vid tappar och bussningar i fräsarmens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Inspektionen visar begynnande slitage på tappar och bussningar i bladarmens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Inspektionen visar märkbart glapp vid tappar och bussningar i bladarmens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Inspektionen visar stort glapp vid tappar och bussningar i bladarmens leder."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Inspektionen visar mycket stort glapp vid tappar och bussningar i bladarmens leder."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="En hyttstötdämpare är lätt fuktig."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Olja sipprar från en hyttstötdämpare."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="En hyttstötdämpare har ett aktivt läckage."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Delar uppmätta %s"/>
         <text name="rms_fleet_parts_need_complete" text="Delar mäts vid nästa fullständiga inspektion"/>
         <text name="rms_fleet_greasing_done" text="Smörjning klar"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s h arbete"/>
+        <text name="rms_fleet_greasing_period_days" text="Var %d:e arbetsdag"/>
         <text name="rms_fleet_greasing_period_day" text="Varje arbetsdag"/>
         <text name="rms_fleet_greasing_period_month" text="Varje månad"/>
         <text name="rms_fleet_greasing_period_months" text="Var %d:e månad"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d dagar försenat"/>
         <text name="rms_fleet_greasing_to_do" text="%d kvar"/>
         <text name="rms_fleet_greasing_points" text="Smörjnipplar"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Oftast"/>
         <text name="rms_fleet_greasing_next" text="Nästa smörjning"/>
         <text name="rms_fleet_greasing_now" text="Nu"/>
         <text name="rms_fleet_greasing_in" text="om %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Snabbare"/>
         <text name="rms_fleet_wear_normal" text="Normalt slitage"/>
         <text name="rms_fleet_wear_late" text="Smörjningsförsening"/>
-        <text name="rms_fleet_wear_dry" text="Slitage utan fett"/>
         <text name="rms_fleet_wear_repair_greases" text="Smörjs vid reparation"/>
         <text name="rms_fleet_wear_repair" text="Reparation på verkstad"/>
         <text name="rms_fleet_wear_none" text="Ingen"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Kylning och luftfilter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Kylaren eller luftfiltret är igensatt. Håll in %s-tangenten medan du tittar på fordonet för att se vilket. Rengör det med tryckluftsblåsaren. Om filtret inte längre kan blåsas rent byter verkstaden det från service %s och uppåt."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Smörjning behövs"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s har smörjnipplar som behöver smörjas.&#10;&#10;I RMS har varje maskin smörjnipplarna från sin instruktionsbok. De behöver smörjas igen efter ett antal drifttimmar, eller varje arbetsdag på vissa maskiner. Försenad smörjning ökar slitaget på chassit.&#10;&#10;Köp en fettspruta och patroner i butiken. Sikta på en patron med fettsprutan i handen för att ladda den och sedan på maskinen: varje klick smörjer en smörjnippel och om knappen hålls inne fortsätter smörjningen på nästa.&#10;&#10;Håll in %s-tangenten medan du tittar på fordonet för att se de återstående smörjnipplarna."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s har smörjnipplar som behöver smörjas.&#10;&#10;I RMS har varje maskin smörjnipplarna från sin instruktionsbok. De behöver smörjas igen efter de dagar maskinen arbetar: varje arbetsdag, eller med några arbetsdagars mellanrum för dem som instruktionsboken smörjer mer sällan. Försenad smörjning ökar slitaget på chassit.&#10;&#10;Köp en fettspruta och patroner i butiken. Ställ dig framför en patron med fettsprutan i handen för att ladda den och sikta sedan på maskinen: varje klick smörjer en smörjnippel och om knappen hålls inne fortsätter smörjningen på nästa.&#10;&#10;Håll in %s-tangenten medan du tittar på fordonet för att se de återstående smörjnipplarna."/>
         <text name="rms_tutorial_needs_repair_title" text="Fel hittat"/>
         <text name="rms_tutorial_needs_repair_message" text="%s har ett problem. En av delarna kan ha gått sönder.&#10;&#10;Kör till verkstaden: en inspektion, eller servicen om den är förfallen, fastställer felet. Vänta inte: felet kan bli värre, och reparationen blir dyrare med det.&#10;&#10;När felet är fastställt, låt reparera det på verkstaden."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Renovering behövs"/>

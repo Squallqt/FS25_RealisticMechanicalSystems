@@ -10,7 +10,7 @@
     <description>
         <en><![CDATA[Your machines finally wear out like real ones.
 
-Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO. Every one is made of the real parts that fail in it, each wearing for its own reasons. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
+Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO, the harvesting parts taking the place of the PTO on a harvester. Every one is made of the real parts that fail in it, each wearing for its own reasons. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
 
 WEAR
 - Condition falls about 1% per operating hour under normal use, far faster under abuse, and each system has its own wear factors
@@ -19,7 +19,7 @@ WEAR
 - Overdue service accelerates wear in the systems covered by the overdue fluid, the engine most of all
 
 BREAKDOWNS
-- 47 breakdowns spread across the 8 systems, each in four stages from Minor to Critical
+- 162 breakdowns spread across the systems, most in four stages from Minor to Critical
 - The part that fails is the one your use has worn: frequent braking with a heavy trailer wears out the brakes first
 - Early faults show through RPM fluctuations, coloured exhaust smoke, knocking and whistling; dashboard warnings usually appear from stage 2, though some faults can warn from stage 1
 - Old machines also degrade permanently, losing engine power, transmission bite, battery performance, and cooling efficiency
@@ -38,7 +38,7 @@ DAILY CARE
 - Telwin Doctor Charge 155 Connect on a trolley: connect it near a vehicle to charge its battery at the current it accepts, or for starting aid (START); charging follows the game's time speed and resumes when the save is loaded
 - Hold R near a vehicle for a pre-shift check of fluids, radiator, air filter and greasing
 - Air Blower clears the cooling pack and removes loose dust from the air filter
-- SKF grease gun, loaded with SKF grease cartridges bought one at a time or up to twelve in a carton. Each machine and implement has its own grease points, to grease after its working hours, every working day or every few months: each click greases one, a display shows the grease left in the cartridge and each point greased, and greasing late wears the machine faster. The fleet page lists every implement with its grease points
+- SKF grease gun, loaded with SKF grease cartridges bought one at a time or up to twelve in a carton. Each machine and implement has its own grease points, to grease every working day, every few working days or every few months: each click greases one, a display shows the grease left in the cartridge and each point greased, and greasing late wears the machine faster. The fleet page lists every implement with its grease points
 - An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
 
 SIMULATION
@@ -67,6 +67,12 @@ Changelog 1.0.0.0-beta.1:
 - Added grease cartridges for the grease gun
 - Reworked greasing with the grease points of each machine
 - Added greasing of implements and their PTO shafts, shown in the fleet page
+- Added the harvesting parts of self-propelled harvesters, worn by the work they do, with crop losses, blockages and stops as they wear
+- Added the renewal of worn harvesting parts to the preventive service, their parts billed
+- Added the harvesting effort measured by RMS itself when Realistic Harvesting is not installed
+- Added integration with Realistic Harvesting (version 1.6.5.0 or higher), sharing the harvesting effort and the wear of the harvesting parts
+- Added spark plugs to methane engines, changed during services, misfiring once overdue
+- Reworked the breakdowns of each machine type, without the parts a machine lacks and with the names of its real parts
 - Fixed farms contracting for another being unable to use its trolley, charger and fluids, as the game allows
 - Removed the raised fill type limit, which the game itself raises to 1023 since patch 1.25.1.0
 - Fixed the buttons of the settings page
@@ -82,6 +88,7 @@ Changelog 1.0.0.0-beta.1:
 - Fixed the jumper cable clamps held off the left hand
 - Fixed the wheel slip following the 4WD switch instead of the front axle after a 4WD engagement failure
 - Fixed the differential lock not holding a spinning wheel in 4WD, and only partly in 2WD
+- Fixed the PTO dropping out without a warning in single player
 
 Changelog 0.13.0.1:
 - Fixed the game freezing while loading a savegame with some mods that switch a machine's lights
@@ -237,7 +244,7 @@ Changelog 0.10.0.0:
 
         <de><![CDATA[Ihre Maschinen verschleißen endlich wie echte.
 
-Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle. Jedes besteht aus den echten Teilen, die darin ausfallen, und jedes Teil verschleißt aus eigenen Gründen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
+Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle, bei einer Erntemaschine die Ernteorgane anstelle der Zapfwelle. Jedes besteht aus den echten Teilen, die darin ausfallen, und jedes Teil verschleißt aus eigenen Gründen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
 
 VERSCHLEISS
 - Der Zustand sinkt im Normalbetrieb um etwa 1 % je Betriebsstunde, bei Missbrauch deutlich schneller, und jedes System hat eigene Verschleißfaktoren
@@ -246,7 +253,7 @@ VERSCHLEISS
 - Überfällige Wartung beschleunigt den Verschleiß der vom überfälligen Flüssigkeitswechsel betroffenen Systeme, allen voran des Motors
 
 DEFEKTE
-- 47 Defekte, verteilt auf die 8 Systeme, jeweils in vier Stufen von geringfügig bis kritisch
+- 162 Defekte, verteilt auf die Systeme, meist in vier Stufen von geringfügig bis kritisch
 - Es fällt das Teil aus, das Ihre Nutzung verschlissen hat: Häufiges Bremsen mit schwerem Anhänger verschleißt zuerst die Bremsen
 - Frühe Defekte zeigen sich durch schwankende Drehzahl, farbigen Abgasrauch, Klopfen und Pfeifen; Warnanzeigen leuchten meist ab Stufe 2, bei manchen Defekten schon ab Stufe 1
 - Alte Maschinen bauen zudem dauerhaft ab und verlieren Motorleistung, Kraftübertragung, Batterieleistung und Kühlwirkung
@@ -265,7 +272,7 @@ TÄGLICHE PFLEGE
 - Telwin Doctor Charge 155 Connect auf einem Wagen: neben einem Fahrzeug anschließen, um seine Batterie mit dem Strom zu laden, den sie aufnimmt, oder für die Starthilfe (START); das Laden folgt der Zeitgeschwindigkeit im Spiel und wird beim Laden des Spielstands fortgesetzt
 - R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler, Luftfilter und Abschmierung vor Schichtbeginn
 - Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter
-- SKF-Fettpresse, geladen mit SKF-Fettkartuschen, einzeln oder bis zu zwölf im Karton gekauft. Jede Maschine und jedes Anbaugerät hat eigene Schmierstellen, nach den Betriebsstunden, an jedem Arbeitstag oder alle paar Monate abzuschmieren: Jeder Klick schmiert eine, eine Anzeige zeigt das Fett in der Kartusche und jede abgeschmierte Stelle, und verspätetes Abschmieren verschleißt die Maschine schneller. Die Fuhrpark-Seite listet jedes Anbaugerät mit seinen Schmierstellen
+- SKF-Fettpresse, geladen mit SKF-Fettkartuschen, einzeln oder bis zu zwölf im Karton gekauft. Jede Maschine und jedes Anbaugerät hat eigene Schmierstellen, an jedem Arbeitstag, alle paar Arbeitstage oder alle paar Monate abzuschmieren: Jeder Klick schmiert eine, eine Anzeige zeigt das Fett in der Kartusche und jede abgeschmierte Stelle, und verspätetes Abschmieren verschleißt die Maschine schneller. Die Fuhrpark-Seite listet jedes Anbaugerät mit seinen Schmierstellen
 - Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
 
 SIMULATION
@@ -294,6 +301,12 @@ Changelog 1.0.0.0-beta.1:
 - Fettkartuschen für die Fettpresse hinzugefügt
 - Abschmierung mit den Schmierstellen jeder Maschine überarbeitet
 - Abschmierung der Anbaugeräte und ihrer Gelenkwellen hinzugefügt, auf der Fuhrpark-Seite angezeigt
+- Ernteorgane selbstfahrender Erntemaschinen hinzugefügt, die durch ihre Arbeit verschleißen, mit Ernteverlusten, Verstopfungen und Stillständen bei zunehmendem Verschleiß
+- Ersatz verschlissener Ernteorgane bei der vorbeugenden Wartung hinzugefügt, die Teile werden berechnet
+- Von RMS selbst gemessene Erntebelastung hinzugefügt, wenn Realistic Harvesting nicht installiert ist
+- Integration mit Realistic Harvesting hinzugefügt (Version 1.6.5.0 oder höher), mit gemeinsamer Erntebelastung und gemeinsamem Verschleiß der Ernteteile
+- Zündkerzen für Methanmotoren hinzugefügt, bei der Wartung gewechselt, überfällig mit Zündaussetzern
+- Defekte je Maschinentyp überarbeitet, ohne die Teile, die einer Maschine fehlen, und mit den Namen ihrer echten Teile
 - Lohnunternehmer-Höfe konnten Werkzeugwagen, Ladegerät und Flüssigkeiten des Auftraggebers nicht nutzen, behoben
 - Angehobenes Fülltypen-Limit entfernt, das Spiel selbst hebt es seit Patch 1.25.1.0 auf 1023 an
 - Fehler der Schaltflächen der Einstellungsseite behoben
@@ -309,6 +322,7 @@ Changelog 1.0.0.0-beta.1:
 - Fehler behoben, durch den die Klemmen der Starthilfekabel neben der linken Hand gehalten wurden
 - Fehler behoben, durch den der Schlupf nach einem Ausfall der Allradzuschaltung dem Allradschalter statt der Vorderachse folgte
 - Fehler behoben, durch den die Differentialsperre ein durchdrehendes Rad im Allradbetrieb nicht und im Hinterradantrieb nur teilweise hielt
+- Fehler behoben, durch den die Zapfwelle im Einzelspieler ohne Warnung auskuppelte
 
 Changelog 0.13.0.1:
 - Hängenbleiben beim Laden des Spielstands mit Mods, die die Beleuchtung einer Maschine schalten, behoben
@@ -464,7 +478,7 @@ Changelog 0.10.0.0:
         
         <fr><![CDATA[Vos machines s'usent enfin comme les vraies.
 
-Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force. Chacun est fait des vraies pièces qui y lâchent, chacune s'usant pour ses propres raisons. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
+Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force, les organes de récolte prenant la place de la prise de force sur une machine de récolte. Chacun est fait des vraies pièces qui y lâchent, chacune s'usant pour ses propres raisons. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
 
 USURE
 - L'état baisse d'environ 1 % par heure de fonctionnement en usage normal, bien plus vite en cas d'abus, et chaque système a ses propres facteurs d'usure
@@ -473,7 +487,7 @@ USURE
 - Un entretien en retard accélère l'usure des systèmes couverts par le fluide à remplacer, du moteur en premier
 
 PANNES
-- 47 pannes réparties sur les 8 systèmes, chacune en quatre stades, de mineur à critique
+- 162 pannes réparties sur les systèmes, la plupart en quatre stades, de mineur à critique
 - La pièce qui lâche est celle que votre usage a usée : freiner souvent avec une lourde remorque use d'abord les freins
 - Les premiers stades se manifestent par un régime instable, une fumée colorée, des cognements ou des sifflements ; les témoins apparaissent généralement au stade 2, mais certaines pannes peuvent en afficher dès le stade 1
 - Les machines âgées se dégradent aussi durablement et perdent puissance moteur, transmission, performance de batterie et efficacité de refroidissement
@@ -492,7 +506,7 @@ ENTRETIEN QUOTIDIEN
 - Telwin Doctor Charge 155 Connect sur chariot : branchez-le près d'un véhicule pour recharger sa batterie au courant qu'elle accepte, ou pour l'aide au démarrage (START) ; la recharge suit la vitesse du temps de la partie et reprend au chargement de la sauvegarde
 - Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air, graissage
 - La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air
-- Pistolet à graisse SKF, chargé de cartouches de graisse SKF achetées à l'unité ou jusqu'à douze dans un carton. Chaque machine et chaque outil attelé a ses propres graisseurs, à graisser après ses heures de travail, chaque jour de travail ou tous les quelques mois : chaque clic en graisse un, un affichage montre la graisse restant dans la cartouche et chaque graisseur fait, et un graissage en retard use la machine plus vite. Le parc de matériel liste chaque outil avec ses graisseurs
+- Pistolet à graisse SKF, chargé de cartouches de graisse SKF achetées à l'unité ou jusqu'à douze dans un carton. Chaque machine et chaque outil attelé a ses propres graisseurs, à graisser chaque jour de travail, tous les quelques jours de travail ou tous les quelques mois : chaque clic en graisse un, un affichage montre la graisse restant dans la cartouche et chaque graisseur fait, et un graissage en retard use la machine plus vite. Le parc de matériel liste chaque outil avec ses graisseurs
 - Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
 
 SIMULATION
@@ -521,6 +535,12 @@ Changelog 1.0.0.0-beta.1 :
 - Ajout des cartouches de graisse pour le pistolet à graisse
 - Refonte du graissage avec les graisseurs de chaque machine
 - Ajout du graissage des outils attelés et de leurs cardans, affiché dans le parc de matériel
+- Ajout des organes de récolte des machines de récolte automotrices, usés par le travail qu'ils font, avec des pertes de récolte, des bourrages et des arrêts à mesure qu'ils s'usent
+- Ajout du remplacement des organes de récolte usés à la révision préventive, leurs pièces facturées
+- Ajout de l'effort de récolte mesuré par RMS lui-même quand Realistic Harvesting n'est pas installé
+- Ajout de l'intégration avec Realistic Harvesting (version 1.6.5.0 ou supérieure), qui partage l'effort de récolte et l'usure des organes de récolte
+- Ajout des bougies d'allumage des moteurs au méthane, changées à l'entretien, avec des ratés une fois en retard
+- Refonte des pannes de chaque type de machine, sans les pièces qu'elle n'a pas et avec le nom de ses vrais organes
 - Correction des fermes sous-traitantes, qui ne pouvaient pas utiliser le chariot, le chargeur et les fluides de la ferme qui les emploie, comme le jeu le permet
 - Suppression du relèvement de la limite des types de remplissage, que le jeu porte lui-même à 1023 depuis le patch 1.25.1.0
 - Correction des boutons de la page des paramètres
@@ -536,6 +556,7 @@ Changelog 1.0.0.0-beta.1 :
 - Correction des pinces des câbles de démarrage tenues à côté de la main gauche
 - Correction du patinage qui suivait le commutateur des 4RM au lieu du pont avant après une défaillance de l'enclenchement des 4RM
 - Correction du blocage de différentiel qui ne retenait pas une roue qui patine en 4RM, et seulement en partie en 2RM
+- Correction de la PDF qui décrochait sans alerte en solo
 
 Changelog 0.13.0.1 :
 - Correction du chargement de la partie qui se figeait avec certains mods qui commandent les feux d'une machine

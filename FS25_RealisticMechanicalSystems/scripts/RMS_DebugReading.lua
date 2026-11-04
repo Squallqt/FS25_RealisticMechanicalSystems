@@ -14,7 +14,8 @@ local SYSTEMS = {
     {key = "electrical", name = "Electrical"},
     {key = "chassis", name = "Chassis"},
     {key = "fuel", name = "Fuel", electricName = "Traction battery", word = "fuel"},
-    {key = "pto", name = "PTO", word = "pto"}
+    {key = "pto", name = "PTO", word = "pto"},
+    {key = "harvest", name = "Harvest", word = "harvest"}
 }
 
 local ACRONYMS = {cvt = "CVT", ecu = "ECU", nox = "NOx", adblue = "AdBlue", hv = "HV", dcdc = "DC/DC", pto = "PTO", gcw = "GCW", ["4wd"] = "4WD"}
@@ -125,7 +126,13 @@ local CAUSES = {
     idfg = {"Sudden damage", "damage", function() return "" end},
     plf = {"PTO load", "PTO load", function(_, spec) return pct(spec.ptoUtilization) .. " of its power" end},
     pef = {"PTO engagements", "engagements", function(_, spec) return string.format("%d engagements", spec.ptoEngagementCount) end},
-    prf = {"PTO raised", "PTO raised", function(_, spec) return string.format("%.0f rpm, tool raised", spec.ptoRpm) end}
+    prf = {"PTO raised", "PTO raised", function(_, spec) return string.format("%.0f rpm, tool raised", spec.ptoRpm) end},
+    hef = {"Harvest overload", "overload", function(f) return "effort " .. pct(f.harvestEffort) end},
+    hgf = {"Grain flow", "grain flow", function(f) return string.format("%.0f t/h grain", f.harvestTonPerHour) end},
+    hsf = {"Chopper load", "chopper", function(f) return string.format("%.0f kW chopping", f.harvestChopperKw) end},
+    hstf = {"Stones", "stones", function(f) return string.format("stone wear x%.2f", 1 + f.harvestStone) end},
+    hrf = {"Rice", "rice", function() return "abrasive rice straw" end},
+    hwf = {"Wet crop", "wet crop", function(f) return f.harvestSource == "rh" and "crop too damp" or "rain on the crop" end}
 }
 
 local SOURCES = {"wear", "poor parts", "quick fix"}
@@ -657,7 +664,8 @@ local function readMachine(vehicle, spec, reading)
     table.insert(filters, "radiator " .. pct(spec.radiatorClogging))
     if not spec.isElectricVehicle then table.insert(filters, "fuel " .. pct(spec.fuelFilterClogging)) end
     table.insert(filters, "hydraulic " .. pct(spec.hydraulicFilterClogging))
-    for _, filter in ipairs({ { "TRANSMISSION_FILTER_CLOGGING", "transmission " }, { "ADBLUE_FILTER_CLOGGING", "AdBlue " } }) do
+    for _, filter in ipairs({ { "TRANSMISSION_FILTER_CLOGGING", "transmission " }, { "ADBLUE_FILTER_CLOGGING", "AdBlue " },
+        { "SPARK_PLUG_WEAR", "spark plugs " } }) do
         local entry = RMS_Consumables.getFilterOfBreakdown(filter[1])
         if RMS_Consumables.getHasFilter(vehicle, entry) then
             table.insert(filters, filter[2] .. pct(spec[entry.stateKey]))
@@ -726,6 +734,15 @@ local function readMachine(vehicle, spec, reading)
     end
     if #axles > 0 then
         table.insert(rows, {"Axles", table.concat(axles, SEP)})
+    end
+    if spec.systems.harvest.enabled then
+        local state = spec.harvestState or {}
+        local loss = spec.activeEffects.HARVEST_GRAIN_LOSS ~= nil and spec.activeEffects.HARVEST_GRAIN_LOSS.value or 0
+        local work = not spec.isHarvestRunning and "stopped" or string.format("%s  ·  %.0f t/h  ·  rotary %.0f kW, %s of full work  ·  "
+            .. "chopper %.0f kW", tostring(state.crop):lower(), state.tonPerHour, state.rotaryKw, pct(state.effort), state.chopperKw)
+        table.insert(rows, {"Harvest", string.format("%s  ·  measured by %s  ·  %s  ·  %.0f t harvested  ·  grain lost to wear %.1f %%",
+            state.kind or RMS_Drivetrain.getHarvestKind(vehicle), state.source == "rh" and "Realistic Harvesting" or "RMS", work,
+            state.tons or 0, loss * 100)})
     end
     if spec.systems.pto.enabled ~= false then
         table.insert(rows, {"PTO", string.format("%s  ·  %.0f rpm  ·  %.0f kW  ·  %s used  ·  %d engagements", spec.isPtoActive and "on" or "off",

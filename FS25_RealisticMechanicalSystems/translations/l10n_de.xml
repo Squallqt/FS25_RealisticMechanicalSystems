@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Fahrwerk"/>
         <text name="rms_spec_system_fuel" text="Kraftstoffsystem"/>
         <text name="rms_spec_system_pto" text="Zapfwelle"/>
+        <text name="rms_spec_system_harvest" text="Ernte"/>
         <text name="rms_spec_system_electric_motor" text="Elektromotor"/>
         <text name="rms_spec_system_traction_battery" text="Traktionsbatterie"/>
         <text name="rms_spec_state_ready" text="Bereit"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Batterie überhitzt"/>
         <text name="rms_report_wear_lubrication" text="Schmierung überfällig"/>
         <text name="rms_report_wear_pto_overload" text="Zapfwelle überlastet"/>
+        <text name="rms_report_wear_harvest_overload" text="Ernte überlastet"/>
+        <text name="rms_report_wear_harvest_flow" text="Hoher Kornfluss"/>
+        <text name="rms_report_wear_harvest_straw" text="Häcksler überlastet"/>
+        <text name="rms_report_wear_harvest_stones" text="Steine"/>
+        <text name="rms_report_wear_harvest_rice" text="Reisernte"/>
+        <text name="rms_report_wear_harvest_wet" text="Feuchtes Erntegut"/>
         <text name="rms_report_component_title" text="Komponente"/>
         <text name="rms_report_system_condition_transmission" text="Getriebe"/>
         <text name="rms_report_system_condition_power" text="Aktuelle Leistung"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Menge"/>
         <text name="rms_grease_hud_title" text="Schmierung"/>
         <text name="rms_grease_hud_done" text="Erledigt"/>
+        <text name="rms_grease_hud_greased" text="Abgeschmiert"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Druckluftgebläse"/>
         <text name="rms_air_blower_no_vehicle" text="Kein Fahrzeug in Reinigungsreichweite"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Die Inspektion zeigt spürbares Spiel an den Bolzen und Buchsen der Frontladergelenke."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Die Inspektion zeigt großes Spiel an den Bolzen und Buchsen der Frontladergelenke."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Die Inspektion zeigt sehr großes Spiel an den Bolzen und Buchsen der Frontladergelenke."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Die Inspektion zeigt beginnenden Verschleiß an den Bolzen und Buchsen des Hubmasts."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Die Inspektion zeigt spürbares Spiel an den Bolzen und Buchsen des Hubmasts."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Die Inspektion zeigt großes Spiel an den Bolzen und Buchsen des Hubmasts."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Die Inspektion zeigt sehr großes Spiel an den Bolzen und Buchsen des Hubmasts."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Die Inspektion zeigt beginnenden Verschleiß an den Bolzen und Buchsen des Krans."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Die Inspektion zeigt spürbares Spiel an den Bolzen und Buchsen des Krans."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Die Inspektion zeigt großes Spiel an den Bolzen und Buchsen des Krans."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Die Inspektion zeigt sehr großes Spiel an den Bolzen und Buchsen des Krans."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Die Inspektion zeigt beginnenden Verschleiß an den Bolzen und Buchsen des Fräsarms."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Die Inspektion zeigt spürbares Spiel an den Bolzen und Buchsen des Fräsarms."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Die Inspektion zeigt großes Spiel an den Bolzen und Buchsen des Fräsarms."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Die Inspektion zeigt sehr großes Spiel an den Bolzen und Buchsen des Fräsarms."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Die Inspektion zeigt beginnenden Verschleiß an den Bolzen und Buchsen des Schildarms."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Die Inspektion zeigt spürbares Spiel an den Bolzen und Buchsen des Schildarms."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Die Inspektion zeigt großes Spiel an den Bolzen und Buchsen des Schildarms."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Die Inspektion zeigt sehr großes Spiel an den Bolzen und Buchsen des Schildarms."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Ein Kabinenstoßdämpfer ist leicht feucht."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="An einem Kabinenstoßdämpfer tritt Schwitzöl aus."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Ein Kabinenstoßdämpfer weist ein aktives Leck auf."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Teile erfasst %s"/>
         <text name="rms_fleet_parts_need_complete" text="Teileerfassung bei nächster vollständiger Inspektion"/>
         <text name="rms_fleet_greasing_done" text="Schmierung erledigt"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s h Arbeit"/>
+        <text name="rms_fleet_greasing_period_days" text="Alle %d Einsatztage"/>
         <text name="rms_fleet_greasing_period_day" text="Jeder Einsatztag"/>
         <text name="rms_fleet_greasing_period_month" text="Jeden Monat"/>
         <text name="rms_fleet_greasing_period_months" text="Alle %d Monate"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d Tage überfällig"/>
         <text name="rms_fleet_greasing_to_do" text="%d offen"/>
         <text name="rms_fleet_greasing_points" text="Schmiernippel"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Am häufigsten"/>
         <text name="rms_fleet_greasing_next" text="Nächste Schmierung"/>
         <text name="rms_fleet_greasing_now" text="Jetzt"/>
         <text name="rms_fleet_greasing_in" text="noch %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Schneller"/>
         <text name="rms_fleet_wear_normal" text="Normal"/>
         <text name="rms_fleet_wear_late" text="Schmierverzug"/>
-        <text name="rms_fleet_wear_dry" text="Verschleiß ohne Fett"/>
         <text name="rms_fleet_wear_repair_greases" text="Bei Reparatur geschmiert"/>
         <text name="rms_fleet_wear_repair" text="Reparatur in der Werkstatt"/>
         <text name="rms_fleet_wear_none" text="Keiner"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Kühlsystem und Luftfilter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Der Kühler oder der Luftfilter ist verschmutzt. Halte die Taste %s gedrückt, während du das Fahrzeug ansiehst, um zu erkennen, welcher betroffen ist. Reinige ihn mit dem Druckluftgebläse. Lässt sich der Filter nicht mehr ausblasen, ersetzt ihn die Werkstatt ab der Wartung %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Schmierung erforderlich"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s hat Schmiernippel, die geschmiert werden müssen.&#10;&#10;In RMS hat jede Maschine die Schmiernippel ihrer Betriebsanleitung. Sie werden nach einer bestimmten Anzahl Betriebsstunden wieder fällig, bei manchen Maschinen an jedem Arbeitstag. Verspätetes Schmieren beschleunigt den Verschleiß des Fahrwerks.&#10;&#10;Kauf im Shop eine Fettpresse und Kartuschen. Ziele mit der Fettpresse in der Hand auf eine Kartusche, um sie zu laden, dann auf die Maschine: Jeder Klick schmiert einen Schmiernippel. Gedrückthalten setzt das Schmieren am nächsten fort.&#10;&#10;Halte die Taste %s gedrückt und sieh die Maschine an, um die noch zu schmierenden Schmiernippel zu sehen."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s hat Schmiernippel, die geschmiert werden müssen.&#10;&#10;In RMS hat jede Maschine die Schmiernippel ihrer Betriebsanleitung. Sie werden an den Einsatztagen der Maschine wieder fällig: an jedem Arbeitstag oder alle paar Arbeitstage bei denen, die die Betriebsanleitung seltener schmiert. Verspätetes Schmieren beschleunigt den Verschleiß des Fahrwerks.&#10;&#10;Kauf im Shop eine Fettpresse und Kartuschen. Stell dich mit der Fettpresse in der Hand vor eine Kartusche, um sie zu laden, und ziele dann auf die Maschine: Jeder Klick schmiert einen Schmiernippel. Gedrückthalten setzt das Schmieren am nächsten fort.&#10;&#10;Halte die Taste %s gedrückt und sieh die Maschine an, um die noch zu schmierenden Schmiernippel zu sehen."/>
         <text name="rms_tutorial_needs_repair_title" text="Schaden festgestellt"/>
         <text name="rms_tutorial_needs_repair_message" text="Dein %s hat ein Problem. Eines seiner Teile ist möglicherweise ausgefallen.&#10;&#10;Fahr zur Werkstatt: Eine Inspektion, oder die Wartung, wenn sie fällig ist, stellt den Schaden fest. Warte nicht: Der Schaden kann sich weiter verschlimmern, und die Reparaturkosten steigen mit ihm.&#10;&#10;Ist der Schaden festgestellt, lass ihn in der Werkstatt reparieren."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Überholung erforderlich"/>

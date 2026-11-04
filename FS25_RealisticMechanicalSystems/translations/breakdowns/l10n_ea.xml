@@ -40,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Desgaste moderado de los bulones y casquillos de las articulaciones del cargador. El juego en las articulaciones del brazo se vuelve perceptible."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Desgaste severo de los bulones y casquillos de las articulaciones del cargador. El brazo presenta un juego importante."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Desgaste crítico de los bulones y casquillos de las articulaciones del cargador. El juego del brazo es muy importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Desgaste leve de los bulones y casquillos del mástil. Aparece un ligero juego en las articulaciones del mástil."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Desgaste moderado de los bulones y casquillos del mástil. El juego en las articulaciones del mástil se vuelve perceptible."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Desgaste severo de los bulones y casquillos del mástil. El mástil presenta un juego importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Desgaste crítico de los bulones y casquillos del mástil. El juego del mástil es muy importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Desgaste leve de los bulones y casquillos de la grúa. Aparece un ligero juego en las articulaciones de la grúa."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Desgaste moderado de los bulones y casquillos de la grúa. El juego en las articulaciones de la grúa se vuelve perceptible."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Desgaste severo de los bulones y casquillos de la grúa. La grúa presenta un juego importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Desgaste crítico de los bulones y casquillos de la grúa. El juego de la grúa es muy importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Desgaste leve de los bulones y casquillos del brazo desensilador. Aparece un ligero juego en las articulaciones del brazo."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Desgaste moderado de los bulones y casquillos del brazo desensilador. El juego en las articulaciones del brazo se vuelve perceptible."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Desgaste severo de los bulones y casquillos del brazo desensilador. El brazo presenta un juego importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Desgaste crítico de los bulones y casquillos del brazo desensilador. El juego del brazo es muy importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Desgaste leve de los bulones y casquillos del brazo portapala. Aparece un ligero juego en las articulaciones del brazo."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Desgaste moderado de los bulones y casquillos del brazo portapala. El juego en las articulaciones del brazo se vuelve perceptible."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Desgaste severo de los bulones y casquillos del brazo portapala. El brazo presenta un juego importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Desgaste crítico de los bulones y casquillos del brazo portapala. El juego del brazo es muy importante."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Fuga leve de un amortiguador de cabina. La cabina está algo menos amortiguada."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Fuga moderada de un amortiguador de cabina. La cabina rebota en los baches."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Fuga severa de un amortiguador de cabina. La cabina se balancea con cada sacudida."/>
@@ -118,6 +134,10 @@
         <text name="rms_breakdowns_part_synchronizer" text="Sincronizador"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Rótulas y barras de dirección"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Bulones y casquillos de las articulaciones del cargador"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Bulones y casquillos del mástil"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Bulones y casquillos de la grúa"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Bulones y casquillos del brazo desensilador"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Bulones y casquillos del brazo portapala"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pivotes de mangueta"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol de dirección"/>
         <text name="rms_breakdowns_part_steering_box" text="Caja de dirección"/>
@@ -154,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Filtro de gas"/>
         <text name="rms_breakdowns_part_gas_lines" text="Conductos de gas"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Inyectores de gas"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Bujías"/>
         <text name="rms_breakdowns_part_adblue_pump" text="Bomba de AdBlue"/>
         <text name="rms_breakdowns_part_adblue_doser" text="Inyector dosificador de AdBlue"/>
         <text name="rms_breakdowns_part_adblue_filter" text="Filtro de AdBlue"/>
@@ -561,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Fallo moderado de los inyectores de gas. El motor vacila, pierde potencia, consume más y puede calarse."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Fallo severo de los inyectores de gas. Un inyector dosifica muy mal: gran pérdida de potencia, consumo excesivo y arranque difícil."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Fallo crítico de los inyectores de gas. La dosificación ya no permite que el motor funcione: se para."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Las bujías llegan al final de su intervalo: aparecen fallos de encendido con carga alta, el motor gira menos fino y consume algo más. La revisión las sustituye."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Las bujías están desgastadas: los fallos de encendido se vuelven frecuentes, el motor pierde potencia, consume más y puede calarse. Se enciende el testigo del motor."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Las bujías están muy desgastadas: gran pérdida de potencia, consumo excesivo y arranque difícil."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Las bujías están inservibles: fallos de encendido constantes, el motor puede calarse y no arrancar."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Fallo de la bomba de AdBlue. Ya no alimenta la dosificación: se enciende el testigo del motor y después la unidad de control reduce la potencia hasta la reparación."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Fallo del inyector dosificador de AdBlue. Obstruido por cristales, ya no pulveriza: se enciende el testigo del motor y después la potencia baja hasta la reparación."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="El filtro de AdBlue llega al final de su intervalo y empieza a obstruirse. La revisión más completa lo sustituye."/>
@@ -630,6 +655,10 @@
         <text name="rms_breakdowns_part_lift_position_sensor" text="Sensor de posición del elevador"/>
         <text name="rms_breakdowns_part_header_height_sensor" text="Sensor de altura del cabezal"/>
         <text name="rms_breakdowns_part_loader_control" text="Mando del cargador"/>
+        <text name="rms_breakdowns_part_mast_control" text="Mando del mástil"/>
+        <text name="rms_breakdowns_part_boom_control" text="Mando de la grúa"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Mando del brazo desensilador"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Mando del brazo portapala"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Acoplamientos hidráulicos rápidos"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Fallo leve del embrague. No se desacopla por completo. Algunas marchas entran con dificultad."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Fallo moderado del embrague. El mecanismo libera mal el disco. Se rechazan marchas con más frecuencia."/>
@@ -709,6 +738,22 @@
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Fallo moderado del mando del cargador. El brazo y el cucharón solo se mueven a media velocidad."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Fallo severo del mando del cargador. El brazo y el cucharón apenas se mueven."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Fallo crítico del mando del cargador. El brazo y el cucharón ya no responden."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Fallo leve del mando del mástil. El mástil y las horquillas responden más despacio."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Fallo moderado del mando del mástil. El mástil y las horquillas solo se mueven a media velocidad."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Fallo severo del mando del mástil. El mástil y las horquillas apenas se mueven."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Fallo crítico del mando del mástil. El mástil y las horquillas ya no responden."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Fallo leve del mando de la grúa. La grúa y su herramienta responden más despacio."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Fallo moderado del mando de la grúa. La grúa y su herramienta solo se mueven a media velocidad."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Fallo severo del mando de la grúa. La grúa y su herramienta apenas se mueven."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Fallo crítico del mando de la grúa. La grúa y su herramienta ya no responden."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Fallo leve del mando del brazo desensilador. El brazo responde más despacio."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Fallo moderado del mando del brazo desensilador. El brazo solo se mueve a media velocidad."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Fallo severo del mando del brazo desensilador. El brazo apenas se mueve."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Fallo crítico del mando del brazo desensilador. El brazo ya no responde."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Fallo leve del mando del brazo portapala. El brazo y la pala responden más despacio."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Fallo moderado del mando del brazo portapala. El brazo y la pala solo se mueven a media velocidad."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Fallo severo del mando del brazo portapala. El brazo y la pala apenas se mueven."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Fallo crítico del mando del brazo portapala. El brazo y la pala ya no responden."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Fallo leve del cilindro hidráulico. El retén del vástago deja escapar algo de aceite. Aparece una ligera humedad alrededor del vástago."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Fallo moderado del cilindro hidráulico. El retén del vástago ya no sella bien. El cilindro rezuma y baja el nivel de aceite."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Fallo severo del cilindro hidráulico. El retén del vástago presenta una fuga activa. El cilindro pierde bastante aceite."/>
@@ -737,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Desgaste crítico de los rodamientos de eje. Un rodamiento ha cedido, el grupo cónico está dañado y el eje ya no transmite tracción."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Fallo del mando del bloqueo del diferencial. El bloqueo no acopla. El diferencial permanece libre."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Fallo del mando del bloqueo del diferencial. El bloqueo permanece acoplado. La máquina se resiste a girar en las curvas."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Correas y variadores"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Rodamientos y cajas de transmisión"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Cadena del alimentador"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Acelerador de alimentación"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Barras desgranadoras"/>
+        <text name="rms_breakdowns_part_concave" text="Cóncavo"/>
+        <text name="rms_breakdowns_part_separation" text="Púas y sacudidores de separación"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Cribas de limpieza"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Sinfines y elevadores de grano"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Picador y esparcidor de paja"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Rodillos de alimentación"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Detector de metales y piedras"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Tambor picador"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Cuchillas del tambor picador"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Contracuchilla"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Procesador de grano"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Acelerador y soplante"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Tubo de descarga"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Deshojadora y descoronadores"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Rejas arrancadoras"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Turbinas de limpieza"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Elevador de remolacha"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Fondo móvil y cinta de descarga"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Cintas cribadoras"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Separador de matas y rodillos"/>
+        <text name="rms_breakdowns_part_picking_units" text="Unidades de recolección"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Humidificador de husillos"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Ventilador y conductos"/>
+        <text name="rms_breakdowns_part_module_builder" text="Cámara de formación de módulos"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Cuchillas de base"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Rodillos de alimentación"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Tambores troceadores"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Extractor primario"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Elevador de caña"/>
+        <text name="rms_breakdowns_part_shaker" text="Sistema de sacudida"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Escamas de recepción"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Transportadores de cangilones"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Aspiradores de limpieza"/>
+        <text name="rms_breakdowns_part_destemmer" text="Despalilladora"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Cabezal de recolección"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Soplante y cribas de limpieza"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevadores y transportadores"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Cosecha imposible: un órgano de cosecha está roto"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Atasco: la cosecha se ha detenido"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Picador roto: la paja cae en hilera"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Picador roto: este cultivo ya no se puede cosechar"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Desgaste inicial de las correas de los órganos. Patinan un poco con carga."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Desgaste moderado de las correas de los órganos. Un órgano se ralentiza con carga y la alarma de régimen a veces detiene la cosecha."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Desgaste severo de las correas de los órganos. El rendimiento baja y las paradas se repiten."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Fallo crítico de las correas de los órganos. Una correa se ha roto: la cosecha es imposible."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Desgaste inicial de los rodamientos de transmisión de los órganos. Aparece un leve rumor durante la cosecha."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Desgaste moderado de los rodamientos de transmisión de los órganos. El rumor se oye claramente y se calientan."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Desgaste severo de los rodamientos de transmisión de los órganos. El rumor aumenta y los ejes cogen holgura."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Fallo crítico de los rodamientos de transmisión de los órganos. Un rodamiento se ha gripado: la cosecha es imposible."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Desgaste inicial de la cadena del alimentador. Se alarga y la alimentación se vuelve irregular."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Desgaste moderado de la cadena del alimentador. Se forman atascos a la entrada del alimentador."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Desgaste severo de la cadena del alimentador. Salta en los piñones y los atascos se repiten."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Fallo crítico de la cadena del alimentador. La cadena se ha roto: ya no entra nada en la máquina."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Desgaste inicial del acelerador de alimentación. El cultivo llega al cilindro de forma menos regular."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Desgaste moderado del acelerador de alimentación. El rendimiento se estanca y aparecen atascos."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Desgaste severo del acelerador de alimentación. El rendimiento baja y los atascos se repiten."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Fallo crítico del acelerador de alimentación. Una paleta se ha arrancado: la cosecha es imposible."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Desgaste inicial de las barras desgranadoras. Parte del grano queda en las espigas y vuelve al campo."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Desgaste moderado de las barras desgranadoras. El cilindro vibra y las pérdidas de grano aumentan."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Desgaste severo de las barras desgranadoras. Algunas barras están rotas: pérdidas fuertes y atascos."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Fallo crítico de las barras desgranadoras. Una barra se ha arrancado: la trilla es imposible."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Desgaste inicial del cóncavo. El grano se trilla peor y una parte vuelve al campo."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Desgaste moderado del cóncavo. Las pérdidas de grano aumentan."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Desgaste severo del cóncavo. El grano se parte, las pérdidas son fuertes y aparecen atascos."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Fallo crítico del cóncavo. Una barra se ha arrancado: la trilla es imposible."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Desgaste inicial de la separación. Queda grano en la paja y vuelve al campo."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Desgaste moderado de la separación. Las pérdidas de grano en la paja aumentan."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Desgaste severo de la separación. Pérdidas fuertes y atascos de paja."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Fallo crítico de la separación. La paja ya no pasa: la cosecha es imposible."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Desgaste inicial de las cribas de limpieza. Llega granza a la tolva y algo de grano se va con los residuos."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Desgaste moderado de las cribas de limpieza. Las pérdidas en las cribas aumentan."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Desgaste severo de las cribas de limpieza. Una criba está agrietada: pérdidas fuertes y atascos."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Fallo crítico de las cribas de limpieza. La limpieza ya no funciona: la cosecha es imposible."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Desgaste inicial de los sinfines y elevadores de grano. El flujo hacia la tolva baja."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Desgaste moderado de los sinfines y elevadores de grano. Parte del grano se parte o se pierde por el camino."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Desgaste severo de los sinfines y elevadores de grano. El elevador se atasca con regularidad."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Fallo crítico de los sinfines y elevadores de grano. La tolva ya no se llena: la cosecha es imposible."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Desgaste inicial del picador. La paja se pica menos corta y el picador pide algo más de potencia."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Desgaste moderado del picador. El picador vibra y pide más potencia."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Desgaste severo del picador. El rotor está desequilibrado y consume mucha potencia."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Fallo crítico del picador. Una cuchilla se ha roto: el picador está parado y la paja cae en hilera."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Desgaste inicial de los rodillos de alimentación. Agarran peor el cultivo: la alimentación se vuelve irregular."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Desgaste moderado de los rodillos de alimentación. La longitud de corte se vuelve desigual y aparecen atascos."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Desgaste severo de los rodillos de alimentación. El rendimiento baja y los atascos se repiten."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Fallo crítico de los rodillos de alimentación. Ya no entra nada en la máquina: la cosecha es imposible."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Fallo inicial del detector de metales y piedras. Falsas alarmas detienen a veces la alimentación."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Fallo moderado del detector de metales y piedras. Las paradas innecesarias se repiten."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Fallo del detector de metales y piedras. Ya no detecta nada: las piedras llegan a las cuchillas y las desgastan mucho más rápido."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Desgaste inicial del tambor picador. Vibra ligeramente y pide algo más de potencia."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Desgaste moderado del tambor picador. El tambor está desequilibrado y pide más potencia."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Desgaste severo del tambor picador. Un soporte de cuchilla está agrietado: más potencia y atascos."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Fallo crítico del tambor picador. El tambor está dañado: la cosecha es imposible."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Desgaste inicial de las cuchillas. El corte es menos limpio y pide algo más de potencia."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Desgaste moderado de las cuchillas. Piden más potencia y más combustible."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Desgaste severo de las cuchillas. El corte es irregular, la potencia necesaria sube y aparecen atascos."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Fallo crítico de las cuchillas. Una cuchilla se ha roto: la cosecha es imposible."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Desgaste inicial de la contracuchilla. La holgura aumenta: el corte pide algo más de potencia."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Desgaste moderado de la contracuchilla. El corte desgarra y pide más potencia."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Desgaste severo de la contracuchilla. Su arista está gastada: más potencia y atascos."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Fallo crítico de la contracuchilla. Está inservible: la cosecha es imposible."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Desgaste inicial del procesador de grano. Los granos se parten peor y el procesador pide algo más de potencia."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Desgaste moderado del procesador de grano. Pasan granos enteros y la potencia necesaria aumenta."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Desgaste severo del procesador de grano. Un rodillo está rayado: más potencia y atascos."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Fallo crítico del procesador de grano. Un rodillo está bloqueado: la cosecha es imposible."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Desgaste inicial del acelerador. El lanzamiento es más corto y el rendimiento baja un poco."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Desgaste moderado del acelerador. El tubo de descarga se atasca a veces."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Desgaste severo del acelerador. Una paleta se ha arrancado: atascos frecuentes y forraje perdido."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Fallo crítico del acelerador. El forraje ya no se expulsa: la cosecha es imposible."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Desgaste inicial del tubo de descarga. El chorro se desvía y el rendimiento baja un poco."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Desgaste moderado del tubo de descarga. El forraje se acumula y a veces atasca el tubo."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Desgaste severo del tubo de descarga. El revestimiento está perforado: forraje perdido y atascos frecuentes."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Fallo crítico del tubo de descarga. Está perforado de lado a lado: la cosecha es imposible."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Desgaste inicial. Parte de la cosecha se queda en el sitio."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Desgaste moderado. Vibraciones y pérdidas mayores."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Desgaste severo. Algunos elementos están rotos: pérdidas fuertes y atascos."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Fallo crítico. El órgano está roto: la cosecha es imposible."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Desgaste inicial de las rejas. Algunas raíces se rompen o quedan en la tierra."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Desgaste moderado de las rejas. Arrancan mal: más pérdidas y más esfuerzo."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Desgaste severo de las rejas. Están gastadas hasta el final: pérdidas fuertes y la máquina fuerza."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Fallo crítico de las rejas. Una reja se ha roto: el arranque es imposible."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Desgaste inicial. La limpieza funciona peor: tierra o restos en la cosecha, algo de cosecha perdida."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Desgaste moderado. Las pérdidas en la limpieza aumentan."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Desgaste severo. Rejillas o palas rotas: pérdidas fuertes y atascos."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Fallo crítico. La limpieza está parada: la cosecha es imposible."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Desgaste inicial. La cadena o la cinta se alarga: la alimentación se vuelve irregular."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Desgaste moderado. Barras o paletas gastadas: rendimiento menor y atascos."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Desgaste severo. La cadena salta: los atascos se repiten."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Fallo crítico. La cadena o la cinta se ha roto: ya no pasa nada."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Desgaste inicial. La transferencia de la cosecha se ralentiza."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Desgaste moderado. La transferencia se vuelve irregular y parte de la cosecha se pierde."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Desgaste severo. La transferencia se bloquea con regularidad."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Fallo crítico. La transferencia está parada: la cosecha es imposible."/>
     </texts>
 </l10n>

@@ -1,10 +1,8 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Implement greasing, counted on the implement's own hour meter
+---Implement greasing, counted on the days the implement worked
 RMS_ImplementGreasing = {}
-
-local TENTH_HOUR_MS = 6 * 60 * 1000
 
 function RMS_ImplementGreasing.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Attachable, specializations)
@@ -14,10 +12,6 @@ end
 function RMS_ImplementGreasing.initSpecialization()
     Vehicle.xmlSchemaSavegame:register(XMLValueType.STRING, "vehicles.vehicle(?).rmsImplementGreasing#greasing",
         "Grease points due, hours run and delay per interval")
-end
-
-function RMS_ImplementGreasing.registerFunctions(vehicleType)
-    SpecializationUtil.registerFunction(vehicleType, "getServiceReferenceInterval", RMS_ImplementGreasing.getServiceReferenceInterval)
 end
 
 function RMS_ImplementGreasing.registerOverwrittenFunctions(vehicleType)
@@ -73,20 +67,10 @@ function RMS_ImplementGreasing:onWriteUpdateStream(streamId, connection, dirtyMa
     end
 end
 
----Returns the hours of the player's service interval, as on a machine
-function RMS_ImplementGreasing:getServiceReferenceInterval()
-    local C = RMS_Config.CORE
-    return (1 - C.SERVICE_EXPIRED_THRESHOLD) / C.BASE_SERVICE_WEAR
-end
-
----Counts the hours the game adds to the implement against its greasing
+---Marks the day worked when the game adds hours to the implement
 function RMS_ImplementGreasing:setOperatingTime(superFunc, operatingTime, isLoading)
     if self.isServer and not isLoading and self.propertyState ~= VehiclePropertyState.MISSION then
         RMS_Greasing.update(self, operatingTime - self.operatingTime)
-        -- the clients count down in the tenths of hour the game shows
-        if math.floor(operatingTime / TENTH_HOUR_MS) ~= math.floor(self.operatingTime / TENTH_HOUR_MS) then
-            self:raiseDirtyFlags(self.spec_rmsImplementGreasing.dirtyFlag)
-        end
     end
     superFunc(self, operatingTime, isLoading)
 end

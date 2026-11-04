@@ -264,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Chassis"/>
         <text name="rms_spec_system_fuel" text="Fuel System"/>
         <text name="rms_spec_system_pto" text="PTO"/>
+        <text name="rms_spec_system_harvest" text="Harvesting"/>
         <text name="rms_spec_system_electric_motor" text="Electric Motor"/>
         <text name="rms_spec_system_traction_battery" text="Traction Battery"/>
         <text name="rms_spec_state_ready" text="Ready"/>
@@ -546,6 +547,12 @@
         <text name="rms_report_wear_battery_heat" text="Battery Overheating"/>
         <text name="rms_report_wear_lubrication" text="Overdue Lubrication"/>
         <text name="rms_report_wear_pto_overload" text="PTO Overload"/>
+        <text name="rms_report_wear_harvest_overload" text="Harvesting Overload"/>
+        <text name="rms_report_wear_harvest_flow" text="Heavy Grain Flow"/>
+        <text name="rms_report_wear_harvest_straw" text="Chopper Overload"/>
+        <text name="rms_report_wear_harvest_stones" text="Stones"/>
+        <text name="rms_report_wear_harvest_rice" text="Rice Harvesting"/>
+        <text name="rms_report_wear_harvest_wet" text="Damp Crop"/>
         <text name="rms_report_component_title" text="Component"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Current Power"/>
@@ -579,6 +586,7 @@
         <text name="rms_grease_quantity" text="Quantity"/>
         <text name="rms_grease_hud_title" text="Greasing"/>
         <text name="rms_grease_hud_done" text="Up to date"/>
+        <text name="rms_grease_hud_greased" text="Greased"/>
         <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Air Blower"/>
         <text name="rms_air_blower_no_vehicle" text="No vehicle in cleaning range"/>
@@ -790,6 +798,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Inspection finds noticeable play in the front loader pivot pins and bushings."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Inspection finds large play in the front loader pivot pins and bushings."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Inspection finds very large play in the front loader pivot pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Inspection finds early wear in the mast pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Inspection finds noticeable play in the mast pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Inspection finds large play in the mast pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Inspection finds very large play in the mast pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Inspection finds early wear in the boom pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Inspection finds noticeable play in the boom pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Inspection finds large play in the boom pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Inspection finds very large play in the boom pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Inspection finds early wear in the milling arm pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Inspection finds noticeable play in the milling arm pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Inspection finds large play in the milling arm pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Inspection finds very large play in the milling arm pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Inspection finds early wear in the blade arm pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Inspection finds noticeable play in the blade arm pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Inspection finds large play in the blade arm pins and bushings."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Inspection finds very large play in the blade arm pins and bushings."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="A cab damper shows slight moisture."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="A cab damper is seeping."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="A cab damper has an active leak."/>
@@ -847,7 +871,7 @@
         <text name="rms_fleet_parts_reading" text="Parts measured %s"/>
         <text name="rms_fleet_parts_need_complete" text="Parts measured at the next complete inspection"/>
         <text name="rms_fleet_greasing_done" text="Greasing up to date"/>
-        <text name="rms_fleet_greasing_period_hours" text="%s h of work"/>
+        <text name="rms_fleet_greasing_period_days" text="Every %d days of work"/>
         <text name="rms_fleet_greasing_period_day" text="Each day of work"/>
         <text name="rms_fleet_greasing_period_month" text="Every month"/>
         <text name="rms_fleet_greasing_period_months" text="Every %d months"/>
@@ -859,6 +883,7 @@
         <text name="rms_fleet_days_late" text="%d days overdue"/>
         <text name="rms_fleet_greasing_to_do" text="%d left"/>
         <text name="rms_fleet_greasing_points" text="Grease points"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Most frequent"/>
         <text name="rms_fleet_greasing_next" text="Next greasing"/>
         <text name="rms_fleet_greasing_now" text="Now"/>
         <text name="rms_fleet_greasing_in" text="in %s"/>
@@ -868,7 +893,6 @@
         <text name="rms_fleet_wear_faster" text="Faster"/>
         <text name="rms_fleet_wear_normal" text="Normal wear"/>
         <text name="rms_fleet_wear_late" text="Greasing delay"/>
-        <text name="rms_fleet_wear_dry" text="Wear when dry"/>
         <text name="rms_fleet_wear_repair_greases" text="Greased when repaired"/>
         <text name="rms_fleet_wear_repair" text="Workshop repair"/>
         <text name="rms_fleet_wear_none" text="None"/>
@@ -901,7 +925,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Cooling and Air Filter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="The radiator or air filter is clogged. Hold the %s key while looking at the vehicle to see which one. Clean it with the compressed-air blower. If the filter can no longer be blown clean, the workshop replaces it from the %s service up."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubrication Required"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Your %s has grease points to grease.&#10;&#10;In RMS, every machine has the grease points of its operator's manual. They come due again after a number of working hours, or every working day on some machines. A machine greased late wears its chassis faster.&#10;&#10;Buy a grease gun and cartridges in the shop. With the gun in hand, aim at a cartridge to load it, then aim at the machine: each click greases one grease point, and holding the click carries on to the next.&#10;&#10;To see the grease points left, hold %s while looking at the vehicle."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Your %s has grease points to grease.&#10;&#10;In RMS, every machine has the grease points of its operator's manual. They come due again over the days the machine works: every working day, or every few working days for those the manual greases less often. A machine greased late wears its chassis faster.&#10;&#10;Buy a grease gun and cartridges in the shop. With the gun in hand, stand in front of a cartridge to load it, then aim at the machine: each click greases one grease point, and holding the click carries on to the next.&#10;&#10;To see the grease points left, hold %s while looking at the vehicle."/>
         <text name="rms_tutorial_needs_repair_title" text="Breakdown Detected"/>
         <text name="rms_tutorial_needs_repair_message" text="Your %s has a problem. One of its parts may have failed.&#10;&#10;Take it to the workshop: an inspection, or a service if one is due, identifies the breakdown. Do not wait: the breakdown can keep worsening, and the repair cost rises with it.&#10;&#10;Once the breakdown is identified, have it repaired at the workshop."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Overhaul Required"/>

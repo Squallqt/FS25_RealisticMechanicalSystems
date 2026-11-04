@@ -40,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Uzură moderată a bolțurilor și bucșelor articulațiilor încărcătorului. Jocul la articulațiile brațului devine perceptibil."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Uzură gravă a bolțurilor și bucșelor articulațiilor încărcătorului. Brațul prezintă un joc mare."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Uzură critică a bolțurilor și bucșelor articulațiilor încărcătorului. Jocul brațului este foarte mare."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Uzură ușoară a bolțurilor și bucșelor catargului. Apare un joc ușor la articulațiile catargului."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Uzură moderată a bolțurilor și bucșelor catargului. Jocul la articulațiile catargului devine perceptibil."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Uzură gravă a bolțurilor și bucșelor catargului. Catargul prezintă un joc mare."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Uzură critică a bolțurilor și bucșelor catargului. Jocul catargului este foarte mare."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Uzură ușoară a bolțurilor și bucșelor macaralei. Apare un joc ușor la articulațiile macaralei."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Uzură moderată a bolțurilor și bucșelor macaralei. Jocul la articulațiile macaralei devine perceptibil."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Uzură gravă a bolțurilor și bucșelor macaralei. Macaraua prezintă un joc mare."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Uzură critică a bolțurilor și bucșelor macaralei. Jocul macaralei este foarte mare."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Uzură ușoară a bolțurilor și bucșelor brațului de frezare. Apare un joc ușor la articulațiile brațului."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Uzură moderată a bolțurilor și bucșelor brațului de frezare. Jocul la articulațiile brațului devine perceptibil."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Uzură gravă a bolțurilor și bucșelor brațului de frezare. Brațul prezintă un joc mare."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Uzură critică a bolțurilor și bucșelor brațului de frezare. Jocul brațului este foarte mare."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Uzură ușoară a bolțurilor și bucșelor brațului lamei. Apare un joc ușor la articulațiile brațului."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Uzură moderată a bolțurilor și bucșelor brațului lamei. Jocul la articulațiile brațului devine perceptibil."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Uzură gravă a bolțurilor și bucșelor brațului lamei. Brațul prezintă un joc mare."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Uzură critică a bolțurilor și bucșelor brațului lamei. Jocul brațului este foarte mare."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Scurgere ușoară la un amortizor al cabinei. Amortizarea cabinei este puțin redusă."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Scurgere moderată la un amortizor al cabinei. Cabina saltă pe denivelări."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Scurgere gravă la un amortizor al cabinei. Cabina se balansează la fiecare șoc."/>
@@ -118,6 +134,10 @@
         <text name="rms_breakdowns_part_synchronizer" text="Sincronizator"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Capete de bară și bare de direcție"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Bolțuri și bucșe ale articulațiilor încărcătorului"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Bolțuri și bucșe ale catargului"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Bolțuri și bucșe ale macaralei"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Bolțuri și bucșe ale brațului de frezare"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Bolțuri și bucșe ale brațului lamei"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Pivoți de fuzetă"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol de direcție"/>
         <text name="rms_breakdowns_part_steering_box" text="Caseta de direcție"/>
@@ -154,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Filtru de gaz"/>
         <text name="rms_breakdowns_part_gas_lines" text="Conducte de gaz"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Injectoare de gaz"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Bujii"/>
         <text name="rms_breakdowns_part_adblue_pump" text="Pompă de AdBlue"/>
         <text name="rms_breakdowns_part_adblue_doser" text="Injector de dozare AdBlue"/>
         <text name="rms_breakdowns_part_adblue_filter" text="Filtru de AdBlue"/>
@@ -561,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Defecțiune moderată a injectoarelor de gaz. Motorul ezită, pierde putere, consumă mai mult și se poate opri."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Defecțiune gravă a injectoarelor de gaz. Un injector dozează foarte prost: pierdere mare de putere, consum excesiv și pornire dificilă."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Defecțiune critică a injectoarelor de gaz. Dozarea nu mai permite funcționarea motorului: acesta se oprește."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Bujiile au ajuns la termenul de înlocuire: la sarcină mare apar rateuri, motorul merge mai neregulat și consumă puțin mai mult. Revizia le înlocuiește."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Bujiile sunt uzate: rateurile devin frecvente, motorul pierde putere, consumă mai mult și se poate opri. Se aprinde martorul motor."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Bujiile sunt foarte uzate: pierdere mare de putere, consum excesiv și pornire dificilă."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Bujiile sunt inutilizabile: rateuri permanente, motorul se poate opri și nu mai pornește."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Defecțiune a pompei de AdBlue. Nu mai alimentează dozarea: martorul motor se aprinde, apoi calculatorul reduce puterea până la reparație."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Defecțiune a injectorului de dozare AdBlue. Colmatat cu cristale, nu mai pulverizează: martorul motor se aprinde, iar puterea scade ulterior până la reparație."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Filtrul de AdBlue a ajuns la termenul de înlocuire și începe să se înfunde. Cea mai completă revizie îl înlocuiește."/>
@@ -630,6 +655,10 @@
         <text name="rms_breakdowns_part_lift_position_sensor" text="Senzorul de poziție al ridicătorului"/>
         <text name="rms_breakdowns_part_header_height_sensor" text="Senzorul de înălțime al hederului"/>
         <text name="rms_breakdowns_part_loader_control" text="Comanda încărcătorului"/>
+        <text name="rms_breakdowns_part_mast_control" text="Comanda catargului"/>
+        <text name="rms_breakdowns_part_boom_control" text="Comanda macaralei"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Comanda brațului de frezare"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Comanda brațului lamei"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Cuplaje hidraulice rapide"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Defecțiune ușoară a ambreiajului. Acesta nu decuplează complet. Unele trepte se selectează greu."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Defecțiune moderată a ambreiajului. Mecanismul eliberează slab discul. Treptele sunt refuzate mai des."/>
@@ -709,6 +738,22 @@
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Defecțiune moderată a comenzii încărcătorului. Brațul și cupa se mișcă doar la jumătate din viteză."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Defecțiune gravă a comenzii încărcătorului. Brațul și cupa abia se mișcă."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Defecțiune critică a comenzii încărcătorului. Brațul și cupa nu mai răspund."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Defecțiune ușoară a comenzii catargului. Catargul și furcile răspund mai lent."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Defecțiune moderată a comenzii catargului. Catargul și furcile se mișcă doar la jumătate din viteză."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Defecțiune gravă a comenzii catargului. Catargul și furcile abia se mișcă."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Defecțiune critică a comenzii catargului. Catargul și furcile nu mai răspund."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Defecțiune ușoară a comenzii macaralei. Macaraua și unealta ei răspund mai lent."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Defecțiune moderată a comenzii macaralei. Macaraua și unealta ei se mișcă doar la jumătate din viteză."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Defecțiune gravă a comenzii macaralei. Macaraua și unealta ei abia se mișcă."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Defecțiune critică a comenzii macaralei. Macaraua și unealta ei nu mai răspund."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Defecțiune ușoară a comenzii brațului de frezare. Brațul răspunde mai lent."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Defecțiune moderată a comenzii brațului de frezare. Brațul se mișcă doar la jumătate din viteză."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Defecțiune gravă a comenzii brațului de frezare. Brațul abia se mișcă."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Defecțiune critică a comenzii brațului de frezare. Brațul nu mai răspunde."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Defecțiune ușoară a comenzii brațului lamei. Brațul și lama răspund mai lent."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Defecțiune moderată a comenzii brațului lamei. Brațul și lama se mișcă doar la jumătate din viteză."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Defecțiune gravă a comenzii brațului lamei. Brațul și lama abia se mișcă."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Defecțiune critică a comenzii brațului lamei. Brațul și lama nu mai răspund."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Defecțiune ușoară a cilindrului hidraulic. Garnitura tijei lasă să scape puțin ulei. Apare o umezire ușoară în jurul tijei."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Defecțiune moderată a cilindrului hidraulic. Garnitura tijei nu mai etanșează. Cilindrul mustește, iar nivelul uleiului scade."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Defecțiune gravă a cilindrului hidraulic. Garnitura tijei are o scurgere activă. Cilindrul pierde mult ulei."/>
@@ -737,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Uzură critică a rulmenților punții. Un rulment a cedat, angrenajul conic este deteriorat și puntea nu mai transmite tracțiunea."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Defecțiune a comenzii blocării diferențialului. Blocarea nu mai cuplează. Diferențialul rămâne liber."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Defecțiune a comenzii blocării diferențialului. Blocarea rămâne cuplată. Utilajul se opune virării."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Curele de transmisie și variatoare"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Rulmenți și cutii de transmisie"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Lanțul canalului de alimentare"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Accelerator de alimentare"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Barele bătătorului"/>
+        <text name="rms_breakdowns_part_concave" text="Contrabătător"/>
+        <text name="rms_breakdowns_part_separation" text="Dinți de separare și scuturători"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Site de curățare"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Melci și elevatoare de boabe"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Tocător și împrăștietor de paie"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Valțuri de alimentare"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Detector de metale și pietre"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Tambur tocător"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Cuțitele tamburului tocător"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Contracuțit"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Procesor de boabe"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Accelerator și suflantă"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Țeavă de evacuare"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Decoletor și curățitoare"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Brăzdare de dislocare"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Turbine de curățare"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Elevator de sfeclă"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Fund mobil și bandă de descărcare"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Benzi de cernere"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Separator de vreji și valțuri"/>
+        <text name="rms_breakdowns_part_picking_units" text="Unități de culegere"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Umidificator de fusuri"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Ventilator și conducte"/>
+        <text name="rms_breakdowns_part_module_builder" text="Cameră de formare a modulelor"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Cuțite de bază"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Valțuri de alimentare"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Tamburi tocători"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Extractor primar"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Elevator de trestie"/>
+        <text name="rms_breakdowns_part_shaker" text="Sistem de scuturare"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Solzi de colectare"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Transportoare cu cupe"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Aspiratoare de curățare"/>
+        <text name="rms_breakdowns_part_destemmer" text="Desciorchinător"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Cap de culegere"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Ventilator și site de curățare"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevatoare și transportoare"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Recoltare imposibilă: un organ de recoltare este rupt"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Înfundare: recoltarea s-a oprit"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Tocător defect: paiele cad în brazdă"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Tocător defect: această cultură nu mai poate fi recoltată"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Uzură incipientă a curelelor de transmisie. Patinează puțin sub sarcină."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Uzură moderată a curelelor de transmisie. Un organ încetinește sub sarcină, iar alarma de turație oprește uneori recoltarea."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Uzură gravă a curelelor de transmisie. Debitul scade, iar opririle revin mereu."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Defecțiune critică a curelelor de transmisie. O curea s-a rupt: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Uzură incipientă a rulmenților de transmisie. Apare un ușor zgomot surd în timpul recoltării."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Uzură moderată a rulmenților de transmisie. Zgomotul se aude clar, iar rulmenții se încălzesc."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Uzură gravă a rulmenților de transmisie. Zgomotul crește, iar arborii capătă joc."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Defecțiune critică a rulmenților de transmisie. Un rulment s-a gripat: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Uzură incipientă a lanțului canalului de alimentare. Se alungește, iar alimentarea devine neregulată."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Uzură moderată a lanțului canalului de alimentare. La intrarea canalului se formează înfundări."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Uzură gravă a lanțului canalului de alimentare. Sare pe pinioane, iar înfundările revin mereu."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Defecțiune critică a lanțului canalului de alimentare. Lanțul s-a rupt: nu mai intră nimic în mașină."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Uzură incipientă a acceleratorului de alimentare. Masa ajunge la bătător mai puțin uniform."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Uzură moderată a acceleratorului de alimentare. Debitul stagnează și apar înfundări."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Uzură gravă a acceleratorului de alimentare. Debitul scade, iar înfundările revin mereu."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Defecțiune critică a acceleratorului de alimentare. O paletă s-a smuls: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Uzură incipientă a barelor bătătorului. O parte din boabe rămân în spice și se întorc pe câmp."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Uzură moderată a barelor bătătorului. Bătătorul vibrează, iar pierderile de boabe cresc."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Uzură gravă a barelor bătătorului. Unele bare sunt rupte: pierderi mari și înfundări."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Defecțiune critică a barelor bătătorului. O bară s-a smuls: treieratul este imposibil."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Uzură incipientă a contrabătătorului. Boabele sunt treierate mai prost și o parte se întoarce pe câmp."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Uzură moderată a contrabătătorului. Pierderile de boabe cresc."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Uzură gravă a contrabătătorului. Boabele se sparg, pierderile sunt mari și apar înfundări."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Defecțiune critică a contrabătătorului. O bară s-a smuls: treieratul este imposibil."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Uzură incipientă a separării. Rămân boabe în paie și se întorc pe câmp."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Uzură moderată a separării. Pierderile de boabe în paie cresc."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Uzură gravă a separării. Pierderi mari și înfundări cu paie."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Defecțiune critică a separării. Paiele nu mai trec: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Uzură incipientă a sitelor de curățare. Pleava ajunge în buncăr, iar puține boabe pleacă odată cu resturile."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Uzură moderată a sitelor de curățare. Pierderile la site cresc."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Uzură gravă a sitelor de curățare. O sită este fisurată: pierderi mari și înfundări."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Defecțiune critică a sitelor de curățare. Curățarea nu mai funcționează: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Uzură incipientă a melcilor și elevatoarelor de boabe. Fluxul spre buncăr scade."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Uzură moderată a melcilor și elevatoarelor de boabe. O parte din boabe se sparg sau se pierd pe drum."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Uzură gravă a melcilor și elevatoarelor de boabe. Elevatorul se înfundă regulat."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Defecțiune critică a melcilor și elevatoarelor de boabe. Buncărul nu se mai umple: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Uzură incipientă a tocătorului de paie. Paiele sunt tocate mai puțin mărunt, iar tocătorul cere puțin mai multă putere."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Uzură moderată a tocătorului de paie. Tocătorul vibrează și cere mai multă putere."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Uzură gravă a tocătorului de paie. Rotorul este dezechilibrat și consumă multă putere."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Defecțiune critică a tocătorului de paie. Un cuțit s-a rupt: tocătorul stă, iar paiele cad în brazdă."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Uzură incipientă a valțurilor de alimentare. Prind mai prost masa: alimentarea devine neregulată."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Uzură moderată a valțurilor de alimentare. Lungimea de tocare devine neregulată și apar înfundări."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Uzură gravă a valțurilor de alimentare. Debitul scade, iar înfundările revin mereu."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Defecțiune critică a valțurilor de alimentare. Nu mai intră nimic în mașină: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Defect incipient al detectorului de metale și pietre. Alarmele false opresc uneori alimentarea."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Defect moderat al detectorului de metale și pietre. Opririle inutile revin mereu."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Defecțiune a detectorului de metale și pietre. Nu mai detectează nimic: pietrele ajung la cuțite și le uzează mult mai repede."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Uzură incipientă a tamburului tocător. Vibrează ușor și cere puțin mai multă putere."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Uzură moderată a tamburului tocător. Rotorul este dezechilibrat și cere mai multă putere."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Uzură gravă a tamburului tocător. Un suport de cuțit este fisurat: putere mai mare și înfundări."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Defecțiune critică a tamburului tocător. Rotorul este deteriorat: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Uzură incipientă a cuțitelor. Tăierea este mai puțin curată și cere puțin mai multă putere."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Uzură moderată a cuțitelor. Cer mai multă putere și mai mult combustibil."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Uzură gravă a cuțitelor. Tăierea este neregulată, puterea cerută crește și apar înfundări."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Defecțiune critică a cuțitelor. Un cuțit s-a rupt: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Uzură incipientă a contracuțitului. Jocul crește: tăierea cere puțin mai multă putere."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Uzură moderată a contracuțitului. Tăierea smulge și cere mai multă putere."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Uzură gravă a contracuțitului. Muchia este uzată: putere mai mare și înfundări."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Defecțiune critică a contracuțitului. Este inutilizabil: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Uzură incipientă a procesorului de boabe. Boabele sunt sparte mai prost, iar procesorul cere puțin mai multă putere."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Uzură moderată a procesorului de boabe. Trec boabe întregi, iar puterea cerută crește."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Uzură gravă a procesorului de boabe. Un valț este zgâriat: putere mai mare și înfundări."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Defecțiune critică a procesorului de boabe. Un valț s-a blocat: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Uzură incipientă a acceleratorului. Aruncarea este mai scurtă, iar debitul scade puțin."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Uzură moderată a acceleratorului. Țeava de evacuare se înfundă uneori."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Uzură gravă a acceleratorului. O paletă s-a smuls: înfundări dese și furaj pierdut."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Defecțiune critică a acceleratorului. Furajul nu mai este aruncat: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Uzură incipientă a țevii de evacuare. Aruncarea deviază, iar debitul scade puțin."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Uzură moderată a țevii de evacuare. Furajul se depune și uneori înfundă țeava."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Uzură gravă a țevii de evacuare. Căptușeala este perforată: furaj pierdut și înfundări dese."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Defecțiune critică a țevii de evacuare. Este străpunsă complet: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Uzură incipientă. O parte din recoltă rămâne pe câmp."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Uzură moderată. Vibrații și pierderi mai mari."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Uzură gravă. Unele elemente sunt rupte: pierderi mari și înfundări."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Defecțiune critică. Organul este rupt: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Uzură incipientă a brăzdarelor. Unele rădăcini se rup sau rămân în pământ."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Uzură moderată a brăzdarelor. Dislocă prost: pierderi mai mari și efort mai mare."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Uzură gravă a brăzdarelor. Sunt uzate până la capăt: pierderi mari, iar mașina forțează."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Defecțiune critică a brăzdarelor. Un brăzdar s-a rupt: dislocarea este imposibilă."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Uzură incipientă. Curățarea funcționează mai prost: pământ sau impurități în recoltă, puțină recoltă pierdută."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Uzură moderată. Pierderile la curățare cresc."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Uzură gravă. Grătare sau palete rupte: pierderi mari și înfundări."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Defecțiune critică. Curățarea s-a oprit: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Uzură incipientă. Lanțul sau banda se alungește: alimentarea devine neregulată."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Uzură moderată. Bare sau palete uzate: debit redus și înfundări."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Uzură gravă. Lanțul sare: înfundările revin mereu."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Defecțiune critică. Lanțul sau banda s-a rupt: nu mai trece nimic."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Uzură incipientă. Transferul recoltei încetinește."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Uzură moderată. Transferul devine neregulat și o parte din recoltă se pierde."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Uzură gravă. Transferul se blochează regulat."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Defecțiune critică. Transferul s-a oprit: recoltarea este imposibilă."/>
     </texts>
 </l10n>
