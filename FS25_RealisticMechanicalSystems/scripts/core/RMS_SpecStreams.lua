@@ -56,7 +56,7 @@ local function readOptionalThermalState(spec, streamId, initializeDisplay)
     end
 end
 
-local function writeFieldcareState(spec, streamId)
+local function writeFieldcareState(self, spec, streamId)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.radiatorClogging, 0, 0))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fanReversalTime, 0, 0, RMS_Config.THERMAL.REVERSIBLE_FAN.REVERSAL_MS))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.airFilterClogging, 0, 0))
@@ -64,8 +64,7 @@ local function writeFieldcareState(spec, streamId)
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
         streamWriteFloat32(streamId, spec[filter.stateKey])
     end
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.lubricationLevel, 1.0, 0.0, 1.0))
-    streamWriteUInt16(streamId, spec.greasingDuePoints or 0)
+    streamWriteString(streamId, RMS_Greasing.serialize(self))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.engineOilLevel, 1.0, 0.0, 1.0))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.coolantLevel, 1.0, 0.0, 1.0))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionOilLevel, 1.0, 0.0, 1.0))
@@ -85,8 +84,7 @@ local function readFieldcareState(self, spec, streamId)
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
         spec[filter.stateKey] = streamReadFloat32(streamId)
     end
-    spec.lubricationLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
-    spec.greasingDuePoints = streamReadUInt16(streamId)
+    RMS_Greasing.deserialize(self, streamReadString(streamId))
     spec.engineOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
     spec.coolantLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
     spec.transmissionOilLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.0, 1.0)
@@ -202,7 +200,7 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     writeElectricalState(spec, streamId)
 
     -- [Group 6] Field care
-    writeFieldcareState(spec, streamId)
+    writeFieldcareState(self, spec, streamId)
     streamWriteBool(streamId, spec.fieldInspectionSoundActive)
 
     -- [Group 7] Wear
@@ -409,7 +407,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
 
         -- [6] Field care
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE) ~= 0) then
-            writeFieldcareState(spec, streamId)
+            writeFieldcareState(self, spec, streamId)
             streamWriteBool(streamId, spec.fieldInspectionSoundActive)
         end
 

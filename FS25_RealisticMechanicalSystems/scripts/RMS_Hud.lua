@@ -1638,10 +1638,29 @@ function RMS_Hud.drawSpeedMeter(speedMeter, superFunc)
     end
 end
 
+---Adds the grease points due, else what is left before the next ones
+local function addGreasingLine(vehicle, box)
+    local spec = RMS_Greasing.getSpec(vehicle)
+    if spec == nil or not spec.isVehicleNeedLubricate then
+        return
+    end
+
+    local greasing = RMS_Greasing.read(vehicle)
+    if greasing.due > 0 then
+        box:addLine(g_i18n:getText("rms_inspection_status_grease_due"), tostring(greasing.due), greasing.state == "late")
+    else
+        box:addLine(g_i18n:getText("rms_fleet_greasing_next"), greasing.next ~= nil and RMS_Utils.formatGreasingLeft(greasing.next)
+            or g_i18n:getText("rms_fleet_greasing_period_day"))
+    end
+end
+
 ---Adds the RMS lines to the vanilla vehicle info box
 function RMS_Hud:showInfoVehicle(box)
     local spec = self.spec_RealisticMechanicalSystems
-    if spec == nil or spec.isExcludedVehicle then
+    if spec == nil then
+        addGreasingLine(self, box)
+        return
+    elseif spec.isExcludedVehicle then
         return
     end
 
@@ -1652,6 +1671,7 @@ function RMS_Hud:showInfoVehicle(box)
         -- Native info-box rows cannot resize text.
         box:addLine(RMS_Utils.formatMaintenanceLevel(self, schedule.maintenanceType), RMS_Utils.formatServiceDeadline(schedule), schedule.overdue)
     end
+    addGreasingLine(self, box)
 
     if spec.batteryIsolated then
         box:addLine(g_i18n:getText("rms_battery_isolator_info"), nil, true)

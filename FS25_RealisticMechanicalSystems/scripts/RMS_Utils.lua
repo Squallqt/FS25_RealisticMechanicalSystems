@@ -1176,6 +1176,22 @@ function RMS_Utils.formatMonths(months)
     return string.format(g_i18n:getText(count == 1 and "rms_service_month" or "rms_service_months"), g_i18n:formatNumber(count, 0))
 end
 
+---Formats an amount of a greasing interval in its unit
+function RMS_Utils.formatGreasingAmount(tier, amount)
+    local count = math.ceil(amount)
+    if tier.unit == "months" then
+        return RMS_Utils.formatMonths(count)
+    elseif tier.unit == "bales" then
+        return string.format(g_i18n:getText("rms_fleet_greasing_bales"), count)
+    end
+    return string.format(g_i18n:getText(count == 1 and "rms_fleet_greasing_day" or "rms_fleet_greasing_days"), count)
+end
+
+---Formats what is left of a greasing interval before its points fall due
+function RMS_Utils.formatGreasingLeft(tier)
+    return RMS_Utils.formatGreasingAmount(tier, math.max(tier.interval - tier.elapsed, 0))
+end
+
 ---Names the actual circuit which causes the next service recommendation.
 function RMS_Utils.formatServiceReason(vehicle, schedule, compact)
     if schedule == nil then return "" end

@@ -38,7 +38,7 @@ DAILY CARE
 - Telwin Doctor Charge 155 Connect on a trolley: connect it near a vehicle to charge its battery at the current it accepts, or for starting aid (START); charging follows the game's time speed and resumes when the save is loaded
 - Hold R near a vehicle for a pre-shift check of fluids, radiator, air filter and greasing
 - Air Blower clears the cooling pack and removes loose dust from the air filter
-- SKF grease gun, loaded with SKF grease cartridges bought one at a time or up to twelve in a carton. Each machine and implement has its own grease points, to grease every working day, every few working days or every few months: each click greases one, a display shows the grease left in the cartridge and each point greased, and greasing late wears the machine faster. The fleet page lists every implement with its grease points
+- SKF grease gun, loaded with SKF grease cartridges bought one at a time or up to twelve in a carton. Each machine and implement has its own grease points, to grease every working day, every few working days or every few months: each click greases one, a display shows the grease left in the cartridge and each point greased, and greasing late wears the machine faster. The fleet page lists every implement with its grease points, and standing next to a machine or implement shows the points due or the next greasing
 - An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
 
 SIMULATION
@@ -272,7 +272,7 @@ TÄGLICHE PFLEGE
 - Telwin Doctor Charge 155 Connect auf einem Wagen: neben einem Fahrzeug anschließen, um seine Batterie mit dem Strom zu laden, den sie aufnimmt, oder für die Starthilfe (START); das Laden folgt der Zeitgeschwindigkeit im Spiel und wird beim Laden des Spielstands fortgesetzt
 - R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler, Luftfilter und Abschmierung vor Schichtbeginn
 - Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter
-- SKF-Fettpresse, geladen mit SKF-Fettkartuschen, einzeln oder bis zu zwölf im Karton gekauft. Jede Maschine und jedes Anbaugerät hat eigene Schmierstellen, an jedem Arbeitstag, alle paar Arbeitstage oder alle paar Monate abzuschmieren: Jeder Klick schmiert eine, eine Anzeige zeigt das Fett in der Kartusche und jede abgeschmierte Stelle, und verspätetes Abschmieren verschleißt die Maschine schneller. Die Fuhrpark-Seite listet jedes Anbaugerät mit seinen Schmierstellen
+- SKF-Fettpresse, geladen mit SKF-Fettkartuschen, einzeln oder bis zu zwölf im Karton gekauft. Jede Maschine und jedes Anbaugerät hat eigene Schmierstellen, an jedem Arbeitstag, alle paar Arbeitstage oder alle paar Monate abzuschmieren: Jeder Klick schmiert eine, eine Anzeige zeigt das Fett in der Kartusche und jede abgeschmierte Stelle, und verspätetes Abschmieren verschleißt die Maschine schneller. Die Fuhrpark-Seite listet jedes Anbaugerät mit seinen Schmierstellen, und zu Fuß neben einer Maschine oder einem Anbaugerät erscheinen die fälligen Schmierstellen oder das nächste Abschmieren
 - Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
 
 SIMULATION
@@ -506,7 +506,7 @@ ENTRETIEN QUOTIDIEN
 - Telwin Doctor Charge 155 Connect sur chariot : branchez-le près d'un véhicule pour recharger sa batterie au courant qu'elle accepte, ou pour l'aide au démarrage (START) ; la recharge suit la vitesse du temps de la partie et reprend au chargement de la sauvegarde
 - Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air, graissage
 - La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air
-- Pistolet à graisse SKF, chargé de cartouches de graisse SKF achetées à l'unité ou jusqu'à douze dans un carton. Chaque machine et chaque outil attelé a ses propres graisseurs, à graisser chaque jour de travail, tous les quelques jours de travail ou tous les quelques mois : chaque clic en graisse un, un affichage montre la graisse restant dans la cartouche et chaque graisseur fait, et un graissage en retard use la machine plus vite. Le parc de matériel liste chaque outil avec ses graisseurs
+- Pistolet à graisse SKF, chargé de cartouches de graisse SKF achetées à l'unité ou jusqu'à douze dans un carton. Chaque machine et chaque outil attelé a ses propres graisseurs, à graisser chaque jour de travail, tous les quelques jours de travail ou tous les quelques mois : chaque clic en graisse un, un affichage montre la graisse restant dans la cartouche et chaque graisseur fait, et un graissage en retard use la machine plus vite. Le parc de matériel liste chaque outil avec ses graisseurs, et à pied près d'une machine ou d'un outil s'affichent les graisseurs à faire ou le prochain graissage
 - Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
 
 SIMULATION

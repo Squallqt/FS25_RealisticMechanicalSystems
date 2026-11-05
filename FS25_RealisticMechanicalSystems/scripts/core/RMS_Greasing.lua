@@ -304,6 +304,30 @@ function RMS_Greasing.getTierStates(vehicle)
     return states
 end
 
+-- greasing units from the most frequent: worked days, months, bales
+local UNIT_RANK = { day = 1, months = 2, bales = 3 }
+
+---Returns the intervals with the latest due, the next and the shortest
+function RMS_Greasing.read(vehicle)
+    local greasing = { tiers = RMS_Greasing.getTierStates(vehicle), total = RMS_Greasing.getTotalPoints(vehicle),
+        due = RMS_Greasing.getDuePoints(vehicle), state = RMS_Greasing.getStatus(vehicle) }
+    for _, tier in ipairs(greasing.tiers) do
+        if tier.due > 0 then
+            if greasing.latest == nil or tier.late / tier.interval > greasing.latest.late / greasing.latest.interval then
+                greasing.latest = tier
+            end
+        elseif (tier.unit ~= "day" or tier.interval > 1) and (greasing.next == nil
+            or 1 - tier.elapsed / tier.interval < 1 - greasing.next.elapsed / greasing.next.interval) then
+            greasing.next = tier
+        end
+        if greasing.frequent == nil or UNIT_RANK[tier.unit] < UNIT_RANK[greasing.frequent.unit]
+            or tier.unit == greasing.frequent.unit and tier.interval < greasing.frequent.interval then
+            greasing.frequent = tier
+        end
+    end
+    return greasing
+end
+
 ---Returns all the grease points of a machine, every interval together
 function RMS_Greasing.getTotalPoints(vehicle)
     local total = 0
