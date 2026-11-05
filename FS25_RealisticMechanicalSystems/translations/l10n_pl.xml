@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Naprawa nieobjęta przy wypożyczeniu"/>
         <text name="rms_warranty_expired" text="Gwarancja wygasła"/>
         <text name="rms_warranty_overdue" text="Odmowa: zaległa obsługa techniczna"/>
+        <text name="rms_warranty_impact" text="Odmowa: uszkodzenie od uderzenia"/>
         <text name="rms_warranty_options" text="Wymagana wymiana na oryginalne części"/>
         <text name="rms_warranty_mobile" text="Płacisz za dodatkową robociznę warsztatu mobilnego"/>
         <text name="rms_warranty_remapped" text="Utrata gwarancji: silnik po chiptuningu"/>

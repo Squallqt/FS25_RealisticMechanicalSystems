@@ -484,8 +484,8 @@ function RMS_FluidWorkshop.getInvoiceRows(vehicle, serviceType, optionOne, invoi
             local label = g_i18n:getText(partKey)
             if line.warrantyReason == "factory" or line.warrantyReason == "part" then
                 label = label .. " (" .. g_i18n:getText("rms_ws_badge_warranty") .. ")"
-            elseif line.warrantyReason == "overdue" then
-                label = label .. " (" .. g_i18n:getText("rms_warranty_overdue") .. ")"
+            elseif line.warrantyReason == "overdue" or line.warrantyReason == "impact" then
+                label = label .. " (" .. g_i18n:getText("rms_warranty_" .. line.warrantyReason) .. ")"
             end
             local rowKey = label .. (line.warrantyReason == "used" and "\0used" or "")
             if repairRowsByLabel[rowKey] ~= nil then

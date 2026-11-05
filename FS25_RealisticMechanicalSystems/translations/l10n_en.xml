@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Repair not covered on a lease"/>
         <text name="rms_warranty_expired" text="Warranty expired"/>
         <text name="rms_warranty_overdue" text="Declined: overdue service"/>
+        <text name="rms_warranty_impact" text="Declined: impact damage"/>
         <text name="rms_warranty_options" text="Replacement with original parts required"/>
         <text name="rms_warranty_mobile" text="You pay the extra mobile labor cost"/>
         <text name="rms_warranty_remapped" text="Warranty lost: engine remapped"/>

@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Riparazione non coperta nel noleggio"/>
         <text name="rms_warranty_expired" text="Garanzia scaduta"/>
         <text name="rms_warranty_overdue" text="Rifiutata: manutenzione in ritardo"/>
+        <text name="rms_warranty_impact" text="Rifiutata: danno da urto"/>
         <text name="rms_warranty_options" text="Sostituzione con ricambi originali richiesta"/>
         <text name="rms_warranty_mobile" text="Paghi la manodopera extra dell'officina mobile"/>
         <text name="rms_warranty_remapped" text="Garanzia persa: motore rimappato"/>

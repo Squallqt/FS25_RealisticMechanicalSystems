@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="リース車両の修理は保証対象外"/>
         <text name="rms_warranty_expired" text="保証期間終了"/>
         <text name="rms_warranty_overdue" text="対象外：メンテナンス期限超過"/>
+        <text name="rms_warranty_impact" text="対象外：衝突による損傷"/>
         <text name="rms_warranty_options" text="純正部品への交換が必要"/>
         <text name="rms_warranty_mobile" text="移動式ワークショップの追加工賃は自己負担"/>
         <text name="rms_warranty_remapped" text="保証失効：エンジン書き換え済み"/>

@@ -486,6 +486,7 @@ local function processPendingRepairStep(vehicle, spec, breakdownId, optionOne, o
             RealisticMechanicalSystems.recordPartWarranty(vehicle, partId, optionTwo, isPaid, donorHours)
             if spec.partWear[partId] ~= nil then
                 spec.partWear[partId] = wear
+                spec.partImpactWear[partId] = nil
             end
         end
         RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
@@ -703,6 +704,7 @@ function RealisticMechanicalSystems:completeService()
                 local definition = RMS_Breakdowns.BreakdownRegistry[partId]
                 if definition.isApplicable(self) and RMS_Utils.getIsPartWorn(partId, spec.partWear[partId]) then
                     spec.partWear[partId] = 0
+                    spec.partImpactWear[partId] = nil
                     RealisticMechanicalSystems.recordPartWarranty(self, partId, optionTwo,
                         not self:isLeaseMaintenanceCovered(spec.workshopType))
                     RealisticMechanicalSystems.refreshSystemCondition(spec, RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, definition.system))
@@ -722,6 +724,7 @@ function RealisticMechanicalSystems:completeService()
     if serviceType == states.OVERHAUL then
         applyPendingOverhaulPartInterpolation(spec, 1)
         for partId in pairs(spec.pendingOverhaulPartTarget) do
+            spec.partImpactWear[partId] = nil
             RealisticMechanicalSystems.recordPartWarranty(self, partId, RealisticMechanicalSystems.PART_TYPES.OEM, true)
         end
         self:updateConditionLevel()
@@ -1493,6 +1496,7 @@ function RealisticMechanicalSystems:isWarrantyRepairCovered(repairType, partType
     if breakdownId ~= nil then
         local fault = self:getActiveBreakdowns()[breakdownId]
         if fault ~= nil and fault.warrantyServiceOverdue then return false, "overdue" end
+        if fault ~= nil and fault.warrantyImpact then return false, "impact" end
         local expiry = spec.partWarranty[breakdownId]
         if expiry ~= nil and self.age < expiry then return true, "part" end
     end
@@ -1553,6 +1557,8 @@ end
 function RealisticMechanicalSystems:getIsUsedPartWarrantyCovered(breakdownId, repairType, partType)
     local R = RealisticMechanicalSystems
     if partType ~= R.PART_TYPES.USED or repairType ~= R.REPAIR_TYPES.MEDIUM then return false end
+    local fault = self:getActiveBreakdowns()[breakdownId]
+    if fault ~= nil and fault.warrantyImpact then return false end
     local expiry = self.spec_RealisticMechanicalSystems.usedPartWarranty[breakdownId]
     return expiry ~= nil and self.age < expiry
 end

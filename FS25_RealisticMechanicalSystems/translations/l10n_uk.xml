@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Ремонт не покривається під час оренди"/>
         <text name="rms_warranty_expired" text="Гарантія закінчилася"/>
         <text name="rms_warranty_overdue" text="Відмова: прострочене обслуговування"/>
+        <text name="rms_warranty_impact" text="Відмова: пошкодження від удару"/>
         <text name="rms_warranty_options" text="Потрібна заміна оригінальними деталями"/>
         <text name="rms_warranty_mobile" text="До сплати: доплата за роботу мобільної майстерні"/>
         <text name="rms_warranty_remapped" text="Гарантію втрачено: чип-тюнінг двигуна"/>

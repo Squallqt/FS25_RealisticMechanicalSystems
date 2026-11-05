@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="租賃機具的維修不予保固"/>
         <text name="rms_warranty_expired" text="保固已到期"/>
         <text name="rms_warranty_overdue" text="拒保：保養逾期"/>
+        <text name="rms_warranty_impact" text="拒保：撞擊損壞"/>
         <text name="rms_warranty_options" text="須更換原廠零件"/>
         <text name="rms_warranty_mobile" text="需支付移動維修廠的額外工時費"/>
         <text name="rms_warranty_remapped" text="保固失效：發動機已調校"/>

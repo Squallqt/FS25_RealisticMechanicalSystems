@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Reparação não coberta no aluguer"/>
         <text name="rms_warranty_expired" text="Garantia terminada"/>
         <text name="rms_warranty_overdue" text="Recusada: manutenção em atraso"/>
+        <text name="rms_warranty_impact" text="Recusada: dano por impacto"/>
         <text name="rms_warranty_options" text="Exige substituição com peças originais"/>
         <text name="rms_warranty_mobile" text="A pagar: mão de obra extra da oficina móvel"/>
         <text name="rms_warranty_remapped" text="Garantia perdida: motor reprogramado"/>

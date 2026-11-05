@@ -1176,6 +1176,7 @@ function RealisticMechanicalSystems.initSpecialization()
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingServiceClockTarget", "Service clock levels the running service restores")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#systemsState", "Systems state snapshot")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#partWear", "Wear of each part")
+    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#partImpactWear", "Wear each part took from collisions")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#factorStats", "Per-system accumulated factor stats")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingOverhaulPartStart", "Wear of each part at the start of the running overhaul")
     schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingOverhaulPartTarget", "Wear the running overhaul brings each part to")
@@ -1600,6 +1601,7 @@ function RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, withBre
     for systemKey, systemParts in pairs(spec.systemParts) do
         for _, partId in ipairs(systemParts) do
             spec.partWear[partId] = parts[partId].age
+            spec.partImpactWear[partId] = nil
             spec.partDrawnWear[partId] = nil
         end
         RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)

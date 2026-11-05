@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Reparatur bei Miete nicht gedeckt"/>
         <text name="rms_warranty_expired" text="Garantie abgelaufen"/>
         <text name="rms_warranty_overdue" text="Abgelehnt: Wartung überfällig"/>
+        <text name="rms_warranty_impact" text="Abgelehnt: Aufprallschaden"/>
         <text name="rms_warranty_options" text="Austausch durch Originalteile erforderlich"/>
         <text name="rms_warranty_mobile" text="Mehrkosten der mobilen Werkstatt für Arbeit zahlst du"/>
         <text name="rms_warranty_remapped" text="Garantie erloschen: Motor optimiert"/>

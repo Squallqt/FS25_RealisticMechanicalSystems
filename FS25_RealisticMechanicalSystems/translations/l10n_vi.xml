@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Không bảo hành sửa chữa xe thuê"/>
         <text name="rms_warranty_expired" text="Bảo hành hết hạn"/>
         <text name="rms_warranty_overdue" text="Từ chối: bảo dưỡng quá hạn"/>
+        <text name="rms_warranty_impact" text="Từ chối: hư hỏng do va chạm"/>
         <text name="rms_warranty_options" text="Phải thay bằng phụ tùng chính hãng"/>
         <text name="rms_warranty_mobile" text="Bạn trả thêm chi phí nhân công của xưởng lưu động"/>
         <text name="rms_warranty_remapped" text="Mất bảo hành: động cơ đã tinh chỉnh"/>

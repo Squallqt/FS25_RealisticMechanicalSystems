@@ -241,7 +241,11 @@ function RealisticMechanicalSystems:applyInstantDamageToSystem(system, damageAmo
 
     for index, partId in ipairs(spec.systemParts[systemKey]) do
         local baseShare = RMS_Breakdowns.BreakdownRegistry[partId].wearsByCausesOnly and 0 or 1
-        spec.partWear[partId] = spec.partWear[partId] + damageAmount * (shares ~= nil and shares[index] or baseShare)
+        local partDamage = damageAmount * (shares ~= nil and shares[index] or baseShare)
+        spec.partWear[partId] = spec.partWear[partId] + partDamage
+        if factorName == "terrainImpactFactor" and partDamage > 0 then
+            spec.partImpactWear[partId] = (spec.partImpactWear[partId] or 0) + partDamage
+        end
     end
     refreshSystemCondition(spec, systemKey)
 

@@ -792,9 +792,10 @@ function RMS_Utils.serializeBreakdowns(breakdownsTable)
         local effectTargetIndex = math.max(math.floor(tonumber(breakdown.effectTargetIndex) or 0), 0)
         local branch = math.max(math.floor(tonumber(breakdown.branch) or 0), 0)
 
-        local system = string.format("%s,%d,%.2f,%d,%d,%d,%.2f,%d,%d,%d,%d,%s", id, breakdown.stage, breakdown.progressTimer or 0,
+        local system = string.format("%s,%d,%.2f,%d,%d,%d,%.2f,%d,%d,%d,%d,%s,%d", id, breakdown.stage, breakdown.progressTimer or 0,
             visible, selected, active, resumeTimer, source, effectTargetIndex, branch,
-            breakdown.warrantyServiceOverdue == nil and -1 or breakdown.warrantyServiceOverdue and 1 or 0, breakdown.usedPartHours or "")
+            breakdown.warrantyServiceOverdue == nil and -1 or breakdown.warrantyServiceOverdue and 1 or 0, breakdown.usedPartHours or "",
+            breakdown.warrantyImpact and 1 or 0)
         table.insert(parts, system)
     end
     return table.concat(parts, ";")
@@ -855,10 +856,10 @@ function RMS_Utils.deserializeBreakdowns(breakdownString)
     end
     
     for part in string.gmatch(breakdownString, "([^;]+)") do
-        local id, stage, timer, isVisible, isSelected, isActive, resumeTimer, source, effectTargetIndex, branch, warrantyServiceOverdue, usedPartHours =
+        local id, stage, timer, isVisible, isSelected, isActive, resumeTimer, source, effectTargetIndex, branch, warrantyServiceOverdue, usedPartHours, warrantyImpact =
             string.match(
                 part,
-                "([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),?([^,]*),?([^,]*),?([^,]*),?([^,]*)"
+                "([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),?([^,]*),?([^,]*),?([^,]*),?([^,]*),?([^,]*)"
             )
         
         if id then
@@ -873,6 +874,7 @@ function RMS_Utils.deserializeBreakdowns(breakdownString)
                 effectTargetIndex = math.max(math.floor(tonumber(effectTargetIndex) or 0), 0),
                 branch = math.max(math.floor(tonumber(branch) or 0), 0),
                 warrantyServiceOverdue = tonumber(warrantyServiceOverdue) == 1,
+                warrantyImpact = tonumber(warrantyImpact) == 1,
                 usedPartHours = tonumber(usedPartHours)
             }
             if tonumber(warrantyServiceOverdue) == -1 then breakdowns[id].warrantyServiceOverdue = nil end

@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Reparation täcks inte vid hyra"/>
         <text name="rms_warranty_expired" text="Garantin har gått ut"/>
         <text name="rms_warranty_overdue" text="Avslag: försenat underhåll"/>
+        <text name="rms_warranty_impact" text="Avslag: stötskada"/>
         <text name="rms_warranty_options" text="Byte till originaldelar krävs"/>
         <text name="rms_warranty_mobile" text="Du betalar extra arbetskostnad för mobil verkstad"/>
         <text name="rms_warranty_remapped" text="Garanti upphörd: motor optimerad"/>

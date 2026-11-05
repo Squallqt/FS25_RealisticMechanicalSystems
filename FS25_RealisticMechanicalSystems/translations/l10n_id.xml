@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Perbaikan tidak ditanggung saat sewa"/>
         <text name="rms_warranty_expired" text="Garansi berakhir"/>
         <text name="rms_warranty_overdue" text="Ditolak: perawatan terlambat"/>
+        <text name="rms_warranty_impact" text="Ditolak: kerusakan akibat benturan"/>
         <text name="rms_warranty_options" text="Wajib ganti dengan suku cadang asli"/>
         <text name="rms_warranty_mobile" text="Kamu bayar tambahan upah kerja bengkel bergerak"/>
         <text name="rms_warranty_remapped" text="Garansi hilang: mesin diremap"/>

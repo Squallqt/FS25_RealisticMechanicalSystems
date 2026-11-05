@@ -396,6 +396,7 @@ local function readFaults(vehicle, spec, reading)
         local stageCount = #definition.stages
         local info = {systemName, string.format("severity %d of %d", breakdown.stage, stageCount)}
         if breakdown.warrantyServiceOverdue then table.insert(info, "warranty refused: service overdue when fault occurred") end
+        if breakdown.warrantyImpact then table.insert(info, "warranty refused: part hit by a collision before the fault") end
         if breakdown.usedPartHours ~= nil then
             table.insert(info, string.format("donor %d h", RealisticMechanicalSystems.getUsedPartMeterHours(breakdown.usedPartHours)))
         end

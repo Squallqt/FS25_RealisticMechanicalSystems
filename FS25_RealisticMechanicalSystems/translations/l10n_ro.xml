@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Reparație neacoperită la închiriere"/>
         <text name="rms_warranty_expired" text="Garanție expirată"/>
         <text name="rms_warranty_overdue" text="Refuz: întreținere întârziată"/>
+        <text name="rms_warranty_impact" text="Refuz: daune din impact"/>
         <text name="rms_warranty_options" text="Înlocuire cu piese originale necesară"/>
         <text name="rms_warranty_mobile" text="Plătești manopera suplimentară a atelierului mobil"/>
         <text name="rms_warranty_remapped" text="Garanție pierdută: motor resoftat"/>

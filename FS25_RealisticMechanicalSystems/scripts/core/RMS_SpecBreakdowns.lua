@@ -192,6 +192,7 @@ function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
     end
     if currentIsActive then
         spec.activeBreakdowns[breakdownId].warrantyServiceOverdue = self:getIsWarrantyServiceOverdue(breakdownId)
+        spec.activeBreakdowns[breakdownId].warrantyImpact = (spec.partImpactWear[breakdownId] or 0) > 0
     end
     if registryEntry.branches ~= nil then
         local branch = math.floor(tonumber(options.branch) or 0)
@@ -401,6 +402,7 @@ function RealisticMechanicalSystems:processBreakdowns(dt)
                     breakdown.isActive = true
                     if breakdown.warrantyServiceOverdue == nil then
                         breakdown.warrantyServiceOverdue = self:getIsWarrantyServiceOverdue(id)
+                        breakdown.warrantyImpact = (spec.partImpactWear[id] or 0) > 0
                     end
                     effectsNeedRecalculation = true
                 end

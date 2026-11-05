@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="임대 차량 수리는 보증 미적용"/>
         <text name="rms_warranty_expired" text="보증 만료"/>
         <text name="rms_warranty_overdue" text="거부: 정비 기한 초과"/>
+        <text name="rms_warranty_impact" text="거부: 충격 손상"/>
         <text name="rms_warranty_options" text="순정 부품으로 교체 필요"/>
         <text name="rms_warranty_mobile" text="이동식 정비소의 추가 공임은 본인 부담"/>
         <text name="rms_warranty_remapped" text="보증 상실: 엔진 맵핑됨"/>

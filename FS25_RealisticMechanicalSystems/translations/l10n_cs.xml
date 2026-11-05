@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="租赁车辆的维修不予保修"/>
         <text name="rms_warranty_expired" text="保修已到期"/>
         <text name="rms_warranty_overdue" text="拒保：保养逾期"/>
+        <text name="rms_warranty_impact" text="拒保：撞击损坏"/>
         <text name="rms_warranty_options" text="须更换原厂配件"/>
         <text name="rms_warranty_mobile" text="需支付移动维修车间的额外工时费"/>
         <text name="rms_warranty_remapped" text="保修失效：发动机已刷写"/>

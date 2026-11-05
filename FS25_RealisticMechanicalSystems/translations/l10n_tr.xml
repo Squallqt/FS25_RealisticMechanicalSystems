@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Kiralamada onarım kapsam dışı"/>
         <text name="rms_warranty_expired" text="Garanti sona erdi"/>
         <text name="rms_warranty_overdue" text="Ret: bakım gecikmiş"/>
+        <text name="rms_warranty_impact" text="Ret: darbe hasarı"/>
         <text name="rms_warranty_options" text="Orijinal parçalarla değişim gerekli"/>
         <text name="rms_warranty_mobile" text="Mobil atölyenin ek işçilik bedelini ödersin"/>
         <text name="rms_warranty_remapped" text="Garanti Kaybı: Motor Yazılımı Değiştirildi"/>

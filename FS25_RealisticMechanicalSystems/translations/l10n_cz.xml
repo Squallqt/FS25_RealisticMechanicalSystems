@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Oprava není kryta při pronájmu"/>
         <text name="rms_warranty_expired" text="Záruka skončila"/>
         <text name="rms_warranty_overdue" text="Zamítnuto: údržba po termínu"/>
+        <text name="rms_warranty_impact" text="Zamítnuto: poškození nárazem"/>
         <text name="rms_warranty_options" text="Nutná výměna za originální díly"/>
         <text name="rms_warranty_mobile" text="K úhradě: příplatek za práci mobilní dílny"/>
         <text name="rms_warranty_remapped" text="Záruka zanikla: motor po chiptuningu"/>

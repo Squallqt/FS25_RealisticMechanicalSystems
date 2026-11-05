@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Korjausta ei kateta vuokrattaessa"/>
         <text name="rms_warranty_expired" text="Takuu päättynyt"/>
         <text name="rms_warranty_overdue" text="Hylätty: huolto myöhässä"/>
+        <text name="rms_warranty_impact" text="Hylätty: iskuvaurio"/>
         <text name="rms_warranty_options" text="Vaihto alkuperäisosiin vaaditaan"/>
         <text name="rms_warranty_mobile" text="Maksat liikkuvan korjaamon lisätyökulut"/>
         <text name="rms_warranty_remapped" text="Takuu menetetty: moottori ohjelmoitu"/>

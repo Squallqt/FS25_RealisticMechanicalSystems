@@ -390,6 +390,7 @@
         <text name="rms_warranty_lease" text="Reparasjon ikke dekket ved leasing"/>
         <text name="rms_warranty_expired" text="Garantien er utløpt"/>
         <text name="rms_warranty_overdue" text="Avvist: vedlikehold forfalt"/>
+        <text name="rms_warranty_impact" text="Avvist: støtskade"/>
         <text name="rms_warranty_options" text="Utskifting med originaldeler kreves"/>
         <text name="rms_warranty_mobile" text="Du betaler ekstra arbeidskostnad for mobilt verksted"/>
         <text name="rms_warranty_remapped" text="Garanti bortfalt: motor optimalisert"/>
