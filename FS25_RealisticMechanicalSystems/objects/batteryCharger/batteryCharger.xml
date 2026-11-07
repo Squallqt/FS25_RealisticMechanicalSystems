@@ -58,7 +58,7 @@
     </wheels>
     <enterable isTabbable="false">
         <exitPoint node="exitPoint" />
-        <enterReferenceNode node="charger_vis" />
+        <enterReferenceNode node="charger_vis" interactionRadius="3" />
         <cameras>
             <camera node="outdoorCamera1" rotatable="true" rotateNode="outdoorCameraTarget" limit="true" useWorldXZRotation="true" rotMinX="-1.4" rotMaxX="1" transMin="3.1" transMax="40" translation="0 0 3.4" rotation="-18 180 0">
                 <raycastNode node="cameraRaycastNode1" />

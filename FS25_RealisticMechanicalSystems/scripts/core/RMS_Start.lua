@@ -46,7 +46,6 @@ function RMS_Start.initSpec(vehicle)
     spec.preheatRequiredMs = 0
     spec.preheatWasRequired = false
     spec.preheatColdStartFaultSeverity = 0
-    spec.glowPlugColdIdleRpmBackup = nil
 end
 
 ---Returns the longest turn of the starter and the rest after it

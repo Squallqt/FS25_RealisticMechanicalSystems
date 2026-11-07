@@ -233,55 +233,48 @@ function RMS_Main.registerSpecializationToVehicles()
 end
 
 
-local htPath = modDirectory .. "xml/handTools.xml"
-local xmlFile = XMLFile.loadIfExists("rmsHandTools", htPath)
-
-if xmlFile ~= nil then
-    xmlFile:iterate("handTools.specializations.specialization", function(_, key)
-        local name = xmlFile:getString(key .. "#name")
-        local className = xmlFile:getString(key .. "#className")
-        local filename = xmlFile:getString(key .. "#filename")
-
-        g_handToolSpecializationManager:addSpecialization(name, className, modDirectory .. filename)
+---Declares the hand tools of the mod, specializations before types
+function RMS_Main.loadHandToolTypes()
+    local declarations = XMLFile.load("rmsHandTools", modDirectory .. "xml/handTools.xml")
+    declarations:iterate("handTools.specializations.specialization", function(_, path)
+        g_handToolSpecializationManager:addSpecialization(declarations:getString(path .. "#name"),
+            declarations:getString(path .. "#className"), modDirectory .. declarations:getString(path .. "#filename"))
     end)
-
-    xmlFile:iterate("handTools.types.type", function(_, key)
-        g_handToolTypeManager:loadTypeFromXML(xmlFile.handle, key, false, nil, modName)
+    declarations:iterate("handTools.types.type", function(_, path)
+        g_handToolTypeManager:loadTypeFromXML(declarations.handle, path, false, nil, modName)
     end)
-
-    xmlFile:delete()
+    declarations:delete()
 end
 
+RMS_Main.loadHandToolTypes()
 
 
 ---Builds the mod state once the mission is running
 function RMS_Main:onStartMission()
     RMS_Gui.loadResources()
-    self.shopMenuPageInstalled = false
     RMS_Gui.loadScreens()
 
-    local mission = g_currentMission
-    RMS_Main.hud = RMS_Hud:new()
-    RMS_Main.hud:setScale(g_gameSettings:getValue(GameSettings.SETTING.UI_SCALE))
-	RMS_Main.hud:setVehicle(nil)
+    local hud = RMS_Hud:new()
+    hud:setScale(g_gameSettings:getValue(GameSettings.SETTING.UI_SCALE))
+    hud:setVehicle(nil)
+    RMS_Main.hud = hud
 
-	table.insert(mission.hud.displayComponents, RMS_Main.hud)
+    -- Drawn after the vehicle HUD, fed the vehicle the game controls
+    local gameHud = g_currentMission.hud
+    table.insert(gameHud.displayComponents, hud)
+    gameHud.setControlledVehicle = Utils.appendedFunction(gameHud.setControlledVehicle, function(_, vehicle)
+        hud:setVehicle(vehicle)
+    end)
+    gameHud.drawControlledEntityHUD = Utils.appendedFunction(gameHud.drawControlledEntityHUD, function()
+        hud:draw()
+    end)
 
-	mission.hud.setControlledVehicle = Utils.appendedFunction(mission.hud.setControlledVehicle, function(self, vehicle)
-		RMS_Main.hud:setVehicle(vehicle)
-	end)
-
-	mission.hud.drawControlledEntityHUD = Utils.appendedFunction(mission.hud.drawControlledEntityHUD, function(self)
-		RMS_Main.hud:draw()
-	end)
-
-    for _, spec in ipairs(g_storeManager.specTypes) do
-        if spec.name == 'wearable' then
-            local origFunc = spec.getValueFunc
-            spec.getValueFunc = function(storeItem, realItem, configurations, saleItem)
-                return RMS_Main.getShopCondition(storeItem, realItem, saleItem) or origFunc(storeItem, realItem, configurations, saleItem)
-            end
-        end
+    -- Condition line of the shop, RMS first, the game for the rest
+    local condition = g_storeManager:getSpecTypeByName("wearable")
+    local getGameCondition = condition.getValueFunc
+    condition.getValueFunc = function(storeItem, realItem, configurations, saleItem)
+        return RMS_Main.getShopCondition(storeItem, realItem, saleItem)
+            or getGameCondition(storeItem, realItem, configurations, saleItem)
     end
 end
 
@@ -324,17 +317,19 @@ end
 
 ---Redirects the vanilla repair button to the mod workshop dialog
 function RMS_Main.hookRepairButton(screenInstance, vehicle)
-    if screenInstance.rmsOriginalRepairCallback == nil and screenInstance.repairButton.onClickCallback ~= nil then
-        screenInstance.rmsOriginalRepairCallback = screenInstance.repairButton.onClickCallback
+    local button = screenInstance.repairButton
+    if screenInstance.rmsOriginalRepairCallback == nil and button.onClickCallback ~= nil then
+        screenInstance.rmsOriginalRepairCallback = button.onClickCallback
     end
-    if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
-        screenInstance.repairButton.onClickCallback = function()           
-            RMS_Main.onCustomRepairClick(screenInstance)
-        end
-        screenInstance.repairButton:setDisabled(false)
-    else
-        screenInstance.repairButton.onClickCallback = screenInstance.rmsOriginalRepairCallback
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or spec.isExcludedVehicle then
+        button.onClickCallback = screenInstance.rmsOriginalRepairCallback
+        return
     end
+    button.onClickCallback = function()
+        RMS_Main.onCustomRepairClick(screenInstance)
+    end
+    button:setDisabled(false)
 end
 
 
@@ -500,17 +495,14 @@ local function loadIsTracked(xmlFile, customEnvironment)
     return RealisticMechanicalSystems.getIsStoreItemTracked(xmlFile, customEnvironment)
 end
 
+---Tells whether the shop rates a tracked machine or store item
 local function getIsRated(storeItem, vehicle)
+    local isTracked = storeItem.specs.reliability == true
     if vehicle ~= nil then
         local spec = vehicle.spec_RealisticMechanicalSystems
-        if spec == nil or spec.isExcludedVehicle then
-            return false
-        end
-    elseif storeItem.specs.reliability ~= true then
-        return false
+        isTracked = spec ~= nil and not spec.isExcludedVehicle
     end
-
-    return storeItem.specs.power ~= nil
+    return isTracked and storeItem.specs.power ~= nil
 end
 
 local function getLaunchYear(storeItem, vehicle)
@@ -616,61 +608,41 @@ if not g_modIsLoaded["FS25_AdvancedDamageSystem"] then
     g_storeManager:addSpecType("rmsLaunchYear", "shopListAttributeIconRmsLaunchYear", nil, getLaunchYear, StoreSpecies.VEHICLE)
 end
 
----Inserts a page into the shop menu
-function RMS_Main.addShopMenuPage(frame, pageName, uvs, predicateFunc, insertAfter)
-    local targetPosition = 0
+---Moves the entry a test picks to a position of a list
+local function moveEntry(list, isEntry, position)
+    for index, entry in ipairs(list) do
+        if isEntry(entry) then
+            table.remove(list, index)
+            table.insert(list, position, entry)
+            return
+        end
+    end
+end
 
-    g_shopMenu.controlIDs[pageName] = nil
-
-    for i = 1, #g_shopMenu.pagingElement.elements do
-        local child = g_shopMenu.pagingElement.elements[i]
-        if child == g_shopMenu[insertAfter] then
-            targetPosition = i + 1
+---Inserts the RMS page in the shop menu, after the used sales
+function RMS_Main.addShopMenuPage(menu, frame)
+    local pageName = RMS_InGameMenuFrame.PAGE_NAME
+    local paging = menu.pagingElement
+    local position = #paging.elements + 1
+    for index, element in ipairs(paging.elements) do
+        if element == menu.pageUsedSale then
+            position = index + 1
             break
         end
     end
 
-    if targetPosition == 0 then
-        targetPosition = #g_shopMenu.pagingElement.elements + 1
-    end
+    menu[pageName] = frame
+    paging:addElement(frame)
+    menu:exposeControlsAsFields(pageName)
+    -- PagingElement:addElement appends: element and page go to the position
+    moveEntry(paging.elements, function(element) return element == frame end, position)
+    moveEntry(paging.pages, function(page) return page.element == frame end, position)
+    paging:updateAbsolutePosition()
+    paging:updatePageMapping()
 
-    g_shopMenu[pageName] = frame
-    g_shopMenu.pagingElement:addElement(g_shopMenu[pageName])
-    g_shopMenu:exposeControlsAsFields(pageName)
-
-    for i = 1, #g_shopMenu.pagingElement.elements do
-        local child = g_shopMenu.pagingElement.elements[i]
-        if child == g_shopMenu[pageName] then
-            table.remove(g_shopMenu.pagingElement.elements, i)
-            table.insert(g_shopMenu.pagingElement.elements, targetPosition, child)
-            break
-        end
-    end
-
-    for i = 1, #g_shopMenu.pagingElement.pages do
-        local child = g_shopMenu.pagingElement.pages[i]
-        if child.element == g_shopMenu[pageName] then
-            table.remove(g_shopMenu.pagingElement.pages, i)
-            table.insert(g_shopMenu.pagingElement.pages, targetPosition, child)
-            break
-        end
-    end
-
-    g_shopMenu.pagingElement:updateAbsolutePosition()
-    g_shopMenu.pagingElement:updatePageMapping()
-    g_shopMenu:registerPage(g_shopMenu[pageName], nil, predicateFunc)
-    g_shopMenu:addPageTab(g_shopMenu[pageName], Utils.getFilename("images/menuIcon.png", modDirectory), GuiUtils.getUVs(uvs))
-
-    for i = 1, #g_shopMenu.pageFrames do
-        local child = g_shopMenu.pageFrames[i]
-        if child == g_shopMenu[pageName] then
-            table.remove(g_shopMenu.pageFrames, i)
-            table.insert(g_shopMenu.pageFrames, targetPosition, child)
-            break
-        end
-    end
-
-    g_shopMenu:rebuildTabList()
+    menu:registerPage(frame, position, function() return true end)
+    menu:addPageTab(frame, Utils.getFilename("images/menuIcon.png", modDirectory), GuiUtils.getUVs({0, 0, 1024, 1024}))
+    menu:rebuildTabList()
 end
 
 ---Clones the last menu button until the menu holds enough of them
@@ -693,76 +665,60 @@ function RMS_Main.ensureMenuButtonCount(menu, count)
     menu.buttonsPanel:invalidateLayout()
 end
 
----Registers the RMS shop page once the shop menu exists
+---Adds the RMS page to the shop menu once the menu exists
 function RMS_Main:tryRegisterShopMenuPage()
-    if self.shopMenuPageInstalled then
-        return true
+    local menu = g_shopMenu
+    if menu == nil or menu[RMS_InGameMenuFrame.PAGE_NAME] ~= nil then
+        return
     end
-
-    if g_shopMenu == nil then
-        return false
-    end
-
-    if g_shopMenu[RMS_InGameMenuFrame.PAGE_NAME] ~= nil then
-        self.shopMenuPageInstalled = true
-        return true
-    end
-
     local frame = RMS_InGameMenuFrame.register()
-    RMS_Main.addShopMenuPage(frame, RMS_InGameMenuFrame.PAGE_NAME, {0, 0, 1024, 1024}, function()
-        return true
-    end, "pageUsedSale")
-    RMS_Main.ensureMenuButtonCount(g_shopMenu, RMS_InGameMenuFrame.MENU_BUTTON_COUNT)
+    RMS_Main.addShopMenuPage(menu, frame)
+    RMS_Main.ensureMenuButtonCount(menu, RMS_InGameMenuFrame.MENU_BUTTON_COUNT)
     frame:initialize()
-
-    self.shopMenuPageInstalled = true
-    return true
 end
 
 
----Adds RMS attributes to a shop item
-function RMS_Main.processAttributeData(self, storeItem, vehicle, saleItem)
-    if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
-        local reliabilityItemElement = self.attributeItem:clone(self.attributesLayout)
-        local reliabilityIconElement = reliabilityItemElement:getDescendantByName("icon")
-        local reliabilityTextElement = reliabilityItemElement:getDescendantByName("text")
+---Adds an icon and its text to the attributes of the shop configurator
+local function addShopAttribute(screen, iconProfile, text)
+    local attribute = screen.attributeItem:clone(screen.attributesLayout)
+    attribute:getDescendantByName("icon"):applyProfile(iconProfile)
+    attribute:getDescendantByName("text"):setText(text)
+end
 
-        local rel = RealisticMechanicalSystems.getBrandReliability(vehicle, nil)
-        reliabilityIconElement:applyProfile("shopConfigAttributeIconReliability")
-        reliabilityTextElement:setText(RMS_Utils.formatReliability(rel, true))
-        local accessItemElement = self.attributeItem:clone(self.attributesLayout)
-        accessItemElement:getDescendantByName("icon"):applyProfile("shopConfigAttributeIconServiceAccess")
-        accessItemElement:getDescendantByName("text"):setText(RMS_Utils.formatServiceAccess(vehicle, storeItem, self.configurations, true))
-        local launchYear = getLaunchYear(storeItem, vehicle)
-        if launchYear ~= nil then
-            local yearItemElement = self.attributeItem:clone(self.attributesLayout)
-            yearItemElement:getDescendantByName("icon"):applyProfile("shopConfigAttributeIconRmsLaunchYear")
-            yearItemElement:getDescendantByName("text"):setText(launchYear)
-        end
-        self.attributesLayout:invalidateLayout()
-
+---Adds reliability, service access and launch year of an owned machine
+function RMS_Main.processAttributeData(screen, storeItem, vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or spec.isExcludedVehicle then
+        return
     end
+    local reliability = RealisticMechanicalSystems.getBrandReliability(vehicle, nil)
+    addShopAttribute(screen, "shopConfigAttributeIconReliability", RMS_Utils.formatReliability(reliability, true))
+    addShopAttribute(screen, "shopConfigAttributeIconServiceAccess",
+        RMS_Utils.formatServiceAccess(vehicle, storeItem, screen.configurations, true))
+    local launchYear = getLaunchYear(storeItem, vehicle)
+    if launchYear ~= nil then
+        addShopAttribute(screen, "shopConfigAttributeIconRmsLaunchYear", launchYear)
+    end
+    screen.attributesLayout:invalidateLayout()
 end
 
----Fills a shop list cell, adding the RMS attributes to it
-function RMS_Main.populateCellForItemInSection(self, superFunc, list, section, index, cell)
-    if list.id == 'vehiclesList' then
-        local vehicle = self.vehicles[index].vehicle
-        if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
-            superFunc(self, list, section, index, cell)
-            local condition, isCompleteInspection = vehicle:getLastInspectedCondition()
-            local _, isReportOutdated = vehicle:getInspectionReportAge()
-            cell:getAttribute("damage"):setText(RMS_Utils.formatCondition(condition, isCompleteInspection))
-            if isReportOutdated then
-                cell:getAttribute("damage"):setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
-            else
-                cell:getAttribute("damage"):setTextColor(RMS_Utils.getConditionColor(condition, isCompleteInspection))
-            end
-        else
-            superFunc(self, list, section, index, cell)
-        end
+---Shows the last inspected condition in the statistics vehicle list
+function RMS_Main.populateCellForItemInSection(frame, superFunc, list, section, index, cell)
+    superFunc(frame, list, section, index, cell)
+    local vehicle = list.id == "vehiclesList" and frame.vehicles[index].vehicle or nil
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or spec.isExcludedVehicle then
+        return
+    end
+    local condition, isComplete = vehicle:getLastInspectedCondition()
+    local _, isOutdated = vehicle:getInspectionReportAge()
+    local conditionText = cell:getAttribute("damage")
+    conditionText:setText(RMS_Utils.formatCondition(condition, isComplete))
+    -- An outdated report is dimmed, a current one coloured by its condition
+    if isOutdated then
+        conditionText:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
     else
-        superFunc(self, list, section, index, cell)
+        conditionText:setTextColor(RMS_Utils.getConditionColor(condition, isComplete))
     end
 end
 
@@ -839,44 +795,47 @@ RMS_Main.isWorkshopOpen = true
 RMS_Main.currentWeather = WeatherType.SUN
 RMS_Main.currentWeatherFactor = 1.0
 
----Recomputes whether the workshop is open from the time of day
+---Tells whether the time of day falls within the opening hours
 function RMS_Main:evaluateWorkshopState()
-    local currentDayHour = g_currentMission.environment.dayTime / (60 * 60 * 1000)
-    return (currentDayHour >= RMS_Config.WORKSHOP.OPEN_HOUR
-        and currentDayHour < RMS_Config.WORKSHOP.CLOSE_HOUR)
+    local hour = g_currentMission.environment.dayTime / 3600000
+    local hours = RMS_Config.WORKSHOP
+    return hour >= hours.OPEN_HOUR and hour < hours.CLOSE_HOUR
 end
+
+---Setting that keeps each workshop type open around the clock
+RMS_Main.ALWAYS_AVAILABLE_SETTINGS = {
+    DEALER = "DEALER_ALWAYS_AVAILABLE",
+    MOBILE = "MOBILE_ALWAYS_AVAILABLE",
+    OWN = "OWN_ALWAYS_AVAILABLE"
+}
 
 ---Tells whether a workshop type ignores the opening hours
 function RMS_Main:isWorkshopTypeAlwaysAvailable(workshopType)
-    local workshopConfig = RMS_Config.WORKSHOP
-
-    if workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER then
-        return workshopConfig.DEALER_ALWAYS_AVAILABLE == true
-    elseif workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE then
-        return workshopConfig.MOBILE_ALWAYS_AVAILABLE == true
-    elseif workshopType == RealisticMechanicalSystems.WORKSHOP.OWN then
-        return workshopConfig.OWN_ALWAYS_AVAILABLE == true
+    for name, setting in pairs(RMS_Main.ALWAYS_AVAILABLE_SETTINGS) do
+        if RealisticMechanicalSystems.WORKSHOP[name] == workshopType then
+            return RMS_Config.WORKSHOP[setting] == true
+        end
     end
-
     return false
 end
 
 ---Tells whether a workshop type accepts a service now
 function RMS_Main:isWorkshopTypeOpen(workshopType)
-    return self:isWorkshopTypeAlwaysAvailable(workshopType) or self.isWorkshopOpen == true
+    return self.isWorkshopOpen == true or self:isWorkshopTypeAlwaysAvailable(workshopType)
 end
 
 
 ---Recomputes the workshop state at once and replicates it
 function RMS_Main:forceWorkshopUpdate(forceNotify)
-    local isWorkshopOpen = self:evaluateWorkshopState()
-    if forceNotify or isWorkshopOpen ~= self.isWorkshopOpen then
-        self.isWorkshopOpen = isWorkshopOpen
-        if g_currentMission:getIsServer() then
-            RMS_WorkshopChangeStatusEvent.send(self.isWorkshopOpen)
-        end
-        g_messageCenter:publish(MessageType.RMS_WORKSHOP_CHANGE_STATUS, self.isWorkshopOpen)
+    local isOpen = self:evaluateWorkshopState()
+    if isOpen == self.isWorkshopOpen and not forceNotify then
+        return
     end
+    self.isWorkshopOpen = isOpen
+    if g_currentMission:getIsServer() then
+        RMS_WorkshopChangeStatusEvent.send(isOpen)
+    end
+    g_messageCenter:publish(MessageType.RMS_WORKSHOP_CHANGE_STATUS, isOpen)
 end
 
 ---Advances the diagnostic tool licences and the monthly greasing
@@ -907,12 +866,59 @@ function RMS_Main:onDayChanged()
     end
 end
 
+---Weather setting that scales the wear of a machine left outside
+RMS_Main.WEATHER_FACTOR_SETTINGS = {
+    RAIN = "RAIN_FACTOR",
+    SNOW = "SNOW_FACTOR",
+    HAIL = "HAIL_FACTOR"
+}
+
+---Reads the current weather and the wear factor it gives
+function RMS_Main.updateWeather()
+    local weather = g_currentMission.environment.weather:getCurrentWeatherType()
+    local factor = 1.0
+    for name, setting in pairs(RMS_Main.WEATHER_FACTOR_SETTINGS) do
+        if WeatherType[name] == weather then
+            factor = RMS_Config.CORE[setting] or 1.0
+        end
+    end
+    RMS_Main.currentWeather = weather
+    RMS_Main.currentWeatherFactor = factor
+end
+
+---Steps a tracked machine; weather and shelter every meta step
+function RMS_Main:stepVehicle(vehicle)
+    local step = RMS_Config.CORE_UPDATE_DELAY
+    vehicle:rmsUpdate(step, self.isWorkshopOpen)
+
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    spec.metaUpdateTimer = spec.metaUpdateTimer + step
+    if spec.metaUpdateTimer <= RMS_Config.META_UPDATE_DELAY then
+        return
+    end
+    spec.metaUpdateTimer = spec.metaUpdateTimer - RMS_Config.META_UPDATE_DELAY
+    RMS_Main.updateWeather()
+    -- A working machine keeps the shelter it was parked under
+    if vehicle:getIsOperating() then
+        return
+    end
+    spec.isUnderRoof = vehicle:isUnderRoof()
+end
+
+---Next tracked machine of the round, back to the first after the last
+function RMS_Main:getNextRoundVehicle()
+    local key, vehicle = next(self.vehicles, self.previousKey)
+    if key == nil then
+        key, vehicle = next(self.vehicles)
+    end
+    self.previousKey = key
+    return vehicle
+end
+
 ---Runs the mod update: workshop hours and the simulation step of every vehicle
 function RMS_Main:update(dt)
     if g_currentMission:getIsClient() then
-        if not self.shopMenuPageInstalled then
-            self:tryRegisterShopMenuPage()
-        end
+        self:tryRegisterShopMenuPage()
     end
 
     self.workshopCheckTimer = self.workshopCheckTimer + dt
@@ -931,56 +937,22 @@ function RMS_Main:update(dt)
         end
     end
 
-    if not g_currentMission:getIsServer() or self.numVehicles == 0 then
+    -- Server only: each machine steps once per CORE_UPDATE_DELAY
+    local isStepping = g_currentMission:getIsServer() and self.numVehicles > 0
+    if not isStepping then
         self.previousKey = nil
         return
     end
-
-    self.updateAlphaTimer = self.updateAlphaTimer + dt
-
-    local timePerVehicle = RMS_Config.CORE_UPDATE_DELAY / self.numVehicles
-    local vehiclesToUpdate = math.floor(self.updateAlphaTimer / timePerVehicle)
-
-    if vehiclesToUpdate < 1 then
-        return
-    end
-
-    for i = 1, vehiclesToUpdate do
-        local vehicle = nil
-        self.previousKey, vehicle = next(self.vehicles, self.previousKey)
-
-        if self.previousKey == nil and self.numVehicles > 0 then
-             self.previousKey, vehicle = next(self.vehicles)
-        end
-        
-        if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
-            vehicle:rmsUpdate(RMS_Config.CORE_UPDATE_DELAY, self.isWorkshopOpen)
-
-            local spec = vehicle.spec_RealisticMechanicalSystems
-            spec.metaUpdateTimer = spec.metaUpdateTimer + RMS_Config.CORE_UPDATE_DELAY
-            if spec.metaUpdateTimer > RMS_Config.META_UPDATE_DELAY then
-
-                RMS_Main.currentWeather = g_currentMission.environment.weather:getCurrentWeatherType()
-                if RMS_Main.currentWeather == WeatherType.RAIN then
-                    RMS_Main.currentWeatherFactor = RMS_Config.CORE.RAIN_FACTOR or 1.0
-                elseif RMS_Main.currentWeather == WeatherType.SNOW then
-                    RMS_Main.currentWeatherFactor = RMS_Config.CORE.SNOW_FACTOR or 1.0
-                elseif RMS_Main.currentWeather == WeatherType.HAIL then
-                    RMS_Main.currentWeatherFactor = RMS_Config.CORE.HAIL_FACTOR or 1.0
-                else
-                    RMS_Main.currentWeatherFactor = 1.0
-                end
-
-                if not vehicle:getIsOperating() then
-                    spec.isUnderRoof = vehicle:isUnderRoof()
-                end
-
-                spec.metaUpdateTimer = spec.metaUpdateTimer - RMS_Config.META_UPDATE_DELAY
-  
-            end
+    local interval = RMS_Config.CORE_UPDATE_DELAY / self.numVehicles
+    local elapsed = self.updateAlphaTimer + dt
+    local count = math.floor(elapsed / interval)
+    self.updateAlphaTimer = elapsed - count * interval
+    for _ = 1, count do
+        local vehicle = self:getNextRoundVehicle()
+        if not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
+            self:stepVehicle(vehicle)
         end
     end
-    self.updateAlphaTimer = self.updateAlphaTimer - vehiclesToUpdate * timePerVehicle
 end
 
 ---Loads the RMS map state and GUI registrations
@@ -988,7 +960,6 @@ function RMS_Main:loadMap()
     RMS_Gui.loadResources()
     RMS_Gui.loadFrames()
     RMS_SettingsPage.reset()
-    self.shopMenuPageInstalled = false
     RMS_Config.resetTutorialStateSession()
     RMS_Config.loadFromXMLFile()
     self:tryRegisterShopMenuPage()
@@ -1012,7 +983,6 @@ end
 function RMS_Main:deleteMap()
     g_messageCenter:unsubscribe(MessageType.PERIOD_CHANGED, self)
     g_messageCenter:unsubscribe(MessageType.DAY_CHANGED, self)
-    self.shopMenuPageInstalled = false
     RMS_Gui.unloadResources()
     RMS_Config._loaded = nil
     RMS_Config.resetTutorialStateSession()

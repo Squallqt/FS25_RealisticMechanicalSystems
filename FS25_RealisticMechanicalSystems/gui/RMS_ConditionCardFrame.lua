@@ -6,6 +6,10 @@ RMS_ConditionCardFrame = {}
 
 local RMS_ConditionCardFrame_mt = Class(RMS_ConditionCardFrame, FrameElement)
 
+-- the list above its foot line, then into the band it leaves free
+local LIST_HEIGHT = 180
+local LIST_FULL_HEIGHT = 200
+
 ---Creates the card
 function RMS_ConditionCardFrame.new()
     local self = FrameElement.new(nil, RMS_ConditionCardFrame_mt)
@@ -19,6 +23,10 @@ function RMS_ConditionCardFrame:initialize()
     self:setTarget(self, self:getRootElement().target)
     self.stateList:setDataSource(self)
     self.stateList:setDelegate(self)
+    self.listParts = { self.systemsLayout, self.stateList, self.stateSliderBox, self.stateSlider }
+    for _, element in ipairs(self.listParts) do
+        element.rmsBaseHeight = element.size[2]
+    end
 end
 
 ---Keeps the vehicle the card reads, its systems folded when it changes
@@ -50,6 +58,10 @@ function RMS_ConditionCardFrame:refresh()
     end
     self.footText:setText(footText)
     self.footRule:setVisible(footText ~= "")
+    local grown = footText == "" and (LIST_FULL_HEIGHT - LIST_HEIGHT) / LIST_HEIGHT * self.stateList.rmsBaseHeight or 0
+    for _, element in ipairs(self.listParts) do
+        element:setSize(nil, element.rmsBaseHeight + grown)
+    end
     RMS_Utils.reloadListTemplates(self.stateList)
 
     self.lastCheckValue:setText(reading.ageText)

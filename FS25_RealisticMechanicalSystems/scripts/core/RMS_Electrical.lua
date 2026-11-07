@@ -40,6 +40,62 @@ local function toCatalogueStep(value, step)
     return math.floor(value / step + 0.5) * step
 end
 
+---Tells whether no configuration hides a lamp of the machine
+function RMS_Electrical.getIsLampMounted(vehicle, node)
+    local isComponent = false
+    while node ~= 0 and not isComponent do
+        if not getVisibility(node) then
+            return false
+        end
+        for _, component in ipairs(vehicle.components) do
+            isComponent = isComponent or component.node == node
+        end
+        node = getParent(node)
+    end
+    return true
+end
+
+local function getHoldsMountedLamp(vehicle, lights)
+    for _, light in ipairs(lights) do
+        if RMS_Electrical.getIsLampMounted(vehicle, light.node) then
+            return true
+        end
+    end
+    return false
+end
+
+---Tells whether the machine carries turn lights
+function RMS_Electrical.getCarriesTurnLights(vehicle)
+    local spec = vehicle.spec_lights
+    if spec == nil then
+        return false
+    end
+    if getHoldsMountedLamp(vehicle, spec.staticLights.turnLightsLeft) then
+        return true
+    end
+    for _, profile in pairs(spec.realLights) do
+        if getHoldsMountedLamp(vehicle, profile.turnLightsLeft) then
+            return true
+        end
+    end
+    return false
+end
+
+---Returns the number of beacons on the machine
+function RMS_Electrical.getMountedBeaconCount(vehicle)
+    if vehicle.spec_lights == nil then
+        return 0
+    end
+    local count = 0
+    for _, beaconLight in ipairs(vehicle.spec_lights.beaconLights) do
+        if beaconLight.linkNode ~= nil and RMS_Electrical.getIsLampMounted(vehicle, beaconLight.linkNode)
+            or beaconLight.linkNode == nil and getHoldsMountedLamp(vehicle, beaconLight.staticLights or {}) then
+            count = count + 1
+        end
+    end
+    return count
+end
+
 ---Sizes the circuit of a machine from its family, its power and its year
 function RMS_Electrical.resolveRating(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -84,6 +140,11 @@ function RMS_Electrical.resolveRating(vehicle)
     local lampW = year < C.LED_YEARS.FRONT_WORK_LIGHTS_FAILURE and C.WORK_LAMP_HALOGEN_W or C.WORK_LAMP_LED_W
     rating.workLamps = workLamps
     rating.workLightsSideA = workLamps / 2 * lampW / (C.LAMP_VOLTAGE_V * series)
+    local beaconA = year < C.LED_YEARS.BEACON_LIGHTS_FAILURE and C.BEACON_HALOGEN_A or C.BEACON_LED_W / C.LAMP_VOLTAGE_V
+    rating.beaconsA = RMS_Electrical.getMountedBeaconCount(vehicle) * beaconA / series
+    local turnLampW = year < C.LED_YEARS.TURN_LIGHTS_FAILURE and C.TURN_LAMP_BULB_W or C.TURN_LAMP_LED_W
+    rating.turnLightsSideA = RMS_Electrical.getCarriesTurnLights(vehicle)
+        and C.TURN_LAMPS_PER_SIDE * turnLampW * C.TURN_LIGHT_DUTY / (C.LAMP_VOLTAGE_V * series) or 0
     local glowPlugs = family == "ROAD_LIGHT" and law.ROAD_LIGHT.glowPlugs or pickStep(C.GLOW_PLUGS_BY_POWER, power)
     rating.glowPlugsA = glowPlugs * C.GLOW_PLUG_A / series
 
@@ -152,6 +213,15 @@ local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
         end
         if math.floor(mask / 4) % 2 == 1 then
             loads.lights = loads.lights + rating.workLightsSideA
+        end
+        if vehicle:getBeaconLightsVisibility() then
+            loads.lights = loads.lights + rating.beaconsA
+        end
+        local turnLightState = vehicle:getTurnLightState()
+        if turnLightState == Lights.TURNLIGHT_HAZARD then
+            loads.lights = loads.lights + 2 * rating.turnLightsSideA
+        elseif turnLightState ~= Lights.TURNLIGHT_OFF then
+            loads.lights = loads.lights + rating.turnLightsSideA
         end
     end
 
@@ -505,14 +575,36 @@ function RMS_Electrical.getCrankingSpeed(vehicle)
         * spec.starterHealth
 end
 
+---Tells whether no lamp of a machine gets any current
+function RMS_Electrical.getIsUnpowered(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    return spec.batteryIsolated or spec.activeEffects.LIGHTS_FAILURE ~= nil
+end
+
 ---Tells whether the lights of a machine stay off whatever asks for them
 function RMS_Electrical.getKeepsLightsOff(vehicle)
-    if vehicle.spec_RealisticMechanicalSystems.batteryIsolated then
+    if RMS_Electrical.getIsUnpowered(vehicle) then
         return true
     end
 
     -- Native and driving-mod updates reapply AI light requests.
     return vehicle:getIsAIActive() and not vehicle:getIsMotorStarted() and not vehicle:getIsControlled()
+end
+
+---Puts out every lamp of a machine left without current
+function RMS_Electrical.switchOffAllLights(vehicle, noEventSend)
+    if vehicle.spec_lights == nil then
+        return
+    end
+    if vehicle:getLightsTypesMask() ~= 0 then
+        vehicle:setLightsTypesMask(0, true, noEventSend)
+    end
+    if vehicle:getBeaconLightsVisibility() then
+        vehicle:setBeaconLightsVisibility(false, true, noEventSend)
+    end
+    if vehicle:getTurnLightState() ~= Lights.TURNLIGHT_OFF then
+        vehicle:setTurnLightState(Lights.TURNLIGHT_OFF, true, noEventSend)
+    end
 end
 
 ---Tells whether a machine carries a battery isolator, every RMS machine
@@ -528,8 +620,8 @@ function RMS_Electrical.setBatteryIsolated(vehicle, isIsolated)
     end
 
     spec.batteryIsolated = isIsolated
-    if isIsolated and vehicle.spec_lights ~= nil and vehicle:getLightsTypesMask() ~= 0 then
-        vehicle:setLightsTypesMask(0, true)
+    if isIsolated then
+        RMS_Electrical.switchOffAllLights(vehicle)
     end
     RMS_Electrical.playBatteryIsolatorSound(vehicle)
 end

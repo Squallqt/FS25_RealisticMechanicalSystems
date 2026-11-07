@@ -1,7 +1,7 @@
 -- Copyright (C) 2026 Squallqt.
 -- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
 
----Synchronises the transient state and the sounds of a single breakdown effect
+---Plays on the clients an event a breakdown effect had on the server
 RMS_EffectSyncEvent = {}
 local RMS_EffectSyncEvent_mt = Class(RMS_EffectSyncEvent, Event)
 
@@ -15,14 +15,15 @@ end
 
 
 ---Create new instance of event
-function RMS_EffectSyncEvent.new(vehicle, effectId, status, timer, extraInt, extraFloat)
+-- @param string effectId effect the event comes from
+-- @param string status what happened
+-- @param float? value the lights mask of a flicker, the length in ms of a grind
+function RMS_EffectSyncEvent.new(vehicle, effectId, status, value)
     local self = RMS_EffectSyncEvent.emptyNew()
-    self.vehicle    = vehicle
-    self.effectId   = effectId   or ""
-    self.status     = status     or ""
-    self.timer      = timer      or 0
-    self.extraInt   = extraInt   or 0
-    self.extraFloat = extraFloat or 0
+    self.vehicle = vehicle
+    self.effectId = effectId
+    self.status = status
+    self.value = value or 0
     return self
 end
 
@@ -30,131 +31,103 @@ end
 ---Writes event data to a stream.
 function RMS_EffectSyncEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
-    streamWriteString(streamId,  self.effectId)
-    streamWriteString(streamId,  self.status)
-    streamWriteFloat32(streamId, self.timer)
-    streamWriteInt32(streamId,   self.extraInt)
-    streamWriteFloat32(streamId, self.extraFloat)
+    streamWriteString(streamId, self.effectId)
+    streamWriteString(streamId, self.status)
+    streamWriteFloat32(streamId, self.value)
 end
 
 
 ---Reads event data from a stream.
 function RMS_EffectSyncEvent:readStream(streamId, connection)
-    self.vehicle    = NetworkUtil.readNodeObject(streamId)
-    self.effectId   = streamReadString(streamId)
-    self.status     = streamReadString(streamId)
-    self.timer      = streamReadFloat32(streamId)
-    self.extraInt   = streamReadInt32(streamId)
-    self.extraFloat = streamReadFloat32(streamId)
+    self.vehicle = NetworkUtil.readNodeObject(streamId)
+    self.effectId = streamReadString(streamId)
+    self.status = streamReadString(streamId)
+    self.value = streamReadFloat32(streamId)
     self:run(connection)
 end
 
 
----Applies the received effect state, dispatching on the effect id
+-- the state of an effect the client runs as well, nil once it is gone
+local function getState(vehicle, effectId)
+    return vehicle.spec_RealisticMechanicalSystems.activeEffects[effectId] ~= nil
+        and RMS_Breakdowns.getEffectState(vehicle, effectId) or nil
+end
+
+local function playSample(vehicle, name)
+    RMS_SoundManager.playSample(vehicle.spec_RealisticMechanicalSystems.samples[name])
+end
+
+-- what a client plays of each effect, by effect id
+local CLIENT_EVENTS = {
+    ENGINE_STALLS_CHANCE = function(vehicle)
+        vehicle:stopMotor()
+        RMS_Breakdowns.showWarning(vehicle, "rms_breakdowns_engine_stalled_message", 5000)
+    end,
+    CHOPPER_FAILURE = function(vehicle, event)
+        RMS_Breakdowns.showWarning(vehicle, event.status == "SWATH" and "rms_breakdowns_chopper_failure_message"
+            or "rms_breakdowns_chopper_failure_spread_message", 4000)
+    end,
+    BRAKE_FORCE_MODIFIER = function(vehicle) playSample(vehicle, "brakes") end,
+    POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT = function(vehicle) playSample(vehicle, "powershiftClunk") end,
+    ENGINE_HESITATION_CHANCE = function(vehicle, event)
+        local cough = getState(vehicle, event.effectId)
+        if cough ~= nil then
+            RMS_Breakdowns.startEngineCough(vehicle, cough)
+        end
+    end,
+    LIGHTS_FLICKER_CHANCE = function(vehicle, event)
+        local flicker = getState(vehicle, event.effectId)
+        if flicker ~= nil then
+            RMS_Breakdowns.startLightsFlicker(flicker, event.value)
+        end
+    end,
+    GEAR_SHIFT_FAILURE_CHANCE = function(vehicle, event)
+        local grind = getState(vehicle, event.effectId)
+        if grind ~= nil then
+            grind.status, grind.timer = "FAILED", 0
+            if event.value > 0 then
+                local motor = vehicle:getMotor()
+                motor.gearChangeTimer, motor.autoGearChangeTimer = event.value, event.value
+            end
+        end
+        playSample(vehicle, "transmissionShiftFailed")
+    end,
+    GEAR_REJECTION_CHANCE = function(vehicle, event)
+        local rejection = getState(vehicle, event.effectId)
+        if event.status == "IDLE" then
+            if rejection ~= nil then
+                rejection.status, rejection.timer = "IDLE", 0
+            end
+            playSample(vehicle, "transmissionShiftFailed")
+        elseif rejection ~= nil then
+            RMS_Breakdowns.rejectGear(vehicle, rejection)
+        end
+    end
+}
+
+
+
+---Plays the event on a client, or warns its driver of the stop
 function RMS_EffectSyncEvent:run(connection)
     local vehicle = self.vehicle
-    if vehicle == nil or not vehicle:getIsSynchronized() then
+    if vehicle == nil or not vehicle:getIsSynchronized() or vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
         return
     end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil or spec.isExcludedVehicle then
-        return
+    if RMS_Breakdowns.SHAFT_ALARMS[self.effectId] then
+        RMS_Breakdowns.soundShaftAlarm(vehicle)
     end
-
-    local effect = spec.activeEffects[self.effectId]
-
-    if self.effectId == "ENGINE_STALLS_CHANCE" then
-        if vehicle.stopMotor then
-            vehicle:stopMotor()
-        end
-        if vehicle:getIsActiveForInput(true) then
-            g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_engine_stalled_message"), 5000)
-        end
-
-    elseif self.effectId == "PTO_AUTO_DISENGAGE_CHANCE" or self.effectId == "FRONT_PTO_AUTO_DISENGAGE_CHANCE"
-        or self.effectId == "HARVEST_BLOCKAGE_CHANCE" then
-        if effect ~= nil then
-            effect.extraData = effect.extraData or {}
-            effect.extraData.status = self.status
-        end
-
-    elseif self.effectId == "CHOPPER_FAILURE" then
-        if vehicle:getIsActiveForInput(true) then
-            local messageKey = self.status == "SWATH" and "rms_breakdowns_chopper_failure_message" or "rms_breakdowns_chopper_failure_spread_message"
-            g_currentMission:showBlinkingWarning(g_i18n:getText(messageKey), 4000)
-        end
-
-    elseif self.effectId == "BRAKE_FORCE_MODIFIER" then
-        if self.status == "SOUND" then
-            RMS_SoundManager.playSample(spec.samples.brakes)
-        end
-
-    elseif self.effectId == "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT" then
-        if self.status == "CLUNK" then
-            RMS_SoundManager.playSample(spec.samples.powershiftClunk)
-        end
-
-    elseif self.effectId == "GEAR_SHIFT_FAILURE_CHANCE" then
-        if effect and effect.extraData then
-            effect.extraData.status = self.status
-            effect.extraData.timer  = self.timer
-            local motor = vehicle:getMotor()
-            if motor and self.extraFloat > 0 then
-                motor.gearChangeTimer = self.extraFloat
-                motor.autoGearChangeTimer = self.extraFloat
-            end
-        end
-        if self.status == "FAILED" then
-            RMS_SoundManager.playSample(spec.samples.transmissionShiftFailed)
-        end
-
-    elseif self.effectId == "GEAR_REJECTION_CHANCE" then
-        if effect and effect.extraData then
-            effect.extraData.status = self.status
-            effect.extraData.timer = self.timer
-            local motor = vehicle:getMotor()
-            if self.status == "REJECTED" and motor and motor.setGear then
-                motor:setGear(0, false)
-            end
-            if self.status == "REJECTED" and vehicle:getIsActiveForInput(true) then
-                g_currentMission:showBlinkingWarning(g_i18n:getText("rms_breakdowns_gear_disengage_message"), 3000)
-            end
-        end
-        if self.status == "REJECTED" then
-            RMS_SoundManager.playSample(spec.samples.gearDisengage)
-        elseif self.status == "IDLE" and self.extraInt > 0 then
-            RMS_SoundManager.playSample(spec.samples.transmissionShiftFailed)
-        end
-
-    elseif self.effectId == "LIGHTS_FLICKER_CHANCE" then
-        if effect and effect.extraData then
-            effect.extraData.maskBackup = self.extraInt > 0 and self.extraInt or effect.extraData.maskBackup
-            effect.extraData.status = self.status
-            effect.extraData.timer = self.timer
-        end
-
-    elseif self.effectId == "ENGINE_HESITATION_CHANCE" then
-        if effect and effect.extraData then
-            effect.extraData.status = self.status
-            effect.extraData.timer = self.timer
-            if self.status == "CHOKING" then
-                local cruiseState = vehicle:getCruiseControlState()
-                if cruiseState ~= 0 then
-                    effect.extraData.cruiseState = cruiseState
-                    vehicle:setCruiseControlState(0, true)
-                end
-            end
-        end
+    local play = CLIENT_EVENTS[self.effectId]
+    if play ~= nil then
+        play(vehicle, self)
+    else
+        RMS_Breakdowns.showWarning(vehicle, RMS_Breakdowns.WORK_STOP_MESSAGES[self.effectId], 4000)
     end
 end
 
 
----Sends the effect state from the server, or the start effects to it
-function RMS_EffectSyncEvent.send(vehicle, effectId, status, timer, extraInt, extraFloat)
+---Sends the event of an effect from the server to the clients
+function RMS_EffectSyncEvent.send(vehicle, effectId, status, value)
     if g_server ~= nil then
-        g_server:broadcastEvent(RMS_EffectSyncEvent.new(vehicle, effectId, status, timer, extraInt, extraFloat), nil, nil, vehicle)
-    elseif g_client ~= nil and (effectId == "ENGINE_HARD_START_MODIFIER" or effectId == "GLOW_PLUG_HARD_START_MODIFIER" or effectId == "ENGINE_FAILURE") then
-        g_client:getServerConnection():sendEvent(RMS_EffectSyncEvent.new(vehicle, effectId, status, timer, extraInt, extraFloat))
+        g_server:broadcastEvent(RMS_EffectSyncEvent.new(vehicle, effectId, status, value), nil, nil, vehicle)
     end
 end

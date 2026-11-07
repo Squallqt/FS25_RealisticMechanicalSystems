@@ -38,17 +38,9 @@ RMS_Config = {
         SNOW_FACTOR = 1.1,
         SERVICE_EXPIRED_THRESHOLD = 0.5,
 
-        SYSTEM_WEIGHTS = {
-            engine=0.22, 
-            transmission=0.16, 
-            hydraulics=0.12, 
-            cooling=0.12, 
-            electrical=0.10, 
-            chassis=0.10, 
-            fuel=0.08,
-            pto=0.06,
-            harvest=0.13
-        },
+        -- share of each system in the condition of the machine
+        SYSTEM_WEIGHTS = { engine = 0.22, transmission = 0.16, hydraulics = 0.12, cooling = 0.12, electrical = 0.10, chassis = 0.10,
+            fuel = 0.08, pto = 0.06, harvest = 0.13 },
 
         AVG_STRESS_WARNING_THRESHOLD = 0.22,
         AVG_STRESS_CRITICAL_THRESHOLD = 0.44,
@@ -300,14 +292,13 @@ RMS_Config = {
             { effect = "TRANSMISSION_SLIP_EFFECT", system = "TRANSMISSION", amplitude = 0.30, exponent = 3, aggregation = "max",
                 combustion = { "MANUAL_TRANSMISSION_CLUTCH_WEAR" } },
             { effect = "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", system = "TRANSMISSION", amplitude = 0.30, exponent = 3,
-                aggregation = "max", extraData = { timer = 0, status = "IDLE", duration = 1000, backup = 0 },
+                aggregation = "max",
                 combustion = { "TRANSMISSION_PUMP_MALFUNCTION" } },
             { effect = "CVT_MAX_RATIO_MODIFIER", system = "TRANSMISSION", amplitude = 0.30, exponent = 3, aggregation = "max",
                 combustion = { "CVT_HYDRAULIC_CONTROL_VALVE_MALFUNCTION" } },
             { effect = "HYDRAULIC_SPEED_MODIFIER", system = "HYDRAULICS", amplitude = -0.30, exponent = 3, aggregation = "min",
                 combustion = { "HYDRAULIC_PUMP_MALFUNCTION" }, electric = { "HYDRAULIC_PUMP_MALFUNCTION" } },
             { effect = "BRAKE_FORCE_MODIFIER", system = "CHASSIS", amplitude = -0.60, exponent = 3, aggregation = "min",
-                extraData = { timer = 0 },
                 combustion = { "BRAKE_DISC_WEAR" }, electric = { "BRAKE_DISC_WEAR" } },
             -- degrees
             { effect = "STEERING_PLAY_EFFECT", system = "CHASSIS", amplitude = 1.5, exponent = 3, rampStart = 0.67, aggregation = "max",
@@ -817,6 +808,7 @@ RMS_Config = {
     },
 
     FIELD_CARE = {
+        -- share of the clogging an air blower clears each second
         CLEANING_SPEED = 0.05,
         AIR_FILTER_BREAKDOWN_THRESHOLD = 0.5,
         AIR_FILTER_BLOWOUT_RESIDUE_SHARE = 0.25,
@@ -1370,6 +1362,14 @@ RMS_Config = {
         WORK_LAMPS_HARVESTER_FACTOR = 2,
         WORK_LAMP_HALOGEN_W = 55,
         WORK_LAMP_LED_W = 45,
+        -- a halogen beacon with its motor
+        BEACON_HALOGEN_A = 5.5,
+        BEACON_LED_W = 10,
+        -- one front and one rear indicator a side, lit half of each flash
+        TURN_LAMPS_PER_SIDE = 2,
+        TURN_LAMP_BULB_W = 21,
+        TURN_LAMP_LED_W = 4,
+        TURN_LIGHT_DUTY = 0.5,
         -- year LEDs are offered on most machines, by light circuit
         LED_YEARS = { LOW_BEAM_FAILURE = 2017, HIGH_BEAM_FAILURE = 2017, FRONT_WORK_LIGHTS_FAILURE = 2015,
             REAR_WORK_LIGHTS_FAILURE = 2015, BEACON_LIGHTS_FAILURE = 2017, TURN_LIGHTS_FAILURE = 2016 },
@@ -1604,52 +1604,25 @@ RMS_Config = {
         { before = 1980, hours = 220 },
         { before = 2000, hours = 250 },
         { before = 2010, hours = 400 }
-    },
-
-    TUTORIAL_MESSAGES = {
-        SERVICE_DUE_SOON = false,
-        SERVICE_INTERVAL_EXPIRED = false,
-        RAD_OR_FILTER_CLOGGED = false,
-        NEEDS_LUBRICATION = false,
-        NEEDS_REPAIR = false,
-        NEEDS_OVERHAUL = false,
-        AGE_DEGRADATION = false,
-        NEEDS_PREVENTIVE = false,
-        POOR_CONSUMABLES = false,
-        POOR_PARTS = false,
-        IDLE_AND_DOWNTIME = false,
-        HOT_WEATHER = false,
-        WET_WEATHER = false,
-        LOW_FUEL = false,
-        IDLE_DEPOSIT = false,
-        ENGINE_OVERHEAT = false,
-        CVT_OVERHEAT = false,
-        HEAVY_TRAILER = false,
-        CHASSIS_VIBRATION = false,
-        TERRAIN_IMPACT = false,
-        DRIVETRAIN_WINDUP = false,
-        STEERING = false,
-        CRANKING = false,
-        PREHEAT = false,
-        BATTERY_LOW = false,
-        HARD_START = false,
-        CRITICAL_FAILURE = false,
-        COLD_ENGINE = false,
-        COLD_OIL = false,
-        WHEEL_SLIP = false,
-        OVERLOAD_INDICATOR = false,
-        ENGINE_OVERLOAD = false,
-        LUGGING = false,
-        PTO_ENGAGEMENT = false,
-        PTO_RAISED = false,
-        FLUID_LEVEL = false,
-        EXHAUST_SMOKE = false,
-        DRIVETRAIN_MODES = false,
-        PARK_BRAKE = false,
-        PARK_BRAKE_MANUAL = false,
-        TRANSMISSION_OVERHEAT = false,
     }
 }
+
+---Tips of the tutorial, in the order their flags are saved and sent
+RMS_Config.TUTORIAL_MESSAGE_IDS = {
+    "AGE_DEGRADATION", "BATTERY_LOW", "CHASSIS_VIBRATION", "COLD_ENGINE", "COLD_OIL", "CRANKING", "CRITICAL_FAILURE",
+    "CVT_OVERHEAT", "DRIVETRAIN_MODES", "DRIVETRAIN_WINDUP", "ENGINE_OVERHEAT", "ENGINE_OVERLOAD", "EXHAUST_SMOKE",
+    "FLUID_LEVEL", "HARD_START", "HEAVY_TRAILER", "HOT_WEATHER", "IDLE_AND_DOWNTIME", "IDLE_DEPOSIT", "LOW_FUEL",
+    "LUGGING", "NEEDS_LUBRICATION", "NEEDS_OVERHAUL", "NEEDS_PREVENTIVE", "NEEDS_REPAIR", "OVERLOAD_INDICATOR",
+    "PARK_BRAKE", "PARK_BRAKE_MANUAL", "POOR_CONSUMABLES", "POOR_PARTS", "PREHEAT", "PTO_ENGAGEMENT", "PTO_RAISED",
+    "RAD_OR_FILTER_CLOGGED", "SERVICE_DUE_SOON", "SERVICE_INTERVAL_EXPIRED", "STEERING", "TERRAIN_IMPACT",
+    "TRANSMISSION_OVERHEAT", "WET_WEATHER", "WHEEL_SLIP"
+}
+
+---Seen flag of each tip, none seen yet
+RMS_Config.TUTORIAL_MESSAGES = {}
+for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
+    RMS_Config.TUTORIAL_MESSAGES[messageId] = false
+end
 
 ---Clears every seen flag of the tutorial messages
 function RMS_Config.resetTutorialMessages()
@@ -1657,12 +1630,6 @@ function RMS_Config.resetTutorialMessages()
         RMS_Config.TUTORIAL_MESSAGES[messageId] = false
     end
 end
-
-RMS_Config.TUTORIAL_MESSAGE_IDS = {}
-for messageId, _ in pairs(RMS_Config.TUTORIAL_MESSAGES) do
-    table.insert(RMS_Config.TUTORIAL_MESSAGE_IDS, messageId)
-end
-table.sort(RMS_Config.TUTORIAL_MESSAGE_IDS)
 
 RMS_Config.TUTORIAL_PLAYER_STATES = {}
 RMS_Config.TUTORIAL_STATE_LOADED = false
@@ -1776,11 +1743,10 @@ end
 
 RMS_Config.savegameFile = "realisticMechanicalSystems.xml"
 
-local function log_dbg(...)
+---Prints a settings file message while debugging
+local function logSettingsDebug(text, ...)
     if RMS_Config.DEBUG then
-        local args = {...}
-        for i = 1, #args do args[i] = tostring(args[i]) end
-        print("[RMS_CFG] " .. table.concat(args, " "))
+        print("[RMS_CFG] " .. string.format(text, ...))
     end
 end
 
@@ -1856,7 +1822,7 @@ end
 local function writeConfigFile(xmlFileName, includeTutorialStates)
     local xmlFile = createXMLFile("realisticMechanicalSystems", xmlFileName, "realisticMechanicalSystems")
     if xmlFile == nil or xmlFile == 0 then
-        log_dbg("SAVE ERROR - createXMLFile returned", tostring(xmlFile))
+        logSettingsDebug("SAVE ERROR - createXMLFile returned %s", tostring(xmlFile))
         return false
     end
 
@@ -1918,13 +1884,13 @@ function RMS_Config.loadFromXMLFile()
 
     local xmlFile = loadXMLFile("realisticMechanicalSystems", xmlFileName)
     if xmlFile == nil or xmlFile == 0 then
-        log_dbg("LOAD ERROR - loadXMLFile returned", tostring(xmlFile))
+        logSettingsDebug("LOAD ERROR - loadXMLFile returned %s", tostring(xmlFile))
         return
     end
 
     local root = "realisticMechanicalSystems"
     RMS_Config.loadedConfigVersion = getXMLInt(xmlFile, root .. "#saveVersion") or 0
-    log_dbg("LOAD VERSION", RMS_Config.loadedConfigVersion, "CURRENT", RMS_Config.CONFIG_VERSION)
+    logSettingsDebug("LOAD VERSION %s CURRENT %s", RMS_Config.loadedConfigVersion, RMS_Config.CONFIG_VERSION)
     for _, setting in ipairs(RMS_Config.SHARED_SETTINGS) do
         local key, value = root .. "." .. (setting.element or setting.field), nil
         if setting.isFloat then

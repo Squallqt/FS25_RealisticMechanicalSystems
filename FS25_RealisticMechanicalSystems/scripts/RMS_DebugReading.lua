@@ -738,7 +738,9 @@ local function readMachine(vehicle, spec, reading)
     end
     if spec.systems.harvest.enabled then
         local state = spec.harvestState or {}
-        local loss = spec.activeEffects.HARVEST_GRAIN_LOSS ~= nil and spec.activeEffects.HARVEST_GRAIN_LOSS.value or 0
+        -- the loss the threshing applies, capped like the effect
+        local effect = spec.activeEffects.HARVEST_GRAIN_LOSS
+        local loss = math.clamp(effect ~= nil and effect.value or 0, 0, RMS_Config.CORE.HARVEST_FACTOR_DATA.MAX_GRAIN_LOSS)
         local work = not spec.isHarvestRunning and "stopped" or string.format("%s  ·  %.0f t/h  ·  rotary %.0f kW, %s of full work  ·  "
             .. "chopper %.0f kW", tostring(state.crop):lower(), state.tonPerHour, state.rotaryKw, pct(state.effort), state.chopperKw)
         table.insert(rows, {"Harvest", string.format("%s  ·  measured by %s  ·  %s  ·  %.0f t harvested  ·  grain lost to wear %.1f %%",

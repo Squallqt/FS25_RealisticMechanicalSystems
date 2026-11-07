@@ -21,6 +21,9 @@ function RMS_ImplementGreasing.registerOverwrittenFunctions(vehicleType)
     if SpecializationUtil.hasSpecialization(BaleWrapper, vehicleType.specializations) then
         SpecializationUtil.registerOverwrittenFunction(vehicleType, "doStateChange", RMS_ImplementGreasing.doStateChange)
     end
+    if SpecializationUtil.hasSpecialization(FillUnit, vehicleType.specializations) then
+        SpecializationUtil.registerOverwrittenFunction(vehicleType, "addFillUnitFillLevel", RMS_ImplementGreasing.addFillUnitFillLevel)
+    end
 end
 
 function RMS_ImplementGreasing.registerEventListeners(vehicleType)
@@ -67,12 +70,38 @@ function RMS_ImplementGreasing:onWriteUpdateStream(streamId, connection, dirtyMa
     end
 end
 
----Marks the day worked when the game adds hours to the implement
+---Returns true while the implement itself works, carried idle not
+local function getIsWorking(self)
+    if self:doCheckSpeedLimit() or self.spec_rmsImplementGreasing.isFeeding
+        or self.getIsTurnedOn ~= nil and self:getIsTurnedOn()
+        or self.getDoConsumePtoPower ~= nil and self:getDoConsumePtoPower()
+        or self.spec_leveler ~= nil and self.spec_leveler.lastFillLevelMoved > 0 then
+        return true
+    end
+    for _, tool in ipairs(self.spec_cylindered ~= nil and self.spec_cylindered.movingTools or {}) do
+        -- lastAnimSpeed only on animated tools
+        if tool.lastRotSpeed ~= 0 or tool.lastTransSpeed ~= 0 or (tool.lastAnimSpeed or 0) ~= 0 then
+            return true
+        end
+    end
+    return false
+end
+
+---Marks the day worked when the implement works, carried idle not
 function RMS_ImplementGreasing:setOperatingTime(superFunc, operatingTime, isLoading)
-    if self.isServer and not isLoading and self.propertyState ~= VehiclePropertyState.MISSION then
+    if self.isServer and not isLoading and self.propertyState ~= VehiclePropertyState.MISSION and getIsWorking(self) then
         RMS_Greasing.update(self, operatingTime - self.operatingTime)
     end
+    self.spec_rmsImplementGreasing.isFeeding = false
     superFunc(self, operatingTime, isLoading)
+end
+
+---Notes a tank emptied by the tool it feeds, a front tank by its drill
+function RMS_ImplementGreasing:addFillUnitFillLevel(superFunc, farmId, fillUnitIndex, fillLevelDelta, ...)
+    if fillLevelDelta < 0 then
+        self.spec_rmsImplementGreasing.isFeeding = true
+    end
+    return superFunc(self, farmId, fillUnitIndex, fillLevelDelta, ...)
 end
 
 ---Wears the implement faster while its greasing is late

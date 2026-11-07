@@ -164,20 +164,17 @@ local function getServiceWorkDurationMs(vehicle, serviceType, optionOne, optionT
     return RealisticMechanicalSystems.getIsServiceInstant(serviceType) and 1000 or hours * 3600000
 end
 
+---Lists a running service fills, emptied when it starts or ends
+local PENDING_SERVICE_LISTS = { "pendingSelectedBreakdowns", "pendingInspectionQueue", "pendingRepairQueue", "pendingServiceClockStart",
+    "pendingServiceClockTarget", "pendingOverhaulPartStart", "pendingOverhaulPartTarget", "pendingFluidRequirements" }
+
+---Clears the state a running service keeps
 local function resetPendingServiceProgress(spec)
-    spec.pendingSelectedBreakdowns = {}
-    spec.pendingServicePrice = nil
-    spec.pendingServiceInvoice = nil
-    spec.pendingInspectionQueue = {}
-    spec.pendingRepairQueue = {}
-    spec.pendingProgressStepIndex = 0
-    spec.pendingProgressTotalTime = 0
-    spec.pendingProgressElapsedTime = 0
-    spec.pendingServiceClockStart = {}
-    spec.pendingServiceClockTarget = {}
-    spec.pendingOverhaulPartStart = {}
-    spec.pendingOverhaulPartTarget = {}
-    spec.pendingFluidRequirements = {}
+    for _, field in ipairs(PENDING_SERVICE_LISTS) do
+        spec[field] = {}
+    end
+    spec.pendingServicePrice, spec.pendingServiceInvoice = nil, nil
+    spec.pendingProgressStepIndex, spec.pendingProgressTotalTime, spec.pendingProgressElapsedTime = 0, 0, 0
 end
 
 local function getServiceClockSumps(vehicle, clock)
@@ -296,7 +293,7 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
         and optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
         and optionTwo ~= nil
         and RMS_Utils.getEffectiveSystemWeight(self, optionTwo, RealisticMechanicalSystems.SYSTEMS) <= 0 then
-        log_dbg(string.format("Skipping partial overhaul for %s: invalid or disabled target system '%s'", self:getFullName(), tostring(optionTwo)))
+        log_dbg(string.format("Partial overhaul of %s refused: system '%s' off or absent", self:getFullName(), tostring(optionTwo)))
         return false
     end
 
@@ -320,12 +317,11 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     end
     resetPendingServiceProgress(spec)
 
+    if type == states.INSPECTION then
+        repairPrice = self:getServicePrice(type, optionOne, optionTwo, optionThree)
+    end
+    -- An inspection or a service looks for the breakdowns not found yet
     if type == states.INSPECTION or type == states.MAINTENANCE then
-        if type == states.INSPECTION then
-
-            repairPrice = self:getServicePrice(type, optionOne, optionTwo, optionThree)
-        end
-
         for id, breakdown in pairs(self:getActiveBreakdowns()) do
             if breakdown ~= nil and not breakdown.isVisible then
                 table.insert(spec.pendingInspectionQueue, id)
@@ -381,13 +377,10 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
         end
 
         if optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL and next(spec.pendingOverhaulPartTarget) == nil then
-            log_dbg(string.format("Skipping partial overhaul for %s: no valid system targets resolved for '%s'", self:getFullName(), tostring(optionTwo)))
-            spec.currentState = states.READY
-            spec.plannedState = states.READY
-            spec.workshopType = workshopType
-            spec.serviceOptionOne = nil
-            spec.serviceOptionTwo = nil
-            spec.serviceOptionThree = false
+            -- No system matches: the booking is undone
+            log_dbg(string.format("Partial overhaul of %s refused: no system matches '%s'", self:getFullName(), tostring(optionTwo)))
+            spec.currentState, spec.plannedState, spec.workshopType = states.READY, states.READY, workshopType
+            spec.serviceOptionOne, spec.serviceOptionTwo, spec.serviceOptionThree = nil, nil, false
             resetPendingServiceProgress(spec)
             return false
         end
@@ -406,12 +399,9 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     spec.pendingServicePrice = repairPrice
 
     if totalTimeMs > 0 then
-        local adjustedTotalTimeMs = totalTimeMs
-        spec.maintenanceTimer = adjustedTotalTimeMs
+        spec.maintenanceTimer = totalTimeMs
         spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
-        spec.pendingProgressTotalTime = adjustedTotalTimeMs
-        spec.pendingProgressElapsedTime = 0
-        spec.pendingProgressStepIndex = 0
+        spec.pendingProgressTotalTime, spec.pendingProgressElapsedTime, spec.pendingProgressStepIndex = totalTimeMs, 0, 0
         log_dbg(string.format(
             '%s initiated for %s, will take %.2f seconds (%.2f seconds booked). Next planned state: %s',
             spec.currentState,
@@ -497,16 +487,9 @@ local function processPendingRepairStep(vehicle, spec, breakdownId, optionOne, o
         if RMS_Consumables.getFilterOfBreakdown(breakdownId) ~= nil then
             RMS_Consumables.renewFilters(vehicle, breakdownId)
         elseif math.random() < C.PARTS_BREAKDOWN_CHANCES[optionTwoKey] then
-            local serviceScale = RMS_Config.CORE.REFERENCE_SERVICE_WEAR / RMS_Config.CORE.BASE_SERVICE_WEAR
-            vehicle:addBreakdown(breakdownId, {
-                stage = stage,
-                isVisible = false,
-                isSelectedForRepair = true,
-                isActive = false,
-                resumeTimer = RMS_Config.CORE.REPEAT_BREAKDOWN_TIME * serviceScale * (math.random() + 0.5),
-                progressTimer = 0,
-                source = RealisticMechanicalSystems.BREAKDOWN_SOURCES.POOR_PARTS
-            })
+            -- a poor part fails again, hidden until its drawn delay runs out
+            vehicle:addBreakdown(breakdownId, { stage = stage, isVisible = false, isActive = false,
+                source = RealisticMechanicalSystems.BREAKDOWN_SOURCES.POOR_PARTS })
         end
     end
 end
@@ -734,12 +717,13 @@ function RealisticMechanicalSystems:completeService()
             self.spec_CVTaddon.CVTdamage = math.min(self.spec_CVTaddon.CVTdamage, (1 - target) * 100)
         end
 
+        -- a partial overhaul repairs the breakdowns of its one system
         local idsToRepair = {}
-        for id, _ in pairs(spec.activeBreakdowns) do
-            if RMS_Breakdowns.BreakdownRegistry[id] and RMS_Breakdowns.BreakdownRegistry[id].isSelectable then
-                if optionOne ~= RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL or optionTwo == RMS_Breakdowns.BreakdownRegistry[id].system then
-                    table.insert(idsToRepair, id)
-                end
+        local isPartial = optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
+        for breakdownId in pairs(spec.activeBreakdowns) do
+            local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
+            if definition ~= nil and definition.isSelectable and (not isPartial or optionTwo == definition.system) then
+                table.insert(idsToRepair, breakdownId)
             end
         end
 
@@ -859,17 +843,14 @@ function RealisticMechanicalSystems:completeService()
         string.format(g_i18n:getText("rms_spec_maintenance_complete_notification"), RMS_Utils.formatServiceState(serviceType)))
 
     if serviceType == states.INSPECTION or serviceType == states.MAINTENANCE then
-        local activeBreakdowns = self:getActiveBreakdowns()
-        local activeBreakdownsCount = 0
-        for _, value in pairs(activeBreakdowns) do
-            if value.isVisible then
-                activeBreakdownsCount = activeBreakdownsCount + 1
-            end
+        local foundCount = 0
+        for _, breakdown in pairs(self:getActiveBreakdowns()) do
+            foundCount = foundCount + (breakdown.isVisible and 1 or 0)
         end
-        if activeBreakdownsCount == 0 then
+        if foundCount == 0 then
             maintenanceCompletedText = maintenanceCompletedText .. ". " .. g_i18n:getText("rms_spec_inspection_no_issues_detected_notification")
         else
-            maintenanceCompletedText = maintenanceCompletedText .. ". " .. string.format(g_i18n:getText("rms_spec_inspection_issues_detected_notification"), activeBreakdownsCount)
+            maintenanceCompletedText = maintenanceCompletedText .. ". " .. string.format(g_i18n:getText("rms_spec_inspection_issues_detected_notification"), foundCount)
         end
     end
 

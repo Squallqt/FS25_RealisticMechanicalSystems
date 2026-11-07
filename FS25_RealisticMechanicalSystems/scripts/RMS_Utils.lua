@@ -3,6 +3,231 @@
 
 ---Shared RMS utilities.
 RMS_Utils = {}
+---1 for a set flag, 0 for an unset one
+local function toFlag(value)
+    return value and 1 or 0
+end
+
+---Whole, non negative count read from a number or a string
+local function toCount(value)
+    return math.max(math.floor(tonumber(value) or 0), 0)
+end
+
+---Fields of a saved breakdown: eight always, five added since
+local BREAKDOWN_ENTRY_PATTERN = string.rep("([^,]+),", 7) .. "([^,]+)" .. string.rep(",?([^,]*)", 5)
+
+---Unit text of a count, singular for one
+local function getCountUnit(count, singular, plural)
+    return g_i18n:getText(count == 1 and singular or plural)
+end
+
+---Formats a ratio as a whole percentage
+local function formatPercent(ratio)
+    return string.format("%.0f%%", ratio * 100)
+end
+
+---Tier of a value against descending levels, 1 at or above the first
+local function getLevelTier(levels, value)
+    for tier, level in ipairs(levels) do
+        if value >= level then
+            return tier
+        end
+    end
+    return #levels + 1
+end
+
+---Sorted entries of a save field, joined by semicolons
+local function joinSaveEntries(entries)
+    table.sort(entries)
+    return table.concat(entries, ";")
+end
+
+---Entries of a save field, comma separated in older saves
+local function splitSaveEntries(serialized)
+    local entries = {}
+    if serialized == nil or serialized == "" then
+        return entries
+    end
+    local separator = string.find(serialized, ";", 1, true) ~= nil and ";" or ","
+    for entry in string.gmatch(serialized, "[^" .. separator .. "]+") do
+        table.insert(entries, entry)
+    end
+    return entries
+end
+
+---Condition and switch of a system, a bare number counting as on
+local function readSystemState(systemData)
+    if type(systemData) == "table" then
+        return tonumber(systemData.condition) or 1.0, RMS_Utils.normalizeBoolValue(systemData.enabled, true)
+    end
+    return tonumber(systemData) or 1.0, true
+end
+
+---Tells whether a system counts, a bare value counting as on
+local function getIsSystemOn(systemData)
+    return type(systemData) ~= "table" or systemData.enabled ~= false
+end
+
+---Weight the configuration gives a system, its key matched in any case
+local function getConfiguredSystemWeight(systemKey)
+    local weights = RMS_Config.CORE.SYSTEM_WEIGHTS
+    local weight = tonumber(weights[systemKey])
+    if weight == nil then
+        local wanted = string.lower(tostring(systemKey))
+        for key, value in pairs(weights) do
+            if string.lower(tostring(key)) == wanted then
+                weight = tonumber(value) or 0
+                break
+            end
+        end
+    end
+    return math.max(weight or 0, 0)
+end
+
+---Key of the vehicle's systems behind a system name or enum key
+local function resolveVehicleSystemKey(vehicleSystems, name, systems)
+    if vehicleSystems[name] ~= nil then
+        return name
+    end
+    local lowered = string.lower(name)
+    if type(systems) == "table" then
+        if type(systems[string.upper(name)]) == "string" and vehicleSystems[lowered] ~= nil then
+            return lowered
+        end
+        local enumKey = RMS_Utils.getKeyByValue(systems, name)
+        if type(enumKey) == "string" and vehicleSystems[string.lower(enumKey)] ~= nil then
+            return string.lower(enumKey)
+        end
+    end
+    for key in pairs(vehicleSystems) do
+        if string.lower(tostring(key)) == lowered then
+            return key
+        end
+    end
+    return lowered
+end
+
+---Words a save or the console may hold for a boolean
+local BOOL_WORDS = {
+    ["true"] = true, ["1"] = true, on = true, yes = true,
+    ["false"] = false, ["0"] = false, off = false, no = false
+}
+
+---Log field of the entry itself, saved as text
+local function entryText(key, default)
+    return {
+        write = function(entry) return tostring(entry[key] or default) end,
+        read = function(entry, _, raw) entry[key] = raw ~= "" and raw or default end
+    }
+end
+
+---Log field of the entry itself, saved as a number
+local function entryNumber(key, default)
+    return {
+        write = function(entry) return tostring(entry[key] or default) end,
+        read = function(entry, _, raw) entry[key] = tonumber(raw) or default end
+    }
+end
+
+---Log field of the entry itself, saved as a boolean
+local function entryFlag(key, default)
+    return {
+        write = function(entry) return tostring(RMS_Utils.normalizeBoolValue(entry[key], default)) end,
+        read = function(entry, _, raw) entry[key] = RMS_Utils.normalizeBoolValue(raw, default) end
+    }
+end
+
+---Log field of the condition data, saved as a number
+-- @param float? default value when missing, none keeps it empty
+local function conditionNumber(key, default)
+    return {
+        write = function(_, data) return tostring(data[key] or default or "") end,
+        read = function(_, data, raw) data[key] = tonumber(raw) or default end
+    }
+end
+
+---Log field of the condition data, saved as escaped text
+local function conditionEncoded(key, serialize, deserialize)
+    return {
+        write = function(_, data) return RMS_Utils.encodeDelimitedString(serialize(data[key])) end,
+        read = function(_, data, raw) data[key] = deserialize(RMS_Utils.decodeDelimitedString(raw or "")) end
+    }
+end
+
+---Fields of a maintenance log entry, in their saved order
+local LOG_ENTRY_FIELDS = {
+    entryNumber("id", 0),
+    {
+        write = function(entry) return tostring(entry.type or "") end,
+        read = function(entry, _, raw) entry.type = raw ~= "" and raw or nil end
+    },
+    entryNumber("price", 0),
+    {
+        write = function(entry) return RMS_Utils.serializeDate(entry.date) end,
+        read = function(entry, _, raw) entry.date = RMS_Utils.deserializeDate(raw) end
+    },
+    entryText("location", "UNKNOWN"),
+    entryText("optionOne", "NONE"),
+    entryText("optionTwo", "NONE"),
+    {
+        write = function(entry) return tostring(entry.optionThree or false) end,
+        read = function(entry, _, raw) entry.optionThree = RMS_Utils.normalizeBoolValue(raw, false) end
+    },
+    entryFlag("isVisible", true),
+    entryFlag("isCompleted", true),
+    conditionNumber("year", 0),
+    conditionNumber("operatingHours", 0),
+    conditionNumber("age", 0),
+    conditionNumber("condition", 1),
+    conditionNumber("service", 1),
+    conditionNumber("reliability", 1),
+    -- Kept empty, older saves wrote here
+    { write = function() return "" end },
+    conditionEncoded("systems",
+        function(systems) return RMS_Utils.serializeSystemsState(RMS_Utils.createSystemsSnapshot(systems)) end,
+        function(text) return RMS_Utils.createSystemsSnapshot(RMS_Utils.deserializeSystemsState(text)) end),
+    conditionNumber("batterySoc", 1),
+    conditionEncoded("activeEffects",
+        function(effects) return RMS_Utils.serializeEffectSnapshot(effects) end,
+        function(text) return RMS_Utils.deserializeEffectSnapshot(text) end),
+    conditionEncoded("activeBreakdowns",
+        function(breakdowns) return RMS_Utils.serializeBreakdowns(breakdowns or {}) end,
+        function(text) return RMS_Utils.deserializeBreakdowns(text) end),
+    conditionEncoded("selectedBreakdowns",
+        function(ids) return table.concat(ids or {}, ",") end,
+        function(text) return RMS_Utils.parseCsvList(text) end),
+    conditionEncoded("activeIndicators",
+        function(indicators)
+            local ids = {}
+            for id, isActive in pairs(indicators or {}) do
+                if isActive then
+                    table.insert(ids, tostring(id))
+                end
+            end
+            table.sort(ids)
+            return table.concat(ids, ",")
+        end,
+        function(text)
+            local indicators = {}
+            for _, id in ipairs(RMS_Utils.parseCsvList(text)) do
+                indicators[id] = true
+            end
+            return indicators
+        end),
+    {
+        write = function(entry) return RMS_Utils.encodeDelimitedString(RMS_Utils.serializeInvoice(entry.invoice)) end,
+        read = function(entry, _, raw) entry.invoice = RMS_Utils.deserializeInvoice(RMS_Utils.decodeDelimitedString(raw or "")) end
+    },
+    conditionNumber("odometerKilometers"),
+    conditionNumber("wearExcess"),
+    conditionEncoded("wearCauses",
+        function(causes) return RMS_Utils.serializeWearCauses(causes) end,
+        function(text) return RMS_Utils.deserializeWearCauses(text) end),
+    conditionEncoded("partWear",
+        function(wear) return RMS_Utils.serializeNumericMap(wear) end,
+        function(text) return RMS_Utils.deserializeNumericMap(text) end)
+}
+
 
 ---Returns the container locked on a hook lift
 function RMS_Utils.getLockedHookLiftContainer(vehicle)
@@ -19,11 +244,11 @@ end
 
 ---Converts a mean time between events into a per frame probability
 function RMS_Utils.getChancePerFrameFromMeanTime(dt, meanTimeInMinutes)
+    -- No mean time: the event is certain
     if meanTimeInMinutes <= 0 then
         return 1.0
     end
-    local meanTimeInMs = meanTimeInMinutes * 60 * 1000
-    return dt / meanTimeInMs
+    return dt / (meanTimeInMinutes * 60000)
 end
 
 ---Tells whether the vehicle drives a PTO output
@@ -514,27 +739,26 @@ function RMS_Utils.getFluidShortage(level)
 end
 
 ---Returns the squared distance past a threshold, 0 on the safe side of it
+-- @param float? customMax end of the scale: floor when less is worse, else ceiling (default 1)
 function RMS_Utils.calculateQuadraticMultiplier(level, threshold, lessIsWorse, customMax)
-    if (lessIsWorse and level >= threshold) or (not lessIsWorse and level <= threshold) then
-        return 0.0
-    end
+    local distance
     if lessIsWorse then
-        local lowerBound = tonumber(customMax)
-        local denominator = threshold
-
-        if lowerBound ~= nil and lowerBound < threshold then
-            denominator = math.max(threshold - lowerBound, 0.0001)
-            level = math.max(level, lowerBound)
-        else
-            denominator = math.max(threshold, 0.0001)
+        if level >= threshold then
+            return 0.0
         end
-
-        local normalizedValue = (threshold - level) / denominator
-        return normalizedValue * normalizedValue
+        local floor = tonumber(customMax)
+        if floor ~= nil and floor < threshold then
+            distance = (threshold - math.max(level, floor)) / math.max(threshold - floor, 0.0001)
+        else
+            distance = (threshold - level) / math.max(threshold, 0.0001)
+        end
     else
-        local normalizedValue = (level - threshold) / ((customMax or 1) - threshold)
-        return normalizedValue * normalizedValue
+        if level <= threshold then
+            return 0.0
+        end
+        distance = (level - threshold) / ((customMax or 1) - threshold)
     end
+    return distance * distance
 end
 
 ---Returns the lugging severity of a motor, high load at low rpm
@@ -617,11 +841,8 @@ end
 
 ---Splits a decimal hour count into whole hours and minutes
 function RMS_Utils.convertHoursToHoursAndMinutes(totalHours)
-    if totalHours == nil then
-        return 0, 0
-    end
-    local totalMinutes = math.floor(math.max(totalHours, 0) * 60 + 0.5)
-    return math.floor(totalMinutes / 60), totalMinutes % 60
+    local minutes = totalHours ~= nil and math.floor(math.max(totalHours, 0) * 60 + 0.5) or 0
+    return math.floor(minutes / 60), minutes % 60
 end
 
 ---Writes the farm balance as the shop does, red below zero
@@ -632,25 +853,6 @@ function RMS_Utils.setBalance(moneyBox, moneyBoxBg, balanceElement)
     balanceElement:setText(g_i18n:formatMoney(money, 0, true, false))
     moneyBox:invalidateLayout()
     moneyBoxBg:setSize(moneyBox.flowSizes[1] + 60 * g_pixelSizeScaledX)
-end
-
----Renders a table as a readable string
-function RMS_Utils.tableToString(tbl)
-    if not tbl or next(tbl) == nil then
-        return "{}" 
-    end
-    
-    local parts = {}
-    for k, v in pairs(tbl) do
-        local valueStr
-        if type(v) == 'table' then
-            valueStr = RMS_Utils.tableToString(v)
-        else
-            valueStr = tostring(v)
-        end
-        table.insert(parts, string.format("%s = %s", tostring(k), valueStr))
-    end
-    return "{ " .. table.concat(parts, ", ") .. " }"
 end
 
 local function layOut(element)
@@ -698,8 +900,8 @@ end
 
 ---Returns the key holding a value in a table
 function RMS_Utils.getKeyByValue(tbl, value)
-    for key, val in pairs(tbl) do
-        if val == value then
+    for key, entry in pairs(tbl) do
+        if entry == value then
             return key
         end
     end
@@ -708,13 +910,12 @@ end
 
 ---Tells whether at least one diagnosed breakdown is selected for repair
 function RMS_Utils.hasSelectedVisibleBreakdown(vehicle)
-    local activeBreakdowns = vehicle ~= nil and vehicle.getActiveBreakdowns ~= nil and vehicle:getActiveBreakdowns() or nil
-    for _, breakdown in pairs(activeBreakdowns or {}) do
-        if breakdown.isVisible and breakdown.isSelectedForRepair then
+    local breakdowns = vehicle ~= nil and vehicle.getActiveBreakdowns ~= nil and vehicle:getActiveBreakdowns() or {}
+    for _, breakdown in pairs(breakdowns) do
+        if breakdown.isSelectedForRepair and breakdown.isVisible then
             return true
         end
     end
-
     return false
 end
 
@@ -780,104 +981,79 @@ function RMS_Utils.getBranchItems(items, breakdown)
     return branchItems
 end
 
----Serializes the active breakdowns into one string
+---Writes the active breakdowns, one comma separated entry each
 function RMS_Utils.serializeBreakdowns(breakdownsTable)
-    local parts = {}
+    local entries = {}
     for id, breakdown in pairs(breakdownsTable) do
-        local visible = breakdown.isVisible and 1 or 0
-        local selected = breakdown.isSelectedForRepair and 1 or 0
-        local active = breakdown.isActive ~= false and 1 or 0
-        local resumeTimer = math.max(tonumber(breakdown.resumeTimer) or 0, 0)
-        local source = math.max(math.floor(tonumber(breakdown.source) or 0), 0)
-        local effectTargetIndex = math.max(math.floor(tonumber(breakdown.effectTargetIndex) or 0), 0)
-        local branch = math.max(math.floor(tonumber(breakdown.branch) or 0), 0)
-
-        local system = string.format("%s,%d,%.2f,%d,%d,%d,%.2f,%d,%d,%d,%d,%s,%d", id, breakdown.stage, breakdown.progressTimer or 0,
-            visible, selected, active, resumeTimer, source, effectTargetIndex, branch,
-            breakdown.warrantyServiceOverdue == nil and -1 or breakdown.warrantyServiceOverdue and 1 or 0, breakdown.usedPartHours or "",
-            breakdown.warrantyImpact and 1 or 0)
-        table.insert(parts, system)
+        local overdue = breakdown.warrantyServiceOverdue
+        table.insert(entries, string.format("%s,%d,%.2f,%d,%d,%d,%.2f,%d,%d,%d,%d,%s,%d", id, breakdown.stage,
+            breakdown.progressTimer or 0, toFlag(breakdown.isVisible), toFlag(breakdown.isSelectedForRepair),
+            toFlag(breakdown.isActive ~= false), math.max(tonumber(breakdown.resumeTimer) or 0, 0),
+            toCount(breakdown.source), toCount(breakdown.effectTargetIndex), toCount(breakdown.branch),
+            overdue == nil and -1 or toFlag(overdue), breakdown.usedPartHours or "", toFlag(breakdown.warrantyImpact)))
     end
-    return table.concat(parts, ";")
+    return table.concat(entries, ";")
 end
 
----Serializes a date into one string
+---Writes a date as day, month and year, empty without a day
 function RMS_Utils.serializeDate(dateTable)
-    if dateTable == nil or dateTable.day == nil then
-        return ""
-    end
-    return string.format("%d,%d,%d", dateTable.day, dateTable.month, dateTable.year)
+    local hasDay = dateTable ~= nil and dateTable.day ~= nil
+    return hasDay and string.format("%d,%d,%d", dateTable.day, dateTable.month, dateTable.year) or ""
 end
 
----Escapes the delimiters of a string so it survives serialization
+---Percent-escapes all but letters, digits and - . _ ~
 function RMS_Utils.encodeDelimitedString(value)
     if value == nil then
         return ""
     end
-
-    return (tostring(value):gsub("([^%w%-%._~])", function(char)
+    local escaped = string.gsub(tostring(value), "[^%w%-%._~]", function(char)
         return string.format("%%%02X", string.byte(char))
-    end))
+    end)
+    return escaped
 end
 
----Restores the delimiters escaped by the encoder
+---Restores the characters escaped by encodeDelimitedString
 function RMS_Utils.decodeDelimitedString(value)
-    if value == nil or value == "" then
-        return ""
-    end
-
-    return (tostring(value):gsub("%%(%x%x)", function(hex)
+    local decoded = string.gsub(tostring(value or ""), "%%(%x%x)", function(hex)
         return string.char(tonumber(hex, 16))
-    end))
+    end)
+    return decoded
 end
 
----Rebuilds a date from its serialized form
+---Reads a date written by serializeDate, empty when unreadable
 function RMS_Utils.deserializeDate(dateString)
-    if dateString == nil or dateString == "" then
+    local day, month, year = string.match(dateString or "", "([^,]+),([^,]+),([^,]+)")
+    if day == nil then
         return {}
     end
-    
-    local day, month, year = string.match(dateString, "([^,]+),([^,]+),([^,]+)")
-    if day and month and year then
-        return {
-            day = tonumber(day),
-            month = tonumber(month),
-            year = tonumber(year)
-        }
-    end
-    return {}
+    return { day = tonumber(day), month = tonumber(month), year = tonumber(year) }
 end
 
----Rebuilds the active breakdowns from their serialized form
+---Reads the breakdowns written by serializeBreakdowns, older saves too
 function RMS_Utils.deserializeBreakdowns(breakdownString)
     local breakdowns = {}
-    if breakdownString == nil or breakdownString == "" then
-        return breakdowns
-    end
-    
-    for part in string.gmatch(breakdownString, "([^;]+)") do
-        local id, stage, timer, isVisible, isSelected, isActive, resumeTimer, source, effectTargetIndex, branch, warrantyServiceOverdue, usedPartHours, warrantyImpact =
-            string.match(
-                part,
-                "([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),?([^,]*),?([^,]*),?([^,]*),?([^,]*),?([^,]*)"
-            )
-        
-        if id then
-            breakdowns[id] = {
-                stage = tonumber(stage),
-                progressTimer = tonumber(timer),
-                isVisible = (tonumber(isVisible) == 1),
-                isSelectedForRepair = (tonumber(isSelected) == 1),
-                isActive = (tonumber(isActive) == 1),
-                resumeTimer = math.max(tonumber(resumeTimer) or 0, 0),
-                source = tonumber(source) or RealisticMechanicalSystems.BREAKDOWN_SOURCES.RANDOM,
-                effectTargetIndex = math.max(math.floor(tonumber(effectTargetIndex) or 0), 0),
-                branch = math.max(math.floor(tonumber(branch) or 0), 0),
-                warrantyServiceOverdue = tonumber(warrantyServiceOverdue) == 1,
-                warrantyImpact = tonumber(warrantyImpact) == 1,
-                usedPartHours = tonumber(usedPartHours)
+    for entry in string.gmatch(breakdownString or "", "[^;]+") do
+        local fields = { string.match(entry, BREAKDOWN_ENTRY_PATTERN) }
+        if fields[1] ~= nil then
+            local breakdown = {
+                stage = tonumber(fields[2]),
+                progressTimer = tonumber(fields[3]),
+                isVisible = tonumber(fields[4]) == 1,
+                isSelectedForRepair = tonumber(fields[5]) == 1,
+                isActive = tonumber(fields[6]) == 1,
+                resumeTimer = math.max(tonumber(fields[7]) or 0, 0),
+                source = tonumber(fields[8]) or RealisticMechanicalSystems.BREAKDOWN_SOURCES.RANDOM,
+                effectTargetIndex = toCount(fields[9]),
+                branch = toCount(fields[10]),
+                warrantyImpact = tonumber(fields[13]) == 1,
+                usedPartHours = tonumber(fields[12])
             }
-            if tonumber(warrantyServiceOverdue) == -1 then breakdowns[id].warrantyServiceOverdue = nil end
+            -- -1: no warranty verdict saved
+            local overdue = tonumber(fields[11])
+            if overdue ~= -1 then
+                breakdown.warrantyServiceOverdue = overdue == 1
+            end
+            breakdowns[fields[1]] = breakdown
         end
     end
     return breakdowns
@@ -887,25 +1063,20 @@ end
 ---Formats a finish hour, adding the days crossed before it
 -- @param float? finishTime hour of the day
 function RMS_Utils.formatFinishTime(finishTime, daysToAdd)
-   if finishTime == nil then
+    if finishTime == nil then
         return ""
     end
-    
-    local finishTimeHours, finishTimeMinutes = RMS_Utils.convertHoursToHoursAndMinutes(finishTime)
-    daysToAdd = (daysToAdd or 0) + math.floor(finishTimeHours / 24)
-    finishTimeHours = finishTimeHours % 24
-    local daysText = ""
-
-    if daysToAdd == 1 then
-        daysText = g_i18n:getText('rms_spec_tomorrow_at')
-    elseif daysToAdd == 2 then
-        daysText =  g_i18n:getText('rms_spec_day_after_tomorrow_at')
-    elseif daysToAdd > 2 then
-        daysText = g_i18n:getText('rms_spec_in_days_at')
-        daysText = string.gsub(daysText, "{days}", daysToAdd)
+    local hours, minutes = RMS_Utils.convertHoursToHoursAndMinutes(finishTime)
+    local days = (daysToAdd or 0) + math.floor(hours / 24)
+    local dayText = ""
+    if days == 1 then
+        dayText = g_i18n:getText("rms_spec_tomorrow_at")
+    elseif days == 2 then
+        dayText = g_i18n:getText("rms_spec_day_after_tomorrow_at")
+    elseif days > 2 then
+        dayText = string.gsub(g_i18n:getText("rms_spec_in_days_at"), "{days}", days)
     end
-
-    return string.format("%s%02d:%02d", daysText, finishTimeHours, finishTimeMinutes)
+    return string.format("%s%02d:%02d", dayText, hours % 24, minutes)
 end
 
 ---Returns the current primary keyboard binding of an action
@@ -936,37 +1107,25 @@ function RMS_Utils.getAmbientTemperature()
     return g_currentMission.environment.weather:getCurrentTemperature()
 end
 
----Formats a duration in hours and minutes
+---Formats a duration in days, hours and minutes
 -- @param float? duration duration in hours
 function RMS_Utils.formatDuration(duration)
     if duration == nil then
         return ""
     end
-    local durationHours, durationMinutes = RMS_Utils.convertHoursToHoursAndMinutes(duration)
-    local days = math.floor(durationHours / 24)
-    local daysText = ""
-    if days > 0 then
-        durationHours = durationHours - days * 24
-        local dayKey = days == 1 and 'rms_spec_day_one' or 'rms_spec_day_s'
-        daysText = string.format("%s %s ", days, g_i18n:getText(dayKey))
-    end
+    local hours, minutes = RMS_Utils.convertHoursToHoursAndMinutes(duration)
+    local days = math.floor(hours / 24)
+    hours = hours - days * 24
 
-    local durationText = ""
-    if durationHours == 0 and durationMinutes > 0 then
-        local minuteKey = durationMinutes == 1 and 'rms_spec_minute_one' or 'rms_spec_minute_s'
-        durationText = string.format(g_i18n:getText('rms_spec_duration_format_minutes'), durationMinutes, g_i18n:getText(minuteKey))
-    elseif durationHours > 0 and durationMinutes == 0 then
-        local hourKey = durationHours == 1 and 'rms_spec_hour_one' or 'rms_spec_hour_s'
-        durationText = string.format(g_i18n:getText('rms_spec_duration_format_hours'), durationHours, g_i18n:getText(hourKey))
-    elseif durationHours > 0 and durationMinutes > 0 then
-        local hourKey = durationHours == 1 and 'rms_spec_hour_one' or 'rms_spec_hour_s'
-        local minuteKey = durationMinutes == 1 and 'rms_spec_minute_one' or 'rms_spec_minute_s'
-        local hoursText = string.format(g_i18n:getText('rms_spec_duration_format_hours'), durationHours, g_i18n:getText(hourKey))
-        local minutesText = string.format(g_i18n:getText('rms_spec_duration_format_minutes'), durationMinutes, g_i18n:getText(minuteKey))
-        durationText = string.format(g_i18n:getText('rms_spec_duration_format_combined'), hoursText, minutesText)
+    local text = days > 0 and string.format("%s %s ", days, getCountUnit(days, "rms_spec_day_one", "rms_spec_day_s")) or ""
+    local hoursText = hours > 0 and string.format(g_i18n:getText("rms_spec_duration_format_hours"), hours,
+        getCountUnit(hours, "rms_spec_hour_one", "rms_spec_hour_s")) or nil
+    local minutesText = minutes > 0 and string.format(g_i18n:getText("rms_spec_duration_format_minutes"), minutes,
+        getCountUnit(minutes, "rms_spec_minute_one", "rms_spec_minute_s")) or nil
+    if hoursText ~= nil and minutesText ~= nil then
+        return text .. string.format(g_i18n:getText("rms_spec_duration_format_combined"), hoursText, minutesText)
     end
-
-    return string.format("%s%s", daysText, durationText)
+    return text .. (hoursText or minutesText or "")
 end
 
 
@@ -994,18 +1153,17 @@ function RMS_Utils.formatCondition(condition, isCompleteInspection)
     local STATES = RealisticMechanicalSystems.STATES
     if isCompleteInspection == nil then
         return g_i18n:getText(STATES.UNKNOWN)
+    elseif not isCompleteInspection then
+        return g_i18n:getText(STATES[CONDITION_STATE_NAMES[RMS_Utils.getConditionTier(condition)]])
     end
-    if isCompleteInspection then
-        return string.format("%.0f%%", condition * 100)
-    end
-    return g_i18n:getText(STATES[CONDITION_STATE_NAMES[RMS_Utils.getConditionTier(condition)]])
+    return formatPercent(condition)
 end
 
 ---Returns the share of the service interval still to run
 function RMS_Utils.getServiceIntervalRemainingRatio(service)
     local threshold = math.clamp(tonumber(RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD) or 0.5, 0.0, 0.9999)
-    local activeRange = math.max(1.0 - threshold, 0.0001)
-    return math.clamp(((tonumber(service) or 0.0) - threshold) / activeRange, 0.0, 1.0)
+    local left = ((tonumber(service) or 0.0) - threshold) / math.max(1.0 - threshold, 0.0001)
+    return math.clamp(left, 0.0, 1.0)
 end
 
 ---Formats a service level, exact after a complete inspection
@@ -1013,23 +1171,16 @@ function RMS_Utils.formatService(service, isCompleteInspection)
     local STATES = RealisticMechanicalSystems.STATES
     if isCompleteInspection == nil then
         return g_i18n:getText(STATES.UNKNOWN)
+    elseif not isCompleteInspection then
+        return g_i18n:getText(STATES[SERVICE_STATE_NAMES[RMS_Utils.getServiceTier(service)]])
     end
-    if isCompleteInspection then
-        return string.format("%.0f%%", RMS_Utils.getServiceIntervalRemainingRatio(service) * 100)
-    end
-    return g_i18n:getText(STATES[SERVICE_STATE_NAMES[RMS_Utils.getServiceTier(service)]])
+    return formatPercent(RMS_Utils.getServiceIntervalRemainingRatio(service))
 end
 
 
 ---Returns the tier a service level falls in, 1 being the best
 function RMS_Utils.getServiceTier(service)
-    service = tonumber(service) or 0.0
-    for tier = 1, #SERVICE_LEVELS do
-        if service >= SERVICE_LEVELS[tier] then
-            return tier
-        end
-    end
-    return #SERVICE_LEVELS + 1
+    return getLevelTier(SERVICE_LEVELS, tonumber(service) or 0.0)
 end
 
 
@@ -1042,11 +1193,10 @@ end
 function RMS_Utils.getConditionRingRatio(condition, isCompleteInspection)
     if isCompleteInspection == nil then
         return 0.0
+    elseif not isCompleteInspection then
+        return getTierCeiling(RMS_Utils.CONDITION_LEVELS, RMS_Utils.getConditionTier(condition))
     end
-    if isCompleteInspection then
-        return math.clamp(tonumber(condition) or 0.0, 0.0, 1.0)
-    end
-    return getTierCeiling(RMS_Utils.CONDITION_LEVELS, RMS_Utils.getConditionTier(condition))
+    return math.clamp(tonumber(condition) or 0.0, 0.0, 1.0)
 end
 
 
@@ -1054,11 +1204,10 @@ end
 function RMS_Utils.getServiceRingRatio(service, isCompleteInspection)
     if isCompleteInspection == nil then
         return 0.0
+    elseif not isCompleteInspection then
+        service = getTierCeiling(SERVICE_LEVELS, RMS_Utils.getServiceTier(service))
     end
-    if isCompleteInspection then
-        return RMS_Utils.getServiceIntervalRemainingRatio(service)
-    end
-    return RMS_Utils.getServiceIntervalRemainingRatio(getTierCeiling(SERVICE_LEVELS, RMS_Utils.getServiceTier(service)))
+    return RMS_Utils.getServiceIntervalRemainingRatio(service)
 end
 
 
@@ -1278,18 +1427,7 @@ end
 
 ---Returns the label of a value against four descending thresholds
 function RMS_Utils.getValueLabel(value, ideal, high, mid, low, ...)
-    local labels = {...}
-    if value >= ideal then
-        return labels[1]
-    elseif value >= high then
-        return labels[2]
-    elseif value >= mid then
-        return labels[3]
-    elseif value >= low then
-        return labels[4]
-    else
-        return labels[5]
-    end
+    return ({ ... })[getLevelTier({ ideal, high, mid, low }, value)]
 end
 
 
@@ -1499,81 +1637,60 @@ function RMS_Utils.populateTwoColumnTextRow(items, index, cell, leftAttribute, r
     })
 end
 
-local COLOR_IDEAL  = {0.12, 0.88, 0.0, 1.0}  -- super green
-local COLOR_GREEN  = {0.3, 0.7, 0.0, 1.0}    -- green
-local COLOR_YELLOW = {0.85, 0.78, 0.2, 1.0}  -- yellow
-local COLOR_ORANGE = {0.85, 0.5, 0.15, 1.0}  -- orange
-local COLOR_RED    = {0.8, 0.2, 0.2, 1.0}    -- red
-local COLOR_UNKNOWN = {0.5, 0.5, 0.5, 1.0}   -- grey
+---Two best colours of the value scales, the stage colours following
+local SCALE_BEST = {0.12, 0.88, 0.0, 1.0}
+local SCALE_GOOD = {0.3, 0.7, 0.0, 1.0}
 
 local SERVICE_COLOR_LEVELS = {0.9, 0.5, 0.2, 0.001}
 
-local function lerpColor(a, b, t)
-    return {
-        a[1] + (b[1] - a[1]) * t,
-        a[2] + (b[2] - a[2]) * t,
-        a[3] + (b[3] - a[3]) * t,
-        a[4] + (b[4] - a[4]) * t,
-    }
+---Colours of a value scale, best band first
+local TEXT_SCALE = { SCALE_BEST, SCALE_GOOD, RMS_Utils.COLOR.STAGE[2], RMS_Utils.COLOR.STAGE[3], RMS_Utils.COLOR.STAGE[4] }
+
+---Colour between two colours, at a share of the way
+local function mixColors(from, to, share)
+    local mixed = {}
+    for channel = 1, 4 do
+        mixed[channel] = from[channel] + (to[channel] - from[channel]) * share
+    end
+    return mixed
 end
 
-local function getScaleColor(scale, value, ideal, high, mid, low, smooth)
-    local c
-
-    if smooth then
-        if value >= ideal then
-            c = scale[1]
-        elseif value >= high then
-            local t = 1.0 - (value - high) / (ideal - high)
-            c = lerpColor(scale[1], scale[2], t)
-        elseif value >= mid then
-            local t = 1.0 - (value - mid) / (high - mid)
-            c = lerpColor(scale[2], scale[3], t)
-        elseif value >= low then
-            local t = 1.0 - (value - low) / (mid - low)
-            c = lerpColor(scale[3], scale[4], t)
-        else
-            local t = math.min(1.0, (low - value) / low)
-            c = lerpColor(scale[4], scale[5], t)
-        end
-    else
-        if value >= ideal then
-            c = scale[1]
-        elseif value >= high then
-            c = scale[2]
-        elseif value >= mid then
-            c = scale[3]
-        elseif value >= low then
-            c = scale[4]
-        else
-            c = scale[5]
+---Colour of a value on a five colour scale cut by four limits
+-- @param integer direction 1 when a higher value is better, -1 when a lower one is
+local function getBandColor(scale, limits, direction, value, smooth)
+    if direction * (value - limits[1]) >= 0 then
+        return unpack(scale[1])
+    end
+    for band = 1, 3 do
+        local top, bottom = limits[band], limits[band + 1]
+        if direction * (value - bottom) >= 0 then
+            local color = smooth and mixColors(scale[band], scale[band + 1], (top - value) / (top - bottom)) or scale[band + 1]
+            return unpack(color)
         end
     end
-
-    return c[1], c[2], c[3], c[4]
+    -- Past the last limit, the worst colour comes as far again
+    local last = limits[4]
+    local color = smooth and mixColors(scale[4], scale[5], math.min(1.0, direction * (last - value) / last)) or scale[5]
+    return unpack(color)
 end
-
-local TEXT_SCALE = {COLOR_IDEAL, COLOR_GREEN, COLOR_YELLOW, COLOR_ORANGE, COLOR_RED}
 
 ---Returns the colour of a value against four descending thresholds
 function RMS_Utils.getValueColor(value, ideal, high, mid, low, smooth)
-    return getScaleColor(TEXT_SCALE, value, ideal, high, mid, low, smooth)
+    return getBandColor(TEXT_SCALE, { ideal, high, mid, low }, 1, value, smooth)
 end
 
 ---Returns the colour of a gauge fill
 function RMS_Utils.getGaugeColor(value, ideal, high, mid, low, smooth)
     local green = RMS_Utils.COLOR.HIGHLIGHT
-    local scale = {green, green, COLOR_YELLOW, COLOR_ORANGE, COLOR_RED}
-
-    return getScaleColor(scale, value, ideal, high, mid, low, smooth)
+    local STAGE = RMS_Utils.COLOR.STAGE
+    return getBandColor({ green, green, STAGE[2], STAGE[3], STAGE[4] }, { ideal, high, mid, low }, 1, value, smooth)
 end
 
 ---Returns the colour of a condition, grey while the inspection is incomplete
 function RMS_Utils.getConditionColor(condition, isCompleteInspection)
     if isCompleteInspection == nil then
-        return unpack(COLOR_UNKNOWN)
+        return unpack(RMS_Utils.COLOR.TEXT_DIM)
     end
-
     local ideal, high, mid, low = unpack(RMS_Utils.CONDITION_LEVELS)
     return RMS_Utils.getValueColor(condition, ideal, high, mid, low, false)
 end
@@ -1729,7 +1846,7 @@ end
 
 function RMS_Utils.getServiceColor(service, isCompleteInspection)
     if isCompleteInspection == nil then
-        return unpack(COLOR_UNKNOWN)
+        return unpack(RMS_Utils.COLOR.TEXT_DIM)
     end
 
     local ideal, high, mid, low = unpack(SERVICE_COLOR_LEVELS)
@@ -1738,312 +1855,168 @@ end
 
 ---Returns the colour of a value against four ascending thresholds
 function RMS_Utils.getValueColorInverted(value, ideal, low, mid, high, smooth)
-    local c
-
-    if smooth then
-        if value <= ideal then
-            c = COLOR_IDEAL
-        elseif value <= low then
-            local t = (value - ideal) / (low - ideal)
-            c = lerpColor(COLOR_IDEAL, COLOR_GREEN, t)
-        elseif value <= mid then
-            local t = (value - low) / (mid - low)
-            c = lerpColor(COLOR_GREEN, COLOR_YELLOW, t)
-        elseif value <= high then
-            local t = (value - mid) / (high - mid)
-            c = lerpColor(COLOR_YELLOW, COLOR_ORANGE, t)
-        else
-            local t = math.min(1.0, (value - high) / high)
-            c = lerpColor(COLOR_ORANGE, COLOR_RED, t)
-        end
-    else
-        if value <= ideal then
-            c = COLOR_IDEAL
-        elseif value <= low then
-            c = COLOR_GREEN
-        elseif value <= mid then
-            c = COLOR_YELLOW
-        elseif value <= high then
-            c = COLOR_ORANGE
-        else
-            c = COLOR_RED
-        end
-    end
-
-    return c[1], c[2], c[3], c[4]
+    return getBandColor(TEXT_SCALE, { ideal, low, mid, high }, -1, value, smooth)
 end
 
 local SAVEGAME_OPTIONAL_FLOAT_SENTINEL = -1
 
 ---Converts a value to a boolean, strings and numbers accepted
 function RMS_Utils.normalizeBoolValue(value, defaultValue)
-    if value == nil then
+    local kind = type(value)
+    if kind == "nil" then
         return defaultValue == true
-    end
-
-    if type(value) == "boolean" then
+    elseif kind == "boolean" then
         return value
-    end
-
-    if type(value) == "number" then
+    elseif kind == "number" then
         return value ~= 0
-    end
-
-    if type(value) == "string" then
-        local v = string.lower(value)
-        if v == "false" or v == "0" or v == "off" or v == "no" then
-            return false
-        end
-        if v == "true" or v == "1" or v == "on" or v == "yes" then
-            return true
+    elseif kind == "string" then
+        local word = BOOL_WORDS[string.lower(value)]
+        if word ~= nil then
+            return word
         end
     end
-
-    return value and true or false
+    -- Any other string or object counts as set
+    return true
 end
 
 
 ---Encodes a float that may be absent
 function RMS_Utils.encodeOptionalFloat(value)
-    if value == nil then
-        return SAVEGAME_OPTIONAL_FLOAT_SENTINEL
-    end
-
-    local num = tonumber(value)
-    if num == nil then
-        return SAVEGAME_OPTIONAL_FLOAT_SENTINEL
-    end
-
-    return num
+    return value ~= nil and tonumber(value) or SAVEGAME_OPTIONAL_FLOAT_SENTINEL
 end
 
----Decodes a float that may be absent
+---Decodes a float that may be absent, negative meaning absent
 function RMS_Utils.decodeOptionalFloat(value)
-    local num = tonumber(value)
-    if num == nil or num < 0 then
-        return nil
+    local number = tonumber(value)
+    if number ~= nil and not (number < 0) then
+        return number
     end
-
-    return num
+    return nil
 end
 
----Splits a comma separated string into a list
+---Splits a comma separated string into its trimmed, non empty items
 function RMS_Utils.parseCsvList(csvString)
-    local result = {}
-    if csvString == nil or csvString == "" then
-        return result
-    end
-
-    for item in string.gmatch(csvString, "([^,]+)") do
-        local trimmed = tostring(item):gsub("^%s+", ""):gsub("%s+$", "")
+    local items = {}
+    for item in string.gmatch(csvString or "", "[^,]+") do
+        local trimmed = string.match(item, "^%s*(.-)%s*$")
         if trimmed ~= "" then
-            table.insert(result, trimmed)
+            table.insert(items, trimmed)
         end
     end
-
-    return result
+    return items
 end
 
----Serializes the active effects into one string
+---Writes the active effects as id|value, value empty if not a number
 function RMS_Utils.serializeEffectSnapshot(effects)
     local entries = {}
-    if effects == nil then
-        return ""
-    end
-
-    for effectId, effectData in pairs(effects) do
-        local key = tostring(effectId or "")
-        if key ~= "" then
-            local encodedValue = ""
-
-            if type(effectData) == "table" then
-                local numericValue = tonumber(effectData.value)
-                if numericValue ~= nil then
-                    encodedValue = string.format("%.6f", numericValue)
-                end
-            elseif type(effectData) == "number" then
-                encodedValue = string.format("%.6f", effectData)
+    for effectId, effectData in pairs(effects or {}) do
+        local id = effectId and tostring(effectId) or ""
+        if id ~= "" then
+            local value = type(effectData) == "table" and tonumber(effectData.value) or nil
+            if type(effectData) == "number" then
+                value = effectData
             end
-
-            table.insert(entries, string.format("%s|%s", key, tostring(encodedValue)))
+            table.insert(entries, id .. "|" .. (value ~= nil and string.format("%.6f", value) or ""))
         end
     end
-
-    table.sort(entries)
-    return table.concat(entries, ";")
+    return joinSaveEntries(entries)
 end
 
----Rebuilds the active effects from their serialized form
+---Reads effects from serializeEffectSnapshot, or a plain id list
 function RMS_Utils.deserializeEffectSnapshot(serialized)
-    local result = {}
+    local effects = {}
     if serialized == nil or serialized == "" then
-        return result
+        return effects
     end
-
-    if not string.find(serialized, "|") then
+    -- Older saves list the ids alone
+    if string.find(serialized, "|", 1, true) == nil then
         for _, effectId in ipairs(RMS_Utils.parseCsvList(serialized)) do
-            result[effectId] = true
+            effects[effectId] = true
         end
-        return result
+        return effects
     end
 
-    for entry in string.gmatch(serialized, "([^;]+)") do
+    for entry in string.gmatch(serialized, "[^;]+") do
         local effectId, rawValue = string.match(entry, "([^|]+)|([^|]*)")
-        if effectId ~= nil and effectId ~= "" then
+        if effectId ~= nil then
             local value = tonumber(rawValue)
-            if value ~= nil then
-                result[effectId] = {
-                    id = effectId,
-                    value = value
-                }
-            else
-                result[effectId] = true
-            end
+            effects[effectId] = value ~= nil and { id = effectId, value = value } or true
         end
     end
-
-    return result
+    return effects
 end
 
----Returns the system name behind a system key
+---Returns the system name behind a system key, in any case
 function RMS_Utils.getSystemNameByKey(systems, systemKey)
-    if systems == nil then
-        return tostring(systemKey)
-    end
-
-    local normalized = string.lower(tostring(systemKey))
-    for enumKey, systemName in pairs(systems) do
-        if string.lower(tostring(enumKey)) == normalized then
-            return systemName
+    local wanted = string.lower(tostring(systemKey))
+    for key, name in pairs(systems or {}) do
+        if string.lower(tostring(key)) == wanted then
+            return name
         end
     end
-
     return tostring(systemKey)
 end
 
----Serializes the condition of every system
+---Writes the condition and switch of every system
 function RMS_Utils.serializeSystemsState(systems)
     local entries = {}
-    if systems == nil then
-        return ""
+    for systemKey, systemData in pairs(systems or {}) do
+        local condition, enabled = readSystemState(systemData)
+        table.insert(entries, string.format("%s|%.6f|%d", tostring(systemKey), condition, toFlag(enabled)))
     end
-
-    for systemKey, systemData in pairs(systems) do
-        local condition = 1.0
-        local enabled = true
-
-        if type(systemData) == "table" then
-            condition = tonumber(systemData.condition) or 1.0
-            enabled = RMS_Utils.normalizeBoolValue(systemData.enabled, true)
-        else
-            condition = tonumber(systemData) or 1.0
-        end
-
-        table.insert(entries, string.format("%s|%.6f|%d", tostring(systemKey), condition, enabled and 1 or 0))
-    end
-
-    table.sort(entries)
-    return table.concat(entries, ";")
+    return joinSaveEntries(entries)
 end
 
----Rebuilds the system conditions from their serialized form
+---Reads the systems written by serializeSystemsState, older saves too
 function RMS_Utils.deserializeSystemsState(serialized)
-    local result = {}
-    if serialized == nil or serialized == "" then
-        return result
-    end
-
-    local separator = ";"
-    if not string.find(serialized, ";") then
-        separator = ","
-    end
-    local pattern = "([^" .. separator .. "]+)"
-
-    for entry in string.gmatch(serialized, pattern) do
-        local parts = {}
-        for part in string.gmatch(entry .. "|", "(.-)|") do
-            table.insert(parts, part)
+    local systems = {}
+    for _, entry in ipairs(splitSaveEntries(serialized)) do
+        local fields = {}
+        for field in string.gmatch(entry .. "|", "(.-)|") do
+            table.insert(fields, field)
         end
-
-        local key = parts[1]
-        if key ~= nil and key ~= "" then
-            -- The enabled flag terminates entries from both log formats.
-            result[key] = {
-                condition = tonumber(parts[2]) or 1.0,
-                enabled = RMS_Utils.normalizeBoolValue(tonumber(parts[3] and parts[#parts]), true)
-            }
+        if fields[1] ~= "" then
+            -- The switch ends the entry in both log formats
+            local switch = #fields >= 3 and tonumber(fields[#fields]) or nil
+            systems[fields[1]] = { condition = tonumber(fields[2]) or 1.0, enabled = RMS_Utils.normalizeBoolValue(switch, true) }
         end
     end
-
-    return result
+    return systems
 end
 
 ---Copies the condition of every system for a later comparison
 function RMS_Utils.createSystemsSnapshot(systems)
     local snapshot = {}
-    if systems == nil then
-        return snapshot
+    for systemKey, systemData in pairs(systems or {}) do
+        local condition, enabled = readSystemState(systemData)
+        snapshot[systemKey] = { condition = condition, enabled = enabled }
     end
-
-    for systemKey, systemData in pairs(systems) do
-        if type(systemData) == "table" then
-            snapshot[systemKey] = {
-                condition = tonumber(systemData.condition) or 1.0,
-                enabled = RMS_Utils.normalizeBoolValue(systemData.enabled, true)
-            }
-        else
-            snapshot[systemKey] = {
-                condition = tonumber(systemData) or 1.0,
-                enabled = true
-            }
-        end
-    end
-
     return snapshot
 end
 
----Serializes a map of numbers into one string
+---Writes a map of numbers as key|value entries
 function RMS_Utils.serializeNumericMap(valueMap)
     local entries = {}
-    if valueMap == nil then
-        return ""
-    end
-
-    for key, value in pairs(valueMap) do
-        local numericValue = tonumber(value)
-        if numericValue ~= nil then
-            table.insert(entries, string.format("%s|%.6f", tostring(key), numericValue))
+    for key, value in pairs(valueMap or {}) do
+        local number = tonumber(value)
+        if number ~= nil then
+            table.insert(entries, string.format("%s|%.6f", tostring(key), number))
         end
     end
-
-    table.sort(entries)
-    return table.concat(entries, ";")
+    return joinSaveEntries(entries)
 end
 
----Rebuilds a map of numbers from its serialized form
+---Reads a map written by serializeNumericMap, older saves too
 function RMS_Utils.deserializeNumericMap(serialized)
-    local result = {}
-    if serialized == nil or serialized == "" then
-        return result
-    end
-
-    local separator = ";"
-    if not string.find(serialized, ";") then
-        separator = ","
-    end
-    local pattern = "([^" .. separator .. "]+)"
-
-    for entry in string.gmatch(serialized, pattern) do
-        local key, valueStr = string.match(entry, "([^|]+)|([^|]+)")
-        if key ~= nil then
-            local numericValue = tonumber(valueStr)
-            if numericValue ~= nil then
-                result[key] = numericValue
-            end
+    local values = {}
+    for _, entry in ipairs(splitSaveEntries(serialized)) do
+        local key, rawValue = string.match(entry, "([^|]+)|([^|]+)")
+        local number = tonumber(rawValue)
+        if key ~= nil and number ~= nil then
+            values[key] = number
         end
     end
-
-    return result
+    return values
 end
 
 local ELECTRIC_SYSTEM_LABELS = {
@@ -2061,10 +2034,8 @@ end
 
 ---Returns the system key behind a system name
 function RMS_Utils.getSystemKey(systems, systemName)
-    if systems == nil then
-        return ""
-    end
-    return string.lower(RMS_Utils.getKeyByValue(systems, systemName) or "")
+    local key = systems ~= nil and RMS_Utils.getKeyByValue(systems, systemName) or ""
+    return string.lower(key)
 end
 
 ---Turns a real price into the game's, scaled by the economic difficulty
@@ -2166,94 +2137,27 @@ function RMS_Utils.writeRow(row, labelText, valueText)
     RMS_Utils.fitRowValue(row:getDescendantByName("label"), row:getDescendantByName("pill"), row:getDescendantByName("value"), labelText, valueText)
 end
 
----Returns the weight a system carries on this vehicle
+---Share of the machine a system weighs among its enabled systems
 function RMS_Utils.getEffectiveSystemWeight(vehicle, systemName, systems)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec == nil or type(spec.systems) ~= "table" or type(systemName) ~= "string" then
         return 0
     end
 
-    local systemWeights = RMS_Config.CORE.SYSTEM_WEIGHTS
-
-    local function getConfiguredWeight(systemKey)
-        if systemKey == nil then
-            return 0
-        end
-
-        local directWeight = tonumber(systemWeights[systemKey])
-        if directWeight ~= nil then
-            return math.max(directWeight, 0)
-        end
-
-        local loweredKey = string.lower(tostring(systemKey))
-        for weightedKey, weight in pairs(systemWeights) do
-            if string.lower(tostring(weightedKey)) == loweredKey then
-                return math.max(tonumber(weight) or 0, 0)
-            end
-        end
-
+    local systemKey = resolveVehicleSystemKey(spec.systems, systemName, systems)
+    local systemData = spec.systems[systemKey]
+    local weight = systemData ~= nil and getIsSystemOn(systemData) and getConfiguredSystemWeight(systemKey) or 0
+    if weight <= 0 then
         return 0
     end
 
-    local function resolveSystemKey(name)
-        if spec.systems[name] ~= nil then
-            return name
-        end
-
-        if type(systems) == "table" then
-            local enumValue = systems[string.upper(name)]
-            if type(enumValue) == "string" then
-                local enumKey = string.lower(string.upper(name))
-                if spec.systems[enumKey] ~= nil then
-                    return enumKey
-                end
-            end
-
-            local systemKeyByValue = RMS_Utils.getKeyByValue(systems, name)
-            if type(systemKeyByValue) == "string" then
-                local loweredEnumKey = string.lower(systemKeyByValue)
-                if spec.systems[loweredEnumKey] ~= nil then
-                    return loweredEnumKey
-                end
-            end
-        end
-
-        local loweredName = string.lower(name)
-        for existingKey, _ in pairs(spec.systems) do
-            if string.lower(tostring(existingKey)) == loweredName then
-                return existingKey
-            end
-        end
-
-        return loweredName
-    end
-
-    local resolvedSystemKey = resolveSystemKey(systemName)
-    local targetSystemData = spec.systems[resolvedSystemKey]
-    if targetSystemData == nil or (type(targetSystemData) == "table" and targetSystemData.enabled == false) then
-        return 0
-    end
-
-    local targetWeight = getConfiguredWeight(resolvedSystemKey)
-    if targetWeight <= 0 then
-        return 0
-    end
-
-    local totalEnabledWeight = 0
-    for existingKey, systemData in pairs(spec.systems) do
-        if type(systemData) ~= "table" or systemData.enabled ~= false then
-            local configuredWeight = getConfiguredWeight(existingKey)
-            if configuredWeight > 0 then
-                totalEnabledWeight = totalEnabledWeight + configuredWeight
-            end
+    local total = 0
+    for key, data in pairs(spec.systems) do
+        if getIsSystemOn(data) then
+            total = total + getConfiguredSystemWeight(key)
         end
     end
-
-    if totalEnabledWeight <= 0 then
-        return 0
-    end
-
-    return targetWeight / totalEnabledWeight
+    return total > 0 and weight / total or 0
 end
 
 ---Returns the enabled systems whose condition permits an overhaul
@@ -2286,56 +2190,43 @@ function RMS_Utils.getOverhaulSystems(vehicle)
     return values
 end
 
----Copies a table one level deep
+---Copies the entries of a table, an empty table for anything else
 function RMS_Utils.shallowCopy(original)
-    local result = {}
-    if type(original) ~= "table" then
-        return result
+    local copy = {}
+    if type(original) == "table" then
+        for key, value in pairs(original) do
+            copy[key] = value
+        end
     end
-    for key, value in pairs(original) do
-        result[key] = value
-    end
-    return result
+    return copy
 end
 
----Copies a table and everything it holds, guarding against cycles
+---Copies a value and every table it reaches, a shared table copied once
 function RMS_Utils.deepCopy(original, seen)
     if type(original) ~= "table" then
         return original
     end
-
     seen = seen or {}
-    if seen[original] ~= nil then
-        return seen[original]
+    local copy = seen[original]
+    if copy == nil then
+        copy = {}
+        seen[original] = copy
+        for key, value in pairs(original) do
+            copy[RMS_Utils.deepCopy(key, seen)] = RMS_Utils.deepCopy(value, seen)
+        end
     end
-
-    local result = {}
-    seen[original] = result
-
-    for key, value in pairs(original) do
-        local copiedKey = RMS_Utils.deepCopy(key, seen)
-        result[copiedKey] = RMS_Utils.deepCopy(value, seen)
-    end
-
-    return result
+    return copy
 end
 
 ---Serializes invoice lines into a string
 -- @return string serialized kind, key, mode, liters and price of each line
 function RMS_Utils.serializeInvoice(invoice)
-    local values = {}
+    local lines = {}
     for _, line in ipairs(invoice or {}) do
-        table.insert(values, string.format(
-            "%s,%s,%s,%.6f,%.4f,%s",
-            tostring(line.kind or ""),
-            tostring(line.key or ""),
-            tostring(line.mode or ""),
-            tonumber(line.liters) or 0,
-            tonumber(line.price) or 0,
-            line.warrantyReason or ""
-        ))
+        lines[#lines + 1] = string.format("%s,%s,%s,%.6f,%.4f,%s", tostring(line.kind or ""), tostring(line.key or ""),
+            tostring(line.mode or ""), tonumber(line.liters) or 0, tonumber(line.price) or 0, line.warrantyReason or "")
     end
-    return table.concat(values, ";")
+    return table.concat(lines, ";")
 end
 
 ---Rebuilds invoice lines from their serialized form
@@ -2363,134 +2254,71 @@ end
 
 ---Serializes one maintenance log entry into a string
 function RMS_Utils.serializeMaintenanceLogEntry(entry)
-    if entry == nil then return "" end
-    local cd = entry.conditionData or {}
-    local serializedSystems = RMS_Utils.encodeDelimitedString(RMS_Utils.serializeSystemsState(RMS_Utils.createSystemsSnapshot(cd.systems)))
-    local serializedBreakdowns = RMS_Utils.encodeDelimitedString(RMS_Utils.serializeBreakdowns(cd.activeBreakdowns or {}))
-    local serializedSelectedBreakdowns = RMS_Utils.encodeDelimitedString(table.concat(cd.selectedBreakdowns or {}, ","))
-    local serializedEffects = RMS_Utils.encodeDelimitedString(RMS_Utils.serializeEffectSnapshot(cd.activeEffects))
-    local activeIndicatorIds = {}
-    for indicatorId, isActive in pairs(cd.activeIndicators or {}) do
-        if isActive then
-            table.insert(activeIndicatorIds, tostring(indicatorId))
-        end
+    if entry == nil then
+        return ""
     end
-    table.sort(activeIndicatorIds)
-    local serializedIndicators = RMS_Utils.encodeDelimitedString(table.concat(activeIndicatorIds, ","))
-    local parts = {
-        tostring(entry.id or 0),
-        tostring(entry.type or ""),
-        tostring(entry.price or 0),
-        RMS_Utils.serializeDate(entry.date),
-        tostring(entry.location or "UNKNOWN"),
-        tostring(entry.optionOne or "NONE"),
-        tostring(entry.optionTwo or "NONE"),
-        tostring(entry.optionThree or false),
-        tostring(RMS_Utils.normalizeBoolValue(entry.isVisible, true)),
-        tostring(RMS_Utils.normalizeBoolValue(entry.isCompleted, true)),
-        tostring(cd.year or 0),
-        tostring(cd.operatingHours or 0),
-        tostring(cd.age or 0),
-        tostring(cd.condition or 1),
-        tostring(cd.service or 1),
-        tostring(cd.reliability or 1),
-        "", -- Reserved position in previously saved log entries.
-        serializedSystems,
-        tostring(cd.batterySoc or 1),
-        serializedEffects,
-        serializedBreakdowns,
-        serializedSelectedBreakdowns,
-        serializedIndicators,
-        RMS_Utils.encodeDelimitedString(RMS_Utils.serializeInvoice(entry.invoice)),
-        tostring(cd.odometerKilometers or ""),
-        tostring(cd.wearExcess or ""),
-        RMS_Utils.encodeDelimitedString(RMS_Utils.serializeWearCauses(cd.wearCauses)),
-        RMS_Utils.encodeDelimitedString(RMS_Utils.serializeNumericMap(cd.partWear))
-    }
-    return table.concat(parts, "|")
+    local fields = {}
+    for index, field in ipairs(LOG_ENTRY_FIELDS) do
+        fields[index] = field.write(entry, entry.conditionData or {})
+    end
+    return table.concat(fields, "|")
 end
 
 ---Rebuilds a maintenance log entry from its serialized form
 function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
-    if serialized == nil or serialized == "" then return nil end
-    local parts = {}
-    for part in string.gmatch(serialized .. "|", "(.-)|") do
-        table.insert(parts, part)
+    if serialized == nil or serialized == "" then
+        return nil
     end
-    if #parts < 10 then return nil end
+    local fields = {}
+    for field in string.gmatch(serialized .. "|", "(.-)|") do
+        table.insert(fields, field)
+    end
+    -- Ten fields at least, those of the first log format
+    if #fields < 10 then
+        return nil
+    end
 
-    local result = {
-        id = tonumber(parts[1]) or 0,
-        type = parts[2] ~= "" and parts[2] or nil,
-        price = tonumber(parts[3]) or 0,
-        date = RMS_Utils.deserializeDate(parts[4]),
-        location = parts[5] ~= "" and parts[5] or "UNKNOWN",
-        optionOne = parts[6] ~= "" and parts[6] or "NONE",
-        optionTwo = parts[7] ~= "" and parts[7] or "NONE",
-        optionThree = RMS_Utils.normalizeBoolValue(parts[8], false),
-        isVisible = RMS_Utils.normalizeBoolValue(parts[9], true),
-        isCompleted = RMS_Utils.normalizeBoolValue(parts[10], true),
-        invoice = RMS_Utils.deserializeInvoice(RMS_Utils.decodeDelimitedString(parts[24] or "")),
-        conditionData = {
-            year = tonumber(parts[11]) or 0,
-            operatingHours = tonumber(parts[12]) or 0,
-            odometerKilometers = tonumber(parts[25]),
-            age = tonumber(parts[13]) or 0,
-            condition = tonumber(parts[14]) or 1,
-            service = tonumber(parts[15]) or 1,
-            reliability = tonumber(parts[16]) or 1,
-            systems = RMS_Utils.createSystemsSnapshot(RMS_Utils.deserializeSystemsState(RMS_Utils.decodeDelimitedString(parts[18] or ""))),
-            batterySoc = tonumber(parts[19]) or 1,
-            activeBreakdowns = RMS_Utils.deserializeBreakdowns(RMS_Utils.decodeDelimitedString(parts[21] or "")),
-            selectedBreakdowns = RMS_Utils.parseCsvList(RMS_Utils.decodeDelimitedString(parts[22] or "")),
-            activeEffects = RMS_Utils.deserializeEffectSnapshot(RMS_Utils.decodeDelimitedString(parts[20] or "")),
-            activeIndicators = {},
-            wearExcess = tonumber(parts[26]),
-            wearCauses = RMS_Utils.deserializeWearCauses(RMS_Utils.decodeDelimitedString(parts[27] or "")),
-            partWear = RMS_Utils.deserializeNumericMap(RMS_Utils.decodeDelimitedString(parts[28] or ""))
-        }
-    }
-    for _, indicatorId in ipairs(RMS_Utils.parseCsvList(RMS_Utils.decodeDelimitedString(parts[23] or ""))) do
-        if indicatorId ~= nil and indicatorId ~= "" then
-            result.conditionData.activeIndicators[indicatorId] = true
+    local entry = { conditionData = {} }
+    for index, field in ipairs(LOG_ENTRY_FIELDS) do
+        if field.read ~= nil then
+            field.read(entry, entry.conditionData, fields[index])
         end
     end
-    return result
+    return entry
 end
 
 ---Tells whether the CVT addon mod drives the transmission of this vehicle
 function RMS_Utils.hasCVTAddon(vehicle)
-    local spec_CVTaddon = vehicle ~= nil and vehicle.spec_CVTaddon or nil
-    local cvtAddonConfig = spec_CVTaddon ~= nil and (tonumber(spec_CVTaddon.CVTconfig) or 0) or 0
-    return spec_CVTaddon ~= nil
-        and spec_CVTaddon.CVTcfgExists
-        and cvtAddonConfig ~= 0
-        and cvtAddonConfig ~= 8
+    local addon = vehicle ~= nil and vehicle.spec_CVTaddon or nil
+    if addon == nil or not addon.CVTcfgExists then
+        return false
+    end
+    -- 0 and 8: the addon leaves the transmission alone
+    local config = tonumber(addon.CVTconfig) or 0
+    return config ~= 0 and config ~= 8
 end
 
 ---Tells whether the vehicle runs a continuously variable transmission
 function RMS_Utils.hasCVTTransmission(vehicle)
-    local motor = vehicle ~= nil and vehicle.getMotor ~= nil and vehicle:getMotor() or nil
+    if vehicle == nil or vehicle.getMotor == nil then
+        return false
+    end
+    local motor = vehicle:getMotor()
     return motor ~= nil and motor.minForwardGearRatio ~= nil and not RMS_Utils.getIsElectricVehicle(vehicle)
 end
 
 ---Tells whether the vehicle runs on electricity alone
 function RMS_Utils.getIsElectricVehicle(vehicle)
-    local hasElectricConsumer = false
-    local hasCombustionConsumer = false
-
-    if vehicle.spec_motorized and vehicle.spec_motorized.consumers then
-        for _, consumer in pairs(vehicle.spec_motorized.consumers) do
-            if consumer.fillType == FillType.ELECTRICCHARGE then
-                hasElectricConsumer = true
-            elseif consumer.fillType == FillType.DIESEL
-                    or consumer.fillType == FillType.METHANE then
-                hasCombustionConsumer = true
-            end
+    local motorized = vehicle.spec_motorized
+    local isElectric = false
+    for _, consumer in pairs(motorized ~= nil and motorized.consumers or {}) do
+        local fillType = consumer.fillType
+        if fillType == FillType.DIESEL or fillType == FillType.METHANE then
+            return false
         end
+        isElectric = isElectric or fillType == FillType.ELECTRICCHARGE
     end
-
-    return hasElectricConsumer and not hasCombustionConsumer
+    return isElectric
 end
 
 ---Tells whether an engine uses the shared ECU profile
@@ -2533,13 +2361,14 @@ end
 ---Builds a logger printing only while debug mode is on
 function RMS_Utils.createLogger(prefix)
     return function(...)
-        if RMS_Config.DEBUG then
-            local args = {...}
-            for i = 1, #args do
-                args[i] = tostring(args[i])
-            end
-            print(prefix .. " " .. table.concat(args, " "))
+        if not RMS_Config.DEBUG then
+            return
         end
+        local words = { prefix }
+        for index = 1, select("#", ...) do
+            words[index + 1] = tostring((select(index, ...)))
+        end
+        print(table.concat(words, " "))
     end
 end
 

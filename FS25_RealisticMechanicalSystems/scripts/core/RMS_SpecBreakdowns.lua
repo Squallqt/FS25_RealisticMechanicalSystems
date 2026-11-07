@@ -124,6 +124,17 @@ function RealisticMechanicalSystems:getRandomBreakdown()
     return candidates[math.random(#candidates)]
 end
 
+-- the breakdowns under way, one suspended until it comes back left out
+local function countActiveBreakdowns(spec)
+    local count = 0
+    for _, breakdown in pairs(spec.activeBreakdowns) do
+        if breakdown.isActive ~= false then
+            count = count + 1
+        end
+    end
+    return count
+end
+
 ---Adds a breakdown at a stage, rolling its detection and reapplying the effects
 function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
     local spec = self.spec_RealisticMechanicalSystems
@@ -139,39 +150,20 @@ function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
         }
     end
 
-    local activeBreakdowns = self:getActiveBreakdowns()
-    local breakdownRegistry = RMS_Breakdowns.BreakdownRegistry
-    
-    local activeBreakdownsCount = 0
-    for _, breakdownData in pairs(activeBreakdowns) do
-        if type(breakdownData) == "table" and breakdownData.isActive ~= false then
-            activeBreakdownsCount = activeBreakdownsCount + 1
-        end
-    end
-
-    local registryEntry = breakdownRegistry[breakdownId]
+    local registryEntry = RMS_Breakdowns.BreakdownRegistry[breakdownId]
     if registryEntry == nil then
         log_dbg("addBreakdown skipped: unknown breakdown id:", tostring(breakdownId))
         return
     end
-
-    if activeBreakdownsCount >= RMS_Config.CORE.CONCURRENT_BREAKDOWN_LIMIT_PER_VEHICLE and registryEntry.isSelectable then
-        return nil 
-    end
-
-    if self:hasBreakdown(breakdownId) then
+    local isFull = registryEntry.isSelectable and countActiveBreakdowns(spec) >= RMS_Config.CORE.CONCURRENT_BREAKDOWN_LIMIT_PER_VEHICLE
+    if isFull or self:hasBreakdown(breakdownId) then
         return
     end
 
-    local currentIsActive = false
-    if options.isActive == nil then
-        currentIsActive = true
-    else
-        currentIsActive = options.isActive
-    end
-
+    -- a suspended breakdown comes back after a drawn delay
+    local isActive = options.isActive ~= false
     local resumeTimer = math.max(tonumber(options.resumeTimer) or 0, 0)
-    if not currentIsActive and resumeTimer <= 0 then
+    if not isActive and resumeTimer <= 0 then
         local serviceScale = RMS_Config.CORE.REFERENCE_SERVICE_WEAR / RMS_Config.CORE.BASE_SERVICE_WEAR
         resumeTimer = RMS_Config.CORE.REPEAT_BREAKDOWN_TIME * serviceScale * (math.random() + 0.5)
     end
@@ -181,8 +173,7 @@ function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
         progressTimer = math.max(tonumber(options.progressTimer) or 0, 0),
         isVisible = RMS_Utils.normalizeBoolValue(options.isVisible, false),
         isSelectedForRepair = RMS_Utils.normalizeBoolValue(options.isSelectedForRepair, true),
-        isActive = currentIsActive,
-        resumeTimer = resumeTimer,
+        isActive = isActive, resumeTimer = resumeTimer,
         source = options.source or RealisticMechanicalSystems.BREAKDOWN_SOURCES.RANDOM,
         effectTargetIndex = math.max(math.floor(tonumber(options.effectTargetIndex) or 0), 0),
         branch = 0
@@ -190,7 +181,7 @@ function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
     if self.isServer then
         spec.activeBreakdowns[breakdownId].usedPartHours = RealisticMechanicalSystems.drawUsedPartDonorHours(breakdownId)
     end
-    if currentIsActive then
+    if isActive then
         spec.activeBreakdowns[breakdownId].warrantyServiceOverdue = self:getIsWarrantyServiceOverdue(breakdownId)
         spec.activeBreakdowns[breakdownId].warrantyImpact = (spec.partImpactWear[breakdownId] or 0) > 0
     end
@@ -366,9 +357,10 @@ local function getStageDuration(stageData)
 end
 RealisticMechanicalSystems.getStageDuration = getStageDuration
 
+-- the share of its stage a breakdown has run, none at the last stage
 local function getStageProgress(registryEntry, breakdown)
-    local stageData = registryEntry.stages[breakdown.stage]
-    local duration = stageData ~= nil and registryEntry.stages[breakdown.stage + 1] ~= nil and getStageDuration(stageData) or nil
+    local stages = registryEntry.stages
+    local duration = stages[breakdown.stage] ~= nil and stages[breakdown.stage + 1] ~= nil and getStageDuration(stages[breakdown.stage]) or nil
     if duration == nil then
         return 0
     end
@@ -470,77 +462,70 @@ function RealisticMechanicalSystems:processWornParts()
     end
 end
 
-local function aggregateEffect(aggregatedEffects, effectData, newValue)
-    local effectId = effectData.id
-    local strategy = effectData.aggregation or "sum"
-
-    local existingEffect = aggregatedEffects[effectId]
-
-    if existingEffect == nil then
-        local newEffect = RMS_Utils.deepCopy(effectData)
-        newEffect.value = newValue
-        aggregatedEffects[effectId] = newEffect
+-- a failure that keeps the starter still wins over one that turns it
+local function mergeEngineFailure(existing, extraData)
+    local current = existing.extraData
+    if current == nil or extraData == nil then
+        existing.extraData = current or extraData
+    elseif current.starter == true and extraData.starter ~= true then
+        existing.extraData = extraData
     else
-        if strategy == "sum" then
-            if math.abs(newValue) > math.abs(existingEffect.value) then
-                existingEffect.extraData = RMS_Utils.deepCopy(effectData.extraData)
-            end
-            existingEffect.value = existingEffect.value + newValue
+        current.starter = current.starter == true or extraData.starter == true
+        current.message = current.message or extraData.message
+        current.reason = current.reason or extraData.reason
+        current.disableAi = extraData.disableAi == true or current.disableAi
+    end
+end
 
-        elseif strategy == "multiply" then
-            if math.abs(newValue - 1) > math.abs(existingEffect.value - 1) then
-                existingEffect.extraData = RMS_Utils.deepCopy(effectData.extraData)
-            end
-            existingEffect.value = existingEffect.value * newValue
+local function getIsSet(value)
+    return value ~= nil and value ~= false and value ~= 0
+end
 
-        elseif strategy == "min" then
-            if newValue < existingEffect.value then
-                existingEffect.value = newValue
-                existingEffect.extraData = RMS_Utils.deepCopy(effectData.extraData)
-            end
-
-        elseif strategy == "max" then
-            if newValue > existingEffect.value then
-                existingEffect.value = newValue
-                existingEffect.extraData = RMS_Utils.deepCopy(effectData.extraData)
-            end
-
-        elseif strategy == "boolean_or" then
-            local wasActive = existingEffect.value ~= nil and existingEffect.value ~= false and existingEffect.value ~= 0
-            local isActive = newValue ~= nil and newValue ~= false and newValue ~= 0
-            existingEffect.value = existingEffect.value or newValue
-
-            if isActive then
-                if effectId == "ENGINE_FAILURE" then
-                    local newExtraData = RMS_Utils.deepCopy(effectData.extraData)
-
-                    if existingEffect.extraData == nil then
-                        existingEffect.extraData = newExtraData
-                    elseif newExtraData ~= nil then
-                        local existingStarter = existingEffect.extraData.starter == true
-                        local newStarter = newExtraData.starter == true
-
-                        if existingStarter and not newStarter then
-                            existingEffect.extraData = newExtraData
-                        else
-                            existingEffect.extraData.starter = existingStarter or newStarter
-
-                            if existingEffect.extraData.message == nil and newExtraData.message ~= nil then
-                                existingEffect.extraData.message = newExtraData.message
-                            end
-                            if existingEffect.extraData.reason == nil and newExtraData.reason ~= nil then
-                                existingEffect.extraData.reason = newExtraData.reason
-                            end
-                            if newExtraData.disableAi == true then
-                                existingEffect.extraData.disableAi = true
-                            end
-                        end
-                    end
-                elseif isActive and not wasActive then
-                    existingEffect.extraData = RMS_Utils.deepCopy(effectData.extraData)
-                end
-            end
+-- each rule folds one more breakdown in, keeping the heaviest extraData
+local AGGREGATIONS = {
+    sum = function(effect, value, effectData)
+        if math.abs(value) > math.abs(effect.value) then
+            effect.extraData = RMS_Utils.deepCopy(effectData.extraData)
         end
+        effect.value = effect.value + value
+    end,
+    multiply = function(effect, value, effectData)
+        if math.abs(value - 1) > math.abs(effect.value - 1) then
+            effect.extraData = RMS_Utils.deepCopy(effectData.extraData)
+        end
+        effect.value = effect.value * value
+    end,
+    min = function(effect, value, effectData)
+        if value < effect.value then
+            effect.value, effect.extraData = value, RMS_Utils.deepCopy(effectData.extraData)
+        end
+    end,
+    max = function(effect, value, effectData)
+        if value > effect.value then
+            effect.value, effect.extraData = value, RMS_Utils.deepCopy(effectData.extraData)
+        end
+    end,
+    boolean_or = function(effect, value, effectData)
+        local wasSet = getIsSet(effect.value)
+        effect.value = effect.value or value
+        if not getIsSet(value) then
+            return
+        elseif effectData.id == "ENGINE_FAILURE" then
+            mergeEngineFailure(effect, RMS_Utils.deepCopy(effectData.extraData))
+        elseif not wasSet then
+            effect.extraData = RMS_Utils.deepCopy(effectData.extraData)
+        end
+    end
+}
+
+local function aggregateEffect(effects, effectData, value)
+    local effect = effects[effectData.id]
+    if effect == nil then
+        effect = RMS_Utils.deepCopy(effectData)
+        effect.value = value
+        effects[effectData.id] = effect
+    else
+        AGGREGATIONS[effectData.aggregation or "sum"](effect, value, effectData)
     end
 end
 
@@ -571,6 +556,41 @@ local function queueFaultCodeMessages(vehicle, noSideNotifications)
     end
 end
 
+local function getEffectValue(vehicle, effectData)
+    if type(effectData.value) == "function" then
+        return effectData.value(vehicle)
+    end
+    return effectData.value
+end
+
+-- a number runs toward the next stage, a worn part may carry more
+local function getStageEffectValue(vehicle, breakdownId, breakdown, effectData, nextStageData, progress)
+    local value = getEffectValue(vehicle, effectData)
+    if type(value) ~= "number" then
+        return value
+    end
+    if progress > 0 and nextStageData ~= nil and nextStageData.effects ~= nil and effectData.aggregation ~= "boolean_or" then
+        for _, nextEffectData in ipairs(RMS_Utils.getBranchItems(nextStageData.effects, breakdown)) do
+            if nextEffectData.id == effectData.id then
+                local nextValue = getEffectValue(vehicle, nextEffectData)
+                if type(nextValue) == "number" then
+                    value = value + (nextValue - value) * progress
+                end
+                break
+            end
+        end
+    end
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local symptom = getCarriedSymptom(spec, breakdownId, effectData.id)
+    if symptom ~= nil then
+        local wornValue = getWornPartEffect(symptom, spec.partWear[breakdownId] or 0)
+        if math.abs(wornValue) > math.abs(value) then
+            return wornValue
+        end
+    end
+    return value
+end
+
 ---Rebuilds the active effects from the breakdowns and applies the difference
 -- @param boolean? noSideNotifications true when restoring an initial network snapshot
 function RealisticMechanicalSystems:recalculateAndApplyEffects(noSideNotifications)
@@ -598,54 +618,17 @@ function RealisticMechanicalSystems:recalculateAndApplyEffects(noSideNotificatio
     local aggregatedEffects = {}
     local unknownBreakdownIds = {}
 
-    for id, breakdown in pairs(self:getActiveBreakdowns()) do
-        local registryEntry = RMS_Breakdowns.BreakdownRegistry[id]
-
+    for breakdownId, breakdown in pairs(self:getActiveBreakdowns()) do
+        local registryEntry = RMS_Breakdowns.BreakdownRegistry[breakdownId]
+        local stageData = registryEntry ~= nil and breakdown.isActive ~= false and registryEntry.stages[breakdown.stage] or nil
         if registryEntry == nil then
-            table.insert(unknownBreakdownIds, id)
-        elseif breakdown.isActive ~= false and registryEntry.stages[breakdown.stage] then
-            local stageData = registryEntry.stages[breakdown.stage]
+            table.insert(unknownBreakdownIds, breakdownId)
+        elseif stageData ~= nil and stageData.effects ~= nil then
             local nextStageData = registryEntry.stages[breakdown.stage + 1]
             local progress = getStageProgress(registryEntry, breakdown)
-
-            if stageData.effects then
-                for _, effectData in ipairs(RMS_Utils.getBranchItems(stageData.effects, breakdown)) do
-                    local effectId = effectData.id
-                    local strategy = effectData.aggregation or "sum"
-
-                    local newValue
-                    if type(effectData.value) == 'function' then
-                        newValue = effectData.value(self)
-                    else
-                        newValue = effectData.value
-                    end
-
-                    if progress > 0 and nextStageData ~= nil and nextStageData.effects ~= nil and type(newValue) == "number"
-                        and strategy ~= "boolean_or" then
-                        for _, nextEffectData in ipairs(RMS_Utils.getBranchItems(nextStageData.effects, breakdown)) do
-                            if nextEffectData.id == effectId then
-                                local nextValue = nextEffectData.value
-                                if type(nextValue) == "function" then
-                                    nextValue = nextValue(self)
-                                end
-                                if type(nextValue) == "number" then
-                                    newValue = newValue + (nextValue - newValue) * progress
-                                end
-                                break
-                            end
-                        end
-                    end
-
-                    local carriedSymptom = type(newValue) == "number" and getCarriedSymptom(spec, id, effectId) or nil
-                    if carriedSymptom ~= nil then
-                        local wornValue = getWornPartEffect(carriedSymptom, spec.partWear[id] or 0)
-                        if math.abs(wornValue) > math.abs(newValue) then
-                            newValue = wornValue
-                        end
-                    end
-
-                    aggregateEffect(aggregatedEffects, effectData, newValue)
-                end
+            for _, effectData in ipairs(RMS_Utils.getBranchItems(stageData.effects, breakdown)) do
+                local value = getStageEffectValue(self, breakdownId, breakdown, effectData, nextStageData, progress)
+                aggregateEffect(aggregatedEffects, effectData, value)
             end
         end
     end
@@ -694,7 +677,6 @@ function RealisticMechanicalSystems:recalculateAndApplyEffects(noSideNotificatio
                         and currentEffect.extraData ~= nil
                         and currentEffect.extraData.message ~= nil
                         and not hasEnteredPlayer then
-                    spec.pendingSideNotifications = spec.pendingSideNotifications or {}
                     spec.pendingSideNotifications[effectId] = currentEffect.extraData.message
                 end
             end
@@ -709,7 +691,6 @@ function RealisticMechanicalSystems:recalculateAndApplyEffects(noSideNotificatio
             and previouslyActiveEffects.ENGINE_THERMAL_TORQUE_LIMIT ~= nil
             and spec.activeEffects.ENGINE_THERMAL_TORQUE_LIMIT == nil
             and self:getOwnerFarmId() == g_currentMission:getFarmId() then
-        spec.pendingSideNotifications = spec.pendingSideNotifications or {}
         spec.pendingSideNotifications.ENGINE_THERMAL_TORQUE_LIMIT = "rms_thermal_power_restored_message"
     end
     self:recalculateAndApplyIndicators()

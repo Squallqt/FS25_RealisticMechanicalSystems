@@ -67,7 +67,7 @@ Changelog 1.0.0.0-beta.1:
 - Added grease cartridges for the grease gun
 - Reworked greasing with the grease points of each machine
 - Added greasing of implements and their PTO shafts, shown in the fleet page
-- Added the harvesting parts of self-propelled harvesters, worn by the work they do, with crop losses, blockages and stops as they wear
+- Added the harvesting parts of self-propelled harvesters, worn by the work they do, with crop losses, blockages and stops as they wear, a stop or a blockage sounding the cab alarm
 - Added the renewal of worn harvesting parts to the preventive service, their parts billed
 - Added the harvesting effort measured by RMS itself when Realistic Harvesting is not installed
 - Added integration with Realistic Harvesting (version 1.6.5.0 or higher), sharing the harvesting effort and the wear of the harvesting parts
@@ -91,6 +91,17 @@ Changelog 1.0.0.0-beta.1:
 - Fixed the PTO dropping out without a warning in single player
 - Fixed engine stumbles no longer cutting the power after a while
 - Fixed the unsteady idle of failing injectors, fuel pumps and spark plugs not worsening with the fault
+- Fixed lights staying in a random state after a wiring fault made them flicker
+- Fixed worn powershift packs sometimes never engaging the gear asked, or driving it at the ratio of the previous gear
+- Fixed PTO drops that sometimes did not happen
+- Fixed gears thrown out by worn synchronizers and refused shifts ending too early
+- Fixed variator pressure drops ending too early
+- Fixed the cold idle of failing glow plugs jumping instead of swinging
+- Fixed engine stumbles switching the cruise control back on after the driver turned it off
+- Fixed worn brake discs only squealing at their last stage
+- Fixed implements on a leaking lift valve dropping at full speed instead of sinking slowly, and the lower key raising them meanwhile
+- Fixed beacons and turn signals still working with the battery disconnected or dead, and never draining the battery
+- Reduced the range for taking the charger trolley
 
 Changelog 0.13.0.1:
 - Fixed the game freezing while loading a savegame with some mods that switch a machine's lights
@@ -303,7 +314,7 @@ Changelog 1.0.0.0-beta.1:
 - Fettkartuschen für die Fettpresse hinzugefügt
 - Abschmierung mit den Schmierstellen jeder Maschine überarbeitet
 - Abschmierung der Anbaugeräte und ihrer Gelenkwellen hinzugefügt, auf der Fuhrpark-Seite angezeigt
-- Ernteorgane selbstfahrender Erntemaschinen hinzugefügt, die durch ihre Arbeit verschleißen, mit Ernteverlusten, Verstopfungen und Stillständen bei zunehmendem Verschleiß
+- Ernteorgane selbstfahrender Erntemaschinen hinzugefügt, die durch ihre Arbeit verschleißen, mit Ernteverlusten, Verstopfungen und Stillständen bei zunehmendem Verschleiß; ein Stillstand oder eine Verstopfung löst den Kabinenalarm aus
 - Ersatz verschlissener Ernteorgane bei der vorbeugenden Wartung hinzugefügt, die Teile werden berechnet
 - Von RMS selbst gemessene Erntebelastung hinzugefügt, wenn Realistic Harvesting nicht installiert ist
 - Integration mit Realistic Harvesting hinzugefügt (Version 1.6.5.0 oder höher), mit gemeinsamer Erntebelastung und gemeinsamem Verschleiß der Ernteteile
@@ -327,6 +338,17 @@ Changelog 1.0.0.0-beta.1:
 - Fehler behoben, durch den die Zapfwelle im Einzelspieler ohne Warnung auskuppelte
 - Fehler behoben, durch den Motoraussetzer nach einer Weile keine Leistung mehr wegnahmen
 - Fehler behoben, durch den der unruhige Leerlauf defekter Einspritzdüsen, Kraftstoffpumpen und Zündkerzen nicht mit dem Schaden zunahm
+- Fehler behoben, durch den Lichter nach einem Flackern durch einen Kabelfehler in einem zufälligen Zustand blieben
+- Fehler behoben, durch den verschlissene Lastschaltkupplungen den gewählten Gang manchmal nie einlegten oder mit der Übersetzung des vorherigen Gangs fuhren
+- Fehler behoben, durch den Zapfwellenausfälle manchmal ausblieben
+- Fehler behoben, durch den herausspringende Gänge bei verschlissenen Synchronringen und verweigerte Schaltvorgänge zu früh endeten
+- Fehler behoben, durch den Druckabfälle des Variators zu früh endeten
+- Fehler behoben, durch den der Kaltleerlauf defekter Glühkerzen sprang statt zu schwanken
+- Fehler behoben, durch den Motoraussetzer den vom Fahrer ausgeschalteten Tempomat wieder einschalteten
+- Fehler behoben, durch den verschlissene Bremsscheiben nur im letzten Stadium quietschten
+- Fehler behoben, durch den Anbaugeräte bei einem undichten Hubwerksventil auf einmal absanken statt langsam herunterzugehen und die Absenktaste sie dabei anhob
+- Fehler behoben, durch den Rundumleuchten und Blinker bei getrennter oder leerer Batterie weiterliefen, ohne die Batterie je zu entladen
+- Reichweite zum Übernehmen des Ladegerätwagens verringert
 
 Changelog 0.13.0.1:
 - Hängenbleiben beim Laden des Spielstands mit Mods, die die Beleuchtung einer Maschine schalten, behoben
@@ -539,7 +561,7 @@ Changelog 1.0.0.0-beta.1 :
 - Ajout des cartouches de graisse pour le pistolet à graisse
 - Refonte du graissage avec les graisseurs de chaque machine
 - Ajout du graissage des outils attelés et de leurs cardans, affiché dans le parc de matériel
-- Ajout des organes de récolte des machines de récolte automotrices, usés par le travail qu'ils font, avec des pertes de récolte, des bourrages et des arrêts à mesure qu'ils s'usent
+- Ajout des organes de récolte des machines de récolte automotrices, usés par le travail qu'ils font, avec des pertes de récolte, des bourrages et des arrêts à mesure qu'ils s'usent ; un arrêt ou un bourrage déclenche l'alarme de la cabine
 - Ajout du remplacement des organes de récolte usés à la révision préventive, leurs pièces facturées
 - Ajout de l'effort de récolte mesuré par RMS lui-même quand Realistic Harvesting n'est pas installé
 - Ajout de l'intégration avec Realistic Harvesting (version 1.6.5.0 ou supérieure), qui partage l'effort de récolte et l'usure des organes de récolte
@@ -563,6 +585,17 @@ Changelog 1.0.0.0-beta.1 :
 - Correction de la PDF qui décrochait sans alerte en solo
 - Correction des à-coups moteur qui ne coupaient plus la puissance au bout d'un moment
 - Correction du ralenti instable des injecteurs, pompes à carburant et bougies défaillants qui ne s'aggravait pas avec la panne
+- Correction des feux laissés dans un état aléatoire après un scintillement dû à un défaut de câblage
+- Correction des embrayages powershift usés qui n'engageaient parfois jamais le rapport demandé, ou le faisaient tourner avec la démultiplication du rapport précédent
+- Correction des décrochages de PDF qui parfois n'avaient pas lieu
+- Correction des rapports qui sautent sur des synchros usés et des passages refusés qui s'arrêtaient trop tôt
+- Correction des chutes de pression du variateur qui s'arrêtaient trop tôt
+- Correction du ralenti à froid des bougies de préchauffage défaillantes qui sautait au lieu d'osciller
+- Correction des à-coups moteur qui rallumaient le régulateur de vitesse coupé par le conducteur
+- Correction des disques de frein usés qui ne crissaient qu'au dernier stade
+- Correction des outils sur un distributeur de relevage qui fuit, qui tombaient d'un coup au lieu de descendre lentement et que la touche de descente relevait pendant ce temps
+- Correction des gyrophares et clignotants qui fonctionnaient batterie coupée ou à plat, sans jamais vider la batterie
+- Réduction de la portée pour prendre le chariot du chargeur
 
 Changelog 0.13.0.1 :
 - Correction du chargement de la partie qui se figeait avec certains mods qui commandent les feux d'une machine

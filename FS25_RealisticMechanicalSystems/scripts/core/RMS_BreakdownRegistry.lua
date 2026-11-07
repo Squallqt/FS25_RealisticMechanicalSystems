@@ -921,8 +921,8 @@ addBreakdown("DEAD_BATTERY", {
 addBreakdown("VOLTAGE_SAG", {
     isSelectable = false, system = systems.ELECTRICAL, part = parts.VEHICLE, isApplicable = always, isCanProgress = never
 }, {
-    { { "LIGHTS_FLICKER_CHANCE", 0.1, { duration = 200, maskBackup = 0, status = "IDLE", timer = 0 } },
-        { "PTO_AUTO_DISENGAGE_CHANCE", 1, { status = "IDLE" } }, { "ENGINE_STALLS_CHANCE", 10.0 },
+    { { "LIGHTS_FLICKER_CHANCE", 0.1, { duration = 200 } },
+        { "PTO_AUTO_DISENGAGE_CHANCE", 1 }, { "ENGINE_STALLS_CHANCE", 10.0 },
         { "ENGINE_HARD_START_MODIFIER", 3, { message = "rms_breakdowns_voltage_sag_message" } }, severity = PERMANENT,
         lamps = { { db.BATTERY, color.CRITICAL } } }
 })
@@ -1022,10 +1022,10 @@ addBreakdown("POWER_CABLE_CONNECTION_FAILURE", {
         causes = { primary = { "wef", "vf" }, secondary = {} }, component = "ELECTRO_MECHANICAL", progress = 0.9,
         electric = true
 }, {
-    { { "LIGHTS_FLICKER_CHANCE", 1.0, { duration = 200, maskBackup = 0, status = "IDLE", timer = 0 } },
+    { { "LIGHTS_FLICKER_CHANCE", 1.0, { duration = 200 } },
         { "ENGINE_HARD_START_MODIFIER", 3 }, { "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", 1 },
         { "ELECTRICAL_LEAKAGE_EFFECT", 1 } },
-    { { "LIGHTS_FLICKER_CHANCE", 0.33, { duration = 300, maskBackup = 0, status = "IDLE", timer = 0 } },
+    { { "LIGHTS_FLICKER_CHANCE", 0.33, { duration = 300 } },
         { "ENGINE_STALLS_CHANCE", 30.0 }, { "ENGINE_HARD_START_MODIFIER", 5 },
         { "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", 2 }, { "ELECTRICAL_LEAKAGE_EFFECT", 2 },
         lamps = { { db.BATTERY, color.WARNING } }, hint = true },
@@ -1049,7 +1049,7 @@ addBreakdown("PREHEAT_RELAY_FAILURE", {
         causes = { primary = { "crf" }, secondary = {} }, component = "ELECTRO_MECHANICAL"
 }, {
     { { "GLOW_PLUG_FAILURE", 4 }, { "GLOW_PLUG_HARD_START_MODIFIER", 8, { blockStart = true } },
-        { "GLOW_PLUG_COLD_IDLE_EFFECT", 0.1, { period = 1500, timer = 0 } }, severity = MAJOR,
+        { "GLOW_PLUG_COLD_IDLE_EFFECT", 0.1, { period = 1500 } }, severity = MAJOR,
         lamps = { { db.PREHEAT, color.WARNING, getIsEngineRunning, getIsEngineStopped, blink = true } } }
 })
 
@@ -1119,13 +1119,13 @@ addBreakdown("GLOW_PLUG_FAILURE", {
     { { "GLOW_PLUG_FAILURE", 1 }, { "GLOW_PLUG_HARD_START_MODIFIER", 2 }, detectionChance = 0.5,
         lamps = { { db.PREHEAT, color.WARNING, getIsEngineRunning, getIsEngineStopped, blink = true } } },
     { { "GLOW_PLUG_FAILURE", 2 }, { "GLOW_PLUG_HARD_START_MODIFIER", 4 },
-        { "GLOW_PLUG_COLD_IDLE_EFFECT", 0.05, { period = 1800, timer = 0 } }, detectionChance = 0.75,
+        { "GLOW_PLUG_COLD_IDLE_EFFECT", 0.05, { period = 1800 } }, detectionChance = 0.75,
         lamps = { { db.PREHEAT, color.WARNING, getIsEngineRunning, getIsEngineStopped, blink = true } } },
     { { "GLOW_PLUG_FAILURE", 3 }, { "GLOW_PLUG_HARD_START_MODIFIER", 8 },
-        { "GLOW_PLUG_COLD_IDLE_EFFECT", 0.1, { period = 1500, timer = 0 } },
+        { "GLOW_PLUG_COLD_IDLE_EFFECT", 0.1, { period = 1500 } },
         lamps = { { db.PREHEAT, color.WARNING, getIsEngineRunning, getIsEngineStopped, blink = true } } },
     { { "GLOW_PLUG_FAILURE", 4 }, { "GLOW_PLUG_HARD_START_MODIFIER", 8, { blockStart = true } },
-        { "GLOW_PLUG_COLD_IDLE_EFFECT", 0.1, { period = 1500, timer = 0 } },
+        { "GLOW_PLUG_COLD_IDLE_EFFECT", 0.1, { period = 1500 } },
         lamps = { { db.PREHEAT, color.WARNING, getIsEngineRunning, getIsEngineStopped, blink = true } } }
 })
 
@@ -1280,13 +1280,13 @@ addBreakdown("INLET_VALVES", {
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.04 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.12 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.25 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
-        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.5, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 } },
         { "ENGINE_STALLS_CHANCE", 10.0 }, lamps = { { db.ENGINE, color.CRITICAL } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.25, branch = 1 },
-        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.5, status = "IDLE", timer = 0 }, branch = 1 },
+        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 }, branch = 1 },
         { "ENGINE_STALLS_CHANCE", 10.0, branch = 1 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 },
         { "ENGINE_FAILURE", 1.0, { disableAi = true, reason = "BREAKDOWN", starter = true }, branch = 2 },
         lamps = { { db.ENGINE, color.CRITICAL } } }
@@ -1299,13 +1299,13 @@ addBreakdown("EXHAUST_VALVES", {
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.04 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.12 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.25 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
-        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.5, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 } },
         { "ENGINE_STALLS_CHANCE", 10.0 }, lamps = { { db.ENGINE, color.CRITICAL } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.25, branch = 1 },
-        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.5, status = "IDLE", timer = 0 }, branch = 1 },
+        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 }, branch = 1 },
         { "ENGINE_STALLS_CHANCE", 10.0, branch = 1 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 },
         { "ENGINE_FAILURE", 1.0, { disableAi = true, reason = "BREAKDOWN", starter = true }, branch = 2 },
         lamps = { { db.ENGINE, color.CRITICAL } } }
@@ -1319,10 +1319,10 @@ addBreakdown("VALVE_GUIDES_SEALS", {
     { { "VALVE_TRAIN_NOISE_EFFECT", 0.5, branch = 1 }, { "EXHAUST_OIL", 0.2 } },
     { { "VALVE_TRAIN_NOISE_EFFECT", 0.7, branch = 1 }, { "EXHAUST_OIL", 0.4 } },
     { { "VALVE_TRAIN_NOISE_EFFECT", 1.0, branch = 1 }, { "EXHAUST_OIL", 0.65 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 }, branch = 1 },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 }, branch = 1 },
         { "ENGINE_TORQUE_MODIFIER", -0.12, branch = 1 }, lamps = { { db.ENGINE, color.CRITICAL, branch = 1 } } },
     { { "VALVE_TRAIN_NOISE_EFFECT", 1.0, branch = 1 }, { "EXHAUST_OIL", 0.65 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 }, branch = 1 },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 }, branch = 1 },
         { "ENGINE_TORQUE_MODIFIER", -0.12, branch = 1 }, lamps = { { db.ENGINE, color.CRITICAL, branch = 1 } } }
 })
 
@@ -1418,10 +1418,10 @@ addBreakdown("MOTOR_POSITION_SENSOR_FAULT", {
     system = systems.ENGINE, part = parts.MOTOR_POSITION_SENSOR, isApplicable = getIsElectricVehicle,
         causes = { primary = { "hmf" }, secondary = {} }, component = "TRANSDUCER"
 }, {
-    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.4, cruiseState = 0, duration = 300, motorLoad = 0.2, status = "IDLE", timer = 0 } } },
-    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.6, cruiseState = 0, duration = 400, motorLoad = 0.2, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.4, duration = 300, motorLoad = 0.2 } } },
+    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.6, duration = 400, motorLoad = 0.2 } },
         { "ENGINE_TORQUE_MODIFIER", -0.1 }, lamps = { { db.ENGINE, color.WARNING } } },
-    { { "ENGINE_HESITATION_CHANCE", 0.1, { amplitude = 0.8, cruiseState = 0, duration = 500, motorLoad = 0.2, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.1, { amplitude = 0.8, duration = 500, motorLoad = 0.2 } },
         { "ENGINE_TORQUE_MODIFIER", -0.2 }, { "ENGINE_STALLS_CHANCE", 10.0 }, lamps = { { db.ENGINE, color.CRITICAL } } },
     { stopEngine(), lamps = { { db.ENGINE, color.CRITICAL }, { db.WARNING, color.CRITICAL } } }
 })
@@ -1432,20 +1432,20 @@ addBreakdown("MANUAL_TRANSMISSION_CLUTCH_WEAR", {
         texts = "transmission_slip"
 }, {
     { { "TRANSMISSION_SLIP_EFFECT", 0.2, branch = 1 },
-        { "GEAR_SHIFT_FAILURE_CHANCE", 0.1, { duration = 1500, status = "IDLE", timer = 0 }, branch = 2 },
+        { "GEAR_SHIFT_FAILURE_CHANCE", 0.1, { duration = 1500 }, branch = 2 },
         description = "rms_breakdowns_transmission_slip_stage1_description",
         branchDescriptions = { "rms_breakdowns_transmission_slip_stage1_description", "rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" } },
     { { "TRANSMISSION_SLIP_EFFECT", 0.4, branch = 1 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 },
-        { "GEAR_SHIFT_FAILURE_CHANCE", 0.2, { duration = 1800, status = "IDLE", timer = 0 }, branch = 2 },
+        { "GEAR_SHIFT_FAILURE_CHANCE", 0.2, { duration = 1800 }, branch = 2 },
         description = "rms_breakdowns_transmission_slip_stage2_description", lamps = { { db.TRANSMISSION, color.WARNING } },
         branchDescriptions = { "rms_breakdowns_transmission_slip_stage2_description", "rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" } },
     { { "TRANSMISSION_SLIP_EFFECT", 0.6, branch = 1 }, { "FUEL_CONSUMPTION_MODIFIER", 0.5, branch = 1 },
-        { "GEAR_SHIFT_FAILURE_CHANCE", 0.5, { duration = 2200, status = "IDLE", timer = 0 }, branch = 2 },
+        { "GEAR_SHIFT_FAILURE_CHANCE", 0.5, { duration = 2200 }, branch = 2 },
         description = "rms_breakdowns_transmission_slip_stage3_description",
         lamps = { { db.TRANSMISSION, color.CRITICAL } },
         branchDescriptions = { "rms_breakdowns_transmission_slip_stage3_description", "rms_breakdowns_manual_transmission_clutch_wear_branch2_stage3_description" } },
     { { "TRANSMISSION_SLIP_EFFECT", 1.0, { disableAi = true }, branch = 1 },
-        { "GEAR_SHIFT_FAILURE_CHANCE", 1.0, { disableAi = true, duration = 2200, status = "IDLE", timer = 0 }, branch = 2 },
+        { "GEAR_SHIFT_FAILURE_CHANCE", 1.0, { disableAi = true, duration = 2200 }, branch = 2 },
         description = "rms_breakdowns_transmission_slip_stage4_description",
         lamps = { { db.TRANSMISSION, color.CRITICAL } },
         branchDescriptions = { "rms_breakdowns_transmission_slip_stage4_description", "rms_breakdowns_manual_transmission_clutch_wear_branch2_stage4_description" } }
@@ -1456,15 +1456,15 @@ addBreakdown("MANUAL_TRANSMISSION_SYNCHRONIZER_MALFUNCTION", {
         isCanProgress = getIsRolling, causes = { primary = { "lf", "pof" }, secondary = { "sf" } },
         component = "FRICTION_CLUTCH", texts = "transmission_synchronizer_malfunction", progress = 1.3
 }, {
-    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.1, { duration = 1500, status = "IDLE", timer = 0 } },
-        { "GEAR_REJECTION_CHANCE", 20.0, { duration = 2000, status = "IDLE", timer = 0 } } },
-    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.2, { duration = 1800, status = "IDLE", timer = 0 } },
-        { "GEAR_REJECTION_CHANCE", 10.0, { duration = 2000, status = "IDLE", timer = 0 } },
+    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.1, { duration = 1500 } },
+        { "GEAR_REJECTION_CHANCE", 20.0, { duration = 2000 } } },
+    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.2, { duration = 1800 } },
+        { "GEAR_REJECTION_CHANCE", 10.0, { duration = 2000 } },
         lamps = { { db.TRANSMISSION, color.WARNING } } },
-    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.5, { duration = 2200, status = "IDLE", timer = 0 } },
-        { "GEAR_REJECTION_CHANCE", 3.0, { duration = 2000, status = "IDLE", timer = 0 } },
+    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.5, { duration = 2200 } },
+        { "GEAR_REJECTION_CHANCE", 3.0, { duration = 2000 } },
         lamps = { { db.TRANSMISSION, color.CRITICAL } } },
-    { { "GEAR_SHIFT_FAILURE_CHANCE", 1.0, { disableAi = true, duration = 2200, status = "IDLE", timer = 0 } },
+    { { "GEAR_SHIFT_FAILURE_CHANCE", 1.0, { disableAi = true, duration = 2200 } },
         lamps = { { db.TRANSMISSION, color.CRITICAL } } }
 })
 
@@ -1485,15 +1485,15 @@ addBreakdown("POWERSHIFT_CLUTCH_FAILURE", {
         component = "POWERSHIFT_REPLACEMENT_BUDGET", branches = 2, progress = 1.1
 }, {
     { { "TRANSMISSION_SLIP_EFFECT", 0.2, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2, { backup = 0, duration = 700, status = "IDLE", timer = 0 }, branch = 2 } },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2, branch = 2 } },
     { { "TRANSMISSION_SLIP_EFFECT", 0.4, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5, { backup = 0, duration = 1000, status = "IDLE", timer = 0 }, branch = 2 },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5, branch = 2 },
         lamps = { { db.TRANSMISSION, color.WARNING } } },
     { { "TRANSMISSION_SLIP_EFFECT", 0.6, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99, { backup = 0, duration = 1500, status = "IDLE", timer = 0 }, branch = 2 },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99, branch = 2 },
         lamps = { { db.TRANSMISSION, color.CRITICAL } } },
     { { "TRANSMISSION_SLIP_EFFECT", 1.0, { disableAi = true }, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 1.0, { disableAi = true, duration = 0, status = "IDLE", timer = 0 }, branch = 2 },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 1.0, { disableAi = true }, branch = 2 },
         { "DRIVE_LOSS_EFFECT", 1, { disableAi = true } }, lamps = { { db.TRANSMISSION, color.CRITICAL } } }
 })
 
@@ -1503,15 +1503,15 @@ addBreakdown("POWERSHIFT_REVERSER_FAILURE", {
         component = "POWERSHIFT_REPLACEMENT_BUDGET", branches = 2, progress = 1.1
 }, {
     { { "TRANSMISSION_SLIP_EFFECT", 0.2, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2, { backup = 0, duration = 700, status = "IDLE", timer = 0 }, branch = 2 } },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2, branch = 2 } },
     { { "TRANSMISSION_SLIP_EFFECT", 0.4, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5, { backup = 0, duration = 1000, status = "IDLE", timer = 0 }, branch = 2 },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5, branch = 2 },
         lamps = { { db.TRANSMISSION, color.WARNING } } },
     { { "TRANSMISSION_SLIP_EFFECT", 0.6, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99, { backup = 0, duration = 1500, status = "IDLE", timer = 0 }, branch = 2 },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99, branch = 2 },
         lamps = { { db.TRANSMISSION, color.CRITICAL } } },
     { { "TRANSMISSION_SLIP_EFFECT", 1.0, { disableAi = true }, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 1.0, { disableAi = true, duration = 0, status = "IDLE", timer = 0 }, branch = 2 },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 1.0, { disableAi = true }, branch = 2 },
         { "DRIVE_LOSS_EFFECT", 1, { disableAi = true } }, lamps = { { db.TRANSMISSION, color.CRITICAL } } }
 })
 
@@ -1520,16 +1520,16 @@ addBreakdown("TRANSMISSION_CONTROL_FAILURE", {
         isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "flf", "hfbf" } },
         component = "POWERSHIFT_REPLACEMENT_BUDGET", branches = 2, progress = 1.1
 }, {
-    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2, { backup = 0, duration = 700, status = "IDLE", timer = 0 }, branch = 1 },
-        { "GEAR_SHIFT_FAILURE_CHANCE", 0.1, { duration = 1500, status = "IDLE", timer = 0 }, branch = 2 } },
-    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5, { backup = 0, duration = 1000, status = "IDLE", timer = 0 }, branch = 1 },
-        { "GEAR_SHIFT_FAILURE_CHANCE", 0.2, { duration = 1800, status = "IDLE", timer = 0 }, branch = 2 },
+    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2, branch = 1 },
+        { "GEAR_SHIFT_FAILURE_CHANCE", 0.1, { duration = 1500 }, branch = 2 } },
+    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5, branch = 1 },
+        { "GEAR_SHIFT_FAILURE_CHANCE", 0.2, { duration = 1800 }, branch = 2 },
         lamps = { { db.TRANSMISSION, color.WARNING } } },
-    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99, { backup = 0, duration = 1500, status = "IDLE", timer = 0 }, branch = 1 },
-        { "GEAR_SHIFT_FAILURE_CHANCE", 0.5, { duration = 2200, status = "IDLE", timer = 0 }, branch = 2 },
+    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99, branch = 1 },
+        { "GEAR_SHIFT_FAILURE_CHANCE", 0.5, { duration = 2200 }, branch = 2 },
         lamps = { { db.TRANSMISSION, color.CRITICAL } } },
-    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 1.0, { disableAi = true, duration = 0, status = "IDLE", timer = 0 }, branch = 1 },
-        { "GEAR_SHIFT_FAILURE_CHANCE", 1.0, { disableAi = true, duration = 2200, status = "IDLE", timer = 0 }, branch = 2 },
+    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 1.0, { disableAi = true }, branch = 1 },
+        { "GEAR_SHIFT_FAILURE_CHANCE", 1.0, { disableAi = true, duration = 2200 }, branch = 2 },
         lamps = { { db.TRANSMISSION, color.CRITICAL } } }
 })
 
@@ -1538,11 +1538,11 @@ addBreakdown("TRANSMISSION_SENSOR_FAILURE", {
         isCanProgress = getIsRolling, causes = { primary = { "hotf" }, secondary = { "ctf" } }, component = "TRANSDUCER",
         branches = 2
 }, {
-    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.2, { duration = 1800, status = "IDLE", timer = 0 }, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5, { backup = 0, duration = 1000, status = "IDLE", timer = 0 }, branch = 2 },
+    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.2, { duration = 1800 }, branch = 1 },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5, branch = 2 },
         severity = MODERATE, lamps = { { db.TRANSMISSION, color.WARNING } } },
-    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.5, { duration = 2200, status = "IDLE", timer = 0 }, branch = 1 },
-        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99, { backup = 0, duration = 1500, status = "IDLE", timer = 0 }, branch = 2 },
+    { { "GEAR_SHIFT_FAILURE_CHANCE", 0.5, { duration = 2200 }, branch = 1 },
+        { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99, branch = 2 },
         severity = CRITICAL, lamps = { { db.TRANSMISSION, color.CRITICAL } } }
 })
 
@@ -1560,17 +1560,17 @@ addBreakdown("TRANSMISSION_PUMP_MALFUNCTION", {
         isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "flf", "hfbf" } },
         component = "POWERSHIFT_REPLACEMENT_BUDGET", progress = 1.1
 }, {
-    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2, { backup = 0, duration = 700, status = "IDLE", timer = 0 } },
-        { "CVT_PRESSURE_DROP_CHANCE", 2.0, { duration = 200, status = "IDLE", timer = 0 } },
+    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2 },
+        { "CVT_PRESSURE_DROP_CHANCE", 2.0, { duration = 200 } },
         { "TRANSMISSION_PUMP_NOISE_EFFECT", 0.3 } },
-    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5, { backup = 0, duration = 1000, status = "IDLE", timer = 0 } },
-        { "CVT_PRESSURE_DROP_CHANCE", 1.0, { duration = 250, status = "IDLE", timer = 0 } },
+    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.5 },
+        { "CVT_PRESSURE_DROP_CHANCE", 1.0, { duration = 250 } },
         { "TRANSMISSION_PUMP_NOISE_EFFECT", 0.5 }, lamps = { { db.TRANSMISSION, color.WARNING } } },
-    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99, { backup = 0, duration = 1500, status = "IDLE", timer = 0 } },
-        { "CVT_PRESSURE_DROP_CHANCE", 0.5, { duration = 300, status = "IDLE", timer = 0 } },
+    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.99 },
+        { "CVT_PRESSURE_DROP_CHANCE", 0.5, { duration = 300 } },
         { "TRANSMISSION_PUMP_NOISE_EFFECT", 0.8 }, lamps = { { db.TRANSMISSION, color.CRITICAL } } },
-    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 1.0, { disableAi = true, duration = 0, status = "IDLE", timer = 0 } },
-        { "CVT_PRESSURE_DROP_CHANCE", 0.1, { duration = 300, status = "IDLE", timer = 0 } },
+    { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 1.0, { disableAi = true } },
+        { "CVT_PRESSURE_DROP_CHANCE", 0.1, { duration = 300 } },
         { "DRIVE_LOSS_EFFECT", 1, { disableAi = true } }, { "TRANSMISSION_PUMP_NOISE_EFFECT", 1.0 },
         lamps = { { db.TRANSMISSION, color.CRITICAL } } }
 })
@@ -1598,16 +1598,16 @@ addBreakdown("CVT_HYDRAULIC_CONTROL_VALVE_MALFUNCTION", {
         isCanProgress = getIsRolling, causes = { primary = { "hotf" }, secondary = { "ctf", "sf", "hfbf" } },
         component = "CVT_REPLACEMENT_BUDGET", texts = "hydraulic_control_valve_malfunction", progress = 1.1
 }, {
-    { { "CVT_PRESSURE_DROP_CHANCE", 2.0, { duration = 200, status = "IDLE", timer = 0 } },
+    { { "CVT_PRESSURE_DROP_CHANCE", 2.0, { duration = 200 } },
         { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "CVT_MAX_RATIO_MODIFIER", 0.3 } },
-    { { "CVT_PRESSURE_DROP_CHANCE", 1.0, { duration = 250, status = "IDLE", timer = 0 } },
+    { { "CVT_PRESSURE_DROP_CHANCE", 1.0, { duration = 250 } },
         { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "TRANSMISSION_HEAT_MODIFIER", 0.05 }, { "CVT_MAX_RATIO_MODIFIER", 0.4 },
         lamps = { { db.TRANSMISSION, color.WARNING } } },
-    { { "CVT_PRESSURE_DROP_CHANCE", 0.5, { duration = 300, status = "IDLE", timer = 0 } },
+    { { "CVT_PRESSURE_DROP_CHANCE", 0.5, { duration = 300 } },
         { "ENGINE_TORQUE_MODIFIER", -0.2 }, { "TRANSMISSION_HEAT_MODIFIER", 0.1 }, { "CVT_MAX_RATIO_MODIFIER", 0.5 },
         lamps = { { db.TRANSMISSION, color.CRITICAL } } },
     { { "CVT_MAX_RATIO_MODIFIER", 0.8 }, { "TRANSMISSION_HEAT_MODIFIER", 0.15 }, { "ENGINE_TORQUE_MODIFIER", -0.3 },
-        { "CVT_PRESSURE_DROP_CHANCE", 0.1, { duration = 300, status = "IDLE", timer = 0 } },
+        { "CVT_PRESSURE_DROP_CHANCE", 0.1, { duration = 300 } },
         { "ENGINE_LIMP_EFFECT", -0.2, { disableAi = true, reason = "BREAKDOWN" } },
         lamps = { { db.TRANSMISSION, color.CRITICAL } } }
 })
@@ -1769,19 +1769,19 @@ addBreakdown("HYDRAULIC_SPOOL_VALVE_MALFUNCTION", {
         causes = { primary = { "of", "sf" }, secondary = { "hfbf" } }, component = "CONTROL_VALVE", branches = 2,
         texts = "hydraulic_spool_valve", progress = 1.1
 }, {
-    { { "HYDRAULIC_FUNCTION_ERRATIC_EFFECT", -0.1, { childVehicleHash = "" }, branch = 1 },
+    { { "HYDRAULIC_FUNCTION_ERRATIC_EFFECT", -0.1, branch = 1 },
         { "HYDRAULIC_FUNCTION_BLOCKED_EFFECT", 1, branch = 2 },
         description = "rms_breakdowns_hydraulic_spool_valve_stage1_description",
         branchDescriptions = { "rms_breakdowns_hydraulic_spool_valve_stage1_description", "rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" } },
-    { { "HYDRAULIC_FUNCTION_ERRATIC_EFFECT", -0.2, { childVehicleHash = "" }, branch = 1 },
+    { { "HYDRAULIC_FUNCTION_ERRATIC_EFFECT", -0.2, branch = 1 },
         { "HYDRAULIC_FUNCTION_BLOCKED_EFFECT", 1, branch = 2 },
         description = "rms_breakdowns_hydraulic_spool_valve_stage2_description", lamps = { { db.WARNING, color.WARNING } },
         branchDescriptions = { "rms_breakdowns_hydraulic_spool_valve_stage2_description", "rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" } },
-    { { "HYDRAULIC_FUNCTION_ERRATIC_EFFECT", -0.35, { childVehicleHash = "" }, branch = 1 },
+    { { "HYDRAULIC_FUNCTION_ERRATIC_EFFECT", -0.35, branch = 1 },
         { "HYDRAULIC_FUNCTION_BLOCKED_EFFECT", 1, branch = 2 },
         description = "rms_breakdowns_hydraulic_spool_valve_stage3_description", lamps = { { db.WARNING, color.CRITICAL } },
         branchDescriptions = { "rms_breakdowns_hydraulic_spool_valve_stage3_description", "rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" } },
-    { { "HYDRAULIC_FUNCTION_ERRATIC_EFFECT", -0.5, { childVehicleHash = "" }, branch = 1 },
+    { { "HYDRAULIC_FUNCTION_ERRATIC_EFFECT", -0.5, branch = 1 },
         { "HYDRAULIC_FUNCTION_BLOCKED_EFFECT", 1, branch = 2 },
         description = "rms_breakdowns_hydraulic_spool_valve_stage4_description", lamps = { { db.WARNING, color.CRITICAL } },
         branchDescriptions = { "rms_breakdowns_hydraulic_spool_valve_stage4_description", "rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" } }
@@ -1792,7 +1792,7 @@ addBreakdown("LIFT_VALVE_FAILURE", {
         getNameVariant = getLiftVariant, variantParts = { header = parts.HEADER_LIFT_VALVE },
         causes = { primary = { "of", "sf" }, secondary = { "hfbf" } }, component = "SOLENOID_VALVE", branches = 2
 }, {
-    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.05, { status = "IDLE", timer = 0 }, branch = 1 },
+    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.05, branch = 1 },
         { "LIFT_CONTROL_FAILURE", 1, branch = 2 }, severity = MAJOR, lamps = { { db.WARNING, color.CRITICAL } } }
 })
 
@@ -1801,7 +1801,7 @@ addBreakdown("LIFT_POSITION_SENSOR_FAILURE", {
         getNameVariant = getLiftVariant, variantParts = { header = parts.HEADER_HEIGHT_SENSOR },
         causes = { primary = {}, secondary = {} }, component = "TRANSDUCER"
 }, {
-    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.05, { status = "IDLE", timer = 0 } }, severity = MAJOR,
+    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.05 }, severity = MAJOR,
         lamps = { { db.WARNING, color.CRITICAL } } }
 })
 
@@ -1822,21 +1822,21 @@ addBreakdown("HYDRAULIC_CYLINDER_INTERNAL_LEAK", {
         isCanProgress = getIsLiftWorking, causes = { primary = { "hlf", "of", "vf" }, secondary = { "hfbf" } },
         component = "O_RING", branches = 2, progress = 0.6
 }, {
-    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.01, { status = "IDLE", timer = 0 }, branch = 1 },
+    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.01, branch = 1 },
         { "HYDRAULIC_FLUID_LEAK_RATE", 0.02, branch = 2 },
         description = "rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description",
         branchDescriptions = { "rms_breakdowns_hydraulic_cylinder_internal_leak_stage1_description", "rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" } },
-    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.03, { status = "IDLE", timer = 0 }, branch = 1 },
+    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.03, branch = 1 },
         { "HYDRAULIC_FLUID_LEAK_RATE", 0.08, branch = 2 },
         description = "rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description",
         lamps = { { db.WARNING, color.WARNING, branch = 1 }, { db.WARNING, color.WARNING, branch = 2 } },
         branchDescriptions = { "rms_breakdowns_hydraulic_cylinder_internal_leak_stage2_description", "rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" } },
-    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.05, { status = "IDLE", timer = 0 }, branch = 1 },
+    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 0.05, branch = 1 },
         { "HYDRAULIC_FLUID_LEAK_RATE", 0.25, branch = 2 },
         description = "rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description",
         lamps = { { db.WARNING, color.CRITICAL, branch = 1 }, { db.WARNING, color.CRITICAL, branch = 2 } },
         branchDescriptions = { "rms_breakdowns_hydraulic_cylinder_internal_leak_stage3_description", "rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" } },
-    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 1.0, { status = "IDLE", timer = 0 }, branch = 1 },
+    { { "HYDRAULIC_HOLD_DRIFT_EFFECT", 1.0, branch = 1 },
         { "HYDRAULIC_FLUID_LEAK_RATE", 0.8, branch = 2 },
         description = "rms_breakdowns_hydraulic_cylinder_internal_leak_stage4_description",
         lamps = { { db.WARNING, color.CRITICAL, branch = 1 }, { db.WARNING, color.CRITICAL, branch = 2 } },
@@ -1911,14 +1911,14 @@ addBreakdown("PTO_CLUTCH_WEAR", {
         causes = { primary = { "plf", "pef" }, secondary = { "sf" } }, component = "FRICTION_CLUTCH", branches = 2,
         hints = { [2] = "pto_clutch_wear_branch2" }
 }, {
-    { { "PTO_AUTO_DISENGAGE_CHANCE", 40, { status = "IDLE" }, branch = 1 },
+    { { "PTO_AUTO_DISENGAGE_CHANCE", 40, branch = 1 },
         description = "rms_breakdowns_pto_clutch_wear_stage1_description", hint = true,
         branchDescriptions = { "rms_breakdowns_pto_clutch_wear_stage1_description", "rms_breakdowns_pto_clutch_wear_branch2_stage1_description" } },
-    { { "PTO_AUTO_DISENGAGE_CHANCE", 20, { status = "IDLE" }, branch = 1 },
+    { { "PTO_AUTO_DISENGAGE_CHANCE", 20, branch = 1 },
         description = "rms_breakdowns_pto_clutch_wear_stage2_description",
         lamps = { { db.WARNING, color.WARNING, branch = 1 } }, hint = true,
         branchDescriptions = { "rms_breakdowns_pto_clutch_wear_stage2_description", "rms_breakdowns_pto_clutch_wear_branch2_stage2_description" } },
-    { { "PTO_AUTO_DISENGAGE_CHANCE", 10, { status = "IDLE" }, branch = 1 }, { "PTO_STUCK_ENGAGED_CHANCE", 0.5, branch = 2 },
+    { { "PTO_AUTO_DISENGAGE_CHANCE", 10, branch = 1 }, { "PTO_STUCK_ENGAGED_CHANCE", 0.5, branch = 2 },
         description = "rms_breakdowns_pto_clutch_wear_stage3_description", lamps = { { db.WARNING, color.CRITICAL } },
         branchDescriptions = { "rms_breakdowns_pto_clutch_wear_stage3_description", "rms_breakdowns_pto_clutch_wear_branch2_stage3_description" } },
     { { "PTO_FAILURE", 1.0, { disableAi = true }, branch = 1 },
@@ -1954,11 +1954,11 @@ addBreakdown("PTO_ENGAGEMENT_SOLENOID_FAILURE", {
         isCanProgress = getIsMotorStarted, causes = { primary = { "sf" }, secondary = {} },
         component = "PTO_CONTROL_SHARED_BUDGET", branches = 2, progress = 1.1
 }, {
-    { { "PTO_AUTO_DISENGAGE_CHANCE", 40, { status = "IDLE" }, branch = 1 },
+    { { "PTO_AUTO_DISENGAGE_CHANCE", 40, branch = 1 },
         { "PTO_ENGAGEMENT_BLOCKED_CHANCE", 0.1, branch = 2 } },
-    { { "PTO_AUTO_DISENGAGE_CHANCE", 20, { status = "IDLE" }, branch = 1 },
+    { { "PTO_AUTO_DISENGAGE_CHANCE", 20, branch = 1 },
         { "PTO_ENGAGEMENT_BLOCKED_CHANCE", 0.3, branch = 2 }, lamps = { { db.WARNING, color.WARNING } } },
-    { { "PTO_AUTO_DISENGAGE_CHANCE", 10, { status = "IDLE" }, branch = 1 },
+    { { "PTO_AUTO_DISENGAGE_CHANCE", 10, branch = 1 },
         { "PTO_ENGAGEMENT_BLOCKED_CHANCE", 0.6, branch = 2 }, lamps = { { db.WARNING, color.CRITICAL } } },
     { { "PTO_FAILURE", 1.0, { disableAi = true }, branch = 1 }, { "PTO_FAILURE", 1.0, { disableAi = true }, branch = 2 },
         lamps = { { db.WARNING, color.CRITICAL } } }
@@ -1969,11 +1969,11 @@ addBreakdown("PTO_ENGAGEMENT_SWITCH_FAILURE", {
         isCanProgress = getIsMotorStarted, causes = { primary = { "sf" }, secondary = {} },
         component = "PTO_CONTROL_SHARED_BUDGET", branches = 2, progress = 1.1
 }, {
-    { { "PTO_AUTO_DISENGAGE_CHANCE", 40, { status = "IDLE" }, branch = 1 },
+    { { "PTO_AUTO_DISENGAGE_CHANCE", 40, branch = 1 },
         { "PTO_ENGAGEMENT_BLOCKED_CHANCE", 0.1, branch = 2 } },
-    { { "PTO_AUTO_DISENGAGE_CHANCE", 20, { status = "IDLE" }, branch = 1 },
+    { { "PTO_AUTO_DISENGAGE_CHANCE", 20, branch = 1 },
         { "PTO_ENGAGEMENT_BLOCKED_CHANCE", 0.3, branch = 2 }, lamps = { { db.WARNING, color.WARNING } } },
-    { { "PTO_AUTO_DISENGAGE_CHANCE", 10, { status = "IDLE" }, branch = 1 },
+    { { "PTO_AUTO_DISENGAGE_CHANCE", 10, branch = 1 },
         { "PTO_ENGAGEMENT_BLOCKED_CHANCE", 0.6, branch = 2 }, lamps = { { db.WARNING, color.CRITICAL } } },
     { { "PTO_FAILURE", 1.0, { disableAi = true }, branch = 1 }, { "PTO_FAILURE", 1.0, { disableAi = true }, branch = 2 },
         lamps = { { db.WARNING, color.CRITICAL } } }
@@ -2007,9 +2007,9 @@ addBreakdown("FRONT_PTO_CLUTCH_FAILURE", {
         isCanProgress = getIsFrontPtoTurning, causes = { primary = { "pef" }, secondary = { "plf", "sf" } },
         component = "FRICTION_CLUTCH"
 }, {
-    { { "FRONT_PTO_AUTO_DISENGAGE_CHANCE", 40, { status = "IDLE" } } },
-    { { "FRONT_PTO_AUTO_DISENGAGE_CHANCE", 20, { status = "IDLE" } }, lamps = { { db.WARNING, color.WARNING } } },
-    { { "FRONT_PTO_AUTO_DISENGAGE_CHANCE", 10, { status = "IDLE" } }, lamps = { { db.WARNING, color.CRITICAL } } },
+    { { "FRONT_PTO_AUTO_DISENGAGE_CHANCE", 40 } },
+    { { "FRONT_PTO_AUTO_DISENGAGE_CHANCE", 20 }, lamps = { { db.WARNING, color.WARNING } } },
+    { { "FRONT_PTO_AUTO_DISENGAGE_CHANCE", 10 }, lamps = { { db.WARNING, color.CRITICAL } } },
     { { "FRONT_PTO_FAILURE", 1.0, { disableAi = true } }, lamps = { { db.WARNING, color.CRITICAL } } }
 })
 
@@ -2161,11 +2161,11 @@ addBreakdown("TRACK_TENSIONER_MALFUNCTION", {
     { { "STEERING_STATIC_BIAS_EFFECT", 0.2 }, { "TRACK_CLATTER_NOISE_EFFECT", 1.0 },
         { "WHEEL_SEIZURE_GRIND_NOISE_EFFECT", 0.5 }, { "MAX_SPEED_MODIFIER", 0.03 } },
     { { "STEERING_STATIC_BIAS_EFFECT", 0.5 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 400, motorLoad = 0.2, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 400, motorLoad = 0.2 } },
         { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "TRACK_CLATTER_NOISE_EFFECT", 1.5 },
         { "WHEEL_SEIZURE_GRIND_NOISE_EFFECT", 1.0 }, { "MAX_SPEED_MODIFIER", 0.06 }, hint = true },
     { { "STEERING_STATIC_BIAS_EFFECT", 1.5 },
-        { "ENGINE_HESITATION_CHANCE", 0.1, { amplitude = 0.6, cruiseState = 0, duration = 500, motorLoad = 0.2, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.1, { amplitude = 0.6, duration = 500, motorLoad = 0.2 } },
         { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "TRACK_CLATTER_NOISE_EFFECT", 2.0 },
         { "WHEEL_SEIZURE_GRIND_NOISE_EFFECT", 2.0 }, { "MAX_SPEED_MODIFIER", 0.15 },
         lamps = { { db.BRAKES, color.WARNING } }, hint = true },
@@ -2304,18 +2304,18 @@ addBreakdown("FUEL_PUMP_MALFUNCTION", {
     system = systems.FUEL, part = parts.FUEL_PUMP, isApplicable = getHasDieselFuelSystem,
         causes = { primary = {}, secondary = { "sf" } }, component = "CENTRIFUGAL_PUMP", progress = 1.1
 }, {
-    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.05 },
+    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.05 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.15 }, { "ENGINE_HARD_START_MODIFIER", 2 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } } },
-    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1600, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.12 },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } } },
+    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1600 } }, { "ENGINE_TORQUE_MODIFIER", -0.12 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.4 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "ENGINE_HARD_START_MODIFIER", 4 },
         { "EXHAUST_UNBURNT", 0.2 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 400, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.WARNING, getIsAtFullLoad, false } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1500, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.25 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.25 },
         { "FUEL_CONSUMPTION_MODIFIER", 1.0 }, { "ENGINE_STALLS_CHANCE", 10.0 }, { "ENGINE_HARD_START_MODIFIER", 6 },
         { "EXHAUST_UNBURNT", 0.3 }, { "EXHAUST_SOOT", 0.15 },
-        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.5, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
@@ -2324,19 +2324,19 @@ addBreakdown("FUEL_INJECTOR_MALFUNCTION", {
     system = systems.FUEL, part = parts.FUEL_INJECTORS, isApplicable = getHasDieselFuelSystem,
         causes = { primary = {}, secondary = {} }, component = "SOLENOID_VALVE", progress = 1.1
 }, {
-    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.08 },
+    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.08 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.1 }, { "EXHAUST_SOOT", 0.2 }, { "EXHAUST_UNBURNT", 0.15 },
-        { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.9, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } },
         { "INJECTOR_KNOCK_NOISE_EFFECT", 0.3 } },
-    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.2 },
+    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.2 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_SOOT", 0.4 },
         { "EXHAUST_UNBURNT", 0.3 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.8, cruiseState = 0, duration = 400, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.8, duration = 400, motorLoad = 0.8 } },
         { "INJECTOR_KNOCK_NOISE_EFFECT", 0.5 }, lamps = { { db.ENGINE, color.WARNING } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.5 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "EXHAUST_SOOT", 0.7 },
         { "EXHAUST_UNBURNT", 0.5 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 500, motorLoad = 0.7 } },
         { "INJECTOR_KNOCK_NOISE_EFFECT", 0.8 }, lamps = { { db.ENGINE, color.CRITICAL } } },
     { stopEngine({ starter = true }), { "INJECTOR_KNOCK_NOISE_EFFECT", 1.0 }, lamps = { { db.ENGINE, color.CRITICAL } } }
 })
@@ -2347,10 +2347,10 @@ addBreakdown("HIGH_PRESSURE_PUMP_MALFUNCTION", {
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 }, { "HIGH_PRESSURE_PUMP_NOISE_EFFECT", 0.3 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         { "HIGH_PRESSURE_PUMP_NOISE_EFFECT", 0.5 }, lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 400, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         { "HIGH_PRESSURE_PUMP_NOISE_EFFECT", 0.8 }, lamps = { { db.ENGINE, color.CRITICAL } } },
     { stopEngine({ starter = true }), { "HIGH_PRESSURE_PUMP_NOISE_EFFECT", 1.0 }, lamps = { { db.ENGINE, color.CRITICAL } } }
 })
@@ -2358,12 +2358,12 @@ addBreakdown("HIGH_PRESSURE_PUMP_MALFUNCTION", {
 addBreakdown("FUEL_FILTER_CLOGGING", {
     system = systems.FUEL, part = parts.FUEL_FILTER, isApplicable = getHasDieselFuelSystem
 }, {
-    { { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.9, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } },
         { "ENGINE_TORQUE_MODIFIER", -0.03 }, progressMultiplier = 0.0 },
-    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.7, cruiseState = 0, duration = 400, motorLoad = 0.9, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.7, duration = 400, motorLoad = 0.9 } },
         { "ENGINE_TORQUE_MODIFIER", -0.06 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_UNBURNT", 0.15 },
         progressMultiplier = 0.0 },
-    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, cruiseState = 0, duration = 500, motorLoad = 0.9, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, duration = 500, motorLoad = 0.9 } },
         { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "EXHAUST_UNBURNT", 0.25 },
         { "EXHAUST_SOOT", 0.15 }, progressMultiplier = 0.0 },
     { stopEngine({ starter = true }) }
@@ -2374,10 +2374,10 @@ addBreakdown("FUEL_LINE_AIR_LEAK", {
         causes = { primary = {}, secondary = { "sf" } }, component = "O_RING", branches = 2, progress = 0.8
 }, {
     { { "ENGINE_HARD_START_MODIFIER", 1, branch = 1 }, { "ENGINE_STALLS_CHANCE", 40.0, branch = 2 } },
-    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.5, status = "IDLE", timer = 0 }, branch = 1 },
+    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.5 }, branch = 1 },
         { "ENGINE_HARD_START_MODIFIER", 2, branch = 1 }, { "ENGINE_STALLS_CHANCE", 20.0, branch = 1 },
         { "EXHAUST_UNBURNT", 0.2, branch = 1 }, { "ENGINE_STALLS_CHANCE", 20.0, branch = 2 } },
-    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, cruiseState = 0, duration = 500, motorLoad = 0.5, status = "IDLE", timer = 0 }, branch = 1 },
+    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, duration = 500, motorLoad = 0.5 }, branch = 1 },
         { "ENGINE_HARD_START_MODIFIER", 3, branch = 1 }, { "ENGINE_STALLS_CHANCE", 10.0, branch = 1 },
         { "EXHAUST_UNBURNT", 0.35, branch = 1 }, { "ENGINE_STALLS_CHANCE", 10.0, branch = 2 } },
     { { "ENGINE_FAILURE", 1.0, { disableAi = true, reason = "BREAKDOWN", starter = true }, branch = 1 },
@@ -2390,10 +2390,10 @@ addBreakdown("MECHANICAL_INJECTION_PUMP_MALFUNCTION", {
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 }, { "INJECTOR_KNOCK_NOISE_EFFECT", 0.3 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         { "INJECTOR_KNOCK_NOISE_EFFECT", 0.5 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 400, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         { "INJECTOR_KNOCK_NOISE_EFFECT", 0.8 } },
     { stopEngine({ starter = true }), { "INJECTOR_KNOCK_NOISE_EFFECT", 1.0 } }
 })
@@ -2404,10 +2404,10 @@ addBreakdown("FUEL_METERING_VALVE_FAILURE", {
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 400, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.CRITICAL } } },
     { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
@@ -2418,13 +2418,13 @@ addBreakdown("RAIL_PRESSURE_SENSOR_FAILURE", {
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 400, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.CRITICAL } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 400, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.CRITICAL } } }
 })
 
@@ -2434,10 +2434,10 @@ addBreakdown("RAIL_PRESSURE_LIMITER_FAILURE", {
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 400, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.CRITICAL } } },
     { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
@@ -2448,10 +2448,10 @@ addBreakdown("GAS_PRESSURE_REGULATOR_FAILURE", {
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 400, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.CRITICAL } } },
     { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
@@ -2461,12 +2461,12 @@ addBreakdown("GAS_SHUTOFF_SOLENOID_FAILURE", {
         causes = { primary = {}, secondary = { "sf" } }, component = "SOLENOID_VALVE", progress = 1.1
 }, {
     { { "ENGINE_HARD_START_MODIFIER", 2 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.8, status = "IDLE", timer = 0 } } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } } },
     { { "ENGINE_STALLS_CHANCE", 20.0 }, { "ENGINE_HARD_START_MODIFIER", 4 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 400, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.WARNING, getIsAtFullLoad, false } } },
     { { "ENGINE_STALLS_CHANCE", 10.0 }, { "ENGINE_HARD_START_MODIFIER", 6 },
-        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.5, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
@@ -2475,11 +2475,11 @@ addBreakdown("GAS_FILTER_CLOGGING", {
     system = systems.FUEL, part = parts.GAS_FILTER, isApplicable = getBurnsMethane,
         causes = { primary = {}, secondary = { "sf" } }, component = "FILTER_STRAINER", progress = 0.35
 }, {
-    { { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.9, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } },
         { "ENGINE_TORQUE_MODIFIER", -0.03 } },
-    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.7, cruiseState = 0, duration = 400, motorLoad = 0.9, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.7, duration = 400, motorLoad = 0.9 } },
         { "ENGINE_TORQUE_MODIFIER", -0.06 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_UNBURNT", 0.15 } },
-    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, cruiseState = 0, duration = 500, motorLoad = 0.9, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, duration = 500, motorLoad = 0.9 } },
         { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "EXHAUST_UNBURNT", 0.25 },
         { "EXHAUST_SOOT", 0.15 } },
     { stopEngine({ starter = true }) }
@@ -2490,10 +2490,10 @@ addBreakdown("GAS_LINE_LEAK", {
         causes = { primary = {}, secondary = { "sf" } }, component = "O_RING", progress = 0.8
 }, {
     { { "ENGINE_HARD_START_MODIFIER", 1 }, { "GAS_LEAK_NOISE_EFFECT", 0.3 } },
-    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.5, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.5 } },
         { "ENGINE_HARD_START_MODIFIER", 2 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "EXHAUST_UNBURNT", 0.2 },
         { "GAS_LEAK_NOISE_EFFECT", 0.5 } },
-    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, cruiseState = 0, duration = 500, motorLoad = 0.5, status = "IDLE", timer = 0 } },
+    { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, duration = 500, motorLoad = 0.5 } },
         { "ENGINE_HARD_START_MODIFIER", 3 }, { "ENGINE_STALLS_CHANCE", 10.0 }, { "EXHAUST_UNBURNT", 0.35 },
         { "GAS_LEAK_NOISE_EFFECT", 0.8 } },
     { stopEngine({ starter = true }), { "GAS_LEAK_NOISE_EFFECT", 1.0 } }
@@ -2503,18 +2503,18 @@ addBreakdown("GAS_INJECTOR_MALFUNCTION", {
     system = systems.FUEL, part = parts.GAS_INJECTORS, isApplicable = getBurnsMethane,
         causes = { primary = {}, secondary = {} }, component = "SOLENOID_VALVE", progress = 1.1
 }, {
-    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.08 },
+    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.08 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.1 }, { "EXHAUST_SOOT", 0.2 }, { "EXHAUST_UNBURNT", 0.15 },
-        { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.9, status = "IDLE", timer = 0 } } },
-    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.2 },
+        { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } } },
+    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.2 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_SOOT", 0.4 },
         { "EXHAUST_UNBURNT", 0.3 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.8, cruiseState = 0, duration = 400, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.8, duration = 400, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.5 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "EXHAUST_SOOT", 0.7 },
         { "EXHAUST_UNBURNT", 0.5 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 500, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.CRITICAL } } },
     { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
@@ -2522,22 +2522,22 @@ addBreakdown("GAS_INJECTOR_MALFUNCTION", {
 addBreakdown("SPARK_PLUG_WEAR", {
     system = systems.ELECTRICAL, part = parts.SPARK_PLUGS, isApplicable = getBurnsMethane
 }, {
-    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.08 },
+    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.08 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.1 }, { "EXHAUST_UNBURNT", 0.15 },
-        { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, cruiseState = 0, duration = 300, motorLoad = 0.9, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } },
         progressMultiplier = 0 },
-    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.2 },
+    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.2 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_UNBURNT", 0.3 },
-        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.8, cruiseState = 0, duration = 400, motorLoad = 0.8, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.8, duration = 400, motorLoad = 0.8 } },
         progressMultiplier = 0, lamps = { { db.ENGINE, color.WARNING } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.5 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "EXHAUST_UNBURNT", 0.5 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 500, motorLoad = 0.7 } },
         progressMultiplier = 0, lamps = { { db.ENGINE, color.CRITICAL } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800, timer = 0 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.5 }, { "ENGINE_HARD_START_MODIFIER", 12 }, { "ENGINE_STALLS_CHANCE", 30.0 },
         { "EXHAUST_UNBURNT", 0.5 },
-        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, cruiseState = 0, duration = 500, motorLoad = 0.7, status = "IDLE", timer = 0 } },
+        { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 500, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.CRITICAL } } }
 })
 
@@ -2656,7 +2656,7 @@ end
 local function getHarvestSymptoms(profile)
     local function throughput(value) return { "HARVEST_THROUGHPUT_LIMIT", value } end
     -- value is the mean time between two blockages, in minutes
-    local function blockage(minutes) return { "HARVEST_BLOCKAGE_CHANCE", minutes, { status = "IDLE" } } end
+    local function blockage(minutes) return { "HARVEST_BLOCKAGE_CHANCE", minutes } end
     local function grainLoss(value) return { "HARVEST_GRAIN_LOSS", value } end
     local function powerDemand(value) return { "HARVEST_POWER_DEMAND", value } end
     local function bearingNoise(value) return { "HARVEST_BEARING_NOISE_EFFECT", value } end
