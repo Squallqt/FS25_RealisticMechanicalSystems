@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Vehicle dashboard and notifications.
 RMS_Hud = {}
@@ -13,11 +12,14 @@ RMS_Hud.INSPECTION_LABEL_SIZE = 17
 RMS_Hud.CONSUMPTION_REFRESH_INTERVAL = 500
 RMS_Hud.CONSUMPTION_PER_AREA_BUCKETS = 10
 RMS_Hud.MOTOR_LOAD_BUCKETS = 2
-RMS_Hud.TRANSMISSION_OIL_TEMP_WARNING = 99
-RMS_Hud.TELLTALE_YEARS = { engine = 1990, transmission = 1990, brakes = 1980, battery = 1950, coolant = 1950, warning = 1990,
-    service = 1970, oil = 1950 }
+RMS_Hud.GEARBOX_OIL_ALERT_TEMP = { DEFAULT = 105, TRUCK = 121 }
+RMS_Hud.NOTIFICATION_DURATION_MS = 3000
+RMS_Hud.LAMP_BLINK = { PHASE_MS = 500, SHORT_PHASES = 8 }
+RMS_Hud.LIT_LAMP_COLOR = { oil = "CRITICAL", battery = "CRITICAL", coolant = "CRITICAL", engine = "WARNING",
+    preheat = "WARNING", dpf = "WARNING", service = "WARNING", tractionBattery = "WARNING", limitedPower = "WARNING" }
+RMS_Hud.LAMP_BEEP_PAUSE_MS = { DEFAULT = 1800, warning = 1400, service = 2500 }
+RMS_Hud.CONDITION_BAR = { FILL_MIN = 0.1, FILL_BY_TIER = { 1, 0.75, 0.5, 0.25, 0.1 } }
 RMS_Hud.ARC_ORDER = { "brakes", "engine", "dpf", "coolant", "fanReversal", "transmission", "battery" }
--- Gearbox before warning: a gearbox fault also lights the warning.
 RMS_Hud.INDICATOR_ORDER = { "transmission", "engine", "brakes", "battery", "coolant", "dpf", "fanReversal", "preheat",
     "oil", "service", "tractionBattery", "limitedPower", "warning" }
 RMS_Hud.LAMP_SLICE = { transmission = "transmissionTemperature", dpf = "particulateFilter", oil = "oilPressure" }
@@ -32,7 +34,6 @@ RMS_Hud.LAMP_INK = {
     oilCan = { 60, 22, 25 }, coolantRoad = { 60, 52, 10 }, wrench = { 60, 56, 8 }
 }
 RMS_Hud.LAMP = { SIZE = 19.2, CELL = 72, VALUE_SIZE = 9, VALUE_GAP = 2.5, VALUE_TOP = 2.05, VALUE_HEIGHT = 6.7 }
--- Row and service lamp size, times LAMP.SIZE
 RMS_Hud.LAMP_SCALE = { preheat = 1.2516, oilCan = 1.5521, limitedPower = 1.3075, tractionBattery = 1.1292,
     service = 1.2134, wrench = 0.9728 }
 RMS_Hud.VALUE_WIDTH = { engine = 24.71, coolant = 25.61, transmission = 25.61, battery = 24.87 }
@@ -44,7 +45,6 @@ RMS_Hud.GAUGE = { IN = 149, OUT = 155.5, SPAN = 39, PITCH = 5.2, GAP = 1.2, LOW 
     GLOW_ALPHA = 0.22, UNLIT_ALPHA = 0.75, BAND_IN = 156.5, BAND_OUT = 158,
     BAR_EXTENT = { -3.75, -2.4908, 3.75, 2.4908 }, BAR_BOX = { -6.25, -6.25, 6.25, 6.25 },
     BAND_EXTENT = { -1.25, -3.3259, 1.25, 3.3259 }, BAND_BOX = { -4.75, -4.75, 4.75, 4.75 } }
--- Linear grey of the game's rpm bars
 RMS_Hud.GAUGE_GREY = { 0.3049, 0.3049, 0.3049 }
 RMS_Hud.GAUGE_LIT = { 1, 1, 1 }
 RMS_Hud.ROW = { PITCH = 28 }
@@ -56,7 +56,6 @@ RMS_Hud.BUBBLE = { RADIUS = 20 * bubbleScale, DARK_RADIUS = 16.5 * bubbleScale, 
 RMS_Hud.DRIVE_INK_HEIGHT = { frontWheelDrive = 35 * RMS_Hud.BUBBLE.PICTURE_SCALE, diffLock = 48 * RMS_Hud.BUBBLE.PICTURE_SCALE }
 RMS_Hud.WHEEL_SLIP_INK_HEIGHT = 41 * RMS_Hud.BUBBLE.PICTURE_SCALE
 RMS_Hud.GLOW = { SIZE = 30.4, ALPHA = 0.35 }
--- Park brake lamp beside the gear: box and gap, reference px
 RMS_Hud.PARK_BRAKE = { SIZE = 27.6, GAP = 5.5 }
 -- INK: ink left, right and weight centre from the top, slice px
 RMS_Hud.FUEL_ICON = { SIZE = 21, CELL = 30, GAP = 6,
@@ -65,14 +64,6 @@ RMS_Hud.FUEL_ICON = { SIZE = 21, CELL = 30, GAP = 6,
 
 local lampLayouts = {}
 
----Returns the angular and radial extent of a lamp and its value below it
--- @param table unit lamp: ink width and height, reading width or nil, reference px
--- @param float phi angle of the lamp centre, radians anticlockwise from the right of the gauge centre
--- @param float radius reference px from the gauge centre
--- @return float low smallest angle from phi they cover, radians
--- @return float high largest
--- @return float near nearest reference px from the gauge centre
--- @return float far farthest
 local function getLampSpan(unit, phi, radius)
     local lamp = RMS_Hud.LAMP
     local boxes = { { -unit.inkWidth * 0.5, -unit.inkHeight * 0.5, unit.inkWidth * 0.5, unit.inkHeight * 0.5 } }
@@ -96,7 +87,6 @@ local function getLampSpan(unit, phi, radius)
     return low, high, near, far
 end
 
----Rounds a half angle up to the atlas cell grid
 local function getCellHalf(half)
     local cell = RMS_Hud.CELL
     local steps = math.ceil((math.deg(half) - cell.HALF_MIN) / cell.HALF_STEP - 1e-6)
@@ -104,8 +94,6 @@ local function getCellHalf(half)
 end
 
 ---Places the lamp cells left of the dial
--- @param table units ordered lamps: id, ink width and height, reading width or nil, reference px
--- @return table layout by lamp id: lamp centre x and y; cell angle phi, half angle and slice
 function RMS_Hud.getLampLayout(units)
     local keys = {}
     for index, unit in ipairs(units) do
@@ -166,8 +154,6 @@ function RMS_Hud.getLampLayout(units)
 end
 
 ---Places the row lamps one pitch apart, centred on the axis
--- @param integer count lamps the machine carries in the row
--- @return table offsets x of each ink centre, reference px from the gauge centre
 function RMS_Hud.getRowLayout(count)
     local offsets = {}
     for index = 1, count do
@@ -177,18 +163,11 @@ function RMS_Hud.getRowLayout(count)
 end
 
 ---Returns a bubble centre, flush with the top or bottom of the dial
--- @param boolean isHigh front axle above, wheel slip below
--- @return float x centre, reference px from the gauge centre
--- @return float y centre
 function RMS_Hud.getBubbleCentre(isHigh)
     local y = 116 - RMS_Hud.BUBBLE.RADIUS
     return RMS_Hud.BUBBLE.X, isHigh and y or -y
 end
 
--- @param float inkHeight ink height of the symbol
--- @return float symbolY centre of the symbol ink, reference px from the bubble centre
--- @return float valueY y of the value text
--- @return float valueBottom y of the foot of the value
 function RMS_Hud.getBubbleContent(inkHeight)
     local bubble = RMS_Hud.BUBBLE
     local height = inkHeight + bubble.SYMBOL_GAP + bubble.VALUE_HEIGHT
@@ -196,7 +175,6 @@ function RMS_Hud.getBubbleContent(inkHeight)
     return height * 0.5 - inkHeight * 0.5, valueBottom + bubble.VALUE_HEIGHT - bubble.VALUE_TOP_ABOVE_ANCHOR, valueBottom
 end
 
----Formats a number, dropping its decimals when it rounds to zero
 local function formatValue(value, numberFormat)
     local amount = tonumber(value) or 0
     local text = string.format(numberFormat, amount)
@@ -208,27 +186,33 @@ local function formatValue(value, numberFormat)
     return text
 end
 
----Formats a consumption readout, one decimal below a hundred
 local function formatConsumptionValue(value)
     local amount = math.max(tonumber(value) or 0, 0)
     return formatValue(amount, amount < 100 and "%.1f" or "%.0f")
 end
 
----Rounds a horizontal screen position to the nearest screen pixel
 local function snapScreenX(x)
     return math.floor(x * g_screenWidth + 0.5) / g_screenWidth
 end
 
----Rounds a vertical screen position to the nearest screen pixel
 local function snapScreenY(y)
     return math.floor(y * g_screenHeight + 0.5) / g_screenHeight
 end
 
----Create instance of RMS_Hud, loading its overlays and its sounds
--- @return table self instance of class RMS_Hud
+local function setTextStyle(alignment, verticalAlignment, isBold)
+    setTextAlignment(alignment)
+    setTextVerticalAlignment(verticalAlignment)
+    setTextBold(isBold)
+end
+
+local function squeezeSpaces(text)
+    return text:gsub("%s+", " "):match("^ ?(.-) ?$")
+end
+
+---Create instance of RMS_Hud, loading its overlays
 function RMS_Hud:new()
-	local self = RMS_Hud:superClass().new(RMS_Hud_mt)
-	self.vehicle = nil
+    local self = RMS_Hud:superClass().new(RMS_Hud_mt)
+
     self.telemetryDisplayValues = {
         motorLoad = 0
     }
@@ -240,7 +224,6 @@ function RMS_Hud:new()
         perHour = 0,
         perArea = nil
     }
-
     self.wheelSlipHud = {
         icon = g_overlayManager:createOverlay("rms_Hud.wheelSlip", 0, 0, 0, 0)
     }
@@ -248,7 +231,6 @@ function RMS_Hud:new()
         icon = g_overlayManager:createOverlay("gui.icon_fuel", 0, 0, 0, 0),
         sliceId = "gui.icon_fuel"
     }
-
     self.halfMoon = {
         background = g_overlayManager:createOverlay("rms_Hud.background", 0, 0, 0, 0),
         cell = g_overlayManager:createOverlay("rms_Hud.cell030", 0, 0, 0, 0),
@@ -272,129 +254,21 @@ function RMS_Hud:new()
         icon = g_overlayManager:createOverlay("rms_Hud.parkBrake", 0, 0, 0, 0)
     }
 
-    self.lampScales = {}
-    local function lampIcon(slice)
-        local icon = g_overlayManager:createOverlay("rms_Hud." .. slice, 0, 0, 0, 0)
-        self.lampScales[icon] = RMS_Hud.LAMP_SCALE[slice] or 1
-        return icon
+    self.lampIcons = {}
+    for slice in pairs(RMS_Hud.LAMP_INK) do
+        self.lampIcons[slice] = g_overlayManager:createOverlay("rms_Hud." .. slice, 0, 0, 0, 0)
     end
-
-    local engineIcon = lampIcon("engine")
-    local coolantIcon = lampIcon("coolant")
-    local serviceIcon = lampIcon("service")
-    local oilIcon = lampIcon("oilPressure")
-
-    self.indicators = {
-        engine = {
-            name = 'engine',
-            icon = engineIcon,
-            icons = {
-                normal = engineIcon,
-                fault = lampIcon("engine"),
-                classic = lampIcon("engineClassic")
-            },
-            year = RMS_Hud.TELLTALE_YEARS.engine
-        },
-        transmission = {
-            name = 'transmission',
-            icon = lampIcon("transmissionTemperature"),
-            year = RMS_Hud.TELLTALE_YEARS.transmission
-        },
-        brakes = {
-            name = 'brakes',
-            icon = lampIcon("brakes"),
-            year = RMS_Hud.TELLTALE_YEARS.brakes
-        },
-        battery = {
-            name = 'battery',
-            icon = lampIcon("battery"),
-            year = RMS_Hud.TELLTALE_YEARS.battery
-        },
-        coolant = {
-            name = 'coolant',
-            icon = coolantIcon,
-            icons = { normal = coolantIcon, coolantRoad = lampIcon("coolantRoad") },
-            year = RMS_Hud.TELLTALE_YEARS.coolant
-        },
-        dpf = {
-            name = 'dpf',
-            icon = lampIcon("particulateFilter")
-        },
-        fanReversal = {
-            name = 'fanReversal',
-            icon = lampIcon("fanReversal")
-        },
-        warning = {
-            name = 'warning',
-            icon = lampIcon("warning"),
-            year = RMS_Hud.TELLTALE_YEARS.warning
-        },
-        preheat = {
-            name = 'preheat',
-            icon = lampIcon("preheat")
-        },
-        service = {
-            name = 'service',
-            icon = serviceIcon,
-            icons = { normal = serviceIcon, wrench = lampIcon("wrench") },
-            year = RMS_Hud.TELLTALE_YEARS.service
-        },
-        oil = {
-            name = 'oil',
-            icon = oilIcon,
-            icons = { normal = oilIcon, oilCan = lampIcon("oilCan") },
-            year = RMS_Hud.TELLTALE_YEARS.oil
-        },
-        tractionBattery = {
-            name = 'tractionBattery',
-            icon = lampIcon("tractionBattery")
-        },
-        limitedPower = {
-            name = 'limitedPower',
-            icon = lampIcon("limitedPower")
-        }
-    }
-
-    self.indicatorRuntime = {}
-    self.indicatorSoundConfig = {
-        engine =        { cooldownMs = 1800 },
-        transmission =  { cooldownMs = 1800 },
-        brakes =        { cooldownMs = 1800 },
-        battery =       { cooldownMs = 1800 },
-        coolant =       { cooldownMs = 1800 },
-        dpf =           { cooldownMs = 1800 },
-        warning =       { cooldownMs = 1400 },
-        preheat =       { cooldownMs = 1800 },
-        service =       { cooldownMs = 2500 },
-        oil =           { cooldownMs = 1800 },
-        tractionBattery = { cooldownMs = 1800 },
-        limitedPower =  { cooldownMs = 1800 }
-    }
-
-    self.indicatorValueText = {}
-
+    self.lampStates = {}
     self.loadMassText = {}
 
-    self.notificationPanel = {
-        title = nil,
-        text = nil,
-        endTime = nil,
-        isVisible = false,
-        isPersistent = false,
-        closeGlyphSize = 26,
-        closeGlyphTextSpacing = 6
-    }
+    self.notification = nil
+    self.closeText = g_i18n:getText("button_ok")
 
     self.inspectionProgress = {
         ratio = nil,
         messageText = nil,
         messageEndTime = 0
     }
-
-    self.notificationCloseGlyph = nil
-    self.notificationCloseGlyphInputMode = nil
-    self.notificationInputContextName = nil
-    self.notificationCloseActionEventId = nil
 
     return self
 end
@@ -424,244 +298,103 @@ function RMS_Hud:delete()
         icon.overlay = nil
     end
 
-    for _, indicator in pairs(self.indicators) do
-        if indicator.icons ~= nil then
-            for _, icon in pairs(indicator.icons) do
-                icon:delete()
-            end
-            indicator.icons = nil
-        else
-            indicator.icon:delete()
-        end
-        indicator.icon = nil
+    for _, icon in pairs(self.lampIcons) do
+        icon:delete()
     end
-
-    if self.notificationCloseGlyph ~= nil then
-        self.notificationCloseGlyph:delete()
-        self.notificationCloseGlyph = nil
-    end
+    self.lampIcons = nil
+    self.closeGlyph:delete()
+    self.closeGlyph = nil
 
     RMS_Hud:superClass().delete(self)
 end
 
----Binds the HUD to a vehicle and resets its per vehicle state
--- @param table? vehicle vehicle
+---Binds the HUD to a vehicle; another one resets lamps and averages
 function RMS_Hud:setVehicle(vehicle)
-    if self.vehicle ~= vehicle then
-        self.indicatorRuntime = {}
-        self.telemetryDisplayValues.motorLoad = 0
-        self.motorLoadAverage = { buckets = {}, current = { value = 0, time = 0 }, timer = 0 }
-        self:resetConsumptionAverages()
-    end
-
-    self.vehicle = vehicle
-end
-
----Returns the blink and sound state of an indicator, creating it on first use
--- @param string indicatorId dashboard indicator id
--- @return table state indicator runtime state
-function RMS_Hud:getIndicatorRuntimeState(indicatorId)
-    if self.indicatorRuntime == nil then
-        self.indicatorRuntime = {}
-    end
-
-    if self.indicatorRuntime[indicatorId] == nil then
-        self.indicatorRuntime[indicatorId] = {
-            isLit = false,
-            soundPlayedForCurrentActivation = false,
-            lastSoundTime = 0,
-            severity = 0,
-            lastSoundSeverity = 0,
-            blinkStartTime = 0,
-            blinkActive = false
-        }
-    end
-
-    return self.indicatorRuntime[indicatorId]
-end
-
----Starts the blink cycle of an indicator
--- @param string indicatorId dashboard indicator id
-function RMS_Hud:startIndicatorBlink(indicatorId)
-    local runtimeState = self:getIndicatorRuntimeState(indicatorId)
-    local vehicle = self.vehicle
-    if vehicle == nil or vehicle.getMotorState == nil or vehicle:getMotorState() ~= MotorState.ON then
-        runtimeState.blinkActive = false
-        runtimeState.blinkStartTime = 0
+    if vehicle == self.vehicle then
         return
     end
-
-    local now = g_currentMission.time
-
-    runtimeState.blinkActive = true
-    runtimeState.blinkStartTime = now
+    self.vehicle = vehicle
+    self.lampStates = {}
+    self.telemetryDisplayValues.motorLoad = 0
+    self.motorLoadAverage = { buckets = {}, current = { value = 0, time = 0 }, timer = 0 }
+    self:resetConsumptionAverages()
 end
 
----Applies the blink colour of an indicator for this frame
--- @param string indicatorId dashboard indicator id
--- @param table targetColor colour the indicator lights in
--- @param boolean blinkWhileActive true to keep blinking while it stays lit
-function RMS_Hud:applyIndicatorBlink(indicatorId, targetColor, blinkWhileActive)
-    local runtimeState = self:getIndicatorRuntimeState(indicatorId)
-    local colors = RMS_Breakdowns.COLORS
-    local vehicle = self.vehicle
-    if runtimeState == nil or runtimeState.blinkActive ~= true then
-        return targetColor
+---Lighting up or turning red, a lamp blinks and beeps once
+function RMS_Hud:updateLampAlert(id, severity, isMotorOn)
+    local state = self.lampStates[id]
+    if state == nil then
+        state = { severity = 0, beepSeverity = 0 }
+        self.lampStates[id] = state
     end
 
-    if vehicle == nil or vehicle.getMotorState == nil or vehicle:getMotorState() ~= MotorState.ON then
-        runtimeState.blinkActive = false
-        runtimeState.blinkStartTime = 0
-        return targetColor
+    if severity > state.severity then
+        state.blinkTime = isMotorOn and 0 or nil
+        if isMotorOn and severity > state.beepSeverity then
+            local time = g_currentMission.time
+            local pause = RMS_Hud.LAMP_BEEP_PAUSE_MS[id] or RMS_Hud.LAMP_BEEP_PAUSE_MS.DEFAULT
+            if state.beepTime == nil or time - state.beepTime >= pause then
+                local samples = self.vehicle.spec_RealisticMechanicalSystems.samples
+                local sample = samples.warning
+                if severity == 2 then
+                    sample = samples.alarm
+                end
+                RMS_SoundManager.playSample(sample)
+                state.beepTime, state.beepSeverity = time, severity
+            end
+        end
+    elseif severity == 0 then
+        state.blinkTime, state.beepSeverity = nil, 0
     end
-
-    local now = g_currentMission.time
-    local blinkIntervalMs = 600
-    local totalPhases = 4
-    local elapsed = math.max(now - (runtimeState.blinkStartTime or 0), 0)
-    local phaseIndex = math.floor(elapsed / blinkIntervalMs)
-
-    if not blinkWhileActive and phaseIndex >= totalPhases then
-        runtimeState.blinkActive = false
-        return targetColor
-    end
-
-    if phaseIndex % 2 == 1 then
-        return colors.DEFAULT
-    end
-
-    return targetColor
+    state.severity = severity
 end
 
----Plays the warning or alarm sound once when an indicator lights up
--- @param string indicatorId dashboard indicator id
--- @param table runtimeState indicator runtime state
--- @param integer severity indicator severity
-function RMS_Hud:tryPlayIndicatorActivationSound(indicatorId, runtimeState, severity)
-    local vehicle = self.vehicle
-    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
-        return false
+---Returns the colour a lamp shows, dark every other blink phase
+function RMS_Hud:getLampBlinkColor(id, color, isContinuous, isMotorOn)
+    local state = self.lampStates[id]
+    if state.blinkTime == nil then
+        return color
     end
 
-    local config = self.indicatorSoundConfig ~= nil and self.indicatorSoundConfig[indicatorId] or nil
-    if config == nil then
-        return false
+    local blink = RMS_Hud.LAMP_BLINK
+    local phase = math.floor(state.blinkTime / blink.PHASE_MS)
+    if not isMotorOn or (not isContinuous and phase >= blink.SHORT_PHASES) then
+        state.blinkTime = nil
+        return color
     end
-
-    if vehicle.getMotorState == nil or vehicle:getMotorState() ~= MotorState.ON then
-        return false
+    state.blinkTime = state.blinkTime + g_currentDt
+    if phase % 2 == 1 then
+        return RMS_Breakdowns.COLORS.DEFAULT
     end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local samples = spec.samples
-    if samples == nil then
-        return false
-    end
-
-    local sample = severity >= 2 and samples.alarm or samples.warning
-    if sample == nil then
-        return false
-    end
-
-    local now = g_currentMission.time
-    local cooldownMs = math.max(tonumber(config.cooldownMs) or 0, 0)
-    local elapsed = now - (runtimeState.lastSoundTime or 0)
-
-    if runtimeState.soundPlayedForCurrentActivation and severity <= (runtimeState.lastSoundSeverity or 0) then
-        return false
-    end
-
-    if elapsed < cooldownMs then
-        return false
-    end
-
-    RMS_SoundManager.playSample(sample)
-    runtimeState.lastSoundTime = now
-    runtimeState.soundPlayedForCurrentActivation = true
-    runtimeState.lastSoundSeverity = severity or 0
-    return true
-end
-
----Lights or clears an indicator, with its blink and its sound
--- @param string indicatorId dashboard indicator id
--- @param boolean shouldLight true when the indicator must be lit
--- @param table targetColor colour the indicator lights in
-function RMS_Hud:syncIndicatorActivation(indicatorId, shouldLight, targetColor)
-    local runtimeState = self:getIndicatorRuntimeState(indicatorId)
-    local colors = RMS_Breakdowns.COLORS
-    local severity = 0
-
-    if shouldLight then
-        if targetColor == colors.CRITICAL then
-            severity = 2
-        elseif targetColor == colors.WARNING then
-            severity = 1
-        end
-    end
-
-    local wasLit = runtimeState.isLit == true
-    local previousSeverity = runtimeState.severity or 0
-    local turnedOn = shouldLight and not wasLit
-    local turnedOff = not shouldLight and wasLit
-    local escalatedToCritical = shouldLight and previousSeverity == 1 and severity == 2
-
-    if turnedOn then
-        runtimeState.isLit = true
-        runtimeState.severity = severity
-        if severity > 0 then
-            self:startIndicatorBlink(indicatorId)
-        end
-        self:tryPlayIndicatorActivationSound(indicatorId, runtimeState, severity)
-    elseif escalatedToCritical then
-        runtimeState.isLit = true
-        runtimeState.severity = severity
-        if severity > 0 then
-            self:startIndicatorBlink(indicatorId)
-        end
-        self:tryPlayIndicatorActivationSound(indicatorId, runtimeState, severity)
-    elseif turnedOff then
-        runtimeState.isLit = false
-        runtimeState.severity = 0
-        runtimeState.soundPlayedForCurrentActivation = false
-        runtimeState.lastSoundSeverity = 0
-        runtimeState.blinkActive = false
-        runtimeState.blinkStartTime = 0
-    else
-        runtimeState.isLit = shouldLight
-        runtimeState.severity = severity
-    end
+    return color
 end
 
 local hasCVTTransmission = RMS_Utils.hasCVTTransmission
 local hasCVTAddon = RMS_Utils.hasCVTAddon
 
-
 ---Draws the whole HUD for the current frame
 function RMS_Hud:draw()
     local isHudVisible = g_currentMission.hud.isVisible
-    local isGuiVisible = g_gui:getIsGuiVisible()
-    self:setNotificationInputActive(isHudVisible and not isGuiVisible and self:hasClosableNotification())
-
+    self:setNotificationInputActive(isHudVisible and not g_gui:getIsGuiVisible() and self:hasClosableNotification())
     if not isHudVisible then
         return
     end
 
-    self:drawNotificationPanel()
+    local vehicle = self.vehicle
+    self:drawNotification()
     self:drawInspectionProgress()
-    RMS_DebugWindow.draw(self.vehicle)
-
-    if self.vehicle ~= nil then
+    RMS_DebugWindow.draw(vehicle)
+    if vehicle ~= nil then
         self:drawDashboard()
         self:drawTelemetryCards()
     end
+
+    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_BASELINE, false)
+    setTextColor(1, 1, 1, 1)
 end
 
-
 ---Shows a notification on the shared HUD instance
--- @param string text notification text
--- @param float? durationMs display duration in ms, absent for a persistent one
--- @param string? title notification title
--- @param boolean? playSound true to play the notification sound
+-- @param float? durationMs display time, 0 or less until the player closes it
 function RMS_Hud.showNotification(text, durationMs, title, playSound)
     if RMS_Main.hud ~= nil then
         RMS_Main.hud:setNotification(text, durationMs, title, playSound)
@@ -669,7 +402,6 @@ function RMS_Hud.showNotification(text, durationMs, title, playSound)
 end
 
 ---Sets the inspection progress on the shared HUD instance
--- @param float? ratio progress between 0 and 1
 function RMS_Hud.showInspectionProgress(ratio)
     if RMS_Main.hud ~= nil then
         RMS_Main.hud:setInspectionProgress(ratio)
@@ -677,214 +409,70 @@ function RMS_Hud.showInspectionProgress(ratio)
 end
 
 ---Shows a message where the inspection ring stood on the shared HUD instance
--- @param string text message shown
--- @param float durationMs time the message stays on screen
 function RMS_Hud.showInspectionMessage(text, durationMs)
     if RMS_Main.hud ~= nil then
         RMS_Main.hud:setInspectionMessage(text, durationMs)
     end
 end
 
----Stores the notification to draw and starts its timer
--- @param string text notification text
--- @param float? durationMs display duration in ms, absent for a persistent one
--- @param string? title notification title
--- @param boolean? playSound true to play the notification sound
+---Shows a notification in place of the one on screen
 function RMS_Hud:setNotification(text, durationMs, title, playSound)
-    local panel = self.notificationPanel
-    local normalizedText = tostring(text or ""):gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
-    local normalizedTitle = tostring(title or ""):gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
-    local parsedDurationMs = tonumber(durationMs)
-
-    if normalizedText == "" then
-        self:clearNotification()
+    text = squeezeSpaces(text)
+    if text == "" then
+        self.notification = nil
         return
     end
-
-    if normalizedTitle == "" then
-        normalizedTitle = nil
-    else
-        normalizedTitle = utf8ToUpper(normalizedTitle)
+    if title ~= nil then
+        title = squeezeSpaces(title)
+        title = title ~= "" and utf8ToUpper(title) or nil
     end
 
-    panel.title = normalizedTitle
-    panel.text = normalizedText
-    panel.isPersistent = parsedDurationMs ~= nil and parsedDurationMs <= 0
-    if panel.isPersistent then
-        panel.endTime = nil
-    else
-        panel.endTime = g_time + math.max(parsedDurationMs or 3000, 0)
-    end
-    panel.isVisible = true
+    durationMs = durationMs or RMS_Hud.NOTIFICATION_DURATION_MS
+    local isPersistent = durationMs <= 0
+    self.notification = { text = text, title = title, isPersistent = isPersistent,
+        endTime = not isPersistent and g_time + durationMs or nil }
 
     if playSound then
         RMS_SoundManager.playSample(RMS_Main.samples.notification2D)
     end
 end
 
----Clears the notification and its input binding
-function RMS_Hud:clearNotification()
-    local panel = self.notificationPanel
-    panel.title = nil
-    panel.text = nil
-    panel.endTime = nil
-    panel.isVisible = false
-    panel.isPersistent = false
+---Tells whether a notification the player closes is on screen
+function RMS_Hud:hasClosableNotification()
+    local notification = self.notification
+    return notification ~= nil and notification.isPersistent
 end
 
----Registers or drops the action closing a persistent notification
--- @param boolean isActive true to register it
+---Binds the close key while a closable notification is shown
 function RMS_Hud:setNotificationInputActive(isActive)
     local inputBinding = g_inputBinding
-    local contextName = isActive and inputBinding.currentContextName or nil
+    local contextName = isActive and inputBinding:getContextName() or nil
 
-    if self.notificationCloseActionEventId ~= nil
-        and (not isActive or self.notificationInputContextName ~= contextName) then
-        inputBinding:beginActionEventsModification(self.notificationInputContextName)
-        inputBinding:removeActionEvent(self.notificationCloseActionEventId)
+    if self.closeEventId ~= nil and self.closeEventContext ~= contextName then
+        inputBinding:beginActionEventsModification(self.closeEventContext)
+        inputBinding:removeActionEvent(self.closeEventId)
         inputBinding:endActionEventsModification()
-
-        self.notificationInputContextName = nil
-        self.notificationCloseActionEventId = nil
+        self.closeEventId, self.closeEventContext = nil, nil
     end
 
-    if isActive and contextName ~= nil and self.notificationCloseActionEventId == nil then
+    if contextName ~= nil and self.closeEventId == nil then
         inputBinding:beginActionEventsModification(contextName)
-        local _, eventId = inputBinding:registerActionEvent(
-            InputAction.RMS_CLOSE_NOTIFICATION,
-            self,
-            self.onCloseNotificationInput,
-            false,
-            true,
-            false,
-            true,
-            nil,
-            false
-        )
+        local _, eventId = inputBinding:registerActionEvent(InputAction.RMS_CLOSE_NOTIFICATION, self, self.onCloseNotification,
+            false, true, false, true, nil, false)
         inputBinding:setActionEventTextVisibility(eventId, false)
         inputBinding:endActionEventsModification()
-
-        self.notificationInputContextName = contextName
-        self.notificationCloseActionEventId = eventId
+        self.closeEventId, self.closeEventContext = eventId, contextName
     end
 end
 
----Closes the persistent notification on player input
-function RMS_Hud:onCloseNotificationInput()
-    self:closePersistentNotification()
-end
-
----Tells whether a notification the player can close is shown
--- @return boolean hasClosable true when one is shown
-function RMS_Hud:hasClosableNotification()
-    local panel = self.notificationPanel
-
-    return panel ~= nil and panel.isVisible and panel.isPersistent
-end
-
----Closes the persistent notification
-function RMS_Hud:closePersistentNotification()
-    if not self:hasClosableNotification() then
-        return false
+---Closes the notification the player closes
+function RMS_Hud:onCloseNotification()
+    if self:hasClosableNotification() then
+        self.notification = nil
     end
-
-    self:clearNotification()
-
-    return true
-end
-
----Draws the divider line of the notification panel
--- @param float x x position
--- @param float y y position
--- @param float width divider width
--- @param float height divider height
--- @param table color rgba channels
-function RMS_Hud:drawNotificationDivider(x, y, width, height, color)
-    local snappedX, snappedY, snappedWidth, snappedHeight = self:snapScreenRect(x, y, width, height)
-    drawFilledRect(
-        snappedX,
-        snappedY,
-        snappedWidth,
-        snappedHeight,
-        color[1],
-        color[2],
-        color[3],
-        color[4] or 1
-    )
-end
-
----Returns the input glyph closing the notification
--- @param float glyphWidth glyph width
--- @param float glyphHeight glyph height
--- @return table? glyph input glyph element
-function RMS_Hud:getNotificationCloseGlyph(glyphWidth, glyphHeight)
-    if self.notificationCloseGlyph == nil then
-        self.notificationCloseGlyph = InputGlyphElement.new(g_inputDisplayManager, glyphWidth, glyphHeight)
-        self.notificationCloseGlyph:setKeyboardGlyphColor(RMS_Hud.COLOR_GAME_GREEN, {0, 0, 0, 0.8})
-        self.notificationCloseGlyph:setButtonGlyphColor(RMS_Hud.COLOR_GAME_GREEN)
-    elseif self.notificationCloseGlyph.baseWidth ~= glyphWidth or self.notificationCloseGlyph.baseHeight ~= glyphHeight then
-        self.notificationCloseGlyph:delete()
-        self.notificationCloseGlyph = InputGlyphElement.new(g_inputDisplayManager, glyphWidth, glyphHeight)
-        self.notificationCloseGlyph:setKeyboardGlyphColor(RMS_Hud.COLOR_GAME_GREEN, {0, 0, 0, 0.8})
-        self.notificationCloseGlyph:setButtonGlyphColor(RMS_Hud.COLOR_GAME_GREEN)
-        self.notificationCloseGlyphInputMode = nil
-    end
-
-    local inputMode = g_inputBinding:getInputHelpMode()
-    if self.notificationCloseGlyphInputMode ~= inputMode then
-        self.notificationCloseGlyph:setAction(InputAction.RMS_CLOSE_NOTIFICATION, nil, nil, true)
-        self.notificationCloseGlyphInputMode = inputMode
-    end
-
-    return self.notificationCloseGlyph
-end
-
----Snaps a rectangle to whole pixels
--- @param float x x position
--- @param float y y position
--- @param float width rectangle width
--- @param float height rectangle height
--- @return float x snapped x position
--- @return float y snapped y position
--- @return float width snapped width
--- @return float height snapped height
-function RMS_Hud:snapScreenRect(x, y, width, height)
-    local snappedX = math.floor(x * g_screenWidth + 0.5) / g_screenWidth
-    local snappedY = math.floor(y * g_screenHeight + 0.5) / g_screenHeight
-    local snappedWidth = math.max(math.floor(width * g_screenWidth + 0.5) / g_screenWidth, 1 / g_screenWidth)
-    local snappedHeight = math.max(math.floor(height * g_screenHeight + 0.5) / g_screenHeight, 1 / g_screenHeight)
-
-    return snappedX, snappedY, snappedWidth, snappedHeight
-end
-
----Draws the rounded background of a panel
--- @param float x x position
--- @param float y y position
--- @param float width panel width
--- @param float height panel height
--- @param table color rgba channels
-function RMS_Hud:drawPanelBackground(x, y, width, height, color)
-    if width <= 0 or height <= 0 then
-        return
-    end
-
-    local panelColor = color or {0, 0, 0, 0.7}
-    local panelX, panelY, panelWidth, panelHeight = self:snapScreenRect(x, y, width, height)
-    drawFilledRectRound(
-        panelX,
-        panelY,
-        panelWidth,
-        panelHeight,
-        0.25,
-        panelColor[1],
-        panelColor[2],
-        panelColor[3],
-        panelColor[4] or 1
-    )
 end
 
 ---Stores the progress the inspection ring draws, absent to hide it
--- @param float? ratio progress between 0 and 1
 function RMS_Hud:setInspectionProgress(ratio)
     local progress = self.inspectionProgress
     progress.ratio = ratio ~= nil and math.clamp(ratio, 0, 1) or nil
@@ -895,8 +483,6 @@ function RMS_Hud:setInspectionProgress(ratio)
 end
 
 ---Stores the message shown where the inspection ring stood
--- @param string text message shown
--- @param float durationMs time the message stays on screen
 function RMS_Hud:setInspectionMessage(text, durationMs)
     local progress = self.inspectionProgress
     progress.messageText = text
@@ -907,18 +493,17 @@ end
 function RMS_Hud:drawInspectionProgress()
     local progress = self.inspectionProgress
     local ratio = progress.ratio
+    local hasMessage = progress.messageText ~= nil and g_time < progress.messageEndTime
+    if ratio == nil and not hasMessage then
+        return
+    end
+
     local centerX, centerY = 0.5, 0.46
-
+    local labelSize = self:scalePixelToScreenHeight(RMS_Hud.INSPECTION_LABEL_SIZE)
+    setTextStyle(RenderText.ALIGN_CENTER, RenderText.VERTICAL_ALIGN_BASELINE, true)
+    setTextColor(1, 1, 1, 1)
     if ratio == nil then
-        if progress.messageText ~= nil and g_time < progress.messageEndTime then
-            setTextAlignment(RenderText.ALIGN_CENTER)
-            setTextBold(true)
-            setTextColor(1, 1, 1, 1)
-            renderText(centerX, centerY, self:scalePixelToScreenHeight(RMS_Hud.INSPECTION_LABEL_SIZE), progress.messageText)
-            setTextBold(false)
-            setTextAlignment(RenderText.ALIGN_LEFT)
-        end
-
+        renderText(centerX, centerY, labelSize, progress.messageText)
         return
     end
 
@@ -932,123 +517,82 @@ function RMS_Hud:drawInspectionProgress()
     RMS_ProgressRing.render(centerX, centerY, ringWidth, ringHeight, ratio, HUD.COLOR.ACTIVE, {grey[1], grey[2], grey[3], RMS_Hud.INSPECTION_SHADE_ALPHA})
 
     local percentSize = ringHeight * RMS_Hud.INSPECTION_PERCENT_SHARE
-    local labelSize = self:scalePixelToScreenHeight(RMS_Hud.INSPECTION_LABEL_SIZE)
-    setTextAlignment(RenderText.ALIGN_CENTER)
-    setTextBold(true)
-    setTextColor(1, 1, 1, 1)
     renderText(centerX, centerY - percentSize * 0.4, percentSize, string.format("%d%%", math.floor(ratio * 100 + 1e-6)))
     renderText(centerX, centerY + ringHeight * 0.5 + labelSize * 0.6, labelSize, g_i18n:getText("rms_field_inspection_progress"))
-    setTextBold(false)
-
-    setTextAlignment(RenderText.ALIGN_LEFT)
-    setTextColor(1, 1, 1, 1)
 end
 
----Draws the notification panel and its text
-function RMS_Hud:drawNotificationPanel()
-    local panel = self.notificationPanel
-    if panel == nil or not panel.isVisible or panel.text == nil then
+---Draws the notification: title, line, text, line and close key
+function RMS_Hud:drawNotification()
+    local notification = self.notification
+    if notification == nil then
+        return
+    end
+    if notification.endTime ~= nil and g_time >= notification.endTime then
+        self.notification = nil
         return
     end
 
-    if panel.endTime ~= nil and g_time >= panel.endTime then
-        self:clearNotification()
-        return
-    end
-
-    local panelWidth = self:scalePixelToScreenWidth(640)
-    local panelX = 0.5 - panelWidth * 0.5
-    local panelY = g_hudAnchorBottom
-    local paddingX = self:scalePixelToScreenWidth(20)
-    local paddingY = self:scalePixelToScreenHeight(20)
-    local maxTextWidth = panelWidth - paddingX * 2
-    local titleTextSize = self:scalePixelToScreenHeight(19)
-    local textSize = self:scalePixelToScreenHeight(17)
-    local titleSpacing = self:scalePixelToScreenHeight(10)
-    local sectionSpacing = self:scalePixelToScreenHeight(15)
-    local dividerHeight = self:scalePixelToScreenHeight(1)
-    local closeRowHeight = self:scalePixelToScreenHeight(30)
-    local hasTitle = panel.title ~= nil
-    local closeGlyphVisible = panel.isPersistent and hasTitle
-    local closeGlyphWidth = closeGlyphVisible and self:scalePixelToScreenWidth(panel.closeGlyphSize or 18) or 0
-    local closeGlyphHeight = closeGlyphVisible and self:scalePixelToScreenHeight(panel.closeGlyphSize or 18) or 0
-
-    setTextAlignment(RenderText.ALIGN_CENTER)
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_TOP)
-    setTextWrapWidth(maxTextWidth)
-
+    local title, width = notification.title, self.messageWidth
+    local paddingX, paddingY = self.messagePaddingX, self.messagePaddingY
+    setTextWrapWidth(width - 2 * paddingX)
+    setTextStyle(RenderText.ALIGN_CENTER, RenderText.VERTICAL_ALIGN_TOP, false)
+    local textHeight = getTextHeight(self.messageTextSize, notification.text)
+    local height = textHeight + 2 * paddingY
     local titleHeight = 0
-    if hasTitle then
+    if title ~= nil then
         setTextBold(true)
-        titleHeight = getTextHeight(titleTextSize, panel.title)
-    end
-
-    setTextBold(false)
-    local textHeight = getTextHeight(textSize, panel.text)
-    local titleSectionHeight = hasTitle and (titleHeight + titleSpacing * 2 + dividerHeight) or 0
-    local closeSectionHeight = hasTitle and (sectionSpacing + dividerHeight + (closeGlyphVisible and closeRowHeight or 0)) or 0
-    local dynamicHeight = paddingY * 2 + titleSectionHeight + textHeight + closeSectionHeight
-
-    self:drawPanelBackground(
-        panelX,
-        panelY,
-        panelWidth,
-        dynamicHeight,
-        HUD.COLOR.BACKGROUND_DARK
-    )
-
-    local centerX = 0.5
-    local dividerWidth = panelWidth - paddingX * 2
-    local currentY = panelY + dynamicHeight - paddingY
-
-    if hasTitle then
-        setTextBold(true)
-        setTextColor(unpack(RMS_Hud.COLOR_GAME_GREEN))
-        renderText(centerX, currentY, titleTextSize, panel.title)
-        currentY = currentY - titleHeight - titleSpacing
-
-        self:drawNotificationDivider(panelX + paddingX, currentY - dividerHeight, dividerWidth, dividerHeight, RMS_Hud.COLOR_GAME_GREEN)
-        currentY = currentY - dividerHeight - titleSpacing
-    end
-
-    setTextBold(false)
-    setTextColor(1, 1, 1, 1)
-    renderText(centerX, currentY, textSize, panel.text)
-    currentY = currentY - textHeight
-    setTextWrapWidth(0)
-
-    if hasTitle then
-        currentY = currentY - sectionSpacing
-        self:drawNotificationDivider(panelX + paddingX, currentY - dividerHeight, dividerWidth, dividerHeight, RMS_Hud.COLOR_GAME_GREEN)
-
-        if closeGlyphVisible then
-            local glyph = self:getNotificationCloseGlyph(closeGlyphWidth, closeGlyphHeight)
-            if glyph ~= nil then
-                local glyphWidth = glyph:getGlyphWidth()
-                local okText = "OK"
-                local okTextSize = textSize
-                local textSpacing = self:scalePixelToScreenWidth(panel.closeGlyphTextSpacing or 6)
-                local okTextWidth = getTextWidth(okTextSize, okText)
-                local glyphX = centerX - (glyphWidth + textSpacing + okTextWidth) * 0.5
-                local glyphY = panelY + paddingY + (closeRowHeight - closeGlyphHeight) * 0.5
-                glyph:setPosition(glyphX, glyphY)
-                glyph:draw()
-
-                setTextAlignment(RenderText.ALIGN_LEFT)
-                setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_MIDDLE)
-                setTextBold(true)
-                setTextColor(1, 1, 1, 0.95)
-                renderText(glyphX + glyphWidth + textSpacing - self:scalePixelToScreenWidth(4), glyphY + closeGlyphHeight * 0.5 + self:scalePixelToScreenHeight(2), okTextSize, okText)
-            end
+        titleHeight = getTextHeight(self.messageTitleSize, title)
+        height = height + titleHeight + 2 * self.messageTitleGap + self.messageCloseGap + 2 * g_pixelSizeY
+        if notification.isPersistent then
+            height = height + self.messageCloseHeight
         end
     end
 
+    local posX, posY = 0.5 - width * 0.5, g_hudAnchorBottom
+    local background = HUD.COLOR.BACKGROUND_DARK
+    drawFilledRectRound(posX, posY, width, height, 0.25, background[1], background[2], background[3], background[4])
+
+    local green = RMS_Hud.COLOR_GAME_GREEN
+    local lineStart, lineEnd = posX + paddingX, posX + width - paddingX
+    local textY = posY + height - paddingY
+    if title ~= nil then
+        setTextColor(green[1], green[2], green[3], green[4])
+        renderText(0.5, textY, self.messageTitleSize, title)
+        textY = textY - titleHeight - self.messageTitleGap - g_pixelSizeY * 0.5
+        drawLine2D(lineStart, textY, lineEnd, textY, g_pixelSizeY, green[1], green[2], green[3], green[4])
+        textY = textY - g_pixelSizeY * 0.5 - self.messageTitleGap
+        local lineY = textY - textHeight - self.messageCloseGap - g_pixelSizeY * 0.5
+        drawLine2D(lineStart, lineY, lineEnd, lineY, g_pixelSizeY, green[1], green[2], green[3], green[4])
+    end
+
     setTextBold(false)
     setTextColor(1, 1, 1, 1)
-    setTextAlignment(RenderText.ALIGN_LEFT)
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_BOTTOM)
+    renderText(0.5, textY, self.messageTextSize, notification.text)
+    setTextWrapWidth(0)
+    if title ~= nil and notification.isPersistent then
+        self:drawCloseControl(posY + paddingY)
+    end
 end
 
+---Draws the close key and its OK, centred on the panel
+function RMS_Hud:drawCloseControl(bottomY)
+    local inputMode = g_inputBinding:getInputHelpMode()
+    if inputMode ~= self.closeGlyphInputMode then
+        self.closeGlyph:setAction(InputAction.RMS_CLOSE_NOTIFICATION, nil, nil, true)
+        self.closeGlyphInputMode = inputMode
+    end
+
+    local keyWidth, textSize = self.closeGlyph:getGlyphWidth(), self.messageTextSize
+    local keyX = 0.5 - (keyWidth + self.closeTextGap + getTextWidth(textSize, self.closeText)) * 0.5
+    local keyY = bottomY + (self.messageCloseHeight - self.closeGlyphHeight) * 0.5
+    self.closeGlyph:setPosition(keyX, keyY)
+    self.closeGlyph:draw()
+
+    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_MIDDLE, true)
+    setTextColor(1, 1, 1, 0.95)
+    renderText(keyX + keyWidth + self.closeTextGap - self.closeTextShiftX,
+        keyY + self.closeGlyphHeight * 0.5 + self.closeTextShiftY, textSize, self.closeText)
+end
 
 ---Recomputes every HUD size and position for the current screen resolution
 function RMS_Hud:storeScaledValues()
@@ -1059,19 +603,17 @@ function RMS_Hud:storeScaledValues()
     end
 
     local lamp = RMS_Hud.LAMP
-    for _, indicator in pairs(self.indicators) do
-        for _, icon in pairs(indicator.icons or { indicator.icon }) do
-            local size = lamp.SIZE * self.lampScales[icon]
-            icon:setDimension(pixelSize(size, size))
-        end
+    for slice, icon in pairs(self.lampIcons) do
+        local size = lamp.SIZE * (RMS_Hud.LAMP_SCALE[slice] or 1)
+        icon:setDimension(pixelSize(size, size))
     end
-    self.indicatorValueText.size = self:scalePixelToScreenHeight(lamp.VALUE_SIZE)
+    self.lampValueSize = self:scalePixelToScreenHeight(lamp.VALUE_SIZE)
 
     local speedMeter = g_currentMission.hud.speedMeter
     local serviceAnchorY = (speedMeter.gaugeTextOffsets[4].offsetY + speedMeter.gaugeTextOffsets[7].offsetY) * 0.5
     self.rowCenterY = serviceAnchorY - self:scalePixelToScreenHeight(10)
     -- The service anchor is the foot of an 11 px mark.
-    self.indicators.service.centreY = serviceAnchorY + self:scalePixelToScreenHeight(5.5)
+    self.serviceCentreY = serviceAnchorY + self:scalePixelToScreenHeight(5.5)
 
     local back = RMS_Hud.BACKGROUND.BOX
     self.halfMoon.background:setDimension(self:scalePixelValuesToScreenVector(back[3] - back[1], back[4] - back[2]))
@@ -1106,38 +648,33 @@ function RMS_Hud:storeScaledValues()
     self.fuelConsumptionHud.width = fuelIconWidth
     self.fuelConsumptionHud.height = fuelIconHeight
     self.fuelConsumptionHud.iconGap = self:scalePixelToScreenWidth(fuelIcon.GAP)
-end
 
----Tells whether a vehicle carries a telltale
--- @param string indicatorId telltale name
--- @param integer? indicatorYear year the telltale appeared on dashboards
--- @param table spec vehicle RMS state
--- @param boolean hasEngineOil true when the vehicle holds engine oil
--- @return boolean isFitted true when the dashboard of this vehicle has it
-function RMS_Hud.getIsTelltaleFitted(indicatorId, indicatorYear, spec, hasEngineOil)
-    if indicatorId == "preheat" then
-        return spec.isDieselVehicle == true
-    elseif indicatorId == "dpf" then
-        return spec.hasParticulateFilter == true
-    elseif indicatorId == "tractionBattery" or indicatorId == "limitedPower" then
-        return spec.isElectricVehicle == true
-    elseif indicatorId == "fanReversal" then
-        return spec.hasReversibleFan == true
-    elseif indicatorId == "oil" and not hasEngineOil then
-        return false
+    self.messageWidth = self:scalePixelToScreenWidth(640)
+    self.messagePaddingX, self.messagePaddingY = self:scalePixelValuesToScreenVector(20, 20)
+    self.messageTitleSize = self:scalePixelToScreenHeight(19)
+    self.messageTextSize = self:scalePixelToScreenHeight(17)
+    self.messageTitleGap = self:scalePixelToScreenHeight(10)
+    self.messageCloseGap = self:scalePixelToScreenHeight(15)
+    self.messageCloseHeight = self:scalePixelToScreenHeight(30)
+    self.closeTextGap, self.closeTextShiftY = self:scalePixelValuesToScreenVector(6, 2)
+    self.closeTextShiftX = self:scalePixelToScreenWidth(4)
+
+    local glyphWidth, glyphHeight = self:scalePixelValuesToScreenVector(26, 26)
+    if self.closeGlyph ~= nil then
+        self.closeGlyph:delete()
     end
-    return indicatorYear <= spec.year
+    self.closeGlyph = InputGlyphElement.new(g_inputDisplayManager, glyphWidth, glyphHeight)
+    self.closeGlyph:setKeyboardGlyphColor(RMS_Hud.COLOR_GAME_GREEN, {0, 0, 0, 0.8})
+    self.closeGlyph:setButtonGlyphColor(RMS_Hud.COLOR_GAME_GREEN)
+    self.closeGlyphHeight = glyphHeight
+    self.closeGlyphInputMode = nil
 end
 
--- @param table spec vehicle RMS state
--- @return boolean isCalling true from the regeneration level while no regeneration runs
 function RMS_Hud.getIsParticulateFilterCalling(spec)
     return spec.fuelState.particulateFilterLevel >= 1 and not spec.fuelState.isParticulateFilterRegenerating
 end
 
 ---Returns the offset putting a row lamp's ink bottom on the warning's
--- @param string slice slice of the lamp
--- @return float lift reference px, negative downward
 function RMS_Hud.getRowLampLift(slice)
     local lamp = RMS_Hud.LAMP
     local function foot(name)
@@ -1147,10 +684,6 @@ function RMS_Hud.getRowLampLift(slice)
 end
 
 ---Returns the road or machine slice replacing the tractor one
--- @param string id lamp id
--- @param boolean isRoadVehicle true for a car or a truck
--- @param boolean isMachine true for a loader, a forklift or a forestry machine
--- @return string? sliceName nil for the tractor's
 function RMS_Hud.getFamilyLampSlice(id, isRoadVehicle, isMachine)
     if isRoadVehicle then
         return RMS_Hud.ROAD_LAMP_SLICE[id]
@@ -1160,30 +693,20 @@ function RMS_Hud.getFamilyLampSlice(id, isRoadVehicle, isMachine)
     return nil
 end
 
----Returns the picture the motor telltale takes
--- @param table spec vehicle RMS state
--- @param boolean isRoadVehicle true for a car or a truck
--- @param boolean isFaultShown lamp test or active fault telltale
--- @return string iconKey classic, fault or normal
-function RMS_Hud.getEngineTelltaleIconKey(spec, isRoadVehicle, isFaultShown)
-    if isRoadVehicle or spec.isElectricVehicle then
-        return "classic"
-    elseif isFaultShown then
-        return "fault"
+---Returns the picture a lamp takes on this vehicle
+function RMS_Hud.getLampSlice(id, spec, isRoadVehicle, isMachine)
+    if id == "engine" and (isRoadVehicle or spec.isElectricVehicle) then
+        return "engineClassic"
     end
-    return "normal"
+    return RMS_Hud.getFamilyLampSlice(id, isRoadVehicle, isMachine) or RMS_Hud.LAMP_SLICE[id] or id
 end
 
 ---Tells whether the level of the engine oil lights the oil lamp
--- @param table spec vehicle RMS state
--- @return boolean isLow true when the engine oil is critically low
 function RMS_Hud.getIsOilPressureLow(spec)
     return (tonumber(spec.engineOilLevel) or 1) <= RMS_Config.FLUIDS.LEVEL_CRITICALLY_LOW
 end
 
 ---Returns the coolant lamp colour key for the drive temperature
--- @param table spec vehicle RMS state
--- @return string? colorKey WARNING, CRITICAL, or nil when unlit
 function RMS_Hud.getCoolantTelltaleState(spec)
     local telltale = RMS_Thermal.getDriveValues(spec).TELLTALE
     local temperature = spec.engineTemperature
@@ -1196,20 +719,96 @@ function RMS_Hud.getCoolantTelltaleState(spec)
     return nil
 end
 
----Builds the figures drawn beside the telltales
--- @param table spec vehicle RMS state
--- @param float motorLoad averaged motor load from 0 to 1
--- @param boolean showTransmissionTemperature gearbox temperature available
--- @param boolean useFahrenheit true to show temperatures in Fahrenheit
--- @return table values readout text and isWarning by telltale name
-function RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperature, useFahrenheit)
-    local engineTemp, transTemp, tempSign = spec.engineTemperature, spec.transmissionTemperature, "°C"
-    if useFahrenheit then
-        engineTemp = engineTemp * 1.8 + 32
-        transTemp = transTemp * 1.8 + 32
-        tempSign = "°F"
+---Returns the colour a lit lamp has on a real dashboard
+function RMS_Hud.getLitLampColor(id, color, spec)
+    local colors = RMS_Breakdowns.COLORS
+    if color == colors.DEFAULT or color == colors.COOL then
+        return color
+    elseif id == "fanReversal" then
+        return RMS_Hud.COLOR_GAME_GREEN
+    elseif id == "transmission" then
+        return spec.isTruck and colors.WARNING or colors.CRITICAL
+    end
+    local litColor = RMS_Hud.LIT_LAMP_COLOR[id]
+    return litColor ~= nil and colors[litColor] or color
+end
+
+---Returns the colour of every lamp this frame
+function RMS_Hud.getLampColors(vehicle, motorState, isServiceOverdue, cvtFaultColor)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local colors = RMS_Breakdowns.COLORS
+    local isOff = motorState == MotorState.OFF
+    -- A routine lamp is a check or a normal operation: no blink, no beep
+    local lampColors, isRoutine = {}, {}
+
+    for _, id in ipairs(RMS_Hud.INDICATOR_ORDER) do
+        lampColors[id] = colors.DEFAULT
+        local light = spec.activeIndicators[id]
+        if light ~= nil then
+            light.isActive = not isOff and not light.switchOff(vehicle) and (light.isActive or light.switchOn(vehicle))
+            if light.isActive then
+                lampColors[id] = light.color
+            end
+        end
+    end
+    if isOff then
+        return lampColors, isRoutine
     end
 
+    -- A gearbox fault lights the warning, its lamp the oil temperature
+    local gearboxFault = lampColors.transmission
+    if cvtFaultColor == colors.CRITICAL or gearboxFault == colors.DEFAULT then
+        gearboxFault = cvtFaultColor
+    end
+    if gearboxFault ~= colors.DEFAULT and (lampColors.warning == colors.DEFAULT or gearboxFault == colors.CRITICAL) then
+        lampColors.warning = gearboxFault
+    end
+    local oilAlertTemp = RMS_Hud.GEARBOX_OIL_ALERT_TEMP[spec.isTruck and "TRUCK" or "DEFAULT"]
+    lampColors.transmission = spec.transmissionTemperature > oilAlertTemp and colors.WARNING or colors.DEFAULT
+
+    if spec.fanReversalTime > 0 then
+        lampColors.fanReversal, isRoutine.fanReversal = RMS_Hud.COLOR_GAME_GREEN, true
+    end
+    local coolantState = RMS_Hud.getCoolantTelltaleState(spec)
+    if coolantState ~= nil and (coolantState == "CRITICAL" or lampColors.coolant == colors.DEFAULT) then
+        lampColors.coolant = colors[coolantState]
+    end
+    if isServiceOverdue then
+        lampColors.service = colors.WARNING
+    end
+    if RMS_Hud.getIsOilPressureLow(spec) then
+        lampColors.oil = colors.CRITICAL
+    end
+    if lampColors.dpf == colors.DEFAULT then
+        if spec.fuelState.isParticulateFilterRegenerating then
+            lampColors.dpf, isRoutine.dpf = colors.WARNING, true
+        elseif RMS_Hud.getIsParticulateFilterCalling(spec) then
+            lampColors.dpf = colors.WARNING
+        end
+    end
+
+    if RMS_Preheat.isLampTestActive(vehicle) then
+        for id in pairs(lampColors) do
+            lampColors[id], isRoutine[id] = colors.WARNING, true
+        end
+        return lampColors, isRoutine
+    end
+    if RMS_Preheat.isHeating(vehicle) and lampColors.preheat == colors.DEFAULT then
+        lampColors.preheat, isRoutine.preheat = colors.WARNING, true
+    end
+    -- Charge and oil pressure lamps stay lit until the engine runs
+    if motorState == MotorState.IGNITION or motorState == MotorState.STARTING then
+        for _, id in ipairs({ "battery", "oil" }) do
+            if lampColors[id] == colors.DEFAULT then
+                lampColors[id], isRoutine[id] = colors.WARNING, true
+            end
+        end
+    end
+    return lampColors, isRoutine
+end
+
+---Builds the figures drawn beside the telltales
+function RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperature)
     local overloadThreshold = spec.isElectricVehicle and RMS_Config.ELECTRIC_DRIVE.MOTOR_OVERLOADED_THRESHOLD
         or RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD
     local overloadLoad = motorLoad
@@ -1217,153 +816,52 @@ function RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperature, us
         overloadLoad = tonumber(spec.dynamicMotorLoad) or motorLoad
     end
     local values = {
-        coolant = { text = string.format("%.0f%s", engineTemp, tempSign) },
+        coolant = { text = g_i18n:formatTemperature(spec.engineTemperature, 0) },
         engine = { text = string.format("%.0f%%", math.max(motorLoad * 100, 0)), isWarning = overloadLoad > overloadThreshold },
         battery = { text = formatValue(spec.batteryIsolated and 0 or spec.systemVoltageV, "%.1f") .. "V" }
     }
     if showTransmissionTemperature then
-        values.transmission = { text = string.format("%.0f%s", transTemp, tempSign) }
+        values.transmission = { text = g_i18n:formatTemperature(spec.transmissionTemperature, 0) }
     end
     return values
 end
 
 ---Draws the dashboard indicators, the gauges and the vehicle condition
 function RMS_Hud:drawDashboard()
-    if self.vehicle == nil or self.vehicle.spec_RealisticMechanicalSystems == nil or self.vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
+    local vehicle, speedMeter = self.vehicle, g_currentMission.hud.speedMeter
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil or spec.isExcludedVehicle then
         return
     end
 
-    local vehicle = self.vehicle
-    local spec = vehicle.spec_RealisticMechanicalSystems
     RMS_Thermal.getEngineTemperature(vehicle)
     local colors = RMS_Breakdowns.COLORS
-    local activeIndicators = spec.activeIndicators
-    local isServiceOverdue = self.vehicle:getServiceLevel() < RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
     local motorState = vehicle:getMotorState()
-    local preheatState = spec.preheatState or RMS_Preheat.STATE.IDLE
-    local isLampTestActive = RMS_Preheat.isLampTestActive(vehicle)
+    local isMotorOn = motorState == MotorState.ON
     local isRoadVehicle = RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
     local isMachine = RMS_Drivetrain.getIsMachineCategory(vehicle)
     local cvtAddonSpec = hasCVTAddon(vehicle) and vehicle.spec_CVTaddon or nil
-    local hasCVTFaultWarning = cvtAddonSpec ~= nil
-        and (cvtAddonSpec.forDBL_warndamage == 1
-            or cvtAddonSpec.forDBL_critdamage == 1
-            or cvtAddonSpec.forDBL_highpressure == 1)
-    local hasCVTCriticalFault = cvtAddonSpec ~= nil
-        and cvtAddonSpec.forDBL_critdamage == 1
-
-    local transmissionFaultColor = colors.DEFAULT
-
-    ---Returns the colour an indicator lights in, the highest priority winning
-    local function calculateIndicatorTargetColor(hudIndicatorId, mutateActiveState)
-        local targetColor = colors.DEFAULT
-        local isRoutineIgnitionIndicator = false
-
-        if motorState ~= MotorState.OFF then
-            local activeData = activeIndicators[hudIndicatorId]
-            if activeData then
-                local isActive = activeData.isActive
-                local shouldBeOn = activeData.switchOn(vehicle)
-                local shouldBeOff = activeData.switchOff(vehicle)
-
-                if isActive and not shouldBeOff then
-                    targetColor = activeData.color
-                elseif shouldBeOn and not shouldBeOff then
-                    if mutateActiveState then
-                        activeData.isActive = true
-                    end
-                    targetColor = activeData.color
-                elseif shouldBeOff and mutateActiveState then
-                    activeData.isActive = false
-                end
-            end
-
-            if hudIndicatorId == self.indicators.transmission.name then
-                -- A gearbox fault lights the warning, not the gearbox lamp.
-                transmissionFaultColor = targetColor
-                if hasCVTCriticalFault then
-                    transmissionFaultColor = colors.CRITICAL
-                elseif transmissionFaultColor == colors.DEFAULT and hasCVTFaultWarning then
-                    transmissionFaultColor = colors.WARNING
-                end
-                targetColor = colors.DEFAULT
-            end
-            if hudIndicatorId == self.indicators.warning.name and transmissionFaultColor ~= colors.DEFAULT
-                    and (targetColor == colors.DEFAULT or transmissionFaultColor == colors.CRITICAL) then
-                targetColor = transmissionFaultColor
-            end
-            if hudIndicatorId == self.indicators.fanReversal.name and (tonumber(spec.fanReversalTime) or 0) > 0 then
-                targetColor = RMS_Hud.COLOR_GAME_GREEN
-                isRoutineIgnitionIndicator = true
-            end
-
-            if hudIndicatorId == self.indicators.coolant.name then
-                local coolantState = RMS_Hud.getCoolantTelltaleState(spec)
-                if coolantState == "CRITICAL" or (coolantState ~= nil and targetColor == colors.DEFAULT) then
-                    targetColor = colors[coolantState]
-                end
-            end
-            if hudIndicatorId == self.indicators.transmission.name
-                    and targetColor == colors.DEFAULT
-                    and spec.transmissionTemperature > RMS_Hud.TRANSMISSION_OIL_TEMP_WARNING
-                    and spec.transmissionTemperature < 110 then
-                targetColor = colors.WARNING
-            elseif hudIndicatorId == self.indicators.transmission.name and spec.transmissionTemperature >= 110 then targetColor = colors.CRITICAL end
-
-            if hudIndicatorId == self.indicators.service.name and isServiceOverdue then targetColor = colors.WARNING end
-            if hudIndicatorId == self.indicators.oil.name and RMS_Hud.getIsOilPressureLow(spec) then
-                targetColor = colors.CRITICAL
-            end
-
-            if hudIndicatorId == self.indicators.dpf.name and targetColor == colors.DEFAULT then
-                if spec.fuelState.isParticulateFilterRegenerating then
-                    targetColor = colors.WARNING
-                    isRoutineIgnitionIndicator = true
-                elseif RMS_Hud.getIsParticulateFilterCalling(spec) then
-                    targetColor = colors.WARNING
-                end
-            end
-
-            if isLampTestActive then
-                targetColor = colors.WARNING
-                isRoutineIgnitionIndicator = true
-            elseif hudIndicatorId == self.indicators.preheat.name
-                    and preheatState == RMS_Preheat.STATE.PREHEATING
-                    and targetColor == colors.DEFAULT then
-                targetColor = colors.WARNING
-                isRoutineIgnitionIndicator = true
-            elseif (motorState == MotorState.IGNITION or motorState == MotorState.STARTING)
-                    and (hudIndicatorId == self.indicators.battery.name or hudIndicatorId == self.indicators.oil.name)
-                    and targetColor == colors.DEFAULT then
-                targetColor = colors.WARNING
-                isRoutineIgnitionIndicator = true
-            end
-        else
-            local activeData = activeIndicators[hudIndicatorId]
-            if activeData and mutateActiveState then
-                activeData.isActive = false
-            end
+    local cvtFaultColor = colors.DEFAULT
+    if cvtAddonSpec ~= nil then
+        if cvtAddonSpec.forDBL_critdamage == 1 then
+            cvtFaultColor = colors.CRITICAL
+        elseif cvtAddonSpec.forDBL_warndamage == 1 or cvtAddonSpec.forDBL_highpressure == 1 then
+            cvtFaultColor = colors.WARNING
         end
-
-        return targetColor, isRoutineIgnitionIndicator
     end
+    local isServiceOverdue = vehicle:getServiceLevel() < RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
+    local lampColors, isRoutine = RMS_Hud.getLampColors(vehicle, motorState, isServiceOverdue, cvtFaultColor)
 
-    g_currentMission.hud.speedMeter.speedTextSize = self:scalePixelToScreenHeight(43)
-    local speedBgX, speedBgY = g_currentMission.hud.speedMeter.speedBg:getPosition()
-    local posX = speedBgX + g_currentMission.hud.speedMeter.speedGaugeCenterOffsetX
-    local posY = speedBgY + g_currentMission.hud.speedMeter.speedGaugeCenterOffsetY
+    speedMeter.speedTextSize = self:scalePixelToScreenHeight(43)
+    local posX, posY = speedMeter.speedBg:getPosition()
+    posX, posY = posX + speedMeter.speedGaugeCenterOffsetX, posY + speedMeter.speedGaugeCenterOffsetY
     local hasTransmissionOilTempDisplay = hasCVTTransmission(vehicle) or cvtAddonSpec ~= nil
-    local hasEngineOil = RMS_Fluids.getCapacity(vehicle, "engineOil") > 0
     local lamp = RMS_Hud.LAMP
 
     local units, unitsById = {}, {}
     for _, id in ipairs(RMS_Hud.ARC_ORDER) do
-        if RMS_Hud.getIsTelltaleFitted(id, self.indicators[id].year, spec, hasEngineOil) then
-            local inkKey = RMS_Hud.getFamilyLampSlice(id, isRoadVehicle, isMachine) or RMS_Hud.LAMP_SLICE[id] or id
-            if id == "engine" and RMS_Hud.getEngineTelltaleIconKey(spec, isRoadVehicle, false) == "classic" then
-                inkKey = "engineClassic"
-            end
-            local ink = RMS_Hud.LAMP_INK[inkKey]
+        if RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, id) then
+            local ink = RMS_Hud.LAMP_INK[RMS_Hud.getLampSlice(id, spec, isRoadVehicle, isMachine)]
             local hasValue = id == "engine" or id == "coolant" or id == "battery" or (id == "transmission" and hasTransmissionOilTempDisplay)
             local unit = { id = id, inkWidth = ink[1] * lamp.SIZE / lamp.CELL, inkHeight = ink[2] * lamp.SIZE / lamp.CELL,
                 valueWidth = hasValue and RMS_Hud.VALUE_WIDTH[id] or nil }
@@ -1378,7 +876,7 @@ function RMS_Hud:drawDashboard()
     local rowIds = {}
     for _, id in ipairs({ spec.isElectricVehicle and "limitedPower" or "preheat", "warning",
         spec.isElectricVehicle and "tractionBattery" or "oil" }) do
-        if RMS_Hud.getIsTelltaleFitted(id, self.indicators[id].year, spec, hasEngineOil) then
+        if RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, id) then
             rowIds[#rowIds + 1] = id
         end
     end
@@ -1388,50 +886,41 @@ function RMS_Hud:drawDashboard()
     end
 
     local lamps = {}
-    for _, hudIndicatorId in ipairs(RMS_Hud.INDICATOR_ORDER) do
-        local hudIndicatorData = self.indicators[hudIndicatorId]
-        local targetColor, isRoutineIgnitionIndicator = calculateIndicatorTargetColor(hudIndicatorId, true)
-        local activeIndicatorData = activeIndicators[hudIndicatorId]
-        local hasActiveBreakdown = activeIndicatorData ~= nil and activeIndicatorData.isActive == true
-        local icon = hudIndicatorData.icon
-
-        if hudIndicatorId == self.indicators.engine.name then
-            icon = hudIndicatorData.icons[RMS_Hud.getEngineTelltaleIconKey(spec, isRoadVehicle, isLampTestActive or hasActiveBreakdown)]
-        elseif hudIndicatorData.icons ~= nil then
-            icon = hudIndicatorData.icons[RMS_Hud.getFamilyLampSlice(hudIndicatorId, isRoadVehicle, isMachine) or "normal"]
+    for _, id in ipairs(RMS_Hud.INDICATOR_ORDER) do
+        local slice = RMS_Hud.getLampSlice(id, spec, isRoadVehicle, isMachine)
+        local x, y
+        if layout[id] ~= nil then
+            x = posX + self:scalePixelToScreenWidth(layout[id].x)
+            y = posY + self:scalePixelToScreenHeight(layout[id].y)
+        elseif rowPlaces[id] ~= nil then
+            x = posX + self:scalePixelToScreenWidth(rowPlaces[id])
+            y = posY + self.rowCenterY + self:scalePixelToScreenHeight(RMS_Hud.getRowLampLift(slice))
+        elseif id == "service" and RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, id) then
+            x, y = posX, posY + self.serviceCentreY
         end
-        hudIndicatorData.icon = icon
 
-        local isIndicatorVisible = RMS_Hud.getIsTelltaleFitted(hudIndicatorId, hudIndicatorData.year, spec, hasEngineOil)
-        local place, unit = layout[hudIndicatorId], unitsById[hudIndicatorId]
-        local centreX, centreY
-        if place ~= nil then
-            centreX = posX + self:scalePixelToScreenWidth(place.x)
-            centreY = posY + self:scalePixelToScreenHeight(place.y)
-        elseif rowPlaces[hudIndicatorId] ~= nil then
-            local slice = RMS_Hud.getFamilyLampSlice(hudIndicatorId, isRoadVehicle, isMachine)
-                or RMS_Hud.LAMP_SLICE[hudIndicatorId] or hudIndicatorId
-            centreX = posX + self:scalePixelToScreenWidth(rowPlaces[hudIndicatorId])
-            centreY = posY + self.rowCenterY + self:scalePixelToScreenHeight(RMS_Hud.getRowLampLift(slice))
-        elseif hudIndicatorId == self.indicators.service.name then
-            centreX, centreY = posX, posY + hudIndicatorData.centreY
-        else
-            isIndicatorVisible = false
+        local color = lampColors[id]
+        local severity = 0
+        if x ~= nil and not isRoutine[id] then
+            if color == colors.CRITICAL then
+                severity = 2
+            elseif color == colors.WARNING then
+                severity = 1
+            end
         end
-        if isIndicatorVisible then
-            icon:setPosition(snapScreenX(centreX - icon.width * 0.5), snapScreenY(centreY - icon.height * 0.5))
+        self:updateLampAlert(id, severity, isMotorOn)
+        color = RMS_Hud.getLitLampColor(id, color, spec)
+        if not isRoutine[id] then
+            local light = spec.activeIndicators[id]
+            local isContinuous = light ~= nil and light.blinkWhileActive
+                or id == "dpf" and color == colors.WARNING and RMS_Hud.getIsParticulateFilterCalling(spec)
+            color = self:getLampBlinkColor(id, color, isContinuous, isMotorOn)
         end
-        icon:setVisible(isIndicatorVisible)
 
-        local isAudibleIndicator = targetColor ~= colors.DEFAULT and targetColor ~= colors.COOL
-        local shouldActivateIndicator = isIndicatorVisible and isAudibleIndicator and not isRoutineIgnitionIndicator
-        self:syncIndicatorActivation(hudIndicatorId, shouldActivateIndicator, targetColor)
-
-        local blinkWhileActive = (activeIndicatorData ~= nil and activeIndicatorData.blinkWhileActive == true)
-            or (hudIndicatorId == self.indicators.dpf.name and targetColor == colors.WARNING and RMS_Hud.getIsParticulateFilterCalling(spec))
-        local displayColor = isRoutineIgnitionIndicator and targetColor or self:applyIndicatorBlink(hudIndicatorId, targetColor, blinkWhileActive)
-        if isIndicatorVisible then
-            lamps[#lamps + 1] = { icon = icon, color = displayColor, x = centreX, y = centreY }
+        if x ~= nil then
+            local icon = self.lampIcons[slice]
+            icon:setPosition(snapScreenX(x - icon.width * 0.5), snapScreenY(y - icon.height * 0.5))
+            lamps[#lamps + 1] = { icon = icon, color = color, x = x, y = y }
         end
     end
 
@@ -1449,40 +938,29 @@ function RMS_Hud:drawDashboard()
         lit.icon:render()
     end
 
-    local motorLoad = 0
-    if vehicle:getIsMotorStarted() then
-        motorLoad = self:updateMotorLoadAverage(math.clamp(tonumber(spec.dynamicMotorLoad) or 0, 0, 1))
-    end
+    local motorLoad = isMotorOn and self:updateMotorLoadAverage(math.clamp(tonumber(spec.dynamicMotorLoad) or 0, 0, 1)) or 0
     self.telemetryDisplayValues.motorLoad = motorLoad
-
     local showTransmissionTemperatureText = hasTransmissionOilTempDisplay and unitsById.transmission ~= nil
-    local gaugeValues = RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperatureText,
-        g_gameSettings:getValue(GameSettings.SETTING.USE_FAHRENHEIT))
+    local gaugeValues = RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperatureText)
 
-    setTextAlignment(RenderText.ALIGN_CENTER)
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_MIDDLE)
-    setTextBold(true)
-
-    local defaultTextColor = {1, 1, 1, 1}
+    setTextStyle(RenderText.ALIGN_CENTER, RenderText.VERTICAL_ALIGN_MIDDLE, true)
     for _, indicatorName in ipairs({ "coolant", "transmission", "engine", "battery" }) do
         local gaugeValue = gaugeValues[indicatorName]
         local place, unit = layout[indicatorName], unitsById[indicatorName]
         if gaugeValue ~= nil and place ~= nil and unit.valueWidth ~= nil then
-            local valueSize = self.indicatorValueText.size
+            local valueSize = self.lampValueSize
             local valueWidth = getTextWidth(valueSize, gaugeValue.text)
             local maxWidth = self:scalePixelToScreenWidth(unit.valueWidth)
             if valueWidth > maxWidth then
                 valueSize = valueSize * maxWidth / valueWidth
             end
             local valueTop = place.y - unit.inkHeight * 0.5 - lamp.VALUE_GAP
-
-            local color = gaugeValue.isWarning and colors.WARNING or defaultTextColor
-            setTextColor(color[1], color[2], color[3], color[4])
+            local color = gaugeValue.isWarning and colors.WARNING or RMS_Hud.GAUGE_LIT
+            setTextColor(color[1], color[2], color[3], 1)
             renderText(snapScreenX(posX + self:scalePixelToScreenWidth(place.x)),
                 snapScreenY(posY + self:scalePixelToScreenHeight(valueTop - lamp.VALUE_TOP)), valueSize, gaugeValue.text)
         end
     end
-    setTextColor(1, 1, 1, 1)
 
     self:drawDrivetrainDisplay(vehicle, posX, posY)
     if not isRoadVehicle then
@@ -1490,20 +968,9 @@ function RMS_Hud:drawDashboard()
     end
     self:drawParkBrakeDisplay(vehicle)
     self:drawOdometer()
-
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_BOTTOM)
-    setTextBold(false)
 end
 
 ---Draws the half-moon: background, lamp cells, coolant gauge
--- @param float posX x of the gauge centre, screen
--- @param float posY y of the gauge centre
--- @param table units lamps of the column, in order
--- @param table layout their places, by lamp id
--- @param table spec vehicle RMS state
--- @param boolean isPowered ignition on
--- @param boolean hasHigh drive bubble drawn above
--- @param boolean hasLow wheel slip bubble drawn below
 function RMS_Hud:drawHalfMoon(posX, posY, units, layout, spec, isPowered, hasHigh, hasLow)
     local halfMoon = self.halfMoon
     local back = RMS_Hud.BACKGROUND.BOX
@@ -1525,13 +992,6 @@ function RMS_Hud:drawHalfMoon(posX, posY, units, layout, spec, isPowered, hasHig
 end
 
 ---Turns an atlas picture by its UVs; overlay rotation distorts it
--- @param table overlay overlay of the atlas
--- @param string sliceId slice of the picture
--- @param table box reference px the slice covers, from the point it turns about: x0, y0, x1, y1
--- @param table extent reference px of the picture itself, same frame
--- @param float x screen x of the point
--- @param float y screen y of the point
--- @param float angle radians, anticlockwise
 function RMS_Hud:drawTurned(overlay, sliceId, box, extent, x, y, angle)
     local uvs = self.sliceUvs[sliceId]
     if uvs == nil then
@@ -1564,10 +1024,6 @@ function RMS_Hud:drawTurned(overlay, sliceId, box, extent, x, y, angle)
 end
 
 ---Draws the coolant gauge and its zone band
--- @param float posX x of the gauge centre, screen
--- @param float posY y of the gauge centre
--- @param table spec vehicle RMS state
--- @param boolean isPowered ignition on
 function RMS_Hud:drawCoolantGauge(posX, posY, spec, isPowered)
     local gauge = RMS_Hud.GAUGE
     local telltale = RMS_Thermal.getDriveValues(spec).TELLTALE
@@ -1629,9 +1085,7 @@ function RMS_Hud:drawOdometer()
     local value = string.format("%04d.%d km", math.floor(displayTenths / 10), displayTenths % 10)
     local size = speedMeter:scalePixelToScreenHeight(10)
     local gap = speedMeter:scalePixelToScreenWidth(4)
-    setTextBold(true)
-    setTextAlignment(RenderText.ALIGN_LEFT)
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_BOTTOM)
+    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_BOTTOM, true)
 
     -- Reserve maximum glyph widths to prevent digit shifts.
     local widestDigit = "0"
@@ -1665,14 +1119,6 @@ function RMS_Hud:drawOdometer()
     setTextBold(false)
 end
 
----Draws a bubble beside the half-moon and places what it holds
--- @param boolean isHigh front axle above, wheel slip below
--- @param float posX x of the gauge centre, screen
--- @param float posY y of the gauge centre
--- @param float inkHeight ink height of the symbol it holds
--- @return float symbolY y of the symbol centre
--- @return float valueY y of the value text
--- @return float centreX x of the bubble centre
 local function drawBubble(self, isHigh, posX, posY, inkHeight)
     local bubbleX, bubbleY = RMS_Hud.getBubbleCentre(isHigh)
     local centreX = posX + self:scalePixelToScreenWidth(bubbleX)
@@ -1684,20 +1130,13 @@ local function drawBubble(self, isHigh, posX, posY, inkHeight)
     return centreY + self:scalePixelToScreenHeight(symbolY), centreY + self:scalePixelToScreenHeight(valueY), centreX
 end
 
----Writes the value of a bubble under its symbol
 local function drawBubbleValue(self, centreX, valueY, text, color)
-    setTextAlignment(RenderText.ALIGN_CENTER)
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_MIDDLE)
-    setTextBold(true)
+    setTextStyle(RenderText.ALIGN_CENTER, RenderText.VERTICAL_ALIGN_MIDDLE, true)
     setTextColor(color[1], color[2], color[3], color[4])
     renderText(snapScreenX(centreX), snapScreenY(valueY), self.bubbleValueSize, text)
-    setTextColor(1, 1, 1, 1)
 end
 
 ---Draws the wheel slip in its bubble below the left of the dial
--- @param table spec vehicle spec
--- @param float posX x of the gauge centre, screen
--- @param float posY y of the gauge centre
 function RMS_Hud:drawWheelSlipDisplay(spec, posX, posY)
     local wheelSlip = math.clamp(tonumber(spec.wheelSlipIntensity) or 0, 0, 1)
     local symbolY, valueY, centreX = drawBubble(self, false, posX, posY, RMS_Hud.WHEEL_SLIP_INK_HEIGHT)
@@ -1710,11 +1149,6 @@ function RMS_Hud:drawWheelSlipDisplay(spec, posX, posY)
     drawBubbleValue(self, centreX, valueY, string.format("%.0f%%", wheelSlip * 100), {1, 1, 1, 1})
 end
 
--- @param table state drivetrain state
--- @param boolean hasFrontAxleSwitch true when the front axle drive can be switched
--- @param float time game time in ms
--- @return string iconId picture shown
--- @return table color its color
 function RMS_Hud.getDrivetrainDisplay(state, hasFrontAxleSwitch, time)
     local colors = RMS_Breakdowns.COLORS
     local windupStress = tonumber(state.windupStress) or 0
@@ -1734,9 +1168,6 @@ function RMS_Hud.getDrivetrainDisplay(state, hasFrontAxleSwitch, time)
     return "frontWheelDrive", isWindingUp and colors.WARNING or RMS_Hud.COLOR_GAME_GREEN
 end
 
--- @param table vehicle vehicle
--- @param float posX x of the gauge centre, screen
--- @param float posY y of the gauge centre
 function RMS_Hud:drawDrivetrainDisplay(vehicle, posX, posY)
     if not RMS_Drivetrain.getIsAvailable(vehicle) then
         return
@@ -1765,7 +1196,6 @@ function RMS_Hud:drawDrivetrainDisplay(vehicle, posX, posY)
 end
 
 ---Draws the park brake indicator
--- @param table vehicle vehicle
 function RMS_Hud:drawParkBrakeDisplay(vehicle)
     if self.parkBrakeHud == nil or self.parkBrakeHud.icon == nil then
         return
@@ -1805,7 +1235,6 @@ function RMS_Hud:drawTelemetryCards()
     self:drawFuelConsumption(cardRightX)
 end
 
----Returns the widest steering assist work area of the whole combination
 local function getSteeringAssistWidth(vehicle)
     local width = 0
     local root = vehicle.rootVehicle or vehicle
@@ -1824,26 +1253,21 @@ local function getSteeringAssistWidth(vehicle)
     return width
 end
 
----Returns the fuel consumption per worked area
--- @return float? rate consumption per hectare
+---Returns the speed and the area the controlled vehicle works
 function RMS_Hud:getConsumptionAreaRate()
-    local vehicle = self.vehicle
-    if vehicle == nil then
-        return 0, 0
-    end
-
-    local speed = vehicle.getLastSpeed ~= nil and (tonumber(vehicle:getLastSpeed()) or 0) or 0
-    local width = vehicle.getAttacherToolWorkingWidth ~= nil and (tonumber(vehicle:getAttacherToolWorkingWidth()) or 0) or 0
+    local speed = self.vehicle.getLastSpeed ~= nil and (tonumber(self.vehicle:getLastSpeed()) or 0) or 0
+    local width = self.vehicle.getAttacherToolWorkingWidth ~= nil and (tonumber(self.vehicle:getAttacherToolWorkingWidth()) or 0) or 0
 
     if width <= 0 then
-        width = getSteeringAssistWidth(vehicle)
+        width = getSteeringAssistWidth(self.vehicle)
     end
 
-    local guidanceSpec = vehicle.spec_globalPositioningSystem
+    local guidanceSpec = self.vehicle.spec_globalPositioningSystem
     if guidanceSpec ~= nil and guidanceSpec.guidanceData ~= nil and guidanceSpec.guidanceData.width ~= nil then
         width = tonumber(guidanceSpec.guidanceData.width) or width
     end
 
+    -- From km/h and m to ha/h
     return speed, (speed * width) / 10
 end
 
@@ -1858,8 +1282,6 @@ function RMS_Hud:resetConsumptionAverages()
 end
 
 ---Uses the native hourly readout and samples the consumption per worked area
--- @param float consumptionPerHour consumption in units per hour
--- @param float areaRate worked area rate in hectares per hour
 function RMS_Hud:updateConsumptionAverages(consumptionPerHour, areaRate)
     local state = self.consumption
     local dt = tonumber(g_currentDt) or 0
@@ -1895,8 +1317,6 @@ function RMS_Hud:updateConsumptionAverages(consumptionPerHour, areaRate)
 end
 
 ---Samples the engine load and refreshes its average once a second
--- @param float motorLoad current engine load between 0 and 1
--- @return float average averaged engine load
 function RMS_Hud:updateMotorLoadAverage(motorLoad)
     local state = self.motorLoadAverage
     local dt = tonumber(g_currentDt) or 0
@@ -1923,25 +1343,24 @@ function RMS_Hud:updateMotorLoadAverage(motorLoad)
     return timeSum > 0 and valueSum / timeSum or motorLoad
 end
 
+local function drawCardSeparator(x, panelY, panelH, color)
+    local lineHeight = panelH * 0.55
+    local bottom = panelY + (panelH - lineHeight) * 0.5
+    drawLine2D(x, bottom, x, bottom + lineHeight, g_pixelSizeX, color[1], color[2], color[3], color[4])
+end
+
 ---Draws the fuel consumption card
--- @param float cardRightX right edge of the card
 function RMS_Hud:drawFuelConsumption(cardRightX)
-    local vehicle = self.vehicle
-    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil or vehicle.spec_motorized == nil then
+    if self.vehicle.spec_RealisticMechanicalSystems == nil or self.vehicle.spec_motorized == nil then
         return
     end
 
-    local _, fuelCapacity, fuelType = SpeedMeterDisplay.getVehicleFuelLevelAndCapacity(vehicle)
+    local _, fuelCapacity, fuelType = SpeedMeterDisplay.getVehicleFuelLevelAndCapacity(self.vehicle)
     if fuelCapacity == nil or fuelCapacity <= 0 then
         return
     end
 
-    local motorizedSpec = vehicle.spec_motorized
-    local consumptionPerHour = 0
-    if vehicle:getIsMotorStarted() then
-        consumptionPerHour = math.max(tonumber(motorizedSpec.lastFuelUsageDisplay or motorizedSpec.lastFuelUsage) or 0, 0)
-    end
-
+    local consumptionPerHour = self.vehicle:getIsMotorStarted() and self.vehicle.spec_motorized.lastFuelUsageDisplay or 0
     local speed, areaRate = self:getConsumptionAreaRate()
     self:updateConsumptionAverages(consumptionPerHour, speed > 0.9 and areaRate or 0)
 
@@ -2000,15 +1419,9 @@ function RMS_Hud:drawFuelConsumption(cardRightX)
     icon:setVisible(true)
     icon:render()
 
-    local separatorLineW = 1 / g_screenWidth
-    local separatorLineH = panelH * 0.55
-    local separatorLineX = textX + perHourWidth + separatorGap * 0.5 - separatorLineW * 0.5
-    local separatorLineY = panelY + (panelH - separatorLineH) * 0.5
-    self:drawNotificationDivider(separatorLineX, separatorLineY, separatorLineW, separatorLineH, green)
+    drawCardSeparator(textX + perHourWidth + separatorGap * 0.5, panelY, panelH, green)
 
-    setTextAlignment(RenderText.ALIGN_LEFT)
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_MIDDLE)
-    setTextBold(true)
+    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_MIDDLE, true)
     setTextColor(1, 1, 1, 1)
     renderText(textX, textY, size, perHourStr)
     setTextBold(false)
@@ -2022,16 +1435,10 @@ function RMS_Hud:drawFuelConsumption(cardRightX)
     setTextBold(false)
     setTextColor(1, 1, 1, 0.55)
     renderText(textX + perAreaValueWidth + unitGap, textY, size, perAreaUnit)
-
-    setTextColor(1, 1, 1, 1)
-    setTextAlignment(RenderText.ALIGN_LEFT)
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_BOTTOM)
 end
 
 
 ---Returns the colour of a load severity
--- @param integer severity load severity
--- @return table color rgba channels
 function RMS_Hud:getLoadSeverityColor(severity)
     local colors = RMS_Breakdowns.COLORS
     local s = math.clamp(tonumber(severity) or 0, 0, 1)
@@ -2049,16 +1456,11 @@ function RMS_Hud:getLoadSeverityColor(severity)
 end
 
 ---Formats a mass in tons
--- @param float massTons mass in tons
--- @return string text formatted mass
 function RMS_Hud:formatMass(massTons)
     return formatValue(math.max(tonumber(massTons) or 0, 0), "%.1f") .. " t"
 end
 
 ---Returns a mass that only changes past a threshold
--- @param string cacheKey key the mass is cached under
--- @param float massTons mass in tons
--- @return float mass stable mass
 function RMS_Hud:getStableDisplayMass(cacheKey, massTons)
     local mass = math.max(tonumber(massTons) or 0, 0)
     local displayStep = 0.1
@@ -2074,20 +1476,9 @@ function RMS_Hud:getStableDisplayMass(cacheKey, massTons)
 end
 
 ---Draws the load mass card
--- @param float cardRightX right edge of the card
 function RMS_Hud:drawLoadMass(cardRightX)
-    local vehicle = self.vehicle
-    if vehicle == nil or vehicle.getTotalMass == nil then
-        return cardRightX
-    end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
+    local vehicle, spec = self.vehicle, self.vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
-        return cardRightX
-    end
-
-    local speedMeter = g_currentMission.hud.speedMeter
-    if speedMeter == nil or speedMeter.speedBg == nil then
         return cardRightX
     end
 
@@ -2154,20 +1545,13 @@ function RMS_Hud:drawLoadMass(cardRightX)
     local bg = HUD.COLOR.BACKGROUND
     drawFilledRectRound(panelX, panelY, panelW, panelH, 0.35, bg[1], bg[2], bg[3], bg[4])
 
-    local sepLineW = 1 / g_screenWidth
-    local sepLineH = panelH * 0.55
-    local sepLineY = panelY + (panelH - sepLineH) * 0.5
     local green    = HUD.COLOR.ACTIVE
-    self:drawNotificationDivider(startX + w1 + wsep * 0.5 - sepLineW * 0.5,             sepLineY, sepLineW, sepLineH, green)
-    self:drawNotificationDivider(startX + w1 + wsep + w2 + wsep * 0.5 - sepLineW * 0.5, sepLineY, sepLineW, sepLineH, green)
+    drawCardSeparator(startX + w1 + wsep * 0.5, panelY, panelH, green)
+    drawCardSeparator(startX + w1 + wsep + w2 + wsep * 0.5, panelY, panelH, green)
 
     local cx = startX
     local dimLabel = {1, 1, 1, 0.55}
-
-    setTextAlignment(RenderText.ALIGN_LEFT)
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_MIDDLE)
-
-    setTextBold(false)
+    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_MIDDLE, false)
     setTextColor(unpack(dimLabel))
     renderText(cx, textY, size, tractorLabel)
     setTextBold(true)
@@ -2192,119 +1576,112 @@ function RMS_Hud:drawLoadMass(cardRightX)
     setTextColor(loadColor[1], loadColor[2], loadColor[3], 1)
     renderText(cx + wOL, textY, size, totalValue)
 
-    setTextBold(false)
-    setTextColor(1, 1, 1, 1)
-    setTextAlignment(RenderText.ALIGN_LEFT)
-    setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_BOTTOM)
-
     return panelX - (self.telemetryCardGap or 0)
 end
 
-
-local INSPECTED_DAMAGE_CEILING = 0.9
-
-local TIER_DAMAGE_AMOUNTS = {0.0, 0.25, 0.5, 0.75, INSPECTED_DAMAGE_CEILING}
-
-local originalSpeedMeterDisplayDraw = SpeedMeterDisplay.draw
-SpeedMeterDisplay.draw = function(self, ...)
-    local vehicle = self.vehicle
-    if vehicle == nil or not self.isVehicleDrawSafe or vehicle.rootVehicle == nil then
-        return originalSpeedMeterDisplayDraw(self, ...)
-    end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec ~= nil and spec.isExcludedVehicle then
-        return originalSpeedMeterDisplayDraw(self, ...)
-    end
-
-    local selectedTool = nil
-    local useCustomValue = false
-    local customDamageAmount = 0
-
-    for _, implement in ipairs(vehicle.rootVehicle.childVehicles) do
-        if implement:getIsSelected() and implement.getDamageShowOnHud ~= nil and implement:getDamageShowOnHud() then
-            selectedTool = implement
-            break
-        end
-    end
-
-    if selectedTool ~= nil then
-        useCustomValue = true
-        if selectedTool.getServiceLevel ~= nil then
-            local condition, isCompleteInspection = vehicle:getLastInspectedCondition()
-            condition = math.clamp(condition or 0, 0, 1)
-            if isCompleteInspection == nil then
-                customDamageAmount = 1.0
-            elseif isCompleteInspection then
-                customDamageAmount = math.min(1 - condition, INSPECTED_DAMAGE_CEILING)
-            else
-                customDamageAmount = TIER_DAMAGE_AMOUNTS[RMS_Utils.getConditionTier(condition)]
+---Returns the damage the game's bar shows for the selected machine
+function RMS_Hud.getSelectedDamage(vehicle)
+    for _, child in ipairs(vehicle.rootVehicle.childVehicles) do
+        if child:getIsSelected() and child.getDamageShowOnHud ~= nil and child:getDamageShowOnHud() then
+            if child.getLastInspectedCondition == nil then
+                return child:getDamageAmount()
             end
-        else
-            customDamageAmount = selectedTool:getDamageAmount()
-        end
-    end
-
-    local originalGetDamageMethods = {}
-    if useCustomValue then
-        local allVehicles = vehicle.rootVehicle.childVehicles
-        
-        for _, v in ipairs(allVehicles) do
-            if v.getDamageAmount ~= nil then
-                originalGetDamageMethods[v] = v.getDamageAmount
-                v.getDamageAmount = function()
-                    return customDamageAmount
-                end
+            -- An RMS machine shows its last inspection, empty before any
+            local condition, isComplete = child:getLastInspectedCondition()
+            local bar = RMS_Hud.CONDITION_BAR
+            if isComplete == nil then
+                return 1
+            elseif isComplete then
+                return 1 - math.max(condition, bar.FILL_MIN)
             end
+            return 1 - bar.FILL_BY_TIER[RMS_Utils.getConditionTier(condition)]
         end
     end
-
-    local result = originalSpeedMeterDisplayDraw(self, ...)
-
-    if useCustomValue then
-        for vehicleInstance, originalMethod in pairs(originalGetDamageMethods) do
-            vehicleInstance.getDamageAmount = originalMethod
-        end
-    end
-
-    return result
+    return nil
 end
 
+local shownDamage = 0
+
+local function getShownDamage()
+    return shownDamage
+end
+
+---Draws the speed meter, its damage bar for the selected machine
+function RMS_Hud.drawSpeedMeter(speedMeter, superFunc)
+    local vehicle = speedMeter.vehicle
+    local damage
+    if vehicle ~= nil and speedMeter.isVehicleDrawSafe then
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        if spec == nil or not spec.isExcludedVehicle then
+            damage = RMS_Hud.getSelectedDamage(vehicle)
+        end
+    end
+    if damage == nil then
+        superFunc(speedMeter)
+        return
+    end
+
+    -- The game shows the worst damage; all report the shown one
+    shownDamage = damage
+    local vehicles = vehicle.rootVehicle.childVehicles
+    local getDamageAmounts = {}
+    for index, child in ipairs(vehicles) do
+        getDamageAmounts[index] = child.getDamageAmount
+        if child.getDamageAmount ~= nil then
+            child.getDamageAmount = getShownDamage
+        end
+    end
+    superFunc(speedMeter)
+    for index, child in ipairs(vehicles) do
+        child.getDamageAmount = getDamageAmounts[index]
+    end
+end
+
+---Adds the grease points due, else what is left before the next ones
+local function addGreasingLine(vehicle, box)
+    local spec = RMS_Greasing.getSpec(vehicle)
+    if spec == nil or not spec.isVehicleNeedLubricate then
+        return
+    end
+
+    local greasing = RMS_Greasing.read(vehicle)
+    if greasing.due > 0 then
+        box:addLine(g_i18n:getText("rms_inspection_status_grease_due"), tostring(greasing.due), greasing.state == "late")
+    else
+        box:addLine(g_i18n:getText("rms_fleet_greasing_next"), greasing.next ~= nil and RMS_Utils.formatGreasingLeft(greasing.next)
+            or g_i18n:getText("rms_fleet_greasing_period_day"))
+    end
+end
 
 ---Adds the RMS lines to the vanilla vehicle info box
--- @param table box info box
 function RMS_Hud:showInfoVehicle(box)
-    if self.spec_RealisticMechanicalSystems ~= nil and not self.spec_RealisticMechanicalSystems.isExcludedVehicle then
-        local spec = self.spec_RealisticMechanicalSystems
-        
-        local schedule = self:getServiceSchedule()
-        local _, isReportOutdated = self:getInspectionReportAge()
-        box:addLine(g_i18n:getText('rms_ws_label_condition'), RMS_Utils.formatCondition(self:getLastInspectedCondition()), isReportOutdated)
-        if schedule ~= nil then
-            -- Native info-box rows cannot resize text.
-            local hasHours = schedule.interval < math.huge
-            local deadline = hasHours and RMS_Utils.formatHours(math.max(schedule.interval - schedule.used, 0))
-                or RMS_Utils.formatMonths(schedule.remainingMonths)
-            box:addLine(RMS_Utils.formatMaintenanceLevel(self, schedule.maintenanceType), deadline, schedule.overdue)
-            if hasHours and schedule.months ~= nil then
-                box:addLine(RMS_Utils.formatServiceReason(self, schedule, true), RMS_Utils.formatMonths(schedule.remainingMonths), schedule.calendarDue)
-            end
-        end
+    local spec = self.spec_RealisticMechanicalSystems
+    if spec == nil then
+        addGreasingLine(self, box)
+        return
+    elseif spec.isExcludedVehicle then
+        return
+    end
 
-        if spec.batteryIsolated then
-            box:addLine(g_i18n:getText("rms_battery_isolator_info"), nil, true)
-        end
+    local schedule = self:getServiceSchedule()
+    local _, isReportOutdated = self:getInspectionReportAge()
+    box:addLine(g_i18n:getText('rms_ws_label_condition'), RMS_Utils.formatCondition(self:getLastInspectedCondition()), isReportOutdated)
+    if schedule ~= nil then
+        -- Native info-box rows cannot resize text.
+        box:addLine(RMS_Utils.formatMaintenanceLevel(self, schedule.maintenanceType), RMS_Utils.formatServiceDeadline(schedule), schedule.overdue)
+    end
+    addGreasingLine(self, box)
 
-        
-        if spec.currentState ~= RealisticMechanicalSystems.STATUS.READY and spec.currentState ~= RealisticMechanicalSystems.STATUS.BROKEN then
-            local maintenanceStatusText = string.format(
-                g_i18n:getText("rms_spec_last_maintenance_until_format"),
-                RMS_Utils.formatServiceState(spec.currentState),
-                RMS_Utils.formatFinishTime(self:getServiceFinishTime())
-            )
-            box:addLine(maintenanceStatusText)
-        end
+    if spec.batteryIsolated then
+        box:addLine(g_i18n:getText("rms_battery_isolator_info"), nil, true)
+    end
+
+    local state = spec.currentState
+    if state ~= RealisticMechanicalSystems.STATUS.READY and state ~= RealisticMechanicalSystems.STATUS.BROKEN then
+        box:addLine(string.format(g_i18n:getText("rms_spec_last_maintenance_until_format"), RMS_Utils.formatServiceState(state),
+            RMS_Utils.formatFinishTime(self:getServiceFinishTime())))
     end
 end
 
 Vehicle.showInfo = Utils.appendedFunction(Vehicle.showInfo, RMS_Hud.showInfoVehicle)
+SpeedMeterDisplay.draw = Utils.overwrittenFunction(SpeedMeterDisplay.draw, RMS_Hud.drawSpeedMeter)

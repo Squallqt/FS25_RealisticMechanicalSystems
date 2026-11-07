@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Synchronises the per player tutorial state between server and client
 RMS_TutorialStateEvent = {}
@@ -8,14 +7,11 @@ local RMS_TutorialStateEvent_mt = Class(RMS_TutorialStateEvent, Event)
 InitEventClass(RMS_TutorialStateEvent, "RMS_TutorialStateEvent")
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_TutorialStateEvent.emptyNew()
     return Event.new(RMS_TutorialStateEvent_mt)
 end
 
 ---Create new instance of event from a normalized copy of the tutorial state
--- @param table? state tutorial state
--- @return table self instance of class event
 function RMS_TutorialStateEvent.new(state)
     local self = RMS_TutorialStateEvent.emptyNew()
     self.state = RMS_Config.createTutorialState(
@@ -27,8 +23,6 @@ function RMS_TutorialStateEvent.new(state)
 end
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_TutorialStateEvent:writeStream(streamId, connection)
     streamWriteBool(streamId, self.state.tutorialMode)
     streamWriteBool(streamId, self.state.welcomeMessageSeen)
@@ -38,8 +32,6 @@ function RMS_TutorialStateEvent:writeStream(streamId, connection)
 end
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_TutorialStateEvent:readStream(streamId, connection)
     local messages = {}
     local tutorialMode = streamReadBool(streamId)
@@ -52,7 +44,6 @@ function RMS_TutorialStateEvent:readStream(streamId, connection)
 end
 
 ---Run action on receiving side
--- @param Connection connection connection
 function RMS_TutorialStateEvent:run(connection)
     if connection:getIsServer() then
         RMS_Config.applyTutorialState(self.state)
@@ -63,7 +54,6 @@ function RMS_TutorialStateEvent:run(connection)
 end
 
 ---Send the stored tutorial state of a player to its newly connected client
--- @param Connection connection connection
 function RMS_TutorialStateEvent.sendToClient(connection)
     if g_server == nil then return end
 
@@ -74,7 +64,6 @@ function RMS_TutorialStateEvent.sendToClient(connection)
 end
 
 ---Send the tutorial state from a client to the server
--- @param table state tutorial state
 function RMS_TutorialStateEvent.sendToServer(state)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_TutorialStateEvent.new(state))

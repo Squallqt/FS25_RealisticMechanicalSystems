@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Diagnostic PC commands and server replies
 RMS_DiagnosticRequestEvent = {}
@@ -14,12 +13,10 @@ local SHARED_ERRORS = {
     unavailable = "rms_charger_error_unavailable"
 }
 
----
 function RMS_DiagnosticRequestEvent.emptyNew()
     return Event.new(RMS_DiagnosticRequestEvent_mt)
 end
 
----
 function RMS_DiagnosticRequestEvent.new(tool, target, action, result)
     local self = RMS_DiagnosticRequestEvent.emptyNew()
     self.tool = tool
@@ -29,7 +26,6 @@ function RMS_DiagnosticRequestEvent.new(tool, target, action, result)
     return self
 end
 
----
 function RMS_DiagnosticRequestEvent:writeStream(streamId)
     NetworkUtil.writeNodeObject(streamId, self.tool)
     NetworkUtil.writeNodeObject(streamId, self.target)
@@ -37,7 +33,6 @@ function RMS_DiagnosticRequestEvent:writeStream(streamId)
     streamWriteString(streamId, self.result)
 end
 
----
 function RMS_DiagnosticRequestEvent:readStream(streamId, connection)
     self.tool = NetworkUtil.readNodeObject(streamId)
     self.target = NetworkUtil.readNodeObject(streamId)
@@ -46,7 +41,6 @@ function RMS_DiagnosticRequestEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
----
 function RMS_DiagnosticRequestEvent:run(connection)
     if connection:getIsServer() then
         if self.result ~= "" and self.result ~= "ok" then
@@ -88,9 +82,6 @@ function RMS_DiagnosticRequestEvent:run(connection)
 end
 
 ---Sends a command of the PC to the server
--- @param table tool trolley
--- @param table? target machine to plug into
--- @param integer action RMS_DiagnosticTool.ACTION
 function RMS_DiagnosticRequestEvent.send(tool, target, action)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_DiagnosticRequestEvent.new(tool, target, action))

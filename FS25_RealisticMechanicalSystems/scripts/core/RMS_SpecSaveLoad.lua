@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Vehicle savegame persistence.
 
@@ -7,89 +6,63 @@ local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
 local getIsElectricVehicle = RMS_Utils.getIsElectricVehicle
 local ensureFactorStats = RealisticMechanicalSystems.ensureFactorStats
 local refreshExclusionState = RealisticMechanicalSystems.refreshExclusionState
-local getSyncOperatingTime = RealisticMechanicalSystems.getSyncOperatingTime
-local captureSystemsSync = RealisticMechanicalSystems.captureSystemsSync
 
----Builds a zeroed wear statistics entry for every system
+---Wear statistics of systems not worked yet, their hours unrecorded
 local function createEmptyFactorStats(systems)
-    local result = {}
-    if type(systems) ~= "table" then
-        return result
+    local stats = {}
+    for systemKey in pairs(type(systems) == "table" and systems or {}) do
+        stats[systemKey] = { total = 0, _prevStress = 0, _avgStress = 0, operatingHours = -1 }
     end
-
-    for systemKey, _ in pairs(systems) do
-        result[systemKey] = {
-            total = 0,
-            _prevStress = 0,
-            _avgStress = 0,
-            operatingHours = -1
-        }
-    end
-
-    return result
+    return stats
 end
 
----Flattens the factor statistics into system.stat keys for the savegame
+---Wear statistics as one map keyed system.cause, numbers only
 local function flattenFactorStats(factorStats)
     local flat = {}
-    if type(factorStats) ~= "table" then
-        return flat
-    end
-
-    for systemKey, stats in pairs(factorStats) do
+    for systemKey, stats in pairs(type(factorStats) == "table" and factorStats or {}) do
         if type(stats) == "table" then
-            for statKey, statValue in pairs(stats) do
-                local numericValue = tonumber(statValue)
-                if numericValue ~= nil then
-                    flat[string.format("%s.%s", tostring(systemKey), tostring(statKey))] = numericValue
+            for statKey, value in pairs(stats) do
+                local number = tonumber(value)
+                if number ~= nil then
+                    flat[tostring(systemKey) .. "." .. tostring(statKey)] = number
                 end
             end
         end
     end
-
     return flat
 end
 
----Rebuilds the factor statistics from the flattened savegame map
+---Puts flattened wear statistics back under their systems
 local function applyFlattenedFactorStats(spec, flattenedMap)
     if spec == nil then
         return
     end
-
     if type(spec.factorStats) ~= "table" then
         spec.factorStats = {}
     end
-
-    if type(flattenedMap) ~= "table" then
-        return
-    end
-
-    for flatKey, value in pairs(flattenedMap) do
+    for flatKey, value in pairs(type(flattenedMap) == "table" and flattenedMap or {}) do
         local systemKey, statKey = string.match(tostring(flatKey), "([^%.]+)%.(.+)")
-        local numericValue = tonumber(value)
-        if systemKey ~= nil and statKey ~= nil and numericValue ~= nil then
-            if type(spec.factorStats[systemKey]) ~= "table" then
-                spec.factorStats[systemKey] = {}
+        local number = tonumber(value)
+        if systemKey ~= nil and number ~= nil then
+            local stats = spec.factorStats[systemKey]
+            if type(stats) ~= "table" then
+                stats = {}
+                spec.factorStats[systemKey] = stats
             end
-            spec.factorStats[systemKey][statKey] = numericValue
+            stats[statKey] = number
         end
     end
 end
 
----Tells whether the vehicle is an auxiliary machine
 local function getIsAuxiliaryMachine(xmlFile)
     return not xmlFile:getValue("vehicle.enterable#isTabbable", true)
 end
 
----Tells whether the vehicle is a machine towed with its own engine
 local function getIsTowedMachine(vehicle)
     return vehicle.getInputAttacherJoints ~= nil and #vehicle:getInputAttacherJoints() > 0
 end
 
 ---Tells whether RMS tracks a store item once bought
--- @param XMLFile xmlFile vehicle file of the store item
--- @param string? customEnvironment mod of the store item
--- @return boolean isTracked true when RMS tracks the machine by default
 function RealisticMechanicalSystems.getIsStoreItemTracked(xmlFile, customEnvironment)
     local vehicleType = g_vehicleTypeManager:getTypeByName(xmlFile:getValue("vehicle#type"), customEnvironment)
     if vehicleType == nil or vehicleType.specializationsByName.RealisticMechanicalSystems == nil then
@@ -102,7 +75,6 @@ function RealisticMechanicalSystems.getIsStoreItemTracked(xmlFile, customEnviron
 end
 
 ---Returns why RMS leaves a vehicle out, as the text key the fleet menu shows
--- @param table vehicle vehicle
 -- @return string? reasonKey l10n key, nil when RMS tracks the vehicle
 function RealisticMechanicalSystems.getExclusionReason(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -124,10 +96,7 @@ function RealisticMechanicalSystems.getExclusionReason(vehicle)
 end
 
 ---Tells whether a player may include or exclude a vehicle
--- @param table vehicle vehicle
--- @param boolean isExcluded true to exclude the vehicle
 -- @param Connection? connection player connection, nil for the local player
--- @return boolean canSet true when the player may change the flag
 function RealisticMechanicalSystems.getCanSetUserExclusion(vehicle, isExcluded, connection)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil or (isExcluded and vehicle:isUnderService()) then
@@ -164,10 +133,110 @@ local function getIsTruck(vehicle)
 end
 
 
+---Log entry attributes in saved order; isDetail: with condition data
+local LOG_ENTRY_XML = {
+    { name = "id", write = function(entry) return entry.id or 0 end },
+    { name = "type", write = function(entry) return entry.type or "" end },
+    { name = "price", write = function(entry) return entry.price or 0 end },
+    { name = "date", write = function(entry) return RMS_Utils.serializeDate(entry.date) end,
+        read = function(value) return RMS_Utils.deserializeDate(value) end },
+    { name = "location", isDetail = true, default = "UNKNOWN" },
+    { name = "optionOne", isDetail = true, default = "NONE" },
+    { name = "optionTwo", isDetail = true, default = "NONE" },
+    { name = "optionThree", isDetail = true, default = false },
+    { name = "isVisible", isDetail = true, default = true,
+        write = function(entry) return tostring(RMS_Utils.normalizeBoolValue(entry.isVisible, true)) end,
+        read = function(value) return RMS_Utils.normalizeBoolValue(value, true) end },
+    { name = "isCompleted", isDetail = true, default = true,
+        write = function(entry) return RMS_Utils.normalizeBoolValue(entry.isCompleted, true) end,
+        read = function(value) return RMS_Utils.normalizeBoolValue(value, true) end },
+    { name = "invoice", isDetail = true,
+        write = function(entry) return entry.invoice ~= nil and RMS_Utils.serializeInvoice(entry.invoice) or nil end,
+        read = function(value) return RMS_Utils.deserializeInvoice(value) end }
+}
+
+---Attributes of the machine as a log entry found it, in saved order
+local LOG_CONDITION_XML = {
+    { name = "year", default = 0 },
+    { name = "operatingHours", default = 0 },
+    { name = "odometerKilometers" },
+    { name = "age", default = 0 },
+    { name = "condition", default = 1 },
+    { name = "service", default = 1 },
+    { name = "reliability", default = 1 },
+    { name = "systems", default = "",
+        write = function(data) return RMS_Utils.serializeSystemsState(RMS_Utils.createSystemsSnapshot(data.systems)) end,
+        read = function(value) return RMS_Utils.createSystemsSnapshot(RMS_Utils.deserializeSystemsState(value)) end },
+    { name = "partWear", default = "",
+        write = function(data) return RMS_Utils.serializeNumericMap(data.partWear) end,
+        read = function(value) return RMS_Utils.deserializeNumericMap(value) end },
+    { name = "batterySoc", default = 1 },
+    { name = "wearExcess" },
+    { name = "wearCauses", default = "",
+        write = function(data) return data.wearExcess ~= nil and RMS_Utils.serializeWearCauses(data.wearCauses) or nil end,
+        read = function(value) return RMS_Utils.deserializeWearCauses(value) end },
+    { name = "activeBreakdowns", default = "",
+        write = function(data) return data.activeBreakdowns and RMS_Utils.serializeBreakdowns(data.activeBreakdowns) or nil end,
+        read = function(value) return RMS_Utils.deserializeBreakdowns(value) or {} end },
+    { name = "selectedBreakdowns", default = "",
+        write = function(data)
+            local selected = data.selectedBreakdowns
+            return selected and #selected > 0 and table.concat(selected, ",") or nil
+        end,
+        read = function(value) return RMS_Utils.parseCsvList(value) end },
+    { name = "activeEffects", default = "",
+        write = function(data) return data.activeEffects and RMS_Utils.serializeEffectSnapshot(data.activeEffects) or nil end,
+        read = function(value) return RMS_Utils.deserializeEffectSnapshot(value) end },
+    { name = "activeIndicators", default = "",
+        write = function(data)
+            if data.activeIndicators == nil then
+                return nil
+            end
+            local ids = {}
+            for id in pairs(data.activeIndicators) do
+                table.insert(ids, tostring(id))
+            end
+            return table.concat(ids, ",")
+        end,
+        read = function(value)
+            local indicators = {}
+            for _, id in ipairs(RMS_Utils.parseCsvList(value)) do
+                indicators[id] = true
+            end
+            return indicators
+        end }
+}
+
+---Writes the attributes of a log entry or of its condition data
+local function writeLogFields(xmlFile, path, holder, fields)
+    for _, field in ipairs(fields) do
+        local value
+        if field.write ~= nil then
+            value = field.write(holder)
+        else
+            value = holder[field.name]
+            if value == nil then
+                value = field.default
+            end
+        end
+        if value ~= nil then
+            xmlFile:setValue(path .. "#" .. field.name, value)
+        end
+    end
+end
+
+---Reads the attributes of a log entry or of its condition data
+local function readLogFields(xmlFile, path, holder, fields)
+    for _, field in ipairs(fields) do
+        local value = xmlFile:getValue(path .. "#" .. field.name, field.default)
+        if field.read ~= nil then
+            value = field.read(value)
+        end
+        holder[field.name] = value
+    end
+end
+
 ---Called on saving
--- @param XMLFile xmlFile XMLFile instance
--- @param string key xml key
--- @param table usedModNames used mod names
 function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
     local spec = self.spec_RealisticMechanicalSystems
     if spec ~= nil and not spec.isNewToRMS then
@@ -180,12 +249,12 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         if spec.isExcludedByUser ~= nil then
             xmlFile:setValue(key .. "#userExclusion", spec.isExcludedByUser)
         end
-        local currentOperatingTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
-        local realOperatingTime = spec.realOperatingTime
-        if (realOperatingTime == nil or realOperatingTime <= 0) and currentOperatingTime > 0 then
-            realOperatingTime = currentOperatingTime
-            spec.realOperatingTime = realOperatingTime
+        -- RMS working time, from the game's while RMS has counted none
+        local gameTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
+        if (spec.realOperatingTime or 0) <= 0 and gameTime > 0 then
+            spec.realOperatingTime = gameTime
         end
+        local workingTime = spec.realOperatingTime or gameTime
         xmlFile:setValue(key .. "#service", spec.serviceLevel or 1.0)
         xmlFile:setValue(key .. "#transmissionService", spec.transmissionServiceLevel)
         xmlFile:setValue(key .. "#coolantService", spec.coolantServiceLevel)
@@ -194,13 +263,15 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#warrantyPlan", spec.warrantyPlan)
         xmlFile:setValue(key .. "#partWarranty", RMS_Utils.serializeNumericMap(spec.partWarranty))
         xmlFile:setValue(key .. "#usedPartWarranty", RMS_Utils.serializeNumericMap(spec.usedPartWarranty))
+        xmlFile:setValue(key .. "#warrantyVoided", spec.warrantyVoided)
+        xmlFile:setValue(key .. "#remapMotor", spec.remapMotor)
+        xmlFile:setValue(key .. "#remapAge", spec.remapAge)
         xmlFile:setValue(key .. "#condition", spec.conditionLevel or 1.0)
-        xmlFile:setValue(key .. "#realOperatingTime", realOperatingTime or currentOperatingTime)
+        xmlFile:setValue(key .. "#realOperatingTime", workingTime)
         if xmlFile.handle ~= nil then
-            setXMLFloat(xmlFile.handle, key .. "#realOperatingTime", tonumber(realOperatingTime or currentOperatingTime) or 0)
+            setXMLFloat(xmlFile.handle, key .. "#realOperatingTime", tonumber(workingTime) or 0)
         end
-        local breakdownString = RMS_Utils.serializeBreakdowns(spec.activeBreakdowns)
-        xmlFile:setValue(key .. "#breakdowns", breakdownString)
+        xmlFile:setValue(key .. "#breakdowns", RMS_Utils.serializeBreakdowns(spec.activeBreakdowns))
         xmlFile:setValue(key .. "#state", spec.currentState or RealisticMechanicalSystems.STATUS.READY)
         xmlFile:setValue(key .. "#plannedState", spec.plannedState or RealisticMechanicalSystems.STATUS.READY)
         xmlFile:setValue(key .. "#maintenanceTimer", RealisticMechanicalSystems.sanitizeNumber(spec.maintenanceTimer, 0, 0))
@@ -244,8 +315,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#particulateFilterLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
         xmlFile:setValue(key .. "#scrInducementHours", RealisticMechanicalSystems.sanitizeNumber(spec.scrInducementHours, 0, 0))
         xmlFile:setValue(key .. "#particulateFilterOverloaded", spec.fuelState.isParticulateFilterOverloaded == true)
-        xmlFile:setValue(key .. "#lubricationLevel", math.clamp(spec.lubricationLevel or 1.0, 0.0, 1.0))
-        xmlFile:setValue(key .. "#lubricationUsedThisPeriod", spec.lubricationUsedThisPeriod == true)
+        xmlFile:setValue(key .. "#greasing", RMS_Greasing.serialize(self))
         xmlFile:setValue(key .. "#thermostatState", RealisticMechanicalSystems.sanitizeNumber(spec.thermostatState, 0.0, 0.0, 1.0))
         xmlFile:setValue(key .. "#transmissionThermostatState", RealisticMechanicalSystems.sanitizeNumber(spec.transmissionThermostatState, 0.0, 0.0, 1.0))
         xmlFile:setValue(key .. "#serviceOptionOne", spec.serviceOptionOne or "")
@@ -265,6 +335,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#pendingServiceClockTarget", RMS_Utils.serializeNumericMap(spec.pendingServiceClockTarget))
         xmlFile:setValue(key .. "#systemsState", RMS_Utils.serializeSystemsState(spec.systems))
         xmlFile:setValue(key .. "#partWear", RMS_Utils.serializeNumericMap(spec.partWear))
+        xmlFile:setValue(key .. "#partImpactWear", RMS_Utils.serializeNumericMap(spec.partImpactWear))
         xmlFile:setValue(key .. "#factorStats", RMS_Utils.serializeNumericMap(flattenFactorStats(spec.factorStats)))
         xmlFile:setValue(key .. "#ptoEngagementCount", spec.ptoEngagementCount or 0)
         xmlFile:setValue(key .. "#ptoEngagementSequence", spec.ptoEngagementSequence or 0)
@@ -274,71 +345,18 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         RMS_Drivetrain.saveToXMLFile(self, xmlFile, key)
         xmlFile:setValue(key .. "#tripStartKilometers", spec.tripStartKilometers)
 
-        if spec.maintenanceLog and #spec.maintenanceLog > 0 then
-            for i, entry in ipairs(spec.maintenanceLog) do
-                local entryKey = string.format("%s.maintenanceLog.entry(%d)", key, i - 1)
-                
-                xmlFile:setValue(entryKey .. "#id", entry.id or 0)
-                xmlFile:setValue(entryKey .. "#type", entry.type or "")
-                xmlFile:setValue(entryKey .. "#price", entry.price or 0)
-                xmlFile:setValue(entryKey .. "#date", RMS_Utils.serializeDate(entry.date)) 
-                xmlFile:setValue(entryKey .. "#location", entry.location or "UNKNOWN")
-                xmlFile:setValue(entryKey .. "#optionOne", entry.optionOne or "NONE")
-                xmlFile:setValue(entryKey .. "#optionTwo", entry.optionTwo or "NONE")
-                xmlFile:setValue(entryKey .. "#optionThree", entry.optionThree or false)
-                xmlFile:setValue(entryKey .. "#isVisible", tostring(RMS_Utils.normalizeBoolValue(entry.isVisible, true)))
-                xmlFile:setValue(entryKey .. "#isCompleted", RMS_Utils.normalizeBoolValue(entry.isCompleted, true))
-                if entry.invoice ~= nil then
-                    xmlFile:setValue(entryKey .. "#invoice", RMS_Utils.serializeInvoice(entry.invoice))
-                end
-
-                if entry.conditionData then
-                    local condKey = entryKey .. ".conditionData"
-                    xmlFile:setValue(condKey .. "#year", entry.conditionData.year or 0)
-                    xmlFile:setValue(condKey .. "#operatingHours", entry.conditionData.operatingHours or 0)
-                    if entry.conditionData.odometerKilometers ~= nil then
-                        xmlFile:setValue(condKey .. "#odometerKilometers", entry.conditionData.odometerKilometers)
-                    end
-                    xmlFile:setValue(condKey .. "#age", entry.conditionData.age or 0)
-                    xmlFile:setValue(condKey .. "#condition", entry.conditionData.condition or 1)
-                    xmlFile:setValue(condKey .. "#service", entry.conditionData.service or 1)
-                    xmlFile:setValue(condKey .. "#reliability", entry.conditionData.reliability or 1)
-                    xmlFile:setValue(condKey .. "#systems", RMS_Utils.serializeSystemsState(RMS_Utils.createSystemsSnapshot(entry.conditionData.systems)))
-                    xmlFile:setValue(condKey .. "#partWear", RMS_Utils.serializeNumericMap(entry.conditionData.partWear))
-                    xmlFile:setValue(condKey .. "#batterySoc", entry.conditionData.batterySoc or 1)
-                    if entry.conditionData.wearExcess ~= nil then
-                        xmlFile:setValue(condKey .. "#wearExcess", entry.conditionData.wearExcess)
-                        xmlFile:setValue(condKey .. "#wearCauses", RMS_Utils.serializeWearCauses(entry.conditionData.wearCauses))
-                    end
-
-                    if entry.conditionData.activeBreakdowns then
-                        xmlFile:setValue(condKey .. "#activeBreakdowns", RMS_Utils.serializeBreakdowns(entry.conditionData.activeBreakdowns))
-                    end
-                    
-                    if entry.conditionData.selectedBreakdowns and #entry.conditionData.selectedBreakdowns > 0 then
-                        xmlFile:setValue(condKey .. "#selectedBreakdowns", table.concat(entry.conditionData.selectedBreakdowns, ","))
-                    end
-                    
-                    if entry.conditionData.activeEffects then
-                        xmlFile:setValue(condKey .. "#activeEffects", RMS_Utils.serializeEffectSnapshot(entry.conditionData.activeEffects))
-                    end
-                    
-                    if entry.conditionData.activeIndicators then
-                        local indKeys = {}
-                        for indId, _ in pairs(entry.conditionData.activeIndicators) do 
-                            table.insert(indKeys, tostring(indId)) 
-                        end
-                        xmlFile:setValue(condKey .. "#activeIndicators", table.concat(indKeys, ","))
-                    end
-                end
+        for index, entry in ipairs(spec.maintenanceLog or {}) do
+            local entryKey = string.format("%s.maintenanceLog.entry(%d)", key, index - 1)
+            writeLogFields(xmlFile, entryKey, entry, LOG_ENTRY_XML)
+            if entry.conditionData then
+                writeLogFields(xmlFile, entryKey .. ".conditionData", entry.conditionData, LOG_CONDITION_XML)
             end
         end
-        
     end
 end
 
----
--- @param table savegame savegame
+local SYSTEM_KEYS = { "engine", "transmission", "hydraulics", "cooling", "electrical", "chassis", "fuel", "pto", "harvest" }
+
 function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.isExcludedVehicle = false
     self.spec_RealisticMechanicalSystems.isExcludedByRule = false
@@ -358,33 +376,32 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.warrantyPlan = 1
     self.spec_RealisticMechanicalSystems.partWarranty = {}
     self.spec_RealisticMechanicalSystems.usedPartWarranty = {}
+    self.spec_RealisticMechanicalSystems.partImpactWear = {}
+    self.spec_RealisticMechanicalSystems.warrantyVoided = false
+    self.spec_RealisticMechanicalSystems.remapMotor = 0
+    self.spec_RealisticMechanicalSystems.remapAge = 0
     self.spec_RealisticMechanicalSystems.conditionLevel = self.spec_RealisticMechanicalSystems.baseConditionLevel
 
     local currentOperatingTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
     local existingRealOperatingTime = tonumber(self.spec_RealisticMechanicalSystems.realOperatingTime) or 0
     self.spec_RealisticMechanicalSystems.realOperatingTime = math.max(existingRealOperatingTime, currentOperatingTime)
 
-    self.spec_RealisticMechanicalSystems.systems = {
-        engine = { name = RealisticMechanicalSystems.SYSTEMS.ENGINE, condition = 1.0, enabled = true },
-        transmission = { name = RealisticMechanicalSystems.SYSTEMS.TRANSMISSION, condition = 1.0, enabled = true },
-        hydraulics = { name = RealisticMechanicalSystems.SYSTEMS.HYDRAULICS, condition = 1.0, enabled = true },
-        cooling = { name = RealisticMechanicalSystems.SYSTEMS.COOLING, condition = 1.0, enabled = true },
-        electrical = { name = RealisticMechanicalSystems.SYSTEMS.ELECTRICAL, condition = 1.0, enabled = true },
-        chassis = { name = RealisticMechanicalSystems.SYSTEMS.CHASSIS, condition = 1.0, enabled = true },
-        fuel = { name = RealisticMechanicalSystems.SYSTEMS.FUEL, condition = 1.0, enabled = true },
-        pto = { name = RealisticMechanicalSystems.SYSTEMS.PTO, condition = 1.0, enabled = true }
-    }
+    -- every system new, the harvest one off until a harvester enables it
+    local systems = {}
+    for _, systemKey in ipairs(SYSTEM_KEYS) do
+        systems[systemKey] = { name = RealisticMechanicalSystems.SYSTEMS[string.upper(systemKey)], condition = 1.0,
+            enabled = systemKey ~= "harvest" }
+    end
+    self.spec_RealisticMechanicalSystems.systems = systems
     self.spec_RealisticMechanicalSystems.factorStats = createEmptyFactorStats(self.spec_RealisticMechanicalSystems.systems)
-    ensureFactorStats(self.spec_RealisticMechanicalSystems, self)
+    ensureFactorStats(self.spec_RealisticMechanicalSystems)
 
-    -- engine consumables
     self.spec_RealisticMechanicalSystems.airFilterClogging = 0.0
     self.spec_RealisticMechanicalSystems.airFilterResidue = 0.0
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
         self.spec_RealisticMechanicalSystems[filter.stateKey] = 0.0
     end
 
-    -- fluid levels
     self.spec_RealisticMechanicalSystems.engineOilLevel = 1.0
     self.spec_RealisticMechanicalSystems.coolantLevel = 1.0
     self.spec_RealisticMechanicalSystems.transmissionOilLevel = 1.0
@@ -415,13 +432,15 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.fluidHydraulicSpeedModifier = 0
     
     self.spec_RealisticMechanicalSystems.reliability = 1.0
-    self.spec_RealisticMechanicalSystems.year = RMS_VehicleYears.DEFAULT_YEAR
+    self.spec_RealisticMechanicalSystems.year = RMS_ProductionYear.DEFAULT_YEAR
     self.spec_RealisticMechanicalSystems.yearIsKnown = false
+    self.spec_RealisticMechanicalSystems.yearSource = RMS_ProductionYear.SOURCE.UNKNOWN
 
     self.spec_RealisticMechanicalSystems.activeBreakdowns = {}
     self.spec_RealisticMechanicalSystems.activeEffects = {}
     self.spec_RealisticMechanicalSystems.activeIndicators = {}
     self.spec_RealisticMechanicalSystems.activeFunctions = {}
+    self.spec_RealisticMechanicalSystems.effectStates = {}
 
     self.spec_RealisticMechanicalSystems.maintenanceLog = {}
     
@@ -432,11 +451,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.coldEngineWarningShown = false
     self.spec_RealisticMechanicalSystems.pendingSideNotifications = {}
 
-    self.spec_RealisticMechanicalSystems.startButtonActionEvents = {}
-    self.spec_RealisticMechanicalSystems.startButtonDown = false
-    self.spec_RealisticMechanicalSystems.startButtonHeld = false
-    self.spec_RealisticMechanicalSystems.startButtonUp = false
-    RMS_Preheat.initSpec(self)
+    RMS_Start.initSpec(self)
     RMS_Exhaust.initSpec(self)
 
     self.spec_RealisticMechanicalSystems.drivetrainActionEvents = {}
@@ -451,7 +466,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
 
     self.spec_RealisticMechanicalSystems.radiatorClogging = 0.0
     self.spec_RealisticMechanicalSystems.lubricationLevel = 1.0
-    self.spec_RealisticMechanicalSystems.lubricationUsedThisPeriod = true
     self.spec_RealisticMechanicalSystems.fieldInspectionSoundActive = false
     self.spec_RealisticMechanicalSystems.fieldInspectionActivePlayers = {}
 
@@ -558,9 +572,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.ptoRaisedTooLong = false
     self.spec_RealisticMechanicalSystems.ptoPreviousActiveLinks = {}
     self.spec_RealisticMechanicalSystems.ptoTutorialObservedSequence = 0
-    self.spec_RealisticMechanicalSystems.ptoEngagementAttempt = false
-    self.spec_RealisticMechanicalSystems.ptoEngagementAttemptBlocked = nil
-    self.spec_RealisticMechanicalSystems.ptoEngagementAttemptWarningShown = nil
     self.spec_RealisticMechanicalSystems.chassisVibState = {
         prevSuspension = {},
         smoothed = 0,
@@ -642,7 +653,15 @@ function RealisticMechanicalSystems:onLoad(savegame)
     end
 end
 
----Reads the saved RMS state of a vehicle
+---Breakdown ids saved comma separated
+local function splitSavedIds(text)
+    local ids = {}
+    for id in string.gmatch(text or "", "[^,]+") do
+        table.insert(ids, id)
+    end
+    return ids
+end
+
 local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTime)
     local spec = self.spec_RealisticMechanicalSystems
     spec.serviceLevel = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#service", spec.serviceLevel), spec.serviceLevel or 1.0, 0.001)
@@ -655,6 +674,10 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.warrantyPlan = xmlFile:getValue(key .. "#warrantyPlan", 1)
     spec.partWarranty = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partWarranty", ""))
     spec.usedPartWarranty = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#usedPartWarranty", ""))
+    spec.warrantyVoided = xmlFile:getValue(key .. "#warrantyVoided", false)
+    spec.remapMotor = xmlFile:getValue(key .. "#remapMotor", 0)
+    spec.remapAge = xmlFile:getValue(key .. "#remapAge", 0)
+    RMS_EngineRemap.validateLoadedEngine(self)
     local savedAge = xmlFile:getValue(vehicleKey .. "#age", 0)
     for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
         if spec.serviceCalendar[clock.key] == nil then
@@ -665,6 +688,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.currentState = xmlFile:getValue(key .. "#state", spec.currentState)
     spec.plannedState = xmlFile:getValue(key .. "#plannedState", spec.plannedState)
     spec.maintenanceTimer = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#maintenanceTimer", spec.maintenanceTimer), spec.maintenanceTimer or 0, 0)
+    spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
     
     local loadedRealOperatingTime = nil
     if xmlFile:hasProperty(key .. "#realOperatingTime") then
@@ -679,7 +703,6 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
         spec.realOperatingTime = currentOperatingTime
     end
 
-    -- Load Breakdowns
     local breakdownString = xmlFile:getValue(key .. "#breakdowns", "")
     if breakdownString and breakdownString ~= "" then
         spec.activeBreakdowns = {}
@@ -693,7 +716,6 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
         spec.activeBreakdowns = {}
     end
 
-    -- Load Simple Variables
     spec.engineTemperature = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#engineTemperature", spec.engineTemperature), 20)
     spec.transmissionTemperature = RealisticMechanicalSystems.sanitizeNumber(
         xmlFile:getValue(key .. "#transmissionTemperature", spec.transmissionTemperature),
@@ -734,8 +756,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
         RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL)
     spec.scrInducementHours = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#scrInducementHours", 0), 0, 0)
     spec.fuelState.isParticulateFilterOverloaded = xmlFile:getValue(key .. "#particulateFilterOverloaded", false)
-    spec.lubricationLevel = math.clamp(xmlFile:getValue(key .. "#lubricationLevel", spec.lubricationLevel), 0.0, 1.0)
-    spec.lubricationUsedThisPeriod = xmlFile:getValue(key .. "#lubricationUsedThisPeriod", true)
+    RMS_Greasing.deserialize(self, xmlFile:getValue(key .. "#greasing"))
     spec.thermostatState = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#thermostatState", spec.thermostatState), spec.thermostatState or 0, 0.0, 1.0)
     spec.transmissionThermostatState = RealisticMechanicalSystems.sanitizeNumber(
         xmlFile:getValue(key .. "#transmissionThermostatState", spec.transmissionThermostatState),
@@ -747,8 +768,12 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.ptoEngagementSequence = math.floor(math.max(xmlFile:getValue(key .. "#ptoEngagementSequence", spec.ptoEngagementSequence) or 0, 0))
     spec.serviceOptionOne = xmlFile:getValue(key .. "#serviceOptionOne", spec.serviceOptionOne)
     spec.serviceOptionTwo = xmlFile:getValue(key .. "#serviceOptionTwo", spec.serviceOptionTwo)
-    if spec.serviceOptionOne == "" then spec.serviceOptionOne = nil end
-    if spec.serviceOptionTwo == "" then spec.serviceOptionTwo = nil end
+    -- An empty choice is saved as an empty text
+    for _, field in ipairs({ "serviceOptionOne", "serviceOptionTwo" }) do
+        if spec[field] == "" then
+            spec[field] = nil
+        end
+    end
     spec.serviceOptionThree = xmlFile:getValue(key .. "#serviceOptionThree", spec.serviceOptionThree)
     RMS_Drivetrain.loadFromSavegame(self, xmlFile, key)
     spec.tripStartKilometers = xmlFile:getValue(key .. "#tripStartKilometers", spec.tripStartKilometers)
@@ -758,28 +783,9 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     end
     spec.pendingServicePrice = RMS_Utils.decodeOptionalFloat(xmlFile:getValue(key .. "#pendingServicePrice", spec.pendingServicePrice))
     spec.pendingServiceInvoice = RMS_Utils.deserializeInvoice(xmlFile:getValue(key .. "#pendingServiceInvoice"))
-    spec.pendingSelectedBreakdowns = {}
-    local pendingSelBdStr = xmlFile:getValue(key .. "#pendingSelectedBreakdowns", "")
-    if pendingSelBdStr ~= nil and pendingSelBdStr ~= "" then
-        for item in string.gmatch(pendingSelBdStr, "([^,]+)") do
-            table.insert(spec.pendingSelectedBreakdowns, item)
-        end
-    end
-    spec.pendingInspectionQueue = {}
-    local pendingInspectionQueueStr = xmlFile:getValue(key .. "#pendingInspectionQueue", "")
-    if pendingInspectionQueueStr ~= nil and pendingInspectionQueueStr ~= "" then
-        for item in string.gmatch(pendingInspectionQueueStr, "([^,]+)") do
-            table.insert(spec.pendingInspectionQueue, item)
-        end
-    end
-
-    spec.pendingRepairQueue = {}
-    local pendingRepairQueueStr = xmlFile:getValue(key .. "#pendingRepairQueue", "")
-    if pendingRepairQueueStr ~= nil and pendingRepairQueueStr ~= "" then
-        for item in string.gmatch(pendingRepairQueueStr, "([^,]+)") do
-            table.insert(spec.pendingRepairQueue, item)
-        end
-    end
+    spec.pendingSelectedBreakdowns = splitSavedIds(xmlFile:getValue(key .. "#pendingSelectedBreakdowns", ""))
+    spec.pendingInspectionQueue = splitSavedIds(xmlFile:getValue(key .. "#pendingInspectionQueue", ""))
+    spec.pendingRepairQueue = splitSavedIds(xmlFile:getValue(key .. "#pendingRepairQueue", ""))
 
     spec.pendingProgressStepIndex = xmlFile:getValue(key .. "#pendingProgressStepIndex", spec.pendingProgressStepIndex)
     spec.pendingProgressTotalTime = xmlFile:getValue(key .. "#pendingProgressTotalTime", spec.pendingProgressTotalTime)
@@ -789,6 +795,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.pendingOverhaulPartStart = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pendingOverhaulPartStart", ""))
     spec.pendingOverhaulPartTarget = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pendingOverhaulPartTarget", ""))
     spec.partWear = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partWear", ""))
+    spec.partImpactWear = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partImpactWear", ""))
     local loadedFactorStatsFlat = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#factorStats", ""))
 
     local loadedSystemsStateRaw = RMS_Utils.deserializeSystemsState(xmlFile:getValue(key .. "#systemsState", ""))
@@ -825,90 +832,41 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
 
         systemData.name = RMS_Utils.getSystemNameByKey(RealisticMechanicalSystems.SYSTEMS, systemKey)
     end
-    ensureFactorStats(spec, self)
+    ensureFactorStats(spec)
     applyFlattenedFactorStats(spec, loadedFactorStatsFlat)
-    ensureFactorStats(spec, self)
+    ensureFactorStats(spec)
 
-    -- Load Maintenance Log
     spec.maintenanceLog = {}
-    local i = 0
-    while true do
-        local entryKey = string.format("%s.maintenanceLog.entry(%d)", key, i)
-        if not xmlFile:hasProperty(entryKey) then
-            break
-        end
-
-        local entry = {
-            id = xmlFile:getValue(entryKey .. "#id"),
-            type = xmlFile:getValue(entryKey .. "#type"),
-            price = xmlFile:getValue(entryKey .. "#price"),
-            date = RMS_Utils.deserializeDate(xmlFile:getValue(entryKey .. "#date")),
-            conditionData = {}
-        }
-        local condKey = entryKey .. ".conditionData"
-
-        if xmlFile:hasProperty(condKey) then
-            entry.location = xmlFile:getValue(entryKey .. "#location", "UNKNOWN")
-            entry.optionOne = xmlFile:getValue(entryKey .. "#optionOne", "NONE")
-            entry.optionTwo = xmlFile:getValue(entryKey .. "#optionTwo", "NONE")
-            entry.optionThree = xmlFile:getValue(entryKey .. "#optionThree", false)
-            entry.isVisible = RMS_Utils.normalizeBoolValue(xmlFile:getValue(entryKey .. "#isVisible", true), true)
-            entry.isCompleted = RMS_Utils.normalizeBoolValue(xmlFile:getValue(entryKey .. "#isCompleted", true), true)
-            entry.invoice = RMS_Utils.deserializeInvoice(xmlFile:getValue(entryKey .. "#invoice"))
-
-            entry.conditionData.year = xmlFile:getValue(condKey .. "#year", 0)
-            entry.conditionData.operatingHours = xmlFile:getValue(condKey .. "#operatingHours", 0)
-            entry.conditionData.odometerKilometers = xmlFile:getValue(condKey .. "#odometerKilometers")
-            entry.conditionData.age = xmlFile:getValue(condKey .. "#age", 0)
-            entry.conditionData.condition = xmlFile:getValue(condKey .. "#condition", 1)
-            entry.conditionData.service = xmlFile:getValue(condKey .. "#service", 1)
-            entry.conditionData.reliability = xmlFile:getValue(condKey .. "#reliability", 1)
-            entry.conditionData.systems = RMS_Utils.createSystemsSnapshot(RMS_Utils.deserializeSystemsState(xmlFile:getValue(condKey .. "#systems", "")))
-            entry.conditionData.partWear = RMS_Utils.deserializeNumericMap(xmlFile:getValue(condKey .. "#partWear", ""))
-            entry.conditionData.batterySoc = xmlFile:getValue(condKey .. "#batterySoc", 1)
-            entry.conditionData.wearExcess = xmlFile:getValue(condKey .. "#wearExcess")
-            entry.conditionData.wearCauses = RMS_Utils.deserializeWearCauses(xmlFile:getValue(condKey .. "#wearCauses", ""))
-
-            local bdStr = xmlFile:getValue(condKey .. "#activeBreakdowns", "")
-            entry.conditionData.activeBreakdowns = RMS_Utils.deserializeBreakdowns(bdStr) or {}
-
-            local selBdStr = xmlFile:getValue(condKey .. "#selectedBreakdowns", "")
-            entry.conditionData.selectedBreakdowns = RMS_Utils.parseCsvList(selBdStr)
-
-            entry.conditionData.activeEffects = RMS_Utils.deserializeEffectSnapshot(xmlFile:getValue(condKey .. "#activeEffects", ""))
-
-            entry.conditionData.activeIndicators = {}
-            local indicatorIds = RMS_Utils.parseCsvList(xmlFile:getValue(condKey .. "#activeIndicators", ""))
-            for _, indId in ipairs(indicatorIds) do
-                entry.conditionData.activeIndicators[indId] = true
-            end
-
+    local index = 0
+    while xmlFile:hasProperty(string.format("%s.maintenanceLog.entry(%d)", key, index)) do
+        local entryKey = string.format("%s.maintenanceLog.entry(%d)", key, index)
+        index = index + 1
+        -- Entries without condition data come from a format no longer read
+        local conditionKey = entryKey .. ".conditionData"
+        if xmlFile:hasProperty(conditionKey) then
+            local entry = { conditionData = {} }
+            readLogFields(xmlFile, entryKey, entry, LOG_ENTRY_XML)
+            readLogFields(xmlFile, conditionKey, entry.conditionData, LOG_CONDITION_XML)
             table.insert(spec.maintenanceLog, entry)
         end
-
-        i = i + 1
     end
 
-    -- Fill defaults
-    if spec.serviceLevel == nil then spec.serviceLevel = spec.baseServiceLevel end
-    if spec.conditionLevel == nil then spec.conditionLevel = spec.baseConditionLevel end
-    if spec.maintenanceTimer == nil then spec.maintenanceTimer = 0 end
-    if spec.currentState == nil then spec.currentState = RealisticMechanicalSystems.STATUS.READY end
-    if spec.plannedState == nil then spec.plannedState = RealisticMechanicalSystems.STATUS.READY end
-    if spec.serviceOptionThree == nil then spec.serviceOptionThree = false end
-    if spec.pendingSelectedBreakdowns == nil then spec.pendingSelectedBreakdowns = {} end
-    if spec.pendingInspectionQueue == nil then spec.pendingInspectionQueue = {} end
-    if spec.pendingRepairQueue == nil then spec.pendingRepairQueue = {} end
-    if spec.pendingProgressStepIndex == nil then spec.pendingProgressStepIndex = 0 end
-    if spec.pendingProgressTotalTime == nil then spec.pendingProgressTotalTime = 0 end
-    if spec.pendingProgressElapsedTime == nil then spec.pendingProgressElapsedTime = 0 end
-    if spec.pendingOverhaulPartStart == nil then spec.pendingOverhaulPartStart = {} end
-    if spec.pendingOverhaulPartTarget == nil then spec.pendingOverhaulPartTarget = {} end
+    -- A save without these values starts the vehicle at rest
+    local defaults = {
+        serviceLevel = spec.baseServiceLevel, conditionLevel = spec.baseConditionLevel, maintenanceTimer = 0,
+        currentState = RealisticMechanicalSystems.STATUS.READY, plannedState = RealisticMechanicalSystems.STATUS.READY,
+        serviceOptionThree = false, pendingSelectedBreakdowns = {}, pendingInspectionQueue = {}, pendingRepairQueue = {},
+        pendingProgressStepIndex = 0, pendingProgressTotalTime = 0, pendingProgressElapsedTime = 0,
+        pendingOverhaulPartStart = {}, pendingOverhaulPartTarget = {}
+    }
+    for field, value in pairs(defaults) do
+        if spec[field] == nil then
+            spec[field] = value
+        end
+    end
     self:updateConditionLevel()
 end
 
----
--- @param table savegame savegame
 function RealisticMechanicalSystems:onPostLoad(savegame)
     local spec = self.spec_RealisticMechanicalSystems
     local currentOperatingTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
@@ -940,7 +898,6 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         duration = RMS_Config.FIELD_CARE.VISUAL_INSPECTION_DURATION
     }
 
-    -- Sounds Loading
     local xmlSoundFile = loadXMLFile("rmsSounds", RealisticMechanicalSystems.modDirectory .. "sounds/rms_sounds.xml")
     if spec.samples == nil then
         spec.samples = {}
@@ -954,6 +911,13 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         
         for _, name in ipairs(RealisticMechanicalSystems.SAMPLE_NAMES) do
             spec.samples[name] = soundManager:loadSampleFromXML(xmlSoundFile, "sounds", name, modDir, root, 1, AudioGroup.VEHICLE, i3d, self)
+        end
+        if not getIsElectricVehicle(self) then
+            local name = "starter" .. RMS_Breakdowns.getStarterFamily(self)
+            -- no target: a machine's volume factor balances its own sounds only
+            spec.samples.starterIntro =soundManager:loadSampleFromXML(xmlSoundFile, "sounds", name .. "Intro", modDir, root, 1, AudioGroup.VEHICLE, i3d)
+            spec.samples.starter = soundManager:loadSampleFromXML(xmlSoundFile, "sounds", name, modDir, root, 0, AudioGroup.VEHICLE, i3d)
+            spec.samples.starterCatch = soundManager:loadSampleFromXML(xmlSoundFile, "sounds", name .. "Catch", modDir, root, 1, AudioGroup.VEHICLE, i3d)
         end
         delete(xmlSoundFile)
     else
@@ -969,7 +933,6 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     spec.hydraulicsMoveAlphaCache = {}
     spec.hydraulicsLiftRatioCache = {}
 
-    ---
     local function resetIsMovingRecursive(vehicleObj, visited)
         if vehicleObj == nil or visited[vehicleObj] then
             return
@@ -995,21 +958,12 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         end
     end
 
-    ---
-    local function enableOrDisableSystems(vehicle)
-        local spec = vehicle.spec_RealisticMechanicalSystems
-        local resolvedCapacities = RMS_Fluids.resolveCapacities(vehicle)
-        for _, systemData in pairs(spec.systems) do
-            if systemData.name == RealisticMechanicalSystems.SYSTEMS.HYDRAULICS then
-                systemData.enabled = RMS_Utils.hasHydraulicCapability(vehicle)
-                    and resolvedCapacities.hydraulicFluid > 0
-            elseif systemData.name == RealisticMechanicalSystems.SYSTEMS.PTO then
-                systemData.enabled = RMS_Utils.hasPtoOutputCapability(vehicle)
-            end
-        end
-    end
-
-    enableOrDisableSystems(self)
+    -- the systems the machine carries: a harvester drives its organs, no PTO
+    local capacities = RMS_Fluids.resolveCapacities(self)
+    local isHarvester = RMS_Drivetrain.getHarvestKind(self) ~= nil
+    spec.systems.hydraulics.enabled = RMS_Utils.hasHydraulicCapability(self) and capacities.hydraulicFluid > 0
+    spec.systems.pto.enabled = not isHarvester and RMS_Utils.hasPtoOutputCapability(self)
+    spec.systems.harvest.enabled = isHarvester
     RealisticMechanicalSystems.buildSystemParts(self)
     RMS_Fluids.initializeVehicle(self, false)
     RealisticMechanicalSystems.getServiceClocks(self)
@@ -1027,69 +981,14 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         RMS_ElectricDrive.initBatteryCapacity(self)
     end
     local isRoadVehicle = RMS_Drivetrain.getIsRoadVehicleCategory(self)
-    spec.isVehicleNeedLubricate = not isRoadVehicle
+    RMS_Greasing.initialize(self)
     spec.isVehicleNeedBlowOut = not isRoadVehicle
     resetIsMovingRecursive(self, {})
 
-    -- dirty-flag comparison: [1] state
-    spec._lastSyncState_currentState = spec.currentState
-    spec._lastSyncState_plannedState = spec.plannedState
-    spec._lastSyncState_maintenanceTimer = spec.maintenanceTimer
-    -- [2] service context
-    spec._lastSyncServiceContext_optionOne = spec.serviceOptionOne
-    spec._lastSyncServiceContext_optionTwo = spec.serviceOptionTwo
-    spec._lastSyncServiceContext_optionThree = spec.serviceOptionThree
-    spec._lastSyncServiceContext_workshopType = spec.workshopType
-    -- [3] telemetry
-    spec._lastSyncTelemetry_operatingTime = getSyncOperatingTime(self)
-    spec._lastSyncTelemetry_realOperatingTime = spec.realOperatingTime
-    spec._lastSyncTelemetry_fuelUsageRaw = spec._fuelUsageRaw
-    spec._lastSyncTelemetry_dynamicMotorLoad = tonumber(spec.dynamicMotorLoad) or 0
-    spec._lastSyncTelemetry_liftedMass = spec.liftedMass
-    -- [4] thermal
-    spec._lastSyncThermal_rawEngineTemperature = spec.rawEngineTemperature
-    spec._lastSyncThermal_rawTransmissionTemperature = spec.rawTransmissionTemperature
-    spec._lastSyncThermal_rawHydraulicTemperature = spec.rawHydraulicTemperature
-    spec._lastSyncThermal_tractionBatteryTempC = spec.tractionBatteryTempC
-    spec._lastSyncThermal_hasHydraulicTemperature = RMS_Thermal.getHasSeparateHydraulicCircuit(spec) and spec.rawHydraulicTemperature ~= nil
-    spec._lastSyncThermal_hasTractionBatteryTemperature = spec.isElectricVehicle == true and spec.tractionBatteryTempC ~= nil
-    spec._lastSyncThermal_thermostatState = spec.thermostatState
-    spec._lastSyncThermal_transmissionThermostatState = spec.transmissionThermostatState
-    -- [5] electrical
-    spec._lastSyncElectrical_batterySoc = spec.batterySoc
-    spec._lastSyncElectrical_batteryIsolated = spec.batteryIsolated
-    spec._lastSyncElectrical_systemVoltage = spec.systemVoltageV
-    spec._lastSyncElectrical_preheatState = spec.preheatState
-    spec._lastSyncElectrical_preheatLampTestActive = spec.preheatLampTestActive
-    spec._lastSyncElectrical_preheatWasRequired = spec.preheatWasRequired
-    spec._lastSyncElectrical_preheatColdStartFaultSeverity = spec.preheatColdStartFaultSeverity
-    -- [6] field care
-    RealisticMechanicalSystems.storeFieldcareSyncState(self, spec, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
-    -- [7] wear
-    spec._lastSyncWear_serviceLevel = spec.serviceLevel
-    spec._lastSyncWear_transmissionServiceLevel = spec.transmissionServiceLevel
-    spec._lastSyncWear_coolantServiceLevel = spec.coolantServiceLevel
-    spec._lastSyncWear_hydraulicServiceLevel = spec.hydraulicServiceLevel
-    spec._lastSyncWear_serviceCalendar = RMS_Utils.serializeNumericMap(spec.serviceCalendar)
-    spec._lastSyncWear_partWarranty = RMS_Utils.serializeNumericMap(spec.partWarranty)
-    spec._lastSyncWear_usedPartWarranty = RMS_Utils.serializeNumericMap(spec.usedPartWarranty)
-    spec._lastSyncWear_warrantyPlan = spec.warrantyPlan
-    spec._lastSyncWear_conditionLevel = spec.conditionLevel
-    spec._lastSyncWear_ptoEngagementSequence = spec.ptoEngagementSequence
-    spec._lastSyncWear_ptoShockSequence = spec.ptoShockSequence
-    spec._lastSyncWear_ptoRaisedTooLong = spec.ptoRaisedTooLong
+    -- What loading set counts as sent
+    RealisticMechanicalSystems.storeSyncBaseline(self)
     spec.ptoTutorialObservedSequence = spec.ptoEngagementSequence
     spec.ptoTutorialObservedShockSequence = spec.ptoShockSequence
-    captureSystemsSync(spec)
-    -- [8] breakdowns
-    spec._lastSyncBreakdowns_serialized = RMS_Utils.serializeBreakdowns(spec.activeBreakdowns or {})
-    -- [9] service
-    spec._lastSyncServiceProgress_elapsed = spec.pendingProgressElapsedTime
-    spec._lastSyncServiceProgress_step = spec.pendingProgressStepIndex
-    spec._lastSyncServiceProgress_total = spec.pendingProgressTotalTime
-    -- [10] tutorial data
-    spec._lastSyncTutorial_idleTimer = spec.fuelState.idleTimer
-    spec._lastSyncTutorial_fuelLevel = spec.fuelState.level
 
     RMS_Electrical.initializeVehicle(self)
 
@@ -1099,8 +998,6 @@ end
 local SALE_STATE_KEY = "vehicles.vehicle(0)"
 
 ---Writes the RMS state of a vehicle to a string
--- @param table vehicle vehicle
--- @return string state
 function RealisticMechanicalSystems.saveStateToMemory(vehicle)
     local xmlFile = XMLFile.create("rmsSaleState", "", "vehicles", Vehicle.xmlSchemaSavegame)
     RealisticMechanicalSystems.saveToXMLFile(vehicle, xmlFile, SALE_STATE_KEY .. ".RealisticMechanicalSystems", {})
@@ -1110,7 +1007,6 @@ function RealisticMechanicalSystems.saveStateToMemory(vehicle)
 end
 
 ---Gives a bought used offer the RMS state of the machine a player sold
--- @param table saleItem used offer
 function RealisticMechanicalSystems:onSaleItemSet(saleItem)
     if not self.isServer or saleItem.rmsState == nil then
         return
@@ -1127,7 +1023,6 @@ function RealisticMechanicalSystems:onSaleItemSet(saleItem)
     RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP_ALL)
 end
 
----
 function RealisticMechanicalSystems:onDelete()
     local spec = self.spec_RealisticMechanicalSystems
 

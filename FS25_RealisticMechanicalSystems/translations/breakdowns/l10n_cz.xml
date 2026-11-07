@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Silné opotřebení svislých čepů těhlic. Vůle v řízení je značná."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritické opotřebení svislých čepů těhlic. Řízení vykazuje velmi značnou vůli."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lehká porucha orbitrolu řízení. Volant se otáčí s malou vůlí, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Lehká porucha převodky řízení. Volant se otáčí s malou vůlí, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Lehká porucha hřebenu řízení. Volant se otáčí s malou vůlí, než kola zareagují."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Střední porucha orbitrolu řízení. Volant se otáčí více, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Střední porucha převodky řízení. Volant se otáčí více, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Střední porucha hřebenu řízení. Volant se otáčí více, než kola zareagují."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Silná porucha orbitrolu řízení. Volant se hodně otáčí, aniž by kola správně reagovala."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Silná porucha převodky řízení. Volant se hodně otáčí, aniž by kola správně reagovala."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Silná porucha hřebenu řízení. Volant se hodně otáčí, aniž by kola správně reagovala."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritické selhání orbitrolu řízení. Volant má velmi značnou vůli, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kritické selhání převodky řízení. Volant má velmi značnou vůli, než kola zareagují."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kritické selhání hřebenu řízení. Volant má velmi značnou vůli, než kola zareagují."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lehká vnitřní netěsnost válce řízení. Vozidlo začíná vybočovat ke straně."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lehká netěsnost těsnění pístnice válce řízení. Hladina hydraulického oleje mírně klesá."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Střední vnitřní netěsnost válce řízení. Vozidlo vybočuje více ke straně."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Střední opotřebení čepů a pouzder kloubů nakladače. Vůle v kloubech ramene se stává znatelnou."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Silné opotřebení čepů a pouzder kloubů nakladače. Rameno vykazuje značnou vůli."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kritické opotřebení čepů a pouzder kloubů nakladače. Vůle ramene je velmi značná."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Lehké opotřebení čepů a pouzder stožáru. V kloubech stožáru se objevuje malá vůle."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Střední opotřebení čepů a pouzder stožáru. Vůle v kloubech stožáru se stává znatelnou."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Silné opotřebení čepů a pouzder stožáru. Stožár vykazuje značnou vůli."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Kritické opotřebení čepů a pouzder stožáru. Vůle stožáru je velmi značná."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Lehké opotřebení čepů a pouzder výložníku. V kloubech výložníku se objevuje malá vůle."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Střední opotřebení čepů a pouzder výložníku. Vůle v kloubech výložníku se stává znatelnou."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Silné opotřebení čepů a pouzder výložníku. Výložník vykazuje značnou vůli."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Kritické opotřebení čepů a pouzder výložníku. Vůle výložníku je velmi značná."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Lehké opotřebení čepů a pouzder frézovacího ramene. V kloubech ramene se objevuje malá vůle."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Střední opotřebení čepů a pouzder frézovacího ramene. Vůle v kloubech ramene se stává znatelnou."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Silné opotřebení čepů a pouzder frézovacího ramene. Rameno vykazuje značnou vůli."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Kritické opotřebení čepů a pouzder frézovacího ramene. Vůle ramene je velmi značná."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Lehké opotřebení čepů a pouzder ramene radlice. V kloubech ramene se objevuje malá vůle."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Střední opotřebení čepů a pouzder ramene radlice. Vůle v kloubech ramene se stává znatelnou."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Silné opotřebení čepů a pouzder ramene radlice. Rameno vykazuje značnou vůli."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Kritické opotřebení čepů a pouzder ramene radlice. Vůle ramene je velmi značná."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Lehký únik z tlumiče kabiny. Kabina je o něco méně tlumena."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Střední únik z tlumiče kabiny. Kabina na nerovnostech odskakuje."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Silný únik z tlumiče kabiny. Kabina se houpe při každém rázu."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="Synchronizátor"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Kulové klouby a táhla řízení"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Čepy a pouzdra kloubů nakladače"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Čepy a pouzdra stožáru"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Čepy a pouzdra výložníku"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Čepy a pouzdra frézovacího ramene"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Čepy a pouzdra ramene radlice"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Svislé čepy těhlic"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol řízení"/>
+        <text name="rms_breakdowns_part_steering_box" text="Převodka řízení"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Hřeben řízení"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Válec řízení"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Odpružení kabiny"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Spojka vývodového hřídele"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Plynový filtr"/>
         <text name="rms_breakdowns_part_gas_lines" text="Plynové vedení"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Plynové vstřikovače"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Zapalovací svíčky"/>
         <text name="rms_breakdowns_part_adblue_pump" text="Čerpadlo AdBlue"/>
         <text name="rms_breakdowns_part_adblue_doser" text="Dávkovací vstřikovač AdBlue"/>
         <text name="rms_breakdowns_part_adblue_filter" text="Filtr AdBlue"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Střední porucha plynových vstřikovačů. Motor zaváhá, ztrácí výkon, spotřebovává více plynu a může zhasnout."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Silná porucha plynových vstřikovačů. Jeden vstřikovač dávkuje velmi špatně: velká ztráta výkonu, nadměrná spotřeba a obtížné startování."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kritické selhání plynových vstřikovačů. Dávkování již neumožňuje chod motoru: motor se zastaví."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Zapalovací svíčky dosáhly intervalu výměny: při vysokém zatížení se objevují výpadky zapalování, motor běží méně klidně a spotřebovává o něco více plynu. Údržba je vymění."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Zapalovací svíčky jsou opotřebené: výpadky zapalování jsou časté, motor ztrácí výkon, spotřebovává více plynu a může zhasnout. Rozsvítí se kontrolka motoru."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Zapalovací svíčky jsou silně opotřebené: velká ztráta výkonu, nadměrná spotřeba a obtížné startování."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Zapalovací svíčky jsou nepoužitelné: neustálé výpadky zapalování, motor může zhasnout a už nenastartovat."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Porucha čerpadla AdBlue. Již nezásobuje dávkování: rozsvítí se kontrolka motoru a poté řídicí jednotka omezí výkon až do opravy."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Porucha dávkovacího vstřikovače AdBlue. Zanesený krystaly již nerozprašuje: rozsvítí se kontrolka motoru a výkon poté klesne až do opravy."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Filtr AdBlue dosáhl intervalu výměny a začíná se ucpávat. Nejrozsáhlejší údržba jej vymění."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Snímače převodovky"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filtr převodovky"/>
         <text name="rms_breakdowns_part_lift_valve" text="Ventil závěsu"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Ventil zvedání adaptéru"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Snímač polohy závěsu"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Snímač výšky adaptéru"/>
         <text name="rms_breakdowns_part_loader_control" text="Ovládání nakladače"/>
+        <text name="rms_breakdowns_part_mast_control" text="Ovládání stožáru"/>
+        <text name="rms_breakdowns_part_boom_control" text="Ovládání výložníku"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Ovládání frézovacího ramene"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Ovládání ramene radlice"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulické rychlospojky"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lehká porucha spojky. Nevypíná úplně. Některé stupně se řadí obtížně."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Střední porucha spojky. Mechanismus špatně uvolňuje lamelu. Stupně jsou častěji odmítány."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Porucha hydraulického čerpadla. Je rozbité. Tlak se ztratil a hydraulické funkce nereagují."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Porucha hydraulického rozvaděče. Šoupátko je zaseknuté. Dotčená hydraulická funkce se nepohybuje."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Porucha ventilu závěsu. Neudrží správně zátěž. Zvednuté nářadí klesá."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Porucha ventilu zvedání adaptéru. Neudrží správně zátěž. Zvednutý adaptér klesá."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Porucha ventilu závěsu. Je zaseknutý. Závěs nereaguje."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Porucha ventilu zvedání adaptéru. Je zaseknutý. Adaptér nelze zvednout ani spustit."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Porucha snímače polohy závěsu. Signál polohy selhal. Závěs neudrží požadovanou výšku a uloží se chybový kód."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Porucha snímače výšky adaptéru. Signál výšky selhal. Adaptér neudrží požadovanou výšku a uloží se chybový kód."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lehká porucha ovládání nakladače. Rameno a lopata reagují pomaleji."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Střední porucha ovládání nakladače. Rameno a lopata se pohybují jen poloviční rychlostí."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Závažná porucha ovládání nakladače. Rameno a lopata se téměř nepohybují."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kritická porucha ovládání nakladače. Rameno a lopata již nereagují."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Lehká porucha ovládání stožáru. Stožár a vidle reagují pomaleji."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Střední porucha ovládání stožáru. Stožár a vidle se pohybují jen poloviční rychlostí."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Závažná porucha ovládání stožáru. Stožár a vidle se téměř nepohybují."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Kritická porucha ovládání stožáru. Stožár a vidle již nereagují."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Lehká porucha ovládání výložníku. Výložník a jeho nástroj reagují pomaleji."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Střední porucha ovládání výložníku. Výložník a jeho nástroj se pohybují jen poloviční rychlostí."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Závažná porucha ovládání výložníku. Výložník a jeho nástroj se téměř nepohybují."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Kritická porucha ovládání výložníku. Výložník a jeho nástroj již nereagují."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Lehká porucha ovládání frézovacího ramene. Rameno reaguje pomaleji."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Střední porucha ovládání frézovacího ramene. Rameno se pohybuje jen poloviční rychlostí."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Závažná porucha ovládání frézovacího ramene. Rameno se téměř nepohybuje."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Kritická porucha ovládání frézovacího ramene. Rameno již nereaguje."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Lehká porucha ovládání ramene radlice. Rameno a radlice reagují pomaleji."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Střední porucha ovládání ramene radlice. Rameno a radlice se pohybují jen poloviční rychlostí."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Závažná porucha ovládání ramene radlice. Rameno a radlice se téměř nepohybují."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Kritická porucha ovládání ramene radlice. Rameno a radlice již nereagují."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Lehká porucha hydraulického válce. Těsnění pístnice propouští trochu oleje. Kolem pístnice je mírná vlhkost."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Střední porucha hydraulického válce. Těsnění pístnice netěsní. Válec se rosí olejem a hladina klesá."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Silná porucha hydraulického válce. Olej trvale uniká přes těsnění pístnice. Válec ztrácí značné množství oleje."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Kritické opotřebení ložisek nápravy. Jedno ložisko se rozpadlo, kuželové soukolí je poškozené a náprava již nepřenáší tažnou sílu."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Porucha ovládání uzávěrky diferenciálu. Uzávěrka se nezapíná. Diferenciál zůstává volný."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Porucha ovládání uzávěrky diferenciálu. Uzávěrka zůstává zapnutá. Stroj v zatáčkách klade odpor řízení."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Hnací řemeny a variátory"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Ložiska a převodovky pohonu"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Řetěz šikmého dopravníku"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Urychlovač podávání"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Mlatné lišty"/>
+        <text name="rms_breakdowns_part_concave" text="Mlatný koš"/>
+        <text name="rms_breakdowns_part_separation" text="Separační prsty a vytřásadla"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Čisticí síta"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Šneky a elevátory zrna"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Drtič a rozmetač slámy"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Vkládací válce"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Detektor kovů a kamenů"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Řezací buben"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Nože řezacího bubnu"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Protiostří"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Drtič zrna"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Urychlovač a dmychadlo"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Metací komín"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Ořezávač chrástu a dočišťovače"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Vyorávací radličky"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Čisticí turbíny"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Elevátor řepy"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Pohyblivé dno a vykládací pás"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Prosévací pásy"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Odlučovač natě a válce"/>
+        <text name="rms_breakdowns_part_picking_units" text="Sběrací jednotky"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Zvlhčovač vřeten"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Ventilátor a potrubí"/>
+        <text name="rms_breakdowns_part_module_builder" text="Komora tvarování modulů"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Spodní nože"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Vkládací válce"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Sekací bubny"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Primární odsavač"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Elevátor třtiny"/>
+        <text name="rms_breakdowns_part_shaker" text="Setřásací systém"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Záchytné šupiny"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Korečkové dopravníky"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Čisticí odsavače"/>
+        <text name="rms_breakdowns_part_destemmer" text="Odstopkovač"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Sběrací hlava"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Čisticí ventilátor a síta"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevátory a dopravníky"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Sklizeň nemožná: sklízecí ústrojí je rozbité"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Ucpání: sklizeň se zastavila"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Drtič rozbitý: sláma padá do řádku"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Drtič rozbitý: tuto plodinu už nelze sklízet"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Počínající opotřebení hnacích řemenů. Pod zatížením mírně prokluzují."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Střední opotřebení hnacích řemenů. Ústrojí pod zatížením zpomaluje a alarm otáček občas zastaví sklizeň."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Silné opotřebení hnacích řemenů. Výkonnost klesá a zastavení se stále opakují."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Kritické selhání hnacích řemenů. Řemen praskl: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Počínající opotřebení ložisek pohonu. Při sklizni se objevuje mírné hučení."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Střední opotřebení ložisek pohonu. Hučení je zřetelně slyšet a ložiska se zahřívají."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Silné opotřebení ložisek pohonu. Hučení sílí a hřídele získávají vůli."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritické selhání ložisek pohonu. Ložisko se zadřelo: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Počínající opotřebení řetězu šikmého dopravníku. Natahuje se a podávání je nerovnoměrné."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Střední opotřebení řetězu šikmého dopravníku. Na vstupu šikmého dopravníku vznikají ucpávky."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Silné opotřebení řetězu šikmého dopravníku. Přeskakuje na ozubených kolech a ucpávky se stále vracejí."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Kritické selhání řetězu šikmého dopravníku. Řetěz praskl: do stroje už nic nevstupuje."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Počínající opotřebení urychlovače podávání. Hmota přichází k bubnu méně rovnoměrně."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Střední opotřebení urychlovače podávání. Výkonnost stagnuje a objevují se ucpávky."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Silné opotřebení urychlovače podávání. Výkonnost klesá a ucpávky se stále vracejí."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Kritické selhání urychlovače podávání. Lopatka se utrhla: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Počínající opotřebení mlatných lišt. Část zrna zůstává v klasech a vrací se na pole."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Střední opotřebení mlatných lišt. Buben vibruje a ztráty zrna rostou."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Silné opotřebení mlatných lišt. Některé lišty jsou zlomené: velké ztráty a ucpávky."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Kritické selhání mlatných lišt. Lišta se utrhla: mlácení je nemožné."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Počínající opotřebení mlatného koše. Zrno je hůře vymláceno a část se vrací na pole."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Střední opotřebení mlatného koše. Ztráty zrna rostou."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Silné opotřebení mlatného koše. Zrno praská, ztráty jsou velké a objevují se ucpávky."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Kritické selhání mlatného koše. Lišta se utrhla: mlácení je nemožné."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Počínající opotřebení separace. Zrno zůstává ve slámě a vrací se na pole."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Střední opotřebení separace. Ztráty zrna ve slámě rostou."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Silné opotřebení separace. Velké ztráty a ucpávky slámou."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Kritické selhání separace. Sláma už neprochází: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Počínající opotřebení čisticích sít. Do zásobníku se dostávají plevy a trocha zrna odchází s odpadem."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Střední opotřebení čisticích sít. Ztráty na sítech rostou."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Silné opotřebení čisticích sít. Síto je prasklé: velké ztráty a ucpávky."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Kritické selhání čisticích sít. Čištění už nefunguje: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Počínající opotřebení šneků a elevátorů zrna. Tok do zásobníku zrna klesá."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Střední opotřebení šneků a elevátorů zrna. Část zrna se láme nebo se cestou ztrácí."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Silné opotřebení šneků a elevátorů zrna. Elevátor se pravidelně ucpává."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Kritické selhání šneků a elevátorů zrna. Zásobník zrna se už neplní: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Počínající opotřebení drtiče slámy. Sláma je řezána méně nakrátko a drtič bere o něco více výkonu."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Střední opotřebení drtiče slámy. Drtič vibruje a bere více výkonu."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Silné opotřebení drtiče slámy. Rotor je nevyvážený a bere hodně výkonu."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritické selhání drtiče slámy. Nůž se zlomil: drtič stojí a sláma padá do řádku."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Počínající opotřebení vkládacích válců. Hůře zachytávají hmotu: podávání je nerovnoměrné."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Střední opotřebení vkládacích válců. Délka řezanky je nerovnoměrná a objevují se ucpávky."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Silné opotřebení vkládacích válců. Výkonnost klesá a ucpávky se stále vracejí."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Kritické selhání vkládacích válců. Do stroje už nic nevstupuje: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Počínající porucha detektoru kovů a kamenů. Falešné poplachy občas zastaví podávání."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Střední porucha detektoru kovů a kamenů. Zbytečná zastavení se stále opakují."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Selhání detektoru kovů a kamenů. Už nic nezjistí: kameny se dostávají k nožům a opotřebovávají je mnohem rychleji."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Počínající opotřebení řezacího bubnu. Mírně vibruje a bere o něco více výkonu."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Střední opotřebení řezacího bubnu. Rotor je nevyvážený a bere více výkonu."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Silné opotřebení řezacího bubnu. Držák nože je prasklý: vyšší odběr výkonu a ucpávky."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Kritické selhání řezacího bubnu. Rotor je poškozený: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Počínající opotřebení nožů. Řez je méně čistý a bere o něco více výkonu."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Střední opotřebení nožů. Berou více výkonu a více paliva."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Silné opotřebení nožů. Řez je nerovnoměrný, odběr výkonu roste a objevují se ucpávky."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Kritické selhání nožů. Nůž se zlomil: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Počínající opotřebení protiostří. Mezera se zvětšuje: řezání bere o něco více výkonu."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Střední opotřebení protiostří. Řez trhá a bere více výkonu."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Silné opotřebení protiostří. Břit je opotřebený: vyšší odběr výkonu a ucpávky."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Kritické selhání protiostří. Je nepoužitelné: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Počínající opotřebení drtiče zrna. Zrna jsou hůře nadrcena a drtič bere o něco více výkonu."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Střední opotřebení drtiče zrna. Procházejí celá zrna a odběr výkonu roste."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Silné opotřebení drtiče zrna. Válec je rýhovaný: vyšší odběr výkonu a ucpávky."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Kritické selhání drtiče zrna. Válec je zablokovaný: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Počínající opotřebení urychlovače. Výmet je kratší a výkonnost mírně klesá."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Střední opotřebení urychlovače. Metací komín se občas ucpe."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Silné opotřebení urychlovače. Lopatka se utrhla: časté ucpávky a ztracená píce."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Kritické selhání urychlovače. Píce už není vymetána: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Počínající opotřebení metacího komínu. Výmet se odchyluje a výkonnost mírně klesá."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Střední opotřebení metacího komínu. Píce se usazuje a občas komín ucpe."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Silné opotřebení metacího komínu. Výstelka je proděravělá: ztracená píce a časté ucpávky."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Kritické selhání metacího komínu. Je prodřený naskrz: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Počínající opotřebení. Část úrody zůstává na poli."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Střední opotřebení. Vibrace a vyšší ztráty."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Silné opotřebení. Některé prvky jsou zlomené: velké ztráty a ucpávky."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Kritické selhání. Ústrojí je rozbité: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Počínající opotřebení radliček. Některé bulvy se lámou nebo zůstávají v zemi."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Střední opotřebení radliček. Špatně vyorávají: vyšší ztráty a větší námaha."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Silné opotřebení radliček. Jsou sjeté do konce: velké ztráty a stroj se namáhá."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Kritické selhání radliček. Radlička se zlomila: vyorávání je nemožné."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Počínající opotřebení. Čištění funguje hůře: zemina nebo nečistoty v úrodě, trocha úrody se ztrácí."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Střední opotřebení. Ztráty při čištění rostou."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Silné opotřebení. Zlomené rošty nebo lopatky: velké ztráty a ucpávky."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Kritické selhání. Čištění se zastavilo: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Počínající opotřebení. Řetěz nebo pás se natahuje: podávání je nerovnoměrné."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Střední opotřebení. Opotřebené tyče nebo lopatky: nižší výkonnost a ucpávky."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Silné opotřebení. Řetěz přeskakuje: ucpávky se stále vracejí."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Kritické selhání. Řetěz nebo pás praskl: už nic neprochází."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Počínající opotřebení. Předávání úrody se zpomaluje."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Střední opotřebení. Předávání je nerovnoměrné a část úrody se ztrácí."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Silné opotřebení. Předávání se pravidelně zasekává."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Kritické selhání. Předávání se zastavilo: sklizeň je nemožná."/>
     </texts>
 </l10n>

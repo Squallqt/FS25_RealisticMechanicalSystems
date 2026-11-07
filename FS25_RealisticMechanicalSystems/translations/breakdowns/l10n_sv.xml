@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Allvarligt slitage på spindeltapparna. Glappet i styrningen är stort."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritiskt slitage på spindeltapparna. Styrningen har mycket stort glapp."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lätt haveri i styrorbitrolen. Ratten vrids med lite glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Lätt haveri i styrväxeln. Ratten vrids med lite glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Lätt haveri i styrkuggstången. Ratten vrids med lite glapp innan hjulen följer med."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Måttligt haveri i styrorbitrolen. Ratten vrids mer innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Måttligt haveri i styrväxeln. Ratten vrids mer innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Måttligt haveri i styrkuggstången. Ratten vrids mer innan hjulen följer med."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Allvarligt haveri i styrorbitrolen. Ratten vrids mycket utan att hjulen följer med ordentligt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Allvarligt haveri i styrväxeln. Ratten vrids mycket utan att hjulen följer med ordentligt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Allvarligt haveri i styrkuggstången. Ratten vrids mycket utan att hjulen följer med ordentligt."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritiskt haveri i styrorbitrolen. Ratten har mycket stort glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kritiskt haveri i styrväxeln. Ratten har mycket stort glapp innan hjulen följer med."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kritiskt haveri i styrkuggstången. Ratten har mycket stort glapp innan hjulen följer med."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lätt inre läckage i styrcylindern. Fordonet börjar driva åt ena sidan."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lätt läckage vid styrcylinderns stångtätning. Hydrauloljenivån sjunker lite."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Måttligt inre läckage i styrcylindern. Fordonet driver mer åt ena sidan."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Måttligt slitage på tapparna och bussningarna i lastarens leder. Glappet i armens leder blir märkbart."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Allvarligt slitage på tapparna och bussningarna i lastarens leder. Armen har stort glapp."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kritiskt slitage på tapparna och bussningarna i lastarens leder. Glappet i armen är mycket stort."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Lätt slitage på tapparna och bussningarna i mastens leder. Det uppstår lätt glapp i mastens leder."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Måttligt slitage på tapparna och bussningarna i mastens leder. Glappet i mastens leder blir märkbart."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Allvarligt slitage på tapparna och bussningarna i mastens leder. Masten har stort glapp."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Kritiskt slitage på tapparna och bussningarna i mastens leder. Glappet i masten är mycket stort."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Lätt slitage på tapparna och bussningarna i bommens leder. Det uppstår lätt glapp i bommens leder."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Måttligt slitage på tapparna och bussningarna i bommens leder. Glappet i bommens leder blir märkbart."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Allvarligt slitage på tapparna och bussningarna i bommens leder. Bommen har stort glapp."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Kritiskt slitage på tapparna och bussningarna i bommens leder. Glappet i bommen är mycket stort."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Lätt slitage på tapparna och bussningarna i fräsarmens leder. Det uppstår lätt glapp i armens leder."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Måttligt slitage på tapparna och bussningarna i fräsarmens leder. Glappet i armens leder blir märkbart."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Allvarligt slitage på tapparna och bussningarna i fräsarmens leder. Armen har stort glapp."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Kritiskt slitage på tapparna och bussningarna i fräsarmens leder. Glappet i armen är mycket stort."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Lätt slitage på tapparna och bussningarna i bladarmens leder. Det uppstår lätt glapp i armens leder."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Måttligt slitage på tapparna och bussningarna i bladarmens leder. Glappet i armens leder blir märkbart."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Allvarligt slitage på tapparna och bussningarna i bladarmens leder. Armen har stort glapp."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Kritiskt slitage på tapparna och bussningarna i bladarmens leder. Glappet i armen är mycket stort."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Lätt läckage från en hyttstötdämpare. Hytten dämpas något mindre."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Måttligt läckage från en hyttstötdämpare. Hytten studsar över ojämnheter."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Allvarligt läckage från en hyttstötdämpare. Hytten gungar vid varje stöt."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="Synkring"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Styrleder och styrstag"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Tappar och bussningar i lastarens leder"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Tappar och bussningar i mastens leder"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Tappar och bussningar i bommens leder"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Tappar och bussningar i fräsarmens leder"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Tappar och bussningar i bladarmens leder"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Spindeltappar"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Styrorbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Styrväxel"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Styrkuggstång"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Styrcylinder"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Hyttfjädring"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Kraftuttagets koppling"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Gasfilter"/>
         <text name="rms_breakdowns_part_gas_lines" text="Gasledningar"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Gasspridare"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Tändstift"/>
         <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-pump"/>
         <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-doseringsspridare"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-filter"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Måttligt haveri i gasspridarna. Motorn tvekar, tappar effekt, förbrukar mer gas och kan stanna."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Allvarligt haveri i gasspridarna. En spridare doserar mycket dåligt: stor effektförlust, hög förbrukning och svår start."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kritiskt haveri i gasspridarna. Doseringen tillåter inte längre motorgång: motorn stannar."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Tändstiften har nått bytesintervallet: vid hög belastning uppstår misständningar, motorn går ojämnare och förbrukar lite mer gas. Servicen byter dem."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Tändstiften är slitna: misständningarna blir vanliga, motorn tappar effekt, förbrukar mer gas och kan stanna. Motorlampan tänds."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Tändstiften är kraftigt slitna: stor effektförlust, hög förbrukning och svår start."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Tändstiften är obrukbara: ständiga misständningar, motorn kan stanna och inte starta igen."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Haveri i AdBlue-pumpen. Den matar inte längre doseringen: motorlampan tänds och därefter begränsar styrenheten effekten fram till reparationen."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Haveri i AdBlue-doseringsspridaren. Igensatt av kristaller finfördelar den inte längre vätskan: motorlampan tänds och effekten sänks senare fram till reparationen."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlue-filtret har nått bytesintervallet och börjar sättas igen. Den mest omfattande servicen byter det."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Växellådsgivare"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Transmissionsfilter"/>
         <text name="rms_breakdowns_part_lift_valve" text="Lyftventil"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Skärbordslyftventil"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Lyftlägesgivare"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Skärhöjdsgivare"/>
         <text name="rms_breakdowns_part_loader_control" text="Lastarstyrning"/>
+        <text name="rms_breakdowns_part_mast_control" text="Maststyrning"/>
+        <text name="rms_breakdowns_part_boom_control" text="Bomstyrning"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Fräsarmsstyrning"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Bladarmsstyrning"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydrauliska snabbkopplingar"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lätt haveri i kopplingen. Den frikopplar inte helt. Vissa växlar är svåra att lägga i."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Måttligt haveri i kopplingen. Mekanismen frigör lamellen dåligt. Växlar avvisas oftare."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Haveri i hydraulpumpen. Den är trasig. Trycket försvinner och hydraulfunktionerna svarar inte."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Haveri i den hydrauliska styrventilen. Sliden sitter fast. Den berörda hydraulfunktionen rör sig inte."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Haveri i lyftventilen. Den håller inte lasten rätt. Det lyfta redskapet sjunker."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Haveri i skärbordslyftventilen. Den håller inte lasten rätt. Det lyfta skärbordet sjunker."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Haveri i lyftventilen. Den sitter fast. Lyften svarar inte."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Haveri i skärbordslyftventilen. Den sitter fast. Skärbordet går inte längre att höja eller sänka."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Haveri i lyftlägesgivaren. Lägessignalen har fallerat. Lyften håller inte önskad höjd och en felkod lagras."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Haveri i skärhöjdsgivaren. Höjdsignalen har fallerat. Skärbordet håller inte önskad höjd och en felkod lagras."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lätt haveri i lastarstyrningen. Armen och skopan reagerar långsammare."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Måttligt haveri i lastarstyrningen. Armen och skopan rör sig bara med halv hastighet."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Allvarligt haveri i lastarstyrningen. Armen och skopan rör sig knappt."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kritiskt haveri i lastarstyrningen. Armen och skopan reagerar inte längre."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Lätt haveri i maststyrningen. Masten och gafflarna reagerar långsammare."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Måttligt haveri i maststyrningen. Masten och gafflarna rör sig bara med halv hastighet."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Allvarligt haveri i maststyrningen. Masten och gafflarna rör sig knappt."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Kritiskt haveri i maststyrningen. Masten och gafflarna reagerar inte längre."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Lätt haveri i bomstyrningen. Bommen och dess redskap reagerar långsammare."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Måttligt haveri i bomstyrningen. Bommen och dess redskap rör sig bara med halv hastighet."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Allvarligt haveri i bomstyrningen. Bommen och dess redskap rör sig knappt."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Kritiskt haveri i bomstyrningen. Bommen och dess redskap reagerar inte längre."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Lätt haveri i fräsarmsstyrningen. Armen reagerar långsammare."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Måttligt haveri i fräsarmsstyrningen. Armen rör sig bara med halv hastighet."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Allvarligt haveri i fräsarmsstyrningen. Armen rör sig knappt."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Kritiskt haveri i fräsarmsstyrningen. Armen reagerar inte längre."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Lätt haveri i bladarmsstyrningen. Armen och bladet reagerar långsammare."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Måttligt haveri i bladarmsstyrningen. Armen och bladet rör sig bara med halv hastighet."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Allvarligt haveri i bladarmsstyrningen. Armen och bladet rör sig knappt."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Kritiskt haveri i bladarmsstyrningen. Armen och bladet reagerar inte längre."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Lätt haveri i hydraulcylindern. Stångtätningen släpper ut lite olja. Lätt fukt syns runt stången."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Måttligt haveri i hydraulcylindern. Stångtätningen är otät. Cylindern svettas och oljenivån sjunker."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Allvarligt haveri i hydraulcylindern. Stångtätningen läcker aktivt. Cylindern förlorar tydligt olja."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Kritiskt slitage på axellagren. Ett lager har havererat, vinkelväxeln är skadad och axeln överför inte längre drivkraft."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Haveri i differentialspärrens manöver. Spärren kopplar inte in. Differentialen förblir öppen."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Haveri i differentialspärrens manöver. Spärren förblir inkopplad. Maskinen motverkar styrningen i svängar."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Drivremmar och variatorer"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Drivlager och växellådor"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Inmatningskanalens kedja"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Inmatningsaccelerator"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Slagskenor"/>
+        <text name="rms_breakdowns_part_concave" text="Slagkorg"/>
+        <text name="rms_breakdowns_part_separation" text="Separationspinnar och skakverk"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Rensoldar"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Spannmålsskruvar och elevatorer"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Halmhack och spridare"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Inmatningsvalsar"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Metall- och stendetektor"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Hacktrumma"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Hackknivar"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Motstål"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Kärnkrossare"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Accelerator och fläkt"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Utkastarrör"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Blastkapare och putsare"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Upptagningsskär"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Rensturbiner"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Betelevator"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Bottenband och tömningsband"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Siktband"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Blastavskiljare och valsar"/>
+        <text name="rms_breakdowns_part_picking_units" text="Plockenheter"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Spindelfuktare"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Fläkt och kanaler"/>
+        <text name="rms_breakdowns_part_module_builder" text="Modulkammare"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Bottenknivar"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Inmatningsvalsar"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Hacktrummor"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Primär utsugning"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Rörelevator"/>
+        <text name="rms_breakdowns_part_shaker" text="Skaksystem"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Uppsamlingsfjäll"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Skopelevatorer"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Rensutsug"/>
+        <text name="rms_breakdowns_part_destemmer" text="Avstjälkare"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Plockhuvud"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Rensfläkt och soldar"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevatorer och transportörer"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Skörd omöjlig: en skördedel är trasig"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Stopp: skörden har stannat"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Halmhacken trasig: halmen faller i sträng"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Halmhacken trasig: denna gröda kan inte längre skördas"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Begynnande slitage på drivremmarna. De slirar lite under belastning."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Måttligt slitage på drivremmarna. En del tappar varvtal under belastning och varvtalslarmet stoppar ibland skörden."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Allvarligt slitage på drivremmarna. Kapaciteten sjunker och stoppen kommer om och om igen."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Kritiskt haveri i drivremmarna. En rem har gått av: skörd är omöjlig."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Begynnande slitage på drivlagren. Ett svagt mullrande hörs under skörden."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Måttligt slitage på drivlagren. Mullrandet hörs tydligt och de blir varma."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Allvarligt slitage på drivlagren. Mullrandet ökar och axlarna får glapp."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritiskt haveri i drivlagren. Ett lager har skurit: skörd är omöjlig."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Begynnande slitage på inmatningskanalens kedja. Den töjs och inmatningen blir ojämn."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Måttligt slitage på inmatningskanalens kedja. Stopp bildas vid inmatningskanalens ingång."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Allvarligt slitage på inmatningskanalens kedja. Den hoppar på drevet och stoppen fortsätter."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Kritiskt haveri i inmatningskanalens kedja. Kedjan har gått av: ingenting kommer längre in i maskinen."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Begynnande slitage på inmatningsacceleratorn. Grödan når trumman mindre jämnt."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Måttligt slitage på inmatningsacceleratorn. Kapaciteten står still och stopp uppstår."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Allvarligt slitage på inmatningsacceleratorn. Kapaciteten sjunker och stoppen fortsätter."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Kritiskt haveri i inmatningsacceleratorn. En skovel har slitits loss: skörd är omöjlig."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Begynnande slitage på slagskenorna. En del kärnor stannar i axen och går tillbaka till fältet."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Måttligt slitage på slagskenorna. Trumman vibrerar och spannmålsförlusterna ökar."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Allvarligt slitage på slagskenorna. Några skenor har gått av: stora förluster och stopp."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Kritiskt haveri i slagskenorna. En skena har slitits loss: tröskning är omöjlig."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Begynnande slitage på slagkorgen. Spannmålen tröskas sämre och en del går tillbaka till fältet."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Måttligt slitage på slagkorgen. Spannmålsförlusterna ökar."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Allvarligt slitage på slagkorgen. Kärnorna spricker, förlusterna är stora och stopp uppstår."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Kritiskt haveri i slagkorgen. En skena har slitits loss: tröskning är omöjlig."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Begynnande slitage på separationen. Kärnor stannar i halmen och går tillbaka till fältet."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Måttligt slitage på separationen. Spannmålsförlusterna i halmen ökar."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Allvarligt slitage på separationen. Stora förluster och halmstopp."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Kritiskt haveri i separationen. Halmen kommer inte längre igenom: skörd är omöjlig."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Begynnande slitage på rensoldarna. Agnar når spannmålstanken och lite spannmål försvinner med avfallet."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Måttligt slitage på rensoldarna. Förlusterna vid soldarna ökar."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Allvarligt slitage på rensoldarna. Ett sold har spruckit: stora förluster och stopp."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Kritiskt haveri i rensoldarna. Rensningen fungerar inte längre: skörd är omöjlig."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Begynnande slitage på spannmålsskruvarna och elevatorerna. Flödet till spannmålstanken minskar."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Måttligt slitage på spannmålsskruvarna och elevatorerna. En del kärnor spricker eller går förlorade på vägen."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Allvarligt slitage på spannmålsskruvarna och elevatorerna. Elevatorn stoppar regelbundet."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Kritiskt haveri i spannmålsskruvarna och elevatorerna. Spannmålstanken fylls inte längre: skörd är omöjlig."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Begynnande slitage på halmhacken. Halmen hackas mindre kort och hacken kräver lite mer effekt."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Måttligt slitage på halmhacken. Hacken vibrerar och kräver mer effekt."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Allvarligt slitage på halmhacken. Rotorn är i obalans och kräver mycket effekt."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritiskt haveri i halmhacken. En kniv har gått av: hacken står still och halmen faller i sträng."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Begynnande slitage på inmatningsvalsarna. De greppar grödan sämre: inmatningen blir ojämn."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Måttligt slitage på inmatningsvalsarna. Hacklängden blir ojämn och stopp uppstår."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Allvarligt slitage på inmatningsvalsarna. Kapaciteten sjunker och stoppen fortsätter."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Kritiskt haveri i inmatningsvalsarna. Ingenting kommer längre in i maskinen: skörd är omöjlig."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Begynnande fel i metall- och stendetektorn. Falsklarm stoppar ibland inmatningen."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Måttligt fel i metall- och stendetektorn. De onödiga stoppen fortsätter."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Haveri i metall- och stendetektorn. Den upptäcker inte längre något: stenar når knivarna och sliter dem mycket snabbare."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Begynnande slitage på hacktrumman. Den vibrerar lätt och kräver lite mer effekt."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Måttligt slitage på hacktrumman. Rotorn är i obalans och kräver mer effekt."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Allvarligt slitage på hacktrumman. En knivhållare har spruckit: mer effekt och stopp."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Kritiskt haveri i hacktrumman. Rotorn är skadad: skörd är omöjlig."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Begynnande slitage på knivarna. Snittet blir mindre rent och kräver lite mer effekt."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Måttligt slitage på knivarna. De kräver mer effekt och mer bränsle."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Allvarligt slitage på knivarna. Snittet blir ojämnt, effektbehovet stiger och stopp uppstår."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Kritiskt haveri i knivarna. En kniv har gått av: skörd är omöjlig."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Begynnande slitage på motstålet. Spelet ökar: snittet kräver lite mer effekt."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Måttligt slitage på motstålet. Snittet river och kräver mer effekt."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Allvarligt slitage på motstålet. Eggen är sliten: mer effekt och stopp."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Kritiskt haveri i motstålet. Det är obrukbart: skörd är omöjlig."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Begynnande slitage på kärnkrossaren. Kärnorna krossas sämre och krossaren kräver lite mer effekt."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Måttligt slitage på kärnkrossaren. Hela kärnor slinker igenom och effektbehovet stiger."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Allvarligt slitage på kärnkrossaren. En vals har repor: mer effekt och stopp."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Kritiskt haveri i kärnkrossaren. En vals har kärvat: skörd är omöjlig."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Begynnande slitage på acceleratorn. Kastet blir kortare och kapaciteten sjunker något."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Måttligt slitage på acceleratorn. Utkastarröret stoppar ibland."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Allvarligt slitage på acceleratorn. En skovel har slitits loss: täta stopp och förlorat foder."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Kritiskt haveri i acceleratorn. Fodret kastas inte längre ut: skörd är omöjlig."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Begynnande slitage på utkastarröret. Kastet drar iväg och kapaciteten sjunker något."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Måttligt slitage på utkastarröret. Fodret samlas och stoppar ibland röret."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Allvarligt slitage på utkastarröret. Slitfodret har hål: förlorat foder och täta stopp."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Kritiskt haveri i utkastarröret. Det är genomslitet: skörd är omöjlig."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Begynnande slitage. En del av grödan blir kvar."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Måttligt slitage. Vibrationer och större förluster."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Allvarligt slitage. Några element har gått av: stora förluster och stopp."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Kritiskt haveri. Delen är trasig: skörd är omöjlig."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Begynnande slitage på skären. Några rötter går av eller blir kvar i jorden."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Måttligt slitage på skären. De lyfter dåligt: större förluster och mer dragkraft."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Allvarligt slitage på skären. De är nedslitna: stora förluster och maskinen får slita."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Kritiskt haveri i skären. Ett skär har gått av: upptagning är omöjlig."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Begynnande slitage. Rensningen fungerar sämre: jord eller orenheter i grödan, lite gröda går förlorad."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Måttligt slitage. Rensförlusterna ökar."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Allvarligt slitage. Trasiga galler eller skovlar: stora förluster och stopp."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Kritiskt haveri. Rensningen har stannat: skörd är omöjlig."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Begynnande slitage. Kedjan eller bandet töjs: inmatningen blir ojämn."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Måttligt slitage. Slitna stavar eller skovlar: lägre kapacitet och stopp."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Allvarligt slitage. Kedjan hoppar: stoppen fortsätter."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Kritiskt haveri. Kedjan eller bandet har gått av: ingenting kommer längre igenom."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Begynnande slitage. Överföringen av grödan går långsammare."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Måttligt slitage. Överföringen blir ojämn och en del av grödan går förlorad."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Allvarligt slitage. Överföringen kärvar regelbundet."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Kritiskt haveri. Överföringen har stannat: skörd är omöjlig."/>
     </texts>
 </l10n>

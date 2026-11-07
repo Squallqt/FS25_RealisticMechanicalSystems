@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 RMS_FluidHandTool = {}
 
@@ -27,7 +26,8 @@ RMS_FluidHandTool.LOGO_SLICE_PREFIX = "rms_Brand"
 RMS_FluidHandTool.LOGO_SHEETS = {
     MOTOREX = "brands/hud_brand_motorex.xml",
     MOTUL = "brands/hud_brand_motul.xml",
-    FUCHS = "brands/hud_brand_fuchs.xml"
+    FUCHS = "brands/hud_brand_fuchs.xml",
+    SKF = "brands/hud_brand_skf.xml"
 }
 RMS_FluidHandTool.LOGO_COLOR = { 1, 1, 1, 1 }
 RMS_FluidHandTool.GAUGE_ZONE_ALPHA = 0.2
@@ -38,18 +38,15 @@ RMS_FluidHandTool.setDowns = {}
 
 source(modDirectory .. "events/RMS_FluidCanisterEvent.lua")
 
----
 function RMS_FluidHandTool.prerequisitesPresent(specializations)
     return true
 end
 
----
 function RMS_FluidHandTool.registerFunctions(handToolType)
     SpecializationUtil.registerFunction(handToolType, "setRMSFluidContainer", RMS_FluidHandTool.setRMSFluidContainer)
     SpecializationUtil.registerFunction(handToolType, "rmsFluidCarryCallback", RMS_FluidHandTool.rmsFluidCarryCallback)
 end
 
----
 function RMS_FluidHandTool.registerEventListeners(handToolType)
     for _, name in ipairs({ "onLoad", "onDelete", "onUpdate", "onDraw", "onWriteStream", "onReadStream", "onHeldStart",
         "onHeldEnd", "onHandToolHolderChanged", "onCarryingPlayerEnteredVehicle", "onRegisterActionEvents" }) do
@@ -57,7 +54,6 @@ function RMS_FluidHandTool.registerEventListeners(handToolType)
     end
 end
 
----Tells whether the local player carries the tool
 local function getIsLocallyCarried(handTool)
     local player = handTool:getCarryingPlayer()
     return player ~= nil and player.isOwner
@@ -74,17 +70,14 @@ function RMS_FluidHandTool.registerOverlays()
     RMS_FluidHandTool.gaugeZone = g_overlayManager:createOverlay("rms_LevelGauge.pourZone", 0, 0, 0, 0)
     RMS_FluidHandTool.gaugeZone:setColor(1, 1, 1, RMS_FluidHandTool.GAUGE_ZONE_ALPHA)
     RMS_FluidHandTool.logos = {}
-    for _, product in pairs(RMS_Fluids.PRODUCTS) do
-        if RMS_FluidHandTool.logos[product.brand] == nil then
-            local prefix = RMS_FluidHandTool.LOGO_SLICE_PREFIX .. product.brand
-            g_overlayManager:addTextureConfigFile(modDirectory .. RMS_FluidHandTool.LOGO_SHEETS[product.brand], prefix)
-            RMS_FluidHandTool.logos[product.brand] = g_overlayManager:createOverlay(prefix .. ".logo", 0, 0, 0, 0)
-            contextDisplay.slicesIds[prefix] = prefix .. ".logo"
-        end
+    for brand, sheet in pairs(RMS_FluidHandTool.LOGO_SHEETS) do
+        local prefix = RMS_FluidHandTool.LOGO_SLICE_PREFIX .. brand
+        g_overlayManager:addTextureConfigFile(modDirectory .. sheet, prefix)
+        RMS_FluidHandTool.logos[brand] = g_overlayManager:createOverlay(prefix .. ".logo", 0, 0, 0, 0)
+        contextDisplay.slicesIds[prefix] = prefix .. ".logo"
     end
 end
 
----Gives the action line of the game a brand logo
 local function setContext(contextDisplay, superFunc, contextAction, contextIconName, text, priority, actionText)
     superFunc(contextDisplay, contextAction, contextIconName, text, priority, actionText)
 
@@ -95,7 +88,6 @@ local function setContext(contextDisplay, superFunc, contextAction, contextIconN
 end
 ContextActionDisplay.setContext = Utils.overwrittenFunction(ContextActionDisplay.setContext, setContext)
 
----Returns the fluid can the hands carry, or aim at and may pick up
 local function getHandsCan(hands)
     local node = hands:getHeldItem()
     if node == nil then
@@ -113,7 +105,6 @@ local function getHandsCan(hands)
     return nil
 end
 
----Returns the drum with a pump and a stored nozzle the empty hands aim at
 local function getHandsDrum(hands)
     local target = hands:getCarryingPlayer().targeter.closestTargetsByKey[HandToolHands]
     if target == nil or hands:getHeldItem() ~= nil then
@@ -122,13 +113,12 @@ local function getHandsDrum(hands)
 
     local object = g_currentMission:getNodeObject(target.node)
     local spec = object ~= nil and object[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
-    if spec ~= nil and spec.hasPump and not spec.isNozzleOut and object:getOwnerFarmId() == g_currentMission:getFarmId() then
+    if spec ~= nil and spec.hasPump and not spec.isNozzleOut and g_currentMission.accessHandler:canPlayerAccess(object) then
         return object
     end
     return nil
 end
 
----Takes in hand the can or the nozzle aimed at, at the release of the key
 local function onTakeAction(hands)
     local container = getHandsCan(hands) or getHandsDrum(hands)
     if container ~= nil then
@@ -136,7 +126,6 @@ local function onTakeAction(hands)
     end
 end
 
----Takes back the pump of the drum the empty hands aim at
 local function onPickUpAction(hands, superFunc, ...)
     local drum = hands:getCarryingPlayer().isOwner and getHandsDrum(hands) or nil
     if drum ~= nil then
@@ -147,7 +136,6 @@ local function onPickUpAction(hands, superFunc, ...)
 end
 HandToolHands.onPickUpAction = Utils.overwrittenFunction(HandToolHands.onPickUpAction, onPickUpAction)
 
----Gives the hands of the player the key of the cans
 local function onHandsRegisterActionEvents(hands)
     if hands:getIsActiveForInput(true) then
         local _, eventId = hands:addActionEvent(InputAction.RMS_TOGGLE_FLUID_CAN, hands, onTakeAction, true, false, false, false, nil)
@@ -158,7 +146,6 @@ local function onHandsRegisterActionEvents(hands)
 end
 HandToolHands.onRegisterActionEvents = Utils.appendedFunction(HandToolHands.onRegisterActionEvents, onHandsRegisterActionEvents)
 
----Runs the fluid containers of the hands of the game
 local function onHandsUpdate(hands)
     local player = hands:getCarryingPlayer()
     if player == nil or not player.isOwner or not hands:getIsHeld() then
@@ -190,10 +177,6 @@ end
 HandToolHands.onUpdate = Utils.appendedFunction(HandToolHands.onUpdate, onHandsUpdate)
 
 ---Returns the circuit of a machine a container tops up
--- @param table container fluid container
--- @param table vehicle machine
--- @return string? circuit circuit key, nil when the machine lacks no fluid
--- @return boolean isCompatible true when the fluid is made for that circuit
 function RMS_FluidHandTool.getPourCircuit(container, vehicle)
     local productKey = container:getRMSFluidProductKey()
     local wrongCircuit = nil
@@ -209,10 +192,6 @@ function RMS_FluidHandTool.getPourCircuit(container, vehicle)
 end
 
 ---Returns why the container cannot pour into the machine aimed at
--- @param table vehicle machine aimed at
--- @param string? circuit circuit the container tops up
--- @param table container container in hand
--- @return string? textKey text of the refusal, nil when it may pour
 function RMS_FluidHandTool.getPourRefusal(vehicle, circuit, container)
     if circuit == nil then
         return "rms_fluid_error_no_circuit"
@@ -230,12 +209,10 @@ function RMS_FluidHandTool.getPourRefusal(vehicle, circuit, container)
 end
 
 ---Takes a can or the nozzle of a drum into the hand of a player, on the server
--- @param table player player taking it
--- @param table container fluid container aimed at
 function RMS_FluidHandTool.take(player, container)
     local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     if containerSpec == nil or containerSpec.carrierTool ~= nil or containerSpec.isBeingTaken
-        or container:getOwnerFarmId() ~= player.farmId or player:getIsHoldingHandTool() then
+        or not g_currentMission.accessHandler:canPlayerAccess(container, player) or player:getIsHoldingHandTool() then
         return
     end
     if container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY then
@@ -294,8 +271,6 @@ function RMS_FluidHandTool.onTaken(_, handTool, loadingState, arguments)
 end
 
 ---Queues a carried can to be set down on the next frame of the server
--- @param table handTool carried can
--- @param table? pose world position and heading, defaults to last carried pose
 function RMS_FluidHandTool.queueSetDown(handTool, pose)
     if next(RMS_FluidHandTool.setDowns) == nil then
         g_currentMission:addUpdateable(RMS_FluidHandTool)
@@ -325,7 +300,6 @@ function RMS_FluidHandTool.update()
     end
 end
 
----
 function RMS_FluidHandTool:onLoad(xmlFile, baseDirectory)
     local spec = self[specName]
     if spec == nil then
@@ -348,7 +322,6 @@ function RMS_FluidHandTool:onLoad(xmlFile, baseDirectory)
 end
 
 ---Links the tool to the container it stands for
--- @param table container fluid container carried, or drum the nozzle belongs to
 function RMS_FluidHandTool:setRMSFluidContainer(container)
     local spec = self[specName]
     spec.container = container
@@ -373,19 +346,16 @@ function RMS_FluidHandTool:setRMSFluidContainer(container)
     end
 end
 
----
 function RMS_FluidHandTool:onWriteStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self[specName].container)
 end
 
----
 function RMS_FluidHandTool:onReadStream(streamId, connection)
     -- The container may arrive after its hand tool on join.
     self[specName].containerId = NetworkUtil.readNodeObjectId(streamId)
     self:raiseActive()
 end
 
----Stops asking the server to pour
 local function stopPour(handTool)
     local spec = handTool[specName]
     if spec.pourVehicle ~= nil then
@@ -394,16 +364,13 @@ local function stopPour(handTool)
     end
 end
 
----Tells whether a node the player looks at is a tracked machine of his farm
--- @param entityId node node crossed by the look
--- @return boolean isMachine
+---Tells whether a node looked at is a tracked machine the farm may use
 function RMS_FluidHandTool.getIsMachineNode(node)
     local vehicle = g_currentMission:getNodeObject(node)
     local vehicleSpec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    return vehicleSpec ~= nil and not vehicleSpec.isExcludedVehicle and vehicle:getOwnerFarmId() == g_currentMission:getFarmId()
+    return vehicleSpec ~= nil and not vehicleSpec.isExcludedVehicle and g_currentMission.accessHandler:canPlayerAccess(vehicle)
 end
 
----Finds the machine the player aims at and the circuit the can tops up on it
 local function updateTarget(handTool, player)
     local spec = handTool[specName]
     local node = player.targeter:getClosestTargetedNodeFromType(RMS_FluidHandTool)
@@ -416,7 +383,7 @@ local function updateTarget(handTool, player)
         spec.targetRefusal = RMS_FluidHandTool.getPourRefusal(vehicle, spec.targetCircuit, spec.container)
         if spec.targetRefusal == nil then
             spec.targetText = string.format(g_i18n:getText("rms_fluid_pour_action"),
-                g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, spec.targetCircuit, "rms_fluid_circuit_" .. spec.targetCircuit)))
+                g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, spec.targetCircuit)))
         end
     end
     if spec.pourVehicle ~= nil and spec.pourVehicle ~= vehicle and not spec.isNozzle then
@@ -431,7 +398,6 @@ function RMS_FluidHandTool:rmsFluidCarryCallback(hitObjectId, x, y, z, distance)
     end
 end
 
----
 function RMS_FluidHandTool:onUpdate(dt)
     local spec = self[specName]
     if spec.containerId ~= nil then
@@ -512,7 +478,6 @@ function RMS_FluidHandTool:onDraw()
     end
 end
 
----
 function RMS_FluidHandTool:onRegisterActionEvents()
     if not self:getIsActiveForInput(true) then
         return
@@ -531,7 +496,6 @@ function RMS_FluidHandTool:onRegisterActionEvents()
     spec.carryEventId = carryEventId
 end
 
----Hands the can back to the hands of the game, which carry it like any object
 local function carry(handTool)
     local spec = handTool[specName]
     local x, y, z, dx, dy, dz = handTool:getCarryingPlayer().targeter:getLastLookRay()
@@ -545,7 +509,6 @@ local function carry(handTool)
         z + dz * spec.carryDistance, MathUtil.getYRotationFromDirection(dx, dz) })
 end
 
----Asks the server to pour, or tells the player why the can will not
 local function startPour(handTool)
     local spec = handTool[specName]
     local target, circuit = spec.target, spec.targetCircuit
@@ -672,10 +635,6 @@ function RMS_FluidHandTool:onDelete()
 end
 
 ---Shows the local player the pour that started
--- @param table container container pouring
--- @param table vehicle machine it pours into
--- @param string circuit circuit it tops up
--- @param boolean isCompatible false when the fluid is not made for the circuit
 function RMS_FluidHandTool.showPour(container, vehicle, circuit, isCompatible)
     if RMS_FluidHandTool.display == nil then
         g_currentMission:addDrawable(RMS_FluidHandTool)
@@ -689,7 +648,7 @@ function RMS_FluidHandTool.showPour(container, vehicle, circuit, isCompatible)
         isCompatible = isCompatible,
         isPouring = true,
         logo = RMS_FluidHandTool.logos[product.brand],
-        circuitText = g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, circuit, "rms_fluid_circuit_" .. circuit)),
+        circuitText = g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, circuit)),
         machineText = vehicle:getFullName(),
         productText = g_brandManager:getBrandByName(product.brand).title .. " " .. product.name,
         containerLiters = container:getRMSFluidLiters(),
@@ -707,8 +666,8 @@ function RMS_FluidHandTool.endPour()
     end
 end
 
----Returns the size at which a text fits its room, in 5 % steps
-local function fitTextSize(text, textSize, width)
+---Shrinks a text size until the text holds in a width
+function RMS_FluidHandTool.fitTextSize(text, textSize, width)
     while getTextWidth(textSize, text) > width do
         textSize = textSize * 0.95
     end
@@ -742,20 +701,18 @@ function RMS_FluidHandTool.draw()
     local padding = hud:scalePixelToScreenWidth(20)
     local x, y = 0.5 - width * 0.5, g_hudAnchorBottom
     local right = x + width - padding
-    ---
     local function rowY(pixels)
         return y + hud:scalePixelToScreenHeight(pixels)
     end
-    ---
     local function size(pixels)
         return hud:scalePixelToScreenHeight(pixels)
     end
-    ---Rounds a length to whole pixels, for the bar and its hatching
     local function onPixels(value)
         return math.floor(value / g_pixelSizeY + 0.5) * g_pixelSizeY
     end
 
-    hud:drawPanelBackground(x, y, width, height, HUD.COLOR.BACKGROUND_DARK)
+    local background = HUD.COLOR.BACKGROUND_DARK
+    drawFilledRectRound(x, y, width, height, 0.25, background[1], background[2], background[3], background[4])
     display.logo:setDimension(hud:scalePixelToScreenWidth(44), size(44))
     display.logo:setPosition(x + padding, rowY(82))
     display.logo:render()
@@ -798,10 +755,10 @@ function RMS_FluidHandTool.draw()
     local textX, gap = x + padding + hud:scalePixelToScreenWidth(58), hud:scalePixelToScreenWidth(12)
     setTextAlignment(RenderText.ALIGN_LEFT)
     setTextColor(1, 1, 1, 1)
-    renderText(textX, rowY(115), fitTextSize(display.circuitText, size(20), right - capacityWidth - litersWidth - gap - textX), display.circuitText)
+    renderText(textX, rowY(115), RMS_FluidHandTool.fitTextSize(display.circuitText, size(20), right - capacityWidth - litersWidth - gap - textX), display.circuitText)
     setTextBold(false)
     setTextColor(1, 1, 1, 0.6)
-    renderText(textX, rowY(92), fitTextSize(display.machineText, size(14), right - statusWidth - gap - textX), display.machineText)
+    renderText(textX, rowY(92), RMS_FluidHandTool.fitTextSize(display.machineText, size(14), right - statusWidth - gap - textX), display.machineText)
     renderText(x + padding, rowY(16), size(13), display.productText)
 
     local trackX, trackWidth = x + padding, width - padding * 2

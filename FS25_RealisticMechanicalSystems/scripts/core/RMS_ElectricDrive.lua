@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Traction battery temperature and charge limits.
 RMS_ElectricDrive = RMS_ElectricDrive or {}
@@ -7,9 +6,6 @@ RMS_ElectricDrive = RMS_ElectricDrive or {}
 local COLD_BATTERY_ID = "COLD_TRACTION_BATTERY"
 
 ---Counts the thresholds a temperature has gone past, in the order they are met
--- @param float temperature temperature in degrees
--- @param table thresholds thresholds, rising for heat and falling for cold
--- @return integer stage thresholds passed, 0 before the first
 function RMS_ElectricDrive.getTemperatureStage(temperature, thresholds)
     local isRising = thresholds[#thresholds] > thresholds[1]
     local stage = 0
@@ -22,17 +18,13 @@ function RMS_ElectricDrive.getTemperatureStage(temperature, thresholds)
 end
 
 ---Returns the share of its original capacity a traction battery holds
--- @param float condition condition of the traction battery from 0 to 1
 -- @param float lostToCells share failed cells take on top of the wear, 0 or negative
--- @return float share share between the faded capacity and 1
 function RMS_ElectricDrive.getCapacityShare(condition, lostToCells)
     local share = (1 - (1 - condition) * RMS_Config.ELECTRIC_DRIVE.BATTERY_CAPACITY_FADE) * (1 + lostToCells)
     return math.floor(share * 1000 + 0.5) / 1000
 end
 
 ---Returns the capacity share the traction battery of a vehicle still holds
--- @param table vehicle vehicle
--- @return float factor share between the faded capacity and 1
 function RMS_ElectricDrive.getCapacityFactor(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local cellFault = spec.activeEffects.TRACTION_BATTERY_CAPACITY_MODIFIER
@@ -40,7 +32,6 @@ function RMS_ElectricDrive.getCapacityFactor(vehicle)
 end
 
 ---Gives the traction battery the capacity its wear leaves it
--- @param table vehicle vehicle
 function RMS_ElectricDrive.applyBatteryCapacity(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local fillUnitIndex = vehicle:getConsumerFillUnitIndex(FillType.ELECTRICCHARGE)
@@ -57,14 +48,12 @@ function RMS_ElectricDrive.applyBatteryCapacity(vehicle)
 end
 
 ---Records the original capacity of the traction battery, then applies its wear
--- @param table vehicle vehicle
 function RMS_ElectricDrive.initBatteryCapacity(vehicle)
     local fillUnitIndex = vehicle:getConsumerFillUnitIndex(FillType.ELECTRICCHARGE)
     vehicle.spec_RealisticMechanicalSystems.tractionBatteryNominalCapacity = vehicle:getFillUnitCapacity(fillUnitIndex)
     RMS_ElectricDrive.applyBatteryCapacity(vehicle)
 end
 
----Returns the share of a station's power the cells accept at a temperature
 local function getColdChargeAcceptance(temperature)
     local curve = RMS_Config.ELECTRIC_DRIVE.CHARGE_ACCEPTANCE_CURVE
     if temperature <= curve[1][1] then
@@ -80,9 +69,6 @@ local function getColdChargeAcceptance(temperature)
 end
 
 ---Returns the share of a station's power a fill unit takes
--- @param table object object a load trigger is filling
--- @param integer fillUnitIndex fill unit the trigger fills
--- @return float acceptance 0 to 1; 1 outside electric traction batteries
 function RMS_ElectricDrive.getChargeAcceptance(object, fillUnitIndex)
     local spec = object.spec_RealisticMechanicalSystems
     if spec == nil or spec.isExcludedVehicle or not spec.isElectricVehicle
@@ -97,12 +83,10 @@ function RMS_ElectricDrive.getChargeAcceptance(object, fillUnitIndex)
     return getColdChargeAcceptance(spec.tractionBatteryTempC) * chargerShare
 end
 
----Tells whether a native fill-unit value is finite
 local function isFiniteChargeValue(value)
     return type(value) == "number" and value == value and value > -math.huge and value < math.huge
 end
 
----Snapshots a server charging interval before the station updates the fill unit
 local function getChargeObservationInputs(trigger, object, dt)
     local spec = object.spec_RealisticMechanicalSystems
     local fillUnitIndex = trigger.fillUnitIndex
@@ -129,7 +113,6 @@ local function getChargeObservationInputs(trigger, object, dt)
     return level, capacity, elapsedMS
 end
 
----Records the positive native fill-level change of an interval
 local function recordChargeObservation(object, fillUnitIndex, levelBefore, capacity, elapsedMS)
     local spec = object.spec_RealisticMechanicalSystems
     local observation = spec.tractionBatteryChargeObservation
@@ -148,10 +131,6 @@ local function recordChargeObservation(object, fillUnitIndex, levelBefore, capac
 end
 
 ---Consumes the transient charging observations
--- @param table vehicle vehicle
--- @return float energy positive amount accepted in native ELECTRICCHARGE fill units
--- @return float capacityShare sum of amount/effective capacity per interval
--- @return float elapsedMS charging duration in load-trigger time
 function RMS_ElectricDrive.consumeChargeObservation(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local observation = spec ~= nil and spec.tractionBatteryChargeObservation or nil
@@ -163,9 +142,6 @@ function RMS_ElectricDrive.consumeChargeObservation(vehicle)
 end
 
 ---Runs a load trigger, slicing the energy a slowed traction battery takes
--- @param table trigger load trigger
--- @param function superFunc super function
--- @param float dt time since last call in ms
 function RMS_ElectricDrive.updateLoadTrigger(trigger, superFunc, dt)
     local object = trigger.currentFillableObject
     if not trigger.isServer or not trigger.isLoading or object == nil then
@@ -174,7 +150,6 @@ function RMS_ElectricDrive.updateLoadTrigger(trigger, superFunc, dt)
 
     local fillUnitIndex = trigger.fillUnitIndex
     local levelBefore, capacity, elapsedMS = getChargeObservationInputs(trigger, object, dt)
-    ---
     local function finishCharge(...)
         if levelBefore ~= nil then
             recordChargeObservation(object, fillUnitIndex, levelBefore, capacity, elapsedMS)
@@ -210,20 +185,13 @@ function RMS_ElectricDrive.updateLoadTrigger(trigger, superFunc, dt)
 end
 
 ---Tells whether the traction battery is taking charge from a station
--- @param table vehicle vehicle
--- @return boolean isCharging true while a station fills it
 function RMS_ElectricDrive.getIsCharging(vehicle)
     local chargeTime = vehicle.spec_RealisticMechanicalSystems.tractionBatteryChargeTime
     return chargeTime ~= nil and g_currentMission.time - chargeTime < 1000
 end
 
 ---Advances the traction battery through the common role kernel
--- @param table vehicle vehicle
--- @param float dtOperatingMS running time represented by this interval, in milliseconds
--- @param float ambientC current ambient temperature in degrees Celsius
 -- @param float? dtBatteryMS battery interval (ms), defaults to operating dt
--- @param float? ambientPrev previous ambient sample
--- @param table? inputs native thermal input snapshot
 function RMS_ElectricDrive.updateBatteryTemperature(vehicle, dtOperatingMS, ambientC, dtBatteryMS, ambientPrev, inputs)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local operating = RealisticMechanicalSystems.sanitizeNumber(dtOperatingMS, 0, 0)
@@ -250,7 +218,6 @@ function RMS_ElectricDrive.updateBatteryTemperature(vehicle, dtOperatingMS, ambi
 end
 
 ---Keeps the cold battery state in step with its temperature
--- @param table vehicle vehicle
 function RMS_ElectricDrive.syncColdBattery(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if not vehicle.isServer then

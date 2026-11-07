@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="115">
+<modDesc descVersion="116">
     <author>Squallqt</author>
-    <version>0.13.0.1</version>
+    <version>1.0.0.0-beta.1</version>
     <title>
         <en>Realistic Mechanical Systems</en>
         <de>Realistische Mechaniksysteme</de>
@@ -10,7 +10,7 @@
     <description>
         <en><![CDATA[Your machines finally wear out like real ones.
 
-Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO. Every one is made of the real parts that fail in it, each wearing for its own reasons. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
+Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO, the harvesting parts taking the place of the PTO on a harvester. Every one is made of the real parts that fail in it, each wearing for its own reasons. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
 
 WEAR
 - Condition falls about 1% per operating hour under normal use, far faster under abuse, and each system has its own wear factors
@@ -19,24 +19,26 @@ WEAR
 - Overdue service accelerates wear in the systems covered by the overdue fluid, the engine most of all
 
 BREAKDOWNS
-- 47 breakdowns spread across the 8 systems, each in four stages from Minor to Critical
+- 162 breakdowns spread across the systems, most in four stages from Minor to Critical
 - The part that fails is the one your use has worn: frequent braking with a heavy trailer wears out the brakes first
 - Early faults show through RPM fluctuations, coloured exhaust smoke, knocking and whistling; dashboard warnings usually appear from stage 2, though some faults can warn from stage 1
 - Old machines also degrade permanently, losing engine power, transmission bite, battery performance, and cooling efficiency
 
 WORKSHOP
 - Inspection, Maintenance, Repair, and Overhaul each offer options that change price, duration, and quality
-- Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. Dealer colour changes use the RMS repaint price
+- Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. The colours of a machine you own change only through a full repaint, and buying one in another colour than the one already selected costs a full repaint
 - Part quality from Used to Original: cheaper parts are more often defective and bring the same fault back
-- Warranty covers replacement repairs with original parts and their fluids for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service excludes only the affected fault.
-- By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make maintenance and repair, repainting, or overhauls instant
+- Warranty covers replacement repairs with original parts and their fluids for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service or an earlier hard impact excludes only the affected fault.
+- Engine remapping by a tuner at the farm or mobile workshop, never at the dealer: 10 to 20% more power depending on the engine's place in its range, its curves before and after on a bench sheet, more fuel and heat for the extra power, wear at full load past the strongest engine of the range, and the warranty lost for good. The tuner can put the stock software back, free for 12 months
+- By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make inspections, maintenance and repair, repainting, overhauls or engine remapping instant
 - A fault is identified before it is repaired: an inspection or any maintenance identifies it, a warning light only shows that one is there
 - A complete inspection can reveal hidden faults and defective repair parts, and shows exact condition values; some faults can remain undetected
 
 DAILY CARE
 - Telwin Doctor Charge 155 Connect on a trolley: connect it near a vehicle to charge its battery at the current it accepts, or for starting aid (START); charging follows the game's time speed and resumes when the save is loaded
-- Hold R near a vehicle for a pre-shift check of fluids, radiator, and air filter
-- Air Blower clears the cooling pack and removes loose dust from the air filter; Grease Gun restores lubrication on machines that need it
+- Hold R near a vehicle for a pre-shift check of fluids, radiator, air filter and greasing
+- Air Blower clears the cooling pack and removes loose dust from the air filter
+- SKF grease gun, loaded with SKF grease cartridges bought one at a time or up to twelve in a carton. Each machine and implement has its own grease points, to grease every working day, every few working days or every few months: each click greases one, a display shows the grease left in the cartridge and each point greased, and greasing late wears the machine faster. The fleet page lists every implement with its grease points, and standing next to a machine or implement shows the points due or the next greasing
 - An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
 
 SIMULATION
@@ -50,7 +52,58 @@ SIMULATION
 - Multiplayer and dedicated server, 27 languages
 - Electric vehicles tracked with their own parts: an electric motor, a traction battery that loses capacity with age and range in the cold, power electronics, and maintenance limited to its present fluid circuits
 
+Mod for Farming Simulator
+
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.1:
+- Reworked machine production years and their period equipment
+- Added the model launch year to the shop
+- Added engine oil change intervals that follow the machine's era
+- Added engine remapping by a tuner at the farm or mobile workshop
+- Added an instant setting for engine remapping
+- Reworked the workshop, the fleet page, the settings page and the other RMS screens
+- Reworked the colours and limits of the dashboard lamps, and the limits of the inspection report and the overhaul advice
+- Replaced the sounds of the starter, worn brakes and the jumper cable clamps
+- Added a single-press engine start for every engine
+- Added grease cartridges for the grease gun
+- Reworked greasing with the grease points of each machine
+- Added greasing of implements and their PTO shafts, shown in the fleet page
+- Added the harvesting parts of self-propelled harvesters, worn by the work they do, with crop losses, blockages and stops as they wear, a stop or a blockage sounding the cab alarm
+- Added the renewal of worn harvesting parts to the preventive service, their parts billed
+- Added the harvesting effort measured by RMS itself when Realistic Harvesting is not installed
+- Added integration with Realistic Harvesting (version 1.6.5.0 or higher), sharing the harvesting effort and the wear of the harvesting parts
+- Added spark plugs to methane engines, changed during services, misfiring once overdue
+- Reworked the breakdowns of each machine type, without the parts a machine lacks and with the names of its real parts
+- Fixed farms contracting for another being unable to use its trolley, charger and fluids, as the game allows
+- Removed the raised fill type limit, which the game itself raises to 1023 since patch 1.25.1.0
+- Fixed the buttons of the settings page
+- Fixed AI workers, Courseplay and AutoDrive wearing the machine by working it cold, hitting obstacles or spinning their wheels on the spot
+- Fixed breakdowns and worn parts of lamps missing from the machine
+- Fixed the committed cost of a running service showing 0 in multiplayer
+- Fixed the finish time of a running service jumping back and forth by a minute when time is sped up
+- Fixed the most powerful Stage V machines having no particulate filter
+- Fixed machines bought in another colour without paying for the paint
+- Fixed the vehicle configurator changing an owned machine's colours without charging the repaint
+- Fixed hard starts with the game's automatic start and the GIANTS Ignition Key
+- Fixed cars with a flat battery not starting on jumper cables in the cold
+- Fixed the jumper cable clamps held off the left hand
+- Fixed the wheel slip following the 4WD switch instead of the front axle after a 4WD engagement failure
+- Fixed the differential lock not holding a spinning wheel in 4WD, and only partly in 2WD
+- Fixed the PTO dropping out without a warning in single player
+- Fixed engine stumbles no longer cutting the power after a while
+- Fixed the unsteady idle of failing injectors, fuel pumps and spark plugs not worsening with the fault
+- Fixed lights staying in a random state after a wiring fault made them flicker
+- Fixed worn powershift packs sometimes never engaging the gear asked, or driving it at the ratio of the previous gear
+- Fixed PTO drops that sometimes did not happen
+- Fixed gears thrown out by worn synchronizers and refused shifts ending too early
+- Fixed variator pressure drops ending too early
+- Fixed the cold idle of failing glow plugs jumping instead of swinging
+- Fixed engine stumbles switching the cruise control back on after the driver turned it off
+- Fixed worn brake discs only squealing at their last stage
+- Fixed implements on a leaking lift valve dropping at full speed instead of sinking slowly, and the lower key raising them meanwhile
+- Fixed beacons and turn signals still working with the battery disconnected or dead, and never draining the battery
+- Reduced the range for taking the charger trolley
 
 Changelog 0.13.0.1:
 - Fixed the game freezing while loading a savegame with some mods that switch a machine's lights
@@ -206,7 +259,7 @@ Changelog 0.10.0.0:
 
         <de><![CDATA[Ihre Maschinen verschleißen endlich wie echte.
 
-Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle. Jedes besteht aus den echten Teilen, die darin ausfallen, und jedes Teil verschleißt aus eigenen Gründen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
+Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle, bei einer Erntemaschine die Ernteorgane anstelle der Zapfwelle. Jedes besteht aus den echten Teilen, die darin ausfallen, und jedes Teil verschleißt aus eigenen Gründen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
 
 VERSCHLEISS
 - Der Zustand sinkt im Normalbetrieb um etwa 1 % je Betriebsstunde, bei Missbrauch deutlich schneller, und jedes System hat eigene Verschleißfaktoren
@@ -215,24 +268,26 @@ VERSCHLEISS
 - Überfällige Wartung beschleunigt den Verschleiß der vom überfälligen Flüssigkeitswechsel betroffenen Systeme, allen voran des Motors
 
 DEFEKTE
-- 47 Defekte, verteilt auf die 8 Systeme, jeweils in vier Stufen von geringfügig bis kritisch
+- 162 Defekte, verteilt auf die Systeme, meist in vier Stufen von geringfügig bis kritisch
 - Es fällt das Teil aus, das Ihre Nutzung verschlissen hat: Häufiges Bremsen mit schwerem Anhänger verschleißt zuerst die Bremsen
 - Frühe Defekte zeigen sich durch schwankende Drehzahl, farbigen Abgasrauch, Klopfen und Pfeifen; Warnanzeigen leuchten meist ab Stufe 2, bei manchen Defekten schon ab Stufe 1
 - Alte Maschinen bauen zudem dauerhaft ab und verlieren Motorleistung, Kraftübertragung, Batterieleistung und Kühlwirkung
 
 WERKSTATT
 - Inspektion, Wartung, Reparatur und Grundüberholung bieten jeweils Optionen für Preis, Dauer und Qualität
-- Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Farbwechsel beim Händler kosten den RMS-Lackierpreis
+- Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Die Farben einer eigenen Maschine ändern sich nur durch eine komplette Neulackierung, und wer eine Maschine in einer anderen als der bereits gewählten Farbe kauft, zahlt eine komplette Neulackierung
 - Teilequalität von Gebraucht bis Original: billigere Teile sind häufiger defekt und holen denselben Fehler zurück
-- Die Garantie deckt den Austausch mit Originalteilen und die benötigten Flüssigkeiten für 24 Monate oder bis zur Stundengrenze ab. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung schließt nur den betroffenen Schaden aus.
-- Standardmäßig richtet sich die Arbeitsdauer nach der Spielzeit und pausiert beim Händler über Nacht; eigene und mobile Werkstätten bleiben geöffnet. Getrennte Einstellungen ermöglichen sofortige Wartung und Reparatur, Neulackierung oder Überholung
+- Die Garantie deckt den Austausch mit Originalteilen und die benötigten Flüssigkeiten für 24 Monate oder bis zur Stundengrenze ab. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung oder ein früherer Aufprall schließt nur den betroffenen Schaden aus.
+- Motoroptimierung durch einen Tuner in der Hofwerkstatt oder der mobilen Werkstatt, nie beim Händler: 10 bis 20 % mehr Leistung je nach Stellung des Motors in seiner Baureihe, seine Kurven vorher und nachher auf einem Prüfstandsblatt, mehr Kraftstoff und Wärme für die zusätzliche Leistung, Verschleiß unter Volllast über dem stärksten Motor der Baureihe, und die Garantie erlischt endgültig. Der Tuner kann die Serien-Software zurückspielen, 12 Monate kostenlos
+- Standardmäßig richtet sich die Arbeitsdauer nach der Spielzeit und pausiert beim Händler über Nacht; eigene und mobile Werkstätten bleiben geöffnet. Getrennte Einstellungen ermöglichen sofortige Inspektion, Wartung und Reparatur, Neulackierung, Überholung oder Motoroptimierung
 - Ein Schaden wird vor der Reparatur festgestellt: Eine Inspektion oder jede Wartung stellt ihn fest, eine Warnleuchte zeigt nur, dass es einen gibt
 - Eine vollständige Inspektion kann verborgene Fehler und defekte Reparaturteile aufdecken und zeigt exakte Zustandswerte; manche Defekte können unentdeckt bleiben
 
 TÄGLICHE PFLEGE
 - Telwin Doctor Charge 155 Connect auf einem Wagen: neben einem Fahrzeug anschließen, um seine Batterie mit dem Strom zu laden, den sie aufnimmt, oder für die Starthilfe (START); das Laden folgt der Zeitgeschwindigkeit im Spiel und wird beim Laden des Spielstands fortgesetzt
-- R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler und Luftfilter vor Schichtbeginn
-- Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter; die Fettpresse stellt die Schmierung wieder her
+- R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler, Luftfilter und Abschmierung vor Schichtbeginn
+- Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter
+- SKF-Fettpresse, geladen mit SKF-Fettkartuschen, einzeln oder bis zu zwölf im Karton gekauft. Jede Maschine und jedes Anbaugerät hat eigene Schmierstellen, an jedem Arbeitstag, alle paar Arbeitstage oder alle paar Monate abzuschmieren: Jeder Klick schmiert eine, eine Anzeige zeigt das Fett in der Kartusche und jede abgeschmierte Stelle, und verspätetes Abschmieren verschleißt die Maschine schneller. Die Fuhrpark-Seite listet jedes Anbaugerät mit seinen Schmierstellen, und zu Fuß neben einer Maschine oder einem Anbaugerät erscheinen die fälligen Schmierstellen oder das nächste Abschmieren
 - Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
 
 SIMULATION
@@ -246,7 +301,58 @@ SIMULATION
 - Mehrspieler und Dedicated Server, 27 Sprachen
 - Elektrofahrzeuge mit ihren eigenen Bauteilen: Elektromotor, Traktionsbatterie, die mit dem Alter Kapazität und bei Kälte Reichweite verliert, Leistungselektronik und Wartung nur für vorhandene Flüssigkeitskreisläufe
 
+Mod for Farming Simulator
+
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.1:
+- Baujahre der Maschinen und ihre zeitgemäße Ausstattung überarbeitet
+- Markteinführungsjahr des Modells im Shop hinzugefügt
+- Motorölwechselintervalle nach der Epoche der Maschine hinzugefügt
+- Motoroptimierung durch einen Tuner in der Hofwerkstatt oder der mobilen Werkstatt hinzugefügt
+- Sofort-Einstellung für die Motoroptimierung hinzugefügt
+- Werkstatt, Fuhrpark-Seite, Einstellungsseite und die übrigen RMS-Fenster überarbeitet
+- Farben und Grenzwerte der Kontrollleuchten sowie Grenzwerte von Inspektionsbericht und Überholungsempfehlung überarbeitet
+- Geräusche des Anlassers, verschlissener Bremsen und der Klemmen des Starthilfekabels ersetzt
+- Motorstart mit einem einzigen Tastendruck für alle Motoren hinzugefügt
+- Fettkartuschen für die Fettpresse hinzugefügt
+- Abschmierung mit den Schmierstellen jeder Maschine überarbeitet
+- Abschmierung der Anbaugeräte und ihrer Gelenkwellen hinzugefügt, auf der Fuhrpark-Seite angezeigt
+- Ernteorgane selbstfahrender Erntemaschinen hinzugefügt, die durch ihre Arbeit verschleißen, mit Ernteverlusten, Verstopfungen und Stillständen bei zunehmendem Verschleiß; ein Stillstand oder eine Verstopfung löst den Kabinenalarm aus
+- Ersatz verschlissener Ernteorgane bei der vorbeugenden Wartung hinzugefügt, die Teile werden berechnet
+- Von RMS selbst gemessene Erntebelastung hinzugefügt, wenn Realistic Harvesting nicht installiert ist
+- Integration mit Realistic Harvesting hinzugefügt (Version 1.6.5.0 oder höher), mit gemeinsamer Erntebelastung und gemeinsamem Verschleiß der Ernteteile
+- Zündkerzen für Methanmotoren hinzugefügt, bei der Wartung gewechselt, überfällig mit Zündaussetzern
+- Defekte je Maschinentyp überarbeitet, ohne die Teile, die einer Maschine fehlen, und mit den Namen ihrer echten Teile
+- Lohnunternehmer-Höfe konnten Werkzeugwagen, Ladegerät und Flüssigkeiten des Auftraggebers nicht nutzen, behoben
+- Angehobenes Fülltypen-Limit entfernt, das Spiel selbst hebt es seit Patch 1.25.1.0 auf 1023 an
+- Fehler der Schaltflächen der Einstellungsseite behoben
+- Fehler behoben, durch den KI-Helfer, Courseplay und AutoDrive die Maschine verschlissen, wenn sie sie kalt belasteten, gegen ein Hindernis fuhren oder die Räder im Stand durchdrehen ließen
+- Fehler behoben, durch den an der Maschine fehlende Leuchten ausfallen oder als verschlissene Teile erscheinen konnten
+- Fehler behoben, durch den die gebundenen Kosten eines laufenden Vorgangs im Mehrspielermodus als 0 angezeigt wurden
+- Fehler behoben, durch den die Endzeit eines laufenden Vorgangs bei beschleunigter Zeit um eine Minute hin und her sprang
+- Fehlender Partikelfilter bei den stärksten Stage-V-Maschinen behoben
+- Fehler behoben, durch den eine Maschine ohne Lackierkosten in einer anderen Farbe gekauft werden konnte
+- Fehler behoben, durch den der Konfigurator die Farben einer eigenen Maschine ohne Lackierkosten änderte
+- Schwere Starts mit dem automatischen Motorstart des Spiels und dem GIANTS-Zündschlüssel behoben
+- Fehler behoben, durch den ein Auto mit leerer Batterie bei Kälte nicht per Starthilfekabel ansprang
+- Fehler behoben, durch den die Klemmen der Starthilfekabel neben der linken Hand gehalten wurden
+- Fehler behoben, durch den der Schlupf nach einem Ausfall der Allradzuschaltung dem Allradschalter statt der Vorderachse folgte
+- Fehler behoben, durch den die Differentialsperre ein durchdrehendes Rad im Allradbetrieb nicht und im Hinterradantrieb nur teilweise hielt
+- Fehler behoben, durch den die Zapfwelle im Einzelspieler ohne Warnung auskuppelte
+- Fehler behoben, durch den Motoraussetzer nach einer Weile keine Leistung mehr wegnahmen
+- Fehler behoben, durch den der unruhige Leerlauf defekter Einspritzdüsen, Kraftstoffpumpen und Zündkerzen nicht mit dem Schaden zunahm
+- Fehler behoben, durch den Lichter nach einem Flackern durch einen Kabelfehler in einem zufälligen Zustand blieben
+- Fehler behoben, durch den verschlissene Lastschaltkupplungen den gewählten Gang manchmal nie einlegten oder mit der Übersetzung des vorherigen Gangs fuhren
+- Fehler behoben, durch den Zapfwellenausfälle manchmal ausblieben
+- Fehler behoben, durch den herausspringende Gänge bei verschlissenen Synchronringen und verweigerte Schaltvorgänge zu früh endeten
+- Fehler behoben, durch den Druckabfälle des Variators zu früh endeten
+- Fehler behoben, durch den der Kaltleerlauf defekter Glühkerzen sprang statt zu schwanken
+- Fehler behoben, durch den Motoraussetzer den vom Fahrer ausgeschalteten Tempomat wieder einschalteten
+- Fehler behoben, durch den verschlissene Bremsscheiben nur im letzten Stadium quietschten
+- Fehler behoben, durch den Anbaugeräte bei einem undichten Hubwerksventil auf einmal absanken statt langsam herunterzugehen und die Absenktaste sie dabei anhob
+- Fehler behoben, durch den Rundumleuchten und Blinker bei getrennter oder leerer Batterie weiterliefen, ohne die Batterie je zu entladen
+- Reichweite zum Übernehmen des Ladegerätwagens verringert
 
 Changelog 0.13.0.1:
 - Hängenbleiben beim Laden des Spielstands mit Mods, die die Beleuchtung einer Maschine schalten, behoben
@@ -402,7 +508,7 @@ Changelog 0.10.0.0:
         
         <fr><![CDATA[Vos machines s'usent enfin comme les vraies.
 
-Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force. Chacun est fait des vraies pièces qui y lâchent, chacune s'usant pour ses propres raisons. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
+Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force, les organes de récolte prenant la place de la prise de force sur une machine de récolte. Chacun est fait des vraies pièces qui y lâchent, chacune s'usant pour ses propres raisons. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
 
 USURE
 - L'état baisse d'environ 1 % par heure de fonctionnement en usage normal, bien plus vite en cas d'abus, et chaque système a ses propres facteurs d'usure
@@ -411,24 +517,26 @@ USURE
 - Un entretien en retard accélère l'usure des systèmes couverts par le fluide à remplacer, du moteur en premier
 
 PANNES
-- 47 pannes réparties sur les 8 systèmes, chacune en quatre stades, de mineur à critique
+- 162 pannes réparties sur les systèmes, la plupart en quatre stades, de mineur à critique
 - La pièce qui lâche est celle que votre usage a usée : freiner souvent avec une lourde remorque use d'abord les freins
 - Les premiers stades se manifestent par un régime instable, une fumée colorée, des cognements ou des sifflements ; les témoins apparaissent généralement au stade 2, mais certaines pannes peuvent en afficher dès le stade 1
 - Les machines âgées se dégradent aussi durablement et perdent puissance moteur, transmission, performance de batterie et efficacité de refroidissement
 
 ATELIER
 - L'inspection, l'entretien, la réparation et la révision proposent chacune des options qui changent le prix, la durée et la qualité
-- L'appoint remplit les fluides manquants ; la peinture retouche les petits dégâts ou se refait en entier avec les couleurs proposées par le véhicule. Le changement de couleur chez le concessionnaire est facturé au prix RMS
+- L'appoint remplit les fluides manquants ; la peinture retouche les petits dégâts ou se refait en entier avec les couleurs proposées par le véhicule. Les couleurs d'une machine possédée ne changent que par une peinture complète, et acheter une machine dans une autre couleur que celle déjà sélectionnée coûte une peinture complète
 - Qualité des pièces de l'occasion à l'origine : les pièces moins chères sont plus souvent défectueuses et ramènent la même panne
-- La garantie couvre le remplacement en pièces d'origine et ses fluides pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien en retard exclut seulement la panne concernée.
-- Par défaut, la durée des travaux suit le temps de la partie et les travaux s'interrompent la nuit chez le concessionnaire ; les ateliers personnels et mobiles restent ouverts. Des réglages distincts permettent de terminer instantanément l'entretien et les réparations, la peinture ou les révisions
+- La garantie couvre le remplacement en pièces d'origine et ses fluides pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien en retard ou un choc antérieur exclut seulement la panne concernée.
+- Reprogrammation moteur par un préparateur à l'atelier de la ferme ou à l'atelier mobile, jamais chez le concessionnaire : 10 à 20 % de puissance en plus selon la place du moteur dans sa gamme, ses courbes avant et après sur une fiche de banc, plus de gazole et de chaleur pour la puissance en plus, de l'usure à pleine charge au-delà du plus gros moteur de la gamme, et la garantie perdue pour toujours. Le préparateur peut remettre le logiciel d'origine, gratuitement pendant 12 mois
+- Par défaut, la durée des travaux suit le temps de la partie et les travaux s'interrompent la nuit chez le concessionnaire ; les ateliers personnels et mobiles restent ouverts. Des réglages distincts permettent de terminer instantanément les inspections, l'entretien et les réparations, la peinture, les révisions ou la reprogrammation moteur
 - Une panne s'identifie avant de se réparer : une inspection ou n'importe quel entretien l'identifie, un voyant montre seulement qu'il y en a une
 - Une inspection complète peut révéler les pannes cachées et les pièces de réparation défectueuses, et donne les valeurs exactes ; certaines pannes peuvent rester indétectées
 
 ENTRETIEN QUOTIDIEN
 - Telwin Doctor Charge 155 Connect sur chariot : branchez-le près d'un véhicule pour recharger sa batterie au courant qu'elle accepte, ou pour l'aide au démarrage (START) ; la recharge suit la vitesse du temps de la partie et reprend au chargement de la sauvegarde
-- Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air
-- La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air ; la pompe à graisse rétablit le graissage des machines qui en demandent
+- Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air, graissage
+- La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air
+- Pistolet à graisse SKF, chargé de cartouches de graisse SKF achetées à l'unité ou jusqu'à douze dans un carton. Chaque machine et chaque outil attelé a ses propres graisseurs, à graisser chaque jour de travail, tous les quelques jours de travail ou tous les quelques mois : chaque clic en graisse un, un affichage montre la graisse restant dans la cartouche et chaque graisseur fait, et un graissage en retard use la machine plus vite. Le parc de matériel liste chaque outil avec ses graisseurs, et à pied près d'une machine ou d'un outil s'affichent les graisseurs à faire ou le prochain graissage
 - Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
 
 SIMULATION
@@ -442,7 +550,58 @@ SIMULATION
 - Multijoueur et serveur dédié, 27 langues
 - Véhicules électriques suivis avec leurs propres organes : moteur électrique, batterie de traction qui perd de la capacité en vieillissant et de l'autonomie au froid, électronique de puissance, et des entretiens limités aux circuits présents
 
+Mod for Farming Simulator
+
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.1 :
+- Refonte des années des machines et de leurs équipements d'époque
+- Ajout de l'année de lancement du modèle au magasin
+- Ajout d'intervalles de vidange moteur selon l'époque de la machine
+- Ajout de la reprogrammation moteur par un préparateur à l'atelier de la ferme ou à l'atelier mobile
+- Ajout d'un réglage pour terminer instantanément la reprogrammation moteur
+- Refonte de l'atelier, de la page du parc, de la page des paramètres et des autres fenêtres RMS
+- Refonte des couleurs et des limites des voyants du tableau de bord, et des limites du rapport d'inspection et du conseil de révision
+- Remplacement des sons du démarreur, des freins usés et des pinces des câbles de démarrage
+- Ajout du démarrage d'un seul appui pour tous les moteurs
+- Ajout des cartouches de graisse pour le pistolet à graisse
+- Refonte du graissage avec les graisseurs de chaque machine
+- Ajout du graissage des outils attelés et de leurs cardans, affiché dans le parc de matériel
+- Ajout des organes de récolte des machines de récolte automotrices, usés par le travail qu'ils font, avec des pertes de récolte, des bourrages et des arrêts à mesure qu'ils s'usent ; un arrêt ou un bourrage déclenche l'alarme de la cabine
+- Ajout du remplacement des organes de récolte usés à la révision préventive, leurs pièces facturées
+- Ajout de l'effort de récolte mesuré par RMS lui-même quand Realistic Harvesting n'est pas installé
+- Ajout de l'intégration avec Realistic Harvesting (version 1.6.5.0 ou supérieure), qui partage l'effort de récolte et l'usure des organes de récolte
+- Ajout des bougies d'allumage des moteurs au méthane, changées à l'entretien, avec des ratés une fois en retard
+- Refonte des pannes de chaque type de machine, sans les pièces qu'elle n'a pas et avec le nom de ses vrais organes
+- Correction des fermes sous-traitantes, qui ne pouvaient pas utiliser le chariot, le chargeur et les fluides de la ferme qui les emploie, comme le jeu le permet
+- Suppression du relèvement de la limite des types de remplissage, que le jeu porte lui-même à 1023 depuis le patch 1.25.1.0
+- Correction des boutons de la page des paramètres
+- Correction de l'usure causée par les ouvriers IA, Courseplay et AutoDrive en travaillant la machine à froid, en heurtant un obstacle ou en patinant sur place
+- Correction des pannes et des pièces usées de feux absents de la machine
+- Correction du coût engagé d'une intervention en cours, affiché à 0 en multijoueur
+- Correction de l'heure de fin d'une intervention en cours, qui oscillait d'une minute quand le temps est accéléré
+- Correction des machines Stage V les plus puissantes, qui n'avaient pas de filtre à particules
+- Correction de l'achat d'une machine dans une autre couleur sans payer la peinture
+- Correction du configurateur qui changeait les couleurs d'une machine possédée sans faire payer la peinture
+- Correction des démarrages difficiles avec le démarrage automatique du jeu et la clé de contact GIANTS
+- Correction des voitures à la batterie à plat qui ne démarraient pas aux câbles par temps froid
+- Correction des pinces des câbles de démarrage tenues à côté de la main gauche
+- Correction du patinage qui suivait le commutateur des 4RM au lieu du pont avant après une défaillance de l'enclenchement des 4RM
+- Correction du blocage de différentiel qui ne retenait pas une roue qui patine en 4RM, et seulement en partie en 2RM
+- Correction de la PDF qui décrochait sans alerte en solo
+- Correction des à-coups moteur qui ne coupaient plus la puissance au bout d'un moment
+- Correction du ralenti instable des injecteurs, pompes à carburant et bougies défaillants qui ne s'aggravait pas avec la panne
+- Correction des feux laissés dans un état aléatoire après un scintillement dû à un défaut de câblage
+- Correction des embrayages powershift usés qui n'engageaient parfois jamais le rapport demandé, ou le faisaient tourner avec la démultiplication du rapport précédent
+- Correction des décrochages de PDF qui parfois n'avaient pas lieu
+- Correction des rapports qui sautent sur des synchros usés et des passages refusés qui s'arrêtaient trop tôt
+- Correction des chutes de pression du variateur qui s'arrêtaient trop tôt
+- Correction du ralenti à froid des bougies de préchauffage défaillantes qui sautait au lieu d'osciller
+- Correction des à-coups moteur qui rallumaient le régulateur de vitesse coupé par le conducteur
+- Correction des disques de frein usés qui ne crissaient qu'au dernier stade
+- Correction des outils sur un distributeur de relevage qui fuit, qui tombaient d'un coup au lieu de descendre lentement et que la touche de descente relevait pendant ce temps
+- Correction des gyrophares et clignotants qui fonctionnaient batterie coupée ou à plat, sans jamais vider la batterie
+- Réduction de la portée pour prendre le chariot du chargeur
 
 Changelog 0.13.0.1 :
 - Correction du chargement de la partie qui se figeait avec certains mods qui commandent les feux d'une machine
@@ -599,6 +758,7 @@ Changelog 0.10.0.0 :
     </description>
     <specializations>
         <specialization name="rmsFluidContainer" className="RMS_FluidContainer" filename="scripts/objects/RMS_FluidContainer.lua"/>
+        <specialization name="rmsGreaseCartridge" className="RMS_GreaseCartridge" filename="scripts/objects/RMS_GreaseCartridge.lua"/>
         <specialization name="rmsBatteryCharger" className="RMS_BatteryCharger" filename="scripts/objects/RMS_BatteryCharger.lua"/>
         <specialization name="rmsDiagnosticTool" className="RMS_DiagnosticTool" filename="scripts/objects/RMS_DiagnosticTool.lua"/>
     </specializations>
@@ -625,6 +785,9 @@ Changelog 0.10.0.0 :
         <type name="rmsFluidContainer" parent="pallet" filename="$dataS/scripts/vehicles/Vehicle.lua">
             <specialization name="rmsFluidContainer"/>
         </type>
+        <type name="rmsGreaseCartridge" parent="pallet" filename="$dataS/scripts/vehicles/Vehicle.lua">
+            <specialization name="rmsGreaseCartridge"/>
+        </type>
     </vehicleTypes>
     <placeableSpecializations>
         <specialization name="rmsTrolleyPlaceable" className="RMS_TrolleyPlaceable" filename="scripts/objects/RMS_TrolleyPlaceable.lua"/>
@@ -646,6 +809,7 @@ Changelog 0.10.0.0 :
         <storeItem xmlFilename="objects/batteryCharger/batteryCharger.xml"/>
         <storeItem xmlFilename="objects/batteryCharger/batteryCharger_placeable.xml"/>
         <storeItem xmlFilename="objects/greaseGun/greaseGun.xml"/>
+        <storeItem xmlFilename="objects/greaseCartridge/greaseCartridge.xml"/>
         <storeItem xmlFilename="objects/airBlower/airBlower.xml"/>
         <storeItem xmlFilename="objects/jumperCables/jumperCables.xml"/>
         <storeItem xmlFilename="objects/fluids/shared/canisterHand5L.xml"/>

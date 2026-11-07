@@ -1,17 +1,14 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Event carrying charger commands and the server's reply
 RMS_BatteryChargerRequestEvent = {}
 local RMS_BatteryChargerRequestEvent_mt = Class(RMS_BatteryChargerRequestEvent, Event)
 InitEventClass(RMS_BatteryChargerRequestEvent, "RMS_BatteryChargerRequestEvent")
 
----
 function RMS_BatteryChargerRequestEvent.emptyNew()
     return Event.new(RMS_BatteryChargerRequestEvent_mt)
 end
 
----
 function RMS_BatteryChargerRequestEvent.new(charger, target, disconnect, result, mode)
     local self = RMS_BatteryChargerRequestEvent.emptyNew()
     self.charger = charger
@@ -22,7 +19,6 @@ function RMS_BatteryChargerRequestEvent.new(charger, target, disconnect, result,
     return self
 end
 
----
 function RMS_BatteryChargerRequestEvent:writeStream(streamId)
     NetworkUtil.writeNodeObject(streamId, self.charger)
     NetworkUtil.writeNodeObject(streamId, self.target)
@@ -31,7 +27,6 @@ function RMS_BatteryChargerRequestEvent:writeStream(streamId)
     streamWriteUIntN(streamId, self.mode, 1)
 end
 
----
 function RMS_BatteryChargerRequestEvent:readStream(streamId, connection)
     self.charger = NetworkUtil.readNodeObject(streamId)
     self.target = NetworkUtil.readNodeObject(streamId)
@@ -41,7 +36,6 @@ function RMS_BatteryChargerRequestEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
----
 function RMS_BatteryChargerRequestEvent:run(connection)
     if connection:getIsServer() then
         if self.result ~= "" and self.result ~= "ok" then
@@ -59,7 +53,7 @@ function RMS_BatteryChargerRequestEvent:run(connection)
         local player = requester.player
         local cx, cy, cz = getWorldTranslation(self.charger.rootNode)
         local px, py, pz = getWorldTranslation(player.rootNode)
-        if requester.farmId == FarmManager.SPECTATOR_FARM_ID or self.charger:getOwnerFarmId() ~= requester.farmId then
+        if not g_currentMission.accessHandler:canFarmAccess(requester.farmId, self.charger) then
             result = "access"
         elseif player:getIsInVehicle()
             or MathUtil.vector3Length(cx - px, cy - py, cz - pz) > RMS_BatteryCharger.MAX_DISTANCE then
@@ -74,7 +68,6 @@ function RMS_BatteryChargerRequestEvent:run(connection)
     connection:sendEvent(RMS_BatteryChargerRequestEvent.new(self.charger, nil, self.disconnect, result))
 end
 
----
 function RMS_BatteryChargerRequestEvent.send(charger, target, disconnect, mode)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_BatteryChargerRequestEvent.new(charger, target, disconnect, nil, mode))

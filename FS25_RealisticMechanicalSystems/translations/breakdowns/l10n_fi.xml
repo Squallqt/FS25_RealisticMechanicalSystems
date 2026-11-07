@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Vakava olkatappien kuluminen. Ohjauksen välys on suuri."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kriittinen olkatappien kuluminen. Ohjauksessa on erittäin suuri välys."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lievä ohjauksen orbitrolin toimintahäiriö. Ohjauspyörässä on hieman välystä ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Lievä ohjausvaihteen toimintahäiriö. Ohjauspyörässä on hieman välystä ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Lievä ohjaushammastangon toimintahäiriö. Ohjauspyörässä on hieman välystä ennen kuin pyörät seuraavat mukana."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Kohtalainen ohjauksen orbitrolin toimintahäiriö. Ohjauspyörä kääntyy enemmän ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Kohtalainen ohjausvaihteen toimintahäiriö. Ohjauspyörä kääntyy enemmän ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Kohtalainen ohjaushammastangon toimintahäiriö. Ohjauspyörä kääntyy enemmän ennen kuin pyörät seuraavat mukana."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Vakava ohjauksen orbitrolin toimintahäiriö. Ohjauspyörä kääntyy paljon ilman että pyörät seuraavat kunnolla mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Vakava ohjausvaihteen toimintahäiriö. Ohjauspyörä kääntyy paljon ilman että pyörät seuraavat kunnolla mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Vakava ohjaushammastangon toimintahäiriö. Ohjauspyörä kääntyy paljon ilman että pyörät seuraavat kunnolla mukana."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Ohjauksen orbitrolissa on kriittinen vika. Ohjauspyörässä on erittäin suuri välys ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Ohjausvaihteessa on kriittinen vika. Ohjauspyörässä on erittäin suuri välys ennen kuin pyörät seuraavat mukana."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Ohjaushammastangossa on kriittinen vika. Ohjauspyörässä on erittäin suuri välys ennen kuin pyörät seuraavat mukana."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Ohjaussylinterissä on lievä sisäinen vuoto. Ajoneuvo alkaa ajautua sivulle."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Ohjaussylinterin varren tiivisteessä on lievä vuoto. Hydrauliöljyn pinta laskee hieman."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Ohjaussylinterissä on kohtalainen sisäinen vuoto. Ajoneuvo ajautuu enemmän sivulle."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Kohtalainen kuormaimen nivelten tappien ja holkkien kuluminen. Puomin nivelten välys muuttuu havaittavaksi."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Vakava kuormaimen nivelten tappien ja holkkien kuluminen. Puomissa on suuri välys."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kriittinen kuormaimen nivelten tappien ja holkkien kuluminen. Puomin välys on erittäin suuri."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Lievä maston nivelten tappien ja holkkien kuluminen. Maston niveliin syntyy hieman välystä."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Kohtalainen maston nivelten tappien ja holkkien kuluminen. Maston nivelten välys muuttuu havaittavaksi."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Vakava maston nivelten tappien ja holkkien kuluminen. Mastossa on suuri välys."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Kriittinen maston nivelten tappien ja holkkien kuluminen. Maston välys on erittäin suuri."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Lievä puomin nivelten tappien ja holkkien kuluminen. Puomin niveliin syntyy hieman välystä."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Kohtalainen puomin nivelten tappien ja holkkien kuluminen. Puomin nivelten välys muuttuu havaittavaksi."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Vakava puomin nivelten tappien ja holkkien kuluminen. Puomissa on suuri välys."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Kriittinen puomin nivelten tappien ja holkkien kuluminen. Puomin välys on erittäin suuri."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Lievä jyrsinvarren nivelten tappien ja holkkien kuluminen. Varren niveliin syntyy hieman välystä."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Kohtalainen jyrsinvarren nivelten tappien ja holkkien kuluminen. Varren nivelten välys muuttuu havaittavaksi."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Vakava jyrsinvarren nivelten tappien ja holkkien kuluminen. Varressa on suuri välys."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Kriittinen jyrsinvarren nivelten tappien ja holkkien kuluminen. Varren välys on erittäin suuri."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Lievä lanan varren nivelten tappien ja holkkien kuluminen. Varren niveliin syntyy hieman välystä."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Kohtalainen lanan varren nivelten tappien ja holkkien kuluminen. Varren nivelten välys muuttuu havaittavaksi."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Vakava lanan varren nivelten tappien ja holkkien kuluminen. Varressa on suuri välys."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Kriittinen lanan varren nivelten tappien ja holkkien kuluminen. Varren välys on erittäin suuri."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Ohjaamon iskunvaimentimen lievä vuoto. Ohjaamon vaimennus on hieman heikentynyt."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Ohjaamon iskunvaimentimen kohtalainen vuoto. Ohjaamo pomppii töyssyissä."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Ohjaamon iskunvaimentimen vakava vuoto. Ohjaamo heiluu jokaisessa tärähdyksessä."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="Synkronointirengas"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Ohjauksen pallonivelet ja raidetangot"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Kuormaimen nivelten tapit ja holkit"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Maston nivelten tapit ja holkit"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Puomin nivelten tapit ja holkit"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Jyrsinvarren nivelten tapit ja holkit"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Lanan varren nivelten tapit ja holkit"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Olkatapit"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Ohjauksen orbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Ohjausvaihde"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Ohjaushammastanko"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Ohjaussylinteri"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Ohjaamon jousitus"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Voimanottokytkin"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Kaasusuodatin"/>
         <text name="rms_breakdowns_part_gas_lines" text="Kaasuputket"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Kaasusuuttimet"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Sytytystulpat"/>
         <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-pumppu"/>
         <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-annostelusuutin"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-suodatin"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Kohtalainen kaasusuuttimien toimintahäiriö. Moottori epäröi, menettää tehoa, kuluttaa enemmän ja voi sammua."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Vakava kaasusuuttimien toimintahäiriö. Yksi suutin annostelee erittäin huonosti: suuri tehonlasku, liiallinen kulutus ja vaikea käynnistys."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kaasusuuttimissa on kriittinen vika. Annostelu ei enää mahdollista moottorin käyntiä: moottori pysähtyy."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Sytytystulpat ovat vaihtovälinsä lopussa: suurella kuormalla esiintyy sytytyskatkoja, moottori käy epätasaisemmin ja kuluttaa hieman enemmän. Huolto vaihtaa ne."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Sytytystulpat ovat kuluneet: sytytyskatkoja tulee usein, moottori menettää tehoa, kuluttaa enemmän ja voi sammua. Moottorin merkkivalo syttyy."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Sytytystulpat ovat pahasti kuluneet: suuri tehonlasku, liiallinen kulutus ja vaikea käynnistys."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Sytytystulpat ovat käyttökelvottomat: jatkuvia sytytyskatkoja, moottori voi sammua eikä enää käynnisty."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="AdBlue-pumpussa on vika. Se ei enää syötä nestettä annosteluun: moottorin merkkivalo syttyy, ja sitten ohjainlaite rajoittaa tehoa korjaukseen asti."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="AdBlue-annostelusuuttimessa on vika. Kiteiden tukkimana se ei enää sumuta: moottorin merkkivalo syttyy ja teho laskee myöhemmin korjaukseen asti."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlue-suodatin on vaihtovälinsä lopussa ja alkaa tukkeutua. Laajin huolto vaihtaa sen."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Vaihteiston anturit"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Vaihteistosuodatin"/>
         <text name="rms_breakdowns_part_lift_valve" text="Nostolaitteen venttiili"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Leikkuupöydän nostoventtiili"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Nostolaitteen asentotunnistin"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Leikkuukorkeuden tunnistin"/>
         <text name="rms_breakdowns_part_loader_control" text="Kuormaimen ohjaus"/>
+        <text name="rms_breakdowns_part_mast_control" text="Maston ohjaus"/>
+        <text name="rms_breakdowns_part_boom_control" text="Puomin ohjaus"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Jyrsinvarren ohjaus"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Lanan varren ohjaus"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydrauliikan pikaliittimet"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lievä kytkimen toimintahäiriö. Se ei irrota täysin. Joitakin vaihteita on vaikea kytkeä."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Kohtalainen kytkimen toimintahäiriö. Mekanismi vapauttaa levyn huonosti. Vaihteita jää useammin kytkeytymättä."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Hydraulipumpussa on vika. Se on rikkoutunut. Paine katoaa eivätkä hydrauliikkatoiminnot vastaa."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Hydraulisessa ohjausventtiilissä on vika. Kara on jumissa. Kyseinen hydrauliikkatoiminto ei liiku."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Nostolaitteen venttiilissä on vika. Se ei pidä kuormaa oikein. Nostettu työkone laskee."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Leikkuupöydän nostoventtiilissä on vika. Se ei pidä kuormaa oikein. Nostettu leikkuupöytä laskee."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Nostolaitteen venttiilissä on vika. Se on jumissa. Nostolaite ei vastaa."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Leikkuupöydän nostoventtiilissä on vika. Se on jumissa. Leikkuupöytä ei enää nouse eikä laske."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Nostolaitteen asentotunnistimessa on vika. Asentosignaali on viallinen. Nostolaite ei pidä pyydettyä korkeutta ja vikakoodi tallentuu."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Leikkuukorkeuden tunnistimessa on vika. Korkeussignaali on viallinen. Leikkuupöytä ei pidä pyydettyä korkeutta ja vikakoodi tallentuu."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Kuormaimen ohjauksen lievä toimintahäiriö. Puomi ja kauha reagoivat hitaammin."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Kuormaimen ohjauksen kohtalainen toimintahäiriö. Puomi ja kauha liikkuvat vain puolella nopeudella."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Kuormaimen ohjauksen vakava toimintahäiriö. Puomi ja kauha liikkuvat tuskin lainkaan."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kuormaimen ohjauksessa on kriittinen vika. Puomi ja kauha eivät enää reagoi."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Maston ohjauksen lievä toimintahäiriö. Masto ja haarukat reagoivat hitaammin."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Maston ohjauksen kohtalainen toimintahäiriö. Masto ja haarukat liikkuvat vain puolella nopeudella."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Maston ohjauksen vakava toimintahäiriö. Masto ja haarukat liikkuvat tuskin lainkaan."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Maston ohjauksessa on kriittinen vika. Masto ja haarukat eivät enää reagoi."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Puomin ohjauksen lievä toimintahäiriö. Puomi ja sen työlaite reagoivat hitaammin."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Puomin ohjauksen kohtalainen toimintahäiriö. Puomi ja sen työlaite liikkuvat vain puolella nopeudella."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Puomin ohjauksen vakava toimintahäiriö. Puomi ja sen työlaite liikkuvat tuskin lainkaan."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Puomin ohjauksessa on kriittinen vika. Puomi ja sen työlaite eivät enää reagoi."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Jyrsinvarren ohjauksen lievä toimintahäiriö. Jyrsinvarsi reagoi hitaammin."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Jyrsinvarren ohjauksen kohtalainen toimintahäiriö. Jyrsinvarsi liikkuu vain puolella nopeudella."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Jyrsinvarren ohjauksen vakava toimintahäiriö. Jyrsinvarsi liikkuu tuskin lainkaan."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Jyrsinvarren ohjauksessa on kriittinen vika. Jyrsinvarsi ei enää reagoi."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Lanan varren ohjauksen lievä toimintahäiriö. Varsi ja lana reagoivat hitaammin."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Lanan varren ohjauksen kohtalainen toimintahäiriö. Varsi ja lana liikkuvat vain puolella nopeudella."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Lanan varren ohjauksen vakava toimintahäiriö. Varsi ja lana liikkuvat tuskin lainkaan."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Lanan varren ohjauksessa on kriittinen vika. Varsi ja lana eivät enää reagoi."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Lievä hydraulisylinterin toimintahäiriö. Varren tiiviste päästää hieman öljyä. Varren ympärille tulee lievää kosteutta."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Kohtalainen hydraulisylinterin toimintahäiriö. Varren tiiviste ei pidä. Sylinteri tihkuu ja öljytaso laskee."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Vakava hydraulisylinterin toimintahäiriö. Varren tiiviste vuotaa jatkuvasti. Sylinteristä häviää selvästi öljyä."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Akselilaakerien kriittinen kuluminen. Yksi laakeri on rikkoutunut, kartiohammaspyöräpari on vaurioitunut eikä akseli enää välitä vetovoimaa."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Tasauspyörästön lukon ohjauksessa on vika. Lukko ei kytkeydy. Tasauspyörästö pysyy avoimena."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Tasauspyörästön lukon ohjauksessa on vika. Lukko jää kytketyksi. Kone vastustaa ohjausta käännöksissä."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Vetohihnat ja variaattorit"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Käyttölaakerit ja vaihteistot"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Syöttökuilun ketju"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Syötön kiihdytin"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Puintikiskot"/>
+        <text name="rms_breakdowns_part_concave" text="Vastakoppa"/>
+        <text name="rms_breakdowns_part_separation" text="Erottelupiikit ja olkikävelijät"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Puhdistusseulat"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Viljaruuvit ja elevaattorit"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Olkisilppuri ja levitin"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Syöttötelat"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Metalli- ja kivitunnistin"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Silppurirumpu"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Silppurirummun terät"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Vastaterä"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Jyvämurskain"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Kiihdytin ja puhallin"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Heittotorvi"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Naatinpoistin ja kaulaajat"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Nostovantaat"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Puhdistusturbiinit"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Juurikaselevaattori"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Liikkuva pohja ja purkuhihna"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Seulamatot"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Varsienerotin ja telat"/>
+        <text name="rms_breakdowns_part_picking_units" text="Poimintayksiköt"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Karojen kostutin"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Puhallin ja kanavat"/>
+        <text name="rms_breakdowns_part_module_builder" text="Moduulikammio"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Pohjaterät"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Syöttötelat"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Silppurirummut"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Ensiöimuri"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Ruokoelevaattori"/>
+        <text name="rms_breakdowns_part_shaker" text="Ravistusjärjestelmä"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Keruusuomut"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Kauhaelevaattorit"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Puhdistusimurit"/>
+        <text name="rms_breakdowns_part_destemmer" text="Rangan erotin"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Poimintapää"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Puhdistuspuhallin ja seulat"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevaattorit ja kuljettimet"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Korjuu mahdoton: korjuuosa on rikki"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Tukos: korjuu on pysähtynyt"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Silppuri rikki: oljet putoavat karhoon"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Silppuri rikki: tätä kasvia ei voi enää korjata"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Vetohihnojen alkava kuluminen. Ne luistavat hieman kuormituksessa."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Vetohihnojen kohtalainen kuluminen. Osa hidastuu kuormituksessa, ja kierroslukuhälytys pysäyttää toisinaan korjuun."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Vetohihnojen vakava kuluminen. Kapasiteetti laskee, ja pysähdykset toistuvat yhä uudelleen."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Vetohihnoissa on kriittinen vika. Hihna on katkennut: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Käyttölaakereiden alkava kuluminen. Korjuun aikana kuuluu lievää jyrinää."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Käyttölaakereiden kohtalainen kuluminen. Jyrinä kuuluu selvästi, ja laakerit kuumenevat."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Käyttölaakereiden vakava kuluminen. Jyrinä voimistuu, ja akseleihin tulee välystä."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Käyttölaakereissa on kriittinen vika. Laakeri on leikannut kiinni: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Syöttökuilun ketjun alkava kuluminen. Se venyy, ja syöttö muuttuu epätasaiseksi."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Syöttökuilun ketjun kohtalainen kuluminen. Syöttökuilun suulle muodostuu tukoksia."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Syöttökuilun ketjun vakava kuluminen. Se hyppää rattailla, ja tukokset jatkuvat."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Syöttökuilun ketjussa on kriittinen vika. Ketju on katkennut: koneeseen ei mene enää mitään."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Syötön kiihdyttimen alkava kuluminen. Kasvusto tulee rummulle epätasaisemmin."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Syötön kiihdyttimen kohtalainen kuluminen. Kapasiteetti polkee paikallaan, ja tukoksia syntyy."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Syötön kiihdyttimen vakava kuluminen. Kapasiteetti laskee, ja tukokset jatkuvat."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Syötön kiihdyttimessä on kriittinen vika. Siipi on irronnut: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Puintikiskojen alkava kuluminen. Osa jyvistä jää tähkiin ja palaa pellolle."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Puintikiskojen kohtalainen kuluminen. Rumpu tärisee, ja jyvähävikki kasvaa."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Puintikiskojen vakava kuluminen. Osa kiskoista on katkennut: suuret hävikit ja tukoksia."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Puintikiskoissa on kriittinen vika. Kisko on irronnut: puinti on mahdotonta."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Vastakopan alkava kuluminen. Vilja puidaan huonommin, ja osa palaa pellolle."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Vastakopan kohtalainen kuluminen. Jyvähävikki kasvaa."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Vastakopan vakava kuluminen. Jyvät rikkoutuvat, hävikit ovat suuria ja tukoksia syntyy."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Vastakopassa on kriittinen vika. Kisko on irronnut: puinti on mahdotonta."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Erottelun alkava kuluminen. Jyviä jää olkiin ja ne palaavat pellolle."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Erottelun kohtalainen kuluminen. Jyvähävikki oljissa kasvaa."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Erottelun vakava kuluminen. Suuret hävikit ja olkitukoksia."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Erottelussa on kriittinen vika. Oljet eivät enää mene läpi: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Puhdistusseulojen alkava kuluminen. Akanoita päätyy viljasäiliöön, ja hieman jyviä lähtee jätteen mukana."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Puhdistusseulojen kohtalainen kuluminen. Seulahävikki kasvaa."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Puhdistusseulojen vakava kuluminen. Seula on haljennut: suuret hävikit ja tukoksia."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Puhdistusseuloissa on kriittinen vika. Puhdistus ei enää toimi: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Viljaruuvien ja elevaattoreiden alkava kuluminen. Virtaus viljasäiliöön pienenee."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Viljaruuvien ja elevaattoreiden kohtalainen kuluminen. Osa jyvistä rikkoutuu tai katoaa matkalla."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Viljaruuvien ja elevaattoreiden vakava kuluminen. Elevaattori tukkeutuu säännöllisesti."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Viljaruuveissa ja elevaattoreissa on kriittinen vika. Viljasäiliö ei enää täyty: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Olkisilppurin alkava kuluminen. Oljet silppuuntuvat pidemmiksi, ja silppuri vie hieman enemmän tehoa."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Olkisilppurin kohtalainen kuluminen. Silppuri tärisee ja vie enemmän tehoa."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Olkisilppurin vakava kuluminen. Roottori on epätasapainossa ja vie paljon tehoa."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Olkisilppurissa on kriittinen vika. Terä on katkennut: silppuri on pysähtynyt ja oljet putoavat karhoon."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Syöttötelojen alkava kuluminen. Ne tarttuvat kasvustoon huonommin: syöttö muuttuu epätasaiseksi."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Syöttötelojen kohtalainen kuluminen. Silppupituus muuttuu epätasaiseksi, ja tukoksia syntyy."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Syöttötelojen vakava kuluminen. Kapasiteetti laskee, ja tukokset jatkuvat."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Syöttöteloissa on kriittinen vika. Koneeseen ei mene enää mitään: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Metalli- ja kivitunnistimen alkava vika. Väärät hälytykset pysäyttävät toisinaan syötön."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Metalli- ja kivitunnistimen kohtalainen vika. Turhat pysähdykset jatkuvat."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Metalli- ja kivitunnistin on vioittunut. Se ei enää havaitse mitään: kivet päätyvät terille ja kuluttavat niitä paljon nopeammin."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Silppurirummun alkava kuluminen. Se tärisee hieman ja vie hieman enemmän tehoa."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Silppurirummun kohtalainen kuluminen. Roottori on epätasapainossa ja vie enemmän tehoa."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Silppurirummun vakava kuluminen. Teräpidike on haljennut: enemmän tehoa ja tukoksia."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Silppurirummussa on kriittinen vika. Roottori on vaurioitunut: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Terien alkava kuluminen. Leikkuu on epäsiistimpää ja vie hieman enemmän tehoa."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Terien kohtalainen kuluminen. Ne vievät enemmän tehoa ja enemmän polttoainetta."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Terien vakava kuluminen. Leikkuu on epätasaista, tehontarve nousee ja tukoksia syntyy."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Terissä on kriittinen vika. Terä on katkennut: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Vastaterän alkava kuluminen. Rako kasvaa: leikkuu vie hieman enemmän tehoa."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Vastaterän kohtalainen kuluminen. Leikkuu repii ja vie enemmän tehoa."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Vastaterän vakava kuluminen. Terän reuna on kulunut: enemmän tehoa ja tukoksia."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Vastaterässä on kriittinen vika. Se on käyttökelvoton: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Jyvämurskaimen alkava kuluminen. Jyvät murskautuvat huonommin, ja murskain vie hieman enemmän tehoa."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Jyvämurskaimen kohtalainen kuluminen. Kokonaisia jyviä pääsee läpi, ja tehontarve nousee."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Jyvämurskaimen vakava kuluminen. Tela on uurteinen: enemmän tehoa ja tukoksia."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Jyvämurskaimessa on kriittinen vika. Tela on juuttunut: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Kiihdyttimen alkava kuluminen. Heitto on lyhyempi, ja kapasiteetti laskee hieman."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Kiihdyttimen kohtalainen kuluminen. Heittotorvi tukkeutuu toisinaan."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Kiihdyttimen vakava kuluminen. Siipi on irronnut: toistuvia tukoksia ja rehua menetetään."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Kiihdyttimessä on kriittinen vika. Rehua ei enää heitetä ulos: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Heittotorven alkava kuluminen. Heitto poikkeaa, ja kapasiteetti laskee hieman."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Heittotorven kohtalainen kuluminen. Rehua kertyy ja tukkii toisinaan torven."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Heittotorven vakava kuluminen. Kulutuspinta on puhjennut: rehua menetetään ja tukoksia tulee usein."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Heittotorvessa on kriittinen vika. Se on kulunut puhki: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Alkava kuluminen. Osa sadosta jää pellolle."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Kohtalainen kuluminen. Tärinää ja suuremmat hävikit."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Vakava kuluminen. Osa elementeistä on katkennut: suuret hävikit ja tukoksia."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Kriittinen vika. Osa on rikki: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Vantaiden alkava kuluminen. Osa juurista katkeaa tai jää maahan."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Vantaiden kohtalainen kuluminen. Ne nostavat huonosti: enemmän hävikkiä ja enemmän vetovastusta."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Vantaiden vakava kuluminen. Ne ovat kuluneet loppuun: suuret hävikit ja kone joutuu ponnistelemaan."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Vantaissa on kriittinen vika. Vannas on katkennut: nosto on mahdotonta."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Alkava kuluminen. Puhdistus toimii huonommin: multaa tai roskia sadossa, hieman satoa menetetään."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Kohtalainen kuluminen. Puhdistushävikki kasvaa."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Vakava kuluminen. Rikkoutuneita ritilöitä tai siipiä: suuret hävikit ja tukoksia."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Kriittinen vika. Puhdistus on pysähtynyt: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Alkava kuluminen. Ketju tai hihna venyy: syöttö muuttuu epätasaiseksi."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Kohtalainen kuluminen. Kuluneet tangot tai lavat: kapasiteetti laskee ja tukoksia syntyy."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Vakava kuluminen. Ketju hyppää: tukokset jatkuvat."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Kriittinen vika. Ketju tai hihna on katkennut: mitään ei mene enää läpi."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Alkava kuluminen. Sadon siirto hidastuu."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Kohtalainen kuluminen. Siirto muuttuu epätasaiseksi, ja osa sadosta menetetään."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Vakava kuluminen. Siirto juuttuu säännöllisesti."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Kriittinen vika. Siirto on pysähtynyt: korjuu on mahdotonta."/>
     </texts>
 </l10n>

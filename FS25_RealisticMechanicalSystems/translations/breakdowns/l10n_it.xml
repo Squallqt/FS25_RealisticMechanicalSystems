@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Grave usura dei perni dei fusi a snodo. Il gioco nello sterzo è importante."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Usura critica dei perni dei fusi a snodo. Lo sterzo presenta un gioco molto importante."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Malfunzionamento lieve dell'orbitrol dello sterzo. Il volante gira con un po' di gioco prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Malfunzionamento lieve della scatola dello sterzo. Il volante gira con un po' di gioco prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Malfunzionamento lieve della cremagliera dello sterzo. Il volante gira con un po' di gioco prima che le ruote seguano."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Malfunzionamento moderato dell'orbitrol dello sterzo. Il volante gira di più prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Malfunzionamento moderato della scatola dello sterzo. Il volante gira di più prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Malfunzionamento moderato della cremagliera dello sterzo. Il volante gira di più prima che le ruote seguano."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Grave malfunzionamento dell'orbitrol dello sterzo. Il volante gira molto senza che le ruote lo seguano bene."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Grave malfunzionamento della scatola dello sterzo. Il volante gira molto senza che le ruote lo seguano bene."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Grave malfunzionamento della cremagliera dello sterzo. Il volante gira molto senza che le ruote lo seguano bene."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Guasto critico dell'orbitrol dello sterzo. Il volante presenta un gioco molto importante prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Guasto critico della scatola dello sterzo. Il volante presenta un gioco molto importante prima che le ruote seguano."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Guasto critico della cremagliera dello sterzo. Il volante presenta un gioco molto importante prima che le ruote seguano."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lieve perdita interna nel cilindro dello sterzo. Il veicolo inizia a deviare da un lato."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lieve perdita dal paraolio dello stelo del cilindro dello sterzo. Il livello dell'olio idraulico scende un po'."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Perdita interna moderata nel cilindro dello sterzo. Il veicolo devia maggiormente da un lato."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Usura moderata dei perni e delle boccole delle articolazioni del caricatore. Il gioco nelle articolazioni del braccio diventa percepibile."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Grave usura dei perni e delle boccole delle articolazioni del caricatore. Il braccio presenta un gioco importante."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Usura critica dei perni e delle boccole delle articolazioni del caricatore. Il gioco del braccio è molto importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Usura lieve dei perni e delle boccole del montante. Compare un lieve gioco nelle articolazioni del montante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Usura moderata dei perni e delle boccole del montante. Il gioco nelle articolazioni del montante diventa percepibile."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Grave usura dei perni e delle boccole del montante. Il montante presenta un gioco importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Usura critica dei perni e delle boccole del montante. Il gioco del montante è molto importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Usura lieve dei perni e delle boccole del braccio. Compare un lieve gioco nelle articolazioni del braccio."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Usura moderata dei perni e delle boccole del braccio. Il gioco nelle articolazioni del braccio diventa percepibile."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Grave usura dei perni e delle boccole del braccio. Il braccio presenta un gioco importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Usura critica dei perni e delle boccole del braccio. Il gioco del braccio è molto importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Usura lieve dei perni e delle boccole del braccio di desilamento. Compare un lieve gioco nelle articolazioni del braccio."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Usura moderata dei perni e delle boccole del braccio di desilamento. Il gioco nelle articolazioni del braccio diventa percepibile."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Grave usura dei perni e delle boccole del braccio di desilamento. Il braccio presenta un gioco importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Usura critica dei perni e delle boccole del braccio di desilamento. Il gioco del braccio è molto importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Usura lieve dei perni e delle boccole del braccio della lama. Compare un lieve gioco nelle articolazioni del braccio."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Usura moderata dei perni e delle boccole del braccio della lama. Il gioco nelle articolazioni del braccio diventa percepibile."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Grave usura dei perni e delle boccole del braccio della lama. Il braccio presenta un gioco importante."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Usura critica dei perni e delle boccole del braccio della lama. Il gioco del braccio è molto importante."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Perdita lieve da un ammortizzatore della cabina. La cabina è leggermente meno ammortizzata."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Perdita moderata da un ammortizzatore della cabina. La cabina rimbalza sulle buche."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Perdita grave da un ammortizzatore della cabina. La cabina oscilla a ogni sobbalzo."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="Sincronizzatore"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Testine e barre dello sterzo"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Perni e boccole delle articolazioni del caricatore"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Perni e boccole del montante"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Perni e boccole del braccio"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Perni e boccole del braccio di desilamento"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Perni e boccole del braccio della lama"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Perni dei fusi a snodo"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol dello sterzo"/>
+        <text name="rms_breakdowns_part_steering_box" text="Scatola dello sterzo"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Cremagliera dello sterzo"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Cilindro dello sterzo"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Sospensione della cabina"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Frizione della PDF"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Filtro del gas"/>
         <text name="rms_breakdowns_part_gas_lines" text="Tubazioni del gas"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Iniettori del gas"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Candele"/>
         <text name="rms_breakdowns_part_adblue_pump" text="Pompa AdBlue"/>
         <text name="rms_breakdowns_part_adblue_doser" text="Iniettore dosatore AdBlue"/>
         <text name="rms_breakdowns_part_adblue_filter" text="Filtro AdBlue"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Malfunzionamento moderato degli iniettori del gas. Il motore esita, perde potenza, consuma di più e può spegnersi."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Grave malfunzionamento degli iniettori del gas. Un iniettore dosa molto male: forte perdita di potenza, consumo eccessivo e avviamento difficile."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Guasto critico degli iniettori del gas. Il dosaggio non permette più al motore di funzionare: si arresta."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Le candele sono da sostituire: compaiono mancate accensioni sotto forte carico, il motore gira meno regolare e consuma un po' di più. Il tagliando le sostituisce."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Le candele sono usurate: le mancate accensioni diventano frequenti, il motore perde potenza, consuma di più e può spegnersi. Si accende la spia motore."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Le candele sono molto usurate: forte perdita di potenza, consumo eccessivo e avviamento difficile."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Le candele sono fuori uso: mancate accensioni continue, il motore può spegnersi e non avviarsi più."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Malfunzionamento della pompa AdBlue. Non alimenta più il dosaggio: la spia motore si accende, poi la centralina riduce la potenza fino alla riparazione."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Malfunzionamento dell'iniettore dosatore AdBlue. Intasato dai cristalli, non nebulizza più: la spia motore si accende e la potenza cala successivamente fino alla riparazione."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Il filtro AdBlue è da sostituire e inizia a intasarsi. Il tagliando più completo lo sostituisce."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Sensori del cambio"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filtro della trasmissione"/>
         <text name="rms_breakdowns_part_lift_valve" text="Valvola del sollevatore"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Valvola di sollevamento della testata"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Sensore di posizione del sollevatore"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Sensore di altezza della testata"/>
         <text name="rms_breakdowns_part_loader_control" text="Comando del caricatore"/>
+        <text name="rms_breakdowns_part_mast_control" text="Comando del montante"/>
+        <text name="rms_breakdowns_part_boom_control" text="Comando del braccio"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Comando del braccio di desilamento"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Comando del braccio della lama"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Innesti idraulici rapidi"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Malfunzionamento lieve della frizione. Non stacca del tutto. Alcune marce entrano con difficoltà."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Malfunzionamento moderato della frizione. Il meccanismo libera male il disco. Le marce vengono rifiutate più spesso."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Guasto della pompa idraulica. È rotta. La pressione è persa e le funzioni idrauliche non rispondono."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Guasto del distributore idraulico. Il cursore è bloccato. La funzione idraulica interessata non si muove più."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Guasto della valvola del sollevatore. Non tiene bene il carico. L'attrezzo sollevato scende."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Guasto della valvola di sollevamento della testata. Non tiene bene il carico. La testata sollevata scende."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Guasto della valvola del sollevatore. È bloccata. Il sollevatore non risponde."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Guasto della valvola di sollevamento della testata. È bloccata. La testata non sale e non scende più."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Guasto del sensore di posizione del sollevatore. Il segnale di posizione è guasto. Il sollevatore non mantiene l'altezza richiesta e viene registrato un codice guasto."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Guasto del sensore di altezza della testata. Il segnale di altezza è guasto. La testata non mantiene l'altezza richiesta e viene registrato un codice guasto."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Malfunzionamento lieve del comando del caricatore. Il braccio e la benna rispondono più lentamente."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Malfunzionamento moderato del comando del caricatore. Il braccio e la benna si muovono solo a metà velocità."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Malfunzionamento grave del comando del caricatore. Il braccio e la benna si muovono appena."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Malfunzionamento critico del comando del caricatore. Il braccio e la benna non rispondono più."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Malfunzionamento lieve del comando del montante. Il montante e le forche rispondono più lentamente."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Malfunzionamento moderato del comando del montante. Il montante e le forche si muovono solo a metà velocità."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Malfunzionamento grave del comando del montante. Il montante e le forche si muovono appena."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Malfunzionamento critico del comando del montante. Il montante e le forche non rispondono più."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Malfunzionamento lieve del comando del braccio. Il braccio e il suo attrezzo rispondono più lentamente."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Malfunzionamento moderato del comando del braccio. Il braccio e il suo attrezzo si muovono solo a metà velocità."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Malfunzionamento grave del comando del braccio. Il braccio e il suo attrezzo si muovono appena."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Malfunzionamento critico del comando del braccio. Il braccio e il suo attrezzo non rispondono più."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Malfunzionamento lieve del comando del braccio di desilamento. Il braccio risponde più lentamente."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Malfunzionamento moderato del comando del braccio di desilamento. Il braccio si muove solo a metà velocità."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Malfunzionamento grave del comando del braccio di desilamento. Il braccio si muove appena."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Malfunzionamento critico del comando del braccio di desilamento. Il braccio non risponde più."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Malfunzionamento lieve del comando del braccio della lama. Il braccio e la lama rispondono più lentamente."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Malfunzionamento moderato del comando del braccio della lama. Il braccio e la lama si muovono solo a metà velocità."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Malfunzionamento grave del comando del braccio della lama. Il braccio e la lama si muovono appena."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Malfunzionamento critico del comando del braccio della lama. Il braccio e la lama non rispondono più."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Malfunzionamento lieve del cilindro idraulico. La guarnizione dello stelo lascia uscire un po' d'olio. Compare una lieve umidità intorno allo stelo."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Malfunzionamento moderato del cilindro idraulico. La guarnizione dello stelo non tiene. Il cilindro trasuda e il livello dell'olio cala."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Grave malfunzionamento del cilindro idraulico. La guarnizione dello stelo perde attivamente. Il cilindro perde molto olio."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Usura critica dei cuscinetti del ponte. Un cuscinetto ha ceduto, la coppia conica è danneggiata e il ponte non trasmette più trazione."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Guasto del comando del bloccaggio differenziale. Il bloccaggio non si innesta. Il differenziale resta libero."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Guasto del comando del bloccaggio differenziale. Il bloccaggio resta inserito. La macchina resiste alla sterzata in curva."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Cinghie e variatori"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Cuscinetti e scatole di trasmissione"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Catena del canale elevatore"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Acceleratore di alimentazione"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Spranghe del battitore"/>
+        <text name="rms_breakdowns_part_concave" text="Controbattitore"/>
+        <text name="rms_breakdowns_part_separation" text="Denti di separazione e scuotipaglia"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Crivelli di pulizia"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Coclee ed elevatori della granella"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Trinciapaglia e spargipaglia"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Rulli di alimentazione"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Rilevatore di metalli e sassi"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Tamburo trinciante"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Coltelli del tamburo trinciante"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Controcoltello"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Rompigranella"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Acceleratore e soffiatore"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Tubo di scarico"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Defogliatrice e scollettatori"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Vomeri di estirpazione"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Turbine di pulizia"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Elevatore delle bietole"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Fondo mobile e nastro di scarico"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Nastri crivellatori"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Separatore dei fusti e rulli"/>
+        <text name="rms_breakdowns_part_picking_units" text="Unità di raccolta"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Umidificatore dei fusi"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Ventilatore e condotti"/>
+        <text name="rms_breakdowns_part_module_builder" text="Camera di formazione dei moduli"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Lame di base"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Rulli di alimentazione"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Tamburi trincianti"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Estrattore primario"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Elevatore della canna"/>
+        <text name="rms_breakdowns_part_shaker" text="Sistema di scuotimento"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Squame di raccolta"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Trasportatori a tazze"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Aspiratori di pulizia"/>
+        <text name="rms_breakdowns_part_destemmer" text="Diraspatrice"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Testata di raccolta"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Ventilatore e crivelli di pulizia"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevatori e trasportatori"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Raccolta impossibile: un organo di raccolta è rotto"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Intasamento: la raccolta si è fermata"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Trinciapaglia rotto: la paglia cade in andana"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Trinciapaglia rotto: questa coltura non si può più raccogliere"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Usura iniziale delle cinghie degli organi. Slittano un po' sotto carico."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Usura moderata delle cinghie degli organi. Un organo rallenta sotto carico e l'allarme di regime a volte ferma la raccolta."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Usura grave delle cinghie degli organi. La resa cala e le fermate si ripetono."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Guasto critico delle cinghie degli organi. Una cinghia si è rotta: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Usura iniziale dei cuscinetti di trasmissione degli organi. Compare un leggero rombo durante la raccolta."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Usura moderata dei cuscinetti di trasmissione degli organi. Il rombo si sente chiaramente e scaldano."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Usura grave dei cuscinetti di trasmissione degli organi. Il rombo aumenta e gli alberi prendono gioco."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Guasto critico dei cuscinetti di trasmissione degli organi. Un cuscinetto si è grippato: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Usura iniziale della catena del canale elevatore. Si allunga e l'alimentazione diventa irregolare."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Usura moderata della catena del canale elevatore. Si formano intasamenti all'ingresso del canale elevatore."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Usura grave della catena del canale elevatore. Salta sui pignoni e gli intasamenti si ripetono."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Guasto critico della catena del canale elevatore. La catena si è rotta: non entra più nulla nella macchina."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Usura iniziale dell'acceleratore di alimentazione. Il prodotto arriva al battitore in modo meno regolare."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Usura moderata dell'acceleratore di alimentazione. La resa ristagna e compaiono intasamenti."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Usura grave dell'acceleratore di alimentazione. La resa cala e gli intasamenti si ripetono."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Guasto critico dell'acceleratore di alimentazione. Una paletta si è staccata: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Usura iniziale delle spranghe del battitore. Parte della granella resta nelle spighe e torna sul campo."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Usura moderata delle spranghe del battitore. Il battitore vibra e le perdite di granella aumentano."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Usura grave delle spranghe del battitore. Alcune spranghe sono rotte: forti perdite e intasamenti."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Guasto critico delle spranghe del battitore. Una spranga si è staccata: la trebbiatura è impossibile."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Usura iniziale del controbattitore. La granella è trebbiata peggio e una parte torna sul campo."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Usura moderata del controbattitore. Le perdite di granella aumentano."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Usura grave del controbattitore. La granella si spezza, le perdite sono forti e compaiono intasamenti."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Guasto critico del controbattitore. Una barra si è staccata: la trebbiatura è impossibile."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Usura iniziale della separazione. Resta granella nella paglia e torna sul campo."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Usura moderata della separazione. Le perdite di granella nella paglia aumentano."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Usura grave della separazione. Forti perdite e intasamenti di paglia."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Guasto critico della separazione. La paglia non passa più: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Usura iniziale dei crivelli di pulizia. Arriva pula nel serbatoio e un po' di granella se ne va con gli scarti."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Usura moderata dei crivelli di pulizia. Le perdite ai crivelli aumentano."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Usura grave dei crivelli di pulizia. Un crivello è incrinato: forti perdite e intasamenti."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Guasto critico dei crivelli di pulizia. La pulizia non funziona più: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Usura iniziale delle coclee e degli elevatori della granella. Il flusso verso il serbatoio cala."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Usura moderata delle coclee e degli elevatori della granella. Parte della granella si spezza o si perde lungo il percorso."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Usura grave delle coclee e degli elevatori della granella. L'elevatore si intasa regolarmente."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Guasto critico delle coclee e degli elevatori della granella. Il serbatoio non si riempie più: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Usura iniziale del trinciapaglia. La paglia è tagliata meno corta e il trinciapaglia chiede un po' più di potenza."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Usura moderata del trinciapaglia. Il trinciapaglia vibra e chiede più potenza."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Usura grave del trinciapaglia. Il rotore è sbilanciato e assorbe molta potenza."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Guasto critico del trinciapaglia. Un coltello si è rotto: il trinciapaglia è fermo e la paglia cade in andana."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Usura iniziale dei rulli di alimentazione. Afferrano peggio il prodotto: l'alimentazione diventa irregolare."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Usura moderata dei rulli di alimentazione. La lunghezza di taglio diventa irregolare e compaiono intasamenti."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Usura grave dei rulli di alimentazione. La resa cala e gli intasamenti si ripetono."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Guasto critico dei rulli di alimentazione. Non entra più nulla nella macchina: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Guasto iniziale del rilevatore di metalli e sassi. Falsi allarmi a volte fermano l'alimentazione."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Guasto moderato del rilevatore di metalli e sassi. Le fermate inutili si ripetono."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Guasto del rilevatore di metalli e sassi. Non rileva più nulla: i sassi raggiungono i coltelli e li consumano molto più in fretta."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Usura iniziale del tamburo trinciante. Vibra leggermente e assorbe un po' più di potenza."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Usura moderata del tamburo trinciante. Il rotore è sbilanciato e assorbe più potenza."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Usura grave del tamburo trinciante. Un supporto dei coltelli è incrinato: più potenza assorbita e intasamenti."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Guasto critico del tamburo trinciante. Il rotore è danneggiato: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Usura iniziale dei coltelli. Il taglio è meno netto e assorbe un po' più di potenza."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Usura moderata dei coltelli. Assorbono più potenza e più carburante."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Usura grave dei coltelli. Il taglio è irregolare, la potenza assorbita sale e compaiono intasamenti."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Guasto critico dei coltelli. Un coltello si è rotto: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Usura iniziale del controcoltello. La distanza aumenta: il taglio assorbe un po' più di potenza."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Usura moderata del controcoltello. Il taglio strappa e assorbe più potenza."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Usura grave del controcoltello. Il filo è consumato: più potenza assorbita e intasamenti."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Guasto critico del controcoltello. È fuori uso: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Usura iniziale del rompigranella. I chicchi sono spezzati peggio e il rompigranella assorbe un po' più di potenza."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Usura moderata del rompigranella. Passano chicchi interi e la potenza assorbita sale."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Usura grave del rompigranella. Un rullo è rigato: più potenza assorbita e intasamenti."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Guasto critico del rompigranella. Un rullo è bloccato: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Usura iniziale dell'acceleratore. Il lancio è più corto e la resa cala un po'."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Usura moderata dell'acceleratore. Il tubo di scarico a volte si intasa."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Usura grave dell'acceleratore. Una paletta si è staccata: intasamenti frequenti e foraggio perso."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Guasto critico dell'acceleratore. Il foraggio non viene più lanciato: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Usura iniziale del tubo di scarico. Il lancio devia e la resa cala un po'."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Usura moderata del tubo di scarico. Il foraggio si accumula e a volte intasa il tubo."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Usura grave del tubo di scarico. Il rivestimento è forato: foraggio perso e intasamenti frequenti."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Guasto critico del tubo di scarico. È forato da parte a parte: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Usura iniziale. Parte del raccolto resta sul campo."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Usura moderata. Vibrazioni e perdite più forti."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Usura grave. Alcuni elementi sono rotti: forti perdite e intasamenti."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Guasto critico. L'organo è rotto: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Usura iniziale dei vomeri. Alcune radici si spezzano o restano nel terreno."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Usura moderata dei vomeri. Estirpano male: più perdite e più sforzo."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Usura grave dei vomeri. Sono consumati fino in fondo: forti perdite e la macchina fatica."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Guasto critico dei vomeri. Un vomere si è rotto: l'estirpazione è impossibile."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Usura iniziale. La pulizia funziona peggio: terra o impurità nel raccolto, un po' di raccolto perso."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Usura moderata. Le perdite di pulizia aumentano."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Usura grave. Griglie o pale rotte: forti perdite e intasamenti."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Guasto critico. La pulizia si è fermata: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Usura iniziale. La catena o il nastro si allunga: l'alimentazione diventa irregolare."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Usura moderata. Barrette o palette consumate: resa ridotta e intasamenti."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Usura grave. La catena salta: gli intasamenti si ripetono."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Guasto critico. La catena o il nastro si è rotto: non passa più nulla."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Usura iniziale. Il trasferimento del raccolto rallenta."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Usura moderata. Il trasferimento diventa irregolare e parte del raccolto va persa."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Usura grave. Il trasferimento si blocca regolarmente."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Guasto critico. Il trasferimento si è fermato: la raccolta è impossibile."/>
     </texts>
 </l10n>

@@ -1,9 +1,7 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Vehicle state measurements.
 
----Sums the draft demand of the working implements
 local function updateActiveDraftStats(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -17,7 +15,6 @@ local function updateActiveDraftStats(vehicle)
     }
     local visited = {}
 
-    ---Walks the implement chain summing the working draft demand
     local function collectDraftStats(rootVehicle)
         if rootVehicle == nil or visited[rootVehicle] then
             return
@@ -65,14 +62,13 @@ local function updateActiveDraftStats(vehicle)
     spec.activeDraftEffectiveForceCap = result.effectiveForceCap
 end
 
----Raises the motor load with driveline vibration during field work
-local function updateDynamicMotorLoad(vehicle, dt)
+local function updateDynamicMotorLoad(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
         return 0
     end
 
-    local motorLoad = RealisticMechanicalSystems.sanitizeNumber(vehicle:getMotorLoadPercentage(), 0, 0, 1.5)
+    local motorLoad = RealisticMechanicalSystems.sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, vehicle:getMotorLoadPercentage()), 0, 0, 1.5)
     local hasMoreRealistic = g_modIsLoaded["MoreRealistic"] == true
 
     if hasMoreRealistic then
@@ -110,7 +106,6 @@ local function updateDynamicMotorLoad(vehicle, dt)
 
 end
 
----Keeps the rolling average of the motor's differential acceleration
 local function updateAvgAbsDiffAccWindow(spec, motor, dt)
     if spec == nil or motor == nil then
         if spec ~= nil then
@@ -156,42 +151,11 @@ local function updateAvgAbsDiffAccWindow(spec, motor, dt)
     spec.avgAbsDiffAcc = avg
 end
 
----Flags the vehicle as cranking
 local function updateStarterState(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil then
-        return false
-    end
-
-    if spec.isElectricVehicle then
-        spec.isCranking = false
-        return
-    end
-
-    local engineHardStartEffect = spec.activeEffects ~= nil and spec.activeEffects.ENGINE_HARD_START_MODIFIER or nil
-    local glowPlugHardStartEffect = spec.activeEffects ~= nil and spec.activeEffects.GLOW_PLUG_HARD_START_MODIFIER or nil
-    local engineFailedEffect = spec.activeEffects ~= nil and spec.activeEffects.ENGINE_FAILURE or nil
-
-    local isCranking = vehicle:getMotorState() == MotorState.STARTING
-        or (engineHardStartEffect ~= nil
-            and engineHardStartEffect.extraData ~= nil
-            and engineHardStartEffect.extraData.status ~= nil
-            and (engineHardStartEffect.extraData.status == "CRANKING"
-                or engineHardStartEffect.extraData.status == "PASSED"))
-        or (glowPlugHardStartEffect ~= nil
-            and glowPlugHardStartEffect.extraData ~= nil
-            and glowPlugHardStartEffect.extraData.status ~= nil
-            and (glowPlugHardStartEffect.extraData.status == "CRANKING"
-                or glowPlugHardStartEffect.extraData.status == "PASSED"))
-        or (engineFailedEffect ~= nil
-            and engineFailedEffect.extraData ~= nil
-            and engineFailedEffect.extraData.status ~= nil
-            and engineFailedEffect.extraData.status == "CRANKING")
-
-    spec.isCranking = isCranking
+    spec.isCranking = not spec.isElectricVehicle and RMS_Start.getIsCranking(vehicle)
 end
 
----Measures wheel slip from the driven wheel speeds, ignored while braking
 local function updateWheelSlip(vehicle)
     local spec_wheels = vehicle.spec_wheels
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -216,7 +180,6 @@ local function updateWheelSlip(vehicle)
     local drivetrainState = RMS_Drivetrain.getState(vehicle)
     local wheelSpeedSum = 0
     local drivenWheelCount = 0
-    ---Adds the ground speed of a grounded wheel to the sum
     local function addWheelSpeed(wheelIndex)
         local wheel = spec_wheels.wheels[tonumber(wheelIndex)]
         local physicsWheel = wheel ~= nil and wheel.physics or nil
@@ -236,10 +199,7 @@ local function updateWheelSlip(vehicle)
             addWheelSpeed(wheelIndex)
         end
 
-        local fourWheelDrive = layout.centerIdx0 == nil
-            or drivetrainState.driveMode == RMS_Drivetrain.MODE.FOUR_WD
-            or (drivetrainState.driveMode == RMS_Drivetrain.MODE.AUTO and drivetrainState.autoEngaged)
-        if fourWheelDrive then
+        if RMS_Drivetrain.getIsFrontAxleDriven(vehicle) then
             for _, wheelIndex in ipairs(layout.engageableWheelIndices) do
                 addWheelSpeed(wheelIndex)
             end
@@ -297,7 +257,6 @@ local function updateWheelSlip(vehicle)
         - math.max(longitudinalSlipIntensity, previousSlip, olderSlip)
 end
 
----Averages the tyre friction and the surface hardness of grounded wheels
 local function updateWheelGroundState(vehicle)
     local spec_wheels = vehicle.spec_wheels
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -346,7 +305,6 @@ local HYDRAULIC_LIFT_RATIO_DEADBAND = 0.05
 local LOAD_RISE_DEADBAND = 0.01
 local HYDRAULIC_LIFT_RATIO_INTERPOLATION_RATE = 1 / 1000
 
----Sums the tire load of the wheels touching ground
 local function getWheelSupportLoad(vehicle)
     local supportWheelLoad = 0
 
@@ -361,7 +319,6 @@ local function getWheelSupportLoad(vehicle)
     return supportWheelLoad
 end
 
----Tells whether an attacher joint type is one of the trailer types
 local function isTrailerJointType(jointTypeId)
     return jointTypeId == AttacherJoints.JOINTTYPE_TRAILER
         or jointTypeId == AttacherJoints.JOINTTYPE_TRAILERLOW
@@ -369,7 +326,6 @@ local function isTrailerJointType(jointTypeId)
         or jointTypeId == AttacherJoints.JOINTTYPE_SEMITRAILERCAR
 end
 
----Tells whether an attacher joint is moving
 local function getMoveState(vehicle, moveKey, jointDesc, nextMoveAlphaCache)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -389,7 +345,6 @@ local function getMoveState(vehicle, moveKey, jointDesc, nextMoveAlphaCache)
     return isMovingRaw and moveAlpha > 0.001 and moveAlpha < 0.999
 end
 
----Reads the hydraulic motion of cylinders, joint control and hammer
 local function getHydraulicMotionFlags(vehicle)
     local isCylinderedMoving = false
     local isAttacherJointControlMoving = false
@@ -412,7 +367,6 @@ local function getHydraulicMotionFlags(vehicle)
     return isCylinderedMoving, isAttacherJointControlMoving, isHydraulicHammerActive
 end
 
----Walks the implement chain for lifted mass and hydraulic flags
 local function updateImplementChainState(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -436,7 +390,6 @@ local function updateImplementChainState(vehicle, dt)
     local visited = {}
     local maxCutterArea = 0
 
-    ---Walks one branch of the implement chain
     local function collectImplementState(vehicleObj, parentObj, jointDesc, jointDescIndex, isHead, liftBranch)
         if vehicleObj == nil or visited[vehicleObj] then
             return
@@ -611,7 +564,6 @@ local function updateImplementChainState(vehicle, dt)
 end
 
 
----Measures chassis vibration from the suspension travel of grounded wheels
 local function updateChassisVibState(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -671,7 +623,6 @@ local function updateChassisVibState(vehicle, dt)
     vibState.isWearing = vibState.smoothed > RMS_Config.CORE.CHASSIS_FACTOR_DATA.VIB_FACTOR_THRESHOLD
 end
 
----Measures the steering travel, the steered axle load and the wheel angle
 local function updateChassisSteeringState(vehicle, dt)
     local steerState = vehicle.spec_RealisticMechanicalSystems.chassisSteerState
     local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
@@ -707,7 +658,6 @@ local function updateChassisSteeringState(vehicle, dt)
     steerState.isMoving = steerState.travelRate > C.STEER_LOAD_RATE_DEADZONE
 end
 
----Reads the brake pedal, the towed mass and the power to mass ratios
 local function updateChassisBrakingState(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -760,7 +710,6 @@ local function updateChassisBrakingState(vehicle)
     brakeState.isBrakingByAxis = isBrakingByAxis
 end
 
----Tracks the fuel level, the consumption and the wet stacking deposits
 local function updateFuelState(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -769,7 +718,6 @@ local function updateFuelState(vehicle, dt)
 
     local fuelState = spec.fuelState
 
-    ---Returns the fill level of the fuel the vehicle burns
     local function resolveFuelLevel()
         local fuelFillUnit = nil
         if vehicle.getConsumerFillUnitIndex ~= nil then
@@ -805,7 +753,6 @@ local function updateFuelState(vehicle, dt)
         return 0
     end
 
-    ---Returns the current fuel usage as a ratio of the maximum usage
     local function resolveFuelUsageRatio()
         local motorizedSpec = vehicle.spec_motorized
         if motorizedSpec == nil then
@@ -922,8 +869,7 @@ local function updateFuelState(vehicle, dt)
     end
 end
 
----Reads the PTO torque, rpm, power and use, and counts engagements
-local function updatePtoState(vehicle, dt)
+local function updatePtoState(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local systemData = spec.systems.pto
 
@@ -967,7 +913,6 @@ local function updatePtoState(vehicle, dt)
 end
 
 ---Refreshes the vehicle state on the server, each group on its interval
--- @param float dt time since last call in ms
 function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
     local spec = self.spec_RealisticMechanicalSystems
     if not self.isServer or spec == nil or spec.isExcludedVehicle then return end
@@ -983,9 +928,9 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
     -- GROUP 1
     if spec.updateVehicleStateTimerOne >= delayOne then
         spec.updateVehicleStateTimerOne = spec.updateVehicleStateTimerOne % delayOne
-        updatePtoState(self, delayOne)
+        updatePtoState(self)
         updateAvgAbsDiffAccWindow(spec, self:getMotor(), delayOne)
-        updateDynamicMotorLoad(self, delayOne)
+        updateDynamicMotorLoad(self)
     end
 
     -- GROUP 2

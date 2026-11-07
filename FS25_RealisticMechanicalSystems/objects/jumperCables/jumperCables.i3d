@@ -137,7 +137,7 @@
               <Shape name="leftPairCablesLOD2_cableRed" shapeId="21" clipDistance="60" nodeId="86" castsShadows="true" receiveShadows="true" materialIds="2" />
             </TransformGroup>
           </TransformGroup>
-          <TransformGroup name="leftHandNode" translation="-0.0500433 0.113 -0.0350295" rotation="22.201004 4.761 -85.330002" nodeId="87" />
+          <TransformGroup name="leftHandNode" translation="-0.019957 0.113 -0.0350295" rotation="-157.798996 4.761 -85.330002" nodeId="87" />
         </TransformGroup>
         <TransformGroup name="rightPair" translation="0.14 0 0" nodeId="88">
           <TransformGroup name="rightClampAssembly" lodDistance="0 4 12" nodeId="89">

@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Súlyos függőcsapszegkopás. A kormányzás holtjátéka jelentős."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Kritikus függőcsapszegkopás. A kormányzás holtjátéka nagyon jelentős."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Enyhe meghibásodás a kormányorbitrolban. A kormánykerék kis holtjátékkal fordul, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Enyhe meghibásodás a kormányműben. A kormánykerék kis holtjátékkal fordul, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Enyhe meghibásodás a fogasléces kormányműben. A kormánykerék kis holtjátékkal fordul, mielőtt a kerekek követnék."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Közepes meghibásodás a kormányorbitrolban. A kormánykerék többet fordul, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Közepes meghibásodás a kormányműben. A kormánykerék többet fordul, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Közepes meghibásodás a fogasléces kormányműben. A kormánykerék többet fordul, mielőtt a kerekek követnék."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Súlyos meghibásodás a kormányorbitrolban. A kormánykerék sokat fordul, de a kerekek nem követik megfelelően."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Súlyos meghibásodás a kormányműben. A kormánykerék sokat fordul, de a kerekek nem követik megfelelően."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Súlyos meghibásodás a fogasléces kormányműben. A kormánykerék sokat fordul, de a kerekek nem követik megfelelően."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Kritikus hiba a kormányorbitrolban. A kormánykerék holtjátéka nagyon jelentős, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Kritikus hiba a kormányműben. A kormánykerék holtjátéka nagyon jelentős, mielőtt a kerekek követnék."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Kritikus hiba a fogasléces kormányműben. A kormánykerék holtjátéka nagyon jelentős, mielőtt a kerekek követnék."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Enyhe belső szivárgás a kormányhengerben. A jármű elkezd oldalra sodródni."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Enyhe szivárgás a kormányhenger rúdtömítésénél. A hidraulikaolaj szintje kissé csökken."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Közepes belső szivárgás a kormányhengerben. A jármű jobban oldalra sodródik."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Közepes rakodócsuklócsap- és perselykopás. A kar csuklóinak holtjátéka észrevehetővé válik."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Súlyos rakodócsuklócsap- és perselykopás. A kar holtjátéka jelentős."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Kritikus rakodócsuklócsap- és perselykopás. A kar holtjátéka nagyon jelentős."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Enyhe árboccsuklócsap- és perselykopás. Enyhe holtjáték jelenik meg az árboc csuklóinál."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Közepes árboccsuklócsap- és perselykopás. Az árboc csuklóinak holtjátéka észrevehetővé válik."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Súlyos árboccsuklócsap- és perselykopás. Az árboc holtjátéka jelentős."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Kritikus árboccsuklócsap- és perselykopás. Az árboc holtjátéka nagyon jelentős."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Enyhe gémcsuklócsap- és perselykopás. Enyhe holtjáték jelenik meg a gém csuklóinál."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Közepes gémcsuklócsap- és perselykopás. A gém csuklóinak holtjátéka észrevehetővé válik."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Súlyos gémcsuklócsap- és perselykopás. A gém holtjátéka jelentős."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Kritikus gémcsuklócsap- és perselykopás. A gém holtjátéka nagyon jelentős."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Enyhe marókar-csuklócsap- és perselykopás. Enyhe holtjáték jelenik meg a marókar csuklóinál."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Közepes marókar-csuklócsap- és perselykopás. A marókar csuklóinak holtjátéka észrevehetővé válik."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Súlyos marókar-csuklócsap- és perselykopás. A marókar holtjátéka jelentős."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Kritikus marókar-csuklócsap- és perselykopás. A marókar holtjátéka nagyon jelentős."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Enyhe tolólapkar-csuklócsap- és perselykopás. Enyhe holtjáték jelenik meg a kar csuklóinál."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Közepes tolólapkar-csuklócsap- és perselykopás. A kar csuklóinak holtjátéka észrevehetővé válik."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Súlyos tolólapkar-csuklócsap- és perselykopás. A kar holtjátéka jelentős."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Kritikus tolólapkar-csuklócsap- és perselykopás. A kar holtjátéka nagyon jelentős."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="A fülke lengéscsillapítójának enyhe szivárgása. A fülke csillapítása kissé gyengébb."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="A fülke lengéscsillapítójának közepes szivárgása. A fülke felpattan az egyenetlenségeken."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="A fülke lengéscsillapítójának súlyos szivárgása. A fülke minden rázkódásnál kileng."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="Szinkrongyűrű"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Kormánygömbfejek és kormányrudak"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Rakodócsuklók csapjai és perselyei"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Árboccsuklók csapjai és perselyei"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Gémcsuklók csapjai és perselyei"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Marókar-csuklók csapjai és perselyei"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Tolólapkar-csuklók csapjai és perselyei"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Függőcsapszegek"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Kormányorbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Kormánymű"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Fogasléces kormánymű"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Kormányhenger"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Fülkerugózás"/>
         <text name="rms_breakdowns_part_pto_clutch" text="TLT-kuplung"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Gázszűrő"/>
         <text name="rms_breakdowns_part_gas_lines" text="Gázvezetékek"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Gázbefecskendezők"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Gyújtógyertyák"/>
         <text name="rms_breakdowns_part_adblue_pump" text="AdBlue-szivattyú"/>
         <text name="rms_breakdowns_part_adblue_doser" text="AdBlue-adagoló befecskendező"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlue-szűrő"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Közepes meghibásodás a gázbefecskendezőkben. A motor megtorpan, teljesítményt veszít, többet fogyaszt és leállhat."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Súlyos meghibásodás a gázbefecskendezőkben. Az egyik befecskendező nagyon rosszul adagol: nagy teljesítményvesztés, túlfogyasztás és nehéz indítás."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kritikus hiba a gázbefecskendezőkben. Az adagolás már nem teszi lehetővé a motor járását: a motor leáll."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="A gyújtógyertyák elérték a csere idejét: nagy terhelésnél gyújtáskimaradások jelentkeznek, a motor egyenetlenebbül jár és kicsit többet fogyaszt. A karbantartás kicseréli őket."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="A gyújtógyertyák kopottak: a gyújtáskimaradások gyakorivá válnak, a motor teljesítményt veszít, többet fogyaszt és leállhat. A motorjelző lámpa világít."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="A gyújtógyertyák erősen kopottak: nagy teljesítményvesztés, túlfogyasztás és nehéz indítás."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="A gyújtógyertyák használhatatlanok: folyamatos gyújtáskimaradás, a motor leállhat és nem indul el."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Meghibásodás az AdBlue-szivattyúban. Már nem látja el az adagolót: kigyullad a motorhiba-jelző, majd a vezérlőegység a javításig csökkenti a teljesítményt."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Meghibásodás az AdBlue-adagoló befecskendezőben. A kristályoktól eltömődve már nem porlaszt: kigyullad a motorhiba-jelző, majd a teljesítmény a javításig csökken."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Az AdBlue-szűrő elérte a csere idejét és kezd eltömődni. A legteljesebb karbantartás kicseréli."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Sebességváltó-érzékelők"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Sebességváltószűrő"/>
         <text name="rms_breakdowns_part_lift_valve" text="Emelőmű szelepe"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Vágóasztal emelőszelepe"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Emelőmű helyzetérzékelője"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Vágásmagasság-érzékelő"/>
         <text name="rms_breakdowns_part_loader_control" text="Rakodóvezérlés"/>
+        <text name="rms_breakdowns_part_mast_control" text="Árbocvezérlés"/>
+        <text name="rms_breakdowns_part_boom_control" text="Gémvezérlés"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Marókar-vezérlés"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Tolólapkar-vezérlés"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hidraulikus gyorscsatlakozók"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Enyhe meghibásodás a kuplungban. Nem emel ki teljesen. Néhány fokozat nehezen kapcsolható."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Közepes meghibásodás a kuplungban. A szerkezet rosszul oldja a tárcsát. Gyakrabban hiúsul meg a fokozatválasztás."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Meghibásodás a hidraulikaszivattyúban. Eltört. A nyomás megszűnik, a hidraulikus funkciók nem reagálnak."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Meghibásodás a hidraulikus vezérlőszelepben. A tolattyú beszorult. Az érintett hidraulikus funkció nem mozog."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Meghibásodás az emelőmű szelepében. Nem tartja rendesen a terhet. A felemelt munkagép lesüllyed."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Meghibásodás a vágóasztal emelőszelepében. Nem tartja rendesen a terhet. A felemelt vágóasztal lesüllyed."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Meghibásodás az emelőmű szelepében. Beszorult. Az emelőmű nem reagál."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Meghibásodás a vágóasztal emelőszelepében. Beszorult. A vágóasztal nem emelhető és nem süllyeszthető."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Meghibásodás az emelőmű helyzetérzékelőjében. A helyzetjel hibás. Az emelőmű nem tartja a kért magasságot, és hibakód tárolódik."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Meghibásodás a vágásmagasság-érzékelőben. A magasságjel hibás. A vágóasztal nem tartja a kért magasságot, és hibakód tárolódik."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Enyhe meghibásodás a rakodóvezérlésben. A kar és a kanál lassabban reagál."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Közepes meghibásodás a rakodóvezérlésben. A kar és a kanál csak félsebességgel mozog."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Súlyos meghibásodás a rakodóvezérlésben. A kar és a kanál alig mozog."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Kritikus hiba a rakodóvezérlésben. A kar és a kanál már nem reagál."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Enyhe meghibásodás az árbocvezérlésben. Az árboc és a villa lassabban reagál."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Közepes meghibásodás az árbocvezérlésben. Az árboc és a villa csak félsebességgel mozog."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Súlyos meghibásodás az árbocvezérlésben. Az árboc és a villa alig mozog."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Kritikus hiba az árbocvezérlésben. Az árboc és a villa már nem reagál."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Enyhe meghibásodás a gémvezérlésben. A gém és a szerszáma lassabban reagál."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Közepes meghibásodás a gémvezérlésben. A gém és a szerszáma csak félsebességgel mozog."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Súlyos meghibásodás a gémvezérlésben. A gém és a szerszáma alig mozog."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Kritikus hiba a gémvezérlésben. A gém és a szerszáma már nem reagál."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Enyhe meghibásodás a marókar-vezérlésben. A marókar lassabban reagál."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Közepes meghibásodás a marókar-vezérlésben. A marókar csak félsebességgel mozog."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Súlyos meghibásodás a marókar-vezérlésben. A marókar alig mozog."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Kritikus hiba a marókar-vezérlésben. A marókar már nem reagál."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Enyhe meghibásodás a tolólapkar-vezérlésben. A kar és a tolólap lassabban reagál."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Közepes meghibásodás a tolólapkar-vezérlésben. A kar és a tolólap csak félsebességgel mozog."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Súlyos meghibásodás a tolólapkar-vezérlésben. A kar és a tolólap alig mozog."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Kritikus hiba a tolólapkar-vezérlésben. A kar és a tolólap már nem reagál."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Enyhe meghibásodás a hidraulikahengerben. A rúdtömítés kevés olajat enged ki. Enyhe nedvesség jelenik meg a rúd körül."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Közepes meghibásodás a hidraulikahengerben. A rúdtömítés nem tömít. A munkahenger olajat izzad, az olajszint csökken."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Súlyos meghibásodás a hidraulikahengerben. A rúdtömítés aktívan szivárog. A munkahenger jelentős olajat veszít."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="A hídcsapágyak kritikus kopása. Egy csapágy szétesett, a kúpkerék és tányérkerék sérült, a híd már nem továbbít vonóerőt."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Meghibásodás a differenciálzár vezérlésében. A zár nem kapcsol be. A differenciálmű szabad marad."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Meghibásodás a differenciálzár vezérlésében. A zár bekapcsolva marad. A gép kanyarban ellenáll a kormányzásnak."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Hajtószíjak és variátorok"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Hajtáscsapágyak és hajtóművek"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Ferdefelhordó-lánc"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Adagológyorsító"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Verőlécek"/>
+        <text name="rms_breakdowns_part_concave" text="Dobkosár"/>
+        <text name="rms_breakdowns_part_separation" text="Szeparáló fogak és szalmarázók"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Tisztítórosták"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Magcsigák és felhordók"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Szalmaszecskázó és -terítő"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Behúzóhengerek"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Fém- és kőérzékelő"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Szecskázódob"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Szecskázódob kései"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Ellenkés"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Szemroppantó"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Gyorsító és fúvó"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Kidobócső"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Levélzetvágó és fejezők"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Kiemelő ekevasak"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Tisztítóturbinák"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Répafelhordó"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Mozgópadló és ürítőszalag"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Rostaszalagok"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Szárelválasztó és hengerek"/>
+        <text name="rms_breakdowns_part_picking_units" text="Szedőegységek"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Orsónedvesítő"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Ventilátor és csatornák"/>
+        <text name="rms_breakdowns_part_module_builder" text="Modulképző kamra"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Alapvágó kések"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Behúzóhengerek"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Aprítódobok"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Elsődleges elszívó"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Nádfelhordó"/>
+        <text name="rms_breakdowns_part_shaker" text="Rázórendszer"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Gyűjtőpikkelyek"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Serleges szállítók"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Tisztító elszívók"/>
+        <text name="rms_breakdowns_part_destemmer" text="Bogyózó"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Szedőfej"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Tisztítóventilátor és rosták"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Felhordók és szállítók"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Betakarítás lehetetlen: egy betakarító egység eltört"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Dugulás: a betakarítás leállt"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Szecskázó elromlott: a szalma rendre hullik"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Szecskázó elromlott: ez a termény már nem takarítható be"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="A hajtószíjak kezdődő kopása. Terhelés alatt kissé csúsznak."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="A hajtószíjak közepes kopása. Egy egység terhelés alatt lelassul, és a fordulatszám-riasztás időnként leállítja a betakarítást."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="A hajtószíjak súlyos kopása. A teljesítmény csökken, és a leállások újra meg újra visszatérnek."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Kritikus hiba a hajtószíjakban. Egy szíj elszakadt: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="A hajtáscsapágyak kezdődő kopása. Betakarítás közben enyhe zúgás jelenik meg."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="A hajtáscsapágyak közepes kopása. A zúgás jól hallható, és a csapágyak melegszenek."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="A hajtáscsapágyak súlyos kopása. A zúgás erősödik, és a tengelyek holtjátékot kapnak."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritikus hiba a hajtáscsapágyakban. Egy csapágy beragadt: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="A ferdefelhordó-lánc kezdődő kopása. Megnyúlik, és az adagolás egyenetlenné válik."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="A ferdefelhordó-lánc közepes kopása. A ferdefelhordó bejáratánál dugulások keletkeznek."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="A ferdefelhordó-lánc súlyos kopása. Átugrik a lánckerekeken, és a dugulások visszatérnek."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Kritikus hiba a ferdefelhordó-láncban. A lánc elszakadt: semmi sem jut már be a gépbe."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Az adagológyorsító kezdődő kopása. A termény kevésbé egyenletesen éri el a dobot."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Az adagológyorsító közepes kopása. A teljesítmény megreked, és dugulások jelennek meg."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Az adagológyorsító súlyos kopása. A teljesítmény csökken, és a dugulások visszatérnek."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Kritikus hiba az adagológyorsítóban. Egy lapát leszakadt: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="A verőlécek kezdődő kopása. A szemek egy része a kalászban marad, és visszakerül a táblára."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="A verőlécek közepes kopása. A dob rezeg, és a szemveszteség nő."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="A verőlécek súlyos kopása. Néhány léc eltört: nagy veszteség és dugulások."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Kritikus hiba a verőlécekben. Egy léc leszakadt: a cséplés lehetetlen."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="A dobkosár kezdődő kopása. A gabona rosszabbul csépelődik, és egy része visszakerül a táblára."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="A dobkosár közepes kopása. A szemveszteség nő."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="A dobkosár súlyos kopása. A szemek törnek, a veszteség nagy, és dugulások jelennek meg."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Kritikus hiba a dobkosárban. Egy léc leszakadt: a cséplés lehetetlen."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="A szeparálás kezdődő kopása. Szem marad a szalmában, és visszakerül a táblára."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="A szeparálás közepes kopása. A szalmával távozó szemveszteség nő."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="A szeparálás súlyos kopása. Nagy veszteség és szalmadugulások."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Kritikus hiba a szeparálásban. A szalma már nem halad át: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="A tisztítórosták kezdődő kopása. Pelyva kerül a magtartályba, és kevés szem távozik a hulladékkal."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="A tisztítórosták közepes kopása. A rostaveszteség nő."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="A tisztítórosták súlyos kopása. Egy rosta megrepedt: nagy veszteség és dugulások."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Kritikus hiba a tisztítórostákban. A tisztítás már nem működik: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="A magcsigák és felhordók kezdődő kopása. A magtartályba jutó áram csökken."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="A magcsigák és felhordók közepes kopása. A szemek egy része eltörik vagy útközben elvész."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="A magcsigák és felhordók súlyos kopása. A felhordó rendszeresen eldugul."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Kritikus hiba a magcsigákban és felhordókban. A magtartály már nem telik: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="A szalmaszecskázó kezdődő kopása. A szalma kevésbé rövidre aprózódik, és a szecskázó kicsit több teljesítményt vesz fel."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="A szalmaszecskázó közepes kopása. A szecskázó rezeg, és több teljesítményt vesz fel."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="A szalmaszecskázó súlyos kopása. A rotor kiegyensúlyozatlan, és sok teljesítményt vesz fel."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritikus hiba a szalmaszecskázóban. Egy kés eltört: a szecskázó áll, és a szalma rendre hullik."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="A behúzóhengerek kezdődő kopása. Rosszabbul fogják a terményt: az adagolás egyenetlenné válik."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="A behúzóhengerek közepes kopása. A szecskahossz egyenetlenné válik, és dugulások jelennek meg."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="A behúzóhengerek súlyos kopása. A teljesítmény csökken, és a dugulások visszatérnek."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Kritikus hiba a behúzóhengerekben. Semmi sem jut már be a gépbe: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="A fém- és kőérzékelő kezdődő hibája. Téves riasztások időnként leállítják az adagolást."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="A fém- és kőérzékelő közepes hibája. A felesleges leállások visszatérnek."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="A fém- és kőérzékelő meghibásodott. Már semmit sem érzékel: a kövek eljutnak a késekig, és sokkal gyorsabban koptatják őket."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="A szecskázódob kezdődő kopása. Enyhén rezeg, és kicsit több teljesítményt vesz fel."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="A szecskázódob közepes kopása. A rotor kiegyensúlyozatlan, és több teljesítményt vesz fel."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="A szecskázódob súlyos kopása. Egy késtartó megrepedt: nagyobb teljesítményigény és dugulások."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Kritikus hiba a szecskázódobban. A rotor megsérült: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="A kések kezdődő kopása. A vágás kevésbé tiszta, és kicsit több teljesítményt igényel."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="A kések közepes kopása. Több teljesítményt és több üzemanyagot igényelnek."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="A kések súlyos kopása. A vágás egyenetlen, a teljesítményigény nő, és dugulások jelennek meg."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Kritikus hiba a késekben. Egy kés eltört: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Az ellenkés kezdődő kopása. A rés nő: a vágás kicsit több teljesítményt igényel."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Az ellenkés közepes kopása. A vágás tép, és több teljesítményt igényel."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Az ellenkés súlyos kopása. Az éle elkopott: nagyobb teljesítményigény és dugulások."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Kritikus hiba az ellenkésben. Használhatatlan: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="A szemroppantó kezdődő kopása. A szemek rosszabbul roppannak, és a roppantó kicsit több teljesítményt vesz fel."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="A szemroppantó közepes kopása. Egész szemek jutnak át, és a teljesítményigény nő."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="A szemroppantó súlyos kopása. Egy henger barázdás: nagyobb teljesítményigény és dugulások."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Kritikus hiba a szemroppantóban. Egy henger beragadt: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="A gyorsító kezdődő kopása. A kidobás rövidebb, és a teljesítmény kissé csökken."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="A gyorsító közepes kopása. A kidobócső időnként eldugul."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="A gyorsító súlyos kopása. Egy lapát leszakadt: gyakori dugulások és elveszett takarmány."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Kritikus hiba a gyorsítóban. A takarmány már nem dobódik ki: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="A kidobócső kezdődő kopása. A kidobás elhúz, és a teljesítmény kissé csökken."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="A kidobócső közepes kopása. A takarmány lerakódik, és időnként eltömi a csövet."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="A kidobócső súlyos kopása. A kopóbetét kilyukadt: elveszett takarmány és gyakori dugulások."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Kritikus hiba a kidobócsőben. Teljesen átkopott: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Kezdődő kopás. A termény egy része a táblán marad."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Közepes kopás. Rezgések és nagyobb veszteség."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Súlyos kopás. Néhány elem eltört: nagy veszteség és dugulások."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Kritikus hiba. Az egység eltört: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Az ekevasak kezdődő kopása. Néhány gyökér eltörik vagy a földben marad."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Az ekevasak közepes kopása. Rosszul emelnek ki: nagyobb veszteség és nagyobb vonóerő."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Az ekevasak súlyos kopása. Teljesen elkoptak: nagy veszteség, és a gép erőlködik."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Kritikus hiba az ekevasakban. Egy ekevas eltört: a kiemelés lehetetlen."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Kezdődő kopás. A tisztítás rosszabbul működik: föld vagy szennyeződés a terményben, kevés termény elvész."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Közepes kopás. A tisztítási veszteség nő."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Súlyos kopás. Törött rácsok vagy lapátok: nagy veszteség és dugulások."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Kritikus hiba. A tisztítás leállt: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Kezdődő kopás. A lánc vagy a szalag megnyúlik: az adagolás egyenetlenné válik."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Közepes kopás. Kopott pálcák vagy lapátok: kisebb teljesítmény és dugulások."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Súlyos kopás. A lánc átugrik: a dugulások visszatérnek."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Kritikus hiba. A lánc vagy a szalag elszakadt: már semmi sem halad át."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Kezdődő kopás. A termény átadása lelassul."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Közepes kopás. Az átadás egyenetlenné válik, és a termény egy része elvész."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Súlyos kopás. Az átadás rendszeresen elakad."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Kritikus hiba. Az átadás leállt: a betakarítás lehetetlen."/>
     </texts>
 </l10n>

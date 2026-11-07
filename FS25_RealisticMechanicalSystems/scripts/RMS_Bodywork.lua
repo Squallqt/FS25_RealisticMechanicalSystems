@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Paint service rules shared by the quote and the server transaction
 RMS_Bodywork = {}
@@ -21,7 +20,6 @@ local previewParameters = {
 }
 local previewMaps = {"detailDiffuse", "detailNormal", "detailSpecular"}
 
----Checks whether a loaded material can be restored after the silver preview.
 local function getPaintDetailDiffuse(node, materialIndex)
     local slotName = getMaterialSlotName(node, materialIndex)
     if type(slotName) ~= "string" or slotName == "" then
@@ -176,9 +174,8 @@ function RMS_Bodywork.repaintVehicle(vehicle, superFunc, ...)
     return superFunc(vehicle, ...)
 end
 
----Returns the volume tier from the vehicle dimensions loaded by GIANTS.
-function RMS_Bodywork.getSizeTier(vehicle)
-    local size = vehicle ~= nil and vehicle.size or nil
+---Returns the volume tier of a machine size
+function RMS_Bodywork.getSizeTier(size)
     local width = size ~= nil and tonumber(size.width) or nil
     local length = size ~= nil and tonumber(size.length) or nil
     local height = size ~= nil and tonumber(size.height) or nil
@@ -193,7 +190,6 @@ function RMS_Bodywork.getSizeTier(vehicle)
     return volume <= 100 and 2 or 3
 end
 
----
 function RMS_Bodywork.getWear(vehicle)
     if vehicle == nil or vehicle.spec_wearable == nil or vehicle.getWearTotalAmount == nil then
         return nil
@@ -202,10 +198,13 @@ function RMS_Bodywork.getWear(vehicle)
     return wear ~= nil and math.max(0, math.min(wear, 1)) or nil
 end
 
----
+local function getRoundedGamePrice(realPrice)
+    return math.ceil(RMS_Utils.getGamePrice(realPrice) / 10) * 10
+end
+
 function RMS_Bodywork.getPrice(vehicle, mode, workshopType)
     if vehicle == nil or vehicle.getPrice == nil or RMS_Bodywork.DURATION_HOURS[mode] == nil
-        or RMS_Bodywork.getSizeTier(vehicle) == nil then
+        or RMS_Bodywork.getSizeTier(vehicle.size) == nil then
         return nil
     end
     local currentWear = RMS_Bodywork.getWear(vehicle)
@@ -214,19 +213,19 @@ function RMS_Bodywork.getPrice(vehicle, mode, workshopType)
             or currentWear > RMS_Bodywork.MAX_TOUCHUP_WEAR)) then
         return nil
     end
-    local price = RMS_Bodywork.FULL_PRICES[RMS_Bodywork.getSizeTier(vehicle)]
+    local price = RMS_Bodywork.FULL_PRICES[RMS_Bodywork.getSizeTier(vehicle.size)]
     if mode == RMS_Bodywork.TOUCHUP then
         price = price * RMS_Bodywork.TOUCHUP_SHARE * math.sqrt(currentWear)
         if workshopType == RealisticMechanicalSystems.WORKSHOP.OWN then
             price = price * RMS_Config.WORKSHOP.PRICE_MULTIPLIERS.OWN
         end
     end
-    return math.ceil(RMS_Utils.getGamePrice(price) / 10) * 10
+    return getRoundedGamePrice(price)
 end
 
 ---Returns the service duration for the selected vehicle size.
 function RMS_Bodywork.getDurationMs(vehicle, mode)
-    local tier = RMS_Bodywork.getSizeTier(vehicle)
+    local tier = RMS_Bodywork.getSizeTier(vehicle.size)
     local hours = RMS_Bodywork.DURATION_HOURS[mode]
     if tier == nil or hours == nil then
         return nil
@@ -234,12 +233,10 @@ function RMS_Bodywork.getDurationMs(vehicle, mode)
     return hours[tier] * 3600000
 end
 
----Lists only color configurations the native shop allows players to select.
 local function getSelectionIndex(selection)
     return type(selection) == "table" and selection.index or selection
 end
 
----
 local function hasMaterialSlot(node, slotName)
     if getHasClassId(node, ClassIds.SHAPE) then
         for materialIndex = 0, getNumOfMaterials(node) - 1 do
@@ -256,7 +253,6 @@ local function hasMaterialSlot(node, slotName)
     return false
 end
 
----
 local function vehicleHasMaterialSlot(vehicle, slotName)
     for _, component in ipairs(vehicle.components or {}) do
         if hasMaterialSlot(component.node, slotName) then
@@ -266,7 +262,6 @@ local function vehicleHasMaterialSlot(vehicle, slotName)
     return false
 end
 
----
 local function collectCrawlerRimSlots(node, slots)
     if node == nil or not entityExists(node) then
         return
@@ -285,9 +280,7 @@ local function collectCrawlerRimSlots(node, slots)
     end
 end
 
----
-function RMS_Bodywork.getColorZones(vehicle)
-    local storeItem = vehicle ~= nil and g_storeManager:getItemByXMLFilename(vehicle.configFileName) or nil
+local function getStoreColorZones(storeItem)
     local configurations = storeItem ~= nil and storeItem.configurations or nil
     local zones = {}
     if configurations == nil then
@@ -302,7 +295,53 @@ function RMS_Bodywork.getColorZones(vehicle)
     return zones
 end
 
----
+function RMS_Bodywork.getColorZones(vehicle)
+    return getStoreColorZones(vehicle ~= nil and g_storeManager:getItemByXMLFilename(vehicle.configFileName) or nil)
+end
+
+local function getIsPurchaseColorSelected(storeItem, configurations, saleItem, zone, index)
+    if saleItem ~= nil then
+        return ConfigurationUtil.hasBoughtConfiguration(saleItem, zone, index)
+    end
+    if index == storeItem.defaultConfigurationIds[zone] then
+        return true
+    end
+    for _, configSet in ipairs(storeItem.configurationSets) do
+        if configSet.configurations[zone] == index
+            and ConfigurationUtil.getConfigurationsMatchConfigSets(configurations, {configSet}) then
+            return true
+        end
+    end
+    return false
+end
+
+---Returns what the colors of a purchase cost under RMS
+-- @return float? paintPrice full repaint price, 0 when every color is the one already selected; nil when RMS
+-- does not track the store item
+function RMS_Bodywork.getPurchaseColorPrices(storeItem, configurations, saleItem)
+    if storeItem.configurations == nil
+        or storeItem.configurations[RealisticMechanicalSystems.WARRANTY_CONFIGURATION] == nil then
+        return nil
+    end
+    local optionPrice, paintedZone = 0, nil
+    for _, zone in ipairs(getStoreColorZones(storeItem)) do
+        local index = configurations[zone]
+        if index ~= nil then
+            if saleItem == nil or not ConfigurationUtil.hasBoughtConfiguration(saleItem, zone, index) then
+                optionPrice = optionPrice + storeItem.configurations[zone][index].price
+            end
+            if paintedZone == nil and not getIsPurchaseColorSelected(storeItem, configurations, saleItem, zone, index) then
+                paintedZone = zone
+            end
+        end
+    end
+    if paintedZone == nil then
+        return 0, optionPrice, nil
+    end
+    local size = StoreItemUtil.getSizeValues(storeItem.xmlFilename, "vehicle", 0, configurations)
+    return getRoundedGamePrice(RMS_Bodywork.FULL_PRICES[RMS_Bodywork.getSizeTier(size)]), optionPrice, paintedZone
+end
+
 function RMS_Bodywork.getColorTargetSlots(vehicle, zone)
     local slots = {}
     local desc = g_vehicleConfigurationManager:getConfigurationDescByName(zone)
@@ -395,7 +434,6 @@ function RMS_Bodywork.syncCrawlerRimColor(vehicle)
     end
 end
 
----
 local function matchesColorConfigurationSets(vehicle, zone, index, indices, configurationSets)
     if configurationSets == nil or next(configurationSets) == nil then
         return true
@@ -414,7 +452,6 @@ local function matchesColorConfigurationSets(vehicle, zone, index, indices, conf
     return ConfigurationUtil.getConfigurationsMatchConfigSets(candidate, configurationSets)
 end
 
----
 function RMS_Bodywork.getColorChoices(vehicle, zone, indices)
     if vehicle == nil then
         return {}
@@ -449,7 +486,6 @@ function RMS_Bodywork.getCustomColorChoice(vehicle, zone, indices)
     return nil
 end
 
----
 function RMS_Bodywork.isValidColor(color)
     if type(color) ~= "table" then
         return false
@@ -484,7 +520,6 @@ function RMS_Bodywork.encodeColors(vehicle, indices)
     return "z;" .. table.concat(tokens, ";")
 end
 
----
 function RMS_Bodywork.decodeColors(value)
     if type(value) ~= "string" then
         return nil
@@ -540,7 +575,6 @@ function RMS_Bodywork.decodeColors(value)
     return selections
 end
 
----
 function RMS_Bodywork.validateColors(vehicle, encoded)
     local indices = RMS_Bodywork.decodeColors(encoded)
     if indices == nil then
@@ -579,7 +613,6 @@ function RMS_Bodywork.validateColors(vehicle, encoded)
     return true
 end
 
----
 function RMS_Bodywork.isAllowed(vehicle, workshopType, mode, encoded)
     local rmsSpec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if rmsSpec == nil or rmsSpec.isExcludedVehicle
@@ -588,7 +621,7 @@ function RMS_Bodywork.isAllowed(vehicle, workshopType, mode, encoded)
         return false
     end
     local wear = RMS_Bodywork.getWear(vehicle)
-    if wear == nil or RMS_Bodywork.getSizeTier(vehicle) == nil then
+    if wear == nil or RMS_Bodywork.getSizeTier(vehicle.size) == nil then
         return false
     end
     if mode == RMS_Bodywork.TOUCHUP then
@@ -603,7 +636,6 @@ function RMS_Bodywork.isAllowed(vehicle, workshopType, mode, encoded)
         and RMS_Bodywork.validateColors(vehicle, encoded)
 end
 
----
 function RMS_Bodywork.clearWear(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_wearable or nil
     for _, nodeData in ipairs(spec ~= nil and spec.wearableNodes or {}) do
@@ -611,7 +643,6 @@ function RMS_Bodywork.clearWear(vehicle)
     end
 end
 
----
 local function refreshWheelColor(vehicle, zone, previousMaterial, material)
     local wheels = vehicle.spec_wheels
     if wheels == nil then

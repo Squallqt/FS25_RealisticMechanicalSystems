@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Client request to start or cancel a physical fluid transfer
 RMS_FluidTransferRequestEvent = {}
@@ -7,12 +6,10 @@ local RMS_FluidTransferRequestEvent_mt = Class(RMS_FluidTransferRequestEvent, Ev
 
 InitEventClass(RMS_FluidTransferRequestEvent, "RMS_FluidTransferRequestEvent")
 
----
 function RMS_FluidTransferRequestEvent.emptyNew()
     return Event.new(RMS_FluidTransferRequestEvent_mt)
 end
 
----
 function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompatibleConfirmed, cancel, result)
     local self = RMS_FluidTransferRequestEvent.emptyNew()
     self.container = container
@@ -24,7 +21,6 @@ function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompati
     return self
 end
 
----
 function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.container)
     NetworkUtil.writeNodeObject(streamId, self.target)
@@ -34,7 +30,6 @@ function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     streamWriteString(streamId, self.result)
 end
 
----
 function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
     self.container = NetworkUtil.readNodeObject(streamId)
     self.target = NetworkUtil.readNodeObject(streamId)
@@ -45,7 +40,6 @@ function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
----
 function RMS_FluidTransferRequestEvent:run(connection)
     if connection:getIsServer() then
         local textKey = self.container ~= nil and RMS_FluidTransfer.getRefusalTextKey(self.container, self.result) or nil
@@ -87,7 +81,6 @@ function RMS_FluidTransferRequestEvent:run(connection)
     end
 end
 
----
 function RMS_FluidTransferRequestEvent.send(container, target, circuit, incompatibleConfirmed, cancel)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_FluidTransferRequestEvent.new(

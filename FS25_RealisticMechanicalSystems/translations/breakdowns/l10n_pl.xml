@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Poważne zużycie sworzni zwrotnic. Luz w układzie kierowniczym jest duży."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Krytyczne zużycie sworzni zwrotnic. Układ kierowniczy wykazuje bardzo duży luz."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Lekkie uszkodzenie orbitrola układu kierowniczego. Kierownica obraca się z niewielkim luzem, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Lekkie uszkodzenie przekładni kierowniczej. Kierownica obraca się z niewielkim luzem, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Lekkie uszkodzenie listwy kierowniczej. Kierownica obraca się z niewielkim luzem, zanim koła zareagują."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Umiarkowane uszkodzenie orbitrola układu kierowniczego. Kierownica obraca się dalej, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Umiarkowane uszkodzenie przekładni kierowniczej. Kierownica obraca się dalej, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Umiarkowane uszkodzenie listwy kierowniczej. Kierownica obraca się dalej, zanim koła zareagują."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Poważne uszkodzenie orbitrola układu kierowniczego. Kierownica obraca się znacznie, a koła nie podążają za nią prawidłowo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Poważne uszkodzenie przekładni kierowniczej. Kierownica obraca się znacznie, a koła nie podążają za nią prawidłowo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Poważne uszkodzenie listwy kierowniczej. Kierownica obraca się znacznie, a koła nie podążają za nią prawidłowo."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Krytyczna awaria orbitrola układu kierowniczego. Kierownica ma bardzo duży luz, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Krytyczna awaria przekładni kierowniczej. Kierownica ma bardzo duży luz, zanim koła zareagują."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Krytyczna awaria listwy kierowniczej. Kierownica ma bardzo duży luz, zanim koła zareagują."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Lekki wewnętrzny wyciek w siłowniku układu kierowniczego. Pojazd zaczyna zbaczać na jedną stronę."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Lekki wyciek przez uszczelnienie tłoczyska siłownika układu kierowniczego. Poziom oleju hydraulicznego nieznacznie spada."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Umiarkowany wewnętrzny wyciek w siłowniku układu kierowniczego. Pojazd bardziej zbacza na jedną stronę."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Umiarkowane zużycie sworzni i tulei przegubów ładowacza. Luz w przegubach ramienia staje się wyczuwalny."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Poważne zużycie sworzni i tulei przegubów ładowacza. Ramię wykazuje duży luz."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Krytyczne zużycie sworzni i tulei przegubów ładowacza. Luz ramienia jest bardzo duży."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Lekkie zużycie sworzni i tulei masztu. W przegubach masztu pojawia się niewielki luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Umiarkowane zużycie sworzni i tulei masztu. Luz w przegubach masztu staje się wyczuwalny."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Poważne zużycie sworzni i tulei masztu. Maszt wykazuje duży luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Krytyczne zużycie sworzni i tulei masztu. Luz masztu jest bardzo duży."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Lekkie zużycie sworzni i tulei wysięgnika. W przegubach wysięgnika pojawia się niewielki luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Umiarkowane zużycie sworzni i tulei wysięgnika. Luz w przegubach wysięgnika staje się wyczuwalny."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Poważne zużycie sworzni i tulei wysięgnika. Wysięgnik wykazuje duży luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Krytyczne zużycie sworzni i tulei wysięgnika. Luz wysięgnika jest bardzo duży."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Lekkie zużycie sworzni i tulei ramienia frezującego. W przegubach ramienia pojawia się niewielki luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Umiarkowane zużycie sworzni i tulei ramienia frezującego. Luz w przegubach ramienia staje się wyczuwalny."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Poważne zużycie sworzni i tulei ramienia frezującego. Ramię wykazuje duży luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Krytyczne zużycie sworzni i tulei ramienia frezującego. Luz ramienia jest bardzo duży."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Lekkie zużycie sworzni i tulei ramienia lemiesza. W przegubach ramienia pojawia się niewielki luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Umiarkowane zużycie sworzni i tulei ramienia lemiesza. Luz w przegubach ramienia staje się wyczuwalny."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Poważne zużycie sworzni i tulei ramienia lemiesza. Ramię wykazuje duży luz."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Krytyczne zużycie sworzni i tulei ramienia lemiesza. Luz ramienia jest bardzo duży."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Lekki wyciek z amortyzatora kabiny. Tłumienie kabiny jest nieco słabsze."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Umiarkowany wyciek z amortyzatora kabiny. Kabina podskakuje na nierównościach."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Poważny wyciek z amortyzatora kabiny. Kabina kołysze się przy każdym wstrząsie."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="Synchronizator"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Przeguby kulowe i drążki kierownicze"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Sworznie i tuleje przegubów ładowacza"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Sworznie i tuleje masztu"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Sworznie i tuleje wysięgnika"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Sworznie i tuleje ramienia frezującego"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Sworznie i tuleje ramienia lemiesza"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Sworznie zwrotnic"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Orbitrol układu kierowniczego"/>
+        <text name="rms_breakdowns_part_steering_box" text="Przekładnia kierownicza"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Listwa kierownicza"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Siłownik układu kierowniczego"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Zawieszenie kabiny"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Sprzęgło WOM"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Filtr gazu"/>
         <text name="rms_breakdowns_part_gas_lines" text="Przewody gazowe"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Wtryskiwacze gazu"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Świece zapłonowe"/>
         <text name="rms_breakdowns_part_adblue_pump" text="Pompa AdBlue"/>
         <text name="rms_breakdowns_part_adblue_doser" text="Wtryskiwacz dozujący AdBlue"/>
         <text name="rms_breakdowns_part_adblue_filter" text="Filtr AdBlue"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Umiarkowane uszkodzenie wtryskiwaczy gazu. Silnik się krztusi, traci moc, zużywa więcej gazu i może zgasnąć."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Poważne uszkodzenie wtryskiwaczy gazu. Jeden wtryskiwacz bardzo źle dawkuje: duża utrata mocy, nadmierne zużycie gazu i trudny rozruch."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Krytyczna awaria wtryskiwaczy gazu. Dawkowanie nie pozwala już silnikowi pracować: silnik się zatrzymuje."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Świece zapłonowe osiągnęły termin wymiany: pod dużym obciążeniem pojawiają się wypadania zapłonu, silnik pracuje mniej równo i zużywa nieco więcej gazu. Przegląd je wymienia."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Świece zapłonowe są zużyte: wypadania zapłonu stają się częste, silnik traci moc, zużywa więcej gazu i może zgasnąć. Zapala się kontrolka silnika."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Świece zapłonowe są mocno zużyte: duża utrata mocy, nadmierne zużycie gazu i trudny rozruch."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Świece zapłonowe nie nadają się do użytku: ciągłe wypadania zapłonu, silnik może zgasnąć i nie dać się uruchomić."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Uszkodzenie pompy AdBlue. Nie zasila już dozowania: zapala się kontrolka silnika, a następnie sterownik ogranicza moc do czasu naprawy."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Uszkodzenie wtryskiwacza dozującego AdBlue. Zatkany kryształami już nie rozpyla: zapala się kontrolka silnika, a moc później spada do czasu naprawy."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Filtr AdBlue osiągnął termin wymiany i zaczyna się zatykać. Wymienia go najpełniejszy przegląd."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Czujniki skrzyni biegów"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Filtr przekładni"/>
         <text name="rms_breakdowns_part_lift_valve" text="Zawór podnośnika"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Zawór podnoszenia hedera"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Czujnik położenia podnośnika"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Czujnik wysokości hedera"/>
         <text name="rms_breakdowns_part_loader_control" text="Sterowanie ładowaczem"/>
+        <text name="rms_breakdowns_part_mast_control" text="Sterowanie masztem"/>
+        <text name="rms_breakdowns_part_boom_control" text="Sterowanie wysięgnikiem"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Sterowanie ramieniem frezującym"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Sterowanie ramieniem lemiesza"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Szybkozłącza hydrauliczne"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Lekkie uszkodzenie sprzęgła. Nie rozłącza całkowicie. Niektóre biegi trudno włączyć."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Umiarkowane uszkodzenie sprzęgła. Mechanizm słabo zwalnia tarczę. Biegi są częściej odrzucane."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Uszkodzenie pompy hydraulicznej. Jest rozbita. Ciśnienie zanika, a funkcje hydrauliczne nie odpowiadają."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Uszkodzenie zaworu sterowania hydrauliką. Suwak jest zablokowany. Dana funkcja hydrauliczna nie porusza się."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Uszkodzenie zaworu podnośnika. Nie utrzymuje prawidłowo ciężaru. Podniesione narzędzie opada."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Uszkodzenie zaworu podnoszenia hedera. Nie utrzymuje prawidłowo ciężaru. Podniesiony heder opada."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Uszkodzenie zaworu podnośnika. Jest zablokowany. Podnośnik nie odpowiada."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Uszkodzenie zaworu podnoszenia hedera. Jest zablokowany. Heder nie podnosi się ani nie opuszcza."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Uszkodzenie czujnika położenia podnośnika. Sygnał położenia zawiódł. Podnośnik nie utrzymuje zadanej wysokości i zapisywany jest kod usterki."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Uszkodzenie czujnika wysokości hedera. Sygnał wysokości zawiódł. Heder nie utrzymuje zadanej wysokości i zapisywany jest kod usterki."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Lekkie uszkodzenie sterowania ładowaczem. Ramię i łyżka reagują wolniej."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Umiarkowane uszkodzenie sterowania ładowaczem. Ramię i łyżka poruszają się tylko z połową prędkości."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Poważne uszkodzenie sterowania ładowaczem. Ramię i łyżka ledwo się poruszają."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Krytyczne uszkodzenie sterowania ładowaczem. Ramię i łyżka już nie reagują."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Lekkie uszkodzenie sterowania masztem. Maszt i widły reagują wolniej."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Umiarkowane uszkodzenie sterowania masztem. Maszt i widły poruszają się tylko z połową prędkości."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Poważne uszkodzenie sterowania masztem. Maszt i widły ledwo się poruszają."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Krytyczne uszkodzenie sterowania masztem. Maszt i widły już nie reagują."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Lekkie uszkodzenie sterowania wysięgnikiem. Wysięgnik i jego narzędzie reagują wolniej."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Umiarkowane uszkodzenie sterowania wysięgnikiem. Wysięgnik i jego narzędzie poruszają się tylko z połową prędkości."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Poważne uszkodzenie sterowania wysięgnikiem. Wysięgnik i jego narzędzie ledwo się poruszają."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Krytyczne uszkodzenie sterowania wysięgnikiem. Wysięgnik i jego narzędzie już nie reagują."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Lekkie uszkodzenie sterowania ramieniem frezującym. Ramię reaguje wolniej."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Umiarkowane uszkodzenie sterowania ramieniem frezującym. Ramię porusza się tylko z połową prędkości."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Poważne uszkodzenie sterowania ramieniem frezującym. Ramię ledwo się porusza."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Krytyczne uszkodzenie sterowania ramieniem frezującym. Ramię już nie reaguje."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Lekkie uszkodzenie sterowania ramieniem lemiesza. Ramię i lemiesz reagują wolniej."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Umiarkowane uszkodzenie sterowania ramieniem lemiesza. Ramię i lemiesz poruszają się tylko z połową prędkości."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Poważne uszkodzenie sterowania ramieniem lemiesza. Ramię i lemiesz ledwo się poruszają."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Krytyczne uszkodzenie sterowania ramieniem lemiesza. Ramię i lemiesz już nie reagują."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Lekkie uszkodzenie siłownika hydraulicznego. Uszczelnienie tłoczyska przepuszcza trochę oleju. Wokół tłoczyska widać lekką wilgoć."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Umiarkowane uszkodzenie siłownika hydraulicznego. Uszczelnienie tłoczyska jest nieszczelne. Siłownik poci się, a poziom oleju spada."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Poważne uszkodzenie siłownika hydraulicznego. Uszczelnienie tłoczyska aktywnie przecieka. Siłownik traci znaczną ilość oleju."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Krytyczne zużycie łożysk mostu. Jedno łożysko się rozpadło, przekładnia stożkowa jest uszkodzona i most nie przenosi już siły napędowej."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Uszkodzenie sterowania blokadą mechanizmu różnicowego. Blokada nie załącza się. Mechanizm różnicowy pozostaje swobodny."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Uszkodzenie sterowania blokadą mechanizmu różnicowego. Blokada pozostaje załączona. Maszyna opiera się skręcaniu na zakrętach."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Pasy napędowe i wariatory"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Łożyska i przekładnie napędu"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Łańcuch przenośnika pochyłego"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Przyspieszacz podawania"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Listwy cepowe"/>
+        <text name="rms_breakdowns_part_concave" text="Klepisko"/>
+        <text name="rms_breakdowns_part_separation" text="Zęby separacji i wytrząsacze"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Sita czyszczące"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Ślimaki i podnośniki ziarna"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Rozdrabniacz i rozrzutnik słomy"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Walce podające"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Detektor metali i kamieni"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Bęben tnący"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Noże bębna tnącego"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Przeciwnóż"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Gniotownik ziarna"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Przyspieszacz i dmuchawa"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Rura wyrzutowa"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Ogławiacz i obcinacze"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Lemiesze wyorujące"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Turbiny czyszczące"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Elewator buraków"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Dno ruchome i taśma rozładunkowa"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Taśmy sitowe"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Separator naci i wałki"/>
+        <text name="rms_breakdowns_part_picking_units" text="Zespoły zbierające"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Nawilżacz wrzecion"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Wentylator i kanały"/>
+        <text name="rms_breakdowns_part_module_builder" text="Komora formowania modułów"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Noże podstawowe"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Walce podające"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Bębny tnące"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Ekstraktor główny"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Elewator trzciny"/>
+        <text name="rms_breakdowns_part_shaker" text="Układ otrząsający"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Łuski chwytające"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Przenośniki kubełkowe"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Wyciągi czyszczące"/>
+        <text name="rms_breakdowns_part_destemmer" text="Odszypułkowywacz"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Głowica zbierająca"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Wentylator i sita czyszczące"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elewatory i przenośniki"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Zbiór niemożliwy: zespół żniwny jest uszkodzony"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Zapchanie: zbiór został zatrzymany"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Rozdrabniacz uszkodzony: słoma spada w pokos"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Rozdrabniacz uszkodzony: tej uprawy nie można już zbierać"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Początkowe zużycie pasów napędowych. Lekko ślizgają się pod obciążeniem."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Umiarkowane zużycie pasów napędowych. Zespół zwalnia pod obciążeniem, a alarm obrotów czasem zatrzymuje zbiór."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Poważne zużycie pasów napędowych. Wydajność spada, a postoje wciąż się powtarzają."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Krytyczna awaria pasów napędowych. Pas pękł: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Początkowe zużycie łożysk napędu. Podczas zbioru pojawia się lekki szum."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Umiarkowane zużycie łożysk napędu. Szum staje się wyraźnie słyszalny, a łożyska się grzeją."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Poważne zużycie łożysk napędu. Szum narasta, a wały nabierają luzu."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Krytyczna awaria łożysk napędu. Łożysko się zatarło: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Początkowe zużycie łańcucha przenośnika pochyłego. Wydłuża się, a podawanie staje się nierówne."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Umiarkowane zużycie łańcucha przenośnika pochyłego. Na wejściu przenośnika tworzą się zapchania."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Poważne zużycie łańcucha przenośnika pochyłego. Przeskakuje na zębatkach, a zapchania wciąż wracają."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Krytyczna awaria łańcucha przenośnika pochyłego. Łańcuch pękł: nic już nie wchodzi do maszyny."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Początkowe zużycie przyspieszacza podawania. Masa trafia do bębna mniej równomiernie."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Umiarkowane zużycie przyspieszacza podawania. Wydajność przestaje rosnąć i pojawiają się zapchania."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Poważne zużycie przyspieszacza podawania. Wydajność spada, a zapchania wciąż wracają."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Krytyczna awaria przyspieszacza podawania. Łopatka się oderwała: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Początkowe zużycie listew cepowych. Część ziarna zostaje w kłosach i wraca na pole."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Umiarkowane zużycie listew cepowych. Bęben drga, a straty ziarna rosną."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Poważne zużycie listew cepowych. Niektóre listwy są pęknięte: duże straty i zapchania."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Krytyczna awaria listew cepowych. Listwa się oderwała: omłot jest niemożliwy."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Początkowe zużycie klepiska. Ziarno jest gorzej wymłócone i część wraca na pole."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Umiarkowane zużycie klepiska. Straty ziarna rosną."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Poważne zużycie klepiska. Ziarno pęka, straty są duże i pojawiają się zapchania."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Krytyczna awaria klepiska. Listwa się oderwała: omłot jest niemożliwy."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Początkowe zużycie separacji. Ziarno zostaje w słomie i wraca na pole."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Umiarkowane zużycie separacji. Straty ziarna w słomie rosną."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Poważne zużycie separacji. Duże straty i zapchania słomą."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Krytyczna awaria separacji. Słoma już nie przechodzi: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Początkowe zużycie sit czyszczących. Plewy trafiają do zbiornika ziarna, a trochę ziarna odchodzi z odpadami."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Umiarkowane zużycie sit czyszczących. Straty na sitach rosną."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Poważne zużycie sit czyszczących. Sito jest pęknięte: duże straty i zapchania."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Krytyczna awaria sit czyszczących. Czyszczenie już nie działa: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Początkowe zużycie ślimaków i podnośników ziarna. Przepływ do zbiornika ziarna maleje."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Umiarkowane zużycie ślimaków i podnośników ziarna. Część ziarna pęka lub ginie po drodze."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Poważne zużycie ślimaków i podnośników ziarna. Podnośnik regularnie się zapycha."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Krytyczna awaria ślimaków i podnośników ziarna. Zbiornik ziarna już się nie napełnia: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Początkowe zużycie rozdrabniacza słomy. Słoma jest cięta mniej krótko, a rozdrabniacz pobiera trochę więcej mocy."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Umiarkowane zużycie rozdrabniacza słomy. Rozdrabniacz drga i pobiera więcej mocy."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Poważne zużycie rozdrabniacza słomy. Wirnik jest niewyważony i pobiera dużo mocy."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Krytyczna awaria rozdrabniacza słomy. Nóż pękł: rozdrabniacz stoi, a słoma spada w pokos."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Początkowe zużycie walców podających. Gorzej chwytają masę: podawanie staje się nierówne."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Umiarkowane zużycie walców podających. Długość cięcia staje się nierówna i pojawiają się zapchania."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Poważne zużycie walców podających. Wydajność spada, a zapchania wciąż wracają."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Krytyczna awaria walców podających. Nic już nie wchodzi do maszyny: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Początkowa usterka detektora metali i kamieni. Fałszywe alarmy czasem zatrzymują podawanie."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Umiarkowana usterka detektora metali i kamieni. Zbędne postoje wciąż się powtarzają."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Awaria detektora metali i kamieni. Nic już nie wykrywa: kamienie docierają do noży i zużywają je znacznie szybciej."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Początkowe zużycie bębna tnącego. Lekko drga i pobiera trochę więcej mocy."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Umiarkowane zużycie bębna tnącego. Wirnik jest niewyważony i pobiera więcej mocy."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Poważne zużycie bębna tnącego. Uchwyt noża jest pęknięty: większy pobór mocy i zapchania."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Krytyczna awaria bębna tnącego. Wirnik jest uszkodzony: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Początkowe zużycie noży. Cięcie jest mniej czyste i pobiera trochę więcej mocy."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Umiarkowane zużycie noży. Pobierają więcej mocy i więcej paliwa."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Poważne zużycie noży. Cięcie jest nierówne, pobór mocy rośnie i pojawiają się zapchania."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Krytyczna awaria noży. Nóż pękł: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Początkowe zużycie przeciwnoża. Szczelina rośnie: cięcie pobiera trochę więcej mocy."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Umiarkowane zużycie przeciwnoża. Cięcie szarpie i pobiera więcej mocy."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Poważne zużycie przeciwnoża. Krawędź jest zużyta: większy pobór mocy i zapchania."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Krytyczna awaria przeciwnoża. Nie nadaje się do użytku: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Początkowe zużycie gniotownika ziarna. Ziarna są gorzej zgniatane, a gniotownik pobiera trochę więcej mocy."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Umiarkowane zużycie gniotownika ziarna. Przechodzą całe ziarna, a pobór mocy rośnie."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Poważne zużycie gniotownika ziarna. Walec jest porysowany: większy pobór mocy i zapchania."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Krytyczna awaria gniotownika ziarna. Walec się zablokował: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Początkowe zużycie przyspieszacza. Wyrzut jest krótszy, a wydajność trochę spada."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Umiarkowane zużycie przyspieszacza. Rura wyrzutowa czasem się zapycha."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Poważne zużycie przyspieszacza. Łopatka się oderwała: częste zapchania i utracona pasza."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Krytyczna awaria przyspieszacza. Pasza nie jest już wyrzucana: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Początkowe zużycie rury wyrzutowej. Wyrzut zbacza, a wydajność trochę spada."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Umiarkowane zużycie rury wyrzutowej. Pasza się odkłada i czasem zapycha rurę."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Poważne zużycie rury wyrzutowej. Wykładzina jest przetarta: utracona pasza i częste zapchania."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Krytyczna awaria rury wyrzutowej. Jest przetarta na wylot: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Początkowe zużycie. Część plonu zostaje na polu."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Umiarkowane zużycie. Drgania i większe straty."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Poważne zużycie. Niektóre elementy są pęknięte: duże straty i zapchania."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Krytyczna awaria. Zespół jest uszkodzony: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Początkowe zużycie lemieszy. Niektóre korzenie pękają lub zostają w ziemi."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Umiarkowane zużycie lemieszy. Słabo wyorują: większe straty i większy opór."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Poważne zużycie lemieszy. Są zużyte do końca: duże straty i maszyna się męczy."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Krytyczna awaria lemieszy. Lemiesz pękł: wyorywanie jest niemożliwe."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Początkowe zużycie. Czyszczenie działa gorzej: ziemia lub zanieczyszczenia w plonie, trochę plonu traconego."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Umiarkowane zużycie. Straty przy czyszczeniu rosną."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Poważne zużycie. Pęknięte ruszty lub łopatki: duże straty i zapchania."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Krytyczna awaria. Czyszczenie stanęło: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Początkowe zużycie. Łańcuch lub taśma się wydłuża: podawanie staje się nierówne."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Umiarkowane zużycie. Zużyte pręty lub łopatki: mniejsza wydajność i zapchania."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Poważne zużycie. Łańcuch przeskakuje: zapchania wciąż wracają."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Krytyczna awaria. Łańcuch lub taśma pękła: nic już nie przechodzi."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Początkowe zużycie. Przekazywanie plonu zwalnia."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Umiarkowane zużycie. Przekazywanie staje się nierówne, a część plonu ginie."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Poważne zużycie. Przekazywanie regularnie się blokuje."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Krytyczna awaria. Przekazywanie stanęło: zbiór jest niemożliwy."/>
     </texts>
 </l10n>

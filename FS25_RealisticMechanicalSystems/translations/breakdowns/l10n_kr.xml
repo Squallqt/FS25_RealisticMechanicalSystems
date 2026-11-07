@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="조향 너클 킹핀이 심하게 마모되었습니다. 조향 유격이 큽니다."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="조향 너클 킹핀이 임계 수준으로 마모되었습니다. 조향 유격이 매우 큽니다."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="조향 오비트롤이 약간 오작동합니다. 핸들이 약간의 유격을 두고 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="조향 기어박스가 약간 오작동합니다. 핸들이 약간의 유격을 두고 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="조향 랙이 약간 오작동합니다. 핸들이 약간의 유격을 두고 돌아간 뒤 바퀴가 따라옵니다."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="조향 오비트롤이 중간 정도로 오작동합니다. 핸들이 더 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="조향 기어박스가 중간 정도로 오작동합니다. 핸들이 더 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="조향 랙이 중간 정도로 오작동합니다. 핸들이 더 많이 돌아간 뒤 바퀴가 따라옵니다."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="조향 오비트롤이 심하게 오작동합니다. 핸들이 많이 돌아가도 바퀴가 잘 따라오지 않습니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="조향 기어박스가 심하게 오작동합니다. 핸들이 많이 돌아가도 바퀴가 잘 따라오지 않습니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="조향 랙이 심하게 오작동합니다. 핸들이 많이 돌아가도 바퀴가 잘 따라오지 않습니다."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="조향 오비트롤에 임계 고장이 발생했습니다. 핸들의 유격이 매우 커서 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="조향 기어박스에 임계 고장이 발생했습니다. 핸들의 유격이 매우 커서 많이 돌아간 뒤 바퀴가 따라옵니다."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="조향 랙에 임계 고장이 발생했습니다. 핸들의 유격이 매우 커서 많이 돌아간 뒤 바퀴가 따라옵니다."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="조향 실린더에서 내부 누설이 약간 발생합니다. 차량이 한쪽으로 흐르기 시작합니다."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="조향 실린더 로드 씰에서 누설이 약간 발생합니다. 유압 오일 수위가 조금 내려갑니다."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="조향 실린더에 중간 정도의 내부 누출이 있습니다. 차량이 한쪽으로 더 많이 흐릅니다."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="로더 관절 핀과 부싱이 중간 정도로 마모되었습니다. 암 관절의 유격이 확연해집니다."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="로더 관절 핀과 부싱이 심하게 마모되었습니다. 암에 큰 유격이 있습니다."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="로더 관절 핀과 부싱이 임계 수준으로 마모되었습니다. 암의 유격이 매우 큽니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="마스트 관절 핀과 부싱이 약간 마모되었습니다. 마스트 관절에 유격이 조금 생깁니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="마스트 관절 핀과 부싱이 중간 정도로 마모되었습니다. 마스트 관절의 유격이 확연해집니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="마스트 관절 핀과 부싱이 심하게 마모되었습니다. 마스트에 큰 유격이 있습니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="마스트 관절 핀과 부싱이 임계 수준으로 마모되었습니다. 마스트의 유격이 매우 큽니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="크레인 관절 핀과 부싱이 약간 마모되었습니다. 크레인 관절에 유격이 조금 생깁니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="크레인 관절 핀과 부싱이 중간 정도로 마모되었습니다. 크레인 관절의 유격이 확연해집니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="크레인 관절 핀과 부싱이 심하게 마모되었습니다. 크레인에 큰 유격이 있습니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="크레인 관절 핀과 부싱이 임계 수준으로 마모되었습니다. 크레인의 유격이 매우 큽니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="밀링 암 관절 핀과 부싱이 약간 마모되었습니다. 암 관절에 유격이 조금 생깁니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="밀링 암 관절 핀과 부싱이 중간 정도로 마모되었습니다. 암 관절의 유격이 확연해집니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="밀링 암 관절 핀과 부싱이 심하게 마모되었습니다. 암에 큰 유격이 있습니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="밀링 암 관절 핀과 부싱이 임계 수준으로 마모되었습니다. 암의 유격이 매우 큽니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="블레이드 암 관절 핀과 부싱이 약간 마모되었습니다. 암 관절에 유격이 조금 생깁니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="블레이드 암 관절 핀과 부싱이 중간 정도로 마모되었습니다. 암 관절의 유격이 확연해집니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="블레이드 암 관절 핀과 부싱이 심하게 마모되었습니다. 암에 큰 유격이 있습니다."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="블레이드 암 관절 핀과 부싱이 임계 수준으로 마모되었습니다. 암의 유격이 매우 큽니다."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="운전실 충격 흡수기에서 약간의 누출이 발생했습니다. 운전실의 충격 흡수 성능이 조금 떨어집니다."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="운전실 충격 흡수기에서 중간 정도의 누출이 발생했습니다. 요철에서 운전실이 튀어 오릅니다."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="운전실 충격 흡수기에서 심한 누출이 발생했습니다. 충격이 있을 때마다 운전실이 흔들립니다."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="싱크로나이저"/>
         <text name="rms_breakdowns_part_steering_linkage" text="조향 볼 조인트와 로드"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="로더 관절 핀과 부싱"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="마스트 관절 핀과 부싱"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="크레인 관절 핀과 부싱"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="밀링 암 관절 핀과 부싱"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="블레이드 암 관절 핀과 부싱"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="조향 너클 킹핀"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="조향 오비트롤"/>
+        <text name="rms_breakdowns_part_steering_box" text="조향 기어박스"/>
+        <text name="rms_breakdowns_part_steering_rack" text="조향 랙"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="조향 실린더"/>
         <text name="rms_breakdowns_part_cab_suspension" text="운전실 서스펜션"/>
         <text name="rms_breakdowns_part_pto_clutch" text="PTO 클러치"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="가스 필터"/>
         <text name="rms_breakdowns_part_gas_lines" text="가스 라인"/>
         <text name="rms_breakdowns_part_gas_injectors" text="가스 인젝터"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="점화 플러그"/>
         <text name="rms_breakdowns_part_adblue_pump" text="요소수 펌프"/>
         <text name="rms_breakdowns_part_adblue_doser" text="요소수 정량 분사 인젝터"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlue 필터"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="가스 인젝터가 중간 정도로 오작동합니다. 엔진이 주저하고 출력이 떨어지며 소비량이 늘고 엔진이 꺼질 수 있습니다."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="가스 인젝터가 심하게 오작동합니다. 인젝터 하나의 분사량이 크게 달라져 출력이 크게 떨어지고 소비가 과도해지며 시동이 어려워집니다."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="가스 인젝터에 임계 고장이 발생했습니다. 분사량으로 엔진 작동을 유지할 수 없어 엔진이 정지합니다."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="점화 플러그가 교체 시기에 도달했습니다. 고부하에서 실화가 생기고 엔진이 덜 부드럽게 돌며 소비량이 조금 늘어납니다. 정비 시 교체합니다."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="점화 플러그가 마모되었습니다. 실화가 빈번해지고 출력이 떨어지며 소비량이 늘고 엔진이 꺼질 수 있습니다. 엔진 경고등이 켜집니다."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="점화 플러그가 심하게 마모되었습니다. 출력이 크게 떨어지고 소비가 과도해지며 시동이 어려워집니다."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="점화 플러그를 더 이상 사용할 수 없습니다. 실화가 계속되어 엔진이 꺼지고 시동이 걸리지 않을 수 있습니다."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="요소수 펌프에 고장이 발생했습니다. 정량 분사 장치에 요소수를 공급하지 못해 엔진 경고등이 켜집니다. 이후 수리할 때까지 제어기가 출력을 줄입니다."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="요소수 정량 분사 인젝터에 고장이 발생했습니다. 결정으로 막혀 분사하지 못해 엔진 경고등이 켜집니다. 이후 수리할 때까지 출력이 낮아집니다."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="AdBlue 필터가 교체 시기에 도달하여 막히기 시작합니다. 가장 완전한 정비 시 교체합니다."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="변속기 센서"/>
         <text name="rms_breakdowns_part_transmission_filter" text="변속기 필터"/>
         <text name="rms_breakdowns_part_lift_valve" text="리프트 밸브"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="헤더 승강 밸브"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="리프트 위치 센서"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="헤더 높이 센서"/>
         <text name="rms_breakdowns_part_loader_control" text="로더 제어 장치"/>
+        <text name="rms_breakdowns_part_mast_control" text="마스트 제어 장치"/>
+        <text name="rms_breakdowns_part_boom_control" text="크레인 제어 장치"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="밀링 암 제어 장치"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="블레이드 암 제어 장치"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="유압 신속 연결기"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="클러치가 약간 오작동합니다. 완전히 분리되지 않아 일부 기어를 넣기 어렵습니다."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="클러치가 중간 정도로 오작동합니다. 기구가 디스크를 충분히 풀지 못해 기어 선택이 더 자주 거부됩니다."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="유압 펌프에 고장이 발생했습니다. 파손되어 압력이 사라지고 유압 기능이 반응하지 않습니다."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="유압 제어 밸브에 고장이 발생했습니다. 스풀이 고착되어 해당 유압 기능이 움직이지 않습니다."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="리프트 밸브에 고장이 발생했습니다. 하중을 제대로 유지하지 못해 올린 작업기가 내려옵니다."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="헤더 승강 밸브에 고장이 발생했습니다. 하중을 제대로 유지하지 못해 올린 헤더가 내려옵니다."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="리프트 밸브에 고장이 발생했습니다. 고착되어 리프트가 반응하지 않습니다."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="헤더 승강 밸브에 고장이 발생했습니다. 고착되어 헤더가 오르내리지 않습니다."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="리프트 위치 센서에 고장이 발생했습니다. 위치 신호가 고장 나 리프트가 요청한 높이를 유지하지 못하며 고장 코드가 저장됩니다."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="헤더 높이 센서에 고장이 발생했습니다. 높이 신호가 고장 나 헤더가 요청한 높이를 유지하지 못하며 고장 코드가 저장됩니다."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="로더 제어 장치가 약간 오작동합니다. 암과 버킷의 반응이 느려집니다."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="로더 제어 장치가 중간 정도로 오작동합니다. 암과 버킷이 절반 속도로만 움직입니다."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="로더 제어 장치가 심하게 오작동합니다. 암과 버킷이 거의 움직이지 않습니다."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="로더 제어 장치에 임계 고장이 발생했습니다. 암과 버킷이 더 이상 반응하지 않습니다."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="마스트 제어 장치가 약간 오작동합니다. 마스트와 포크의 반응이 느려집니다."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="마스트 제어 장치가 중간 정도로 오작동합니다. 마스트와 포크가 절반 속도로만 움직입니다."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="마스트 제어 장치가 심하게 오작동합니다. 마스트와 포크가 거의 움직이지 않습니다."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="마스트 제어 장치에 임계 고장이 발생했습니다. 마스트와 포크가 더 이상 반응하지 않습니다."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="크레인 제어 장치가 약간 오작동합니다. 크레인과 작업 도구의 반응이 느려집니다."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="크레인 제어 장치가 중간 정도로 오작동합니다. 크레인과 작업 도구가 절반 속도로만 움직입니다."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="크레인 제어 장치가 심하게 오작동합니다. 크레인과 작업 도구가 거의 움직이지 않습니다."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="크레인 제어 장치에 임계 고장이 발생했습니다. 크레인과 작업 도구가 더 이상 반응하지 않습니다."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="밀링 암 제어 장치가 약간 오작동합니다. 암의 반응이 느려집니다."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="밀링 암 제어 장치가 중간 정도로 오작동합니다. 암이 절반 속도로만 움직입니다."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="밀링 암 제어 장치가 심하게 오작동합니다. 암이 거의 움직이지 않습니다."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="밀링 암 제어 장치에 임계 고장이 발생했습니다. 암이 더 이상 반응하지 않습니다."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="블레이드 암 제어 장치가 약간 오작동합니다. 암과 블레이드의 반응이 느려집니다."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="블레이드 암 제어 장치가 중간 정도로 오작동합니다. 암과 블레이드가 절반 속도로만 움직입니다."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="블레이드 암 제어 장치가 심하게 오작동합니다. 암과 블레이드가 거의 움직이지 않습니다."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="블레이드 암 제어 장치에 임계 고장이 발생했습니다. 암과 블레이드가 더 이상 반응하지 않습니다."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="유압 실린더가 약간 오작동합니다. 로드 씰에서 오일이 조금 새어 로드 주변이 약간 젖습니다."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="유압 실린더가 중간 정도로 오작동합니다. 로드 씰의 밀폐가 불량해 실린더에 오일이 배어나오고 오일량이 줄어듭니다."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="유압 실린더가 심하게 오작동합니다. 로드 씰에서 계속 오일이 새어 실린더의 오일 손실이 분명합니다."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="차축 베어링의 임계 마모 상태입니다. 베어링 하나가 파손되고 베벨 기어도 손상되어 차축이 구동력을 전달하지 못합니다."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="차동 잠금 제어 장치에 고장이 발생했습니다. 잠금이 결합되지 않아 차동 장치가 열린 상태로 남습니다."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="차동 잠금 제어 장치에 고장이 발생했습니다. 잠금이 결합된 채로 남아 회전할 때 조향이 어려워집니다."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="구동 벨트와 무단 변속기"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="구동 베어링과 기어박스"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="피더 하우스 체인"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="공급 가속기"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="래스프 바"/>
+        <text name="rms_breakdowns_part_concave" text="콘케이브"/>
+        <text name="rms_breakdowns_part_separation" text="분리 이빨과 짚 워커"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="선별 체"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="곡물 오거와 엘리베이터"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="짚 초퍼와 살포기"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="공급 롤"/>
+        <text name="rms_breakdowns_part_metal_detector" text="금속·돌 감지기"/>
+        <text name="rms_breakdowns_part_cutterhead" text="커터헤드"/>
+        <text name="rms_breakdowns_part_forage_knives" text="커터헤드 칼날"/>
+        <text name="rms_breakdowns_part_shear_bar" text="고정날"/>
+        <text name="rms_breakdowns_part_crop_processor" text="곡물 파쇄기"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="가속기와 송풍기"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="배출 슈트"/>
+        <text name="rms_breakdowns_part_beet_topper" text="잎 절단기와 스캘퍼"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="굴취 날"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="선별 터빈"/>
+        <text name="rms_breakdowns_part_root_elevator" text="비트 엘리베이터"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="호퍼 바닥과 배출 벨트"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="체 웹"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="줄기 분리기와 롤러"/>
+        <text name="rms_breakdowns_part_picking_units" text="수확 유닛"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="스핀들 가습기"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="팬과 덕트"/>
+        <text name="rms_breakdowns_part_module_builder" text="모듈 성형실"/>
+        <text name="rms_breakdowns_part_base_cutters" text="베이스 커터"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="공급 롤러"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="절단 드럼"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="1차 추출기"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="사탕수수 엘리베이터"/>
+        <text name="rms_breakdowns_part_shaker" text="진동 시스템"/>
+        <text name="rms_breakdowns_part_catching_scales" text="받이 비늘"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="버킷 컨베이어"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="선별 흡입기"/>
+        <text name="rms_breakdowns_part_destemmer" text="제경기"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="수확 헤드"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="선별 팬과 체"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="엘리베이터와 컨베이어"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="수확 불가: 수확 부품이 고장 났습니다"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="막힘: 수확이 멈췄습니다"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="초퍼 고장: 짚이 줄지어 떨어집니다"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="초퍼 고장: 이 작물은 더 이상 수확할 수 없습니다"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="구동 벨트의 초기 마모입니다. 부하가 걸리면 조금 미끄러집니다."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="구동 벨트가 중간 정도로 마모되었습니다. 부하가 걸리면 한 부품의 회전이 떨어지고 회전수 경보로 때때로 수확이 중단됩니다."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="구동 벨트가 심하게 마모되었습니다. 처리량이 떨어지고 정지가 계속 반복됩니다."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="구동 벨트에 임계 고장이 발생했습니다. 벨트가 끊어졌습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="구동 베어링의 초기 마모입니다. 수확 중에 약한 웅웅거림이 생깁니다."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="구동 베어링이 중간 정도로 마모되었습니다. 웅웅거림이 확연히 들리고 베어링이 뜨거워집니다."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="구동 베어링이 심하게 마모되었습니다. 웅웅거림이 커지고 축에 유격이 생깁니다."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="구동 베어링에 임계 고장이 발생했습니다. 베어링이 고착되었습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="피더 하우스 체인의 초기 마모입니다. 체인이 늘어나 공급이 고르지 않게 됩니다."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="피더 하우스 체인이 중간 정도로 마모되었습니다. 피더 하우스 입구에 막힘이 생깁니다."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="피더 하우스 체인이 심하게 마모되었습니다. 스프로킷에서 튀고 막힘이 계속됩니다."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="피더 하우스 체인에 임계 고장이 발생했습니다. 체인이 끊어졌습니다: 기계에 아무것도 들어가지 않습니다."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="공급 가속기의 초기 마모입니다. 작물이 드럼에 덜 고르게 들어갑니다."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="공급 가속기가 중간 정도로 마모되었습니다. 처리량이 늘지 않고 막힘이 생깁니다."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="공급 가속기가 심하게 마모되었습니다. 처리량이 떨어지고 막힘이 계속됩니다."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="공급 가속기에 임계 고장이 발생했습니다. 날개가 떨어져 나갔습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="래스프 바의 초기 마모입니다. 일부 곡물이 이삭에 남아 밭으로 돌아갑니다."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="래스프 바가 중간 정도로 마모되었습니다. 드럼이 진동하고 곡물 손실이 늘어납니다."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="래스프 바가 심하게 마모되었습니다. 일부 바가 부러졌습니다: 큰 손실과 막힘."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="래스프 바에 임계 고장이 발생했습니다. 바가 떨어져 나갔습니다: 탈곡할 수 없습니다."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="콘케이브의 초기 마모입니다. 탈곡이 나빠지고 일부가 밭으로 돌아갑니다."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="콘케이브가 중간 정도로 마모되었습니다. 곡물 손실이 늘어납니다."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="콘케이브가 심하게 마모되었습니다. 곡물이 깨지고 손실이 크며 막힘이 생깁니다."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="콘케이브에 임계 고장이 발생했습니다. 바가 떨어져 나갔습니다: 탈곡할 수 없습니다."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="분리부의 초기 마모입니다. 짚에 곡물이 남아 밭으로 돌아갑니다."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="분리부가 중간 정도로 마모되었습니다. 짚과 함께 나가는 곡물 손실이 늘어납니다."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="분리부가 심하게 마모되었습니다. 큰 손실과 짚 막힘."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="분리부에 임계 고장이 발생했습니다. 짚이 더 이상 통과하지 않습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="선별 체의 초기 마모입니다. 곡물 탱크에 겨가 들어가고 약간의 곡물이 찌꺼기와 함께 나갑니다."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="선별 체가 중간 정도로 마모되었습니다. 체에서의 손실이 늘어납니다."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="선별 체가 심하게 마모되었습니다. 체에 균열이 생겼습니다: 큰 손실과 막힘."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="선별 체에 임계 고장이 발생했습니다. 선별이 더 이상 작동하지 않습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="곡물 오거와 엘리베이터의 초기 마모입니다. 곡물 탱크로 가는 흐름이 줄어듭니다."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="곡물 오거와 엘리베이터가 중간 정도로 마모되었습니다. 일부 곡물이 깨지거나 도중에 손실됩니다."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="곡물 오거와 엘리베이터가 심하게 마모되었습니다. 엘리베이터에 자주 막힘이 생깁니다."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="곡물 오거와 엘리베이터에 임계 고장이 발생했습니다. 곡물 탱크가 더 이상 차지 않습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="짚 초퍼의 초기 마모입니다. 짚이 덜 짧게 잘리고 초퍼가 동력을 조금 더 소모합니다."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="짚 초퍼가 중간 정도로 마모되었습니다. 초퍼가 진동하고 동력을 더 소모합니다."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="짚 초퍼가 심하게 마모되었습니다. 로터의 균형이 깨져 동력을 많이 소모합니다."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="짚 초퍼에 임계 고장이 발생했습니다. 칼날이 부러졌습니다: 초퍼가 멈추고 짚이 줄지어 떨어집니다."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="공급 롤의 초기 마모입니다. 작물을 잡는 힘이 약해져 공급이 고르지 않게 됩니다."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="공급 롤이 중간 정도로 마모되었습니다. 절단 길이가 고르지 않고 막힘이 생깁니다."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="공급 롤이 심하게 마모되었습니다. 처리량이 떨어지고 막힘이 계속됩니다."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="공급 롤에 임계 고장이 발생했습니다. 기계에 아무것도 들어가지 않습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="금속·돌 감지기에 초기 결함이 있습니다. 오경보로 때때로 공급이 중단됩니다."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="금속·돌 감지기에 중간 정도의 결함이 있습니다. 불필요한 정지가 계속됩니다."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="금속·돌 감지기가 고장 났습니다. 더 이상 아무것도 감지하지 못해 돌이 칼날에 닿아 훨씬 빨리 마모시킵니다."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="커터헤드의 초기 마모입니다. 약간 진동하고 동력을 조금 더 소모합니다."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="커터헤드가 중간 정도로 마모되었습니다. 로터의 균형이 깨져 동력을 더 소모합니다."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="커터헤드가 심하게 마모되었습니다. 칼날 홀더에 균열이 생겼습니다: 동력 증가와 막힘."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="커터헤드에 임계 고장이 발생했습니다. 로터가 손상되었습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="칼날의 초기 마모입니다. 절단면이 덜 깨끗하고 동력을 조금 더 소모합니다."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="칼날이 중간 정도로 마모되었습니다. 동력과 연료를 더 소모합니다."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="칼날이 심하게 마모되었습니다. 절단이 고르지 않고 필요 동력이 오르며 막힘이 생깁니다."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="칼날에 임계 고장이 발생했습니다. 칼날이 부러졌습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="고정날의 초기 마모입니다. 간격이 넓어져 절단에 동력이 조금 더 듭니다."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="고정날이 중간 정도로 마모되었습니다. 절단면이 거칠어지고 동력을 더 소모합니다."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="고정날이 심하게 마모되었습니다. 날끝이 마모되었습니다: 동력 증가와 막힘."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="고정날에 임계 고장이 발생했습니다. 사용할 수 없습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="곡물 파쇄기의 초기 마모입니다. 알곡이 덜 부서지고 파쇄기가 동력을 조금 더 소모합니다."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="곡물 파쇄기가 중간 정도로 마모되었습니다. 온전한 알곡이 통과하고 필요 동력이 오릅니다."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="곡물 파쇄기가 심하게 마모되었습니다. 롤에 흠집이 생겼습니다: 동력 증가와 막힘."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="곡물 파쇄기에 임계 고장이 발생했습니다. 롤이 고착되었습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="가속기의 초기 마모입니다. 던지는 거리가 짧아지고 처리량이 조금 떨어집니다."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="가속기가 중간 정도로 마모되었습니다. 배출 슈트에 때때로 막힘이 생깁니다."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="가속기가 심하게 마모되었습니다. 날개가 떨어져 나갔습니다: 빈번한 막힘과 사료 손실."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="가속기에 임계 고장이 발생했습니다. 사료가 더 이상 배출되지 않습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="배출 슈트의 초기 마모입니다. 배출 방향이 틀어지고 처리량이 조금 떨어집니다."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="배출 슈트가 중간 정도로 마모되었습니다. 사료가 쌓여 때때로 슈트를 막습니다."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="배출 슈트가 심하게 마모되었습니다. 라이너에 구멍이 났습니다: 사료 손실과 빈번한 막힘."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="배출 슈트에 임계 고장이 발생했습니다. 완전히 구멍이 났습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="초기 마모입니다. 작물 일부가 밭에 남습니다."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="중간 정도로 마모되었습니다. 진동과 손실 증가."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="심하게 마모되었습니다. 일부 요소가 부러졌습니다: 큰 손실과 막힘."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="임계 고장이 발생했습니다. 부품이 고장 났습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="굴취 날의 초기 마모입니다. 일부 뿌리가 부러지거나 땅에 남습니다."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="굴취 날이 중간 정도로 마모되었습니다. 굴취가 나빠져 손실과 부하가 늘어납니다."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="굴취 날이 심하게 마모되었습니다. 끝까지 마모되었습니다: 큰 손실과 기계 부담."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="굴취 날에 임계 고장이 발생했습니다. 날이 부러졌습니다: 굴취할 수 없습니다."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="초기 마모입니다. 선별이 나빠져 흙이나 이물질이 섞이고 작물이 조금 손실됩니다."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="중간 정도로 마모되었습니다. 선별 손실이 늘어납니다."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="심하게 마모되었습니다. 격자나 날개가 부러졌습니다: 큰 손실과 막힘."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="임계 고장이 발생했습니다. 선별이 멈췄습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="초기 마모입니다. 체인이나 벨트가 늘어나 공급이 고르지 않게 됩니다."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="중간 정도로 마모되었습니다. 바나 날개가 마모되었습니다: 처리량 감소와 막힘."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="심하게 마모되었습니다. 체인이 튀어 막힘이 계속됩니다."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="임계 고장이 발생했습니다. 체인이나 벨트가 끊어졌습니다: 아무것도 통과하지 않습니다."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="초기 마모입니다. 작물 이송이 느려집니다."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="중간 정도로 마모되었습니다. 이송이 고르지 않고 작물 일부가 손실됩니다."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="심하게 마모되었습니다. 이송이 자주 걸립니다."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="임계 고장이 발생했습니다. 이송이 멈췄습니다: 수확할 수 없습니다."/>
     </texts>
 </l10n>

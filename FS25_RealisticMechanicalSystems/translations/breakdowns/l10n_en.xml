@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Severe steering knuckle pivot wear. Play in the steering is large."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Critical steering knuckle pivot wear. The steering has very large play."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Light steering orbitrol failure. The steering wheel turns with a little play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Light steering box failure. The steering wheel turns with a little play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Light steering rack failure. The steering wheel turns with a little play before the wheels follow."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Moderate steering orbitrol failure. The steering wheel turns farther before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Moderate steering box failure. The steering wheel turns farther before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Moderate steering rack failure. The steering wheel turns farther before the wheels follow."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Severe steering orbitrol failure. The steering wheel turns a lot without the wheels following well."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Severe steering box failure. The steering wheel turns a lot without the wheels following well."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Severe steering rack failure. The steering wheel turns a lot without the wheels following well."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Critical steering orbitrol failure. The steering wheel has very large play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Critical steering box failure. The steering wheel has very large play before the wheels follow."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Critical steering rack failure. The steering wheel has very large play before the wheels follow."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Light internal steering cylinder leak. The machine starts to drift to one side."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Light steering cylinder rod seal leak. Hydraulic oil level drops slightly."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Moderate internal steering cylinder leak. The machine drifts farther to one side."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Moderate front loader pivot pin and bushing wear. Play at the arm joints becomes noticeable."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Severe front loader pivot pin and bushing wear. The arm has large play."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Critical front loader pivot pin and bushing wear. The arm play is very large."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Light mast pin and bushing wear. Slight play appears at the mast joints."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Moderate mast pin and bushing wear. Play at the mast joints becomes noticeable."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Severe mast pin and bushing wear. The mast has large play."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Critical mast pin and bushing wear. The mast play is very large."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Light boom pin and bushing wear. Slight play appears at the boom joints."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Moderate boom pin and bushing wear. Play at the boom joints becomes noticeable."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Severe boom pin and bushing wear. The boom has large play."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Critical boom pin and bushing wear. The boom play is very large."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Light milling arm pin and bushing wear. Slight play appears at the arm joints."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Moderate milling arm pin and bushing wear. Play at the arm joints becomes noticeable."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Severe milling arm pin and bushing wear. The arm has large play."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Critical milling arm pin and bushing wear. The arm play is very large."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Light blade arm pin and bushing wear. Slight play appears at the arm joints."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Moderate blade arm pin and bushing wear. Play at the arm joints becomes noticeable."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Severe blade arm pin and bushing wear. The arm has large play."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Critical blade arm pin and bushing wear. The arm play is very large."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Light cab damper leak. The cab is slightly less damped."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Moderate cab damper leak. The cab bounces over bumps."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Severe cab damper leak. The cab rocks with every jolt."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="Synchronizer"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Steering Ball Joints and Rods"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Front Loader Pins and Bushings"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Mast Pins and Bushings"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Boom Pins and Bushings"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Milling Arm Pins and Bushings"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Blade Arm Pins and Bushings"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Steering Knuckle Pivots"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Steering Control Unit"/>
+        <text name="rms_breakdowns_part_steering_box" text="Steering Box"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Steering Rack"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Steering Cylinder"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Cab Suspension"/>
         <text name="rms_breakdowns_part_pto_clutch" text="PTO Clutch"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Gas Filter"/>
         <text name="rms_breakdowns_part_gas_lines" text="Gas Lines"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Gas Injectors"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Spark Plugs"/>
         <text name="rms_breakdowns_part_adblue_pump" text="AdBlue Pump"/>
         <text name="rms_breakdowns_part_adblue_doser" text="AdBlue Dosing Injector"/>
         <text name="rms_breakdowns_part_adblue_filter" text="AdBlue Filter"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Moderate failure of the gas injectors. The engine falters, loses power, uses more gas and may stall."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Severe failure of the gas injectors. One injector doses very poorly: heavy power loss, high consumption and hard starting."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Critical failure of the gas injectors. Dosing no longer lets the engine run: it stops."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="The spark plugs are due: misfires appear under heavy load, the engine runs less smoothly and uses a little more. The service replaces them."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="The spark plugs are worn: misfires become frequent, the engine loses power, uses more and may stall. The engine lamp comes on."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="The spark plugs are badly worn: heavy loss of power, high consumption and hard starting."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="The spark plugs are beyond use: constant misfires, the engine may stall and refuse to start."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="AdBlue pump failure. It no longer feeds the dosing: the engine lamp comes on, then the ECU reduces power until the repair."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="AdBlue dosing injector failure. Clogged with crystals, it no longer sprays: the engine lamp comes on and power drops later until the repair."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="The AdBlue filter is due and beginning to clog. The most complete service replaces it."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Transmission Sensors"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Transmission Filter"/>
         <text name="rms_breakdowns_part_lift_valve" text="Lift Valve"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Header Lift Valve"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Lift Position Sensor"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Header Height Sensor"/>
         <text name="rms_breakdowns_part_loader_control" text="Loader Control"/>
+        <text name="rms_breakdowns_part_mast_control" text="Mast Control"/>
+        <text name="rms_breakdowns_part_boom_control" text="Boom Control"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Milling Arm Control"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Blade Arm Control"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Hydraulic Quick Couplers"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Light clutch failure. It does not fully release. Some gear selections are difficult."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Moderate clutch failure. The mechanism releases the disc poorly. Gear selections are refused more often."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Hydraulic pump failure. It is broken. Pressure is lost and the hydraulic functions no longer respond."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Hydraulic control valve failure. The spool is stuck. The affected hydraulic function no longer moves."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Lift valve failure. It no longer holds the load correctly. The raised implement sinks."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Header lift valve failure. It no longer holds the load correctly. The raised header sinks."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Lift valve failure. It is stuck. The lift no longer responds."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Header lift valve failure. It is stuck. The header can no longer be raised or lowered."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Lift position sensor failure. The position signal has failed. The lift no longer holds the requested height and a fault code is stored."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Header height sensor failure. The height signal has failed. The header no longer holds the requested height and a fault code is stored."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Light loader control failure. The arm and bucket respond more slowly."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Moderate loader control failure. The arm and bucket move at half speed only."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Severe loader control failure. The arm and bucket barely move."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Critical loader control failure. The arm and bucket no longer respond."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Light mast control failure. The mast and forks respond more slowly."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Moderate mast control failure. The mast and forks move at half speed only."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Severe mast control failure. The mast and forks barely move."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Critical mast control failure. The mast and forks no longer respond."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Light boom control failure. The boom and its tool respond more slowly."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Moderate boom control failure. The boom and its tool move at half speed only."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Severe boom control failure. The boom and its tool barely move."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Critical boom control failure. The boom and its tool no longer respond."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Light milling arm control failure. The arm responds more slowly."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Moderate milling arm control failure. The arm moves at half speed only."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Severe milling arm control failure. The arm barely moves."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Critical milling arm control failure. The arm no longer responds."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Light blade arm control failure. The arm and blade respond more slowly."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Moderate blade arm control failure. The arm and blade move at half speed only."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Severe blade arm control failure. The arm and blade barely move."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Critical blade arm control failure. The arm and blade no longer respond."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Light hydraulic cylinder failure. The rod seal lets some oil escape. Slight wetness appears around the rod."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Moderate hydraulic cylinder failure. The rod seal no longer seals correctly. The cylinder seeps and the oil level drops."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Severe hydraulic cylinder failure. The rod seal leaks actively. The cylinder loses a significant amount of oil."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Critical wear of the axle bearings. A bearing has collapsed, the bevel gear is damaged and the axle no longer transmits drive."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Differential lock control failure. The lock no longer engages. The differential remains unlocked."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Differential lock control failure. The lock remains engaged. The machine resists steering when turning."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Drive Belts and Variators"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Drive Bearings and Gearboxes"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Feeder House Chain"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Feed Accelerator"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Rasp Bars"/>
+        <text name="rms_breakdowns_part_concave" text="Concave"/>
+        <text name="rms_breakdowns_part_separation" text="Separator Tines and Straw Walkers"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Cleaning Sieves"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Grain Augers and Elevators"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Straw Chopper and Spreader"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Feed Rolls"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Metal and Stone Detector"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Cutterhead"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Cutterhead Knives"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Shear Bar"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Crop Processor"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Accelerator and Blower"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Discharge Spout"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Topper and Scalpers"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Lifting Shares"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Cleaning Turbines"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Beet Elevator"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Hopper Floor and Unloading Belt"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Sieve Webs"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Haulm Separator and Rollers"/>
+        <text name="rms_breakdowns_part_picking_units" text="Picking Units"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Spindle Moistener"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Fan and Ducts"/>
+        <text name="rms_breakdowns_part_module_builder" text="Module Builder"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Base Cutters"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Feed Rollers"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Chopper Drums"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Primary Extractor"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Cane Elevator"/>
+        <text name="rms_breakdowns_part_shaker" text="Shaking System"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Catching Scales"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Bucket Conveyors"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Cleaning Extractors"/>
+        <text name="rms_breakdowns_part_destemmer" text="Destemmer"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Picking Head"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Cleaning Fan and Sieves"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Elevators and Conveyors"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Harvesting impossible: a harvesting part is broken"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Blockage: harvesting has stopped"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Chopper broken: the straw drops in a swath"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Chopper broken: this crop can no longer be harvested"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Early wear of the drive belts. They slip a little under load."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Moderate wear of the drive belts. A part slows down under load and the speed alarm sometimes stops harvesting."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Severe wear of the drive belts. Throughput drops and the stops come back again and again."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Critical drive belt failure. A belt has snapped: harvesting is impossible."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Early wear of the drive bearings. A slight rumble appears while harvesting."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Moderate wear of the drive bearings. The rumble becomes clearly audible and they run hot."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Severe wear of the drive bearings. The rumble grows louder and the shafts gain play."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Critical drive bearing failure. A bearing has seized: harvesting is impossible."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Early wear of the feeder house chain. It stretches and the feed becomes uneven."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Moderate wear of the feeder house chain. Blockages form at the feeder house intake."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Severe wear of the feeder house chain. It jumps on its sprockets and the blockages keep coming."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Critical feeder house chain failure. The chain has broken: nothing enters the machine any more."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Early wear of the feed accelerator. The crop reaches the drum less evenly."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Moderate wear of the feed accelerator. Throughput levels off and blockages appear."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Severe wear of the feed accelerator. Throughput drops and the blockages keep coming."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Critical feed accelerator failure. A paddle has torn off: harvesting is impossible."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Early wear of the rasp bars. Some grain stays in the heads and goes back to the field."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Moderate wear of the rasp bars. The drum vibrates and grain losses rise."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Severe wear of the rasp bars. Some bars are broken: heavy losses and blockages."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Critical rasp bar failure. A bar has torn off: threshing is impossible."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Early wear of the concave. The grain is threshed less well and some goes back to the field."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Moderate wear of the concave. Grain losses rise."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Severe wear of the concave. Grain cracks, losses are heavy and blockages appear."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Critical concave failure. A bar has torn off: threshing is impossible."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Early wear of the separation. Grain stays in the straw and goes back to the field."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Moderate wear of the separation. Grain losses in the straw rise."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Severe wear of the separation. Heavy losses and straw blockages."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Critical separation failure. The straw no longer passes through: harvesting is impossible."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Early wear of the cleaning sieves. Chaff reaches the grain tank and a little grain leaves with the waste."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Moderate wear of the cleaning sieves. Losses at the sieves rise."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Severe wear of the cleaning sieves. A sieve is cracked: heavy losses and blockages."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Critical cleaning sieve failure. Cleaning no longer works: harvesting is impossible."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Early wear of the grain augers and elevators. The flow to the grain tank drops."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Moderate wear of the grain augers and elevators. Some grain cracks or is lost on the way."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Severe wear of the grain augers and elevators. The elevator blocks regularly."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Critical grain auger and elevator failure. The grain tank no longer fills: harvesting is impossible."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Early wear of the straw chopper. The straw is cut less short and the chopper takes a little more power."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Moderate wear of the straw chopper. The chopper vibrates and takes more power."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Severe wear of the straw chopper. The rotor is out of balance and takes a lot of power."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Critical straw chopper failure. A knife has broken: the chopper is stopped and the straw drops in a swath."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Early wear of the feed rolls. They grip the crop less well: the feed becomes uneven."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Moderate wear of the feed rolls. The length of cut becomes uneven and blockages appear."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Severe wear of the feed rolls. Throughput drops and the blockages keep coming."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Critical feed roll failure. Nothing enters the machine any more: harvesting is impossible."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Early fault of the metal and stone detector. False alarms sometimes stop the feed."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Moderate fault of the metal and stone detector. The needless stops keep coming."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Metal and stone detector failure. It no longer detects anything: stones reach the knives and wear them much faster."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Early wear of the cutterhead. It vibrates slightly and takes a little more power."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Moderate wear of the cutterhead. The rotor is out of balance and takes more power."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Severe wear of the cutterhead. A knife mount is cracked: more power taken and blockages."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Critical cutterhead failure. The rotor is damaged: harvesting is impossible."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Early wear of the knives. The cut is less clean and takes a little more power."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Moderate wear of the knives. They take more power and more fuel."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Severe wear of the knives. The cut is uneven, the power taken climbs and blockages appear."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Critical knife failure. A knife has broken: harvesting is impossible."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Early wear of the shear bar. The gap widens: cutting takes a little more power."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Moderate wear of the shear bar. The cut tears and takes more power."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Severe wear of the shear bar. Its edge is worn: more power taken and blockages."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Critical shear bar failure. It is beyond use: harvesting is impossible."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Early wear of the crop processor. Kernels are cracked less well and the processor takes a little more power."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Moderate wear of the crop processor. Whole kernels get through and the power taken rises."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Severe wear of the crop processor. A roll is scored: more power taken and blockages."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Critical crop processor failure. A roll is jammed: harvesting is impossible."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Early wear of the accelerator. The throw is shorter and throughput drops a little."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Moderate wear of the accelerator. The spout sometimes blocks."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Severe wear of the accelerator. A paddle has torn off: frequent blockages and forage lost."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Critical accelerator failure. The forage is no longer thrown out: harvesting is impossible."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Early wear of the discharge spout. The throw drifts and throughput drops a little."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Moderate wear of the discharge spout. Forage builds up and sometimes blocks the spout."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Severe wear of the discharge spout. The liner is holed: forage lost and frequent blockages."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Critical discharge spout failure. It is holed right through: harvesting is impossible."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Early wear. Part of the crop is left behind."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Moderate wear. Vibrations and heavier losses."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Severe wear. Some elements are broken: heavy losses and blockages."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Critical failure. The part is broken: harvesting is impossible."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Early wear of the shares. Some roots are broken or left in the ground."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Moderate wear of the shares. They lift poorly: more losses and more effort."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Severe wear of the shares. They are worn to the end: heavy losses and the machine strains."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Critical share failure. A share has broken: lifting is impossible."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Early wear. Cleaning works less well: soil or trash in the crop, a little crop lost."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Moderate wear. Cleaning losses rise."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Severe wear. Broken grates or blades: heavy losses and blockages."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Critical failure. Cleaning has stopped: harvesting is impossible."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Early wear. The chain or belt stretches: the feed becomes uneven."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Moderate wear. Worn bars or paddles: reduced throughput and blockages."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Severe wear. The chain jumps: the blockages keep coming."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Critical failure. The chain or belt has broken: nothing gets through any more."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Early wear. The crop transfer slows down."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Moderate wear. The transfer becomes uneven and part of the crop is lost."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Severe wear. The transfer jams regularly."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Critical failure. The transfer has stopped: harvesting is impossible."/>
     </texts>
 </l10n>

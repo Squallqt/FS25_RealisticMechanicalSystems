@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---RMS vehicle specialization.
 RealisticMechanicalSystems = {
@@ -12,6 +11,7 @@ RealisticMechanicalSystems = {
         REFILL = 'rms_spec_state_refill',
         OVERHAUL = 'rms_spec_state_overhaul',
         BODYWORK = 'button_repaint',
+        REMAP = 'rms_spec_state_remap',
         BROKEN = 'rms_spec_state_broken'
     },
 
@@ -47,7 +47,7 @@ RealisticMechanicalSystems = {
         RESALE = 2048
     },
 
-    -- the eight tracked vehicle systems
+    -- a harvester carries the harvest system in place of the PTO
     SYSTEMS = {
         ENGINE = "rms_spec_system_engine",
         TRANSMISSION = "rms_spec_system_transmission",
@@ -56,7 +56,8 @@ RealisticMechanicalSystems = {
         ELECTRICAL = "rms_spec_system_electrical",
         CHASSIS = "rms_spec_system_chassis",
         FUEL = "rms_spec_system_fuel",
-        PTO = "rms_spec_system_pto"
+        PTO = "rms_spec_system_pto",
+        HARVEST = "rms_spec_system_harvest"
     },
 
     BREAKDOWN_SOURCES = {
@@ -121,7 +122,8 @@ RealisticMechanicalSystems.SYSTEMS_ORDER = {
     RealisticMechanicalSystems.SYSTEMS.ELECTRICAL,
     RealisticMechanicalSystems.SYSTEMS.CHASSIS,
     RealisticMechanicalSystems.SYSTEMS.FUEL,
-    RealisticMechanicalSystems.SYSTEMS.PTO
+    RealisticMechanicalSystems.SYSTEMS.PTO,
+    RealisticMechanicalSystems.SYSTEMS.HARVEST
 }
 
 RealisticMechanicalSystems.SERVICE_CLOCKS = {
@@ -131,7 +133,15 @@ RealisticMechanicalSystems.SERVICE_CLOCKS = {
     { key = "coolant", levelKey = "coolantServiceLevel", intervalFactor = 4, maintenanceType = "PREVENTIVE", circuits = { "coolant" }, systems = { "cooling" } }
 }
 
-RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS = { "INLET_VALVES", "EXHAUST_VALVES", "FUEL_INJECTOR_MALFUNCTION", "THERMOSTAT_MALFUNCTION" }
+-- the harvest organs among them are renewed and billed when worn
+RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS = { "INLET_VALVES", "EXHAUST_VALVES", "FUEL_INJECTOR_MALFUNCTION", "THERMOSTAT_MALFUNCTION",
+    "FEEDER_CHAIN_WEAR", "FEED_ACCELERATOR_WEAR", "THRESHING_BAR_WEAR", "CONCAVE_WEAR", "SEPARATION_WEAR", "CLEANING_SIEVE_WEAR",
+    "GRAIN_ELEVATOR_WEAR", "STRAW_CHOPPER_WEAR", "FEED_ROLL_WEAR", "CUTTERHEAD_WEAR", "FORAGE_KNIFE_WEAR", "SHEAR_BAR_WEAR",
+    "CROP_PROCESSOR_WEAR", "CROP_ACCELERATOR_WEAR", "DISCHARGE_SPOUT_WEAR", "BEET_TOPPER_WEAR", "LIFTING_SHARE_WEAR",
+    "BEET_CLEANING_WEAR", "ROOT_ELEVATOR_WEAR", "HOPPER_FLOOR_WEAR", "SIEVE_WEB_WEAR", "HAULM_SEPARATOR_WEAR", "PICKING_UNIT_WEAR",
+    "COTTON_FAN_WEAR", "BASE_CUTTER_WEAR", "CANE_FEED_ROLL_WEAR", "CANE_CHOPPER_WEAR", "CANE_EXTRACTOR_WEAR", "CANE_ELEVATOR_WEAR",
+    "SHAKER_WEAR", "CATCHING_SCALE_WEAR", "BUCKET_CONVEYOR_WEAR", "CLEANING_FAN_WEAR", "DESTEMMER_WEAR", "VEGETABLE_PICKER_WEAR",
+    "VEGETABLE_CLEANING_WEAR", "VEGETABLE_ELEVATOR_WEAR" }
 
 RealisticMechanicalSystems.PART_TYPES_ORDER = {
     RealisticMechanicalSystems.PART_TYPES.USED,
@@ -142,57 +152,37 @@ RealisticMechanicalSystems.PART_TYPES_ORDER = {
 RealisticMechanicalSystems.modDirectory = g_currentModDirectory
 
 ---Tells whether a value is a number that is neither nan nor infinite
--- @param any value value to test
--- @return boolean isFinite true for a finite number
 function RealisticMechanicalSystems.isFiniteNumber(value)
-    return type(value) == "number" and value == value and value ~= math.huge and value ~= -math.huge
+    return type(value) == "number" and value - value == 0
 end
 
--- @param table savegame savegame
--- @return string key savegame key
 function RealisticMechanicalSystems.getSavegameKey(savegame)
     return savegame.key .. ".RealisticMechanicalSystems"
 end
 
 ---Tells whether a vehicle is lent by a contract
--- @param table? vehicle vehicle
--- @return boolean isMissionVehicle true for a contract vehicle
 function RealisticMechanicalSystems.isMissionVehicle(vehicle)
     return vehicle ~= nil and vehicle.propertyState == VehiclePropertyState.MISSION
 end
 
--- @param any value value to convert
--- @param float fallback value used when the conversion fails
--- @param float? minValue lower bound
--- @param float? maxValue upper bound
--- @return float number sanitized number
+---Finite number from a value, else fallback or 0, within finite bounds
 function RealisticMechanicalSystems.sanitizeNumber(value, fallback, minValue, maxValue)
-    local sanitized = tonumber(value)
-    local safeFallback = tonumber(fallback)
-
-    if not RealisticMechanicalSystems.isFiniteNumber(safeFallback) then
-        safeFallback = 0
-    end
-
-    if not RealisticMechanicalSystems.isFiniteNumber(sanitized) then
-        sanitized = safeFallback
-    end
-
-    if minValue ~= nil then
-        local minNumber = tonumber(minValue)
-        if RealisticMechanicalSystems.isFiniteNumber(minNumber) and sanitized < minNumber then
-            sanitized = minNumber
+    local isFinite = RealisticMechanicalSystems.isFiniteNumber
+    local number = tonumber(value)
+    if not isFinite(number) then
+        number = tonumber(fallback)
+        if not isFinite(number) then
+            number = 0
         end
     end
-
-    if maxValue ~= nil then
-        local maxNumber = tonumber(maxValue)
-        if RealisticMechanicalSystems.isFiniteNumber(maxNumber) and sanitized > maxNumber then
-            sanitized = maxNumber
-        end
+    local lower, upper = tonumber(minValue), tonumber(maxValue)
+    if isFinite(lower) and number < lower then
+        number = lower
     end
-
-    return sanitized
+    if isFinite(upper) and number > upper then
+        number = upper
+    end
+    return number
 end
 
 source(g_currentModDirectory .. "scripts/core/RMS_Thermal.lua")
@@ -200,65 +190,29 @@ source(g_currentModDirectory .. "scripts/core/RMS_Electrical.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Preheat.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Exhaust.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Breakdowns.lua")
+source(g_currentModDirectory .. "scripts/core/RMS_Start.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Consumables.lua")
+source(g_currentModDirectory .. "scripts/core/RMS_Greasing.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Drivetrain.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_Steering.lua")
 source(g_currentModDirectory .. "scripts/core/RMS_ElectricDrive.lua")
 
+-- the short name each wear cause is saved under, system by system
 RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
-    expiredServiceFactor = "sf",
-    -- engine
-    motorLoadFactor = "mlf",
-    airFilterCloggingFactor = "aicf",
-    coldMotorFactor = "cmf",
-    lowFluidFactor = "flf",
-    hotMotorFactor = "hmf",
-    -- transmission
-    pullOverloadFactor = "pof",
-    heavyTrailerFactor = "htf",
-    luggingFactor = "lf",
-    wheelSlipFactor = "wsf",
-    drivetrainWindupFactor = "dwf",
-    coldTransFactor = "ctf",
-    hotTransFactor = "hotf",
-    -- hydraulic
-    heavyLiftFactor = "hlf",
-    operatingFactor = "of",
-    coldOilFactor = "cof",
-    hotOilFactor = "hof",
-    vibFactor = "vf",
-    filterBypassFactor = "hfbf",
-    transmissionFilterBypassFactor = "tfbf",
-    -- cooling
-    highCoolingFactor = "hcf",
-    overheatFactor = "ohf",
-    coldShockFactor = "csf",
-
-    -- electrical
-    weatherExposureFactor = "wef",
-    lightsFactor = "ltf",
-    crankingStressFactor = "crf",
-
-    -- chassis
-    steerLoadFactor = "slf",
-    brakeMassFactor = "bmf",
-    parkBrakeDragFactor = "pbf",
-    terrainImpactFactor = "tif",
-
-    --fuel
-    lowFuelStarvationFactor = "lff",
-    coldFuelFactor = "cff",
-    idleDepositFactor = "idf",
-    highPressureFactor = "hpf",
-    -- traction battery
-    deepDischargeFactor = "ddf",
-    highDrawFactor = "hdf",
-    batteryHeatFactor = "bhf",
-    lubricationFactor = "lubf",
-    instantDamageFactor = "idfg",
-    ptoLoadFactor = "plf",
-    ptoEngagementFactor = "pef",
-    ptoRaisedFactor = "prf"
+    expiredServiceFactor = "sf", lowFluidFactor = "flf", instantDamageFactor = "idfg",
+    motorLoadFactor = "mlf", airFilterCloggingFactor = "aicf", coldMotorFactor = "cmf", hotMotorFactor = "hmf",
+    pullOverloadFactor = "pof", heavyTrailerFactor = "htf", luggingFactor = "lf", wheelSlipFactor = "wsf",
+    drivetrainWindupFactor = "dwf", coldTransFactor = "ctf", hotTransFactor = "hotf",
+    heavyLiftFactor = "hlf", operatingFactor = "of", coldOilFactor = "cof", hotOilFactor = "hof", vibFactor = "vf",
+    filterBypassFactor = "hfbf", transmissionFilterBypassFactor = "tfbf",
+    highCoolingFactor = "hcf", overheatFactor = "ohf", coldShockFactor = "csf",
+    weatherExposureFactor = "wef", lightsFactor = "ltf", crankingStressFactor = "crf",
+    steerLoadFactor = "slf", brakeMassFactor = "bmf", parkBrakeDragFactor = "pbf", terrainImpactFactor = "tif", lubricationFactor = "lubf",
+    lowFuelStarvationFactor = "lff", coldFuelFactor = "cff", idleDepositFactor = "idf", highPressureFactor = "hpf",
+    deepDischargeFactor = "ddf", highDrawFactor = "hdf", batteryHeatFactor = "bhf",
+    ptoLoadFactor = "plf", ptoEngagementFactor = "pef", ptoRaisedFactor = "prf",
+    harvestEffortFactor = "hef", harvestGrainFactor = "hgf", harvestStrawFactor = "hsf", harvestStoneFactor = "hstf",
+    harvestRiceFactor = "hrf", harvestWetFactor = "hwf"
 }
 
 RealisticMechanicalSystems.FACTOR_STATS_KEYS = {}
@@ -266,155 +220,132 @@ for _, alias in pairs(RealisticMechanicalSystems.FACTOR_STATS_ALIASES) do
     RealisticMechanicalSystems.FACTOR_STATS_KEYS[alias] = true
 end
 
-local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
-
----Returns the operating hours of a vehicle
-local function getVehicleOperatingHours(vehicle)
-    if vehicle == nil then
-        return 0
+---Table held under a key, created when missing or not a table
+local function ensureTable(holder, key)
+    if type(holder[key]) ~= "table" then
+        holder[key] = {}
     end
+    return holder[key]
+end
 
-    if vehicle.getOperatingTime ~= nil then
-        local operatingTime = tonumber(vehicle:getOperatingTime())
-        if operatingTime ~= nil then
-            return operatingTime / (60 * 60 * 1000)
+---Tells whether a name contains one of the words
+local function nameContains(name, ...)
+    for _, word in ipairs({ ... }) do
+        if string.find(name, word, 1, true) ~= nil then
+            return true
         end
     end
+    return false
+end
 
-    if vehicle.getFormattedOperatingTime ~= nil then
+---Operating hours of a vehicle, 0 when it keeps none
+local function getVehicleOperatingHours(vehicle)
+    if vehicle ~= nil and vehicle.getOperatingTime ~= nil then
+        local milliseconds = tonumber(vehicle:getOperatingTime())
+        if milliseconds ~= nil then
+            return milliseconds / 3600000
+        end
+    end
+    if vehicle ~= nil and vehicle.getFormattedOperatingTime ~= nil then
         return tonumber(vehicle:getFormattedOperatingTime()) or 0
     end
-
     return 0
 end
 RealisticMechanicalSystems.getVehicleOperatingHours = getVehicleOperatingHours
 
----Returns one normalized wear factor statistics entry
+---Wear statistics of a system, created or repaired in place
 local function ensureFactorStatsEntry(spec, systemKey)
     if spec == nil or systemKey == nil then
         return nil
     end
-    if type(spec.factorStats) ~= "table" then
-        spec.factorStats = {}
-    end
-
-    if type(spec.factorStats[systemKey]) ~= "table" then
-        spec.factorStats[systemKey] = {}
-    end
-
-    local stats = spec.factorStats[systemKey]
+    local stats = ensureTable(ensureTable(spec, "factorStats"), systemKey)
     stats.total = tonumber(stats.total) or 0
     stats._prevStress = tonumber(stats._prevStress) or 0
     stats._avgStress = tonumber(stats._avgStress) or 0
-    stats.operatingHours = tonumber(stats.operatingHours)
-    if stats.operatingHours == nil then
-        stats.operatingHours = -1
-    end
-
+    -- -1 until the hours are first recorded
+    stats.operatingHours = tonumber(stats.operatingHours) or -1
     return stats
 end
 RealisticMechanicalSystems.ensureFactorStatsEntry = ensureFactorStatsEntry
 
----Returns the wear factor statistics of the spec, missing entries created
-local function ensureFactorStats(spec, vehicle)
+---Wear statistics of every system of the vehicle
+local function ensureFactorStats(spec)
     if spec == nil then
         return {}
     end
-
-    if type(spec.factorStats) ~= "table" then
-        spec.factorStats = {}
-    end
-
-    for systemKey, _ in pairs(spec.systems or {}) do
+    ensureTable(spec, "factorStats")
+    for systemKey in pairs(spec.systems or {}) do
         ensureFactorStatsEntry(spec, systemKey)
     end
-
     return spec.factorStats
 end
 RealisticMechanicalSystems.ensureFactorStats = ensureFactorStats
 
----Returns the transmission name declared in the vehicle xml
+---Transmission name of the motor configuration, XML first, then shop
 local function getTransmissionNameFromXML(vehicle)
     if vehicle == nil then
         return nil
     end
+    local configurations = vehicle.configurations
+    local index = math.max(configurations ~= nil and tonumber(configurations.motor) or 1, 1)
 
-    local motorConfigIndex = 1
-    if vehicle.configurations ~= nil and vehicle.configurations.motor ~= nil then
-        motorConfigIndex = math.max(tonumber(vehicle.configurations.motor) or 1, 1)
-    end
-
-    if vehicle.xmlFile ~= nil and vehicle.xmlFile.getValue ~= nil then
-        local key = string.format("vehicle.motorized.motorConfigurations.motorConfiguration(%d).transmission", motorConfigIndex - 1)
+    local xmlFile = vehicle.xmlFile
+    if xmlFile ~= nil and xmlFile.getValue ~= nil then
+        local path = "vehicle.motorized.motorConfigurations.motorConfiguration(%d).transmission"
+        local key = string.format(path, index - 1)
         -- Motorized inherits transmission only if the selected block is absent.
-        if not vehicle.xmlFile:hasProperty(key) then
-            key = "vehicle.motorized.motorConfigurations.motorConfiguration(0).transmission"
+        if not xmlFile:hasProperty(key) then
+            key = string.format(path, 0)
         end
-        local name = vehicle.xmlFile:getValue(key .. "#name", nil, vehicle.customEnvironment, false)
+        local name = xmlFile:getValue(key .. "#name", nil, vehicle.customEnvironment, false)
         if name ~= nil then
             return tostring(name)
         end
     end
 
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
-    if storeItem ~= nil and storeItem.specs ~= nil and type(storeItem.specs.transmission) == "table" then
-        return storeItem.specs.transmission[motorConfigIndex] or storeItem.specs.transmission[1]
+    local names = storeItem ~= nil and storeItem.specs ~= nil and storeItem.specs.transmission or nil
+    if type(names) == "table" then
+        return names[index] or names[1]
     end
-
     return nil
 end
 
----Classifies the transmission from its xml name and its gear configuration
+---Kind of transmission, from its name, else from the game gearbox
 local function getTransmissionType(vehicle)
-    local transmissionTypes = RealisticMechanicalSystems.TRANSMISSION_TYPES
-    if vehicle == nil or vehicle.getMotor == nil then
-        return transmissionTypes.UNKNOWN
-    end
-
-    local motor = vehicle:getMotor()
+    local TYPES = RealisticMechanicalSystems.TRANSMISSION_TYPES
+    local motor = vehicle ~= nil and vehicle.getMotor ~= nil and vehicle:getMotor() or nil
     if motor == nil then
-        return transmissionTypes.UNKNOWN
+        return TYPES.UNKNOWN
     end
 
-    local transmissionName = getTransmissionNameFromXML(vehicle)
-    if transmissionName ~= nil then
-        local normalizedName = string.lower(tostring(transmissionName))
-        if string.find(normalizedName, "manual", 1, true) ~= nil
-            and (string.find(normalizedName, "powershift", 1, true) ~= nil
-            or string.find(normalizedName, "power shift", 1, true) ~= nil) then
-            return transmissionTypes.MANUAL_POWERSHIFT
-        elseif string.find(normalizedName, "powershift", 1, true) ~= nil
-            or string.find(normalizedName, "power shift", 1, true) ~= nil then
-            return transmissionTypes.POWERSHIFT
-        elseif string.find(normalizedName, "variable", 1, true) ~= nil
-            or string.find(normalizedName, "cvt", 1, true) ~= nil then
-            return transmissionTypes.VARIABLE
-        elseif string.find(normalizedName, "automatic", 1, true) ~= nil
-            or string.find(normalizedName, "auto", 1, true) ~= nil then
-            return transmissionTypes.AUTOMATIC
-        elseif string.find(normalizedName, "manual", 1, true) ~= nil then
-            return transmissionTypes.MANUAL
+    local name = getTransmissionNameFromXML(vehicle)
+    if name ~= nil then
+        name = string.lower(tostring(name))
+        local isPowershift = nameContains(name, "powershift", "power shift")
+        if isPowershift and nameContains(name, "manual") then
+            return TYPES.MANUAL_POWERSHIFT
+        elseif isPowershift then
+            return TYPES.POWERSHIFT
+        elseif nameContains(name, "variable", "cvt") then
+            return TYPES.VARIABLE
+        elseif nameContains(name, "auto") then
+            return TYPES.AUTOMATIC
+        elseif nameContains(name, "manual") then
+            return TYPES.MANUAL
         end
     end
 
-    if motor.gearType == VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT
-        or motor.groupType == VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT then
-        if motor.forwardGears ~= nil or motor.backwardGears ~= nil then
-            return transmissionTypes.MANUAL_POWERSHIFT
-        end
-
-        return transmissionTypes.POWERSHIFT
+    local hasGears = motor.forwardGears ~= nil or motor.backwardGears ~= nil
+    local POWERSHIFT = VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT
+    if motor.gearType == POWERSHIFT or motor.groupType == POWERSHIFT then
+        return hasGears and TYPES.MANUAL_POWERSHIFT or TYPES.POWERSHIFT
+    elseif motor.minForwardGearRatio ~= nil then
+        return TYPES.VARIABLE
+    elseif hasGears then
+        return TYPES.MANUAL
     end
-
-    if motor.minForwardGearRatio ~= nil then
-        return transmissionTypes.VARIABLE
-    end
-
-    if motor.forwardGears ~= nil or motor.backwardGears ~= nil then
-        return transmissionTypes.MANUAL
-    end
-
-    return transmissionTypes.UNKNOWN
+    return TYPES.UNKNOWN
 end
 
 RealisticMechanicalSystems.getTransmissionType = getTransmissionType
@@ -423,7 +354,6 @@ RealisticMechanicalSystems.getTransmissionNameFromXML = getTransmissionNameFromX
 local hasCVTAddon = RMS_Utils.hasCVTAddon
 local hasCVTTransmission = RMS_Utils.hasCVTTransmission
 
----Recomputes whether the vehicle is excluded
 local function refreshExclusionState(spec)
     if spec.isExcludedByUser ~= nil then
         spec.isExcludedVehicle = spec.isExcludedByUser
@@ -436,8 +366,6 @@ RealisticMechanicalSystems.refreshExclusionState = refreshExclusionState
 RealisticMechanicalSystems.SYNC_GROUP_ALL = 4095
 
 ---Flags one or more sync groups dirty on the vehicle
--- @param table vehicle vehicle
--- @param integer groupBits sync group bit mask
 function RealisticMechanicalSystems.raiseRMSDirty(vehicle, groupBits)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec == nil or not vehicle.isServer or spec.rmsDirtyFlag == nil then
@@ -452,9 +380,6 @@ function RealisticMechanicalSystems.raiseRMSDirty(vehicle, groupBits)
 end
 
 ---Flags one or more sync groups dirty for a single connection
--- @param table vehicle vehicle
--- @param integer groupBits sync group bit mask
--- @param Connection connection connection
 function RealisticMechanicalSystems.raiseRMSDirtyForConnection(vehicle, groupBits, connection)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local mask = spec.rmsPendingByConnection[connection]
@@ -467,50 +392,41 @@ function RealisticMechanicalSystems.raiseRMSDirtyForConnection(vehicle, groupBit
 end
 
 ---Sets the user exclusion flag and replicates it
--- @param boolean isExcluded true to exclude the vehicle
--- @param boolean? noEventSend no event send
 function RealisticMechanicalSystems:setRMSUserExcluded(isExcluded, noEventSend)
     local spec = self.spec_RealisticMechanicalSystems
     if spec == nil then
         return false, "unsupported"
     end
-
-    local requestedValue = isExcluded == true
-    if spec.isExcludedByUser == requestedValue then
+    local isWanted = isExcluded == true
+    if spec.isExcludedByUser == isWanted then
         return false, "unchanged"
     end
 
-    spec.isExcludedByUser = requestedValue
+    spec.isExcludedByUser = isWanted
     refreshExclusionState(spec)
-
-    if spec.isExcludedVehicle then
+    if not spec.isExcludedVehicle then
+        RealisticMechanicalSystems.registerVehicle(self)
+    else
+        -- Left to the game: smoke, drivetrain and pending messages let go
         if self.isClient then
             RMS_Exhaust.reset(self)
         end
         RMS_Drivetrain.releaseControl(self)
         spec.pendingSideNotifications = {}
-    else
-        spec.lubricationUsedThisPeriod = true
-        RealisticMechanicalSystems.registerVehicle(self)
     end
 
     self:recalculateAndApplyEffects()
     RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP_ALL)
-
     if self.isServer and not noEventSend then
         RMS_VehicleExclusionEvent.sendToClients(self, spec.isExcludedByUser)
     end
-
     return true
 end
 
----Returns the mission time scale, guarded against a missing or invalid value
+---Time scale of the mission, 1 when unset or not positive
 local function getSafeMissionTimeScale()
     local timeScale = g_currentMission.missionInfo.timeScale or 1
-    if timeScale <= 0 then
-        timeScale = 1
-    end
-    return timeScale
+    return timeScale > 0 and timeScale or 1
 end
 RealisticMechanicalSystems.getSafeMissionTimeScale = getSafeMissionTimeScale
 
@@ -522,455 +438,151 @@ local OVERLOAD_FACTOR_ALIASES_BY_SYSTEM = {
     transmission = { "pof", "htf", "lf", "wsf", "hotf" }
 }
 
----Clears the runtime-only rolling overload window
 local function resetOverloadAverage(systemData)
     systemData._avgStress = 0
     systemData._avgStressWindow = nil
 end
 
----Adds one sample to the rolling overload average
+---Drops the samples, or part of the oldest, past the averaging period
+local function trimOverloadWindow(window)
+    while window.head <= window.tail and window.totalDurationMs > OVERLOAD_AVERAGE_PERIOD_MS do
+        local oldest = window.samples[window.head]
+        local length = math.max(tonumber(oldest.durationMs) or 0, 0)
+        local rate = tonumber(oldest.ratePerHour) or 0
+        local excess = window.totalDurationMs - OVERLOAD_AVERAGE_PERIOD_MS
+        local cut = math.min(length, excess)
+        window.totalDurationMs = window.totalDurationMs - cut
+        window.weightedSum = window.weightedSum - rate * cut
+        if length <= excess then
+            window.samples[window.head] = nil
+            window.head = window.head + 1
+            if rate > 0 then
+                window.positiveSampleCount = window.positiveSampleCount - 1
+            end
+        else
+            oldest.durationMs = length - excess
+        end
+    end
+end
+
+---Overload rate averaged over the last period, from one more sample
 local function updateOverloadAverage(systemData, sampleDurationMs, sampleRatePerHour)
     local window = systemData._avgStressWindow
-    if type(window) ~= "table" and sampleRatePerHour <= 0 then
-        resetOverloadAverage(systemData)
-        return 0
-    end
-
     if type(window) ~= "table" then
-        window = {
-            samples = {},
-            head = 1,
-            tail = 0,
-            totalDurationMs = 0,
-            weightedSum = 0,
-            positiveSampleCount = 0
-        }
+        if sampleRatePerHour <= 0 then
+            resetOverloadAverage(systemData)
+            return 0
+        end
+        window = { samples = {}, head = 1, tail = 0, totalDurationMs = 0, weightedSum = 0, positiveSampleCount = 0 }
         systemData._avgStressWindow = window
     end
 
-    local samples = window.samples
-    local head = window.head
-    local tail = window.tail
-    local totalDurationMs = window.totalDurationMs
-    local weightedSum = window.weightedSum
-    local positiveSampleCount = window.positiveSampleCount
-
-    if sampleRatePerHour > 0 or head <= tail then
-        tail = tail + 1
-        samples[tail] = {
-            durationMs = sampleDurationMs,
-            ratePerHour = sampleRatePerHour
-        }
-        totalDurationMs = totalDurationMs + sampleDurationMs
-        weightedSum = weightedSum + sampleRatePerHour * sampleDurationMs
+    -- A zero rate counts only while older samples are still weighed
+    if sampleRatePerHour > 0 or window.head <= window.tail then
+        window.tail = window.tail + 1
+        window.samples[window.tail] = { durationMs = sampleDurationMs, ratePerHour = sampleRatePerHour }
+        window.totalDurationMs = window.totalDurationMs + sampleDurationMs
+        window.weightedSum = window.weightedSum + sampleRatePerHour * sampleDurationMs
         if sampleRatePerHour > 0 then
-            positiveSampleCount = positiveSampleCount + 1
+            window.positiveSampleCount = window.positiveSampleCount + 1
         end
     end
+    trimOverloadWindow(window)
 
-    while head <= tail and totalDurationMs > OVERLOAD_AVERAGE_PERIOD_MS do
-        local oldest = samples[head]
-        local oldestDurationMs = math.max(tonumber(oldest.durationMs) or 0, 0)
-        local oldestRatePerHour = tonumber(oldest.ratePerHour) or 0
-        local overflowMs = totalDurationMs - OVERLOAD_AVERAGE_PERIOD_MS
-
-        if oldestDurationMs <= overflowMs then
-            totalDurationMs = totalDurationMs - oldestDurationMs
-            weightedSum = weightedSum - oldestRatePerHour * oldestDurationMs
-            samples[head] = nil
-            head = head + 1
-            if oldestRatePerHour > 0 then
-                positiveSampleCount = positiveSampleCount - 1
-            end
-        else
-            oldest.durationMs = oldestDurationMs - overflowMs
-            totalDurationMs = totalDurationMs - overflowMs
-            weightedSum = weightedSum - oldestRatePerHour * overflowMs
-        end
-    end
-
-    if positiveSampleCount <= 0 or weightedSum <= 0 or totalDurationMs <= 0 then
+    if window.positiveSampleCount <= 0 or window.weightedSum <= 0 or window.totalDurationMs <= 0 then
         resetOverloadAverage(systemData)
         return 0
     end
-
-    if head > OVERLOAD_WINDOW_COMPACT_THRESHOLD and head > tail / 2 then
-        local compactedSamples = {}
-        for index = head, tail do
-            compactedSamples[#compactedSamples + 1] = samples[index]
+    -- The dropped slots are packed once they pile up
+    if window.head > OVERLOAD_WINDOW_COMPACT_THRESHOLD and window.head > window.tail / 2 then
+        local kept = {}
+        for index = window.head, window.tail do
+            kept[#kept + 1] = window.samples[index]
         end
-        samples = compactedSamples
-        head = 1
-        tail = #samples
+        window.samples, window.head, window.tail = kept, 1, #kept
     end
 
-    window.samples = samples
-    window.head = head
-    window.tail = tail
-    window.totalDurationMs = totalDurationMs
-    window.weightedSum = weightedSum
-    window.positiveSampleCount = positiveSampleCount
-
-    local average = math.max(weightedSum / OVERLOAD_AVERAGE_PERIOD_MS, 0)
+    local average = math.max(window.weightedSum / OVERLOAD_AVERAGE_PERIOD_MS, 0)
     systemData._avgStress = average
     return average
 end
 
----Tells whether the vehicle may flag a sync group dirty right now
 local function canRaiseDirtyFlag(vehicle, spec)
     return vehicle ~= nil and vehicle.isServer and spec ~= nil and spec.rmsDirtyFlag ~= nil
 end
 
----Returns the operating time replicated to the clients
+---Operating time the network sends, in ms
 local function getSyncOperatingTime(vehicle)
-    if vehicle == nil then
-        return 0
+    local time = nil
+    if vehicle ~= nil then
+        if vehicle.getOperatingTime ~= nil then
+            time = vehicle:getOperatingTime()
+        else
+            time = vehicle.operatingTime
+        end
     end
-
-    if vehicle.getOperatingTime ~= nil then
-        return tonumber(vehicle:getOperatingTime()) or 0
-    end
-
-    return tonumber(vehicle.operatingTime) or 0
+    return tonumber(time) or 0
 end
 RealisticMechanicalSystems.getSyncOperatingTime = getSyncOperatingTime
 
----Serializes the active breakdowns into the string the dirty check compares
-local function serializeBreakdownsForDirtyCheck(breakdownsTable)
-    if type(breakdownsTable) ~= "table" or next(breakdownsTable) == nil then
-        return ""
+---Breakdown fields the clients show, as one comparable string
+local function serializeBreakdownsForDirtyCheck(breakdowns)
+    local entries = {}
+    for id, breakdown in pairs(type(breakdowns) == "table" and breakdowns or {}) do
+        table.insert(entries, string.format("%s,%d,%d,%d,%d,%d,%d", id, math.max(math.floor(tonumber(breakdown.stage) or 1), 1),
+            breakdown.isVisible and 1 or 0, breakdown.isSelectedForRepair and 1 or 0, breakdown.isActive ~= false and 1 or 0,
+            math.max(math.floor(tonumber(breakdown.source) or 0), 0), breakdown.usedPartHours or 0))
     end
-
-    local parts = {}
-
-    for id, breakdown in pairs(breakdownsTable) do
-        local stage = math.max(math.floor(tonumber(breakdown.stage) or 1), 1)
-        local visible = breakdown.isVisible and 1 or 0
-        local selected = breakdown.isSelectedForRepair and 1 or 0
-        local active = breakdown.isActive ~= false and 1 or 0
-        local source = math.max(math.floor(tonumber(breakdown.source) or 0), 0)
-
-        table.insert(parts, string.format("%s,%d,%d,%d,%d,%d,%d", id, stage, visible, selected, active, source, breakdown.usedPartHours or 0))
-    end
-
-    table.sort(parts)
-
-    return table.concat(parts, ";")
+    table.sort(entries)
+    return table.concat(entries, ";")
 end
 
----Tells whether two floats differ by more than an epsilon
-local function syncFloatChanged(a, b, epsilon)
-    local valueA = RealisticMechanicalSystems.sanitizeNumber(a, 0)
-    local valueB = RealisticMechanicalSystems.sanitizeNumber(b, 0)
-    return math.abs(valueA - valueB) > (epsilon or 0)
+---Tells whether two numbers differ past a tolerance, nil reading 0
+local function hasNumberMoved(last, current, tolerance)
+    local sanitize = RealisticMechanicalSystems.sanitizeNumber
+    return math.abs(sanitize(last, 0) - sanitize(current, 0)) > tolerance
 end
 
----Flags the state group dirty when the status or the maintenance timer changed
-local function markStateDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
+---A value a sync group watches, a spec field or read by a function
+-- @param float? tolerance a number moves past it, no tolerance compares as is
+local function watch(source, tolerance)
+    local read = source
+    if type(source) ~= "function" then
+        read = function(_, spec) return spec[source] end
     end
-
-    if spec._lastSyncState_currentState ~= spec.currentState or
-       spec._lastSyncState_plannedState ~= spec.plannedState or
-       syncFloatChanged(spec._lastSyncState_maintenanceTimer, spec.maintenanceTimer, 1.0) then
-            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.STATE)
-            spec._lastSyncState_currentState = spec.currentState
-            spec._lastSyncState_plannedState = spec.plannedState
-            spec._lastSyncState_maintenanceTimer = spec.maintenanceTimer
-            return true
-    end
-
-    return false
+    return { read = read, tolerance = tolerance }
 end
 
----Flags the service context group dirty on a change
-local function markServiceContextDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
-    end
-
-    if spec._lastSyncServiceContext_optionOne ~= spec.serviceOptionOne or
-       spec._lastSyncServiceContext_optionTwo ~= spec.serviceOptionTwo or
-       spec._lastSyncServiceContext_optionThree ~= spec.serviceOptionThree or
-       spec._lastSyncServiceContext_workshopType ~= spec.workshopType then
-            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.SERVICE_CONTEXT)
-            spec._lastSyncServiceContext_optionOne = spec.serviceOptionOne
-            spec._lastSyncServiceContext_optionTwo = spec.serviceOptionTwo
-            spec._lastSyncServiceContext_optionThree = spec.serviceOptionThree
-            spec._lastSyncServiceContext_workshopType = spec.workshopType
-            return true
-    end
-
-    return false
+---A spec field read as a number, a default standing for none
+local function watchNumber(field, default, tolerance)
+    return watch(function(_, spec) return tonumber(spec[field]) or default end, tolerance)
 end
 
----Flags the telemetry group dirty on a change
-local function markTelemetryDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
+---Conditions and switches of the systems, with their count
+local function readSystemsSync(_, spec)
+    local systems, count = {}, 0
+    for systemKey, systemData in pairs(spec.systems) do
+        systems[systemKey] = { condition = systemData.condition, enabled = systemData.enabled ~= false }
+        count = count + 1
     end
-
-    local operatingTime = getSyncOperatingTime(vehicle)
-    local realOperatingTime = spec.realOperatingTime or 0
-    local dynamicMotorLoad = tonumber(spec.dynamicMotorLoad) or 0
-    local wheelSlip = tonumber(spec.wheelSlipIntensity) or 0
-
-    if syncFloatChanged(spec._lastSyncTelemetry_operatingTime, operatingTime, 60000.0) or
-       syncFloatChanged(spec._lastSyncTelemetry_realOperatingTime, realOperatingTime, 60000.0) or
-       syncFloatChanged(spec._lastSyncTelemetry_fuelUsageRaw, spec._fuelUsageRaw, 0.3) or
-       syncFloatChanged(spec._lastSyncTelemetry_dynamicMotorLoad, dynamicMotorLoad, 0.01) or
-       syncFloatChanged(spec._lastSyncTelemetry_wheelSlip, wheelSlip, 0.01) or
-       syncFloatChanged(spec._lastSyncTelemetry_liftedMass, spec.liftedMass, 10.0) then
-            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.TELEMETRY)
-            spec._lastSyncTelemetry_operatingTime = operatingTime
-            spec._lastSyncTelemetry_realOperatingTime = realOperatingTime
-            spec._lastSyncTelemetry_fuelUsageRaw = spec._fuelUsageRaw
-            spec._lastSyncTelemetry_dynamicMotorLoad = dynamicMotorLoad
-            spec._lastSyncTelemetry_wheelSlip = wheelSlip
-            spec._lastSyncTelemetry_liftedMass = spec.liftedMass
-            return true
-    end
-
-    return false
+    return { systems = systems, count = count }
 end
 
-local function markThermalDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
-    end
-
-    RMS_Thermal.getEngineTemperature(vehicle)
-    local hasHydraulicTemperature = RMS_Thermal.getHasSeparateHydraulicCircuit(spec) and spec.rawHydraulicTemperature ~= nil
-    local hasTractionBatteryTemperature = spec.isElectricVehicle == true and spec.tractionBatteryTempC ~= nil
-    if spec._lastSyncThermal_hasHydraulicTemperature ~= hasHydraulicTemperature or
-       spec._lastSyncThermal_hasTractionBatteryTemperature ~= hasTractionBatteryTemperature or
-       syncFloatChanged(spec._lastSyncThermal_rawHydraulicTemperature, spec.rawHydraulicTemperature, 0.05) or
-       syncFloatChanged(spec._lastSyncThermal_tractionBatteryTempC, spec.tractionBatteryTempC, 0.05) or
-       syncFloatChanged(spec._lastSyncThermal_rawEngineTemperature, spec.rawEngineTemperature, 0.05) or
-       syncFloatChanged(spec._lastSyncThermal_rawTransmissionTemperature, spec.rawTransmissionTemperature, 0.05) or
-       syncFloatChanged(spec._lastSyncThermal_thermostatState, spec.thermostatState, 0.05) or
-       syncFloatChanged(spec._lastSyncThermal_transmissionThermostatState, spec.transmissionThermostatState, 0.05) then
-            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.THERMAL)
-            spec._lastSyncThermal_rawEngineTemperature = spec.rawEngineTemperature
-            spec._lastSyncThermal_rawTransmissionTemperature = spec.rawTransmissionTemperature
-            spec._lastSyncThermal_hasHydraulicTemperature = hasHydraulicTemperature
-            spec._lastSyncThermal_hasTractionBatteryTemperature = hasTractionBatteryTemperature
-            spec._lastSyncThermal_rawHydraulicTemperature = spec.rawHydraulicTemperature
-            spec._lastSyncThermal_tractionBatteryTempC = spec.tractionBatteryTempC
-            spec._lastSyncThermal_thermostatState = spec.thermostatState
-            spec._lastSyncThermal_transmissionThermostatState = spec.transmissionThermostatState
-            return true
-    end
-
-    return false
-end
-
----Flags the electrical group dirty on a change
-local function markElectricalDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
-    end
-
-    if syncFloatChanged(spec._lastSyncElectrical_batterySoc, spec.batterySoc, 0.01) or
-       spec._lastSyncElectrical_batteryIsolated ~= spec.batteryIsolated or
-       syncFloatChanged(spec._lastSyncElectrical_systemVoltage, spec.systemVoltageV, 0.01) or
-       spec._lastSyncElectrical_preheatState ~= spec.preheatState or
-       spec._lastSyncElectrical_preheatLampTestActive ~= spec.preheatLampTestActive or
-       spec._lastSyncElectrical_preheatWasRequired ~= spec.preheatWasRequired or
-       spec._lastSyncElectrical_preheatColdStartFaultSeverity ~= spec.preheatColdStartFaultSeverity then
-            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.ELECTRICAL)
-            spec._lastSyncElectrical_batterySoc = spec.batterySoc
-            spec._lastSyncElectrical_batteryIsolated = spec.batteryIsolated
-            spec._lastSyncElectrical_systemVoltage = spec.systemVoltageV
-            spec._lastSyncElectrical_preheatState = spec.preheatState
-            spec._lastSyncElectrical_preheatLampTestActive = spec.preheatLampTestActive
-            spec._lastSyncElectrical_preheatWasRequired = spec.preheatWasRequired
-            spec._lastSyncElectrical_preheatColdStartFaultSeverity = spec.preheatColdStartFaultSeverity
-            return true
-    end
-
-    return false
-end
-
----Stores the field care values last compared by the network sync
-function RealisticMechanicalSystems.storeFieldcareSyncState(vehicle, spec, serializedLeakDebt)
-    spec._lastSyncFieldcare_radiatorClogging = spec.radiatorClogging
-    spec._lastSyncFieldcare_airFilterClogging = spec.airFilterClogging
-    spec._lastSyncFieldcare_airFilterResidue = spec.airFilterResidue
-    for _, filter in ipairs(RMS_Consumables.FILTERS) do
-        spec["_lastSyncFieldcare_" .. filter.stateKey] = spec[filter.stateKey]
-    end
-    spec._lastSyncFieldcare_lubricationLevel = spec.lubricationLevel
-    spec._lastSyncFieldcare_engineOilLevel = spec.engineOilLevel
-    spec._lastSyncFieldcare_coolantLevel = spec.coolantLevel
-    spec._lastSyncFieldcare_transmissionOilLevel = spec.transmissionOilLevel
-    spec._lastSyncFieldcare_hydraulicFluidLevel = spec.hydraulicFluidLevel
-    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-        spec["_lastSyncFieldcare_capacity_" .. circuit] = RMS_Fluids.getCapacity(vehicle, circuit)
-        spec["_lastSyncFieldcare_compatibility_" .. circuit] = RMS_Fluids.getCompatibility(vehicle, circuit)
-    end
-    spec._lastSyncFieldcare_leakDebt = serializedLeakDebt
-    spec._lastSyncFieldcare_inspectionSoundActive = spec.fieldInspectionSoundActive
-end
-
----Flags the field care group dirty when the clogging or the lubrication changed
-local function markFieldcareDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
-    end
-
-    local fluidDataChanged = false
-    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-        if syncFloatChanged(spec["_lastSyncFieldcare_capacity_" .. circuit], RMS_Fluids.getCapacity(vehicle, circuit), 0.001)
-            or syncFloatChanged(spec["_lastSyncFieldcare_compatibility_" .. circuit], RMS_Fluids.getCompatibility(vehicle, circuit), 0.0001) then
-            fluidDataChanged = true
-            break
-        end
-    end
-    local serializedLeakDebt = RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt)
-    local filterChanged = false
-    for _, filter in ipairs(RMS_Consumables.FILTERS) do
-        filterChanged = filterChanged or syncFloatChanged(spec["_lastSyncFieldcare_" .. filter.stateKey], spec[filter.stateKey], 0.005)
-    end
-
-    if syncFloatChanged(spec._lastSyncFieldcare_radiatorClogging, spec.radiatorClogging, 0.005) or
-       syncFloatChanged(spec._lastSyncFieldcare_airFilterClogging, spec.airFilterClogging, 0.005) or
-       syncFloatChanged(spec._lastSyncFieldcare_airFilterResidue, spec.airFilterResidue, 0.005) or
-       filterChanged or
-       syncFloatChanged(spec._lastSyncFieldcare_lubricationLevel, spec.lubricationLevel, 0.005) or
-       syncFloatChanged(spec._lastSyncFieldcare_engineOilLevel, spec.engineOilLevel, 0.005) or
-       syncFloatChanged(spec._lastSyncFieldcare_coolantLevel, spec.coolantLevel, 0.005) or
-       syncFloatChanged(spec._lastSyncFieldcare_transmissionOilLevel, spec.transmissionOilLevel, 0.005) or
-       syncFloatChanged(spec._lastSyncFieldcare_hydraulicFluidLevel, spec.hydraulicFluidLevel, 0.005) or
-       fluidDataChanged or
-       spec._lastSyncFieldcare_leakDebt ~= serializedLeakDebt or
-       spec._lastSyncFieldcare_inspectionSoundActive ~= spec.fieldInspectionSoundActive then
-            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
-            RealisticMechanicalSystems.storeFieldcareSyncState(vehicle, spec, serializedLeakDebt)
-            return true
-    end
-
-    return false
-end
-
----Tells whether a system condition moved past its sync threshold
-local function getSystemsSyncChanged(spec)
-    local lastSystems = spec._lastSyncWear_systems
-    if lastSystems == nil then
+---Tells whether a system changed, or one came or went
+local function haveSystemsMoved(last, current)
+    if last == nil then
         return true
     end
-
-    local count = 0
-    for sysKey, sysData in pairs(spec.systems) do
-        count = count + 1
-
-        local last = lastSystems[sysKey]
-        if last == nil then
-            return true
-        end
-
-        if syncFloatChanged(last.condition, sysData.condition, SYSTEM_SYNC_EPSILON) or
-           last.enabled ~= (sysData.enabled ~= false) then
+    for systemKey, now in pairs(current.systems) do
+        local before = last.systems[systemKey]
+        if before == nil or before.enabled ~= now.enabled
+            or hasNumberMoved(before.condition, now.condition, SYSTEM_SYNC_EPSILON) then
             return true
         end
     end
-
-    return count ~= spec._lastSyncWear_systemsCount
+    return last.count ~= current.count
 end
 
----Snapshots the system conditions for the next dirty check
-local function captureSystemsSync(spec)
-    local snapshot = {}
-    local count = 0
-
-    for sysKey, sysData in pairs(spec.systems) do
-        snapshot[sysKey] = {
-            condition = sysData.condition,
-            enabled = sysData.enabled ~= false
-        }
-        count = count + 1
-    end
-
-    spec._lastSyncWear_systems = snapshot
-    spec._lastSyncWear_systemsCount = count
-end
-RealisticMechanicalSystems.captureSystemsSync = captureSystemsSync
-
----Flags the wear group dirty when the service, condition or a system changed
-local function markWearDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
-    end
-
-    if syncFloatChanged(spec._lastSyncWear_serviceLevel, spec.serviceLevel, 0.001) or
-       syncFloatChanged(spec._lastSyncWear_transmissionServiceLevel, spec.transmissionServiceLevel, 0.001) or
-       syncFloatChanged(spec._lastSyncWear_coolantServiceLevel, spec.coolantServiceLevel, 0.001) or
-       syncFloatChanged(spec._lastSyncWear_hydraulicServiceLevel, spec.hydraulicServiceLevel, 0.001) or
-       spec._lastSyncWear_serviceCalendar ~= RMS_Utils.serializeNumericMap(spec.serviceCalendar) or
-       spec._lastSyncWear_partWarranty ~= RMS_Utils.serializeNumericMap(spec.partWarranty) or
-       spec._lastSyncWear_usedPartWarranty ~= RMS_Utils.serializeNumericMap(spec.usedPartWarranty) or
-       spec._lastSyncWear_warrantyPlan ~= spec.warrantyPlan or
-       syncFloatChanged(spec._lastSyncWear_conditionLevel, spec.conditionLevel, 0.001) or
-       spec._lastSyncWear_ptoEngagementSequence ~= spec.ptoEngagementSequence or
-       spec._lastSyncWear_ptoShockSequence ~= spec.ptoShockSequence or
-       spec._lastSyncWear_ptoRaisedTooLong ~= spec.ptoRaisedTooLong or
-       getSystemsSyncChanged(spec) then
-            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.WEAR)
-            spec._lastSyncWear_serviceLevel = spec.serviceLevel
-            spec._lastSyncWear_transmissionServiceLevel = spec.transmissionServiceLevel
-            spec._lastSyncWear_coolantServiceLevel = spec.coolantServiceLevel
-            spec._lastSyncWear_hydraulicServiceLevel = spec.hydraulicServiceLevel
-            spec._lastSyncWear_serviceCalendar = RMS_Utils.serializeNumericMap(spec.serviceCalendar)
-            spec._lastSyncWear_partWarranty = RMS_Utils.serializeNumericMap(spec.partWarranty)
-            spec._lastSyncWear_usedPartWarranty = RMS_Utils.serializeNumericMap(spec.usedPartWarranty)
-            spec._lastSyncWear_warrantyPlan = spec.warrantyPlan
-            spec._lastSyncWear_conditionLevel = spec.conditionLevel
-            spec._lastSyncWear_ptoEngagementSequence = spec.ptoEngagementSequence
-            spec._lastSyncWear_ptoShockSequence = spec.ptoShockSequence
-            spec._lastSyncWear_ptoRaisedTooLong = spec.ptoRaisedTooLong
-            captureSystemsSync(spec)
-            return true
-    end
-
-    return false
-end
-
----Flags the breakdown group dirty when the serialized breakdowns changed
-local function markBreakdownsDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
-    end
-
-    local serializedBreakdowns = serializeBreakdownsForDirtyCheck(spec.activeBreakdowns)
-    if spec._lastSyncBreakdowns_serialized ~= serializedBreakdowns then
-            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.BREAKDOWNS)
-            spec._lastSyncBreakdowns_serialized = serializedBreakdowns
-            return true
-    end
-
-    return false
-end
-
-local function markServiceProgressDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
-    end
-
-    if syncFloatChanged(spec._lastSyncServiceProgress_elapsed, spec.pendingProgressElapsedTime,500.0) or
-       spec._lastSyncServiceProgress_step ~= spec.pendingProgressStepIndex or
-       syncFloatChanged(spec._lastSyncServiceProgress_total, spec.pendingProgressTotalTime, 500.0) then
-            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.SERVICE_PROGRESS)
-            spec._lastSyncServiceProgress_elapsed = spec.pendingProgressElapsedTime
-            spec._lastSyncServiceProgress_step = spec.pendingProgressStepIndex
-            spec._lastSyncServiceProgress_total = spec.pendingProgressTotalTime
-            return true
-    end
-
-    return false
-end
-
----Returns the connection of the player driving the vehicle
 local function getTutorialSyncConnection(vehicle)
     local connection = vehicle:getOwnerConnection()
     if connection == nil then
@@ -990,258 +602,357 @@ local function getTutorialSyncConnection(vehicle)
     return connection
 end
 
----Flags the tutorial group dirty for the driving player on a change
+---Sync groups in update order, each with the values it watches
+local syncGroups = nil
+
+---The same groups by their bit
+local syncGroupsByBit = {}
+
+---Builds the sync groups once the fluids and filters are known
+local function getSyncGroups()
+    if syncGroups ~= nil then
+        return syncGroups
+    end
+    local GROUP = RealisticMechanicalSystems.SYNC_GROUP
+    local function mapText(field)
+        return watch(function(_, spec) return RMS_Utils.serializeNumericMap(spec[field]) end)
+    end
+
+    local fieldcare = {
+        watch("radiatorClogging", 0.005), watch("airFilterClogging", 0.005), watch("airFilterResidue", 0.005),
+        watch("lubricationLevel", 0.005), watch("greasingDuePoints"), watch("engineOilLevel", 0.005),
+        watch("coolantLevel", 0.005), watch("transmissionOilLevel", 0.005), watch("hydraulicFluidLevel", 0.005),
+        watch(function(_, spec) return RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt) end),
+        watch("fieldInspectionSoundActive")
+    }
+    for _, filter in ipairs(RMS_Consumables.FILTERS) do
+        table.insert(fieldcare, watch(filter.stateKey, 0.005))
+    end
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        table.insert(fieldcare, watch(function(vehicle) return RMS_Fluids.getCapacity(vehicle, circuit) end, 0.001))
+        table.insert(fieldcare, watch(function(vehicle) return RMS_Fluids.getCompatibility(vehicle, circuit) end, 0.0001))
+    end
+
+    syncGroups = {
+        { group = GROUP.STATE, watches = { watch("currentState"), watch("plannedState"), watch("maintenanceTimer", 1.0) } },
+        { group = GROUP.SERVICE_CONTEXT, watches = {
+            watch("serviceOptionOne"), watch("serviceOptionTwo"), watch("serviceOptionThree"), watch("workshopType") } },
+        { group = GROUP.TELEMETRY, watches = {
+            watch(getSyncOperatingTime, 60000.0), watchNumber("realOperatingTime", 0, 60000.0), watch("_fuelUsageRaw", 0.3),
+            watchNumber("dynamicMotorLoad", 0, 0.01), watchNumber("wheelSlipIntensity", 0, 0.01), watch("liftedMass", 10.0) } },
+        -- The engine temperature is brought up to date before it is compared
+        { group = GROUP.THERMAL, prepare = function(vehicle) RMS_Thermal.getEngineTemperature(vehicle) end, watches = {
+            watch(function(_, spec) return RMS_Thermal.getHasSeparateHydraulicCircuit(spec) and spec.rawHydraulicTemperature ~= nil end),
+            watch(function(_, spec) return spec.isElectricVehicle == true and spec.tractionBatteryTempC ~= nil end),
+            watch("rawHydraulicTemperature", 0.05), watch("tractionBatteryTempC", 0.05), watch("rawEngineTemperature", 0.05),
+            watch("rawTransmissionTemperature", 0.05), watch("thermostatState", 0.05), watch("transmissionThermostatState", 0.05) } },
+        { group = GROUP.ELECTRICAL, watches = {
+            watch("batterySoc", 0.01), watch("batteryIsolated"), watch("systemVoltageV", 0.01), watch("startState"),
+            watch("preheatLampTestActive"), watch("preheatWasRequired"), watch("preheatColdStartFaultSeverity") } },
+        { group = GROUP.FIELDCARE, watches = fieldcare },
+        { group = GROUP.WEAR, watches = {
+            watch("serviceLevel", 0.001), watch("transmissionServiceLevel", 0.001), watch("coolantServiceLevel", 0.001),
+            watch("hydraulicServiceLevel", 0.001), mapText("serviceCalendar"), mapText("partWarranty"), mapText("usedPartWarranty"),
+            watch("warrantyPlan"), watch("warrantyVoided"), watch("remapMotor"), watch("remapAge"), watch("conditionLevel", 0.001),
+            watch("ptoEngagementSequence"), watch("ptoShockSequence"), watch("ptoRaisedTooLong"),
+            { read = readSystemsSync, hasMoved = haveSystemsMoved } } },
+        { group = GROUP.BREAKDOWNS, watches = {
+            watch(function(_, spec) return serializeBreakdownsForDirtyCheck(spec.activeBreakdowns) end) } },
+        { group = GROUP.SERVICE_PROGRESS, watches = {
+            watch("pendingProgressElapsedTime", 500.0), watch("pendingProgressStepIndex"), watch("pendingProgressTotalTime", 500.0) } },
+        -- Sent to the driver alone, their connection first
+        { group = GROUP.TUTORIAL_DATA, watches = {
+            watch(function(vehicle) return getTutorialSyncConnection(vehicle) end),
+            watch(function(_, spec) return tonumber(spec.fuelState.idleTimer) or 0 end, 1.0),
+            watch(function(_, spec) return tonumber(spec.fuelState.level) or 0 end, 0.01),
+            watchNumber("luggingTutorialTimer", 0, 100.0), watchNumber("wheelSlipTutorialTimer", 0, 100.0),
+            watch(function(_, spec) return tonumber(spec.chassisBrakeState.hpTrailerMassRatio) or 1000 end, 0.1),
+            watch(function(_, spec) return tonumber(spec.chassisBrakeState.trailerMass) or 0 end, 0.01),
+            watch(function(_, spec) return tonumber(spec.chassisBrakeState.hpGrossMassRatio) or 1000 end, 0.1),
+            watch(function(_, spec) return spec.isCranking == true end),
+            watch(function(_, spec) return spec.chassisSteerState.groundContact > 0 end),
+            watch(function(_, spec) return spec.chassisSteerState.isMoving == true end),
+            watch("vibrationTutorialTimer", 100.0), watch("terrainImpactTutorialTimer", 100.0),
+            watch(function(_, spec)
+                local electrical = spec.systems ~= nil and spec.systems.electrical or nil
+                return electrical ~= nil and (tonumber(electrical.crankingTimer) or 0) or 0
+            end, 100.0) } }
+    }
+    for _, entry in ipairs(syncGroups) do
+        syncGroupsByBit[entry.group] = entry
+    end
+    return syncGroups
+end
+
+---Reads the values a sync group watches, from a first one on
+-- @param integer? first first value read, 1 when nil
+local function readSyncGroup(vehicle, spec, entry, first)
+    local values = {}
+    for index = first or 1, #entry.watches do
+        values[index] = entry.watches[index].read(vehicle, spec)
+    end
+    return values
+end
+
+---Tells whether a watched value moved since it was last sent
+local function hasWatchMoved(watched, last, current)
+    if watched.hasMoved ~= nil then
+        return watched.hasMoved(last, current)
+    elseif watched.tolerance ~= nil then
+        return hasNumberMoved(last, current, watched.tolerance)
+    end
+    return last ~= current
+end
+
+---Raises a sync group when one of its values moved since it was sent
+-- @param table? connection the one connection to send to, every one when nil
+local function markGroupDirty(vehicle, spec, group, connection)
+    if not canRaiseDirtyFlag(vehicle, spec) then
+        return false
+    end
+    getSyncGroups()
+    local entry = syncGroupsByBit[group]
+    if entry.prepare ~= nil then
+        entry.prepare(vehicle)
+    end
+    local sent = ensureTable(spec, "rmsLastSync")
+    local last = sent[group] or {}
+    local values = readSyncGroup(vehicle, spec, entry)
+    for index, watched in ipairs(entry.watches) do
+        if hasWatchMoved(watched, last[index], values[index]) then
+            if connection ~= nil then
+                RealisticMechanicalSystems.raiseRMSDirtyForConnection(vehicle, group, connection)
+            else
+                RealisticMechanicalSystems.raiseRMSDirty(vehicle, group)
+            end
+            sent[group] = values
+            return true
+        end
+    end
+    return false
+end
+
+---Raises the tutorial data for the driver, while they keep the tips on
 local function markTutorialDataDirty(vehicle, spec)
     if not canRaiseDirtyFlag(vehicle, spec) then
         return false
     end
-
-    local tutorialConnection = getTutorialSyncConnection(vehicle)
-    if tutorialConnection == nil then
-        spec._lastSyncTutorial_connection = nil
+    local GROUP = RealisticMechanicalSystems.SYNC_GROUP
+    local connection = getTutorialSyncConnection(vehicle)
+    if connection == nil then
+        -- The next driver gets everything
+        local last = ensureTable(spec, "rmsLastSync")[GROUP.TUTORIAL_DATA]
+        if last ~= nil then
+            last[1] = nil
+        end
         return false
     end
+    return markGroupDirty(vehicle, spec, GROUP.TUTORIAL_DATA, connection)
+end
 
-    local fuelState = spec.fuelState
-    local idleTimer  = tonumber(fuelState.idleTimer)  or 0
-    local fuelLevel  = tonumber(fuelState.level)      or 0
-    local luggingTimer    = tonumber(spec.luggingTutorialTimer)    or 0
-    local wheelSlipTimer  = tonumber(spec.wheelSlipTutorialTimer)  or 0
-    local brakeState  = spec.chassisBrakeState
-    local hpTrailerMassRatio = tonumber(brakeState.hpTrailerMassRatio) or 1000
-    local trailerMass = tonumber(brakeState.trailerMass) or 0
-    local hpGrossMassRatio = tonumber(brakeState.hpGrossMassRatio) or 1000
-    local isCranking  = spec.isCranking == true
-    local steerState    = spec.chassisSteerState
-    local groundContact = steerState.groundContact > 0
-    local isMoving      = steerState.isMoving == true
-    local vibrationTimer = spec.vibrationTutorialTimer
-    local impactTimer    = spec.terrainImpactTutorialTimer
-    local elecSys      = spec.systems ~= nil and spec.systems.electrical or nil
-    local crankingTimer = elecSys ~= nil and (tonumber(elecSys.crankingTimer) or 0) or 0
-
-    if spec._lastSyncTutorial_connection ~= tutorialConnection                          or
-       syncFloatChanged(spec._lastSyncTutorial_idleTimer,       idleTimer,       1.0)   or
-       syncFloatChanged(spec._lastSyncTutorial_fuelLevel,       fuelLevel,       0.01)  or
-       syncFloatChanged(spec._lastSyncTutorial_luggingTimer,    luggingTimer,    100.0) or
-       syncFloatChanged(spec._lastSyncTutorial_wheelSlipTimer,  wheelSlipTimer,  100.0) or
-       syncFloatChanged(spec._lastSyncTutorial_hpTrailerMassRatio, hpTrailerMassRatio, 0.1) or
-       syncFloatChanged(spec._lastSyncTutorial_trailerMass,     trailerMass,     0.01)  or
-       syncFloatChanged(spec._lastSyncTutorial_hpGrossMassRatio, hpGrossMassRatio, 0.1) or
-       spec._lastSyncTutorial_isCranking    ~= isCranking                              or
-       spec._lastSyncTutorial_groundContact ~= groundContact                           or
-       spec._lastSyncTutorial_isMoving      ~= isMoving                                or
-       syncFloatChanged(spec._lastSyncTutorial_vibrationTimer,  vibrationTimer,  100.0) or
-       syncFloatChanged(spec._lastSyncTutorial_impactTimer,     impactTimer,     100.0) or
-       syncFloatChanged(spec._lastSyncTutorial_crankingTimer,   crankingTimer,   100.0) then
-            RealisticMechanicalSystems.raiseRMSDirtyForConnection(vehicle, RealisticMechanicalSystems.SYNC_GROUP.TUTORIAL_DATA, tutorialConnection)
-            spec._lastSyncTutorial_connection      = tutorialConnection
-            spec._lastSyncTutorial_idleTimer       = idleTimer
-            spec._lastSyncTutorial_fuelLevel       = fuelLevel
-            spec._lastSyncTutorial_luggingTimer    = luggingTimer
-            spec._lastSyncTutorial_wheelSlipTimer  = wheelSlipTimer
-            spec._lastSyncTutorial_hpTrailerMassRatio = hpTrailerMassRatio
-            spec._lastSyncTutorial_trailerMass     = trailerMass
-            spec._lastSyncTutorial_hpGrossMassRatio = hpGrossMassRatio
-            spec._lastSyncTutorial_isCranking      = isCranking
-            spec._lastSyncTutorial_groundContact   = groundContact
-            spec._lastSyncTutorial_isMoving        = isMoving
-            spec._lastSyncTutorial_vibrationTimer  = vibrationTimer
-            spec._lastSyncTutorial_impactTimer     = impactTimer
-            spec._lastSyncTutorial_crankingTimer   = crankingTimer
-            return true
+---Raises every sync group whose values moved
+function RealisticMechanicalSystems.markSyncGroupsDirty(vehicle, spec)
+    if not canRaiseDirtyFlag(vehicle, spec) then
+        return
     end
+    local TUTORIAL = RealisticMechanicalSystems.SYNC_GROUP.TUTORIAL_DATA
+    for _, entry in ipairs(getSyncGroups()) do
+        if entry.group == TUTORIAL then
+            markTutorialDataDirty(vehicle, spec)
+        else
+            markGroupDirty(vehicle, spec, entry.group)
+        end
+    end
+end
 
-    return false
+---Takes the current values as sent, so a loaded vehicle raises nothing
+function RealisticMechanicalSystems.storeSyncBaseline(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local sent = ensureTable(spec, "rmsLastSync")
+    local TUTORIAL = RealisticMechanicalSystems.SYNC_GROUP.TUTORIAL_DATA
+    for _, entry in ipairs(getSyncGroups()) do
+        -- The tutorial data waits for its driver, then goes out whole
+        sent[entry.group] = readSyncGroup(vehicle, spec, entry, entry.group == TUTORIAL and 2 or 1)
+    end
 end
 
 ---Flags every group a finished or cancelled service touches
--- @param table vehicle vehicle
 function RealisticMechanicalSystems.raiseServiceLifecycleDirtyFlags(vehicle)
-    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil then
         return false
     end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
+    local GROUP = RealisticMechanicalSystems.SYNC_GROUP
     local raised = false
-
-    if markStateDirty(vehicle, spec) then
-        raised = true
+    for _, group in ipairs({ GROUP.STATE, GROUP.SERVICE_CONTEXT, GROUP.WEAR, GROUP.BREAKDOWNS, GROUP.SERVICE_PROGRESS }) do
+        raised = markGroupDirty(vehicle, spec, group) or raised
     end
-    if markServiceContextDirty(vehicle, spec) then
-        raised = true
-    end
-    if markWearDirty(vehicle, spec) then
-        raised = true
-    end
-    if markBreakdownsDirty(vehicle, spec) then
-        raised = true
-    end
-    if markServiceProgressDirty(vehicle, spec) then
-        raised = true
-    end
-
     return raised
 end
 
+---Savegame attributes of a vehicle: name, type, content, default
+local SAVEGAME_ATTRIBUTES = {
+    { "userExclusion", "BOOL", "User decision overriding the automatic exclusion, absent when the user has no opinion" },
+    { "service", "FLOAT", "Engine oil service clock, 1 just serviced" },
+    { "transmissionService", "FLOAT", "Transmission and hydraulic oil service level" },
+    { "coolantService", "FLOAT", "Coolant service level" },
+    { "hydraulicService", "FLOAT", "Separate hydraulic oil service level" },
+    { "serviceCalendar", "STRING", "Calendar start ages by service circuit" },
+    { "warrantyPlan", "INT", "Factory warranty plan" },
+    { "partWarranty", "STRING", "Dealer part warranty expiry ages" },
+    { "usedPartWarranty", "STRING", "Used part warranty expiry ages" },
+    { "warrantyVoided", "BOOL", "Warranty lost to an engine remap" },
+    { "remapMotor", "INT", "Engine configuration remapped, 0 on stock software" },
+    { "remapAge", "INT", "Machine age in months at the remap" },
+    { "condition", "FLOAT", "Overall condition of the machine" },
+    { "breakdowns", "STRING", "Breakdowns on the machine, encoded" },
+    { "state", "STRING", "Service under way, ready when none" },
+    { "plannedState", "STRING", "Service ordered next" },
+    { "maintenanceTimer", "FLOAT", "Time left of the running service, in ms" },
+    { "realOperatingTime", "FLOAT", "Working time counted by RMS, in ms" },
+    { "engineTemperature", "FLOAT", "Engine coolant temperature, in degrees" },
+    { "transmissionTemperature", "FLOAT", "Transmission oil temperature, in degrees" },
+    { "hydraulicTemperature", "FLOAT", "Separate hydraulic oil temperature, in degrees" },
+    { "thermalWorldTime", "FLOAT", "Mission time of the saved temperatures" },
+    { "thermalAmbient", "FLOAT", "Air temperature of the saved temperatures" },
+    { "batterySoc", "FLOAT", "Battery charge, 1 full" },
+    { "batteryIsolated", "BOOL", "Battery isolator open", false },
+    { "tractionBatteryTempC", "FLOAT", "Traction battery temperature of an electric vehicle" },
+    { "radiatorClogging", "FLOAT", "Radiator clogging, 1 fully clogged" },
+    { "airFilterClogging", "FLOAT", "Air filter clogging level" },
+    { "airFilterResidue", "FLOAT", "Air filter clogging a blow out cannot remove" },
+    { "engineOilLevel", "FLOAT", "Engine oil level" },
+    { "coolantLevel", "FLOAT", "Coolant level" },
+    { "transmissionOilLevel", "FLOAT", "Transmission oil level" },
+    { "hydraulicFluidLevel", "FLOAT", "Hydraulic fluid level" },
+    { "fluidCapacityVersion", "INT", "Fluid capacity model version" },
+    { "fluidCapacitySource", "STRING", "Resolved fluid capacity source" },
+    { "engineOilCapacity", "FLOAT", "Engine oil capacity in liters" },
+    { "coolantCapacity", "FLOAT", "Coolant capacity in liters" },
+    { "transmissionOilCapacity", "FLOAT", "Transmission oil capacity in liters" },
+    { "hydraulicFluidCapacity", "FLOAT", "Hydraulic fluid capacity in liters" },
+    { "engineOilCompatibility", "FLOAT", "Engine oil mixture compatibility" },
+    { "coolantCompatibility", "FLOAT", "Coolant mixture compatibility" },
+    { "transmissionOilCompatibility", "FLOAT", "Transmission oil mixture compatibility" },
+    { "hydraulicFluidCompatibility", "FLOAT", "Hydraulic fluid mixture compatibility" },
+    { "fluidLeakLossDebt", "STRING", "Unreplenished fluid loss by leak" },
+    { "pendingFluidRequirements", "STRING", "Physical fluid reserved for the running service" },
+    { "wetStackingLevel", "FLOAT", "Wet stacking deposit level" },
+    { "particulateFilterLevel", "FLOAT", "Particulate filter soot level, 1 calling a regeneration" },
+    { "scrInducementHours", "FLOAT", "Engine hours since an AdBlue fault was confirmed" },
+    { "particulateFilterOverloaded", "BOOL", "Whether the particulate filter overload is shown as a breakdown" },
+    { "greasing", "STRING", "Grease points due, hours elapsed and hours late per interval, then the worked day" },
+    { "thermostatState", "FLOAT", "Opening of the engine thermostat, 0 to 1" },
+    { "transmissionThermostatState", "FLOAT", "Opening of the transmission oil thermostat, 0 to 1" },
+    { "serviceOptionOne", "STRING", "First choice of the running service" },
+    { "serviceOptionTwo", "STRING", "Second choice of the running service" },
+    { "serviceOptionThree", "BOOL", "Third choice of the running service" },
+    { "workshopType", "STRING", "Workshop doing the running service" },
+    { "pendingSelectedBreakdowns", "STRING", "Breakdowns the running service repairs" },
+    { "pendingServicePrice", "FLOAT", "Price of the running service" },
+    { "pendingServiceInvoice", "STRING", "Invoice lines of the running service" },
+    { "pendingInspectionQueue", "STRING", "Breakdowns the running inspection has yet to find" },
+    { "pendingRepairQueue", "STRING", "Breakdowns the running repair has yet to clear" },
+    { "pendingProgressStepIndex", "INT", "Step the running service is at" },
+    { "pendingProgressTotalTime", "FLOAT", "Length of the running service, in ms" },
+    { "pendingProgressElapsedTime", "FLOAT", "Time the running service has run, in ms" },
+    { "pendingServiceClockStart", "STRING", "Service clock levels at the start of the running service" },
+    { "pendingServiceClockTarget", "STRING", "Service clock levels the running service restores" },
+    { "systemsState", "STRING", "Condition and switch of each system" },
+    { "partWear", "STRING", "Wear of each part" },
+    { "partImpactWear", "STRING", "Wear each part took from collisions" },
+    { "factorStats", "STRING", "Wear gathered by each cause, system by system" },
+    { "pendingOverhaulPartStart", "STRING", "Wear of each part at the start of the running overhaul" },
+    { "pendingOverhaulPartTarget", "STRING", "Wear the running overhaul brings each part to" },
+    { "driveMode", "INT", "Drivetrain mode (0=4x2, 1=4WD, 2=AUTO)" },
+    { "diffLockRequested", "BOOL", "Differential lock requested" },
+    { "tripStartKilometers", "FLOAT", "Odometer reading at the last trip meter reset (km)" },
+    { "ptoEngagementCount", "INT", "PTO engagement count" },
+    { "ptoEngagementSequence", "INT", "PTO engagement cycle sequence" }
+}
+
+---Savegame attributes of a maintenance log entry
+local LOG_ENTRY_ATTRIBUTES = {
+    { "id", "INT", "Number of the entry" },
+    { "type", "STRING", "Kind of service" },
+    { "price", "FLOAT", "Price paid" },
+    { "date", "STRING", "Day, month and year of the service" },
+    { "location", "STRING", "Workshop of the service" },
+    { "optionOne", "STRING", "First choice of the service" },
+    { "optionTwo", "STRING", "Second choice of the service" },
+    { "optionThree", "BOOL", "Third choice of the service" },
+    { "isVisible", "STRING", "Whether the record shows the entry" },
+    { "isCompleted", "BOOL", "Whether the service ran to its end" },
+    { "invoice", "STRING", "Invoice Lines" }
+}
+
+---Savegame attributes of the machine as a log entry found it
+local LOG_CONDITION_ATTRIBUTES = {
+    { "year", "INT", "Model year of the machine" },
+    { "operatingHours", "FLOAT", "Hours on the meter" },
+    { "odometerKilometers", "FLOAT", "Odometer Reading (km)" },
+    { "age", "FLOAT", "Age of the machine in months" },
+    { "condition", "FLOAT", "Overall condition" },
+    { "service", "FLOAT", "Engine oil service clock" },
+    { "activeBreakdowns", "STRING", "Breakdowns on the machine, encoded" },
+    { "selectedBreakdowns", "STRING", "Breakdowns chosen for repair" },
+    { "activeEffects", "STRING", "Effects the breakdowns had" },
+    { "activeIndicators", "STRING", "Warning lights lit" },
+    { "reliability", "FLOAT", "Reliability of the make" },
+    { "systems", "STRING", "Condition and switch of each system" },
+    { "partWear", "STRING", "Wear of each part" },
+    { "batterySoc", "FLOAT", "Battery charge, 1 full" },
+    { "wearExcess", "FLOAT", "Wear over the normal wear" },
+    { "wearCauses", "STRING", "Share of each cause of wear" }
+}
+
 ---Finishes the running service at once
--- @param table vehicle vehicle
--- @return boolean finished true when a service was running
 function RealisticMechanicalSystems.forceFinishService(vehicle)
-    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil or not vehicle.isServer then
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or not vehicle.isServer or spec.currentState == RealisticMechanicalSystems.STATUS.READY then
         return false
     end
 
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec.currentState == RealisticMechanicalSystems.STATUS.READY then
-        return false
-    end
-
-    local remainingMs = math.max(spec.maintenanceTimer or 0, 0)
-    local missionInfo = g_currentMission and g_currentMission.missionInfo or nil
-    local timeScale = (missionInfo and missionInfo.timeScale) or 1
-    if timeScale <= 0 then
-        timeScale = 1
-    end
-
-    local forceDt = math.max(math.ceil(remainingMs / timeScale) + 1, 1)
-
-    vehicle:processService(forceDt, true)
+    -- One step as long as what is left, at the time scale of the mission
+    local missionInfo = g_currentMission ~= nil and g_currentMission.missionInfo or nil
+    local timeScale = missionInfo ~= nil and missionInfo.timeScale or 1
+    timeScale = timeScale > 0 and timeScale or 1
+    local remaining = math.max(spec.maintenanceTimer or 0, 0)
+    vehicle:processService(math.max(math.ceil(remaining / timeScale) + 1, 1), true)
 
     if spec.currentState ~= RealisticMechanicalSystems.STATUS.READY then
         spec.pendingProgressElapsedTime = spec.pendingProgressTotalTime or 0
         spec.maintenanceTimer = 0
         vehicle:completeService()
     end
-
     return true
 end
 
 ---Registers the savegame schema of the specialization
 function RealisticMechanicalSystems.initSpecialization()
     local schema = Vehicle.xmlSchema
-    local schemaSavegame = Vehicle.xmlSchemaSavegame
+    local savegame = Vehicle.xmlSchemaSavegame
+    local function register(path, attributes)
+        for _, attribute in ipairs(attributes) do
+            savegame:register(XMLValueType[attribute[2]], path .. "#" .. attribute[1], attribute[3], attribute[4])
+        end
+    end
 
     schema:setXMLSpecializationType("RealisticMechanicalSystems")
-
-    local baseKey = "vehicles.vehicle(?).RealisticMechanicalSystems"
-    schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#userExclusion", "User decision overriding the automatic exclusion, absent when the user has no opinion")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#service", "Service Level")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionService", "Transmission and hydraulic oil service level")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#coolantService", "Coolant service level")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#hydraulicService", "Separate hydraulic oil service level")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#serviceCalendar", "Calendar start ages by service circuit")
-    schemaSavegame:register(XMLValueType.INT, baseKey .. "#warrantyPlan", "Factory warranty plan")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#partWarranty", "Dealer part warranty expiry ages")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#usedPartWarranty", "Used part warranty expiry ages")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#condition", "Condition Level")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#breakdowns", "Active Breakdowns")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#state", "Current State")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#plannedState", "Planned State")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#maintenanceTimer", "Maintenance Timer")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#realOperatingTime", "Real Operating Time")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#engineTemperature", "Engine Temperature")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionTemperature", "Transmission Temperature")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#hydraulicTemperature", "Optional Separate Hydraulic Temperature")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#thermalWorldTime", "Optional Thermal World Time Metadata")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#thermalAmbient", "Optional Thermal Ambient Metadata")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#batterySoc", "Battery State Of Charge")
-    schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#batteryIsolated", "Battery isolator open", false)
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#tractionBatteryTempC", "Traction battery temperature of an electric vehicle")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#radiatorClogging", "Radiator clogging level")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#airFilterClogging", "Air filter clogging level")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#airFilterResidue", "Air filter clogging a blow out cannot remove")
+    local base = "vehicles.vehicle(?).RealisticMechanicalSystems"
+    register(base, SAVEGAME_ATTRIBUTES)
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
-        schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#" .. filter.stateKey, "Filter clogging, 1 when its change falls due")
+        savegame:register(XMLValueType.FLOAT, base .. "#" .. filter.stateKey, "Filter clogging, 1 when its change falls due")
     end
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#engineOilLevel", "Engine oil level")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#coolantLevel", "Coolant level")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionOilLevel", "Transmission oil level")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#hydraulicFluidLevel", "Hydraulic fluid level")
-    schemaSavegame:register(XMLValueType.INT,    baseKey .. "#fluidCapacityVersion", "Fluid capacity model version")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#fluidCapacitySource", "Resolved fluid capacity source")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#engineOilCapacity", "Engine oil capacity in liters")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#coolantCapacity", "Coolant capacity in liters")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionOilCapacity", "Transmission oil capacity in liters")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#hydraulicFluidCapacity", "Hydraulic fluid capacity in liters")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#engineOilCompatibility", "Engine oil mixture compatibility")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#coolantCompatibility", "Coolant mixture compatibility")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionOilCompatibility", "Transmission oil mixture compatibility")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#hydraulicFluidCompatibility", "Hydraulic fluid mixture compatibility")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#fluidLeakLossDebt", "Unreplenished fluid loss by leak")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingFluidRequirements", "Physical fluid reserved for the running service")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#wetStackingLevel", "Wet stacking deposit level")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#particulateFilterLevel", "Particulate filter soot level, 1 calling a regeneration")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#scrInducementHours", "Engine hours since an AdBlue fault was confirmed")
-    schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#particulateFilterOverloaded", "Whether the particulate filter overload is shown as a breakdown")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#lubricationLevel", "Lubrication level")
-    schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#lubricationUsedThisPeriod", "Whether the vehicle was used during the current period")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#thermostatState", "Engine Thermostat Position")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#transmissionThermostatState", "Transmission Thermostat Position")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#serviceOptionOne", "Current Service Option One")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#serviceOptionTwo", "Current Service Option Two")
-    schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#serviceOptionThree", "Current Service Option Three")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#workshopType", "Workshop Type")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingSelectedBreakdowns", "Pending Selected Breakdowns")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#pendingServicePrice", "Pending Service Price")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingServiceInvoice", "Pending Service Invoice")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingInspectionQueue", "Pending Inspection Queue")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingRepairQueue", "Pending Repair Queue")
-    schemaSavegame:register(XMLValueType.INT,    baseKey .. "#pendingProgressStepIndex", "Pending Progress Step Index")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#pendingProgressTotalTime", "Pending Progress Total Time")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#pendingProgressElapsedTime", "Pending Progress Elapsed Time")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingServiceClockStart", "Service clock levels at the start of the running service")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingServiceClockTarget", "Service clock levels the running service restores")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#systemsState", "Systems state snapshot")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#partWear", "Wear of each part")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#factorStats", "Per-system accumulated factor stats")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingOverhaulPartStart", "Wear of each part at the start of the running overhaul")
-    schemaSavegame:register(XMLValueType.STRING, baseKey .. "#pendingOverhaulPartTarget", "Wear the running overhaul brings each part to")
-    schemaSavegame:register(XMLValueType.INT,    baseKey .. "#driveMode", "Drivetrain mode (0=4x2, 1=4WD, 2=AUTO)")
-    schemaSavegame:register(XMLValueType.BOOL,   baseKey .. "#diffLockRequested", "Differential lock requested")
-    schemaSavegame:register(XMLValueType.FLOAT,  baseKey .. "#tripStartKilometers", "Odometer reading at the last trip meter reset (km)")
-    schemaSavegame:register(XMLValueType.INT,    baseKey .. "#ptoEngagementCount", "PTO engagement count")
-    schemaSavegame:register(XMLValueType.INT,    baseKey .. "#ptoEngagementSequence", "PTO engagement cycle sequence")
-
-    local logKey = baseKey .. ".maintenanceLog.entry(?)"
-    schemaSavegame:register(XMLValueType.INT,    logKey .. "#id", "Entry ID")
-    schemaSavegame:register(XMLValueType.STRING, logKey .. "#type", "Maintenance Type")
-    schemaSavegame:register(XMLValueType.FLOAT,  logKey .. "#price", "Price")
-    schemaSavegame:register(XMLValueType.STRING, logKey .. "#date", "Date")
-
-    schemaSavegame:register(XMLValueType.STRING, logKey .. "#location", "Workshop Location")
-    schemaSavegame:register(XMLValueType.STRING, logKey .. "#optionOne", "Option One")
-    schemaSavegame:register(XMLValueType.STRING, logKey .. "#optionTwo", "Option Two")
-    schemaSavegame:register(XMLValueType.BOOL,   logKey .. "#optionThree", "Option Three")
-    schemaSavegame:register(XMLValueType.STRING, logKey .. "#isVisible", "is Visible in Log")
-    schemaSavegame:register(XMLValueType.BOOL,   logKey .. "#isCompleted", "Is Completed")
-    schemaSavegame:register(XMLValueType.STRING, logKey .. "#invoice", "Invoice Lines")
-    local condKey = logKey .. ".conditionData"
-    schemaSavegame:register(XMLValueType.INT,    condKey .. "#year", "Vehicle Year")
-    schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#operatingHours", "Operating Hours")
-    schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#odometerKilometers", "Odometer Reading (km)")
-    schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#age", "Vehicle Age")
-    schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#condition", "Condition Level")
-    schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#service", "Service Level")
-    schemaSavegame:register(XMLValueType.STRING, condKey .. "#activeBreakdowns", "Active Breakdowns")
-    schemaSavegame:register(XMLValueType.STRING, condKey .. "#selectedBreakdowns", "Selected Breakdowns")
-    schemaSavegame:register(XMLValueType.STRING, condKey .. "#activeEffects", "Active Effects")
-    schemaSavegame:register(XMLValueType.STRING, condKey .. "#activeIndicators", "Active Indicators")
-    schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#reliability", "Reliability")
-    schemaSavegame:register(XMLValueType.STRING, condKey .. "#systems", "Per-system snapshot")
-    schemaSavegame:register(XMLValueType.STRING, condKey .. "#partWear", "Wear of each part")
-    schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#batterySoc", "Battery State Of Charge")
-    schemaSavegame:register(XMLValueType.FLOAT,  condKey .. "#wearExcess", "Wear over the normal wear")
-    schemaSavegame:register(XMLValueType.STRING, condKey .. "#wearCauses", "Share of each cause of wear")
-
+    local entry = base .. ".maintenanceLog.entry(?)"
+    register(entry, LOG_ENTRY_ATTRIBUTES)
+    register(entry .. ".conditionData", LOG_CONDITION_ATTRIBUTES)
     schema:setXMLSpecializationType()
 
     RMS_Thermal.registerReversibleFan()
     RealisticMechanicalSystems.registerWarrantyConfiguration()
 end
 
----
--- @param table vehicleType vehicle type
 function RealisticMechanicalSystems.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onLoad", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onPostLoad", RealisticMechanicalSystems)
@@ -1261,19 +972,19 @@ function RealisticMechanicalSystems.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", RealisticMechanicalSystems)
 end
 
----
--- @param table vehicleType vehicle type
 function RealisticMechanicalSystems.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsTabbable", RealisticMechanicalSystems.getIsTabbable)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "repaintVehicle", RMS_Bodywork.repaintVehicle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCanMotorRun", RMS_Breakdowns.getCanMotorRun)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getMotorNotAllowedWarning", RMS_Breakdowns.getMotorNotAllowedWarning)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCanStartAIVehicle", RMS_Breakdowns.getCanStartAIVehicle)
-    SpecializationUtil.registerOverwrittenFunction(vehicleType, "startMotor", RMS_Breakdowns.startMotor)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "startMotor", RMS_Start.startMotor)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "stopMotor", RMS_Start.stopMotor)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateDamageAmount", RealisticMechanicalSystems.updateDamageAmount)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "setLightsTypesMask", RMS_Breakdowns.setLightsTypesMask)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "setBeaconLightsVisibility", RMS_Breakdowns.setBeaconLightsVisibility)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "setTurnLightState", RMS_Breakdowns.setTurnLightState)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsActiveForLights", RMS_Breakdowns.getIsActiveForLights)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getSpeedLimit", RMS_Breakdowns.getSpeedLimitOverwrite)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCruiseControlSpeed", RealisticMechanicalSystems.getCruiseControlSpeed)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateVehiclePhysics", RMS_Breakdowns.updateVehiclePhysics)
@@ -1287,8 +998,6 @@ function RealisticMechanicalSystems.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateArticulatedAxisRotation", RMS_Steering.updateArticulatedAxisRotation)
 end
 
----
--- @param table vehicleType vehicle type
 function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "rmsUpdate", RealisticMechanicalSystems.rmsUpdate)
     SpecializationUtil.registerFunction(vehicleType, "updateVehicleStateSnapshot", RealisticMechanicalSystems.updateVehicleStateSnapshot)
@@ -1333,6 +1042,7 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getTransmissionType", RealisticMechanicalSystems.getTransmissionType)
     SpecializationUtil.registerFunction(vehicleType, "updateHydraulicsSystem", RealisticMechanicalSystems.updateHydraulicsSystem)
     SpecializationUtil.registerFunction(vehicleType, "updatePtoSystem", RealisticMechanicalSystems.updatePtoSystem)
+    SpecializationUtil.registerFunction(vehicleType, "updateHarvestSystem", RealisticMechanicalSystems.updateHarvestSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateCoolingSystem", RealisticMechanicalSystems.updateCoolingSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateElectricalSystem", RealisticMechanicalSystems.updateElectricalSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateChassisSystem", RealisticMechanicalSystems.updateChassisSystem)
@@ -1361,7 +1071,6 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "updateAirFilterClogging", RMS_Consumables.updateAirFilterClogging)
     SpecializationUtil.registerFunction(vehicleType, "updateFilterClogging", RMS_Consumables.updateFilterClogging)
     SpecializationUtil.registerFunction(vehicleType, "cleanRadiatorAndAirFilter", RMS_Consumables.cleanRadiatorAndAirFilter)
-    SpecializationUtil.registerFunction(vehicleType, "updateLubricationLevel", RMS_Consumables.updateLubricationLevel)
     SpecializationUtil.registerFunction(vehicleType, "updateFluidLevels", RMS_Consumables.updateFluidLevels)
     SpecializationUtil.registerFunction(vehicleType, "refillVehicleFluids", RMS_Consumables.refillVehicleFluids)
     SpecializationUtil.registerFunction(vehicleType, "topUpRepairedLeaks", RMS_Consumables.topUpRepairedLeaks)
@@ -1372,7 +1081,6 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getFluidCompatibility", RMS_Consumables.getFluidCompatibility)
     SpecializationUtil.registerFunction(vehicleType, "addFluidLiters", RMS_Consumables.addFluidLiters)
     SpecializationUtil.registerFunction(vehicleType, "replaceFluidCircuit", RMS_Consumables.replaceFluidCircuit)
-    SpecializationUtil.registerFunction(vehicleType, "lubricateVehicle", RMS_Consumables.lubricateVehicle)
     SpecializationUtil.registerFunction(vehicleType, "startFieldVisualInspectionProcess", RMS_Consumables.startFieldVisualInspectionProcess)
     SpecializationUtil.registerFunction(vehicleType, "setFieldInspectionPlayerActive", RMS_Consumables.setFieldInspectionPlayerActive)
     SpecializationUtil.registerFunction(vehicleType, "updateFieldInspectionSound", RMS_Consumables.updateFieldInspectionSound)
@@ -1412,37 +1120,16 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     
 end
 
----
--- @param boolean wasEntered true if the vehicle was entered
 function RealisticMechanicalSystems:onLeaveVehicle(wasEntered)
     local spec = self.spec_RealisticMechanicalSystems
     if spec == nil then
         return
     end
 
-    spec.lastBlinkingWarningMessage = ""
-    spec.blinkingWarningTimer = 0
+    -- The next driver gets every warning afresh
+    spec.lastBlinkingWarningMessage, spec.blinkingWarningTimer = "", 0
 
-    local hadStartInput = spec.startButtonDown or spec.startButtonHeld or spec.startButtonUp
-    spec.startButtonDown = false
-    spec.startButtonHeld = false
-    spec.startButtonUp = false
-
-    if hadStartInput then
-        RMS_StartButtonEvent.send(self, false, false, false)
-    end
-
-    if self.isServer
-        and not self:getIsMotorStarted()
-        and spec.preheatState ~= RMS_Preheat.STATE.IDLE then
-        RMS_Breakdowns.cancelStarterCranking(self)
-        RMS_Preheat.reset(self, false)
-        if self:getMotorState() ~= MotorState.OFF then
-            self:setMotorState(MotorState.OFF)
-        end
-        RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.ELECTRICAL)
-    end
-
+    RMS_Start.onLeaveVehicle(self)
     RMS_Drivetrain.onDriverLeft(self, wasEntered)
 end
 
@@ -1451,64 +1138,17 @@ function RealisticMechanicalSystems:onDeactivate()
     RMS_Drivetrain.restoreFreeRolling(self)
 end
 
----Enables the start button action only while it can actually be used
--- @param table self vehicle
-function RealisticMechanicalSystems.updateStartButtonActionEvents(self)
-    if not self.isClient or not self:getIsActiveForInput(true) then
-        return
-    end
-
-    local spec = self.spec_RealisticMechanicalSystems
-    local motorizedSpec = self.spec_motorized
-    if spec == nil or motorizedSpec == nil or spec.startButtonActionEvents == nil then
-        return
-    end
-
-    local automaticMotorStartEnabled = g_currentMission.missionInfo.automaticMotorStartEnabled == true
-
-    for inputAction, actionEvent in pairs(spec.startButtonActionEvents) do
-        local actionEventId = actionEvent.actionEventId
-        local registeredEvent = actionEventId ~= nil
-            and g_inputBinding.events ~= nil
-            and g_inputBinding.events[actionEventId]
-            or nil
-
-        if registeredEvent ~= nil then
-            g_inputBinding:setActionEventActive(actionEventId, true)
-
-            if inputAction == InputAction.TOGGLE_MOTOR_STATE then
-                g_inputBinding:setActionEventTextVisibility(actionEventId, not automaticMotorStartEnabled)
-
-                local motorState = self:getMotorState()
-                if motorState == MotorState.STARTING or motorState == MotorState.ON or RMS_Preheat.isFailed(self) then
-                    g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
-                    g_inputBinding:setActionEventText(actionEventId, motorizedSpec.turnOffText)
-                else
-                    g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_HIGH)
-                    g_inputBinding:setActionEventText(actionEventId, motorizedSpec.turnOnText)
-                end
-            else
-                g_inputBinding:setActionEventTextVisibility(actionEventId, false)
-            end
-        end
-    end
-end
-
 ---Registers the specialization action events
--- @param boolean isActiveForInput true if vehicle is active for input
--- @param boolean isActiveForInputIgnoreSelection active regardless of selection
 function RealisticMechanicalSystems:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
     if not self.isClient then
         return
     end
 
     local spec = self.spec_RealisticMechanicalSystems
-    local motorizedSpec = self.spec_motorized
-    if spec == nil or motorizedSpec == nil then
+    if spec == nil then
         return
     end
 
-    self:clearActionEventsTable(spec.startButtonActionEvents)
     self:clearActionEventsTable(spec.odometerActionEvents)
     self:clearActionEventsTable(spec.fanActionEvents)
 
@@ -1537,41 +1177,6 @@ function RealisticMechanicalSystems:onRegisterActionEvents(isActiveForInput, isA
             g_inputBinding:setActionEventTextVisibility(fanEventId, true)
         end
     end
-
-    local startInputActions = {
-        InputAction.TOGGLE_MOTOR_STATE,
-        InputAction.MOTOR_STATE_ON or "MOTOR_STATE_ON"
-    }
-
-    for _, inputAction in ipairs(startInputActions) do
-        local motorizedActionEvent = motorizedSpec.actionEvents[inputAction]
-        if motorizedActionEvent ~= nil and motorizedActionEvent.actionEventId ~= nil then
-            g_inputBinding:removeActionEvent(motorizedActionEvent.actionEventId)
-        end
-        motorizedSpec.actionEvents[inputAction] = nil
-
-        -- Share one action event with native held-state tracking.
-        local _, actionEventId = self:addActionEvent(
-            spec.startButtonActionEvents,
-            inputAction,
-            self,
-            RMS_Breakdowns.onStartButtonAction,
-            true,
-            true,
-            false,
-            true,
-            nil,
-            nil,
-            true
-        )
-
-        if actionEventId ~= nil then
-            g_inputBinding:setActionEventTextVisibility(actionEventId, false)
-            g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
-        end
-    end
-
-    RealisticMechanicalSystems.updateStartButtonActionEvents(self)
 end
 
 function RealisticMechanicalSystems:onReverseFanAction()
@@ -1580,8 +1185,6 @@ function RealisticMechanicalSystems:onReverseFanAction()
 end
 
 ---Odometer key: a press switches odometer and trip, a hold resets the trip
--- @param string actionName input action name
--- @param float inputValue input value, zero on release
 function RealisticMechanicalSystems:onOdometerAction(actionName, inputValue)
     local spec = self.spec_RealisticMechanicalSystems
     if inputValue == 0 then
@@ -1601,8 +1204,6 @@ function RealisticMechanicalSystems:onOdometerAction(actionName, inputValue)
 end
 
 ---Resets the trip meter to the current odometer reading, on every machine
--- @param table vehicle vehicle
--- @param boolean? noEventSend no event send
 function RealisticMechanicalSystems.resetTripMeter(vehicle, noEventSend)
     vehicle.spec_RealisticMechanicalSystems.tripStartKilometers = RMS_Utils.getOdometerKilometers(vehicle)
     RMS_TripResetEvent.sendEvent(vehicle, noEventSend)
@@ -1633,7 +1234,6 @@ local function getHistoryWearRate(spec, systemKey, index, partId, care)
     return rate * RMS_Config.CORE.BASE_SYSTEMS_WEAR / math.max(spec.reliability or 1, 0.001)
 end
 
----Draws the wear a part lasts, by the Weibull law of its kind
 local function drawPartLife(partId)
     local C = RMS_Config.CORE
     local life = C.COMPONENT_LIVES[RMS_Breakdowns.BreakdownRegistry[partId].component]
@@ -1641,9 +1241,6 @@ local function drawPartLife(partId)
 end
 
 ---Returns the wear of a lit part without record
--- @param table vehicle vehicle
--- @param string partId breakdown id of the part
--- @return float wear wear of the part
 function RealisticMechanicalSystems.getUnrecordedLitPartWear(vehicle, partId)
     local C = RMS_Config.CORE
     local wear = vehicle:getOperatingTime() / 3600000 * C.USED_VEHICLE_HISTORY.LIT_SHARE * C.BASE_SYSTEMS_WEAR
@@ -1669,8 +1266,6 @@ local function addAgedBreakdown(vehicle, partId, elapsed)
         isVisible = stage == #stages and stages[stage].detectionChance > 0 })
 end
 
--- @param table vehicle vehicle
--- @param string care careful, regular or neglected
 -- @param boolean withBreakdowns false for a contract machine, lent in working order
 function RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, withBreakdowns)
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1737,6 +1332,7 @@ function RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, withBre
     for systemKey, systemParts in pairs(spec.systemParts) do
         for _, partId in ipairs(systemParts) do
             spec.partWear[partId] = parts[partId].age
+            spec.partImpactWear[partId] = nil
             spec.partDrawnWear[partId] = nil
         end
         RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
@@ -1756,8 +1352,6 @@ function RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, withBre
     end
 end
 
--- @param table vehicle vehicle
--- @param float hours operating hours
 -- @return table wear wear by part id
 function RealisticMechanicalSystems.getAverageMachineWear(vehicle, hours)
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1786,9 +1380,6 @@ function RealisticMechanicalSystems.getAverageMachineWear(vehicle, hours)
     return wear
 end
 
--- @param table vehicle vehicle
--- @param float hours operating hours
--- @return float price catch-up price
 function RealisticMechanicalSystems.getCatchUpPrice(vehicle, hours)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local average = RealisticMechanicalSystems.getAverageMachineWear(vehicle, hours)
@@ -1802,170 +1393,172 @@ function RealisticMechanicalSystems.getCatchUpPrice(vehicle, hours)
     return price
 end
 
----Registers a vehicle with the mod, classifying it and creating its spec fields
+---Adds or removes a breakdown as the vehicle state asks
+local function setBreakdownPresent(vehicle, breakdownId, isPresent)
+    local hasBreakdown = vehicle:hasBreakdown(breakdownId)
+    if isPresent and not hasBreakdown then
+        vehicle:addBreakdown(breakdownId)
+    elseif not isPresent and hasBreakdown then
+        vehicle:removeBreakdown(breakdownId)
+    end
+end
+
+---Puts a breakdown at the stage the vehicle asks, 0 removing it
+local function setBreakdownStage(vehicle, breakdownId, stage)
+    local hasBreakdown = vehicle:hasBreakdown(breakdownId)
+    if stage <= 0 then
+        if hasBreakdown then
+            vehicle:removeBreakdown(breakdownId)
+        end
+    elseif not hasBreakdown then
+        vehicle:addBreakdown(breakdownId, stage)
+    elseif vehicle:getActiveBreakdowns()[breakdownId].stage ~= stage then
+        vehicle:changeBreakdownStage(breakdownId, stage)
+    end
+end
+
+---Tells whether an active effect carries a flag in its extra data
+local function hasEffectFlag(spec, flag)
+    for _, effect in pairs(spec.activeEffects or {}) do
+        if effect.extraData ~= nil and effect.extraData[flag] then
+            return true
+        end
+    end
+    return false
+end
+
+---Tells whether a vehicle is owned, leased or lent by an existing farm
+local function getIsFarmVehicle(vehicle)
+    local PROPERTY = VehiclePropertyState
+    local state = vehicle.propertyState
+    if state ~= PROPERTY.OWNED and state ~= PROPERTY.LEASED and state ~= PROPERTY.MISSION then
+        return false
+    end
+    local farmId = vehicle.getOwnerFarmId ~= nil and vehicle:getOwnerFarmId() or vehicle.ownerFarmId
+    return farmId ~= nil and farmId ~= FarmManager.SPECTATOR_FARM_ID and g_farmManager:getFarmById(farmId) ~= nil
+end
+
+---Removes the breakdowns the parts of this vehicle cannot have
+local function removeInapplicableBreakdowns(vehicle, spec)
+    local breakdownIds = {}
+    for breakdownId in pairs(spec.activeBreakdowns) do
+        local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
+        if definition == nil or not definition.isApplicable(vehicle) then
+            table.insert(breakdownIds, breakdownId)
+        end
+    end
+    if #breakdownIds > 0 then
+        vehicle:removeBreakdown(unpack(breakdownIds))
+    end
+end
+
+---Seeds a vehicle new to RMS from its hours and damage
+local function initializeNewToRMS(vehicle, spec)
+    spec.isNewToRMS = false
+    local isMission = RealisticMechanicalSystems.isMissionVehicle(vehicle)
+    local isUsed = vehicle:getFormattedOperatingTime() > 0.01
+    if isUsed and not spec.isExcludedVehicle then
+        local care = isMission and "careful" or RMS_Utils.getOwnerCare(vehicle:getDamageAmount())
+        RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, not isMission)
+    end
+    -- A new or lent machine comes with the report of its delivery inspection
+    if (not isUsed or isMission) and (spec.maintenanceLog == nil or #spec.maintenanceLog == 0) then
+        local TYPES = RealisticMechanicalSystems.INSPECTION_TYPES
+        vehicle:addEntryToMaintenanceLog(RealisticMechanicalSystems.STATUS.INSPECTION, isMission and TYPES.STANDARD or TYPES.COMPLETE,
+            "NONE", false, 0)
+    end
+end
+
+---Puts a farm vehicle under RMS once, its data read and checked
 local function registerVehicle(vehicle)
-    if RMS_Main and RMS_Main.vehicles and RMS_Main.vehicles[vehicle.uniqueId] == nil then
-        local ownerFarmId = vehicle.getOwnerFarmId ~= nil and vehicle:getOwnerFarmId() or vehicle.ownerFarmId
-        local hasSupportedPropertyState = vehicle.propertyState == VehiclePropertyState.OWNED
-            or vehicle.propertyState == VehiclePropertyState.LEASED
-            or vehicle.propertyState == VehiclePropertyState.MISSION
-        local hasValidOwnerFarm = ownerFarmId ~= nil
-            and ownerFarmId ~= FarmManager.SPECTATOR_FARM_ID
-            and g_farmManager:getFarmById(ownerFarmId) ~= nil
+    if RMS_Main == nil or RMS_Main.vehicles == nil or RMS_Main.vehicles[vehicle.uniqueId] ~= nil or not getIsFarmVehicle(vehicle) then
+        return
+    end
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil then
+        return
+    end
+    RMS_Main.vehicles[vehicle.uniqueId] = vehicle
+    RMS_Main.numVehicles = RMS_Main.numVehicles + 1
+    spec.reliability = RealisticMechanicalSystems.getBrandReliability(vehicle)
 
-        if hasSupportedPropertyState and hasValidOwnerFarm then
+    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
+    if storeItem ~= nil then
+        spec.year, spec.yearSource = RMS_ProductionYear.getVehicleYear(vehicle, storeItem)
+        spec.yearIsKnown = spec.yearSource ~= RMS_ProductionYear.SOURCE.UNKNOWN
+        spec.electricalRating = RMS_Electrical.resolveRating(vehicle)
+    end
+    spec.hasParticulateFilter = RMS_Exhaust.getHasParticulateFilter(vehicle)
+    RealisticMechanicalSystems.buildSystemParts(vehicle)
 
-            local spec = vehicle.spec_RealisticMechanicalSystems
-            if spec == nil then return end
+    if vehicle.isServer then
+        removeInapplicableBreakdowns(vehicle, spec)
+        if spec.isNewToRMS then
+            initializeNewToRMS(vehicle, spec)
+        end
+        RMS_Drivetrain.resolveParkBrakeKind(vehicle)
+    end
 
-            RMS_Main.vehicles[vehicle.uniqueId] = vehicle
-            RMS_Main.numVehicles = RMS_Main.numVehicles + 1
-    
-            spec.reliability = RealisticMechanicalSystems.getBrandReliability(vehicle)
-
-            local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
-            if storeItem ~= nil then
-                spec.year, spec.yearIsKnown = RMS_VehicleYears.getVehicleYear(vehicle, storeItem)
-                spec.electricalRating = RMS_Electrical.resolveRating(vehicle)
-            end
-            spec.hasParticulateFilter = RMS_Exhaust.getHasParticulateFilter(vehicle)
-            RealisticMechanicalSystems.buildSystemParts(vehicle)
-
-            if vehicle.isServer then
-                local inapplicableIds = {}
-                for breakdownId in pairs(spec.activeBreakdowns) do
-                    local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
-                    if definition == nil or not definition.isApplicable(vehicle) then
-                        table.insert(inapplicableIds, breakdownId)
-                    end
-                end
-                if #inapplicableIds > 0 then
-                    vehicle:removeBreakdown(unpack(inapplicableIds))
-                end
-            end
-
-            if vehicle.isServer and spec.isNewToRMS then
-                    spec.isNewToRMS = false
-                    local isUsedVehicle = vehicle:getFormattedOperatingTime() > 0.01
-                    if isUsedVehicle and not spec.isExcludedVehicle then
-                        local isMission = RealisticMechanicalSystems.isMissionVehicle(vehicle)
-                        local care = isMission and "careful" or RMS_Utils.getOwnerCare(vehicle:getDamageAmount())
-                        RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, not isMission)
-                    end
-
-                    local needsInitialReport = not isUsedVehicle or RealisticMechanicalSystems.isMissionVehicle(vehicle)
-                    if needsInitialReport and (spec.maintenanceLog == nil or #spec.maintenanceLog == 0) then
-                        local inspectionType = RealisticMechanicalSystems.isMissionVehicle(vehicle) and RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD
-                            or RealisticMechanicalSystems.INSPECTION_TYPES.COMPLETE
-                        vehicle:addEntryToMaintenanceLog(RealisticMechanicalSystems.STATUS.INSPECTION, inspectionType, "NONE", false, 0)
-                    end
-            end
-
-            if vehicle.isServer then
-                RMS_Drivetrain.resolveParkBrakeKind(vehicle)
-            end
-
-            local factorStats = ensureFactorStats(spec, vehicle)
-            local currentOperatingHours = getVehicleOperatingHours(vehicle)
-            for _, systemStats in pairs(factorStats) do
-                if type(systemStats) == "table" then
-                    local operatingHours = tonumber(systemStats.operatingHours)
-                    if operatingHours == nil or operatingHours < 0 then
-                        systemStats.operatingHours = currentOperatingHours
-                    end
-                end
-            end
+    -- The wear statistics count from the hours the vehicle has now
+    local hours = getVehicleOperatingHours(vehicle)
+    for _, stats in pairs(ensureFactorStats(spec)) do
+        if type(stats) == "table" and (tonumber(stats.operatingHours) or -1) < 0 then
+            stats.operatingHours = hours
         end
     end
 end
 RealisticMechanicalSystems.registerVehicle = registerVehicle
 
----Adds or removes the cold engine effect from the current engine temperature
+---Keeps the cold engine breakdown at -10 degrees or less
 local function syncColdEngineEffect(vehicle)
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil then return end
-
-    if vehicle.isServer then
-        local engTemp = RealisticMechanicalSystems.sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, -99, -99, 160)
-        local breakdownId = 'COLD_ENGINE'
-
-        if engTemp <= -10 and not vehicle:hasBreakdown(breakdownId) then
-            vehicle:addBreakdown(breakdownId)
-        elseif engTemp > -10 and vehicle:hasBreakdown(breakdownId) then
-            vehicle:removeBreakdown(breakdownId)
-        end
-    end
-end
-
-local function syncAirFilterCloggingEffect(vehicle)
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil or not vehicle.isServer then return end
-
-    local breakdownId = 'AIRFILTER_CLOGGING'
-    local shouldBeStage = 0
-    local threshold = RMS_Config.FIELD_CARE.AIR_FILTER_BREAKDOWN_THRESHOLD 
-
-    if spec.airFilterClogging > threshold then
-        if spec.airFilterClogging > (threshold + (threshold / 3 * 2)) then
-            shouldBeStage = 3
-        elseif spec.airFilterClogging > (threshold + (threshold / 3)) then
-            shouldBeStage = 2
-        else
-            shouldBeStage = 1
-        end
-        if not vehicle:hasBreakdown(breakdownId) then
-            vehicle:addBreakdown(breakdownId, shouldBeStage)
-        else
-            local currentStage = vehicle:getActiveBreakdowns()[breakdownId].stage
-            if currentStage ~= shouldBeStage then
-                vehicle:changeBreakdownStage(breakdownId, shouldBeStage)
-            end
-        end
-    else
-        if vehicle:hasBreakdown(breakdownId) then
-            vehicle:removeBreakdown(breakdownId)
-        end
-    end
-end
-
----Stops the AI helper and AutoDrive when a breakdown stops the machine working
-local function syncDisableAiWorkers(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil or not vehicle.isServer then
         return
     end
+    local temperature = RealisticMechanicalSystems.sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, -99, -99, 160)
+    setBreakdownPresent(vehicle, "COLD_ENGINE", temperature <= -10)
+end
 
-    if spec.activeEffects ~= nil and next(spec.activeEffects) ~= nil then
-        for _, effectData in pairs(spec.activeEffects) do
-            if effectData ~= nil and effectData.extraData ~= nil and effectData.extraData.disableAi then
-                local autoDriveActive = vehicle.ad ~= nil
-                    and vehicle.ad.stateModule ~= nil
-                    and vehicle.ad.stateModule.isActive ~= nil
-                    and vehicle.ad.stateModule:isActive()
-
-                if autoDriveActive and vehicle.stopAutoDrive ~= nil then
-                    vehicle.ad.isStoppingWithError = true
-
-                    if vehicle.ad.stateModule.setLoopsDone ~= nil then
-                        vehicle.ad.stateModule:setLoopsDone(0)
-                    end
-
-                    vehicle:stopAutoDrive()
-                end
-
-                if vehicle:getIsAIActive() and vehicle.stopCurrentAIJob ~= nil then
-                    vehicle:stopCurrentAIJob(AIMessageErrorVehicleBroken.new())
-                end
-
-                return
-            end
+---Stages the air filter breakdown, a third of the threshold apart
+local function syncAirFilterCloggingEffect(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil or not vehicle.isServer then
+        return
+    end
+    local threshold = RMS_Config.FIELD_CARE.AIR_FILTER_BREAKDOWN_THRESHOLD
+    local stage = 0
+    for step = 0, 2 do
+        if spec.airFilterClogging > threshold + threshold / 3 * step then
+            stage = step + 1
         end
+    end
+    setBreakdownStage(vehicle, "AIRFILTER_CLOGGING", stage)
+end
+
+---Stops the AI worker and a route driver a breakdown forbids
+local function syncDisableAiWorkers(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil or not vehicle.isServer or not hasEffectFlag(spec, "disableAi") then
+        return
+    end
+
+    local routeDriver = vehicle.ad
+    local driverState = routeDriver ~= nil and routeDriver.stateModule or nil
+    if driverState ~= nil and driverState.isActive ~= nil and driverState:isActive() and vehicle.stopAutoDrive ~= nil then
+        -- Stopped as on its own error, its loops reset
+        routeDriver.isStoppingWithError = true
+        if driverState.setLoopsDone ~= nil then
+            driverState:setLoopsDone(0)
+        end
+        vehicle:stopAutoDrive()
+    end
+    if vehicle:getIsAIActive() and vehicle.stopCurrentAIJob ~= nil then
+        vehicle:stopCurrentAIJob(AIMessageErrorVehicleBroken.new())
     end
 end
 
 local COLD_ENGINE_WARNING_MESSAGE = 'rms_spec_cold_engine_message'
 
----Returns the extra stress a cold engine puts on the systems
 local function getColdEngineStress(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.CORE.ENGINE_FACTOR_DATA
@@ -2001,109 +1594,95 @@ local function getColdEngineStress(vehicle)
 end
 RealisticMechanicalSystems.getColdEngineStress = getColdEngineStress
 
----Shows the blinking warnings of the active faults to the driving player
-local function syncBlinkingWarning(vehicle, dt)
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil or not vehicle.isClient then return end
+---Delay before the same blinking warning shows again, in ms
+local BLINKING_WARNING_REPEAT_MS = 180000
 
-    local C = RMS_Config.CORE.ENGINE_FACTOR_DATA
-    if spec.engineTemperature >= C.COLD_MOTOR_TEMP_THRESHOLD then
-        spec.coldEngineExposureMs = 0
-        spec.coldEngineWarningShown = false
+---Motor load the engine reports, 0 when it reports none
+local function getReportedMotorLoad(vehicle)
+    if vehicle.getMotorLoad ~= nil then
+        return tonumber(vehicle:getMotorLoad()) or 0
+    elseif vehicle.getMotorLoadPercentage ~= nil then
+        return tonumber(vehicle:getMotorLoadPercentage()) or 0
     end
+    return 0
+end
 
-    if RMS_Config.CORE.ENABLE_WARNING_MESSAGES == false
-            and (spec.activeEffects == nil or spec.activeEffects.ENGINE_THERMAL_TORQUE_LIMIT == nil) then
-        return
-    end
-
-    local repeatDelayMs = 180000
-
-    if spec.blinkingWarningTimer == nil then
-        spec.blinkingWarningTimer = 0
-    end
-
-    if spec.lastBlinkingWarningMessage == nil then
-        spec.lastBlinkingWarningMessage = ""
-    end
-
-    if spec.blinkingWarningTimer > 0 then
-        spec.blinkingWarningTimer = math.max(spec.blinkingWarningTimer - dt, 0)
-    end
-
-    local candidateMessage = nil
-    local isActiveForInput = vehicle:getIsActiveForInput(true)
-    local isAiActive = vehicle:getIsAIActive()
-    local isUnderService = vehicle:isUnderService()
-    local isMotorStarted = vehicle:getIsMotorStarted()
-    local coldEngineStress = 0
-
-    if isMotorStarted and isActiveForInput and not isAiActive and not spec.isElectricVehicle then
-        local spec_motorized = vehicle.spec_motorized
-        local motor = spec_motorized ~= nil and spec_motorized.motor or nil
-        if motor ~= nil then
-            local lastRpm = tonumber(motor:getLastModulatedMotorRpm()) or 0
-            local maxRpm = math.max(tonumber(motor.maxRpm) or 0, 0.0001)
-            local rpmLoad = lastRpm / maxRpm
-            local motorLoad = 0
-
-            if vehicle.getMotorLoad ~= nil then
-                motorLoad = tonumber(vehicle:getMotorLoad()) or 0
-            elseif vehicle.getMotorLoadPercentage ~= nil then
-                motorLoad = tonumber(vehicle:getMotorLoadPercentage()) or 0
+---Cold or hot engine or hot CVT warning, with the cold stress
+local function getThermalWarning(vehicle, spec, motor, dt)
+    local ENGINE = RMS_Config.CORE.ENGINE_FACTOR_DATA
+    local rpmShare = (tonumber(motor:getLastModulatedMotorRpm()) or 0) / math.max(tonumber(motor.maxRpm) or 0, 0.0001)
+    local message, coldStress = nil, 0
+    -- -90 and below: no temperature read yet
+    if spec.engineTemperature > -90 then
+        coldStress = getColdEngineStress(vehicle)
+        if coldStress > 0 then
+            spec.coldEngineExposureMs = spec.coldEngineExposureMs + dt
+            if spec.coldEngineExposureMs >= ENGINE.COLD_MOTOR_WARNING_EXPOSURE_MS and not spec.coldEngineWarningShown then
+                message = COLD_ENGINE_WARNING_MESSAGE
             end
-
-            if spec.engineTemperature > -90 then
-                coldEngineStress = getColdEngineStress(vehicle)
-                if coldEngineStress > 0 then
-                    spec.coldEngineExposureMs = spec.coldEngineExposureMs + dt
-                end
-
-                if coldEngineStress > 0
-                        and spec.coldEngineExposureMs >= C.COLD_MOTOR_WARNING_EXPOSURE_MS
-                        and not spec.coldEngineWarningShown then
-                    candidateMessage = COLD_ENGINE_WARNING_MESSAGE
-                elseif spec.engineTemperature >= RMS_Config.CORE.ENGINE_FACTOR_DATA.OVERHEAT_MOTOR_THRESHOLD + 5 and motorLoad > 0.3 then
-                    candidateMessage = 'rms_spec_overheat_engine_message'
-                end
-            end
-
-            if candidateMessage == nil and hasCVTTransmission(vehicle) and spec.transmissionTemperature > -90 then
-                if spec.transmissionTemperature >= RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.OVERHEAT_TRANSMISSION_THRESHOLD + 5 and rpmLoad > 0.75 then
-                    candidateMessage = 'rms_spec_overheat_transmission_message'
-                end
-            end
+        end
+        if message == nil and spec.engineTemperature >= ENGINE.OVERHEAT_MOTOR_THRESHOLD + 5 and getReportedMotorLoad(vehicle) > 0.3 then
+            message = "rms_spec_overheat_engine_message"
         end
     end
 
-    if coldEngineStress == 0 then
+    local transmissionLimit = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.OVERHEAT_TRANSMISSION_THRESHOLD + 5
+    if message == nil and hasCVTTransmission(vehicle) and spec.transmissionTemperature > -90
+        and spec.transmissionTemperature >= transmissionLimit and rpmShare > 0.75 then
+        message = "rms_spec_overheat_transmission_message"
+    end
+    return message, coldStress
+end
+
+---Blinks a thermal or breakdown warning, again after a delay
+local function syncBlinkingWarning(vehicle, dt)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil or not vehicle.isClient then
+        return
+    end
+    if spec.engineTemperature >= RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD then
+        spec.coldEngineExposureMs, spec.coldEngineWarningShown = 0, false
+    end
+    local effects = spec.activeEffects or {}
+    -- Warnings off, the thermal power limit still warns
+    if RMS_Config.CORE.ENABLE_WARNING_MESSAGES == false and effects.ENGINE_THERMAL_TORQUE_LIMIT == nil then
+        return
+    end
+    spec.blinkingWarningTimer = math.max((spec.blinkingWarningTimer or 0) - dt, 0)
+    spec.lastBlinkingWarningMessage = spec.lastBlinkingWarningMessage or ""
+
+    local isDriven = vehicle:getIsActiveForInput(true)
+    local isAiActive = vehicle:getIsAIActive()
+    local isUnderService = vehicle:isUnderService()
+    local motor = vehicle.spec_motorized ~= nil and vehicle.spec_motorized.motor or nil
+    local message, coldStress = nil, 0
+    if vehicle:getIsMotorStarted() and isDriven and not isAiActive and not spec.isElectricVehicle and motor ~= nil then
+        message, coldStress = getThermalWarning(vehicle, spec, motor, dt)
+    end
+    if coldStress == 0 then
         spec.coldEngineExposureMs = math.max(spec.coldEngineExposureMs - dt, 0)
     end
 
-    local thermalLimit = spec.activeEffects ~= nil and spec.activeEffects.ENGINE_THERMAL_TORQUE_LIMIT or nil
-    if thermalLimit ~= nil and thermalLimit.extraData ~= nil and not isUnderService then
-        candidateMessage = thermalLimit.extraData.message
+    -- The thermal power limit comes first, then any breakdown message
+    local limit = effects.ENGINE_THERMAL_TORQUE_LIMIT
+    if limit ~= nil and limit.extraData ~= nil and not isUnderService then
+        message = limit.extraData.message
     end
-
-    if spec.activeEffects ~= nil and next(spec.activeEffects) ~= nil then
-        for _, effectData in pairs(spec.activeEffects) do
-            if effectData ~= nil and effectData.extraData ~= nil and effectData.extraData.message ~= nil then
-                if candidateMessage == nil and isActiveForInput and not isUnderService then
-                    candidateMessage = effectData.extraData.message
-                end
+    if message == nil and isDriven and not isUnderService then
+        for _, effect in pairs(effects) do
+            if effect.extraData ~= nil and effect.extraData.message ~= nil then
+                message = effect.extraData.message
+                break
             end
         end
     end
 
-    if candidateMessage ~= nil
-            and isActiveForInput
-            and not isAiActive
-            and not isUnderService
-            and (spec.blinkingWarningTimer == 0 or spec.lastBlinkingWarningMessage ~= candidateMessage) then
-        g_currentMission:showBlinkingWarning(g_i18n:getText(candidateMessage), 3600)
-        spec.lastBlinkingWarningMessage = candidateMessage
-        spec.blinkingWarningTimer = repeatDelayMs
-        if candidateMessage == COLD_ENGINE_WARNING_MESSAGE then
+    local isNew = spec.blinkingWarningTimer == 0 or spec.lastBlinkingWarningMessage ~= message
+    if message ~= nil and isDriven and not isAiActive and not isUnderService and isNew then
+        g_currentMission:showBlinkingWarning(g_i18n:getText(message), 3600)
+        spec.lastBlinkingWarningMessage = message
+        spec.blinkingWarningTimer = BLINKING_WARNING_REPEAT_MS
+        if message == COLD_ENGINE_WARNING_MESSAGE then
             spec.coldEngineWarningShown = true
         end
     end
@@ -2134,7 +1713,7 @@ local function syncFaultCodeMessages(vehicle)
     spec.pendingFaultCodeMessages = waiting
 end
 
----Pushes the pending side notifications of the vehicle
+---Shows the side notifications the effects left, once each
 local function syncSideNotifications(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil or not vehicle.isClient then
@@ -2142,22 +1721,17 @@ local function syncSideNotifications(vehicle)
     end
 
     -- Pending warnings are runtime state, not join history.
-    local pendingNotifications = spec.pendingSideNotifications
+    local pending = spec.pendingSideNotifications
     spec.pendingSideNotifications = {}
-    if pendingNotifications == nil or next(pendingNotifications) == nil then
+    local hud = g_currentMission.hud
+    if pending == nil or next(pending) == nil or vehicle:getOwnerFarmId() ~= g_currentMission:getFarmId()
+        or hud == nil or hud.addSideNotification == nil then
         return
     end
 
     local warningsEnabled = RMS_Config.CORE == nil or RMS_Config.CORE.ENABLE_WARNING_MESSAGES ~= false
-
-    if vehicle:getOwnerFarmId() ~= g_currentMission:getFarmId()
-            or g_currentMission.hud == nil
-            or g_currentMission.hud.addSideNotification == nil then
-        return
-    end
-
     local shownMessages = {}
-    for effectId, messageKey in pairs(pendingNotifications) do
+    for effectId, messageKey in pairs(pending) do
         local effect = spec.activeEffects ~= nil and spec.activeEffects[effectId] or nil
         local thermalRecovery = effectId == "ENGINE_THERMAL_TORQUE_LIMIT"
             and messageKey == "rms_thermal_power_restored_message" and effect == nil
@@ -2171,154 +1745,119 @@ local function syncSideNotifications(vehicle)
     end
 end
 
----Applies the fuel consumption modifier of the active effects
+---Fuel use the server measures, shown as is on the clients
 local function syncFuelConsumption(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil then return end
-
-    if vehicle.isServer and vehicle.spec_motorized ~= nil then
-        if vehicle.getIsMotorStarted ~= nil and vehicle:getIsMotorStarted() then
-            spec._fuelUsageRaw = RealisticMechanicalSystems.sanitizeNumber(vehicle.spec_motorized.lastFuelUsage, 0, 0, 10000)
-        else
-            spec._fuelUsageRaw = 0
-        end
+    local motorized = vehicle.spec_motorized
+    if spec == nil or motorized == nil then
+        return
     end
-    if vehicle.isClient and not vehicle.isServer and vehicle.spec_motorized ~= nil then
-        vehicle.spec_motorized.lastFuelUsage = RealisticMechanicalSystems.sanitizeNumber(spec._fuelUsageRaw, 0, 0, 10000)
+    local sanitize = RealisticMechanicalSystems.sanitizeNumber
+    if vehicle.isServer then
+        local isRunning = vehicle.getIsMotorStarted ~= nil and vehicle:getIsMotorStarted()
+        spec._fuelUsageRaw = isRunning and sanitize(motorized.lastFuelUsage, 0, 0, 10000) or 0
+    elseif vehicle.isClient then
+        motorized.lastFuelUsage = sanitize(spec._fuelUsageRaw, 0, 0, 10000)
     end
 end
 
----Keeps the CVT addon breakdown in step with the addon state
+---Stages the CVT addon breakdown from its damage: 60 % then each 10 %
 local function syncCVTaddonBreakdown(vehicle)
-    if not hasCVTAddon(vehicle) then return end
+    if not hasCVTAddon(vehicle) then
+        return
+    end
     local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil or not vehicle.isServer then return end
-
-    local breakdownId = 'CVT_ADDON_MALFUNCTION'
-    local spec_CVTaddon = vehicle.spec_CVTaddon
-    if spec_CVTaddon ~= nil then
-        local shouldHaveBreakdown = spec_CVTaddon.CVTdamage > 60.0
-        local shouldBeStage = 1
-        if spec_CVTaddon.CVTdamage > 90.0 then
-            shouldBeStage = 4
-        elseif spec_CVTaddon.CVTdamage > 80.0 then
-            shouldBeStage = 3
-        elseif spec_CVTaddon.CVTdamage > 70.0 then
-            shouldBeStage = 2
-        end
-
-        if shouldHaveBreakdown and not vehicle:hasBreakdown(breakdownId) then
-            vehicle:addBreakdown(breakdownId, shouldBeStage)
-        elseif not shouldHaveBreakdown and vehicle:hasBreakdown(breakdownId) then
-            vehicle:removeBreakdown(breakdownId)
-        elseif shouldHaveBreakdown and vehicle:hasBreakdown(breakdownId) then
-            local currentStage = vehicle:getActiveBreakdowns()[breakdownId].stage
-            if currentStage ~= shouldBeStage then
-                vehicle:changeBreakdownStage(breakdownId, shouldBeStage)
-            end
-        end
-    else
-        if vehicle:hasBreakdown(breakdownId) then
-            vehicle:removeBreakdown(breakdownId)
+    if spec == nil or not vehicle.isServer then
+        return
+    end
+    local damage = vehicle.spec_CVTaddon.CVTdamage
+    local stage = 0
+    for index, limit in ipairs({ 60.0, 70.0, 80.0, 90.0 }) do
+        if damage > limit then
+            stage = index
         end
     end
+    setBreakdownStage(vehicle, "CVT_ADDON_MALFUNCTION", stage)
 end
 
----Measures the overload, shows its warning and counts its time
+---Stages the overload breakdown from the averaged wear rate of the drive
 local function syncOverloadWarning(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil or not vehicle.isServer then return end
-    local wearScale = RMS_Config.CORE.BASE_SYSTEMS_WEAR / RMS_Config.CORE.REFERENCE_SYSTEMS_WEAR
-    local avgStressWarningThreshold = RMS_Config.CORE.AVG_STRESS_WARNING_THRESHOLD * wearScale
-    local avgStressCriticalThreshold = RMS_Config.CORE.AVG_STRESS_CRITICAL_THRESHOLD * wearScale
-    local sampleDurationMs = math.max(tonumber(dt) or 0, 1)
-    local isMotorStarted = vehicle.getIsMotorStarted ~= nil and vehicle:getIsMotorStarted()
+    if spec == nil or not vehicle.isServer then
+        return
+    end
+    local CORE = RMS_Config.CORE
+    local wearScale = CORE.BASE_SYSTEMS_WEAR / CORE.REFERENCE_SYSTEMS_WEAR
+    local warning, critical = CORE.AVG_STRESS_WARNING_THRESHOLD * wearScale, CORE.AVG_STRESS_CRITICAL_THRESHOLD * wearScale
+    local sampleMs = math.max(tonumber(dt) or 0, 1)
+    local isRunning = vehicle.getIsMotorStarted ~= nil and vehicle:getIsMotorStarted()
 
-    local factorStats = ensureFactorStats(spec, vehicle)
-
-    local shouldStage = 0
-    local maxAvgStress = 0
-    local maxSampleRate = 0
-    for systemName, systemData in pairs(factorStats) do
-        if type(systemData) == "table" then
-            local systemStressMultiplier = RMS_Config.CORE.SYSTEM_WEIGHTS[systemName] ~= nil and 10.0 or 1.0
-            local selectedAliases = OVERLOAD_FACTOR_ALIASES_BY_SYSTEM[tostring(systemName)]
-            local currentStress = 0
-
-            if type(selectedAliases) == "table" then
-                for _, alias in ipairs(selectedAliases) do
-                    currentStress = currentStress + math.max(tonumber(systemData[alias]) or 0, 0)
+    local stage, highestAverage, highestRate = 0, 0, 0
+    for systemName, stats in pairs(ensureFactorStats(spec)) do
+        if type(stats) == "table" then
+            local aliases = OVERLOAD_FACTOR_ALIASES_BY_SYSTEM[tostring(systemName)]
+            local stress = 0
+            if type(aliases) == "table" then
+                for _, alias in ipairs(aliases) do
+                    stress = stress + math.max(tonumber(stats[alias]) or 0, 0)
                 end
-                currentStress = currentStress * systemStressMultiplier
+                -- A weighted system counts ten times
+                stress = stress * (CORE.SYSTEM_WEIGHTS[systemName] ~= nil and 10.0 or 1.0)
             end
+            local previous = tonumber(stats._prevStress) or stress
+            stats._prevStress = stress
 
-            if not isMotorStarted then
-                systemData._prevStress = currentStress
-                resetOverloadAverage(systemData)
+            if not isRunning then
+                resetOverloadAverage(stats)
             else
-            local previousStress = tonumber(systemData._prevStress)
-            if previousStress == nil then
-                previousStress = currentStress
-            end
-
-            local deltaStress = math.max(currentStress - previousStress, 0)
-            local sampleRatePerHour = deltaStress * (60 * 60 * 1000) / sampleDurationMs
-            systemData._prevStress = currentStress
-
-            systemData._avgStress = updateOverloadAverage(systemData, sampleDurationMs, sampleRatePerHour)
-            if systemData._avgStress > maxAvgStress then maxAvgStress = systemData._avgStress end
-
-            local affectsOverloadBreakdown = type(selectedAliases) == "table" and #selectedAliases > 0
-            if affectsOverloadBreakdown then
-                maxSampleRate = math.max(maxSampleRate, sampleRatePerHour)
-                if systemData._avgStress > avgStressCriticalThreshold then
-                    shouldStage = 2
-                elseif systemData._avgStress > avgStressWarningThreshold and shouldStage == 0 then
-                    shouldStage = 1
+                local rate = math.max(stress - previous, 0) * 3600000 / sampleMs
+                stats._avgStress = updateOverloadAverage(stats, sampleMs, rate)
+                highestAverage = math.max(highestAverage, stats._avgStress)
+                if type(aliases) == "table" and #aliases > 0 then
+                    highestRate = math.max(highestRate, rate)
+                    if stats._avgStress > critical then
+                        stage = 2
+                    elseif stats._avgStress > warning and stage == 0 then
+                        stage = 1
+                    end
                 end
-            end
             end
         end
     end
-    spec.overloadLevel = maxSampleRate / avgStressWarningThreshold
+    spec.overloadLevel = highestRate / warning
 
     if RealisticMechanicalSystems.isMissionVehicle(vehicle) then
         return
     end
-
-    local breakdownId = "STRESS_OVERLOAD"
-    local activeBreakdowns = spec.activeBreakdowns or {}
-    local currentBreakdown = activeBreakdowns[breakdownId]
-
-    if shouldStage > 0 then
-        if currentBreakdown == nil then
-            vehicle:addBreakdown(breakdownId, shouldStage)
-        elseif currentBreakdown.stage < shouldStage then
-            vehicle:changeBreakdownStage(breakdownId, shouldStage)
+    local current = (spec.activeBreakdowns or {}).STRESS_OVERLOAD
+    if stage > 0 then
+        if current == nil then
+            vehicle:addBreakdown("STRESS_OVERLOAD", stage)
+        elseif current.stage < stage then
+            vehicle:changeBreakdownStage("STRESS_OVERLOAD", stage)
         end
-    elseif currentBreakdown ~= nil and maxAvgStress < avgStressWarningThreshold * 0.5 then
-        vehicle:removeBreakdown(breakdownId)
+    -- Cleared once the worst average falls under half the warning
+    elseif current ~= nil and highestAverage < warning * 0.5 then
+        vehicle:removeBreakdown("STRESS_OVERLOAD")
     end
 end
 
----Returns the motor load eased over time
+---Smooths the engine load over about 300 ms
 local function getSmoothedMotorLoad(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil then return end
-
-    if vehicle:getIsMotorStarted() then
-        local rawLoad = math.max(vehicle:getMotorLoadPercentage() or 0, 0)
-        local loadTau = 300
-        local loadAlpha = math.min(dt / (loadTau + dt), 1)
-        spec._smoothedMotorLoad = (spec._smoothedMotorLoad or 0) + loadAlpha * (rawLoad - (spec._smoothedMotorLoad or 0))
-    else
-        spec._smoothedMotorLoad = 0
+    if spec == nil then
+        return
     end
+    if not vehicle:getIsMotorStarted() then
+        spec._smoothedMotorLoad = 0
+        return
+    end
+    local load = math.max(vehicle:getMotorLoadPercentage() or 0, 0)
+    local previous = spec._smoothedMotorLoad or 0
+    spec._smoothedMotorLoad = previous + math.min(dt / (300 + dt), 1) * (load - previous)
 end
 
 ---Updates the specialization every rendered frame
--- @param float dt time since last call in ms
--- @param any ... additional update arguments
 function RealisticMechanicalSystems:onUpdate(dt, ...)
     local spec = self.spec_RealisticMechanicalSystems
     self:updateFieldInspectionSound()
@@ -2333,8 +1872,7 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
         self:updateThermalSystems(dt, false, true)
         RMS_Thermal.updateFanReversal(self, dt)
     end
-    RealisticMechanicalSystems.updateStartButtonActionEvents(self)
-    RMS_Preheat.update(self, dt)
+    RMS_Start.update(self, dt)
     RMS_Breakdowns.updateStarter(self, dt)
 
     local updateDelay = RMS_Config.ON_UPDATE_DELAY
@@ -2397,16 +1935,13 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
         RMS_Exhaust.update(self)
     end
 
-    if spec ~= nil and spec.activeFunctions ~= nil and next(spec.activeFunctions) ~= nil then
-        for _ , func in pairs(spec.activeFunctions) do
-            func(self, updateDt)
-        end
+    -- Effects that act on each step
+    for _, applyEffect in pairs(spec.activeFunctions or {}) do
+        applyEffect(self, updateDt)
     end
 end
 
 ---Applies client-side effects after the rendered-frame update
--- @param float dt time since last call in ms
--- @param any ... additional update arguments
 function RealisticMechanicalSystems:onPostUpdate(dt, ...)
     local spec = self.spec_RealisticMechanicalSystems
     if not self.isClient or spec.isExcludedVehicle then return end
@@ -2417,6 +1952,7 @@ end
 function RealisticMechanicalSystems:onStartMotor()
     local spec = self.spec_RealisticMechanicalSystems
     RMS_Breakdowns.onStarterCaught(self)
+    RMS_Start.onStartMotor(self)
     if self.isClient and not spec.isExcludedVehicle then
         RMS_Exhaust.update(self)
         if spec.isElectricVehicle then
@@ -2431,28 +1967,37 @@ function RealisticMechanicalSystems:onStopMotor()
         RMS_SoundManager.playSample(spec.samples.hvContactor)
     end
     RMS_Drivetrain.refreshParkBrakePedal(self)
-    if self.spec_lights ~= nil and self:getLightsTypesMask() ~= 0 and RMS_Electrical.getKeepsLightsOff(self) then
-        self:setLightsTypesMask(0, true, not self.isServer)
+    if self.spec_lights ~= nil and RMS_Breakdowns.getLoadedSpec(self) ~= nil and RMS_Electrical.getKeepsLightsOff(self) then
+        if self:getLightsTypesMask() ~= 0 then
+            self:setLightsTypesMask(0, true, not self.isServer)
+        end
+        if self:getBeaconLightsVisibility() then
+            self:setBeaconLightsVisibility(false, true, not self.isServer)
+        end
+        local turnLightState = self:getTurnLightState()
+        if turnLightState ~= Lights.TURNLIGHT_OFF and turnLightState ~= Lights.TURNLIGHT_HAZARD then
+            self:setTurnLightState(Lights.TURNLIGHT_OFF, true, not self.isServer)
+        end
     end
 end
 
 ---Runs the vehicle simulation step: state, wear, thermal, electrical, services
--- @param float dt time since last call in ms
--- @param boolean isWorkshopOpen true while the workshop accepts services
+-- each system wears in turn, a disabled one skipping its update
+local SYSTEM_WEAR_UPDATES = { "updateEngineSystem", "updateTransmissionSystem", "updateHydraulicsSystem", "updatePtoSystem",
+    "updateHarvestSystem", "updateCoolingSystem", "updateElectricalSystem", "updateChassisSystem", "updateFuelSystem" }
+
 function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
     local spec = self.spec_RealisticMechanicalSystems
     if spec.isExcludedVehicle then return end
 
-    local motorState = self.getMotorState ~= nil and self:getMotorState() or nil
-    local currentOperatingTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
-    local operatingDt = 0
-
-    if (spec.realOperatingTime == nil or spec.realOperatingTime <= 0) and currentOperatingTime > 0 then
-        spec.realOperatingTime = currentOperatingTime
+    -- RMS counts its own working time, from the game's when first seen
+    local gameTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
+    if (spec.realOperatingTime or 0) <= 0 and gameTime > 0 then
+        spec.realOperatingTime = gameTime
     end
-
-    if motorState == MotorState.ON then
-        operatingDt = dt or 0
+    local isRunning = self.getMotorState ~= nil and self:getMotorState() == MotorState.ON
+    local operatingDt = isRunning and (dt or 0) or 0
+    if isRunning then
         spec.realOperatingTime = (spec.realOperatingTime or 0) + dt
     end
 
@@ -2475,18 +2020,13 @@ function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
         end
 
         self:updateServiceLevel(dt)
-        self:updateEngineSystem(dt)
-        self:updateTransmissionSystem(dt)
-        self:updateHydraulicsSystem(dt)
-        self:updatePtoSystem(dt)
-        self:updateCoolingSystem(dt)
-        self:updateElectricalSystem(dt)
-        self:updateChassisSystem(dt)
-        self:updateFuelSystem(dt)
+        for _, updateSystem in ipairs(SYSTEM_WEAR_UPDATES) do
+            self[updateSystem](self, dt)
+        end
         self:updateConditionLevel()
         self:processWornParts()
         if not isMissionVehicle then
-            self:updateLubricationLevel(operatingDt, motorState)
+            RMS_Greasing.update(self, operatingDt)
             self:updateFluidLevels(operatingDt)
             self:updateFilterClogging(operatingDt)
         end
@@ -2498,34 +2038,22 @@ function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
     end
 
     if self.isServer then
-        markStateDirty(self, spec)
-        markServiceContextDirty(self, spec)
-        markTelemetryDirty(self, spec)
-        markThermalDirty(self, spec)
-        markElectricalDirty(self, spec)
-        markFieldcareDirty(self, spec)
-        markWearDirty(self, spec)
-        markBreakdownsDirty(self, spec)
-        markServiceProgressDirty(self, spec)
-        markTutorialDataDirty(self, spec)
+        RealisticMechanicalSystems.markSyncGroupsDirty(self, spec)
         RealisticMechanicalSystems.updateResalePrice(self)
     end
 end
 
 ---Replaces the vanilla damage with the RMS condition
--- @param table wearable wearable spec
--- @param function superFunc super function
--- @param float dt time since last call in ms
 function RealisticMechanicalSystems.updateDamageAmount(wearable, superFunc, dt)
-	if wearable.spec_RealisticMechanicalSystems ~= nil and not wearable.spec_RealisticMechanicalSystems.isExcludedVehicle then
-		return 0
-	else
-		return superFunc(wearable, dt)
-	end
+    local spec = wearable.spec_RealisticMechanicalSystems
+    -- RMS wears the machine itself, the game damage stays at 0
+    if spec ~= nil and not spec.isExcludedVehicle then
+        return 0
+    end
+    return superFunc(wearable, dt)
 end
 
 ---Flags the resale quote dirty when either payment changes
--- @param table self vehicle
 function RealisticMechanicalSystems.updateResalePrice(self)
     local spec = self.spec_RealisticMechanicalSystems
     if not canRaiseDirtyFlag(self, spec) or spec.isExcludedVehicle then
@@ -2544,9 +2072,6 @@ function RealisticMechanicalSystems.updateResalePrice(self)
 end
 
 ---Replaces the vanilla sell price by the RMS market value
--- @param table self vehicle
--- @param function superFunc super function
--- @return float price sell price
 function RealisticMechanicalSystems.getSellPrice(self, superFunc)
     if self.spec_RealisticMechanicalSystems ~= nil and not self.spec_RealisticMechanicalSystems.isExcludedVehicle then
         if not self.isServer and self.spec_RealisticMechanicalSystems.syncedSellPrice ~= nil then
@@ -2558,12 +2083,10 @@ function RealisticMechanicalSystems.getSellPrice(self, superFunc)
 end
 
 ---Keeps the native engine state while RMS alone advances its temperature
--- @param table self vehicle
--- @param function superFunc super function
--- @param float dt time since last call in ms
 function RealisticMechanicalSystems.updateMotorTemperature(self, superFunc, dt)
     local spec = self.spec_RealisticMechanicalSystems
-    if spec == nil or spec.isExcludedVehicle or hasCVTAddon(self) then
+    local isHeatedByRMS = spec ~= nil and not spec.isExcludedVehicle and not hasCVTAddon(self)
+    if not isHeatedByRMS then
         return superFunc(self, dt)
     end
     RMS_Thermal.getEngineTemperature(self)
@@ -2571,7 +2094,6 @@ function RealisticMechanicalSystems.updateMotorTemperature(self, superFunc, dt)
 end
 
 ---Returns the level of the lowest service clock
--- @return float serviceLevel service level
 function RealisticMechanicalSystems:getServiceLevel()
     local spec = self.spec_RealisticMechanicalSystems
     local serviceLevel = spec.baseServiceLevel
@@ -2583,14 +2105,11 @@ function RealisticMechanicalSystems:getServiceLevel()
 end
 
 ---Returns the overall condition level
--- @return float conditionLevel condition level
 function RealisticMechanicalSystems:getConditionLevel()
     return self.spec_RealisticMechanicalSystems.conditionLevel
 end
 
 ---Returns the condition of one system
--- @param string systemName system name
--- @return float? condition system condition
 function RealisticMechanicalSystems:getSystemConditionLevel(systemName)
     local spec = self.spec_RealisticMechanicalSystems
     local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemName)
@@ -2605,123 +2124,69 @@ function RealisticMechanicalSystems:isUnderRoofRaycastCallback()
     end
 end
 
----Tells whether the vehicle stands under a roof, by raycasting upward
--- @return boolean isUnderRoof true when sheltered
+---Tells whether the vehicle is indoors, or under a roof once parked
 function RealisticMechanicalSystems:isUnderRoof()
     local spec = self.spec_RealisticMechanicalSystems
     local node = self.rootNode
     if (node == nil or node == 0) and self.components ~= nil and self.components[1] ~= nil then
         node = self.components[1].node
     end
-
     if node == nil or node == 0 then
         return false
     end
 
     local x, y, z = getWorldTranslation(node)
     local mission = g_currentMission
-    local isIndoorMask = false
+    local isIndoor = mission ~= nil and mission.indoorMask ~= nil and mission.indoorMask:getIsIndoorAtWorldPosition(x, z) == true
 
-    if mission ~= nil and mission.indoorMask ~= nil then
-        if mission.indoorMask.getIsIndoorAtWorldPosition ~= nil then
-            isIndoorMask = mission.indoorMask:getIsIndoorAtWorldPosition(x, z) == true
-        else
-            local handle, firstChannel, numChannels = mission.indoorMask:getDensityMapData()
-            if handle ~= nil and handle ~= 0 and mission.terrainSize ~= nil and mission.terrainSize > 0 then
-                local maskSize = getBitVectorMapSize(handle)
-                if maskSize ~= nil and maskSize > 0 then
-                    local terrainHalfSize = mission.terrainSize * 0.5
-                    local worldToDensityMap = maskSize / mission.terrainSize
-                    local xI = math.floor((x + terrainHalfSize) * worldToDensityMap)
-                    local zI = math.floor((z + terrainHalfSize) * worldToDensityMap)
-
-                    if xI >= 0 and xI < maskSize and zI >= 0 and zI < maskSize then
-                        local maskValue = getBitVectorMapPoint(handle, xI, zI, firstChannel, numChannels)
-                        isIndoorMask = maskValue == IndoorMask.INDOOR
-                    end
-                end
-            end
-        end
-    end
-
-    local movementVehicle = self.rootVehicle or self
-    local speed = movementVehicle.getLastSpeed ~= nil and math.abs(tonumber(movementVehicle:getLastSpeed(true)) or 0) or 0
-    local stationarySpeedLimit = tonumber(RMS_Config.ROOF_STATIONARY_SPEED_LIMIT) or 0.5
-    local isStationary = speed <= stationarySpeedLimit
-
-    if not isStationary then
+    -- On the move, the roof is looked for again once parked
+    local mover = self.rootVehicle or self
+    local speed = mover.getLastSpeed ~= nil and math.abs(tonumber(mover:getLastSpeed(true)) or 0) or 0
+    if speed > (tonumber(RMS_Config.ROOF_STATIONARY_SPEED_LIMIT) or 0.5) then
         if spec ~= nil then
-            spec.roofWasStationary = false
-            spec.roofLastRaycastTime = nil
-            spec.roofRaycastResult = nil
+            spec.roofWasStationary, spec.roofLastRaycastTime, spec.roofRaycastResult = false, nil, nil
         end
-        return isIndoorMask
+        return isIndoor
     end
-
     if spec == nil then
-        return isIndoorMask
+        return isIndoor
     end
 
     local now = (mission ~= nil and mission.time) or g_time or 0
-    local raycastInterval = tonumber(RMS_Config.ROOF_RAYCAST_INTERVAL) or 5000
-    local lastRaycastTime = tonumber(spec.roofLastRaycastTime)
-    local needsRaycast = spec.roofWasStationary ~= true
-        or lastRaycastTime == nil
-        or now < lastRaycastTime
-        or now - lastRaycastTime >= raycastInterval
-
+    local last = tonumber(spec.roofLastRaycastTime)
+    local isDue = spec.roofWasStationary ~= true or last == nil or now < last
+        or now - last >= (tonumber(RMS_Config.ROOF_RAYCAST_INTERVAL) or 5000)
     spec.roofWasStationary = true
-
-    if needsRaycast then
+    if isDue then
         spec.roofLastRaycastTime = now
         spec.roofRaycastHit = false
-
-        local roofMask = CollisionFlag.STATIC_OBJECT + CollisionFlag.BUILDING
-        raycastClosest(
-            x,
-            y + (tonumber(RMS_Config.ROOF_RAYCAST_START_OFFSET) or 1),
-            z,
-            0,
-            1,
-            0,
-            tonumber(RMS_Config.ROOF_RAYCAST_DISTANCE) or 40,
-            "isUnderRoofRaycastCallback",
-            self,
-            roofMask
-        )
-
+        local startY = y + (tonumber(RMS_Config.ROOF_RAYCAST_START_OFFSET) or 1)
+        local distance = tonumber(RMS_Config.ROOF_RAYCAST_DISTANCE) or 40
+        raycastClosest(x, startY, z, 0, 1, 0, distance, "isUnderRoofRaycastCallback", self, CollisionFlag.STATIC_OBJECT + CollisionFlag.BUILDING)
         spec.roofRaycastResult = spec.roofRaycastHit == true
     end
-
     if spec.roofRaycastResult ~= nil then
         return spec.roofRaycastResult == true
     end
-
-    return isIndoorMask
+    return isIndoor
 end
 
 ---Tells whether a service is running on the vehicle
--- @return boolean isUnderService true while a service runs
 function RealisticMechanicalSystems:isUnderService()
     return self.spec_RealisticMechanicalSystems.currentState ~= RealisticMechanicalSystems.STATUS.READY
 end
 
 ---Returns the current status of the vehicle
--- @return string status status constant
 function RealisticMechanicalSystems:getCurrentStatus()
     return self.spec_RealisticMechanicalSystems.currentState
 end
 
 ---Returns the active breakdowns of the vehicle
--- @return table breakdowns active breakdowns
 function RealisticMechanicalSystems:getActiveBreakdowns()
     return self.spec_RealisticMechanicalSystems.activeBreakdowns
 end
 
 ---Returns the reliability multiplier of the brand of a vehicle
--- @param table vehicle vehicle
--- @param table? storeItem store item
--- @return float reliability brand reliability
 function RealisticMechanicalSystems.getBrandReliability(vehicle, storeItem)
     if vehicle ~= nil then
         local brand = g_brandManager:getBrandByIndex(vehicle:getBrand())

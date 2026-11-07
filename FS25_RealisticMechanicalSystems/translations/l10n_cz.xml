@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Pro uvolnění parkovací brzdy spusť motor"/>
         <text name="rms_preheat_ignition_message" text="Zapalování zapnuto: probíhá předehřev"/>
         <text name="rms_preheat_system_failure_message" text="Porucha systému žhavení: studený start není možný"/>
-        <text name="rms_preheat_start_failed_message" text="Motor nenastartoval: před dalším pokusem vypni zapalování"/>
+        <text name="rms_preheat_start_failed_message" text="Motor nenastartoval"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Zkontrolovat vozidlo"/>
@@ -39,48 +39,52 @@
         <text name="rms_settings_section_service_wear" text="Údržba a opotřebení"/>
         <text name="rms_settings_section_drivetrain" text="Pohon a parkovací brzda"/>
         <text name="rms_workshopOpenHour_label" text="Otevírací doba dílny"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Úkony začínají až od této hodiny."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Určuje otevírací hodinu dílen: úkony začínají až od této hodiny."/>
         <text name="rms_workshopCloseHour_label" text="Zavírací doba dílny"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Probíhající úkony se v tuto hodinu pozastaví a pokračují po otevření."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Určuje zavírací hodinu dílen: probíhající úkony se v tuto hodinu přeruší a pokračují při otevření."/>
+        <text name="rms_workshopHours_locked" text="Toto nastavení vyžaduje alespoň jednu dílnu, která není otevřená 24/7."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Dílna prodejce 24/7"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Udržuje dílnu prodejce dostupnou nepřetržitě ve dne i v noci."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Určuje, zda dílna prodejce zůstává otevřená v každou hodinu."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Mobilní dílna 24/7"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Udržuje mobilní dílnu dostupnou nepřetržitě ve dne i v noci."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Určuje, zda mobilní dílna zůstává dostupná v každou hodinu."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Omezení dílen"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Omezuje práce mobilní a vlastní dílny podle potřebného vybavení. Údržba zůstává dostupná; elektronika vyžaduje diagnostické zařízení připojené ke stroji a v mobilní dílně vyžaduje náročná demontáž nebo vysokonapěťová práce vybavenou dílnu."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Určuje, zda vybavení omezuje mobilní a vlastní dílnu: elektronika vyžaduje připojené diagnostické zařízení a mobilní dílna neprovádí náročnou demontáž ani vysokonapěťové práce. Údržba zůstává vždy možná."/>
         <text name="rms_ownWorkshopAvailable_label" text="Vlastní dílna 24/7"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Udržuje tvou vlastní dílnu dostupnou nepřetržitě ve dne i v noci."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Určuje, zda tvoje vlastní dílna zůstává otevřená v každou hodinu."/>
         <text name="rms_instantInspection_label" text="Okamžitá prohlídka"/>
-        <text name="rms_instantInspection_tooltip" text="Je-li tato možnost zapnuta, prohlídky v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantInspection_tooltip" text="Určuje, zda se kontroly v dílně dokončí okamžitě, včetně již probíhajících."/>
         <text name="rms_instantMaintenanceRepair_label" text="Okamžitá údržba a opravy"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Je-li tato možnost zapnuta, údržba a opravy v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Určuje, zda se údržba a opravy v dílně dokončí okamžitě, včetně již probíhajících."/>
         <text name="rms_instantBodywork_label" text="Okamžité lakování"/>
-        <text name="rms_instantBodywork_tooltip" text="Je-li tato možnost zapnuta, lakování v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantBodywork_tooltip" text="Určuje, zda se lakování v dílně dokončí okamžitě, včetně již probíhajícího."/>
         <text name="rms_instantOverhaul_label" text="Okamžitá generální oprava"/>
-        <text name="rms_instantOverhaul_tooltip" text="Je-li tato možnost zapnuta, generální oprava v dílně se dokončí okamžitě. I již probíhající úkony tohoto typu se dokončí okamžitě."/>
+        <text name="rms_instantOverhaul_tooltip" text="Určuje, zda se generální opravy v dílně dokončí okamžitě, včetně již probíhajících."/>
+        <text name="rms_instantRemap_label" text="Okamžitý chiptuning motoru"/>
+        <text name="rms_instantRemap_tooltip" text="Určuje, zda se chiptuning motoru a návrat do série dokončí okamžitě, včetně již probíhajících."/>
         <text name="rms_debugMode_label" text="Režim ladění"/>
-        <text name="rms_debugMode_tooltip" text="Zobrazuje okno ladění ve vozidle, které řídíš; klávesa %s ho také otevírá a zavírá. V režimu více hráčů ho vidí jen administrátoři. Také zapisuje podrobné záznamy do konzole."/>
+        <text name="rms_debugMode_tooltip" text="Určuje, zda se v řízeném stroji zobrazuje ladicí okno a konzole dostává podrobné záznamy. Klávesa %s okno otevírá a zavírá; ve hře více hráčů ho vidí jen správci."/>
         <text name="rms_warningMessages_label" text="Varovné zprávy"/>
-        <text name="rms_warningMessages_tooltip" text="Povolí nebo zakáže varovné zprávy ve hře, jako jsou upozornění na studený motor nebo přehřátí. Upozornění na omezení výkonu kvůli teplotě zůstávají aktivní."/>
+        <text name="rms_warningMessages_tooltip" text="Určuje, zda se zobrazují varování jako studený motor nebo přehřátí. Zprávy o tepelném omezení výkonu se zobrazují vždy."/>
         <text name="rms_serviceInterval_label" text="Rozestupy údržby"/>
-        <text name="rms_serviceInterval_tooltip" text="Nastavte referenční hodiny. Při 100 h se předpis 500 h změní na 100 h a 600 h na 120 h. Každá kapalina má program vozidla; kalendářní lhůty jsou nezávislé."/>
+        <text name="rms_serviceInterval_tooltip" text="Určuje hodiny mezi dvěma výměnami motorového oleje u modelu uvedeného od roku 2010 nebo s neznámým rokem. Starší model potřebuje výměnu častěji:&#10;2000 až 2009: %s&#10;1980 až 1999: %s&#10;1960 až 1979: %s&#10;Před rokem 1960: %s"/>
         <text name="rms_vehicleLifespan_label" text="Životnost vozidla"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Nastavuje základní životnost vozidla v hodinách, po jejímž uplynutí jeho stav dosáhne 0 %. Čím blíže je stav k nule, tím nespolehlivějším se vozidlo stává. Hodnota vozidla s těmito hodinami také klesá. Změna platí od té chvíle: vozidla si zachovají svůj stav, přepočítá se pouze jejich hodnota."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Určuje provozní hodiny, po kterých stav vozidla dosáhne 0 %; čím je jim blíže, tím je méně spolehlivé a tím více klesá jeho hodnota. Změna platí od té chvíle: vozidla si zachovají stav, přepočítá se jen jejich hodnota."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kouř z výfuku"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Řídí kouř z výfuku podle skutečného stavu motoru. Je černý, když motor dostává více paliva, než odpovídá dostupnému vzduchu: při prudké akceleraci, když motor pracuje namáhavě v nízkých otáčkách, po dlouhém volnoběhu s nízkým zatížením, při zaneseném vzduchovém filtru nebo opotřebeném vstřikování. Je modrý, když opotřebený motor spaluje olej, a bílý, když palivo odchází nespálené. Množství kouře se zvyšuje také s prací motoru. Starší stroje kouří výrazně více než moderní, které téměř nekouří, dokud není něco skutečně porouchané. Ve studeném vzduchu navíc voda ze spalování kondenzuje do krátké bílé stopy, která se odpaří během metru či dvou, a to i u zdravého motoru."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Určuje, zda kouř z výfuku odpovídá skutečnému stavu motoru: černý při nedostatku vzduchu, modrý při spalování oleje, bílý při úniku nespáleného paliva, hustší při zatížení. Staré stroje kouří mnohem více než moderní."/>
         <text name="rms_tutorialMode_label" text="Režim výukového programu"/>
-        <text name="rms_tutorialMode_tooltip" text="Zobrazuje během hry rady výukového programu."/>
+        <text name="rms_tutorialMode_tooltip" text="Určuje, zda se během hry zobrazují tipy výuky."/>
         <text name="rms_tutorialResetTips_label" text="Resetovat rady"/>
         <text name="rms_tutorialResetTips_text" text="Resetovat"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Resetuje historii rad výukového programu a znovu je všechny zobrazí."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Obnoví historii tipů výuky: všechny se znovu zobrazí."/>
         <text name="rms_tutorialResetConfirm_title" text="Resetovat rady výukového programu?"/>
         <text name="rms_tutorialResetConfirm_message" text="Resetovat historii rad výukového programu a znovu je všechny zobrazit?"/>
         <text name="rms_drivetrainEnabled_label" text="Správa 4x4 a uzávěrky diferenciálu"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Zapíná ruční ovládání připojitelné přední nápravy a uzávěrek diferenciálu u traktorů. Pokud je nainstalován Enhanced Vehicle, jeho správa diferenciálů se vypne; chceš-li mu ji vrátit, vypni tuto možnost a pak diferenciály znovu zapni v menu Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Určuje, zda se přední náprava a uzávěrky diferenciálu traktorů ovládají ručně. Tato možnost nahrazuje správu diferenciálů v Enhanced Vehicle: chceš-li ji vrátit, vypni tuto možnost a pak znovu zapni diferenciály v jeho menu."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Povolit režim AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Přidává polohu AUTO: přední náprava se připojí automaticky při prokluzu kol nebo při pracovní rychlosti pod zatížením a na silnici se odpojí. Vozidla ponechaná v režimu AUTO se po vypnutí této možnosti vrátí do režimu 4x4."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Určuje, zda volič nabízí polohu AUTO, která připojuje přední nápravu při prokluzu kol nebo práci pod zatížením a odpojuje ji na silnici. Vypnutí přepne vozidla ponechaná v AUTO na 4x4."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Toto nastavení vyžaduje zapnutou správu 4x4 a uzávěrky diferenciálu."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkovací brzda"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Přidává všem vozidlům RMS parkovací brzdu. Novější stroje s převodovkou CVT nebo Powershift ji zatahují a uvolňují samy; u ostatních ji ovládáš vlastní klávesou. Pokud je nainstalován Enhanced Vehicle, jeho parkovací brzda se vypne; chceš-li mu ji vrátit, vypni tuto možnost a pak parkovací brzdu znovu zapni v menu Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Určuje, zda mají sledovaná vozidla parkovací brzdu: automatickou u novějších strojů s převodovkou CVT nebo Powershift, ovládanou klávesou u ostatních. Tato možnost nahrazuje brzdu v Enhanced Vehicle: chceš-li ji vrátit, vypni tuto možnost a znovu zapni parkovací brzdu v jeho menu."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Dílna"/>
         <text name="rms_ws_tab_summary" text="Přehled"/>
@@ -93,14 +97,11 @@
         <text name="rms_ws_section_quote" text="Nabídka opravy"/>
         <text name="rms_ws_section_choose_intervention" text="Vybrat úkon"/>
         <text name="rms_ws_section_work_order" text="Zakázkový list"/>
-        <text name="rms_ws_section_paint_order" text="Zakázka lakování"/>
         <text name="rms_ws_section_recap" text="Souhrn"/>
         <text name="rms_ws_section_parts" text="Dotčené díly"/>
         <text name="rms_ws_section_history" text="Historie"/>
-        <text name="rms_ws_section_current_intervention" text="Probíhající úkon"/>
         <text name="rms_ws_label_last_check" text="Poslední kontrola"/>
         <text name="rms_ws_reading_outdated" text="Ke kontrole"/>
-        <text name="rms_ws_label_workshop_state" text="Stav dílny"/>
         <text name="rms_ws_label_more_parts" text="+ %s dalších"/>
         <text name="rms_ws_label_committed_cost" text="Vynaložené náklady"/>
         <text name="rms_ws_label_finish_time" text="Čas dokončení"/>
@@ -109,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Prohlídka nebo údržba může zjistit další poruchy."/>
         <text name="rms_ws_status_ready_title" text="Dílna je připravena"/>
         <text name="rms_ws_status_ready_hint" text="Vyber úkon. Volby, díly a cena budou potvrzeny před zahájením."/>
+        <text name="rms_ws_status_closed_hint" text="Úkony lze objednat od %s do %s."/>
         <text name="rms_ws_label_value" text="Hodnota vozidla"/>
         <text name="rms_ws_label_age" text="Stáří"/>
         <text name="rms_ws_label_operating_hours" text="Provozní hodiny"/>
@@ -132,12 +134,13 @@
         <text name="rms_shop_service_access_easy" text="Vysoká snadnost údržby"/>
         <text name="rms_shop_service_access_average" text="Průměrná snadnost údržby"/>
         <text name="rms_shop_service_access_demanding" text="Nízká snadnost údržby"/>
+        <text name="rms_shop_launch_year" text="Model uveden v roce %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Rok uvedení na trh neznámý"/>
         <text name="rms_owner_care_careful" text="Pečlivá údržba"/>
         <text name="rms_owner_care_regular" text="Pravidelná údržba"/>
         <text name="rms_owner_care_neglected" text="Zanedbaná údržba"/>
         <text name="rms_ws_label_overhaul_count" text="Provedené generální opravy"/>
         <text name="rms_ws_label_maintenance_log" text="Deník údržby"/>
-        <text name="rms_ws_label_last_report" text="Poslední zpráva"/>
         <text name="rms_ws_label_last_maintenance" text="Poslední údržba"/>
         <text name="rms_ws_task_inspection" text="Prohlídka"/>
         <text name="rms_ws_task_maintenance" text="Údržba"/>
@@ -151,12 +154,12 @@
         <text name="rms_ws_reason_repair_unselected" text="Není zaškrtnutá žádná porucha. Zaškrtni v Diagnostika a cenová nabídka poruchy k opravě."/>
         <text name="rms_ws_reason_overhaul_none" text="Generální oprava obnoví systémy pod 50 % stavu. Tento stroj žádný takový nemá."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Mobilní dílna lakování neprovádí. Provádí se u prodejce."/>
+        <text name="rms_ws_reason_refill_dealer" text="Doplnění kapalin provádí pouze prodejce. Jinde se provádí z kanystru."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Použijte vybavenou dílnu."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Připojte ke stroji diagnostické zařízení vozíku."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Vyžadována elektronická diagnostika"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Vyžadována demontáž nebo speciální nástroje"/>
         <text name="rms_mobile_workshop_high_voltage_required" text="Vyžadováno vysokonapěťové vybavení"/>
-        <text name="rms_ws_status_in_progress_short_format" text="Probíhá %s..."/>
         <text name="rms_ws_status_in_progress_format" text="Probíhá %s do %s"/>
         <text name="rms_ws_status_open" text="Dílna je otevřena"/>
         <text name="rms_ws_status_closed" text="Dílna je zavřena"/>
@@ -171,19 +174,17 @@
         <text name="rms_ws_action_choice_overhaul" text="Generální oprava stroje"/>
         <text name="rms_ws_action_choice_refill" text="Doplnění kapalin"/>
         <text name="rms_ws_action_choice_bodywork" text="Lakování vozidla"/>
+        <text name="rms_ws_action_choice_remap" text="Chiptuning motoru"/>
         <text name="rms_ws_action_cancel_service" text="Zrušit úkon"/>
         <text name="rms_ws_age_unit" text="měsíců"/>
-        <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_no_last_report_message" text="Zatím žádná hlášení"/>
         <text name="rms_ws_no_log_empty_message" text="Záznam je zatím prázdný"/>
-        <text name="rms_ws_no_report_message" text="Zatím žádná zpráva"/>
         <text name="rms_ws_cancel_confirm_title" text="Zrušit probíhající úkon? (%s)"/>
         <text name="rms_ws_cancel_confirm_text" text="Aktuální postup bude uložen v nynějším stavu. Peníze nebudou vráceny."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="Deník údržby"/>
         <text name="rms_log_recorded_interventions_title" text="Zaznamenané úkony"/>
         <text name="rms_log_last_intervention_title" text="Poslední úkon"/>
-        <text name="rms_log_hours" text="Provozní hodiny"/>
         <text name="rms_log_total_cost_title" text="Celkové náklady"/>
         <text name="rms_log_total_breakdowns_count_title" text="Opravené poruchy"/>
         <text name="rms_log_type" text="Typ úkonu"/>
@@ -263,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Podvozek"/>
         <text name="rms_spec_system_fuel" text="Palivová soustava"/>
         <text name="rms_spec_system_pto" text="Vývodový hřídel"/>
+        <text name="rms_spec_system_harvest" text="Sklizeň"/>
         <text name="rms_spec_system_electric_motor" text="Elektromotor"/>
         <text name="rms_spec_system_traction_battery" text="Trakční baterie"/>
         <text name="rms_spec_state_ready" text="Připraveno"/>
@@ -274,6 +276,7 @@
         <text name="rms_spec_state_maintenance" text="Údržba"/>
         <text name="rms_spec_state_overhaul" text="Generální oprava"/>
         <text name="rms_spec_state_bodywork" text="Lakování"/>
+        <text name="rms_spec_state_remap" text="Chiptuning motoru"/>
         <text name="rms_spec_state_overdue" text="Po termínu"/>
         <text name="rms_spec_state_optimal" text="Optimální"/>
         <text name="rms_spec_state_broken" text="Rozbité"/>
@@ -310,9 +313,9 @@
         <text name="rms_option_menu_lease_service_text" text="Zahrnuto v pronájmu"/>
         <text name="rms_option_menu_duration_text" text="Trvání"/>
         <text name="rms_option_menu_duration_instant" text="Okamžitě"/>
-        <text name="rms_option_menu_finish_time_text" text="Čas dokončení"/>
         <text name="rms_option_menu_start_text" text="Spustit"/>
         <text name="rms_service_months" text="%s měsíců"/>
+        <text name="rms_service_either" text="%s nebo %s"/>
         <text name="rms_service_month" text="%s měs."/>
         <text name="rms_service_calendar_due" text="Kalendářní lhůta dosažena"/>
         <text name="rms_service_program_estimated" text="Odhadovaný plán"/>
@@ -387,8 +390,10 @@
         <text name="rms_warranty_lease" text="Oprava není kryta při pronájmu"/>
         <text name="rms_warranty_expired" text="Záruka skončila"/>
         <text name="rms_warranty_overdue" text="Zamítnuto: údržba po termínu"/>
+        <text name="rms_warranty_impact" text="Zamítnuto: poškození nárazem"/>
         <text name="rms_warranty_options" text="Nutná výměna za originální díly"/>
         <text name="rms_warranty_mobile" text="K úhradě: příplatek za práci mobilní dílny"/>
+        <text name="rms_warranty_remapped" text="Záruka zanikla: motor po chiptuningu"/>
         <text name="rms_ws_overhaul_row_systems" text="Řešené systémy"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Obnovené"/>
         <text name="rms_ws_overhaul_systems_one" text="Jeden podle volby"/>
@@ -442,8 +447,42 @@
         <text name="rms_bodywork_no_wear" text="Žádné poškození laku k opravě"/>
         <text name="rms_bodywork_wear_limit" text="Opravy laku jsou dostupné do 30 % poškození"/>
         <text name="rms_bodywork_no_colors" text="Toto vozidlo nenabízí volitelné barvy. Současné barvy zůstanou zachovány."/>
-        <text name="rms_bodywork_unavailable_title" text="Úkon není dostupný"/>
         <text name="rms_bodywork_dealer_only" text="Úplné přelakování se provádí u prodejce"/>
+        <text name="rms_remap_option" text="Chiptuning"/>
+        <text name="rms_remap_restore" text="Návrat do série"/>
+        <text name="rms_remap_max_power" text="Maximální výkon"/>
+        <text name="rms_remap_max_torque" text="Maximální točivý moment"/>
+        <text name="rms_remap_gain" text="Nárůst"/>
+        <text name="rms_remap_gain_format" text="+%d %%"/>
+        <text name="rms_remap_stock_format" text="Série %s"/>
+        <text name="rms_remap_today_format" text="Nyní %s"/>
+        <text name="rms_remap_torque_format" text="%s Nm"/>
+        <text name="rms_remap_free_restore" text="Návrat zdarma"/>
+        <text name="rms_remap_until_format" text="Končí: %s"/>
+        <text name="rms_remap_then_format" text="Poté %s"/>
+        <text name="rms_remap_curves_announced" text="Křivky uváděné úpravcem"/>
+        <text name="rms_remap_curves_measured" text="Brzda úpravce, před a po"/>
+        <text name="rms_remap_legend_remapped" text="Upravený"/>
+        <text name="rms_remap_legend_stock" text="Sériový"/>
+        <text name="rms_remap_legend_power" text="Výkon"/>
+        <text name="rms_remap_legend_torque" text="Moment"/>
+        <text name="rms_remap_note_fuel" text="Vyšší výkon spotřebuje více nafty a vytvoří více tepla"/>
+        <text name="rms_remap_note_stock_kept" text="Úpravce uchová původní software"/>
+        <text name="rms_remap_note_overload" text="Nad nejsilnějším motorem řady: opotřebení při plném zatížení"/>
+        <text name="rms_remap_note_restored" text="Motor získá zpět původní křivky"/>
+        <text name="rms_remap_note_same_fuel" text="Stejně nafty na jednotku výkonu"/>
+        <text name="rms_remap_warranty_lost" text="Zanikla"/>
+        <text name="rms_remap_warranty_lost_detail" text="Natrvalo, i po návratu do série"/>
+        <text name="rms_remap_warranty_not_back" text="Původní software ji neobnoví"/>
+        <text name="rms_remap_free" text="Zdarma"/>
+        <text name="rms_remap_unavailable" text="Chiptuning není dostupný"/>
+        <text name="rms_remap_refusal_dealer" text="Prodejce neprovádí chiptuning motorů."/>
+        <text name="rms_remap_refusal_farm_mobile_hint" text="Úpravce přijede na farmu: použij dílnu na farmě nebo mobilní dílnu."/>
+        <text name="rms_remap_refusal_leased" text="Pronajatý stroj nelze upravit chiptuningem."/>
+        <text name="rms_remap_refusal_not_eligible" text="Tento motor nemá programovatelnou řídicí jednotku."/>
+        <text name="rms_remap_confirm_title" text="Provést chiptuning motoru?"/>
+        <text name="rms_remap_confirm_format" text="%s: odstavení na %s."/>
+        <text name="rms_remap_confirm_warranty" text="Záruka zanikne natrvalo, i po návratu k původnímu softwaru."/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Zpráva z prohlídky"/>
         <text name="rms_report_vehicle_specs_title" text="Specifikace vozidla"/>
@@ -463,7 +502,6 @@
         <text name="rms_report_worn_part_replace" text="%s · Výměna: důkladná oprava nebo generální oprava"/>
         <text name="rms_report_overall_assessment_title" text="Celkové posouzení stavu"/>
         <text name="rms_report_overall_assessment_condition" text="Úroveň stavu"/>
-        <text name="rms_report_overall_assessment_service" text="Úroveň údržby"/>
         <text name="rms_report_recommendations_title" text="Závěr a doporučení"/>
         <text name="rms_report_recommendation_repair_active_breakdowns" text="Zjištěny aktivní poruchy. Doporučuje se standardní oprava všech poruch."/>
         <text name="rms_report_recommendation_repeat_maintenance" text="Zjištěny vadné spotřební materiály. Zopakuj údržbu a nahraď je."/>
@@ -510,6 +548,12 @@
         <text name="rms_report_wear_battery_heat" text="Přehřívání baterie"/>
         <text name="rms_report_wear_lubrication" text="Opožděné mazání"/>
         <text name="rms_report_wear_pto_overload" text="Přetížení vývodového hřídele"/>
+        <text name="rms_report_wear_harvest_overload" text="Přetížení sklizně"/>
+        <text name="rms_report_wear_harvest_flow" text="Velký průtok zrna"/>
+        <text name="rms_report_wear_harvest_straw" text="Přetížený drtič"/>
+        <text name="rms_report_wear_harvest_stones" text="Kameny"/>
+        <text name="rms_report_wear_harvest_rice" text="Sklizeň rýže"/>
+        <text name="rms_report_wear_harvest_wet" text="Vlhká plodina"/>
         <text name="rms_report_component_title" text="Součást"/>
         <text name="rms_report_system_condition_transmission" text="Převodovka"/>
         <text name="rms_report_system_condition_power" text="Aktuální výkon"/>
@@ -525,15 +569,26 @@
         <text name="rms_report_transmission_cvt_slipping" text="Neúčinný přenos síly"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Omezený převodový poměr"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Nepravidelný přenos síly"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Zhoršený stav termostatu"/>
         <text name="rms_report_transmission_failed" text="Nefunkční"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Mazací lis"/>
         <text name="rms_grease_gun_no_vehicle" text="V dosahu mazání není žádné vozidlo"/>
-        <text name="rms_grease_gun_function" text="Slouží k mazání mazacích bodů stroje"/>
+        <text name="rms_grease_gun_function" text="Maže maznice strojů. Plní se kartuší s mazivem."/>
         <text name="rms_grease_gun_action" text="Mazat"/>
         <text name="rms_grease_gun_already_lubricated" text="%s: mazání již provedeno"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s nevyžaduje mazání"/>
+        <text name="rms_grease_gun_load" text="Vložit kartuši"/>
+        <text name="rms_grease_gun_empty" text="Mazací lis je prázdný: vlož kartuši"/>
+        <text name="rms_grease_gun_not_empty" text="Mazací lis stále obsahuje mazivo"/>
+        <text name="rms_grease_gun_points" text="Zbývající maznice: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Kartuše s mazivem"/>
+        <text name="rms_grease_cartridge_function" text="Doplňuje mazací lis: s lisem v ruce se postav před kartuši."/>
+        <text name="rms_grease_cartridge_count" text="Kartuše"/>
+        <text name="rms_grease_quantity" text="Množství"/>
+        <text name="rms_grease_hud_title" text="Mazání"/>
+        <text name="rms_grease_hud_done" text="Promazáno"/>
+        <text name="rms_grease_hud_greased" text="Promazaných"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Ofukovací pistole"/>
         <text name="rms_air_blower_no_vehicle" text="V dosahu čištění není žádné vozidlo"/>
         <text name="rms_air_blower_function" text="Používá se k čištění chladičů a vzduchových filtrů"/>
@@ -631,27 +686,22 @@
         <text name="rms_inspection_service_overdue" text="%s překročena o %s"/>
         <text name="rms_inspection_status_slightly_low" text="Mírně nízká"/>
         <text name="rms_inspection_status_slightly_dirty" text="Mírně zanesený"/>
-        <text name="rms_inspection_status_slightly_dry" text="Mírně suché"/>
+        <text name="rms_inspection_status_grease_due" text="Namazat"/>
         <text name="rms_inspection_status_slight_moisture" text="Lehká vlhkost"/>
         <text name="rms_inspection_status_seepage" text="Průsak"/>
         <text name="rms_inspection_status_severe_leak" text="Silný únik"/>
         <text name="rms_inspection_status_low" text="Nízká"/>
         <text name="rms_inspection_status_very_low" text="Velmi nízká"/>
-        <text name="rms_inspection_status_very_dry" text="Velmi suché"/>
         <text name="rms_inspection_status_critically_low" text="Nutné doplnění"/>
         <text name="rms_inspection_status_critically_clogged" text="Zcela ucpaný"/>
-        <text name="rms_inspection_status_critically_dry" text="Kov na kov"/>
         <text name="rms_inspection_status_dirty" text="Zanesený"/>
-        <text name="rms_inspection_status_dry" text="Suché"/>
+        <text name="rms_inspection_status_grease_late" text="Po termínu"/>
         <text name="rms_inspection_status_active_leak" text="Aktivní únik"/>
         <text name="rms_inspection_status_heavily_clogged" text="Silně zanesený"/>
         <text name="rms_inspection_status_not_required" text="Není vyžadováno"/>
         <text name="rms_inspection_status_change_overdue" text="Výměna po termínu"/>
         <text name="rms_inspection_status_change_long_overdue" text="Výměna dlouho po termínu"/>
         <text name="rms_inspection_status_replacement_due" text="Nutná výměna"/>
-        <text name="rms_inspection_engine_oil" text="Motorový olej"/>
-        <text name="rms_inspection_coolant" text="Chladicí kapalina"/>
-        <text name="rms_inspection_hydraulic_fluid" text="Hydraulický olej"/>
         <text name="rms_inspection_hint_coolant_leak_stage1" text="U spojů chladicí soustavy jsou viditelné mírné stopy chladicí kapaliny."/>
         <text name="rms_inspection_hint_coolant_leak_stage2" text="Jsou patrné zbytky chladicí kapaliny a její hladina je pod normálem."/>
         <text name="rms_inspection_hint_coolant_leak_stage3" text="V oblasti chladicí soustavy je patrná zřetelná ztráta kapaliny."/>
@@ -691,10 +741,7 @@
         <text name="rms_inspection_hint_unidentified" text="Příznak nezjištěné poruchy: dílna ji zjistí prohlídkou nebo údržbou."/>
         <text name="rms_inspection_hint_alternator_stage3" text="V okolí alternátoru a některých spojů jsou patrné známky přehřívání a ztmavnutí."/>
         <text name="rms_inspection_hint_alternator_stage4" text="V okolí alternátoru a jeho kabeláže jsou viditelné výrazné známky přehřívání a ztmavlé konektory."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Mazací body vypadají mírně suché."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Mazací body vypadají suché a nedostatečně promazané."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Mazací body jsou velmi suché, s minimem zbývajícího maziva."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Mazací body pracují kov na kov, téměř bez viditelného maziva."/>
+        <text name="rms_inspection_hint_grease_due" text="Maznice k namazání: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="Na skříni převodovky jsou patrné lehké stopy oleje."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Pod převodovkou jsou vidět kapky oleje."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Kolem převodovky je patrná výrazná ztráta oleje."/>
@@ -752,6 +799,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder kloubů nakladače."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder kloubů nakladače."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder kloubů nakladače."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Prohlídka zjišťuje počínající opotřebení čepů a pouzder stožáru."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder stožáru."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder stožáru."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder stožáru."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Prohlídka zjišťuje počínající opotřebení čepů a pouzder výložníku."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder výložníku."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder výložníku."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder výložníku."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Prohlídka zjišťuje počínající opotřebení čepů a pouzder frézovacího ramene."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder frézovacího ramene."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder frézovacího ramene."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder frézovacího ramene."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Prohlídka zjišťuje počínající opotřebení čepů a pouzder ramene radlice."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Prohlídka zjišťuje znatelnou vůli čepů a pouzder ramene radlice."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Prohlídka zjišťuje značnou vůli čepů a pouzder ramene radlice."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Prohlídka zjišťuje velmi značnou vůli čepů a pouzder ramene radlice."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Tlumič kabiny je mírně vlhký."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Z tlumiče kabiny prosakuje olej."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Tlumič kabiny vykazuje aktivní únik."/>
@@ -764,10 +827,8 @@
         <text name="rms_inspection_hint_service_transmission" text="Výměna převodového oleje je po termínu: opotřebovaný olej urychluje opotřebení všeho, co maže. Údržba doporučená v dílně jej vymění i s filtrem."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Výměna hydraulického oleje je po termínu: opotřebovaný olej urychluje opotřebení hydraulického systému. Údržba doporučená v dílně jej vymění i s filtrem."/>
         <text name="rms_inspection_hint_service_coolant" text="Chladicí kapalinu je třeba vyměnit: opotřebovaná kapalina urychluje opotřebení chladicího systému. Údržba doporučená v dílně ji vymění."/>
-        <text name="rms_inspection_transmission_oil" text="Převodový olej"/>
         <text name="rms_inspection_radiator" text="Chladič"/>
         <text name="rms_inspection_air_filter" text="Vzduchový filtr"/>
-        <text name="rms_inspection_lubrication_level" text="Úroveň mazání"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Nebyly zjištěny žádné podezřelé příznaky"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -810,6 +871,32 @@
         <text name="rms_fleet_part_unmeasured" text="Bez měření"/>
         <text name="rms_fleet_parts_reading" text="Měření součástí %s"/>
         <text name="rms_fleet_parts_need_complete" text="Měření součástí při příští úplné prohlídce"/>
+        <text name="rms_fleet_greasing_done" text="Mazání provedeno"/>
+        <text name="rms_fleet_greasing_period_days" text="Každých %d dní provozu"/>
+        <text name="rms_fleet_greasing_period_day" text="Každý den provozu"/>
+        <text name="rms_fleet_greasing_period_month" text="Každý měsíc"/>
+        <text name="rms_fleet_greasing_period_months" text="Každých %d měs."/>
+        <text name="rms_fleet_greasing_period_bales" text="Každých %d balíků"/>
+        <text name="rms_fleet_greasing_bales" text="%d balíků"/>
+        <text name="rms_fleet_greasing_day" text="%d den"/>
+        <text name="rms_fleet_greasing_days" text="%d dní"/>
+        <text name="rms_fleet_day_late" text="Zpoždění %d den"/>
+        <text name="rms_fleet_days_late" text="Zpoždění %d dní"/>
+        <text name="rms_fleet_greasing_to_do" text="Zbývá %d"/>
+        <text name="rms_fleet_greasing_points" text="Maznice"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Nejčastější"/>
+        <text name="rms_fleet_greasing_next" text="Příští mazání"/>
+        <text name="rms_fleet_greasing_now" text="Nyní"/>
+        <text name="rms_fleet_greasing_in" text="za %s"/>
+        <text name="rms_fleet_months_late" text="Zpoždění %d měs."/>
+        <text name="rms_fleet_bales_late" text="Zpoždění %d balíků"/>
+        <text name="rms_fleet_wear" text="Opotřebení"/>
+        <text name="rms_fleet_wear_faster" text="Rychleji"/>
+        <text name="rms_fleet_wear_normal" text="Běžné opotřebení"/>
+        <text name="rms_fleet_wear_late" text="Zpoždění mazání"/>
+        <text name="rms_fleet_wear_repair_greases" text="Promazáno při opravě"/>
+        <text name="rms_fleet_wear_repair" text="Oprava v dílně"/>
+        <text name="rms_fleet_wear_none" text="Žádné"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Vrácení vozidla"/>
         <text name="rms_sell_dialog_section_vehicle" text="Vozidlo"/>
@@ -839,7 +926,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Chlazení a vzduchový filtr"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Chladič nebo vzduchový filtr je zanesený. Při pohledu na vozidlo podrž klávesu %s a zjisti, který z nich to je. Vyčisti jej ofukovačem stlačeného vzduchu. Pokud už filtr nelze profouknout, dílna jej vymění od údržby %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Nutné mazání"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Stroj %s potřebuje pravidelné mazání.&#10;&#10;V RMS úroveň mazání klesá s provozními hodinami. Po dlouhé době bez používání je mazání nutné také před opětovným uvedením stroje do provozu. Nedostatečné mazání urychluje opotřebení podvozku.&#10;&#10;Kup si v obchodě mazací lis a namaž stroj, když to prohlídka vyžaduje.&#10;&#10;Úroveň mazání můžeš zkontrolovat: při pohledu na vozidlo podrž klávesu %s."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Stroj %s má maznice k namazání.&#10;&#10;V RMS má každý stroj maznice podle svého návodu. Znovu se mažou podle dnů, kdy stroj pracuje: každý pracovní den, nebo jednou za několik pracovních dnů ty, které návod maže méně často. Opožděné mazání urychluje opotřebení podvozku.&#10;&#10;Kup si v obchodě mazací lis a kartuše. S lisem v ruce se postav před kartuši, aby se vložila, a potom zamiř na stroj: každé kliknutí namaže jednu maznici a podržením tlačítka pokračuješ na další.&#10;&#10;Zbývající maznice uvidíš, když při pohledu na vozidlo podržíš klávesu %s."/>
         <text name="rms_tutorial_needs_repair_title" text="Zjištěná porucha"/>
         <text name="rms_tutorial_needs_repair_message" text="Stroj %s má problém. Jedna z jeho součástí možná selhala.&#10;&#10;Zajeď do dílny: prohlídka, nebo údržba, pokud je na řadě, poruchu zjistí. Neotálej: porucha se může dále zhoršovat a spolu s ní rostou i náklady na opravu.&#10;&#10;Jakmile je porucha zjištěna, nech ji opravit v dílně."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Nutná generální oprava"/>
@@ -870,7 +957,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Příliš těžký přívěs"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Tažený náklad může být pro toto vozidlo příliš těžký. Můžeš pokračovat v jízdě, ale převodovka a hnací ústrojí budou více namáhány.&#10;&#10;RMS používá dvě hodnoty: traktor potřebuje alespoň 10 koní na tunu tažené hmotnosti, zatímco nákladní vůz alespoň 6 koní na tunu celkové hmotnosti soupravy. Pod příslušnou hodnotou a při vysokém zatížení motoru se opotřebení převodovky zvyšuje."/>
         <text name="rms_tutorial_hard_start_title" text="Obtížné startování"/>
-        <text name="rms_tutorial_hard_start_message" text="Motor stroje %s se obtížně spouští. Příčinou může být slabá baterie, mráz, mechanická porucha nebo opotřebovaný startér. Drž tlačítko spuštění, dokud se motor nerozběhne.&#10;&#10;Elektrický systém je při spouštění silně namáhán vysokými nárazovými proudy."/>
+        <text name="rms_tutorial_hard_start_message" text="Motor stroje %s se obtížně spouští. Příčinou může být slabá baterie, mráz, mechanická porucha nebo opotřebovaný startér.&#10;&#10;Elektrický systém je při spouštění silně namáhán vysokými nárazovými proudy."/>
         <text name="rms_tutorial_low_fuel_title" text="Nízká zásoba paliva"/>
         <text name="rms_tutorial_low_fuel_message" text="Nádrž se blíží k rezervě. Čím méně paliva zbývá, tím více se palivové čerpadlo musí namáhat, aby ho nasálo, a ze dna nádrže se do filtru dostává voda a usazeniny, takže se rychleji zanáší.&#10;&#10;Nejlépe je dotankovat na konci dne: v plné nádrži vzniká méně kondenzátu."/>
         <text name="rms_tutorial_lugging_title" text="Podtáčení motoru"/>
@@ -982,7 +1069,6 @@
         <text name="rms_diagnostic_spn_102" text="Plnicí tlak"/>
         <text name="rms_diagnostic_spn_100" text="Tlak motorového oleje"/>
         <text name="rms_diagnostic_spn_101" text="Tlak v klikové skříni motoru"/>
-        <text name="rms_diagnostic_spn_1322" text="Vynechávání zapalování ve více válcích"/>
         <text name="rms_diagnostic_spn_cylinder" text="Vynechávání zapalování ve válci %d"/>
         <text name="rms_diagnostic_spn_94" text="Dopravní tlak paliva"/>
         <text name="rms_diagnostic_spn_110" text="Teplota chladicí kapaliny"/>
@@ -1076,7 +1162,6 @@
         <text name="rms_charger_disconnected" text="Nabíječka odpojena."/>
         <text name="rms_charger_stopped_motor" text="Nabíjení přerušeno: start"/>
         <text name="rms_charger_error_player_distance" text="Přistup k nabíječce pěšky."/>
-        <text name="rms_charger_mode_select" text="Připojit nabíječku"/>
         <text name="rms_charger_mode_start" text="Podpořit startování"/>
         <text name="rms_charger_start_ready" text="START připraven"/>
         <text name="rms_charger_start_active" text="Pomoc při startování aktivní"/>

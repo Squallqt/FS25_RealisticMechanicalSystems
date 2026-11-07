@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Event setting a pump on a drum or taking it back in hand
 RMS_DrumPumpEvent = {}
@@ -7,13 +6,10 @@ local RMS_DrumPumpEvent_mt = Class(RMS_DrumPumpEvent, Event)
 
 InitEventClass(RMS_DrumPumpEvent, "RMS_DrumPumpEvent")
 
----
 function RMS_DrumPumpEvent.emptyNew()
     return Event.new(RMS_DrumPumpEvent_mt)
 end
 
----
--- @param table container drum aimed at
 -- @param table? handTool pump in hand to set on it, nil to take its pump back
 function RMS_DrumPumpEvent.new(container, handTool)
     local self = RMS_DrumPumpEvent.emptyNew()
@@ -23,7 +19,6 @@ function RMS_DrumPumpEvent.new(container, handTool)
     return self
 end
 
----
 function RMS_DrumPumpEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.container)
     if streamWriteBool(streamId, self.handTool ~= nil) then
@@ -31,7 +26,6 @@ function RMS_DrumPumpEvent:writeStream(streamId, connection)
     end
 end
 
----
 function RMS_DrumPumpEvent:readStream(streamId, connection)
     self.container = NetworkUtil.readNodeObject(streamId)
     self.isMount = streamReadBool(streamId)
@@ -41,7 +35,6 @@ function RMS_DrumPumpEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
----
 function RMS_DrumPumpEvent:run(connection)
     if connection:getIsServer() or self.container == nil then
         return
@@ -60,8 +53,6 @@ function RMS_DrumPumpEvent:run(connection)
 end
 
 ---Asks the server to set a pump on a drum or take it back
--- @param table container drum aimed at
--- @param table? handTool pump in hand to set on it, nil to take its pump back
 function RMS_DrumPumpEvent.send(container, handTool)
     g_client:getServerConnection():sendEvent(RMS_DrumPumpEvent.new(container, handTool))
 end

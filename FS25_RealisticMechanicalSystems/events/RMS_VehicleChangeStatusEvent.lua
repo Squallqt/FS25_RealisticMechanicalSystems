@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 RMS_VehicleChangeStatusEvent = {}
 local RMS_VehicleChangeStatusEvent_mt = Class(RMS_VehicleChangeStatusEvent, Event)
@@ -9,17 +8,12 @@ InitEventClass(RMS_VehicleChangeStatusEvent, "RMS_VehicleChangeStatusEvent")
 
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_VehicleChangeStatusEvent.emptyNew()
     return Event.new(RMS_VehicleChangeStatusEvent_mt)
 end
 
 
 ---Create new instance of event
--- @param table vehicle vehicle
--- @param string? notificationText text shown as a side notification
--- @param table? logEntry maintenance log entry completed with this status change
--- @return table self instance of class event
 function RMS_VehicleChangeStatusEvent.new(vehicle, notificationText, logEntry)
     local self = RMS_VehicleChangeStatusEvent.emptyNew()
     self.vehicle = vehicle
@@ -38,8 +32,6 @@ end
 
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_VehicleChangeStatusEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
     streamWriteString(streamId, self.notificationText or "")
@@ -54,8 +46,6 @@ end
 
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_VehicleChangeStatusEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
     self.notificationText = streamReadString(streamId)
@@ -71,7 +61,6 @@ end
 
 
 ---Run action on receiving side
--- @param Connection connection connection
 function RMS_VehicleChangeStatusEvent:run(connection)
     if self.vehicle ~= nil and self.vehicle:getIsSynchronized() then
         local spec = self.vehicle.spec_RealisticMechanicalSystems
@@ -79,6 +68,7 @@ function RMS_VehicleChangeStatusEvent:run(connection)
             spec.currentState = self.currentState
             spec.plannedState = self.plannedState
             spec.maintenanceTimer = self.maintenanceTimer
+            spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
             spec.pendingProgressStepIndex = self.progressStepIndex
             spec.pendingProgressTotalTime = self.progressTotalTime
             spec.pendingProgressElapsedTime = self.progressElapsedTime
@@ -130,9 +120,6 @@ end
 
 
 ---Broadcast the status change from the server to the clients of the vehicle
--- @param table vehicle vehicle
--- @param string? notificationText text shown as a side notification
--- @param table? logEntry maintenance log entry completed with this status change
 function RMS_VehicleChangeStatusEvent.send(vehicle, notificationText, logEntry)
     if g_server ~= nil then
         g_server:broadcastEvent(RMS_VehicleChangeStatusEvent.new(vehicle, notificationText or "", logEntry), nil, nil, vehicle)

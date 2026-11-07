@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Запустіть двигун, щоб відпустити стоянкове гальмо"/>
         <text name="rms_preheat_ignition_message" text="Запалювання ввімкнено: триває передпусковий підігрів"/>
         <text name="rms_preheat_system_failure_message" text="Несправність системи передпускового підігріву: холодний запуск неможливий"/>
-        <text name="rms_preheat_start_failed_message" text="Двигун не запустився: вимкніть запалювання перед новою спробою"/>
+        <text name="rms_preheat_start_failed_message" text="Двигун не запустився"/>
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Перевірити техніку"/>
@@ -39,48 +39,52 @@
         <text name="rms_settings_section_service_wear" text="Обслуговування та знос"/>
         <text name="rms_settings_section_drivetrain" text="Привід і стоянкове гальмо"/>
         <text name="rms_workshopOpenHour_label" text="Час відкриття майстерні"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Роботи починаються лише з цієї години."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Задає годину відкриття майстерень: роботи починаються лише з цієї години."/>
         <text name="rms_workshopCloseHour_label" text="Час закриття майстерні"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Поточні роботи призупиняються в цей час і відновлюються під час відкриття."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Задає годину закриття майстерень: поточні роботи зупиняються та відновлюються при відкритті."/>
+        <text name="rms_workshopHours_locked" text="Для цього налаштування хоча б одна майстерня не повинна працювати цілодобово."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Майстерня дилера 24/7"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Робить майстерню дилера доступною в будь-який час доби."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Визначає, чи залишається майстерня дилера відкритою будь-якої години."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Мобільна майстерня 24/7"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Робить мобільну майстерню доступною в будь-який час доби."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Визначає, чи залишається мобільна майстерня доступною будь-якої години."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Обмеження майстерень"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Обмежує роботи мобільної та власної майстерні за потрібним обладнанням. Обслуговування доступне; електроніка потребує діагностичного обладнання, під’єднаного до машини, а в мобільній майстерні важке розбирання або високовольтні роботи потребують обладнаної майстерні."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Визначає, чи обмежує обладнання мобільну та власну майстерню: електроніка потребує під’єднаного діагностичного обладнання, а мобільна майстерня не робить важкого розбирання або високовольтних робіт. Обслуговування завжди можливе."/>
         <text name="rms_ownWorkshopAvailable_label" text="Власна майстерня 24/7"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Робить вашу власну майстерню доступною в будь-який час доби."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Визначає, чи залишається ваша власна майстерня відкритою будь-якої години."/>
         <text name="rms_instantInspection_label" text="Миттєвий огляд"/>
-        <text name="rms_instantInspection_tooltip" text="Якщо увімкнено, огляди в майстерні завершуються миттєво. Роботи цього типу, які вже тривають, також завершуються миттєво."/>
+        <text name="rms_instantInspection_tooltip" text="Визначає, чи завершуються огляди в майстерні миттєво, включно з уже розпочатими."/>
         <text name="rms_instantMaintenanceRepair_label" text="Миттєве обслуговування та ремонт"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Якщо увімкнено, обслуговування та ремонти в майстерні завершуються миттєво. Роботи цього типу, які вже тривають, також завершуються миттєво."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Визначає, чи завершуються обслуговування та ремонт у майстерні миттєво, включно з уже розпочатими роботами."/>
         <text name="rms_instantBodywork_label" text="Миттєве фарбування"/>
-        <text name="rms_instantBodywork_tooltip" text="Якщо увімкнено, фарбування в майстерні завершується миттєво. Роботи цього типу, які вже тривають, також завершуються миттєво."/>
+        <text name="rms_instantBodywork_tooltip" text="Визначає, чи завершується фарбування в майстерні миттєво, включно з уже розпочатим."/>
         <text name="rms_instantOverhaul_label" text="Миттєвий механічний капітальний ремонт"/>
-        <text name="rms_instantOverhaul_tooltip" text="Якщо увімкнено, механічний капітальний ремонт в майстерні завершується миттєво. Роботи цього типу, які вже тривають, також завершуються миттєво."/>
+        <text name="rms_instantOverhaul_tooltip" text="Визначає, чи завершується механічний капітальний ремонт у майстерні миттєво, включно з уже розпочатим."/>
+        <text name="rms_instantRemap_label" text="Миттєвий чип-тюнінг двигуна"/>
+        <text name="rms_instantRemap_tooltip" text="Визначає, чи завершуються чип-тюнінг двигуна та повернення заводської прошивки миттєво, включно з уже розпочатими."/>
         <text name="rms_debugMode_label" text="Режим налагодження"/>
-        <text name="rms_debugMode_tooltip" text="Показує вікно налагодження в техніці, якою ви керуєте; клавіша %s також відкриває й закриває його. У багатокористувацькій грі його бачать лише адміністратори. Також записує докладні журнали в консоль."/>
+        <text name="rms_debugMode_tooltip" text="Визначає, чи показується вікно налагодження в керованій машині та чи отримує консоль докладні журнали. Клавіша %s відкриває і закриває вікно; у багатокористувацькій грі його бачать лише адміністратори."/>
         <text name="rms_warningMessages_label" text="Попереджувальні повідомлення"/>
-        <text name="rms_warningMessages_tooltip" text="Вмикає або вимикає ігрові попереджувальні повідомлення, такі як сповіщення про холодний двигун та перегрів. Сповіщення про обмеження потужності через температуру залишаються активними."/>
+        <text name="rms_warningMessages_tooltip" text="Визначає, чи показуються попередження, наприклад про холодний двигун або перегрів. Повідомлення про обмеження потужності через температуру показуються завжди."/>
         <text name="rms_serviceInterval_label" text="Періодичність обслуговування"/>
-        <text name="rms_serviceInterval_tooltip" text="Задайте еталонні години. За 100 год припис 500 год стає 100 год, а 600 год — 120 год. Для кожної рідини діє програма машини; календарні строки незалежні."/>
+        <text name="rms_serviceInterval_tooltip" text="Задає години між двома замінами моторної оливи в моделі, представленої з 2010 року, або з невідомим роком. Старішій моделі заміна потрібна частіше:&#10;З 2000 по 2009 рік: %s&#10;З 1980 по 1999 рік: %s&#10;З 1960 по 1979 рік: %s&#10;До 1960 року: %s"/>
         <text name="rms_vehicleLifespan_label" text="Термін служби техніки"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Встановлює базовий термін служби техніки в годинах, після якого її стан досягне 0%. Чим ближче стан до нуля, тим менш надійною стає техніка. Вартість техніки також знижується за ці години. Зміна діє з цього моменту: техніка зберігає свій стан, перераховується лише її вартість."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Задає години роботи, після яких стан техніки досягає 0%; що ближче до цієї межі, то нижчі її надійність і вартість. Зміна діє з цього моменту: техніка зберігає свій стан, перераховується лише її вартість."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Вихлопний дим"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Керує вихлопним димом відповідно до фактичного стану двигуна. Дим чорний, коли палива більше за доступне повітря: під час різкого прискорення, важкої роботи на низьких обертах, тривалого холостого ходу з малим навантаженням, із засміченим повітряним фільтром або зношеною системою впорскування. Дим синій, коли зношений двигун спалює оливу, і білий, коли паливо виходить незгорілим. Шлейф також збільшується разом із навантаженням двигуна. Стара техніка димить значно більше за сучасну, яка майже не димить, доки немає справжньої несправності. У холодному повітрі вода, що утворюється під час згоряння, ще й конденсується в короткий білий шлейф, який випаровується в межах метра-двох навіть у справного двигуна."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Визначає, чи відповідає вихлопний дим фактичному стану двигуна: чорний за браку повітря, синій при спалюванні оливи, білий при виході незгорілого палива, густіший під навантаженням. Стара техніка димить значно більше за сучасну."/>
         <text name="rms_tutorialMode_label" text="Режим навчання"/>
-        <text name="rms_tutorialMode_tooltip" text="Показує підказки під час гри."/>
+        <text name="rms_tutorialMode_tooltip" text="Визначає, чи показуються навчальні поради під час гри."/>
         <text name="rms_tutorialResetTips_label" text="Скинути підказки"/>
         <text name="rms_tutorialResetTips_text" text="Скинути підказки"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Скидає історію навчальних підказок і знову показує їх усі."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Скидає історію навчальних порад: усі поради буде показано знову."/>
         <text name="rms_tutorialResetConfirm_title" text="Скинути навчальні підказки?"/>
         <text name="rms_tutorialResetConfirm_message" text="Скинути історію підказок і знову показати їх усі?"/>
         <text name="rms_drivetrainEnabled_label" text="Керування 4WD / блокуванням диференціала"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Вмикає ручне керування підключним переднім мостом і блокуваннями диференціалів на тракторах. Якщо встановлено Enhanced Vehicle, його керування диференціалами вимикається; щоб повернути його, вимкніть цю опцію, а потім знову ввімкніть диференціали в меню Enhanced Vehicle."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Визначає, чи керуються передній міст і блокування диференціалів тракторів вручну. Опція замінює керування диференціалами Enhanced Vehicle: щоб повернути його, вимкніть опцію, а потім знову ввімкніть диференціали в його меню."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Дозволити режим АВТО"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Додає положення АВТО: передній міст підключається автоматично при пробуксовці або на робочій швидкості під навантаженням і відключається на дорозі. Машини, залишені в АВТО, повертаються до 4WD після вимкнення цієї опції."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Визначає, чи пропонує перемикач положення AUTO: передній міст підключається при пробуксовці коліс або роботі під навантаженням і відключається на дорозі. Вимкнення опції повертає машини, залишені в AUTO, до 4WD."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Для цього налаштування потрібно ввімкнути керування 4WD / блокуванням диференціала."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Стоянкове гальмо"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Додає всій підтримуваній техніці стоянкове гальмо. Нова техніка з трансмісією CVT або Powershift затягує й відпускає його сама; на решті ви керуєте ним окремою клавішею. Якщо встановлено Enhanced Vehicle, його стоянкове гальмо вимикається; щоб повернути його, вимкніть цю опцію, а потім знову ввімкніть стоянкове гальмо в меню Enhanced Vehicle."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Визначає, чи має відстежувана техніка стоянкове гальмо: автоматичне в нових машин із CVT або Powershift, з окремою клавішею в решти. Опція замінює стоянкове гальмо Enhanced Vehicle: щоб повернути його, вимкніть опцію і знову ввімкніть його стоянкове гальмо в його меню."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Майстерня"/>
         <text name="rms_ws_tab_summary" text="Зведення"/>
@@ -93,14 +97,11 @@
         <text name="rms_ws_section_quote" text="Кошторис ремонту"/>
         <text name="rms_ws_section_choose_intervention" text="Обрати роботу"/>
         <text name="rms_ws_section_work_order" text="Наряд-замовлення"/>
-        <text name="rms_ws_section_paint_order" text="Наряд-замовлення на фарбування"/>
         <text name="rms_ws_section_recap" text="Підсумок"/>
         <text name="rms_ws_section_parts" text="Задіяні деталі"/>
         <text name="rms_ws_section_history" text="Історія"/>
-        <text name="rms_ws_section_current_intervention" text="Робота в процесі"/>
         <text name="rms_ws_label_last_check" text="Остання перевірка"/>
         <text name="rms_ws_reading_outdated" text="На перевірку"/>
-        <text name="rms_ws_label_workshop_state" text="Стан майстерні"/>
         <text name="rms_ws_label_more_parts" text="+ ще %s"/>
         <text name="rms_ws_label_committed_cost" text="Витрачені кошти"/>
         <text name="rms_ws_label_finish_time" text="Час завершення"/>
@@ -109,12 +110,13 @@
         <text name="rms_ws_info_inspection_reveals" text="Огляд або обслуговування може виявити інші несправності."/>
         <text name="rms_ws_status_ready_title" text="Майстерня готова"/>
         <text name="rms_ws_status_ready_hint" text="Оберіть роботу. Параметри, деталі та ціну буде підтверджено перед початком."/>
+        <text name="rms_ws_status_closed_hint" text="Роботи приймаються з %s до %s."/>
         <text name="rms_ws_label_value" text="Вартість"/>
         <text name="rms_ws_label_age" text="Вік"/>
         <text name="rms_ws_label_operating_hours" text="Мотогодини"/>
         <text name="rms_odometer_label" text="Пробіг"/>
         <text name="rms_odometer_not_recorded" text="Не зафіксовано"/>
-        <text name="rms_ws_label_service" text="Рівень обслуговування"/>
+        <text name="rms_ws_label_service" text="Рівень ТО"/>
         <text name="rms_ws_label_condition" text="Стан"/>
         <text name="rms_ws_label_reliability" text="Надійність"/>
         <text name="rms_reliability_average" text="Середня"/>
@@ -132,12 +134,13 @@
         <text name="rms_shop_service_access_easy" text="Висока зручність сервісу"/>
         <text name="rms_shop_service_access_average" text="Середня зручність сервісу"/>
         <text name="rms_shop_service_access_demanding" text="Низька зручність сервісу"/>
+        <text name="rms_shop_launch_year" text="Модель вийшла на ринок у %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Рік виходу на ринок невідомий"/>
         <text name="rms_owner_care_careful" text="Ретельне обслуговування"/>
         <text name="rms_owner_care_regular" text="Регулярне обслуговування"/>
         <text name="rms_owner_care_neglected" text="Занедбане обслуговування"/>
         <text name="rms_ws_label_overhaul_count" text="Виконано капітальних ремонтів"/>
         <text name="rms_ws_label_maintenance_log" text="Журнал обслуговування"/>
-        <text name="rms_ws_label_last_report" text="Останній звіт"/>
         <text name="rms_ws_label_last_maintenance" text="Останнє обслуговування"/>
         <text name="rms_ws_task_inspection" text="Огляд"/>
         <text name="rms_ws_task_maintenance" text="Обслуговування"/>
@@ -151,12 +154,12 @@
         <text name="rms_ws_reason_repair_unselected" text="Жодну несправність не позначено. Позначте в розділі «Діагностика та кошторис» несправності для ремонту."/>
         <text name="rms_ws_reason_overhaul_none" text="Механічний капітальний ремонт відновлює системи зі станом нижче 50%. У цієї техніки таких немає."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Мобільна майстерня не виконує фарбування. Його виконують у дилера."/>
+        <text name="rms_ws_reason_refill_dealer" text="Доливання рідин виконує лише дилер. В інших місцях доливають з каністри."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s: %s. Скористайтеся обладнаною майстернею."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Під’єднайте до машини діагностичне обладнання візка."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Потрібна електронна діагностика"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Потрібне розбирання або спеціальний інструмент"/>
         <text name="rms_mobile_workshop_high_voltage_required" text="Потрібне високовольтне обладнання"/>
-        <text name="rms_ws_status_in_progress_short_format" text="%s триває..."/>
         <text name="rms_ws_status_in_progress_format" text="%s триває до %s"/>
         <text name="rms_ws_status_open" text="Майстерня відкрита"/>
         <text name="rms_ws_status_closed" text="Майстерня закрита"/>
@@ -171,19 +174,17 @@
         <text name="rms_ws_action_choice_overhaul" text="Механічний капітальний ремонт"/>
         <text name="rms_ws_action_choice_refill" text="Доливання рідин"/>
         <text name="rms_ws_action_choice_bodywork" text="Фарбування техніки"/>
+        <text name="rms_ws_action_choice_remap" text="Чип-тюнінг двигуна"/>
         <text name="rms_ws_action_cancel_service" text="Скасувати роботу"/>
         <text name="rms_ws_age_unit" text="міс."/>
-        <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_no_last_report_message" text="Звітів ще немає"/>
         <text name="rms_ws_no_log_empty_message" text="Журнал поки порожній"/>
-        <text name="rms_ws_no_report_message" text="Звіт відсутній"/>
         <text name="rms_ws_cancel_confirm_title" text="Скасувати поточну роботу? (%s)"/>
         <text name="rms_ws_cancel_confirm_text" text="Поточний прогрес буде збережено як є. Гроші не повертаються."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="Журнал обслуговування"/>
         <text name="rms_log_recorded_interventions_title" text="Зареєстровані роботи"/>
         <text name="rms_log_last_intervention_title" text="Остання робота"/>
-        <text name="rms_log_hours" text="Мотогодини"/>
         <text name="rms_log_total_cost_title" text="Загальні витрати"/>
         <text name="rms_log_total_breakdowns_count_title" text="Усунені несправності"/>
         <text name="rms_log_type" text="Тип робіт"/>
@@ -263,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Ходова частина"/>
         <text name="rms_spec_system_fuel" text="Паливна система"/>
         <text name="rms_spec_system_pto" text="Вал відбору потужності"/>
+        <text name="rms_spec_system_harvest" text="Збирання"/>
         <text name="rms_spec_system_electric_motor" text="Електродвигун"/>
         <text name="rms_spec_system_traction_battery" text="Тягова батарея"/>
         <text name="rms_spec_state_ready" text="Готово"/>
@@ -274,6 +276,7 @@
         <text name="rms_spec_state_maintenance" text="Обслуговування"/>
         <text name="rms_spec_state_overhaul" text="Капітальний ремонт"/>
         <text name="rms_spec_state_bodywork" text="Фарбування"/>
+        <text name="rms_spec_state_remap" text="Чип-тюнінг двигуна"/>
         <text name="rms_spec_state_overdue" text="Прострочено"/>
         <text name="rms_spec_state_optimal" text="Оптимальний"/>
         <text name="rms_spec_state_broken" text="Несправно"/>
@@ -310,9 +313,9 @@
         <text name="rms_option_menu_lease_service_text" text="Входить в оренду"/>
         <text name="rms_option_menu_duration_text" text="Тривалість"/>
         <text name="rms_option_menu_duration_instant" text="Миттєво"/>
-        <text name="rms_option_menu_finish_time_text" text="Час завершення"/>
         <text name="rms_option_menu_start_text" text="Почати"/>
         <text name="rms_service_months" text="%s міс."/>
+        <text name="rms_service_either" text="%s або %s"/>
         <text name="rms_service_month" text="%s міс."/>
         <text name="rms_service_calendar_due" text="Календарний строк досягнуто"/>
         <text name="rms_service_program_estimated" text="Орієнтовний графік"/>
@@ -387,8 +390,10 @@
         <text name="rms_warranty_lease" text="Ремонт не покривається під час оренди"/>
         <text name="rms_warranty_expired" text="Гарантія закінчилася"/>
         <text name="rms_warranty_overdue" text="Відмова: прострочене обслуговування"/>
+        <text name="rms_warranty_impact" text="Відмова: пошкодження від удару"/>
         <text name="rms_warranty_options" text="Потрібна заміна оригінальними деталями"/>
         <text name="rms_warranty_mobile" text="До сплати: доплата за роботу мобільної майстерні"/>
+        <text name="rms_warranty_remapped" text="Гарантію втрачено: чип-тюнінг двигуна"/>
         <text name="rms_ws_overhaul_row_systems" text="Відновлювані системи"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Приводяться до ладу"/>
         <text name="rms_ws_overhaul_systems_one" text="Одна на вибір"/>
@@ -420,7 +425,7 @@
         <text name="rms_ws_inspection_mechanical" text="Механічні несправності"/>
         <text name="rms_ws_inspection_mechanical_detail" text="Зовнішній огляд і перевірка функцій"/>
         <text name="rms_ws_inspection_electronic" text="Електронні несправності"/>
-        <text name="rms_ws_inspection_electronic_detail" text="Коди помилок, зчитані діагностичним сканером"/>
+        <text name="rms_ws_inspection_electronic_detail" text="Коди помилок, зчитані сканером"/>
         <text name="rms_ws_inspection_dormant" text="Приховані дефекти"/>
         <text name="rms_ws_inspection_dormant_detail" text="Дефектна деталь, тимчасовий ремонт"/>
         <text name="rms_ws_inspection_report" text="Звіт"/>
@@ -442,8 +447,42 @@
         <text name="rms_bodywork_no_wear" text="Немає пошкоджень фарби для ремонту"/>
         <text name="rms_bodywork_wear_limit" text="Підфарбування доступне за пошкодження фарби до 30%"/>
         <text name="rms_bodywork_no_colors" text="Ця машина не має кольорів на вибір. Поточні кольори зберігаються."/>
-        <text name="rms_bodywork_unavailable_title" text="Робота недоступна"/>
         <text name="rms_bodywork_dealer_only" text="Повне перефарбування виконується у дилера"/>
+        <text name="rms_remap_option" text="Чип-тюнінг"/>
+        <text name="rms_remap_restore" text="Заводська прошивка"/>
+        <text name="rms_remap_max_power" text="Максимальна потужність"/>
+        <text name="rms_remap_max_torque" text="Максимальний момент"/>
+        <text name="rms_remap_gain" text="Приріст"/>
+        <text name="rms_remap_gain_format" text="+%d%%"/>
+        <text name="rms_remap_stock_format" text="Заводський %s"/>
+        <text name="rms_remap_today_format" text="Зараз %s"/>
+        <text name="rms_remap_torque_format" text="%s Нм"/>
+        <text name="rms_remap_free_restore" text="Безкоштовне повернення"/>
+        <text name="rms_remap_until_format" text="По %s"/>
+        <text name="rms_remap_then_format" text="Потім %s"/>
+        <text name="rms_remap_curves_announced" text="Криві, заявлені тюнером"/>
+        <text name="rms_remap_curves_measured" text="Стенд тюнера, до та після"/>
+        <text name="rms_remap_legend_remapped" text="Чип-тюнінг"/>
+        <text name="rms_remap_legend_stock" text="Заводські"/>
+        <text name="rms_remap_legend_power" text="Потужність"/>
+        <text name="rms_remap_legend_torque" text="Момент"/>
+        <text name="rms_remap_note_fuel" text="Більша потужність потребує більше дизпалива і дає більше тепла"/>
+        <text name="rms_remap_note_stock_kept" text="Тюнер зберігає заводську прошивку"/>
+        <text name="rms_remap_note_overload" text="Понад найпотужніший двигун лінійки: знос при повному навантаженні"/>
+        <text name="rms_remap_note_restored" text="Заводські криві двигуна відновляться"/>
+        <text name="rms_remap_note_same_fuel" text="Та сама витрата на кожну віддану к.с."/>
+        <text name="rms_remap_warranty_lost" text="Втрачена"/>
+        <text name="rms_remap_warranty_lost_detail" text="Назавжди, навіть після повернення заводської прошивки"/>
+        <text name="rms_remap_warranty_not_back" text="Заводська прошивка не поверне гарантію"/>
+        <text name="rms_remap_free" text="Безкоштовно"/>
+        <text name="rms_remap_unavailable" text="Чип-тюнінг недоступний"/>
+        <text name="rms_remap_refusal_dealer" text="Дилер не виконує чип-тюнінг двигунів."/>
+        <text name="rms_remap_refusal_farm_mobile_hint" text="Тюнер приїде на ферму: скористайтеся майстернею ферми або мобільною майстернею."/>
+        <text name="rms_remap_refusal_leased" text="Чип-тюнінг орендованої машини неможливий."/>
+        <text name="rms_remap_refusal_not_eligible" text="Цей двигун не має блока керування для перепрошивки."/>
+        <text name="rms_remap_confirm_title" text="Виконати чип-тюнінг?"/>
+        <text name="rms_remap_confirm_format" text="%s: машина недоступна протягом %s."/>
+        <text name="rms_remap_confirm_warranty" text="Гарантію буде втрачено назавжди, навіть після повернення заводської прошивки."/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Звіт про огляд"/>
         <text name="rms_report_vehicle_specs_title" text="Характеристики техніки"/>
@@ -463,7 +502,6 @@
         <text name="rms_report_worn_part_replace" text="%s · Заміна: поглиблений ремонт або капітальний ремонт"/>
         <text name="rms_report_overall_assessment_title" text="Загальна оцінка стану"/>
         <text name="rms_report_overall_assessment_condition" text="Рівень стану"/>
-        <text name="rms_report_overall_assessment_service" text="Рівень обслуговування"/>
         <text name="rms_report_recommendations_title" text="Висновки та рекомендації"/>
         <text name="rms_report_recommendation_repair_active_breakdowns" text="Виявлено активні несправності. Рекомендується стандартний ремонт усіх виявлених несправностей."/>
         <text name="rms_report_recommendation_repeat_maintenance" text="Виявлено дефектні витратні матеріали. Повторіть обслуговування, щоб замінити їх."/>
@@ -510,6 +548,12 @@
         <text name="rms_report_wear_battery_heat" text="Перегрів акумулятора"/>
         <text name="rms_report_wear_lubrication" text="Прострочене змащування"/>
         <text name="rms_report_wear_pto_overload" text="Перевантаження ВВП"/>
+        <text name="rms_report_wear_harvest_overload" text="Перевантаження збирання"/>
+        <text name="rms_report_wear_harvest_flow" text="Великий потік зерна"/>
+        <text name="rms_report_wear_harvest_straw" text="Перевантаження подрібнювача"/>
+        <text name="rms_report_wear_harvest_stones" text="Каміння"/>
+        <text name="rms_report_wear_harvest_rice" text="Збирання рису"/>
+        <text name="rms_report_wear_harvest_wet" text="Волога маса"/>
         <text name="rms_report_component_title" text="Вузол"/>
         <text name="rms_report_system_condition_transmission" text="Трансмісія"/>
         <text name="rms_report_system_condition_power" text="Поточна потужність"/>
@@ -525,15 +569,26 @@
         <text name="rms_report_transmission_cvt_slipping" text="Неефективна передача тяги"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Передавальне число обмежене"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Нерівномірна передача тяги"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Несправний термостат"/>
         <text name="rms_report_transmission_failed" text="Несправна"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Шприц для змащування"/>
         <text name="rms_grease_gun_no_vehicle" text="У зоні доступу немає техніки для змащування"/>
-        <text name="rms_grease_gun_function" text="Використовується для змащування точок машини"/>
+        <text name="rms_grease_gun_function" text="Змащує прес-маслянки машин. Заправляється картриджем із мастилом."/>
         <text name="rms_grease_gun_action" text="Змастити"/>
         <text name="rms_grease_gun_already_lubricated" text="%s вже змащено"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s не потребує змащування"/>
+        <text name="rms_grease_gun_load" text="Вставити картридж"/>
+        <text name="rms_grease_gun_empty" text="Шприц порожній: вставте картридж"/>
+        <text name="rms_grease_gun_not_empty" text="У шприці для змащування ще є мастило"/>
+        <text name="rms_grease_gun_points" text="Залишилося прес-маслянок: %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Картридж із мастилом"/>
+        <text name="rms_grease_cartridge_function" text="Заправляє шприц для змащування: тримаючи шприц у руках, станьте перед картриджем."/>
+        <text name="rms_grease_cartridge_count" text="Картриджі"/>
+        <text name="rms_grease_quantity" text="Кількість"/>
+        <text name="rms_grease_hud_title" text="Змащування"/>
+        <text name="rms_grease_hud_done" text="Змащено"/>
+        <text name="rms_grease_hud_greased" text="Змащено"/>
+        <text name="rms_unit_milliliterShort" text="мл"/>
         <text name="rms_air_blower_name" text="Повітродувка"/>
         <text name="rms_air_blower_no_vehicle" text="У зоні доступу немає техніки для очищення"/>
         <text name="rms_air_blower_function" text="Використовується для чищення радіаторів та повітряних фільтрів"/>
@@ -631,27 +686,22 @@
         <text name="rms_inspection_service_overdue" text="%s прострочена на %s"/>
         <text name="rms_inspection_status_slightly_low" text="Трохи низький"/>
         <text name="rms_inspection_status_slightly_dirty" text="Злегка забитий"/>
-        <text name="rms_inspection_status_slightly_dry" text="Трохи сухі"/>
+        <text name="rms_inspection_status_grease_due" text="Час змастити"/>
         <text name="rms_inspection_status_slight_moisture" text="Легка вологість"/>
         <text name="rms_inspection_status_seepage" text="Просочування"/>
         <text name="rms_inspection_status_severe_leak" text="Сильний витік"/>
         <text name="rms_inspection_status_low" text="Низький"/>
         <text name="rms_inspection_status_very_low" text="Дуже низький"/>
-        <text name="rms_inspection_status_very_dry" text="Дуже сухі"/>
         <text name="rms_inspection_status_critically_low" text="Термінове доливання"/>
         <text name="rms_inspection_status_critically_clogged" text="Повністю забитий"/>
-        <text name="rms_inspection_status_critically_dry" text="Метал по металу"/>
         <text name="rms_inspection_status_dirty" text="Забитий"/>
-        <text name="rms_inspection_status_dry" text="Сухі"/>
+        <text name="rms_inspection_status_grease_late" text="Прострочено"/>
         <text name="rms_inspection_status_active_leak" text="Активний витік"/>
         <text name="rms_inspection_status_heavily_clogged" text="Сильно забитий"/>
         <text name="rms_inspection_status_not_required" text="Не потрібно"/>
         <text name="rms_inspection_status_change_overdue" text="Заміну прострочено"/>
         <text name="rms_inspection_status_change_long_overdue" text="Заміну сильно прострочено"/>
         <text name="rms_inspection_status_replacement_due" text="Потрібна заміна"/>
-        <text name="rms_inspection_engine_oil" text="Моторна олива"/>
-        <text name="rms_inspection_coolant" text="Охолоджувальна рідина"/>
-        <text name="rms_inspection_hydraulic_fluid" text="Гідравлічна олива"/>
         <text name="rms_inspection_hint_coolant_leak_stage1" text="Біля з’єднань системи охолодження видно незначні сліди охолоджувальної рідини."/>
         <text name="rms_inspection_hint_coolant_leak_stage2" text="Видно залишки охолоджувальної рідини, а її рівень нижчий за норму."/>
         <text name="rms_inspection_hint_coolant_leak_stage3" text="Навколо системи охолодження видно значну втрату охолоджувальної рідини."/>
@@ -691,10 +741,7 @@
         <text name="rms_inspection_hint_unidentified" text="Ознака невиявленої несправності: майстерня виявить її під час огляду або обслуговування."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Біля генератора видно сліди перегріву й потемніння деяких з’єднань."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Біля генератора та його проводки видно значні сліди перегріву й потемнілі роз’єми."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Точки змащування виглядають злегка сухими."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Точки змащування виглядають сухими, мастила недостатньо."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Точки змащування дуже сухі, видимих залишків мастила майже немає."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Точки змащування працюють метал по металу, мастила майже не видно."/>
+        <text name="rms_inspection_hint_grease_due" text="Прес-маслянок для змащування: %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="На корпусі коробки передач помітні слабкі сліди оливи."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Під коробкою передач видно краплі оливи."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Навколо коробки передач помітна значна втрата оливи."/>
@@ -752,6 +799,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів навантажувача."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів навантажувача."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів навантажувача."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="Огляд виявляє початковий знос пальців та втулок шарнірів щогли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів щогли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів щогли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів щогли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="Огляд виявляє початковий знос пальців та втулок шарнірів маніпулятора."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів маніпулятора."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів маніпулятора."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів маніпулятора."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="Огляд виявляє початковий знос пальців та втулок шарнірів фрезерної стріли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів фрезерної стріли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів фрезерної стріли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів фрезерної стріли."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="Огляд виявляє початковий знос пальців та втулок шарнірів рами відвалу."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="Огляд виявляє помітний люфт пальців та втулок шарнірів рами відвалу."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="Огляд виявляє значний люфт пальців та втулок шарнірів рами відвалу."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="Огляд виявляє дуже значний люфт пальців та втулок шарнірів рами відвалу."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="На амортизаторі кабіни видно легку вологість."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="З амортизатора кабіни просочується олива."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Амортизатор кабіни має активний витік."/>
@@ -764,10 +827,8 @@
         <text name="rms_inspection_hint_service_transmission" text="Заміну трансмісійної оливи прострочено: зношена олива прискорює знос усього, що вона змащує. Рекомендоване в майстерні ТО замінює її разом із фільтром."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Заміну гідравлічної оливи прострочено: зношена олива прискорює знос гідросистеми. Рекомендоване в майстерні ТО замінює її разом із фільтром."/>
         <text name="rms_inspection_hint_service_coolant" text="Охолоджувальну рідину час замінити: відпрацьована рідина прискорює знос системи охолодження. Рекомендоване в майстерні ТО замінює її."/>
-        <text name="rms_inspection_transmission_oil" text="Трансмісійна олива"/>
         <text name="rms_inspection_radiator" text="Радіатор"/>
         <text name="rms_inspection_air_filter" text="Повітряний фільтр"/>
-        <text name="rms_inspection_lubrication_level" text="Рівень змащування"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Підозрілих симптомів не виявлено"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -810,6 +871,32 @@
         <text name="rms_fleet_part_unmeasured" text="Немає виміру"/>
         <text name="rms_fleet_parts_reading" text="Вимір деталей %s"/>
         <text name="rms_fleet_parts_need_complete" text="Вимір деталей на наступному повному огляді"/>
+        <text name="rms_fleet_greasing_done" text="Змащування виконано"/>
+        <text name="rms_fleet_greasing_period_days" text="Що %d дн. роботи"/>
+        <text name="rms_fleet_greasing_period_day" text="Кожен день роботи"/>
+        <text name="rms_fleet_greasing_period_month" text="Щомісяця"/>
+        <text name="rms_fleet_greasing_period_months" text="Кожні %d міс."/>
+        <text name="rms_fleet_greasing_period_bales" text="Кожні %d тюків"/>
+        <text name="rms_fleet_greasing_bales" text="%d тюків"/>
+        <text name="rms_fleet_greasing_day" text="%d день"/>
+        <text name="rms_fleet_greasing_days" text="%d дн."/>
+        <text name="rms_fleet_day_late" text="Прострочено на %d день"/>
+        <text name="rms_fleet_days_late" text="Прострочено на %d дн."/>
+        <text name="rms_fleet_greasing_to_do" text="Залишилося %d"/>
+        <text name="rms_fleet_greasing_points" text="Прес-маслянки"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Найчастіший"/>
+        <text name="rms_fleet_greasing_next" text="Наступне змащування"/>
+        <text name="rms_fleet_greasing_now" text="Зараз"/>
+        <text name="rms_fleet_greasing_in" text="через %s"/>
+        <text name="rms_fleet_months_late" text="Прострочено на %d міс."/>
+        <text name="rms_fleet_bales_late" text="Прострочено на %d тюків"/>
+        <text name="rms_fleet_wear" text="Знос"/>
+        <text name="rms_fleet_wear_faster" text="Швидше"/>
+        <text name="rms_fleet_wear_normal" text="Звичайний знос"/>
+        <text name="rms_fleet_wear_late" text="Прострочка змащування"/>
+        <text name="rms_fleet_wear_repair_greases" text="Змащування під час ремонту"/>
+        <text name="rms_fleet_wear_repair" text="Ремонт у майстерні"/>
+        <text name="rms_fleet_wear_none" text="Немає"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Повернення техніки"/>
         <text name="rms_sell_dialog_section_vehicle" text="Техніка"/>
@@ -839,7 +926,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Система охолодження та повітряний фільтр"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Радіатор або повітряний фільтр засмічений. Дивіться на техніку й утримуйте клавішу %s, щоб дізнатися, який саме. Очистьте його повітродувкою зі стисненим повітрям. Якщо фільтр більше не продувається, майстерня замінює його починаючи з ТО %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Необхідне змащування"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Техніка %s потребує регулярного змащування.&#10;&#10;У RMS рівень змащування знижується з мотогодинами. Після тривалого простою змащування також потрібне перед поверненням техніки до роботи. Недостатнє змащування прискорює знос ходової частини.&#10;&#10;Придбайте в магазині шприц для змащування та змастіть техніку, коли цього вимагатиме огляд.&#10;&#10;Рівень змащування можна перевірити, утримуючи клавішу %s і дивлячись на техніку."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Техніка %s має прес-маслянки, які потрібно змастити.&#10;&#10;У RMS кожна машина має прес-маслянки зі своєї інструкції. Їх потрібно змащувати знову за днями роботи машини: кожного робочого дня або раз на кілька робочих днів ті, що інструкція змащує рідше. Запізніле змащування прискорює знос ходової частини.&#10;&#10;Придбайте в магазині шприц для змащування та картриджі. Тримаючи шприц у руках, станьте перед картриджем для заправки, потім наведіть шприц на машину: кожне клацання змащує одну прес-маслянку, а утримання кнопки продовжує змащування наступних.&#10;&#10;Щоб побачити решту прес-маслянок, утримуйте клавішу %s, дивлячись на техніку."/>
         <text name="rms_tutorial_needs_repair_title" text="Виявлено несправність"/>
         <text name="rms_tutorial_needs_repair_message" text="З технікою %s щось не так. Можливо, одна з її деталей вийшла з ладу.&#10;&#10;Завітайте до майстерні: огляд або обслуговування, якщо воно настало, виявить несправність. Не зволікайте: несправність може погіршуватися, а вартість ремонту — зростати.&#10;&#10;Коли несправність виявлено, відремонтуйте її в майстерні."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Потрібен капітальний ремонт"/>
@@ -870,7 +957,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Надто важкий причіп"/>
         <text name="rms_tutorial_heavy_trailer_message" text="Буксируване навантаження здається надто важким для цієї техніки. Можна продовжувати рух, але трансмісія та силова передача зазнаватимуть більшого напруження.&#10;&#10;RMS використовує два орієнтири: трактору потрібно щонайменше 10 к.с. на тонну буксируваної маси, а вантажівці — щонайменше 6 к.с. на тонну повної маси автопоїзда. Нижче відповідного значення за високого навантаження двигуна знос трансмісії зростає."/>
         <text name="rms_tutorial_hard_start_title" text="Важкий запуск"/>
-        <text name="rms_tutorial_hard_start_message" text="Двигун %s запускається важко. Причиною може бути розряджений акумулятор, мороз, механічні несправності або знос стартера. Утримуйте кнопку запалювання, доки двигун не запуститься.&#10;&#10;Під час запуску електросистема зазнає високих навантажень через великі пускові струми."/>
+        <text name="rms_tutorial_hard_start_message" text="Двигун %s запускається важко. Причиною може бути розряджений акумулятор, мороз, механічні несправності або знос стартера.&#10;&#10;Під час запуску електросистема зазнає високих навантажень через великі пускові струми."/>
         <text name="rms_tutorial_low_fuel_title" text="Мало палива"/>
         <text name="rms_tutorial_low_fuel_message" text="У баку майже резервний рівень. Що менше залишається палива, то більше зусиль докладає паливний насос, щоб його всмоктувати, а з дна бака у фільтр потрапляють вода й осад, і він швидше забивається.&#10;&#10;Краще заправлятися до повного бака наприкінці дня: у повному баку утворюється менше конденсату."/>
         <text name="rms_tutorial_lugging_title" text="Двигун на низьких обертах"/>
@@ -982,7 +1069,6 @@
         <text name="rms_diagnostic_spn_102" text="Тиск наддуву"/>
         <text name="rms_diagnostic_spn_100" text="Тиск моторної оливи"/>
         <text name="rms_diagnostic_spn_101" text="Тиск у картері двигуна"/>
-        <text name="rms_diagnostic_spn_1322" text="Пропуски запалювання в кількох циліндрах"/>
         <text name="rms_diagnostic_spn_cylinder" text="Пропуск запалювання в циліндрі %d"/>
         <text name="rms_diagnostic_spn_94" text="Тиск подачі палива"/>
         <text name="rms_diagnostic_spn_110" text="Температура охолоджувальної рідини"/>
@@ -1076,7 +1162,6 @@
         <text name="rms_charger_disconnected" text="Зарядний пристрій від’єднано."/>
         <text name="rms_charger_stopped_motor" text="Заряджання зупинено: запуск"/>
         <text name="rms_charger_error_player_distance" text="Підійдіть до зарядного пристрою пішки."/>
-        <text name="rms_charger_mode_select" text="Підключити зарядний пристрій"/>
         <text name="rms_charger_mode_start" text="Допомогти із запуском"/>
         <text name="rms_charger_start_ready" text="START готовий"/>
         <text name="rms_charger_start_active" text="Допомога під час запуску активна"/>

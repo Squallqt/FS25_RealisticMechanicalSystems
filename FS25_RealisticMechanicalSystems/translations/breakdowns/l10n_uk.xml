@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Сильний знос шворнів поворотних кулаків. Люфт у рульовому керуванні значний."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Критичний знос шворнів поворотних кулаків. У рульовому керуванні дуже значний люфт."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Легка несправність рульового насоса-дозатора. Кермо обертається з невеликим люфтом, перш ніж колеса починають слідувати за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Легка несправність рульового механізму. Кермо обертається з невеликим люфтом, перш ніж колеса починають слідувати за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Легка несправність рульової рейки. Кермо обертається з невеликим люфтом, перш ніж колеса починають слідувати за ним."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Помірна несправність рульового насоса-дозатора. Кермо обертається далі, перш ніж колеса починають слідувати за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Помірна несправність рульового механізму. Кермо обертається далі, перш ніж колеса починають слідувати за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Помірна несправність рульової рейки. Кермо обертається далі, перш ніж колеса починають слідувати за ним."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Сильна несправність рульового насоса-дозатора. Кермо обертається сильно, а колеса погано слідують за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Сильна несправність рульового механізму. Кермо обертається сильно, а колеса погано слідують за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Сильна несправність рульової рейки. Кермо обертається сильно, а колеса погано слідують за ним."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Критична відмова рульового насоса-дозатора. Кермо має дуже значний люфт, перш ніж колеса починають слідувати за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Критична відмова рульового механізму. Кермо має дуже значний люфт, перш ніж колеса починають слідувати за ним."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Критична відмова рульової рейки. Кермо має дуже значний люфт, перш ніж колеса починають слідувати за ним."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Легкий внутрішній витік у гідроциліндрі рульового керування. Машина починає відхилятися вбік."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Легкий витік через ущільнення штока гідроциліндра рульового керування. Рівень гідравлічної оливи трохи падає."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Помірний внутрішній витік у гідроциліндрі рульового керування. Машина більше відхиляється вбік."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Помірний знос пальців та втулок шарнірів навантажувача. Люфт у шарнірах стріли стає помітним."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Сильний знос пальців та втулок шарнірів навантажувача. Стріла має значний люфт."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Критичний знос пальців та втулок шарнірів навантажувача. Люфт стріли дуже значний."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Легкий знос пальців та втулок шарнірів щогли. У шарнірах щогли з’являється невеликий люфт."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Помірний знос пальців та втулок шарнірів щогли. Люфт у шарнірах щогли стає помітним."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Сильний знос пальців та втулок шарнірів щогли. Щогла має значний люфт."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Критичний знос пальців та втулок шарнірів щогли. Люфт щогли дуже значний."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Легкий знос пальців та втулок шарнірів маніпулятора. У шарнірах маніпулятора з’являється невеликий люфт."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Помірний знос пальців та втулок шарнірів маніпулятора. Люфт у шарнірах маніпулятора стає помітним."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Сильний знос пальців та втулок шарнірів маніпулятора. Маніпулятор має значний люфт."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Критичний знос пальців та втулок шарнірів маніпулятора. Люфт маніпулятора дуже значний."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Легкий знос пальців та втулок шарнірів фрезерної стріли. У шарнірах стріли з’являється невеликий люфт."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Помірний знос пальців та втулок шарнірів фрезерної стріли. Люфт у шарнірах стріли стає помітним."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Сильний знос пальців та втулок шарнірів фрезерної стріли. Стріла має значний люфт."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Критичний знос пальців та втулок шарнірів фрезерної стріли. Люфт стріли дуже значний."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Легкий знос пальців та втулок шарнірів рами відвалу. У шарнірах рами з’являється невеликий люфт."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Помірний знос пальців та втулок шарнірів рами відвалу. Люфт у шарнірах рами стає помітним."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Сильний знос пальців та втулок шарнірів рами відвалу. Рама має значний люфт."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Критичний знос пальців та втулок шарнірів рами відвалу. Люфт рами дуже значний."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Легкий витік з амортизатора кабіни. Демпфування кабіни трохи послаблене."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Помірний витік з амортизатора кабіни. Кабіна підстрибує на нерівностях."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Сильний витік з амортизатора кабіни. Кабіна розгойдується при кожному поштовху."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="Синхронізатор"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Шарніри та рульові тяги"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Пальці та втулки шарнірів навантажувача"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Пальці та втулки шарнірів щогли"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Пальці та втулки шарнірів маніпулятора"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Пальці та втулки шарнірів фрезерної стріли"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Пальці та втулки шарнірів рами відвалу"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Шворні поворотних кулаків"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Рульовий насос-дозатор"/>
+        <text name="rms_breakdowns_part_steering_box" text="Рульовий механізм"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Рульова рейка"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Гідроциліндр рульового керування"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Підвіска кабіни"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Муфта ВВП"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Газовий фільтр"/>
         <text name="rms_breakdowns_part_gas_lines" text="Газопроводи"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Газові форсунки"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Свічки запалювання"/>
         <text name="rms_breakdowns_part_adblue_pump" text="Насос AdBlue"/>
         <text name="rms_breakdowns_part_adblue_doser" text="Дозувальна форсунка AdBlue"/>
         <text name="rms_breakdowns_part_adblue_filter" text="Фільтр AdBlue"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Помірна несправність газових форсунок. Двигун працює з провалами, втрачає потужність, споживає більше газу й може заглухнути."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Сильна несправність газових форсунок. Одна форсунка дуже погано дозує газ: велика втрата потужності, перевитрата й утруднений запуск."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Критична відмова газових форсунок. Дозування більше не дозволяє двигуну працювати: він зупиняється."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Свічки запалювання досягли терміну заміни: під великим навантаженням з’являються пропуски запалювання, двигун працює менш рівно й споживає трохи більше. ТО їх замінює."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Свічки запалювання зношені: пропуски запалювання стають частими, двигун втрачає потужність, споживає більше й може заглохнути. Засвічується індикатор двигуна."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Свічки запалювання сильно зношені: велика втрата потужності, перевитрата й важкий пуск."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Свічки запалювання непридатні: постійні пропуски запалювання, двигун може заглохнути й більше не запуститися."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Несправність насоса AdBlue. Він більше не подає рідину для дозування: загоряється лампа двигуна, потім блок керування обмежує потужність до ремонту."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Несправність дозувальної форсунки AdBlue. Забита кристалами, вона більше не розпилює: загоряється лампа двигуна, а потужність згодом знижується до ремонту."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Фільтр AdBlue досяг терміну заміни й починає забиватися. Його замінює найповніше ТО."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Датчики коробки передач"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Фільтр трансмісії"/>
         <text name="rms_breakdowns_part_lift_valve" text="Клапан навіски"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Клапан підйому жатки"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Датчик положення навіски"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Датчик висоти жатки"/>
         <text name="rms_breakdowns_part_loader_control" text="Керування навантажувачем"/>
+        <text name="rms_breakdowns_part_mast_control" text="Керування щоглою"/>
+        <text name="rms_breakdowns_part_boom_control" text="Керування маніпулятором"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Керування фрезерною стрілою"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Керування рамою відвалу"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Гідравлічні швидкороз’єми"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Легка несправність зчеплення. Воно вимикається не повністю. Деякі передачі вмикаються важко."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Помірна несправність зчеплення. Механізм погано звільняє диск. Передачі частіше не вмикаються."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Несправність гідравлічного насоса. Він зламаний. Тиск втрачений, гідравлічні функції не відповідають."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Несправність гідравлічного розподільника. Золотник заклинив. Зачеплена гідравлічна функція не рухається."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Несправність клапана навіски. Він не тримає вантаж правильно. Підняте знаряддя опускається."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Несправність клапана підйому жатки. Він не тримає вантаж правильно. Піднята жатка опускається."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Несправність клапана навіски. Він заклинив. Навіска не відповідає."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Несправність клапана підйому жатки. Він заклинив. Жатка не піднімається й не опускається."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Несправність датчика положення навіски. Сигнал положення несправний. Навіска не тримає задану висоту, зберігається код несправності."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Несправність датчика висоти жатки. Сигнал висоти несправний. Жатка не тримає задану висоту, зберігається код несправності."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Легка несправність керування навантажувачем. Стріла та ківш реагують повільніше."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Помірна несправність керування навантажувачем. Стріла та ківш рухаються лише з половинною швидкістю."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Сильна несправність керування навантажувачем. Стріла та ківш ледь рухаються."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Критична несправність керування навантажувачем. Стріла та ківш більше не реагують."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Легка несправність керування щоглою. Щогла та вила реагують повільніше."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Помірна несправність керування щоглою. Щогла та вила рухаються лише з половинною швидкістю."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Сильна несправність керування щоглою. Щогла та вила ледь рухаються."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Критична несправність керування щоглою. Щогла та вила більше не реагують."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Легка несправність керування маніпулятором. Маніпулятор і його робочий орган реагують повільніше."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Помірна несправність керування маніпулятором. Маніпулятор і його робочий орган рухаються лише з половинною швидкістю."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Сильна несправність керування маніпулятором. Маніпулятор і його робочий орган ледь рухаються."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Критична несправність керування маніпулятором. Маніпулятор і його робочий орган більше не реагують."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Легка несправність керування фрезерною стрілою. Стріла реагує повільніше."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Помірна несправність керування фрезерною стрілою. Стріла рухається лише з половинною швидкістю."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Сильна несправність керування фрезерною стрілою. Стріла ледь рухається."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Критична несправність керування фрезерною стрілою. Стріла більше не реагує."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Легка несправність керування рамою відвалу. Рама та відвал реагують повільніше."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Помірна несправність керування рамою відвалу. Рама та відвал рухаються лише з половинною швидкістю."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Сильна несправність керування рамою відвалу. Рама та відвал ледь рухаються."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Критична несправність керування рамою відвалу. Рама та відвал більше не реагують."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Легка несправність гідроциліндра. Ущільнення штока пропускає трохи оливи. Навколо штока з'являється легка волога."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Помірна несправність гідроциліндра. Ущільнення штока негерметичне. Циліндр пітніє оливою, рівень падає."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Сильна несправність гідроциліндра. Ущільнення штока активно тече. Циліндр втрачає значну кількість оливи."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Критичний знос підшипників моста. Один підшипник зруйнувався, конічна пара пошкоджена, міст більше не передає тягу."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Несправність керування блокуванням диференціала. Блокування не вмикається. Диференціал залишається вільним."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Несправність керування блокуванням диференціала. Блокування залишається ввімкненим. Машина опирається повороту."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Привідні паси та варіатори"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Підшипники та редуктори приводу"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Ланцюг похилої камери"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Прискорювач подачі"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Бичі барабана"/>
+        <text name="rms_breakdowns_part_concave" text="Підбарабання"/>
+        <text name="rms_breakdowns_part_separation" text="Сепарувальні зуби та соломотряси"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Очисні решета"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Шнеки та елеватори зерна"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Подрібнювач і розкидач соломи"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Живильні вальці"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Детектор металу та каміння"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Подрібнювальний барабан"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Ножі подрібнювального барабана"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Протирізальний брус"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Доподрібнювач зерна"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Прискорювач і вентилятор"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Силосопровід"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Гичкозрізач і доочисники"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Копачі"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Очисні турбіни"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Елеватор буряків"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Рухоме дно та вивантажувальний транспортер"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Просівні транспортери"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Гичковідокремлювач і вальці"/>
+        <text name="rms_breakdowns_part_picking_units" text="Збиральні апарати"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Зволожувач шпинделів"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Вентилятор і повітропроводи"/>
+        <text name="rms_breakdowns_part_module_builder" text="Камера формування модулів"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Нижні ножі"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Живильні вальці"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Різальні барабани"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Первинний екстрактор"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Елеватор тростини"/>
+        <text name="rms_breakdowns_part_shaker" text="Система струшування"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Вловлювальні лусочки"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Ковшові транспортери"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Очисні витяжки"/>
+        <text name="rms_breakdowns_part_destemmer" text="Гребеневідокремлювач"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Збиральна голова"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Очисний вентилятор і решета"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Елеватори та транспортери"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Збирання неможливе: збиральний вузол зламано"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Забивання: збирання зупинилося"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Подрібнювач зламано: солома падає у валок"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Подрібнювач зламано: цю культуру більше не можна збирати"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Початковий знос привідних пасів. Під навантаженням вони трохи прослизають."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Помірний знос привідних пасів. Вузол сповільнюється під навантаженням, і сигнал обертів іноді зупиняє збирання."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Сильний знос привідних пасів. Продуктивність падає, зупинки повторюються знову і знову."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Критична відмова привідних пасів. Пас розірвався: збирання неможливе."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Початковий знос підшипників приводу. Під час збирання з’являється легкий гул."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Помірний знос підшипників приводу. Гул добре чутно, підшипники гріються."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Сильний знос підшипників приводу. Гул посилюється, у валів з’являється люфт."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Критична відмова підшипників приводу. Підшипник заклинило: збирання неможливе."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Початковий знос ланцюга похилої камери. Він витягується, подача стає нерівномірною."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Помірний знос ланцюга похилої камери. На вході до похилої камери утворюються забивання."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Сильний знос ланцюга похилої камери. Він перескакує на зірочках, забивання не припиняються."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Критична відмова ланцюга похилої камери. Ланцюг розірвався: до машини більше нічого не надходить."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Початковий знос прискорювача подачі. Маса надходить до барабана менш рівномірно."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Помірний знос прискорювача подачі. Продуктивність перестає зростати, з’являються забивання."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Сильний знос прискорювача подачі. Продуктивність падає, забивання не припиняються."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Критична відмова прискорювача подачі. Лопать відірвалася: збирання неможливе."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Початковий знос бичів барабана. Частина зерна залишається в колосках і повертається в поле."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Помірний знос бичів барабана. Барабан вібрує, втрати зерна зростають."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Сильний знос бичів барабана. Деякі бичі зламані: великі втрати та забивання."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Критична відмова бичів барабана. Бич відірвався: обмолот неможливий."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Початковий знос підбарабання. Зерно гірше вимолочується, частина повертається в поле."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Помірний знос підбарабання. Втрати зерна зростають."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Сильний знос підбарабання. Зерно дробиться, втрати великі, з’являються забивання."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Критична відмова підбарабання. Планка відірвалася: обмолот неможливий."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Початковий знос сепарації. Зерно залишається в соломі й повертається в поле."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Помірний знос сепарації. Втрати зерна із соломою зростають."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Сильний знос сепарації. Великі втрати та забивання соломою."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Критична відмова сепарації. Солома більше не проходить: збирання неможливе."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Початковий знос очисних решіт. У бункер потрапляє полова, трохи зерна йде з відходами."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Помірний знос очисних решіт. Втрати на решетах зростають."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Сильний знос очисних решіт. Решето тріснуло: великі втрати та забивання."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Критична відмова очисних решіт. Очищення більше не працює: збирання неможливе."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Початковий знос шнеків та елеваторів зерна. Потік до бункера зменшується."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Помірний знос шнеків та елеваторів зерна. Частина зерна дробиться або губиться дорогою."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Сильний знос шнеків та елеваторів зерна. Елеватор регулярно забивається."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Критична відмова шнеків та елеваторів зерна. Бункер більше не наповнюється: збирання неможливе."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Початковий знос подрібнювача соломи. Солома ріжеться менш дрібно, подрібнювач бере трохи більше потужності."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Помірний знос подрібнювача соломи. Подрібнювач вібрує і бере більше потужності."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Сильний знос подрібнювача соломи. Ротор розбалансований і бере багато потужності."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Критична відмова подрібнювача соломи. Ніж зламався: подрібнювач стоїть, солома падає у валок."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Початковий знос живильних вальців. Вони гірше захоплюють масу: подача стає нерівномірною."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Помірний знос живильних вальців. Довжина різання стає нерівномірною, з’являються забивання."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Сильний знос живильних вальців. Продуктивність падає, забивання не припиняються."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Критична відмова живильних вальців. До машини більше нічого не надходить: збирання неможливе."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Початкова несправність детектора металу та каміння. Хибні спрацювання іноді зупиняють подачу."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Помірна несправність детектора металу та каміння. Зайві зупинки не припиняються."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Відмова детектора металу та каміння. Він більше нічого не виявляє: каміння доходить до ножів і зношує їх набагато швидше."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Початковий знос подрібнювального барабана. Він злегка вібрує і бере трохи більше потужності."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Помірний знос подрібнювального барабана. Ротор розбалансований і бере більше потужності."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Сильний знос подрібнювального барабана. Ножетримач тріснув: більше потужності та забивання."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Критична відмова подрібнювального барабана. Ротор пошкоджено: збирання неможливе."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Початковий знос ножів. Зріз менш чистий і потребує трохи більше потужності."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Помірний знос ножів. Вони беруть більше потужності та більше пального."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Сильний знос ножів. Зріз нерівний, споживана потужність зростає, з’являються забивання."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Критична відмова ножів. Ніж зламався: збирання неможливе."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Початковий знос протирізального бруса. Зазор зростає: різання потребує трохи більше потужності."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Помірний знос протирізального бруса. Різання рве масу і потребує більше потужності."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Сильний знос протирізального бруса. Кромка зношена: більше потужності та забивання."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Критична відмова протирізального бруса. Він непридатний: збирання неможливе."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Початковий знос доподрібнювача зерна. Зерна гірше дробляться, доподрібнювач бере трохи більше потужності."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Помірний знос доподрібнювача зерна. Проходять цілі зерна, споживана потужність зростає."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Сильний знос доподрібнювача зерна. Валець має задири: більше потужності та забивання."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Критична відмова доподрібнювача зерна. Валець заклинило: збирання неможливе."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Початковий знос прискорювача. Викид коротший, продуктивність трохи падає."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Помірний знос прискорювача. Силосопровід іноді забивається."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Сильний знос прискорювача. Лопать відірвалася: часті забивання та втрачений корм."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Критична відмова прискорювача. Корм більше не викидається: збирання неможливе."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Початковий знос силосопроводу. Викид відхиляється, продуктивність трохи падає."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Помірний знос силосопроводу. Корм налипає й іноді забиває силосопровід."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Сильний знос силосопроводу. Облицювання протерте: втрачений корм і часті забивання."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Критична відмова силосопроводу. Він протертий наскрізь: збирання неможливе."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Початковий знос. Частина врожаю залишається в полі."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Помірний знос. Вібрації та більші втрати."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Сильний знос. Деякі елементи зламані: великі втрати та забивання."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Критична відмова. Вузол зламано: збирання неможливе."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Початковий знос копачів. Деякі коренеплоди ламаються або залишаються в землі."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Помірний знос копачів. Вони погано викопують: більше втрат і більший опір."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Сильний знос копачів. Вони зношені до краю: великі втрати, машина працює з натугою."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Критична відмова копачів. Копач зламався: викопування неможливе."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Початковий знос. Очищення працює гірше: земля або домішки у врожаї, трохи врожаю втрачається."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Помірний знос. Втрати під час очищення зростають."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Сильний знос. Зламані решітки або лопаті: великі втрати та забивання."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Критична відмова. Очищення зупинилося: збирання неможливе."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Початковий знос. Ланцюг або стрічка витягується: подача стає нерівномірною."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Помірний знос. Зношені прутки або лопатки: менша продуктивність і забивання."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Сильний знос. Ланцюг перескакує: забивання не припиняються."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Критична відмова. Ланцюг або стрічка розірвалися: більше нічого не проходить."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Початковий знос. Передавання врожаю сповільнюється."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Помірний знос. Передавання стає нерівномірним, частина врожаю втрачається."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Сильний знос. Передавання регулярно заїдає."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Критична відмова. Передавання зупинилося: збирання неможливе."/>
     </texts>
 </l10n>

@@ -1,619 +1,403 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
----Field inspection dialog and its findings
+---Check on foot: fluids, cleaning, greasing and a verdict
 RMS_InspectionDialog = {}
-RMS_InspectionDialog.INSTANCE = nil
 
 local RMS_InspectionDialog_mt = Class(RMS_InspectionDialog, MessageDialog)
-local modDirectory = g_currentModDirectory
-local TEXT_COLOR = RMS_Utils.COLOR.TEXT
 
-local TARGET_TO_SECTION = {
-    engineOil = "technicalFluidsData",
-    coolant = "technicalFluidsData",
-    hydraulicFluid = "technicalFluidsData",
-    transmissionOil = "technicalFluidsData",
-    radiator = "fieldCareData",
-    airFilter = "fieldCareData",
-    lubrication = "fieldCareData"
-}
+local OK, NOT_REQUIRED = "rms_inspection_ok", "rms_inspection_status_not_required"
 
-local FLUID_ROWS = {
-    { titleKey = "rms_inspection_engine_oil", circuit = "engineOil", icon = "rms_workshopFluidIconEngineOil" },
-    { titleKey = "rms_inspection_coolant", circuit = "coolant", icon = "rms_workshopFluidIconCoolant" },
-    { titleKey = "rms_inspection_hydraulic_fluid", circuit = "hydraulicFluid", icon = "rms_workshopFluidIconHydraulicFluid" },
-    { titleKey = "rms_inspection_transmission_oil", circuit = "transmissionOil", icon = "rms_workshopFluidIconTransmissionOil" }
-}
-
-local STATUS_PRIORITY = {
-    rms_inspection_ok = 0,
-    rms_inspection_status_slightly_low = 1,
-    rms_inspection_status_slight_moisture = 1,
-    rms_inspection_status_slightly_dirty = 1,
-    rms_inspection_status_slightly_dry = 1,
-    rms_inspection_status_change_overdue = 1,
-    rms_inspection_status_low = 2,
-    rms_inspection_status_seepage = 2,
-    rms_inspection_status_dirty = 2,
-    rms_inspection_status_dry = 2,
-    rms_inspection_status_change_long_overdue = 2,
-    rms_inspection_status_very_low = 3,
-    rms_inspection_status_active_leak = 3,
-    rms_inspection_status_heavily_clogged = 3,
-    rms_inspection_status_very_dry = 3,
-    rms_inspection_status_replacement_due = 3,
-    rms_inspection_status_critically_low = 4,
-    rms_inspection_status_severe_leak = 4,
-    rms_inspection_status_critically_clogged = 4,
-    rms_inspection_status_critically_dry = 4,
-    rms_inspection_status_not_required = 0
-}
-
-local AIR_FILTER_STAGE_STATUS = {
-    "rms_inspection_status_slightly_dirty",
-    "rms_inspection_status_dirty",
-    "rms_inspection_status_heavily_clogged"
-}
-
-local FIELD_CARE_ICONS = {
-    rms_inspection_air_filter = "rms_workshopFluidIconAirFilter",
-    rms_inspection_radiator = "rms_workshopFluidIconRadiator",
-    rms_inspection_lubrication_level = "rms_workshopFluidIconLubrication"
-}
-
----Localizes a value when it is an rms_ key
-local function getLocalizedText(value)
-    if value == nil then
-        return ""
+-- statuses by severity: watch, worse, serious, stop
+local SEVERITY = {}
+for severity, statuses in ipairs({
+    { "rms_inspection_status_slightly_low", "rms_inspection_status_slight_moisture", "rms_inspection_status_slightly_dirty",
+        "rms_inspection_status_grease_due", "rms_inspection_status_change_overdue" },
+    { "rms_inspection_status_low", "rms_inspection_status_seepage", "rms_inspection_status_dirty", "rms_inspection_status_grease_late",
+        "rms_inspection_status_change_long_overdue" },
+    { "rms_inspection_status_very_low", "rms_inspection_status_active_leak", "rms_inspection_status_heavily_clogged",
+        "rms_inspection_status_replacement_due" },
+    { "rms_inspection_status_critically_low", "rms_inspection_status_severe_leak", "rms_inspection_status_critically_clogged" }
+}) do
+    for _, status in ipairs(statuses) do
+        SEVERITY[status] = severity
     end
-
-    if type(value) == "string" and string.sub(value, 1, 4) == "rms_" then
-        return g_i18n:getText(value)
-    end
-
-    return tostring(value)
 end
 
----Returns the colour of a severity, as the dashboard telltales use it
-local function getSeverityColor(priority)
-    if priority >= 4 then
-        return RMS_Breakdowns.COLORS.CRITICAL
-    elseif priority >= 1 then
-        return RMS_Breakdowns.COLORS.WARNING
-    end
+-- cleaning and greasing points; an air filter on fuel only
+local CARE_POINTS = {
+    { target = "airFilter", titleKey = "rms_inspection_air_filter", icon = "rms_workshopFluidIconAirFilter", isFuelled = true },
+    { target = "radiator", titleKey = "rms_inspection_radiator", icon = "rms_workshopFluidIconRadiator" },
+    { target = "lubrication", titleKey = "rms_grease_hud_title", icon = "rms_workshopFluidIconLubrication" }
+}
 
-    return RMS_Utils.COLOR.HIGHLIGHT
-end
-
----Returns the row colour from its status severity
-local function getRowColor(row)
-    if row ~= nil and row.statusKey == "rms_inspection_status_not_required" then
-        return RMS_Breakdowns.COLORS.DEFAULT
-    end
-
-    return getSeverityColor(row ~= nil and STATUS_PRIORITY[row.statusKey or ""] or 0)
-end
+local AIR_FILTER_STATUS = { "rms_inspection_status_slightly_dirty", "rms_inspection_status_dirty", "rms_inspection_status_heavily_clogged" }
 
 local GAUGE_PARTS = { "inspectionGaugeTrack", "inspectionGaugeZone", "inspectionGaugeMinMark", "inspectionGaugeMaxMark",
     "inspectionGaugeMinLabel", "inspectionGaugeMaxLabel" }
 
----Returns the worst status severity of the whole report
-local function getWorstPriority(dialog)
-    local worst = 0
-    for _, rows in ipairs({dialog.technicalFluidsData, dialog.fieldCareData}) do
-        for _, row in ipairs(rows or {}) do
-            if row.statusKey ~= "rms_inspection_status_not_required" then
-                worst = math.max(worst, STATUS_PRIORITY[row.statusKey or ""] or 0)
-            end
-        end
-    end
-
-    return worst
+local function getSeverity(status)
+    return SEVERITY[status] or 0
 end
 
----Returns whether a warning exists outside the air filter row
-local function hasWarningOutsideAirFilter(dialog)
-    for _, rows in ipairs({dialog.technicalFluidsData, dialog.fieldCareData}) do
-        for _, row in ipairs(rows or {}) do
-            local priority = STATUS_PRIORITY[row.statusKey or ""] or 0
-            if row.titleKey ~= "rms_inspection_air_filter" and priority >= 1 then
-                return true
-            end
-        end
+local function getSeverityColor(severity)
+    if severity >= 4 then
+        return RMS_Breakdowns.COLORS.CRITICAL
+    elseif severity >= 1 then
+        return RMS_Breakdowns.COLORS.WARNING
     end
-
-    return false
+    return RMS_Utils.COLOR.HIGHLIGHT
 end
 
----Sets the status of a row, the more severe one winning
-local function setRowValue(rows, titleKey, statusKey)
-    if rows == nil or titleKey == nil or statusKey == nil then
-        return
+local function newRow(titleKey, title, icon)
+    return { titleKey = titleKey, title = title, icon = icon, statusKey = OK, value = g_i18n:getText(OK) }
+end
+
+---Builds a row for each fluid circuit of a machine, at its level
+function RMS_InspectionDialog.buildFluidRows(vehicle)
+    local rows = {}
+    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+        if RMS_Fluids.hasCircuit(vehicle, circuit) then
+            local row = newRow(RMS_Fluids.getCircuitTextKey(nil, circuit), g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, circuit)),
+                RMS_Fluids.CIRCUITS[circuit].icon)
+            row.circuit, row.target, row.level = circuit, circuit, RMS_Fluids.getLevel(vehicle, circuit)
+            table.insert(rows, row)
+        end
     end
+    return rows
+end
 
-    for _, row in ipairs(rows) do
-        if row.titleKey == titleKey then
-            local newPriority = STATUS_PRIORITY[statusKey] or 0
-            local currentPriority = STATUS_PRIORITY[row.statusKey or "rms_inspection_ok"] or 0
+---Builds a row for each cleaning and greasing point of a machine
+function RMS_InspectionDialog.buildFieldCareRows(vehicle)
+    local isElectric = vehicle.spec_RealisticMechanicalSystems.isElectricVehicle
+    local rows = {}
+    for _, point in ipairs(CARE_POINTS) do
+        if not (point.isFuelled and isElectric) then
+            local row = newRow(point.titleKey, g_i18n:getText(point.titleKey), point.icon)
+            row.target = point.target
+            table.insert(rows, row)
+        end
+    end
+    return rows
+end
 
-            if newPriority >= currentPriority then
-                row.statusKey = statusKey
-                row.value = getLocalizedText(statusKey)
-            end
+---What the check finds: a status per point, lines under them
+local Report = {}
+local Report_mt = { __index = Report }
 
+---Starts a report on the rows of the dialog
+function Report.new(vehicle, fluidRows, careRows)
+    local self = setmetatable({ vehicle = vehicle, spec = vehicle.spec_RealisticMechanicalSystems, rows = {}, lines = {} }, Report_mt)
+    for _, rows in ipairs({ fluidRows, careRows }) do
+        for _, row in ipairs(rows) do
+            self.rows[row.target] = row
+        end
+    end
+    return self
+end
+
+---Gives a point a status, unless it already has a more severe one
+function Report:mark(target, status)
+    local row = self.rows[target]
+    if row ~= nil and getSeverity(status) >= getSeverity(row.statusKey) then
+        row.statusKey, row.value = status, g_i18n:getText(status)
+    end
+end
+
+---Writes a line under the points, once
+function Report:note(textKey, ...)
+    local text = select("#", ...) > 0 and string.format(g_i18n:getText(textKey), ...) or g_i18n:getText(textKey)
+    for _, line in ipairs(self.lines) do
+        if line == text then
             return
         end
     end
+    table.insert(self.lines, text)
 end
 
----Appends a localized line to the findings, skipping duplicates
-local function appendAdditionalLine(lines, textKey, ...)
-    if lines == nil or textKey == nil or textKey == "" then
-        return
-    end
-
-    local text = getLocalizedText(textKey)
-    if select("#", ...) > 0 then
-        text = string.format(text, ...)
-    end
-    if text == "" then
-        return
-    end
-
-    for _, existing in ipairs(lines) do
-        if existing == text then
-            return
-        end
-    end
-
-    table.insert(lines, text)
-end
-
----Joins the findings into a bullet list
-local function buildAdditionalText(lines)
-    local formattedLines = {}
-    for _, line in ipairs(lines or {}) do
-        table.insert(formattedLines, "\194\183  " .. line)
-    end
-
-    return table.concat(formattedLines, "\n")
-end
-
----Applies the findings of the active breakdown stages
-local function applyBreakdownInspectionFindings(dialog, additionalLines)
-    local vehicle = dialog.vehicle
-    if vehicle == nil or vehicle.getActiveBreakdowns == nil then
-        return
-    end
-
-    local activeBreakdowns = vehicle:getActiveBreakdowns() or {}
-    local registry = RMS_Breakdowns.BreakdownRegistry or {}
-    local targetMap = {
-        engineOil = "rms_inspection_engine_oil",
-        coolant = "rms_inspection_coolant",
-        hydraulicFluid = "rms_inspection_hydraulic_fluid",
-        transmissionOil = "rms_inspection_transmission_oil",
-        radiator = "rms_inspection_radiator",
-        airFilter = "rms_inspection_air_filter",
-        lubrication = "rms_inspection_lubrication_level"
-    }
-
-    local hasUnidentified = false
-    for breakdownId, breakdown in pairs(activeBreakdowns) do
-        local registryEntry = registry[breakdownId]
-        if registryEntry ~= nil and registryEntry.stages ~= nil then
-            local stageData = registryEntry.stages[breakdown.stage]
-            local findings = stageData ~= nil and stageData.inspection ~= nil and RMS_Utils.getBranchItems(stageData.inspection, breakdown) or nil
-
-            if findings ~= nil and #findings > 0 and not breakdown.isVisible and registryEntry.isSelectable
-                and RMS_Consumables.getFilterOfBreakdown(breakdownId) == nil then
-                hasUnidentified = true
-            end
-            if findings ~= nil then
-                for _, finding in ipairs(findings) do
-                    if finding.target ~= nil and finding.status ~= nil then
-                        local titleKey = targetMap[RMS_Fluids.getSumpCircuit(vehicle, finding.target)]
-                        local sectionKey = TARGET_TO_SECTION[finding.target]
-                        if titleKey ~= nil and sectionKey ~= nil then
-                            setRowValue(dialog[sectionKey], titleKey, finding.status)
-                        end
-                    end
-
-                    appendAdditionalLine(additionalLines, finding.additional)
-                end
-            end
-        end
-    end
-    if hasUnidentified then
-        appendAdditionalLine(additionalLines, "rms_inspection_hint_unidentified")
-    end
-end
-
----Rates the radiator and air filter clogging
-local function applyCloggingInspectionFindings(dialog, additionalLines)
-    local vehicle = dialog.vehicle
-    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec == nil then
-        return
-    end
-
-    if spec.isVehicleNeedBlowOut == false then
-        return
-    end
-
-    local radiatorClogging = math.clamp(tonumber(spec.radiatorClogging) or 0, 0, 1)
-    if radiatorClogging > 0.15 then
-        local statusKey
-        if radiatorClogging >= 0.85 then
-            statusKey = "rms_inspection_status_critically_clogged"
-            appendAdditionalLine(additionalLines, "rms_inspection_hint_radiator_clogging_stage4")
-        elseif radiatorClogging >= 0.60 then
-            statusKey = "rms_inspection_status_heavily_clogged"
-            appendAdditionalLine(additionalLines, "rms_inspection_hint_radiator_clogging_stage3")
-        elseif radiatorClogging >= 0.35 then
-            statusKey = "rms_inspection_status_dirty"
-            appendAdditionalLine(additionalLines, "rms_inspection_hint_radiator_clogging_stage2")
-        else
-            statusKey = "rms_inspection_status_slightly_dirty"
-            appendAdditionalLine(additionalLines, "rms_inspection_hint_radiator_clogging_stage1")
-        end
-
-        setRowValue(dialog.fieldCareData, "rms_inspection_radiator", statusKey)
-    end
-
-    local airFilterStage = RMS_Consumables.getAirFilterBlowOutStage(spec)
-    if airFilterStage > 0 then
-        appendAdditionalLine(additionalLines, "rms_inspection_hint_air_filter_clogging_stage" .. airFilterStage)
-        setRowValue(dialog.fieldCareData, "rms_inspection_air_filter", AIR_FILTER_STAGE_STATUS[airFilterStage])
-    end
-    if radiatorClogging >= 0.35 or airFilterStage >= 2 then
-        appendAdditionalLine(additionalLines, "rms_air_blower_action")
-    end
-
-    if RMS_Consumables.getIsAirFilterWornOut(spec) then
-        dialog.isAirFilterReplacementDue = true
-        appendAdditionalLine(additionalLines, "rms_inspection_hint_air_filter_blowout_limit",
-            RMS_Utils.formatAirFilterServiceHours(dialog.vehicle))
-        setRowValue(dialog.fieldCareData, "rms_inspection_air_filter", "rms_inspection_status_replacement_due")
-    end
-end
-
----Rates the lubrication level
-local function applyLubricationInspectionFindings(dialog, additionalLines)
-    local vehicle = dialog.vehicle
-    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec == nil or spec.isVehicleNeedLubricate == false then
-        return
-    end
-
-    local lubricationLevel = math.clamp(tonumber(spec.lubricationLevel) or 0, 0, 1)
-    local statusKey = nil
-
-    local C = RMS_Config.FIELD_CARE
-
-    if lubricationLevel <= C.LUBRICATION_CRITICALLY_DRY_THRESHOLD then
-        statusKey = "rms_inspection_status_critically_dry"
-        appendAdditionalLine(additionalLines, "rms_inspection_hint_lubrication_stage4")
-    elseif lubricationLevel <= C.LUBRICATION_VERY_DRY_THRESHOLD then
-        statusKey = "rms_inspection_status_very_dry"
-        appendAdditionalLine(additionalLines, "rms_inspection_hint_lubrication_stage3")
-    elseif lubricationLevel <= C.LUBRICATION_DRY_THRESHOLD then
-        statusKey = "rms_inspection_status_dry"
-        appendAdditionalLine(additionalLines, "rms_inspection_hint_lubrication_stage2")
-    elseif lubricationLevel <= C.LUBRICATION_WARNING_THRESHOLD then
-        statusKey = "rms_inspection_status_slightly_dry"
-        appendAdditionalLine(additionalLines, "rms_inspection_hint_lubrication_stage1")
-    end
-
-    if statusKey ~= nil then
-        setRowValue(dialog.fieldCareData, "rms_inspection_lubrication_level", statusKey)
-    end
-end
-
----Reads the level of every fluid circuit the report shows
-local function applyFluidLevelInspectionFindings(dialog, additionalLines)
-    local vehicle = dialog.vehicle
-    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec == nil then
-        return
-    end
-
+---Reads the level of every fluid against the marks of its gauge
+function Report:readFluidLevels(fluidRows)
     local C = RMS_Config.FLUIDS
     local lowCount = 0
-
-    for _, row in ipairs(dialog.technicalFluidsData) do
-        local level = RMS_Fluids.getLevel(vehicle, row.circuit)
-        local statusKey = nil
-
+    for _, row in ipairs(fluidRows) do
+        local level = row.level
+        local status
         if level <= C.LEVEL_CRITICALLY_LOW then
-            statusKey = "rms_inspection_status_critically_low"
+            status = "rms_inspection_status_critically_low"
         elseif level <= C.LEVEL_VERY_LOW then
-            statusKey = "rms_inspection_status_very_low"
+            status = "rms_inspection_status_very_low"
         elseif level <= C.LEVEL_LOW then
-            statusKey = "rms_inspection_status_low"
+            status = "rms_inspection_status_low"
         elseif level < C.LEVEL_MIN_MARK then
-            statusKey = "rms_inspection_status_slightly_low"
+            status = "rms_inspection_status_slightly_low"
         end
-
-        row.level = level
-
-        if statusKey ~= nil then
-            setRowValue(dialog.technicalFluidsData, row.titleKey, statusKey)
+        if status ~= nil then
+            self:mark(row.target, status)
             lowCount = lowCount + 1
         end
     end
-
-    if lowCount > 0 then
-        appendAdditionalLine(additionalLines, lowCount > 1 and "rms_inspection_hint_fluid_levels_low" or "rms_inspection_hint_fluid_level_low")
+    if lowCount > 1 then
+        self:note("rms_inspection_hint_fluid_levels_low")
+    elseif lowCount == 1 then
+        self:note("rms_inspection_hint_fluid_level_low")
     end
 end
 
 ---Marks the fluids whose service clock ran past its interval
-local function applyServiceClockInspectionFindings(dialog, additionalLines)
-    local vehicle = dialog.vehicle
-    local spec = vehicle.spec_RealisticMechanicalSystems
+function Report:readServiceClocks()
     local threshold = RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
-
-    for _, clock in ipairs(vehicle:getServiceClocks()) do
-        local level = spec[clock.levelKey]
+    for _, clock in ipairs(self.vehicle:getServiceClocks()) do
+        local level = self.spec[clock.levelKey]
         if level < threshold then
-            local statusKey = level < threshold / 2 and "rms_inspection_status_change_long_overdue"
-                or "rms_inspection_status_change_overdue"
-            for _, row in ipairs(dialog.technicalFluidsData) do
-                for _, circuit in ipairs(clock.circuits) do
-                    if row.circuit == circuit then
-                        setRowValue(dialog.technicalFluidsData, row.titleKey, statusKey)
-                    end
-                end
+            for _, circuit in ipairs(clock.circuits) do
+                self:mark(circuit, level < threshold / 2 and "rms_inspection_status_change_long_overdue" or "rms_inspection_status_change_overdue")
             end
-            appendAdditionalLine(additionalLines, "rms_inspection_hint_service_" .. clock.key)
+            self:note("rms_inspection_hint_service_" .. clock.key)
         end
     end
 end
 
----Writes the machine name, hours, odometer and next service
-local function updateIdentity(dialog)
-    local vehicle = dialog.vehicle
-    local hoursText = RMS_Utils.formatHours(vehicle:getFormattedOperatingTime())
-    local serviceText = RMS_Utils.formatServiceDue(vehicle, vehicle:getServiceSchedule())
-
-    local odometerText = "ODO " .. RMS_Utils.formatOdometerKilometers(RMS_Utils.getOdometerKilometers(vehicle))
-    dialog.identityElement:setText(string.format("%s  \194\183  %s  \194\183  %s  \194\183  %s", vehicle:getFullName(), hoursText, odometerText, serviceText))
-
-    local textWidth = math.max(dialog.dialogTitleElement.size[1], dialog.identityElement.size[1])
-    dialog.headerTextLayout:setSize(textWidth, nil)
-    dialog.headerTextLayout:invalidateLayout()
-    dialog.headerLayout:invalidateLayout()
+---Reads what the stage of each fault shows on foot
+function Report:readBreakdowns()
+    local hasUnidentified = false
+    for id, breakdown in pairs(self.vehicle:getActiveBreakdowns()) do
+        local definition = RMS_Breakdowns.BreakdownRegistry[id]
+        local stage = definition ~= nil and definition.stages ~= nil and definition.stages[breakdown.stage] or nil
+        local findings = stage ~= nil and stage.inspection ~= nil and RMS_Utils.getBranchItems(stage.inspection, breakdown) or {}
+        -- a fault the workshop has not named; a filter has its own row
+        if #findings > 0 and not breakdown.isVisible and definition.isSelectable and RMS_Consumables.getFilterOfBreakdown(id) == nil then
+            hasUnidentified = true
+        end
+        for _, finding in ipairs(findings) do
+            if finding.target ~= nil and finding.status ~= nil then
+                self:mark(RMS_Fluids.getSumpCircuit(self.vehicle, finding.target), finding.status)
+            end
+            if finding.additional ~= nil and finding.additional ~= "" then
+                local variant = RMS_Utils.getBreakdownNameVariant(self.vehicle, definition)
+                self:note(variant ~= nil and finding.variantAdditional ~= nil and finding.variantAdditional[variant] or finding.additional)
+            end
+        end
+    end
+    if hasUnidentified then
+        self:note("rms_inspection_hint_unidentified")
+    end
 end
 
----Writes the go or no go the whole report comes down to
-local function updateVerdict(dialog, additionalLines)
-    local worst = getWorstPriority(dialog)
-    local name, color
-
-    if worst >= 4 then
-        name = "stop"
-    elseif worst >= 1 then
-        name = "watch"
-    else
-        name = "ok"
+---Rates the radiator and the air filter a blow-out cleans
+function Report:readClogging()
+    if self.spec.isVehicleNeedBlowOut == false then
+        return
     end
 
-    color = getSeverityColor(worst)
-    local message = g_i18n:getText("rms_inspection_verdict_" .. name .. "_message")
-    if name == "watch"
-        and dialog.isAirFilterReplacementDue == true
-        and #additionalLines == 1
-        and not hasWarningOutsideAirFilter(dialog) then
-        message = string.format(g_i18n:getText("rms_inspection_verdict_air_filter_service_message"),
-            RMS_Utils.formatAirFilterServiceHours(dialog.vehicle))
+    local clogging = math.clamp(tonumber(self.spec.radiatorClogging) or 0, 0, 1)
+    if clogging >= 0.85 then
+        self:mark("radiator", "rms_inspection_status_critically_clogged")
+        self:note("rms_inspection_hint_radiator_clogging_stage4")
+    elseif clogging >= 0.60 then
+        self:mark("radiator", "rms_inspection_status_heavily_clogged")
+        self:note("rms_inspection_hint_radiator_clogging_stage3")
+    elseif clogging >= 0.35 then
+        self:mark("radiator", "rms_inspection_status_dirty")
+        self:note("rms_inspection_hint_radiator_clogging_stage2")
+    elseif clogging > 0.15 then
+        self:mark("radiator", "rms_inspection_status_slightly_dirty")
+        self:note("rms_inspection_hint_radiator_clogging_stage1")
     end
 
-    dialog.verdictTitle:setText(g_i18n:getText("rms_inspection_verdict_" .. name .. "_title"))
-    dialog.verdictMessage:setText(message)
-    dialog.verdictBadgeText:setText(worst == 0 and "OK" or "!")
-    dialog.verdictTitle:setTextColor(unpack(color))
-    dialog.verdictBadge.color = {color[1], color[2], color[3], color[4]}
+    local filterStage = RMS_Consumables.getAirFilterBlowOutStage(self.spec)
+    if filterStage > 0 then
+        self:note("rms_inspection_hint_air_filter_clogging_stage" .. filterStage)
+        self:mark("airFilter", AIR_FILTER_STATUS[filterStage])
+    end
+    if clogging >= 0.35 or filterStage >= 2 then
+        self:note("rms_air_blower_action")
+    end
+    if RMS_Consumables.getIsAirFilterWornOut(self.spec) then
+        self.isAirFilterReplacementDue = true
+        self:note("rms_inspection_hint_air_filter_blowout_limit", RMS_Utils.formatAirFilterServiceHours(self.vehicle))
+        self:mark("airFilter", "rms_inspection_status_replacement_due")
+    end
 end
 
----Loads the dialog layout and stores the shared instance
-function RMS_InspectionDialog.register()
-    local dialog = RMS_InspectionDialog.new()
-    g_gui:loadGui(modDirectory .. "gui/RMS_InspectionDialog.xml", "RMS_InspectionDialog", dialog)
-    RMS_InspectionDialog.INSTANCE = dialog
+---Rates the greasing, late once its delay has begun
+function Report:readLubrication()
+    if not self.spec.isVehicleNeedLubricate then
+        return
+    end
+
+    local total, duePoints = RMS_Greasing.getTotalPoints(self.vehicle), RMS_Greasing.getDuePoints(self.vehicle)
+    self.rows.lubrication.greasing = { total = total, greased = total - duePoints }
+    if duePoints == 0 then
+        return
+    end
+    self:mark("lubrication", RMS_Greasing.getStatus(self.vehicle) == "late" and "rms_inspection_status_grease_late"
+        or "rms_inspection_status_grease_due")
+    self:note("rms_inspection_hint_grease_due", duePoints)
 end
 
----Create instance of RMS_InspectionDialog
--- @param table? target target
--- @param table? customMt custom metatable
--- @return table dialog instance of class RMS_InspectionDialog
+---Returns the worst severity, and a warning off the air filter
+function Report:getWorst()
+    local worst, isOtherWarned = 0, false
+    for target, row in pairs(self.rows) do
+        local severity = getSeverity(row.statusKey)
+        worst = math.max(worst, severity)
+        isOtherWarned = isOtherWarned or target ~= "airFilter" and severity >= 1
+    end
+    return worst, isOtherWarned
+end
+
+---Creates the dialog
 function RMS_InspectionDialog.new(target, customMt)
-    local dialog = MessageDialog.new(target, customMt or RMS_InspectionDialog_mt)
-    dialog.vehicle = nil
-    dialog.technicalFluidsData = {}
-    dialog.fieldCareData = {}
-    dialog.isAirFilterReplacementDue = false
-    return dialog
+    local self = MessageDialog.new(target, customMt or RMS_InspectionDialog_mt)
+    self.technicalFluidsData, self.fieldCareData = {}, {}
+    return self
 end
 
----Opens the dialog on a vehicle
--- @param table vehicle vehicle
-function RMS_InspectionDialog.show(vehicle)
-    if RMS_InspectionDialog.INSTANCE == nil then RMS_InspectionDialog.register() end
-    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then return end
-    
-    local dialog = RMS_InspectionDialog.INSTANCE
-    dialog.vehicle = vehicle
-    dialog:updateScreen()
-    g_gui:showDialog("RMS_InspectionDialog")
-end
-
----Builds a card for each oil circuit of a machine
--- @param table vehicle vehicle
--- @return table rows fluid rows, all fine
-function RMS_InspectionDialog.buildFluidRows(vehicle)
-    local rows = {}
-    for _, fluidRow in ipairs(FLUID_ROWS) do
-        if RMS_Fluids.hasCircuit(vehicle, fluidRow.circuit) then
-            local title = g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, fluidRow.circuit, fluidRow.titleKey))
-            table.insert(rows, {titleKey = fluidRow.titleKey, title = title, icon = fluidRow.icon,
-                circuit = fluidRow.circuit, statusKey = "rms_inspection_ok", value = g_i18n:getText("rms_inspection_ok")})
-        end
-    end
-    return rows
-end
-
----Builds the cleaning and lubrication rows.
--- @param table vehicle vehicle
--- @return table rows card rows, all fine
-function RMS_InspectionDialog.buildFieldCareRows(vehicle)
-    local titleKeys = {}
-    if not vehicle.spec_RealisticMechanicalSystems.isElectricVehicle then
-        table.insert(titleKeys, "rms_inspection_air_filter")
-    end
-    table.insert(titleKeys, "rms_inspection_radiator")
-    table.insert(titleKeys, "rms_inspection_lubrication_level")
-
-    local rows = {}
-    for _, titleKey in ipairs(titleKeys) do
-        table.insert(rows, {titleKey = titleKey, title = g_i18n:getText(titleKey), icon = FIELD_CARE_ICONS[titleKey],
-            statusKey = "rms_inspection_ok", value = g_i18n:getText("rms_inspection_ok")})
-    end
-    return rows
-end
-
----Resets every section, then applies all the findings
-function RMS_InspectionDialog:updateScreen()
-    if self.vehicle == nil then return end
-    
-    self.dialogTitleElement:setText(g_i18n:getText("rms_inspection_dialog_title"))
-
-    local spec = self.vehicle.spec_RealisticMechanicalSystems
-
-    self.technicalFluidsData = RMS_InspectionDialog.buildFluidRows(self.vehicle)
-    self.fieldCareData = RMS_InspectionDialog.buildFieldCareRows(self.vehicle)
-
-    if spec.isVehicleNeedBlowOut == false then
-        setRowValue(self.fieldCareData, "rms_inspection_radiator", "rms_inspection_status_not_required")
-        setRowValue(self.fieldCareData, "rms_inspection_air_filter", "rms_inspection_status_not_required")
-    end
-
-    if spec.isVehicleNeedLubricate == false then
-        setRowValue(self.fieldCareData, "rms_inspection_lubrication_level", "rms_inspection_status_not_required")
-    end
-
-    local additionalLines = {}
-    self.isAirFilterReplacementDue = false
-
-    applyFluidLevelInspectionFindings(self, additionalLines)
-    applyServiceClockInspectionFindings(self, additionalLines)
-    applyBreakdownInspectionFindings(self, additionalLines)
-    applyCloggingInspectionFindings(self, additionalLines)
-    applyLubricationInspectionFindings(self, additionalLines)
-
-    local hasAdditionalFindings = #additionalLines > 0
-    self.additionalText:setText(buildAdditionalText(additionalLines))
-    self.additionalScroll:setVisible(hasAdditionalFindings)
-    self.additionalSliderBox:setVisible(hasAdditionalFindings)
-    self.noFindingsText:setText(g_i18n:getText("rms_inspection_no_suspicious_symptoms"))
-    self.noFindingsText:setVisible(not hasAdditionalFindings)
-
-    self.technicalFluidsList:setDataSource(self)
-    self.technicalFluidsList:setDelegate(self)
-    self.technicalFluidsList:reloadData()
-    self.technicalFluidsCard:setSize(nil, self.technicalFluidsList.contentSize + self.technicalFluidsCardPadding)
-
-    self.fieldCareList:setDataSource(self)
-    self.fieldCareList:setDelegate(self)
-    self.fieldCareList:reloadData()
-    self.fieldCareCard:setSize(nil, self.fieldCareList.contentSize + self.fieldCareCardPadding)
-
-    updateIdentity(self)
-    updateVerdict(self, additionalLines)
-end
-
----Returns the row table backing a list element
-local function getListData(self, list)
-    if list == self.technicalFluidsList then
-        return self.technicalFluidsData
-    elseif list == self.fieldCareList then
-        return self.fieldCareData
-    end
-
-    return nil
-end
-
----Returns the row count of the requested section
--- @param table list list element
--- @param integer section section index
--- @return integer count number of rows
-function RMS_InspectionDialog:getNumberOfItemsInSection(list, section)
-    local data = getListData(self, list)
-    return data ~= nil and #data or 0
-end
-
----Fills one inspection row
--- @param table list list element
--- @param integer section section index
--- @param integer index row index
--- @param table cell cell element
-function RMS_InspectionDialog:populateCellForItemInSection(list, section, index, cell)
-    local data = getListData(self, list)
-    local row = data ~= nil and data[index] or nil
-    if row == nil then
-        return
-    end
-
-    cell:getAttribute("inspectionIcon"):applyProfile(row.icon, true)
-    local titleElement = cell:getAttribute("inspectionTitle")
-    if list == self.technicalFluidsList then
-        titleElement:setText(row.title or "")
-    else
-        local valueElement = cell:getAttribute("inspectionValue")
-        local valuePill = cell:getAttribute("inspectionValuePill")
-        RMS_Utils.fitRowValue(titleElement, valuePill, valueElement, row.title or "", row.value or "")
-        valueElement:setTextColor(unpack(getRowColor(row)))
-    end
-    titleElement:setTextColor(unpack(TEXT_COLOR))
-
-    local gaugeTrack = cell:getAttribute("inspectionGaugeTrack")
-    if gaugeTrack == nil then
-        return
-    end
-
-    local level = tonumber(row.level)
-    for _, name in ipairs(GAUGE_PARTS) do
-        cell:getAttribute(name):setVisible(level ~= nil)
-    end
-
-    local gaugeFill, gaugeUnder = cell:getAttribute("inspectionGaugeFill"), cell:getAttribute("inspectionGaugeUnder")
-    if level == nil then
-        gaugeFill:setVisible(false)
-        gaugeUnder:setVisible(false)
-        return
-    end
-    RMS_Utils.setLevelGauge(gaugeFill, gaugeUnder, gaugeTrack.size[1], level)
-end
-
----Caches the margin each card keeps around its rows
+---Wires both lists and keeps the margin each card has around its rows
 function RMS_InspectionDialog:onCreate()
+    RMS_InspectionDialog:superClass().onCreate(self)
+    for _, list in ipairs({ self.technicalFluidsList, self.fieldCareList }) do
+        list:setDataSource(self)
+        list:setDelegate(self)
+    end
     self.technicalFluidsCardPadding = self.technicalFluidsCard.size[2] - self.technicalFluidsList.size[2]
     self.fieldCareCardPadding = self.fieldCareCard.size[2] - self.fieldCareList.size[2]
 end
 
----
-function RMS_InspectionDialog:onOpen()
-    RMS_InspectionDialog:superClass().onOpen(self)
+---Opens the check on a machine
+function RMS_InspectionDialog.show(vehicle)
+    local self = RMS_InspectionDialog.INSTANCE
+    self.vehicle = vehicle
+    self:updateScreen()
+    g_gui:showDialog("RMS_InspectionDialog")
 end
 
----Clears the inspected vehicle
+---Checks the machine, then writes its points, lines and verdict
+function RMS_InspectionDialog:updateScreen()
+    local vehicle = self.vehicle
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    self.technicalFluidsData = RMS_InspectionDialog.buildFluidRows(vehicle)
+    self.fieldCareData = RMS_InspectionDialog.buildFieldCareRows(vehicle)
+
+    local report = Report.new(vehicle, self.technicalFluidsData, self.fieldCareData)
+    if spec.isVehicleNeedBlowOut == false then
+        report:mark("radiator", NOT_REQUIRED)
+        report:mark("airFilter", NOT_REQUIRED)
+    end
+    if spec.isVehicleNeedLubricate == false then
+        report:mark("lubrication", NOT_REQUIRED)
+    end
+    report:readFluidLevels(self.technicalFluidsData)
+    report:readServiceClocks()
+    report:readBreakdowns()
+    report:readClogging()
+    report:readLubrication()
+
+    local bullets = {}
+    for _, line in ipairs(report.lines) do
+        table.insert(bullets, "\194\183  " .. line)
+    end
+    local hasLines = #bullets > 0
+    self.additionalText:setText(table.concat(bullets, "\n"))
+    self.additionalScroll:setVisible(hasLines)
+    self.additionalSliderBox:setVisible(hasLines)
+    self.noFindingsText:setVisible(not hasLines)
+
+    self.technicalFluidsList:reloadData()
+    self.technicalFluidsCard:setSize(nil, self.technicalFluidsList.contentSize + self.technicalFluidsCardPadding)
+    RMS_Utils.reloadListTemplates(self.fieldCareList)
+    self.fieldCareCard:setSize(nil, self.fieldCareList.contentSize + self.fieldCareCardPadding)
+
+    self:updateIdentity()
+    self:updateVerdict(report)
+end
+
+---Writes the machine, its hours, its odometer and its next service
+function RMS_InspectionDialog:updateIdentity()
+    local vehicle = self.vehicle
+    self.identityElement:setText(table.concat({ vehicle:getFullName(), RMS_Utils.formatHours(RMS_Utils.getHourMeter(vehicle)),
+        "ODO " .. RMS_Utils.formatOdometerKilometers(RMS_Utils.getOdometerKilometers(vehicle)),
+        RMS_Utils.formatServiceDue(vehicle, vehicle:getServiceSchedule()) }, "  \194\183  "))
+    self.headerTextLayout:setSize(math.max(self.dialogTitleElement.size[1], self.identityElement.size[1]), nil)
+    self.headerTextLayout:invalidateLayout()
+    self.headerLayout:invalidateLayout()
+end
+
+---Writes the go or no go the check comes down to
+function RMS_InspectionDialog:updateVerdict(report)
+    local worst, isOtherWarned = report:getWorst()
+    local name = worst >= 4 and "stop" or worst >= 1 and "watch" or "ok"
+    local message = g_i18n:getText("rms_inspection_verdict_" .. name .. "_message")
+    if name == "watch" and report.isAirFilterReplacementDue and #report.lines == 1 and not isOtherWarned then
+        message = string.format(g_i18n:getText("rms_inspection_verdict_air_filter_service_message"),
+            RMS_Utils.formatAirFilterServiceHours(self.vehicle))
+    end
+    local color = getSeverityColor(worst)
+    self.verdictTitle:setText(g_i18n:getText("rms_inspection_verdict_" .. name .. "_title"))
+    self.verdictTitle:setTextColor(unpack(color))
+    self.verdictMessage:setText(message)
+    self.verdictBadgeText:setText(worst == 0 and "OK" or "!")
+    self.verdictBadge.color = { unpack(color) }
+end
+
+---Number of rows of a list
+function RMS_InspectionDialog:getNumberOfItemsInSection(list)
+    return list == self.technicalFluidsList and #self.technicalFluidsData or #self.fieldCareData
+end
+
+---Writes a row: a fluid by its gauge, a care point by its status
+function RMS_InspectionDialog:populateCellForItemInSection(list, _section, index, cell)
+    local isFluid = list == self.technicalFluidsList
+    local row = isFluid and self.technicalFluidsData[index] or self.fieldCareData[index]
+    cell:getAttribute("inspectionIcon"):applyProfile(row.icon, true)
+    local title = cell:getAttribute("inspectionTitle")
+    title:setTextColor(unpack(RMS_Utils.COLOR.TEXT))
+    if isFluid then
+        title:setText(row.title)
+        for _, name in ipairs(GAUGE_PARTS) do
+            cell:getAttribute(name):setVisible(true)
+        end
+        RMS_Utils.setLevelGauge(cell:getAttribute("inspectionGaugeFill"), cell:getAttribute("inspectionGaugeUnder"),
+            cell:getAttribute("inspectionGaugeTrack").size[1], row.level)
+    else
+        local value = cell:getAttribute("inspectionValue")
+        RMS_Utils.fitRowValue(title, cell:getAttribute("inspectionValuePill"), value, row.title, row.value)
+        local color = row.statusKey == NOT_REQUIRED and RMS_Breakdowns.COLORS.DEFAULT or getSeverityColor(getSeverity(row.statusKey))
+        value:setTextColor(unpack(color))
+        local greasing = row.greasing
+        if greasing ~= nil then
+            local count, segments = cell:getAttribute("inspectionCount"), cell:getAttribute("inspectionSegments")
+            count:setText(string.format("%d / %d", greasing.greased, greasing.total))
+            count:setPosition(title.position[1] + title:getTextWidth() + 8 * g_pixelSizeScaledX, count.position[2])
+            segments.rmsGreasing = greasing
+            segments.rmsRestColor = { color[1], color[2], color[3], 0.35 }
+        end
+    end
+end
+
+---Gives the greasing its own row, its gauge under the title
+function RMS_InspectionDialog:getCellTypeForItemInSection(list, _section, index)
+    if list == self.technicalFluidsList then
+        return "technicalFluidsRowTemplate"
+    end
+    -- the list also asks for row 0, where a section header would go
+    local row = self.fieldCareData[index]
+    return row ~= nil and row.greasing ~= nil and "fieldCareGreasingRowTemplate" or "fieldCareRowTemplate"
+end
+
+---Draws one segment per grease point of the machine, the greased lit
+function RMS_InspectionDialog:onDrawGreasingSegments(element)
+    local greasing = element.rmsGreasing
+    RMS_Utils.drawSegments(element.absPosition[1], element.absPosition[2], element.absSize[1], element.absSize[2], greasing.total,
+        greasing.greased, RMS_Utils.COLOR.HIGHLIGHT, element.rmsRestColor, RMS_Utils.getSegmentGap(greasing.total, 2) * g_pixelSizeScaledX)
+end
+
+---Forgets the machine
 function RMS_InspectionDialog:onClose()
     self.vehicle = nil
     RMS_InspectionDialog:superClass().onClose(self)
 end
 
----Closes the dialog
+---Closes the check
 function RMS_InspectionDialog:onClickBack()
     self:close()
 end

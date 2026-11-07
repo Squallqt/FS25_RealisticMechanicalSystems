@@ -2,19 +2,17 @@
 
 In-depth vehicle wear, failure, diagnostics, maintenance, and repair system for Farming Simulator 25.
 
-[![Version](https://img.shields.io/badge/version-0.13.0.0-blue.svg)](#)
+[![Version](https://img.shields.io/badge/version-1.0.0.0--beta.1-blue.svg)](#)
 [![FS25](https://img.shields.io/badge/FS25-compatible-green.svg)](https://farming-simulator.com/)
 ![Multiplayer](https://img.shields.io/badge/multiplayer-supported-success.svg)
 ![Languages](https://img.shields.io/badge/languages-27-blue.svg)
-[![License](https://img.shields.io/badge/license-GPL--3.0-yellow.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-All_Rights_Reserved-red.svg)](LICENSE)
 
 Every machine is built from up to 8 individual systems, each with its own condition, its own wear factors, and its own way of failing. Service on schedule, work the machine within its limits, and watch for the early symptoms: the cheapest repair is always the one you catch first.
 
 Singleplayer, multiplayer, and dedicated server.
 
 Electric vehicles are tracked with the parts they really have: an electric motor, a traction battery and power electronics.
-
-> **Note:** This repository is an independently maintained fork of Advanced Damage System by id577, developed by Squallqt since 30 June 2026. The gameplay model and the documentation have been substantially reworked since then; the original credits and provenance are preserved unchanged in [NOTICE.md](NOTICE.md).
 
 ## Quick Start
 
@@ -40,7 +38,7 @@ Each report also tells how much faster than normal the machine has worn since RM
 
 ## Wear Factors
 
-Normal wear depends on system activity. Hydraulics and PTO wear only while active; the other enabled systems retain their idling and downtime wear. Passive wear continues outdoors and stops under cover; it also affects the service level. Overdue service adds wear while the affected system operates, and poor-quality consumables increase overall Condition wear.
+Normal wear depends on system activity. Hydraulics, PTO and harvesting parts wear only while active; the other enabled systems retain their idling and downtime wear. Passive wear continues outdoors and stops under cover; it also affects the service level. Overdue service adds wear while the affected system operates, and poor-quality consumables increase overall Condition wear.
 
 | System | Wear factors |
 | --- | --- |
@@ -52,8 +50,9 @@ Normal wear depends on system activity. Hydraulics and PTO wear only while activ
 | **Chassis** | Poor lubrication on machines that require greasing; vibration over rough ground at speed, the same on a field as on a track; a collision that stops the machine dead or takes `10 km/h` or more off it at once, faster than its tyres could ever slow it, which costs `1%` of Condition per `10 km/h` lost, up to `5%`; turning the steering under `4 km/h`, counted by how far the wheels are turned and scaled by the grip of the ground and the load the steered axle really carries, wheels held turned costing nothing; braking above `2 km/h` while towing |
 | **Fuel** | Fuel below `20%`, aggravated by load; fuel colder than `20C` above `50%` load; idling past `60` seconds; fuel consumption above `80%` of the configured maximum |
 | **PTO** | Active drive; PTO load above `40%`, reaching its full factor at `90%`, then overload up to `120%`; a liftable implement turning while raised; every engagement wears the clutch, and engaging above idle shocks the driveline, harder with a bigger implement; sprayers and spreaders are spared engagement and raised wear |
+| **Harvesting** | Self-propelled harvesters only, in place of the PTO, and only while harvesting: the processing effort of the crop flowing through, from its yield, straw and kind, against the effort of the machine at full work, faster beyond it; a heavy grain flow on the grain elevators; a chopper loaded beyond its full work; stones under the cutter; rice straw on the rasp bars and the concave; a damp crop or rain on the separation, the sieves, the chopper and the belts; late greasing on the chains and bearings. With Realistic Harvesting installed, its measured processing power, crop moisture and grain flow replace the game's yield |
 
-AI workers use the same wear model, with raised-PTO wear skipped during their automated headland turns. They are protected by behaviour instead: the helper drives like a careful driver. It slows down as soon as the machine counts an overload, whether from low revs, a long hard pull, wheel slip or overheating, never below `5 km/h`, the game's own field work floor, and picks its pace back up once the load eases. It never stalls and is never blocked by a hard start. An overload never sends it home; only a breakdown that leaves the machine unable to work stops it. The game's helpers, Courseplay and AutoDrive are all driven this way, contract machines included, and the player's cruise control speed is never touched.
+AI workers use the same wear model, minus what a careful driver avoids and a worker cannot: working the machine before it has warmed up, the PTO turning raised during their automated headland turns, engaging the PTO above idle, steering at a crawl, driveline windup, collisions, and wheels spinning on the spot. Otherwise they are protected by behaviour: the helper drives like a careful driver. It slows down as soon as the machine counts an overload, whether from low revs, a long hard pull, wheel slip or overheating, never below `5 km/h`, the game's own field work floor, and picks its pace back up once the load eases. It never stalls and is never blocked by a hard start. An overload never sends it home; only a breakdown that leaves the machine unable to work stops it. The game's helpers, Courseplay and AutoDrive are all driven this way, contract machines included, and the player's cruise control speed is never touched.
 
 ## Breakdowns
 
@@ -62,6 +61,10 @@ A breakdown is a part that fails, as real parts of its kind do. Each part follow
 Most breakdowns run through four stages, **Minor**, **Moderate**, **Major**, and **Critical**, each never cheaper to repair than the last: a repair costs the real parts it replaces, more once the fault has damaged others. Progression is context-dependent; some faults only worsen while the machine performs the work that causes them, and every fault worsens faster while the causes that wore its part go on. Within a stage, its symptoms grow gradually towards those of the next one; the dashboard warnings and the new symptoms of the next stage wait for it. Most dashboard warnings on modern vehicles appear from stage 2, though some faults can warn from stage 1. Early faults also show themselves through symptoms: fluctuating RPM, coloured exhaust smoke, knocking, squealing. Catching one there spares the parts it would go on to damage.
 
 A part also shows its wear before it fails. From a third of its life it slowly takes on its symptom, in full at the end of that life: worn piston rings, liners, pistons and valves cost engine power, burn oil into blue smoke, raise fuel consumption and make a cold start harder; a worn turbocharger costs power and burns oil; injectors drink more; a worn clutch slips; a worn hydraulic pump slows the hydraulics; worn brakes brake less; a worn radiator cools less; a sulfated battery holds less and a worn alternator charges less; from two thirds of its life a worn steering linkage lets the steering float. On an electric machine a worn motor costs power and draws more, and corroded wiring leaks current. A symptom several parts share comes from the most worn of them, never from their sum. A new part takes its symptom away, and an engine rebuild renews the whole kit: the top end its valves, guides and head gasket, the bottom end its pistons, rings, liners and bearings as well.
+
+A self-propelled harvester carries its harvesting parts in place of the PTO: the feeder chain, rasp bars, concave, separation, sieves, grain elevators and straw chopper of a combine; the feed rolls, cutterhead, knives, shear bar, crop processor, accelerator and spout of a forage harvester; the shares, cleaning, elevators and hopper of a beet or potato harvester, and the picking, cleaning and conveying parts of cotton, sugarcane, grape, olive and vegetable harvesters, all with their drive belts and bearings. Worn, they lose part of the crop through the yield the game threshes with, slow the harvest, block and stop it for a moment, or take more power; broken, they stop the harvest until the repair, and a broken straw chopper drops the straw in a swath. The shaft monitor sounds the cab alarm when a part stops or blocks the harvest, or the straw chopper breaks. A preventive service renews the worn ones and bills their parts. On a forklift, a forester, a self-propelled mixer and a snow groomer, the loader parts take the name of the mast, the boom, the milling arm or the blade arm they really are.
+
+A methane engine fires its gas with spark plugs. A service changes them when they would pass their interval before the next one, and bills them; left overdue, they misfire under load, then cost power and fuel, and at last make the engine hard or impossible to start.
 
 A damaged steering never loses its lock. A worn linkage gives the wheels play, up to `2.5` degrees: small corrections at the wheel do nothing, every blow of the suspension kicks the wheels inside that play, harder with speed, and a badly worn front end shakes between `25` and `45 km/h`. A bent linkage toes one wheel off, up to `1.2` degrees, and the machine pulls to that side, left or right, settled when the breakdown appears. At the last stage a rod end lets go: one wheel trails on its own, steady at walking pace and fluttering ever harder from `8` to `25 km/h`. The game's helpers, Courseplay, AutoDrive and the steering assist drive on the same wheels and take the same faults. No dashboard lamp warns of any of it: a rod end carries no sensor.
 
@@ -140,17 +143,18 @@ Leaving a diesel idling also leaves its mark. Past a long idle under `30%` load,
 
 ## Workshop
 
-The workshop offers Inspection, Maintenance, Repair, Overhaul, fluid Top up at the dealer, and Repainting. By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make maintenance and repair, overhauls or repainting instant. Before you start, the recap quotes the bill line by line, as the maintenance log will keep it: labour, filters with the ones fitted, each part and each fluid with its price. Fluids drawn from your own drums at the farm keep their liters without a price; when the workshop zone does not hold enough of one, the quote says how many liters are missing and the order waits for them. A drum needs no pump for this: the pump only serves to top a machine up by hand.
+The workshop offers Inspection, Maintenance, Repair, Overhaul, fluid Top up at the dealer, Repainting, and engine Remapping. By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make inspections, maintenance and repair, repainting, overhauls or engine remapping instant. Before you start, the recap quotes the bill line by line, as the maintenance log will keep it: labour, filters with the ones fitted, each part and each fluid with its price. Fluids drawn from your own drums at the farm keep their liters without a price; when the workshop zone does not hold enough of one, the quote says how many liters are missing and the order waits for them. A drum needs no pump for this: the pump only serves to top a machine up by hand.
 
 Prices combine estimated labour, parts and required fluids for the machine's size. A maintenance done in your own farm workshop bills no labour: you service the machine yourself and pay its filters, with the fluids taken from your containers; repairs, inspections and overhauls keep their labour there. Repair labour depends on the selected operations and their access; overhaul prices remain capped against the machine's purchase price. Economic Difficulty scales costs like the game's wages. Maintenance spacing controls hourly service deadlines independently of the price.
 
 - **Inspection**: the three types side by side, each with its price and duration. `Visual` looks the machine over and runs it: it finds a mechanical fault four times in five, none of the faults a diagnostic tool reads (calculators, wiring, high voltage), and leaves no report. `Standard` also reads the fault codes, finds every active fault and rates the condition in words. `Complete` also finds the faults that have not shown yet, a defective repair part or a temporary repair, gives exact figures and assesses the failure risk of each system against that of the same system new: `Low` under one and a half times, `Moderate` under twice, `High` beyond. After the breakdowns it lists up to three worn parts, the riskiest first, each with its risk against a new part and what renews it: the adjustment of a service, or the replacement of an advanced repair or an overhaul. The corner of the table gives the age of the last report. The figures of a `Complete` inspection stay on screen after a `Standard` inspection or a maintenance, for as long as that report still describes the machine; a maintenance only renews the Service it measured. Every maintenance level runs the fault search of a `Standard` inspection, so an inspection is never needed before a maintenance; without a diagnostic tool plugged into the machine, the mobile and personal workshops find only the mechanical faults of a machine with an electronic control unit. In the Mechanical Dashboard, each system of the `Condition` card unfolds on its parts as the last `Complete` inspection measured them, the `Failed` and `Worn` ones first; a part that reading does not hold says `Not measured`.
-- **Maintenance**: each level is named after its interval in hours on the machine, for example `20 h service`, `40 h service` and `80 h service`. Under its name, each column says how often it comes back: at every service, 1 service in 2, 1 service in 4. The larger ones also do all that the smaller ones do. The first changes the engine oil, tops up the other fluids and cleans the air filter while leaving its embedded wear. The second changes all present oils and the air filter, and tops up coolant. The last changes all present fluids and the air filter, adjusts the valve clearance and checks the injectors and the thermostat: on a combustion machine a worn valve train is set right; injectors and thermostats fail at random at any age, which no check prevents, and no other part is touched. The existing radiator cleaning and lubrication are retained. Each fluid follows its own hourly and calendar limits, whichever comes first. The workshop recommends the lightest service covering the due changes, names the fluid responsible and shows both limits. Only completed fluid replacements restart their deadlines; top-ups and lighter services leave other deadlines unchanged. Maintenance spacing remains freely adjustable, independently of mechanical lifespan. It scales all programmes from the same 500-hour reference: at 100 h, a 500 h engine programme becomes 100 h, a 600 h programme 120 h, and a 750 h programme 150 h. Calendar limits stay unchanged. The bill retains labour, filters, fluid volumes and part quality.
+- **Maintenance**: each level is named after its interval in hours on the machine, for example `20 h service`, `40 h service` and `80 h service`. Under its name, each column says how often it comes back: at every service, 1 service in 2, 1 service in 4. The larger ones also do all that the smaller ones do. The first changes the engine oil, tops up the other fluids and cleans the air filter while leaving its embedded wear. The second changes all present oils and the air filter, and tops up coolant. The last changes all present fluids and the air filter, adjusts the valve clearance and checks the injectors and the thermostat: on a combustion machine a worn valve train is set right; injectors and thermostats fail at random at any age, which no check prevents, and no other part is touched. The existing radiator cleaning and lubrication are retained. Each fluid follows its own hourly and calendar limits, whichever comes first. The workshop recommends the lightest service covering the due changes, names the fluid responsible and shows both limits. Only completed fluid replacements restart their deadlines; top-ups and lighter services leave other deadlines unchanged. Maintenance spacing remains freely adjustable, independently of mechanical lifespan. It sets the engine oil interval of a recent machine, on a 500-hour reference. An older machine changes its engine oil as often as its manuals of the time required: at a 10 h setting, a 1970s tractor does it every 4.4 h and a machine from before 1960 every 2 h. The other fluids keep their programme. Calendar limits stay unchanged. The bill retains labour, filters, fluid volumes and part quality.
 - **Repair**: `Quick Fix` suppresses the symptoms without fixing the fault, which returns, and fits no part: the part stays worn. `Standard` replaces the failed part with a new one, or a half worn one with `Used` parts. `Advanced` takes twice the time and the price and also replaces the worn parts of the same system. A part is worn once it is older than the age by which one part of its kind in ten has failed and its risk of failing has doubled since it was new: in normal use the bearings, the valve train and the steering linkage get there within the life of the machine, the clutch, the brakes and the turbocharger only when driven hard. The work order sets the three methods side by side, as the maintenance levels: price, duration and what each one does to the fault, its part and the parts beside it.
-- **Warranty**: replacement with original parts and its required fluids is covered for 24 months or the hour limit, whichever comes first. A new machine can be bought with 36- or 48-month cover; the shop shows the hour-meter limit and the price for the selected configuration. Dealer repairs are free; mobile repairs retain the extra mobile labor cost. Farm workshop repairs are not covered. A dealer-fitted replacement part is covered for 12 months. A fault that occurs with overdue service for its system is refused on its own; the other faults remain eligible. The repair quote and the recorded invoice show coverage and what you pay.
+- **Warranty**: replacement with original parts and its required fluids is covered for 24 months or the hour limit, whichever comes first. A new machine can be bought with 36- or 48-month cover; the shop shows the hour-meter limit and the price for the selected configuration. Dealer repairs are free; mobile repairs retain the extra mobile labor cost. Farm workshop repairs are not covered. A dealer-fitted replacement part is covered for 12 months. A fault that occurs with overdue service for its system, or on a part a hard impact has worn, is refused on its own; the other faults remain eligible. A new part is clean again. The repair quote and the recorded invoice show coverage and what you pay. A remapped engine has lost its warranty for good.
+- **Engine remapping**: a tuner remaps the engine at your farm workshop or through the mobile workshop; the dealer does not. The gain depends on the engine's place among those of its machine in the shop: 20% for the weakest, 10% for the strongest, in proportion between them, 10% on a machine with a single engine. The order shows the maximum power and torque before and after, the gain, and the stock and remapped power and torque curves over the engine speed. It costs what a tuner charges, 1,000 at 160 hp and more for a larger engine, scaled by Economic Difficulty, and takes 3 hours, after a confirmation. The extra power costs fuel in proportion; heat and wear read the load against the stock torque, and overload only starts beyond the strongest engine of the same range. The factory warranty, its extension and the cover of fitted parts are lost for good. The tuner keeps the stock software: putting it back takes 1 hour, is free for the 12 months after the remap and costs 80 afterwards, and gives no warranty back. Fitting another engine through the game's Customize screen comes with its stock software.
 - **Top up**: at the dealer, fills whatever fluid the machine is missing, for the price of the fluids alone. Quick, and the button disappears once everything is full. On the farm, top up with your own fluid cans.
 - **Overhaul**: available when at least one system falls below `50%` Condition. `Partial` brings the selected system to at least `75%`; `Standard` brings every system to at least `75%`; `Full` restores every system to `100%`. Every tier brings each part of the systems it treats to at least that condition, repairs their breakdowns, identified or not, fits new fuel and hydraulic filters and leaves a report with figures. `Partial` changes the oil of its system; `Standard` and `Full` change every fluid, which restarts their deadlines. The work order sets the three tiers side by side, counts the systems below `50%` in its corner and gives the system of a `Partial` overhaul one card each.
-- **Repainting**: `Touch-Ups` repair minor paint damage without changing colours. `Full Repaint` renews the finish and lets you keep the current colours or choose from the vehicle's own configurable colours, including compatible added configurations. Touch-ups are done on the farm or at the dealer up to `30%` paint damage, a full repaint at the dealer only. The work order sets both side by side under the paint damage of the machine, and says why one cannot be done where you are. Changing colours through the dealer's vehicle configurator also incurs the RMS repaint price.
+- **Repainting**: `Touch-Ups` repair minor paint damage without changing colours. `Full Repaint` renews the finish and lets you keep the current colours or choose from the vehicle's own configurable colours, including compatible added configurations. Touch-ups are done on the farm or at the dealer up to `30%` paint damage, a full repaint at the dealer only. The work order sets both side by side under the paint damage of the machine, and says why one cannot be done where you are. On a machine you own, colours change only through a full repaint: the game's `Customize` screen keeps its other options. Buying a machine in another colour than the one already selected, metallic or not, costs a full repaint.
 
 A fault has to be identified before the workshop repairs it. The dashboard, noises, smoke and the pre-shift check show symptoms; an inspection or a maintenance identifies the fault, and a fault that reaches its last stage shows itself. The workshop says so: a warning light lit by a fault not yet identified is written in orange, and a `Repair` or an `Overhaul` with nothing to do stays open and says why: no fault identified, none ticked, or no system below `50%` Condition.
 
@@ -158,15 +162,14 @@ Maintenance and repair let you pick part quality between `Used`, `Aftermarket` a
 
 ## Pre-Shift Care
 
-- **Pre-shift check**: hold `R` near a vehicle for a go or no go verdict, the machine and its next service, the four fluid levels, radiator and air filter fouling, and the symptoms a real visual check would catch. Takes seconds, works anywhere. When a symptom comes from a fault the workshop has not identified yet, the check says that an inspection or a maintenance identifies it.
+- **Pre-shift check**: hold `R` near a vehicle for a go or no go verdict, the machine and its next service, the four fluid levels, radiator and air filter fouling, the grease points greased out of all with a gauge of one segment per point, and the symptoms a real visual check would catch. Takes seconds, works anywhere. When a symptom comes from a fault the workshop has not identified yet, the check says that an inspection or a maintenance identifies it.
 - **Fluids**: engine oil, coolant, transmission oil and hydraulic fluid each have a level, read against the minimum mark of their gauge. Engine oil is burnt off with the work done, faster under load and much faster as the engine wears, at the rates measured on real diesels: a healthy engine worked hard reaches its minimum mark late in its service interval and takes a litre or two, a worn one asks for oil many times per interval; the other three only drop through a leak. A shortage of coolant or transmission/hydraulic oil progressively weakens the cooling of its circuit as the level falls; check the gauges and top up before sustained heavy work. Every level gauge reads like a dipstick: the stretch between its MIN and MAX marks is hatched, and a level that falls below the gauge only shows its red end. Below the minimum mark, low engine, transmission or hydraulic oil also increases wear, more as the level falls; the oil lamp, which reads the oil pressure, lights only once the engine oil is critically low, under `30%`. The dealer's `Top up` service fills what is missing for the price of the fluids, maintenance and overhaul replace the fluids covered by the selected procedure, and a repair puts back what the fault it fixed had let out.
 - **Fluid cans**: the game's fill displays identify each product and show its remaining litres. A 5 or 25 L can is carried like any object with the left click, which sets it down where you want. `R` takes it in hand to pour: aim at a machine within `4 m` and hold the left click. The can tops up the circuit made for its fluid first, and the gauge shows the level rising towards its MAX mark. Release the click to stop, and press `R` again to carry the can like any object. The `R` key can be changed in the controls. Switching hand tool or climbing into a machine sets it down for you.
 - **Drum pump**: a 200 L drum stays on its pallet and delivers through a battery drum pump, bought with the hand tools. Pump in hand, aim at a drum and click to fit it on the bung; with empty hands, a click on the drum takes the pump back. `R` on a fitted drum takes the nozzle at the end of its `4 m` hose, and `R` again hangs it up. Bring the drum within `4 m` of the machine, aim at the machine and hold the click, as with a can: the pump runs at `1 L/s` for as long as you hold it and stops by itself at the MAX mark. The hose is counted from you to the pump: from `3 m` a warning tells how far it still reaches, as the game does for its pressure washer, and past `4 m` the nozzle is hung up. A drum pumped empty stays until its pump is taken off.
 - **Putting containers away**: cans and drums go into a `Bale & Pallet Storage` like any pallet, as long as the building accepts their product. Its list names each container with the liters left in it out of what it holds, and says which drum carries the pump. Each one comes back out as it went in: same format, same liters, pump still fitted.
 - **Wrong fluid**: watch what you hold. When the circuit made for its fluid is full, a can or the nozzle of a drum offers the circuit that is short instead. Manually transferring an incompatible product contaminates only the selected circuit, and the pour gauge says `Incompatible Fluid` for as long as it runs. Depending on the proportion in the mixture, system wear can rise to three times its normal rate, heat can increase, and contaminated hydraulic fluid can slow hydraulic functions by up to `25%`. The transfer requires explicit confirmation, which says what the wrong fluid harms on that circuit, and only a complete fluid replacement clears the contamination. Workshop procedures only reserve compatible products.
 - **Air Blower**: clears dust from the cooling pack and the air filter. Blowing an air filter out only recovers part of it, since what is embedded in the media stays until the workshop replaces it, from the second maintenance level up. Washing the vehicle exterior does not clear either component. Their clogging speed follows the game's dirt speed independently of the RMS service interval.
-- **Grease Gun**: restores lubrication on machines that need it, harvesters above all. Lubrication drops `10%` per period only if the machine was neither operated, greased, nor serviced during it; inspection alone does not count.
-- **Aiming a hand tool**: point it directly at the machine within `5 m`.
+- **Grease Gun and cartridges**: the SKF grease gun empties SKF grease cartridges, bought one at a time or up to twelve in a carton. Each machine has the grease points of its operator's manual, counted in the days it worked, however long, a day of work standing for the 10 hours a manual gives a day: the points it greases every 10 hours or daily come due each worked day, those of every 50 hours every 5 worked days, those of every 100 hours every 10. Implements have the grease points of their kind too: a mower, a plough or a baler over the days it worked, counted only while the implement itself works, never while it is only carried on the road; a trailer every few months of the calendar; a bale wrapper after the bales it drops; an implement driven by the PTO adds its shaft. Points fall due together at the change of day, ready for one round of greasing in the morning. Fixed loader forks, weights and pallets have none. Gun in hand, face a cartridge or a carton within reach and press `R`, the key that takes a can, to load the gun once it is empty; then aim at the machine: each click greases one point with the stroke of the pump, holding the click carries on to the next, and a machine already greased takes nothing. Gun in hand, a display at the bottom of the screen shows the grease left in the cartridge, in millilitres; aimed at a machine, it shows the points greased out of all those of the machine, as the fleet page and the pre-shift check count them, one segment per point lit at each stroke, and whether the greasing is due, late or up to date. In multiplayer, the machines of other farms can be greased too. One cartridge greases `304` points. Points are late once a day of work has passed without greasing them, and the machine wears faster as their grease runs out, in proportion to the points left late: with all its points a whole interval late, twice as fast, four times two intervals late, up to 26 times once every joint is dry; a few points left late wear it only a little faster. A daily point left for a worked day is a whole interval late; a workshop maintenance greases a machine, a workshop repair an implement. Standing next to a machine or implement, its information shows the points due, in the warning style once they are late, or what is left before the next greasing.- **Aiming a hand tool**: point it directly at the machine within `5 m`.
 
 ## Reliability and Workshop Access
 
@@ -208,7 +211,7 @@ Work and weather set the temperatures of the engine, the oils and the traction b
 - **Oil temperature follows the job.** One oil shared by the transmission and the hydraulics has one temperature; separate oils each keep their own.
 - **Low fluids weaken cooling.** A clean radiator does not make up for lost coolant or oil: check the levels and top up the circuit that needs it.
 - **The fan turns with the engine.** It gives all its air at the engine's rated speed and less below it: a hot engine lugging at low speed, or left at idle, cools less. Machines from before 1997 have a fan bolted on its pulley, with no clutch to fail; from 1997 a viscous clutch drives it, and from 2013 the engine controller, whose fan speed the diagnostic tool reads.
-- **A fouled radiator cools less.** The Air Blower cleans it. A **reversible fan**, an option of every combustion machine except cars and trucks, in the shop or at the workshop, blows it out from the cab: `Left Alt + 6` reverses the fan for `15` seconds, the radiators getting no cooling air meanwhile, and the fan also reverses on its own every `20` minutes of running, the factory setting of a real reversible fan control. It does not clean the air filter.
+- **A fouled radiator cools less.** The Air Blower cleans it. A **reversible fan**, an option of combustion machines built from `2007`, except cars and trucks, in the shop or at the workshop, blows it out from the cab: `Left Alt + 6` reverses the fan for `15` seconds, the radiators getting no cooling air meanwhile. From `2008`, the fan also reverses on its own every `20` minutes of running, the factory setting of a real reversible fan control. It does not clean the air filter.
 - **A stopped machine cools down with the game's time**, sleep included, and its temperatures are kept in the save.
 
 ## Drivetrain and Parking Brake
@@ -231,11 +234,11 @@ With Enhanced Vehicle installed, RMS drives the drivetrain, the parking brake an
 Every machine has the battery, the alternator and the starter of its size and its age, measured on real machines: an 80 hp tractor of 1985 carries 120 Ah and a 50 A alternator, a 300 hp tractor of 2018 carries 210 Ah and 220 A. There is nothing to set.
 
 - **A healthy machine that works looks after itself.** A start is given back to the battery in four to five minutes of running. Up to 80 % the battery takes whatever the alternator can spare; the last fifth comes back slowly, over about five hours.
-- **Lights left on with the engine stopped** flatten the battery in three to six hours of game time, sooner on a machine loaded with work lamps.
+- **Lights left on with the engine stopped** flatten the battery in three to six hours of game time, sooner on a machine loaded with work lamps. Beacons and turn signals draw on it too, halogen ones far more than LEDs.
 - **The cold keeps part of the charge out of reach.** A battery needs about 12 % to start at `10 C`, 25 % at `0 C`, 40 % at `-10 C` and more than half at `-18 C`. The charge comes back as the weather warms.
 - **The starter no longer rolls dice.** The same situation always takes the same time. It turns slower, with a lower sound, when the voltage drops: cold, a battery running empty or aged, corroded wiring. A cold engine drags it too, its oil thick: on a full battery it turns about `250 rpm` on a mild engine and `150 rpm` at `-19 C`. A diesel needs about `100 rpm` to fire; slower, the starter turns without the engine catching. Insisting drains the battery; when it can no longer turn the engine, the machine says **Battery too weak**.
-- **Hold the start key while the engine is slow to start.** An engine colder than `-10 C` or a fault that makes starting hard keeps the starter turning until the engine catches: hold the key, let go and it stops. Otherwise a press starts the engine.
-- **Each machine cranks its own starter.** A machine of the base game turns the starter heard in its own engine sound, for as long as the key holds it, and its engine catches as in that sound. Another machine starts with its own engine sound, and while the key holds a slow start it borrows the starter of the base game machine of its kind nearest in power.
+- **One press starts every engine.** The starter turns on its own until the engine catches; an engine colder than `-10 C` or a fault that makes starting hard keeps it turning longer. A car starter turns `10 s` at most and a tractor or heavy machine starter `30 s`, as their owner's manuals allow. If the engine has not caught, press again: the cranking already done counts. A press while the starter turns stops it and switches the ignition off. With the game's automatic start, the game waits the rest the manuals ask before it tries again, `20 s` for a car and `2 min` for the others.
+- **Each kind of machine has its starter.** On a hard start a car, a tractor up to 150 hp, a larger tractor and a heavy machine such as a truck or a harvester each crank with their own starter, slower as the battery and the cold slow it. Once the engine catches, the machine starts on its own engine sound.
 - **A failed alternator** leaves the machine running on its battery: two to three hours at night with every light on, four and a half to six and a half by day, while the voltmeter reads the battery instead of `14 V`.
 - **Workers switch their lights off** when they stop their engine to wait, and light them again as they leave. Your own lights stay as you set them.
 - **Wheel loaders above 110 hp, forestry machines and trucks run 24 V**, like the real ones, on two 12 V batteries of 180 Ah in series. The voltmeter reads `28 V` running and `25.2 V` at rest, the report shows a **24 V Battery**, and with their larger batteries they hold longer: a 250 hp loader keeps its lights on for eight hours with the engine stopped. Jumper cables never link a 12 V machine to a 24 V one.
@@ -299,10 +302,6 @@ An electric machine is tracked like any other, with the parts it really has: an 
 2. Activate the mod in mod selection.
 3. Access RMS from the fleet menu (`P` key), the in-game settings, and workshop interactions.
 
-> **Note:** RMS raises the game's limit of 255 fill types to 511. Large maps and long mod lists then keep the products of every mod.
-
-> **Important:** Do not run RMS and Advanced Damage System together. RMS steps aside when it finds ADS and leaves it in charge, so nothing runs twice.
-
 ## Usage
 
 ### Running a service
@@ -324,6 +323,8 @@ An electric machine is tracked like any other, with the parts it really has: an 
 1. Open the fleet menu (`P` key) and select `Mechanical Dashboard`.
 2. In `Equipment fleet`, open a category or `All equipment`, highlight the machine and press `X` (`Exclude from RMS`): RMS stops tracking its wear.
 3. Go back to `Equipment fleet` with the button under the list, open `Untracked equipment` in its place and pick a category: each machine states why it is left out, and `X` (`Include in RMS`) brings a supported machine back in. A machine that was never tracked starts from its resale value, like a used one.
+
+Implements with grease points are listed in `Equipment fleet`, in their category beside the machines: their row and their file show the grease points due, how often they come back, and how much faster the implement wears while its greasing is late. Implements without grease points stay in `Untracked equipment`.
 4. On a server, only an admin can make this choice, and a machine under a workshop procedure cannot be excluded until it is done.
 
 ## Debug Window
@@ -345,6 +346,7 @@ For testing and debugging. Unless noted, a command acts on the vehicle you sit i
 | `rms_setPartWear <id> <wear>` | Sets the wear of one part of the vehicle, named by its breakdown ID: `1.0` is a whole machine life, more is allowed. Prints the risk of the part against that of a new one; the next draw starts from the wear set. An unknown ID lists the parts of the vehicle |
 | `rms_setService [0.0-1.0] [engine\|transmission\|hydraulic\|coolant]` | Sets how much of its hours a service clock has left: `1.0` just serviced, `0` used up. Sets the four clocks without a clock name; defaults to `1.0`. The dates of the last services do not change |
 | `rms_setPaintWear <0.0-1.0>` | Sets the paint wear a Repainting order repairs |
+| `rms_setGreasing <0.0-1.0>` | Sets how much of each greasing interval is left on the machine and the implements attached to it: `1.0` just greased, `0` every grease point due at once |
 | `rms_setDirtAmount <0.0-1.0>` | Sets the dirt level |
 | `rms_setFuelLevel <value>` | Sets fuel or electric traction charge: values from `0` to `1` are fractions, values above `1` to `100` are percentages |
 | `rms_reinitializeVehicle` | Seeds the vehicle again as a used machine of its hours, as when RMS first met it: each part worn by those hours and the care of its previous owner (`careful`, `regular` or `neglected`, by default the one its repair need tells), the parts that failed replaced, service clocks where the owner left them, and a neglectful owner's breakdowns since his last service; unavailable during a workshop procedure |
@@ -354,7 +356,7 @@ For testing and debugging. Unless noted, a command acts on the vehicle you sit i
 | `rms_showServiceLog [index]` | Prints the service log, or one entry in detail using its integer index |
 | `rms_getDebugVehicleInfo [1]` | Prints how RMS reads the vehicle: brand, type, category, electrical circuit and transmission; lists its specializations when given `1` |
 | `rms_exhaustOverride <opacity\|-> [flow\|-] [vapour\|-]` | Overrides exhaust rendering locally for all machines; `-` keeps each engine's value and `off` clears the override |
-| `rms_setSpecVar <path> <value>` | Sets one value of the vehicle's RMS state, see the paths below; displayed oil temperatures, the Condition of the vehicle and of each system, and circuit voltage are calculated and cannot be set |
+| `rms_setSpecVar <path> <value>` | Sets one value of the vehicle's RMS state, see the paths below; displayed oil temperatures, the Condition of the vehicle and of each system, circuit voltage and the grease level, which follows the grease points due (`rms_setGreasing`), are calculated and cannot be set |
 | `rms_printSpecVar <path>` | Prints a value of the vehicle's RMS state, or a whole table when the path names one |
 
 ### Useful paths for `rms_setSpecVar`
@@ -363,7 +365,6 @@ For testing and debugging. Unless noted, a command acts on the vehicle you sit i
 | --- | --- |
 | `batterySoc` | Battery charge, from `0` to `1` |
 | `engineOilLevel`, `coolantLevel`, `transmissionOilLevel`, `hydraulicFluidLevel` | Fluid level as a share of the circuit's capacity, from `0` to `1`; with a common sump the hydraulic oil follows `transmissionOilLevel` |
-| `lubricationLevel` | Grease, from `0` to `1` |
 | `radiatorClogging`, `airFilterClogging`, `fuelFilterClogging`, `hydraulicFilterClogging` | Clogging, from `0` to `1` |
 | `serviceCalendar.engine`, `.transmission`, `.hydraulic`, `.coolant` | Age of the machine, in months, at the last service of that clock; a low value on an old machine makes the service due by date |
 | `activeBreakdowns.<ID>.isVisible` | `true` identifies a breakdown as an inspection would, `false` hides it again |
@@ -381,6 +382,7 @@ Commands that take a system argument accept these names, case-insensitive:
 - `chassis`
 - `fuel`
 - `pto`
+- `harvest`, on a self-propelled harvester
 
 This applies to commands such as `rms_setSystemCondition`.
 
@@ -399,6 +401,56 @@ rms_printSpecVar rawTransmissionTemperature
 Engine temperature writes use the shared native motor state. Transmission oil uses `rawTransmissionTemperature`; the dashboard value `transmissionTemperature` is smoothed and cannot be written directly. For a separate hydraulic oil circuit, use `rawHydraulicTemperature`. With a common sump, transmission and hydraulic oil share the transmission temperature.
 
 ## Changelog
+
+### v1.0.0.0-beta.1
+
+- Reworked machine production years and their period equipment
+- Added the model launch year to the shop
+- Added engine oil change intervals that follow the machine's era
+- Added engine remapping by a tuner at the farm or mobile workshop
+- Added an instant setting for engine remapping
+- Reworked the workshop, the fleet page, the settings page and the other RMS screens
+- Reworked the colours and limits of the dashboard lamps, and the limits of the inspection report and the overhaul advice
+- Replaced the sounds of the starter, worn brakes and the jumper cable clamps
+- Added a single-press engine start for every engine
+- Added grease cartridges for the grease gun
+- Reworked greasing with the grease points of each machine
+- Added greasing of implements and their PTO shafts, shown in the fleet page
+- Added the harvesting parts of self-propelled harvesters, worn by the work they do, with crop losses, blockages and stops as they wear, a stop or a blockage sounding the cab alarm
+- Added the renewal of worn harvesting parts to the preventive service, their parts billed
+- Added the harvesting effort measured by RMS itself when Realistic Harvesting is not installed
+- Added integration with Realistic Harvesting (version 1.6.5.0 or higher), sharing the harvesting effort and the wear of the harvesting parts
+- Added spark plugs to methane engines, changed during services, misfiring once overdue
+- Reworked the breakdowns of each machine type, without the parts a machine lacks and with the names of its real parts
+- Fixed farms contracting for another being unable to use its trolley, charger and fluids, as the game allows
+- Removed the raised fill type limit, which the game itself raises to 1023 since patch 1.25.1.0
+- Fixed the buttons of the settings page
+- Fixed AI workers, Courseplay and AutoDrive wearing the machine by working it cold, hitting obstacles or spinning their wheels on the spot
+- Fixed breakdowns and worn parts of lamps missing from the machine
+- Fixed the committed cost of a running service showing 0 in multiplayer
+- Fixed the finish time of a running service jumping back and forth by a minute when time is sped up
+- Fixed the most powerful Stage V machines having no particulate filter
+- Fixed machines bought in another colour without paying for the paint
+- Fixed the vehicle configurator changing an owned machine's colours without charging the repaint
+- Fixed hard starts with the game's automatic start and the GIANTS Ignition Key
+- Fixed cars with a flat battery not starting on jumper cables in the cold
+- Fixed the jumper cable clamps held off the left hand
+- Fixed the wheel slip following the 4WD switch instead of the front axle after a 4WD engagement failure
+- Fixed the differential lock not holding a spinning wheel in 4WD, and only partly in 2WD
+- Fixed the PTO dropping out without a warning in single player
+- Fixed engine stumbles no longer cutting the power after a while
+- Fixed the unsteady idle of failing injectors, fuel pumps and spark plugs not worsening with the fault
+- Fixed lights staying in a random state after a wiring fault made them flicker
+- Fixed worn powershift packs sometimes never engaging the gear asked, or driving it at the ratio of the previous gear
+- Fixed PTO drops that sometimes did not happen
+- Fixed gears thrown out by worn synchronizers and refused shifts ending too early
+- Fixed variator pressure drops ending too early
+- Fixed the cold idle of failing glow plugs jumping instead of swinging
+- Fixed engine stumbles switching the cruise control back on after the driver turned it off
+- Fixed worn brake discs only squealing at their last stage
+- Fixed implements on a leaking lift valve dropping at full speed instead of sinking slowly, and the lower key raising them meanwhile
+- Fixed beacons and turn signals still working with the battery disconnected or dead, and never draining the battery
+- Reduced the range for taking the charger trolley
 
 ### v0.13.0.1
 
@@ -564,4 +616,10 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 
 ## License
 
-GNU General Public License v3.0. See [LICENSE](LICENSE) for the complete terms and [NOTICE.md](NOTICE.md) for provenance and attribution.
+Mod for Farming Simulator.
+
+Copyright © 2026 Squallqt. All rights reserved.
+
+This project is proprietary and is not distributed under an open-source license. Downloading an official release to play with it in Farming Simulator 25, in single player or multiplayer, is permitted. Copying, modifying, converting, redistributing, reuploading, commercializing, or reusing any part of this project requires prior written authorization.
+
+See [LICENSE](LICENSE) for the complete terms and [NOTICE.md](NOTICE.md) for provenance and attribution.

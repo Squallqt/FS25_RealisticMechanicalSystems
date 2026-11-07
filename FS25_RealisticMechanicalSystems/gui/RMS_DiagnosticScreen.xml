@@ -105,18 +105,12 @@
                     <Bitmap profile="rms_diagHelpBar" />
                     <Bitmap profile="rms_diagHelpIcon" />
                     <Text profile="rms_diagHelpText" text="$l10n_rms_diagnostic_help" />
-                    <Text profile="rms_diagFieldLabel" id="detailLabel[1]" position="26.38px -184.68px" />
-                    <Text profile="rms_diagFieldValue" id="detailValue[1]" position="202.27px -184.68px" />
-                    <Text profile="rms_diagFieldLabel" id="detailLabel[2]" position="26.38px -227.18px" />
-                    <Text profile="rms_diagFieldValue" id="detailValue[2]" position="202.27px -227.18px" />
-                    <Text profile="rms_diagFieldLabel" id="detailLabel[3]" position="26.38px -269.69px" />
-                    <Text profile="rms_diagFieldValue" id="detailValue[3]" position="202.27px -269.69px" />
-                    <Text profile="rms_diagFieldLabel" id="detailLabel[4]" position="26.38px -312.2px" />
-                    <Text profile="rms_diagFieldValue" id="detailValue[4]" position="202.27px -312.2px" />
-                    <Text profile="rms_diagFieldLabel" id="detailLabel[5]" position="26.38px -354.7px" />
-                    <Text profile="rms_diagFieldValue" id="detailValue[5]" position="202.27px -354.7px" />
-                    <Text profile="rms_diagFieldLabel" id="detailLabel[6]" position="26.38px -397.21px" />
-                    <Text profile="rms_diagFieldValue" id="detailValue[6]" position="202.27px -397.21px" />
+                    <BoxLayout profile="rms_workshopStack" position="26.38px -184.68px" size="489.55px 255.03px">
+                        <GuiElement profile="rms_workshopBlock" id="detailFieldTemplate" size="489.55px 42.505px">
+                            <Text profile="rms_diagFieldLabel" name="label" position="0px 0px" />
+                            <Text profile="rms_diagFieldValue" name="value" position="175.89px 0px" />
+                        </GuiElement>
+                    </BoxLayout>
                     <Bitmap profile="rms_diagLine" id="detailNoteLine" position="26.38px -445.58px" size="489.55px 1px" />
                     <Text profile="rms_diagNote" id="detailNote" position="26.38px -460.23px" />
                 </GuiElement>

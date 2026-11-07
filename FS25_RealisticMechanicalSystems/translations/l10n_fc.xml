@@ -20,7 +20,7 @@
         <text name="rms_drivetrain_warning_parkbrake_engine_off" text="Démarrez le moteur pour desserrer le frein de stationnement"/>
         <text name="rms_preheat_ignition_message" text="Contact mis : préchauffage en cours"/>
         <text name="rms_preheat_system_failure_message" text="Panne du système de préchauffage : démarrage à froid impossible"/>
-        <text name="rms_preheat_start_failed_message" text="Le moteur n'a pas démarré : coupez le contact avant de réessayer"/>
+        <text name="rms_preheat_start_failed_message" text="Le moteur n'a pas démarré"/>
         <text name="rms_hud_vehicle_notification" text="%s : %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Contrôler le véhicule"/>
@@ -39,48 +39,52 @@
         <text name="rms_settings_section_service_wear" text="Entretien et usure"/>
         <text name="rms_settings_section_drivetrain" text="Transmission et frein de stationnement"/>
         <text name="rms_workshopOpenHour_label" text="Heure d'ouverture de l'atelier"/>
-        <text name="rms_workshopOpenHour_tooltip" text="Les interventions ne démarrent qu'à partir de cette heure."/>
+        <text name="rms_workshopOpenHour_tooltip" text="Définit l'heure d'ouverture des ateliers : les interventions ne démarrent qu'à partir de cette heure."/>
         <text name="rms_workshopCloseHour_label" text="Heure de fermeture de l'atelier"/>
-        <text name="rms_workshopCloseHour_tooltip" text="Les interventions en cours sont suspendues à cette heure et reprennent à l'ouverture."/>
+        <text name="rms_workshopCloseHour_tooltip" text="Définit l'heure de fermeture des ateliers : les interventions en cours s'y arrêtent et reprennent à l'ouverture."/>
+        <text name="rms_workshopHours_locked" text="Ce paramètre nécessite qu'au moins un atelier ne soit pas ouvert 24 h/24."/>
         <text name="rms_dealerWorkshopAvailable_label" text="Atelier du concessionnaire 24 h/24"/>
-        <text name="rms_dealerWorkshopAvailable_tooltip" text="Maintient l'atelier du concessionnaire disponible à toute heure du jour et de la nuit."/>
+        <text name="rms_dealerWorkshopAvailable_tooltip" text="Détermine si l'atelier du concessionnaire reste ouvert à toute heure."/>
         <text name="rms_mobileWorkshopAvailable_label" text="Atelier mobile 24 h/24"/>
-        <text name="rms_mobileWorkshopAvailable_tooltip" text="Maintient l'atelier mobile disponible à toute heure du jour et de la nuit."/>
+        <text name="rms_mobileWorkshopAvailable_tooltip" text="Détermine si l'atelier mobile reste disponible à toute heure."/>
         <text name="rms_mobileWorkshopRestrictions_label" text="Restrictions des ateliers"/>
-        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Limite les interventions des ateliers mobile et personnel selon les moyens nécessaires. Les entretiens restent accessibles ; l'électronique demande la valise de diagnostic branchée sur la machine, et à l'atelier mobile, un démontage lourd ou une intervention haute tension demande un atelier équipé."/>
+        <text name="rms_mobileWorkshopRestrictions_tooltip" text="Détermine si l'équipement limite les ateliers mobile et personnel : l'électronique demande la valise de diagnostic branchée, et l'atelier mobile ne fait ni démontage lourd ni intervention haute tension. Les entretiens restent toujours possibles."/>
         <text name="rms_ownWorkshopAvailable_label" text="Atelier personnel 24 h/24"/>
-        <text name="rms_ownWorkshopAvailable_tooltip" text="Maintient votre atelier personnel disponible à toute heure du jour et de la nuit."/>
+        <text name="rms_ownWorkshopAvailable_tooltip" text="Détermine si votre atelier personnel reste ouvert à toute heure."/>
         <text name="rms_instantInspection_label" text="Inspection instantanée"/>
-        <text name="rms_instantInspection_tooltip" text="Lorsque l'option est activée, les inspections en atelier se terminent instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
+        <text name="rms_instantInspection_tooltip" text="Détermine si les inspections à l'atelier se terminent instantanément, celles en cours comprises."/>
         <text name="rms_instantMaintenanceRepair_label" text="Entretien et réparation instantanés"/>
-        <text name="rms_instantMaintenanceRepair_tooltip" text="Lorsque l'option est activée, les entretiens et réparations en atelier se terminent instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
+        <text name="rms_instantMaintenanceRepair_tooltip" text="Détermine si les entretiens et les réparations à l'atelier se terminent instantanément, ceux en cours compris."/>
         <text name="rms_instantBodywork_label" text="Peinture instantanée"/>
-        <text name="rms_instantBodywork_tooltip" text="Lorsque l'option est activée, la peinture en atelier se termine instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
+        <text name="rms_instantBodywork_tooltip" text="Détermine si la peinture à l'atelier se termine instantanément, celle en cours comprise."/>
         <text name="rms_instantOverhaul_label" text="Révision mécanique instantanée"/>
-        <text name="rms_instantOverhaul_tooltip" text="Lorsque l'option est activée, les révisions mécaniques en atelier se terminent instantanément. Les interventions de ce type déjà en cours se terminent aussi immédiatement."/>
+        <text name="rms_instantOverhaul_tooltip" text="Détermine si les révisions mécaniques à l'atelier se terminent instantanément, celles en cours comprises."/>
+        <text name="rms_instantRemap_label" text="Reprogrammation moteur instantanée"/>
+        <text name="rms_instantRemap_tooltip" text="Détermine si la reprogrammation moteur et le retour à l&apos;origine se terminent instantanément, ceux en cours compris."/>
         <text name="rms_debugMode_label" text="Mode débogage"/>
-        <text name="rms_debugMode_tooltip" text="Affiche la fenêtre de débogage dans la machine conduite ; la touche %s l'ouvre et la ferme aussi. En multijoueur, seuls les administrateurs la voient. Écrit aussi des journaux détaillés dans la console."/>
+        <text name="rms_debugMode_tooltip" text="Détermine si la fenêtre de débogage s'affiche dans la machine conduite et si la console reçoit des journaux détaillés. La touche %s l'ouvre et la ferme ; en multijoueur, seuls les administrateurs la voient."/>
         <text name="rms_warningMessages_label" text="Messages d'avertissement"/>
-        <text name="rms_warningMessages_tooltip" text="Active ou désactive les avertissements de jeu comme moteur froid ou surchauffe. Les messages de limitation thermique de puissance restent actifs."/>
+        <text name="rms_warningMessages_tooltip" text="Détermine si les avertissements comme le moteur froid ou la surchauffe s'affichent. Les messages de limitation thermique de puissance restent toujours affichés."/>
         <text name="rms_serviceInterval_label" text="Espacement des entretiens"/>
-        <text name="rms_serviceInterval_tooltip" text="Réglez les heures de référence. Avec 100 h, une prescription de 500 h devient 100 h, et 600 h devient 120 h. Chaque fluide suit le programme du véhicule ; le calendrier reste indépendant."/>
+        <text name="rms_serviceInterval_tooltip" text="Définit les heures entre deux vidanges moteur d'un modèle lancé depuis 2010 ou d'année inconnue. Un modèle plus ancien est vidangé plus souvent :&#10;2000 à 2009 : %s&#10;1980 à 1999 : %s&#10;1960 à 1979 : %s&#10;Avant 1960 : %s"/>
         <text name="rms_vehicleLifespan_label" text="Durée de vie du véhicule"/>
-        <text name="rms_vehicleLifespan_tooltip" text="Définit la durée de vie de base du véhicule en heures, après laquelle son état atteint 0 %. Plus l'état se rapproche de zéro, plus le véhicule devient peu fiable. La valeur du véhicule baisse aussi au fil de ces heures. Un changement vaut pour la suite : les véhicules gardent leur état, seule leur valeur est recalculée."/>
+        <text name="rms_vehicleLifespan_tooltip" text="Définit les heures de fonctionnement après lesquelles l'état d'un véhicule atteint 0 % ; plus il s'en approche, moins le véhicule est fiable et plus sa valeur baisse. Un changement vaut pour la suite : les véhicules gardent leur état, seule leur valeur est recalculée."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fumée d'échappement"/>
-        <text name="rms_exhaustSmokeEnabled_tooltip" text="Pilote la fumée d'échappement selon l'état réel du moteur. Elle est noire quand le carburant dépasse l'air disponible : reprise franche, moteur qui peine à bas régime, long ralenti à faible charge, filtre à air colmaté ou injection usée. Elle est bleue quand un moteur fatigué brûle de l'huile, blanche quand du carburant part imbrûlé. Le panache grossit aussi avec le travail que fournit le moteur. Les machines anciennes fument bien plus que les modernes, qui ne fument presque pas tant que rien n'est vraiment cassé. Par temps froid, l'eau issue de la combustion se condense aussi en une courte traînée blanche qui s'évapore en un mètre ou deux, même sur un moteur sain."/>
+        <text name="rms_exhaustSmokeEnabled_tooltip" text="Détermine si la fumée d'échappement suit l'état réel du moteur : noire quand il manque d'air, bleue quand il brûle de l'huile, blanche quand du carburant part imbrûlé, plus épaisse sous l'effort. Les machines anciennes fument bien plus que les modernes."/>
         <text name="rms_tutorialMode_label" text="Mode didacticiel"/>
-        <text name="rms_tutorialMode_tooltip" text="Affiche les conseils du didacticiel pendant le jeu."/>
+        <text name="rms_tutorialMode_tooltip" text="Détermine si les conseils du didacticiel s'affichent pendant le jeu."/>
         <text name="rms_tutorialResetTips_label" text="Réinitialiser les conseils"/>
         <text name="rms_tutorialResetTips_text" text="Réinitialiser"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Réinitialise l'historique des conseils du didacticiel et les affiche tous de nouveau."/>
+        <text name="rms_tutorialResetTips_tooltip" text="Réinitialise l'historique des conseils du didacticiel : ils s'afficheront tous de nouveau."/>
         <text name="rms_tutorialResetConfirm_title" text="Réinitialiser les conseils du didacticiel ?"/>
         <text name="rms_tutorialResetConfirm_message" text="Réinitialiser l'historique des conseils du didacticiel et tous les réafficher ?"/>
         <text name="rms_drivetrainEnabled_label" text="Gestion du 4RM et du blocage de différentiel"/>
-        <text name="rms_drivetrainEnabled_tooltip" text="Active le contrôle manuel du pont avant moteur et des blocages de différentiel sur les tracteurs. Si Enhanced Vehicle est installé, sa gestion des différentiels est désactivée ; pour la lui rendre, désactivez cette option puis réactivez les différentiels dans son menu."/>
+        <text name="rms_drivetrainEnabled_tooltip" text="Détermine si le pont avant et les blocages de différentiel des tracteurs se commandent à la main. Cette option remplace la gestion des différentiels d'Enhanced Vehicle : pour la lui rendre, désactivez-la puis réactivez les différentiels dans son menu."/>
         <text name="rms_drivetrainAllowAutoMode_label" text="Autoriser le mode AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Ajoute une position AUTO au sélecteur : le pont avant s'embraye automatiquement en cas de patinage ou à vitesse de travail sous charge, et se débraye sur route. Les véhicules laissés en AUTO repassent en 4RM quand cette option est désactivée."/>
+        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Détermine si le sélecteur propose la position AUTO, qui embraye le pont avant quand les roues patinent ou en travail sous charge et le débraye sur route. Désactivée, elle fait repasser en 4RM les véhicules laissés en AUTO."/>
+        <text name="rms_drivetrainAllowAutoMode_locked" text="Ce paramètre nécessite l'activation de la gestion du 4RM et du blocage de différentiel."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Frein de stationnement"/>
-        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Ajoute un frein de stationnement à tous les véhicules suivis. Les machines récentes à transmission CVT ou Powershift le serrent et le desserrent toutes seules ; sur les autres, vous le commandez avec sa touche. Si Enhanced Vehicle est installé, son frein de stationnement est désactivé ; pour le lui rendre, désactivez cette option puis réactivez le frein de stationnement dans son menu."/>
+        <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Détermine si les véhicules suivis ont un frein de stationnement : automatique sur les machines récentes à transmission CVT ou Powershift, à sa touche sur les autres. Cette option remplace le frein de stationnement d'Enhanced Vehicle : pour le lui rendre, désactivez-la puis réactivez son frein de stationnement dans son menu."/>
         <!-- Workshop -->
         <text name="rms_ws_header_title" text="Atelier"/>
         <text name="rms_ws_tab_summary" text="Synthèse"/>
@@ -93,14 +97,11 @@
         <text name="rms_ws_section_quote" text="Estimation des réparations"/>
         <text name="rms_ws_section_choose_intervention" text="Choisir l'intervention"/>
         <text name="rms_ws_section_work_order" text="Bon de travail"/>
-        <text name="rms_ws_section_paint_order" text="Bon de peinture"/>
         <text name="rms_ws_section_recap" text="Récapitulatif"/>
         <text name="rms_ws_section_parts" text="Pièces concernées"/>
         <text name="rms_ws_section_history" text="Historique"/>
-        <text name="rms_ws_section_current_intervention" text="Intervention en cours"/>
         <text name="rms_ws_label_last_check" text="Dernier contrôle"/>
         <text name="rms_ws_reading_outdated" text="À revérifier"/>
-        <text name="rms_ws_label_workshop_state" text="État de l'atelier"/>
         <text name="rms_ws_label_more_parts" text="+ %s autres"/>
         <text name="rms_ws_label_committed_cost" text="Coût engagé"/>
         <text name="rms_ws_label_finish_time" text="Heure de fin"/>
@@ -109,6 +110,7 @@
         <text name="rms_ws_info_inspection_reveals" text="Une inspection ou un entretien peut identifier d'autres pannes."/>
         <text name="rms_ws_status_ready_title" text="Atelier prêt"/>
         <text name="rms_ws_status_ready_hint" text="Sélectionnez une intervention. Les options, les pièces et le prix seront confirmés avant le démarrage."/>
+        <text name="rms_ws_status_closed_hint" text="Les interventions se commandent de %s à %s."/>
         <text name="rms_ws_label_value" text="Valeur du véhicule"/>
         <text name="rms_ws_label_age" text="Âge"/>
         <text name="rms_ws_label_operating_hours" text="Heures de fonctionnement"/>
@@ -132,12 +134,13 @@
         <text name="rms_shop_service_access_easy" text="Facilité d'entretien élevée"/>
         <text name="rms_shop_service_access_average" text="Facilité d'entretien moyenne"/>
         <text name="rms_shop_service_access_demanding" text="Facilité d'entretien faible"/>
+        <text name="rms_shop_launch_year" text="Modèle lancé en %d"/>
+        <text name="rms_shop_launch_year_unknown" text="Année de lancement inconnue"/>
         <text name="rms_owner_care_careful" text="Entretien soigné"/>
         <text name="rms_owner_care_regular" text="Entretien régulier"/>
         <text name="rms_owner_care_neglected" text="Entretien négligé"/>
         <text name="rms_ws_label_overhaul_count" text="Révisions effectuées"/>
         <text name="rms_ws_label_maintenance_log" text="Journal d'entretien"/>
-        <text name="rms_ws_label_last_report" text="Dernier rapport"/>
         <text name="rms_ws_label_last_maintenance" text="Dernier entretien"/>
         <text name="rms_ws_task_inspection" text="Inspection"/>
         <text name="rms_ws_task_maintenance" text="Entretien"/>
@@ -151,12 +154,12 @@
         <text name="rms_ws_reason_repair_unselected" text="Aucune panne cochée. Cochez dans Diagnostic et estimation les pannes à réparer."/>
         <text name="rms_ws_reason_overhaul_none" text="Une révision mécanique remet en état les systèmes sous 50 % d'état. Aucun ne l'est sur cette machine."/>
         <text name="rms_ws_reason_bodywork_mobile" text="Un atelier mobile ne fait pas de peinture. Elle se fait chez le concessionnaire."/>
+        <text name="rms_ws_reason_refill_dealer" text="Seul le concessionnaire fait l'appoint des fluides. Ailleurs, versez-les au bidon."/>
         <text name="rms_mobile_workshop_operation_blocked" text="%s : %s. Utilisez un atelier équipé."/>
         <text name="rms_workshop_diagnostic_blocked" text="%s : %s. Branchez la valise de diagnostic d'un chariot sur la machine."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnostic électronique requis"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Démontage ou outillage spécialisé requis"/>
         <text name="rms_mobile_workshop_high_voltage_required" text="Équipement haute tension requis"/>
-        <text name="rms_ws_status_in_progress_short_format" text="%s en cours..."/>
         <text name="rms_ws_status_in_progress_format" text="%s en cours jusqu'à %s"/>
         <text name="rms_ws_status_open" text="L'atelier est ouvert"/>
         <text name="rms_ws_status_closed" text="L'atelier est fermé"/>
@@ -171,19 +174,17 @@
         <text name="rms_ws_action_choice_overhaul" text="Révision mécanique"/>
         <text name="rms_ws_action_choice_refill" text="Appoint des fluides"/>
         <text name="rms_ws_action_choice_bodywork" text="Peinture du véhicule"/>
+        <text name="rms_ws_action_choice_remap" text="Reprogrammation"/>
         <text name="rms_ws_action_cancel_service" text="Annuler l'intervention"/>
         <text name="rms_ws_age_unit" text="mois"/>
-        <text name="rms_ws_hours_unit" text="h"/>
         <text name="rms_ws_no_last_report_message" text="Aucun rapport pour le moment"/>
         <text name="rms_ws_no_log_empty_message" text="Journal vide pour le moment"/>
-        <text name="rms_ws_no_report_message" text="Aucun rapport pour le moment"/>
         <text name="rms_ws_cancel_confirm_title" text="Annuler l'intervention en cours ? (%s)"/>
         <text name="rms_ws_cancel_confirm_text" text="La progression actuelle sera enregistrée telle quelle. Aucun argent ne sera remboursé."/>
         <!-- Maintenance Log -->
         <text name="rms_log_header_title" text="Journal d'entretien"/>
         <text name="rms_log_recorded_interventions_title" text="Interventions enregistrées"/>
         <text name="rms_log_last_intervention_title" text="Dernière intervention"/>
-        <text name="rms_log_hours" text="Heures de fonctionnement"/>
         <text name="rms_log_total_cost_title" text="Coût total"/>
         <text name="rms_log_total_breakdowns_count_title" text="Pannes réparées"/>
         <text name="rms_log_type" text="Type d'intervention"/>
@@ -250,7 +251,7 @@
         <text name="rms_spec_work_under_hour_ago" text="il y a moins d'1 h de travail"/>
         <text name="rms_spec_maintenance_complete_notification" text="Intervention terminée : %s"/>
         <text name="rms_spec_maintenance_cancelled_notification" text="Intervention annulée : %s"/>
-        <text name="rms_spec_maintenance_level" text="Révision %s"/>
+        <text name="rms_spec_maintenance_level" text="Entretien %s"/>
         <text name="rms_spec_last_maintenance_until_format" text="%s jusqu'à %s"/>
         <text name="rms_spec_workshop_dealer" text="Concessionnaire"/>
         <text name="rms_spec_workshop_own" text="Personnel"/>
@@ -263,6 +264,7 @@
         <text name="rms_spec_system_chassis" text="Châssis"/>
         <text name="rms_spec_system_fuel" text="Système de carburant"/>
         <text name="rms_spec_system_pto" text="Prise de force"/>
+        <text name="rms_spec_system_harvest" text="Récolte"/>
         <text name="rms_spec_system_electric_motor" text="Moteur électrique"/>
         <text name="rms_spec_system_traction_battery" text="Batterie de traction"/>
         <text name="rms_spec_state_ready" text="Prêt"/>
@@ -274,6 +276,7 @@
         <text name="rms_spec_state_maintenance" text="Entretien"/>
         <text name="rms_spec_state_overhaul" text="Révision"/>
         <text name="rms_spec_state_bodywork" text="Peinture"/>
+        <text name="rms_spec_state_remap" text="Reprogrammation moteur"/>
         <text name="rms_spec_state_overdue" text="En retard"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
         <text name="rms_spec_state_broken" text="En panne"/>
@@ -310,9 +313,9 @@
         <text name="rms_option_menu_lease_service_text" text="Compris dans la location"/>
         <text name="rms_option_menu_duration_text" text="Durée"/>
         <text name="rms_option_menu_duration_instant" text="Instantané"/>
-        <text name="rms_option_menu_finish_time_text" text="Heure de fin"/>
         <text name="rms_option_menu_start_text" text="Démarrer"/>
         <text name="rms_service_months" text="%s mois"/>
+        <text name="rms_service_either" text="%s ou %s"/>
         <text name="rms_service_month" text="%s mois"/>
         <text name="rms_service_calendar_due" text="Échéance calendaire atteinte"/>
         <text name="rms_service_program_estimated" text="Programme estimé"/>
@@ -387,8 +390,10 @@
         <text name="rms_warranty_lease" text="Réparation non couverte en location"/>
         <text name="rms_warranty_expired" text="Garantie terminée"/>
         <text name="rms_warranty_overdue" text="Refus : entretien en retard"/>
+        <text name="rms_warranty_impact" text="Refus : dégâts de choc"/>
         <text name="rms_warranty_options" text="Remplacement en pièces d'origine requis"/>
         <text name="rms_warranty_mobile" text="À payer : supplément de main-d'œuvre"/>
+        <text name="rms_warranty_remapped" text="Garantie perdue : moteur reprogrammé"/>
         <text name="rms_ws_overhaul_row_systems" text="Systèmes traités"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Remis en état"/>
         <text name="rms_ws_overhaul_systems_one" text="Un au choix"/>
@@ -442,8 +447,42 @@
         <text name="rms_bodywork_no_wear" text="Aucun dégât de peinture à corriger"/>
         <text name="rms_bodywork_wear_limit" text="Retouches possibles jusqu'à 30 % de dégâts de peinture"/>
         <text name="rms_bodywork_no_colors" text="Ce véhicule ne propose aucune couleur sélectionnable. Ses couleurs actuelles sont conservées."/>
-        <text name="rms_bodywork_unavailable_title" text="Intervention indisponible"/>
         <text name="rms_bodywork_dealer_only" text="La peinture complète se fait chez le concessionnaire"/>
+        <text name="rms_remap_option" text="Reprogrammation"/>
+        <text name="rms_remap_restore" text="Retour à l&apos;origine"/>
+        <text name="rms_remap_max_power" text="Puissance maximale"/>
+        <text name="rms_remap_max_torque" text="Couple maximal"/>
+        <text name="rms_remap_gain" text="Gain"/>
+        <text name="rms_remap_gain_format" text="+%d %%"/>
+        <text name="rms_remap_stock_format" text="Origine %s"/>
+        <text name="rms_remap_today_format" text="Aujourd&apos;hui %s"/>
+        <text name="rms_remap_torque_format" text="%s Nm"/>
+        <text name="rms_remap_free_restore" text="Retour gratuit"/>
+        <text name="rms_remap_until_format" text="Jusqu&apos;en %s"/>
+        <text name="rms_remap_then_format" text="%s ensuite"/>
+        <text name="rms_remap_curves_announced" text="Courbes annoncées par le préparateur"/>
+        <text name="rms_remap_curves_measured" text="Relevé au banc du préparateur, avant et après"/>
+        <text name="rms_remap_legend_remapped" text="Reprogrammé"/>
+        <text name="rms_remap_legend_stock" text="Origine"/>
+        <text name="rms_remap_legend_power" text="Puissance"/>
+        <text name="rms_remap_legend_torque" text="Couple"/>
+        <text name="rms_remap_note_fuel" text="La puissance en plus se paie en gazole et en chaleur"/>
+        <text name="rms_remap_note_stock_kept" text="Logiciel d&apos;origine gardé par le préparateur"/>
+        <text name="rms_remap_note_overload" text="Au-delà du plus gros moteur de la gamme : usure à pleine charge"/>
+        <text name="rms_remap_note_restored" text="Le moteur retrouve ses courbes d&apos;origine"/>
+        <text name="rms_remap_note_same_fuel" text="Même gazole pour chaque ch fourni"/>
+        <text name="rms_remap_warranty_lost" text="Perdue"/>
+        <text name="rms_remap_warranty_lost_detail" text="Définitivement, même après un retour à l&apos;origine"/>
+        <text name="rms_remap_warranty_not_back" text="Elle ne revient pas avec le logiciel d&apos;origine"/>
+        <text name="rms_remap_free" text="Gratuit"/>
+        <text name="rms_remap_unavailable" text="Reprogrammation indisponible"/>
+        <text name="rms_remap_refusal_dealer" text="Le concessionnaire ne reprogramme pas les moteurs."/>
+        <text name="rms_remap_refusal_farm_mobile_hint" text="Un préparateur vient à la ferme : passez par l'atelier de la ferme ou l'atelier mobile."/>
+        <text name="rms_remap_refusal_leased" text="Une machine louée ne se reprogramme pas."/>
+        <text name="rms_remap_refusal_not_eligible" text="Ce moteur n&apos;a pas de calculateur à reprogrammer."/>
+        <text name="rms_remap_confirm_title" text="Reprogrammer le moteur ?"/>
+        <text name="rms_remap_confirm_format" text="Le %s sera immobilisé %s."/>
+        <text name="rms_remap_confirm_warranty" text="La garantie sera perdue définitivement, même après un retour à l&apos;origine."/>
         <!-- Inspection Report -->
         <text name="rms_report_header_title" text="Rapport d'inspection"/>
         <text name="rms_report_vehicle_specs_title" text="Caractéristiques du véhicule"/>
@@ -463,7 +502,6 @@
         <text name="rms_report_worn_part_replace" text="%s · Remplacement : réparation approfondie ou révision"/>
         <text name="rms_report_overall_assessment_title" text="Évaluation générale de l'état"/>
         <text name="rms_report_overall_assessment_condition" text="Niveau d'état"/>
-        <text name="rms_report_overall_assessment_service" text="Niveau d'entretien"/>
         <text name="rms_report_recommendations_title" text="Conclusion et recommandations"/>
         <text name="rms_report_recommendation_repair_active_breakdowns" text="Des pannes actives ont été détectées. Une réparation standard de toutes ces pannes est recommandée."/>
         <text name="rms_report_recommendation_repeat_maintenance" text="Consommables défectueux détectés. Répétez l'entretien pour les remplacer."/>
@@ -510,6 +548,12 @@
         <text name="rms_report_wear_battery_heat" text="Batterie en surchauffe"/>
         <text name="rms_report_wear_lubrication" text="Graissage en retard"/>
         <text name="rms_report_wear_pto_overload" text="PDF en surcharge"/>
+        <text name="rms_report_wear_harvest_overload" text="Récolte en surcharge"/>
+        <text name="rms_report_wear_harvest_flow" text="Fort débit de grain"/>
+        <text name="rms_report_wear_harvest_straw" text="Broyeur surchargé"/>
+        <text name="rms_report_wear_harvest_stones" text="Pierres"/>
+        <text name="rms_report_wear_harvest_rice" text="Récolte du riz"/>
+        <text name="rms_report_wear_harvest_wet" text="Récolte humide"/>
         <text name="rms_report_component_title" text="Composant"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Puissance actuelle"/>
@@ -525,15 +569,26 @@
         <text name="rms_report_transmission_cvt_slipping" text="Transmission inefficace"/>
         <text name="rms_report_transmission_cvt_ratio_limited" text="Rapport réduit"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Transmission irrégulière"/>
-        <text name="rms_report_transmission_thermostat_degraded" text="Thermostat dégradé"/>
         <text name="rms_report_transmission_failed" text="Défaillante"/>
         <!-- Tools and Inspection -->
         <text name="rms_grease_gun_name" text="Pistolet à graisse"/>
         <text name="rms_grease_gun_no_vehicle" text="Aucun véhicule à portée de graissage"/>
-        <text name="rms_grease_gun_function" text="Utilisé pour graisser les points de graissage de la machine"/>
+        <text name="rms_grease_gun_function" text="Graisse les graisseurs des machines. Se charge avec une cartouche de graisse."/>
         <text name="rms_grease_gun_action" text="Graisser"/>
         <text name="rms_grease_gun_already_lubricated" text="%s : graissage déjà effectué"/>
         <text name="rms_grease_gun_lubrication_not_require" text="%s ne nécessite pas de graissage"/>
+        <text name="rms_grease_gun_load" text="Recharger"/>
+        <text name="rms_grease_gun_empty" text="Pistolet vide : chargez une cartouche"/>
+        <text name="rms_grease_gun_not_empty" text="Le pistolet contient encore de la graisse"/>
+        <text name="rms_grease_gun_points" text="Graisseurs à faire : %d"/>
+        <text name="rms_grease_cartridge_typedesc" text="Cartouche de graisse"/>
+        <text name="rms_grease_cartridge_function" text="Recharge le pistolet à graisse : pistolet en main, placez-vous devant la cartouche."/>
+        <text name="rms_grease_cartridge_count" text="Cartouches"/>
+        <text name="rms_grease_quantity" text="Quantité"/>
+        <text name="rms_grease_hud_title" text="Graissage"/>
+        <text name="rms_grease_hud_done" text="À jour"/>
+        <text name="rms_grease_hud_greased" text="Graissés"/>
+        <text name="rms_unit_milliliterShort" text="ml"/>
         <text name="rms_air_blower_name" text="Souffleur d'air comprimé"/>
         <text name="rms_air_blower_no_vehicle" text="Aucun véhicule à portée de nettoyage"/>
         <text name="rms_air_blower_function" text="Utilisé pour nettoyer les radiateurs et les filtres à air"/>
@@ -631,27 +686,22 @@
         <text name="rms_inspection_service_overdue" text="%s dépassée de %s"/>
         <text name="rms_inspection_status_slightly_low" text="Légèrement bas"/>
         <text name="rms_inspection_status_slightly_dirty" text="Légèrement encrassé"/>
-        <text name="rms_inspection_status_slightly_dry" text="Légèrement sec"/>
+        <text name="rms_inspection_status_grease_due" text="À graisser"/>
         <text name="rms_inspection_status_slight_moisture" text="Légère humidité"/>
         <text name="rms_inspection_status_seepage" text="Suintement"/>
         <text name="rms_inspection_status_severe_leak" text="Fuite importante"/>
         <text name="rms_inspection_status_low" text="Bas"/>
         <text name="rms_inspection_status_very_low" text="Très bas"/>
-        <text name="rms_inspection_status_very_dry" text="Très sec"/>
         <text name="rms_inspection_status_critically_low" text="Appoint urgent"/>
         <text name="rms_inspection_status_critically_clogged" text="Totalement colmaté"/>
-        <text name="rms_inspection_status_critically_dry" text="Métal contre métal"/>
         <text name="rms_inspection_status_dirty" text="Encrassé"/>
-        <text name="rms_inspection_status_dry" text="Sec"/>
+        <text name="rms_inspection_status_grease_late" text="En retard"/>
         <text name="rms_inspection_status_active_leak" text="Fuite active"/>
         <text name="rms_inspection_status_heavily_clogged" text="Fortement encrassé"/>
         <text name="rms_inspection_status_not_required" text="Non requis"/>
         <text name="rms_inspection_status_change_overdue" text="Vidange dépassée"/>
         <text name="rms_inspection_status_change_long_overdue" text="Vidange très dépassée"/>
         <text name="rms_inspection_status_replacement_due" text="À remplacer"/>
-        <text name="rms_inspection_engine_oil" text="Huile moteur"/>
-        <text name="rms_inspection_coolant" text="Liquide de refroidissement"/>
-        <text name="rms_inspection_hydraulic_fluid" text="Huile hydraulique"/>
         <text name="rms_inspection_hint_coolant_leak_stage1" text="De légères traces de liquide de refroidissement sont visibles près des raccords du système de refroidissement."/>
         <text name="rms_inspection_hint_coolant_leak_stage2" text="Des résidus de liquide de refroidissement sont visibles et le niveau est inférieur à la normale."/>
         <text name="rms_inspection_hint_coolant_leak_stage3" text="Une perte notable de liquide de refroidissement est visible autour du système de refroidissement."/>
@@ -691,10 +741,7 @@
         <text name="rms_inspection_hint_unidentified" text="Symptôme d'une panne non identifiée : l'atelier l'identifie par une inspection ou un entretien."/>
         <text name="rms_inspection_hint_alternator_stage3" text="Des traces de surchauffe et un assombrissement de certains raccordements sont visibles près de l'alternateur."/>
         <text name="rms_inspection_hint_alternator_stage4" text="Des traces prononcées de surchauffe et des connecteurs assombris sont visibles près de l'alternateur et de son câblage."/>
-        <text name="rms_inspection_hint_lubrication_stage1" text="Les points de graissage paraissent légèrement secs."/>
-        <text name="rms_inspection_hint_lubrication_stage2" text="Les points de graissage paraissent secs, la graisse est insuffisante."/>
-        <text name="rms_inspection_hint_lubrication_stage3" text="Les points de graissage sont très secs, avec peu de graisse visible."/>
-        <text name="rms_inspection_hint_lubrication_stage4" text="Les points de graissage travaillent métal contre métal, avec presque aucune graisse visible."/>
+        <text name="rms_inspection_hint_grease_due" text="Graisseurs à graisser : %d."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage1" text="De légères traces d'huile sont visibles autour du carter de transmission."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage2" text="Des gouttes d'huile sont visibles sous la transmission."/>
         <text name="rms_inspection_hint_transmission_oil_leak_stage3" text="Une perte d'huile notable est visible autour de la transmission."/>
@@ -752,6 +799,22 @@
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues des articulations du chargeur."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage3" text="L'inspection relève un jeu important aux axes et bagues des articulations du chargeur."/>
         <text name="rms_inspection_hint_loader_pivot_pin_wear_stage4" text="L'inspection relève un jeu très important aux axes et bagues des articulations du chargeur."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage1" text="L'inspection relève un début d'usure des axes et bagues du mât."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues du mât."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage3" text="L'inspection relève un jeu important aux axes et bagues du mât."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_mast_stage4" text="L'inspection relève un jeu très important aux axes et bagues du mât."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage1" text="L'inspection relève un début d'usure des axes et bagues de la flèche."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues de la flèche."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage3" text="L'inspection relève un jeu important aux axes et bagues de la flèche."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_boom_stage4" text="L'inspection relève un jeu très important aux axes et bagues de la flèche."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage1" text="L'inspection relève un début d'usure des axes et bagues du bras de désilage."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues du bras de désilage."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage3" text="L'inspection relève un jeu important aux axes et bagues du bras de désilage."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_arm_stage4" text="L'inspection relève un jeu très important aux axes et bagues du bras de désilage."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage1" text="L'inspection relève un début d'usure des axes et bagues du bras porte-lame."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage2" text="L'inspection relève un jeu perceptible aux axes et bagues du bras porte-lame."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage3" text="L'inspection relève un jeu important aux axes et bagues du bras porte-lame."/>
+        <text name="rms_inspection_hint_loader_pivot_pin_wear_blade_stage4" text="L'inspection relève un jeu très important aux axes et bagues du bras porte-lame."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage1" text="Un amortisseur de cabine présente une légère humidité."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage2" text="Un amortisseur de cabine présente un suintement."/>
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage3" text="Un amortisseur de cabine présente une fuite active."/>
@@ -764,10 +827,8 @@
         <text name="rms_inspection_hint_service_transmission" text="La vidange de transmission est dépassée : l'huile usée accélère l'usure de tout ce qu'elle lubrifie. La révision recommandée à l'atelier la fait avec son filtre."/>
         <text name="rms_inspection_hint_service_hydraulic" text="La vidange hydraulique est dépassée : l'huile usée accélère l'usure du circuit hydraulique. La révision recommandée à l'atelier la fait avec son filtre."/>
         <text name="rms_inspection_hint_service_coolant" text="Le liquide de refroidissement est à changer : usé, il accélère l'usure du circuit de refroidissement. La révision recommandée à l'atelier le remplace."/>
-        <text name="rms_inspection_transmission_oil" text="Huile de transmission"/>
         <text name="rms_inspection_radiator" text="Radiateur"/>
         <text name="rms_inspection_air_filter" text="Filtre à air"/>
-        <text name="rms_inspection_lubrication_level" text="Niveau de graissage"/>
         <text name="rms_inspection_no_suspicious_symptoms" text="Aucun symptôme suspect détecté"/>
         <text name="rms_inspection_ok" text="OK"/>
         <!-- In-Game Menu -->
@@ -810,6 +871,32 @@
         <text name="rms_fleet_part_unmeasured" text="Pas de relevé"/>
         <text name="rms_fleet_parts_reading" text="Pièces relevées %s"/>
         <text name="rms_fleet_parts_need_complete" text="Pièces relevées à la prochaine inspection complète"/>
+        <text name="rms_fleet_greasing_done" text="Graissage à jour"/>
+        <text name="rms_fleet_greasing_period_days" text="Tous les %d jours travaillés"/>
+        <text name="rms_fleet_greasing_period_day" text="Chaque jour travaillé"/>
+        <text name="rms_fleet_greasing_period_month" text="Chaque mois"/>
+        <text name="rms_fleet_greasing_period_months" text="Tous les %d mois"/>
+        <text name="rms_fleet_greasing_period_bales" text="Toutes les %d balles"/>
+        <text name="rms_fleet_greasing_bales" text="%d balles"/>
+        <text name="rms_fleet_greasing_day" text="%d jour"/>
+        <text name="rms_fleet_greasing_days" text="%d jours"/>
+        <text name="rms_fleet_day_late" text="%d jour de retard"/>
+        <text name="rms_fleet_days_late" text="%d jours de retard"/>
+        <text name="rms_fleet_greasing_to_do" text="%d à faire"/>
+        <text name="rms_fleet_greasing_points" text="Graisseurs"/>
+        <text name="rms_fleet_greasing_most_frequent" text="Le plus fréquent"/>
+        <text name="rms_fleet_greasing_next" text="Prochain graissage"/>
+        <text name="rms_fleet_greasing_now" text="Maintenant"/>
+        <text name="rms_fleet_greasing_in" text="dans %s"/>
+        <text name="rms_fleet_months_late" text="%d mois de retard"/>
+        <text name="rms_fleet_bales_late" text="%d balles de retard"/>
+        <text name="rms_fleet_wear" text="Usure"/>
+        <text name="rms_fleet_wear_faster" text="Plus vite"/>
+        <text name="rms_fleet_wear_normal" text="Usure normale"/>
+        <text name="rms_fleet_wear_late" text="Retard de graissage"/>
+        <text name="rms_fleet_wear_repair_greases" text="Graissé à la réparation"/>
+        <text name="rms_fleet_wear_repair" text="Réparation à l'atelier"/>
+        <text name="rms_fleet_wear_none" text="Aucun"/>
         <!-- Sell Dialog -->
         <text name="rms_sell_dialog_title" text="Restitution du véhicule"/>
         <text name="rms_sell_dialog_section_vehicle" text="Véhicule"/>
@@ -839,7 +926,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Refroidissement et filtre à air"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Le radiateur ou le filtre à air est encrassé. Maintenez la touche %s en regardant le véhicule pour savoir lequel. Utilisez le souffleur d'air comprimé pour le nettoyer. Si le filtre ne peut plus être nettoyé, l'atelier le remplace à partir de la révision %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Graissage nécessaire"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Votre %s a besoin d'un graissage régulier.&#10;&#10;Dans RMS, le niveau de graissage baisse avec les heures de fonctionnement. Après une longue période sans utilisation, un graissage est également nécessaire avant la remise en service. Un graissage insuffisant accélère l'usure du châssis.&#10;&#10;Achetez un pistolet à graisse dans le magasin et graissez la machine lorsque l'inspection le demande.&#10;&#10;Vous pouvez vérifier le niveau de graissage : maintenez la touche %s en regardant le véhicule."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Votre %s a des graisseurs à graisser.&#10;&#10;Dans RMS, chaque machine a les graisseurs de sa notice. Ils reviennent à graisser au fil des jours où la machine travaille : chaque jour de travail, ou tous les quelques jours de travail pour ceux que la notice graisse moins souvent. Une machine graissée en retard use son châssis plus vite.&#10;&#10;Achetez un pistolet à graisse et des cartouches au magasin. Pistolet en main, placez-vous devant une cartouche pour la charger, puis visez la machine : chaque clic graisse un graisseur, et garder le clic enfoncé enchaîne les graisseurs.&#10;&#10;Pour voir les graisseurs à faire, maintenez la touche %s en regardant le véhicule."/>
         <text name="rms_tutorial_needs_repair_title" text="Panne détectée"/>
         <text name="rms_tutorial_needs_repair_message" text="Votre %s présente un problème. Une de ses pièces a peut-être lâché.&#10;&#10;Passez à l'atelier : une inspection, ou l'entretien s'il est dû, identifie la panne. Ne tardez pas : la panne peut continuer à s'aggraver et le coût de la réparation augmente avec elle.&#10;&#10;Une fois la panne identifiée, faites-la réparer à l'atelier."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Révision nécessaire"/>
@@ -870,7 +957,7 @@
         <text name="rms_tutorial_heavy_trailer_title" text="Remorque trop lourde"/>
         <text name="rms_tutorial_heavy_trailer_message" text="La charge tractée semble trop lourde pour ce véhicule. Vous pouvez continuer à rouler, mais la transmission et la chaîne cinématique subiront davantage de contraintes.&#10;&#10;RMS utilise deux repères : un tracteur nécessite au moins 10 ch par tonne de masse tractée, tandis qu'un camion nécessite au moins 6 ch par tonne de poids total roulant. Sous la valeur applicable et à forte charge moteur, l'usure de la transmission augmente."/>
         <text name="rms_tutorial_hard_start_title" text="Démarrage difficile"/>
-        <text name="rms_tutorial_hard_start_message" text="Le moteur de votre %s démarre difficilement. Une batterie faible, le gel, une panne mécanique ou l'usure du démarreur peuvent en être la cause. Maintenez le bouton de démarrage enfoncé jusqu'au lancement.&#10;&#10;Le système électrique subit de fortes charges au démarrage, à cause des courants d'appel élevés."/>
+        <text name="rms_tutorial_hard_start_message" text="Le moteur de votre %s démarre difficilement. Une batterie faible, le gel, une panne mécanique ou l'usure du démarreur peuvent en être la cause.&#10;&#10;Le système électrique subit de fortes charges au démarrage, à cause des courants d'appel élevés."/>
         <text name="rms_tutorial_low_fuel_title" text="Réserve de carburant"/>
         <text name="rms_tutorial_low_fuel_message" text="Le réservoir approche de la réserve. Moins il reste de carburant, plus la pompe à carburant doit forcer pour l'aspirer, et le fond du réservoir envoie son eau et ses dépôts au filtre, qui s'encrasse plus vite.&#10;&#10;Mieux vaut faire le plein en fin de journée : un réservoir plein prend moins de condensation."/>
         <text name="rms_tutorial_lugging_title" text="Moteur en sous-régime"/>
@@ -982,7 +1069,6 @@
         <text name="rms_diagnostic_spn_102" text="Pression de suralimentation"/>
         <text name="rms_diagnostic_spn_100" text="Pression d'huile moteur"/>
         <text name="rms_diagnostic_spn_101" text="Pression des gaz du carter moteur"/>
-        <text name="rms_diagnostic_spn_1322" text="Ratés de combustion sur plusieurs cylindres"/>
         <text name="rms_diagnostic_spn_cylinder" text="Raté de combustion du cylindre %d"/>
         <text name="rms_diagnostic_spn_94" text="Pression d'alimentation en carburant"/>
         <text name="rms_diagnostic_spn_110" text="Température du liquide de refroidissement"/>
@@ -1076,7 +1162,6 @@
         <text name="rms_charger_disconnected" text="Chargeur débranché."/>
         <text name="rms_charger_stopped_motor" text="Recharge coupée : démarrage"/>
         <text name="rms_charger_error_player_distance" text="Approchez-vous du chargeur à pied."/>
-        <text name="rms_charger_mode_select" text="Brancher le chargeur"/>
         <text name="rms_charger_mode_start" text="Aide au démarrage"/>
         <text name="rms_charger_start_ready" text="START prêt"/>
         <text name="rms_charger_start_active" text="Aide au démarrage en cours"/>

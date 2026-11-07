@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 RMS_ServiceRequestEvent = {}
 local RMS_ServiceRequestEvent_mt = Class(RMS_ServiceRequestEvent, Event)
@@ -8,20 +7,12 @@ InitEventClass(RMS_ServiceRequestEvent, "RMS_ServiceRequestEvent")
 
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_ServiceRequestEvent.emptyNew()
     return Event.new(RMS_ServiceRequestEvent_mt)
 end
 
 
 ---Create new instance of event
--- @param table vehicle vehicle
--- @param string serviceType service status constant
--- @param string? workshopType workshop the service runs at
--- @param string? optionOne first service option
--- @param string? optionTwo second service option
--- @param boolean? optionThree third service option
--- @return table self instance of class event
 function RMS_ServiceRequestEvent.new(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
     local self = RMS_ServiceRequestEvent.emptyNew()
     self.vehicle = vehicle
@@ -35,8 +26,6 @@ end
 
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_ServiceRequestEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
     streamWriteString(streamId, self.serviceType or "")
@@ -48,8 +37,6 @@ end
 
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_ServiceRequestEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
     self.serviceType = streamReadString(streamId)
@@ -68,7 +55,6 @@ end
 
 
 ---Run action on receiving side
--- @param Connection connection connection
 function RMS_ServiceRequestEvent:run(connection)
     if not connection:getIsServer() then
         if self.vehicle ~= nil and self.vehicle:getIsSynchronized() and self.vehicle.spec_RealisticMechanicalSystems ~= nil then
@@ -89,7 +75,8 @@ function RMS_ServiceRequestEvent:run(connection)
                 [RealisticMechanicalSystems.STATUS.REPAIR] = true,
                 [RealisticMechanicalSystems.STATUS.REFILL] = true,
                 [RealisticMechanicalSystems.STATUS.OVERHAUL] = true,
-                [RealisticMechanicalSystems.STATUS.BODYWORK] = true
+                [RealisticMechanicalSystems.STATUS.BODYWORK] = true,
+                [RealisticMechanicalSystems.STATUS.REMAP] = true
             }
             if not validTypes[self.serviceType] then
                 return
@@ -120,12 +107,6 @@ end
 
 
 ---Send the service request from a client to the server
--- @param table vehicle vehicle
--- @param string serviceType service status constant
--- @param string? workshopType workshop the service runs at
--- @param string? optionOne first service option
--- @param string? optionTwo second service option
--- @param boolean? optionThree third service option
 function RMS_ServiceRequestEvent.send(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_ServiceRequestEvent.new(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree))

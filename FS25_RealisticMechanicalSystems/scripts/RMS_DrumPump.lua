@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Battery drum pump carried in hand, set on the bung of a drum
 RMS_DrumPump = {}
@@ -14,19 +13,16 @@ RMS_DrumPump.mounted = {}
 
 source(modDirectory .. "events/RMS_DrumPumpEvent.lua")
 
----
 function RMS_DrumPump.prerequisitesPresent(specializations)
     return true
 end
 
----
 function RMS_DrumPump.registerEventListeners(handToolType)
     for _, name in ipairs({ "onLoad", "onUpdate", "onDraw", "onHeldStart", "onHeldEnd", "onRegisterActionEvents" }) do
         SpecializationUtil.registerEventListener(handToolType, name, RMS_DrumPump)
     end
 end
 
----Tells whether a player stands within reach of a container
 local function getIsInReach(player, container)
     local x, y, z = getWorldTranslation(player.rootNode)
     local cx, cy, cz = getWorldTranslation(container.rootNode)
@@ -34,13 +30,10 @@ local function getIsInReach(player, container)
 end
 
 ---Sets the pump a player carries on the bung of a drum, on the server
--- @param table player player carrying the pump
--- @param table handTool pump in hand
--- @param table container drum aimed at
 function RMS_DrumPump.mount(player, handTool, container)
     local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     if containerSpec == nil or containerSpec.pump == nil or containerSpec.hasPump or handTool[specName] == nil
-        or handTool:getCarryingPlayer() ~= player or container:getOwnerFarmId() ~= player.farmId
+        or handTool:getCarryingPlayer() ~= player or not g_currentMission.accessHandler:canPlayerAccess(container, player)
         or not getIsInReach(player, container) then
         return
     end
@@ -66,12 +59,10 @@ function RMS_DrumPump.update()
 end
 
 ---Takes the pump off a drum into the hand of a player, on the server
--- @param table player player taking it
--- @param table container drum aimed at
 function RMS_DrumPump.unmount(player, container)
     local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     if containerSpec == nil or not containerSpec.hasPump or containerSpec.carrierTool ~= nil or containerSpec.isBeingTaken
-        or container:getOwnerFarmId() ~= player.farmId or player:getIsHoldingHandTool()
+        or not g_currentMission.accessHandler:canPlayerAccess(container, player) or player:getIsHoldingHandTool()
         or not getIsInReach(player, container) then
         return
     end
@@ -104,7 +95,6 @@ function RMS_DrumPump.onUnmounted(_, handTool, loadingState, arguments)
     container:setRMSFluidPump(false)
 end
 
----
 function RMS_DrumPump:onLoad(xmlFile, baseDirectory)
     local spec = self[specName]
     if spec == nil then
@@ -118,14 +108,13 @@ function RMS_DrumPump:onLoad(xmlFile, baseDirectory)
     end
 end
 
----Finds the drum without a pump the player aims at
 local function updateTarget(handTool, player)
     local spec = handTool[specName]
     local node = player.targeter:getClosestTargetedNodeFromType(RMS_DrumPump)
     local container = node ~= nil and g_currentMission:getNodeObject(node) or nil
     local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
     if containerSpec == nil or containerSpec.pump == nil or containerSpec.hasPump
-        or container:getOwnerFarmId() ~= g_currentMission:getFarmId() then
+        or not g_currentMission.accessHandler:canPlayerAccess(container) then
         container = nil
     end
 
@@ -133,7 +122,6 @@ local function updateTarget(handTool, player)
     g_inputBinding:setActionEventActive(spec.mountEventId, container ~= nil)
 end
 
----
 function RMS_DrumPump:onUpdate(dt)
     local spec = self[specName]
     local player = self:getCarryingPlayer()
@@ -156,7 +144,6 @@ function RMS_DrumPump:onDraw()
     end
 end
 
----
 function RMS_DrumPump:onRegisterActionEvents()
     if not self:getIsActiveForInput(true) then
         return
@@ -184,7 +171,6 @@ function RMS_DrumPump:onHeldStart()
     end
 end
 
----
 function RMS_DrumPump:onHeldEnd()
     local player = self:getCarryingPlayer()
     if player ~= nil and player.isOwner then

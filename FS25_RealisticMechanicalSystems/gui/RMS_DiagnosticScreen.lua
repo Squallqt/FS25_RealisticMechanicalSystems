@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Vehicle diagnostic screen.
 RMS_DiagnosticScreen = {}
@@ -7,10 +6,10 @@ RMS_DiagnosticScreen.INSTANCE = nil
 RMS_DiagnosticScreen.PAGE = { CONNECTION = 1, SCAN = 2 }
 
 local RMS_DiagnosticScreen_mt = Class(RMS_DiagnosticScreen, MessageDialog)
-local modDirectory = g_currentModDirectory
 local PAGE = RMS_DiagnosticScreen.PAGE
 
 local REFRESH_MS = 250
+local DETAIL_FIELDS = 6
 local COLOR = {
     TEXT = { 0.0452, 0.0452, 0.0452, 1 },
     GREY = { 0.2346, 0.2346, 0.1981, 1 },
@@ -21,8 +20,6 @@ local MACHINE_STATE_COLORS = { ok = COLOR.OK, plugged = COLOR.OK, moving = COLOR
 local shownTexts = setmetatable({}, { __mode = "k" })
 
 ---Sets a text only when it changes; every setText lays it out again
--- @param table element text element or button
--- @param string text text
 local function setText(element, text)
     if shownTexts[element] ~= text then
         shownTexts[element] = text
@@ -30,17 +27,7 @@ local function setText(element, text)
     end
 end
 
----Loads the screen layout and stores the shared instance
-function RMS_DiagnosticScreen.register()
-    local screen = RMS_DiagnosticScreen.new()
-    g_gui:loadGui(modDirectory .. "gui/RMS_DiagnosticScreen.xml", "RMS_DiagnosticScreen", screen)
-    RMS_DiagnosticScreen.INSTANCE = screen
-end
-
 ---Create instance of RMS_DiagnosticScreen
--- @param table? target target
--- @param table? customMt custom metatable
--- @return table screen instance of class RMS_DiagnosticScreen
 function RMS_DiagnosticScreen.new(target, customMt)
     local self = MessageDialog.new(target, customMt or RMS_DiagnosticScreen_mt)
     self.tool = nil
@@ -51,7 +38,6 @@ function RMS_DiagnosticScreen.new(target, customMt)
     return self
 end
 
--- @param table tool trolley
 function RMS_DiagnosticScreen.show(tool)
     local screen = RMS_DiagnosticScreen.INSTANCE
     screen.tool = tool
@@ -128,7 +114,6 @@ local function getScanRows(tool, target, controllers)
     return rows, answered, #controllers
 end
 
----Returns a key identifying a list's rows
 local function getRowsSignature(rows)
     local parts = {}
     for _, row in ipairs(rows) do
@@ -159,7 +144,7 @@ local function getDetailFields(target, entry, isLicenceValid)
     end
     local operation = RMS_Config.MAINTENANCE.REPAIR_OPERATIONS[entry.breakdownId]
     local hours = RealisticMechanicalSystems.getRepairLabourHours(target, entry.breakdownId, RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM)
-    table.insert(fields, { g_i18n:getText("rms_diagnostic_part_label"), g_i18n:getText(definition.part) })
+    table.insert(fields, { g_i18n:getText("rms_diagnostic_part_label"), g_i18n:getText(RMS_Utils.getBreakdownPartKey(target, definition)) })
     table.insert(fields, { g_i18n:getText("rms_diagnostic_repair_time_label"), RMS_Utils.formatDuration(hours) })
     table.insert(fields, { g_i18n:getText("rms_diagnostic_where_label"),
         g_i18n:getText(operation.category == "highVoltage" and "rms_diagnostic_where_high_voltage" or "rms_diagnostic_where_diagnostic") })
@@ -183,13 +168,12 @@ function RMS_DiagnosticScreen:updateDetail()
         or g_i18n:getText("rms_diagnostic_uncoded_title"))
     setText(self.detailText, getCodeText(entry))
     local fields, note = getDetailFields(target, entry, RMS_DiagnosticTool.getIsLicenceValid(self.tool))
-    for fieldIndex = 1, #self.detailLabel do
+    for fieldIndex, row in ipairs(self.detailFields) do
         local field = fields[fieldIndex]
-        self.detailLabel[fieldIndex]:setVisible(field ~= nil)
-        self.detailValue[fieldIndex]:setVisible(field ~= nil)
+        row:setVisible(field ~= nil)
         if field ~= nil then
-            setText(self.detailLabel[fieldIndex], field[1])
-            setText(self.detailValue[fieldIndex], field[2])
+            setText(row:getDescendantByName("label"), field[1])
+            setText(row:getDescendantByName("value"), field[2])
         end
     end
     self.detailNoteLine:setVisible(note ~= nil)
@@ -452,6 +436,7 @@ function RMS_DiagnosticScreen:onCreate()
     self.machineList:setDelegate(self)
     self.codeList:setDataSource(self)
     self.codeList:setDelegate(self)
+    self.detailFields = RMS_Utils.cloneTemplate(self.detailFieldTemplate, DETAIL_FIELDS)
 end
 
 ---Fills the screen from the trolley and focuses its first control

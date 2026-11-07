@@ -1,9 +1,7 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Segmented progress ring
 RMS_ProgressRing = {}
-RMS_ProgressRing.modDirectory = g_currentModDirectory
 -- centre line radius, share of the ring box
 RMS_ProgressRing.RADIUS = 107 / 256
 RMS_ProgressRing.SEGMENTS = 100
@@ -11,21 +9,12 @@ RMS_ProgressRing.SEGMENTS = 100
 RMS_ProgressRing.SEGMENT_WIDTH = 36 / 1024
 RMS_ProgressRing.SEGMENT_HEIGHT = 82 / 1024
 
----
-function RMS_ProgressRing.register()
-    g_overlayManager:addTextureConfigFile(RMS_ProgressRing.modDirectory .. "hud/rms_progressRing.xml", "rms_ProgressRing")
+---Creates the segment and disc overlays from the loaded atlas
+function RMS_ProgressRing.createOverlays()
     RMS_ProgressRing.segment = g_overlayManager:createOverlay("rms_ProgressRing.segment", 0, 0, 0, 0)
     RMS_ProgressRing.disc = g_overlayManager:createOverlay("rms_ProgressRing.disc", 0, 0, 0, 0)
 end
 
----
--- @param float centerX horizontal center in screen space
--- @param float centerY vertical center in screen space
--- @param float width ring width in screen space
--- @param float height ring height in screen space
--- @param float ratio progress between 0 and 1
--- @param table arcColor colour of the filled segments
--- @param table trackColor colour of the other segments, alpha optional
 function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, arcColor, trackColor)
     local overlay = RMS_ProgressRing.segment
     local segmentWidth, segmentHeight = width * RMS_ProgressRing.SEGMENT_WIDTH, height * RMS_ProgressRing.SEGMENT_HEIGHT
@@ -43,4 +32,12 @@ function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, arcColo
         overlay:setRotation(-angle, segmentWidth * 0.5, segmentHeight * 0.5)
         overlay:render()
     end
+end
+
+---Draws a ring as high as a GUI area, centred in it
+function RMS_ProgressRing.renderInArea(area, ratio, arcColor, trackColor)
+    local height = area.absSize[2]
+    RMS_ProgressRing.render(area.absPosition[1] + area.absSize[1] * 0.5, area.absPosition[2] + height * 0.5,
+        height * g_screenHeight / g_screenWidth, height, ratio, arcColor or RMS_Utils.COLOR.HIGHLIGHT,
+        trackColor or RMS_Utils.COLOR.RING_TRACK)
 end

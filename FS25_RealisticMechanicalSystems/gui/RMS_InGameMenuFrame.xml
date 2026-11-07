@@ -31,7 +31,7 @@
             <BoxLayout profile="rms_fleetPageFlow">
                 <!-- Fleet pulse -->
                 <GuiElement profile="rms_workshopBlock" size="1473px 48px">
-                    <RoundCorner profile="rms_workshopSurfaceBand" />
+                    <RoundCorner profile="rms_inspectionSurface" />
                     <BoxLayout profile="rms_fleetPulseRow" id="pulseLayout" size="1473px 48px">
                         <Text profile="rms_fleetPulseLabel" size="0px 48px" text="$l10n_rms_fleet_overdue_label" />
                         <Text profile="rms_fleetPulseValue" id="pulseValues[1]" size="0px 48px" />
@@ -135,51 +135,44 @@
                                 <RoundCorner profile="rms_workshopSurfaceSoft" />
                                 <Bitmap profile="rms_fleetIconReliability" position="8px -15px" />
                                 <Text profile="rms_fleetTileLabel" position="40px -9px" size="130px 18px" text="$l10n_rms_ws_label_reliability" />
-                                <Text profile="rms_fleetTileValue" id="reliabilityValue" position="40px -28px" size="130px 24px" />
+                                <Text profile="rms_tileValue" id="reliabilityValue" position="40px -28px" size="130px 24px" />
                             </GuiElement>
                             <GuiElement profile="rms_workshopBlock" position="186px 0px" size="174px 58px">
                                 <RoundCorner profile="rms_workshopSurfaceSoft" />
                                 <Bitmap profile="rms_fleetIconMaintenance" position="8px -15px" />
                                 <Text profile="rms_fleetTileLabel" position="40px -9px" size="130px 18px" text="$l10n_rms_ws_label_service_access" />
-                                <Text profile="rms_fleetTileValue" id="serviceAccessValue" position="40px -28px" size="130px 24px" />
+                                <Text profile="rms_tileValue" id="serviceAccessValue" position="40px -28px" size="130px 24px" />
+                            </GuiElement>
+                        </GuiElement>
+                        <GuiElement profile="rms_workshopBlock" id="greasingTiles" position="20px -304px" size="360px 58px" visible="false">
+                            <GuiElement profile="rms_workshopBlock" size="174px 58px">
+                                <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                <Bitmap profile="rms_fleetIconLubrication" position="8px -15px" />
+                                <Text profile="rms_fleetTileLabel" position="40px -9px" size="130px 18px" text="$l10n_rms_fleet_greasing_points" />
+                                <Text profile="rms_tileValue" id="greasingPointsValue" position="40px -28px" size="130px 24px" />
+                            </GuiElement>
+                            <GuiElement profile="rms_workshopBlock" position="186px 0px" size="174px 58px">
+                                <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                <Bitmap profile="rms_fleetIconOperatingHours" position="8px -15px" />
+                                <Text profile="rms_fleetTileLabel" id="greasingIntervalLabel" position="40px -9px" size="130px 18px" />
+                                <Text profile="rms_tileValue" id="greasingIntervalValue" position="40px -28px" size="130px 24px" />
                             </GuiElement>
                         </GuiElement>
                         <GuiElement profile="rms_workshopBlock" id="reasonTile" position="20px -304px" size="360px 58px" visible="false">
                             <RoundCorner profile="rms_workshopSurfaceSoft" />
                             <Bitmap profile="rms_workshopIcon" position="10px -13px" size="32px 32px" imageSliceId="gui.storeAttribute_info" />
                             <Text profile="rms_fleetTileLabel" position="52px -9px" size="296px 18px" text="$l10n_rms_ingame_menu_header_reason" />
-                            <Text profile="rms_fleetTileValue" id="reasonValue" position="52px -28px" size="296px 24px" />
+                            <Text profile="rms_tileValue" id="reasonValue" position="52px -28px" size="296px 24px" />
                         </GuiElement>
 
                         <BoxLayout profile="rms_workshopStack" position="20px -372px" size="360px 200px" elementSpacing="8px">
-                            <GuiElement profile="rms_workshopBlock" size="360px 44px">
+                            <GuiElement profile="rms_workshopBlock" id="factRowTemplate" size="360px 44px">
                                 <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <Bitmap profile="rms_workshopIcon" position="12px -4px" imageSliceId="gui.icon_calendar" />
-                                <Text profile="rms_workshopDetail" id="factLabels[1]" position="58px -9px" size="150px 26px" textMaxNumLines="1" />
-                                <RoundCorner profile="rms_fleetPillOnRow" id="factPills[1]" position="214px -8px" size="134px 28px" />
-                                <Text profile="rms_workshopPillValue" id="factValues[1]" position="226px -8px" size="110px 28px" />
-                            </GuiElement>
-                            <GuiElement profile="rms_workshopBlock" size="360px 44px">
-                                <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <Bitmap profile="rms_workshopIcon" position="12px -4px" imageSliceId="gui.storeAttribute_operatingHours" />
-                                <Text profile="rms_workshopDetail" id="factLabels[2]" position="58px -9px" size="150px 26px" textMaxNumLines="1" />
-                                <RoundCorner profile="rms_fleetPillOnRow" id="factPills[2]" position="214px -8px" size="134px 28px" />
-                                <Text profile="rms_workshopPillValue" id="factValues[2]" position="226px -8px" size="110px 28px" />
-                            </GuiElement>
-                            <GuiElement profile="rms_workshopBlock" size="360px 44px">
-                                <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <Text profile="rms_workshopPillValue" id="odometerGlyph" position="12px -4px" size="36px 36px" text="ODO" textSize="15px" />
-                                <Bitmap profile="rms_workshopIcon" id="conditionGlyph" position="12px -4px" imageSliceId="gui.storeAttribute_condition" visible="false" />
-                                <Text profile="rms_workshopDetail" id="factLabels[3]" position="58px -9px" size="150px 26px" textMaxNumLines="1" />
-                                <RoundCorner profile="rms_fleetPillOnRow" id="factPills[3]" position="214px -8px" size="134px 28px" />
-                                <Text profile="rms_workshopPillValue" id="factValues[3]" position="226px -8px" size="110px 28px" />
-                            </GuiElement>
-                            <GuiElement profile="rms_workshopBlock" size="360px 44px">
-                                <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <Bitmap profile="rms_workshopCurrencyIcon" id="currencyIcon" position="12px -4px" />
-                                <Text profile="rms_workshopDetail" id="factLabels[4]" position="58px -9px" size="150px 26px" textMaxNumLines="1" />
-                                <RoundCorner profile="rms_fleetPillOnRow" id="factPills[4]" position="214px -8px" size="134px 28px" />
-                                <Text profile="rms_workshopPillValue" id="factValues[4]" position="226px -8px" size="110px 28px" />
+                                <Bitmap profile="rms_workshopRowIcon" name="icon" />
+                                <Text profile="rms_workshopRowBadge" name="badge" text="ODO" />
+                                <Text profile="rms_workshopRowLabel" name="label" position="58px -9px" size="150px 26px" />
+                                <RoundCorner profile="rms_workshopValuePill" name="pill" position="214px -8px" size="134px 28px" />
+                                <Text profile="rms_workshopPillValue" name="value" position="226px -8px" size="110px 28px" />
                             </GuiElement>
                         </BoxLayout>
 
@@ -192,10 +185,11 @@
                     <!-- Dossier of a tracked machine -->
                     <GuiElement profile="rms_workshopBlock" id="dossierColumn" size="669px 626px">
                         <GuiElement profile="rms_workshopBlock" size="669px 64px">
-                            <RoundCorner profile="rms_workshopSurfaceBand" />
+                            <RoundCorner profile="rms_inspectionSurface" />
                             <Bitmap profile="rms_fleetUrgencyAccent" id="bannerAccent" position="10px -12px" size="4px 40px" />
                             <Bitmap profile="rms_fleetIconMaintenance" id="bannerIcons[1]" position="24px -13px" size="38px 38px" />
                             <Bitmap profile="rms_workshopIcon" id="bannerIcons[2]" position="24px -13px" size="38px 38px" imageSliceId="gui.icon_construction_buildings" visible="false" />
+                            <Bitmap profile="rms_fleetIconLubrication" id="bannerIcons[3]" position="24px -13px" size="38px 38px" visible="false" />
                             <Text profile="rms_fleetBannerTitle" id="bannerTitle" position="76px -9px" size="331px 26px" />
                             <Text profile="rms_fleetBannerDetail" id="bannerDetail" position="76px -35px" size="331px 20px" />
                             <Button profile="rms_workshopPrimaryButton" id="logButton" position="425px -7px" size="236px 50px" textMaxWidth="212px" text="$l10n_rms_ws_label_maintenance_log" onClick="onShowMaintenanceLog">
@@ -203,58 +197,67 @@
                             </Button>
                         </GuiElement>
 
-                        <!-- Last inspection -->
                         <GuiElement profile="rms_workshopBlock" position="0px -76px" size="328px 550px">
-                            <RoundCorner profile="rms_workshopSurfaceStrong" />
-                            <GuiElement profile="rms_workshopBlock" position="20px -16px" size="288px 32px">
-                                <RoundCorner profile="rms_workshopSectionAccent" />
-                                <Text profile="rms_workshopSectionTitle" position="16px 0px" size="272px 32px" text="$l10n_rms_ws_label_condition" />
-                                <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="272px 1px" />
-                            </GuiElement>
-                            <GuiElement profile="rms_workshopBlock" id="conditionRingArea" position="72px -51px" size="184px 184px" onDraw="onDrawConditionRing" />
-                            <BoxLayout profile="rms_ringValueStack" id="conditionValueStack" position="106px -95px" size="116px 96px">
-                                <Text profile="rms_fleetRingValue" id="conditionValue" size="116px 40px" />
-                                <Text profile="rms_ringOutdated" id="conditionOutdatedText" size="116px 18px" text="$l10n_rms_ws_reading_outdated" visible="false" />
-                            </BoxLayout>
-                            <GuiElement profile="rms_workshopBlock" position="20px -242px" size="288px 224px">
-                                <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                <!-- Condition list -->
-                                <GuiElement profile="rms_workshopBlock" id="systemsLayout" position="6px -8px" size="278px 192px">
-                                    <SmoothList profile="rms_fleetStateList" id="stateList" position="0px 0px" size="268px 192px" onClick="onClickStateRow" showHighlights="true">
-                                        <ListItem profile="rms_fleetStateRow" name="system" size="268px 24px" handleFocus="true">
-                                            <Bitmap profile="rms_fleetStateBand" name="band" position="10px 0px" size="256px 24px" />
-                                            <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="256px 24px" />
-                                            <Bitmap profile="rms_fleetStateTriangle" name="triangle" position="12px -8px" />
-                                            <RoundCorner profile="rms_fleetStateDot" name="dot" position="14px -10px" size="4px 4px" />
-                                            <Text profile="rms_fleetSystemName" name="name" position="24px 0px" size="164px 24px" />
-                                            <Bitmap profile="rms_workshopGaugeTrack" name="track" position="194px -9px" size="36px 6px" />
-                                            <Bitmap profile="rms_workshopGaugeFill" name="gauge" position="194px -9px" size="36px 6px" />
-                                            <Text profile="rms_fleetSystemValue" name="value" position="236px 0px" size="26px 24px" />
-                                            <Text profile="rms_fleetSystemRating" name="rating" position="162px 0px" size="100px 24px" />
-                                        </ListItem>
-                                        <ListItem profile="rms_fleetStateRow" name="part" size="268px 24px" handleFocus="true">
-                                            <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="256px 24px" />
-                                            <Bitmap profile="rms_fleetStateGuide" position="16px 0px" size="1px 24px" />
-                                            <Text profile="rms_fleetPartName" name="name" position="30px 0px" size="200px 24px" />
-                                            <Text profile="rms_fleetPartState" name="state" position="130px 0px" size="100px 24px" />
-                                            <Text profile="rms_fleetSystemValue" name="value" position="236px 0px" size="26px 24px" />
-                                        </ListItem>
-                                    </SmoothList>
-                                    <ThreePartBitmap profile="rms_listSliderBox" position="0px 0px" size="6px 100%">
-                                        <Slider profile="fs25_listSlider" dataElementId="stateList" />
-                                    </ThreePartBitmap>
+                            <FrameReference ref="RMS_ConditionCardFrame" id="conditionCard" />
+                            <!-- Greasing of an implement -->
+                            <GuiElement profile="rms_fillParent" id="greasingCard" visible="false">
+                                <RoundCorner profile="rms_workshopSurfaceStrong" />
+                                <GuiElement profile="rms_workshopBlock" position="20px -16px" size="288px 32px">
+                                    <RoundCorner profile="rms_workshopSectionAccent" />
+                                    <Text profile="rms_workshopSectionTitle" position="16px 0px" size="272px 32px" text="$l10n_rms_grease_hud_title" />
+                                    <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="272px 1px" />
                                 </GuiElement>
-                                <RoundCorner profile="rms_fleetStateFootRule" id="stateFootRule" position="16px -201px" size="256px 1px" />
-                                <Text profile="rms_fleetStateFoot" id="stateFootText" position="12px -204px" size="264px 16px" />
-                                <Text profile="rms_workshopCenteredDetail" id="systemsEmptyText" position="12px 0px" size="264px 224px" text="$l10n_rms_ws_no_last_report_message" />
+                                <GuiElement profile="rms_workshopBlock" id="greasingRingArea" position="72px -51px" size="184px 184px" onDraw="onDrawGreasingRing" />
+                                <BoxLayout profile="rms_ringValueStack" position="106px -95px" size="116px 96px">
+                                    <Text profile="rms_ringValue" id="greasingValue" size="116px 40px" />
+                                    <Text profile="rms_ringOutdated" id="greasingState" size="116px 18px" />
+                                </BoxLayout>
+                                <BoxLayout profile="rms_workshopStack" position="20px -242px" size="288px 222px" elementSpacing="8px">
+                                    <GuiElement profile="rms_workshopBlock" id="greasingRowTemplate" size="288px 38px">
+                                        <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                        <Text profile="rms_workshopRowLabel" name="label" position="14px 0px" size="82px 38px" />
+                                        <RoundCorner profile="rms_workshopValuePill" name="pill" position="102px -5px" size="174px 28px" />
+                                        <Text profile="rms_workshopPillValue" name="value" position="114px -5px" size="150px 28px" />
+                                    </GuiElement>
+                                </BoxLayout>
+                                <GuiElement profile="rms_cardFoot" size="328px 56px">
+                                    <Text profile="rms_workshopCenteredDetail" position="20px 0px" size="288px 24px" textMaxNumLines="1" text="$l10n_rms_fleet_greasing_next" />
+                                    <RoundCorner profile="rms_workshopValuePillCentered" id="greasingFootPill" position="40px -26px" size="248px 30px" />
+                                    <Text profile="rms_workshopPillValue" id="greasingFootValue" position="52px -26px" size="224px 30px" />
+                                </GuiElement>
                             </GuiElement>
-                            <Text profile="rms_workshopCenteredDetail" position="20px -472px" size="288px 24px" textMaxNumLines="1" text="$l10n_rms_ws_label_last_check" />
-                            <RoundCorner profile="rms_fleetPillOnCard" id="lastCheckPill" position="40px -498px" size="248px 30px" />
-                            <Text profile="rms_workshopPillValue" id="lastCheckValue" position="52px -498px" size="224px 30px" />
+                        </GuiElement>
+
+                        <!-- Wear of an implement -->
+                        <GuiElement profile="rms_workshopBlock" id="wearCard" position="340px -76px" size="329px 550px" visible="false">
+                            <RoundCorner profile="rms_workshopSurfaceStrong" />
+                            <GuiElement profile="rms_workshopBlock" position="20px -16px" size="289px 32px">
+                                <RoundCorner profile="rms_workshopSectionAccent" />
+                                <Text profile="rms_workshopSectionTitle" position="16px 0px" size="273px 32px" text="$l10n_rms_fleet_wear" />
+                                <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="273px 1px" />
+                            </GuiElement>
+                            <GuiElement profile="rms_workshopBlock" id="wearRingArea" position="72px -51px" size="184px 184px" onDraw="onDrawWearRing" />
+                            <BoxLayout profile="rms_ringValueStack" position="106px -95px" size="116px 96px">
+                                <Text profile="rms_ringValue" id="wearValue" size="116px 40px" />
+                                <Text profile="rms_ringOutdated" id="wearState" size="116px 18px" />
+                            </BoxLayout>
+                            <BoxLayout profile="rms_workshopStack" position="20px -242px" size="289px 222px" elementSpacing="8px">
+                                <GuiElement profile="rms_workshopBlock" id="wearRowTemplate" size="289px 38px">
+                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
+                                    <Text profile="rms_workshopRowLabel" name="label" position="14px 0px" size="82px 38px" />
+                                    <RoundCorner profile="rms_workshopValuePill" name="pill" position="102px -5px" size="175px 28px" />
+                                    <Text profile="rms_workshopPillValue" name="value" position="114px -5px" size="151px 28px" />
+                                </GuiElement>
+                            </BoxLayout>
+                            <GuiElement profile="rms_cardFoot" size="329px 56px">
+                                <Text profile="rms_workshopCenteredDetail" position="20px 0px" size="289px 24px" textMaxNumLines="1" text="$l10n_rms_fleet_wear_repair" />
+                                <RoundCorner profile="rms_workshopValuePillCentered" id="wearFootPill" position="40px -26px" size="249px 30px" />
+                                <Text profile="rms_workshopPillValue" id="wearFootValue" position="52px -26px" size="225px 30px" />
+                            </GuiElement>
                         </GuiElement>
 
                         <!-- Next maintenance, or the running intervention -->
-                        <GuiElement profile="rms_workshopBlock" position="340px -76px" size="329px 550px">
+                        <GuiElement profile="rms_workshopBlock" id="serviceCard" position="340px -76px" size="329px 550px">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="289px 32px">
                                 <RoundCorner profile="rms_workshopSectionAccent" />
@@ -262,36 +265,20 @@
                                 <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="273px 1px" />
                             </GuiElement>
                             <GuiElement profile="rms_workshopBlock" id="serviceRingArea" position="72px -51px" size="184px 184px" onDraw="onDrawServiceRing" />
-                            <Text profile="rms_fleetRingValue" id="serviceValue" position="106px -115px" size="116px 56px" />
-                            <BoxLayout profile="rms_workshopStack" position="20px -242px" size="289px 222px" elementSpacing="10px">
-                                <GuiElement profile="rms_workshopBlock" size="289px 48px">
+                            <Text profile="rms_ringValue" id="serviceValue" position="106px -115px" size="116px 56px" />
+                            <BoxLayout profile="rms_workshopStack" position="20px -242px" size="289px 222px" elementSpacing="8px">
+                                <GuiElement profile="rms_workshopBlock" id="serviceRowTemplate" size="289px 38px">
                                     <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopDetail" id="serviceLabels[1]" position="14px 0px" size="82px 48px" textMaxNumLines="1" />
-                                    <RoundCorner profile="rms_fleetPillOnRow" id="servicePills[1]" position="102px -10px" size="175px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="serviceValues[1]" position="114px -10px" size="151px 28px" />
-                                </GuiElement>
-                                <GuiElement profile="rms_workshopBlock" size="289px 48px">
-                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopDetail" id="serviceLabels[2]" position="14px 0px" size="82px 48px" textMaxNumLines="1" />
-                                    <RoundCorner profile="rms_fleetPillOnRow" id="servicePills[2]" position="102px -10px" size="175px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="serviceValues[2]" position="114px -10px" size="151px 28px" />
-                                </GuiElement>
-                                <GuiElement profile="rms_workshopBlock" size="289px 48px">
-                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopDetail" id="serviceLabels[3]" position="14px 0px" size="82px 48px" textMaxNumLines="1" />
-                                    <RoundCorner profile="rms_fleetPillOnRow" id="servicePills[3]" position="102px -10px" size="175px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="serviceValues[3]" position="114px -10px" size="151px 28px" />
-                                </GuiElement>
-                                <GuiElement profile="rms_workshopBlock" size="289px 48px">
-                                    <RoundCorner profile="rms_workshopSurfaceSoft" />
-                                    <Text profile="rms_workshopDetail" id="serviceLabels[4]" position="14px 0px" size="82px 48px" textMaxNumLines="1" />
-                                    <RoundCorner profile="rms_fleetPillOnRow" id="servicePills[4]" position="102px -10px" size="175px 28px" />
-                                    <Text profile="rms_workshopPillValue" id="serviceValues[4]" position="114px -10px" size="151px 28px" />
+                                    <Text profile="rms_workshopRowLabel" name="label" position="14px 0px" size="82px 38px" />
+                                    <RoundCorner profile="rms_workshopValuePill" name="pill" position="102px -5px" size="175px 28px" />
+                                    <Text profile="rms_workshopPillValue" name="value" position="114px -5px" size="151px 28px" />
                                 </GuiElement>
                             </BoxLayout>
-                            <Text profile="rms_workshopCenteredDetail" id="serviceFootLabel" position="20px -472px" size="289px 24px" textMaxNumLines="1" />
-                            <RoundCorner profile="rms_fleetPillOnCard" id="serviceFootPill" position="40px -498px" size="249px 30px" />
-                            <Text profile="rms_workshopPillValue" id="serviceFootValue" position="52px -498px" size="225px 30px" />
+                            <GuiElement profile="rms_cardFoot" size="329px 56px">
+                                <Text profile="rms_workshopCenteredDetail" id="serviceFootLabel" position="20px 0px" size="289px 24px" textMaxNumLines="1" />
+                                <RoundCorner profile="rms_workshopValuePillCentered" id="serviceFootPill" position="40px -26px" size="249px 30px" />
+                                <Text profile="rms_workshopPillValue" id="serviceFootValue" position="52px -26px" size="225px 30px" />
+                            </GuiElement>
                         </GuiElement>
                     </GuiElement>
 
@@ -318,23 +305,200 @@
         <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="settingsContainer">
             <GuiElement profile="rms_menuSettingsContainer" id="settingsPage">
                 <ScrollingLayout profile="fs25_settingsLayout" id="settingsLayout">
-                    <Text profile="fs25_settingsSectionHeader" name="sectionHeader" id="subTitlePrefab"/>
-                    <Bitmap profile="fs25_multiTextOptionContainer" id="binaryPrefab">
-                        <BinaryOption profile="fs25_settingsBinaryOption" id="checkPrefab">
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" />
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsTutorialMode" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_tutorialMode_tooltip"/>
                         </BinaryOption>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" />
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_tutorialMode_label"/>
                     </Bitmap>
-                    <Bitmap profile="fs25_multiTextOptionContainer" id="multiPrefab">
-                        <MultiTextOption profile="fs25_settingsMultiTextOption" id="multiTextPrefab">
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" />
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <Button profile="rms_settingsButton" id="rmsTutorialResetTips" text="$l10n_rms_tutorialResetTips_text" onClick="onClickRmsResetTutorialTips">
+                            <ThreePartBitmap profile="rms_settingsButtonBg"/>
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_tutorialResetTips_tooltip"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_tutorialResetTips_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsWarningMessages" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_warningMessages_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_warningMessages_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDebugMode" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_debugMode_label"/>
+                    </Bitmap>
+
+                    <Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_rms_settings_section_service_wear"/>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <MultiTextOption profile="rms_settingsMultiTextOption" id="rmsServiceWear" onClick="onClickRmsOption">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore"/>
                         </MultiTextOption>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" />
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_serviceInterval_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <MultiTextOption profile="rms_settingsMultiTextOption" id="rmsConditionWear" onClick="onClickRmsOption">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_vehicleLifespan_tooltip"/>
+                        </MultiTextOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_vehicleLifespan_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsExhaustSmokeEnabled" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_exhaustSmokeEnabled_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_exhaustSmokeEnabled_label"/>
+                    </Bitmap>
+
+                    <Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_rms_ws_header_title"/>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantInspection" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantInspection_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantInspection_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantMaintenanceRepair" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantMaintenanceRepair_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantMaintenanceRepair_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantBodywork" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantBodywork_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantBodywork_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantOverhaul" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantOverhaul_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantOverhaul_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsInstantRemap" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_instantRemap_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_instantRemap_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsMobileWorkshopRestrictions" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_mobileWorkshopRestrictions_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_mobileWorkshopRestrictions_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDealerWorkshopAvailable" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_dealerWorkshopAvailable_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_dealerWorkshopAvailable_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsMobileWorkshopAvailable" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_mobileWorkshopAvailable_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_mobileWorkshopAvailable_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsOwnWorkshopAvailable" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_ownWorkshopAvailable_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_ownWorkshopAvailable_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <MultiTextOption profile="rms_settingsMultiTextOption" id="rmsWorkshopOpenHour" onClick="onClickRmsOption">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_workshopOpenHour_tooltip"/>
+                        </MultiTextOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_workshopOpenHour_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <MultiTextOption profile="rms_settingsMultiTextOption" id="rmsWorkshopCloseHour" onClick="onClickRmsOption">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_workshopCloseHour_tooltip"/>
+                        </MultiTextOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_workshopCloseHour_label"/>
+                    </Bitmap>
+
+                    <Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_rms_settings_section_drivetrain"/>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainEnabled" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_drivetrainEnabled_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainEnabled_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainAllowAutoMode" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_drivetrainAllowAutoMode_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainAllowAutoMode_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainParkBrakeEnabled" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_drivetrainParkBrakeEnabled_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainParkBrakeEnabled_label"/>
                     </Bitmap>
                 </ScrollingLayout>
                 <Bitmap profile="fs25_settingsTooltipSeparator" id="settingsTooltipSeparator"/>
                 <ThreePartBitmap profile="rms_menuSettingsDockedSliderBg" id="settingsSliderBox">
-                    <ThreePartBitmap profile="rms_menuDockedSliderBox">
+                    <ThreePartBitmap profile="fs25_sliderDockedBox">
                         <Slider profile="rms_menuDockedSlider" id="settingsSlider" dataElementId="settingsLayout"/>
                     </ThreePartBitmap>
                 </ThreePartBitmap>

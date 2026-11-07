@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 RMS_DrivetrainEvent = {}
 local RMS_DrivetrainEvent_mt = Class(RMS_DrivetrainEvent, Event)
@@ -7,14 +6,11 @@ local RMS_DrivetrainEvent_mt = Class(RMS_DrivetrainEvent, Event)
 InitEventClass(RMS_DrivetrainEvent, "RMS_DrivetrainEvent")
 
 ---Create instance of Event class
--- @return table self instance of class event
 function RMS_DrivetrainEvent.emptyNew()
     return Event.new(RMS_DrivetrainEvent_mt)
 end
 
 ---Create new instance of event from the current drivetrain state of the vehicle
--- @param table vehicle vehicle
--- @return table self instance of class event
 function RMS_DrivetrainEvent.new(vehicle)
     local self = RMS_DrivetrainEvent.emptyNew()
     local state = RMS_Drivetrain.getState(vehicle)
@@ -27,8 +23,6 @@ function RMS_DrivetrainEvent.new(vehicle)
 end
 
 ---Writes event data to a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_DrivetrainEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
     streamWriteUIntN(streamId, self.driveMode, 2)
@@ -37,8 +31,6 @@ function RMS_DrivetrainEvent:writeStream(streamId, connection)
 end
 
 ---Reads event data from a stream.
--- @param integer streamId streamId
--- @param Connection connection connection
 function RMS_DrivetrainEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
     self.driveMode = streamReadUIntN(streamId, 2)
@@ -48,7 +40,6 @@ function RMS_DrivetrainEvent:readStream(streamId, connection)
 end
 
 ---Run action on receiving side
--- @param Connection connection connection
 function RMS_DrivetrainEvent:run(connection)
     if self.vehicle == nil or not self.vehicle:getIsSynchronized() then
         return
@@ -66,8 +57,6 @@ function RMS_DrivetrainEvent:run(connection)
 end
 
 ---Send the drivetrain state from a client to the server
--- @param table vehicle vehicle
--- @param boolean noEventSend no event send
 function RMS_DrivetrainEvent.sendEvent(vehicle, noEventSend)
     if noEventSend or g_client == nil then
         return

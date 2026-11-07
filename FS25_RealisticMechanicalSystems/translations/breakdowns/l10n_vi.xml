@@ -17,9 +17,17 @@
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage3_description" text="Chốt trụ đứng bị mòn nặng. Độ rơ trong hệ thống lái lớn."/>
         <text name="rms_breakdowns_steering_knuckle_pivot_wear_stage4_description" text="Chốt trụ đứng bị mòn nghiêm trọng. Hệ thống lái có độ rơ rất lớn."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage1_description" text="Van lái orbitrol hư hỏng nhẹ. Vô lăng quay với một chút độ rơ trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage1_description" text="Hộp lái hư hỏng nhẹ. Vô lăng quay với một chút độ rơ trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage1_description" text="Thước lái hư hỏng nhẹ. Vô lăng quay với một chút độ rơ trước khi bánh xe quay theo."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage2_description" text="Van lái orbitrol hư hỏng ở mức trung bình. Vô lăng quay nhiều hơn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage2_description" text="Hộp lái hư hỏng ở mức trung bình. Vô lăng quay nhiều hơn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage2_description" text="Thước lái hư hỏng ở mức trung bình. Vô lăng quay nhiều hơn trước khi bánh xe quay theo."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage3_description" text="Van lái orbitrol hư hỏng nặng. Vô lăng quay nhiều nhưng bánh xe không quay theo tốt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage3_description" text="Hộp lái hư hỏng nặng. Vô lăng quay nhiều nhưng bánh xe không quay theo tốt."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage3_description" text="Thước lái hư hỏng nặng. Vô lăng quay nhiều nhưng bánh xe không quay theo tốt."/>
         <text name="rms_breakdowns_steering_orbitrol_malfunction_stage4_description" text="Van lái orbitrol hư hỏng nghiêm trọng. Vô lăng có độ rơ rất lớn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_box_stage4_description" text="Hộp lái hư hỏng nghiêm trọng. Vô lăng có độ rơ rất lớn trước khi bánh xe quay theo."/>
+        <text name="rms_breakdowns_steering_orbitrol_malfunction_rack_stage4_description" text="Thước lái hư hỏng nghiêm trọng. Vô lăng có độ rơ rất lớn trước khi bánh xe quay theo."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage1_description" text="Xi lanh lái bị rò rỉ nhẹ bên trong. Xe bắt đầu trôi lệch sang một bên."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch2_stage1_description" text="Phớt cần xi lanh lái bị rò rỉ nhẹ. Mức dầu thủy lực giảm một chút."/>
         <text name="rms_breakdowns_steering_cylinder_leak_branch1_stage2_description" text="Xi lanh lái bị rò rỉ bên trong ở mức trung bình. Xe trôi lệch sang một bên nhiều hơn."/>
@@ -32,6 +40,22 @@
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage2_description" text="Chốt và bạc lót khớp bộ nạp trước bị mòn ở mức trung bình. Độ rơ ở các khớp tay nâng trở nên rõ rệt."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage3_description" text="Chốt và bạc lót khớp bộ nạp trước bị mòn nặng. Tay nâng có độ rơ lớn."/>
         <text name="rms_breakdowns_loader_pivot_pin_wear_stage4_description" text="Chốt và bạc lót khớp bộ nạp trước bị mòn nghiêm trọng. Độ rơ của tay nâng rất lớn."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage1_description" text="Chốt và bạc lót khớp trụ nâng bị mòn nhẹ. Xuất hiện độ rơ nhẹ ở các khớp trụ nâng."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage2_description" text="Chốt và bạc lót khớp trụ nâng bị mòn ở mức trung bình. Độ rơ ở các khớp trụ nâng trở nên rõ rệt."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage3_description" text="Chốt và bạc lót khớp trụ nâng bị mòn nặng. Trụ nâng có độ rơ lớn."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_mast_stage4_description" text="Chốt và bạc lót khớp trụ nâng bị mòn nghiêm trọng. Độ rơ của trụ nâng rất lớn."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage1_description" text="Chốt và bạc lót khớp cần cẩu bị mòn nhẹ. Xuất hiện độ rơ nhẹ ở các khớp cần cẩu."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage2_description" text="Chốt và bạc lót khớp cần cẩu bị mòn ở mức trung bình. Độ rơ ở các khớp cần cẩu trở nên rõ rệt."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage3_description" text="Chốt và bạc lót khớp cần cẩu bị mòn nặng. Cần cẩu có độ rơ lớn."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_boom_stage4_description" text="Chốt và bạc lót khớp cần cẩu bị mòn nghiêm trọng. Độ rơ của cần cẩu rất lớn."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage1_description" text="Chốt và bạc lót khớp tay phay bị mòn nhẹ. Xuất hiện độ rơ nhẹ ở các khớp tay phay."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage2_description" text="Chốt và bạc lót khớp tay phay bị mòn ở mức trung bình. Độ rơ ở các khớp tay phay trở nên rõ rệt."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage3_description" text="Chốt và bạc lót khớp tay phay bị mòn nặng. Tay phay có độ rơ lớn."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_arm_stage4_description" text="Chốt và bạc lót khớp tay phay bị mòn nghiêm trọng. Độ rơ của tay phay rất lớn."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage1_description" text="Chốt và bạc lót khớp tay lưỡi ủi bị mòn nhẹ. Xuất hiện độ rơ nhẹ ở các khớp tay."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage2_description" text="Chốt và bạc lót khớp tay lưỡi ủi bị mòn ở mức trung bình. Độ rơ ở các khớp tay trở nên rõ rệt."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage3_description" text="Chốt và bạc lót khớp tay lưỡi ủi bị mòn nặng. Tay có độ rơ lớn."/>
+        <text name="rms_breakdowns_loader_pivot_pin_wear_blade_stage4_description" text="Chốt và bạc lót khớp tay lưỡi ủi bị mòn nghiêm trọng. Độ rơ của tay rất lớn."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage1_description" text="Giảm chấn ca bin rò rỉ nhẹ. Khả năng giảm chấn của ca bin giảm nhẹ."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage2_description" text="Giảm chấn ca bin rò rỉ ở mức trung bình. Ca bin nảy lên khi qua chỗ xóc."/>
         <text name="rms_breakdowns_cab_suspension_damper_leak_stage3_description" text="Giảm chấn ca bin rò rỉ nặng. Ca bin lắc lư mỗi khi bị xóc."/>
@@ -110,8 +134,14 @@
         <text name="rms_breakdowns_part_synchronizer" text="Bộ đồng tốc"/>
         <text name="rms_breakdowns_part_steering_linkage" text="Rô-tuyn và thanh kéo lái"/>
         <text name="rms_breakdowns_part_loader_pins_and_bushings" text="Chốt và bạc lót khớp bộ nạp trước"/>
+        <text name="rms_breakdowns_part_mast_pins_and_bushings" text="Chốt và bạc lót khớp trụ nâng"/>
+        <text name="rms_breakdowns_part_boom_pins_and_bushings" text="Chốt và bạc lót khớp cần cẩu"/>
+        <text name="rms_breakdowns_part_milling_arm_pins_and_bushings" text="Chốt và bạc lót khớp tay phay"/>
+        <text name="rms_breakdowns_part_blade_arm_pins_and_bushings" text="Chốt và bạc lót khớp tay lưỡi ủi"/>
         <text name="rms_breakdowns_part_steering_knuckle_pivot" text="Chốt trụ đứng"/>
         <text name="rms_breakdowns_part_steering_orbitrol" text="Van lái orbitrol"/>
+        <text name="rms_breakdowns_part_steering_box" text="Hộp lái"/>
+        <text name="rms_breakdowns_part_steering_rack" text="Thước lái"/>
         <text name="rms_breakdowns_part_steering_cylinder" text="Xi lanh lái"/>
         <text name="rms_breakdowns_part_cab_suspension" text="Hệ thống treo ca bin"/>
         <text name="rms_breakdowns_part_pto_clutch" text="Ly hợp PTO"/>
@@ -144,6 +174,7 @@
         <text name="rms_breakdowns_part_gas_filter" text="Bộ lọc khí nhiên liệu"/>
         <text name="rms_breakdowns_part_gas_lines" text="Đường ống khí nhiên liệu"/>
         <text name="rms_breakdowns_part_gas_injectors" text="Kim phun khí"/>
+        <text name="rms_breakdowns_part_spark_plugs" text="Bugi"/>
         <text name="rms_breakdowns_part_adblue_pump" text="Bơm AdBlue"/>
         <text name="rms_breakdowns_part_adblue_doser" text="Kim phun định lượng AdBlue"/>
         <text name="rms_breakdowns_part_adblue_filter" text="Bộ lọc AdBlue"/>
@@ -551,6 +582,10 @@
         <text name="rms_breakdowns_gas_injector_malfunction_stage2_description" text="Kim phun khí hư hỏng ở mức trung bình. Động cơ bị hụt, mất công suất, tiêu thụ nhiều hơn và có thể chết máy."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage3_description" text="Kim phun khí hư hỏng nặng. Một kim phun định lượng rất kém: mất nhiều công suất, tiêu thụ quá mức và khó khởi động."/>
         <text name="rms_breakdowns_gas_injector_malfunction_stage4_description" text="Kim phun khí hư hỏng nghiêm trọng. Việc định lượng không còn cho phép động cơ hoạt động: động cơ dừng."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage1_description" text="Bugi đã đến hạn thay: khi tải nặng xuất hiện hiện tượng bỏ máy, động cơ chạy kém êm và tiêu thụ nhiều hơn một chút. Việc bảo dưỡng sẽ thay bugi."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage2_description" text="Bugi bị mòn: hiện tượng bỏ máy trở nên thường xuyên, động cơ mất công suất, tiêu thụ nhiều hơn và có thể chết máy. Đèn động cơ sáng."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage3_description" text="Bugi bị mòn nặng: mất nhiều công suất, tiêu thụ quá mức và khó khởi động."/>
+        <text name="rms_breakdowns_spark_plug_wear_stage4_description" text="Bugi không còn dùng được: bỏ máy liên tục, động cơ có thể chết máy và không khởi động lại được."/>
         <text name="rms_breakdowns_adblue_pump_failure_stage1_description" text="Bơm AdBlue hư hỏng. Bơm không còn cấp dung dịch cho bộ định lượng: đèn báo động cơ sáng, sau đó bộ điều khiển giảm công suất cho đến khi sửa chữa."/>
         <text name="rms_breakdowns_adblue_doser_failure_stage1_description" text="Kim phun định lượng AdBlue hư hỏng. Bị tinh thể làm tắc, kim phun không còn phun được: đèn báo động cơ sáng và công suất sau đó giảm cho đến khi sửa chữa."/>
         <text name="rms_breakdowns_adblue_filter_clogging_stage1_description" text="Bộ lọc AdBlue đã đến hạn và bắt đầu tắc. Mức bảo dưỡng đầy đủ nhất thay bộ lọc."/>
@@ -616,8 +651,14 @@
         <text name="rms_breakdowns_part_transmission_sensors" text="Cảm biến hộp số"/>
         <text name="rms_breakdowns_part_transmission_filter" text="Bộ lọc truyền động"/>
         <text name="rms_breakdowns_part_lift_valve" text="Van nâng"/>
+        <text name="rms_breakdowns_part_header_lift_valve" text="Van nâng bàn cắt"/>
         <text name="rms_breakdowns_part_lift_position_sensor" text="Cảm biến vị trí cơ cấu nâng"/>
+        <text name="rms_breakdowns_part_header_height_sensor" text="Cảm biến độ cao bàn cắt"/>
         <text name="rms_breakdowns_part_loader_control" text="Bộ điều khiển bộ nạp"/>
+        <text name="rms_breakdowns_part_mast_control" text="Bộ điều khiển trụ nâng"/>
+        <text name="rms_breakdowns_part_boom_control" text="Bộ điều khiển cần cẩu"/>
+        <text name="rms_breakdowns_part_milling_arm_control" text="Bộ điều khiển tay phay"/>
+        <text name="rms_breakdowns_part_blade_arm_control" text="Bộ điều khiển tay lưỡi ủi"/>
         <text name="rms_breakdowns_part_hydraulic_quick_couplers" text="Khớp nối nhanh thủy lực"/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage1_description" text="Ly hợp hư hỏng nhẹ. Bộ phận này không ngắt hoàn toàn. Một số cấp số khó gài."/>
         <text name="rms_breakdowns_manual_transmission_clutch_wear_branch2_stage2_description" text="Ly hợp hư hỏng ở mức trung bình. Cơ cấu nhả đĩa không hết. Việc chọn số bị từ chối thường xuyên hơn."/>
@@ -688,12 +729,31 @@
         <text name="rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" text="Bơm thủy lực hư hỏng. Bộ phận này bị vỡ. Áp suất mất và các chức năng thủy lực không đáp ứng."/>
         <text name="rms_breakdowns_hydraulic_spool_valve_malfunction_branch2_stage1_description" text="Van điều khiển thủy lực hư hỏng. Con trượt bị kẹt. Chức năng thủy lực bị ảnh hưởng không chuyển động."/>
         <text name="rms_breakdowns_lift_valve_failure_branch1_stage1_description" text="Van nâng hư hỏng. Bộ phận này không giữ tải đúng. Nông cụ đã nâng bị hạ xuống."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch1_stage1_description" text="Van nâng bàn cắt hư hỏng. Bộ phận này không giữ tải đúng. Bàn cắt đã nâng bị hạ xuống."/>
         <text name="rms_breakdowns_lift_valve_failure_branch2_stage1_description" text="Van nâng hư hỏng. Bộ phận này bị kẹt. Cơ cấu nâng không đáp ứng."/>
+        <text name="rms_breakdowns_lift_valve_failure_header_branch2_stage1_description" text="Van nâng bàn cắt hư hỏng. Bộ phận này bị kẹt. Bàn cắt không còn nâng lên hay hạ xuống được."/>
         <text name="rms_breakdowns_lift_position_sensor_failure_stage1_description" text="Cảm biến vị trí cơ cấu nâng hư hỏng. Tín hiệu vị trí bị hỏng. Cơ cấu nâng không giữ được độ cao yêu cầu và mã lỗi được lưu."/>
+        <text name="rms_breakdowns_lift_position_sensor_failure_header_stage1_description" text="Cảm biến độ cao bàn cắt hư hỏng. Tín hiệu độ cao bị hỏng. Bàn cắt không giữ được độ cao yêu cầu và mã lỗi được lưu."/>
         <text name="rms_breakdowns_loader_control_failure_stage1_description" text="Bộ điều khiển bộ nạp hư hỏng nhẹ. Tay nâng và gầu phản ứng chậm hơn."/>
         <text name="rms_breakdowns_loader_control_failure_stage2_description" text="Bộ điều khiển bộ nạp hư hỏng ở mức trung bình. Tay nâng và gầu chỉ di chuyển với nửa tốc độ."/>
         <text name="rms_breakdowns_loader_control_failure_stage3_description" text="Bộ điều khiển bộ nạp hư hỏng nặng. Tay nâng và gầu hầu như không di chuyển."/>
         <text name="rms_breakdowns_loader_control_failure_stage4_description" text="Bộ điều khiển bộ nạp hư hỏng tới hạn. Tay nâng và gầu không còn phản ứng."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage1_description" text="Bộ điều khiển trụ nâng hư hỏng nhẹ. Trụ nâng và càng nâng phản ứng chậm hơn."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage2_description" text="Bộ điều khiển trụ nâng hư hỏng ở mức trung bình. Trụ nâng và càng nâng chỉ di chuyển với nửa tốc độ."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage3_description" text="Bộ điều khiển trụ nâng hư hỏng nặng. Trụ nâng và càng nâng hầu như không di chuyển."/>
+        <text name="rms_breakdowns_loader_control_failure_mast_stage4_description" text="Bộ điều khiển trụ nâng hư hỏng tới hạn. Trụ nâng và càng nâng không còn phản ứng."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage1_description" text="Bộ điều khiển cần cẩu hư hỏng nhẹ. Cần cẩu và dụng cụ phản ứng chậm hơn."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage2_description" text="Bộ điều khiển cần cẩu hư hỏng ở mức trung bình. Cần cẩu và dụng cụ chỉ di chuyển với nửa tốc độ."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage3_description" text="Bộ điều khiển cần cẩu hư hỏng nặng. Cần cẩu và dụng cụ hầu như không di chuyển."/>
+        <text name="rms_breakdowns_loader_control_failure_boom_stage4_description" text="Bộ điều khiển cần cẩu hư hỏng tới hạn. Cần cẩu và dụng cụ không còn phản ứng."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage1_description" text="Bộ điều khiển tay phay hư hỏng nhẹ. Tay phay phản ứng chậm hơn."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage2_description" text="Bộ điều khiển tay phay hư hỏng ở mức trung bình. Tay phay chỉ di chuyển với nửa tốc độ."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage3_description" text="Bộ điều khiển tay phay hư hỏng nặng. Tay phay hầu như không di chuyển."/>
+        <text name="rms_breakdowns_loader_control_failure_arm_stage4_description" text="Bộ điều khiển tay phay hư hỏng tới hạn. Tay phay không còn phản ứng."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage1_description" text="Bộ điều khiển tay lưỡi ủi hư hỏng nhẹ. Tay và lưỡi ủi phản ứng chậm hơn."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage2_description" text="Bộ điều khiển tay lưỡi ủi hư hỏng ở mức trung bình. Tay và lưỡi ủi chỉ di chuyển với nửa tốc độ."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage3_description" text="Bộ điều khiển tay lưỡi ủi hư hỏng nặng. Tay và lưỡi ủi hầu như không di chuyển."/>
+        <text name="rms_breakdowns_loader_control_failure_blade_stage4_description" text="Bộ điều khiển tay lưỡi ủi hư hỏng tới hạn. Tay và lưỡi ủi không còn phản ứng."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage1_description" text="Xi lanh thủy lực hư hỏng nhẹ. Phớt cần để lọt một ít dầu. Có hơi ẩm nhẹ quanh cần."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage2_description" text="Xi lanh thủy lực hư hỏng ở mức trung bình. Phớt cần không còn kín. Xi lanh rỉ dầu và mức dầu giảm."/>
         <text name="rms_breakdowns_hydraulic_cylinder_internal_leak_branch2_stage3_description" text="Xi lanh thủy lực hư hỏng nặng. Phớt cần rò rỉ liên tục. Xi lanh mất lượng dầu đáng kể."/>
@@ -722,5 +782,142 @@
         <text name="rms_breakdowns_axle_bearing_wear_stage4_description" text="Vòng bi cầu bị mòn tới hạn. Một vòng bi đã hỏng, cặp bánh răng côn bị hư hại và cầu không còn truyền lực kéo."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch1_stage1_description" text="Bộ điều khiển khóa vi sai hư hỏng. Khóa không gài được. Vi sai vẫn ở trạng thái tự do."/>
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Bộ điều khiển khóa vi sai hư hỏng. Khóa vẫn gài. Máy cản trở đánh lái khi vào cua."/>
+        <text name="rms_breakdowns_part_harvest_drive_belts" text="Dây đai truyền động và bộ biến tốc"/>
+        <text name="rms_breakdowns_part_harvest_drive_bearings" text="Ổ bi và hộp số truyền động"/>
+        <text name="rms_breakdowns_part_feeder_chain" text="Xích buồng tiếp liệu"/>
+        <text name="rms_breakdowns_part_feed_accelerator" text="Bộ tăng tốc tiếp liệu"/>
+        <text name="rms_breakdowns_part_threshing_bars" text="Thanh đập"/>
+        <text name="rms_breakdowns_part_concave" text="Máng đập"/>
+        <text name="rms_breakdowns_part_separation" text="Răng tách và bộ lắc rơm"/>
+        <text name="rms_breakdowns_part_cleaning_sieves" text="Sàng làm sạch"/>
+        <text name="rms_breakdowns_part_grain_elevators" text="Vít tải và gầu tải hạt"/>
+        <text name="rms_breakdowns_part_straw_chopper" text="Máy băm và rải rơm"/>
+        <text name="rms_breakdowns_part_feed_rolls" text="Trục cuốn tiếp liệu"/>
+        <text name="rms_breakdowns_part_metal_detector" text="Bộ dò kim loại và đá"/>
+        <text name="rms_breakdowns_part_cutterhead" text="Trống cắt"/>
+        <text name="rms_breakdowns_part_forage_knives" text="Dao trống cắt"/>
+        <text name="rms_breakdowns_part_shear_bar" text="Dao đối"/>
+        <text name="rms_breakdowns_part_crop_processor" text="Bộ nghiền hạt"/>
+        <text name="rms_breakdowns_part_crop_accelerator" text="Bộ tăng tốc và quạt thổi"/>
+        <text name="rms_breakdowns_part_discharge_spout" text="Ống xả"/>
+        <text name="rms_breakdowns_part_beet_topper" text="Bộ cắt lá và gọt đầu"/>
+        <text name="rms_breakdowns_part_lifting_shares" text="Lưỡi đào"/>
+        <text name="rms_breakdowns_part_beet_cleaning" text="Tuabin làm sạch"/>
+        <text name="rms_breakdowns_part_root_elevator" text="Băng tải củ cải"/>
+        <text name="rms_breakdowns_part_hopper_floor" text="Sàn di động và băng dỡ hàng"/>
+        <text name="rms_breakdowns_part_sieve_webs" text="Băng sàng"/>
+        <text name="rms_breakdowns_part_haulm_separator" text="Bộ tách thân và con lăn"/>
+        <text name="rms_breakdowns_part_picking_units" text="Cụm hái"/>
+        <text name="rms_breakdowns_part_spindle_moistener" text="Bộ làm ẩm trục quay"/>
+        <text name="rms_breakdowns_part_cotton_fan" text="Quạt và ống dẫn"/>
+        <text name="rms_breakdowns_part_module_builder" text="Buồng tạo kiện"/>
+        <text name="rms_breakdowns_part_base_cutters" text="Dao cắt gốc"/>
+        <text name="rms_breakdowns_part_cane_feed_rolls" text="Trục cuốn tiếp liệu"/>
+        <text name="rms_breakdowns_part_cane_chopper" text="Trống băm"/>
+        <text name="rms_breakdowns_part_cane_extractor" text="Bộ hút tạp chất chính"/>
+        <text name="rms_breakdowns_part_cane_elevator" text="Băng tải mía"/>
+        <text name="rms_breakdowns_part_shaker" text="Hệ thống rung"/>
+        <text name="rms_breakdowns_part_catching_scales" text="Vảy hứng"/>
+        <text name="rms_breakdowns_part_bucket_conveyors" text="Băng tải gầu"/>
+        <text name="rms_breakdowns_part_cleaning_fans" text="Bộ hút làm sạch"/>
+        <text name="rms_breakdowns_part_destemmer" text="Máy tách cuống"/>
+        <text name="rms_breakdowns_part_vegetable_picker" text="Đầu hái"/>
+        <text name="rms_breakdowns_part_vegetable_cleaning" text="Quạt và sàng làm sạch"/>
+        <text name="rms_breakdowns_part_vegetable_elevators" text="Băng tải và gầu tải"/>
+        <text name="rms_breakdowns_harvest_failure_message" text="Không thể thu hoạch: một bộ phận thu hoạch bị hỏng"/>
+        <text name="rms_breakdowns_harvest_blockage_message" text="Tắc nghẽn: việc thu hoạch đã dừng"/>
+        <text name="rms_breakdowns_chopper_failure_message" text="Máy băm rơm hỏng: rơm rơi thành hàng"/>
+        <text name="rms_breakdowns_chopper_failure_spread_message" text="Máy băm rơm hỏng: không thể thu hoạch loại cây này nữa"/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Dây đai truyền động bắt đầu mòn. Dây đai hơi trượt khi chịu tải."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Dây đai truyền động bị mòn ở mức trung bình. Một bộ phận chậm lại khi chịu tải và cảnh báo vòng quay đôi khi dừng việc thu hoạch."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Dây đai truyền động bị mòn nặng. Năng suất giảm và các lần dừng cứ lặp lại."/>
+        <text name="rms_breakdowns_harvest_drive_belt_wear_stage4_description" text="Dây đai truyền động hư hỏng nghiêm trọng. Một dây đai bị đứt: không thể thu hoạch."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage1_description" text="Ổ bi truyền động bắt đầu mòn. Xuất hiện tiếng ù nhẹ khi thu hoạch."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Ổ bi truyền động bị mòn ở mức trung bình. Tiếng ù nghe rõ và ổ bi nóng lên."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Ổ bi truyền động bị mòn nặng. Tiếng ù to dần và các trục bị rơ."/>
+        <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Ổ bi truyền động hư hỏng nghiêm trọng. Một ổ bi bị kẹt cứng: không thể thu hoạch."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Xích buồng tiếp liệu bắt đầu mòn. Xích giãn ra và việc cấp liệu trở nên không đều."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Xích buồng tiếp liệu bị mòn ở mức trung bình. Tắc nghẽn hình thành ở cửa buồng tiếp liệu."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Xích buồng tiếp liệu bị mòn nặng. Xích nhảy răng trên đĩa xích và tắc nghẽn liên tục."/>
+        <text name="rms_breakdowns_feeder_chain_wear_stage4_description" text="Xích buồng tiếp liệu hư hỏng nghiêm trọng. Xích bị đứt: không còn gì vào được máy."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage1_description" text="Bộ tăng tốc tiếp liệu bắt đầu mòn. Cây trồng đến trống đập kém đều hơn."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage2_description" text="Bộ tăng tốc tiếp liệu bị mòn ở mức trung bình. Năng suất chững lại và xuất hiện tắc nghẽn."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage3_description" text="Bộ tăng tốc tiếp liệu bị mòn nặng. Năng suất giảm và tắc nghẽn liên tục."/>
+        <text name="rms_breakdowns_feed_accelerator_wear_stage4_description" text="Bộ tăng tốc tiếp liệu hư hỏng nghiêm trọng. Một cánh bị bật ra: không thể thu hoạch."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage1_description" text="Thanh đập bắt đầu mòn. Một phần hạt còn lại trên bông và rơi lại ruộng."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage2_description" text="Thanh đập bị mòn ở mức trung bình. Trống đập rung và hao hụt hạt tăng."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage3_description" text="Thanh đập bị mòn nặng. Một số thanh bị gãy: hao hụt lớn và tắc nghẽn."/>
+        <text name="rms_breakdowns_threshing_bar_wear_stage4_description" text="Thanh đập hư hỏng nghiêm trọng. Một thanh bị bật ra: không thể đập lúa."/>
+        <text name="rms_breakdowns_concave_wear_stage1_description" text="Máng đập bắt đầu mòn. Hạt được đập kém hơn và một phần rơi lại ruộng."/>
+        <text name="rms_breakdowns_concave_wear_stage2_description" text="Máng đập bị mòn ở mức trung bình. Hao hụt hạt tăng."/>
+        <text name="rms_breakdowns_concave_wear_stage3_description" text="Máng đập bị mòn nặng. Hạt bị vỡ, hao hụt lớn và xuất hiện tắc nghẽn."/>
+        <text name="rms_breakdowns_concave_wear_stage4_description" text="Máng đập hư hỏng nghiêm trọng. Một thanh bị bật ra: không thể đập lúa."/>
+        <text name="rms_breakdowns_separation_wear_stage1_description" text="Bộ phận tách bắt đầu mòn. Hạt còn lại trong rơm và rơi lại ruộng."/>
+        <text name="rms_breakdowns_separation_wear_stage2_description" text="Bộ phận tách bị mòn ở mức trung bình. Hao hụt hạt theo rơm tăng."/>
+        <text name="rms_breakdowns_separation_wear_stage3_description" text="Bộ phận tách bị mòn nặng. Hao hụt lớn và tắc rơm."/>
+        <text name="rms_breakdowns_separation_wear_stage4_description" text="Bộ phận tách hư hỏng nghiêm trọng. Rơm không còn đi qua được: không thể thu hoạch."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage1_description" text="Sàng làm sạch bắt đầu mòn. Trấu lọt vào thùng chứa hạt và một ít hạt bị thải theo tạp chất."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage2_description" text="Sàng làm sạch bị mòn ở mức trung bình. Hao hụt ở sàng tăng."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage3_description" text="Sàng làm sạch bị mòn nặng. Một tấm sàng bị nứt: hao hụt lớn và tắc nghẽn."/>
+        <text name="rms_breakdowns_cleaning_sieve_wear_stage4_description" text="Sàng làm sạch hư hỏng nghiêm trọng. Việc làm sạch không còn hoạt động: không thể thu hoạch."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage1_description" text="Vít tải và gầu tải hạt bắt đầu mòn. Dòng hạt vào thùng chứa giảm."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage2_description" text="Vít tải và gầu tải hạt bị mòn ở mức trung bình. Một phần hạt bị vỡ hoặc rơi mất trên đường."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage3_description" text="Vít tải và gầu tải hạt bị mòn nặng. Gầu tải thường xuyên bị tắc."/>
+        <text name="rms_breakdowns_grain_elevator_wear_stage4_description" text="Vít tải và gầu tải hạt hư hỏng nghiêm trọng. Thùng chứa hạt không còn đầy lên: không thể thu hoạch."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Máy băm rơm bắt đầu mòn. Rơm được băm kém ngắn hơn và máy băm tốn thêm chút công suất."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Máy băm rơm bị mòn ở mức trung bình. Máy băm rung và tốn nhiều công suất hơn."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Máy băm rơm bị mòn nặng. Rôto mất cân bằng và tốn rất nhiều công suất."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Máy băm rơm hư hỏng nghiêm trọng. Một lưỡi dao bị gãy: máy băm dừng và rơm rơi thành hàng."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Trục cuốn tiếp liệu bắt đầu mòn. Trục kẹp cây kém hơn: việc cấp liệu trở nên không đều."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Trục cuốn tiếp liệu bị mòn ở mức trung bình. Chiều dài cắt không đều và xuất hiện tắc nghẽn."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Trục cuốn tiếp liệu bị mòn nặng. Năng suất giảm và tắc nghẽn liên tục."/>
+        <text name="rms_breakdowns_feed_roll_wear_stage4_description" text="Trục cuốn tiếp liệu hư hỏng nghiêm trọng. Không còn gì vào được máy: không thể thu hoạch."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage1_description" text="Bộ dò kim loại và đá bắt đầu trục trặc. Báo động giả đôi khi dừng việc cấp liệu."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage2_description" text="Bộ dò kim loại và đá trục trặc ở mức trung bình. Các lần dừng không cần thiết cứ lặp lại."/>
+        <text name="rms_breakdowns_metal_detector_failure_stage3_description" text="Bộ dò kim loại và đá bị hỏng. Nó không còn phát hiện gì: đá lọt tới dao và làm dao mòn nhanh hơn nhiều."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage1_description" text="Trống cắt bắt đầu mòn. Trống rung nhẹ và tốn thêm chút công suất."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage2_description" text="Trống cắt bị mòn ở mức trung bình. Rôto mất cân bằng và tốn nhiều công suất hơn."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage3_description" text="Trống cắt bị mòn nặng. Một giá dao bị nứt: tốn thêm công suất và tắc nghẽn."/>
+        <text name="rms_breakdowns_cutterhead_wear_stage4_description" text="Trống cắt hư hỏng nghiêm trọng. Rôto bị hư hại: không thể thu hoạch."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage1_description" text="Dao bắt đầu mòn. Vết cắt kém sạch và tốn thêm chút công suất."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage2_description" text="Dao bị mòn ở mức trung bình. Dao tốn nhiều công suất và nhiên liệu hơn."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage3_description" text="Dao bị mòn nặng. Vết cắt không đều, công suất cần thiết tăng và xuất hiện tắc nghẽn."/>
+        <text name="rms_breakdowns_forage_knife_wear_stage4_description" text="Dao hư hỏng nghiêm trọng. Một lưỡi dao bị gãy: không thể thu hoạch."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage1_description" text="Dao đối bắt đầu mòn. Khe hở rộng ra: việc cắt tốn thêm chút công suất."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage2_description" text="Dao đối bị mòn ở mức trung bình. Vết cắt bị xé và tốn nhiều công suất hơn."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage3_description" text="Dao đối bị mòn nặng. Lưỡi đã mòn: tốn thêm công suất và tắc nghẽn."/>
+        <text name="rms_breakdowns_shear_bar_wear_stage4_description" text="Dao đối hư hỏng nghiêm trọng. Dao không còn dùng được: không thể thu hoạch."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage1_description" text="Bộ nghiền hạt bắt đầu mòn. Hạt được nghiền kém hơn và bộ nghiền tốn thêm chút công suất."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage2_description" text="Bộ nghiền hạt bị mòn ở mức trung bình. Hạt nguyên lọt qua và công suất cần thiết tăng."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage3_description" text="Bộ nghiền hạt bị mòn nặng. Một trục lăn bị xước: tốn thêm công suất và tắc nghẽn."/>
+        <text name="rms_breakdowns_crop_processor_wear_stage4_description" text="Bộ nghiền hạt hư hỏng nghiêm trọng. Một trục lăn bị kẹt: không thể thu hoạch."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage1_description" text="Bộ tăng tốc bắt đầu mòn. Tầm ném ngắn hơn và năng suất giảm nhẹ."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage2_description" text="Bộ tăng tốc bị mòn ở mức trung bình. Ống xả đôi khi bị tắc."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage3_description" text="Bộ tăng tốc bị mòn nặng. Một cánh bị bật ra: tắc thường xuyên và thất thoát thức ăn xanh."/>
+        <text name="rms_breakdowns_crop_accelerator_wear_stage4_description" text="Bộ tăng tốc hư hỏng nghiêm trọng. Thức ăn xanh không còn được ném ra: không thể thu hoạch."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage1_description" text="Ống xả bắt đầu mòn. Hướng ném bị lệch và năng suất giảm nhẹ."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage2_description" text="Ống xả bị mòn ở mức trung bình. Thức ăn xanh bám lại và đôi khi làm tắc ống."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage3_description" text="Ống xả bị mòn nặng. Lớp lót bị thủng: thất thoát thức ăn xanh và tắc thường xuyên."/>
+        <text name="rms_breakdowns_discharge_spout_wear_stage4_description" text="Ống xả hư hỏng nghiêm trọng. Ống bị thủng xuyên: không thể thu hoạch."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage1_description" text="Bắt đầu mòn. Một phần cây trồng bị bỏ lại trên ruộng."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage2_description" text="Mòn ở mức trung bình. Rung và hao hụt lớn hơn."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage3_description" text="Mòn nặng. Một số chi tiết bị gãy: hao hụt lớn và tắc nghẽn."/>
+        <text name="rms_breakdowns_harvest_pickup_wear_stage4_description" text="Hư hỏng nghiêm trọng. Bộ phận bị hỏng: không thể thu hoạch."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage1_description" text="Lưỡi đào bắt đầu mòn. Một số củ bị gãy hoặc nằm lại trong đất."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage2_description" text="Lưỡi đào bị mòn ở mức trung bình. Lưỡi đào kém: hao hụt lớn hơn và tốn sức kéo hơn."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage3_description" text="Lưỡi đào bị mòn nặng. Lưỡi đã mòn hết: hao hụt lớn và máy phải gắng sức."/>
+        <text name="rms_breakdowns_lifting_share_wear_stage4_description" text="Lưỡi đào hư hỏng nghiêm trọng. Một lưỡi đào bị gãy: không thể đào."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage1_description" text="Bắt đầu mòn. Việc làm sạch kém hơn: đất hoặc tạp chất lẫn vào cây trồng, một ít cây trồng bị mất."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage2_description" text="Mòn ở mức trung bình. Hao hụt khi làm sạch tăng."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage3_description" text="Mòn nặng. Lưới hoặc cánh bị gãy: hao hụt lớn và tắc nghẽn."/>
+        <text name="rms_breakdowns_harvest_cleaning_wear_stage4_description" text="Hư hỏng nghiêm trọng. Việc làm sạch đã dừng: không thể thu hoạch."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage1_description" text="Bắt đầu mòn. Xích hoặc băng giãn ra: việc cấp liệu trở nên không đều."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage2_description" text="Mòn ở mức trung bình. Thanh hoặc cánh bị mòn: năng suất giảm và tắc nghẽn."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage3_description" text="Mòn nặng. Xích bị nhảy: tắc nghẽn liên tục."/>
+        <text name="rms_breakdowns_harvest_conveyor_wear_stage4_description" text="Hư hỏng nghiêm trọng. Xích hoặc băng bị đứt: không còn gì đi qua."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage1_description" text="Bắt đầu mòn. Việc chuyển cây trồng chậm lại."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage2_description" text="Mòn ở mức trung bình. Việc chuyển trở nên không đều và một phần cây trồng bị mất."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage3_description" text="Mòn nặng. Việc chuyển thường xuyên bị kẹt."/>
+        <text name="rms_breakdowns_harvest_unloading_wear_stage4_description" text="Hư hỏng nghiêm trọng. Việc chuyển đã dừng: không thể thu hoạch."/>
     </texts>
 </l10n>

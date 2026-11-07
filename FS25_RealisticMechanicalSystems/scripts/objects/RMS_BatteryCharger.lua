@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Mobile battery charger.
 RMS_BatteryCharger = {}
@@ -14,12 +13,10 @@ RMS_BatteryCharger.START_CURRENT_A = 200
 RMS_BatteryCharger.MAX_CURRENT_24V_A = 80
 RMS_BatteryCharger.START_COOLDOWN_MS = 30000
 
----
 local function getSpec(charger)
     return charger ~= nil and charger[RMS_BatteryCharger.SPEC_TABLE_NAME] or nil
 end
 
----
 local function canDisconnect(spec)
     return spec.state == RMS_BatteryCharger.STATE.CHARGING or spec.state == RMS_BatteryCharger.STATE.FULL
 end
@@ -42,7 +39,6 @@ function RMS_BatteryCharger.getIsAlive(object)
 end
 local getIsAlive = RMS_BatteryCharger.getIsAlive
 
----
 local function getIsCranking(target)
     return RMS_Electrical.getIsStarting(target)
 end
@@ -61,7 +57,6 @@ function RMS_BatteryCharger.hasMoved(object, position)
 end
 local hasMoved = RMS_BatteryCharger.hasMoved
 
----
 local function configurePushDrive(charger)
     local motorized = charger.spec_motorized
     if motorized ~= nil and motorized.motor ~= nil then
@@ -72,7 +67,6 @@ local function configurePushDrive(charger)
     end
 end
 
----
 local function publishState(charger, spec)
     spec.publishedCurrent = spec.current
     spec.publishedSoc = spec.soc
@@ -81,15 +75,6 @@ local function publishState(charger, spec)
     charger:raiseDirtyFlags(spec.dirtyFlag)
 end
 
----
-local function getTargetObject(spec)
-    if spec.targetObjectId ~= nil then
-        return NetworkUtil.getObject(spec.targetObjectId)
-    end
-    return spec.target
-end
-
----Notifies a live change of the charger, never the join or save snapshot
 local function notifyChange(charger, previousState, previousInsufficient, previousTarget)
     if not charger.isClient or g_currentMission.hud == nil
         or g_currentMission.hud.addSideNotification == nil
@@ -120,7 +105,7 @@ local function notifyChange(charger, previousState, previousInsufficient, previo
         message = g_i18n:getText("rms_charger_consumers")
     end
     if message ~= nil then
-        local target = getTargetObject(spec) or previousTarget
+        local target = RMS_Utils.getConnectedObject(spec) or previousTarget
         local name = target ~= nil and target:getFullName() or charger:getFullName()
         g_currentMission.hud:addSideNotification(HUD.COLOR.DEFAULT,
             string.format(g_i18n:getText("rms_hud_vehicle_notification"), name, message))
@@ -134,7 +119,7 @@ function RMS_BatteryCharger.getConnectedCharger(target)
     if not target.isServer then
         for _, charger in pairs(g_currentMission.vehicleSystem.vehicles) do
             local spec = getSpec(charger)
-            if spec ~= nil and canDisconnect(spec) and getIsAlive(charger) and getTargetObject(spec) == target then
+            if spec ~= nil and canDisconnect(spec) and getIsAlive(charger) and RMS_Utils.getConnectedObject(spec) == target then
                 return charger
             end
         end
@@ -155,12 +140,10 @@ function RMS_BatteryCharger.getStartBlockReason(target)
     return nil
 end
 
----
 function RMS_BatteryCharger.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(PushHandTool, specializations)
 end
 
----
 function RMS_BatteryCharger.initSpecialization()
     local schema = Vehicle.xmlSchema
     schema:setXMLSpecializationType("RMSBatteryCharger")
@@ -178,7 +161,6 @@ function RMS_BatteryCharger.initSpecialization()
     Vehicle.xmlSchemaSavegame:register(XMLValueType.FLOAT, saveKey .. "#voltage", "Last measured circuit voltage", 0)
 end
 
----
 function RMS_BatteryCharger.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "showInfo", RMS_BatteryCharger.showInfo)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "addToPhysics", RMS_BatteryCharger.addToPhysics)
@@ -235,7 +217,6 @@ function RMS_BatteryCharger:removeFromPhysics(superFunc)
     return superFunc(self)
 end
 
----
 function RMS_BatteryCharger.registerEventListeners(vehicleType)
     for _, name in ipairs({"onLoad", "onDelete", "onUpdate", "onRegisterActionEvents", "onVehicleSettingChanged", "saveToXMLFile", "onReadStream", "onWriteStream",
         "onReadUpdateStream", "onWriteUpdateStream"}) do
@@ -249,7 +230,7 @@ local DISPLAY_INDICATIONS = { "lcdUnitV", "lcdUnitA", "lcdVoltage12V", "lcdVolta
 
 local function getShownIndications(spec)
     local shown = { "lcdUnitV", "lcdUnitA" }
-    local target = getTargetObject(spec)
+    local target = RMS_Utils.getConnectedObject(spec)
     if not canDisconnect(spec) or not getIsAlive(target) or not target.finishedLoading then
         return shown
     end
@@ -268,7 +249,6 @@ local function getShownIndications(spec)
     return shown
 end
 
----
 function RMS_BatteryCharger:onLoad(savegame)
     configurePushDrive(self)
     local spec = self[RMS_BatteryCharger.SPEC_TABLE_NAME]
@@ -347,14 +327,15 @@ function RMS_BatteryCharger.validate(charger, target, mode)
         or targetSpec.systems.electrical.enabled == false then
         return "unavailable"
     end
-    if charger:getOwnerFarmId() ~= target:getOwnerFarmId() then
+    local accessHandler = g_currentMission.accessHandler
+    if not accessHandler:canFarmAccess(charger:getOwnerFarmId(), target) and not accessHandler:canFarmAccess(target:getOwnerFarmId(), charger) then
         return "access"
     end
     if getDistance(charger, target) > RMS_BatteryCharger.MAX_DISTANCE then
         return "distance"
     end
     local spec = assert(getSpec(charger))
-    local connected = canDisconnect(spec) and getTargetObject(spec) == target and spec.targetPosition ~= nil
+    local connected = canDisconnect(spec) and RMS_Utils.getConnectedObject(spec) == target and spec.targetPosition ~= nil
     local process = mode or spec.mode or RMS_BatteryCharger.MODE.CHARGE
     if process == RMS_BatteryCharger.MODE.START and targetSpec.electricalRating.seriesBatteries > 1 then return "voltage" end
     if (not connected or process ~= RMS_BatteryCharger.MODE.START)
@@ -374,7 +355,6 @@ function RMS_BatteryCharger.validate(charger, target, mode)
     return "ok"
 end
 
----
 function RMS_BatteryCharger.stop(charger, state, reason, suppressNotification)
     local spec = getSpec(charger)
     if spec == nil then return end
@@ -404,13 +384,12 @@ function RMS_BatteryCharger.stop(charger, state, reason, suppressNotification)
     charger:raiseActive()
 end
 
----
 function RMS_BatteryCharger.tryStart(charger, target, requester, restoring, mode)
     local spec = getSpec(charger)
     if charger == nil or not charger.isServer or spec == nil then return "unavailable" end
     if not restoring and (requester == nil or requester.player == nil
-        or requester.farmId == FarmManager.SPECTATOR_FARM_ID
-        or requester.farmId ~= charger:getOwnerFarmId()) then
+        or not g_currentMission.accessHandler:canFarmAccess(requester.farmId, charger)
+        or not g_currentMission.accessHandler:canFarmAccess(requester.farmId, target)) then
         return "access"
     end
     if not restoring and (requester.player:getIsInVehicle()
@@ -444,8 +423,6 @@ function RMS_BatteryCharger.tryStart(charger, target, requester, restoring, mode
 end
 
 ---Tells the electrical solver what the charger can give its target
--- @return float chargeA current offered to the consumers and the battery
--- @return float startAidA current offered to the starter alone
 function RMS_BatteryCharger.getAvailableCurrent(target, isCranking)
     local charger = target.spec_RealisticMechanicalSystems.batteryCharger
     local spec = getSpec(charger)
@@ -486,7 +463,6 @@ function RMS_BatteryCharger.onBatteryUpdated(target, current, netCurrent)
         and battery.batterySoc >= 1 then RMS_BatteryCharger.stop(charger, RMS_BatteryCharger.STATE.FULL) end
 end
 
----
 function RMS_BatteryCharger:onUpdate()
     local spec = assert(getSpec(self))
     -- Motorized supplies push physics only.
@@ -539,7 +515,7 @@ function RMS_BatteryCharger:onUpdate()
         if reason ~= "ok" then RMS_BatteryCharger.stop(self, RMS_BatteryCharger.STATE.INTERRUPTED, reason) end
     end
     if self.isServer and spec.mode == RMS_BatteryCharger.MODE.START and canDisconnect(spec) then
-        local target = getTargetObject(spec)
+        local target = RMS_Utils.getConnectedObject(spec)
         if getIsAlive(target) then
             local cranking = getIsCranking(target) and not target:getIsMotorStarted()
             if spec.wasCranking and not cranking then
@@ -554,7 +530,7 @@ function RMS_BatteryCharger:onUpdate()
         end
     end
     if self.isServer and canDisconnect(spec) and not spec.pendingTarget then
-        local target = getTargetObject(spec)
+        local target = RMS_Utils.getConnectedObject(spec)
         if getIsAlive(target) and target.spec_RealisticMechanicalSystems ~= nil then
             local voltage = target.spec_RealisticMechanicalSystems.systemVoltageV
             local changed = spec.publishedVoltage == nil or math.abs(spec.publishedVoltage - voltage) >= 0.02
@@ -564,7 +540,7 @@ function RMS_BatteryCharger:onUpdate()
         end
     end
     if spec.state == RMS_BatteryCharger.STATE.CHARGING or spec.pendingResume or spec.pendingTarget
-        or spec.state == RMS_BatteryCharger.STATE.FULL and getIsAlive(getTargetObject(spec)) then self:raiseActive() end
+        or spec.state == RMS_BatteryCharger.STATE.FULL and getIsAlive(RMS_Utils.getConnectedObject(spec)) then self:raiseActive() end
     if self.isClient then
         if spec.display ~= nil then
             local voltage = math.floor(math.clamp(spec.voltage, 0, 99.9) * 10 + 0.5)
@@ -608,14 +584,12 @@ function RMS_BatteryCharger:onUpdate()
     end
 end
 
----
 function RMS_BatteryCharger:onRegisterActionEvents()
     if self.isClient then
         self:clearActionEventsTable(self.spec_motorized.actionEvents)
     end
 end
 
----
 function RMS_BatteryCharger:onVehicleSettingChanged(gameSettingId)
     if gameSettingId == GameSettings.SETTING.DIRECTION_CHANGE_MODE
         or gameSettingId == GameSettings.SETTING.GEAR_SHIFT_MODE then
@@ -623,7 +597,6 @@ function RMS_BatteryCharger:onVehicleSettingChanged(gameSettingId)
     end
 end
 
----
 function RMS_BatteryCharger:onDelete()
     if self.isServer then
         setIsParked(self, false)
@@ -636,7 +609,6 @@ function RMS_BatteryCharger:onDelete()
     end
 end
 
----
 function RMS_BatteryCharger:saveToXMLFile(xmlFile, key)
     local spec = assert(getSpec(self))
     xmlFile:setValue(key .. "#state", spec.state)
@@ -648,7 +620,6 @@ function RMS_BatteryCharger:saveToXMLFile(xmlFile, key)
     xmlFile:setValue(key .. "#voltage", spec.voltage)
 end
 
----
 local function writeState(spec, streamId)
     streamWriteUIntN(streamId, spec.state, 2)
     streamWriteUIntN(streamId, spec.mode or RMS_BatteryCharger.MODE.CHARGE, 1)
@@ -664,7 +635,6 @@ local function writeState(spec, streamId)
     streamWriteBool(streamId, spec.insufficient)
 end
 
----
 local function readState(spec, streamId)
     spec.state = streamReadUIntN(streamId, 2)
     spec.mode = streamReadUIntN(streamId, 1)
@@ -680,18 +650,15 @@ local function readState(spec, streamId)
     spec.insufficient = streamReadBool(streamId)
 end
 
----
 function RMS_BatteryCharger:onWriteStream(streamId)
     writeState(assert(getSpec(self)), streamId)
 end
 
----
 function RMS_BatteryCharger:onReadStream(streamId)
     readState(assert(getSpec(self)), streamId)
     self:raiseActive()
 end
 
----
 function RMS_BatteryCharger:onWriteUpdateStream(streamId, connection, dirtyMask)
     if not connection:getIsServer() then
         local spec = assert(getSpec(self))
@@ -701,25 +668,23 @@ function RMS_BatteryCharger:onWriteUpdateStream(streamId, connection, dirtyMask)
     end
 end
 
----
 function RMS_BatteryCharger:onReadUpdateStream(streamId, timestamp, connection)
     if connection:getIsServer() and streamReadBool(streamId) then
         local spec = assert(getSpec(self))
-        local previousState, previousInsufficient, previousTarget = spec.state, spec.insufficient, getTargetObject(spec)
+        local previousState, previousInsufficient, previousTarget = spec.state, spec.insufficient, RMS_Utils.getConnectedObject(spec)
         readState(spec, streamId)
         notifyChange(self, previousState, previousInsufficient, previousTarget)
         self:raiseActive()
     end
 end
 
----
 function RMS_BatteryCharger:showInfo(superFunc, box)
     superFunc(self, box)
     local spec = assert(getSpec(self))
     local stateKeys = {"rms_charger_idle", "rms_charger_charging", "rms_charger_full", "rms_charger_interrupted"}
     local state = g_i18n:getText(stateKeys[spec.state + 1])
     if spec.mode == RMS_BatteryCharger.MODE.START and canDisconnect(spec) then
-        local target = getTargetObject(spec)
+        local target = RMS_Utils.getConnectedObject(spec)
         if getIsAlive(target) and target:getIsMotorStarted() then
             state = g_i18n:getText("rms_charger_start_running")
         elseif getIsAlive(target) and getIsCranking(target) then
@@ -742,7 +707,6 @@ end
 RMS_BatteryChargerActivatable = {}
 local RMS_BatteryChargerActivatable_mt = Class(RMS_BatteryChargerActivatable)
 
----
 function RMS_BatteryChargerActivatable.new(charger)
     local self = setmetatable({}, RMS_BatteryChargerActivatable_mt)
     self.charger = charger
@@ -785,8 +749,6 @@ local function getRayBoxesEntry(node, boxes, x, y, z, dx, dy, dz, limit)
     return limit
 end
 
--- @return boolean isPcLookedAt
--- @return table? holder space whose stored tool is looked at
 local function getLookedAt(charger, player)
     if player.targeter == nil then
         return false, nil
@@ -840,12 +802,10 @@ function RMS_BatteryChargerActivatable:getDistance(x, y, z)
     return MathUtil.vector3Length(tx - x, ty - y, tz - z)
 end
 
----
 function RMS_BatteryChargerActivatable:getIsActivatable()
     return getIsAlive(self.charger) and g_localPlayer ~= nil and not g_localPlayer:getIsInVehicle()
         and self.charger.isAddedToPhysics == true
-        and self.charger:getOwnerFarmId() == g_currentMission:getFarmId()
-        and g_currentMission:getFarmId() ~= FarmManager.SPECTATOR_FARM_ID
+        and g_currentMission.accessHandler:canPlayerAccess(self.charger)
         and getDistance(self.charger, g_localPlayer) <= RMS_BatteryCharger.MAX_DISTANCE
 end
 
@@ -881,7 +841,7 @@ function RMS_BatteryChargerActivatable:run()
         OptionDialog.show(function(index)
             if index == 1 then self:connect(RMS_BatteryCharger.MODE.CHARGE)
             elseif index == 2 then self:connect(RMS_BatteryCharger.MODE.START) end
-        end, g_i18n:getText("rms_charger_mode_select"), g_i18n:getText("rms_charger_name"),
+        end, g_i18n:getText("rms_charger_start"), g_i18n:getText("rms_charger_name"),
             {g_i18n:getText("rms_charger_mode_charge"), g_i18n:getText("rms_charger_mode_start")})
     end
 end
@@ -904,7 +864,6 @@ function RMS_BatteryChargerActivatable:connect(mode)
         end
     end
     table.sort(candidates, function(a, b) return getDistance(self.charger, a) < getDistance(self.charger, b) end)
-    ---
     local function choose(index)
         if index ~= nil and candidates[index] ~= nil then
             RMS_BatteryChargerRequestEvent.send(self.charger, candidates[index], false, mode)

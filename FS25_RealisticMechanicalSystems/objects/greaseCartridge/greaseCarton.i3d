@@ -1,0 +1,450 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<i3D xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="greaseCarton_source" version="1.6" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0" />
+  </Asset>
+  <Files>
+    <File fileId="15" filename="textures/carton_diffuse.dds" />
+    <File fileId="3" filename="textures/carton_vmask.dds" />
+    <File fileId="16" filename="textures/cartridge_diffuse.dds" />
+    <File fileId="14" filename="textures/cartridge_vmask.dds" />
+    <File fileId="13" filename="textures/closure_diffuse.dds" />
+    <File fileId="12" filename="textures/edge_diffuse.dds" />
+    <File fileId="1" filename="textures/kraft_diffuse.dds" />
+    <File fileId="4" filename="$data/shaders/vehicleShader.xml" />
+    <File fileId="2" filename="$data/shared/default_normal.dds" />
+    <File fileId="6" filename="$data/shared/detailLibrary/flat_normal.dds" />
+    <File fileId="7" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_diffuse.dds" />
+    <File fileId="5" filename="$data/shared/detailLibrary/nonMetallic/plastic/plasticPainted_specular.dds" />
+    <File fileId="17" filename="textures/bottom_diffuse.dds" />
+  </Files>
+  <Materials>
+    <Material name="cartonCutEdge" materialId="2" customShaderId="4">
+      <Texture fileId="12" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="3" />
+      <Custommap name="detailSpecular" fileId="5" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="7" />
+    </Material>
+    <Material name="cartonKraft" materialId="1" customShaderId="4">
+      <Texture fileId="1" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="3" />
+      <Custommap name="detailSpecular" fileId="5" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="7" />
+    </Material>
+    <Material name="cartonPrintedPaper" materialId="3" customShaderId="4">
+      <Texture fileId="15" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="3" />
+      <Custommap name="detailSpecular" fileId="5" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="7" />
+    </Material>
+    <Material name="cartridgePolymer" materialId="5" customShaderId="4">
+      <Texture fileId="16" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="14" />
+      <Custommap name="detailSpecular" fileId="5" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="7" />
+    </Material>
+    <Material name="closurePolymer" materialId="4" customShaderId="4">
+      <Texture fileId="13" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="14" />
+      <Custommap name="detailSpecular" fileId="5" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="7" />
+    </Material>
+    <Material name="cartonBottom" materialId="6" customShaderId="4">
+      <Texture fileId="17" />
+      <Normalmap fileId="2" />
+      <Glossmap fileId="3" />
+      <Custommap name="detailSpecular" fileId="5" />
+      <Custommap name="detailNormal" fileId="6" />
+      <Custommap name="detailDiffuse" fileId="7" />
+    </Material>
+  </Materials>
+  <Shapes externalShapesFile="greaseCarton.i3d.shapes">
+  </Shapes>
+  <Scene>
+    <Shape name="greasePackage" shapeId="1" dynamic="true" compound="true" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ff983" staticFriction="0.8" dynamicFriction="0.6" linearDamping="0.1" angularDamping="0.8" nodeId="44" castsShadows="false" receiveShadows="false" nonRenderable="true" materialIds="1,2">
+      <Shape name="cartonBody" shapeId="2" compoundChild="true" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ff983" staticFriction="0.8" dynamicFriction="0.6" nodeId="45" castsShadows="false" receiveShadows="false" nonRenderable="true" materialIds="1,2" />
+      <Shape name="singleCartridgeBody" shapeId="3" compoundChild="true" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ff983" staticFriction="0.8" dynamicFriction="0.6" nodeId="46" castsShadows="false" receiveShadows="false" nonRenderable="true" materialIds="4" />
+      <TransformGroup name="cartonVariant" nodeId="47">
+        <TransformGroup name="graphics" nodeId="48">
+          <TransformGroup name="cartonShell" lodDistance="0 0.75 2.5" nodeId="49">
+            <TransformGroup name="cartonLOD0" nodeId="50">
+              <Shape name="backWall_L0" shapeId="4" clipDistance="40" nodeId="51" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+              <Shape name="bottom_L0" shapeId="5" clipDistance="40" nodeId="52" castsShadows="true" receiveShadows="true" materialIds="6,1" />
+              <Shape name="frontWall_L0" shapeId="6" clipDistance="40" nodeId="53" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+              <Shape name="gluedSeam" shapeId="7" clipDistance="40" nodeId="54" castsShadows="true" receiveShadows="true" materialIds="1,2" />
+              <Shape name="leftWall_L0" shapeId="8" clipDistance="40" nodeId="55" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+              <Shape name="rightWall_L0" shapeId="9" clipDistance="40" nodeId="56" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+            </TransformGroup>
+            <TransformGroup name="cartonLOD1" nodeId="57">
+              <Shape name="backWall_L1" shapeId="4" clipDistance="40" nodeId="58" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+              <Shape name="bottom_L1" shapeId="5" clipDistance="40" nodeId="59" castsShadows="true" receiveShadows="true" materialIds="6,1" />
+              <Shape name="frontWall_L1" shapeId="6" clipDistance="40" nodeId="60" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+              <Shape name="leftWall_L1" shapeId="8" clipDistance="40" nodeId="61" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+              <Shape name="rightWall_L1" shapeId="9" clipDistance="40" nodeId="62" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+            </TransformGroup>
+            <TransformGroup name="cartonLOD2" nodeId="63">
+              <Shape name="backWall_L2" shapeId="4" clipDistance="40" nodeId="64" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+              <Shape name="bottom_L2" shapeId="5" clipDistance="40" nodeId="65" castsShadows="true" receiveShadows="true" materialIds="6,1" />
+              <Shape name="frontWall_L2" shapeId="6" clipDistance="40" nodeId="66" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+              <Shape name="leftWall_L2" shapeId="8" clipDistance="40" nodeId="67" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+              <Shape name="rightWall_L2" shapeId="9" clipDistance="40" nodeId="68" castsShadows="true" receiveShadows="true" materialIds="1,2,3" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge01" translation="-0.0867 0.003 0.0578" lodDistance="0 0.75 2.5" nodeId="69">
+            <TransformGroup name="cartridge01LOD0" nodeId="70">
+              <Shape name="cartridge01_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="71" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="72" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="73" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="74" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="75" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="76" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge01LOD1" nodeId="77">
+              <Shape name="cartridge01_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="78" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="79" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="80" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="81" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="82" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="83" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge01LOD2" nodeId="84">
+              <Shape name="cartridge01_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="85" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="86" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="87" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="88" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="89" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge01_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="90" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge02" translation="-0.0289 0.003 0.0578" lodDistance="0 0.75 2.5" nodeId="91">
+            <TransformGroup name="cartridge02LOD0" nodeId="92">
+              <Shape name="cartridge02_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="93" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="94" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="95" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="96" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="97" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="98" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge02LOD1" nodeId="99">
+              <Shape name="cartridge02_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="100" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="101" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="102" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="103" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="104" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="105" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge02LOD2" nodeId="106">
+              <Shape name="cartridge02_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="107" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="108" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="109" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="110" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="111" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge02_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="112" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge03" translation="0.0289 0.003 0.0578" lodDistance="0 0.75 2.5" nodeId="113">
+            <TransformGroup name="cartridge03LOD0" nodeId="114">
+              <Shape name="cartridge03_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="115" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="116" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="117" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="118" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="119" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="120" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge03LOD1" nodeId="121">
+              <Shape name="cartridge03_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="122" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="123" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="124" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="125" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="126" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="127" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge03LOD2" nodeId="128">
+              <Shape name="cartridge03_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="129" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="130" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="131" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="132" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="133" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge03_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="134" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge04" translation="0.0867 0.003 0.0578" lodDistance="0 0.75 2.5" nodeId="135">
+            <TransformGroup name="cartridge04LOD0" nodeId="136">
+              <Shape name="cartridge04_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="137" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="138" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="139" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="140" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="141" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="142" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge04LOD1" nodeId="143">
+              <Shape name="cartridge04_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="144" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="145" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="146" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="147" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="148" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="149" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge04LOD2" nodeId="150">
+              <Shape name="cartridge04_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="151" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="152" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="153" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="154" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="155" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge04_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="156" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge05" translation="-0.0867 0.003 0" lodDistance="0 0.75 2.5" nodeId="157">
+            <TransformGroup name="cartridge05LOD0" nodeId="158">
+              <Shape name="cartridge05_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="159" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="160" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="161" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="162" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="163" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="164" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge05LOD1" nodeId="165">
+              <Shape name="cartridge05_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="166" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="167" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="168" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="169" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="170" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="171" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge05LOD2" nodeId="172">
+              <Shape name="cartridge05_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="173" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="174" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="175" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="176" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="177" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge05_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="178" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge06" translation="-0.0289 0.003 0" lodDistance="0 0.75 2.5" nodeId="179">
+            <TransformGroup name="cartridge06LOD0" nodeId="180">
+              <Shape name="cartridge06_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="181" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="182" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="183" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="184" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="185" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="186" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge06LOD1" nodeId="187">
+              <Shape name="cartridge06_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="188" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="189" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="190" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="191" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="192" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="193" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge06LOD2" nodeId="194">
+              <Shape name="cartridge06_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="195" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="196" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="197" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="198" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="199" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge06_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="200" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge07" translation="0.0289 0.003 0" lodDistance="0 0.75 2.5" nodeId="201">
+            <TransformGroup name="cartridge07LOD0" nodeId="202">
+              <Shape name="cartridge07_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="203" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="204" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="205" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="206" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="207" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="208" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge07LOD1" nodeId="209">
+              <Shape name="cartridge07_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="210" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="211" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="212" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="213" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="214" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="215" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge07LOD2" nodeId="216">
+              <Shape name="cartridge07_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="217" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="218" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="219" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="220" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="221" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge07_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="222" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge08" translation="0.0867 0.003 0" lodDistance="0 0.75 2.5" nodeId="223">
+            <TransformGroup name="cartridge08LOD0" nodeId="224">
+              <Shape name="cartridge08_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="225" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="226" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="227" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="228" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="229" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="230" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge08LOD1" nodeId="231">
+              <Shape name="cartridge08_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="232" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="233" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="234" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="235" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="236" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="237" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge08LOD2" nodeId="238">
+              <Shape name="cartridge08_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="239" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="240" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="241" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="242" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="243" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge08_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="244" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge09" translation="-0.0867 0.003 -0.0578" lodDistance="0 0.75 2.5" nodeId="245">
+            <TransformGroup name="cartridge09LOD0" nodeId="246">
+              <Shape name="cartridge09_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="247" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="248" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="249" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="250" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="251" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="252" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge09LOD1" nodeId="253">
+              <Shape name="cartridge09_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="254" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="255" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="256" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="257" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="258" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="259" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge09LOD2" nodeId="260">
+              <Shape name="cartridge09_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="261" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="262" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="263" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="264" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="265" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge09_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="266" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge10" translation="-0.0289 0.003 -0.0578" lodDistance="0 0.75 2.5" nodeId="267">
+            <TransformGroup name="cartridge10LOD0" nodeId="268">
+              <Shape name="cartridge10_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="269" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="270" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="271" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="272" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="273" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="274" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge10LOD1" nodeId="275">
+              <Shape name="cartridge10_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="276" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="277" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="278" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="279" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="280" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="281" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge10LOD2" nodeId="282">
+              <Shape name="cartridge10_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="283" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="284" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="285" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="286" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="287" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge10_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="288" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge11" translation="0.0289 0.003 -0.0578" lodDistance="0 0.75 2.5" nodeId="289">
+            <TransformGroup name="cartridge11LOD0" nodeId="290">
+              <Shape name="cartridge11_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="291" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="292" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="293" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="294" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="295" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="296" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge11LOD1" nodeId="297">
+              <Shape name="cartridge11_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="298" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="299" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="300" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="301" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="302" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="303" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge11LOD2" nodeId="304">
+              <Shape name="cartridge11_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="305" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="306" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="307" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="308" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="309" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge11_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="310" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+          <TransformGroup name="cartridge12" translation="0.0867 0.003 -0.0578" lodDistance="0 0.75 2.5" nodeId="311">
+            <TransformGroup name="cartridge12LOD0" nodeId="312">
+              <Shape name="cartridge12_accepted_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="313" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="314" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="315" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="316" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_capTop_L0" shapeId="14" clipDistance="40" nodeId="317" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_tube_L0" shapeId="15" clipDistance="40" nodeId="318" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge12LOD1" nodeId="319">
+              <Shape name="cartridge12_accepted_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="320" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="321" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="322" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="323" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_capTop_L1" shapeId="20" clipDistance="40" nodeId="324" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_tube_L1" shapeId="21" clipDistance="40" nodeId="325" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+            <TransformGroup name="cartridge12LOD2" nodeId="326">
+              <Shape name="cartridge12_accepted_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="327" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="328" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="329" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="330" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_capTop_L2" shapeId="26" clipDistance="40" nodeId="331" castsShadows="true" receiveShadows="true" materialIds="4" />
+              <Shape name="cartridge12_accepted_tube_L2" shapeId="27" clipDistance="40" nodeId="332" castsShadows="true" receiveShadows="true" materialIds="5" />
+            </TransformGroup>
+          </TransformGroup>
+        </TransformGroup>
+      </TransformGroup>
+      <TransformGroup name="singleVariant" nodeId="333">
+        <TransformGroup name="singleGraphics" lodDistance="0 2 6" nodeId="334">
+          <TransformGroup name="single_LOD0" nodeId="335">
+            <Shape name="single_bottomDisc_L0" shapeId="10" clipDistance="40" nodeId="336" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_bottomLip_L0" shapeId="11" clipDistance="40" nodeId="337" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_capLowerBead_L0" shapeId="12" clipDistance="40" nodeId="338" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_capSkirt_L0" shapeId="13" clipDistance="40" nodeId="339" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_capTop_L0" shapeId="14" clipDistance="40" nodeId="340" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_tube_L0" shapeId="15" clipDistance="40" nodeId="341" castsShadows="true" receiveShadows="true" materialIds="5" />
+          </TransformGroup>
+          <TransformGroup name="single_LOD1" nodeId="342">
+            <Shape name="single_bottomDisc_L1" shapeId="16" clipDistance="40" nodeId="343" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_bottomLip_L1" shapeId="17" clipDistance="40" nodeId="344" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_capLowerBead_L1" shapeId="18" clipDistance="40" nodeId="345" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_capSkirt_L1" shapeId="19" clipDistance="40" nodeId="346" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_capTop_L1" shapeId="20" clipDistance="40" nodeId="347" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_tube_L1" shapeId="21" clipDistance="40" nodeId="348" castsShadows="true" receiveShadows="true" materialIds="5" />
+          </TransformGroup>
+          <TransformGroup name="single_LOD2" nodeId="349">
+            <Shape name="single_bottomDisc_L2" shapeId="22" clipDistance="40" nodeId="350" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_bottomLip_L2" shapeId="23" clipDistance="40" nodeId="351" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_capLowerBead_L2" shapeId="24" clipDistance="40" nodeId="352" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_capSkirt_L2" shapeId="25" clipDistance="40" nodeId="353" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_capTop_L2" shapeId="26" clipDistance="40" nodeId="354" castsShadows="true" receiveShadows="true" materialIds="4" />
+            <Shape name="single_tube_L2" shapeId="27" clipDistance="40" nodeId="355" castsShadows="true" receiveShadows="true" materialIds="5" />
+          </TransformGroup>
+        </TransformGroup>
+        <TransformGroup name="singleFillRootNode" translation="0 0.1195 0" nodeId="356" />
+      </TransformGroup>
+      <TransformGroup name="pickupNode" translation="0 0.121 0" nodeId="357" />
+      <TransformGroup name="fillRootNode" translation="0 0.145 0.0922" nodeId="358" />
+    </Shape>
+  </Scene>
+</i3D>
