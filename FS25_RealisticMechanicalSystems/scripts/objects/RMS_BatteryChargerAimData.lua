@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Trolley interaction boxes: min x y z, max x y z, node-local metres
 RMS_BatteryChargerAimData = {

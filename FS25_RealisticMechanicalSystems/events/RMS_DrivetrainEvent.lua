@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 RMS_DrivetrainEvent = {}
 local RMS_DrivetrainEvent_mt = Class(RMS_DrivetrainEvent, Event)

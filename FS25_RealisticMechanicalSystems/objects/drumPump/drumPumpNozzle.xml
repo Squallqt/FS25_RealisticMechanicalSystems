@@ -1,5 +1,5 @@
 <handTool type="rmsFluidCanister" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
-    <annotation>Copyright (C) 2026 Squallqt. Licensed under the GNU General Public License v3.0 or later.</annotation>
+    <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
     <!-- Carried drum nozzle -->
     <storeData>
         <name>$l10n_rms_drum_pump_name</name>

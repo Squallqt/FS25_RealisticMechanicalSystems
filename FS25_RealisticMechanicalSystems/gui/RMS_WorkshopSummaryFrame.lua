@@ -1,5 +1,4 @@
--- Copyright (C) 2026 Squallqt.
--- Licensed under the GNU General Public License v3.0 or later. See LICENSE.
+-- Copyright © 2026 Squallqt. All rights reserved.
 
 ---Summary page: vehicle, condition, service, alerts and fluids
 RMS_WorkshopSummaryFrame = {}

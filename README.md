@@ -6,15 +6,13 @@ In-depth vehicle wear, failure, diagnostics, maintenance, and repair system for 
 [![FS25](https://img.shields.io/badge/FS25-compatible-green.svg)](https://farming-simulator.com/)
 ![Multiplayer](https://img.shields.io/badge/multiplayer-supported-success.svg)
 ![Languages](https://img.shields.io/badge/languages-27-blue.svg)
-[![License](https://img.shields.io/badge/license-GPL--3.0-yellow.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-All_Rights_Reserved-red.svg)](LICENSE)
 
 Every machine is built from up to 8 individual systems, each with its own condition, its own wear factors, and its own way of failing. Service on schedule, work the machine within its limits, and watch for the early symptoms: the cheapest repair is always the one you catch first.
 
 Singleplayer, multiplayer, and dedicated server.
 
 Electric vehicles are tracked with the parts they really have: an electric motor, a traction battery and power electronics.
-
-> **Note:** This repository is an independently maintained fork of Advanced Damage System by id577, developed by Squallqt since 30 June 2026. The gameplay model and the documentation have been substantially reworked since then; the original credits and provenance are preserved unchanged in [NOTICE.md](NOTICE.md).
 
 ## Quick Start
 
@@ -303,8 +301,6 @@ An electric machine is tracked like any other, with the parts it really has: an 
 1. Place the mod ZIP file into your FS25 `mods/` directory (do not extract).
 2. Activate the mod in mod selection.
 3. Access RMS from the fleet menu (`P` key), the in-game settings, and workshop interactions.
-
-> **Important:** Do not run RMS and Advanced Damage System together. RMS steps aside when it finds ADS and leaves it in charge, so nothing runs twice.
 
 ## Usage
 
@@ -620,4 +616,10 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 
 ## License
 
-GNU General Public License v3.0. See [LICENSE](LICENSE) for the complete terms and [NOTICE.md](NOTICE.md) for provenance and attribution.
+Mod for Farming Simulator.
+
+Copyright © 2026 Squallqt. All rights reserved.
+
+This project is proprietary and is not distributed under an open-source license. Downloading an official release to play with it in Farming Simulator 25, in single player or multiplayer, is permitted. Copying, modifying, converting, redistributing, reuploading, commercializing, or reusing any part of this project requires prior written authorization.
+
+See [LICENSE](LICENSE) for the complete terms and [NOTICE.md](NOTICE.md) for provenance and attribution.
