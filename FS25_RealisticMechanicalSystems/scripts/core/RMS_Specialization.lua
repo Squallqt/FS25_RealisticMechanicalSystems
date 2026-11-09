@@ -1959,9 +1959,21 @@ end
 local SYSTEM_WEAR_UPDATES = { "updateEngineSystem", "updateTransmissionSystem", "updateHydraulicsSystem", "updatePtoSystem",
     "updateHarvestSystem", "updateCoolingSystem", "updateElectricalSystem", "updateChassisSystem", "updateFuelSystem" }
 
+---Tells the clients a lent machine now belongs to its farm
+local function syncPropertyState(vehicle, spec)
+    if vehicle.isServer and spec.syncedPropertyState ~= vehicle.propertyState then
+        if spec.syncedPropertyState ~= nil then
+            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.STATE)
+        end
+        spec.syncedPropertyState = vehicle.propertyState
+    end
+end
+RealisticMechanicalSystems.syncPropertyState = syncPropertyState
+
 function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
     local spec = self.spec_RealisticMechanicalSystems
     if spec.isExcludedVehicle then return end
+    syncPropertyState(self, spec)
 
     -- RMS counts its own working time, from the game's when first seen
     local gameTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0

@@ -304,8 +304,7 @@ An electric machine is tracked like any other, with the parts it really has: an 
 - **AutoDrive** and **Courseplay**: their drivers slow down on an overload like the game's helpers, and a breakdown that stops the machine stops them too.
 - **Mobile Workshop**: its workshop screen works as the RMS mobile workshop, with the same limits.
 - **Realistic Harvesting** (`1.6.5.0` or higher): losses, throughput and stops follow the wear of the RMS harvesting parts.
-- **[WIP] Red Tape**: machines lent by a scheme are handled like contract machines, without wear.
-- **[WIP] Vehicle Control Addon**: RMS drives the drivetrain and the differential locks, and turns off Vehicle Control Addon's own; its other functions stay.
+- **Red Tape**: machines lent by a scheme are handled like contract machines, without wear.
 
 ## Installation
 

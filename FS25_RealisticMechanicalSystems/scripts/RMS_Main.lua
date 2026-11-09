@@ -313,7 +313,7 @@ function RMS_Main.hookRepairButton(screenInstance, vehicle)
         screenInstance.rmsOriginalRepairCallback = button.onClickCallback
     end
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec == nil or spec.isExcludedVehicle then
+    if spec == nil or spec.isExcludedVehicle or RealisticMechanicalSystems.isMissionVehicle(vehicle) then
         button.onClickCallback = screenInstance.rmsOriginalRepairCallback
         return
     end
@@ -371,6 +371,7 @@ function RMS_Main.hookRepaintButton(screenInstance, vehicle)
 
     local isRmsVehicle = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil
         and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
+        and not RealisticMechanicalSystems.isMissionVehicle(vehicle)
     if isRmsVehicle then
         button.onClickCallback = function()
             RMS_WorkshopDialog.show(screenInstance.vehicle, RMS_Main.getWorkshopType(screenInstance), RealisticMechanicalSystems.STATUS.BODYWORK)
