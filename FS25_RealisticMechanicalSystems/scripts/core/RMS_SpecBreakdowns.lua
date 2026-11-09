@@ -137,7 +137,7 @@ end
 ---Adds a breakdown at a stage, rolling its detection and reapplying the effects
 function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
     local spec = self.spec_RealisticMechanicalSystems
-    if not spec then return end
+    if not spec or RealisticMechanicalSystems.isMissionVehicle(self) then return end
 
     local options
     if type(stageOrOptions) == "table" then

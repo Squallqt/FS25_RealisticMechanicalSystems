@@ -164,7 +164,10 @@ function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, fa
     local spec = self.spec_RealisticMechanicalSystems
     local reliability = math.max(spec.reliability, 0.001)
     local dtMultiplier = RMS_Config.CORE.BASE_SYSTEMS_WEAR / (60 * 60 * 1000) * dt
-    local scale = (1 + spec.extraConditionWear) / reliability * RMS_Fluids.getSystemWearMultiplier(self, systemKey) * dtMultiplier
+    local isLent = isMissionVehicle(self)
+    -- a lent machine does not wear; helpers ease off on its causes
+    local scale = isLent and 0
+        or (1 + spec.extraConditionWear) / reliability * RMS_Fluids.getSystemWearMultiplier(self, systemKey) * dtMultiplier
 
     local causeRates, causeTotal = {}, 0
     for key, value in pairs(factors) do
@@ -197,7 +200,7 @@ function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, fa
     refreshSystemCondition(spec, systemKey)
 
     local systemStats = ensureFactorStatsEntry(spec, systemKey)
-    systemStats.total = systemStats.total + wearRate * scale
+    systemStats.total = systemStats.total + (isLent and causeTotal / reliability * dtMultiplier or wearRate * scale)
     for alias, value in pairs(causeRates) do
         systemStats[alias] = (tonumber(systemStats[alias]) or 0) + value / reliability * dtMultiplier
     end
@@ -208,6 +211,10 @@ end
 
 ---Wears the parts of a system at once, the cause on the parts it reaches
 function RealisticMechanicalSystems:applyInstantDamageToSystem(system, damageAmount, factorName)
+    if isMissionVehicle(self) then
+        return
+    end
+
     local spec = self.spec_RealisticMechanicalSystems
     local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, system)
     local alias = RealisticMechanicalSystems.FACTOR_STATS_ALIASES[factorName]

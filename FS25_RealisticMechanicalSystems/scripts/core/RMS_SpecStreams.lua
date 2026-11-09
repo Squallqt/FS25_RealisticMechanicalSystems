@@ -369,6 +369,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteString(streamId, spec.currentState or "")
             streamWriteString(streamId, spec.plannedState or "")
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.maintenanceTimer, 0, 0))
+            VehiclePropertyState.writeStream(streamId, self.propertyState)
         end
 
         -- [2] Service context
@@ -475,6 +476,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             spec.plannedState = streamReadString(streamId)
             spec.maintenanceTimer = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
             spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
+            self.propertyState = VehiclePropertyState.readStream(streamId)
         end
 
         -- [2] Service context

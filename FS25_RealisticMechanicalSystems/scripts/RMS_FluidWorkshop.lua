@@ -515,7 +515,8 @@ function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, w
         return false, RMS_FluidWorkshop.RESULT.INVALID
     end
 
-    if vehicle:getCurrentStatus() ~= RealisticMechanicalSystems.STATUS.READY
+    if RealisticMechanicalSystems.isMissionVehicle(vehicle)
+        or vehicle:getCurrentStatus() ~= RealisticMechanicalSystems.STATUS.READY
         or (vehicle.spec_RealisticMechanicalSystems.maintenanceTimer or 0) ~= 0 then
         return false, RMS_FluidWorkshop.RESULT.SERVICE_REFUSED
     end
