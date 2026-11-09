@@ -212,7 +212,7 @@
         <text name="rms_thermal_power_restored_message" text="Termiskt skydd: effektbegränsningen hävd"/>
         <text name="rms_breakdown_at_progress_message" text="pågår"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Varning! Motorn är kall, sänk belastningen."/>
+        <text name="rms_spec_cold_engine_message" text="Varning! Motorn är kall: den slits tills den blivit varm."/>
         <text name="rms_spec_overheat_engine_message" text="Varning! Motorn överhettas."/>
         <text name="rms_spec_overheat_transmission_message" text="Varning! Transmissionen överhettas."/>
         <text name="rms_spec_overhaul_partial" text="Delvis"/>

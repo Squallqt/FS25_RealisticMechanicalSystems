@@ -15,6 +15,9 @@
         <shopHeight>0.955</shopHeight>
         <shopTranslationOffset>0 0 0</shopTranslationOffset>
         <shopRotationOffset>0 0 0</shopRotationOffset>
+        <specs>
+            <weight ignore="true" />
+        </specs>
         <showInStore>false</showInStore>
     </storeData>
     <base>
@@ -23,7 +26,7 @@
         <sounds filename="objects/batteryCharger/sounds.xml" />
         <size width="0.653" length="0.51" height="0.955" />
         <components>
-            <component centerOfMass="0 0.350000 -0.025267" solverIterationCount="10" mass="29.69" />
+            <component centerOfMass="0 -0.200000 -0.025267" solverIterationCount="10" mass="297.20" />
         </components>
         <schemaOverlay attacherJointPosition="0 0" name="IMPLEMENT" />
         <mapHotspot type="TOOL" />
@@ -34,19 +37,19 @@
             <wheelConfiguration name="$l10n_configuration_valueDefault" price="0" brand="TRELLEBORG" saveId="TRELLEBORG_DEFAULT">
                 <wheels autoRotateBackSpeed="2.1">
                     <wheel isLeft="true" hasTireTracks="false" hasParticles="false">
-                        <physics rotSpeed="1" restLoad="0.0102816" radius="0.0475" width="0.025" mass="0.0004" repr="wheelFrontLeftRot" driveNode="wheelFrontLeft" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="1.4394304" damper="2.0563291" yOffset="0" />
+                        <physics rotSpeed="1" restLoad="0.0949367" radius="0.0475" width="0.025" mass="0.0004" repr="wheelFrontLeftRot" driveNode="wheelFrontLeft" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="13.2911392" damper="18.9873418" yOffset="0" />
                         <tire tireTrackAtlasIndex="4" />
                     </wheel>
                     <wheel isLeft="false" hasTireTracks="false" hasParticles="false">
-                        <physics rotSpeed="1" restLoad="0.0102816" radius="0.0475" width="0.025" mass="0.0004" repr="wheelFrontRightRot" driveNode="wheelFrontRight" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="1.4394304" damper="2.0563291" yOffset="0" />
+                        <physics rotSpeed="1" restLoad="0.0949367" radius="0.0475" width="0.025" mass="0.0004" repr="wheelFrontRightRot" driveNode="wheelFrontRight" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="13.2911392" damper="18.9873418" yOffset="0" />
                         <tire tireTrackAtlasIndex="4" />
                     </wheel>
                     <wheel isLeft="true" hasTireTracks="false" hasParticles="false">
-                        <physics rotSpeed="0" restLoad="0.0102816" radius="0.106" width="0.035" mass="0.001" repr="wheelBackLeft" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="1.4394304" damper="2.0563291" yOffset="0" />
+                        <physics rotSpeed="0" restLoad="0.0949367" radius="0.106" width="0.035" mass="0.001" repr="wheelBackLeft" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="13.2911392" damper="18.9873418" yOffset="0" />
                         <tire tireTrackAtlasIndex="4" />
                     </wheel>
                     <wheel isLeft="false" hasTireTracks="false" hasParticles="false">
-                        <physics rotSpeed="0" restLoad="0.0102816" radius="0.106" width="0.035" mass="0.001" repr="wheelBackRight" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="1.4394304" damper="2.0563291" yOffset="0" />
+                        <physics rotSpeed="0" restLoad="0.0949367" radius="0.106" width="0.035" mass="0.001" repr="wheelBackRight" forcePointRatio="0.5" initialCompression="10" suspTravel="0.05" spring="13.2911392" damper="18.9873418" yOffset="0" />
                         <tire tireTrackAtlasIndex="4" />
                     </wheel>
                 </wheels>
@@ -81,7 +84,7 @@
         </differentialConfigurations>
         <motorConfigurations>
             <motorConfiguration price="0">
-                <motor torqueScale="0.015834" minRpm="850" maxRpm="2200" maxForwardSpeed="7" maxBackwardSpeed="5" brakeForce="0.0020563" lowBrakeForceScale="0.1" accelerationLimit="1.6" dampingRateScale="0.08">
+                <motor torqueScale="0.146203" minRpm="850" maxRpm="2200" maxForwardSpeed="7" maxBackwardSpeed="5" brakeForce="0.0759494" lowBrakeForceScale="0.1" accelerationLimit="1.6" dampingRateScale="0.08">
                     <torque normRpm="0.45" torque="0.9" />
                     <torque normRpm="0.5" torque="0.97" />
                     <torque normRpm="0.59" torque="1" />

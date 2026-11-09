@@ -212,7 +212,7 @@
         <text name="rms_thermal_power_restored_message" text="过热保护：功率限制已解除"/>
         <text name="rms_breakdown_at_progress_message" text="进行中"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="警告！发动机温度低，请降低负载。"/>
+        <text name="rms_spec_cold_engine_message" text="警告！发动机温度低，升温前会持续磨损。"/>
         <text name="rms_spec_overheat_engine_message" text="警告！发动机过热。"/>
         <text name="rms_spec_overheat_transmission_message" text="警告！变速箱过热。"/>
         <text name="rms_spec_overhaul_partial" text="部分"/>

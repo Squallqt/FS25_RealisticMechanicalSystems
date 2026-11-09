@@ -163,58 +163,6 @@ end
 
 function RMS_BatteryCharger.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "showInfo", RMS_BatteryCharger.showInfo)
-    SpecializationUtil.registerOverwrittenFunction(vehicleType, "addToPhysics", RMS_BatteryCharger.addToPhysics)
-    SpecializationUtil.registerOverwrittenFunction(vehicleType, "removeFromPhysics", RMS_BatteryCharger.removeFromPhysics)
-end
-
-local function setIsParked(vehicle, isParked)
-    local spec = getSpec(vehicle)
-    if spec.isParked == isParked then
-        return
-    end
-    spec.isParked = isParked
-    if not isParked then
-        for _, jointIndex in ipairs(spec.parkingJoints or {}) do
-            removeJoint(jointIndex)
-        end
-        spec.parkingJoints = nil
-        return
-    end
-    -- Wheels need dynamic bodies; a world joint locks the parked pose.
-    spec.parkingJoints = {}
-    for _, component in ipairs(vehicle.components) do
-        local joint = JointConstructor.new()
-        joint:setActors(component.node, 0)
-        local x, y, z = getWorldTranslation(component.node)
-        joint:setJointWorldPositions(x, y, z, x, y, z)
-        for axis = 0, 2 do
-            joint:setTranslationLimit(axis, true, 0, 0)
-            joint:setRotationLimit(axis, 0, 0)
-        end
-        joint:setJointWorldAxes(1, 0, 0, 1, 0, 0)
-        joint:setJointWorldNormals(0, 1, 0, 0, 1, 0)
-        joint:setEnableCollision(false)
-        table.insert(spec.parkingJoints, joint:finalize())
-    end
-end
-
----Parks the trolley on entering physics unless pushed
-function RMS_BatteryCharger:addToPhysics(superFunc)
-    if not superFunc(self) then
-        return false
-    end
-    if self.isServer then
-        getSpec(self).isParked = nil
-        setIsParked(self, not self:getIsControlled())
-    end
-    return true
-end
-
-function RMS_BatteryCharger:removeFromPhysics(superFunc)
-    if self.isServer then
-        setIsParked(self, false)
-    end
-    return superFunc(self)
 end
 
 function RMS_BatteryCharger.registerEventListeners(vehicleType)
@@ -474,9 +422,6 @@ function RMS_BatteryCharger:onUpdate()
             self:stopMotor(false)
         end
     end
-    if self.isServer and self.isAddedToPhysics then
-        setIsParked(self, not self:getIsControlled())
-    end
     if self.isServer and spec.pendingTarget then
         local system = g_currentMission.vehicleSystem
         if system.loadedVehicles == nil then
@@ -599,7 +544,6 @@ end
 
 function RMS_BatteryCharger:onDelete()
     if self.isServer then
-        setIsParked(self, false)
         RMS_BatteryCharger.stop(self, nil, nil, true)
     end
     local spec = assert(getSpec(self))

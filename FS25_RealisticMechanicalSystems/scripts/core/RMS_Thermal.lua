@@ -162,34 +162,6 @@ function RMS_Thermal.getEngineTemperature(vehicle)
     return temperature
 end
 
----Keeps Dashboard Live's other events while RMS owns the engine temperature
-function RMS_Thermal.registerDashboardLiveCompatibility(vehicleType)
-    local listeners = vehicleType.eventListeners or {}
-    for _, eventName in ipairs({ "onLoadFinished", "onEnterVehicle", "onUpdateTick" }) do
-        for index, listener in ipairs(listeners[eventName] or {}) do
-            if listener.MOD_NAME == "FS25_DashboardLive" and not listener.rmsThermalAdapter then
-                local original = listener[eventName]
-                listeners[eventName][index] = setmetatable({ rmsThermalAdapter = true,
-                    [eventName] = function(vehicle, ...)
-                        if getManagedMotorTemperature(vehicle) == nil then
-                            return original(vehicle, ...)
-                        end
-                        local temperature = RMS_Thermal.getEngineTemperature(vehicle)
-                        if vehicle.spec_DashboardLive ~= nil then
-                            vehicle.spec_DashboardLive.motorTemperature = temperature
-                        end
-                        original(vehicle, ...)
-                        RMS_Thermal.setEngineTemperature(vehicle, temperature)
-                        if vehicle.spec_DashboardLive ~= nil then
-                            vehicle.spec_DashboardLive.motorTemperature = temperature
-                        end
-                    end
-                }, { __index = listener })
-            end
-        end
-    end
-end
-
 local function getRoleInterval(spec, trackerKey, ambientKey, dtOperating, isMotorStarted, ambient, worldTime)
     local previousAmbient = getTemperature(spec[ambientKey], ambient)
     local elapsed = dtOperating

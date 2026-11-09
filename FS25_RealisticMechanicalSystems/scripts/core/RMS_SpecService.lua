@@ -1025,10 +1025,6 @@ local function getRealOperatingHours(vehicle)
 end
 RealisticMechanicalSystems.getRealOperatingHours = getRealOperatingHours
 
-local function getHourMeterCoefficient()
-    return g_modIsLoaded["FS25_ingameTimeOperatingHours"] and getSafeMissionTimeScale() or 1
-end
-
 local function getWearExcess(spec)
     local normal, causes = 0, {}
     for systemKey, weight in pairs(RMS_Config.CORE.SYSTEM_WEIGHTS) do
@@ -1138,7 +1134,7 @@ local function getReportAge(vehicle, report)
     for id, breakdown in pairs(vehicle:getActiveBreakdowns()) do
         isOutdated = isOutdated or (breakdown.isVisible and not (reported[id] ~= nil and reported[id].isVisible))
     end
-    return hours * getHourMeterCoefficient(), isOutdated
+    return hours, isOutdated
 end
 
 ---Returns the report the screens read their figures from
@@ -1288,9 +1284,8 @@ end
 function RealisticMechanicalSystems:getServiceClockHours(clock)
     if clock == nil then return 0, 0 end
     local spec = self.spec_RealisticMechanicalSystems
-    local coefficient = getHourMeterCoefficient()
     if clock.intervalFactor == nil then return 0, math.huge end
-    local interval = self:getServiceReferenceInterval() * clock.intervalFactor * coefficient
+    local interval = self:getServiceReferenceInterval() * clock.intervalFactor
     local share = (spec.baseServiceLevel - (spec[clock.levelKey] or spec.baseServiceLevel))
         / (spec.baseServiceLevel - RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD)
     return share * interval, interval
@@ -1398,7 +1393,7 @@ function RealisticMechanicalSystems:getMaintenanceLevelInterval(maintenanceType)
         end
     end
     return self:getServiceReferenceInterval() * (held < math.huge and held or programmed)
-        / RMS_Config.SERVICE_REFERENCE_HOURS * getHourMeterCoefficient()
+        / RMS_Config.SERVICE_REFERENCE_HOURS
 end
 
 ---Returns the options of the newest service

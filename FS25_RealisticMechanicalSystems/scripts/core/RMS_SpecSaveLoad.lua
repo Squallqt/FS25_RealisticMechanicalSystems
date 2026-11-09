@@ -924,7 +924,6 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         log_dbg("ERROR: RealisticMechanicalSystems - Could not load rms_sounds.xml")
     end
 
-    RMS_Thermal.registerDashboardLiveCompatibility(self)
     RMS_Thermal.initializeEngineTemperature(self)
     spec.rawTransmissionTemperature = spec.transmissionTemperature
 

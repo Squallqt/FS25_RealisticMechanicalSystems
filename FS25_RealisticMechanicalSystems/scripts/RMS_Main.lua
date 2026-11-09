@@ -214,14 +214,6 @@ end
 
 ---Attaches RMS to the machines and the greasing to the implements
 function RMS_Main.registerSpecializationToVehicles()
-	if g_modIsLoaded["FS25_AdvancedDamageSystem"] then
-		if not RMS_Main.conflictLogged then
-			Logging.warning("RMS: Advanced Damage System is loaded, RMS stays out. Keep only one of the two.")
-			RMS_Main.conflictLogged = true
-		end
-		return
-	end
-
 	for _, vehicleType in pairs(g_vehicleTypeManager.types) do
 		if getIsTypeManagedByRMS(vehicleType) then
 			addSpecialization(vehicleType, "RealisticMechanicalSystems")
@@ -601,11 +593,9 @@ function RMS_Main.loadVehicleSales(saleSystem, superFunc, xmlFilename)
     return isLoaded
 end
 
-if not g_modIsLoaded["FS25_AdvancedDamageSystem"] then
-    g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", loadIsTracked, getReliability, StoreSpecies.VEHICLE)
-    g_storeManager:addSpecType("serviceAccess", "shopListAttributeIconServiceAccess", RMS_Utils.loadServiceAccess, getServiceAccess, StoreSpecies.VEHICLE)
-    g_storeManager:addSpecType("rmsLaunchYear", "shopListAttributeIconRmsLaunchYear", nil, getLaunchYear, StoreSpecies.VEHICLE)
-end
+g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", loadIsTracked, getReliability, StoreSpecies.VEHICLE)
+g_storeManager:addSpecType("serviceAccess", "shopListAttributeIconServiceAccess", RMS_Utils.loadServiceAccess, getServiceAccess, StoreSpecies.VEHICLE)
+g_storeManager:addSpecType("rmsLaunchYear", "shopListAttributeIconRmsLaunchYear", nil, getLaunchYear, StoreSpecies.VEHICLE)
 
 ---Moves the entry a test picks to a position of a list
 local function moveEntry(list, isEntry, position)
@@ -792,7 +782,6 @@ RMS_Main.updateAlphaTimer = 0
 RMS_Main.workshopCheckTimer = 0
 RMS_Main.isWorkshopOpen = true
 RMS_Main.currentWeather = WeatherType.SUN
-RMS_Main.currentWeatherFactor = 1.0
 
 ---Tells whether the time of day falls within the opening hours
 function RMS_Main:evaluateWorkshopState()
@@ -865,24 +854,9 @@ function RMS_Main:onDayChanged()
     end
 end
 
----Weather setting that scales the wear of a machine left outside
-RMS_Main.WEATHER_FACTOR_SETTINGS = {
-    RAIN = "RAIN_FACTOR",
-    SNOW = "SNOW_FACTOR",
-    HAIL = "HAIL_FACTOR"
-}
-
----Reads the current weather and the wear factor it gives
+---Reads the current weather
 function RMS_Main.updateWeather()
-    local weather = g_currentMission.environment.weather:getCurrentWeatherType()
-    local factor = 1.0
-    for name, setting in pairs(RMS_Main.WEATHER_FACTOR_SETTINGS) do
-        if WeatherType[name] == weather then
-            factor = RMS_Config.CORE[setting] or 1.0
-        end
-    end
-    RMS_Main.currentWeather = weather
-    RMS_Main.currentWeatherFactor = factor
+    RMS_Main.currentWeather = g_currentMission.environment.weather:getCurrentWeatherType()
 end
 
 ---Steps a tracked machine; weather and shelter every meta step

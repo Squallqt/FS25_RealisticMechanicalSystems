@@ -212,7 +212,7 @@
         <text name="rms_thermal_power_restored_message" text="過熱保護：出力制限が解除されました"/>
         <text name="rms_breakdown_at_progress_message" text="進行中"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="警告！エンジンが冷えています。負荷を下げてください。"/>
+        <text name="rms_spec_cold_engine_message" text="警告！エンジンが冷えています。温まるまで摩耗が進みます。"/>
         <text name="rms_spec_overheat_engine_message" text="警告！エンジンが過熱しています。"/>
         <text name="rms_spec_overheat_transmission_message" text="警告！ミッションが過熱しています。"/>
         <text name="rms_spec_overhaul_partial" text="部分"/>

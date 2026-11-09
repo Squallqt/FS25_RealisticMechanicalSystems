@@ -199,17 +199,17 @@ source(g_currentModDirectory .. "scripts/core/RMS_ElectricDrive.lua")
 
 -- the short name each wear cause is saved under, system by system
 RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
-    expiredServiceFactor = "sf", lowFluidFactor = "flf", instantDamageFactor = "idfg",
+    expiredServiceFactor = "sf", instantDamageFactor = "idfg",
     motorLoadFactor = "mlf", airFilterCloggingFactor = "aicf", coldMotorFactor = "cmf", hotMotorFactor = "hmf",
     pullOverloadFactor = "pof", heavyTrailerFactor = "htf", luggingFactor = "lf", wheelSlipFactor = "wsf",
     drivetrainWindupFactor = "dwf", coldTransFactor = "ctf", hotTransFactor = "hotf",
     heavyLiftFactor = "hlf", operatingFactor = "of", coldOilFactor = "cof", hotOilFactor = "hof", vibFactor = "vf",
     filterBypassFactor = "hfbf", transmissionFilterBypassFactor = "tfbf",
     highCoolingFactor = "hcf", overheatFactor = "ohf", coldShockFactor = "csf",
-    weatherExposureFactor = "wef", lightsFactor = "ltf", crankingStressFactor = "crf",
+    weatherExposureFactor = "wef", crankingStressFactor = "crf",
     steerLoadFactor = "slf", brakeMassFactor = "bmf", parkBrakeDragFactor = "pbf", terrainImpactFactor = "tif", lubricationFactor = "lubf",
     lowFuelStarvationFactor = "lff", coldFuelFactor = "cff", idleDepositFactor = "idf", highPressureFactor = "hpf",
-    deepDischargeFactor = "ddf", highDrawFactor = "hdf", batteryHeatFactor = "bhf",
+    deepDischargeFactor = "ddf", batteryHeatFactor = "bhf",
     ptoLoadFactor = "plf", ptoEngagementFactor = "pef", ptoRaisedFactor = "prf",
     harvestEffortFactor = "hef", harvestGrainFactor = "hgf", harvestStrawFactor = "hsf", harvestStoneFactor = "hstf",
     harvestRiceFactor = "hrf", harvestWetFactor = "hwf"
@@ -217,6 +217,10 @@ RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
 
 RealisticMechanicalSystems.FACTOR_STATS_KEYS = {}
 for _, alias in pairs(RealisticMechanicalSystems.FACTOR_STATS_ALIASES) do
+    RealisticMechanicalSystems.FACTOR_STATS_KEYS[alias] = true
+end
+-- no longer measured: a saved game still holds what they wore
+for _, alias in ipairs({ "flf", "ltf", "hdf" }) do
     RealisticMechanicalSystems.FACTOR_STATS_KEYS[alias] = true
 end
 
@@ -352,7 +356,6 @@ RealisticMechanicalSystems.getTransmissionType = getTransmissionType
 RealisticMechanicalSystems.getTransmissionNameFromXML = getTransmissionNameFromXML
 
 local hasCVTAddon = RMS_Utils.hasCVTAddon
-local hasCVTTransmission = RMS_Utils.hasCVTTransmission
 
 local function refreshExclusionState(spec)
     if spec.isExcludedByUser ~= nil then
@@ -1047,6 +1050,7 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "updateElectricalSystem", RealisticMechanicalSystems.updateElectricalSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateChassisSystem", RealisticMechanicalSystems.updateChassisSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateFuelSystem", RealisticMechanicalSystems.updateFuelSystem)
+    SpecializationUtil.registerFunction(vehicleType, "updateDirectFailures", RealisticMechanicalSystems.updateDirectFailures)
     SpecializationUtil.registerFunction(vehicleType, "applyInstantDamageToSystem", RealisticMechanicalSystems.applyInstantDamageToSystem)
     
     SpecializationUtil.registerFunction(vehicleType, "isUnderService", RealisticMechanicalSystems.isUnderService)
@@ -1569,69 +1573,38 @@ local function getColdEngineStress(vehicle)
             or engineTemperature >= C.COLD_MOTOR_TEMP_THRESHOLD then
         return 0
     end
-
-    local motorLoad = math.clamp(spec._smoothedMotorLoad, 0, 1)
-    if motorLoad <= C.COLD_MOTOR_LOAD_THRESHOLD then
-        return 0
-    end
-
-    local motor = vehicle.spec_motorized.motor
-    local rpmLoad = math.clamp(motor:getLastRealMotorRpm() / motor.maxRpm, 0, 1)
-    local temperatureFactor = RMS_Utils.calculateQuadraticMultiplier(
-        engineTemperature,
-        C.COLD_MOTOR_TEMP_THRESHOLD,
-        true
-    )
-    local loadFactor = math.clamp(RMS_Utils.calculateQuadraticMultiplier(
-        motorLoad,
-        C.COLD_MOTOR_LOAD_THRESHOLD,
-        false
-    ), 0, 1)
-    local rpmFactor = 1 - C.COLD_MOTOR_RPM_INFLUENCE
-        + C.COLD_MOTOR_RPM_INFLUENCE * rpmLoad * rpmLoad
-
-    return temperatureFactor * loadFactor * rpmFactor
+    local below = C.COLD_MOTOR_TEMP_THRESHOLD - math.max(engineTemperature, C.COLD_MOTOR_MEASURED_MIN)
+    return math.exp(C.COLD_MOTOR_WEAR_SLOPE * below) - 1
 end
 RealisticMechanicalSystems.getColdEngineStress = getColdEngineStress
 
 ---Delay before the same blinking warning shows again, in ms
 local BLINKING_WARNING_REPEAT_MS = 180000
 
----Motor load the engine reports, 0 when it reports none
-local function getReportedMotorLoad(vehicle)
-    if vehicle.getMotorLoad ~= nil then
-        return tonumber(vehicle:getMotorLoad()) or 0
-    elseif vehicle.getMotorLoadPercentage ~= nil then
-        return tonumber(vehicle:getMotorLoadPercentage()) or 0
-    end
-    return 0
-end
-
----Cold or hot engine or hot CVT warning, with the cold stress
-local function getThermalWarning(vehicle, spec, motor, dt)
+---Cold engine, or past an alert temperature
+local function getThermalWarning(vehicle, spec, dt)
     local ENGINE = RMS_Config.CORE.ENGINE_FACTOR_DATA
-    local rpmShare = (tonumber(motor:getLastModulatedMotorRpm()) or 0) / math.max(tonumber(motor.maxRpm) or 0, 0.0001)
-    local message, coldStress = nil, 0
+    local message, isCold = nil, false
     -- -90 and below: no temperature read yet
     if spec.engineTemperature > -90 then
-        coldStress = getColdEngineStress(vehicle)
-        if coldStress > 0 then
+        isCold = spec.engineTemperature < ENGINE.COLD_MOTOR_TEMP_THRESHOLD
+        if isCold then
             spec.coldEngineExposureMs = spec.coldEngineExposureMs + dt
             if spec.coldEngineExposureMs >= ENGINE.COLD_MOTOR_WARNING_EXPOSURE_MS and not spec.coldEngineWarningShown then
                 message = COLD_ENGINE_WARNING_MESSAGE
             end
         end
-        if message == nil and spec.engineTemperature >= ENGINE.OVERHEAT_MOTOR_THRESHOLD + 5 and getReportedMotorLoad(vehicle) > 0.3 then
+        if message == nil and spec.engineTemperature >= ENGINE.OVERHEAT_MOTOR_WARNING
+            and vehicle:getMotorLoadPercentage() > ENGINE.OVERHEAT_MOTOR_WARNING_LOAD then
             message = "rms_spec_overheat_engine_message"
         end
     end
 
-    local transmissionLimit = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.OVERHEAT_TRANSMISSION_THRESHOLD + 5
-    if message == nil and hasCVTTransmission(vehicle) and spec.transmissionTemperature > -90
-        and spec.transmissionTemperature >= transmissionLimit and rpmShare > 0.75 then
+    local transmissionLimit = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.OVERHEAT_TRANSMISSION_WARNING
+    if message == nil and spec.transmissionTemperature > -90 and spec.transmissionTemperature >= transmissionLimit then
         message = "rms_spec_overheat_transmission_message"
     end
-    return message, coldStress
+    return message, isCold
 end
 
 ---Blinks a thermal or breakdown warning, again after a delay
@@ -1655,11 +1628,11 @@ local function syncBlinkingWarning(vehicle, dt)
     local isAiActive = vehicle:getIsAIActive()
     local isUnderService = vehicle:isUnderService()
     local motor = vehicle.spec_motorized ~= nil and vehicle.spec_motorized.motor or nil
-    local message, coldStress = nil, 0
+    local message, isCold = nil, false
     if vehicle:getIsMotorStarted() and isDriven and not isAiActive and not spec.isElectricVehicle and motor ~= nil then
-        message, coldStress = getThermalWarning(vehicle, spec, motor, dt)
+        message, isCold = getThermalWarning(vehicle, spec, dt)
     end
-    if coldStress == 0 then
+    if not isCold then
         spec.coldEngineExposureMs = math.max(spec.coldEngineExposureMs - dt, 0)
     end
 
@@ -2023,10 +1996,11 @@ function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
         for _, updateSystem in ipairs(SYSTEM_WEAR_UPDATES) do
             self[updateSystem](self, dt)
         end
+        self:updateDirectFailures(dt)
         self:updateConditionLevel()
         self:processWornParts()
         if not isMissionVehicle then
-            RMS_Greasing.update(self, operatingDt)
+            RMS_Greasing.updateMachine(self, operatingDt)
             self:updateFluidLevels(operatingDt)
             self:updateFilterClogging(operatingDt)
         end

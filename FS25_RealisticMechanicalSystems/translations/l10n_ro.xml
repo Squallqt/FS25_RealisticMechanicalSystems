@@ -212,7 +212,7 @@
         <text name="rms_thermal_power_restored_message" text="Protecție termică: limitarea puterii dezactivată"/>
         <text name="rms_breakdown_at_progress_message" text="în curs"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Atenție! Motor rece, redu sarcina."/>
+        <text name="rms_spec_cold_engine_message" text="Atenție! Motor rece: se uzează până se încălzește."/>
         <text name="rms_spec_overheat_engine_message" text="Atenție! Motorul se supraîncălzește."/>
         <text name="rms_spec_overheat_transmission_message" text="Atenție! Transmisia se supraîncălzește."/>
         <text name="rms_spec_overhaul_partial" text="Parțială"/>

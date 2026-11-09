@@ -35,6 +35,8 @@ local function resolveFamily(vehicle, entry)
     elseif entry.trailed ~= nil then
         local wheels = vehicle.spec_wheels
         return wheels ~= nil and #wheels.wheels >= 2 and entry.trailed or entry.mounted
+    elseif entry.baleLoader ~= nil then
+        return vehicle.spec_baleLoader ~= nil and entry.baleLoader or entry.flatbed
     end
     local cylindered = vehicle.spec_cylindered
     if cylindered ~= nil and #cylindered.movingTools > 0 then
@@ -224,11 +226,64 @@ local function advance(vehicle, unit, amount)
     refresh(vehicle, true)
 end
 
----Marks the day worked once the machine or implement has run
+---Marks the day worked, telling the clients once a day
 -- @param float operatingDt running time since last call in ms
 function RMS_Greasing.update(vehicle, operatingDt)
-    if RMS_Greasing.getTiers(vehicle) ~= nil and operatingDt > 0 then
+    if RMS_Greasing.getTiers(vehicle) ~= nil and operatingDt > 0 and not getState(vehicle).workedToday then
         getState(vehicle).workedToday = true
+        refresh(vehicle, true)
+    end
+end
+
+---Returns true once the vehicle has worked that day
+function RMS_Greasing.getIsWorkedToday(vehicle)
+    return getState(vehicle).workedToday
+end
+
+---Returns true while the vehicle itself works, idle not
+function RMS_Greasing.getIsWorking(vehicle)
+    local implementSpec = vehicle.spec_rmsImplementGreasing
+    if vehicle:doCheckSpeedLimit() or implementSpec ~= nil and implementSpec.isFeeding
+        or vehicle.getIsTurnedOn ~= nil and vehicle:getIsTurnedOn()
+        or vehicle.getDoConsumePtoPower ~= nil and vehicle:getDoConsumePtoPower()
+        or vehicle.spec_leveler ~= nil and vehicle.spec_leveler.lastFillLevelMoved > 0 then
+        return true
+    end
+    for _, tool in ipairs(vehicle.spec_cylindered ~= nil and vehicle.spec_cylindered.movingTools or {}) do
+        -- lastAnimSpeed only on animated tools
+        if tool.lastRotSpeed ~= 0 or tool.lastTransSpeed ~= 0 or (tool.lastAnimSpeed or 0) ~= 0 then
+            return true
+        end
+    end
+    return false
+end
+
+---Returns true for what rolls behind, a raised tool not
+local function getIsTowed(child)
+    local jointType = child:getActiveInputAttacherJoint().jointType
+    return jointType == AttacherJoints.JOINTTYPE_TRAILER or jointType == AttacherJoints.JOINTTYPE_TRAILERLOW
+        or jointType == AttacherJoints.JOINTTYPE_TRAILERSADDLED or jointType == AttacherJoints.JOINTTYPE_TRAILERCAR
+        or jointType == AttacherJoints.JOINTTYPE_SEMITRAILER or jointType == AttacherJoints.JOINTTYPE_SEMITRAILERHOOK
+        or jointType == AttacherJoints.JOINTTYPE_SEMITRAILERCAR
+end
+
+-- organs first: a combine's header trailer on the road is no work
+local function getIsMachineWorking(vehicle)
+    local isTowing = false
+    for _, child in ipairs(vehicle:getChildVehicles()) do
+        if RMS_Greasing.getIsWorking(child) then
+            return true
+        end
+        isTowing = isTowing or child ~= vehicle and getIsTowed(child)
+    end
+    return isTowing and vehicle.spec_turnOnVehicle == nil and vehicle:getLastSpeed() > RMS_Config.GREASING.TOWING_MIN_SPEED
+end
+
+---Marks the day worked while the machine or what follows it works
+-- @param float operatingDt running time since last call in ms
+function RMS_Greasing.updateMachine(vehicle, operatingDt)
+    if operatingDt > 0 and RMS_Greasing.getTiers(vehicle) ~= nil and not getState(vehicle).workedToday and getIsMachineWorking(vehicle) then
+        RMS_Greasing.update(vehicle, operatingDt)
     end
 end
 

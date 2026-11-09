@@ -552,6 +552,43 @@ function RMS_Utils.getFrontPtoOutput(vehicle)
     return nil
 end
 
+local function getShaftEndAngle(node, x, y, z, length)
+    local dirX, dirY, dirZ = localDirectionToWorld(node, 0, 0, 1)
+    return math.deg(math.acos(math.clamp(math.abs(dirX * x + dirY * y + dirZ * z) / length, 0, 1)))
+end
+
+---Returns the angle of the worse joint of a shaft, zero when collapsed
+function RMS_Utils.getPtoShaftAngle(output)
+    local outputNode, inputNode = output.outputNode, output.connectedInput.inputNode
+    local x1, y1, z1 = getWorldTranslation(outputNode)
+    local x2, y2, z2 = getWorldTranslation(inputNode)
+    local x, y, z = x2 - x1, y2 - y1, z2 - z1
+    local length = math.sqrt(x * x + y * y + z * z)
+    if length < 0.001 then
+        return 0
+    end
+    return math.max(getShaftEndAngle(outputNode, x, y, z, length), getShaftEndAngle(inputNode, x, y, z, length))
+end
+
+-- a fitted shaft works straight: only the angle the driver adds counts
+local function getDriverShaftAngle(output, consumer)
+    local angle = RMS_Utils.getPtoShaftAngle(output)
+    if output.rmsWorkConsumer ~= consumer then
+        output.rmsWorkConsumer, output.rmsWorkAngle = consumer, nil
+    end
+    local isLowerable = consumer.getAllowsLowering ~= nil and consumer:getAllowsLowering()
+    if not isLowerable then
+        -- a trailed one runs straightest going straight
+        output.rmsWorkAngle = math.min(output.rmsWorkAngle or angle, angle)
+    elseif consumer.getIsLowered ~= nil and consumer:getIsLowered(true) then
+        output.rmsWorkAngle = angle
+    end
+    if output.rmsWorkAngle == nil then
+        return angle
+    end
+    return RMS_Config.CORE.PTO_FACTOR_DATA.SHAFT_ANGLE_REFERENCE + math.max(angle - output.rmsWorkAngle, 0)
+end
+
 local function collectConnectedPtoData(vehicleObj, data, visited, isOutputCounted)
     if vehicleObj == nil or visited[vehicleObj] then
         return
@@ -591,8 +628,10 @@ local function collectConnectedPtoData(vehicleObj, data, visited, isOutputCounte
                 if isEngaged or measuredRpm > 0 or torque > 0 then
                     data.isActive = true
                 end
+                local shaftAngle = getDriverShaftAngle(output, consumer)
                 if isEngaged then
                     data.activeLinks[consumer] = true
+                    data.shaftAngle = math.max(data.shaftAngle, shaftAngle)
 
                     if consumer.spec_sprayer == nil then
                         local neededMaxPower = consumer.spec_powerConsumer ~= nil
@@ -624,7 +663,8 @@ function RMS_Utils.getConnectedPtoData(vehicle, side)
         connectedVehicles = {},
         activeLinks = {},
         engagementTorques = {},
-        isRaised = false
+        isRaised = false,
+        shaftAngle = 0
     }
     local visited = {}
 
@@ -727,16 +767,6 @@ function RMS_Utils.setLevelGauge(fillElement, underElement, trackWidth, level)
     fillElement:setImageColor(nil, color[1], color[2], color[3], color[4])
 end
 
--- @return float shortage 0 above that level, up to 1 on an empty circuit
-function RMS_Utils.getFluidShortage(level)
-    local start = RMS_Config.FLUIDS.LEVEL_MIN_MARK
-    if start <= 0 then
-        return 0
-    end
-
-    return math.clamp((start - math.clamp(tonumber(level) or 1, 0, 1)) / start, 0, 1)
-end
-
 ---Returns the squared distance past a threshold, 0 on the safe side of it
 -- @param float? customMax end of the scale: floor when less is worse, else ceiling (default 1)
 function RMS_Utils.calculateQuadraticMultiplier(level, threshold, lessIsWorse, customMax)
@@ -774,6 +804,40 @@ function RMS_Utils.getEngineLuggingSeverity(motor, motorLoad, loadThreshold)
     return loadShare * loadShare * rpmShare * rpmShare
 end
 
+---Returns the torque against the torque at peak power the block holds
+function RMS_Utils.getRatedTorqueRatio(vehicle, stockLoad)
+    local motor = vehicle.spec_motorized.motor
+    local sanitize = RealisticMechanicalSystems.sanitizeNumber
+    local ratedSpeed = sanitize(motor.peakMotorPowerRotSpeed, 0, 0)
+    local rated = ratedSpeed > 0 and sanitize(motor.peakMotorPower, 0, 0) / ratedSpeed or 0
+    local rpm = sanitize(motor:getLastRealMotorRpm(), ratedSpeed * 30 / math.pi, 0)
+    local rise = rated > 0 and sanitize(motor:getTorqueCurve():get(rpm), rated, 0) / rated or 1
+    return stockLoad * rise / RMS_EngineRemap.getOverloadRatio(vehicle)
+end
+
+---Life law past the rated level: wear grows as the ratio to the exponent
+function RMS_Utils.getLifeLawFactor(ratio, exponent)
+    return ratio > 1 and ratio ^ exponent - 1 or 0
+end
+
+---Wear of a cold circuit, as liners wear by their start temperature
+function RMS_Utils.getColdWearFactor(temperature, reference)
+    local C = RMS_Config.CORE.ENGINE_FACTOR_DATA
+    if temperature >= reference then
+        return 0
+    end
+    local measured = C.COLD_MOTOR_TEMP_THRESHOLD - C.COLD_MOTOR_MEASURED_MIN
+    return math.exp(C.COLD_MOTOR_WEAR_SLOPE * math.min(reference - temperature, measured)) - 1
+end
+
+---Wear past a temperature, life halved every HEAT_HALVING_K
+function RMS_Utils.getHeatWearFactor(temperature, reference)
+    if temperature <= reference then
+        return 0
+    end
+    return 2 ^ ((temperature - reference) / RMS_Config.CORE.HEAT_HALVING_K) - 1
+end
+
 function RMS_Utils.getPartFailureChance(partId, fromWear, toWear)
     local C = RMS_Config.CORE
     local life = C.COMPONENT_LIVES[RMS_Breakdowns.BreakdownRegistry[partId].component]
@@ -797,7 +861,7 @@ function RMS_Utils.getPartRiskRatio(partId, wear)
 end
 
 function RMS_Utils.getIsPartWorn(partId, wear)
-    return wear >= RMS_Utils.getPartB10Wear(partId) and RMS_Utils.getPartRiskRatio(partId, wear) >= RMS_Config.CORE.RISK_RATIO_HIGH
+    return wear >= RMS_Utils.getPartB10Wear(partId) and RMS_Utils.getPartRiskRatio(partId, wear) >= RMS_Config.CORE.WORN_PART_RISK_RATIO
 end
 
 function RMS_Utils.getPartB10Wear(partId)
@@ -2348,13 +2412,14 @@ function RMS_Utils.getFanDrive(vehicle)
     return "DIRECT"
 end
 
----Returns the power to trailer mass thresholds, trucks having their own
-function RMS_Utils.getHeavyTrailerRatioLevels(isTruck)
+---Returns the power to mass levels of a heavy load
+function RMS_Utils.getHeavyTrailerRatioLevels(vehicle)
     local C = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA
-    if isTruck then
+    if vehicle.spec_RealisticMechanicalSystems.isTruck then
         return C.HEAVY_TRAILER_TRUCK_MASS_RATIO_THRESHOLD, C.HEAVY_TRAILER_TRUCK_MASS_RATIO_FULL_EFFECT
     end
-    return C.HEAVY_TRAILER_MASS_RATIO_THRESHOLD, C.HEAVY_TRAILER_MASS_RATIO_FULL_EFFECT
+    local powerPerOwnMass = vehicle:getMotor().peakMotorPower * 1.36 / math.max(vehicle:getTotalMass(true), 0.01)
+    return powerPerOwnMass / C.HEAVY_TRAILER_MASS_RATIO_THRESHOLD, powerPerOwnMass / C.HEAVY_TRAILER_MASS_RATIO_FULL_EFFECT
 end
 
 ---Builds a logger printing only while debug mode is on

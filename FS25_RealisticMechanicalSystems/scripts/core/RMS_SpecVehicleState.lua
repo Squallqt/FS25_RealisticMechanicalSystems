@@ -68,87 +68,8 @@ local function updateDynamicMotorLoad(vehicle)
         return 0
     end
 
-    local motorLoad = RealisticMechanicalSystems.sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, vehicle:getMotorLoadPercentage()), 0, 0, 1.5)
-    local hasMoreRealistic = g_modIsLoaded["MoreRealistic"] == true
-
-    if hasMoreRealistic then
-        spec.dynamicMotorLoad = motorLoad
-        return
-    end
-
-    local dynamicMotorLoad = motorLoad
-
-    if vehicle:getIsOnField() then
-        local isWorking = false
-        if vehicle.spec_attacherJoints and vehicle.spec_attacherJoints.attachedImplements and next(vehicle.spec_attacherJoints.attachedImplements) ~= nil then
-            for _, implementData in pairs(vehicle.spec_attacherJoints.attachedImplements) do
-                if implementData.object ~= nil then
-                    local implement = implementData.object
-                    if implement:getIsLowered() then
-                        isWorking = true
-                    end
-                end
-            end
-        end
-
-        if isWorking then
-            local motor = vehicle:getMotor()
-            local peakPowerHp = RealisticMechanicalSystems.sanitizeNumber((motor.peakMotorPower or 0) * 1.36, 0, 0)
-            local avgAbsDiffAcc = RealisticMechanicalSystems.sanitizeNumber(spec.avgAbsDiffAcc, 0, 0, 100)
-            if peakPowerHp > 0.001 then
-                local activeDraftEffectiveForceCap = RealisticMechanicalSystems.sanitizeNumber(spec.activeDraftEffectiveForceCap, 0, 0, 1000000)
-                dynamicMotorLoad = math.min(motorLoad + math.min(avgAbsDiffAcc / 3, 0.15) * ((activeDraftEffectiveForceCap / peakPowerHp) / 0.15) ^ 2, 1.15)
-            end
-        end
-    end
-
-    spec.dynamicMotorLoad = RealisticMechanicalSystems.sanitizeNumber(dynamicMotorLoad, motorLoad, 0, 1.5)
-
-end
-
-local function updateAvgAbsDiffAccWindow(spec, motor, dt)
-    if spec == nil or motor == nil then
-        if spec ~= nil then
-            spec.avgAbsDiffAcc = 0
-        end
-        return 0
-    end
-
-    local windowDurationMs = 500
-    local diffAcc = math.abs(tonumber(motor.differentialRotAccelerationSmoothed) or 0)
-
-    if spec._avgAbsDiffAccSamples == nil then
-        spec._avgAbsDiffAccSamples = {}
-    end
-
-    local samples = spec._avgAbsDiffAccSamples
-
-    for i = #samples, 1, -1 do
-        local sample = samples[i]
-        sample.ageMs = (tonumber(sample.ageMs) or 0) + (tonumber(dt) or 0)
-
-        if sample.ageMs > windowDurationMs then
-            table.remove(samples, i)
-        end
-    end
-
-    table.insert(samples, {
-        ageMs = 0,
-        value = diffAcc
-    })
-
-    if #samples == 0 then
-        spec.avgAbsDiffAcc = 0
-        return 0
-    end
-
-    local sum = 0
-    for i = 1, #samples do
-        sum = sum + (tonumber(samples[i].value) or 0)
-    end
-
-    local avg = sum / #samples
-    spec.avgAbsDiffAcc = avg
+    spec.dynamicMotorLoad = RealisticMechanicalSystems.sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, vehicle:getMotorLoadPercentage()),
+        0, 0, 1.5)
 end
 
 local function updateStarterState(vehicle)
@@ -880,6 +801,7 @@ local function updatePtoState(vehicle)
         spec.ptoPower = 0
         spec.ptoUtilization = 0
         spec.isPtoImplementRaised = false
+        spec.ptoShaftAngle = 0
         if type(spec.ptoPreviousActiveLinks) ~= "table" or next(spec.ptoPreviousActiveLinks) ~= nil then
             spec.ptoPreviousActiveLinks = {}
         end
@@ -908,6 +830,7 @@ local function updatePtoState(vehicle)
     end
     spec.ptoPreviousActiveLinks = ptoData.activeLinks
     spec.isPtoImplementRaised = ptoData.isRaised
+    spec.ptoShaftAngle = vehicle:getIsAIActive() and 0 or ptoData.shaftAngle
 
     spec.ptoLastRpmShare = RMS_Utils.getMotorRpmShareAboveIdle(vehicle)
 end
@@ -929,7 +852,6 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
     if spec.updateVehicleStateTimerOne >= delayOne then
         spec.updateVehicleStateTimerOne = spec.updateVehicleStateTimerOne % delayOne
         updatePtoState(self)
-        updateAvgAbsDiffAccWindow(spec, self:getMotor(), delayOne)
         updateDynamicMotorLoad(self)
     end
 

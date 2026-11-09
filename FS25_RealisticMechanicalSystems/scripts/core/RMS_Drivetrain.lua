@@ -1181,7 +1181,7 @@ local function updateWindupModel(vehicle, state, spec, dt)
     end
 
     if state.windupStress > 0 and isWindingUp then
-        state.windupWearFactor = state.windupStress * C.WINDUP_WEAR_MULTIPLIER * windupFactor
+        state.windupWearFactor = (1 + state.windupStress) ^ C.WINDUP_GEAR_EXPONENT - 1
     else
         state.windupWearFactor = 0
     end

@@ -212,7 +212,7 @@
         <text name="rms_thermal_power_restored_message" text="Protezione termica: limitazione di potenza rimossa"/>
         <text name="rms_breakdown_at_progress_message" text="in corso"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Attenzione! Motore freddo, riduci il carico."/>
+        <text name="rms_spec_cold_engine_message" text="Attenzione! Motore freddo: si usura finché non si scalda."/>
         <text name="rms_spec_overheat_engine_message" text="Attenzione! Surriscaldamento del motore."/>
         <text name="rms_spec_overheat_transmission_message" text="Attenzione! Surriscaldamento della trasmissione."/>
         <text name="rms_spec_overhaul_partial" text="Parziale"/>

@@ -212,7 +212,7 @@
         <text name="rms_thermal_power_restored_message" text="Тепловая защита: ограничение мощности снято"/>
         <text name="rms_breakdown_at_progress_message" text="в процессе"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Внимание! Двигатель холодный, снизьте нагрузку."/>
+        <text name="rms_spec_cold_engine_message" text="Внимание! Двигатель холодный: он изнашивается, пока не прогреется."/>
         <text name="rms_spec_overheat_engine_message" text="Внимание! Перегрев двигателя."/>
         <text name="rms_spec_overheat_transmission_message" text="Внимание! Перегрев трансмиссии."/>
         <text name="rms_spec_overhaul_partial" text="Частичный"/>

@@ -809,8 +809,7 @@ end
 
 ---Builds the figures drawn beside the telltales
 function RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperature)
-    local overloadThreshold = spec.isElectricVehicle and RMS_Config.ELECTRIC_DRIVE.MOTOR_OVERLOADED_THRESHOLD
-        or RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD
+    local overloadThreshold = RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD
     local overloadLoad = motorLoad
     if not spec.isElectricVehicle and motorLoad > 0 then
         overloadLoad = tonumber(spec.dynamicMotorLoad) or motorLoad
@@ -1498,7 +1497,7 @@ function RMS_Hud:drawLoadMass(cardRightX)
         local ratioBasis = isTruck and totalMass or towedMass
         local powerToWeight = horsepower / math.max(ratioBasis, 0.01)
 
-        local threshold, fullEffect = RMS_Utils.getHeavyTrailerRatioLevels(isTruck)
+        local threshold, fullEffect = RMS_Utils.getHeavyTrailerRatioLevels(vehicle)
 
         local trailerSeverity = RMS_Utils.calculateQuadraticMultiplier(powerToWeight, threshold, true, fullEffect)
 

@@ -135,6 +135,25 @@ local function formatTierLeft(tier)
     return string.format(g_i18n:getText("rms_fleet_greasing_in"), RMS_Utils.formatGreasingLeft(tier))
 end
 
+---Line of the power a tool asks of its tractor, empty without any
+local function getNeededPowerText(storeItem, vehicle)
+    local neededPower = storeItem.specs.neededPower
+    local configured = neededPower.config[vehicle.configurations.powerConsumer]
+    local minPower = configured or neededPower.base or 0
+    if minPower == 0 then
+        return ""
+    end
+
+    local maxPower = configured == nil and neededPower.maxPower or minPower
+    local minValue = g_i18n:getPower(minPower)
+    local maxValue = g_i18n:getPower(maxPower)
+    local value = string.format(g_i18n:getText("shop_maxPowerValueSingle"), MathUtil.round(minValue))
+    if minValue ~= maxValue then
+        value = string.format(g_i18n:getText("shop_maxPowerValueRange"), MathUtil.round(minValue), MathUtil.round(maxValue))
+    end
+    return string.format("%s %s", g_i18n:getText("shop_neededPower"), value)
+end
+
 local function buildImplementRow(row, vehicle)
     local greasing = RMS_Greasing.read(vehicle)
     row.isImplement, row.greasing = true, greasing
@@ -207,11 +226,22 @@ local function buildRow(vehicle, isTracked)
         end
     end
 
+    -- banner and ring stay on the service, list and alerts take both
+    row.serviceStatus, row.serviceUrgency = row.status, row.urgency
+    local greasingState = RMS_Greasing.getStatus(vehicle)
+    local greasingUrgency = greasingState == "late" and URGENCY.OVERDUE or greasingState == "due" and URGENCY.SOON or URGENCY.NONE
+    if not row.isServicing and greasingUrgency > row.urgency then
+        row.urgency = greasingUrgency
+        row.status = string.format(g_i18n:getText("rms_grease_gun_points"), RMS_Greasing.getDuePoints(vehicle))
+    end
+
     return row
 end
 
 local function isRowBefore(sortMode, a, b)
-    if sortMode == SORT.DEADLINE and a.remaining ~= b.remaining then
+    if sortMode == SORT.DEADLINE and a.urgency ~= b.urgency then
+        return a.urgency > b.urgency
+    elseif sortMode == SORT.DEADLINE and a.remaining ~= b.remaining then
         return a.remaining < b.remaining
     elseif sortMode == SORT.HOURS and a.hours ~= b.hours then
         return a.hours > b.hours
@@ -891,6 +921,7 @@ function RMS_InGameMenuFrame:updateIdentity(row)
         StoreItemUtil.loadSpecsFromXML(storeItem)
         local detail = Motorized.getSpecValuePower(storeItem, vehicle) or Vehicle.getSpecValueWorkingWidth(storeItem, vehicle)
         self.categoryText:setText(detail ~= nil and string.format("%s · %s", row.categoryTitle, detail) or row.categoryTitle)
+        self.neededPowerText:setText(getNeededPowerText(storeItem, vehicle))
 
         self.ratingTiles:setVisible(row.isTracked)
         self.greasingTiles:setVisible(row.isImplement == true)
@@ -1012,7 +1043,7 @@ function RMS_InGameMenuFrame:updateService(row)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local overhaulCount = string.format("%d", vehicle:getOverhaulPerformedCount() or 0)
     local totalCost = g_i18n:formatMoney(getTotalCost(vehicle), 0, true, false)
-    local color = getUrgencyColor(row.urgency)
+    local color = getUrgencyColor(row.serviceUrgency)
     local rows, foot
 
     local breakdownCount = 0
@@ -1049,14 +1080,14 @@ function RMS_InGameMenuFrame:updateService(row)
         foot = {"rms_ws_label_finish_time", RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime())}
     else
         self.bannerTitle:setText(RMS_Utils.formatMaintenanceLevel(vehicle, vehicle:getDueMaintenanceType()))
-        self.bannerDetail:setText(RMS_Utils.formatServiceReason(vehicle, row.schedule) .. " · " .. row.status)
+        self.bannerDetail:setText(RMS_Utils.formatServiceReason(vehicle, row.schedule) .. " · " .. row.serviceStatus)
         self.bannerDetail:setTextColor(unpack(color))
         self.serviceCardTitle:setText(g_i18n:getText("rms_fleet_next_service"))
         self.serviceValue:setText(row.schedule ~= nil and row.schedule.calendarLeading
             and RMS_Utils.formatMonths(row.schedule.remainingMonths)
             or RMS_Utils.formatHours(math.max(row.remaining, 0)))
         self.serviceRingRatio = math.clamp(1 - (row.schedule ~= nil and row.schedule.progress or 0), 0, 1)
-        self.serviceTrackColor = row.urgency == URGENCY.OVERDUE and color or nil
+        self.serviceTrackColor = row.serviceUrgency == URGENCY.OVERDUE and color or nil
         rows = {
             breakdowns,
             {"rms_ws_label_overhaul_count", overhaulCount},

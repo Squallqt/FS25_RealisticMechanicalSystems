@@ -946,9 +946,9 @@ addBreakdown("AIRFILTER_CLOGGING", {
     isSelectable = false, system = systems.ENGINE, part = parts.VEHICLE, isApplicable = getHasAirFilter,
         isCanProgress = never
 }, {
-    { { "ENGINE_TORQUE_MODIFIER", -0.03 }, { "FUEL_CONSUMPTION_MODIFIER", 0.06 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.06 }, { "FUEL_CONSUMPTION_MODIFIER", 0.12 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "FUEL_CONSUMPTION_MODIFIER", 0.18 }, { "ENGINE_HEAT_MODIFIER", 0.05 } }
+    { { "ENGINE_TORQUE_MODIFIER", -0.03 }, { "FUEL_CONSUMPTION_MODIFIER", 0.03 } },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "FUEL_CONSUMPTION_MODIFIER", 0.06 } },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "FUEL_CONSUMPTION_MODIFIER", 0.09 }, { "ENGINE_HEAT_MODIFIER", 0.05 } }
 })
 
 addBreakdown("STRESS_OVERLOAD", {
@@ -1007,11 +1007,11 @@ addBreakdown("ECU_MALFUNCTION", {
     system = systems.ELECTRICAL, part = parts.ECU, isApplicable = getHasEcu,
         causes = { primary = { "ohf" }, secondary = { "vf" } }, component = "SOLID_STATE_CONTROLLER"
 }, {
-    { { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "EXHAUST_SOOT", 0.25 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "EXHAUST_SOOT", 0.25 },
         lamps = { { db.ENGINE, color.WARNING, getIsAtFullLoad, getIsBelowHalfLoad } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.2 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 }, { "EXHAUST_SOOT", 0.45 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.22 }, { "FUEL_CONSUMPTION_MODIFIER", 0.09 }, { "EXHAUST_SOOT", 0.45 },
         lamps = { { db.ENGINE, color.WARNING } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.35 }, { "FUEL_CONSUMPTION_MODIFIER", 0.5 }, { "ENGINE_STALLS_CHANCE", 10.0 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.33 }, { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_STALLS_CHANCE", 10.0 },
         { "ENGINE_HARD_START_MODIFIER", 2 }, { "EXHAUST_SOOT", 0.8 }, lamps = { { db.ENGINE, color.CRITICAL } } },
     { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
@@ -1028,7 +1028,7 @@ addBreakdown("POWER_CABLE_CONNECTION_FAILURE", {
         { "ENGINE_STALLS_CHANCE", 30.0 }, { "ENGINE_HARD_START_MODIFIER", 5 },
         { "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", 2 }, { "ELECTRICAL_LEAKAGE_EFFECT", 2 },
         lamps = { { db.BATTERY, color.WARNING } }, hint = true },
-    { { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "LIGHTS_FAILURE", 1.0 }, { "ENGINE_STALLS_CHANCE", 20.0 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "LIGHTS_FAILURE", 1.0 }, { "ENGINE_STALLS_CHANCE", 20.0 },
         { "ENGINE_HARD_START_MODIFIER", 8 }, { "ELECTRICAL_CONTACT_RESISTANCE_EFFECT", 4 },
         { "ELECTRICAL_LEAKAGE_EFFECT", 4 }, lamps = { { db.BATTERY, color.CRITICAL } }, hint = true },
     { { "LIGHTS_FAILURE", 1.0 }, { "ELECTRICAL_LEAKAGE_EFFECT", 8 }, stopEngine(),
@@ -1105,8 +1105,8 @@ addBreakdown("BATTERY_SULFATION", {
     system = systems.ELECTRICAL, part = parts.BATTERY, isApplicable = always,
         causes = { primary = { "crf" }, secondary = {} }, component = "STARTER_BATTERY", progress = 1.4, electric = true
 }, {
-    { { "BATTERY_HEALTH_MODIFIER", -0.3 } },
-    { { "BATTERY_HEALTH_MODIFIER", -0.6 }, { "ENGINE_HARD_START_MODIFIER", 3 }, lamps = { { db.BATTERY, color.WARNING } } },
+    { { "BATTERY_HEALTH_MODIFIER", -0.2 } },
+    { { "BATTERY_HEALTH_MODIFIER", -0.5 }, { "ENGINE_HARD_START_MODIFIER", 3 }, lamps = { { db.BATTERY, color.WARNING } } },
     { { "BATTERY_HEALTH_MODIFIER", -0.75 }, { "ENGINE_HARD_START_MODIFIER", 6 }, lamps = { { db.BATTERY, color.CRITICAL } } },
     { { "BATTERY_HEALTH_MODIFIER", -1.0 }, { "ENGINE_HARD_START_MODIFIER", 9 }, lamps = { { db.BATTERY, color.CRITICAL } } }
 })
@@ -1130,7 +1130,7 @@ addBreakdown("GLOW_PLUG_FAILURE", {
 
 addBreakdown("ALTERNATOR", {
     system = systems.ELECTRICAL, part = parts.ALTERNATOR, isApplicable = getHasEngine,
-        causes = { primary = { "ohf", "crf" }, secondary = { "ltf", "vf" } }, component = "SOLID_STATE_CONTROLLER",
+        causes = { primary = { "ohf", "crf" }, secondary = { "vf" } }, component = "DC_MOTOR",
         branches = 2, progress = 1.1, hints = { [1] = "alternator" }
 }, {
     { { "ALTERNATOR_HEALTH_MODIFIER", -0.2 }, { "ELECTRICAL_LEAKAGE_EFFECT", 1, branch = 2 } },
@@ -1165,7 +1165,7 @@ addBreakdown("INVERTER_MALFUNCTION", {
 
 addBreakdown("DCDC_CONVERTER_FAILURE", {
     system = systems.ELECTRICAL, part = parts.DCDC_CONVERTER, isApplicable = getIsElectricVehicle,
-        causes = { primary = { "ohf", "ltf" }, secondary = { "vf" } }, component = "SOLID_STATE_CONTROLLER", progress = 1.1
+        causes = { primary = { "ohf" }, secondary = { "vf" } }, component = "SOLID_STATE_CONTROLLER", progress = 1.1
 }, {
     { { "ALTERNATOR_HEALTH_MODIFIER", -0.2 } },
     { { "ALTERNATOR_HEALTH_MODIFIER", -0.5 }, lamps = { { db.BATTERY, color.WARNING } } },
@@ -1195,47 +1195,47 @@ addBreakdown("HV_INSULATION_LOSS", {
 
 addBreakdown("TURBOCHARGER_MALFUNCTION", {
     system = systems.ENGINE, part = parts.TURBOCHARGER, isApplicable = getHasTurbocharger,
-        causes = { primary = { "hmf", "mlf" }, secondary = { "aicf", "sf", "flf", "cmf" } },
+        causes = { primary = { "hmf", "mlf" }, secondary = { "aicf", "sf", "cmf" } },
         component = "CENTRIFUGAL_COMPRESSOR", texts = "turbocharger_wear", progress = 1.1
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "TURBO_WHISTLE_NOISE_EFFECT", 0.25 }, { "EXHAUST_SOOT", 0.2 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.25 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 }, { "TURBO_WHISTLE_NOISE_EFFECT", 0.35 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.22 }, { "FUEL_CONSUMPTION_MODIFIER", 0.09 }, { "TURBO_WHISTLE_NOISE_EFFECT", 0.35 },
         { "EXHAUST_SOOT", 0.4 }, { "EXHAUST_OIL", 0.25 }, lamps = { { db.ENGINE, color.WARNING } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.35 }, { "FUEL_CONSUMPTION_MODIFIER", 0.4 }, { "ENGINE_STALLS_CHANCE", 10.0 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.35 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 }, { "ENGINE_STALLS_CHANCE", 10.0 },
         { "TURBO_WHISTLE_NOISE_EFFECT", 0.6 }, { "EXHAUST_SOOT", 0.65 }, { "EXHAUST_OIL", 0.5 },
         lamps = { { db.ENGINE, color.CRITICAL } }, hint = true },
-    { { "ENGINE_TORQUE_MODIFIER", -0.5 }, { "FUEL_CONSUMPTION_MODIFIER", 0.6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.5 }, { "FUEL_CONSUMPTION_MODIFIER", 0.3 }, { "ENGINE_STALLS_CHANCE", 10.0 },
         { "EXHAUST_SOOT", 0.9 }, { "EXHAUST_OIL", 0.7 },
         lamps = { { db.ENGINE, color.CRITICAL }, { db.WARNING, color.CRITICAL } }, hint = true }
 })
 
 addBreakdown("OIL_PUMP_MALFUNCTION", {
     system = systems.ENGINE, part = parts.OIL_PUMP, isApplicable = getHasEngine,
-        causes = { primary = { "sf" }, secondary = { "flf" } }, component = "LUBRICATOR_PUMP", progress = 1.3
+        causes = { primary = { "sf" }, secondary = {} }, component = "LUBRICATOR_PUMP", progress = 1.3
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_KNOCKING_NOISE_EFFECT", 0.3 }, { "ENGINE_HEAT_MODIFIER", 0.05 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.25 }, { "ENGINE_KNOCKING_NOISE_EFFECT", 0.5 }, { "ENGINE_HEAT_MODIFIER", 0.15 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "ENGINE_KNOCKING_NOISE_EFFECT", 0.5 }, { "ENGINE_HEAT_MODIFIER", 0.15 },
         lamps = { { db.ENGINE, color.WARNING } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.45 }, { "ENGINE_STALLS_CHANCE", 10.0 }, { "ENGINE_KNOCKING_NOISE_EFFECT", 0.8 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.17 }, { "ENGINE_STALLS_CHANCE", 10.0 }, { "ENGINE_KNOCKING_NOISE_EFFECT", 0.8 },
         { "ENGINE_HEAT_MODIFIER", 0.35 }, lamps = { { db.ENGINE, color.CRITICAL } } },
     { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
 
 addBreakdown("PISTONS", {
     system = systems.ENGINE, part = parts.PISTONS, isApplicable = getHasEngine,
-        causes = { primary = { "sf", "cmf", "hmf", "flf" }, secondary = { "mlf", "lf" } }, component = "ENGINE_PISTON",
+        causes = { primary = { "sf", "cmf", "hmf" }, secondary = { "mlf", "lf" } }, component = "ENGINE_PISTON",
         branches = 2, progress = 1.4
 }, {
     { },
     { { "EXHAUST_OIL", 0.2 }, { "PISTON_SLAP_NOISE_EFFECT", 0.5 } },
-    { { "EXHAUST_OIL", 0.4 }, { "ENGINE_TORQUE_MODIFIER", -0.12 }, { "ENGINE_HARD_START_MODIFIER", 3 },
+    { { "EXHAUST_OIL", 0.4 }, { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "ENGINE_HARD_START_MODIFIER", 3 },
         { "PISTON_SLAP_NOISE_EFFECT", 0.8 }, lamps = { { db.ENGINE, color.WARNING } } },
     { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
 
 addBreakdown("PISTON_RINGS", {
     system = systems.ENGINE, part = parts.PISTON_RINGS, isApplicable = getHasEngine,
-        causes = { primary = { "sf", "cmf", "hmf", "flf" }, secondary = { "mlf", "lf" } }, component = "ENGINE_PISTON",
+        causes = { primary = { "sf", "cmf", "hmf" }, secondary = { "mlf", "lf" } }, component = "ENGINE_PISTON",
         branches = 3, progress = 1.4
 }, {
     { },
@@ -1243,13 +1243,13 @@ addBreakdown("PISTON_RINGS", {
         { "FUEL_CONSUMPTION_MODIFIER", 0.05, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.04, branch = 3 },
         { "ENGINE_HARD_START_MODIFIER", 3, branch = 3 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05, branch = 3 },
         { "EXHAUST_OIL", 0.2, branch = 2 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.12, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 6, branch = 1 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.1, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.12, branch = 3 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 6, branch = 1 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.1, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 3 },
         { "ENGINE_HARD_START_MODIFIER", 6, branch = 3 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1, branch = 3 },
         { "EXHAUST_OIL", 0.4, branch = 2 },
         lamps = { { db.ENGINE, color.WARNING, branch = 1 }, { db.ENGINE, color.WARNING, branch = 3 } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.25, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.25, branch = 3 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 3 },
         { "ENGINE_HARD_START_MODIFIER", 9, branch = 3 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 3 },
         { "EXHAUST_OIL", 0.65, branch = 2 }, { "EXHAUST_OIL", 0.65, branch = 3 },
         lamps = { { db.ENGINE, color.CRITICAL, branch = 1 }, { db.ENGINE, color.CRITICAL, branch = 3 } } }
@@ -1257,13 +1257,13 @@ addBreakdown("PISTON_RINGS", {
 
 addBreakdown("CYLINDER_LINERS", {
     system = systems.ENGINE, part = parts.CYLINDER_LINERS, isApplicable = getHasEngine,
-        causes = { primary = { "sf", "cmf", "hmf", "flf" }, secondary = { "mlf", "lf" } }, component = "CYLINDER_LINER",
+        causes = { primary = { "sf", "cmf", "hmf" }, secondary = { "mlf", "lf" } }, component = "CYLINDER_LINER",
         branches = 2, progress = 1.4, hints = { [2] = "cylinder_liners" }
 }, {
     { },
     { { "EXHAUST_OIL", 0.25, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.04, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.08, branch = 2 }, { "PISTON_SLAP_NOISE_EFFECT", 0.5, branch = 1 }, hint = true },
-    { { "EXHAUST_OIL", 0.5, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.12, branch = 1 },
+    { { "EXHAUST_OIL", 0.5, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.25, branch = 2 }, { "EXHAUST_UNBURNT", 0.3, branch = 2 },
         { "PISTON_SLAP_NOISE_EFFECT", 0.8, branch = 1 },
         lamps = { { db.ENGINE, color.WARNING, branch = 1 }, { db.COOLANT, color.WARNING, branch = 2 } }, hint = true },
@@ -1274,17 +1274,17 @@ addBreakdown("CYLINDER_LINERS", {
 
 addBreakdown("INLET_VALVES", {
     system = systems.ENGINE, part = parts.INLET_VALVES, isApplicable = getHasEngine,
-        causes = { primary = { "sf", "cmf" }, secondary = { "flf", "hmf", "mlf" } }, component = "ENGINE_VALVE",
+        causes = { primary = { "sf", "cmf" }, secondary = { "hmf", "mlf" } }, component = "ENGINE_VALVE",
         branches = 2, progress = 1.4
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.04 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.12 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.25 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.22 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
         { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 } },
         { "ENGINE_STALLS_CHANCE", 10.0 }, lamps = { { db.ENGINE, color.CRITICAL } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.25, branch = 1 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 },
         { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 }, branch = 1 },
         { "ENGINE_STALLS_CHANCE", 10.0, branch = 1 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 },
         { "ENGINE_FAILURE", 1.0, { disableAi = true, reason = "BREAKDOWN", starter = true }, branch = 2 },
@@ -1293,17 +1293,17 @@ addBreakdown("INLET_VALVES", {
 
 addBreakdown("EXHAUST_VALVES", {
     system = systems.ENGINE, part = parts.EXHAUST_VALVES, isApplicable = getHasEngine,
-        causes = { primary = { "sf", "cmf" }, secondary = { "flf", "hmf", "mlf" } }, component = "ENGINE_VALVE",
+        causes = { primary = { "sf", "cmf" }, secondary = { "hmf", "mlf" } }, component = "ENGINE_VALVE",
         branches = 2, progress = 1.4
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.04 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.12 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.25 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.22 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
         { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 } },
         { "ENGINE_STALLS_CHANCE", 10.0 }, lamps = { { db.ENGINE, color.CRITICAL } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.25, branch = 1 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 },
         { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 }, branch = 1 },
         { "ENGINE_STALLS_CHANCE", 10.0, branch = 1 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 },
         { "ENGINE_FAILURE", 1.0, { disableAi = true, reason = "BREAKDOWN", starter = true }, branch = 2 },
@@ -1312,17 +1312,17 @@ addBreakdown("EXHAUST_VALVES", {
 
 addBreakdown("VALVE_GUIDES_SEALS", {
     system = systems.ENGINE, part = parts.VALVE_GUIDES_SEALS, isApplicable = getHasEngine,
-        causes = { primary = { "sf", "cmf" }, secondary = { "flf", "hmf", "mlf" } }, component = "ENGINE_VALVE",
+        causes = { primary = { "sf", "cmf" }, secondary = { "hmf", "mlf" } }, component = "ENGINE_VALVE",
         branches = 2, progress = 1.4
 }, {
     { { "VALVE_TRAIN_NOISE_EFFECT", 0.5, branch = 1 }, { "EXHAUST_OIL", 0.2 } },
     { { "VALVE_TRAIN_NOISE_EFFECT", 0.7, branch = 1 }, { "EXHAUST_OIL", 0.4 } },
     { { "VALVE_TRAIN_NOISE_EFFECT", 1.0, branch = 1 }, { "EXHAUST_OIL", 0.65 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 }, branch = 1 },
-        { "ENGINE_TORQUE_MODIFIER", -0.12, branch = 1 }, lamps = { { db.ENGINE, color.CRITICAL, branch = 1 } } },
+        { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 }, lamps = { { db.ENGINE, color.CRITICAL, branch = 1 } } },
     { { "VALVE_TRAIN_NOISE_EFFECT", 1.0, branch = 1 }, { "EXHAUST_OIL", 0.65 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 }, branch = 1 },
-        { "ENGINE_TORQUE_MODIFIER", -0.12, branch = 1 }, lamps = { { db.ENGINE, color.CRITICAL, branch = 1 } } }
+        { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 }, lamps = { { db.ENGINE, color.CRITICAL, branch = 1 } } }
 })
 
 addBreakdown("CYLINDER_HEAD", {
@@ -1334,12 +1334,12 @@ addBreakdown("CYLINDER_HEAD", {
     { { "ENGINE_TORQUE_MODIFIER", -0.04, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 3, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.08, branch = 1 }, { "COOLANT_LEAK_RATE", 0.08, branch = 2 },
         { "COOLANT_LEAK_RATE", 0.08, branch = 3 }, hint = true },
-    { { "ENGINE_TORQUE_MODIFIER", -0.12, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 6, branch = 1 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 6, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.25, branch = 1 }, { "COOLANT_LEAK_RATE", 0.25, branch = 2 },
         { "COOLANT_LEAK_RATE", 0.25, branch = 3 }, { "EXHAUST_UNBURNT", 0.3, branch = 1 },
         lamps = { { db.COOLANT, color.CRITICAL, branch = 1 }, { db.COOLANT, color.WARNING, branch = 2 }, { db.COOLANT, color.WARNING, branch = 3 } },
         hint = true },
-    { { "ENGINE_TORQUE_MODIFIER", -0.25, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.8, branch = 1 }, { "COOLANT_LEAK_RATE", 0.8, branch = 2 },
         { "COOLANT_LEAK_RATE", 0.8, branch = 3 }, { "EXHAUST_UNBURNT", 0.5, branch = 1 },
         lamps = { { db.COOLANT, color.CRITICAL, branch = 1 }, { db.COOLANT, color.CRITICAL, branch = 2 }, { db.COOLANT, color.CRITICAL, branch = 3 } },
@@ -1355,12 +1355,12 @@ addBreakdown("CYLINDER_HEAD_GASKET", {
     { { "ENGINE_TORQUE_MODIFIER", -0.04, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 3, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.08, branch = 1 }, { "COOLANT_LEAK_RATE", 0.08, branch = 2 },
         { "COOLANT_LEAK_RATE", 0.08, branch = 3 }, hint = true },
-    { { "ENGINE_TORQUE_MODIFIER", -0.12, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 6, branch = 1 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 6, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.25, branch = 1 }, { "COOLANT_LEAK_RATE", 0.25, branch = 2 },
         { "COOLANT_LEAK_RATE", 0.25, branch = 3 }, { "EXHAUST_UNBURNT", 0.3, branch = 1 },
         lamps = { { db.COOLANT, color.CRITICAL, branch = 1 }, { db.COOLANT, color.WARNING, branch = 2 }, { db.COOLANT, color.WARNING, branch = 3 } },
         hint = true },
-    { { "ENGINE_TORQUE_MODIFIER", -0.25, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.8, branch = 1 }, { "COOLANT_LEAK_RATE", 0.8, branch = 2 },
         { "COOLANT_LEAK_RATE", 0.8, branch = 3 }, { "EXHAUST_UNBURNT", 0.5, branch = 1 },
         lamps = { { db.COOLANT, color.CRITICAL, branch = 1 }, { db.COOLANT, color.CRITICAL, branch = 2 }, { db.COOLANT, color.CRITICAL, branch = 3 } },
@@ -1369,7 +1369,7 @@ addBreakdown("CYLINDER_HEAD_GASKET", {
 
 addBreakdown("MAIN_BEARINGS", {
     system = systems.ENGINE, part = parts.MAIN_BEARINGS, isApplicable = getHasEngine,
-        causes = { primary = { "flf", "hmf" }, secondary = { "sf", "mlf" } }, component = "SLEEVE_BEARING", branches = 2,
+        causes = { primary = { "hmf" }, secondary = { "sf", "mlf" } }, component = "SLEEVE_BEARING", branches = 2,
         progress = 1.4
 }, {
     { },
@@ -1380,7 +1380,7 @@ addBreakdown("MAIN_BEARINGS", {
 
 addBreakdown("CONROD_BEARINGS", {
     system = systems.ENGINE, part = parts.CONROD_BEARINGS, isApplicable = getHasEngine,
-        causes = { primary = { "flf", "hmf" }, secondary = { "sf", "mlf" } }, component = "SLEEVE_BEARING", branches = 2,
+        causes = { primary = { "hmf" }, secondary = { "sf", "mlf" } }, component = "SLEEVE_BEARING", branches = 2,
         progress = 1.4
 }, {
     { },
@@ -1469,7 +1469,7 @@ addBreakdown("MANUAL_TRANSMISSION_SYNCHRONIZER_MALFUNCTION", {
 
 addBreakdown("GEARBOX_BEARING_FAILURE", {
     system = systems.TRANSMISSION, part = parts.GEARBOX_BEARINGS, isApplicable = getHasGearbox,
-        isCanProgress = getIsRolling, causes = { primary = { "flf", "pof" }, secondary = { "sf", "hfbf" } },
+        isCanProgress = getIsRolling, causes = { primary = { "pof" }, secondary = { "sf", "hfbf" } },
         component = "ROLLER_BEARING", progress = 1.3
 }, {
     { { "GEARBOX_BEARING_NOISE_EFFECT", 0.3 } },
@@ -1480,7 +1480,7 @@ addBreakdown("GEARBOX_BEARING_FAILURE", {
 
 addBreakdown("POWERSHIFT_CLUTCH_FAILURE", {
     system = systems.TRANSMISSION, part = parts.POWERSHIFT_CLUTCHES, isApplicable = isPowershiftClutchBreakdownApplicable,
-        isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "flf", "hfbf" } },
+        isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "hfbf" } },
         component = "POWERSHIFT_REPLACEMENT_BUDGET", branches = 2, progress = 1.1
 }, {
     { { "TRANSMISSION_SLIP_EFFECT", 0.2, branch = 1 },
@@ -1498,7 +1498,7 @@ addBreakdown("POWERSHIFT_CLUTCH_FAILURE", {
 
 addBreakdown("POWERSHIFT_REVERSER_FAILURE", {
     system = systems.TRANSMISSION, part = parts.POWERSHIFT_REVERSER, isApplicable = isPowershiftClutchBreakdownApplicable,
-        isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "flf", "hfbf" } },
+        isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "hfbf" } },
         component = "POWERSHIFT_REPLACEMENT_BUDGET", branches = 2, progress = 1.1
 }, {
     { { "TRANSMISSION_SLIP_EFFECT", 0.2, branch = 1 },
@@ -1516,7 +1516,7 @@ addBreakdown("POWERSHIFT_REVERSER_FAILURE", {
 
 addBreakdown("TRANSMISSION_CONTROL_FAILURE", {
     system = systems.TRANSMISSION, part = parts.TRANSMISSION_CONTROL, isApplicable = isPowershiftBreakdownApplicable,
-        isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "flf", "hfbf" } },
+        isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "hfbf" } },
         component = "POWERSHIFT_REPLACEMENT_BUDGET", branches = 2, progress = 1.1
 }, {
     { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2, branch = 1 },
@@ -1556,7 +1556,7 @@ addBreakdown("CVT_SENSOR_FAILURE", {
 
 addBreakdown("TRANSMISSION_PUMP_MALFUNCTION", {
     system = systems.TRANSMISSION, part = parts.TRANSMISSION_PUMP, isApplicable = getHasTransmissionPump,
-        isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "flf", "hfbf" } },
+        isCanProgress = getIsRolling, causes = { primary = {}, secondary = { "pof", "sf", "ctf", "hfbf" } },
         component = "POWERSHIFT_REPLACEMENT_BUDGET", progress = 1.1
 }, {
     { { "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT", 0.2 },
@@ -1643,7 +1643,7 @@ addBreakdown("TRANSMISSION_FILTER_CLOGGING", {
 
 addBreakdown("REAR_BEVEL_GEAR_FAILURE", {
     system = systems.TRANSMISSION, part = parts.REAR_BEVEL_GEAR, isApplicable = isWheelDifferentialBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "flf", "hfbf" } }, component = "GEAR", progress = 1.2
+        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 0.3 } },
     { { "GEAR_WHINE_NOISE_EFFECT", 0.8 } },
@@ -1653,7 +1653,7 @@ addBreakdown("REAR_BEVEL_GEAR_FAILURE", {
 
 addBreakdown("FINAL_DRIVE_FAILURE", {
     system = systems.TRANSMISSION, part = parts.FINAL_DRIVES, isApplicable = isWheelDifferentialBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "flf", "hfbf" } }, component = "GEAR", progress = 1.2
+        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 0.3 } },
     { { "GEAR_WHINE_NOISE_EFFECT", 0.8 } },
@@ -1663,7 +1663,7 @@ addBreakdown("FINAL_DRIVE_FAILURE", {
 
 addBreakdown("DIFFERENTIAL_FAILURE", {
     system = systems.TRANSMISSION, part = parts.DIFFERENTIAL, isApplicable = isWheelDifferentialBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "flf", "hfbf" } }, component = "GEAR", progress = 1.2
+        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 0.3 } },
     { { "GEAR_WHINE_NOISE_EFFECT", 0.8 } },
@@ -1684,7 +1684,7 @@ addBreakdown("FRONT_AXLE_SHAFT_WEAR", {
 
 addBreakdown("AXLE_BEARING_WEAR", {
     system = systems.TRANSMISSION, part = parts.AXLE_BEARINGS, isApplicable = isWheelDifferentialBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "flf", "hfbf" } }, component = "ROLLER_BEARING",
+        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "ROLLER_BEARING",
         progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 0.3 }, hint = true },
@@ -1711,7 +1711,7 @@ addBreakdown("FOUR_WD_CONTROL_FAILURE", {
 
 addBreakdown("REDUCER_GEAR_WEAR", {
     system = systems.TRANSMISSION, part = parts.REDUCER, isApplicable = isReducerBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "flf", "hfbf" } }, component = "GEAR", progress = 1.2
+        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 1.0 } },
     { { "GEAR_WHINE_NOISE_EFFECT", 1.5 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 }, { "TRANSMISSION_HEAT_MODIFIER", 0.05 },
@@ -1733,16 +1733,16 @@ addBreakdown("CVT_ADDON_MALFUNCTION", {
 addBreakdown("HYDRAULIC_PUMP_MALFUNCTION", {
     system = systems.HYDRAULICS, part = parts.HYDRAULIC_PUMP, isApplicable = isHydraulicBreakdownApplicable,
         isCanProgress = getWearsWhileFlowing("HYDRAULIC_PUMP_MALFUNCTION"),
-        causes = { primary = { "cof", "hof", "sf" }, secondary = { "flf", "hfbf" } }, component = "CENTRIFUGAL_PUMP",
+        causes = { primary = { "cof", "hof", "sf" }, secondary = { "hfbf" } }, component = "CENTRIFUGAL_PUMP",
         branches = 2, progress = 1.1
 }, {
-    { { "HYDRAULIC_SPEED_MODIFIER", -0.2, branch = 1 },
+    { { "HYDRAULIC_SPEED_MODIFIER", -0.15, branch = 1 },
         { "HYDRAULIC_SPEED_MODIFIER", -1.0, { disableAi = true }, branch = 2 },
         { "HYDRAULIC_PUMP_NOISE_EFFECT", 0.3, branch = 1 },
         description = "rms_breakdowns_hydraulic_pump_malfunction_stage1_description",
         lamps = { { db.WARNING, color.CRITICAL, branch = 2 } },
         branchDescriptions = { "rms_breakdowns_hydraulic_pump_malfunction_stage1_description", "rms_breakdowns_hydraulic_pump_malfunction_branch2_stage1_description" } },
-    { { "HYDRAULIC_SPEED_MODIFIER", -0.4, branch = 1 },
+    { { "HYDRAULIC_SPEED_MODIFIER", -0.3, branch = 1 },
         { "HYDRAULIC_SPEED_MODIFIER", -1.0, { disableAi = true }, branch = 2 },
         { "HYDRAULIC_PUMP_NOISE_EFFECT", 0.5, branch = 1 },
         description = "rms_breakdowns_hydraulic_pump_malfunction_stage2_description",
@@ -1980,7 +1980,7 @@ addBreakdown("PTO_ENGAGEMENT_SWITCH_FAILURE", {
 
 addBreakdown("PTO_OUTPUT_SHAFT_FAILURE", {
     system = systems.PTO, part = parts.PTO_OUTPUT_SHAFT, isApplicable = isPtoBreakdownApplicable,
-        causes = { primary = { "plf", "sf" }, secondary = { "pef" } }, component = "PTO_OUTPUT_SHARED_BUDGET", branches = 2
+        causes = { primary = { "plf", "sf", "prf" }, secondary = { "pef" } }, component = "PTO_OUTPUT_SHARED_BUDGET", branches = 2
 }, {
     { { "PTO_FAILURE", 1.0, { disableAi = true }, branch = 1 }, { "PTO_FAILURE", 1.0, { disableAi = true }, branch = 2 },
         { "PTO_SPLINES_NOISE_EFFECT", 1.0, branch = 1 }, { "PTO_SHAFT_BREAK_NOISE_EFFECT", 1.0, branch = 2 },
@@ -2017,9 +2017,9 @@ addBreakdown("BRAKE_DISC_WEAR", {
         isCanProgress = always, causes = { primary = { "bmf" }, secondary = {} }, component = "BRAKE_SERVICE_BUDGET",
         progress = 0.9
 }, {
-    { { "BRAKE_FORCE_MODIFIER", -0.3 } },
-    { { "BRAKE_FORCE_MODIFIER", -0.45 } },
-    { { "BRAKE_FORCE_MODIFIER", -0.7 } },
+    { { "BRAKE_FORCE_MODIFIER", -0.29 } },
+    { { "BRAKE_FORCE_MODIFIER", -0.5 } },
+    { { "BRAKE_FORCE_MODIFIER", -0.56 } },
     { { "BRAKE_FORCE_MODIFIER", -1.0, { disableAi = true } } }
 })
 
@@ -2028,10 +2028,10 @@ addBreakdown("BRAKE_CONTROL_FAILURE", {
         isCanProgress = getIsRolling, causes = { primary = { "bmf" }, secondary = {} }, component = "BRAKE_SERVICE_BUDGET",
         branches = 2, progress = 0.9, hints = { [1] = "brake_control_failure", [2] = "brake_control_failure_soft_pedal" }
 }, {
-    { { "BRAKE_PULL_EFFECT", 0.2, branch = 1 }, { "BRAKE_FORCE_MODIFIER", -0.3, branch = 2 }, hint = true },
-    { { "BRAKE_PULL_EFFECT", 0.5, branch = 1 }, { "BRAKE_FORCE_MODIFIER", -0.45, branch = 2 },
+    { { "BRAKE_PULL_EFFECT", 0.2, branch = 1 }, { "BRAKE_FORCE_MODIFIER", -0.29, branch = 2 }, hint = true },
+    { { "BRAKE_PULL_EFFECT", 0.5, branch = 1 }, { "BRAKE_FORCE_MODIFIER", -0.5, branch = 2 },
         lamps = { { db.BRAKES, color.WARNING, branch = 2 } }, hint = true },
-    { { "BRAKE_PULL_EFFECT", 1.2, branch = 1 }, { "BRAKE_FORCE_MODIFIER", -0.7, branch = 2 },
+    { { "BRAKE_PULL_EFFECT", 1.2, branch = 1 }, { "BRAKE_FORCE_MODIFIER", -0.56, branch = 2 },
         lamps = { { db.BRAKES, color.CRITICAL, branch = 2 } }, hint = true },
     { { "BRAKE_PULL_EFFECT", 1.2, branch = 1 }, { "BRAKE_FORCE_MODIFIER", -1.0, { disableAi = true }, branch = 2 },
         lamps = { { db.BRAKES, color.CRITICAL, branch = 2 } }, hint = true }
@@ -2042,9 +2042,9 @@ addBreakdown("TRAILER_BRAKE_VALVE_FAILURE", {
         isCanProgress = getIsRolling, causes = { primary = {}, secondary = {} }, component = "TRAILER_BRAKE_VALVE",
         progress = 0.9
 }, {
-    { { "TRAILER_BRAKE_FAILURE", -0.3 }, hint = true },
-    { { "TRAILER_BRAKE_FAILURE", -0.45 }, hint = true },
-    { { "TRAILER_BRAKE_FAILURE", -0.7 }, hint = true },
+    { { "TRAILER_BRAKE_FAILURE", -0.29 }, hint = true },
+    { { "TRAILER_BRAKE_FAILURE", -0.5 }, hint = true },
+    { { "TRAILER_BRAKE_FAILURE", -0.56 }, hint = true },
     { { "TRAILER_BRAKE_FAILURE", -1.0 }, hint = true }
 })
 
@@ -2220,7 +2220,7 @@ addBreakdown("EXPANSION_TANK_FAILURE", {
 
 addBreakdown("ACCESSORY_BELT_FAILURE", {
     system = systems.COOLING, part = parts.ACCESSORY_BELT_KIT, isApplicable = getHasEngineBelt,
-        causes = { primary = { "ohf", "crf" }, secondary = { "ltf", "vf" } }, component = "DRIVE_BELT", progress = 1.1
+        causes = { primary = { "ohf", "crf" }, secondary = { "vf" } }, component = "DRIVE_BELT", progress = 1.1
 }, {
     { { "ALTERNATOR_HEALTH_MODIFIER", -0.2 }, { "RADIATOR_HEALTH_MODIFIER", -0.2 }, { "BELT_SQUEAL_NOISE_EFFECT", 0.3 } },
     { { "ALTERNATOR_HEALTH_MODIFIER", -0.5 }, { "RADIATOR_HEALTH_MODIFIER", -0.4 }, { "BELT_SQUEAL_NOISE_EFFECT", 0.5 },
@@ -2254,7 +2254,7 @@ addBreakdown("ELECTRIC_COOLING_FAN_FAILURE", {
 
 addBreakdown("FAN_CLUTCH_FAILURE", {
     system = systems.COOLING, part = parts.FAN_CLUTCH, isApplicable = getHasFanClutch,
-        causes = { primary = {}, secondary = { "ohf", "sf" } }, component = "MAGNETIC_CLUTCH", progress = 0.9
+        causes = { primary = { "hcf" }, secondary = { "ohf", "sf" } }, component = "MAGNETIC_CLUTCH", progress = 0.9
 }, {
     { { "FAN_CLUTCH_MODIFIER", -0.1 }, { "FAN_CLUTCH_NOISE_EFFECT", 0.6 } },
     { { "FAN_CLUTCH_MODIFIER", -0.2 }, { "FAN_CLUTCH_NOISE_EFFECT", 0.8 }, lamps = { { db.COOLANT, color.WARNING } } },
@@ -2304,15 +2304,15 @@ addBreakdown("FUEL_PUMP_MALFUNCTION", {
         causes = { primary = {}, secondary = { "sf" } }, component = "CENTRIFUGAL_PUMP", progress = 1.1
 }, {
     { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.05 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.15 }, { "ENGINE_HARD_START_MODIFIER", 2 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } } },
-    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1600 } }, { "ENGINE_TORQUE_MODIFIER", -0.12 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.4 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "ENGINE_HARD_START_MODIFIER", 4 },
+    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1600 } }, { "ENGINE_TORQUE_MODIFIER", -0.09 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.1 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "ENGINE_HARD_START_MODIFIER", 4 },
         { "EXHAUST_UNBURNT", 0.2 },
         { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 400, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.WARNING, getIsAtFullLoad, false } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.25 },
-        { "FUEL_CONSUMPTION_MODIFIER", 1.0 }, { "ENGINE_STALLS_CHANCE", 10.0 }, { "ENGINE_HARD_START_MODIFIER", 6 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.22 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.15 }, { "ENGINE_STALLS_CHANCE", 10.0 }, { "ENGINE_HARD_START_MODIFIER", 6 },
         { "EXHAUST_UNBURNT", 0.3 }, { "EXHAUST_SOOT", 0.15 },
         { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 } },
         lamps = { { db.ENGINE, color.WARNING } } },
@@ -2323,17 +2323,17 @@ addBreakdown("FUEL_INJECTOR_MALFUNCTION", {
     system = systems.FUEL, part = parts.FUEL_INJECTORS, isApplicable = getHasDieselFuelSystem,
         causes = { primary = {}, secondary = {} }, component = "SOLENOID_VALVE", progress = 1.1
 }, {
-    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.08 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.1 }, { "EXHAUST_SOOT", 0.2 }, { "EXHAUST_UNBURNT", 0.15 },
+    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.09 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.09 }, { "EXHAUST_SOOT", 0.2 }, { "EXHAUST_UNBURNT", 0.15 },
         { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } },
         { "INJECTOR_KNOCK_NOISE_EFFECT", 0.3 } },
-    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.2 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_SOOT", 0.4 },
+    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.17 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.15 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_SOOT", 0.4 },
         { "EXHAUST_UNBURNT", 0.3 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.8, duration = 400, motorLoad = 0.8 } },
         { "INJECTOR_KNOCK_NOISE_EFFECT", 0.5 }, lamps = { { db.ENGINE, color.WARNING } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.5 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "EXHAUST_SOOT", 0.7 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.33 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "EXHAUST_SOOT", 0.7 },
         { "EXHAUST_UNBURNT", 0.5 },
         { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 500, motorLoad = 0.7 } },
         { "INJECTOR_KNOCK_NOISE_EFFECT", 0.8 }, lamps = { { db.ENGINE, color.CRITICAL } } },
@@ -2345,7 +2345,7 @@ addBreakdown("HIGH_PRESSURE_PUMP_MALFUNCTION", {
         causes = { primary = { "sf" }, secondary = {} }, component = "HIGH_PRESSURE_INJECTION_BUDGET", progress = 1.1
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 }, { "HIGH_PRESSURE_PUMP_NOISE_EFFECT", 0.3 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.17 }, { "ENGINE_HARD_START_MODIFIER", 4 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         { "HIGH_PRESSURE_PUMP_NOISE_EFFECT", 0.5 }, lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
@@ -2360,10 +2360,10 @@ addBreakdown("FUEL_FILTER_CLOGGING", {
     { { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } },
         { "ENGINE_TORQUE_MODIFIER", -0.03 }, progressMultiplier = 0.0 },
     { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.7, duration = 400, motorLoad = 0.9 } },
-        { "ENGINE_TORQUE_MODIFIER", -0.06 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_UNBURNT", 0.15 },
+        { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_UNBURNT", 0.15 },
         progressMultiplier = 0.0 },
     { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, duration = 500, motorLoad = 0.9 } },
-        { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "EXHAUST_UNBURNT", 0.25 },
+        { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "EXHAUST_UNBURNT", 0.25 },
         { "EXHAUST_SOOT", 0.15 }, progressMultiplier = 0.0 },
     { stopEngine({ starter = true }) }
 })
@@ -2388,7 +2388,7 @@ addBreakdown("MECHANICAL_INJECTION_PUMP_MALFUNCTION", {
         causes = { primary = { "sf" }, secondary = {} }, component = "LUBRICATOR_PUMP", progress = 1.1
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 }, { "INJECTOR_KNOCK_NOISE_EFFECT", 0.3 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.17 }, { "ENGINE_HARD_START_MODIFIER", 4 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         { "INJECTOR_KNOCK_NOISE_EFFECT", 0.5 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
@@ -2402,7 +2402,7 @@ addBreakdown("FUEL_METERING_VALVE_FAILURE", {
         causes = { primary = { "sf" }, secondary = {} }, component = "HIGH_PRESSURE_INJECTION_BUDGET", progress = 1.1
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.17 }, { "ENGINE_HARD_START_MODIFIER", 4 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
@@ -2416,7 +2416,7 @@ addBreakdown("RAIL_PRESSURE_SENSOR_FAILURE", {
         causes = { primary = { "sf" }, secondary = {} }, component = "HIGH_PRESSURE_INJECTION_BUDGET", progress = 1.1
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.17 }, { "ENGINE_HARD_START_MODIFIER", 4 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
@@ -2432,7 +2432,7 @@ addBreakdown("RAIL_PRESSURE_LIMITER_FAILURE", {
         causes = { primary = { "sf" }, secondary = {} }, component = "RELIEF_VALVE", progress = 1.1
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.17 }, { "ENGINE_HARD_START_MODIFIER", 4 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
@@ -2446,7 +2446,7 @@ addBreakdown("GAS_PRESSURE_REGULATOR_FAILURE", {
         causes = { primary = { "sf" }, secondary = {} }, component = "RUBBER_DIAPHRAGM", progress = 1.1
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_HARD_START_MODIFIER", 2 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.15 }, { "ENGINE_HARD_START_MODIFIER", 4 },
+    { { "ENGINE_TORQUE_MODIFIER", -0.17 }, { "ENGINE_HARD_START_MODIFIER", 4 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
     { { "ENGINE_TORQUE_MODIFIER", -0.3 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "ENGINE_STALLS_CHANCE", 10.0 },
@@ -2477,9 +2477,9 @@ addBreakdown("GAS_FILTER_CLOGGING", {
     { { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } },
         { "ENGINE_TORQUE_MODIFIER", -0.03 } },
     { { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.7, duration = 400, motorLoad = 0.9 } },
-        { "ENGINE_TORQUE_MODIFIER", -0.06 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_UNBURNT", 0.15 } },
+        { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_UNBURNT", 0.15 } },
     { { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 0.7, duration = 500, motorLoad = 0.9 } },
-        { "ENGINE_TORQUE_MODIFIER", -0.1 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "EXHAUST_UNBURNT", 0.25 },
+        { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "ENGINE_STALLS_CHANCE", 20.0 }, { "EXHAUST_UNBURNT", 0.25 },
         { "EXHAUST_SOOT", 0.15 } },
     { stopEngine({ starter = true }) }
 })
@@ -2502,16 +2502,16 @@ addBreakdown("GAS_INJECTOR_MALFUNCTION", {
     system = systems.FUEL, part = parts.GAS_INJECTORS, isApplicable = getBurnsMethane,
         causes = { primary = {}, secondary = {} }, component = "SOLENOID_VALVE", progress = 1.1
 }, {
-    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.08 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.1 }, { "EXHAUST_SOOT", 0.2 }, { "EXHAUST_UNBURNT", 0.15 },
+    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.09 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.09 }, { "EXHAUST_SOOT", 0.2 }, { "EXHAUST_UNBURNT", 0.15 },
         { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } } },
-    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.2 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_SOOT", 0.4 },
+    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.17 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.15 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_SOOT", 0.4 },
         { "EXHAUST_UNBURNT", 0.3 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.8, duration = 400, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.5 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "EXHAUST_SOOT", 0.7 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.33 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "EXHAUST_SOOT", 0.7 },
         { "EXHAUST_UNBURNT", 0.5 },
         { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 500, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.CRITICAL } } },
@@ -2521,20 +2521,20 @@ addBreakdown("GAS_INJECTOR_MALFUNCTION", {
 addBreakdown("SPARK_PLUG_WEAR", {
     system = systems.ELECTRICAL, part = parts.SPARK_PLUGS, isApplicable = getBurnsMethane
 }, {
-    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.08 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.1 }, { "EXHAUST_UNBURNT", 0.15 },
+    { { "IDLE_HUNTING_EFFECT", 0.05, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.09 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.09 }, { "EXHAUST_UNBURNT", 0.15 },
         { "ENGINE_HESITATION_CHANCE", 0.4, { amplitude = 0.6, duration = 300, motorLoad = 0.9 } },
         progressMultiplier = 0 },
-    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.2 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_UNBURNT", 0.3 },
+    { { "IDLE_HUNTING_EFFECT", 0.08, { period = 1500 } }, { "ENGINE_TORQUE_MODIFIER", -0.17 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.15 }, { "ENGINE_STALLS_CHANCE", 30.0 }, { "EXHAUST_UNBURNT", 0.3 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.8, duration = 400, motorLoad = 0.8 } },
         progressMultiplier = 0, lamps = { { db.ENGINE, color.WARNING } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.5 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "EXHAUST_UNBURNT", 0.5 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.33 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_HARD_START_MODIFIER", 6 }, { "EXHAUST_UNBURNT", 0.5 },
         { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 500, motorLoad = 0.7 } },
         progressMultiplier = 0, lamps = { { db.ENGINE, color.CRITICAL } } },
-    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.35 },
-        { "FUEL_CONSUMPTION_MODIFIER", 0.5 }, { "ENGINE_HARD_START_MODIFIER", 12 }, { "ENGINE_STALLS_CHANCE", 30.0 },
+    { { "IDLE_HUNTING_EFFECT", 0.1, { period = 1800 } }, { "ENGINE_TORQUE_MODIFIER", -0.33 },
+        { "FUEL_CONSUMPTION_MODIFIER", 0.25 }, { "ENGINE_HARD_START_MODIFIER", 12 }, { "ENGINE_STALLS_CHANCE", 30.0 },
         { "EXHAUST_UNBURNT", 0.5 },
         { "ENGINE_HESITATION_CHANCE", 0.2, { amplitude = 1.0, duration = 500, motorLoad = 0.7 } },
         lamps = { { db.ENGINE, color.CRITICAL } } }
@@ -2593,7 +2593,7 @@ addBreakdown("PARTICULATE_FILTER_SOOT_OVERLOAD", {
 
 addBreakdown("TRACTION_BATTERY_CELL_FAULT", {
     system = systems.FUEL, part = parts.TRACTION_BATTERY, isApplicable = getIsElectricVehicle,
-        causes = { primary = { "ddf", "bhf" }, secondary = { "hdf" } }, component = "TRACTION_BATTERY", progress = 1.4
+        causes = { primary = { "ddf", "bhf" }, secondary = {} }, component = "TRACTION_BATTERY", progress = 1.4
 }, {
     { { "TRACTION_BATTERY_CAPACITY_MODIFIER", -0.05 } },
     { { "TRACTION_BATTERY_CAPACITY_MODIFIER", -0.12 }, { "ENGINE_TORQUE_MODIFIER", -0.1 },
@@ -2606,7 +2606,7 @@ addBreakdown("TRACTION_BATTERY_CELL_FAULT", {
 
 addBreakdown("HV_CONTACTOR_FAILURE", {
     system = systems.FUEL, part = parts.HV_CONTACTOR, isApplicable = getIsElectricVehicle,
-        causes = { primary = { "hdf" }, secondary = {} }, component = "CIRCUIT_BREAKER", progress = 1.1
+        causes = { primary = {}, secondary = {} }, component = "CIRCUIT_BREAKER", progress = 1.1
 }, {
     { { "ENGINE_STALLS_CHANCE", 60.0 } },
     { { "ENGINE_STALLS_CHANCE", 30.0 }, lamps = { { db.TRACTION_BATTERY, color.WARNING } } },

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="116">
     <author>Squallqt</author>
-    <version>1.0.0.0-beta.1</version>
+    <version>1.0.0.0-beta.2</version>
     <title>
         <en>Realistic Mechanical Systems</en>
         <de>Realistische Mechaniksysteme</de>
@@ -15,11 +15,11 @@ Each vehicle is built from up to 8 individual systems: engine, transmission, hyd
 WEAR
 - Condition falls about 1% per operating hour under normal use, far faster under abuse, and each system has its own wear factors
 - Each part wears faster under what wears it on a real machine: driving against the parking brake wears the parking brake, an engine pushed cold its valve train
-- Each part fails as real parts of its kind do, by published failure data: about ten breakdowns over the life of a machine in normal use, more on the parts you strain
-- Overdue service accelerates wear in the systems covered by the overdue fluid, the engine most of all
+- Each part fails as real parts of its kind do, by published failure data: about fourteen breakdowns over the life of a machine in normal use, few when new and more as it ages, more on the parts you strain
+- Overdue service accelerates wear in the systems covered by the overdue fluid
 
 BREAKDOWNS
-- 162 breakdowns spread across the systems, most in four stages from Minor to Critical
+- 164 breakdowns spread across the systems, most in four stages from Minor to Critical
 - The part that fails is the one your use has worn: frequent braking with a heavy trailer wears out the brakes first
 - Early faults show through RPM fluctuations, coloured exhaust smoke, knocking and whistling; dashboard warnings usually appear from stage 2, though some faults can warn from stage 1
 - Old machines also degrade permanently, losing engine power, transmission bite, battery performance, and cooling efficiency
@@ -38,7 +38,7 @@ DAILY CARE
 - Telwin Doctor Charge 155 Connect on a trolley: connect it near a vehicle to charge its battery at the current it accepts, or for starting aid (START); charging follows the game's time speed and resumes when the save is loaded
 - Hold R near a vehicle for a pre-shift check of fluids, radiator, air filter and greasing
 - Air Blower clears the cooling pack and removes loose dust from the air filter
-- SKF grease gun, loaded with SKF grease cartridges bought one at a time or up to twelve in a carton. Each machine and implement has its own grease points, to grease every working day, every few working days or every few months: each click greases one, a display shows the grease left in the cartridge and each point greased, and greasing late wears the machine faster. The fleet page lists every implement with its grease points, and standing next to a machine or implement shows the points due or the next greasing
+- SKF grease gun, loaded with SKF grease cartridges bought one at a time or up to twelve in a carton. Each machine and implement has its own grease points, to grease every working day, every few working days or every few months: each click greases one, a display shows the grease left in the cartridge and each point greased, and greasing late wears the machine faster. The fleet page lists every implement with its grease points and shows the tractor power it requires, and standing next to a machine or implement shows the points due or the next greasing
 - An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
 
 SIMULATION
@@ -52,9 +52,29 @@ SIMULATION
 - Multiplayer and dedicated server, 27 languages
 - Electric vehicles tracked with their own parts: an electric motor, a traction battery that loses capacity with age and range in the cold, power electronics, and maintenance limited to its present fluid circuits
 
+COMPATIBILITY
+- Enhanced Vehicle: RMS drives the drivetrain, the parking brake and the odometer, and turns off Enhanced Vehicle's own; its other functions stay
+- CVT Addon: the mod keeps the wear of its gearbox, which RMS shows as a CVT Addon breakdown and repairs with an overhaul
+- Extended Leasing: the wash is billed once, and the deposit refund shows in the return window
+- AutoDrive and Courseplay: their drivers slow down on an overload like the game's helpers, and a breakdown that stops the machine stops them too
+- Mobile Workshop: its workshop screen works as the RMS mobile workshop, with the same limits
+- Realistic Harvesting (1.6.5.0 or higher): losses, throughput and stops follow the wear of the RMS harvesting parts
+- [WIP] Red Tape: machines lent by a scheme are handled like contract machines, without wear
+- [WIP] Vehicle Control Addon: RMS drives the drivetrain and the differential locks, and turns off Vehicle Control Addon's own; its other functions stay
+
 Mod for Farming Simulator
 
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.2:
+- Reworked wear and breakdowns: a new machine rarely fails, an old or mistreated one far more often, and overheating, running dry or a starter used without rest break the part
+- Added the required tractor power to the implement cards of the fleet page
+- Fixed the error when entering the battery trolley with some driving mods
+- Reworked the physics of the battery trolley, which now stands on its own brakes instead of being locked to the ground
+- Fixed machines asking for grease after a simple trip or idling: only real work counts now
+- Fixed machines due for greasing missing from the alerts of the fleet page
+- Fixed flatbed trailers sold among the bale loaders being greased as bale loaders
+- Added greasing to self-propelled balers and wood chippers, MacDon headers and onion planters
 
 Changelog 1.0.0.0-beta.1:
 - Reworked machine production years and their period equipment
@@ -264,11 +284,11 @@ Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraul
 VERSCHLEISS
 - Der Zustand sinkt im Normalbetrieb um etwa 1 % je Betriebsstunde, bei Missbrauch deutlich schneller, und jedes System hat eigene Verschleißfaktoren
 - Jedes Teil verschleißt schneller unter dem, was es an einer echten Maschine verschleißt: Fahren gegen die angezogene Feststellbremse verschleißt die Feststellbremse, ein kalt geforderter Motor seinen Ventiltrieb
-- Jedes Teil fällt aus wie echte Teile seiner Art, nach veröffentlichten Ausfalldaten: etwa zehn Defekte im Leben einer normal genutzten Maschine, mehr an den Teilen, die Sie überlasten
-- Überfällige Wartung beschleunigt den Verschleiß der vom überfälligen Flüssigkeitswechsel betroffenen Systeme, allen voran des Motors
+- Jedes Teil fällt aus wie echte Teile seiner Art, nach veröffentlichten Ausfalldaten: etwa vierzehn Defekte im Leben einer normal genutzten Maschine, wenige im Neuzustand und mehr mit dem Alter, mehr an den Teilen, die Sie überlasten
+- Überfällige Wartung beschleunigt den Verschleiß der vom überfälligen Flüssigkeitswechsel betroffenen Systeme
 
 DEFEKTE
-- 162 Defekte, verteilt auf die Systeme, meist in vier Stufen von geringfügig bis kritisch
+- 164 Defekte, verteilt auf die Systeme, meist in vier Stufen von geringfügig bis kritisch
 - Es fällt das Teil aus, das Ihre Nutzung verschlissen hat: Häufiges Bremsen mit schwerem Anhänger verschleißt zuerst die Bremsen
 - Frühe Defekte zeigen sich durch schwankende Drehzahl, farbigen Abgasrauch, Klopfen und Pfeifen; Warnanzeigen leuchten meist ab Stufe 2, bei manchen Defekten schon ab Stufe 1
 - Alte Maschinen bauen zudem dauerhaft ab und verlieren Motorleistung, Kraftübertragung, Batterieleistung und Kühlwirkung
@@ -287,7 +307,7 @@ TÄGLICHE PFLEGE
 - Telwin Doctor Charge 155 Connect auf einem Wagen: neben einem Fahrzeug anschließen, um seine Batterie mit dem Strom zu laden, den sie aufnimmt, oder für die Starthilfe (START); das Laden folgt der Zeitgeschwindigkeit im Spiel und wird beim Laden des Spielstands fortgesetzt
 - R in Fahrzeugnähe gedrückt halten für eine Kontrolle von Betriebsflüssigkeiten, Kühler, Luftfilter und Abschmierung vor Schichtbeginn
 - Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter
-- SKF-Fettpresse, geladen mit SKF-Fettkartuschen, einzeln oder bis zu zwölf im Karton gekauft. Jede Maschine und jedes Anbaugerät hat eigene Schmierstellen, an jedem Arbeitstag, alle paar Arbeitstage oder alle paar Monate abzuschmieren: Jeder Klick schmiert eine, eine Anzeige zeigt das Fett in der Kartusche und jede abgeschmierte Stelle, und verspätetes Abschmieren verschleißt die Maschine schneller. Die Fuhrpark-Seite listet jedes Anbaugerät mit seinen Schmierstellen, und zu Fuß neben einer Maschine oder einem Anbaugerät erscheinen die fälligen Schmierstellen oder das nächste Abschmieren
+- SKF-Fettpresse, geladen mit SKF-Fettkartuschen, einzeln oder bis zu zwölf im Karton gekauft. Jede Maschine und jedes Anbaugerät hat eigene Schmierstellen, an jedem Arbeitstag, alle paar Arbeitstage oder alle paar Monate abzuschmieren: Jeder Klick schmiert eine, eine Anzeige zeigt das Fett in der Kartusche und jede abgeschmierte Stelle, und verspätetes Abschmieren verschleißt die Maschine schneller. Die Fuhrpark-Seite listet jedes Anbaugerät mit seinen Schmierstellen und zeigt die benötigte Traktorleistung, und zu Fuß neben einer Maschine oder einem Anbaugerät erscheinen die fälligen Schmierstellen oder das nächste Abschmieren
 - Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
 
 SIMULATION
@@ -301,9 +321,29 @@ SIMULATION
 - Mehrspieler und Dedicated Server, 27 Sprachen
 - Elektrofahrzeuge mit ihren eigenen Bauteilen: Elektromotor, Traktionsbatterie, die mit dem Alter Kapazität und bei Kälte Reichweite verliert, Leistungselektronik und Wartung nur für vorhandene Flüssigkeitskreisläufe
 
+KOMPATIBILITÄT
+- Enhanced Vehicle: RMS steuert Antrieb, Feststellbremse und Kilometerzähler und schaltet die von Enhanced Vehicle ab; seine übrigen Funktionen bleiben
+- CVT Addon: Der Mod behält den Verschleiß seines Getriebes, den RMS als CVT-Addon-Defekt anzeigt und mit einer Überholung behebt
+- Extended Leasing: Die Wäsche wird nur einmal berechnet, und die Rückzahlung der Kaution erscheint im Rückgabefenster
+- AutoDrive und Courseplay: Ihre Fahrer werden bei Überlastung langsamer wie die Helfer des Spiels, und ein Defekt, der die Maschine stoppt, stoppt auch sie
+- Mobile Workshop: Sein Werkstattbildschirm dient als mobile Werkstatt von RMS, mit denselben Grenzen
+- Realistic Harvesting (1.6.5.0 oder höher): Verluste, Durchsatz und Stopps folgen dem Verschleiß der RMS-Ernteorgane
+- [WIP] Red Tape: Von einem Programm verliehene Maschinen werden wie Auftragsmaschinen behandelt, ohne Verschleiß
+- [WIP] Vehicle Control Addon: RMS steuert Antrieb und Differenzialsperren und schaltet die von Vehicle Control Addon ab; seine übrigen Funktionen bleiben
+
 Mod for Farming Simulator
 
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.2:
+- Verschleiß und Defekte überarbeitet: Neue Maschinen fallen selten aus, alte oder schlecht behandelte weit häufiger, und Überhitzung, Trockenlauf oder ein Anlasser ohne Ruhepause beschädigen das Teil
+- Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
+- Fehler beim Einsteigen in den Batteriewagen mit einigen Fahr-Mods behoben
+- Physik des Batteriewagens überarbeitet, der nun auf seinen eigenen Bremsen steht, statt am Boden fixiert zu sein
+- Abschmierbedarf von Maschinen nach bloßer Fahrt oder im Leerlauf behoben: Nur echte Arbeit zählt jetzt
+- Fehlende abzuschmierende Maschinen in den Warnungen der Fuhrpark-Seite behoben
+- Abschmierung von Plattformanhängern aus der Kategorie Ballenlader wie Ballenlader behoben
+- Abschmierung selbstfahrender Pressen und Holzhacker, von MacDon-Schneidwerken und Zwiebelpflanzmaschinen hinzugefügt
 
 Changelog 1.0.0.0-beta.1:
 - Baujahre der Maschinen und ihre zeitgemäße Ausstattung überarbeitet
@@ -513,11 +553,11 @@ Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, tran
 USURE
 - L'état baisse d'environ 1 % par heure de fonctionnement en usage normal, bien plus vite en cas d'abus, et chaque système a ses propres facteurs d'usure
 - Chaque pièce s'use plus vite sous ce qui l'use sur une vraie machine : rouler frein de parking serré use le frein de parking, un moteur poussé à froid ses soupapes
-- Chaque pièce lâche comme les vraies pièces de son type, d'après des données de pannes publiées : environ dix pannes sur la vie d'une machine menée normalement, davantage sur les pièces que vous malmenez
-- Un entretien en retard accélère l'usure des systèmes couverts par le fluide à remplacer, du moteur en premier
+- Chaque pièce lâche comme les vraies pièces de son type, d'après des données de pannes publiées : environ quatorze pannes sur la vie d'une machine menée normalement, peu quand elle est neuve et davantage en vieillissant, davantage sur les pièces que vous malmenez
+- Un entretien en retard accélère l'usure des systèmes couverts par le fluide à remplacer
 
 PANNES
-- 162 pannes réparties sur les systèmes, la plupart en quatre stades, de mineur à critique
+- 164 pannes réparties sur les systèmes, la plupart en quatre stades, de mineur à critique
 - La pièce qui lâche est celle que votre usage a usée : freiner souvent avec une lourde remorque use d'abord les freins
 - Les premiers stades se manifestent par un régime instable, une fumée colorée, des cognements ou des sifflements ; les témoins apparaissent généralement au stade 2, mais certaines pannes peuvent en afficher dès le stade 1
 - Les machines âgées se dégradent aussi durablement et perdent puissance moteur, transmission, performance de batterie et efficacité de refroidissement
@@ -536,7 +576,7 @@ ENTRETIEN QUOTIDIEN
 - Telwin Doctor Charge 155 Connect sur chariot : branchez-le près d'un véhicule pour recharger sa batterie au courant qu'elle accepte, ou pour l'aide au démarrage (START) ; la recharge suit la vitesse du temps de la partie et reprend au chargement de la sauvegarde
 - Maintenir R près d'un véhicule pour un contrôle avant prise de poste : niveaux, radiateur, filtre à air, graissage
 - La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air
-- Pistolet à graisse SKF, chargé de cartouches de graisse SKF achetées à l'unité ou jusqu'à douze dans un carton. Chaque machine et chaque outil attelé a ses propres graisseurs, à graisser chaque jour de travail, tous les quelques jours de travail ou tous les quelques mois : chaque clic en graisse un, un affichage montre la graisse restant dans la cartouche et chaque graisseur fait, et un graissage en retard use la machine plus vite. Le parc de matériel liste chaque outil avec ses graisseurs, et à pied près d'une machine ou d'un outil s'affichent les graisseurs à faire ou le prochain graissage
+- Pistolet à graisse SKF, chargé de cartouches de graisse SKF achetées à l'unité ou jusqu'à douze dans un carton. Chaque machine et chaque outil attelé a ses propres graisseurs, à graisser chaque jour de travail, tous les quelques jours de travail ou tous les quelques mois : chaque clic en graisse un, un affichage montre la graisse restant dans la cartouche et chaque graisseur fait, et un graissage en retard use la machine plus vite. Le parc de matériel liste chaque outil avec ses graisseurs et affiche la puissance de tracteur requise, et à pied près d'une machine ou d'un outil s'affichent les graisseurs à faire ou le prochain graissage
 - Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
 
 SIMULATION
@@ -550,9 +590,29 @@ SIMULATION
 - Multijoueur et serveur dédié, 27 langues
 - Véhicules électriques suivis avec leurs propres organes : moteur électrique, batterie de traction qui perd de la capacité en vieillissant et de l'autonomie au froid, électronique de puissance, et des entretiens limités aux circuits présents
 
+COMPATIBILITÉ
+- Enhanced Vehicle : RMS gère la transmission, le frein de parc et le compteur kilométrique, et coupe ceux d'Enhanced Vehicle ; ses autres fonctions restent
+- CVT Addon : le mod garde l'usure de sa boîte, que RMS affiche comme une panne CVT Addon et répare avec une révision
+- Extended Leasing : le lavage n'est facturé qu'une fois, et le remboursement de la caution apparaît dans la fenêtre de retour
+- AutoDrive et Courseplay : leurs conducteurs ralentissent sur une surcharge comme les ouvriers du jeu, et une panne qui arrête la machine les arrête aussi
+- Mobile Workshop : son écran d'atelier sert d'atelier mobile RMS, avec les mêmes limites
+- Realistic Harvesting (1.6.5.0 ou plus) : les pertes, le débit et les arrêts suivent l'usure des organes de récolte RMS
+- [WIP] Red Tape : les machines prêtées par un programme sont traitées comme des machines de contrat, sans usure
+- [WIP] Vehicle Control Addon : RMS gère la transmission et les blocages de différentiel, et coupe ceux de Vehicle Control Addon ; ses autres fonctions restent
+
 Mod for Farming Simulator
 
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.2 :
+- Refonte de l'usure et des pannes : une machine neuve tombe rarement en panne, une machine vieille ou malmenée bien plus souvent, et la surchauffe, la marche à sec ou un démarreur sans repos cassent la pièce
+- Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel
+- Correction de l'erreur en montant dans le chariot de batterie avec certains mods de conduite
+- Refonte de la physique du chariot de batterie, qui tient désormais sur ses propres freins au lieu d'être bloqué au sol
+- Correction des machines qui demandaient de la graisse après un simple trajet ou au ralenti : seul un vrai travail compte désormais
+- Correction des machines à graisser absentes des alertes du parc de matériel
+- Correction des plateaux vendus parmi les ramasseuses de balles, graissés comme des ramasseuses
+- Ajout du graissage des presses et broyeurs automoteurs, des barres de coupe MacDon et des planteuses d'oignons
 
 Changelog 1.0.0.0-beta.1 :
 - Refonte des années des machines et de leurs équipements d'époque
@@ -763,22 +823,8 @@ Changelog 0.10.0.0 :
         <specialization name="rmsDiagnosticTool" className="RMS_DiagnosticTool" filename="scripts/objects/RMS_DiagnosticTool.lua"/>
     </specializations>
     <vehicleTypes>
-        <type name="rmsBatteryCharger" className="Vehicle" filename="$dataS/scripts/vehicles/Vehicle.lua">
-            <specialization name="vehicleSettings"/>
-            <specialization name="baseMaterial"/>
-            <specialization name="foliageBending"/>
-            <specialization name="washable"/>
-            <specialization name="wearable"/>
-            <specialization name="animatedVehicle"/>
-            <specialization name="dashboard"/>
-            <specialization name="ikChains"/>
-            <specialization name="wheels"/>
-            <specialization name="enterable"/>
-            <specialization name="fillUnit"/>
-            <specialization name="motorized"/>
-            <specialization name="drivable"/>
+        <type name="rmsBatteryCharger" parent="baseDrivable" filename="$dataS/scripts/vehicles/Vehicle.lua">
             <specialization name="pushHandTool"/>
-            <specialization name="handToolHolders"/>
             <specialization name="rmsBatteryCharger"/>
             <specialization name="rmsDiagnosticTool"/>
         </type>

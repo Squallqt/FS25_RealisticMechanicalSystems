@@ -1785,6 +1785,10 @@
         <textMaxNumLines value="1"/>
         <textAlignment value="center"/>
     </Profile>
+    <Profile name="rms_fleetNeededPower" extends="rms_workshopCenteredDetail">
+        <textMaxNumLines value="1"/>
+        <textColor value="$preset_fs25_colorMainLight"/>
+    </Profile>
     <Profile name="rms_tileValue" extends="rms_workshopValue">
         <textSize value="17px"/>
         <textMinSize value="12px"/>
