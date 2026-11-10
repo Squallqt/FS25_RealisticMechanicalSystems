@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Byte till originaldelar krävs"/>
         <text name="rms_warranty_mobile" text="Du betalar extra arbetskostnad för mobil verkstad"/>
         <text name="rms_warranty_remapped" text="Garanti upphörd: motor optimerad"/>
+        <text name="rms_warranty_heat" text="Avslag: överhettning"/>
+        <text name="rms_warranty_low_level" text="Avslag: för låg oljenivå"/>
+        <text name="rms_warranty_fuel_dry" text="Avslag: tanken körd tom"/>
+        <text name="rms_warranty_park_brake" text="Avslag: parkeringsbroms åtdragen"/>
+        <text name="rms_warranty_pto_engagement" text="Avslag: ryck vid inkoppling av kraftuttag"/>
+        <text name="rms_warranty_stones" text="Avslag: stenar intagna"/>
+        <text name="rms_warranty_starter" text="Avslag: startmotor överbelastad"/>
+        <text name="rms_warranty_pto_angle" text="Avslag: för stor kardanvinkel"/>
+        <text name="rms_warranty_windup" text="Avslag: spärr eller 4WD på fast mark"/>
+        <text name="rms_warranty_filter" text="Avslag: igensatt filter"/>
+        <text name="rms_warranty_trailer" text="Avslag: för tungt släp"/>
         <text name="rms_ws_overhaul_row_systems" text="Behandlade system"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Återställda"/>
         <text name="rms_ws_overhaul_systems_one" text="Ett valfritt"/>

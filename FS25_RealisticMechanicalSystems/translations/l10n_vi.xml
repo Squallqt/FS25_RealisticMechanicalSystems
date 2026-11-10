@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Phải thay bằng phụ tùng chính hãng"/>
         <text name="rms_warranty_mobile" text="Bạn trả thêm chi phí nhân công của xưởng lưu động"/>
         <text name="rms_warranty_remapped" text="Mất bảo hành: động cơ đã tinh chỉnh"/>
+        <text name="rms_warranty_heat" text="Từ chối: quá nhiệt"/>
+        <text name="rms_warranty_low_level" text="Từ chối: mức dầu quá thấp"/>
+        <text name="rms_warranty_fuel_dry" text="Từ chối: chạy cạn bình nhiên liệu"/>
+        <text name="rms_warranty_park_brake" text="Từ chối: phanh đỗ đang kéo"/>
+        <text name="rms_warranty_pto_engagement" text="Từ chối: giật khi đóng PTO"/>
+        <text name="rms_warranty_stones" text="Từ chối: hút phải đá"/>
+        <text name="rms_warranty_starter" text="Từ chối: khởi động quá lâu"/>
+        <text name="rms_warranty_pto_angle" text="Từ chối: góc trục các-đăng quá lớn"/>
+        <text name="rms_warranty_windup" text="Từ chối: khóa vi sai hoặc 4WD trên nền cứng"/>
+        <text name="rms_warranty_filter" text="Từ chối: bộ lọc bị tắc"/>
+        <text name="rms_warranty_trailer" text="Từ chối: rơ-moóc quá nặng"/>
         <text name="rms_ws_overhaul_row_systems" text="Hệ thống được xử lý"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Được phục hồi"/>
         <text name="rms_ws_overhaul_systems_one" text="Một tùy chọn"/>

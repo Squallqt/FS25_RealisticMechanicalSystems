@@ -830,7 +830,7 @@ function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey)
                 table.insert(groups, group)
             end
             table.insert(group.lines, { label = row.label, price = row.price })
-            if row.warrantyReason ~= nil and row.warrantyReason ~= "overdue" and row.warrantyReason ~= "impact" then
+            if row.warrantyReason ~= nil and not RealisticMechanicalSystems.getIsWarrantyRefusal(row.warrantyReason) then
                 local note = g_i18n:getText("rms_warranty_" .. row.warrantyReason)
                 if row.warrantyReason == "part" then
                     note = string.format(note, vehicle.spec_RealisticMechanicalSystems.partWarranty[row.breakdownId])

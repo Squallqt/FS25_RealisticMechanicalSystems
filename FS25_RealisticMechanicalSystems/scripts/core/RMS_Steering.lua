@@ -255,7 +255,7 @@ local function applyImpact(vehicle, speedLoss)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local damage = math.min(speedLoss * C.TERRAIN_IMPACT_DAMAGE_PER_KMH, C.TERRAIN_IMPACT_MAX_DAMAGE)
 
-    vehicle:applyInstantDamageToSystem(RealisticMechanicalSystems.SYSTEMS.CHASSIS, damage, "terrainImpactFactor")
+    vehicle:applyInstantDamageToSystem(RealisticMechanicalSystems.SYSTEMS.CHASSIS, damage, "terrainImpactFactor", "impact")
     spec.terrainImpacts.count = spec.terrainImpacts.count + 1
     spec.terrainImpacts.lastSpeedLoss = speedLoss
     spec.terrainImpactTutorialTimer = C.TERRAIN_IMPACT_TUTORIAL_MS

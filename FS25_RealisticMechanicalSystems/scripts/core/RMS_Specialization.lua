@@ -215,6 +215,19 @@ RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
     harvestRiceFactor = "hrf", harvestWetFactor = "hwf"
 }
 
+-- warranty refusals for a part an abuse wore; the index is saved
+RealisticMechanicalSystems.WARRANTY_ABUSES = { "impact", "heat", "low_level", "fuel_dry", "park_brake", "pto_engagement",
+    "stones", "starter", "pto_angle", "windup", "filter", "trailer" }
+RealisticMechanicalSystems.WARRANTY_ABUSE = {}
+for code, reason in ipairs(RealisticMechanicalSystems.WARRANTY_ABUSES) do
+    RealisticMechanicalSystems.WARRANTY_ABUSE[reason] = code
+end
+
+---Tells whether a warranty reason refuses the fault it is given for
+function RealisticMechanicalSystems.getIsWarrantyRefusal(reason)
+    return reason == "overdue" or RealisticMechanicalSystems.WARRANTY_ABUSE[reason] ~= nil
+end
+
 RealisticMechanicalSystems.FACTOR_STATS_KEYS = {}
 for _, alias in pairs(RealisticMechanicalSystems.FACTOR_STATS_ALIASES) do
     RealisticMechanicalSystems.FACTOR_STATS_KEYS[alias] = true
@@ -863,7 +876,7 @@ local SAVEGAME_ATTRIBUTES = {
     { "pendingServiceClockTarget", "STRING", "Service clock levels the running service restores" },
     { "systemsState", "STRING", "Condition and switch of each system" },
     { "partWear", "STRING", "Wear of each part" },
-    { "partImpactWear", "STRING", "Wear each part took from collisions" },
+    { "partAbuse", "STRING", "Abuse that last wore each part, refusing its warranty" },
     { "factorStats", "STRING", "Wear gathered by each cause, system by system" },
     { "pendingOverhaulPartStart", "STRING", "Wear of each part at the start of the running overhaul" },
     { "pendingOverhaulPartTarget", "STRING", "Wear the running overhaul brings each part to" },
@@ -1336,7 +1349,7 @@ function RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, withBre
     for systemKey, systemParts in pairs(spec.systemParts) do
         for _, partId in ipairs(systemParts) do
             spec.partWear[partId] = parts[partId].age
-            spec.partImpactWear[partId] = nil
+            spec.partAbuse[partId] = nil
             spec.partDrawnWear[partId] = nil
         end
         RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)

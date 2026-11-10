@@ -826,6 +826,7 @@ local function updatePtoState(vehicle)
         spec.ptoEngagementDamage = (tonumber(spec.ptoEngagementDamage) or 0) + damage
         if isShock then
             spec.ptoShockSequence = (tonumber(spec.ptoShockSequence) or 0) + 1
+            spec.isPtoEngagementShock = true
         end
     end
     spec.ptoPreviousActiveLinks = ptoData.activeLinks

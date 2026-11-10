@@ -1053,7 +1053,7 @@ function RMS_Utils.serializeBreakdowns(breakdownsTable)
             breakdown.progressTimer or 0, toFlag(breakdown.isVisible), toFlag(breakdown.isSelectedForRepair),
             toFlag(breakdown.isActive ~= false), math.max(tonumber(breakdown.resumeTimer) or 0, 0),
             toCount(breakdown.source), toCount(breakdown.effectTargetIndex), toCount(breakdown.branch),
-            overdue == nil and -1 or toFlag(overdue), breakdown.usedPartHours or "", toFlag(breakdown.warrantyImpact)))
+            overdue == nil and -1 or toFlag(overdue), breakdown.usedPartHours or "", toCount(breakdown.warrantyAbuse)))
     end
     return table.concat(entries, ";")
 end
@@ -1108,7 +1108,7 @@ function RMS_Utils.deserializeBreakdowns(breakdownString)
                 source = tonumber(fields[8]) or RealisticMechanicalSystems.BREAKDOWN_SOURCES.RANDOM,
                 effectTargetIndex = toCount(fields[9]),
                 branch = toCount(fields[10]),
-                warrantyImpact = tonumber(fields[13]) == 1,
+                warrantyAbuse = RealisticMechanicalSystems.WARRANTY_ABUSES[toCount(fields[13])] and toCount(fields[13]) or nil,
                 usedPartHours = tonumber(fields[12])
             }
             -- -1: no warranty verdict saved

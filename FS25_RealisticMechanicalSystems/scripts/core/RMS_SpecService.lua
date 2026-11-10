@@ -473,9 +473,9 @@ local function processPendingRepairStep(vehicle, spec, breakdownId, optionOne, o
         end
         for _, partId in ipairs(renewedParts) do
             RealisticMechanicalSystems.recordPartWarranty(vehicle, partId, optionTwo, isPaid, donorHours)
+            spec.partAbuse[partId] = nil
             if spec.partWear[partId] ~= nil then
                 spec.partWear[partId] = wear
-                spec.partImpactWear[partId] = nil
             end
         end
         RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
@@ -686,7 +686,7 @@ function RealisticMechanicalSystems:completeService()
                 local definition = RMS_Breakdowns.BreakdownRegistry[partId]
                 if definition.isApplicable(self) and RMS_Utils.getIsPartWorn(partId, spec.partWear[partId]) then
                     spec.partWear[partId] = 0
-                    spec.partImpactWear[partId] = nil
+                    spec.partAbuse[partId] = nil
                     RealisticMechanicalSystems.recordPartWarranty(self, partId, optionTwo,
                         not self:isLeaseMaintenanceCovered(spec.workshopType))
                     RealisticMechanicalSystems.refreshSystemCondition(spec, RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, definition.system))
@@ -706,7 +706,7 @@ function RealisticMechanicalSystems:completeService()
     if serviceType == states.OVERHAUL then
         applyPendingOverhaulPartInterpolation(spec, 1)
         for partId in pairs(spec.pendingOverhaulPartTarget) do
-            spec.partImpactWear[partId] = nil
+            spec.partAbuse[partId] = nil
             RealisticMechanicalSystems.recordPartWarranty(self, partId, RealisticMechanicalSystems.PART_TYPES.OEM, true)
         end
         self:updateConditionLevel()
@@ -1442,9 +1442,15 @@ function RealisticMechanicalSystems:getWarrantyLimits()
     return RealisticMechanicalSystems.getWarrantyPlan(self.spec_RealisticMechanicalSystems.warrantyPlan)
 end
 
----Tells whether the service of a fault's system is overdue
+---Tells whether the service or the greasing of a fault's part is overdue
 function RealisticMechanicalSystems:getIsWarrantyServiceOverdue(breakdownId)
-    local system = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, RMS_Breakdowns.BreakdownRegistry[breakdownId].system)
+    local entry = RMS_Breakdowns.BreakdownRegistry[breakdownId]
+    local causes = entry.causes
+    if causes ~= nil and (table.hasElement(causes.primary, "lubf") or table.hasElement(causes.secondary, "lubf"))
+        and RMS_Greasing.getStatus(self) == "late" then
+        return true
+    end
+    local system = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, entry.system)
     for _, clock in ipairs(self:getServiceClocks()) do
         if table.hasElement(clock.systems, system) then
             local used, interval = self:getServiceClockHours(clock)
@@ -1471,7 +1477,7 @@ function RealisticMechanicalSystems:isWarrantyRepairCovered(repairType, partType
     if breakdownId ~= nil then
         local fault = self:getActiveBreakdowns()[breakdownId]
         if fault ~= nil and fault.warrantyServiceOverdue then return false, "overdue" end
-        if fault ~= nil and fault.warrantyImpact then return false, "impact" end
+        if fault ~= nil and fault.warrantyAbuse ~= nil then return false, R.WARRANTY_ABUSES[fault.warrantyAbuse] end
         local expiry = spec.partWarranty[breakdownId]
         if expiry ~= nil and self.age < expiry then return true, "part" end
     end
@@ -1533,7 +1539,7 @@ function RealisticMechanicalSystems:getIsUsedPartWarrantyCovered(breakdownId, re
     local R = RealisticMechanicalSystems
     if partType ~= R.PART_TYPES.USED or repairType ~= R.REPAIR_TYPES.MEDIUM then return false end
     local fault = self:getActiveBreakdowns()[breakdownId]
-    if fault ~= nil and fault.warrantyImpact then return false end
+    if fault ~= nil and fault.warrantyAbuse ~= nil then return false end
     local expiry = self.spec_RealisticMechanicalSystems.usedPartWarranty[breakdownId]
     return expiry ~= nil and self.age < expiry
 end

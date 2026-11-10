@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Exige substituição com peças originais"/>
         <text name="rms_warranty_mobile" text="A pagar: mão de obra extra da oficina móvel"/>
         <text name="rms_warranty_remapped" text="Garantia perdida: motor reprogramado"/>
+        <text name="rms_warranty_heat" text="Recusada: sobreaquecimento"/>
+        <text name="rms_warranty_low_level" text="Recusada: nível de óleo demasiado baixo"/>
+        <text name="rms_warranty_fuel_dry" text="Recusada: depósito esvaziado"/>
+        <text name="rms_warranty_park_brake" text="Recusada: travão de estacionamento acionado"/>
+        <text name="rms_warranty_pto_engagement" text="Recusada: esticão ao ligar a TDF"/>
+        <text name="rms_warranty_stones" text="Recusada: pedras ingeridas"/>
+        <text name="rms_warranty_starter" text="Recusada: motor de arranque sobrecarregado"/>
+        <text name="rms_warranty_pto_angle" text="Recusada: ângulo do cardã excessivo"/>
+        <text name="rms_warranty_windup" text="Recusada: bloqueio ou 4WD em piso duro"/>
+        <text name="rms_warranty_filter" text="Recusada: filtro entupido"/>
+        <text name="rms_warranty_trailer" text="Recusada: reboque demasiado pesado"/>
         <text name="rms_ws_overhaul_row_systems" text="Sistemas tratados"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Recuperados"/>
         <text name="rms_ws_overhaul_systems_one" text="Um à escolha"/>

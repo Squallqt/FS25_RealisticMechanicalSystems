@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Csere eredeti alkatrészekkel szükséges"/>
         <text name="rms_warranty_mobile" text="Fizetendő: mobil műhely munkadíjtöbblete"/>
         <text name="rms_warranty_remapped" text="Garancia elveszett: optimalizált motor"/>
+        <text name="rms_warranty_heat" text="Elutasítva: túlmelegedés"/>
+        <text name="rms_warranty_low_level" text="Elutasítva: túl alacsony olajszint"/>
+        <text name="rms_warranty_fuel_dry" text="Elutasítva: kiürített tartály"/>
+        <text name="rms_warranty_park_brake" text="Elutasítva: behúzott rögzítőfék"/>
+        <text name="rms_warranty_pto_engagement" text="Elutasítva: TLT bekapcsolási lökés"/>
+        <text name="rms_warranty_stones" text="Elutasítva: felszívott kövek"/>
+        <text name="rms_warranty_starter" text="Elutasítva: túlterhelt önindító"/>
+        <text name="rms_warranty_pto_angle" text="Elutasítva: túl nagy kardántengely-szög"/>
+        <text name="rms_warranty_windup" text="Elutasítva: zár vagy 4WD kemény talajon"/>
+        <text name="rms_warranty_filter" text="Elutasítva: eltömődött szűrő"/>
+        <text name="rms_warranty_trailer" text="Elutasítva: túl nehéz pótkocsi"/>
         <text name="rms_ws_overhaul_row_systems" text="Kezelt rendszerek"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Rendbe hozva"/>
         <text name="rms_ws_overhaul_systems_one" text="Egy választható"/>

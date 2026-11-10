@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Nutná výměna za originální díly"/>
         <text name="rms_warranty_mobile" text="K úhradě: příplatek za práci mobilní dílny"/>
         <text name="rms_warranty_remapped" text="Záruka zanikla: motor po chiptuningu"/>
+        <text name="rms_warranty_heat" text="Zamítnuto: přehřátí"/>
+        <text name="rms_warranty_low_level" text="Zamítnuto: příliš nízká hladina oleje"/>
+        <text name="rms_warranty_fuel_dry" text="Zamítnuto: vyjetá nádrž"/>
+        <text name="rms_warranty_park_brake" text="Zamítnuto: zatažená parkovací brzda"/>
+        <text name="rms_warranty_pto_engagement" text="Zamítnuto: ráz při zapnutí vývodového hřídele"/>
+        <text name="rms_warranty_stones" text="Zamítnuto: nasáté kameny"/>
+        <text name="rms_warranty_starter" text="Zamítnuto: přetížený startér"/>
+        <text name="rms_warranty_pto_angle" text="Zamítnuto: příliš velký úhel kloubového hřídele"/>
+        <text name="rms_warranty_windup" text="Zamítnuto: uzávěrka nebo 4x4 na tvrdém povrchu"/>
+        <text name="rms_warranty_filter" text="Zamítnuto: zanesený filtr"/>
+        <text name="rms_warranty_trailer" text="Zamítnuto: příliš těžký přívěs"/>
         <text name="rms_ws_overhaul_row_systems" text="Řešené systémy"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Obnovené"/>
         <text name="rms_ws_overhaul_systems_one" text="Jeden podle volby"/>

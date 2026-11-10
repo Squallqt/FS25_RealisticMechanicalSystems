@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Remplacement en pièces d'origine requis"/>
         <text name="rms_warranty_mobile" text="À payer : supplément de main-d'œuvre"/>
         <text name="rms_warranty_remapped" text="Garantie perdue : moteur reprogrammé"/>
+        <text name="rms_warranty_heat" text="Refus : surchauffe"/>
+        <text name="rms_warranty_low_level" text="Refus : niveau d'huile trop bas"/>
+        <text name="rms_warranty_fuel_dry" text="Refus : réservoir vidé"/>
+        <text name="rms_warranty_park_brake" text="Refus : frein de parking serré"/>
+        <text name="rms_warranty_pto_engagement" text="Refus : à-coup de prise de force"/>
+        <text name="rms_warranty_stones" text="Refus : pierres avalées"/>
+        <text name="rms_warranty_starter" text="Refus : démarreur trop sollicité"/>
+        <text name="rms_warranty_pto_angle" text="Refus : angle de cardan excessif"/>
+        <text name="rms_warranty_windup" text="Refus : blocage ou 4RM sur sol dur"/>
+        <text name="rms_warranty_filter" text="Refus : filtre colmaté"/>
+        <text name="rms_warranty_trailer" text="Refus : remorque trop lourde"/>
         <text name="rms_ws_overhaul_row_systems" text="Systèmes traités"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Remis en état"/>
         <text name="rms_ws_overhaul_systems_one" text="Un au choix"/>

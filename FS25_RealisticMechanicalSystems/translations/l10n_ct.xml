@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="須更換原廠零件"/>
         <text name="rms_warranty_mobile" text="需支付移動維修廠的額外工時費"/>
         <text name="rms_warranty_remapped" text="保固失效：發動機已調校"/>
+        <text name="rms_warranty_heat" text="拒保：過熱"/>
+        <text name="rms_warranty_low_level" text="拒保：機油油位過低"/>
+        <text name="rms_warranty_fuel_dry" text="拒保：燃油耗盡"/>
+        <text name="rms_warranty_park_brake" text="拒保：駐車煞車未放開"/>
+        <text name="rms_warranty_pto_engagement" text="拒保：動力輸出軸接合衝擊"/>
+        <text name="rms_warranty_stones" text="拒保：吸入石塊"/>
+        <text name="rms_warranty_starter" text="拒保：起動機過度使用"/>
+        <text name="rms_warranty_pto_angle" text="拒保：傳動軸角度過大"/>
+        <text name="rms_warranty_windup" text="拒保：硬地面使用差速鎖或四驅"/>
+        <text name="rms_warranty_filter" text="拒保：濾清器堵塞"/>
+        <text name="rms_warranty_trailer" text="拒保：拖車過重"/>
         <text name="rms_ws_overhaul_row_systems" text="處理的系統"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="恢復"/>
         <text name="rms_ws_overhaul_systems_one" text="任選一個"/>

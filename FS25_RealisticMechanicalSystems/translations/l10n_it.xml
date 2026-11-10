@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Sostituzione con ricambi originali richiesta"/>
         <text name="rms_warranty_mobile" text="Paghi la manodopera extra dell'officina mobile"/>
         <text name="rms_warranty_remapped" text="Garanzia persa: motore rimappato"/>
+        <text name="rms_warranty_heat" text="Rifiutata: surriscaldamento"/>
+        <text name="rms_warranty_low_level" text="Rifiutata: livello dell'olio troppo basso"/>
+        <text name="rms_warranty_fuel_dry" text="Rifiutata: serbatoio svuotato"/>
+        <text name="rms_warranty_park_brake" text="Rifiutata: freno di stazionamento inserito"/>
+        <text name="rms_warranty_pto_engagement" text="Rifiutata: strappo all'innesto della PTO"/>
+        <text name="rms_warranty_stones" text="Rifiutata: sassi ingeriti"/>
+        <text name="rms_warranty_starter" text="Rifiutata: motorino d'avviamento sovraccaricato"/>
+        <text name="rms_warranty_pto_angle" text="Rifiutata: angolo del cardano eccessivo"/>
+        <text name="rms_warranty_windup" text="Rifiutata: blocco o 4RM su fondo duro"/>
+        <text name="rms_warranty_filter" text="Rifiutata: filtro intasato"/>
+        <text name="rms_warranty_trailer" text="Rifiutata: rimorchio troppo pesante"/>
         <text name="rms_ws_overhaul_row_systems" text="Sistemi trattati"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Ripristinati"/>
         <text name="rms_ws_overhaul_systems_one" text="Uno a scelta"/>

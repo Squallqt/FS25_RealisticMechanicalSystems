@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Vaihto alkuperäisosiin vaaditaan"/>
         <text name="rms_warranty_mobile" text="Maksat liikkuvan korjaamon lisätyökulut"/>
         <text name="rms_warranty_remapped" text="Takuu menetetty: moottori ohjelmoitu"/>
+        <text name="rms_warranty_heat" text="Hylätty: ylikuumeneminen"/>
+        <text name="rms_warranty_low_level" text="Hylätty: öljytaso liian alhainen"/>
+        <text name="rms_warranty_fuel_dry" text="Hylätty: tankki ajettu tyhjäksi"/>
+        <text name="rms_warranty_park_brake" text="Hylätty: seisontajarru kytkettynä"/>
+        <text name="rms_warranty_pto_engagement" text="Hylätty: voimanoton kytkentäisku"/>
+        <text name="rms_warranty_stones" text="Hylätty: kiviä koneessa"/>
+        <text name="rms_warranty_starter" text="Hylätty: käynnistin ylikuormitettu"/>
+        <text name="rms_warranty_pto_angle" text="Hylätty: nivelakselin kulma liian suuri"/>
+        <text name="rms_warranty_windup" text="Hylätty: lukko tai 4WD kovalla alustalla"/>
+        <text name="rms_warranty_filter" text="Hylätty: tukkeutunut suodatin"/>
+        <text name="rms_warranty_trailer" text="Hylätty: liian raskas perävaunu"/>
         <text name="rms_ws_overhaul_row_systems" text="Käsitellyt järjestelmät"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Kunnostettu"/>
         <text name="rms_ws_overhaul_systems_one" text="Yksi valittava"/>

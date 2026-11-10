@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Потрібна заміна оригінальними деталями"/>
         <text name="rms_warranty_mobile" text="До сплати: доплата за роботу мобільної майстерні"/>
         <text name="rms_warranty_remapped" text="Гарантію втрачено: чип-тюнінг двигуна"/>
+        <text name="rms_warranty_heat" text="Відмова: перегрів"/>
+        <text name="rms_warranty_low_level" text="Відмова: надто низький рівень оливи"/>
+        <text name="rms_warranty_fuel_dry" text="Відмова: бак вироблено досуха"/>
+        <text name="rms_warranty_park_brake" text="Відмова: затягнуто стоянкове гальмо"/>
+        <text name="rms_warranty_pto_engagement" text="Відмова: ривок під час увімкнення ВВП"/>
+        <text name="rms_warranty_stones" text="Відмова: потрапляння каміння"/>
+        <text name="rms_warranty_starter" text="Відмова: перевантаження стартера"/>
+        <text name="rms_warranty_pto_angle" text="Відмова: надто великий кут карданного вала"/>
+        <text name="rms_warranty_windup" text="Відмова: блокування або 4WD на твердому ґрунті"/>
+        <text name="rms_warranty_filter" text="Відмова: забитий фільтр"/>
+        <text name="rms_warranty_trailer" text="Відмова: надто важкий причіп"/>
         <text name="rms_ws_overhaul_row_systems" text="Відновлювані системи"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Приводяться до ладу"/>
         <text name="rms_ws_overhaul_systems_one" text="Одна на вибір"/>

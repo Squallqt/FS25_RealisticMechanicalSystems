@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Austausch durch Originalteile erforderlich"/>
         <text name="rms_warranty_mobile" text="Mehrkosten der mobilen Werkstatt für Arbeit zahlst du"/>
         <text name="rms_warranty_remapped" text="Garantie erloschen: Motor optimiert"/>
+        <text name="rms_warranty_heat" text="Abgelehnt: Überhitzung"/>
+        <text name="rms_warranty_low_level" text="Abgelehnt: Ölstand zu niedrig"/>
+        <text name="rms_warranty_fuel_dry" text="Abgelehnt: Tank leergefahren"/>
+        <text name="rms_warranty_park_brake" text="Abgelehnt: Feststellbremse angezogen"/>
+        <text name="rms_warranty_pto_engagement" text="Abgelehnt: Zapfwellen-Einschaltstoß"/>
+        <text name="rms_warranty_stones" text="Abgelehnt: Steine aufgenommen"/>
+        <text name="rms_warranty_starter" text="Abgelehnt: Anlasser überlastet"/>
+        <text name="rms_warranty_pto_angle" text="Abgelehnt: Gelenkwelle zu stark abgewinkelt"/>
+        <text name="rms_warranty_windup" text="Abgelehnt: Sperre oder 4WD auf festem Boden"/>
+        <text name="rms_warranty_filter" text="Abgelehnt: Filter verstopft"/>
+        <text name="rms_warranty_trailer" text="Abgelehnt: Anhänger zu schwer"/>
         <text name="rms_ws_overhaul_row_systems" text="Behandelte Systeme"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Instand gesetzt"/>
         <text name="rms_ws_overhaul_systems_one" text="Eines nach Wahl"/>

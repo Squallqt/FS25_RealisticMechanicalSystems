@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Replacement with original parts required"/>
         <text name="rms_warranty_mobile" text="You pay the extra mobile labor cost"/>
         <text name="rms_warranty_remapped" text="Warranty lost: engine remapped"/>
+        <text name="rms_warranty_heat" text="Declined: overheating"/>
+        <text name="rms_warranty_low_level" text="Declined: oil level too low"/>
+        <text name="rms_warranty_fuel_dry" text="Declined: tank run dry"/>
+        <text name="rms_warranty_park_brake" text="Declined: parking brake on"/>
+        <text name="rms_warranty_pto_engagement" text="Declined: PTO engagement shock"/>
+        <text name="rms_warranty_stones" text="Declined: stones taken in"/>
+        <text name="rms_warranty_starter" text="Declined: starter overcranked"/>
+        <text name="rms_warranty_pto_angle" text="Declined: PTO shaft angle too steep"/>
+        <text name="rms_warranty_windup" text="Declined: diff lock or 4WD on hard ground"/>
+        <text name="rms_warranty_filter" text="Declined: clogged filter"/>
+        <text name="rms_warranty_trailer" text="Declined: trailer too heavy"/>
         <text name="rms_ws_overhaul_row_systems" text="Systems Treated"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Restored"/>
         <text name="rms_ws_overhaul_systems_one" text="One you pick"/>

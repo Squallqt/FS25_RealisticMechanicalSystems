@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="純正部品への交換が必要"/>
         <text name="rms_warranty_mobile" text="移動式ワークショップの追加工賃は自己負担"/>
         <text name="rms_warranty_remapped" text="保証失効：エンジン書き換え済み"/>
+        <text name="rms_warranty_heat" text="対象外：オーバーヒート"/>
+        <text name="rms_warranty_low_level" text="対象外：オイル量不足"/>
+        <text name="rms_warranty_fuel_dry" text="対象外：燃料切れ"/>
+        <text name="rms_warranty_park_brake" text="対象外：駐車ブレーキ作動中の走行"/>
+        <text name="rms_warranty_pto_engagement" text="対象外：PTO接続時のショック"/>
+        <text name="rms_warranty_stones" text="対象外：石の巻き込み"/>
+        <text name="rms_warranty_starter" text="対象外：スターターの過度な使用"/>
+        <text name="rms_warranty_pto_angle" text="対象外：PTOシャフト角度過大"/>
+        <text name="rms_warranty_windup" text="対象外：硬い路面でのデフロック・4駆"/>
+        <text name="rms_warranty_filter" text="対象外：フィルターの目詰まり"/>
+        <text name="rms_warranty_trailer" text="対象外：トレーラーの過積載"/>
         <text name="rms_ws_overhaul_row_systems" text="対象システム"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="整備して回復"/>
         <text name="rms_ws_overhaul_systems_one" text="一つを選択"/>

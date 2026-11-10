@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Udskiftning med originale dele kræves"/>
         <text name="rms_warranty_mobile" text="Du betaler ekstra arbejdsløn for mobilt værksted"/>
         <text name="rms_warranty_remapped" text="Garanti bortfaldet: motor optimeret"/>
+        <text name="rms_warranty_heat" text="Afvist: overophedning"/>
+        <text name="rms_warranty_low_level" text="Afvist: oliestand for lav"/>
+        <text name="rms_warranty_fuel_dry" text="Afvist: tank kørt tom"/>
+        <text name="rms_warranty_park_brake" text="Afvist: parkeringsbremse trukket"/>
+        <text name="rms_warranty_pto_engagement" text="Afvist: stød ved indkobling af PTO"/>
+        <text name="rms_warranty_stones" text="Afvist: sten indtaget"/>
+        <text name="rms_warranty_starter" text="Afvist: starter overbelastet"/>
+        <text name="rms_warranty_pto_angle" text="Afvist: for stor vinkel på kardanaksel"/>
+        <text name="rms_warranty_windup" text="Afvist: spærre eller 4WD på fast underlag"/>
+        <text name="rms_warranty_filter" text="Afvist: tilstoppet filter"/>
+        <text name="rms_warranty_trailer" text="Afvist: for tung vogn"/>
         <text name="rms_ws_overhaul_row_systems" text="Behandlede systemer"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Genoprettet"/>
         <text name="rms_ws_overhaul_systems_one" text="Ét efter valg"/>

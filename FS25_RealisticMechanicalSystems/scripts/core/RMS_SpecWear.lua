@@ -160,6 +160,42 @@ function RealisticMechanicalSystems:updateConditionLevel()
     spec.conditionLevel = totalWeight > 0 and math.clamp(weighted / totalWeight, 0.001, 1.0) or 1.0
 end
 
+-- the red coolant lamp is lit
+local function getHeatAbuse(_, spec)
+    return spec.engineTemperature >= RMS_Thermal.getDriveValues(spec).TELLTALE.CRITICAL and "heat" or nil
+end
+
+-- the abuse a cause's wear is, past the warning the player was given
+local CAUSE_ABUSES = {
+    hmf = getHeatAbuse,
+    ohf = getHeatAbuse,
+    hotf = function(_, spec)
+        return spec.transmissionTemperature >= RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.OVERHEAT_TRANSMISSION_WARNING
+            and "heat" or nil
+    end,
+    pbf = function() return "park_brake" end,
+    hstf = function() return "stones" end,
+    dwf = function(vehicle) return RMS_Drivetrain.getIsWindupChosen(vehicle) and "windup" or nil end,
+    aicf = function() return "filter" end,
+    hfbf = function() return "filter" end,
+    tfbf = function() return "filter" end,
+    htf = function() return "trailer" end,
+    bmf = function() return "trailer" end,
+}
+
+---Marks the parts a cause wears with an abuse, refusing their warranty
+-- @param string abuse one of WARRANTY_ABUSES
+function RealisticMechanicalSystems.markCauseAbuse(vehicle, systemKey, alias, abuse)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local shares = spec.partCauseShares[systemKey][alias]
+    for index, partId in ipairs(spec.systemParts[systemKey]) do
+        local baseShare = RMS_Breakdowns.BreakdownRegistry[partId].wearsByCausesOnly and 0 or 1
+        if (shares ~= nil and shares[index] or baseShare) > 0 then
+            spec.partAbuse[partId] = RealisticMechanicalSystems.WARRANTY_ABUSE[abuse]
+        end
+    end
+end
+
 function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, factors)
     local spec = self.spec_RealisticMechanicalSystems
     local reliability = math.max(spec.reliability, 0.001)
@@ -175,6 +211,10 @@ function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, fa
         if alias ~= nil and value > 0 then
             causeRates[alias] = value
             causeTotal = causeTotal + value
+            local abuse = not isLent and CAUSE_ABUSES[alias] ~= nil and CAUSE_ABUSES[alias](self, spec) or nil
+            if abuse ~= nil then
+                RealisticMechanicalSystems.markCauseAbuse(self, systemKey, alias, abuse)
+            end
         end
     end
     local causeScale = causeTotal > wearRate and wearRate / causeTotal or 1
@@ -210,7 +250,8 @@ function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, fa
 end
 
 ---Wears the parts of a system at once, the cause on the parts it reaches
-function RealisticMechanicalSystems:applyInstantDamageToSystem(system, damageAmount, factorName)
+-- @param string? abuse one of WARRANTY_ABUSES, marking the parts it wears
+function RealisticMechanicalSystems:applyInstantDamageToSystem(system, damageAmount, factorName, abuse)
     if isMissionVehicle(self) then
         return
     end
@@ -224,8 +265,8 @@ function RealisticMechanicalSystems:applyInstantDamageToSystem(system, damageAmo
         local baseShare = RMS_Breakdowns.BreakdownRegistry[partId].wearsByCausesOnly and 0 or 1
         local partDamage = damageAmount * (shares ~= nil and shares[index] or baseShare)
         spec.partWear[partId] = spec.partWear[partId] + partDamage
-        if factorName == "terrainImpactFactor" and partDamage > 0 then
-            spec.partImpactWear[partId] = (spec.partImpactWear[partId] or 0) + partDamage
+        if abuse ~= nil and partDamage > 0 then
+            spec.partAbuse[partId] = RealisticMechanicalSystems.WARRANTY_ABUSE[abuse]
         end
     end
     refreshSystemCondition(spec, systemKey)
@@ -528,7 +569,8 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
     local C = RMS_Config.CORE.PTO_FACTOR_DATA
     local wear = startWear(0, { "expiredServiceFactor", "ptoLoadFactor", "ptoRaisedFactor" })
     local engagementDamage = math.max(tonumber(spec.ptoEngagementDamage) or 0, 0)
-    spec.ptoEngagementDamage = 0
+    local isShock = spec.isPtoEngagementShock
+    spec.ptoEngagementDamage, spec.isPtoEngagementShock = 0, false
 
     if self:getIsMotorStarted() and spec.isPtoActive then
         wear.rate = 1
@@ -549,7 +591,7 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
     spec.ptoRaisedTooLong = spec.ptoRaisedTutorialTimer >= C.RAISED_TUTORIAL_MS
 
     if engagementDamage > 0 then
-        self:applyInstantDamageToSystem(system.name, engagementDamage, "ptoEngagementFactor")
+        self:applyInstantDamageToSystem(system.name, engagementDamage, "ptoEngagementFactor", isShock and "pto_engagement" or nil)
     end
 
     finishWear(self, dt, RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, system.name), wear, {
@@ -922,6 +964,11 @@ function RealisticMechanicalSystems:updateFuelSystem(dt)
 
     local C = RMS_Config.CORE.FUEL_FACTOR_DATA
     local fuelState = spec.fuelState
+    -- the notice says to fill up before the tank runs dry
+    if (spec.lastFuelLevel or 0) > 0 and fuelState.level <= 0 and not isMissionVehicle(self) then
+        RealisticMechanicalSystems.markCauseAbuse(self, systemKey, "lff", "fuel_dry")
+    end
+    spec.lastFuelLevel = fuelState.level
     local wear = startWear(1.0, FUEL_CAUSES)
     local readings = { currentFuelUsageRatio = 0, idleTimer = fuelState.idleTimer, fuelLevel = 0, fuelTemperature = 0 }
 
@@ -966,29 +1013,38 @@ local function getLowLevels()
     return -RMS_Config.FLUIDS.LEVEL_CRITICALLY_LOW, -RMS_Config.FLUIDS.LEVEL_CRITICALLY_LOW
 end
 
--- i={partId, firstStage, levels or getLevels, read}
+-- i={partId, firstStage, abuse, levels or getLevels, read}
 local DIRECT_FAILURES = {
-    { partId = "CYLINDER_HEAD_GASKET", firstStage = 2, levels = "ENGINE_HEAT", read = function(spec) return getEngineTemperature(spec) end },
-    { partId = "TRANSMISSION_PUMP_MALFUNCTION", levels = "TRANSMISSION_HEAT",
+    { partId = "CYLINDER_HEAD_GASKET", firstStage = 2, abuse = "heat", levels = "ENGINE_HEAT",
+        read = function(spec) return getEngineTemperature(spec) end },
+    { partId = "TRANSMISSION_PUMP_MALFUNCTION", abuse = "heat", levels = "TRANSMISSION_HEAT",
         read = function(spec) return sanitizeNumber(spec.rawTransmissionTemperature or spec.transmissionTemperature, -99, -99, 180) end },
-    { partId = "HYDRAULIC_PUMP_MALFUNCTION", levels = "HYDRAULIC_HEAT", read = getHydraulicOilTemperature },
-    { partId = "STARTER_FAILURE", levels = "STARTER_CRANKING", whileCranking = true, read = function(spec) return spec.crankingSeconds end },
-    { partId = "PTO_OUTPUT_SHAFT_FAILURE", read = function(spec) return spec.ptoShaftAngle or 0 end,
+    { partId = "HYDRAULIC_PUMP_MALFUNCTION", abuse = "heat", levels = "HYDRAULIC_HEAT", read = getHydraulicOilTemperature },
+    { partId = "STARTER_FAILURE", abuse = "starter", levels = "STARTER_CRANKING", whileCranking = true,
+        read = function(spec) return spec.crankingSeconds end },
+    { partId = "PTO_OUTPUT_SHAFT_FAILURE", abuse = "pto_angle", read = function(spec) return spec.ptoShaftAngle or 0 end,
         getLevels = function(_, spec) return getHeatLevels(spec.isPtoImplementRaised and "PTO_SHAFT_ANGLE_TURNING" or "PTO_SHAFT_ANGLE") end },
     -- the oil lamp lights once the pump draws air
-    { partId = "MAIN_BEARINGS", firstStage = 3, read = function(spec) return -(tonumber(spec.engineOilLevel) or 1) end, getLevels = getLowLevels },
-    { partId = "ENGINE_JAM", read = function(spec) return -(tonumber(spec.engineOilLevel) or 1) end, getLevels = function() return 0, 0 end },
-    { partId = "TRANSMISSION_PUMP_MALFUNCTION", read = function(spec) return -(tonumber(spec.transmissionOilLevel) or 1) end, getLevels = getLowLevels },
-    { partId = "HYDRAULIC_PUMP_MALFUNCTION", read = function(spec) return -(tonumber(spec.hydraulicFluidLevel) or 1) end, getLevels = getLowLevels },
+    { partId = "MAIN_BEARINGS", firstStage = 3, abuse = "low_level", read = function(spec) return -(tonumber(spec.engineOilLevel) or 1) end,
+        getLevels = getLowLevels },
+    { partId = "ENGINE_JAM", abuse = "low_level", read = function(spec) return -(tonumber(spec.engineOilLevel) or 1) end,
+        getLevels = function() return 0, 0 end },
+    { partId = "TRANSMISSION_PUMP_MALFUNCTION", abuse = "low_level",
+        read = function(spec) return -(tonumber(spec.transmissionOilLevel) or 1) end, getLevels = getLowLevels },
+    { partId = "HYDRAULIC_PUMP_MALFUNCTION", abuse = "low_level",
+        read = function(spec) return -(tonumber(spec.hydraulicFluidLevel) or 1) end, getLevels = getLowLevels },
 }
 
-local function failPart(vehicle, partId, firstStage)
+local function failPart(vehicle, failure)
     local spec = vehicle.spec_RealisticMechanicalSystems
+    local partId = failure.partId
     local breakdown = spec.activeBreakdowns[partId]
     if breakdown ~= nil then
+        spec.partAbuse[partId] = RealisticMechanicalSystems.WARRANTY_ABUSE[failure.abuse]
         vehicle:changeBreakdownStage(partId, breakdown.stage + 1)
     elseif RMS_Breakdowns.BreakdownRegistry[partId].isApplicable(vehicle) then
-        vehicle:addBreakdown(partId, firstStage or 1)
+        spec.partAbuse[partId] = RealisticMechanicalSystems.WARRANTY_ABUSE[failure.abuse]
+        vehicle:addBreakdown(partId, failure.firstStage or 1)
     end
 end
 
@@ -1010,7 +1066,7 @@ function RealisticMechanicalSystems:updateDirectFailures(dt)
         local isWatched = failure.whileCranking and spec.isCranking or not failure.whileCranking and isRunning
         if isWatched and value >= limit and not spec.directFailureLatches[index] then
             spec.directFailureLatches[index] = true
-            failPart(self, failure.partId, failure.firstStage)
+            failPart(self, failure)
         elseif not isWatched or value < release then
             spec.directFailureLatches[index] = nil
         end

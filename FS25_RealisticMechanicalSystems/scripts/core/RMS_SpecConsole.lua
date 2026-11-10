@@ -617,7 +617,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setSystemCondition(rawArgs, 
 
     for _, partId in ipairs(spec.systemParts[systemKey]) do
         spec.partWear[partId] = 1 - value
-        spec.partImpactWear[partId] = nil
+        spec.partAbuse[partId] = nil
         spec.partDrawnWear[partId] = nil
     end
     RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
@@ -645,7 +645,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setCondition(rawArgs)
         if systemData.enabled ~= false then
             for _, partId in ipairs(spec.systemParts[systemKey]) do
                 spec.partWear[partId] = 1 - targetCondition
-                spec.partImpactWear[partId] = nil
+                spec.partAbuse[partId] = nil
                 spec.partDrawnWear[partId] = nil
             end
             RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
@@ -699,7 +699,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setPartWear(rawArgs, rawArgT
     end
 
     spec.partWear[partId] = value
-    spec.partImpactWear[partId] = nil
+    spec.partAbuse[partId] = nil
     spec.partDrawnWear[partId] = nil
     RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
     vehicle:updateConditionLevel()

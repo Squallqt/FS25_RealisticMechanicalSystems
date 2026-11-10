@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="순정 부품으로 교체 필요"/>
         <text name="rms_warranty_mobile" text="이동식 정비소의 추가 공임은 본인 부담"/>
         <text name="rms_warranty_remapped" text="보증 상실: 엔진 맵핑됨"/>
+        <text name="rms_warranty_heat" text="거부: 과열"/>
+        <text name="rms_warranty_low_level" text="거부: 오일 수위 부족"/>
+        <text name="rms_warranty_fuel_dry" text="거부: 연료 고갈"/>
+        <text name="rms_warranty_park_brake" text="거부: 주차 브레이크 체결 주행"/>
+        <text name="rms_warranty_pto_engagement" text="거부: PTO 연결 충격"/>
+        <text name="rms_warranty_stones" text="거부: 돌 유입"/>
+        <text name="rms_warranty_starter" text="거부: 시동 모터 과다 사용"/>
+        <text name="rms_warranty_pto_angle" text="거부: PTO 축 각도 과다"/>
+        <text name="rms_warranty_windup" text="거부: 단단한 노면의 차동 잠금·4WD"/>
+        <text name="rms_warranty_filter" text="거부: 필터 막힘"/>
+        <text name="rms_warranty_trailer" text="거부: 트레일러 과중량"/>
         <text name="rms_ws_overhaul_row_systems" text="처리하는 시스템"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="복원"/>
         <text name="rms_ws_overhaul_systems_one" text="하나 선택"/>

@@ -394,6 +394,17 @@
         <text name="rms_warranty_options" text="Wajib ganti dengan suku cadang asli"/>
         <text name="rms_warranty_mobile" text="Kamu bayar tambahan upah kerja bengkel bergerak"/>
         <text name="rms_warranty_remapped" text="Garansi hilang: mesin diremap"/>
+        <text name="rms_warranty_heat" text="Ditolak: panas berlebih"/>
+        <text name="rms_warranty_low_level" text="Ditolak: level oli terlalu rendah"/>
+        <text name="rms_warranty_fuel_dry" text="Ditolak: tangki dikosongkan"/>
+        <text name="rms_warranty_park_brake" text="Ditolak: rem parkir aktif"/>
+        <text name="rms_warranty_pto_engagement" text="Ditolak: hentakan saat PTO dihidupkan"/>
+        <text name="rms_warranty_stones" text="Ditolak: batu tertelan"/>
+        <text name="rms_warranty_starter" text="Ditolak: starter dipaksa terlalu lama"/>
+        <text name="rms_warranty_pto_angle" text="Ditolak: sudut poros PTO terlalu besar"/>
+        <text name="rms_warranty_windup" text="Ditolak: pengunci atau 4WD di tanah keras"/>
+        <text name="rms_warranty_filter" text="Ditolak: filter tersumbat"/>
+        <text name="rms_warranty_trailer" text="Ditolak: trailer terlalu berat"/>
         <text name="rms_ws_overhaul_row_systems" text="Sistem yang Ditangani"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Dipulihkan"/>
         <text name="rms_ws_overhaul_systems_one" text="Satu pilihanmu"/>

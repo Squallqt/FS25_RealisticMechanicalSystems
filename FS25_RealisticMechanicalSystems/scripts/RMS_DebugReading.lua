@@ -383,6 +383,14 @@ local function getBreakdownSystem(definition, isElectric)
     return "Machine", nil
 end
 
+-- the abuse that wore a part before its fault, by WARRANTY_ABUSES
+local ABUSE_READINGS = {
+    impact = "hit by a collision", heat = "heat past the warning", low_level = "oil too low",
+    fuel_dry = "tank run dry", park_brake = "parking brake on", pto_engagement = "PTO engaged high",
+    stones = "stones", starter = "starter held", pto_angle = "PTO shaft angle", windup = "lock or 4WD on hard ground",
+    filter = "clogged filter", trailer = "trailer too heavy",
+}
+
 local function readFaults(vehicle, spec, reading)
     local R = RealisticMechanicalSystems
     local isInWorkshop = spec.currentState ~= R.STATUS.READY
@@ -393,7 +401,9 @@ local function readFaults(vehicle, spec, reading)
         local stageCount = #definition.stages
         local info = {systemName, string.format("severity %d of %d", breakdown.stage, stageCount)}
         if breakdown.warrantyServiceOverdue then table.insert(info, "warranty refused: service overdue when fault occurred") end
-        if breakdown.warrantyImpact then table.insert(info, "warranty refused: part hit by a collision before the fault") end
+        if breakdown.warrantyAbuse ~= nil then
+            table.insert(info, "warranty refused: " .. ABUSE_READINGS[R.WARRANTY_ABUSES[breakdown.warrantyAbuse]])
+        end
         if breakdown.usedPartHours ~= nil then
             table.insert(info, string.format("donor %d h", RealisticMechanicalSystems.getUsedPartMeterHours(breakdown.usedPartHours)))
         end
