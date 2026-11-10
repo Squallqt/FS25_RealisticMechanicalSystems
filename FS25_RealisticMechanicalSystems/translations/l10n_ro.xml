@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Suflantă cu aer comprimat"/>
         <text name="rms_air_blower_no_vehicle" text="Niciun vehicul în raza de curățare"/>
         <text name="rms_air_blower_function" text="Folosită pentru curățarea radiatoarelor și a filtrelor de aer"/>
-        <text name="rms_air_blower_action" text="Curăță radiatorul și filtrul de aer"/>
+        <text name="rms_air_blower_action" text="Curăță radiatorul și filtrul de aer."/>
+        <text name="rms_air_blower_action_radiator" text="Curăță radiatorul."/>
+        <text name="rms_air_blower_action_air_filter" text="Curăță filtrul de aer."/>
         <text name="rms_air_blower_action_short" text="Suflă"/>
         <text name="rms_air_blower_already_clean" text="%s: radiatorul și filtrul de aer sunt deja curate"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: radiatorul este curat. Filtrul de aer a atins limita curățării prin suflare. Atelierul îl înlocuiește începând cu revizia %s"/>

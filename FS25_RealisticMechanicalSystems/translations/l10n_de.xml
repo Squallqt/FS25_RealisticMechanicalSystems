@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Druckluftgebläse"/>
         <text name="rms_air_blower_no_vehicle" text="Kein Fahrzeug in Reinigungsreichweite"/>
         <text name="rms_air_blower_function" text="Wird zum Reinigen von Kühlern und Luftfiltern verwendet"/>
-        <text name="rms_air_blower_action" text="Kühler und Luftfilter reinigen"/>
+        <text name="rms_air_blower_action" text="Kühler und Luftfilter reinigen."/>
+        <text name="rms_air_blower_action_radiator" text="Kühler reinigen."/>
+        <text name="rms_air_blower_action_air_filter" text="Luftfilter reinigen."/>
         <text name="rms_air_blower_action_short" text="Ausblasen"/>
         <text name="rms_air_blower_already_clean" text="%s: Kühler und Luftfilter sind bereits sauber"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: Der Kühler ist sauber. Der Luftfilter hat die Grenze der Reinigung durch Ausblasen erreicht. Die Werkstatt ersetzt ihn ab der Wartung %s"/>

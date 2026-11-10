@@ -352,7 +352,7 @@ function RMS_Start.startMotor(self, superFunc, noEventSend)
             end
         elseif state ~= RMS_Start.STATE.IDLE or RMS_Start.getNeedsSequence(self) then
             spec.isStartRequested = true
-            MotorSetTurnedOnEvent.sendEvent(self, true)
+            RMS_StartEvent.sendRequest(self)
         else
             superFunc(self, noEventSend)
         end

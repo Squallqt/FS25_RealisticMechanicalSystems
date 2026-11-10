@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Soffiatore ad aria compressa"/>
         <text name="rms_air_blower_no_vehicle" text="Nessun veicolo nel raggio di pulizia"/>
         <text name="rms_air_blower_function" text="Utilizzato per pulire radiatori e filtri dell'aria"/>
-        <text name="rms_air_blower_action" text="Pulisci radiatore e filtro dell'aria"/>
+        <text name="rms_air_blower_action" text="Pulisci radiatore e filtro dell'aria."/>
+        <text name="rms_air_blower_action_radiator" text="Pulisci il radiatore."/>
+        <text name="rms_air_blower_action_air_filter" text="Pulisci il filtro dell'aria."/>
         <text name="rms_air_blower_action_short" text="Soffia"/>
         <text name="rms_air_blower_already_clean" text="%s: radiatore e filtro dell'aria sono già puliti"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: il radiatore è pulito. Il filtro dell'aria ha raggiunto il limite della pulizia mediante soffiaggio. L'officina lo sostituisce a partire dal tagliando %s"/>

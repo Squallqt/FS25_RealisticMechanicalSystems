@@ -4,6 +4,46 @@
 
 local getSyncOperatingTime = RealisticMechanicalSystems.getSyncOperatingTime
 
+-- [connection][packet number][vehicle] = sync groups the packet carried
+local unacknowledgedGroups = setmetatable({}, { __mode = "k" })
+
+local function rememberSentGroups(vehicle, connection, groups)
+    local packets = unacknowledgedGroups[connection] or {}
+    unacknowledgedGroups[connection] = packets
+    local packet = packets[connection.lastSeqSent] or setmetatable({}, { __mode = "k" })
+    packets[connection.lastSeqSent] = packet
+    packet[vehicle] = bit32.bor(packet[vehicle] or 0, groups)
+end
+
+---Sends again the groups of an update packet the network lost
+function RealisticMechanicalSystems.onConnectionPacketLost(_, connection, packetId)
+    local packets = unacknowledgedGroups[connection]
+    local packet = packets ~= nil and packets[packetId] or nil
+    if packet == nil then
+        return
+    end
+    packets[packetId] = nil
+    for vehicle, groups in pairs(packet) do
+        local spec = vehicle.spec_RealisticMechanicalSystems
+        local pending = spec.rmsPendingByConnection[connection]
+        if pending ~= nil then
+            spec.rmsPendingByConnection[connection] = bit32.bor(pending, groups)
+            vehicle:raiseDirtyFlags(spec.rmsDirtyFlag)
+        end
+    end
+end
+
+---Forgets the groups of an update packet the client received
+function RealisticMechanicalSystems.onConnectionPacketSent(_, connection, packetId)
+    local packets = unacknowledgedGroups[connection]
+    if packets ~= nil then
+        packets[packetId] = nil
+    end
+end
+
+FSBaseMission.onConnectionPacketLost = Utils.appendedFunction(FSBaseMission.onConnectionPacketLost, RealisticMechanicalSystems.onConnectionPacketLost)
+FSBaseMission.onConnectionPacketSent = Utils.appendedFunction(FSBaseMission.onConnectionPacketSent, RealisticMechanicalSystems.onConnectionPacketSent)
+
 local function writeResalePrice(vehicle, streamId)
     streamWriteString(streamId, string.format("%.17g", RMS_Utils.getMarketValue(vehicle)))
 end
@@ -363,6 +403,9 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
     if not connection:getIsServer() then
         local pending = spec.rmsPendingByConnection[connection] or 0
         spec.rmsPendingByConnection[connection] = 0
+        if pending ~= 0 then
+            rememberSentGroups(self, connection, pending)
+        end
 
         -- [1] State
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.STATE) ~= 0) then

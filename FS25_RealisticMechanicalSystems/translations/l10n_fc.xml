@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Souffleur d'air comprimé"/>
         <text name="rms_air_blower_no_vehicle" text="Aucun véhicule à portée de nettoyage"/>
         <text name="rms_air_blower_function" text="Utilisé pour nettoyer les radiateurs et les filtres à air"/>
-        <text name="rms_air_blower_action" text="Nettoyer le radiateur et le filtre à air"/>
+        <text name="rms_air_blower_action" text="Nettoyer le radiateur et le filtre à air."/>
+        <text name="rms_air_blower_action_radiator" text="Nettoyer le radiateur."/>
+        <text name="rms_air_blower_action_air_filter" text="Nettoyer le filtre à air."/>
         <text name="rms_air_blower_action_short" text="Souffler"/>
         <text name="rms_air_blower_already_clean" text="%s : le radiateur et le filtre à air sont déjà propres"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s : le radiateur est propre. Le filtre à air a atteint la limite du nettoyage par soufflage. L'atelier le remplace à partir de la révision %s"/>
@@ -725,7 +727,7 @@
         <text name="rms_inspection_hint_radiator_core_stage4" text="Le liquide de refroidissement passe par les tubes percés du faisceau vers l'extérieur. La perte de liquide compromet gravement le refroidissement."/>
         <text name="rms_inspection_hint_power_cable_connection_failure_stage2" text="Une oxydation est visible sur les connexions de puissance ou de masse."/>
         <text name="rms_inspection_hint_power_cable_connection_failure_stage3" text="Les connexions de puissance ou de masse sont oxydées et encrassées."/>
-        <text name="rms_inspection_hint_power_cable_connection_failure_stage4" text="Les connexions de puissance ou de masse sont fortement corrodées; leur isolation est abîmée."/>
+        <text name="rms_inspection_hint_power_cable_connection_failure_stage4" text="Les connexions de puissance ou de masse sont fortement corrodées ; leur isolation est abîmée."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage1" text="Un léger film huileux est visible sur un flexible hydraulique ou un raccord."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage2" text="Un suintement d'huile hydraulique est visible sur un flexible ou un raccord."/>
         <text name="rms_inspection_hint_hydraulic_hose_external_leak_stage3" text="Des traces nettes d'huile hydraulique et une zone fraîchement humide sont visibles le long d'un flexible."/>

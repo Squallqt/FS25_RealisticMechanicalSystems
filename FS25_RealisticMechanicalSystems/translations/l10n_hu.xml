@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Légfúvó"/>
         <text name="rms_air_blower_no_vehicle" text="Nincs jármű tisztítási hatótávban"/>
         <text name="rms_air_blower_function" text="Hűtők és légszűrők tisztítására használható"/>
-        <text name="rms_air_blower_action" text="Hűtő és légszűrő tisztítása"/>
+        <text name="rms_air_blower_action" text="Hűtő és légszűrő tisztítása."/>
+        <text name="rms_air_blower_action_radiator" text="Hűtő tisztítása."/>
+        <text name="rms_air_blower_action_air_filter" text="Légszűrő tisztítása."/>
         <text name="rms_air_blower_action_short" text="Kifúvatás"/>
         <text name="rms_air_blower_already_clean" text="%s: a hűtő és a légszűrő már tiszta"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: a hűtő tiszta. A légszűrő elérte a kifúvással történő tisztítás határát. A műhely a(z) %s karbantartástól kezdve cseréli"/>

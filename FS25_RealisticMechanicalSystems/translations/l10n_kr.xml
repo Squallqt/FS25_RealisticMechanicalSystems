@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="에어 블로워"/>
         <text name="rms_air_blower_no_vehicle" text="청소 범위 내에 차량이 없습니다"/>
         <text name="rms_air_blower_function" text="라디에이터 및 에어 필터 청소에 사용됩니다"/>
-        <text name="rms_air_blower_action" text="라디에이터 및 에어 필터 청소"/>
+        <text name="rms_air_blower_action" text="라디에이터 및 에어 필터 청소."/>
+        <text name="rms_air_blower_action_radiator" text="라디에이터 청소."/>
+        <text name="rms_air_blower_action_air_filter" text="에어 필터 청소."/>
         <text name="rms_air_blower_action_short" text="에어 청소"/>
         <text name="rms_air_blower_already_clean" text="%s: 라디에이터 및 에어 필터가 이미 깨끗합니다"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: 라디에이터는 깨끗합니다. 에어 필터는 불어내도 더 이상 깨끗해지지 않습니다. 정비소는 %s 정비부터 필터를 교체합니다"/>

@@ -714,6 +714,8 @@ RMS_Config = {
         TAU = 5000,
         PID_TARGET_TEMP = 90,
         TELLTALE = { WARNING = 99, CRITICAL = 110 },
+        -- deg C, the top of what an oil sensor reads
+        OIL_GAUGE_MAX = 150,
         ENGINE_PROTECTION = {
             START_TEMP = 110,
             SEVERE_TEMP = 115,
@@ -749,6 +751,8 @@ RMS_Config = {
                 forcedCooling = 0.0027000000000000001,
                 regulatedMin = 82,
                 regulatedMax = 97,
+                -- deg C, the coolant boils there under its cap
+                boilingPoint = 122,
                 faultHeatScale = 0.12365389417419846,
             },
             evDrive = {

@@ -287,7 +287,8 @@ function RMS_Thermal.advanceRole(vehicle, role, temperature, dtMS, ambient0, amb
     local speed = profile.speedCooling * inputs.speed * responseRate
     local forced = profile.forcedCooling * opening * exchange * fan * responseRate
     local coolingRate = passive + speed + forced
-    local nextTemperature = RMS_Thermal.integrateTemperatureExact(temperature, heat, coolingRate, elapsed, ambient0, ambient1)
+    local nextTemperature = math.min(RMS_Thermal.integrateTemperatureExact(temperature, heat, coolingRate, elapsed, ambient0, ambient1),
+        profile.boilingPoint or math.huge)
     return nextTemperature, {
         totalHeat = heat, totalCooling = coolingRate * (temperature - ambient0),
         radiatorCooling = forced * (temperature - ambient0), coolerCooling = forced * (temperature - ambient0),

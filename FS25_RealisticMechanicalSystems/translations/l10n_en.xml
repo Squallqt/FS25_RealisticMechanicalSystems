@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Air Blower"/>
         <text name="rms_air_blower_no_vehicle" text="No vehicle in cleaning range"/>
         <text name="rms_air_blower_function" text="Used to clean radiators and air filters"/>
-        <text name="rms_air_blower_action" text="Clean radiator and air filter"/>
+        <text name="rms_air_blower_action" text="Clean radiator and air filter."/>
+        <text name="rms_air_blower_action_radiator" text="Clean radiator."/>
+        <text name="rms_air_blower_action_air_filter" text="Clean air filter."/>
         <text name="rms_air_blower_action_short" text="Blow clean"/>
         <text name="rms_air_blower_already_clean" text="%s: the radiator and air filter are already clean"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: the radiator is clean. Blowing out the air filter cannot clean it any further. The workshop replaces it from the %s service up"/>

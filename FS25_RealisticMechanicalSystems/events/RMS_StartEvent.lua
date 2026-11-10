@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Sends each state of an engine start from the server to the clients
+---Start states to the clients, a driver's start request to the server
 RMS_StartEvent = {}
 local RMS_StartEvent_mt = Class(RMS_StartEvent, Event)
 
@@ -26,24 +26,33 @@ end
 ---Writes event data to a stream.
 function RMS_StartEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
-    streamWriteUIntN(streamId, self.state, 3)
-    streamWriteBool(streamId, self.preheatWasRequired)
+    if not connection:getIsServer() then
+        streamWriteUIntN(streamId, self.state, 3)
+        streamWriteBool(streamId, self.preheatWasRequired)
+    end
 end
 
 
 ---Reads event data from a stream.
 function RMS_StartEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
-    self.state = streamReadUIntN(streamId, 3)
-    self.preheatWasRequired = streamReadBool(streamId)
+    if connection:getIsServer() then
+        self.state = streamReadUIntN(streamId, 3)
+        self.preheatWasRequired = streamReadBool(streamId)
+    end
     self:run(connection)
 end
 
 
 ---Run action on receiving side
 function RMS_StartEvent:run(connection)
-    if self.vehicle ~= nil and self.vehicle:getIsSynchronized() then
+    if self.vehicle == nil or not self.vehicle:getIsSynchronized() then
+        return
+    end
+    if connection:getIsServer() then
         RMS_Start.onStateReceived(self.vehicle, self.state, self.preheatWasRequired)
+    else
+        self.vehicle:startMotor()
     end
 end
 
@@ -53,4 +62,10 @@ function RMS_StartEvent.sendEvent(vehicle, state, preheatWasRequired)
     if g_server ~= nil then
         g_server:broadcastEvent(RMS_StartEvent.new(vehicle, state, preheatWasRequired), nil, nil, vehicle)
     end
+end
+
+
+---Asks the server alone for a start, never the other players
+function RMS_StartEvent.sendRequest(vehicle)
+    g_client:getServerConnection():sendEvent(RMS_StartEvent.new(vehicle))
 end

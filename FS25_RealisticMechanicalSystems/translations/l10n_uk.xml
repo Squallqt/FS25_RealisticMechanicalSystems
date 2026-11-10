@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Повітродувка"/>
         <text name="rms_air_blower_no_vehicle" text="У зоні доступу немає техніки для очищення"/>
         <text name="rms_air_blower_function" text="Використовується для чищення радіаторів та повітряних фільтрів"/>
-        <text name="rms_air_blower_action" text="Очистити радіатор та повітряний фільтр"/>
+        <text name="rms_air_blower_action" text="Очистити радіатор та повітряний фільтр."/>
+        <text name="rms_air_blower_action_radiator" text="Очистити радіатор."/>
+        <text name="rms_air_blower_action_air_filter" text="Очистити повітряний фільтр."/>
         <text name="rms_air_blower_action_short" text="Продути"/>
         <text name="rms_air_blower_already_clean" text="%s: радіатор та повітряний фільтр вже чисті"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: радіатор чистий. Повітряний фільтр досяг межі очищення продуванням. Майстерня замінює його починаючи з ТО %s"/>

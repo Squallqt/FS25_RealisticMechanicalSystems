@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="エアブロワー"/>
         <text name="rms_air_blower_no_vehicle" text="清掃範囲内に車両がありません"/>
         <text name="rms_air_blower_function" text="ラジエーターとエアフィルターの清掃に使用します"/>
-        <text name="rms_air_blower_action" text="ラジエーターとエアフィルターを清掃"/>
+        <text name="rms_air_blower_action" text="ラジエーターとエアフィルターを清掃。"/>
+        <text name="rms_air_blower_action_radiator" text="ラジエーターを清掃。"/>
+        <text name="rms_air_blower_action_air_filter" text="エアフィルターを清掃。"/>
         <text name="rms_air_blower_action_short" text="エア清掃"/>
         <text name="rms_air_blower_already_clean" text="%s：ラジエーターとエアフィルターは清掃済みです"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s：ラジエーターは清掃済みです。エアフィルターはエアブロー清掃の限界に達しています。ワークショップの%s整備以上で交換されます"/>

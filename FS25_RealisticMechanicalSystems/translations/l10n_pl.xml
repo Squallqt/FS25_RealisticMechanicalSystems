@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Dmuchawa sprężonego powietrza"/>
         <text name="rms_air_blower_no_vehicle" text="Nie wykryto pojazdu w strefie czyszczenia"/>
         <text name="rms_air_blower_function" text="Służy do oczyszczania chłodnic i filtrów powietrza"/>
-        <text name="rms_air_blower_action" text="Wyczyść chłodnicę i filtr powietrza"/>
+        <text name="rms_air_blower_action" text="Wyczyść chłodnicę i filtr powietrza."/>
+        <text name="rms_air_blower_action_radiator" text="Wyczyść chłodnicę."/>
+        <text name="rms_air_blower_action_air_filter" text="Wyczyść filtr powietrza."/>
         <text name="rms_air_blower_action_short" text="Przedmuchaj"/>
         <text name="rms_air_blower_already_clean" text="%s: chłodnica i filtr powietrza są już czyste"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: chłodnica jest czysta. Filtr powietrza osiągnął granicę czyszczenia przez przedmuchiwanie. Warsztat wymienia go od przeglądu %s"/>

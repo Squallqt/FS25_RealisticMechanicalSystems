@@ -908,6 +908,10 @@ function RMS_Main:update(dt)
         local spec = vehicle.spec_RealisticMechanicalSystems
         if spec ~= nil and not spec.isExcludedVehicle and vehicle.isActive ~= true and vehicle:getMotorState() == MotorState.ON then
             vehicle:raiseActive()
+            -- a sleeping vehicle never runs the game's motor stop timer
+            if vehicle.isServer and getIsSleeping(vehicle.rootNode) then
+                vehicle.spec_motorized.motorStopTimer = vehicle.spec_motorized.motorStopTimerDuration
+            end
         end
     end
 

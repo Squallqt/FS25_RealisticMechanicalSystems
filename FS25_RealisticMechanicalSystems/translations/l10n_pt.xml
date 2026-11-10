@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Soprador de ar comprimido"/>
         <text name="rms_air_blower_no_vehicle" text="Nenhum veículo ao alcance da limpeza"/>
         <text name="rms_air_blower_function" text="Usado para limpar radiadores e filtros de ar"/>
-        <text name="rms_air_blower_action" text="Limpar o radiador e o filtro de ar"/>
+        <text name="rms_air_blower_action" text="Limpar o radiador e o filtro de ar."/>
+        <text name="rms_air_blower_action_radiator" text="Limpar o radiador."/>
+        <text name="rms_air_blower_action_air_filter" text="Limpar o filtro de ar."/>
         <text name="rms_air_blower_action_short" text="Soprar"/>
         <text name="rms_air_blower_already_clean" text="%s: o radiador e o filtro de ar já estão limpos"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: o radiador está limpo. O filtro de ar atingiu o limite da limpeza por sopro. A oficina substitui-o a partir da revisão %s"/>

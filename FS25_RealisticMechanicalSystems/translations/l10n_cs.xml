@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="压缩空气吹尘器"/>
         <text name="rms_air_blower_no_vehicle" text="清洁范围内没有载具"/>
         <text name="rms_air_blower_function" text="用于清洁散热器和空气滤清器"/>
-        <text name="rms_air_blower_action" text="清洁散热器和空气滤清器"/>
+        <text name="rms_air_blower_action" text="清洁散热器和空气滤清器。"/>
+        <text name="rms_air_blower_action_radiator" text="清洁散热器。"/>
+        <text name="rms_air_blower_action_air_filter" text="清洁空气滤清器。"/>
         <text name="rms_air_blower_action_short" text="吹扫"/>
         <text name="rms_air_blower_already_clean" text="%s：散热器和空气滤清器已清洁"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s：散热器已清洁。空气滤清器已达到吹扫清洁的极限。维修车间从%s保养起更换滤清器"/>

@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Máy thổi khí nén"/>
         <text name="rms_air_blower_no_vehicle" text="Không có xe nào trong tầm vệ sinh"/>
         <text name="rms_air_blower_function" text="Dùng để vệ sinh két tản nhiệt và bộ lọc không khí"/>
-        <text name="rms_air_blower_action" text="Vệ sinh két tản nhiệt và bộ lọc không khí"/>
+        <text name="rms_air_blower_action" text="Vệ sinh két tản nhiệt và bộ lọc không khí."/>
+        <text name="rms_air_blower_action_radiator" text="Vệ sinh két tản nhiệt."/>
+        <text name="rms_air_blower_action_air_filter" text="Vệ sinh bộ lọc không khí."/>
         <text name="rms_air_blower_action_short" text="Thổi sạch"/>
         <text name="rms_air_blower_already_clean" text="%s: két tản nhiệt và bộ lọc không khí đã sạch"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: két tản nhiệt đã sạch. Bộ lọc không khí đã đạt giới hạn làm sạch bằng khí thổi. Xưởng thay bộ lọc từ mức bảo dưỡng %s trở lên"/>

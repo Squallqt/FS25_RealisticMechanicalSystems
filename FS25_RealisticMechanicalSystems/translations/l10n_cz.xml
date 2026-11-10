@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Ofukovací pistole"/>
         <text name="rms_air_blower_no_vehicle" text="V dosahu čištění není žádné vozidlo"/>
         <text name="rms_air_blower_function" text="Používá se k čištění chladičů a vzduchových filtrů"/>
-        <text name="rms_air_blower_action" text="Vyčistit chladič a vzduchový filtr"/>
+        <text name="rms_air_blower_action" text="Vyčistit chladič a vzduchový filtr."/>
+        <text name="rms_air_blower_action_radiator" text="Vyčistit chladič."/>
+        <text name="rms_air_blower_action_air_filter" text="Vyčistit vzduchový filtr."/>
         <text name="rms_air_blower_action_short" text="Ofoukat"/>
         <text name="rms_air_blower_already_clean" text="%s: chladič a vzduchový filtr jsou již čisté"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: chladič je čistý. Vzduchový filtr dosáhl limitu čištění profouknutím. Dílna jej vymění od údržby %s"/>

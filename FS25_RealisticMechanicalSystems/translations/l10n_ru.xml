@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Воздуходувка"/>
         <text name="rms_air_blower_no_vehicle" text="Нет техники в зоне очистки"/>
         <text name="rms_air_blower_function" text="Используется для очистки радиаторов и воздушных фильтров"/>
-        <text name="rms_air_blower_action" text="Очистить радиатор и воздушный фильтр"/>
+        <text name="rms_air_blower_action" text="Очистить радиатор и воздушный фильтр."/>
+        <text name="rms_air_blower_action_radiator" text="Очистить радиатор."/>
+        <text name="rms_air_blower_action_air_filter" text="Очистить воздушный фильтр."/>
         <text name="rms_air_blower_action_short" text="Продуть"/>
         <text name="rms_air_blower_already_clean" text="%s: радиатор и воздушный фильтр уже чистые"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: радиатор чистый. Воздушный фильтр достиг предела очистки продувкой. Мастерская заменяет его начиная с ТО %s"/>

@@ -820,7 +820,7 @@ function RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperature)
         battery = { text = formatValue(spec.batteryIsolated and 0 or spec.systemVoltageV, "%.1f") .. "V" }
     }
     if showTransmissionTemperature then
-        values.transmission = { text = g_i18n:formatTemperature(spec.transmissionTemperature, 0) }
+        values.transmission = { text = g_i18n:formatTemperature(math.min(spec.transmissionTemperature, RMS_Config.THERMAL.OIL_GAUGE_MAX), 0) }
     end
     return values
 end

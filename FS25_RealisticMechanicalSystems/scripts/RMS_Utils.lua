@@ -1372,9 +1372,7 @@ function RMS_Utils.formatOdometerKilometers(kilometers)
     if kilometers == nil or kilometers ~= kilometers or kilometers < 0 or kilometers == math.huge then
         return g_i18n:getText("rms_odometer_not_recorded")
     end
-    local value = g_i18n:formatNumber(kilometers, 1)
-    local decimalPattern = g_i18n.decimalSeparator:gsub("(%W)", "%%%1")
-    return (value:gsub(decimalPattern .. "(%d)$", ".%1")) .. " km"
+    return g_i18n:formatNumber(kilometers, 1) .. " km"
 end
 
 

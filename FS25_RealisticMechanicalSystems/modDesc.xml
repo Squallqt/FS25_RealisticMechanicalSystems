@@ -74,6 +74,9 @@ Changelog 1.0.0.0-beta.2:
 - Fixed machines due for greasing missing from the alerts of the fleet page
 - Fixed flatbed trailers sold among the bale loaders being greased as bale loaders
 - Added greasing to self-propelled balers and wood chippers, MacDon headers and onion planters
+- Fixed the pre-shift check asking to clean the radiator when only the air filter is dirty
+- Fixed other players in multiplayer hearing the normal engine start, then the struggling starter over it, during a hard start
+- Fixed a parked machine left running shutting off on its own after a few minutes when the player is far away
 
 Changelog 1.0.0.0-beta.1:
 - Reworked machine production years and their period equipment
@@ -342,6 +345,9 @@ Changelog 1.0.0.0-beta.2:
 - Fehlende abzuschmierende Maschinen in den Warnungen der Fuhrpark-Seite behoben
 - Abschmierung von Plattformanhängern aus der Kategorie Ballenlader wie Ballenlader behoben
 - Abschmierung selbstfahrender Pressen und Holzhacker, von MacDon-Schneidwerken und Zwiebelpflanzmaschinen hinzugefügt
+- Aufforderung der Kontrolle vor Schichtbeginn, den Kühler zu reinigen, obwohl nur der Luftfilter verschmutzt ist, behoben
+- Normales Startgeräusch mit dem mühsamen Anlasser darüber bei anderen Spielern im Mehrspielermodus während eines schweren Starts behoben
+- Selbstständiges Abschalten einer laufend abgestellten Maschine nach einigen Minuten, wenn der Spieler weit entfernt ist, behoben
 
 Changelog 1.0.0.0-beta.1:
 - Baujahre der Maschinen und ihre zeitgemäße Ausstattung überarbeitet
@@ -610,6 +616,9 @@ Changelog 1.0.0.0-beta.2 :
 - Correction des machines à graisser absentes des alertes du parc de matériel
 - Correction des plateaux vendus parmi les ramasseuses de balles, graissés comme des ramasseuses
 - Ajout du graissage des presses et broyeurs automoteurs, des barres de coupe MacDon et des planteuses d'oignons
+- Correction du contrôle avant prise de poste qui demandait de nettoyer le radiateur quand seul le filtre à air est encrassé
+- Correction du démarrage normal suivi du démarreur qui peine par-dessus, entendu par les autres joueurs en multijoueur lors d'un démarrage difficile
+- Correction d'une machine garée moteur en marche qui s'arrêtait seule au bout de quelques minutes quand le joueur est loin
 
 Changelog 1.0.0.0-beta.1 :
 - Refonte des années des machines et de leurs équipements d'époque

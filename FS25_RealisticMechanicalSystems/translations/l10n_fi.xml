@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Paineilmapuhallin"/>
         <text name="rms_air_blower_no_vehicle" text="Ei ajoneuvoa puhdistusalueella"/>
         <text name="rms_air_blower_function" text="Käytetään jäähdyttimien ja ilmansuodattimien puhdistukseen"/>
-        <text name="rms_air_blower_action" text="Puhdista jäähdytin ja ilmansuodatin"/>
+        <text name="rms_air_blower_action" text="Puhdista jäähdytin ja ilmansuodatin."/>
+        <text name="rms_air_blower_action_radiator" text="Puhdista jäähdytin."/>
+        <text name="rms_air_blower_action_air_filter" text="Puhdista ilmansuodatin."/>
         <text name="rms_air_blower_action_short" text="Puhalla puhtaaksi"/>
         <text name="rms_air_blower_already_clean" text="%s: jäähdytin ja ilmansuodatin ovat jo puhtaat"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: jäähdytin on puhdas. Ilmansuodatin on saavuttanut paineilmapuhdistuksen rajan. Korjaamo vaihtaa sen %s huollosta alkaen"/>

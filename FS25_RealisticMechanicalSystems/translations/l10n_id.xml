@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Peniup Udara Bertekanan"/>
         <text name="rms_air_blower_no_vehicle" text="Tidak ada kendaraan dalam jangkauan pembersihan"/>
         <text name="rms_air_blower_function" text="Digunakan untuk membersihkan radiator dan filter udara"/>
-        <text name="rms_air_blower_action" text="Bersihkan radiator dan filter udara"/>
+        <text name="rms_air_blower_action" text="Bersihkan radiator dan filter udara."/>
+        <text name="rms_air_blower_action_radiator" text="Bersihkan radiator."/>
+        <text name="rms_air_blower_action_air_filter" text="Bersihkan filter udara."/>
         <text name="rms_air_blower_action_short" text="Tiup bersih"/>
         <text name="rms_air_blower_already_clean" text="%s: radiator dan filter udara sudah bersih"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: radiator sudah bersih. Filter udara tidak dapat dibersihkan lebih lanjut dengan ditiup. Bengkel menggantinya mulai dari servis %s"/>

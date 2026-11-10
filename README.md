@@ -422,6 +422,9 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Fixed machines due for greasing missing from the alerts of the fleet page
 - Fixed flatbed trailers sold among the bale loaders being greased as bale loaders
 - Added greasing to self-propelled balers and wood chippers, MacDon headers and onion planters
+- Fixed the pre-shift check asking to clean the radiator when only the air filter is dirty
+- Fixed other players in multiplayer hearing the normal engine start, then the struggling starter over it, during a hard start
+- Fixed a parked machine left running shutting off on its own after a few minutes when the player is far away
 
 ### v1.0.0.0-beta.1
 

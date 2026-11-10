@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Tryckluftsblåsare"/>
         <text name="rms_air_blower_no_vehicle" text="Inget fordon inom rengöringsavstånd"/>
         <text name="rms_air_blower_function" text="Används för att rengöra kylare och luftfilter"/>
-        <text name="rms_air_blower_action" text="Rengör kylaren och luftfiltret"/>
+        <text name="rms_air_blower_action" text="Rengör kylaren och luftfiltret."/>
+        <text name="rms_air_blower_action_radiator" text="Rengör kylaren."/>
+        <text name="rms_air_blower_action_air_filter" text="Rengör luftfiltret."/>
         <text name="rms_air_blower_action_short" text="Blås rent"/>
         <text name="rms_air_blower_already_clean" text="%s: kylaren och luftfiltret är redan rena"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: kylaren är ren. Luftfiltret har nått gränsen för rengöring med tryckluft. Verkstaden byter det från service %s och uppåt"/>

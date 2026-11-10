@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Soplador de aire"/>
         <text name="rms_air_blower_no_vehicle" text="No hay vehículo en el rango de limpieza"/>
         <text name="rms_air_blower_function" text="Se utiliza para limpiar radiadores y filtros de aire"/>
-        <text name="rms_air_blower_action" text="Limpiar radiador y filtro de aire"/>
+        <text name="rms_air_blower_action" text="Limpiar radiador y filtro de aire."/>
+        <text name="rms_air_blower_action_radiator" text="Limpiar radiador."/>
+        <text name="rms_air_blower_action_air_filter" text="Limpiar filtro de aire."/>
         <text name="rms_air_blower_action_short" text="Soplar"/>
         <text name="rms_air_blower_already_clean" text="%s: el radiador y el filtro de aire ya están limpios"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: el radiador está limpio. El filtro de aire ha alcanzado el límite de limpieza por soplado. El taller lo sustituye a partir de la revisión %s"/>

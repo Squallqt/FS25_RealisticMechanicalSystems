@@ -208,8 +208,14 @@ function Report:readClogging()
         self:note("rms_inspection_hint_air_filter_clogging_stage" .. filterStage)
         self:mark("airFilter", AIR_FILTER_STATUS[filterStage])
     end
-    if clogging >= 0.35 or filterStage >= 2 then
+    -- a reversible fan cleans the radiator, not the filter
+    local isRadiatorDirty, isFilterDirty = clogging >= 0.35, filterStage >= 2
+    if isRadiatorDirty and isFilterDirty then
         self:note("rms_air_blower_action")
+    elseif isRadiatorDirty then
+        self:note("rms_air_blower_action_radiator")
+    elseif isFilterDirty then
+        self:note("rms_air_blower_action_air_filter")
     end
     if RMS_Consumables.getIsAirFilterWornOut(self.spec) then
         self.isAirFilterReplacementDue = true

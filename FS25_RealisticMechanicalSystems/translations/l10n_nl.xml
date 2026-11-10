@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Persluchtblazer"/>
         <text name="rms_air_blower_no_vehicle" text="Geen voertuig binnen reinigingsbereik"/>
         <text name="rms_air_blower_function" text="Voor het reinigen van radiateurs en luchtfilters"/>
-        <text name="rms_air_blower_action" text="Radiateur en luchtfilter reinigen"/>
+        <text name="rms_air_blower_action" text="Radiateur en luchtfilter reinigen."/>
+        <text name="rms_air_blower_action_radiator" text="Radiateur reinigen."/>
+        <text name="rms_air_blower_action_air_filter" text="Luchtfilter reinigen."/>
         <text name="rms_air_blower_action_short" text="Schoonblazen"/>
         <text name="rms_air_blower_already_clean" text="%s: radiateur en luchtfilter zijn al schoon"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: de radiateur is schoon. Het luchtfilter kan door uitblazen niet verder worden gereinigd. De werkplaats vervangt het vanaf het onderhoud %s"/>

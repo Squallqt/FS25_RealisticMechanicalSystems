@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Trykluftblæser"/>
         <text name="rms_air_blower_no_vehicle" text="Intet køretøj inden for rengøringsafstand"/>
         <text name="rms_air_blower_function" text="Bruges til at rense kølere og luftfiltre"/>
-        <text name="rms_air_blower_action" text="Rens køleren og luftfilteret"/>
+        <text name="rms_air_blower_action" text="Rens køleren og luftfilteret."/>
+        <text name="rms_air_blower_action_radiator" text="Rens køleren."/>
+        <text name="rms_air_blower_action_air_filter" text="Rens luftfilteret."/>
         <text name="rms_air_blower_action_short" text="Blæs rent"/>
         <text name="rms_air_blower_already_clean" text="%s: køleren og luftfilteret er allerede rene"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: køleren er ren. Luftfilteret har nået grænsen for rensning med trykluft. Værkstedet udskifter det fra service %s og opefter"/>

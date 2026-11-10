@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Trykkluftblåser"/>
         <text name="rms_air_blower_no_vehicle" text="Ingen kjøretøy innen rengjøringsavstand"/>
         <text name="rms_air_blower_function" text="Brukes til å rense kjølere og luftfiltre"/>
-        <text name="rms_air_blower_action" text="Rens kjøleren og luftfilteret"/>
+        <text name="rms_air_blower_action" text="Rens kjøleren og luftfilteret."/>
+        <text name="rms_air_blower_action_radiator" text="Rens kjøleren."/>
+        <text name="rms_air_blower_action_air_filter" text="Rens luftfilteret."/>
         <text name="rms_air_blower_action_short" text="Blås rent"/>
         <text name="rms_air_blower_already_clean" text="%s: kjøleren og luftfilteret er allerede rene"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: kjøleren er ren. Luftfilteret har nådd grensen for rengjøring med trykkluft. Verkstedet skifter det fra service %s og oppover"/>

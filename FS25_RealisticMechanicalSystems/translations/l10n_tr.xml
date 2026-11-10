@@ -592,7 +592,9 @@
         <text name="rms_air_blower_name" text="Hava Üfleyici"/>
         <text name="rms_air_blower_no_vehicle" text="Temizlik alanında hiçbir araç yok"/>
         <text name="rms_air_blower_function" text="Radyatörleri ve hava filtrelerini temizlemek için kullanılır"/>
-        <text name="rms_air_blower_action" text="Radyatörü ve hava filtresini temizle"/>
+        <text name="rms_air_blower_action" text="Radyatörü ve hava filtresini temizle."/>
+        <text name="rms_air_blower_action_radiator" text="Radyatörü temizle."/>
+        <text name="rms_air_blower_action_air_filter" text="Hava filtresini temizle."/>
         <text name="rms_air_blower_action_short" text="Havayla temizle"/>
         <text name="rms_air_blower_already_clean" text="%s: radyatör ve hava filtresi zaten temiz"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: radyatör temiz. Hava filtresi üfleyerek temizleme sınırına ulaştı. Atölye onu %s bakımından itibaren değiştirir"/>
