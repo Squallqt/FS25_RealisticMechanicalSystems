@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Perawatan cermat"/>
         <text name="rms_owner_care_regular" text="Perawatan rutin"/>
         <text name="rms_owner_care_neglected" text="Perawatan terabaikan"/>
+        <text name="rms_ws_label_maintenance_count" text="Perawatan yang Dilakukan"/>
         <text name="rms_ws_label_overhaul_count" text="Rekondisi yang Dilakukan"/>
         <text name="rms_ws_label_maintenance_log" text="Log Perawatan"/>
         <text name="rms_ws_label_last_maintenance" text="Perawatan Terakhir"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Filter"/>
         <text name="rms_log_cancelled_desc" text="Prosedur dibatalkan"/>
         <text name="rms_log_ownership_months_title" text="Durasi Kepemilikan"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Kendaraan dicat ulang"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Interval Rata-Rata Antar Kerusakan"/>
         <text name="rms_log_average_maintenance_interval_title" text="Interval Rata-Rata Antar Perawatan"/>
         <text name="rms_log_performed" text="Prosedur dilakukan: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="Bulan ini"/>
         <text name="rms_spec_tomorrow_at" text="besok pukul "/>
         <text name="rms_spec_never" text="Tidak Pernah"/>
-        <text name="rms_spec_next_planned_service_notification" text="Prosedur terjadwal dimulai: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Prosedur terjadwal dibatalkan karena dana tidak mencukupi: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Prosedur terjadwal (%s) tidak dimulai: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="lusa pukul "/>
         <text name="rms_spec_day_s" text="hari"/>
         <text name="rms_spec_day_one" text="hari"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Kualitas Bahan Habis Pakai"/>
         <text name="rms_option_menu_option_two_title_repair" text="Kualitas Suku Cadang Pengganti"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Sistem yang Direkondisi"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Jika prosedur mengungkap kerusakan, prosedur otomatis dilanjutkan dengan perbaikan standar menggunakan suku cadang asli."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Setelah perbaikan, prosedur otomatis dilanjutkan dengan servis yang disarankan menggunakan bahan habis pakai asli."/>
         <text name="rms_option_menu_price_text" text="Harga"/>
-        <text name="rms_option_menu_perform_repair" text="Perbaikan Otomatis"/>
-        <text name="rms_option_menu_perform_maintenance" text="Perawatan Otomatis"/>
         <text name="rms_option_menu_warranty_repair_text" text="Perbaikan Garansi"/>
         <text name="rms_option_menu_lease_service_text" text="Termasuk dalam sewa"/>
         <text name="rms_option_menu_duration_text" text="Durasi"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="Tanpa Garansi"/>
         <text name="rms_ws_quality_oem_warranty" text="Garansi 12 Bulan"/>
         <text name="rms_ws_quality_factory_warranty" text="Garansi Pabrik"/>
-        <text name="rms_warranty_used" text="Garansi Pembongkar: Suku Cadang Saja"/>
+        <text name="rms_ws_quality_part_warranty" text="Garansi %d bulan lagi"/>
         <text name="rms_ws_quality_delta" text="%s dibanding asli"/>
         <text name="rms_ws_repair_row_faults" text="Kerusakan yang Ditangani"/>
         <text name="rms_ws_repair_row_faults_detail" text="Dari yang dicentang"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Dipilih di kartu di bawah"/>
         <text name="rms_ws_repair_quality_choice" text="Sesuai pilihan"/>
         <text name="rms_ws_warranty_title" text="Garansi"/>
+        <text name="rms_ws_quote_warranty_label" text="Garansi:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Garansi pabrik:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Garansi suku cadang:"/>
+        <text name="rms_ws_quote_warranty_covered" text="ditanggung"/>
+        <text name="rms_ws_quote_warranty_part" text="ditanggung, %d bulan lagi"/>
+        <text name="rms_ws_quote_warranty_used" text="hanya suku cadang ditanggung"/>
+        <text name="rms_ws_quote_warranty_expired" text="berakhir"/>
+        <text name="rms_ws_quote_warranty_own" text="tidak ditanggung di bengkel pribadi"/>
+        <text name="rms_ws_quote_warranty_lease" text="tidak ditanggung saat sewa"/>
+        <text name="rms_ws_quote_warranty_remapped" text="hilang, mesin diremap"/>
+        <text name="rms_ws_quote_warranty_refused" text="ditolak, %s"/>
         <text name="rms_ws_warranty_covered" text="Berlaku"/>
         <text name="rms_ws_warranty_not_covered" text="Tidak Berlaku"/>
         <text name="rms_ws_warranty_terms" text="Pabrik: %d bulan atau %s h"/>
+        <text name="rms_ws_warranty_refused" text="Ditolak: %s"/>
         <text name="rms_ws_badge_warranty" text="Garansi"/>
         <text name="rms_warranty_base" text="%d Bulan atau %s h (Termasuk)"/>
         <text name="rms_warranty_extension" text="%d Bulan atau %s h"/>
         <text name="rms_warranty_partial" text="Ditanggung Sebagian"/>
         <text name="rms_warranty_own" text="Tidak ditanggung di bengkel pribadi"/>
-        <text name="rms_warranty_factory" text="Suku cadang asli dan upah kerja ditanggung"/>
-        <text name="rms_warranty_part" text="Suku cadang ditanggung hingga usia mesin %d bulan"/>
+        <text name="rms_warranty_part" text="Garansi suku cadang: %d bulan lagi"/>
         <text name="rms_warranty_lease" text="Perbaikan tidak ditanggung saat sewa"/>
-        <text name="rms_warranty_expired" text="Garansi berakhir"/>
-        <text name="rms_warranty_overdue" text="Ditolak: perawatan terlambat"/>
-        <text name="rms_warranty_impact" text="Ditolak: kerusakan akibat benturan"/>
-        <text name="rms_warranty_options" text="Wajib ganti dengan suku cadang asli"/>
+        <text name="rms_warranty_overdue" text="perawatan terlambat"/>
+        <text name="rms_warranty_impact" text="kerusakan akibat benturan"/>
         <text name="rms_warranty_mobile" text="Kamu bayar tambahan upah kerja bengkel bergerak"/>
         <text name="rms_warranty_remapped" text="Garansi hilang: mesin diremap"/>
-        <text name="rms_warranty_heat" text="Ditolak: panas berlebih"/>
-        <text name="rms_warranty_low_level" text="Ditolak: level oli terlalu rendah"/>
-        <text name="rms_warranty_fuel_dry" text="Ditolak: tangki dikosongkan"/>
-        <text name="rms_warranty_park_brake" text="Ditolak: rem parkir aktif"/>
-        <text name="rms_warranty_pto_engagement" text="Ditolak: hentakan saat PTO dihidupkan"/>
-        <text name="rms_warranty_stones" text="Ditolak: batu tertelan"/>
-        <text name="rms_warranty_starter" text="Ditolak: starter dipaksa terlalu lama"/>
-        <text name="rms_warranty_pto_angle" text="Ditolak: sudut poros PTO terlalu besar"/>
-        <text name="rms_warranty_windup" text="Ditolak: pengunci atau 4WD di tanah keras"/>
-        <text name="rms_warranty_filter" text="Ditolak: filter tersumbat"/>
-        <text name="rms_warranty_trailer" text="Ditolak: trailer terlalu berat"/>
+        <text name="rms_warranty_heat" text="panas berlebih"/>
+        <text name="rms_warranty_low_level" text="level oli terlalu rendah"/>
+        <text name="rms_warranty_fuel_dry" text="tangki dikosongkan"/>
+        <text name="rms_warranty_park_brake" text="rem parkir aktif"/>
+        <text name="rms_warranty_pto_engagement" text="hentakan saat PTO dihidupkan"/>
+        <text name="rms_warranty_stones" text="batu tertelan"/>
+        <text name="rms_warranty_starter" text="starter dipaksa terlalu lama"/>
+        <text name="rms_warranty_pto_angle" text="sudut poros PTO terlalu besar"/>
+        <text name="rms_warranty_windup" text="pengunci atau 4WD di tanah keras"/>
+        <text name="rms_warranty_filter" text="filter tersumbat"/>
+        <text name="rms_warranty_trailer" text="trailer terlalu berat"/>
+        <text name="rms_warranty_aftermarket_part" text="suku cadang purnajual"/>
+        <text name="rms_warranty_used_part" text="suku cadang bekas"/>
+        <text name="rms_warranty_imposed" text="Perbaikan Standar dengan suku cadang asli"/>
+        <text name="rms_warranty_partial_imposed" text="Kerusakan yang ditanggung diperbaiki Standar dengan suku cadang asli"/>
         <text name="rms_ws_overhaul_row_systems" text="Sistem yang Ditangani"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Dipulihkan"/>
         <text name="rms_ws_overhaul_systems_one" text="Satu pilihanmu"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="Perawatan juga melakukan pencarian kerusakan ini, seperti inspeksi standar."/>
         <text name="rms_ws_quote_title" text="Rincian Penawaran"/>
         <text name="rms_ws_quote_oil_filter" text="Filter Oli"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Prosedur berikutnya ditagih secara terpisah. Fluida yang diperlukan disediakan atau diambil dari persediaan saat prosedur dimulai."/>
         <text name="rms_bodywork_touchup" text="Perbaikan Cat"/>
         <text name="rms_bodywork_full" text="Pengecatan Ulang Penuh"/>
         <text name="rms_bodywork_colors_title" text="Warna Kendaraan"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="Tidak pulih dengan perangkat lunak bawaan"/>
         <text name="rms_remap_free" text="Gratis"/>
         <text name="rms_remap_unavailable" text="Remap Tidak Tersedia"/>
-        <text name="rms_remap_refusal_dealer" text="Dealer tidak melakukan remap mesin."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Tuner datang ke lahan pertanian: gunakan bengkel pertanian atau bengkel bergerak."/>
+        <text name="rms_ws_overhaul_unavailable" text="Rekondisi Tidak Tersedia"/>
+        <text name="rms_remap_refusal_top" text="Sudah mesin terkuat di serinya: hanya tuner yang melampauinya, di bengkel pertanian atau bergerak."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Di-remap tuner: hanya tuner yang mengembalikannya, di bengkel pertanian atau bergerak."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Di-remap dealer: hanya dealer yang mengembalikannya."/>
+        <text name="rms_remap_curves_maker" text="Kurva yang Dijanjikan Pabrikan"/>
+        <text name="rms_remap_curves_dealer_measured" text="Uji Dyno Dealer, Sebelum dan Sesudah"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Dealer menyimpan perangkat lunak bawaan"/>
         <text name="rms_remap_refusal_leased" text="Mesin sewaan tidak dapat diremap."/>
         <text name="rms_remap_refusal_not_eligible" text="Mesin ini tidak memiliki unit kontrol yang bisa diremap."/>
         <text name="rms_remap_confirm_title" text="Remap mesin?"/>

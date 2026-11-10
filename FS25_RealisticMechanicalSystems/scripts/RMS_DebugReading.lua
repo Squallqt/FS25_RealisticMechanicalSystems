@@ -388,7 +388,7 @@ local ABUSE_READINGS = {
     impact = "hit by a collision", heat = "heat past the warning", low_level = "oil too low",
     fuel_dry = "tank run dry", park_brake = "parking brake on", pto_engagement = "PTO engaged high",
     stones = "stones", starter = "starter held", pto_angle = "PTO shaft angle", windup = "lock or 4WD on hard ground",
-    filter = "clogged filter", trailer = "trailer too heavy",
+    filter = "clogged filter", trailer = "trailer too heavy", aftermarket_part = "aftermarket part fitted", used_part = "used part fitted",
 }
 
 local function readFaults(vehicle, spec, reading)
@@ -495,7 +495,7 @@ local function readWork(spec, reading)
         end
     end
     local progress = spec.pendingProgressTotalTime > 0 and spec.pendingProgressElapsedTime / spec.pendingProgressTotalTime or 0
-    table.insert(reading.work, {"Work", table.concat(options, SEP) .. ", then " .. plainKey(spec.plannedState)})
+    table.insert(reading.work, {"Work", table.concat(options, SEP)})
     local queue = spec.currentState == R.STATUS.REPAIR and spec.pendingRepairQueue
         or (spec.currentState == R.STATUS.INSPECTION or spec.currentState == R.STATUS.MAINTENANCE) and spec.pendingInspectionQueue or {}
     local done = #queue > 0 and string.format("  ·  %d of %d done", spec.pendingProgressStepIndex, #queue) or ""
@@ -833,8 +833,7 @@ local function readMachine(vehicle, spec, reading)
             addon.forDBL_highpressure == 1 and "on" or "off")})
     end
     local months, hours = vehicle:getWarrantyLimits()
-    local factoryActive = vehicle.age < months and RealisticMechanicalSystems.getRealOperatingHours(vehicle) < hours
-    local warrantyState = factoryActive and "active" or "expired"
+    local warrantyState = RealisticMechanicalSystems.getIsWithinWarrantyLimits(vehicle) and "active" or "expired"
     if vehicle.propertyState == VehiclePropertyState.LEASED then warrantyState = "lease" end
     if spec.warrantyVoided then warrantyState = "lost to a remap" end
     table.insert(rows, {"Warranty", string.format("%s (%s): age < %d months, meter < %d h of play",

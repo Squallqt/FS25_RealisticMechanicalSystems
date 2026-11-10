@@ -29,9 +29,12 @@ function RMS_WorkshopDiagnosticFrame:initialize(dialog)
     end
     self.lastCheckColor = { unpack(self.diagnosticLastInspection.textColor) }
     self.emptyHintColor = { unpack(self.breakdownEmptyHint.textColor) }
+    RMS_Utils.fitIcon(self.breakdownEmptyIcon)
     self.readingRows = RMS_Utils.cloneTemplate(self.readingRowTemplate, #READING_ROWS)
     for index, entry in ipairs(READING_ROWS) do
-        self.readingRows[index]:getDescendantByName("icon"):applyProfile(entry.icon)
+        local icon = self.readingRows[index]:getDescendantByName("icon")
+        icon:applyProfile(entry.icon)
+        RMS_Utils.fitIcon(icon)
     end
 end
 
@@ -88,7 +91,7 @@ function RMS_WorkshopDiagnosticFrame:updateEstimate()
 
     local STATUS = RealisticMechanicalSystems.STATUS
     local price = RMS_FluidWorkshop.getTransactionPrice(self.vehicle, STATUS.REPAIR, self.workshopType, RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM,
-        RealisticMechanicalSystems.PART_TYPES.OEM, false)
+        RealisticMechanicalSystems.PART_TYPES.OEM)
     self.diagnosticTotal:setText(g_i18n:formatMoney(price, 0, true, false))
     self.diagnosticConfigureButton:setDisabled(pickedCount == 0 or self.isUnderService)
 end

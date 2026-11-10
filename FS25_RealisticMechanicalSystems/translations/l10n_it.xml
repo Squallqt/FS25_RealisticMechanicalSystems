@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Manutenzione accurata"/>
         <text name="rms_owner_care_regular" text="Manutenzione regolare"/>
         <text name="rms_owner_care_neglected" text="Manutenzione trascurata"/>
+        <text name="rms_ws_label_maintenance_count" text="Manutenzioni effettuate"/>
         <text name="rms_ws_label_overhaul_count" text="Revisioni effettuate"/>
         <text name="rms_ws_label_maintenance_log" text="Registro di manutenzione"/>
         <text name="rms_ws_label_last_maintenance" text="Ultima manutenzione"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Filtri"/>
         <text name="rms_log_cancelled_desc" text="Intervento annullato"/>
         <text name="rms_log_ownership_months_title" text="Durata del possesso"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Il veicolo è stato riverniciato"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Intervallo medio tra i guasti"/>
         <text name="rms_log_average_maintenance_interval_title" text="Intervallo medio di manutenzione"/>
         <text name="rms_log_performed" text="Intervento eseguito: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="Questo mese"/>
         <text name="rms_spec_tomorrow_at" text="domani alle "/>
         <text name="rms_spec_never" text="Mai"/>
-        <text name="rms_spec_next_planned_service_notification" text="Intervento pianificato avviato: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Intervento pianificato annullato per fondi insufficienti: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="L'intervento pianificato (%s) non è stato avviato: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="dopodomani alle "/>
         <text name="rms_spec_day_s" text="giorni"/>
         <text name="rms_spec_day_one" text="giorno"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Qualità dei materiali di consumo"/>
         <text name="rms_option_menu_option_two_title_repair" text="Qualità dei ricambi"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Sistema da revisionare"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Se l'intervento rileva guasti, avvia automaticamente una riparazione standard con ricambi originali."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Dopo la riparazione, avvia automaticamente il tagliando consigliato con materiali di consumo originali."/>
         <text name="rms_option_menu_price_text" text="Prezzo"/>
-        <text name="rms_option_menu_perform_repair" text="Riparazione automatica"/>
-        <text name="rms_option_menu_perform_maintenance" text="Manutenzione automatica"/>
         <text name="rms_option_menu_warranty_repair_text" text="Riparazione in garanzia"/>
         <text name="rms_option_menu_lease_service_text" text="Incluso nel noleggio"/>
         <text name="rms_option_menu_duration_text" text="Durata"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="Senza garanzia"/>
         <text name="rms_ws_quality_oem_warranty" text="Garanzia di 12 mesi"/>
         <text name="rms_ws_quality_factory_warranty" text="Garanzia di fabbrica"/>
-        <text name="rms_warranty_used" text="Garanzia del demolitore: solo ricambio"/>
+        <text name="rms_ws_quality_part_warranty" text="Garanzia ancora %d mesi"/>
         <text name="rms_ws_quality_delta" text="%s sull'originale"/>
         <text name="rms_ws_repair_row_faults" text="Guasti trattati"/>
         <text name="rms_ws_repair_row_faults_detail" text="Tra quelli spuntati"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Scelta sulle schede qui sotto"/>
         <text name="rms_ws_repair_quality_choice" text="A scelta"/>
         <text name="rms_ws_warranty_title" text="Garanzia"/>
+        <text name="rms_ws_quote_warranty_label" text="Garanzia:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Garanzia di fabbrica:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Garanzia del ricambio:"/>
+        <text name="rms_ws_quote_warranty_covered" text="coperta"/>
+        <text name="rms_ws_quote_warranty_part" text="coperta, ancora %d mesi"/>
+        <text name="rms_ws_quote_warranty_used" text="solo il ricambio coperto"/>
+        <text name="rms_ws_quote_warranty_expired" text="scaduta"/>
+        <text name="rms_ws_quote_warranty_own" text="non coperta nell'officina propria"/>
+        <text name="rms_ws_quote_warranty_lease" text="non coperta nel noleggio"/>
+        <text name="rms_ws_quote_warranty_remapped" text="persa, motore rimappato"/>
+        <text name="rms_ws_quote_warranty_refused" text="rifiutata, %s"/>
         <text name="rms_ws_warranty_covered" text="Valida"/>
         <text name="rms_ws_warranty_not_covered" text="Non valida"/>
         <text name="rms_ws_warranty_terms" text="Fabbrica: %d mesi o %s h"/>
+        <text name="rms_ws_warranty_refused" text="Rifiutata: %s"/>
         <text name="rms_ws_badge_warranty" text="Garanzia"/>
         <text name="rms_warranty_base" text="%d mesi o %s h (inclusa)"/>
         <text name="rms_warranty_extension" text="%d mesi o %s h"/>
         <text name="rms_warranty_partial" text="Parzialmente coperta"/>
         <text name="rms_warranty_own" text="Non coperta nell'officina propria"/>
-        <text name="rms_warranty_factory" text="Ricambi originali e manodopera coperti"/>
-        <text name="rms_warranty_part" text="Ricambio coperto fino a %d mesi di età"/>
+        <text name="rms_warranty_part" text="Garanzia del ricambio: ancora %d mesi"/>
         <text name="rms_warranty_lease" text="Riparazione non coperta nel noleggio"/>
-        <text name="rms_warranty_expired" text="Garanzia scaduta"/>
-        <text name="rms_warranty_overdue" text="Rifiutata: manutenzione in ritardo"/>
-        <text name="rms_warranty_impact" text="Rifiutata: danno da urto"/>
-        <text name="rms_warranty_options" text="Sostituzione con ricambi originali richiesta"/>
+        <text name="rms_warranty_overdue" text="manutenzione in ritardo"/>
+        <text name="rms_warranty_impact" text="danno da urto"/>
         <text name="rms_warranty_mobile" text="Paghi la manodopera extra dell'officina mobile"/>
         <text name="rms_warranty_remapped" text="Garanzia persa: motore rimappato"/>
-        <text name="rms_warranty_heat" text="Rifiutata: surriscaldamento"/>
-        <text name="rms_warranty_low_level" text="Rifiutata: livello dell'olio troppo basso"/>
-        <text name="rms_warranty_fuel_dry" text="Rifiutata: serbatoio svuotato"/>
-        <text name="rms_warranty_park_brake" text="Rifiutata: freno di stazionamento inserito"/>
-        <text name="rms_warranty_pto_engagement" text="Rifiutata: strappo all'innesto della PTO"/>
-        <text name="rms_warranty_stones" text="Rifiutata: sassi ingeriti"/>
-        <text name="rms_warranty_starter" text="Rifiutata: motorino d'avviamento sovraccaricato"/>
-        <text name="rms_warranty_pto_angle" text="Rifiutata: angolo del cardano eccessivo"/>
-        <text name="rms_warranty_windup" text="Rifiutata: blocco o 4RM su fondo duro"/>
-        <text name="rms_warranty_filter" text="Rifiutata: filtro intasato"/>
-        <text name="rms_warranty_trailer" text="Rifiutata: rimorchio troppo pesante"/>
+        <text name="rms_warranty_heat" text="surriscaldamento"/>
+        <text name="rms_warranty_low_level" text="livello dell'olio troppo basso"/>
+        <text name="rms_warranty_fuel_dry" text="serbatoio svuotato"/>
+        <text name="rms_warranty_park_brake" text="freno di stazionamento inserito"/>
+        <text name="rms_warranty_pto_engagement" text="strappo all'innesto della PTO"/>
+        <text name="rms_warranty_stones" text="sassi ingeriti"/>
+        <text name="rms_warranty_starter" text="motorino d'avviamento sovraccaricato"/>
+        <text name="rms_warranty_pto_angle" text="angolo del cardano eccessivo"/>
+        <text name="rms_warranty_windup" text="blocco o 4RM su fondo duro"/>
+        <text name="rms_warranty_filter" text="filtro intasato"/>
+        <text name="rms_warranty_trailer" text="rimorchio troppo pesante"/>
+        <text name="rms_warranty_aftermarket_part" text="ricambio compatibile"/>
+        <text name="rms_warranty_used_part" text="ricambio usato"/>
+        <text name="rms_warranty_imposed" text="Riparazione Standard con ricambi originali"/>
+        <text name="rms_warranty_partial_imposed" text="Guasto coperto riparato in Standard, con ricambi originali"/>
         <text name="rms_ws_overhaul_row_systems" text="Sistemi trattati"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Ripristinati"/>
         <text name="rms_ws_overhaul_systems_one" text="Uno a scelta"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="Anche una manutenzione esegue questa ricerca guasti, come l'ispezione standard."/>
         <text name="rms_ws_quote_title" text="Dettaglio del preventivo"/>
         <text name="rms_ws_quote_oil_filter" text="Filtro dell'olio"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="L'intervento successivo viene addebitato separatamente. I fluidi necessari vengono forniti o prelevati dalla scorta all'avvio."/>
         <text name="rms_bodywork_touchup" text="Ritocchi"/>
         <text name="rms_bodywork_full" text="Riverniciatura completa"/>
         <text name="rms_bodywork_colors_title" text="Colori del veicolo"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="Non ritorna con il software originale"/>
         <text name="rms_remap_free" text="Gratuito"/>
         <text name="rms_remap_unavailable" text="Rimappatura non disponibile"/>
-        <text name="rms_remap_refusal_dealer" text="Il concessionario non rimappa i motori."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Un preparatore viene alla fattoria: usa l'officina della fattoria o l'officina mobile."/>
+        <text name="rms_ws_overhaul_unavailable" text="Revisione meccanica non disponibile"/>
+        <text name="rms_remap_refusal_top" text="Già il motore più potente della gamma: solo un preparatore va oltre, nell'officina della fattoria o mobile."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Rimappato da un preparatore: solo lui lo riporta all'originale, nell'officina della fattoria o mobile."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Rimappato dal concessionario: solo lui lo riporta all'originale."/>
+        <text name="rms_remap_curves_maker" text="Curve dichiarate dal costruttore"/>
+        <text name="rms_remap_curves_dealer_measured" text="Banco del concessionario, prima e dopo"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Il concessionario conserva il software originale"/>
         <text name="rms_remap_refusal_leased" text="Non si può rimappare una macchina a noleggio."/>
         <text name="rms_remap_refusal_not_eligible" text="Questo motore non ha una centralina riprogrammabile."/>
         <text name="rms_remap_confirm_title" text="Rimappare il motore?"/>
@@ -696,7 +706,7 @@
         <text name="rms_inspection_verdict_stop_title" text="Non utilizzare"/>
         <text name="rms_inspection_verdict_stop_message" text="Un punto deve essere risolto prima di qualsiasi utilizzo. Non far lavorare la macchina in questo stato."/>
         <text name="rms_inspection_service_due_in" text="%s tra %s"/>
-        <text name="rms_inspection_service_overdue" text="%s scaduto da %s"/>
+        <text name="rms_inspection_service_overdue" text="%s: ritardo di %s"/>
         <text name="rms_inspection_status_slightly_low" text="Leggermente basso"/>
         <text name="rms_inspection_status_slightly_dirty" text="Leggermente ostruito"/>
         <text name="rms_inspection_status_grease_due" text="Da ingrassare"/>

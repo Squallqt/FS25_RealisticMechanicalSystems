@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Careful maintenance"/>
         <text name="rms_owner_care_regular" text="Regular maintenance"/>
         <text name="rms_owner_care_neglected" text="Neglected maintenance"/>
+        <text name="rms_ws_label_maintenance_count" text="Services Done"/>
         <text name="rms_ws_label_overhaul_count" text="Overhauls Done"/>
         <text name="rms_ws_label_maintenance_log" text="Maintenance Log"/>
         <text name="rms_ws_label_last_maintenance" text="Last Maintenance"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Filters"/>
         <text name="rms_log_cancelled_desc" text="Procedure canceled"/>
         <text name="rms_log_ownership_months_title" text="Ownership Duration"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Vehicle repainted"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Average Breakdown Interval"/>
         <text name="rms_log_average_maintenance_interval_title" text="Average Maintenance Interval"/>
         <text name="rms_log_performed" text="Procedure performed: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="This month"/>
         <text name="rms_spec_tomorrow_at" text="tomorrow at "/>
         <text name="rms_spec_never" text="Never"/>
-        <text name="rms_spec_next_planned_service_notification" text="Scheduled procedure started: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Scheduled procedure canceled due to insufficient funds: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="The scheduled procedure (%s) did not start: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="day after tomorrow at "/>
         <text name="rms_spec_day_s" text="days"/>
         <text name="rms_spec_day_one" text="day"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Consumables Quality"/>
         <text name="rms_option_menu_option_two_title_repair" text="Spare Parts Quality"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="System to Overhaul"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="If the procedure reveals any breakdowns, automatically follows it with a standard repair using original parts."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="After the repair, automatically follows it with the recommended service using original consumables."/>
         <text name="rms_option_menu_price_text" text="Price"/>
-        <text name="rms_option_menu_perform_repair" text="Automatic repair"/>
-        <text name="rms_option_menu_perform_maintenance" text="Automatic maintenance"/>
         <text name="rms_option_menu_warranty_repair_text" text="Warranty repair"/>
         <text name="rms_option_menu_lease_service_text" text="Included in the lease"/>
         <text name="rms_option_menu_duration_text" text="Duration"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="No Warranty"/>
         <text name="rms_ws_quality_oem_warranty" text="12-Month Warranty"/>
         <text name="rms_ws_quality_factory_warranty" text="Factory Warranty"/>
-        <text name="rms_warranty_used" text="Salvage Warranty: Part Only"/>
+        <text name="rms_ws_quality_part_warranty" text="Warranty, %d Months Left"/>
         <text name="rms_ws_quality_delta" text="%s vs original"/>
         <text name="rms_ws_repair_row_faults" text="Breakdowns Treated"/>
         <text name="rms_ws_repair_row_faults_detail" text="Among those ticked"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Picked on the cards below"/>
         <text name="rms_ws_repair_quality_choice" text="Your choice"/>
         <text name="rms_ws_warranty_title" text="Warranty"/>
+        <text name="rms_ws_quote_warranty_label" text="Warranty:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Factory warranty:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Part warranty:"/>
+        <text name="rms_ws_quote_warranty_covered" text="covered"/>
+        <text name="rms_ws_quote_warranty_part" text="covered, %d months left"/>
+        <text name="rms_ws_quote_warranty_used" text="part only covered"/>
+        <text name="rms_ws_quote_warranty_expired" text="expired"/>
+        <text name="rms_ws_quote_warranty_own" text="not covered at the farm workshop"/>
+        <text name="rms_ws_quote_warranty_lease" text="not covered on a lease"/>
+        <text name="rms_ws_quote_warranty_remapped" text="lost, engine remapped"/>
+        <text name="rms_ws_quote_warranty_refused" text="declined, %s"/>
         <text name="rms_ws_warranty_covered" text="Covered"/>
         <text name="rms_ws_warranty_not_covered" text="Not Covered"/>
         <text name="rms_ws_warranty_terms" text="Factory: %d months or %s h"/>
+        <text name="rms_ws_warranty_refused" text="Declined: %s"/>
         <text name="rms_ws_badge_warranty" text="Warranty"/>
         <text name="rms_warranty_base" text="%d Months or %s h (Included)"/>
         <text name="rms_warranty_extension" text="%d Months or %s h"/>
         <text name="rms_warranty_partial" text="Partially Covered"/>
         <text name="rms_warranty_own" text="Not covered at the farm workshop"/>
-        <text name="rms_warranty_factory" text="Original parts and labor covered"/>
-        <text name="rms_warranty_part" text="Part covered until age %d months"/>
+        <text name="rms_warranty_part" text="Part warranty: %d months left"/>
         <text name="rms_warranty_lease" text="Repair not covered on a lease"/>
-        <text name="rms_warranty_expired" text="Warranty expired"/>
-        <text name="rms_warranty_overdue" text="Declined: overdue service"/>
-        <text name="rms_warranty_impact" text="Declined: impact damage"/>
-        <text name="rms_warranty_options" text="Replacement with original parts required"/>
+        <text name="rms_warranty_overdue" text="overdue service"/>
+        <text name="rms_warranty_impact" text="impact damage"/>
         <text name="rms_warranty_mobile" text="You pay the extra mobile labor cost"/>
         <text name="rms_warranty_remapped" text="Warranty lost: engine remapped"/>
-        <text name="rms_warranty_heat" text="Declined: overheating"/>
-        <text name="rms_warranty_low_level" text="Declined: oil level too low"/>
-        <text name="rms_warranty_fuel_dry" text="Declined: tank run dry"/>
-        <text name="rms_warranty_park_brake" text="Declined: parking brake on"/>
-        <text name="rms_warranty_pto_engagement" text="Declined: PTO engagement shock"/>
-        <text name="rms_warranty_stones" text="Declined: stones taken in"/>
-        <text name="rms_warranty_starter" text="Declined: starter overcranked"/>
-        <text name="rms_warranty_pto_angle" text="Declined: PTO shaft angle too steep"/>
-        <text name="rms_warranty_windup" text="Declined: diff lock or 4WD on hard ground"/>
-        <text name="rms_warranty_filter" text="Declined: clogged filter"/>
-        <text name="rms_warranty_trailer" text="Declined: trailer too heavy"/>
+        <text name="rms_warranty_heat" text="overheating"/>
+        <text name="rms_warranty_low_level" text="oil level too low"/>
+        <text name="rms_warranty_fuel_dry" text="tank run dry"/>
+        <text name="rms_warranty_park_brake" text="parking brake on"/>
+        <text name="rms_warranty_pto_engagement" text="PTO engagement shock"/>
+        <text name="rms_warranty_stones" text="stones taken in"/>
+        <text name="rms_warranty_starter" text="starter overcranked"/>
+        <text name="rms_warranty_pto_angle" text="PTO shaft angle too steep"/>
+        <text name="rms_warranty_windup" text="diff lock or 4WD on hard ground"/>
+        <text name="rms_warranty_filter" text="clogged filter"/>
+        <text name="rms_warranty_trailer" text="trailer too heavy"/>
+        <text name="rms_warranty_aftermarket_part" text="aftermarket part"/>
+        <text name="rms_warranty_used_part" text="used part"/>
+        <text name="rms_warranty_imposed" text="Standard repair with original parts"/>
+        <text name="rms_warranty_partial_imposed" text="Covered fault repaired as Standard with original parts"/>
         <text name="rms_ws_overhaul_row_systems" text="Systems Treated"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Restored"/>
         <text name="rms_ws_overhaul_systems_one" text="One you pick"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="A service runs this fault search too, as the standard inspection does."/>
         <text name="rms_ws_quote_title" text="Quote Details"/>
         <text name="rms_ws_quote_oil_filter" text="Oil Filter"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="The following procedure is charged separately. Required fluids are supplied or taken from stock when it starts."/>
         <text name="rms_bodywork_touchup" text="Touch-Ups"/>
         <text name="rms_bodywork_full" text="Full Repaint"/>
         <text name="rms_bodywork_colors_title" text="Vehicle Colors"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="It does not come back with the stock software"/>
         <text name="rms_remap_free" text="Free"/>
         <text name="rms_remap_unavailable" text="Remapping Unavailable"/>
-        <text name="rms_remap_refusal_dealer" text="The dealer does not remap engines."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="A tuner comes to the farm: use the farm workshop or the mobile workshop."/>
+        <text name="rms_ws_overhaul_unavailable" text="Overhaul Unavailable"/>
+        <text name="rms_remap_refusal_top" text="Already the range's largest engine: only a tuner goes beyond, at the farm or mobile workshop."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Remapped by a tuner: only the tuner restores it, at the farm or mobile workshop."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Remapped by the dealer: only the dealer restores it."/>
+        <text name="rms_remap_curves_maker" text="Curves Announced by the Manufacturer"/>
+        <text name="rms_remap_curves_dealer_measured" text="Dealer's Dyno Run, Before and After"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Stock software kept by the dealer"/>
         <text name="rms_remap_refusal_leased" text="A leased machine cannot be remapped."/>
         <text name="rms_remap_refusal_not_eligible" text="This engine has no control unit to remap."/>
         <text name="rms_remap_confirm_title" text="Remap the Engine?"/>

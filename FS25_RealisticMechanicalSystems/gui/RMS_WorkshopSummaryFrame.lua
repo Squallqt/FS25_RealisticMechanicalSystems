@@ -16,7 +16,7 @@ function RMS_WorkshopSummaryFrame:initialize(dialog)
     self.conditionCard:initialize()
     self.noAlertColor = { unpack(self.summaryNoAlertText.textColor) }
     self.factRows = RMS_Utils.cloneTemplate(self.factRowTemplate, 4)
-    self.serviceRows = RMS_Utils.cloneTemplate(self.serviceRowTemplate, 4)
+    self.serviceRows = RMS_Utils.cloneTemplate(self.serviceRowTemplate, 5)
     self.fluidRows = RMS_Utils.cloneTemplate(self.fluidRowTemplate, #RMS_Fluids.CIRCUIT_ORDER)
     for index, row in ipairs(self.fluidRows) do
         row:getDescendantByName("icon"):applyProfile(RMS_Fluids.CIRCUITS[RMS_Fluids.CIRCUIT_ORDER[index]].icon, true)
@@ -46,6 +46,12 @@ function RMS_WorkshopSummaryFrame:updateVehicleCard()
     local vehicle = self.vehicle
     RMS_Utils.setVehicleIdentity(vehicle, self.vehicleImage, self.vehicleBrandValue, self.vehicleNameValue)
     RMS_Utils.writeVehicleFacts(self.factRows, vehicle, true, self.workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER)
+    for _, row in ipairs(self.factRows) do
+        local icon = row:getDescendantByName("icon")
+        if icon:getIsVisible() then
+            RMS_Utils.fitIcon(icon)
+        end
+    end
 end
 
 ---Writes the service ring and the figures it does not carry
@@ -64,7 +70,8 @@ function RMS_WorkshopSummaryFrame:updateServiceCard()
         { "rms_ws_label_service_access", RMS_Utils.formatServiceAccess(vehicle) },
         { "rms_ws_label_last_maintenance", lastMaintenanceDate ~= nil and RMS_Utils.formatMaintenanceLogDate({ date = lastMaintenanceDate })
             or g_i18n:getText("rms_spec_never") },
-        { "rms_ws_label_overhaul_count", string.format("%d", vehicle:getOverhaulPerformedCount()) }
+        { "rms_ws_label_maintenance_count", string.format("%d", vehicle:getPerformedServiceCount(RealisticMechanicalSystems.STATUS.MAINTENANCE)) },
+        { "rms_ws_label_overhaul_count", string.format("%d", vehicle:getPerformedServiceCount(RealisticMechanicalSystems.STATUS.OVERHAUL)) }
     }
     for index, entry in ipairs(rows) do
         RMS_Utils.writeRow(self.serviceRows[index], g_i18n:getText(entry[1]), entry[2])

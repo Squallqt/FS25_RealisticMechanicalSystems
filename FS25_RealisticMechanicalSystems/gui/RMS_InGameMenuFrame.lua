@@ -87,10 +87,9 @@ local function getCommittedCost(vehicle)
 
     if spec.currentState == RealisticMechanicalSystems.STATUS.REFILL then
         return RMS_FluidWorkshop.getTransactionPrice(vehicle, spec.currentState, spec.workshopType,
-            spec.serviceOptionOne, spec.serviceOptionTwo, spec.serviceOptionThree or false) or 0
+            spec.serviceOptionOne, spec.serviceOptionTwo) or 0
     end
-    return vehicle:getServicePrice(spec.currentState, spec.serviceOptionOne, spec.serviceOptionTwo,
-        spec.serviceOptionThree or false) or 0
+    return vehicle:getServicePrice(spec.currentState, spec.serviceOptionOne, spec.serviceOptionTwo) or 0
 end
 
 local function canDisplayVehicle(vehicle, farmId)
@@ -1041,7 +1040,7 @@ end
 function RMS_InGameMenuFrame:updateService(row)
     local vehicle = row.vehicle
     local spec = vehicle.spec_RealisticMechanicalSystems
-    local overhaulCount = string.format("%d", vehicle:getOverhaulPerformedCount() or 0)
+    local overhaulCount = string.format("%d", vehicle:getPerformedServiceCount(RealisticMechanicalSystems.STATUS.OVERHAUL))
     local totalCost = g_i18n:formatMoney(getTotalCost(vehicle), 0, true, false)
     local color = getUrgencyColor(row.serviceUrgency)
     local rows, foot

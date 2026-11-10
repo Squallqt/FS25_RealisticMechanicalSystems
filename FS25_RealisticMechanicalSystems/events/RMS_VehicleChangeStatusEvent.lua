@@ -22,7 +22,6 @@ function RMS_VehicleChangeStatusEvent.new(vehicle, notificationText, logEntry)
 
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     self.currentState = spec ~= nil and spec.currentState or ""
-    self.plannedState = spec ~= nil and spec.plannedState or ""
     self.maintenanceTimer = spec ~= nil and spec.maintenanceTimer or 0
     self.progressStepIndex = spec ~= nil and spec.pendingProgressStepIndex or 0
     self.progressTotalTime = spec ~= nil and spec.pendingProgressTotalTime or 0
@@ -36,7 +35,6 @@ function RMS_VehicleChangeStatusEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
     streamWriteString(streamId, self.notificationText or "")
     streamWriteString(streamId, self.currentState or "")
-    streamWriteString(streamId, self.plannedState or "")
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(self.maintenanceTimer, 0, 0))
     streamWriteInt32(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(self.progressStepIndex, 0, 0)))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(self.progressTotalTime, 0, 0))
@@ -50,7 +48,6 @@ function RMS_VehicleChangeStatusEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
     self.notificationText = streamReadString(streamId)
     self.currentState = streamReadString(streamId)
-    self.plannedState = streamReadString(streamId)
     self.maintenanceTimer = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
     self.progressStepIndex = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadInt32(streamId), 0, 0))
     self.progressTotalTime = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
@@ -66,7 +63,6 @@ function RMS_VehicleChangeStatusEvent:run(connection)
         local spec = self.vehicle.spec_RealisticMechanicalSystems
         if connection:getIsServer() and spec ~= nil then
             spec.currentState = self.currentState
-            spec.plannedState = self.plannedState
             spec.maintenanceTimer = self.maintenanceTimer
             spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
             spec.pendingProgressStepIndex = self.progressStepIndex

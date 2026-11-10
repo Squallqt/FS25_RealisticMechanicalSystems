@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Omhyggelig vedligeholdelse"/>
         <text name="rms_owner_care_regular" text="Regelmæssig vedligeholdelse"/>
         <text name="rms_owner_care_neglected" text="Forsømt vedligeholdelse"/>
+        <text name="rms_ws_label_maintenance_count" text="Udførte vedligeholdelser"/>
         <text name="rms_ws_label_overhaul_count" text="Udførte renoveringer"/>
         <text name="rms_ws_label_maintenance_log" text="Vedligeholdelseslog"/>
         <text name="rms_ws_label_last_maintenance" text="Seneste vedligeholdelse"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Filtre"/>
         <text name="rms_log_cancelled_desc" text="Procedure annulleret"/>
         <text name="rms_log_ownership_months_title" text="Ejertid"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Køretøj lakeret om"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Gennemsnitligt fejlinterval"/>
         <text name="rms_log_average_maintenance_interval_title" text="Gennemsnitligt vedligeholdelsesinterval"/>
         <text name="rms_log_performed" text="Procedure udført: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="Denne måned"/>
         <text name="rms_spec_tomorrow_at" text="i morgen kl. "/>
         <text name="rms_spec_never" text="Aldrig"/>
-        <text name="rms_spec_next_planned_service_notification" text="Planlagt procedure startet: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Planlagt procedure annulleret på grund af manglende midler: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Den planlagte procedure (%s) startede ikke: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="i overmorgen kl. "/>
         <text name="rms_spec_day_s" text="dage"/>
         <text name="rms_spec_day_one" text="dag"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Kvalitet af forbrugsmaterialer"/>
         <text name="rms_option_menu_option_two_title_repair" text="Kvalitet af reservedele"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="System, der skal renoveres"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Hvis proceduren afslører fejl, følger der automatisk en standardreparation med originale dele."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Efter reparationen følger automatisk det anbefalede service med originale forbrugsmaterialer."/>
         <text name="rms_option_menu_price_text" text="Pris"/>
-        <text name="rms_option_menu_perform_repair" text="Automatisk reparation"/>
-        <text name="rms_option_menu_perform_maintenance" text="Automatisk vedligeholdelse"/>
         <text name="rms_option_menu_warranty_repair_text" text="Reparation under garanti"/>
         <text name="rms_option_menu_lease_service_text" text="Inkluderet i leasingen"/>
         <text name="rms_option_menu_duration_text" text="Varighed"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="Ingen garanti"/>
         <text name="rms_ws_quality_oem_warranty" text="12 måneders garanti"/>
         <text name="rms_ws_quality_factory_warranty" text="Fabriksgaranti"/>
-        <text name="rms_warranty_used" text="Ophuggergaranti: kun reservedelen"/>
+        <text name="rms_ws_quality_part_warranty" text="Garanti %d måneder endnu"/>
         <text name="rms_ws_quality_delta" text="%s ift. original"/>
         <text name="rms_ws_repair_row_faults" text="Behandlede fejl"/>
         <text name="rms_ws_repair_row_faults_detail" text="Blandt de markerede"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Valgt på kortene nedenfor"/>
         <text name="rms_ws_repair_quality_choice" text="Efter valg"/>
         <text name="rms_ws_warranty_title" text="Garanti"/>
+        <text name="rms_ws_quote_warranty_label" text="Garanti:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Fabriksgaranti:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Garanti på delen:"/>
+        <text name="rms_ws_quote_warranty_covered" text="dækket"/>
+        <text name="rms_ws_quote_warranty_part" text="dækket, %d måneder endnu"/>
+        <text name="rms_ws_quote_warranty_used" text="kun delen dækket"/>
+        <text name="rms_ws_quote_warranty_expired" text="udløbet"/>
+        <text name="rms_ws_quote_warranty_own" text="ikke dækket på eget værksted"/>
+        <text name="rms_ws_quote_warranty_lease" text="ikke dækket ved leasing"/>
+        <text name="rms_ws_quote_warranty_remapped" text="bortfaldet, motor optimeret"/>
+        <text name="rms_ws_quote_warranty_refused" text="afvist, %s"/>
         <text name="rms_ws_warranty_covered" text="Gælder"/>
         <text name="rms_ws_warranty_not_covered" text="Gælder ikke"/>
         <text name="rms_ws_warranty_terms" text="Fabrik: %d måneder eller %s h"/>
+        <text name="rms_ws_warranty_refused" text="Afvist: %s"/>
         <text name="rms_ws_badge_warranty" text="Garanti"/>
         <text name="rms_warranty_base" text="%d måneder eller %s h (inkluderet)"/>
         <text name="rms_warranty_extension" text="%d måneder eller %s h"/>
         <text name="rms_warranty_partial" text="Delvist dækket"/>
         <text name="rms_warranty_own" text="Ikke dækket på eget værksted"/>
-        <text name="rms_warranty_factory" text="Originale dele og arbejdsløn dækket"/>
-        <text name="rms_warranty_part" text="Del dækket indtil maskinens alder er %d måneder"/>
+        <text name="rms_warranty_part" text="Garanti på delen: %d måneder endnu"/>
         <text name="rms_warranty_lease" text="Reparation ikke dækket ved leasing"/>
-        <text name="rms_warranty_expired" text="Garantien er udløbet"/>
-        <text name="rms_warranty_overdue" text="Afvist: forsinket vedligeholdelse"/>
-        <text name="rms_warranty_impact" text="Afvist: slagskade"/>
-        <text name="rms_warranty_options" text="Udskiftning med originale dele kræves"/>
+        <text name="rms_warranty_overdue" text="forsinket vedligeholdelse"/>
+        <text name="rms_warranty_impact" text="slagskade"/>
         <text name="rms_warranty_mobile" text="Du betaler ekstra arbejdsløn for mobilt værksted"/>
         <text name="rms_warranty_remapped" text="Garanti bortfaldet: motor optimeret"/>
-        <text name="rms_warranty_heat" text="Afvist: overophedning"/>
-        <text name="rms_warranty_low_level" text="Afvist: oliestand for lav"/>
-        <text name="rms_warranty_fuel_dry" text="Afvist: tank kørt tom"/>
-        <text name="rms_warranty_park_brake" text="Afvist: parkeringsbremse trukket"/>
-        <text name="rms_warranty_pto_engagement" text="Afvist: stød ved indkobling af PTO"/>
-        <text name="rms_warranty_stones" text="Afvist: sten indtaget"/>
-        <text name="rms_warranty_starter" text="Afvist: starter overbelastet"/>
-        <text name="rms_warranty_pto_angle" text="Afvist: for stor vinkel på kardanaksel"/>
-        <text name="rms_warranty_windup" text="Afvist: spærre eller 4WD på fast underlag"/>
-        <text name="rms_warranty_filter" text="Afvist: tilstoppet filter"/>
-        <text name="rms_warranty_trailer" text="Afvist: for tung vogn"/>
+        <text name="rms_warranty_heat" text="overophedning"/>
+        <text name="rms_warranty_low_level" text="oliestand for lav"/>
+        <text name="rms_warranty_fuel_dry" text="tank kørt tom"/>
+        <text name="rms_warranty_park_brake" text="parkeringsbremse trukket"/>
+        <text name="rms_warranty_pto_engagement" text="stød ved indkobling af PTO"/>
+        <text name="rms_warranty_stones" text="sten indtaget"/>
+        <text name="rms_warranty_starter" text="starter overbelastet"/>
+        <text name="rms_warranty_pto_angle" text="for stor vinkel på kardanaksel"/>
+        <text name="rms_warranty_windup" text="spærre eller 4WD på fast underlag"/>
+        <text name="rms_warranty_filter" text="tilstoppet filter"/>
+        <text name="rms_warranty_trailer" text="for tung vogn"/>
+        <text name="rms_warranty_aftermarket_part" text="uoriginal del"/>
+        <text name="rms_warranty_used_part" text="brugt del"/>
+        <text name="rms_warranty_imposed" text="Standard reparation med originale dele"/>
+        <text name="rms_warranty_partial_imposed" text="Dækket fejl repareret som Standard med originale dele"/>
         <text name="rms_ws_overhaul_row_systems" text="Behandlede systemer"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Genoprettet"/>
         <text name="rms_ws_overhaul_systems_one" text="Ét efter valg"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="En service udfører også denne fejlsøgning, som standardinspektionen."/>
         <text name="rms_ws_quote_title" text="Tilbudsdetaljer"/>
         <text name="rms_ws_quote_oil_filter" text="Oliefilter"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Den næste procedure faktureres særskilt. De nødvendige væsker leveres eller tages fra lageret, når den starter."/>
         <text name="rms_bodywork_touchup" text="Lakreparationer"/>
         <text name="rms_bodywork_full" text="Fuld omlakering"/>
         <text name="rms_bodywork_colors_title" text="Køretøjets farver"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="Den vender ikke tilbage med original software"/>
         <text name="rms_remap_free" text="Gratis"/>
         <text name="rms_remap_unavailable" text="Motoroptimering ikke tilgængelig"/>
-        <text name="rms_remap_refusal_dealer" text="Forhandleren optimerer ikke motorer."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="En tuner kommer til gården: brug gårdens værksted eller det mobile værksted."/>
+        <text name="rms_ws_overhaul_unavailable" text="Renovering ikke tilgængelig"/>
+        <text name="rms_remap_refusal_top" text="Allerede seriens største motor: kun en tuner går videre, i gårdens eller det mobile værksted."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Optimeret af en tuner: kun tuneren sætter den tilbage, i gårdens eller det mobile værksted."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Optimeret af forhandleren: kun forhandleren sætter den tilbage."/>
+        <text name="rms_remap_curves_maker" text="Kurver oplyst af producenten"/>
+        <text name="rms_remap_curves_dealer_measured" text="Forhandlerens rullefelt, før og efter"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Forhandleren gemmer den originale software"/>
         <text name="rms_remap_refusal_leased" text="En leaset maskine kan ikke optimeres."/>
         <text name="rms_remap_refusal_not_eligible" text="Denne motor har ingen programmerbar styreenhed."/>
         <text name="rms_remap_confirm_title" text="Optimere motoren?"/>

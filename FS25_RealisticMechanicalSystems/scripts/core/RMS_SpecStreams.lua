@@ -151,6 +151,7 @@ local function writeWearState(spec, streamId)
     streamWriteBool(streamId, spec.warrantyVoided)
     streamWriteUInt8(streamId, spec.remapMotor)
     streamWriteInt32(streamId, spec.remapAge)
+    streamWriteBool(streamId, spec.remapByDealer)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.conditionLevel, 1.0, 0.001, 1.0))
     streamWriteString(streamId, RMS_Utils.serializeSystemsState(spec.systems))
     streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.partWear))
@@ -168,6 +169,7 @@ local function readWearState(spec, streamId)
     spec.warrantyVoided = streamReadBool(streamId)
     spec.remapMotor = streamReadUInt8(streamId)
     spec.remapAge = streamReadInt32(streamId)
+    spec.remapByDealer = streamReadBool(streamId)
     spec.remapGain = nil
     spec.conditionLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001, 1.0)
     local loadedSystems = RMS_Utils.deserializeSystemsState(streamReadString(streamId))
@@ -216,13 +218,11 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
 
     -- [Group 1] State
     streamWriteString(streamId, spec.currentState or "")
-    streamWriteString(streamId, spec.plannedState or "")
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.maintenanceTimer, 0, 0))
 
     -- [Group 2] Service context
     streamWriteString(streamId, spec.serviceOptionOne or "")
     streamWriteString(streamId, spec.serviceOptionTwo or "")
-    streamWriteBool(streamId, spec.serviceOptionThree or false)
     streamWriteString(streamId, spec.workshopType or "")
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingServicePrice, 0, 0))
 
@@ -293,14 +293,12 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
 
     -- [Group 1] State
     spec.currentState = streamReadString(streamId)
-    spec.plannedState = streamReadString(streamId)
     spec.maintenanceTimer = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
     spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
 
     -- [Group 2] Service context
     spec.serviceOptionOne = streamReadString(streamId)
     spec.serviceOptionTwo = streamReadString(streamId)
-    spec.serviceOptionThree = streamReadBool(streamId)
     spec.workshopType = streamReadString(streamId)
     spec.pendingServicePrice = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
     if spec.serviceOptionOne == "" then spec.serviceOptionOne = nil end
@@ -410,7 +408,6 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
         -- [1] State
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.STATE) ~= 0) then
             streamWriteString(streamId, spec.currentState or "")
-            streamWriteString(streamId, spec.plannedState or "")
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.maintenanceTimer, 0, 0))
             VehiclePropertyState.writeStream(streamId, self.propertyState)
         end
@@ -419,7 +416,6 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.SERVICE_CONTEXT) ~= 0) then
             streamWriteString(streamId, spec.serviceOptionOne or "")
             streamWriteString(streamId, spec.serviceOptionTwo or "")
-            streamWriteBool(streamId, spec.serviceOptionThree or false)
             streamWriteString(streamId, spec.workshopType or "")
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingServicePrice, 0, 0))
         end
@@ -516,7 +512,6 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
         -- [1] State
         if streamReadBool(streamId) then
             spec.currentState = streamReadString(streamId)
-            spec.plannedState = streamReadString(streamId)
             spec.maintenanceTimer = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
             spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
             self.propertyState = VehiclePropertyState.readStream(streamId)
@@ -526,7 +521,6 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
         if streamReadBool(streamId) then
             spec.serviceOptionOne = streamReadString(streamId)
             spec.serviceOptionTwo = streamReadString(streamId)
-            spec.serviceOptionThree = streamReadBool(streamId)
             spec.workshopType = streamReadString(streamId)
             spec.pendingServicePrice = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
             if spec.serviceOptionOne == "" then spec.serviceOptionOne = nil end

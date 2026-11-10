@@ -168,10 +168,6 @@ local LOG_ENTRY_FIELDS = {
     entryText("location", "UNKNOWN"),
     entryText("optionOne", "NONE"),
     entryText("optionTwo", "NONE"),
-    {
-        write = function(entry) return tostring(entry.optionThree or false) end,
-        read = function(entry, _, raw) entry.optionThree = RMS_Utils.normalizeBoolValue(raw, false) end
-    },
     entryFlag("isVisible", true),
     entryFlag("isCompleted", true),
     conditionNumber("year", 0),
@@ -1465,12 +1461,13 @@ function RMS_Utils.formatPower(hp)
 end
 
 ---Names the first option of a service
-function RMS_Utils.formatServiceOption(vehicle, serviceType, optionOne)
+-- @param string? workshopType of a remap to come, nil for the software fitted
+function RMS_Utils.formatServiceOption(vehicle, serviceType, optionOne, workshopType)
     if serviceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
         return RMS_Utils.formatMaintenanceLevel(vehicle, optionOne)
     elseif serviceType == RealisticMechanicalSystems.STATUS.REMAP and vehicle.spec_motorized ~= nil then
         local stockHp = RMS_EngineRemap.getStockPeaks(vehicle)
-        local power = optionOne == RMS_EngineRemap.REMAP and stockHp * (1 + RMS_EngineRemap.getGain(vehicle)) or stockHp
+        local power = optionOne == RMS_EngineRemap.REMAP and stockHp * (1 + RMS_EngineRemap.getGain(vehicle, workshopType)) or stockHp
         return string.format("%s · %s", g_i18n:getText(optionOne), RMS_Utils.formatPower(power))
     end
     return g_i18n:getText(optionOne)
@@ -1596,13 +1593,6 @@ RMS_Utils.COLOR = {
     }
 }
 
-RMS_Utils.LOG_ICON_PROFILES = {
-    square = {row = "rms_logTypeIcon", detail = "rms_logDetailIcon"},
-    wide = {row = "rms_logTypeIconWide", detail = "rms_logDetailIconWide"},
-    maintenance = {row = "rms_logTypeIconMaintenance", detail = "rms_logDetailIconMaintenance"},
-    refill = {row = "rms_logTypeIconRefill", detail = "rms_logDetailIconRefill"}
-}
-
 ---Entries of the maintenance log the record shows, newest first
 function RMS_Utils.getVisibleLogEntries(vehicle)
     local log = vehicle.spec_RealisticMechanicalSystems.maintenanceLog
@@ -1653,24 +1643,24 @@ function RMS_Utils.getLogTypePresentation(entry)
     local entryType = entry ~= nil and entry.type or nil
 
     if entryType == status.REPAIR then
-        return g_i18n:getText("rms_ws_action_repair"), {0.88, 0.12, 0.12, 1}, "gui.contextAction_icon_repair", "wide"
+        return g_i18n:getText("rms_ws_action_repair"), {0.88, 0.12, 0.12, 1}, "gui.contextAction_icon_repair"
     elseif entryType == status.MAINTENANCE then
-        return g_i18n:getText("rms_ws_action_maintenance"), RMS_Utils.COLOR.HIGHLIGHT, "rms_Hud.maintenance", "maintenance"
+        return g_i18n:getText("rms_ws_action_maintenance"), RMS_Utils.COLOR.HIGHLIGHT, "rms_Hud.maintenance"
     elseif entryType == status.INSPECTION then
-        return g_i18n:getText("rms_ws_action_inspection"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_search", "square"
+        return g_i18n:getText("rms_ws_action_inspection"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_search"
     elseif entryType == status.OVERHAUL then
-        return g_i18n:getText("rms_ws_action_overhaul"), {1, 0.5, 0, 1}, "gui.icon_ingameMenu_options", "square"
+        return g_i18n:getText("rms_ws_action_overhaul"), {1, 0.5, 0, 1}, "gui.icon_ingameMenu_options"
     elseif entryType == status.REFILL then
-        return g_i18n:getText("rms_ws_action_refill"), RMS_Utils.COLOR.HIGHLIGHT, "rms_WorkshopFluids.engineOil", "refill"
+        return g_i18n:getText("rms_ws_action_refill"), RMS_Utils.COLOR.HIGHLIGHT, "rms_WorkshopFluids.engineOil"
     elseif entryType == status.BODYWORK then
-        return g_i18n:getText("rms_spec_state_bodywork"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_machines", "square"
+        return g_i18n:getText("rms_spec_state_bodywork"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_machines"
     elseif entryType == status.REMAP then
-        return g_i18n:getText("rms_spec_state_remap"), RMS_Utils.COLOR.HIGHLIGHT, "gui.storeAttribute_power", "square"
+        return g_i18n:getText("rms_spec_state_remap"), RMS_Utils.COLOR.HIGHLIGHT, "gui.storeAttribute_power"
     elseif entryType == RealisticMechanicalSystems.LOG_DIAGNOSTIC_READING then
-        return g_i18n:getText("rms_diagnostic_log_title"), {1, 1, 1, 1}, "rms_Diagnostic.stethoscope", "square"
+        return g_i18n:getText("rms_diagnostic_log_title"), {1, 1, 1, 1}, "rms_Diagnostic.stethoscope"
     end
 
-    return "-", {1, 1, 1, 1}, "gui.icon_ingameMenu_options", "square"
+    return "-", {1, 1, 1, 1}, "gui.icon_ingameMenu_options"
 end
 
 local function populateTextColumnsRow(items, index, cell, columns)
@@ -2129,8 +2119,8 @@ function RMS_Utils.getMarketValue(vehicle)
         hours * C.BASE_SYSTEMS_WEAR * C.MACHINE_LIFE_HOURS)
     local repaintPrice = (RMS_Bodywork.getPrice(vehicle, RMS_Bodywork.FULL, R.WORKSHOP.DEALER) or 0)
         * math.sqrt(vehicle:getWearTotalAmount())
-    local repairPrice = vehicle:getServicePrice(R.STATUS.REPAIR, R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM, false, R.WORKSHOP.DEALER, true)
-    local overhaulPrice = vehicle:getServicePrice(R.STATUS.OVERHAUL, R.OVERHAUL_TYPES.FULL, nil, false, R.WORKSHOP.DEALER)
+    local repairPrice = vehicle:getServicePrice(R.STATUS.REPAIR, R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM, R.WORKSHOP.DEALER, true)
+    local overhaulPrice = vehicle:getServicePrice(R.STATUS.OVERHAUL, R.OVERHAUL_TYPES.FULL, nil, R.WORKSHOP.DEALER)
     local deduction = math.min(repairPrice + R.getCatchUpPrice(vehicle, hours), overhaulPrice)
     return math.max(price * share - deduction - repaintPrice, price * 0.03)
 end
@@ -2176,6 +2166,45 @@ function RMS_Utils.getVehicleFacts(vehicle, isTracked, isDirectSell)
         third,
         { label = valueLabel, value = value ~= nil and g_i18n:formatMoney(value, 0, true, false) or "-", icon = RMS_Utils.getCurrencySlice() }
     }
+end
+
+-- slice width and height, larger side of its drawing, atlas pixels
+RMS_Utils.ICON_DRAWINGS = {
+    ["gui.icon_vehicleDealer_search"] = { 72, 72, 62 },
+    ["gui.icon_ingameMenu_options"] = { 72, 72, 59 },
+    ["gui.icon_vehicleDealer_machines"] = { 72, 72, 61 },
+    ["gui.storeAttribute_power"] = { 36, 36, 34 },
+    ["gui.contextAction_icon_repairAlert"] = { 64, 48, 39 },
+    ["gui.contextAction_icon_repair"] = { 64, 48, 42 },
+    ["gui.icon_construction_buildings"] = { 72, 72, 59 },
+    ["gui.icon_calendar"] = { 48, 48, 37 },
+    ["gui.icon_clock"] = { 48, 48, 34 },
+    ["gui.icon_ingameMenu_statistics"] = { 72, 72, 58 },
+    ["gui.storeAttribute_operatingHours"] = { 36, 36, 33 },
+    ["gui.storeAttribute_condition"] = { 36, 36, 31 },
+    ["ui_elements.currency_euro"] = { 48, 48, 38 },
+    ["ui_elements.currency_dollar"] = { 48, 48, 38 },
+    ["ui_elements.currency_pound"] = { 48, 48, 38 },
+    ["rms_Hud.maintenance"] = { 72, 72, 59 },
+    ["rms_WorkshopFluids.engineOil"] = { 128, 128, 111 },
+    ["rms_Diagnostic.stethoscope"] = { 160, 160, 142 }
+}
+-- share of its slot the drawing fills
+local ICON_FILL = 0.84
+-- most stretch of a slice: 1.1 times on a 1440 px screen
+local ICON_MAX_SCALE = 1.1 / 1440
+
+---Fits a pictogram so its drawing fills its slot like the others
+-- @param table element picture, its slot the size of its first fit
+function RMS_Utils.fitIcon(element)
+    local width, height, drawing = unpack(RMS_Utils.ICON_DRAWINGS[element.overlay.sliceId])
+    element.rmsIconSlot = element.rmsIconSlot or element.size[2]
+    local scale = math.min(ICON_FILL * element.rmsIconSlot / drawing, ICON_MAX_SCALE)
+    local newWidth, newHeight = width * scale * g_screenHeight / g_screenWidth, height * scale
+    -- the same centre, whatever the pivot
+    element:setPosition(element.position[1] + (newWidth - element.size[1]) * (element.pivot[1] - 0.5),
+        element.position[2] + (newHeight - element.size[2]) * (element.pivot[2] - 0.5))
+    element:setSize(newWidth, newHeight)
 end
 
 ---Writes the facts of a vehicle in rows cloned from one template

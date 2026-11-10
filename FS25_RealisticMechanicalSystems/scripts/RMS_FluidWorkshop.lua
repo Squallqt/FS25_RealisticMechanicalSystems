@@ -32,13 +32,16 @@ RMS_FluidWorkshop.RESULT_TEXT_KEYS = {
     MOBILE_DIAGNOSTIC = "rms_mobile_workshop_diagnostic_required",
     MOBILE_HEAVY_WORK = "rms_mobile_workshop_heavy_work_required",
     MOBILE_HIGH_VOLTAGE = "rms_mobile_workshop_high_voltage_required",
-    REMAP_DEALER = "rms_remap_refusal_dealer",
+    REMAP_TOP = "rms_remap_refusal_top",
+    REMAP_BY_TUNER = "rms_remap_refusal_restore_tuner",
+    REMAP_BY_DEALER = "rms_remap_refusal_restore_dealer",
     REMAP_LEASED = "rms_remap_refusal_leased",
     REMAP_NOT_ELIGIBLE = "rms_remap_refusal_not_eligible",
     INVALID = "rms_fluid_service_refused"
 }
 
-local REMAP_REFUSALS = { dealer = "REMAP_DEALER", leased = "REMAP_LEASED", notEligible = "REMAP_NOT_ELIGIBLE" }
+RMS_FluidWorkshop.REMAP_REFUSALS = { top = "REMAP_TOP", byTuner = "REMAP_BY_TUNER", byDealer = "REMAP_BY_DEALER", leased = "REMAP_LEASED",
+    notEligible = "REMAP_NOT_ELIGIBLE" }
 
 local function getIsBreakdownCoveredByRepair(breakdownId, breakdown, repairType)
     local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
@@ -66,23 +69,23 @@ local function collectCoveredRepairBreakdowns(vehicle, repairType)
 end
 
 ---Returns the share of a repair fluid the warranty does not supply
-function RMS_FluidWorkshop.getUncoveredFluidShare(vehicle, requirement, serviceType, workshopType, optionOne, optionTwo)
+function RMS_FluidWorkshop.getUncoveredFluidShare(vehicle, requirement, serviceType, workshopType)
     if serviceType ~= RealisticMechanicalSystems.STATUS.REPAIR then return 1 end
     local ids = requirement.breakdownIds or {}
-    if #ids == 0 then return vehicle:isWarrantyRepairCovered(optionOne, optionTwo, workshopType) and 0 or 1 end
+    if #ids == 0 then return vehicle:isWarrantyRepairCovered(workshopType) and 0 or 1 end
     local total, uncovered = 0, 0
     for _, id in ipairs(ids) do
         local debt = vehicle.spec_RealisticMechanicalSystems.fluidLeakLossDebt[id] or 0
         total = total + debt
-        if not vehicle:isWarrantyRepairCovered(optionOne, optionTwo, workshopType, id) then uncovered = uncovered + debt end
+        if not vehicle:isWarrantyRepairCovered(workshopType, id) then uncovered = uncovered + debt end
     end
     return total > 0 and uncovered / total or 0
 end
 
-local function getStockRequirements(vehicle, requirements, serviceType, workshopType, optionOne, optionTwo)
+local function getStockRequirements(vehicle, requirements, serviceType, workshopType)
     local result = {}
     for _, requirement in ipairs(requirements) do
-        local share = RMS_FluidWorkshop.getUncoveredFluidShare(vehicle, requirement, serviceType, workshopType, optionOne, optionTwo)
+        local share = RMS_FluidWorkshop.getUncoveredFluidShare(vehicle, requirement, serviceType, workshopType)
         if share > 0 then
             local line = RMS_Utils.shallowCopy(requirement)
             line.liters = requirement.liters * share
@@ -102,7 +105,7 @@ function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, worksho
     local workshops = RealisticMechanicalSystems.WORKSHOP
     if serviceType == RealisticMechanicalSystems.STATUS.REMAP then
         local isAllowed, refusal = RMS_EngineRemap.getAvailability(vehicle, workshopType, optionOne)
-        if refusal ~= nil then return false, REMAP_REFUSALS[refusal] end
+        if refusal ~= nil then return false, RMS_FluidWorkshop.REMAP_REFUSALS[refusal] end
         return isAllowed, not isAllowed and "INVALID" or nil
     end
     if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil
@@ -347,13 +350,18 @@ local function getIsFluidSupplied(vehicle, serviceType, workshopType)
 end
 
 ---Tells what a farm or mobile workshop zone lacks to run a service
-function RMS_FluidWorkshop.getStockShortages(vehicle, sellingPoint, serviceType, workshopType, requirements, optionOne, optionTwo)
-    if getIsFluidSupplied(vehicle, serviceType, workshopType) then
-        return {}
+-- @param table jobs in their order, each { serviceType, requirements, optionOne, optionTwo }
+function RMS_FluidWorkshop.getStockShortages(vehicle, sellingPoint, workshopType, jobs)
+    local lines = {}
+    for _, job in ipairs(jobs) do
+        if not getIsFluidSupplied(vehicle, job.serviceType, workshopType) then
+            for _, line in ipairs(getStockRequirements(vehicle, job.requirements, job.serviceType, workshopType)) do
+                table.insert(lines, line)
+            end
+        end
     end
     local _, shortages = RMS_FluidWorkshop.allocateStock(vehicle,
-        RMS_FluidWorkshop.findSellingPoint(vehicle, workshopType, sellingPoint), vehicle:getOwnerFarmId(),
-        getStockRequirements(vehicle, requirements, serviceType, workshopType, optionOne, optionTwo))
+        RMS_FluidWorkshop.findSellingPoint(vehicle, workshopType, sellingPoint), vehicle:getOwnerFarmId(), lines)
     return shortages
 end
 
@@ -412,7 +420,7 @@ function RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, opti
                 mode = requirement.mode,
                 liters = liters,
                 price = isFluidBilled and liters * RMS_FluidWorkshop.getUncoveredFluidShare(
-                    vehicle, requirement, serviceType, workshopType, optionOne, optionTwo) * getDealerPricePerLiter(requirement.circuit) or 0
+                    vehicle, requirement, serviceType, workshopType) * getDealerPricePerLiter(requirement.circuit) or 0
             })
         end
     end
@@ -420,28 +428,27 @@ function RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, opti
     return lines
 end
 
-local function getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
+local function getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo)
     if serviceType == RealisticMechanicalSystems.STATUS.REFILL then
         return 0
     end
-    return math.max(tonumber(vehicle:getServicePrice(serviceType, optionOne, optionTwo, optionThree, workshopType)) or 0, 0)
+    return math.max(tonumber(vehicle:getServicePrice(serviceType, optionOne, optionTwo, workshopType)) or 0, 0)
 end
 
-local function getIsFluidBilled(vehicle, serviceType, workshopType, optionOne, optionTwo)
+local function getIsFluidBilled(vehicle, serviceType, workshopType)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
-        and not (serviceType == RealisticMechanicalSystems.STATUS.REPAIR
-            and vehicle:isWarrantyRepairCovered(optionOne, optionTwo, workshopType))
+        and not (serviceType == RealisticMechanicalSystems.STATUS.REPAIR and vehicle:isWarrantyRepairCovered(workshopType))
         and not (serviceType == RealisticMechanicalSystems.STATUS.MAINTENANCE and vehicle:isLeaseMaintenanceCovered(workshopType))
 end
 
 ---Returns the displayed transaction price, dealer fluids included
-function RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
+function RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, optionOne, optionTwo)
     if vehicle == nil then
         return nil
     end
 
-    local servicePrice = getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
-    if not getIsFluidBilled(vehicle, serviceType, workshopType, optionOne, optionTwo) then
+    local servicePrice = getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo)
+    if not getIsFluidBilled(vehicle, serviceType, workshopType) then
         return servicePrice
     end
 
@@ -454,20 +461,56 @@ function RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopTyp
 end
 
 ---Returns the bill a service would charge, line by line
-function RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
+function RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopType, optionOne, optionTwo)
     local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, optionOne, optionTwo)
-    local isFluidBilled = getIsFluidBilled(vehicle, serviceType, workshopType, optionOne, optionTwo)
+    local isFluidBilled = getIsFluidBilled(vehicle, serviceType, workshopType)
     if isFluidBilled and RMS_FluidWorkshop.getDealerFluidPrice(requirements) == nil then
         return nil
     end
     return RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, optionOne, optionTwo,
-        getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree), requirements, isFluidBilled)
+        getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo), requirements, isFluidBilled)
+end
+
+-- warranty status of a repaired part, by reason
+local WARRANTY_STATUS = {
+    factory = "rms_ws_quote_warranty_covered", part = "rms_ws_quote_warranty_covered", used = "rms_ws_quote_warranty_used",
+    expired = "rms_ws_quote_warranty_expired", own = "rms_ws_quote_warranty_own", lease = "rms_ws_quote_warranty_lease",
+    remapped = "rms_ws_quote_warranty_remapped"
+}
+local WARRANTY_PAYS = { factory = true, part = true, used = true }
+-- reasons the warranty repairs the part for, its own way
+local COVERING = { factory = true, part = true }
+-- the warranty that repairs the part, named before its status
+local WARRANTY_LABELS = { factory = "rms_ws_quote_warranty_label_factory", part = "rms_ws_quote_warranty_label_part" }
+
+---Says what the warranty does for a repaired part
+-- @param string reason warranty reason of its line
+-- @param integer? monthsLeft months the fitted part stays covered
+-- @return string status words that follow the warranty label
+-- @return boolean isCovered true when the warranty pays for the part
+-- @return string label the warranty the status speaks of
+function RMS_FluidWorkshop.getWarrantyStatus(reason, monthsLeft)
+    local label = g_i18n:getText(WARRANTY_LABELS[reason] or "rms_ws_quote_warranty_label")
+    if RealisticMechanicalSystems.getIsWarrantyRefusal(reason) then
+        return string.format(g_i18n:getText("rms_ws_quote_warranty_refused"), g_i18n:getText("rms_warranty_" .. reason)), false, label
+    elseif reason == "part" and monthsLeft ~= nil then
+        return string.format(g_i18n:getText("rms_ws_quote_warranty_part"), monthsLeft), true, label
+    end
+    return g_i18n:getText(WARRANTY_STATUS[reason]), WARRANTY_PAYS[reason] == true, label
 end
 
 ---Lists the rows of a bill, the repairs of one part merged
 function RMS_FluidWorkshop.getInvoiceRows(vehicle, serviceType, optionOne, invoice, includeWarrantyNotes)
     local rows = {}
     local repairRowsByLabel = {}
+    -- beside paid parts, a part the warranty repairs says how it is repaired
+    local hasCovered, hasPaid = false, false
+    for _, line in ipairs(invoice) do
+        if line.kind == "repair" then
+            hasCovered = hasCovered or COVERING[line.warrantyReason] == true
+            hasPaid = hasPaid or COVERING[line.warrantyReason] == nil
+        end
+    end
     for _, line in ipairs(invoice) do
         local price = tonumber(line.price) or 0
         if line.kind == "service" then
@@ -481,20 +524,22 @@ function RMS_FluidWorkshop.getInvoiceRows(vehicle, serviceType, optionOne, invoi
             local breakdownDef = RMS_Breakdowns.BreakdownRegistry[line.key]
             local partKey = breakdownDef ~= nil and RMS_Utils.getBreakdownPartKey(vehicle, breakdownDef) or "rms_log_repair_desc_generic"
             local label = g_i18n:getText(partKey)
-            if line.warrantyReason == "factory" or line.warrantyReason == "part" then
-                label = label .. " (" .. g_i18n:getText("rms_ws_badge_warranty") .. ")"
-            elseif RealisticMechanicalSystems.getIsWarrantyRefusal(line.warrantyReason) then
-                label = label .. " (" .. g_i18n:getText("rms_warranty_" .. line.warrantyReason) .. ")"
+            if hasCovered and hasPaid and COVERING[line.warrantyReason] then
+                label = string.format("%s · %s · %s", label, g_i18n:getText(RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM),
+                    g_i18n:getText(RealisticMechanicalSystems.PART_TYPES.OEM))
             end
-            local rowKey = label .. (line.warrantyReason == "used" and "\0used" or "")
+            local rowKey = label .. "\0" .. (line.warrantyReason or "")
             if repairRowsByLabel[rowKey] ~= nil then
                 repairRowsByLabel[rowKey].price = repairRowsByLabel[rowKey].price + price
             else
                 repairRowsByLabel[rowKey] = { kind = line.kind, label = label, price = price,
                     warrantyReason = line.warrantyReason, breakdownId = line.key }
                 table.insert(rows, repairRowsByLabel[rowKey])
-                if includeWarrantyNotes and line.warrantyReason == "used" then
-                    table.insert(rows, {kind = "repair", label = g_i18n:getText("rms_warranty_used")})
+                -- an older log may keep a reason no longer given
+                local reason = line.warrantyReason
+                if includeWarrantyNotes and reason ~= nil and (WARRANTY_STATUS[reason] ~= nil or RealisticMechanicalSystems.getIsWarrantyRefusal(reason)) then
+                    local status, _, warrantyLabel = RMS_FluidWorkshop.getWarrantyStatus(line.warrantyReason)
+                    table.insert(rows, { kind = "repair", label = warrantyLabel .. " " .. status })
                 end
             end
         elseif line.kind == "fluid" then
@@ -510,7 +555,7 @@ function RMS_FluidWorkshop.getInvoiceRows(vehicle, serviceType, optionOne, invoi
 end
 
 ---Starts, consumes and charges one service as a single server transaction
-function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, workshopType, optionOne, optionTwo, optionThree, requestingFarmId)
+function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, workshopType, optionOne, optionTwo, requestingFarmId)
     if g_server == nil or vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
         return false, RMS_FluidWorkshop.RESULT.INVALID
     end
@@ -522,10 +567,6 @@ function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, w
     end
 
     if requestingFarmId ~= nil and requestingFarmId ~= vehicle:getOwnerFarmId() then
-        return false, RMS_FluidWorkshop.RESULT.SERVICE_REFUSED
-    end
-
-    if serviceType == RealisticMechanicalSystems.STATUS.OVERHAUL and optionThree == true then
         return false, RMS_FluidWorkshop.RESULT.SERVICE_REFUSED
     end
 
@@ -553,7 +594,7 @@ function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, w
     local farmId = vehicle:getOwnerFarmId()
     local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, optionOne, optionTwo)
     local allocations = {}
-    local isFluidBilled = getIsFluidBilled(vehicle, serviceType, workshopType, optionOne, optionTwo)
+    local isFluidBilled = getIsFluidBilled(vehicle, serviceType, workshopType)
 
     if getIsFluidSupplied(vehicle, serviceType, workshopType) then
         if isFluidBilled then
@@ -563,13 +604,13 @@ function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, w
         end
     else
         allocations = RMS_FluidWorkshop.allocateStock(vehicle, sellingPoint, farmId,
-            getStockRequirements(vehicle, requirements, serviceType, workshopType, optionOne, optionTwo))
+            getStockRequirements(vehicle, requirements, serviceType, workshopType))
         if allocations == nil then
             return false, RMS_FluidWorkshop.RESULT.STOCK_INSUFFICIENT
         end
     end
 
-    local servicePrice = getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
+    local servicePrice = getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo)
     local totalPrice = 0
     local invoice = RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, optionOne, optionTwo,
         servicePrice, requirements, isFluidBilled)
@@ -586,7 +627,7 @@ function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, w
         end
     end
 
-    local started = vehicle:initService(serviceType, workshopType, optionOne, optionTwo, optionThree)
+    local started = vehicle:initService(serviceType, workshopType, optionOne, optionTwo)
     if not started then
         for container in pairs(touched) do
             container:endRMSFluidTransaction(false)

@@ -645,8 +645,6 @@ RMS_Config = {
             FULL     = 2.0,
         },
 
-        REPAINT_TIME = 8 * 3600000,
-
         INSPECTION_DETECTION_CHANCE_MULTIPLIERS = {
             STANDARD = 1.0,
             VISUAL   = 0.8,

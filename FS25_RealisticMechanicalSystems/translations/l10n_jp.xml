@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="入念なメンテナンス"/>
         <text name="rms_owner_care_regular" text="定期的なメンテナンス"/>
         <text name="rms_owner_care_neglected" text="不十分なメンテナンス"/>
+        <text name="rms_ws_label_maintenance_count" text="メンテナンス回数"/>
         <text name="rms_ws_label_overhaul_count" text="オーバーホール回数"/>
         <text name="rms_ws_label_maintenance_log" text="メンテナンス履歴"/>
         <text name="rms_ws_label_last_maintenance" text="前回のメンテナンス"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="フィルター"/>
         <text name="rms_log_cancelled_desc" text="作業キャンセル"/>
         <text name="rms_log_ownership_months_title" text="保有期間"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="車両再塗装"/>
         <text name="rms_log_average_breakdowns_interval_title" text="平均故障間隔"/>
         <text name="rms_log_average_maintenance_interval_title" text="平均メンテナンス間隔"/>
         <text name="rms_log_performed" text="実施作業：%s（%s）"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="今月"/>
         <text name="rms_spec_tomorrow_at" text="明日 "/>
         <text name="rms_spec_never" text="なし"/>
-        <text name="rms_spec_next_planned_service_notification" text="予約作業を開始：%s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="資金不足のため予約作業をキャンセル：%s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="予約作業（%s）を開始できませんでした：%s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="明後日 "/>
         <text name="rms_spec_day_s" text="日"/>
         <text name="rms_spec_day_one" text="日"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="消耗品の品質"/>
         <text name="rms_option_menu_option_two_title_repair" text="交換部品の品質"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="オーバーホール対象システム"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="この作業で故障が見つかった場合、純正部品を使用する標準修理を自動的に続けて実施します。"/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="修理後、純正消耗品を使用する推奨整備を自動的に続けて実施します。"/>
         <text name="rms_option_menu_price_text" text="価格"/>
-        <text name="rms_option_menu_perform_repair" text="自動修理"/>
-        <text name="rms_option_menu_perform_maintenance" text="自動メンテナンス"/>
         <text name="rms_option_menu_warranty_repair_text" text="保証修理"/>
         <text name="rms_option_menu_lease_service_text" text="リース料に含まれます"/>
         <text name="rms_option_menu_duration_text" text="所要時間"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="保証なし"/>
         <text name="rms_ws_quality_oem_warranty" text="12か月保証"/>
         <text name="rms_ws_quality_factory_warranty" text="工場保証"/>
-        <text name="rms_warranty_used" text="解体業者保証：部品のみ"/>
+        <text name="rms_ws_quality_part_warranty" text="保証残り%dか月"/>
         <text name="rms_ws_quality_delta" text="純正比 %s"/>
         <text name="rms_ws_repair_row_faults" text="対象の故障"/>
         <text name="rms_ws_repair_row_faults_detail" text="選択した故障のうち"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="下のカードで選択"/>
         <text name="rms_ws_repair_quality_choice" text="選択可"/>
         <text name="rms_ws_warranty_title" text="保証"/>
+        <text name="rms_ws_quote_warranty_label" text="保証："/>
+        <text name="rms_ws_quote_warranty_label_factory" text="工場保証："/>
+        <text name="rms_ws_quote_warranty_label_part" text="部品保証："/>
+        <text name="rms_ws_quote_warranty_covered" text="対象"/>
+        <text name="rms_ws_quote_warranty_part" text="対象、残り%dか月"/>
+        <text name="rms_ws_quote_warranty_used" text="部品のみ対象"/>
+        <text name="rms_ws_quote_warranty_expired" text="期間終了"/>
+        <text name="rms_ws_quote_warranty_own" text="個人ワークショップでは対象外"/>
+        <text name="rms_ws_quote_warranty_lease" text="リース車両は対象外"/>
+        <text name="rms_ws_quote_warranty_remapped" text="失効（エンジン書き換え済み）"/>
+        <text name="rms_ws_quote_warranty_refused" text="対象外（%s）"/>
         <text name="rms_ws_warranty_covered" text="対象"/>
         <text name="rms_ws_warranty_not_covered" text="対象外"/>
         <text name="rms_ws_warranty_terms" text="工場保証：%dか月または%s h"/>
+        <text name="rms_ws_warranty_refused" text="対象外：%s"/>
         <text name="rms_ws_badge_warranty" text="保証"/>
         <text name="rms_warranty_base" text="%dか月または%s h（含まれます）"/>
         <text name="rms_warranty_extension" text="%dか月または%s h"/>
         <text name="rms_warranty_partial" text="一部対象"/>
         <text name="rms_warranty_own" text="個人ワークショップでは保証対象外"/>
-        <text name="rms_warranty_factory" text="純正部品と工賃が保証対象"/>
-        <text name="rms_warranty_part" text="車齢%dか月まで部品を保証"/>
+        <text name="rms_warranty_part" text="部品保証：残り%dか月"/>
         <text name="rms_warranty_lease" text="リース車両の修理は保証対象外"/>
-        <text name="rms_warranty_expired" text="保証期間終了"/>
-        <text name="rms_warranty_overdue" text="対象外：メンテナンス期限超過"/>
-        <text name="rms_warranty_impact" text="対象外：衝突による損傷"/>
-        <text name="rms_warranty_options" text="純正部品への交換が必要"/>
+        <text name="rms_warranty_overdue" text="メンテナンス期限超過"/>
+        <text name="rms_warranty_impact" text="衝突による損傷"/>
         <text name="rms_warranty_mobile" text="移動式ワークショップの追加工賃は自己負担"/>
         <text name="rms_warranty_remapped" text="保証失効：エンジン書き換え済み"/>
-        <text name="rms_warranty_heat" text="対象外：オーバーヒート"/>
-        <text name="rms_warranty_low_level" text="対象外：オイル量不足"/>
-        <text name="rms_warranty_fuel_dry" text="対象外：燃料切れ"/>
-        <text name="rms_warranty_park_brake" text="対象外：駐車ブレーキ作動中の走行"/>
-        <text name="rms_warranty_pto_engagement" text="対象外：PTO接続時のショック"/>
-        <text name="rms_warranty_stones" text="対象外：石の巻き込み"/>
-        <text name="rms_warranty_starter" text="対象外：スターターの過度な使用"/>
-        <text name="rms_warranty_pto_angle" text="対象外：PTOシャフト角度過大"/>
-        <text name="rms_warranty_windup" text="対象外：硬い路面でのデフロック・4駆"/>
-        <text name="rms_warranty_filter" text="対象外：フィルターの目詰まり"/>
-        <text name="rms_warranty_trailer" text="対象外：トレーラーの過積載"/>
+        <text name="rms_warranty_heat" text="オーバーヒート"/>
+        <text name="rms_warranty_low_level" text="オイル量不足"/>
+        <text name="rms_warranty_fuel_dry" text="燃料切れ"/>
+        <text name="rms_warranty_park_brake" text="駐車ブレーキ作動中の走行"/>
+        <text name="rms_warranty_pto_engagement" text="PTO接続時のショック"/>
+        <text name="rms_warranty_stones" text="石の巻き込み"/>
+        <text name="rms_warranty_starter" text="スターターの過度な使用"/>
+        <text name="rms_warranty_pto_angle" text="PTOシャフト角度過大"/>
+        <text name="rms_warranty_windup" text="硬い路面でのデフロック・4駆"/>
+        <text name="rms_warranty_filter" text="フィルターの目詰まり"/>
+        <text name="rms_warranty_trailer" text="トレーラーの過積載"/>
+        <text name="rms_warranty_aftermarket_part" text="社外品部品"/>
+        <text name="rms_warranty_used_part" text="中古部品"/>
+        <text name="rms_warranty_imposed" text="純正部品での標準修理"/>
+        <text name="rms_warranty_partial_imposed" text="保証対象の故障は純正部品で標準修理"/>
         <text name="rms_ws_overhaul_row_systems" text="対象システム"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="整備して回復"/>
         <text name="rms_ws_overhaul_systems_one" text="一つを選択"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="メンテナンスでも、標準点検と同じくこの故障探索を行います。"/>
         <text name="rms_ws_quote_title" text="見積明細"/>
         <text name="rms_ws_quote_oil_filter" text="オイルフィルター"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="次の作業は別途請求されます。必要な油水類は作業開始時に供給されるか、在庫から使用されます。"/>
         <text name="rms_bodywork_touchup" text="塗装の補修"/>
         <text name="rms_bodywork_full" text="全面再塗装"/>
         <text name="rms_bodywork_colors_title" text="車両の色"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="純正ソフトに戻しても保証は復活しません"/>
         <text name="rms_remap_free" text="無料"/>
         <text name="rms_remap_unavailable" text="エンジン書き換え不可"/>
-        <text name="rms_remap_refusal_dealer" text="販売店ではエンジンの書き換えを行いません。"/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="チューナーが農場を訪問します。農場のワークショップか移動式ワークショップから依頼してください。"/>
+        <text name="rms_ws_overhaul_unavailable" text="オーバーホール不可"/>
+        <text name="rms_remap_refusal_top" text="シリーズ最強です。これを超える書き換えはチューナーのみです。"/>
+        <text name="rms_remap_refusal_restore_tuner" text="チューナーの書き換えです。戻しはチューナーが行います。"/>
+        <text name="rms_remap_refusal_restore_dealer" text="販売店が書き換えました。純正への戻しは販売店で行います。"/>
+        <text name="rms_remap_curves_maker" text="メーカーが提示する性能曲線"/>
+        <text name="rms_remap_curves_dealer_measured" text="販売店の測定台による施工前後の測定"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="販売店が純正ソフトを保管"/>
         <text name="rms_remap_refusal_leased" text="リース機械は書き換えできません。"/>
         <text name="rms_remap_refusal_not_eligible" text="このエンジンには書き換え可能な制御装置がありません。"/>
         <text name="rms_remap_confirm_title" text="エンジンを書き換えますか？"/>

@@ -14,8 +14,8 @@
                     <Text profile="rms_workshopVehicleBrand" id="diagnosticVehicleBrand" position="20px -16px" size="272px 22px" />
                     <Text profile="rms_workshopVehicleModel" id="diagnosticVehicleName" position="20px -38px" size="272px 62px" />
                     <Text profile="rms_workshopCenteredDetail" position="20px -366px" size="272px 26px" text="$l10n_rms_ws_label_last_check" />
-                    <RoundCorner profile="rms_workshopValuePillCentered" position="56px -396px" size="199px 30px" />
-                    <Text profile="rms_workshopPillValue" id="diagnosticLastInspection" position="68px -396px" size="175px 30px" />
+                    <RoundCorner profile="rms_workshopValuePillCentered" position="38px -396px" size="236px 30px" />
+                    <Text profile="rms_workshopPillValue" id="diagnosticLastInspection" position="50px -396px" size="212px 30px" />
 
                     <BoxLayout profile="rms_workshopStack" position="20px -450px" size="272px 96px" elementSpacing="8px">
                         <GuiElement profile="rms_workshopReadingRow" id="readingRowTemplate">
@@ -37,7 +37,7 @@
                     </GuiElement>
                     <GuiElement profile="rms_workshopBlock" id="breakdownInfoRow" position="20px -60px" size="705px 44px">
                         <BoxLayout profile="rms_workshopInfoGroup" size="705px 44px">
-                            <Bitmap profile="rms_workshopIcon" imageSliceId="gui.storeAttribute_info" />
+                            <Bitmap profile="rms_workshopIcon" size="30px 30px" imageSliceId="gui.storeAttribute_info" />
                             <Text profile="rms_workshopInfoText" size="0px 26px" text="$l10n_rms_ws_info_inspection_reveals" />
                         </BoxLayout>
                     </GuiElement>
@@ -64,7 +64,7 @@
                         </ThreePartBitmap>
                     </GuiElement>
                     <GuiElement profile="rms_workshopBlock" id="breakdownEmptyPanel" size="745px 566px" visible="false">
-                        <Bitmap profile="rms_workshopIcon" position="336.5px -207px" size="72px 72px" imageSliceId="gui.icon_vehicleDealer_search" />
+                        <Bitmap profile="rms_workshopIcon" id="breakdownEmptyIcon" position="343.5px -214px" size="58px 58px" imageSliceId="gui.icon_vehicleDealer_search" />
                         <Text profile="rms_workshopTitle" id="breakdownEmptyTitle" position="20px -303px" size="705px 36px" textAlignment="center" text="$l10n_rms_ws_faults_none_title" />
                         <Text profile="rms_workshopCenteredDetail" id="breakdownEmptyHint" position="112.5px -347px" size="520px 40px" text="$l10n_rms_ws_faults_none_hint" />
                     </GuiElement>

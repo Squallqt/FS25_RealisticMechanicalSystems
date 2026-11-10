@@ -215,6 +215,18 @@
     <rmsBatteryCharger maxCurrent="150" display="chargerDisplay">
         <sounds>
             <work file="objects/batteryCharger/chargerHum.ogg" linkNode="0&gt;" loops="0" volumeScale="1" innerRadius="2" outerRadius="12" fadeIn="0.3" fadeOut="0.3" />
+            <connect file="sounds/jumperCablesConnect.ogg" linkNode="0&gt;" innerRadius="1.0" outerRadius="30.0">
+                <volume indoor="1.0" outdoor="1.0" />
+                <lowpassGain indoor="0.50" outdoor="1.00" />
+                <lowpassCutoffFrequency indoor="250.0" outdoor="20000.0" />
+                <lowpassResonance indoor="1.0" outdoor="1.0" />
+            </connect>
+            <disconnect file="sounds/jumperCablesDisconnect.ogg" linkNode="0&gt;" innerRadius="1.0" outerRadius="30.0">
+                <volume indoor="1.0" outdoor="1.0" />
+                <lowpassGain indoor="0.50" outdoor="1.00" />
+                <lowpassCutoffFrequency indoor="250.0" outdoor="20000.0" />
+                <lowpassResonance indoor="1.0" outdoor="1.0" />
+            </disconnect>
         </sounds>
     </rmsBatteryCharger>
     <rmsDiagnosticTool>

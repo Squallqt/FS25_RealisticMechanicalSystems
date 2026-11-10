@@ -215,9 +215,9 @@ RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
     harvestRiceFactor = "hrf", harvestWetFactor = "hwf"
 }
 
--- warranty refusals for a part an abuse wore; the index is saved
+-- refused parts: abused, or fitted not new original; index saved
 RealisticMechanicalSystems.WARRANTY_ABUSES = { "impact", "heat", "low_level", "fuel_dry", "park_brake", "pto_engagement",
-    "stones", "starter", "pto_angle", "windup", "filter", "trailer" }
+    "stones", "starter", "pto_angle", "windup", "filter", "trailer", "aftermarket_part", "used_part" }
 RealisticMechanicalSystems.WARRANTY_ABUSE = {}
 for code, reason in ipairs(RealisticMechanicalSystems.WARRANTY_ABUSES) do
     RealisticMechanicalSystems.WARRANTY_ABUSE[reason] = code
@@ -650,9 +650,9 @@ local function getSyncGroups()
     end
 
     syncGroups = {
-        { group = GROUP.STATE, watches = { watch("currentState"), watch("plannedState"), watch("maintenanceTimer", 1.0) } },
+        { group = GROUP.STATE, watches = { watch("currentState"), watch("maintenanceTimer", 1.0) } },
         { group = GROUP.SERVICE_CONTEXT, watches = {
-            watch("serviceOptionOne"), watch("serviceOptionTwo"), watch("serviceOptionThree"), watch("workshopType") } },
+            watch("serviceOptionOne"), watch("serviceOptionTwo"), watch("workshopType") } },
         { group = GROUP.TELEMETRY, watches = {
             watch(getSyncOperatingTime, 60000.0), watchNumber("realOperatingTime", 0, 60000.0), watch("_fuelUsageRaw", 0.3),
             watchNumber("dynamicMotorLoad", 0, 0.01), watchNumber("wheelSlipIntensity", 0, 0.01), watch("liftedMass", 10.0) } },
@@ -669,7 +669,7 @@ local function getSyncGroups()
         { group = GROUP.WEAR, watches = {
             watch("serviceLevel", 0.001), watch("transmissionServiceLevel", 0.001), watch("coolantServiceLevel", 0.001),
             watch("hydraulicServiceLevel", 0.001), mapText("serviceCalendar"), mapText("partWarranty"), mapText("usedPartWarranty"),
-            watch("warrantyPlan"), watch("warrantyVoided"), watch("remapMotor"), watch("remapAge"), watch("conditionLevel", 0.001),
+            watch("warrantyPlan"), watch("warrantyVoided"), watch("remapMotor"), watch("remapAge"), watch("remapByDealer"), watch("conditionLevel", 0.001),
             watch("ptoEngagementSequence"), watch("ptoShockSequence"), watch("ptoRaisedTooLong"),
             { read = readSystemsSync, hasMoved = haveSystemsMoved } } },
         { group = GROUP.BREAKDOWNS, watches = {
@@ -820,10 +820,10 @@ local SAVEGAME_ATTRIBUTES = {
     { "warrantyVoided", "BOOL", "Warranty lost to an engine remap" },
     { "remapMotor", "INT", "Engine configuration remapped, 0 on stock software" },
     { "remapAge", "INT", "Machine age in months at the remap" },
+    { "remapByDealer", "BOOL", "Remap by the dealer, factory software" },
     { "condition", "FLOAT", "Overall condition of the machine" },
     { "breakdowns", "STRING", "Breakdowns on the machine, encoded" },
     { "state", "STRING", "Service under way, ready when none" },
-    { "plannedState", "STRING", "Service ordered next" },
     { "maintenanceTimer", "FLOAT", "Time left of the running service, in ms" },
     { "realOperatingTime", "FLOAT", "Working time counted by RMS, in ms" },
     { "engineTemperature", "FLOAT", "Engine coolant temperature, in degrees" },
@@ -862,7 +862,6 @@ local SAVEGAME_ATTRIBUTES = {
     { "transmissionThermostatState", "FLOAT", "Opening of the transmission oil thermostat, 0 to 1" },
     { "serviceOptionOne", "STRING", "First choice of the running service" },
     { "serviceOptionTwo", "STRING", "Second choice of the running service" },
-    { "serviceOptionThree", "BOOL", "Third choice of the running service" },
     { "workshopType", "STRING", "Workshop doing the running service" },
     { "pendingSelectedBreakdowns", "STRING", "Breakdowns the running service repairs" },
     { "pendingServicePrice", "FLOAT", "Price of the running service" },
@@ -896,7 +895,6 @@ local LOG_ENTRY_ATTRIBUTES = {
     { "location", "STRING", "Workshop of the service" },
     { "optionOne", "STRING", "First choice of the service" },
     { "optionTwo", "STRING", "Second choice of the service" },
-    { "optionThree", "BOOL", "Third choice of the service" },
     { "isVisible", "STRING", "Whether the record shows the entry" },
     { "isCompleted", "BOOL", "Whether the service ran to its end" },
     { "invoice", "STRING", "Invoice Lines" }
@@ -1133,7 +1131,7 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getMaintenanceTypes", RealisticMechanicalSystems.getMaintenanceTypes)
     SpecializationUtil.registerFunction(vehicleType, "getMaintenanceLevelInterval", RealisticMechanicalSystems.getMaintenanceLevelInterval)
     SpecializationUtil.registerFunction(vehicleType, "getLastServiceOptions", RealisticMechanicalSystems.getLastServiceOptions)
-    SpecializationUtil.registerFunction(vehicleType, "getOverhaulPerformedCount", RealisticMechanicalSystems.getOverhaulPerformedCount)
+    SpecializationUtil.registerFunction(vehicleType, "getPerformedServiceCount", RealisticMechanicalSystems.getPerformedServiceCount)
     
 end
 
@@ -1482,7 +1480,7 @@ local function initializeNewToRMS(vehicle, spec)
     if (not isUsed or isMission) and (spec.maintenanceLog == nil or #spec.maintenanceLog == 0) then
         local TYPES = RealisticMechanicalSystems.INSPECTION_TYPES
         vehicle:addEntryToMaintenanceLog(RealisticMechanicalSystems.STATUS.INSPECTION, isMission and TYPES.STANDARD or TYPES.COMPLETE,
-            "NONE", false, 0)
+            "NONE", 0)
     end
 end
 

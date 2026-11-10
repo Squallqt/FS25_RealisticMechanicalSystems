@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Zorgvuldig onderhoud"/>
         <text name="rms_owner_care_regular" text="Regelmatig onderhoud"/>
         <text name="rms_owner_care_neglected" text="Verwaarloosd onderhoud"/>
+        <text name="rms_ws_label_maintenance_count" text="Uitgevoerde onderhoudsbeurten"/>
         <text name="rms_ws_label_overhaul_count" text="Uitgevoerde revisies"/>
         <text name="rms_ws_label_maintenance_log" text="Onderhoudslogboek"/>
         <text name="rms_ws_label_last_maintenance" text="Laatste onderhoud"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Filters"/>
         <text name="rms_log_cancelled_desc" text="Procedure geannuleerd"/>
         <text name="rms_log_ownership_months_title" text="Bezitstijd"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Voertuig opnieuw gespoten"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Gemiddeld storingsinterval"/>
         <text name="rms_log_average_maintenance_interval_title" text="Gemiddeld onderhoudsinterval"/>
         <text name="rms_log_performed" text="Procedure uitgevoerd: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="Deze maand"/>
         <text name="rms_spec_tomorrow_at" text="morgen om "/>
         <text name="rms_spec_never" text="Nooit"/>
-        <text name="rms_spec_next_planned_service_notification" text="Geplande procedure gestart: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Geplande procedure geannuleerd wegens onvoldoende geld: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="De geplande procedure (%s) is niet gestart: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="overmorgen om "/>
         <text name="rms_spec_day_s" text="dagen"/>
         <text name="rms_spec_day_one" text="dag"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Kwaliteit verbruiksmaterialen"/>
         <text name="rms_option_menu_option_two_title_repair" text="Kwaliteit reserveonderdelen"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Te reviseren systeem"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Als de procedure storingen ontdekt, volgt automatisch een standaardreparatie met originele onderdelen."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Na de reparatie volgt automatisch het aanbevolen onderhoud met originele verbruiksmaterialen."/>
         <text name="rms_option_menu_price_text" text="Prijs"/>
-        <text name="rms_option_menu_perform_repair" text="Automatische reparatie"/>
-        <text name="rms_option_menu_perform_maintenance" text="Automatisch onderhoud"/>
         <text name="rms_option_menu_warranty_repair_text" text="Garantiereparatie"/>
         <text name="rms_option_menu_lease_service_text" text="Inbegrepen in de huur"/>
         <text name="rms_option_menu_duration_text" text="Duur"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="Geen garantie"/>
         <text name="rms_ws_quality_oem_warranty" text="12 maanden garantie"/>
         <text name="rms_ws_quality_factory_warranty" text="Fabrieksgarantie"/>
-        <text name="rms_warranty_used" text="Sloperijgarantie: alleen onderdeel"/>
+        <text name="rms_ws_quality_part_warranty" text="Garantie nog %d maanden"/>
         <text name="rms_ws_quality_delta" text="%s t.o.v. origineel"/>
         <text name="rms_ws_repair_row_faults" text="Behandelde storingen"/>
         <text name="rms_ws_repair_row_faults_detail" text="Van de aangevinkte"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Gekozen op de kaarten hieronder"/>
         <text name="rms_ws_repair_quality_choice" text="Naar keuze"/>
         <text name="rms_ws_warranty_title" text="Garantie"/>
+        <text name="rms_ws_quote_warranty_label" text="Garantie:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Fabrieksgarantie:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Onderdeelgarantie:"/>
+        <text name="rms_ws_quote_warranty_covered" text="gedekt"/>
+        <text name="rms_ws_quote_warranty_part" text="gedekt, nog %d maanden"/>
+        <text name="rms_ws_quote_warranty_used" text="alleen onderdeel gedekt"/>
+        <text name="rms_ws_quote_warranty_expired" text="verlopen"/>
+        <text name="rms_ws_quote_warranty_own" text="niet gedekt in de eigen werkplaats"/>
+        <text name="rms_ws_quote_warranty_lease" text="niet gedekt bij huur"/>
+        <text name="rms_ws_quote_warranty_remapped" text="vervallen, motor getuned"/>
+        <text name="rms_ws_quote_warranty_refused" text="geweigerd, %s"/>
         <text name="rms_ws_warranty_covered" text="Geldig"/>
         <text name="rms_ws_warranty_not_covered" text="Niet geldig"/>
         <text name="rms_ws_warranty_terms" text="Fabriek: %d maanden of %s h"/>
+        <text name="rms_ws_warranty_refused" text="Geweigerd: %s"/>
         <text name="rms_ws_badge_warranty" text="Garantie"/>
         <text name="rms_warranty_base" text="%d maanden of %s h (inbegrepen)"/>
         <text name="rms_warranty_extension" text="%d maanden of %s h"/>
         <text name="rms_warranty_partial" text="Gedeeltelijk gedekt"/>
         <text name="rms_warranty_own" text="Niet gedekt in de eigen werkplaats"/>
-        <text name="rms_warranty_factory" text="Originele onderdelen en arbeidsloon gedekt"/>
-        <text name="rms_warranty_part" text="Onderdeel gedekt tot machineleeftijd %d maanden"/>
+        <text name="rms_warranty_part" text="Onderdeelgarantie: nog %d maanden"/>
         <text name="rms_warranty_lease" text="Reparatie niet gedekt bij huur"/>
-        <text name="rms_warranty_expired" text="Garantie verlopen"/>
-        <text name="rms_warranty_overdue" text="Geweigerd: onderhoud achterstallig"/>
-        <text name="rms_warranty_impact" text="Geweigerd: botsschade"/>
-        <text name="rms_warranty_options" text="Vervanging door originele onderdelen vereist"/>
+        <text name="rms_warranty_overdue" text="onderhoud achterstallig"/>
+        <text name="rms_warranty_impact" text="botsschade"/>
         <text name="rms_warranty_mobile" text="Je betaalt het extra arbeidsloon van de mobiele werkplaats"/>
         <text name="rms_warranty_remapped" text="Garantie vervallen: motor getuned"/>
-        <text name="rms_warranty_heat" text="Geweigerd: oververhitting"/>
-        <text name="rms_warranty_low_level" text="Geweigerd: oliepeil te laag"/>
-        <text name="rms_warranty_fuel_dry" text="Geweigerd: tank leeggereden"/>
-        <text name="rms_warranty_park_brake" text="Geweigerd: parkeerrem aangetrokken"/>
-        <text name="rms_warranty_pto_engagement" text="Geweigerd: inschakelschok aftakas"/>
-        <text name="rms_warranty_stones" text="Geweigerd: stenen opgenomen"/>
-        <text name="rms_warranty_starter" text="Geweigerd: startmotor overbelast"/>
-        <text name="rms_warranty_pto_angle" text="Geweigerd: hoek aftakas te groot"/>
-        <text name="rms_warranty_windup" text="Geweigerd: slot of 4WD op harde grond"/>
-        <text name="rms_warranty_filter" text="Geweigerd: verstopt filter"/>
-        <text name="rms_warranty_trailer" text="Geweigerd: aanhanger te zwaar"/>
+        <text name="rms_warranty_heat" text="oververhitting"/>
+        <text name="rms_warranty_low_level" text="oliepeil te laag"/>
+        <text name="rms_warranty_fuel_dry" text="tank leeggereden"/>
+        <text name="rms_warranty_park_brake" text="parkeerrem aangetrokken"/>
+        <text name="rms_warranty_pto_engagement" text="inschakelschok aftakas"/>
+        <text name="rms_warranty_stones" text="stenen opgenomen"/>
+        <text name="rms_warranty_starter" text="startmotor overbelast"/>
+        <text name="rms_warranty_pto_angle" text="hoek aftakas te groot"/>
+        <text name="rms_warranty_windup" text="slot of 4WD op harde grond"/>
+        <text name="rms_warranty_filter" text="verstopt filter"/>
+        <text name="rms_warranty_trailer" text="aanhanger te zwaar"/>
+        <text name="rms_warranty_aftermarket_part" text="aftermarket onderdeel"/>
+        <text name="rms_warranty_used_part" text="gebruikt onderdeel"/>
+        <text name="rms_warranty_imposed" text="Standaard reparatie met originele onderdelen"/>
+        <text name="rms_warranty_partial_imposed" text="Gedekte storing hersteld als Standaard met originele onderdelen"/>
         <text name="rms_ws_overhaul_row_systems" text="Behandelde systemen"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Hersteld"/>
         <text name="rms_ws_overhaul_systems_one" text="Eén naar keuze"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="Een onderhoudsbeurt zoekt ook naar storingen, zoals de standaardinspectie."/>
         <text name="rms_ws_quote_title" text="Offertedetails"/>
         <text name="rms_ws_quote_oil_filter" text="Oliefilter"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="De volgende procedure wordt afzonderlijk gefactureerd. De vereiste vloeistoffen worden bij de start geleverd of uit voorraad genomen."/>
         <text name="rms_bodywork_touchup" text="Lak bijwerken"/>
         <text name="rms_bodywork_full" text="Volledig opnieuw spuiten"/>
         <text name="rms_bodywork_colors_title" text="Voertuigkleuren"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="Komt niet terug met de originele software"/>
         <text name="rms_remap_free" text="Gratis"/>
         <text name="rms_remap_unavailable" text="Motortuning niet beschikbaar"/>
-        <text name="rms_remap_refusal_dealer" text="De dealer tunet geen motoren."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Een tuner komt naar de boerderij: gebruik de boerderijwerkplaats of de mobiele werkplaats."/>
+        <text name="rms_ws_overhaul_unavailable" text="Revisie niet beschikbaar"/>
+        <text name="rms_remap_refusal_top" text="Al de sterkste motor van de serie: alleen een tuner gaat verder, in de boerderij- of mobiele werkplaats."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Getuned door een tuner: alleen die zet hem terug, in de boerderij- of mobiele werkplaats."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Getuned door de dealer: alleen de dealer zet hem terug."/>
+        <text name="rms_remap_curves_maker" text="Door de fabrikant opgegeven curves"/>
+        <text name="rms_remap_curves_dealer_measured" text="Testbank van de dealer, voor en na"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Dealer bewaart de originele software"/>
         <text name="rms_remap_refusal_leased" text="Een gehuurde machine kan niet worden getuned."/>
         <text name="rms_remap_refusal_not_eligible" text="Deze motor heeft geen programmeerbare regeleenheid."/>
         <text name="rms_remap_confirm_title" text="Motor tunen?"/>

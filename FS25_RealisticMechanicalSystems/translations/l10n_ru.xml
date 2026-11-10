@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Тщательное техобслуживание"/>
         <text name="rms_owner_care_regular" text="Регулярное техобслуживание"/>
         <text name="rms_owner_care_neglected" text="Запущенное техобслуживание"/>
+        <text name="rms_ws_label_maintenance_count" text="Выполнено техобслуживаний"/>
         <text name="rms_ws_label_overhaul_count" text="Выполнено капремонтов"/>
         <text name="rms_ws_label_maintenance_log" text="Журнал техобслуживания"/>
         <text name="rms_ws_label_last_maintenance" text="Последнее техобслуживание"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Фильтры"/>
         <text name="rms_log_cancelled_desc" text="Работа отменена"/>
         <text name="rms_log_ownership_months_title" text="Срок владения"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Обновлено лакокрасочное покрытие"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Средний интервал между неисправностями"/>
         <text name="rms_log_average_maintenance_interval_title" text="Средний интервал между техобслуживаниями"/>
         <text name="rms_log_performed" text="Выполнена работа: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="В этом месяце"/>
         <text name="rms_spec_tomorrow_at" text="завтра в "/>
         <text name="rms_spec_never" text="Никогда"/>
-        <text name="rms_spec_next_planned_service_notification" text="Запланированная работа начата: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Запланированная работа отменена из-за недостатка средств: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Запланированная работа (%s) не начата: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="послезавтра в "/>
         <text name="rms_spec_day_s" text="дн."/>
         <text name="rms_spec_day_one" text="дн."/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Качество расходных материалов"/>
         <text name="rms_option_menu_option_two_title_repair" text="Качество запчастей"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Система для капитального ремонта"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Если во время работы выявлены неисправности, после неё автоматически запускается стандартный ремонт с оригинальными деталями."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="После ремонта автоматически выполняет рекомендованное ТО с оригинальными расходными материалами."/>
         <text name="rms_option_menu_price_text" text="Цена"/>
-        <text name="rms_option_menu_perform_repair" text="Автоматический ремонт"/>
-        <text name="rms_option_menu_perform_maintenance" text="Автоматическое техобслуживание"/>
         <text name="rms_option_menu_warranty_repair_text" text="Гарантийный ремонт"/>
         <text name="rms_option_menu_lease_service_text" text="Входит в аренду"/>
         <text name="rms_option_menu_duration_text" text="Продолжительность"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="Без гарантии"/>
         <text name="rms_ws_quality_oem_warranty" text="Гарантия 12 мес."/>
         <text name="rms_ws_quality_factory_warranty" text="Заводская гарантия"/>
-        <text name="rms_warranty_used" text="Гарантия разборки: только деталь"/>
+        <text name="rms_ws_quality_part_warranty" text="Гарантия ещё %d мес."/>
         <text name="rms_ws_quality_delta" text="%s к оригиналу"/>
         <text name="rms_ws_repair_row_faults" text="Устраняемые неисправности"/>
         <text name="rms_ws_repair_row_faults_detail" text="Из отмеченных"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Выбирается на карточках ниже"/>
         <text name="rms_ws_repair_quality_choice" text="На выбор"/>
         <text name="rms_ws_warranty_title" text="Гарантия"/>
+        <text name="rms_ws_quote_warranty_label" text="Гарантия:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Заводская гарантия:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Гарантия детали:"/>
+        <text name="rms_ws_quote_warranty_covered" text="покрывается"/>
+        <text name="rms_ws_quote_warranty_part" text="покрывается, ещё %d мес."/>
+        <text name="rms_ws_quote_warranty_used" text="покрывается только деталь"/>
+        <text name="rms_ws_quote_warranty_expired" text="истекла"/>
+        <text name="rms_ws_quote_warranty_own" text="не покрывается в собственной мастерской"/>
+        <text name="rms_ws_quote_warranty_lease" text="не покрывается при аренде"/>
+        <text name="rms_ws_quote_warranty_remapped" text="утрачена, чип-тюнинг двигателя"/>
+        <text name="rms_ws_quote_warranty_refused" text="отказ, %s"/>
         <text name="rms_ws_warranty_covered" text="Действует"/>
         <text name="rms_ws_warranty_not_covered" text="Не действует"/>
         <text name="rms_ws_warranty_terms" text="Заводская: %d мес. или %s h"/>
+        <text name="rms_ws_warranty_refused" text="Отказ: %s"/>
         <text name="rms_ws_badge_warranty" text="Гарантия"/>
         <text name="rms_warranty_base" text="%d мес. или %s h (включено)"/>
         <text name="rms_warranty_extension" text="%d мес. или %s h"/>
         <text name="rms_warranty_partial" text="Частично покрывается"/>
         <text name="rms_warranty_own" text="Не покрывается в собственной мастерской"/>
-        <text name="rms_warranty_factory" text="Оригинальные детали и работа покрываются"/>
-        <text name="rms_warranty_part" text="Деталь покрывается до возраста машины %d месяцев"/>
+        <text name="rms_warranty_part" text="Гарантия детали: ещё %d мес."/>
         <text name="rms_warranty_lease" text="Ремонт не покрывается при аренде"/>
-        <text name="rms_warranty_expired" text="Гарантия истекла"/>
-        <text name="rms_warranty_overdue" text="Отказ: просрочено техобслуживание"/>
-        <text name="rms_warranty_impact" text="Отказ: повреждение от удара"/>
-        <text name="rms_warranty_options" text="Нужна замена оригинальными деталями"/>
+        <text name="rms_warranty_overdue" text="просрочено техобслуживание"/>
+        <text name="rms_warranty_impact" text="повреждение от удара"/>
         <text name="rms_warranty_mobile" text="К оплате: доплата за работу мобильной мастерской"/>
         <text name="rms_warranty_remapped" text="Гарантия утрачена: чип-тюнинг двигателя"/>
-        <text name="rms_warranty_heat" text="Отказ: перегрев"/>
-        <text name="rms_warranty_low_level" text="Отказ: слишком низкий уровень масла"/>
-        <text name="rms_warranty_fuel_dry" text="Отказ: бак выработан досуха"/>
-        <text name="rms_warranty_park_brake" text="Отказ: затянут стояночный тормоз"/>
-        <text name="rms_warranty_pto_engagement" text="Отказ: рывок при включении ВОМ"/>
-        <text name="rms_warranty_stones" text="Отказ: попадание камней"/>
-        <text name="rms_warranty_starter" text="Отказ: перегрузка стартера"/>
-        <text name="rms_warranty_pto_angle" text="Отказ: слишком большой угол карданного вала"/>
-        <text name="rms_warranty_windup" text="Отказ: блокировка или 4WD на твёрдом грунте"/>
-        <text name="rms_warranty_filter" text="Отказ: засорённый фильтр"/>
-        <text name="rms_warranty_trailer" text="Отказ: слишком тяжёлый прицеп"/>
+        <text name="rms_warranty_heat" text="перегрев"/>
+        <text name="rms_warranty_low_level" text="слишком низкий уровень масла"/>
+        <text name="rms_warranty_fuel_dry" text="бак выработан досуха"/>
+        <text name="rms_warranty_park_brake" text="затянут стояночный тормоз"/>
+        <text name="rms_warranty_pto_engagement" text="рывок при включении ВОМ"/>
+        <text name="rms_warranty_stones" text="попадание камней"/>
+        <text name="rms_warranty_starter" text="перегрузка стартера"/>
+        <text name="rms_warranty_pto_angle" text="слишком большой угол карданного вала"/>
+        <text name="rms_warranty_windup" text="блокировка или 4WD на твёрдом грунте"/>
+        <text name="rms_warranty_filter" text="засорённый фильтр"/>
+        <text name="rms_warranty_trailer" text="слишком тяжёлый прицеп"/>
+        <text name="rms_warranty_aftermarket_part" text="неоригинальная деталь"/>
+        <text name="rms_warranty_used_part" text="подержанная деталь"/>
+        <text name="rms_warranty_imposed" text="Стандартный, оригинальные детали"/>
+        <text name="rms_warranty_partial_imposed" text="Покрытая неисправность: Стандартный ремонт, оригинальные детали"/>
         <text name="rms_ws_overhaul_row_systems" text="Восстанавливаемые системы"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Приводятся в порядок"/>
         <text name="rms_ws_overhaul_systems_one" text="Одна на выбор"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="Техобслуживание тоже выполняет этот поиск неисправностей, как стандартный осмотр."/>
         <text name="rms_ws_quote_title" text="Детализация сметы"/>
         <text name="rms_ws_quote_oil_filter" text="Масляный фильтр"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Следующая работа оплачивается отдельно. При её начале необходимые жидкости будут предоставлены или взяты из вашего запаса."/>
         <text name="rms_bodywork_touchup" text="Подкраска"/>
         <text name="rms_bodywork_full" text="Полная перекраска"/>
         <text name="rms_bodywork_colors_title" text="Цвета машины"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="Заводская прошивка не вернёт гарантию"/>
         <text name="rms_remap_free" text="Бесплатно"/>
         <text name="rms_remap_unavailable" text="Чип-тюнинг недоступен"/>
-        <text name="rms_remap_refusal_dealer" text="Дилер не занимается чип-тюнингом двигателей."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Тюнер приедет на ферму: выберите мастерскую фермы или мобильную мастерскую."/>
+        <text name="rms_ws_overhaul_unavailable" text="Капитальный ремонт недоступен"/>
+        <text name="rms_remap_refusal_top" text="Уже самый мощный двигатель линейки: дальше идёт только тюнер, в мастерской фермы или мобильной."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Прошит тюнером: вернуть заводскую прошивку может только он, в мастерской фермы или мобильной."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Прошит дилером: вернуть заводскую прошивку может только дилер."/>
+        <text name="rms_remap_curves_maker" text="Кривые, заявленные производителем"/>
+        <text name="rms_remap_curves_dealer_measured" text="Стенд дилера, до и после"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Дилер хранит заводскую прошивку"/>
         <text name="rms_remap_refusal_leased" text="Чип-тюнинг арендованной машины невозможен."/>
         <text name="rms_remap_refusal_not_eligible" text="У этого двигателя нет блока управления для перепрошивки."/>
         <text name="rms_remap_confirm_title" text="Выполнить чип-тюнинг?"/>
@@ -696,7 +706,7 @@
         <text name="rms_inspection_verdict_stop_title" text="Не использовать"/>
         <text name="rms_inspection_verdict_stop_message" text="Критический пункт требует устранения. Не используйте машину до его устранения."/>
         <text name="rms_inspection_service_due_in" text="%s через %s"/>
-        <text name="rms_inspection_service_overdue" text="%s просрочена на %s"/>
+        <text name="rms_inspection_service_overdue" text="%s: просрочка %s"/>
         <text name="rms_inspection_status_slightly_low" text="Незначительно снижен"/>
         <text name="rms_inspection_status_slightly_dirty" text="Слегка забит"/>
         <text name="rms_inspection_status_grease_due" text="Пора смазать"/>

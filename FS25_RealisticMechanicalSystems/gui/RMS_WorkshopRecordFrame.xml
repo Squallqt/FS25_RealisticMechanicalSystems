@@ -74,22 +74,22 @@
                         </BoxLayout>
                     </GuiElement>
 
-                    <GuiElement profile="rms_workshopBlock" position="20px -134px" size="146px 54px">
+                    <GuiElement profile="rms_workshopBlock" position="20px -134px" size="134px 54px">
                         <RoundCorner profile="rms_workshopSurfaceSoft" />
-                        <Text profile="rms_logDetailMetaLabel" position="10px -4px" size="126px 21px" text="$l10n_rms_log_date" />
-                        <Text profile="rms_tileValue" id="selectedLogDate" position="10px -26px" size="126px 24px" />
+                        <Text profile="rms_logDetailMetaLabel" position="10px -4px" size="114px 21px" text="$l10n_rms_log_date" />
+                        <Text profile="rms_tileValue" id="selectedLogDate" position="10px -26px" size="114px 24px" />
                     </GuiElement>
 
-                    <GuiElement profile="rms_workshopBlock" position="178px -134px" size="191px 54px">
+                    <GuiElement profile="rms_workshopBlock" position="166px -134px" size="215px 54px">
                         <RoundCorner profile="rms_workshopSurfaceSoft" />
-                        <Text profile="rms_logDetailMetaLabel" position="10px -4px" size="171px 21px" text="$l10n_rms_ws_label_operating_hours" />
-                        <Text profile="rms_tileValue" id="selectedLogHours" position="10px -26px" size="171px 24px" />
+                        <Text profile="rms_logDetailMetaLabel" position="10px -4px" size="195px 21px" text="$l10n_rms_ws_label_operating_hours" />
+                        <Text profile="rms_tileValue" id="selectedLogHours" position="10px -26px" size="195px 24px" />
                     </GuiElement>
 
-                    <GuiElement profile="rms_workshopBlock" position="381px -134px" size="146px 54px">
+                    <GuiElement profile="rms_workshopBlock" position="393px -134px" size="134px 54px">
                         <RoundCorner profile="rms_workshopSurfaceSoft" />
-                        <Text profile="rms_logDetailMetaLabel" position="10px -4px" size="126px 21px" text="$l10n_rms_log_price" />
-                        <RoundCorner profile="rms_workshopValuePillCentered" position="12px -25px" size="122px 24px" />
+                        <Text profile="rms_logDetailMetaLabel" position="10px -4px" size="114px 21px" text="$l10n_rms_log_price" />
+                        <RoundCorner profile="rms_workshopValuePillCentered" position="12px -25px" size="110px 24px" />
                         <Text profile="rms_logDetailPrice" id="selectedLogPrice" position="22px -24px" size="102px 26px" />
                     </GuiElement>
 

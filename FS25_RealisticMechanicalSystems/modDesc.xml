@@ -28,8 +28,8 @@ WORKSHOP
 - Inspection, Maintenance, Repair, and Overhaul each offer options that change price, duration, and quality
 - Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. The colours of a machine you own change only through a full repaint, and buying one in another colour than the one already selected costs a full repaint
 - Part quality from Used to Original: cheaper parts are more often defective and bring the same fault back
-- Warranty covers replacement repairs with original parts and their fluids for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service or greasing, or a part worn by misuse (a hard impact, overheating past the warning, low oil, a tank run dry, the parking brake on, a harsh PTO engagement, stones, the starter held too long, a PTO shaft at too sharp an angle, diff lock or 4WD on hard ground, a clogged filter, an overweight trailer), excludes only the affected fault.
-- Engine remapping by a tuner at the farm or mobile workshop, never at the dealer: 10 to 20% more power depending on the engine's place in its range, its curves before and after on a bench sheet, more fuel and heat for the extra power, wear at full load past the strongest engine of the range, and the warranty lost for good. The tuner can put the stock software back, free for 12 months
+- A fault under warranty is repaired by the dealer as a Standard repair with original parts, free with its fluids, for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service or greasing, or a part worn by misuse (a hard impact, overheating past the warning, low oil, a tank run dry, the parking brake on, a harsh PTO engagement, stones, the starter held too long, a PTO shaft at too sharp an angle, diff lock or 4WD on hard ground, a clogged filter, an overweight trailer), or a part fitted aftermarket or used, excludes only the affected fault.
+- Engine remapping by the dealer, with the manufacturer's software up to the strongest engine of the range, or by a tuner at the farm or mobile workshop: 10 to 20% more power depending on the engine's place in its range, its curves before and after on a bench sheet, more fuel and heat for the extra power, wear at full load past the strongest engine of the range, and the warranty lost for good. Each puts its stock software back, the tuner free for 12 months
 - By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make inspections, maintenance and repair, repainting, overhauls or engine remapping instant
 - A fault is identified before it is repaired: an inspection or any maintenance identifies it, a warning light only shows that one is there
 - A complete inspection can reveal hidden faults and defective repair parts, and shows exact condition values; some faults can remain undetected
@@ -67,8 +67,11 @@ Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 
 Changelog 1.0.0.0-beta.2:
 - Reworked wear and breakdowns: a new machine rarely fails, an old or mistreated one far more often, and overheating, running dry or a starter used without rest break the part
-- Added warranty refusal for faults caused by misuse
+- Added warranty refusal for faults caused by misuse or on a part fitted aftermarket or used
 - Added the required tractor power to the implement cards of the fleet page
+- Added the number of maintenances done to the workshop summary
+- Fixed cancelled overhauls counted as done in the workshop and on the fleet page
+- Improved the warranty at the workshop: a covered fault is repaired as a Standard repair with original parts, and the quote shows for each part what the player pays and why the warranty refuses it
 - Fixed the error when entering the battery trolley with some driving mods
 - Reworked the physics of the battery trolley, which now stands on its own brakes instead of being locked to the ground
 - Fixed machines asking for grease after a simple trip or idling: only real work counts now
@@ -79,6 +82,8 @@ Changelog 1.0.0.0-beta.2:
 - Fixed other players in multiplayer hearing the normal engine start, then the struggling starter over it, during a hard start
 - Fixed a parked machine left running shutting off on its own after a few minutes when the player is far away
 - Reworked starting with the charger's starting aid and with jumper cables: a machine with a flat battery can now start on them, its voltmeter showing the voltage it receives
+- Removed the jobs chained at the workshop: once a job is done, order the repair or the overdue maintenance from its results
+- Added engine remapping at the dealer
 
 Changelog 1.0.0.0-beta.1:
 - Reworked machine production years and their period equipment
@@ -301,8 +306,8 @@ WERKSTATT
 - Inspektion, Wartung, Reparatur und Grundüberholung bieten jeweils Optionen für Preis, Dauer und Qualität
 - Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Die Farben einer eigenen Maschine ändern sich nur durch eine komplette Neulackierung, und wer eine Maschine in einer anderen als der bereits gewählten Farbe kauft, zahlt eine komplette Neulackierung
 - Teilequalität von Gebraucht bis Original: billigere Teile sind häufiger defekt und holen denselben Fehler zurück
-- Die Garantie deckt den Austausch mit Originalteilen und die benötigten Flüssigkeiten für 24 Monate oder bis zur Stundengrenze ab. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung oder Abschmierung oder ein durch Fehlbedienung verschlissenes Teil (Aufprall, Überhitzung nach der Warnung, zu wenig Öl, leergefahrener Tank, angezogene Feststellbremse, Zapfwelle bei hoher Drehzahl eingeschaltet, Steine, zu lange betätigter Anlasser, zu stark abgewinkelte Gelenkwelle, Sperre oder 4WD auf festem Boden, verstopfter Filter, zu schwerer Anhänger) schließt nur den betroffenen Schaden aus.
-- Motoroptimierung durch einen Tuner in der Hofwerkstatt oder der mobilen Werkstatt, nie beim Händler: 10 bis 20 % mehr Leistung je nach Stellung des Motors in seiner Baureihe, seine Kurven vorher und nachher auf einem Prüfstandsblatt, mehr Kraftstoff und Wärme für die zusätzliche Leistung, Verschleiß unter Volllast über dem stärksten Motor der Baureihe, und die Garantie erlischt endgültig. Der Tuner kann die Serien-Software zurückspielen, 12 Monate kostenlos
+- Ein Schaden unter Garantie wird vom Händler als Standard-Reparatur mit Originalteilen behoben, mit den benötigten Flüssigkeiten kostenlos, für 24 Monate oder bis zur Stundengrenze. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung oder Abschmierung oder ein durch Fehlbedienung verschlissenes Teil (Aufprall, Überhitzung nach der Warnung, zu wenig Öl, leergefahrener Tank, angezogene Feststellbremse, Zapfwelle bei hoher Drehzahl eingeschaltet, Steine, zu lange betätigter Anlasser, zu stark abgewinkelte Gelenkwelle, Sperre oder 4WD auf festem Boden, verstopfter Filter, zu schwerer Anhänger) oder ein eingebautes Nachbau- oder Gebrauchtteil schließt nur den betroffenen Schaden aus.
+- Motoroptimierung beim Händler, mit der Herstellersoftware bis zum stärksten Motor der Baureihe, oder durch einen Tuner in der Hofwerkstatt oder der mobilen Werkstatt: 10 bis 20 % mehr Leistung je nach Stellung des Motors in seiner Baureihe, seine Kurven vorher und nachher auf einem Prüfstandsblatt, mehr Kraftstoff und Wärme für die zusätzliche Leistung, Verschleiß unter Volllast über dem stärksten Motor der Baureihe, und die Garantie erlischt endgültig. Jeder spielt seine Serien-Software zurück, der Tuner 12 Monate kostenlos
 - Standardmäßig richtet sich die Arbeitsdauer nach der Spielzeit und pausiert beim Händler über Nacht; eigene und mobile Werkstätten bleiben geöffnet. Getrennte Einstellungen ermöglichen sofortige Inspektion, Wartung und Reparatur, Neulackierung, Überholung oder Motoroptimierung
 - Ein Schaden wird vor der Reparatur festgestellt: Eine Inspektion oder jede Wartung stellt ihn fest, eine Warnleuchte zeigt nur, dass es einen gibt
 - Eine vollständige Inspektion kann verborgene Fehler und defekte Reparaturteile aufdecken und zeigt exakte Zustandswerte; manche Defekte können unentdeckt bleiben
@@ -340,8 +345,11 @@ Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 
 Changelog 1.0.0.0-beta.2:
 - Verschleiß und Defekte überarbeitet: Neue Maschinen fallen selten aus, alte oder schlecht behandelte weit häufiger, und Überhitzung, Trockenlauf oder ein Anlasser ohne Ruhepause beschädigen das Teil
-- Garantieablehnung bei Schäden durch Fehlbedienung hinzugefügt
+- Garantieablehnung bei Schäden durch Fehlbedienung oder an einem eingebauten Nachbau- oder Gebrauchtteil hinzugefügt
 - Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
+- Anzahl der durchgeführten Wartungen in der Werkstattübersicht hinzugefügt
+- Abgebrochene Überholungen, die in der Werkstatt und auf der Fuhrpark-Seite als durchgeführt zählten, behoben
+- Garantie in der Werkstatt verbessert: Ein gedeckter Schaden wird als Standard-Reparatur mit Originalteilen behoben, und der Kostenvoranschlag zeigt für jedes Teil, was der Spieler zahlt und warum die Garantie es ablehnt
 - Fehler beim Einsteigen in den Batteriewagen mit einigen Fahr-Mods behoben
 - Physik des Batteriewagens überarbeitet, der nun auf seinen eigenen Bremsen steht, statt am Boden fixiert zu sein
 - Abschmierbedarf von Maschinen nach bloßer Fahrt oder im Leerlauf behoben: Nur echte Arbeit zählt jetzt
@@ -352,6 +360,8 @@ Changelog 1.0.0.0-beta.2:
 - Normales Startgeräusch mit dem mühsamen Anlasser darüber bei anderen Spielern im Mehrspielermodus während eines schweren Starts behoben
 - Selbstständiges Abschalten einer laufend abgestellten Maschine nach einigen Minuten, wenn der Spieler weit entfernt ist, behoben
 - Starten mit der Starthilfe des Ladegeräts und mit Starthilfekabeln überarbeitet: Eine Maschine mit leerer Batterie kann nun damit starten, ihr Voltmeter zeigt die Spannung, die sie erhält
+- Angeschlossene Werkstattarbeiten entfernt: Nach Abschluss einer Arbeit werden die Reparatur oder die überfällige Wartung anhand ihrer Ergebnisse beauftragt
+- Motoroptimierung beim Händler hinzugefügt
 
 Changelog 1.0.0.0-beta.1:
 - Baujahre der Maschinen und ihre zeitgemäße Ausstattung überarbeitet
@@ -574,8 +584,8 @@ ATELIER
 - L'inspection, l'entretien, la réparation et la révision proposent chacune des options qui changent le prix, la durée et la qualité
 - L'appoint remplit les fluides manquants ; la peinture retouche les petits dégâts ou se refait en entier avec les couleurs proposées par le véhicule. Les couleurs d'une machine possédée ne changent que par une peinture complète, et acheter une machine dans une autre couleur que celle déjà sélectionnée coûte une peinture complète
 - Qualité des pièces de l'occasion à l'origine : les pièces moins chères sont plus souvent défectueuses et ramènent la même panne
-- La garantie couvre le remplacement en pièces d'origine et ses fluides pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien ou un graissage en retard, ou une pièce usée par un mauvais usage (choc, surchauffe passé l'alerte, huile trop basse, réservoir vidé, frein de parking serré, prise de force enclenchée à haut régime, pierres, démarreur trop sollicité, angle de cardan excessif, blocage ou 4RM sur sol dur, filtre colmaté, remorque trop lourde), exclut seulement la panne concernée.
-- Reprogrammation moteur par un préparateur à l'atelier de la ferme ou à l'atelier mobile, jamais chez le concessionnaire : 10 à 20 % de puissance en plus selon la place du moteur dans sa gamme, ses courbes avant et après sur une fiche de banc, plus de gazole et de chaleur pour la puissance en plus, de l'usure à pleine charge au-delà du plus gros moteur de la gamme, et la garantie perdue pour toujours. Le préparateur peut remettre le logiciel d'origine, gratuitement pendant 12 mois
+- Une panne sous garantie est réparée par le concessionnaire en Standard, pièces d'origine, gratuitement avec ses fluides, pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien ou un graissage en retard, ou une pièce usée par un mauvais usage (choc, surchauffe passé l'alerte, huile trop basse, réservoir vidé, frein de parking serré, prise de force enclenchée à haut régime, pierres, démarreur trop sollicité, angle de cardan excessif, blocage ou 4RM sur sol dur, filtre colmaté, remorque trop lourde), ou une pièce posée adaptable ou d'occasion, exclut seulement la panne concernée.
+- Reprogrammation moteur chez le concessionnaire, avec le logiciel du constructeur jusqu'au plus gros moteur de la gamme, ou par un préparateur à l'atelier de la ferme ou à l'atelier mobile : 10 à 20 % de puissance en plus selon la place du moteur dans sa gamme, ses courbes avant et après sur une fiche de banc, plus de gazole et de chaleur pour la puissance en plus, de l'usure à pleine charge au-delà du plus gros moteur de la gamme, et la garantie perdue pour toujours. Chacun remet son logiciel d'origine, le préparateur gratuitement pendant 12 mois
 - Par défaut, la durée des travaux suit le temps de la partie et les travaux s'interrompent la nuit chez le concessionnaire ; les ateliers personnels et mobiles restent ouverts. Des réglages distincts permettent de terminer instantanément les inspections, l'entretien et les réparations, la peinture, les révisions ou la reprogrammation moteur
 - Une panne s'identifie avant de se réparer : une inspection ou n'importe quel entretien l'identifie, un voyant montre seulement qu'il y en a une
 - Une inspection complète peut révéler les pannes cachées et les pièces de réparation défectueuses, et donne les valeurs exactes ; certaines pannes peuvent rester indétectées
@@ -613,8 +623,11 @@ Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSyste
 
 Changelog 1.0.0.0-beta.2 :
 - Refonte de l'usure et des pannes : une machine neuve tombe rarement en panne, une machine vieille ou malmenée bien plus souvent, et la surchauffe, la marche à sec ou un démarreur sans repos cassent la pièce
-- Ajout du refus de garantie pour les pannes dues à un mauvais usage
+- Ajout du refus de garantie pour les pannes dues à un mauvais usage ou à une pièce posée adaptable ou d'occasion
 - Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel
+- Ajout du nombre d'entretiens effectués à la synthèse de l'atelier
+- Correction des révisions annulées comptées comme effectuées à l'atelier et dans le parc de matériel
+- Amélioration de la garantie à l'atelier : une panne couverte est réparée en Standard, pièces d'origine, et le devis indique pour chaque pièce ce que le joueur paie et pourquoi la garantie la refuse
 - Correction de l'erreur en montant dans le chariot de batterie avec certains mods de conduite
 - Refonte de la physique du chariot de batterie, qui tient désormais sur ses propres freins au lieu d'être bloqué au sol
 - Correction des machines qui demandaient de la graisse après un simple trajet ou au ralenti : seul un vrai travail compte désormais
@@ -625,6 +638,8 @@ Changelog 1.0.0.0-beta.2 :
 - Correction du démarrage normal suivi du démarreur qui peine par-dessus, entendu par les autres joueurs en multijoueur lors d'un démarrage difficile
 - Correction d'une machine garée moteur en marche qui s'arrêtait seule au bout de quelques minutes quand le joueur est loin
 - Refonte du démarrage avec l'aide au démarrage du chargeur et avec les câbles de démarrage : une machine à la batterie à plat peut désormais démarrer, son voltmètre affichant la tension qu'elle reçoit
+- Suppression des travaux enchaînés à l'atelier : une fois l'intervention terminée, la réparation ou l'entretien en retard se commande d'après ses résultats
+- Ajout de la reprogrammation moteur chez le concessionnaire
 
 Changelog 1.0.0.0-beta.1 :
 - Refonte des années des machines et de leurs équipements d'époque

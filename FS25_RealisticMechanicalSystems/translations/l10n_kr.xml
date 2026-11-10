@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="세심한 정비"/>
         <text name="rms_owner_care_regular" text="정기적인 정비"/>
         <text name="rms_owner_care_neglected" text="소홀한 정비"/>
+        <text name="rms_ws_label_maintenance_count" text="완료된 정비"/>
         <text name="rms_ws_label_overhaul_count" text="완료된 오버홀"/>
         <text name="rms_ws_label_maintenance_log" text="정비 기록"/>
         <text name="rms_ws_label_last_maintenance" text="최근 정비"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="필터"/>
         <text name="rms_log_cancelled_desc" text="작업 취소됨"/>
         <text name="rms_log_ownership_months_title" text="보유 기간"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="차량 재도색 완료"/>
         <text name="rms_log_average_breakdowns_interval_title" text="평균 고장 간격"/>
         <text name="rms_log_average_maintenance_interval_title" text="평균 정비 간격"/>
         <text name="rms_log_performed" text="작업 완료: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="이번 달"/>
         <text name="rms_spec_tomorrow_at" text="내일 "/>
         <text name="rms_spec_never" text="없음"/>
-        <text name="rms_spec_next_planned_service_notification" text="예약 작업 시작: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="자금 부족으로 예약 작업 취소: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="예약된 %s 작업이 시작되지 않았습니다: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="모레 "/>
         <text name="rms_spec_day_s" text="일"/>
         <text name="rms_spec_day_one" text="일"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="소모품 품질"/>
         <text name="rms_option_menu_option_two_title_repair" text="교체 부품 품질"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="오버홀 대상 시스템"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="작업에서 고장이 발견되면 순정 부품을 사용하는 표준 수리를 자동으로 시작합니다."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="수리 후 순정 소모품을 사용하는 권장 정비를 자동으로 수행합니다."/>
         <text name="rms_option_menu_price_text" text="가격"/>
-        <text name="rms_option_menu_perform_repair" text="자동 수리"/>
-        <text name="rms_option_menu_perform_maintenance" text="자동 정비"/>
         <text name="rms_option_menu_warranty_repair_text" text="보증 수리"/>
         <text name="rms_option_menu_lease_service_text" text="임대 비용에 포함"/>
         <text name="rms_option_menu_duration_text" text="소요 시간"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="보증 없음"/>
         <text name="rms_ws_quality_oem_warranty" text="12개월 보증"/>
         <text name="rms_ws_quality_factory_warranty" text="공장 보증"/>
-        <text name="rms_warranty_used" text="해체업체 보증: 부품만 적용"/>
+        <text name="rms_ws_quality_part_warranty" text="보증 %d개월 남음"/>
         <text name="rms_ws_quality_delta" text="순정 대비 %s"/>
         <text name="rms_ws_repair_row_faults" text="처리하는 고장"/>
         <text name="rms_ws_repair_row_faults_detail" text="선택한 고장 중"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="아래 카드에서 선택"/>
         <text name="rms_ws_repair_quality_choice" text="선택 가능"/>
         <text name="rms_ws_warranty_title" text="보증"/>
+        <text name="rms_ws_quote_warranty_label" text="보증:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="공장 보증:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="부품 보증:"/>
+        <text name="rms_ws_quote_warranty_covered" text="적용"/>
+        <text name="rms_ws_quote_warranty_part" text="적용, %d개월 남음"/>
+        <text name="rms_ws_quote_warranty_used" text="부품만 적용"/>
+        <text name="rms_ws_quote_warranty_expired" text="만료"/>
+        <text name="rms_ws_quote_warranty_own" text="자가 정비소에서는 미적용"/>
+        <text name="rms_ws_quote_warranty_lease" text="임대 차량은 미적용"/>
+        <text name="rms_ws_quote_warranty_remapped" text="상실, 엔진 맵핑됨"/>
+        <text name="rms_ws_quote_warranty_refused" text="거부, %s"/>
         <text name="rms_ws_warranty_covered" text="적용"/>
         <text name="rms_ws_warranty_not_covered" text="미적용"/>
         <text name="rms_ws_warranty_terms" text="공장: %d개월 또는 %s h"/>
+        <text name="rms_ws_warranty_refused" text="거부: %s"/>
         <text name="rms_ws_badge_warranty" text="보증"/>
         <text name="rms_warranty_base" text="%d개월 또는 %s h (포함)"/>
         <text name="rms_warranty_extension" text="%d개월 또는 %s h"/>
         <text name="rms_warranty_partial" text="부분 적용"/>
         <text name="rms_warranty_own" text="자가 정비소에서는 미적용"/>
-        <text name="rms_warranty_factory" text="순정 부품과 공임 적용"/>
-        <text name="rms_warranty_part" text="차령 %d개월까지 부품 보증"/>
+        <text name="rms_warranty_part" text="부품 보증: %d개월 남음"/>
         <text name="rms_warranty_lease" text="임대 차량 수리는 보증 미적용"/>
-        <text name="rms_warranty_expired" text="보증 만료"/>
-        <text name="rms_warranty_overdue" text="거부: 정비 기한 초과"/>
-        <text name="rms_warranty_impact" text="거부: 충격 손상"/>
-        <text name="rms_warranty_options" text="순정 부품으로 교체 필요"/>
+        <text name="rms_warranty_overdue" text="정비 기한 초과"/>
+        <text name="rms_warranty_impact" text="충격 손상"/>
         <text name="rms_warranty_mobile" text="이동식 정비소의 추가 공임은 본인 부담"/>
         <text name="rms_warranty_remapped" text="보증 상실: 엔진 맵핑됨"/>
-        <text name="rms_warranty_heat" text="거부: 과열"/>
-        <text name="rms_warranty_low_level" text="거부: 오일 수위 부족"/>
-        <text name="rms_warranty_fuel_dry" text="거부: 연료 고갈"/>
-        <text name="rms_warranty_park_brake" text="거부: 주차 브레이크 체결 주행"/>
-        <text name="rms_warranty_pto_engagement" text="거부: PTO 연결 충격"/>
-        <text name="rms_warranty_stones" text="거부: 돌 유입"/>
-        <text name="rms_warranty_starter" text="거부: 시동 모터 과다 사용"/>
-        <text name="rms_warranty_pto_angle" text="거부: PTO 축 각도 과다"/>
-        <text name="rms_warranty_windup" text="거부: 단단한 노면의 차동 잠금·4WD"/>
-        <text name="rms_warranty_filter" text="거부: 필터 막힘"/>
-        <text name="rms_warranty_trailer" text="거부: 트레일러 과중량"/>
+        <text name="rms_warranty_heat" text="과열"/>
+        <text name="rms_warranty_low_level" text="오일 수위 부족"/>
+        <text name="rms_warranty_fuel_dry" text="연료 고갈"/>
+        <text name="rms_warranty_park_brake" text="주차 브레이크 체결 주행"/>
+        <text name="rms_warranty_pto_engagement" text="PTO 연결 충격"/>
+        <text name="rms_warranty_stones" text="돌 유입"/>
+        <text name="rms_warranty_starter" text="시동 모터 과다 사용"/>
+        <text name="rms_warranty_pto_angle" text="PTO 축 각도 과다"/>
+        <text name="rms_warranty_windup" text="단단한 노면의 차동 잠금·4WD"/>
+        <text name="rms_warranty_filter" text="필터 막힘"/>
+        <text name="rms_warranty_trailer" text="트레일러 과중량"/>
+        <text name="rms_warranty_aftermarket_part" text="애프터마켓 부품"/>
+        <text name="rms_warranty_used_part" text="중고 부품"/>
+        <text name="rms_warranty_imposed" text="순정 부품으로 표준 수리"/>
+        <text name="rms_warranty_partial_imposed" text="보증 고장은 순정 부품으로 표준 수리"/>
         <text name="rms_ws_overhaul_row_systems" text="처리하는 시스템"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="복원"/>
         <text name="rms_ws_overhaul_systems_one" text="하나 선택"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="정비에서도 표준 점검처럼 이 고장 탐색을 합니다."/>
         <text name="rms_ws_quote_title" text="견적 내역"/>
         <text name="rms_ws_quote_oil_filter" text="오일 필터"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="후속 작업은 별도로 청구됩니다. 필요한 유체는 작업 시작 시 정비소에서 제공하거나 보유 재고에서 사용합니다."/>
         <text name="rms_bodywork_touchup" text="도장 보수"/>
         <text name="rms_bodywork_full" text="전체 재도장"/>
         <text name="rms_bodywork_colors_title" text="차량 색상"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="순정 소프트웨어로 보증은 복구되지 않습니다"/>
         <text name="rms_remap_free" text="무료"/>
         <text name="rms_remap_unavailable" text="엔진 맵핑 불가"/>
-        <text name="rms_remap_refusal_dealer" text="판매점에서는 엔진 맵핑을 하지 않습니다."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="튜너가 농장을 방문합니다. 농장 정비소나 이동식 정비소에서 요청하십시오."/>
+        <text name="rms_ws_overhaul_unavailable" text="오버홀 불가"/>
+        <text name="rms_remap_refusal_top" text="이미 라인업 최고 출력 엔진입니다. 그 이상은 농장이나 이동식 정비소의 튜너만 가능합니다."/>
+        <text name="rms_remap_refusal_restore_tuner" text="튜너가 맵핑했습니다. 순정 복원은 농장이나 이동식 정비소에서 합니다."/>
+        <text name="rms_remap_refusal_restore_dealer" text="판매점이 맵핑했습니다. 순정 복원은 판매점에서 합니다."/>
+        <text name="rms_remap_curves_maker" text="제조사가 제시한 성능 곡선"/>
+        <text name="rms_remap_curves_dealer_measured" text="판매점의 다이노 측정, 전후 비교"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="판매점이 순정 소프트웨어 보관"/>
         <text name="rms_remap_refusal_leased" text="임대 기계는 맵핑할 수 없습니다."/>
         <text name="rms_remap_refusal_not_eligible" text="이 엔진에는 맵핑할 제어 장치가 없습니다."/>
         <text name="rms_remap_confirm_title" text="엔진을 맵핑하시겠습니까?"/>

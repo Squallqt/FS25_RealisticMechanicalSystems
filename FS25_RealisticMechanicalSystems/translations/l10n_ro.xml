@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Întreținere atentă"/>
         <text name="rms_owner_care_regular" text="Întreținere regulată"/>
         <text name="rms_owner_care_neglected" text="Întreținere neglijată"/>
+        <text name="rms_ws_label_maintenance_count" text="Întrețineri efectuate"/>
         <text name="rms_ws_label_overhaul_count" text="Recondiționări efectuate"/>
         <text name="rms_ws_label_maintenance_log" text="Jurnal de întreținere"/>
         <text name="rms_ws_label_last_maintenance" text="Ultima întreținere"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Filtre"/>
         <text name="rms_log_cancelled_desc" text="Intervenție anulată"/>
         <text name="rms_log_ownership_months_title" text="Durata deținerii"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Vehicul revopsit"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Interval mediu între avarii"/>
         <text name="rms_log_average_maintenance_interval_title" text="Interval mediu între întrețineri"/>
         <text name="rms_log_performed" text="Intervenție efectuată: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="Luna aceasta"/>
         <text name="rms_spec_tomorrow_at" text="mâine la "/>
         <text name="rms_spec_never" text="Niciodată"/>
-        <text name="rms_spec_next_planned_service_notification" text="Intervenție planificată începută: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Intervenție planificată anulată din lipsă de fonduri: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Intervenția planificată (%s) nu a început: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="poimâine la "/>
         <text name="rms_spec_day_s" text="zile"/>
         <text name="rms_spec_day_one" text="zi"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Calitatea consumabilelor"/>
         <text name="rms_option_menu_option_two_title_repair" text="Calitatea pieselor de schimb"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Sistem de recondiționat"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Dacă intervenția identifică avarii, aceasta este urmată automat de o reparație standard cu piese originale."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="După reparație, se efectuează automat revizia recomandată, cu consumabile originale."/>
         <text name="rms_option_menu_price_text" text="Preț"/>
-        <text name="rms_option_menu_perform_repair" text="Reparație automată"/>
-        <text name="rms_option_menu_perform_maintenance" text="Întreținere automată"/>
         <text name="rms_option_menu_warranty_repair_text" text="Reparație în garanție"/>
         <text name="rms_option_menu_lease_service_text" text="Inclus în închiriere"/>
         <text name="rms_option_menu_duration_text" text="Durată"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="Fără garanție"/>
         <text name="rms_ws_quality_oem_warranty" text="Garanție de 12 luni"/>
         <text name="rms_ws_quality_factory_warranty" text="Garanție de fabrică"/>
-        <text name="rms_warranty_used" text="Garanție din dezmembrări: doar piesa"/>
+        <text name="rms_ws_quality_part_warranty" text="Garanție încă %d luni"/>
         <text name="rms_ws_quality_delta" text="%s față de original"/>
         <text name="rms_ws_repair_row_faults" text="Avarii tratate"/>
         <text name="rms_ws_repair_row_faults_detail" text="Dintre cele bifate"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Aleasă pe cardurile de mai jos"/>
         <text name="rms_ws_repair_quality_choice" text="La alegere"/>
         <text name="rms_ws_warranty_title" text="Garanție"/>
+        <text name="rms_ws_quote_warranty_label" text="Garanție:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Garanție de fabrică:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Garanția piesei:"/>
+        <text name="rms_ws_quote_warranty_covered" text="acoperită"/>
+        <text name="rms_ws_quote_warranty_part" text="acoperită, încă %d luni"/>
+        <text name="rms_ws_quote_warranty_used" text="doar piesa acoperită"/>
+        <text name="rms_ws_quote_warranty_expired" text="expirată"/>
+        <text name="rms_ws_quote_warranty_own" text="neacoperită în atelierul propriu"/>
+        <text name="rms_ws_quote_warranty_lease" text="neacoperită la închiriere"/>
+        <text name="rms_ws_quote_warranty_remapped" text="pierdută, motor resoftat"/>
+        <text name="rms_ws_quote_warranty_refused" text="refuz, %s"/>
         <text name="rms_ws_warranty_covered" text="Valabilă"/>
         <text name="rms_ws_warranty_not_covered" text="Nevalabilă"/>
         <text name="rms_ws_warranty_terms" text="Fabrică: %d luni sau %s h"/>
+        <text name="rms_ws_warranty_refused" text="Refuz: %s"/>
         <text name="rms_ws_badge_warranty" text="Garanție"/>
         <text name="rms_warranty_base" text="%d luni sau %s h (inclusă)"/>
         <text name="rms_warranty_extension" text="%d luni sau %s h"/>
         <text name="rms_warranty_partial" text="Parțial acoperită"/>
         <text name="rms_warranty_own" text="Neacoperită în atelierul propriu"/>
-        <text name="rms_warranty_factory" text="Piese originale și manoperă acoperite"/>
-        <text name="rms_warranty_part" text="Piesă acoperită până la vârsta de %d luni"/>
+        <text name="rms_warranty_part" text="Garanția piesei: încă %d luni"/>
         <text name="rms_warranty_lease" text="Reparație neacoperită la închiriere"/>
-        <text name="rms_warranty_expired" text="Garanție expirată"/>
-        <text name="rms_warranty_overdue" text="Refuz: întreținere întârziată"/>
-        <text name="rms_warranty_impact" text="Refuz: daune din impact"/>
-        <text name="rms_warranty_options" text="Înlocuire cu piese originale necesară"/>
+        <text name="rms_warranty_overdue" text="întreținere întârziată"/>
+        <text name="rms_warranty_impact" text="daune din impact"/>
         <text name="rms_warranty_mobile" text="Plătești manopera suplimentară a atelierului mobil"/>
         <text name="rms_warranty_remapped" text="Garanție pierdută: motor resoftat"/>
-        <text name="rms_warranty_heat" text="Refuz: supraîncălzire"/>
-        <text name="rms_warranty_low_level" text="Refuz: nivel de ulei prea scăzut"/>
-        <text name="rms_warranty_fuel_dry" text="Refuz: rezervor golit"/>
-        <text name="rms_warranty_park_brake" text="Refuz: frână de parcare acționată"/>
-        <text name="rms_warranty_pto_engagement" text="Refuz: șoc la cuplarea prizei de putere"/>
-        <text name="rms_warranty_stones" text="Refuz: pietre înghițite"/>
-        <text name="rms_warranty_starter" text="Refuz: demaror suprasolicitat"/>
-        <text name="rms_warranty_pto_angle" text="Refuz: unghi prea mare al cardanului"/>
-        <text name="rms_warranty_windup" text="Refuz: blocare sau 4x4 pe teren dur"/>
-        <text name="rms_warranty_filter" text="Refuz: filtru înfundat"/>
-        <text name="rms_warranty_trailer" text="Refuz: remorcă prea grea"/>
+        <text name="rms_warranty_heat" text="supraîncălzire"/>
+        <text name="rms_warranty_low_level" text="nivel de ulei prea scăzut"/>
+        <text name="rms_warranty_fuel_dry" text="rezervor golit"/>
+        <text name="rms_warranty_park_brake" text="frână de parcare acționată"/>
+        <text name="rms_warranty_pto_engagement" text="șoc la cuplarea prizei de putere"/>
+        <text name="rms_warranty_stones" text="pietre înghițite"/>
+        <text name="rms_warranty_starter" text="demaror suprasolicitat"/>
+        <text name="rms_warranty_pto_angle" text="unghi prea mare al cardanului"/>
+        <text name="rms_warranty_windup" text="blocare sau 4x4 pe teren dur"/>
+        <text name="rms_warranty_filter" text="filtru înfundat"/>
+        <text name="rms_warranty_trailer" text="remorcă prea grea"/>
+        <text name="rms_warranty_aftermarket_part" text="piesă compatibilă"/>
+        <text name="rms_warranty_used_part" text="piesă folosită"/>
+        <text name="rms_warranty_imposed" text="Reparație Standard cu piese originale"/>
+        <text name="rms_warranty_partial_imposed" text="Defecțiune acoperită reparată Standard, cu piese originale"/>
         <text name="rms_ws_overhaul_row_systems" text="Sisteme tratate"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Repuse în stare"/>
         <text name="rms_ws_overhaul_systems_one" text="Unul la alegere"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="O întreținere face și această căutare a avariilor, ca inspecția standard."/>
         <text name="rms_ws_quote_title" text="Detaliile devizului"/>
         <text name="rms_ws_quote_oil_filter" text="Filtru de ulei"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Intervenția următoare va fi facturată separat. Fluidele necesare vor fi furnizate sau preluate din stoc la începerea acesteia."/>
         <text name="rms_bodywork_touchup" text="Retușuri"/>
         <text name="rms_bodywork_full" text="Revopsire completă"/>
         <text name="rms_bodywork_colors_title" text="Culorile vehiculului"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="Nu revine odată cu softul original"/>
         <text name="rms_remap_free" text="Gratuit"/>
         <text name="rms_remap_unavailable" text="Resoftare indisponibilă"/>
-        <text name="rms_remap_refusal_dealer" text="Reprezentanța nu resoftează motoare."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Un preparator vine la fermă: folosește atelierul fermei sau atelierul mobil."/>
+        <text name="rms_ws_overhaul_unavailable" text="Recondiționare indisponibilă"/>
+        <text name="rms_remap_refusal_top" text="Deja cel mai puternic motor din gamă: doar un preparator trece de el, în atelierul fermei sau mobil."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Resoftat de un preparator: doar el îl readuce la original, în atelierul fermei sau mobil."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Resoftat de reprezentanță: doar ea îl readuce la original."/>
+        <text name="rms_remap_curves_maker" text="Curbe anunțate de producător"/>
+        <text name="rms_remap_curves_dealer_measured" text="Bancul reprezentanței, înainte și după"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Reprezentanța păstrează softul original"/>
         <text name="rms_remap_refusal_leased" text="Un utilaj închiriat nu poate fi resoftat."/>
         <text name="rms_remap_refusal_not_eligible" text="Acest motor nu are o unitate de comandă resoftabilă."/>
         <text name="rms_remap_confirm_title" text="Resoftezi motorul?"/>
@@ -696,7 +706,7 @@
         <text name="rms_inspection_verdict_stop_title" text="Nu utiliza"/>
         <text name="rms_inspection_verdict_stop_message" text="Un punct trebuie remediat înainte de orice utilizare. Nu lucra cu acest utilaj în starea actuală."/>
         <text name="rms_inspection_service_due_in" text="%s peste %s"/>
-        <text name="rms_inspection_service_overdue" text="%s depășit cu %s"/>
+        <text name="rms_inspection_service_overdue" text="%s: întârziere de %s"/>
         <text name="rms_inspection_status_slightly_low" text="Ușor scăzut"/>
         <text name="rms_inspection_status_slightly_dirty" text="Ușor colmatat"/>
         <text name="rms_inspection_status_grease_due" text="De uns"/>

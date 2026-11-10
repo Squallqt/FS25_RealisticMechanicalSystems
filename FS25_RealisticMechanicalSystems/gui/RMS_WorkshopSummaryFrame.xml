@@ -42,7 +42,7 @@
                         <Text profile="rms_ringValue" id="serviceValue" size="116px 40px" />
                         <Text profile="rms_ringOutdated" id="serviceOutdatedText" size="116px 18px" text="$l10n_rms_ws_reading_outdated" />
                     </BoxLayout>
-                    <BoxLayout profile="rms_workshopStack" position="20px -242px" size="241px 228px" elementSpacing="12px">
+                    <BoxLayout profile="rms_workshopStack" position="20px -242px" size="241px 224px" elementSpacing="6px">
                         <GuiElement profile="rms_workshopServiceRow" id="serviceRowTemplate">
                             <RoundCorner profile="rms_workshopServiceRowSurface" />
                             <Text profile="rms_workshopServiceRowLabel" name="label" />

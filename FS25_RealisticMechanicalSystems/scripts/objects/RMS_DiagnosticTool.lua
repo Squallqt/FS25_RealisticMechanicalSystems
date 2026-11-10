@@ -182,8 +182,7 @@ local function addReadingToLog(target, faults)
     for _, fault in ipairs(faults) do
         table.insert(readings, fault.breakdownId .. ":" .. (fault.isCritical and "1" or "0"))
     end
-    target:addEntryToMaintenanceLog(RealisticMechanicalSystems.LOG_DIAGNOSTIC_READING, table.concat(readings, ","), "NONE",
-        false, 0, true, nil)
+    target:addEntryToMaintenanceLog(RealisticMechanicalSystems.LOG_DIAGNOSTIC_READING, table.concat(readings, ","), "NONE", 0, true, nil)
     local log = target.spec_RealisticMechanicalSystems.maintenanceLog
     local entry = log[#log]
     entry.isVisible = true

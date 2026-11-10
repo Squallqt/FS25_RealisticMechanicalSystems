@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Bảo dưỡng chu đáo"/>
         <text name="rms_owner_care_regular" text="Bảo dưỡng định kỳ"/>
         <text name="rms_owner_care_neglected" text="Bảo dưỡng bị bỏ bê"/>
+        <text name="rms_ws_label_maintenance_count" text="Số lần bảo dưỡng"/>
         <text name="rms_ws_label_overhaul_count" text="Số lần đại tu"/>
         <text name="rms_ws_label_maintenance_log" text="Nhật ký bảo dưỡng"/>
         <text name="rms_ws_label_last_maintenance" text="Lần bảo dưỡng gần nhất"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Bộ lọc"/>
         <text name="rms_log_cancelled_desc" text="Quy trình đã hủy"/>
         <text name="rms_log_ownership_months_title" text="Thời gian sở hữu"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Xe đã sơn lại"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Khoảng cách trung bình giữa các hỏng hóc"/>
         <text name="rms_log_average_maintenance_interval_title" text="Khoảng cách trung bình giữa các lần bảo dưỡng"/>
         <text name="rms_log_performed" text="Quy trình đã thực hiện: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="Tháng này"/>
         <text name="rms_spec_tomorrow_at" text="ngày mai lúc "/>
         <text name="rms_spec_never" text="Không bao giờ"/>
-        <text name="rms_spec_next_planned_service_notification" text="Đã bắt đầu quy trình theo kế hoạch: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Đã hủy quy trình theo kế hoạch do không đủ tiền: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Quy trình theo kế hoạch (%s) không bắt đầu: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="ngày kia lúc "/>
         <text name="rms_spec_day_s" text="ngày"/>
         <text name="rms_spec_day_one" text="ngày"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Chất lượng vật tư tiêu hao"/>
         <text name="rms_option_menu_option_two_title_repair" text="Chất lượng phụ tùng"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Hệ thống cần đại tu"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Nếu quy trình phát hiện hỏng hóc, hệ thống sẽ tự động thực hiện tiếp quy trình sửa chữa tiêu chuẩn bằng linh kiện chính hãng."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Sau khi sửa chữa, hệ thống sẽ tự động thực hiện tiếp mức bảo dưỡng được khuyến nghị bằng vật tư tiêu hao chính hãng."/>
         <text name="rms_option_menu_price_text" text="Giá"/>
-        <text name="rms_option_menu_perform_repair" text="Sửa chữa tự động"/>
-        <text name="rms_option_menu_perform_maintenance" text="Bảo dưỡng tự động"/>
         <text name="rms_option_menu_warranty_repair_text" text="Sửa chữa bảo hành"/>
         <text name="rms_option_menu_lease_service_text" text="Đã gồm trong phí thuê"/>
         <text name="rms_option_menu_duration_text" text="Thời gian"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="Không bảo hành"/>
         <text name="rms_ws_quality_oem_warranty" text="Bảo hành 12 tháng"/>
         <text name="rms_ws_quality_factory_warranty" text="Bảo hành nhà máy"/>
-        <text name="rms_warranty_used" text="Bảo hành cơ sở tháo dỡ: chỉ phụ tùng"/>
+        <text name="rms_ws_quality_part_warranty" text="Bảo hành còn %d tháng"/>
         <text name="rms_ws_quality_delta" text="%s so với chính hãng"/>
         <text name="rms_ws_repair_row_faults" text="Hỏng hóc được xử lý"/>
         <text name="rms_ws_repair_row_faults_detail" text="Trong số đã đánh dấu"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Chọn ở các thẻ bên dưới"/>
         <text name="rms_ws_repair_quality_choice" text="Tùy chọn"/>
         <text name="rms_ws_warranty_title" text="Bảo hành"/>
+        <text name="rms_ws_quote_warranty_label" text="Bảo hành:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Bảo hành nhà máy:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Bảo hành phụ tùng:"/>
+        <text name="rms_ws_quote_warranty_covered" text="được bảo hành"/>
+        <text name="rms_ws_quote_warranty_part" text="được bảo hành, còn %d tháng"/>
+        <text name="rms_ws_quote_warranty_used" text="chỉ bảo hành phụ tùng"/>
+        <text name="rms_ws_quote_warranty_expired" text="hết hạn"/>
+        <text name="rms_ws_quote_warranty_own" text="không áp dụng tại xưởng cá nhân"/>
+        <text name="rms_ws_quote_warranty_lease" text="không áp dụng cho xe thuê"/>
+        <text name="rms_ws_quote_warranty_remapped" text="mất, động cơ đã tinh chỉnh"/>
+        <text name="rms_ws_quote_warranty_refused" text="từ chối, %s"/>
         <text name="rms_ws_warranty_covered" text="Áp dụng"/>
         <text name="rms_ws_warranty_not_covered" text="Không áp dụng"/>
         <text name="rms_ws_warranty_terms" text="Nhà máy: %d tháng hoặc %s h"/>
+        <text name="rms_ws_warranty_refused" text="Từ chối: %s"/>
         <text name="rms_ws_badge_warranty" text="Bảo hành"/>
         <text name="rms_warranty_base" text="%d tháng hoặc %s h (đã gồm)"/>
         <text name="rms_warranty_extension" text="%d tháng hoặc %s h"/>
         <text name="rms_warranty_partial" text="Bảo hành một phần"/>
         <text name="rms_warranty_own" text="Không bảo hành tại xưởng cá nhân"/>
-        <text name="rms_warranty_factory" text="Phụ tùng chính hãng và nhân công được bảo hành"/>
-        <text name="rms_warranty_part" text="Bảo hành phụ tùng đến khi máy được %d tháng tuổi"/>
+        <text name="rms_warranty_part" text="Bảo hành phụ tùng: còn %d tháng"/>
         <text name="rms_warranty_lease" text="Không bảo hành sửa chữa xe thuê"/>
-        <text name="rms_warranty_expired" text="Bảo hành hết hạn"/>
-        <text name="rms_warranty_overdue" text="Từ chối: bảo dưỡng quá hạn"/>
-        <text name="rms_warranty_impact" text="Từ chối: hư hỏng do va chạm"/>
-        <text name="rms_warranty_options" text="Phải thay bằng phụ tùng chính hãng"/>
+        <text name="rms_warranty_overdue" text="bảo dưỡng quá hạn"/>
+        <text name="rms_warranty_impact" text="hư hỏng do va chạm"/>
         <text name="rms_warranty_mobile" text="Bạn trả thêm chi phí nhân công của xưởng lưu động"/>
         <text name="rms_warranty_remapped" text="Mất bảo hành: động cơ đã tinh chỉnh"/>
-        <text name="rms_warranty_heat" text="Từ chối: quá nhiệt"/>
-        <text name="rms_warranty_low_level" text="Từ chối: mức dầu quá thấp"/>
-        <text name="rms_warranty_fuel_dry" text="Từ chối: chạy cạn bình nhiên liệu"/>
-        <text name="rms_warranty_park_brake" text="Từ chối: phanh đỗ đang kéo"/>
-        <text name="rms_warranty_pto_engagement" text="Từ chối: giật khi đóng PTO"/>
-        <text name="rms_warranty_stones" text="Từ chối: hút phải đá"/>
-        <text name="rms_warranty_starter" text="Từ chối: khởi động quá lâu"/>
-        <text name="rms_warranty_pto_angle" text="Từ chối: góc trục các-đăng quá lớn"/>
-        <text name="rms_warranty_windup" text="Từ chối: khóa vi sai hoặc 4WD trên nền cứng"/>
-        <text name="rms_warranty_filter" text="Từ chối: bộ lọc bị tắc"/>
-        <text name="rms_warranty_trailer" text="Từ chối: rơ-moóc quá nặng"/>
+        <text name="rms_warranty_heat" text="quá nhiệt"/>
+        <text name="rms_warranty_low_level" text="mức dầu quá thấp"/>
+        <text name="rms_warranty_fuel_dry" text="chạy cạn bình nhiên liệu"/>
+        <text name="rms_warranty_park_brake" text="phanh đỗ đang kéo"/>
+        <text name="rms_warranty_pto_engagement" text="giật khi đóng PTO"/>
+        <text name="rms_warranty_stones" text="hút phải đá"/>
+        <text name="rms_warranty_starter" text="khởi động quá lâu"/>
+        <text name="rms_warranty_pto_angle" text="góc trục các-đăng quá lớn"/>
+        <text name="rms_warranty_windup" text="khóa vi sai hoặc 4WD trên nền cứng"/>
+        <text name="rms_warranty_filter" text="bộ lọc bị tắc"/>
+        <text name="rms_warranty_trailer" text="rơ-moóc quá nặng"/>
+        <text name="rms_warranty_aftermarket_part" text="phụ tùng ngoài hãng"/>
+        <text name="rms_warranty_used_part" text="phụ tùng đã qua sử dụng"/>
+        <text name="rms_warranty_imposed" text="Sửa chữa Tiêu chuẩn với phụ tùng chính hãng"/>
+        <text name="rms_warranty_partial_imposed" text="Hư hỏng được bảo hành sửa Tiêu chuẩn bằng phụ tùng chính hãng"/>
         <text name="rms_ws_overhaul_row_systems" text="Hệ thống được xử lý"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Được phục hồi"/>
         <text name="rms_ws_overhaul_systems_one" text="Một tùy chọn"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="Bảo dưỡng cũng thực hiện việc tìm hỏng hóc này, như kiểm tra tiêu chuẩn."/>
         <text name="rms_ws_quote_title" text="Chi tiết báo giá"/>
         <text name="rms_ws_quote_oil_filter" text="Bộ lọc dầu"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Quy trình tiếp theo được tính phí riêng. Các chất lỏng cần thiết sẽ được cung cấp hoặc lấy từ kho khi quy trình bắt đầu."/>
         <text name="rms_bodywork_touchup" text="Dặm sơn"/>
         <text name="rms_bodywork_full" text="Sơn lại toàn bộ"/>
         <text name="rms_bodywork_colors_title" text="Màu xe"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="Phần mềm gốc không khôi phục bảo hành"/>
         <text name="rms_remap_free" text="Miễn phí"/>
         <text name="rms_remap_unavailable" text="Không thể tinh chỉnh động cơ"/>
-        <text name="rms_remap_refusal_dealer" text="Đại lý không tinh chỉnh động cơ."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Thợ tinh chỉnh đến trang trại: dùng xưởng ở trang trại hoặc xưởng lưu động."/>
+        <text name="rms_ws_overhaul_unavailable" text="Không thể đại tu"/>
+        <text name="rms_remap_refusal_top" text="Đã là động cơ mạnh nhất của dòng: chỉ thợ tinh chỉnh vượt qua, tại xưởng trang trại hoặc lưu động."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Do thợ tinh chỉnh: chỉ thợ trả về nguyên bản, tại xưởng trang trại hoặc lưu động."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Do đại lý tinh chỉnh: chỉ đại lý trả về nguyên bản."/>
+        <text name="rms_remap_curves_maker" text="Đường đặc tính do nhà sản xuất công bố"/>
+        <text name="rms_remap_curves_dealer_measured" text="Băng thử của đại lý, trước và sau"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Đại lý giữ phần mềm nguyên bản"/>
         <text name="rms_remap_refusal_leased" text="Không thể tinh chỉnh máy thuê."/>
         <text name="rms_remap_refusal_not_eligible" text="Động cơ này không có bộ điều khiển để lập trình lại."/>
         <text name="rms_remap_confirm_title" text="Tinh chỉnh động cơ?"/>

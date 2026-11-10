@@ -19,7 +19,7 @@ local KPI_CARDS = {
     { profile = "rms_logKpiIcon", label = "rms_log_cost_per_month_title", figure = "costPerMonth", isCost = true },
     { profile = "rms_logKpiIcon", label = "rms_log_cost_per_hour_title", figure = "costPerHour", isCost = true },
     { profile = "rms_logKpiIcon", slice = "gui.icon_calendar", label = "rms_log_ownership_months_title", figure = "months" },
-    { profile = "rms_logKpiIconWide", slice = "gui.contextAction_icon_repairAlert", label = "rms_log_total_breakdowns_count_title",
+    { profile = "rms_logKpiIcon", slice = "gui.contextAction_icon_repairAlert", label = "rms_log_total_breakdowns_count_title",
         figure = "breakdowns" },
     { profile = "rms_logKpiIcon", slice = "gui.icon_clock", label = "rms_log_average_breakdowns_interval_title", figure = "breakdownInterval" },
     { profile = "rms_logKpiMaintenanceIcon", label = "rms_log_average_maintenance_interval_title", figure = "maintenanceInterval" }
@@ -73,8 +73,7 @@ local function getPresentation(vehicle, entry)
             detailItems = #partNames > 0 and partNames or { g_i18n:getText("rms_log_inspection_desc_no_breakdowns") } }
     elseif entry.type == STATUS.OVERHAUL then
         return { summary = string.format(performed, g_i18n:getText("rms_ws_task_overhaul"), g_i18n:getText(entry.optionOne)),
-            detailLabel = entry.optionThree and g_i18n:getText("rms_log_description") or "",
-            detailItems = entry.optionThree and { g_i18n:getText("rms_log_overhaul_desc_with_painting") } or {} }
+            detailLabel = "", detailItems = {} }
     elseif entry.type == STATUS.BODYWORK then
         return { summary = g_i18n:getText(entry.optionOne), detailLabel = "", detailItems = {} }
     end
@@ -97,8 +96,6 @@ local function getDescription(vehicle, entry)
         description = description .. ". " .. partsText
     elseif entry.type == STATUS.INSPECTION then
         description = description .. ". " .. (#partNames > 0 and partsText or g_i18n:getText("rms_log_inspection_desc_no_breakdowns"))
-    elseif entry.type == STATUS.OVERHAUL and entry.optionThree then
-        description = description .. ". " .. g_i18n:getText("rms_log_overhaul_desc_with_painting")
     end
     local location = getLocation(entry)
     if location ~= "" then
@@ -126,7 +123,9 @@ function RMS_WorkshopRecordFrame:initialize(dialog)
     self.report:initialize(dialog)
     self.heroMetrics = RMS_Utils.cloneTemplate(self.heroMetricTemplate, #HERO_METRICS)
     for index, entry in ipairs(HERO_METRICS) do
-        self.heroMetrics[index]:getDescendantByName("icon"):setImageSlice(nil, entry.icon)
+        local icon = self.heroMetrics[index]:getDescendantByName("icon")
+        icon:setImageSlice(nil, entry.icon)
+        RMS_Utils.fitIcon(icon)
         self.heroMetrics[index]:getDescendantByName("label"):setText(g_i18n:getText(entry.label))
     end
     self.kpiCards = RMS_Utils.cloneTemplate(self.kpiCardTemplate, #KPI_CARDS)
@@ -135,6 +134,9 @@ function RMS_WorkshopRecordFrame:initialize(dialog)
         icon:applyProfile(entry.profile)
         if entry.slice ~= nil then
             icon:setImageSlice(nil, entry.slice)
+        end
+        if not entry.isCost then
+            RMS_Utils.fitIcon(icon)
         end
         self.kpiCards[index]:getDescendantByName("label"):setText(g_i18n:getText(entry.label))
     end
@@ -202,7 +204,9 @@ function RMS_WorkshopRecordFrame:refresh()
     end
     for index, entry in ipairs(KPI_CARDS) do
         if entry.isCost then
-            RMS_Utils.setCurrencyIcon(self.kpiCards[index]:getDescendantByName("icon"))
+            local icon = self.kpiCards[index]:getDescendantByName("icon")
+            RMS_Utils.setCurrencyIcon(icon)
+            RMS_Utils.fitIcon(icon)
         end
         self.kpiCards[index]:getDescendantByName("value"):setText(figures[entry.figure])
     end
@@ -233,10 +237,10 @@ function RMS_WorkshopRecordFrame:updateSelectedEntry()
         self.selectedLogDetailsHeader:setVisible(false)
         self.detailItems, self.invoiceRows = {}, {}
     else
-        local typeText, color, iconSliceId, iconStyle = RMS_Utils.getLogTypePresentation(entry)
+        local typeText, color, iconSliceId = RMS_Utils.getLogTypePresentation(entry)
         local presentation = getPresentation(self.vehicle, entry)
-        self.selectedLogIcon:applyProfile(RMS_Utils.LOG_ICON_PROFILES[iconStyle].detail)
         self.selectedLogIcon:setImageSlice(nil, iconSliceId)
+        RMS_Utils.fitIcon(self.selectedLogIcon)
         self.selectedLogIcon:setImageColor(nil, unpack(color))
         self.selectedLogType:setText(typeText)
         self.selectedLogType:setTextColor(unpack(color))
@@ -287,10 +291,10 @@ function RMS_WorkshopRecordFrame:populateCellForItemInSection(list, _section, in
     end
 
     local entry = self.entries[index]
-    local typeText, color, iconSliceId, iconStyle = RMS_Utils.getLogTypePresentation(entry)
+    local typeText, color, iconSliceId = RMS_Utils.getLogTypePresentation(entry)
     local icon = cell:getAttribute("logTypeIcon")
-    icon:applyProfile(RMS_Utils.LOG_ICON_PROFILES[iconStyle].row)
     icon:setImageSlice(nil, iconSliceId)
+    RMS_Utils.fitIcon(icon)
     icon:setImageColor(nil, unpack(color))
     cell:getAttribute("logType"):setText(typeText)
     cell:getAttribute("logType"):setTextColor(unpack(color))

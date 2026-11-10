@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Huolellinen huolto"/>
         <text name="rms_owner_care_regular" text="Säännöllinen huolto"/>
         <text name="rms_owner_care_neglected" text="Laiminlyöty huolto"/>
+        <text name="rms_ws_label_maintenance_count" text="Tehdyt huollot"/>
         <text name="rms_ws_label_overhaul_count" text="Tehdyt peruskorjaukset"/>
         <text name="rms_ws_label_maintenance_log" text="Huoltoloki"/>
         <text name="rms_ws_label_last_maintenance" text="Viimeisin huolto"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Suodattimet"/>
         <text name="rms_log_cancelled_desc" text="Toimenpide peruttu"/>
         <text name="rms_log_ownership_months_title" text="Omistusaika"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Ajoneuvo maalattiin uudelleen"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Keskimääräinen vikaväli"/>
         <text name="rms_log_average_maintenance_interval_title" text="Keskimääräinen huoltoväli"/>
         <text name="rms_log_performed" text="Suoritettu: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="Tässä kuussa"/>
         <text name="rms_spec_tomorrow_at" text="huomenna kello "/>
         <text name="rms_spec_never" text="Ei koskaan"/>
-        <text name="rms_spec_next_planned_service_notification" text="Aikataulutettu toimenpide aloitettu: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Aikataulutettu toimenpide peruutettiin varojen puutteen vuoksi: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Aikataulutettu toimenpide (%s) ei käynnistynyt: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="ylihuomenna kello "/>
         <text name="rms_spec_day_s" text="päivää"/>
         <text name="rms_spec_day_one" text="päivä"/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Kulutustarvikkeiden laatu"/>
         <text name="rms_option_menu_option_two_title_repair" text="Varaosien laatu"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Peruskorjattava järjestelmä"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Jos toimenpide paljastaa vikoja, sen jälkeen käynnistyy automaattisesti standardikorjaus alkuperäisillä osilla."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Korjauksen jälkeen käynnistyy automaattisesti suositeltu huolto alkuperäisillä kulutustarvikkeilla."/>
         <text name="rms_option_menu_price_text" text="Hinta"/>
-        <text name="rms_option_menu_perform_repair" text="Automaattinen korjaus"/>
-        <text name="rms_option_menu_perform_maintenance" text="Automaattinen huolto"/>
         <text name="rms_option_menu_warranty_repair_text" text="Takuukorjaus"/>
         <text name="rms_option_menu_lease_service_text" text="Sisältyy vuokraan"/>
         <text name="rms_option_menu_duration_text" text="Kesto"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="Ei takuuta"/>
         <text name="rms_ws_quality_oem_warranty" text="12 kuukauden takuu"/>
         <text name="rms_ws_quality_factory_warranty" text="Tehdastakuu"/>
-        <text name="rms_warranty_used" text="Purkaamon takuu: vain osa"/>
+        <text name="rms_ws_quality_part_warranty" text="Takuuta vielä %d kuukautta"/>
         <text name="rms_ws_quality_delta" text="%s vs. alkuperäinen"/>
         <text name="rms_ws_repair_row_faults" text="Käsitellyt viat"/>
         <text name="rms_ws_repair_row_faults_detail" text="Valituista"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Valitaan alla olevista korteista"/>
         <text name="rms_ws_repair_quality_choice" text="Oma valinta"/>
         <text name="rms_ws_warranty_title" text="Takuu"/>
+        <text name="rms_ws_quote_warranty_label" text="Takuu:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Tehdastakuu:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Osan takuu:"/>
+        <text name="rms_ws_quote_warranty_covered" text="katettu"/>
+        <text name="rms_ws_quote_warranty_part" text="katettu, vielä %d kuukautta"/>
+        <text name="rms_ws_quote_warranty_used" text="vain osa katettu"/>
+        <text name="rms_ws_quote_warranty_expired" text="päättynyt"/>
+        <text name="rms_ws_quote_warranty_own" text="ei kateta omassa korjaamossa"/>
+        <text name="rms_ws_quote_warranty_lease" text="ei kateta vuokrattaessa"/>
+        <text name="rms_ws_quote_warranty_remapped" text="menetetty, moottori ohjelmoitu"/>
+        <text name="rms_ws_quote_warranty_refused" text="hylätty, %s"/>
         <text name="rms_ws_warranty_covered" text="Voimassa"/>
         <text name="rms_ws_warranty_not_covered" text="Ei voimassa"/>
         <text name="rms_ws_warranty_terms" text="Tehdas: %d kuukautta tai %s h"/>
+        <text name="rms_ws_warranty_refused" text="Hylätty: %s"/>
         <text name="rms_ws_badge_warranty" text="Takuu"/>
         <text name="rms_warranty_base" text="%d kuukautta tai %s h (sisältyy)"/>
         <text name="rms_warranty_extension" text="%d kuukautta tai %s h"/>
         <text name="rms_warranty_partial" text="Osittain katettu"/>
         <text name="rms_warranty_own" text="Ei kateta omassa korjaamossa"/>
-        <text name="rms_warranty_factory" text="Alkuperäisosat ja työ katetaan"/>
-        <text name="rms_warranty_part" text="Osa katettu koneen %d kuukauden ikään asti"/>
+        <text name="rms_warranty_part" text="Osan takuu: vielä %d kuukautta"/>
         <text name="rms_warranty_lease" text="Korjausta ei kateta vuokrattaessa"/>
-        <text name="rms_warranty_expired" text="Takuu päättynyt"/>
-        <text name="rms_warranty_overdue" text="Hylätty: huolto myöhässä"/>
-        <text name="rms_warranty_impact" text="Hylätty: iskuvaurio"/>
-        <text name="rms_warranty_options" text="Vaihto alkuperäisosiin vaaditaan"/>
+        <text name="rms_warranty_overdue" text="huolto myöhässä"/>
+        <text name="rms_warranty_impact" text="iskuvaurio"/>
         <text name="rms_warranty_mobile" text="Maksat liikkuvan korjaamon lisätyökulut"/>
         <text name="rms_warranty_remapped" text="Takuu menetetty: moottori ohjelmoitu"/>
-        <text name="rms_warranty_heat" text="Hylätty: ylikuumeneminen"/>
-        <text name="rms_warranty_low_level" text="Hylätty: öljytaso liian alhainen"/>
-        <text name="rms_warranty_fuel_dry" text="Hylätty: tankki ajettu tyhjäksi"/>
-        <text name="rms_warranty_park_brake" text="Hylätty: seisontajarru kytkettynä"/>
-        <text name="rms_warranty_pto_engagement" text="Hylätty: voimanoton kytkentäisku"/>
-        <text name="rms_warranty_stones" text="Hylätty: kiviä koneessa"/>
-        <text name="rms_warranty_starter" text="Hylätty: käynnistin ylikuormitettu"/>
-        <text name="rms_warranty_pto_angle" text="Hylätty: nivelakselin kulma liian suuri"/>
-        <text name="rms_warranty_windup" text="Hylätty: lukko tai 4WD kovalla alustalla"/>
-        <text name="rms_warranty_filter" text="Hylätty: tukkeutunut suodatin"/>
-        <text name="rms_warranty_trailer" text="Hylätty: liian raskas perävaunu"/>
+        <text name="rms_warranty_heat" text="ylikuumeneminen"/>
+        <text name="rms_warranty_low_level" text="öljytaso liian alhainen"/>
+        <text name="rms_warranty_fuel_dry" text="tankki ajettu tyhjäksi"/>
+        <text name="rms_warranty_park_brake" text="seisontajarru kytkettynä"/>
+        <text name="rms_warranty_pto_engagement" text="voimanoton kytkentäisku"/>
+        <text name="rms_warranty_stones" text="kiviä koneessa"/>
+        <text name="rms_warranty_starter" text="käynnistin ylikuormitettu"/>
+        <text name="rms_warranty_pto_angle" text="nivelakselin kulma liian suuri"/>
+        <text name="rms_warranty_windup" text="lukko tai 4WD kovalla alustalla"/>
+        <text name="rms_warranty_filter" text="tukkeutunut suodatin"/>
+        <text name="rms_warranty_trailer" text="liian raskas perävaunu"/>
+        <text name="rms_warranty_aftermarket_part" text="tarvikeosa"/>
+        <text name="rms_warranty_used_part" text="käytetty osa"/>
+        <text name="rms_warranty_imposed" text="Standardi-korjaus alkuperäisosin"/>
+        <text name="rms_warranty_partial_imposed" text="Katettu vika korjataan Standardi-korjauksena alkuperäisosin"/>
         <text name="rms_ws_overhaul_row_systems" text="Käsitellyt järjestelmät"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Kunnostettu"/>
         <text name="rms_ws_overhaul_systems_one" text="Yksi valittava"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="Myös huolto tekee tämän vianetsinnän, kuten vakiotarkastus."/>
         <text name="rms_ws_quote_title" text="Tarjouksen erittely"/>
         <text name="rms_ws_quote_oil_filter" text="Öljynsuodatin"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Seuraava toimenpide veloitetaan erikseen. Tarvittavat nesteet toimitetaan tai otetaan varastosta sen alkaessa."/>
         <text name="rms_bodywork_touchup" text="Maalin paikkaukset"/>
         <text name="rms_bodywork_full" text="Täysi uudelleenmaalaus"/>
         <text name="rms_bodywork_colors_title" text="Ajoneuvon värit"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="Alkuperäisohjelma ei palauta takuuta"/>
         <text name="rms_remap_free" text="Ilmainen"/>
         <text name="rms_remap_unavailable" text="Moottoriohjelmointi ei saatavilla"/>
-        <text name="rms_remap_refusal_dealer" text="Jälleenmyyjä ei ohjelmoi moottoreita."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Ohjelmoija tulee tilalle: käytä tilan korjaamoa tai liikkuvaa korjaamoa."/>
+        <text name="rms_ws_overhaul_unavailable" text="Peruskorjaus ei saatavilla"/>
+        <text name="rms_remap_refusal_top" text="Jo sarjan tehokkain moottori: vain ohjelmoija menee pidemmälle, tilan tai liikkuvalla korjaamolla."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Ohjelmoijan ohjelmoima: vain ohjelmoija palauttaa sen, tilan tai liikkuvalla korjaamolla."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Jälleenmyyjän ohjelmoima: vain jälleenmyyjä palauttaa sen."/>
+        <text name="rms_remap_curves_maker" text="Valmistajan ilmoittamat käyrät"/>
+        <text name="rms_remap_curves_dealer_measured" text="Jälleenmyyjän tehopenkki, ennen ja jälkeen"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Jälleenmyyjä säilyttää alkuperäisohjelman"/>
         <text name="rms_remap_refusal_leased" text="Vuokrakonetta ei voi ohjelmoida."/>
         <text name="rms_remap_refusal_not_eligible" text="Tässä moottorissa ei ole ohjelmoitavaa ohjausyksikköä."/>
         <text name="rms_remap_confirm_title" text="Ohjelmoidaanko moottori?"/>

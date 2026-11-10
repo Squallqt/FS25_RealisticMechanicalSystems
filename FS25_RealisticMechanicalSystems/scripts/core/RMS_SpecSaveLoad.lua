@@ -143,7 +143,6 @@ local LOG_ENTRY_XML = {
     { name = "location", isDetail = true, default = "UNKNOWN" },
     { name = "optionOne", isDetail = true, default = "NONE" },
     { name = "optionTwo", isDetail = true, default = "NONE" },
-    { name = "optionThree", isDetail = true, default = false },
     { name = "isVisible", isDetail = true, default = true,
         write = function(entry) return tostring(RMS_Utils.normalizeBoolValue(entry.isVisible, true)) end,
         read = function(value) return RMS_Utils.normalizeBoolValue(value, true) end },
@@ -266,6 +265,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#warrantyVoided", spec.warrantyVoided)
         xmlFile:setValue(key .. "#remapMotor", spec.remapMotor)
         xmlFile:setValue(key .. "#remapAge", spec.remapAge)
+        xmlFile:setValue(key .. "#remapByDealer", spec.remapByDealer)
         xmlFile:setValue(key .. "#condition", spec.conditionLevel or 1.0)
         xmlFile:setValue(key .. "#realOperatingTime", workingTime)
         if xmlFile.handle ~= nil then
@@ -273,7 +273,6 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         end
         xmlFile:setValue(key .. "#breakdowns", RMS_Utils.serializeBreakdowns(spec.activeBreakdowns))
         xmlFile:setValue(key .. "#state", spec.currentState or RealisticMechanicalSystems.STATUS.READY)
-        xmlFile:setValue(key .. "#plannedState", spec.plannedState or RealisticMechanicalSystems.STATUS.READY)
         xmlFile:setValue(key .. "#maintenanceTimer", RealisticMechanicalSystems.sanitizeNumber(spec.maintenanceTimer, 0, 0))
         xmlFile:setValue(key .. "#engineTemperature", RMS_Thermal.getEngineTemperature(self))
         xmlFile:setValue(key .. "#transmissionTemperature", RealisticMechanicalSystems.sanitizeNumber(spec.rawTransmissionTemperature or spec.transmissionTemperature, 20))
@@ -320,7 +319,6 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#transmissionThermostatState", RealisticMechanicalSystems.sanitizeNumber(spec.transmissionThermostatState, 0.0, 0.0, 1.0))
         xmlFile:setValue(key .. "#serviceOptionOne", spec.serviceOptionOne or "")
         xmlFile:setValue(key .. "#serviceOptionTwo", spec.serviceOptionTwo or "")
-        xmlFile:setValue(key .. "#serviceOptionThree", spec.serviceOptionThree or false)
         xmlFile:setValue(key .. "#workshopType", spec.workshopType or "")
         xmlFile:setValue(key .. "#pendingSelectedBreakdowns", table.concat(spec.pendingSelectedBreakdowns or {}, ","))
         xmlFile:setValue(key .. "#pendingServicePrice", RMS_Utils.encodeOptionalFloat(spec.pendingServicePrice))
@@ -380,6 +378,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.warrantyVoided = false
     self.spec_RealisticMechanicalSystems.remapMotor = 0
     self.spec_RealisticMechanicalSystems.remapAge = 0
+    self.spec_RealisticMechanicalSystems.remapByDealer = false
     self.spec_RealisticMechanicalSystems.conditionLevel = self.spec_RealisticMechanicalSystems.baseConditionLevel
 
     local currentOperatingTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
@@ -628,11 +627,9 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.metaUpdateTimer = math.random() * RMS_Config.META_UPDATE_DELAY
     self.spec_RealisticMechanicalSystems.maintenanceTimer = 0
     self.spec_RealisticMechanicalSystems.currentState = RealisticMechanicalSystems.STATUS.READY
-    self.spec_RealisticMechanicalSystems.plannedState = RealisticMechanicalSystems.STATUS.READY
     self.spec_RealisticMechanicalSystems.workshopType = RealisticMechanicalSystems.WORKSHOP.DEALER
     self.spec_RealisticMechanicalSystems.serviceOptionOne = nil
     self.spec_RealisticMechanicalSystems.serviceOptionTwo = nil
-    self.spec_RealisticMechanicalSystems.serviceOptionThree = false
     self.spec_RealisticMechanicalSystems.pendingSelectedBreakdowns = {}
     self.spec_RealisticMechanicalSystems.pendingServicePrice = nil
     self.spec_RealisticMechanicalSystems.pendingServiceInvoice = nil
@@ -678,6 +675,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.warrantyVoided = xmlFile:getValue(key .. "#warrantyVoided", false)
     spec.remapMotor = xmlFile:getValue(key .. "#remapMotor", 0)
     spec.remapAge = xmlFile:getValue(key .. "#remapAge", 0)
+    spec.remapByDealer = xmlFile:getValue(key .. "#remapByDealer", false)
     RMS_EngineRemap.validateLoadedEngine(self)
     local savedAge = xmlFile:getValue(vehicleKey .. "#age", 0)
     for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
@@ -687,7 +685,6 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     end
     spec.conditionLevel = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#condition", spec.conditionLevel), spec.conditionLevel or 1.0, 0.001, 1.0)
     spec.currentState = xmlFile:getValue(key .. "#state", spec.currentState)
-    spec.plannedState = xmlFile:getValue(key .. "#plannedState", spec.plannedState)
     spec.maintenanceTimer = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#maintenanceTimer", spec.maintenanceTimer), spec.maintenanceTimer or 0, 0)
     spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
     
@@ -775,7 +772,6 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
             spec[field] = nil
         end
     end
-    spec.serviceOptionThree = xmlFile:getValue(key .. "#serviceOptionThree", spec.serviceOptionThree)
     RMS_Drivetrain.loadFromSavegame(self, xmlFile, key)
     spec.tripStartKilometers = xmlFile:getValue(key .. "#tripStartKilometers", spec.tripStartKilometers)
     local loadedWorkshopType = xmlFile:getValue(key .. "#workshopType", "")
@@ -855,8 +851,8 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     -- A save without these values starts the vehicle at rest
     local defaults = {
         serviceLevel = spec.baseServiceLevel, conditionLevel = spec.baseConditionLevel, maintenanceTimer = 0,
-        currentState = RealisticMechanicalSystems.STATUS.READY, plannedState = RealisticMechanicalSystems.STATUS.READY,
-        serviceOptionThree = false, pendingSelectedBreakdowns = {}, pendingInspectionQueue = {}, pendingRepairQueue = {},
+        currentState = RealisticMechanicalSystems.STATUS.READY,
+        pendingSelectedBreakdowns = {}, pendingInspectionQueue = {}, pendingRepairQueue = {},
         pendingProgressStepIndex = 0, pendingProgressTotalTime = 0, pendingProgressElapsedTime = 0,
         pendingOverhaulPartStart = {}, pendingOverhaulPartTarget = {}
     }

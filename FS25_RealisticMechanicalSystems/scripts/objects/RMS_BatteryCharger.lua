@@ -60,7 +60,17 @@ local function publishState(charger, spec)
     charger:raiseDirtyFlags(spec.dirtyFlag)
 end
 
+---Plays the clamps put on or taken off, for every player around
+local function playClamps(charger, previousState)
+    local spec = assert(getSpec(charger))
+    local wasConnected = previousState == RMS_BatteryCharger.STATE.CHARGING or previousState == RMS_BatteryCharger.STATE.FULL
+    if charger.isClient and wasConnected ~= canDisconnect(spec) then
+        RMS_SoundManager.playSample(wasConnected and spec.disconnectSample or spec.connectSample)
+    end
+end
+
 local function notifyChange(charger, previousState, previousInsufficient, previousTarget)
+    playClamps(charger, previousState)
     if not charger.isClient or g_currentMission.hud == nil
         or g_currentMission.hud.addSideNotification == nil
         or charger:getOwnerFarmId() ~= g_currentMission:getFarmId() then
@@ -134,7 +144,9 @@ function RMS_BatteryCharger.initSpecialization()
     schema:setXMLSpecializationType("RMSBatteryCharger")
     schema:register(XMLValueType.FLOAT, "vehicle.rmsBatteryCharger#maxCurrent", "Maximum output current in amps", 150)
     schema:register(XMLValueType.NODE_INDEX, "vehicle.rmsBatteryCharger#display", "Digital charger display")
-    SoundManager.registerSampleXMLPaths(schema, "vehicle.rmsBatteryCharger.sounds", "work")
+    for _, name in ipairs({ "work", "connect", "disconnect" }) do
+        SoundManager.registerSampleXMLPaths(schema, "vehicle.rmsBatteryCharger.sounds", name)
+    end
     schema:setXMLSpecializationType()
     local saveKey = "vehicles.vehicle(?)." .. RMS_BatteryCharger.SPEC_NAME
     Vehicle.xmlSchemaSavegame:register(XMLValueType.INT, saveKey .. "#state", "Charger state", 0)
@@ -241,6 +253,10 @@ function RMS_BatteryCharger:onLoad(savegame)
         end
         spec.sample = g_soundManager:loadSampleFromXML(self.xmlFile, "vehicle.rmsBatteryCharger.sounds", "work",
             self.baseDirectory, self.components, 0, AudioGroup.VEHICLE, self.i3dMappings, self)
+        spec.connectSample = g_soundManager:loadSampleFromXML(self.xmlFile, "vehicle.rmsBatteryCharger.sounds", "connect",
+            self.baseDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
+        spec.disconnectSample = g_soundManager:loadSampleFromXML(self.xmlFile, "vehicle.rmsBatteryCharger.sounds", "disconnect",
+            self.baseDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
         spec.activatable = RMS_BatteryChargerActivatable.new(self)
         g_currentMission.activatableObjectsSystem:addActivatable(spec.activatable)
     end
@@ -524,7 +540,7 @@ function RMS_BatteryCharger:onDelete()
     local spec = assert(getSpec(self))
     if self.isClient then
         g_currentMission.activatableObjectsSystem:removeActivatable(spec.activatable)
-        g_soundManager:deleteSample(spec.sample)
+        g_soundManager:deleteSamples({ spec.sample, spec.connectSample, spec.disconnectSample })
     end
 end
 

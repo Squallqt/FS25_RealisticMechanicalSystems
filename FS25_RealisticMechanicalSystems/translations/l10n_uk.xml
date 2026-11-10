@@ -139,6 +139,7 @@
         <text name="rms_owner_care_careful" text="Ретельне обслуговування"/>
         <text name="rms_owner_care_regular" text="Регулярне обслуговування"/>
         <text name="rms_owner_care_neglected" text="Занедбане обслуговування"/>
+        <text name="rms_ws_label_maintenance_count" text="Виконано обслуговувань"/>
         <text name="rms_ws_label_overhaul_count" text="Виконано капітальних ремонтів"/>
         <text name="rms_ws_label_maintenance_log" text="Журнал обслуговування"/>
         <text name="rms_ws_label_last_maintenance" text="Останнє обслуговування"/>
@@ -196,7 +197,6 @@
         <text name="rms_log_invoice_filters" text="Фільтри"/>
         <text name="rms_log_cancelled_desc" text="Роботу скасовано"/>
         <text name="rms_log_ownership_months_title" text="Тривалість володіння"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Транспортний засіб було перефарбовано"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Середній інтервал між несправностями"/>
         <text name="rms_log_average_maintenance_interval_title" text="Середній інтервал між обслуговуваннями"/>
         <text name="rms_log_performed" text="Виконана робота: %s (%s)"/>
@@ -222,9 +222,6 @@
         <text name="rms_spec_this_month" text="Цього місяця"/>
         <text name="rms_spec_tomorrow_at" text="завтра о "/>
         <text name="rms_spec_never" text="Ніколи"/>
-        <text name="rms_spec_next_planned_service_notification" text="Заплановану роботу розпочато: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Заплановану роботу %s скасовано через брак коштів"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Заплановану роботу (%s) не розпочато: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="післязавтра о "/>
         <text name="rms_spec_day_s" text="дн."/>
         <text name="rms_spec_day_one" text="дн."/>
@@ -304,11 +301,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Якість витратних матеріалів"/>
         <text name="rms_option_menu_option_two_title_repair" text="Якість запасних частин"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Система для капітального ремонту"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Якщо робота виявляє несправності, автоматично розпочинає стандартний ремонт з оригінальними деталями."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Після ремонту автоматично виконує рекомендоване ТО з оригінальними витратними матеріалами."/>
         <text name="rms_option_menu_price_text" text="Ціна"/>
-        <text name="rms_option_menu_perform_repair" text="Автоматичний ремонт"/>
-        <text name="rms_option_menu_perform_maintenance" text="Автоматичне обслуговування"/>
         <text name="rms_option_menu_warranty_repair_text" text="Гарантійний ремонт"/>
         <text name="rms_option_menu_lease_service_text" text="Входить в оренду"/>
         <text name="rms_option_menu_duration_text" text="Тривалість"/>
@@ -357,7 +350,7 @@
         <text name="rms_ws_quality_no_warranty" text="Без гарантії"/>
         <text name="rms_ws_quality_oem_warranty" text="Гарантія 12 міс."/>
         <text name="rms_ws_quality_factory_warranty" text="Заводська гарантія"/>
-        <text name="rms_warranty_used" text="Гарантія розбірки: лише деталь"/>
+        <text name="rms_ws_quality_part_warranty" text="Гарантія ще %d міс."/>
         <text name="rms_ws_quality_delta" text="%s до оригіналу"/>
         <text name="rms_ws_repair_row_faults" text="Усувані несправності"/>
         <text name="rms_ws_repair_row_faults_detail" text="З позначених"/>
@@ -377,34 +370,47 @@
         <text name="rms_ws_repair_row_quality_detail" text="Вибирається на картках нижче"/>
         <text name="rms_ws_repair_quality_choice" text="На вибір"/>
         <text name="rms_ws_warranty_title" text="Гарантія"/>
+        <text name="rms_ws_quote_warranty_label" text="Гарантія:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Заводська гарантія:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Гарантія деталі:"/>
+        <text name="rms_ws_quote_warranty_covered" text="покривається"/>
+        <text name="rms_ws_quote_warranty_part" text="покривається, ще %d міс."/>
+        <text name="rms_ws_quote_warranty_used" text="покривається лише деталь"/>
+        <text name="rms_ws_quote_warranty_expired" text="закінчилася"/>
+        <text name="rms_ws_quote_warranty_own" text="не покривається у власній майстерні"/>
+        <text name="rms_ws_quote_warranty_lease" text="не покривається під час оренди"/>
+        <text name="rms_ws_quote_warranty_remapped" text="втрачено, чип-тюнінг двигуна"/>
+        <text name="rms_ws_quote_warranty_refused" text="відмова, %s"/>
         <text name="rms_ws_warranty_covered" text="Діє"/>
         <text name="rms_ws_warranty_not_covered" text="Не діє"/>
         <text name="rms_ws_warranty_terms" text="Заводська: %d міс. або %s h"/>
+        <text name="rms_ws_warranty_refused" text="Відмова: %s"/>
         <text name="rms_ws_badge_warranty" text="Гарантія"/>
         <text name="rms_warranty_base" text="%d міс. або %s h (включено)"/>
         <text name="rms_warranty_extension" text="%d міс. або %s h"/>
         <text name="rms_warranty_partial" text="Частково покривається"/>
         <text name="rms_warranty_own" text="Не покривається у власній майстерні"/>
-        <text name="rms_warranty_factory" text="Оригінальні деталі та робота покриваються"/>
-        <text name="rms_warranty_part" text="Деталь покривається до віку машини %d місяців"/>
+        <text name="rms_warranty_part" text="Гарантія деталі: ще %d міс."/>
         <text name="rms_warranty_lease" text="Ремонт не покривається під час оренди"/>
-        <text name="rms_warranty_expired" text="Гарантія закінчилася"/>
-        <text name="rms_warranty_overdue" text="Відмова: прострочене обслуговування"/>
-        <text name="rms_warranty_impact" text="Відмова: пошкодження від удару"/>
-        <text name="rms_warranty_options" text="Потрібна заміна оригінальними деталями"/>
+        <text name="rms_warranty_overdue" text="прострочене обслуговування"/>
+        <text name="rms_warranty_impact" text="пошкодження від удару"/>
         <text name="rms_warranty_mobile" text="До сплати: доплата за роботу мобільної майстерні"/>
         <text name="rms_warranty_remapped" text="Гарантію втрачено: чип-тюнінг двигуна"/>
-        <text name="rms_warranty_heat" text="Відмова: перегрів"/>
-        <text name="rms_warranty_low_level" text="Відмова: надто низький рівень оливи"/>
-        <text name="rms_warranty_fuel_dry" text="Відмова: бак вироблено досуха"/>
-        <text name="rms_warranty_park_brake" text="Відмова: затягнуто стоянкове гальмо"/>
-        <text name="rms_warranty_pto_engagement" text="Відмова: ривок під час увімкнення ВВП"/>
-        <text name="rms_warranty_stones" text="Відмова: потрапляння каміння"/>
-        <text name="rms_warranty_starter" text="Відмова: перевантаження стартера"/>
-        <text name="rms_warranty_pto_angle" text="Відмова: надто великий кут карданного вала"/>
-        <text name="rms_warranty_windup" text="Відмова: блокування або 4WD на твердому ґрунті"/>
-        <text name="rms_warranty_filter" text="Відмова: забитий фільтр"/>
-        <text name="rms_warranty_trailer" text="Відмова: надто важкий причіп"/>
+        <text name="rms_warranty_heat" text="перегрів"/>
+        <text name="rms_warranty_low_level" text="надто низький рівень оливи"/>
+        <text name="rms_warranty_fuel_dry" text="бак вироблено досуха"/>
+        <text name="rms_warranty_park_brake" text="затягнуто стоянкове гальмо"/>
+        <text name="rms_warranty_pto_engagement" text="ривок під час увімкнення ВВП"/>
+        <text name="rms_warranty_stones" text="потрапляння каміння"/>
+        <text name="rms_warranty_starter" text="перевантаження стартера"/>
+        <text name="rms_warranty_pto_angle" text="надто великий кут карданного вала"/>
+        <text name="rms_warranty_windup" text="блокування або 4WD на твердому ґрунті"/>
+        <text name="rms_warranty_filter" text="забитий фільтр"/>
+        <text name="rms_warranty_trailer" text="надто важкий причіп"/>
+        <text name="rms_warranty_aftermarket_part" text="неоригінальна деталь"/>
+        <text name="rms_warranty_used_part" text="вживана деталь"/>
+        <text name="rms_warranty_imposed" text="Стандартний, оригінальні деталі"/>
+        <text name="rms_warranty_partial_imposed" text="Покрита несправність: Стандартний ремонт, оригінальні деталі"/>
         <text name="rms_ws_overhaul_row_systems" text="Відновлювані системи"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Приводяться до ладу"/>
         <text name="rms_ws_overhaul_systems_one" text="Одна на вибір"/>
@@ -448,7 +454,6 @@
         <text name="rms_ws_inspection_maintenance_note" text="Обслуговування теж виконує цей пошук несправностей, як стандартний огляд."/>
         <text name="rms_ws_quote_title" text="Деталізація кошторису"/>
         <text name="rms_ws_quote_oil_filter" text="Оливний фільтр"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Наступна робота оплачується окремо. Потрібні рідини надає майстерня або їх беруть із вашого запасу на початку роботи."/>
         <text name="rms_bodywork_touchup" text="Підфарбування"/>
         <text name="rms_bodywork_full" text="Повне перефарбування"/>
         <text name="rms_bodywork_colors_title" text="Кольори машини"/>
@@ -487,8 +492,13 @@
         <text name="rms_remap_warranty_not_back" text="Заводська прошивка не поверне гарантію"/>
         <text name="rms_remap_free" text="Безкоштовно"/>
         <text name="rms_remap_unavailable" text="Чип-тюнінг недоступний"/>
-        <text name="rms_remap_refusal_dealer" text="Дилер не виконує чип-тюнінг двигунів."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Тюнер приїде на ферму: скористайтеся майстернею ферми або мобільною майстернею."/>
+        <text name="rms_ws_overhaul_unavailable" text="Капітальний ремонт недоступний"/>
+        <text name="rms_remap_refusal_top" text="Уже найпотужніший двигун лінійки: далі йде лише тюнер, у майстерні ферми або мобільній."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Прошитий тюнером: повернути заводську прошивку може лише він, у майстерні ферми або мобільній."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Прошитий дилером: повернути заводську прошивку може лише дилер."/>
+        <text name="rms_remap_curves_maker" text="Криві, заявлені виробником"/>
+        <text name="rms_remap_curves_dealer_measured" text="Стенд дилера, до та після"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Дилер зберігає заводську прошивку"/>
         <text name="rms_remap_refusal_leased" text="Чип-тюнінг орендованої машини неможливий."/>
         <text name="rms_remap_refusal_not_eligible" text="Цей двигун не має блока керування для перепрошивки."/>
         <text name="rms_remap_confirm_title" text="Виконати чип-тюнінг?"/>
@@ -696,7 +706,7 @@
         <text name="rms_inspection_verdict_stop_title" text="Не використовувати"/>
         <text name="rms_inspection_verdict_stop_message" text="Один пункт потребує усунення перед використанням. Не працюйте на цій машині в такому стані."/>
         <text name="rms_inspection_service_due_in" text="%s через %s"/>
-        <text name="rms_inspection_service_overdue" text="%s прострочена на %s"/>
+        <text name="rms_inspection_service_overdue" text="%s: затримка %s"/>
         <text name="rms_inspection_status_slightly_low" text="Трохи низький"/>
         <text name="rms_inspection_status_slightly_dirty" text="Злегка забитий"/>
         <text name="rms_inspection_status_grease_due" text="Час змастити"/>
