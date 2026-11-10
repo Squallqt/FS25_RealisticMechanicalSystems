@@ -584,8 +584,9 @@ local function readBatteryRows(vehicle, spec, rows)
     local batteryA = math.floor(balance.batteryA * 10 + 0.5) / 10
     table.insert(rows, {label, string.format("%.1f V  ·  %s (%.0f of %.0f Ah)  ·  %+.1f A", spec.systemVoltageV, pct(spec.batterySoc),
         spec.batterySoc * balance.capacityAh, balance.capacityAh, batteryA == 0 and 0 or batteryA)})
-    table.insert(rows, {"At rest", string.format("%.2f V  ·  ambient %.0f °C  ·  cold holds back %s",
-        RMS_Electrical.getRestingVoltage(rating, spec.batterySoc), balance.ambientC, pct(balance.floorSoc))})
+    table.insert(rows, {"At rest", string.format("%.2f V  ·  ambient %.0f °C  ·  cold holds back %s%s",
+        RMS_Electrical.getRestingVoltage(rating, spec.batterySoc), balance.ambientC, pct(balance.floorSoc),
+        balance.reachSoc < balance.floorSoc and ", given under a starting aid" or "")})
     local partner = spec.externalPowerConnection
     table.insert(rows, {"Parked draw", string.format("%.0f mA  ·  isolator %s  ·  %s  ·  %s", RMS_Electrical.getRestingDraw(spec) * 1000,
         spec.batteryIsolated and "open" or "closed", partner ~= nil and "cables to " .. partner:getFullName() or "no cables",

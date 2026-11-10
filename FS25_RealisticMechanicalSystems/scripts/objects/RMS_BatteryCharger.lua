@@ -6,7 +6,6 @@ RMS_BatteryCharger.SPEC_NAME = "FS25_RealisticMechanicalSystems.rmsBatteryCharge
 RMS_BatteryCharger.SPEC_TABLE_NAME = "spec_" .. RMS_BatteryCharger.SPEC_NAME
 RMS_BatteryCharger.MAX_DISTANCE = 4
 RMS_BatteryCharger.STOPPED_SPEED = 0.1
-RMS_BatteryCharger.MOVEMENT_TOLERANCE = 0.05
 RMS_BatteryCharger.STATE = { IDLE = 0, CHARGING = 1, FULL = 2, INTERRUPTED = 3 }
 RMS_BatteryCharger.MODE = { CHARGE = 0, START = 1 }
 RMS_BatteryCharger.START_CURRENT_A = 200
@@ -42,20 +41,6 @@ local getIsAlive = RMS_BatteryCharger.getIsAlive
 local function getIsCranking(target)
     return RMS_Electrical.getIsStarting(target)
 end
-
----Returns where an object stands
-function RMS_BatteryCharger.getPosition(object)
-    return {getWorldTranslation(object.rootNode)}
-end
-local getPosition = RMS_BatteryCharger.getPosition
-
----Tells whether an object left the place it was plugged at
-function RMS_BatteryCharger.hasMoved(object, position)
-    local x, y, z = getWorldTranslation(object.rootNode)
-    return MathUtil.vector3Length(x - position[1], y - position[2], z - position[3])
-        > RMS_BatteryCharger.MOVEMENT_TOLERANCE
-end
-local hasMoved = RMS_BatteryCharger.hasMoved
 
 local function configurePushDrive(charger)
     local motorized = charger.spec_motorized
@@ -283,13 +268,12 @@ function RMS_BatteryCharger.validate(charger, target, mode)
         return "distance"
     end
     local spec = assert(getSpec(charger))
-    local connected = canDisconnect(spec) and RMS_Utils.getConnectedObject(spec) == target and spec.targetPosition ~= nil
+    local connected = canDisconnect(spec) and RMS_Utils.getConnectedObject(spec) == target
     local process = mode or spec.mode or RMS_BatteryCharger.MODE.CHARGE
     if process == RMS_BatteryCharger.MODE.START and targetSpec.electricalRating.seriesBatteries > 1 then return "voltage" end
     if (not connected or process ~= RMS_BatteryCharger.MODE.START)
         and (target:getIsMotorStarted() or getIsCranking(target)) then return "motor" end
-    if connected and hasMoved(target, spec.targetPosition)
-        or not connected and math.abs(target:getLastSpeed()) > RMS_BatteryCharger.STOPPED_SPEED then
+    if not connected and math.abs(target:getLastSpeed()) > RMS_BatteryCharger.STOPPED_SPEED then
         return "moving"
     end
     if target:isUnderService() then
@@ -318,7 +302,6 @@ function RMS_BatteryCharger.stop(charger, state, reason, suppressNotification)
     spec.current = 0
     spec.insufficient = false
     if not canDisconnect(spec) then
-        spec.targetPosition = nil
         spec.wasCranking = false
     end
     if not canDisconnect(spec) then
@@ -353,7 +336,6 @@ function RMS_BatteryCharger.tryStart(charger, target, requester, restoring, mode
     local previousState, previousInsufficient = spec.state, spec.insufficient
     spec.mode = mode
     spec.target = target
-    spec.targetPosition = getPosition(target)
     spec.wasCranking = false
     spec.targetUniqueId = target:getUniqueId()
     spec.state = RMS_BatteryCharger.STATE.CHARGING
@@ -374,16 +356,15 @@ end
 function RMS_BatteryCharger.getAvailableCurrent(target, isCranking)
     local charger = target.spec_RealisticMechanicalSystems.batteryCharger
     local spec = getSpec(charger)
-    if spec == nil or spec.state ~= RMS_BatteryCharger.STATE.CHARGING then return 0, 0 end
+    if spec == nil or spec.state ~= RMS_BatteryCharger.STATE.CHARGING then return 0 end
     -- A pending disconnect must supply no current.
-    if RMS_BatteryCharger.validate(charger, target) ~= "ok" then return 0, 0 end
+    if RMS_BatteryCharger.validate(charger, target) ~= "ok" then return 0 end
     if spec.mode == RMS_BatteryCharger.MODE.START then
-        if target:getIsMotorStarted() or not isCranking
-            or (spec.cooldownUntilMs or 0) > (g_currentMission.time or 0) then return 0, 0 end
-        return 0, RMS_BatteryCharger.START_CURRENT_A
+        if target:getIsMotorStarted() then return 0 end
+        return isCranking and RMS_BatteryCharger.START_CURRENT_A or spec.maxCurrent
     end
     local rating = target.spec_RealisticMechanicalSystems.electricalRating
-    return rating.seriesBatteries > 1 and math.min(spec.maxCurrent, RMS_BatteryCharger.MAX_CURRENT_24V_A) or spec.maxCurrent, 0
+    return rating.seriesBatteries > 1 and math.min(spec.maxCurrent, RMS_BatteryCharger.MAX_CURRENT_24V_A) or spec.maxCurrent
 end
 
 ---Publishes measurements after the one authoritative battery integration.
@@ -430,7 +411,6 @@ function RMS_BatteryCharger:onUpdate()
             local reason = RMS_BatteryCharger.validate(self, target)
             if reason == "ok" then
                 spec.target = target
-                spec.targetPosition = getPosition(target)
                 target.spec_RealisticMechanicalSystems.batteryCharger = self
                 publishState(self, spec)
             else
@@ -445,7 +425,6 @@ function RMS_BatteryCharger:onUpdate()
             local reason = RMS_BatteryCharger.tryStart(self, target, nil, true)
             if reason == "full" then
                 spec.target = target
-                spec.targetPosition = getPosition(target)
                 target.spec_RealisticMechanicalSystems.batteryCharger = self
                 spec.soc = target.spec_RealisticMechanicalSystems.batterySoc
                 spec.voltage = target.spec_RealisticMechanicalSystems.systemVoltageV
@@ -468,10 +447,6 @@ function RMS_BatteryCharger:onUpdate()
                 publishState(self, spec)
             end
             spec.wasCranking = cranking
-            if not cranking and spec.current ~= 0 then
-                spec.current = 0
-                publishState(self, spec)
-            end
         end
     end
     if self.isServer and canDisconnect(spec) and not spec.pendingTarget then

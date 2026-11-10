@@ -77,6 +77,7 @@ Changelog 1.0.0.0-beta.2:
 - Fixed the pre-shift check asking to clean the radiator when only the air filter is dirty
 - Fixed other players in multiplayer hearing the normal engine start, then the struggling starter over it, during a hard start
 - Fixed a parked machine left running shutting off on its own after a few minutes when the player is far away
+- Reworked starting with the charger's starting aid and with jumper cables: a machine with a flat battery can now start on them, its voltmeter showing the voltage it receives
 
 Changelog 1.0.0.0-beta.1:
 - Reworked machine production years and their period equipment
@@ -348,6 +349,7 @@ Changelog 1.0.0.0-beta.2:
 - Aufforderung der Kontrolle vor Schichtbeginn, den Kühler zu reinigen, obwohl nur der Luftfilter verschmutzt ist, behoben
 - Normales Startgeräusch mit dem mühsamen Anlasser darüber bei anderen Spielern im Mehrspielermodus während eines schweren Starts behoben
 - Selbstständiges Abschalten einer laufend abgestellten Maschine nach einigen Minuten, wenn der Spieler weit entfernt ist, behoben
+- Starten mit der Starthilfe des Ladegeräts und mit Starthilfekabeln überarbeitet: Eine Maschine mit leerer Batterie kann nun damit starten, ihr Voltmeter zeigt die Spannung, die sie erhält
 
 Changelog 1.0.0.0-beta.1:
 - Baujahre der Maschinen und ihre zeitgemäße Ausstattung überarbeitet
@@ -619,6 +621,7 @@ Changelog 1.0.0.0-beta.2 :
 - Correction du contrôle avant prise de poste qui demandait de nettoyer le radiateur quand seul le filtre à air est encrassé
 - Correction du démarrage normal suivi du démarreur qui peine par-dessus, entendu par les autres joueurs en multijoueur lors d'un démarrage difficile
 - Correction d'une machine garée moteur en marche qui s'arrêtait seule au bout de quelques minutes quand le joueur est loin
+- Refonte du démarrage avec l'aide au démarrage du chargeur et avec les câbles de démarrage : une machine à la batterie à plat peut désormais démarrer, son voltmètre affichant la tension qu'elle reçoit
 
 Changelog 1.0.0.0-beta.1 :
 - Refonte des années des machines et de leurs équipements d'époque

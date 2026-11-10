@@ -103,9 +103,7 @@ function RMS_DiagnosticTool.validate(tool, target)
     if not RMS_DiagnosticTool.getHasControllers(target) then
         return "electronics"
     end
-    local isPlugged = spec.target == target
-    if isPlugged and RMS_BatteryCharger.hasMoved(target, spec.targetPosition)
-        or not isPlugged and math.abs(target:getLastSpeed()) > RMS_BatteryCharger.STOPPED_SPEED then
+    if spec.target ~= target and math.abs(target:getLastSpeed()) > RMS_BatteryCharger.STOPPED_SPEED then
         return "moving"
     end
     local other = RMS_DiagnosticTool.getConnectedTool(target)
@@ -124,7 +122,6 @@ function RMS_DiagnosticTool.plug(tool, target)
     RMS_DiagnosticTool.unplug(tool)
     local spec = getSpec(tool)
     spec.target = target
-    spec.targetPosition = RMS_BatteryCharger.getPosition(target)
     spec.targetUniqueId = target:getUniqueId()
     target.spec_RealisticMechanicalSystems.diagnosticTool = tool
     updateScreen(spec)
@@ -142,7 +139,7 @@ function RMS_DiagnosticTool.unplug(tool)
         target.spec_RealisticMechanicalSystems.diagnosticTool = nil
     end
     if target ~= nil or spec.targetUniqueId ~= "" then
-        spec.target, spec.targetPosition, spec.targetUniqueId = nil, nil, ""
+        spec.target, spec.targetUniqueId = nil, ""
         spec.scanState, spec.scanFaults = RMS_DiagnosticTool.SCAN.NONE, {}
         updateScreen(spec)
         tool:raiseDirtyFlags(spec.dirtyFlag)

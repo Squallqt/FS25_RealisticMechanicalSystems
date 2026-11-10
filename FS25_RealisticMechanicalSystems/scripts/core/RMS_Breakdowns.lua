@@ -191,9 +191,10 @@ RMS_Breakdowns.EffectApplicators.SELF_DISAPPEARING_BREAKDOWN_EFFECT = {
     apply = function(vehicle, effect) vehicle:removeBreakdown(effect.extraData.breakdownId) end
 }
 
--- the game never stops an engine already running when it may not run
+-- the game never stops an engine running or starting when it may not run
 local function stopRunningEngine(vehicle)
-    if vehicle:getIsMotorStarted() then
+    local motorState = vehicle:getMotorState()
+    if motorState == MotorState.ON or motorState == MotorState.STARTING then
         vehicle:stopMotor()
     end
 end

@@ -238,7 +238,7 @@ end
 
 ---Tells whether a machine is being started at this instant
 function RMS_Electrical.getIsStarting(vehicle)
-    return vehicle.spec_RealisticMechanicalSystems.isCranking == true or RMS_Start.getIsCranking(vehicle)
+    return RMS_Start.getIsCranking(vehicle)
 end
 
 local function buildNode(vehicle, isStarting)
@@ -263,7 +263,6 @@ local function buildNode(vehicle, isStarting)
         circuitOhm = spec.circuitResistanceFactor * C.CIRCUIT_ADMISSIBLE_DROP_V * rating.seriesBatteries / rating.starterRatedA,
         generatorA = 0,
         chargerA = 0,
-        startAidA = 0,
         chargerOutA = 0,
         loads = { base = 0, cab = 0, lights = 0, starter = 0, preheat = 0, total = 0 }
     }
@@ -277,8 +276,10 @@ local function buildNode(vehicle, isStarting)
     end
 
     if vehicle.isServer and spec.batteryCharger ~= nil then
-        node.chargerA, node.startAidA = RMS_BatteryCharger.getAvailableCurrent(vehicle, isCranking)
+        node.chargerA = RMS_BatteryCharger.getAvailableCurrent(vehicle, isCranking)
     end
+    -- held up by a charger, the cold keeps no charge of the battery back
+    node.reachSoc = node.chargerA > 0 and 0 or node.floorSoc
 
     return node
 end
@@ -295,23 +296,21 @@ end
 
 local function solveNode(node)
     local restingV = getRestingVoltage(node.rating, node.soc)
-    local startAidA = math.min(node.startAidA, node.loads.total)
-    local shortfallA = node.loads.total - startAidA - node.generatorA - node.chargerA
+    local shortfallA = node.loads.total - node.generatorA - node.chargerA
 
     if shortfallA <= 0 then
         node.batteryA = math.min(-shortfallA, getAcceptance(node))
-        local isFed = node.generatorA + node.chargerA + startAidA > 0
+        local isFed = node.generatorA + node.chargerA > 0
         node.voltageV = isFed and RMS_Config.ELECTRICAL.REGULATED_VOLTAGE_V * node.rating.seriesBatteries or restingV
-        local drawnA = node.loads.total - startAidA + node.batteryA
-        node.chargerOutA = startAidA + math.max(drawnA - node.generatorA, 0)
-    elseif node.soc > node.floorSoc then
+        node.chargerOutA = math.max(node.loads.total + node.batteryA - node.generatorA, 0)
+    elseif node.soc > node.reachSoc then
         node.batteryA = -shortfallA
         node.voltageV = math.max(restingV - shortfallA * (node.resistanceOhm + node.circuitOhm), 0)
-        node.chargerOutA = startAidA + node.chargerA
+        node.chargerOutA = node.chargerA
     else
         node.batteryA = 0
         node.voltageV = 0
-        node.chargerOutA = startAidA + node.chargerA
+        node.chargerOutA = node.chargerA
     end
 end
 
@@ -324,7 +323,7 @@ local function advanceNode(node, hours)
             return
         end
 
-        local targetSoc = node.floorSoc
+        local targetSoc = node.reachSoc
         if node.batteryA > 0 then
             targetSoc = node.soc < C.CHARGE_TOPPING_SOC and C.CHARGE_TOPPING_SOC or 1
         end
@@ -353,6 +352,10 @@ local function solvePair(a, b)
         node.acceptA = getAcceptance(node)
         demandA[index] = node.loads.total - node.generatorA
     end
+    -- held up by the other machine, the cold keeps no charge back
+    local isLive = { a.soc > a.floorSoc or a.generatorA > 0, b.soc > b.floorSoc or b.generatorA > 0 }
+    a.reachSoc = isLive[2] and 0 or a.floorSoc
+    b.reachSoc = isLive[1] and 0 or b.floorSoc
 
     local totalA = demandA[1] + demandA[2]
     if totalA <= 0 and generatorA > 0 then
@@ -387,7 +390,7 @@ local function solvePair(a, b)
         for index, node in ipairs(nodes) do
             if conductance[index] > 0 then
                 local batteryA = conductance[index] * (voltageV[index] - node.restingV)
-                if batteryA < 0 and node.soc <= node.floorSoc then
+                if batteryA < 0 and node.soc <= node.reachSoc then
                     conductance[index], fixedA[index], isSettled = 0, 0, false
                 elseif batteryA > node.acceptA then
                     conductance[index], fixedA[index], isSettled = 0, node.acceptA, false
@@ -414,7 +417,7 @@ local function advancePair(a, b, elapsedMs)
         for _, node in ipairs({ a, b }) do
             local soc = node.soc + node.batteryA * stepHours / node.capacityAh
             if node.batteryA < 0 then
-                soc = math.max(soc, node.floorSoc)
+                soc = math.max(soc, node.reachSoc)
             end
             node.soc = math.clamp(soc, 0, 1)
         end
@@ -500,7 +503,9 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
         local partnerNode = buildNode(partner)
         local isWorking = node.isRunning or node.isCranking or node.loads.preheat > 0
             or partnerNode.isRunning or partnerNode.isCranking or partnerNode.loads.preheat > 0
-        local elapsedMs, worldElapsedMs = getElapsed(spec, dt, isWorking)
+        -- each machine steps the pair in its own frame
+        local lastSolve = math.max(spec._electricalSolveStamp or -math.huge, partnerSpec._electricalSolveStamp or -math.huge)
+        local elapsedMs, worldElapsedMs = getElapsed(spec, math.min(solveStamp - lastSolve, dt), isWorking)
         getElapsed(partnerSpec, dt, isWorking)
 
         applyCalendarLosses(node, spec, worldElapsedMs)
@@ -525,15 +530,9 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
     end
 end
 
----Returns the voltage the circuit would hold if started now
-function RMS_Electrical.getStartingVoltage(vehicle)
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec.batteryIsolated then
-        return 0
-    end
-
-    local node = buildNode(vehicle, true)
-    local partner = spec.externalPowerConnection
+local function getVoltageNow(vehicle, isStarting)
+    local node = buildNode(vehicle, isStarting)
+    local partner = vehicle.spec_RealisticMechanicalSystems.externalPowerConnection
     if partner ~= nil then
         solvePair(node, buildNode(partner))
     else
@@ -541,6 +540,14 @@ function RMS_Electrical.getStartingVoltage(vehicle)
     end
 
     return node.voltageV
+end
+
+---Returns the voltage the circuit would hold if started now
+function RMS_Electrical.getStartingVoltage(vehicle)
+    if vehicle.spec_RealisticMechanicalSystems.batteryIsolated then
+        return 0
+    end
+    return getVoltageNow(vehicle, true)
 end
 
 ---Returns the lowest voltage that still turns the starter of a machine
@@ -669,7 +676,8 @@ function RMS_Electrical:syncDeadBatteryEffect()
     if spec.batteryIsolated then
         isDead = false
     elseif self:getIsMotorStarted() then
-        isDead = spec.rawSystemVoltageV <= 0
+        -- solved now: the last step may date from the starter's turn
+        isDead = getVoltageNow(self) <= 0
     else
         isDead = not RMS_Electrical.getCanStart(self)
     end
